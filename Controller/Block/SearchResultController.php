@@ -54,6 +54,7 @@ class SearchResultController extends Controller
         $nbspellcheck,
         $facets = array(),
         $filter = array(),
+        $limitFields = 50,
         $optionsearch = array(),
         $optionsdismax = array(),
         $page = null,
