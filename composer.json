@@ -1,0 +1,14 @@
+{
+    "name": "itkg/phporchestra-cms-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicolas Thal",
+            "email": "nico.th4l@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
