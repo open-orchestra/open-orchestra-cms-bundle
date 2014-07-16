@@ -10,5 +10,9 @@
     "minimum-stability": "dev",
     "require": {
 
-    }
+    },
+    "autoload": {
+        "psr-0": { "PHPOrchestra\\CmsBundle": "" }
+    },
+    "target-dir": "PHPOrchestra/CmsBundle"
 }
