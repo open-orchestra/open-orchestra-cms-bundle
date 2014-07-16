@@ -12,7 +12,7 @@
 
     },
     "autoload": {
-        "psr-0": { "PHPOrchestra\\CmsBundle": "" }
+        "psr-0": { "PHPOrchestra\\CMSBundle": "" }
     },
-    "target-dir": "PHPOrchestra/CmsBundle"
+    "target-dir": "PHPOrchestra/CMSBundle"
 }
