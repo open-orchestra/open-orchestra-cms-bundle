@@ -39,6 +39,7 @@ class SearchResultController extends Controller
      * @param int $nbdoc number of documents per page
      * @param array $fielddisplayed array of field name which are display
      * @param int $nbspellcheck number of spell check result
+     * @param int $limitField number of letter per field
      * @param array $filter array of filter
      * @param array $optionsearch array of option
      * @param array $optionsdismax array of option for dismax component
@@ -52,9 +53,9 @@ class SearchResultController extends Controller
         $nbdoc,
         $fielddisplayed,
         $nbspellcheck,
+        $limitField = 50,
         $facets = array(),
         $filter = array(),
-        $limitFields = 50,
         $optionsearch = array(),
         $optionsdismax = array(),
         $page = null,
@@ -105,6 +106,7 @@ class SearchResultController extends Controller
                         $page,
                         $nbdoc,
                         $fielddisplayed,
+                        $limitField,
                         $facets
                     );
         
@@ -127,6 +129,7 @@ class SearchResultController extends Controller
                             $page,
                             $nbdoc,
                             $fielddisplayed,
+                            $limitField,
                             $facets
                         );
                     }
@@ -315,11 +318,13 @@ class SearchResultController extends Controller
      * @param string $nodeId identifiant of node
      * @param int $page number of page
      * @param int $nbdoc number of documents per page selected by the user
+     * @param array $fields array of field displayed
+     * @param int $limitField number of letters per field
      * @param array $facets array if they have facets
      *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $facets = array())
+    public function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $limitField, $facets = array())
     {
         $firstField = array_shift($fields);
         if (isset($facets)) {
@@ -334,7 +339,8 @@ class SearchResultController extends Controller
                     'fieldsdisplayed' => $fields,
                     'facetsArray' => $facets,
                     'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
-                    'firstField' => $firstField
+                    'firstField' => $firstField,
+                    'limitField' => $limitField
                 )
             );
         } else {
@@ -346,9 +352,10 @@ class SearchResultController extends Controller
                     'nodeId' => $nodeId,
                     'page' => $page,
                     'nbdocs' => $nbdoc,
-                    '$fields' => $fields,
+                    'fieldsdisplayed' => $fields,
                     'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
-                    'firstField' => $firstField
+                    'firstField' => $firstField,
+                    'limitField' => $limitField
                 )
             );
         }
@@ -397,6 +404,7 @@ class SearchResultController extends Controller
         $nbdoc,
         $fielddisplayed,
         $nbspellcheck,
+        $limitField = 50,
         $facets = array(),
         $filter = array(),
         $optionsearch = array(),
@@ -408,55 +416,22 @@ class SearchResultController extends Controller
             $page = 1;
         }
 
-        // Method POST
-        if (isset($_page_parameters['post']['form'])) {
-            if (is_array($_page_parameters['post']['form'])) {
-                $form = $_page_parameters['post']['form'];
-                if (isset($form['search'])) {
-                    $data = $form['search'];
-                    
-                    if (!empty($optionsearch)) {
-                        $optionsearch['start'] = ($page * $nbdoc) - $nbdoc;
-                        $optionsearch['rows'] = $page * $nbdoc;
-                    } else {
-                        $optionsearch = array('start' => ($page * $nbdoc) - $nbdoc, 'rows' => $page * $nbdoc);
-                    }
-                    
-                    // Result of search
-                    $resultSet = $this->callResearch(
-                        $data,
-                        $nbspellcheck,
-                        $optionsearch,
-                        $facets,
-                        $filter,
-                        $optionsdismax
-                    );
-                    
-                    // Call template
-                    return $this->callTemplate(
-                        $data,
-                        $resultSet,
-                        $nodeId,
-                        $page,
-                        $nbdoc,
-                        $fielddisplayed,
-                        $facets
-                    );
-        
-                }
-            }
-        }
         // Method GET
         if (isset($_page_parameters['query'])) {
             if (is_array($_page_parameters['query'])) {
                 $form = $_page_parameters['query'];
-                if (isset($form['search'])) {
-                    $data = $form['search'];
-        
+                if (isset($form['autocomplete_search']) || isset($form['terms'])) {
+
+                    if (isset($form['autocomplete_search'])) {
+                        $data = $form['autocomplete_search']['terms'];
+                    } elseif (isset($form['terms'])) {
+                        $data = $form['terms'];
+                    }
+
                     if (isset($form['page'])) {
                         $page = $form['page'];
                     }
-                    
+
                     if (!empty($optionsearch)) {
                         $optionsearch['start'] = ($page * $nbdoc) - $nbdoc;
                         $optionsearch['rows'] = $page * $nbdoc;
@@ -473,7 +448,7 @@ class SearchResultController extends Controller
                         $filter,
                         $optionsdismax
                     );
-        
+
                     // Call template
                     return $this->callTemplate(
                         $data,
@@ -482,12 +457,17 @@ class SearchResultController extends Controller
                         $page,
                         $nbdoc,
                         $fielddisplayed,
+                        $limitField,
                         $facets
                     );
-        
+
                 } else {
                     // Filter
                     if (isset($form['data']) && isset($form['filter']) && isset($form['facetname'])) {
+
+                        if (isset($form['page'])) {
+                            $page = $form['page'];
+                        }
 
                         // Result of filter query
                         $resultSet = $this->callFilter($form['data'], $form['filter'], $form['facetname']);
@@ -500,6 +480,7 @@ class SearchResultController extends Controller
                             $page,
                             $nbdoc,
                             $fielddisplayed,
+                            $limitField,
                             $facets
                         );
                     }
