@@ -40,9 +40,11 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
 
+
     /**
+     * @param string $locale
+     * 
      * @dataProvider getLocale
-     * @param string $nodeType
      */
     public function testGetCurrentLocale($locale)
     {
@@ -52,8 +54,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @dataProvider getLocale
      * @param string $locale
+     * 
+     * @dataProvider getLocale
      */
     public function testSetCurrentLocale($locale)
     {

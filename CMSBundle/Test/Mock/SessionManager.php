@@ -18,12 +18,10 @@ class SessionManager
     
     public function get($key)
     {
-        $value = '';
-        
-        if (isset($this->storage[$key])) {
-            $value = $this->storage[$key];
+        if (array_key_exists($key, $this->storage)) {
+            return $this->storage[$key];
         }
         
-        return $value;
+        return '';
     }
 }
