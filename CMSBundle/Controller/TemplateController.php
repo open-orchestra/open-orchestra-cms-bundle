@@ -43,7 +43,7 @@ class TemplateController extends Controller
         }
         
         $doSave = ($request->getMethod() == 'POST');
-        if($request->request->get('ajax')){
+        if($request->request->get('refresh')){
             $template->fromArray($request->request->all());
             $doSave = true;
         }
@@ -64,7 +64,7 @@ class TemplateController extends Controller
             }
         }
         if ($doSave) {
-        	$response = array();
+            $response = array();
         	$response['dialog'] = $this->render(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(
@@ -84,7 +84,6 @@ class TemplateController extends Controller
             }
             return new JsonResponse($response);
         }
-                
         return $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
             array(

@@ -197,7 +197,7 @@ class NodeController extends Controller
             $node->setVersion($node->getVersion() + 1);
         }
         $doSave = ($request->getMethod() == 'POST');
-        if ($request->request->get('ajax')) {
+        if ($request->request->get('refresh')) {
             $node->fromArray($request->request->all());
             $doSave = true;
         } else {
@@ -217,7 +217,7 @@ class NodeController extends Controller
             }
         }
         if ($doSave) {
-        	$response = array();
+            $response = array();
         	$response['dialog'] = $this->render(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(
@@ -239,7 +239,6 @@ class NodeController extends Controller
             }
             return new JsonResponse($response);
         }
-                
         return $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
             array(
