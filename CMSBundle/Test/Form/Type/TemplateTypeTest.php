@@ -52,7 +52,7 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         
         // TODO Improves this test, check some specific added types
         $formBuilderMock
-            ->expects($this->exactly(10))
+            ->expects($this->exactly(11))
             ->method('add')
             ->will($this->returnSelf());
         

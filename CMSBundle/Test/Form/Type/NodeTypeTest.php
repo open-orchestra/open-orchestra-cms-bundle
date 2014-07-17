@@ -52,7 +52,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         
         // TODO Improves this test, check some specific added types
         $formBuilderMock
-            ->expects($this->exactly(14))
+            ->expects($this->exactly(15))
             ->method('add')
             ->will($this->returnSelf());
         

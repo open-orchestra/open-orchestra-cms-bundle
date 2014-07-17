@@ -40,7 +40,7 @@ class SearchResultTypeTest extends \PHPUnit_Framework_TestCase
         $this->getMock('\\Symfony\\Component\\Form\\FormBuilderInterface');
             
         $formBuilderMock
-        ->expects($this->exactly(8))
+        ->expects($this->exactly(9))
         ->method('add')
         ->will($this->returnSelf());
 
