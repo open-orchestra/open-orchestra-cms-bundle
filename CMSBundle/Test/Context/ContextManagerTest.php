@@ -66,7 +66,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * 
+     * @param array $documentsList
+     * @param array $expectedArray
+     *  
      * @dataProvider getAvailableSites
      */
     public function testGetAvailableSites($documentsList, $expectedArray)
@@ -109,6 +111,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Locale provider
+     */
     public function getLocale()
     {
         return array(
@@ -120,6 +125,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Site provider
+     */
     public function getSite()
     {
         return array(
@@ -128,6 +136,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Available sites provider
+     */
     public function getAvailableSites()
     {
         $site1 = new Site('site1');
