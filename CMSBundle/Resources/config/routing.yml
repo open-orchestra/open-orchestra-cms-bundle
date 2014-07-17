@@ -56,4 +56,8 @@ php_orchestra_autocomplete:
 
 php_orchestra_setLanguage:
     pattern: /ajax/context/setLanguage/{language}
-    defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Language:SetLanguage, language:en }
+    defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Context:SetLanguage, language:en }
+
+php_orchestra_setSite:
+    pattern: /ajax/context/setSite/{siteId}/{siteDomain}
+    defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Context:SetSite}

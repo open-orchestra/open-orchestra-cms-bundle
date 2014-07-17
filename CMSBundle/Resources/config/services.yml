@@ -30,7 +30,7 @@ services:
     # Context service
     phporchestra_cms.contextmanager:
         class: PHPOrchestra\CMSBundle\Context\ContextManager
-        arguments: [@session, "%kernel.default_locale%"]
+        arguments: [@session, @phporchestra_cms.documentmanager, "%kernel.default_locale%"]
 
     # Locale listener
     phporchestra_cms.locale_listener:
