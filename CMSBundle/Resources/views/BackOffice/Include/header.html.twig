@@ -53,20 +53,17 @@
             <!-- projects dropdown -->
             <div id="project-context">
 
+                {% set availableSites = context.getAvailableSites() %}
                 <span class="label">{{ 'site'|trans({}, 'backOffice') }}</span>
-                <span id="project-selector" class="popover-trigger-element dropdown-toggle" data-toggle="dropdown"><b>xCurrent Sitex</b> <i class="fa fa-angle-down"></i></span>
+                <span id="project-selector" class="popover-trigger-element dropdown-toggle" data-toggle="dropdown"><b>{{ context.getCurrentSite().domain }}</b> <i class="fa fa-angle-down"></i></span>
 
                 <!-- Suggestion: populate this list with fetch and push technique -->
                 <ul class="dropdown-menu">
-                    <li>
-                        <a href="javascript:void(0);">xSite 1x</a>
+                    {% for site in availableSites %}
+                    <li{% if context.getCurrentSite().id == site.id %} class="active"{% endif %}>
+                        <a href="javascript:callAndReload('{{ path('php_orchestra_setSite', {'siteId':site.id, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);">xSite 2x</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);">xSite 3x</a>
-                    </li>
+                    {% endfor %}
                 </ul>
                 <!-- end dropdown-menu-->
 

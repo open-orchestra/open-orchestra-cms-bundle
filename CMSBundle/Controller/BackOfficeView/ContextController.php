@@ -8,16 +8,35 @@
 namespace PHPOrchestra\CMSBundle\Controller\BackOfficeView;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class LanguageController extends Controller
+class ContextController extends Controller
 {
+    /**
+     * Switch context language
+     * 
+     * @param string $language
+     */
     public function SetLanguageAction($language)
     {
         $contextManager = $this->container->get('phporchestra_cms.contextmanager');
         
         $contextManager->setCurrentLocale($language);
+        
+        return new JsonResponse(array('success' => true));
+    }
+
+    /**
+     * Switch context current site
+     * 
+     * @param string $siteId
+     * @param string $siteDomain
+     */
+    public function SetSiteAction($siteId, $siteDomain)
+    {
+        $contextManager = $this->container->get('phporchestra_cms.contextmanager');
+        
+        $contextManager->setCurrentsite($siteId, $siteDomain);
         
         return new JsonResponse(array('success' => true));
     }
