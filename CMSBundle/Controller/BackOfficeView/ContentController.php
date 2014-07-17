@@ -203,7 +203,7 @@ class ContentController extends TableViewController
             }
         }
 
-        /*$soft = $this->get('phporchestra_cms.indexHelper');
+        /*$soft = $this->get('phporchestra_indexation.index_manager');
         $soft->index($document, 'Content');*/
         
         return array(
@@ -229,7 +229,7 @@ class ContentController extends TableViewController
             $contentVersion->markAsDeleted();
         }
 
-        /*$soft = $this->get('phporchestra_cms.indexHelper');
+        /*$soft = $this->get('phporchestra_indexation.index_manager');
         $soft->deleteIndex($contentId);*/
         
         return $this->redirect(
