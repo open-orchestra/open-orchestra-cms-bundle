@@ -217,6 +217,15 @@ class NodeController extends Controller
             }
         }
         if ($doSave) {
+        	$response = array();
+        	$response['dialog'] = $this->render(
+                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
+                array(
+                    'dialogId' => '',
+                    'dialogTitle' => 'Modification du node',
+                    'dialogMessage' => 'Modification ok',
+                )
+            )->getContent();
             if (!$node->getDeleted()) {
                 $node->setId(null);
                 $node->setIsNew(true);
@@ -226,21 +235,9 @@ class NodeController extends Controller
                 $soft->index($node, 'Node');*/
             } else {
                 $this->deleteTree($node->getNodeId());
+                $response['redirect'] = $this->generateUrl('php_orchestra_cms_bo_edito');
             }
-            
-            $response = $this->render(
-                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
-                array(
-                    'dialogId' => '',
-                    'dialogTitle' => 'Modification du node',
-                    'dialogMessage' => 'Modification ok',
-                )
-            );
-            return new JsonResponse(
-                array(
-                    'dialog' => $response->getContent(),
-                )
-            );
+            return new JsonResponse($response);
         }
                 
         return $this->render(

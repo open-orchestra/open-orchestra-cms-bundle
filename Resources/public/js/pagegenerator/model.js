@@ -66,9 +66,8 @@ function formIdToName(prefix, data){
 			var data = getValueInObject($(this).data('container').data('settings'), $(this).data('path'));
 			var prefix = $(this).data('type');
 			var ref = $(this);
-			var refresh = $(this).find(":input.refresh");
-			if(refresh.length){
-				refresh.eq(0).refreshForm(formIdToName(prefix, data));
+			if($(this).find(":input.refresh").length){
+				$('form', this).refreshForm(formIdToName(prefix, data));
 			}
 	        $(this).find(':input[id!="' + prefix + '__token"]').each(function(){
 	        	var id = $(this).attr("id").replace(prefix + '_', '');

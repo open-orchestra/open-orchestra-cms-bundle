@@ -64,6 +64,15 @@ class TemplateController extends Controller
             }
         }
         if ($doSave) {
+        	$response = array();
+        	$response['dialog'] = $this->render(
+                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
+                array(
+                    'dialogId' => '',
+                    'dialogTitle' => 'Modification du template',
+                    'dialogMessage' => 'Modification ok',
+                )
+            )>getContent();
             if(!$template->getDeleted()){
                 $template->setId(null);
                 $template->setIsNew(true);
@@ -71,20 +80,9 @@ class TemplateController extends Controller
             }
             else{
                 $this->deleteTree($template->getNodeId());
+                $response['redirect'] = $this->generateUrl('php_orchestra_cms_bo_edito');
             }
-            $response = $this->render(
-                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
-                array(
-                    'dialogId' => '',
-                    'dialogTitle' => 'Modification du template',
-                    'dialogMessage' => 'Modification ok',
-                )
-            );
-            return new JsonResponse(
-                array(
-                    'dialog' => $response->getContent(),
-                )
-            );
+            return new JsonResponse($response);
         }
                 
         return $this->render(
