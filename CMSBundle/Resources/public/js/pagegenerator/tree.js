@@ -69,6 +69,9 @@ function treeAjaxCall(url, params, target)
 	                window.setTimeout(function() {
 	                    newDiv.dialog("close");
 	                }, 2000);
+	                if ('redirect' in response){
+	                	window.location.hash = response.redirect;
+		    		}
 	    		}
     		}
         }
@@ -84,20 +87,23 @@ function treeAjaxCall(url, params, target)
     }
     $.fn.refreshNav = function(){
     	return this.each(function(){
-	        var refThis = $(this);
+    		var url = $(this).data('url');
+    		var controller = $(this).data('controller');
+	        var target = $('ul', this);
+	        var selector = $.getSelector($(this), ['class']) + ' ul';
 	        $.ajax({
 	            'type': 'POST',
-	            'url': refThis.data('url'),
+	            'url': url,
 	            'success': function(response){
-	                refThis.replaceWith(response);
-	                refThis.jarvismenu({
+	        		target.html($('<div />').append(response).find(selector).html());
+	        		$(selector).jarvismenu({
 	                	accordion : true,
 	                	speed : $.menu_speed,
 	                	closedSign : '<em class="fa fa-expand-o"></em>',
 	                	openedSign : '<em class="fa fa-collapse-o"></em>'
 	                }); 
 	            },
-	            'data': {'controller' : refThis.data('controller')},
+	            'data': {'controller' : controller},
 	            'async': false
 	        });
     	});

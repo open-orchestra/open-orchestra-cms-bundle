@@ -1,10 +1,11 @@
 $('body').on('change', '.refresh', function(){
-	$(this).refreshForm();
+	$(this).parents('form').refreshForm();
 });
 
 (function($){
 	$.fn.refreshForm = function(params){
-		var target = $(this).parents('form');
+		var target = $(this);
+		var selector = $.getSelector($(this))
 		if(!params){
 			params = target.serializeArray();
 		}
@@ -13,11 +14,7 @@ $('body').on('change', '.refresh', function(){
 	        'type': 'POST',
 	        'url': target.attr('action'),
 	        'success': function(response){
-	    		$(response.data).each(function(){
-	    			if($(this).prop("tagName") == target.prop("tagName")){
-	    				target.html($(this).html());
-	    			}
-	    		});
+	    		target.html($('<div />').append(response.data).find(selector).html());
 	        },
 	        'data': params,
 	        'dataType': 'json',
