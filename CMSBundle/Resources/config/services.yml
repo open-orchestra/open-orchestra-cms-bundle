@@ -12,20 +12,12 @@ services:
         class: PHPOrchestra\CMSBundle\Document\DocumentManager
         arguments: [@mandango]
 
-    # IndexCommand service
-    phporchestra_cms.indexsolr:
-        class: PHPOrchestra\BlockBundle\IndexCommand\SolrIndexCommand
-        arguments: [@service_container]
-    
     # SearchCommand service
     phporchestra_cms.searchsolr:
         class: PHPOrchestra\BlockBundle\IndexCommand\SolrSearchCommand
         arguments: [@service_container]
 
-    # call the indexation service
-    phporchestra_cms.indexHelper:
-        class: PHPOrchestra\CMSBundle\Helper\IndexHelper
-        arguments: [@service_container]
+
 
     # Context service
     phporchestra_cms.contextmanager:
