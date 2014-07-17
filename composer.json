@@ -14,5 +14,5 @@
     "autoload": {
         "psr-0": { "PHPOrchestra\\CMSBundle": "" }
     },
-    "target-dir": "PHPOrchestra/CMSBundle"
+    "target-dir": "PHPOrchestra"
 }
