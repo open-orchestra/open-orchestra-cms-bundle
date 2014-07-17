@@ -68,17 +68,17 @@ class SearchResultController extends Controller
         // Method GET
         if (isset($_page_parameters['query'])) {
             if (is_array($_page_parameters['query'])) {
-                $form = $_page_parameters['query'];
-                if (isset($form['autocomplete_search']) || isset($form['terms'])) {
+                $paramQuery = $_page_parameters['query'];
+                if (isset($paramQuery['autocomplete_search']) || isset($paramQuery['terms'])) {
 
-                    if (isset($form['autocomplete_search'])) {
-                        $data = $form['autocomplete_search']['terms'];
-                    } elseif (isset($form['terms'])) {
-                        $data = $form['terms'];
+                    if (isset($paramQuery['autocomplete_search'])) {
+                        $data = $paramQuery['autocomplete_search']['terms'];
+                    } elseif (isset($paramQuery['terms'])) {
+                        $data = $paramQuery['terms'];
                     }
         
-                    if (isset($form['page'])) {
-                        $page = $form['page'];
+                    if (isset($paramQuery['page'])) {
+                        $page = $paramQuery['page'];
                     }
                     
                     if (!empty($optionsearch)) {
@@ -112,18 +112,18 @@ class SearchResultController extends Controller
         
                 } else {
                     // Filter
-                    if (isset($form['data']) && isset($form['filter']) && isset($form['facetname'])) {
+                    if (isset($paramQuery['data']) && isset($paramQuery['filter']) && isset($paramQuery['facetname'])) {
 
-                        if (isset($form['page'])) {
-                            $page = $form['page'];
+                        if (isset($paramQuery['page'])) {
+                            $page = $paramQuery['page'];
                         }
 
                         // Result of filter query
-                        $resultSet = $this->callFilter($form['data'], $form['filter'], $form['facetname']);
+                        $resultSet = $this->callFilter($paramQuery['data'], $paramQuery['filter'], $paramQuery['facetname']);
 
                         // Call template
                         return $this->callTemplate(
-                            $form['data'],
+                            $paramQuery['data'],
                             $resultSet,
                             $nodeId,
                             $page,
@@ -419,17 +419,17 @@ class SearchResultController extends Controller
         // Method GET
         if (isset($_page_parameters['query'])) {
             if (is_array($_page_parameters['query'])) {
-                $form = $_page_parameters['query'];
-                if (isset($form['autocomplete_search']) || isset($form['terms'])) {
+                $paramQuery = $_page_parameters['query'];
+                if (isset($paramQuery['autocomplete_search']) || isset($paramQuery['terms'])) {
 
-                    if (isset($form['autocomplete_search'])) {
-                        $data = $form['autocomplete_search']['terms'];
-                    } elseif (isset($form['terms'])) {
-                        $data = $form['terms'];
+                    if (isset($paramQuery['autocomplete_search'])) {
+                        $data = $paramQuery['autocomplete_search']['terms'];
+                    } elseif (isset($paramQuery['terms'])) {
+                        $data = $paramQuery['terms'];
                     }
 
-                    if (isset($form['page'])) {
-                        $page = $form['page'];
+                    if (isset($paramQuery['page'])) {
+                        $page = $paramQuery['page'];
                     }
 
                     if (!empty($optionsearch)) {
@@ -463,18 +463,18 @@ class SearchResultController extends Controller
 
                 } else {
                     // Filter
-                    if (isset($form['data']) && isset($form['filter']) && isset($form['facetname'])) {
+                    if (isset($paramQuery['data']) && isset($paramQuery['filter']) && isset($paramQuery['facetname'])) {
 
-                        if (isset($form['page'])) {
-                            $page = $form['page'];
+                        if (isset($paramQuery['page'])) {
+                            $page = $paramQuery['page'];
                         }
 
                         // Result of filter query
-                        $resultSet = $this->callFilter($form['data'], $form['filter'], $form['facetname']);
+                        $resultSet = $this->callFilter($paramQuery['data'], $paramQuery['filter'], $paramQuery['facetname']);
 
                         // Call template
                         return $this->callTemplate(
-                            $form['data'],
+                            $paramQuery['data'],
                             $resultSet,
                             $nodeId,
                             $page,
