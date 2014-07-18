@@ -11,6 +11,20 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ContentTypeTransformer implements DataTransformerInterface
 {
+    protected $customTypes = array();
+
+    /**
+     * Construtor
+     * 
+     * @param array $customTypes list of availables custom Types
+     */
+    public function __construct($customTypes = array())
+    {
+        if (is_array($customTypes)) {
+            $this->customTypes = $customTypes;
+        }
+    }
+
     /**
      * Transforms a ContentType entity to inject customfields as standard fields
      *
@@ -32,18 +46,30 @@ class ContentTypeTransformer implements DataTransformerInterface
      */
     public function reverseTransform($contentType) // formfield => entity
     {
-        if ($contentType->new_field != '') {
-            $fields = json_decode($contentType->getFields());
+        if ($contentType->new_field != ''
+            && array_key_exists($contentType->new_field, $this->customTypes)
+            && array_key_exists('type', $this->customTypes[$contentType->new_field])
+        ) {
+            $fieldStructure = $this->customTypes[$contentType->new_field];
+            $fieldOptions = array();
             
+            if (is_array($fieldStructure) && array_key_exists('options', $fieldStructure)) {
+                foreach ($fieldStructure['options'] as $optionType => $optionParams) {
+                    $fieldOptions[$optionType] = $optionParams['default_value'];
+                }
+            }
+            
+            $fields = json_decode($contentType->getFields());
             $fields[] = (object) array(
                 'fieldId' => '',
                 'label' => '',
                 'defaultValue' => '',
                 'searchable' => false,
                 'type' => $contentType->new_field,
-                'symfonyType' => '',
-                'options' => (object) array()
+                'symfonyType' => $fieldStructure['type'],
+                'options' => (object) $fieldOptions
             );
+            
             $contentType->setFields(json_encode($fields));
         }
         

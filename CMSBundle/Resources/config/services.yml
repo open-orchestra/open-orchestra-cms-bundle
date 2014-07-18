@@ -143,6 +143,7 @@ services:
     # ContentType Form Builder
     php_orchestra_cms.type.contentType:
         class: PHPOrchestra\CMSBundle\Form\Type\ContentTypeType
+        arguments: ["%php_orchestra.custom_types%"]
         tags:
             - { name: form.type, alias: contentType }
 

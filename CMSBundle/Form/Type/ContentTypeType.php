@@ -15,6 +15,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContentTypeType extends AbstractType
 {
+    protected $customTypes = null;
+
+    public function __construct($orchestraCustomTypes = array())
+    {
+        $this->customTypes = $orchestraCustomTypes;
+    }
+
     /**
      * (non-PHPdoc)
      * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
@@ -22,11 +29,10 @@ class ContentTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new ContentTypeTransformer();
+        $transformer = new ContentTypeTransformer($this->customTypes);
         $builder->addModelTransformer($transformer);
         
         $builder
-            ->add('id', 'hidden', array('mapped' => false, 'data' => (string)$options['data']->getId()))
             ->add(
                 'contentTypeId',
                 'text',
@@ -45,15 +51,6 @@ class ContentTypeType extends AbstractType
                 )
             )
             ->add(
-                'version',
-                'hidden',
-                array(
-                    'read_only' => true,
-                    'label' => 'contentTypes.form.version',
-                    'translation_domain' => 'backOffice'
-                )
-            )
-            ->add(
                 'status',
                 'choice',
                 array(
@@ -66,7 +63,9 @@ class ContentTypeType extends AbstractType
                 )
             )
             ->add('fields', 'contentTypeFields', array('data' => $options['data']->getFields()))
-            ->add('new_field', 'hidden', array('label' => 'Nouveau champ', 'required' => false));
+            ->add('id', 'hidden', array('mapped' => false, 'data' => (string)$options['data']->getId()))
+            ->add('version', 'hidden', array('read_only' => true))
+            ->add('new_field', 'hidden', array('required' => false));
     }
 
     /**

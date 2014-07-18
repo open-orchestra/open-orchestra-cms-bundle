@@ -201,7 +201,7 @@
                     </trans-unit>
                     <trans-unit id="contentTypes.form.fieldX">
                         <source>contentTypes.form.field%fieldId%</source>
-                        <target>Champ "fieldName"</target>
+                        <target>Champ "fieldId"</target>
                     </trans-unit>
                     <trans-unit id="contentTypes.form.newField">
                         <source>contentTypes.form.newField</source>
