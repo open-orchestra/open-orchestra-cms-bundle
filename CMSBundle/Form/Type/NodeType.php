@@ -43,11 +43,14 @@ class NodeType extends AbstractType
         $transformer = new NodeTypeTransformer($this->container, true);
         $builder->addModelTransformer($transformer);
 
+        $templateUrl = $this->container->get('router')->generate('php_orchestra_cms_templateajaxrequest', array('templateId' => '%s'));
+        $templateUrl = urldecode($templateUrl);
+        
         $builder
             ->add('nodeId', 'hidden')
             ->add('siteId', 'hidden')
             ->add('deleted', 'hidden')
-            ->add('templateId', 'orchestra_template_choice', array('empty_value' => '--------'))
+            ->add('templateId', 'orchestra_template_choice', array('empty_value' => '--------', 'attr' => array('data-url'=> $templateUrl)))
             ->add('name', 'text', array('attr' => array('class' => 'used-as-label')))
             ->add('nodeType', 'choice', array('choices' => array('page' => 'Page simple')))
             ->add('parentId', 'hidden')

@@ -17,11 +17,11 @@ $('#content div[role="content"]').html('');
 $('#content div[role="content"]').model({"type" : "node", "resizable" : false});
 
 $('#node_templateId').change(function(e){
-	var value = $(this).val();
 	var data = $(this).parents('#dialog-node').data();
+	var url = $(this).attr('data-url').replace('%s', $(this).val());
     $.ajax({
         'type': 'GET',
-        'url': 'http://127.0.0.1:8080/orchestra/phporchestra/src/symfony2/web/app_dev.php/admin/template/ajaxRequest/' + value,
+        'url': url,
         'success': function(response){
     		data.container.data('settings').areas = response.data;
     		data.source.empty();

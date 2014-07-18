@@ -125,10 +125,9 @@ class TemplateController extends Controller
             'Template',
             array('templateId' => $templateId)
         );
-        $form = $this->createForm(
-                'template',
-                $template);
-        $result = json_decode($form->get('areas')->getData(), true);
+        $transformer = new NodeTypeTransformer($this->container, false);
+        $template = $transformer->transform($template);
+        $result = json_decode($template->getAreas(), true);
         $result = $result['areas'];
         return new JsonResponse(
             array(
