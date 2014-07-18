@@ -20,7 +20,7 @@ class ContextManager
     const KEY_SITE = '_site';
 
     protected $session = null;
-    protected $documentManager = null;
+    public $documentManager = null;
 
     /**
      * Constructor

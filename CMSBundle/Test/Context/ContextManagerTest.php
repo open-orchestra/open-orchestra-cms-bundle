@@ -37,7 +37,10 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->sessionManager = new SessionManager();
-        $this->contextManager = new ContextManager($this->sessionManager, null);
+        $documentManager = $this->getMockBuilder('PHPOrchestra\\CMSBundle\\Document\\DocumentManager')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->contextManager = new ContextManager($this->sessionManager, $documentManager);
     }
 
 
@@ -73,17 +76,11 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAvailableSites($documentsList, $expectedArray)
     {
-        $documentManager = $this->getMockBuilder('PHPOrchestra\\CMSBundle\\Document\\DocumentManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $documentManager->expects($this->any())
+        $this->contextManager->documentManager->expects($this->any())
             ->method('getDocuments')
             ->will($this->returnValue($documentsList));
-            
-        $contextManager = new ContextManager($this->sessionManager, $documentManager);
         
-        $this->assertEquals($expectedArray, $contextManager->getAvailableSites());
+        $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
 
 
