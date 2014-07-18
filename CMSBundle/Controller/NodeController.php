@@ -217,8 +217,7 @@ class NodeController extends Controller
             }
         }
         if ($doSave) {
-            $response = array();
-        	$response['dialog'] = $this->render(
+           $response['dialog'] = $this->render(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(
                     'dialogId' => '',
