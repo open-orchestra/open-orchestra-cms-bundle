@@ -222,8 +222,8 @@ class NodeController extends Controller
                 $node->setIsNew(true);
                 $node->save();
 
-                /*$soft = $this->get('phporchestra_indexation.index_manager');
-                $soft->index($node, 'Node');*/
+                /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
+                $indexManager->index($node, 'Node');*/
             } else {
                 $this->deleteTree($node->getNodeId());
             }
@@ -260,8 +260,8 @@ class NodeController extends Controller
      */
     protected function deleteTree($nodeId)
     {
-        /*$soft = $this->get('phporchestra_indexation.index_manager');
-        $soft->deleteIndex($nodeId);*/
+        /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
+          $indexManager->deleteIndex($nodeId);*/
         
         $documentManager = $this->get('phporchestra_cms.documentmanager');
         

@@ -203,8 +203,8 @@ class ContentController extends TableViewController
             }
         }
 
-        /*$soft = $this->get('phporchestra_indexation.index_manager');
-        $soft->index($document, 'Content');*/
+        /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
+        $indexManager->index($document, 'Content');*/
         
         return array(
             'success' => true,
@@ -229,8 +229,8 @@ class ContentController extends TableViewController
             $contentVersion->markAsDeleted();
         }
 
-        /*$soft = $this->get('phporchestra_indexation.index_manager');
-        $soft->deleteIndex($contentId);*/
+        /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
+        $indexManager->deleteIndex($contentId);*/
         
         return $this->redirect(
             $this->generateUrlValue('catalog')
