@@ -116,5 +116,17 @@ function loadCss(cssName) {
         body.appendChild(css);
     }
 }
-
 /* ~ END: LOAD SCRIPTS */
+
+/* Generate jQuery selector from attributs of jQuery object */
+(function($){
+	$.getSelector = function(obj, exclude){
+		var selector = $.makeArray(obj[0].attributes);
+		selector = $.map(selector, function(val, i){
+			return (exclude && exclude.indexOf(val.name) > -1) ? '' : '[' + val.name + '="' + val.value + '"]';
+		});
+		selector = obj.prop('tagName') + selector.join('');
+		return selector;
+	}
+})(jQuery);
+

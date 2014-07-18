@@ -197,7 +197,7 @@ class NodeController extends Controller
             $node->setVersion($node->getVersion() + 1);
         }
         $doSave = ($request->getMethod() == 'POST');
-        if ($request->request->get('ajax')) {
+        if ($request->request->get('refresh')) {
             $node->fromArray($request->request->all());
             $doSave = true;
         } else {
@@ -217,6 +217,14 @@ class NodeController extends Controller
             }
         }
         if ($doSave) {
+           $response['dialog'] = $this->render(
+                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
+                array(
+                    'dialogId' => '',
+                    'dialogTitle' => 'Modification du node',
+                    'dialogMessage' => 'Modification ok',
+                )
+            )->getContent();
             if (!$node->getDeleted()) {
                 $node->setId(null);
                 $node->setIsNew(true);
@@ -226,23 +234,10 @@ class NodeController extends Controller
                 $indexManager->index($node, 'Node');*/
             } else {
                 $this->deleteTree($node->getNodeId());
+                $response['redirect'] = $this->generateUrl('php_orchestra_cms_bo_edito');
             }
-            
-            $response = $this->render(
-                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
-                array(
-                    'dialogId' => '',
-                    'dialogTitle' => 'Modification du node',
-                    'dialogMessage' => 'Modification ok',
-                )
-            );
-            return new JsonResponse(
-                array(
-                    'dialog' => $response->getContent(),
-                )
-            );
+            return new JsonResponse($response);
         }
-                
         return $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
             array(
