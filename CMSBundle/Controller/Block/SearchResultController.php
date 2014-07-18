@@ -24,28 +24,24 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SearchResult Controller
- * 
- * @author Benjamin Fouché <benjamin.fouche@businessdecision.com>
- *
  */
 class SearchResultController extends Controller
 {
-
-
     /**
      * Render the search's result block
-     * 
+     *
      * @param string $nodeId node identifiant
-     * @param int $nbdoc number of documents per page
-     * @param array $fielddisplayed array of field name which are display
-     * @param int $nbspellcheck number of spell check result
-     * @param int $limitField number of letter per field
-     * @param array $filter array of filter
-     * @param array $optionsearch array of option
-     * @param array $optionsdismax array of option for dismax component
-     * @param string $page page number
-     * @param array $_page_parameters additional parameters extracted from url
-     * 
+     * @param int    $nbdoc number of documents per page
+     * @param array  $fielddisplayed array of field name which are display
+     * @param int    $nbspellcheck number of spell check result
+     * @param int    $limitField number of letter per field
+     * @param array  $facets
+     * @param array  $filter array of filter
+     * @param array  $optionsearch array of option
+     * @param array  $optionsdismax array of option for dismax component
+     * @param int    $page page number
+     * @param array  $_page_parameters additional parameters extracted from url
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(
@@ -58,112 +54,112 @@ class SearchResultController extends Controller
         $filter = array(),
         $optionsearch = array(),
         $optionsdismax = array(),
-        $page = null,
+        $page = 1,
         $_page_parameters = array()
     ) {
-        if (!isset($page)) {
-            $page = 1;
-        }
-
-        // Method GET
-        if (isset($_page_parameters['query'])) {
-            if (is_array($_page_parameters['query'])) {
-                $paramQuery = $_page_parameters['query'];
-                if (isset($paramQuery['autocomplete_search']) || isset($paramQuery['terms'])) {
-
-                    if (isset($paramQuery['autocomplete_search'])) {
-                        $data = $paramQuery['autocomplete_search']['terms'];
-                    } elseif (isset($paramQuery['terms'])) {
-                        $data = $paramQuery['terms'];
-                    }
-        
-                    if (isset($paramQuery['page'])) {
-                        $page = $paramQuery['page'];
-                    }
-                    
-                    if (!empty($optionsearch)) {
-                        $optionsearch['start'] = ($page * $nbdoc) - $nbdoc;
-                        $optionsearch['rows'] = $page * $nbdoc;
-                    } else {
-                        $optionsearch = array('start' => ($page * $nbdoc) - $nbdoc, 'rows' => $page * $nbdoc);
-                    }
-
-                    // Result of search
-                    $resultSet = $this->callResearch(
-                        $data,
-                        $nbspellcheck,
-                        $optionsearch,
-                        $facets,
-                        $filter,
-                        $optionsdismax
-                    );
-        
-                    // Call template
-                    return $this->callTemplate(
-                        $data,
-                        $resultSet,
-                        $nodeId,
-                        $page,
-                        $nbdoc,
-                        $fielddisplayed,
-                        $limitField,
-                        $facets
-                    );
-        
-                } else {
-                    // Filter
-                    if (isset($paramQuery['data']) && isset($paramQuery['filter']) && isset($paramQuery['facetname'])) {
-
-                        if (isset($paramQuery['page'])) {
-                            $page = $paramQuery['page'];
-                        }
-
-                        // Result of filter query
-                        $resultSet = $this->callFilter($paramQuery['data'], $paramQuery['filter'], $paramQuery['facetname']);
-
-                        // Call template
-                        return $this->callTemplate(
-                            $paramQuery['data'],
-                            $resultSet,
-                            $nodeId,
-                            $page,
-                            $nbdoc,
-                            $fielddisplayed,
-                            $limitField,
-                            $facets
-                        );
-                    }
-                }
-            }
-        }
-        return new Response($this->get('translator')->trans('No results found'));
+        return $this->show(
+            $nodeId,
+            $nbdoc,
+            $fielddisplayed,
+            $nbspellcheck,
+            $limitField,
+            $facets,
+            $filter,
+            $optionsearch,
+            $optionsdismax,
+            $page,
+            $_page_parameters
+        );
     }
 
+    /**
+     * @see \PHPOrchestra\CMSBundle\Controller\Block\BlockInterface::showAction()
+     */
+    public function showBackAction(
+        $nodeId,
+        $nbdoc,
+        $fielddisplayed,
+        $nbspellcheck,
+        $limitField = 50,
+        $facets = array(),
+        $filter = array(),
+        $optionsearch = array(),
+        $optionsdismax = array(),
+        $page = 1,
+        $_page_parameters = array()
+    ) {
+        return $this->show(
+            $nodeId,
+            $nbdoc,
+            $fielddisplayed,
+            $nbspellcheck,
+            $limitField,
+            $facets,
+            $filter,
+            $optionsearch,
+            $optionsdismax,
+            $page,
+            $_page_parameters
+        );
+    }
+
+    /**
+     * Get list of words find by auto-completion with solr
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function autocompleteAction(Request $request)
+    {
+        // Take words in the search word field
+        $terms = $request->query->get('term');
+
+        // Create facet query
+        $client = $this->get('solarium.client');
+        $query = $client->createSelect();
+        $query->setQuery('*:*');
+        $facetSet = $query->getFacetSet();
+        $facetSet->setLimit($request->get('limit', 5));
+        $facet = $facetSet->createFacetField('autocomplete')->setField('suggest');
+        $facet->setMinCount(1);
+        $facet->setPrefix($terms);
+        $resultset = $client->select($query);
+
+        $result = array();
+        foreach ($resultset->getFacetSet()->getFacets() as $facet) {
+            $values = $facet->getValues();
+            foreach ($values as $name => $value) {
+                $result[] = $name;
+            }
+        }
+        return new JsonResponse($result);
+    }
 
     /**
      * Search in solr
      *
      * @param string $data searching word
+     * @param $nbspellcheck
      * @param array $optionSearch array of option to the search
      * @param array $facets array of option to the facets
+     * @param $filters
+     * @param $dismax
      *
      * @return Solarium\QueryType\Select\Result\Result
      */
-    public function callResearch($data, $nbspellcheck, $optionSearch, $facets, $filters, $dismax)
+    protected function callResearch($data, $nbspellcheck, $optionSearch, $facets, $filters, $dismax)
     {
-        $client = $this->get('solarium.client');
-        $query  = $client->createSelect();
-    
         // Research
-        $search = $this->get('phporchestra_cms.searchsolr');
-        $search->search($data, $query, $optionSearch);
+        $searchManager = $this->get('php_orchestra_indexation.search_manager');
+        $query = $searchManager->search($data, null, $optionSearch);
     
         // Spell check setting
-        $search->spellCheck($query, $data, $nbspellcheck);
+        $query = $searchManager->spellCheck($query, $data, $nbspellcheck);
 
         // Faceting
         if (isset($facets) && !empty($facets)) {
-            $this->callFacet($query, $search, $facets);
+            $this->callFacet($query, $searchManager, $facets);
         }
         
         // Filtering
@@ -171,25 +167,24 @@ class SearchResultController extends Controller
             if (!isset($filters['name'])) {
                 // array of filter
                 foreach ($filters as $filter) {
-                    $search->filter($query, $filter['name'], $filter['field']);
+                    $searchManager->filter($query, $filter['name'], $filter['field']);
                 }
             } else {
-                $search->filter($query, $filters['name'], $filters['field']);
+                $searchManager->filter($query, $filters['name'], $filters['field']);
             }
         }
         
         /*/ Dismax
         if (isset($dismax) && !empty($dismax)) {
             if (isset($dismax['mm'])) {
-                $search->disMax($query, $dismax['fields'], $dismax['boost'], $dismax['mm']);
+                $searchManager->disMax($query, $dismax['fields'], $dismax['boost'], $dismax['mm']);
             } else {
-                $search->disMax($query, $dismax['fields'], $dismax['boost']);
+                $searchManager->disMax($query, $dismax['fields'], $dismax['boost']);
             }
         }*/
     
-        return $this->result($client, $query, $search);
+        return $this->result($query, $searchManager);
     }
-
 
     /**
      * Create a filter query
@@ -198,7 +193,7 @@ class SearchResultController extends Controller
      * @param string $filter query filter
      * @param string $facetName facet name
      */
-    public function callFilter($data, $filter, $facetName)
+    protected function callFilter($data, $filter, $facetName)
     {
         $client = $this->get('solarium.client');
         $query  = $client->createSelect();
@@ -209,20 +204,18 @@ class SearchResultController extends Controller
         return $client->select($query);
     }
 
-
     /**
      * Return result of the query
      *
-     * @param Solarium\Client $client
      * @param Solarium\QueryType\Select\Query\Query $query
      * @param PHPOrchestra\BlockBundle\IndexCommand\SolrSearchCommand $search
      *
-     * @return multitype:NULL array |Solarium\QueryType\Select\Result\Result
+     * @return mixed|NULL|array|Solarium\QueryType\Select\Result\Result
      */
-    public function result($client, $query, $search)
+    protected function result($query, $search)
     {
         // Result
-        $resultset = $client->select($query);
+        $resultset = $this->get('php_orchestra_indexation.search_manager')->select($query);
     
         if ($resultset->getNumFound() < 1) {
             $result = array();
@@ -235,7 +228,7 @@ class SearchResultController extends Controller
                     foreach ($suggestions as $suggest) {
                         $search->search($suggest->getword(), $query);
     
-                        $result[] = $client->select($query);
+                        $result[] = $this->get('php_orchestra_indexation.search_manager')->select($query);
                     }
                 }
             }
@@ -245,7 +238,6 @@ class SearchResultController extends Controller
         }
     }
 
-
     /**
      * Call facet services
      *
@@ -253,7 +245,7 @@ class SearchResultController extends Controller
      * @param PHPOrchestra\BlockBundle\IndexCommand\SolrSearchCommand $search search services
      * @param array $facets
      */
-    public function callFacet($query, $search, $facets)
+    protected function callFacet($query, $search, $facets)
     {
         $facetSet = $query->getFacetSet();
 
@@ -309,7 +301,6 @@ class SearchResultController extends Controller
         }
     }
 
-
     /**
      * Call search template
      *
@@ -324,7 +315,7 @@ class SearchResultController extends Controller
      *
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $limitField, $facets = array())
+    protected function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $limitField, $facets = array())
     {
         $firstField = array_shift($fields);
         if (isset($facets)) {
@@ -348,7 +339,7 @@ class SearchResultController extends Controller
                 "PHPOrchestraCMSBundle:Block/SearchResult:show.html.twig",
                 array(
                     'data' => $data,
-                    'resultset' => $resultset,
+                    'resultset' => $resultSet,
                     'nodeId' => $nodeId,
                     'page' => $page,
                     'nbdocs' => $nbdoc,
@@ -363,95 +354,77 @@ class SearchResultController extends Controller
 
 
     /**
-     * Get list of words find by auto-completion with solr
+     * @param string $nodeId node identifiant
+     * @param int    $nbdoc number of documents per page
+     * @param array  $fielddisplayed array of field name which are display
+     * @param int    $nbspellcheck number of spell check result
+     * @param int    $limitField number of letter per field
+     * @param array  $facets
+     * @param array  $filter array of filter
+     * @param array  $optionsearch array of option
+     * @param array  $optionsdismax array of option for dismax component
+     * @param int    $page page number
+     * @param array  $_page_parameters additional parameters extracted from url
      *
-     * @param Request $request
-     *
-     * @return JsonResponse
+     * @return Response
      */
-    public function autocompleteAction(Request $request)
+    protected function show($nodeId, $nbdoc, $fielddisplayed, $nbspellcheck, $limitField, $facets, $filter, $optionsearch, $optionsdismax, $page, $_page_parameters)
     {
-        // Take words in the search word field
-        $terms = $request->query->get('term');
-    
-        // Create facet query
-        $client = $this->get('solarium.client');
-        $query = $client->createSelect();
-        $query->setQuery('*:*');
-        $facetSet = $query->getFacetSet();
-        $facetSet->setLimit($request->get('limit', 5));
-        $facet = $facetSet->createFacetField('autocomplete')->setField('suggest');
-        $facet->setMinCount(1);
-        $facet->setPrefix($terms);
-        $resultset = $client->select($query);
-    
-        $result = array();
-        foreach ($resultset->getFacetSet()->getFacets() as $facet) {
-            $values = $facet->getValues();
-            foreach ($values as $name => $value) {
-                $result[] = $name;
-            }
-        }
-        return new JsonResponse($result);
-    }
+        if (isset($_page_parameters['query']) && is_array($_page_parameters['query'])) {
+            $paramQuery = $_page_parameters['query'];
+            if (isset($paramQuery['autocomplete_search']) || isset($paramQuery['terms'])) {
 
+                if (isset($paramQuery['autocomplete_search'])) {
+                    $data = $paramQuery['autocomplete_search']['terms'];
+                } else {
+                    $data = $paramQuery['terms'];
+                }
 
-    /**
-     * @see \PHPOrchestra\CMSBundle\Controller\Block\BlockInterface::showBackAction()
-     */
-    public function showBackAction(
-        $nodeId,
-        $nbdoc,
-        $fielddisplayed,
-        $nbspellcheck,
-        $limitField = 50,
-        $facets = array(),
-        $filter = array(),
-        $optionsearch = array(),
-        $optionsdismax = array(),
-        $page = null,
-        $_page_parameters = array()
-    ) {
-        if (!isset($page)) {
-            $page = 1;
-        }
+                if (isset($paramQuery['page'])) {
+                    $page = $paramQuery['page'];
+                }
 
-        // Method GET
-        if (isset($_page_parameters['query'])) {
-            if (is_array($_page_parameters['query'])) {
-                $paramQuery = $_page_parameters['query'];
-                if (isset($paramQuery['autocomplete_search']) || isset($paramQuery['terms'])) {
+                $optionsearch = array_merge(
+                    array('start' => ($page * $nbdoc) - $nbdoc, 'rows' => $page * $nbdoc),
+                    $optionsearch
+                );
 
-                    if (isset($paramQuery['autocomplete_search'])) {
-                        $data = $paramQuery['autocomplete_search']['terms'];
-                    } elseif (isset($paramQuery['terms'])) {
-                        $data = $paramQuery['terms'];
-                    }
+                // Result of search
+                $resultSet = $this->callResearch(
+                    $data,
+                    $nbspellcheck,
+                    $optionsearch,
+                    $facets,
+                    $filter,
+                    $optionsdismax
+                );
+
+                // Call template
+                return $this->callTemplate(
+                    $data,
+                    $resultSet,
+                    $nodeId,
+                    $page,
+                    $nbdoc,
+                    $fielddisplayed,
+                    $limitField,
+                    $facets
+                );
+
+            } else {
+                // Filter
+                if (isset($paramQuery['data']) && isset($paramQuery['filter']) && isset($paramQuery['facetname'])) {
 
                     if (isset($paramQuery['page'])) {
                         $page = $paramQuery['page'];
                     }
 
-                    if (!empty($optionsearch)) {
-                        $optionsearch['start'] = ($page * $nbdoc) - $nbdoc;
-                        $optionsearch['rows'] = $page * $nbdoc;
-                    } else {
-                        $optionsearch = array('start' => ($page * $nbdoc) - $nbdoc, 'rows' => $page * $nbdoc);
-                    }
-
-                    // Result of search
-                    $resultSet = $this->callResearch(
-                        $data,
-                        $nbspellcheck,
-                        $optionsearch,
-                        $facets,
-                        $filter,
-                        $optionsdismax
-                    );
+                    // Result of filter query
+                    $resultSet = $this->callFilter($paramQuery['data'], $paramQuery['filter'], $paramQuery['facetname']);
 
                     // Call template
                     return $this->callTemplate(
-                        $data,
+                        $paramQuery['data'],
                         $resultSet,
                         $nodeId,
                         $page,
@@ -460,33 +433,10 @@ class SearchResultController extends Controller
                         $limitField,
                         $facets
                     );
-
-                } else {
-                    // Filter
-                    if (isset($paramQuery['data']) && isset($paramQuery['filter']) && isset($paramQuery['facetname'])) {
-
-                        if (isset($paramQuery['page'])) {
-                            $page = $paramQuery['page'];
-                        }
-
-                        // Result of filter query
-                        $resultSet = $this->callFilter($paramQuery['data'], $paramQuery['filter'], $paramQuery['facetname']);
-
-                        // Call template
-                        return $this->callTemplate(
-                            $paramQuery['data'],
-                            $resultSet,
-                            $nodeId,
-                            $page,
-                            $nbdoc,
-                            $fielddisplayed,
-                            $limitField,
-                            $facets
-                        );
-                    }
                 }
             }
         }
+
         return new Response($this->get('translator')->trans('No results found'));
     }
 }
