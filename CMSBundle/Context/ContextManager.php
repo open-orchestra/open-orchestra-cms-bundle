@@ -19,8 +19,8 @@ class ContextManager
     const KEY_LOCALE = '_locale';
     const KEY_SITE = '_site';
 
-    protected $session = null;
-    public $documentManager = null;
+    protected $session;
+    protected $documentManager;
 
     /**
      * Constructor

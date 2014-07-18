@@ -20,6 +20,7 @@ namespace PHPOrchestra\CMSBundle\Test\Context;
 use PHPOrchestra\CMSBundle\Context\ContextManager;
 use PHPOrchestra\CMSBundle\Test\Mock\SessionManager;
 use PHPOrchestra\CMSBundle\Test\Mock\Site;
+use Phake;
 
 /**
  * Unit tests of contextManager
@@ -28,8 +29,9 @@ use PHPOrchestra\CMSBundle\Test\Mock\Site;
  */
 class ContextManagerTest extends \PHPUnit_Framework_TestCase
 {
-    private $sessionManager = null;
-    private $contextManager = null;
+    protected $sessionManager;
+    protected $contextManager;
+    protected $documentManager;
     
     /**
      * Tests setup
@@ -37,10 +39,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->sessionManager = new SessionManager();
-        $documentManager = $this->getMockBuilder('PHPOrchestra\\CMSBundle\\Document\\DocumentManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->contextManager = new ContextManager($this->sessionManager, $documentManager);
+        $this->documentManager = Phake::mock('PHPOrchestra\CMSBundle\Document\DocumentManager');
+        $this->contextManager = new ContextManager($this->sessionManager, $this->documentManager);
     }
 
 
@@ -76,9 +76,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAvailableSites($documentsList, $expectedArray)
     {
-        $this->contextManager->documentManager->expects($this->any())
-            ->method('getDocuments')
-            ->will($this->returnValue($documentsList));
+        Phake::when($this->documentManager)->getDocuments(Phake::anyParameters())->thenReturn($documentsList);
         
         $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
