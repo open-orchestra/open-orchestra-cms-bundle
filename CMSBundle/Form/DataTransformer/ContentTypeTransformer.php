@@ -14,7 +14,7 @@ class ContentTypeTransformer implements DataTransformerInterface
     protected $customTypes = array();
 
     /**
-     * Construtor
+     * Constructor
      * 
      * @param array $customTypes list of availables custom Types
      */
