@@ -19,6 +19,8 @@ namespace PHPOrchestra\CMSBundle\Test\Context;
 
 use PHPOrchestra\CMSBundle\Context\ContextManager;
 use PHPOrchestra\CMSBundle\Test\Mock\SessionManager;
+use PHPOrchestra\CMSBundle\Test\Mock\Site;
+use Phake;
 
 /**
  * Unit tests of contextManager
@@ -27,8 +29,9 @@ use PHPOrchestra\CMSBundle\Test\Mock\SessionManager;
  */
 class ContextManagerTest extends \PHPUnit_Framework_TestCase
 {
-    private $sessionManager = null;
-    private $contextManager = null;
+    protected $sessionManager;
+    protected $contextManager;
+    protected $documentManager;
     
     /**
      * Tests setup
@@ -36,9 +39,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->sessionManager = new SessionManager();
-        $this->contextManager = new ContextManager($this->sessionManager);
+        $this->documentManager = Phake::mock('PHPOrchestra\CMSBundle\Document\DocumentManager');
+        $this->contextManager = new ContextManager($this->sessionManager, $this->documentManager);
     }
-
 
 
     /**
@@ -65,6 +68,47 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * @param array $documentsList
+     * @param array $expectedArray
+     *  
+     * @dataProvider getAvailableSites
+     */
+    public function testGetAvailableSites($documentsList, $expectedArray)
+    {
+        Phake::when($this->documentManager)->getDocuments(Phake::anyParameters())->thenReturn($documentsList);
+        
+        $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
+    }
+
+
+    /**
+     * @param array $site
+     * 
+     * @dataProvider getSite
+     */
+    public function testSetCurrentSite($site)
+    {
+        $this->contextManager->setCurrentSite($site['id'], $site['domain']);
+        $this->assertEquals($site, $this->sessionManager->get('_site'));
+    }
+
+
+    /**
+     * @param array $site
+     * 
+     * @dataProvider getSite
+     */
+    public function testGetCurrentSite($site)
+    {
+        $this->sessionManager->set('_site', $site);
+        $this->assertEquals($site, $this->contextManager->getCurrentSite());
+    }
+
+
+    /**
+     * Locale provider
+     */
     public function getLocale()
     {
         return array(
@@ -72,6 +116,37 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
             array('fr'),
             array(3),
             array('fakeKey' => 'fakeValue')
+        );
+    }
+
+
+    /**
+     * Site provider
+     */
+    public function getSite()
+    {
+        return array(
+            array(array('id' => 'fakeId', 'domain' => 'fakeDomain'))
+        );
+    }
+
+
+    /**
+     * Available sites provider
+     */
+    public function getAvailableSites()
+    {
+        $site1 = new Site('site1');
+        $site2 = new Site('site2');
+        
+        return array(
+            array(
+                array($site1, $site2),
+                array(
+                    array('id' => $site1->getId(), 'domain' => $site1->getDomain()),
+                    array('id' => $site2->getId(), 'domain' => $site2->getDomain())
+                )
+            )
         );
     }
 }
