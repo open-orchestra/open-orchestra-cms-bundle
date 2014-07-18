@@ -63,12 +63,12 @@ class BackOfficeController extends Controller
 	            );
 	            break;
             case 'deleteNode':
-            	$request->request->add(array('refresh' => true));
+            	$request->request->add(array('refreshRecord' => true));
             	$request->request->add(array('deleted' => true));
                 return $this->forward('PHPOrchestraCMSBundle:Node:form', array('nodeId' => $request->request->get('nodeId')));
                 break;
             case 'moveNode':
-                $request->request->add(array('refresh' => true));
+                $request->request->add(array('refreshRecord' => true));
                 $node = $request->request->get('node');
                 $parentNode = $request->request->get('parentNode');
                 $request->request->add(array('parentId' => $parentNode['nodeId']));
@@ -96,7 +96,7 @@ class BackOfficeController extends Controller
                 );
                 break;
             case 'deleteTemplate':
-                $request->request->add(array('refresh' => true));
+                $request->request->add(array('refreshRecord' => true));
                 $request->request->add(array('deleted' => true));
                 return $this->forward('PHPOrchestraCMSBundle:Template:form', array('templateId' => $request->request->get('templateId')));
                 break;

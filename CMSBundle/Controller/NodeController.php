@@ -197,7 +197,7 @@ class NodeController extends Controller
             $node->setVersion($node->getVersion() + 1);
         }
         $doSave = ($request->getMethod() == 'POST');
-        if ($request->request->get('refresh')) {
+        if ($request->request->get('refreshRecord')) {
             $node->fromArray($request->request->all());
             $doSave = true;
         } else {
