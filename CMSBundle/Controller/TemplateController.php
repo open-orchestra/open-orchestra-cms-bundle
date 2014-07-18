@@ -13,6 +13,7 @@ use PHPOrchestra\CMSBundle\Model\Area;
 use PHPOrchestra\CMSBundle\Form\Type\TemplateType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 class TemplateController extends Controller
 {
@@ -21,14 +22,13 @@ class TemplateController extends Controller
      * 
      * Render the templates form
      * @param int $templateId
-     * @param string parentId
      * 
      */
     public function formAction($templateId = 0)
     {
-    	
+        
         $request = $this->get('request');
-    	$documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
         
         if (empty($templateId)) {
             $template = $documentManager->createDocument('Template');
@@ -43,7 +43,7 @@ class TemplateController extends Controller
         }
         
         $doSave = ($request->getMethod() == 'POST');
-        if($request->request->get('refresh')){
+        if($request->request->get('refreshRecord')){
             $template->fromArray($request->request->all());
             $doSave = true;
         }
@@ -111,6 +111,30 @@ class TemplateController extends Controller
             'PHPOrchestraCMSBundle:BackOffice/Editorial:simpleMessage.html.twig',
             array('message' => 'Delete template process on ' . $templateId)
         );
-        
     }
+    /**
+     * 
+     * Get template Information
+     * @param int $templateId
+     * 
+     */
+    public function ajaxRequestAction($templateId)
+    {
+        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $template = $documentManager->getDocument(
+            'Template',
+            array('templateId' => $templateId)
+        );
+        $form = $this->createForm(
+                'template',
+                $template);
+        $result = json_decode($form->get('areas')->getData(), true);
+        $result = $result['areas'];
+        return new JsonResponse(
+            array(
+                'data' => $result
+            )
+        );
+    }
+    
 }
