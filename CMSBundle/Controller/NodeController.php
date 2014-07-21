@@ -171,20 +171,17 @@ class NodeController extends Controller
             }
         }
     }
-    
-    
-     /**
-     * Test purpose : render a basic Node form
-     * 
-     * @param int nodeId
-     * @param string parentId
-     * @return Response
+
+    /**
+     * @param Request $request
+     * @param int $nodeId
+     *
+     * @return JsonResponse|Response
      */
-    public function formAction($nodeId = 0)
+    public function formAction(Request $request, $nodeId = 0)
     {
-        $request = $this->get('request');
         $documentManager = $this->container->get('php_orchestra_cms.document_manager');
-        
+
         if (empty($nodeId)) {
             $node = $documentManager->createDocument('Node');
             $node->setSiteId(1);
@@ -196,10 +193,9 @@ class NodeController extends Controller
             );
             $node->setVersion($node->getVersion() + 1);
         }
-        $doSave = ($request->getMethod() == 'POST');
+
         if ($request->request->get('refreshRecord')) {
             $node->fromArray($request->request->all());
-            $doSave = true;
         } else {
             $form = $this->createForm(
                 'node',
@@ -208,15 +204,16 @@ class NodeController extends Controller
                     'inDialog' => true,
                     'beginJs' => array('pagegenerator/dialogNode.js', 'pagegenerator/model.js'),
                     'endJs' => array('pagegenerator/node.js?'.time()),
-                    'action' => $this->getRequest()->getUri()
+                    'action' => $request->getUri()
                 )
             );
-            if ($doSave) {
+            if ($request->isMethod('POST')) {
                 $form->handleRequest($request);
-                $doSave = $form->isValid();
+                $node = $form->getData();
             }
         }
-        if ($doSave) {
+
+        if ($this->get('validator')->validate($node)) {
            $response['dialog'] = $this->render(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(

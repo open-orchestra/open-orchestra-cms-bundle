@@ -17,8 +17,9 @@
 
 namespace PHPOrchestra\CMSBundle\Test\Form\Type;
 
-use \PHPOrchestra\CMSBundle\Form\Type\OrchestraChoiceType;
-use \PHPOrchestra\CMSBundle\Test\Mock;
+use PHPOrchestra\CMSBundle\Form\Type\LanguageType;
+use PHPOrchestra\CMSBundle\Test\Mock;
+use Phake;
 
 /**
  * Description of OrchestraChoiceTypeTest
@@ -27,29 +28,35 @@ use \PHPOrchestra\CMSBundle\Test\Mock;
  */
 class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
+    protected $choices;
+    protected $orchestraChoiceType;
+
+    /**
+     * Set up the test
+     */
     public function setUp()
     {
-        
         $this->choices = array(
             'key1' => 'value1',
             'key2' => 'value2',
             'key3' => 'value3',
         );
         
-        $this->orchestraChoiceType = new OrchestraChoiceType($this->choices);
+        $this->orchestraChoiceType = new LanguageType($this->choices);
     }
-    
+
+    /**
+     * test default options
+     */
     public function testSetDefaultOptions()
     {
-        $resolverMock =
-            $this->getMock('\\Symfony\\Component\\OptionsResolver\\OptionsResolverInterface');
-        
-        $resolverMock
-            ->expects($this->once())
-            ->method('setDefaults')
-            ->with($this->equalTo(array('choices' => $this->choices)));
-        
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+
         $this->orchestraChoiceType->setDefaultOptions($resolverMock);
+
+        Phake::verify($resolverMock)->setDefaults(
+            array('choices' => $this->choices)
+        );
     }
     
     public function testGetParent()
@@ -59,6 +66,6 @@ class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('orchestra_choice', $this->orchestraChoiceType->getName());
+        $this->assertEquals('orchestra_language', $this->orchestraChoiceType->getName());
     }
 }

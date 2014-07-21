@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Form\Type;
 
@@ -11,16 +6,24 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OrchestraChoiceType extends AbstractType
+/**
+ * Class OrchestraChoiceType
+ */
+abstract class OrchestraChoiceType extends AbstractType
 {
+    protected $choices;
 
-    private $choices;
-    
+    /**
+     * @param array $choices
+     */
     public function __construct(array $choices)
     {
         $this->choices = $choices;
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
@@ -29,12 +32,18 @@ class OrchestraChoiceType extends AbstractType
             )
         );
     }
-    
+
+    /**
+     * @return string
+     */
     public function getParent()
     {
         return 'choice';
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'orchestra_choice';

@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Form\Type;
 
@@ -17,15 +12,9 @@ use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 class NodeType extends AbstractType
 {
-    /**
-    * container service
-    * @var container
-    */
     protected $container = null;
-    
+
     /**
-     * Constructor
-     * 
      * @param $container
      */
     public function __construct($container)

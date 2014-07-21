@@ -17,32 +17,23 @@
 
 namespace PHPOrchestra\CMSBundle\Test\Form\Type;
 
+use Phake;
 use \PHPOrchestra\CMSBundle\Form\Type\NodeType;
 
 /**
  * Description of NodeTypeTest
- *
- * @author Nicolas BOUQUET <nicolas.bouquet@businessdecision.com>
  */
 class NodeTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $blocks = array();
-        /**
-         * A dummy router
-         * 
-         * @var \Symfony\Component\Routing\Router
-         */
-        $router = $this->getMockBuilder('\\Symfony\\Component\\Routing\\Router')
-                ->disableOriginalConstructor()
-                ->getMock();
-        
-        $router->expects($this->any())
-            ->method('generate')
-            ->will($this->returnValue('/dummy/url'));
-        
-        $this->nodeType = new NodeType($router, $blocks);
+        $router = Phake::mock('Symfony\Component\Routing\Router');
+        Phake::when($router)->generate(Phake::anyParameters())->thenReturn('/dummy/url');
+
+        $container = Phake::mock('Symfony\Component\DependencyInjection\Container');
+        Phake::when($container)->get('router')->thenReturn($router);
+
+        $this->nodeType = new NodeType($container);
     }
     
 /*    public function testBuildForm()

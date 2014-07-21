@@ -79,7 +79,7 @@ class BlockController extends Controller
         if ($request->request->get('component') !== null) {
             list($component, $attributs) = $this->getGenerateInformations($request);
         } elseif ($request->request->get('nodeId') !== null && $request->request->get('blockId') !== null) {
-        	list($component, $attributs) = $this->getLoadInformations($request);
+            list($component, $attributs) = $this->getLoadInformations($request);
         }
         if ($component !== '') {
             $response  = $this->forward('PHPOrchestraCMSBundle:Block/'.$component.':showBack', $attributs);
@@ -100,28 +100,28 @@ class BlockController extends Controller
     }
     
     public function getRecRefresh($request, $form, $refresh){
-    	$children = $form->all();
-    	$restart = false;
-    	if(count($children) > 0){
-	        foreach($children as $child){
-	            $view = $child->createView();
+        $children = $form->all();
+        $restart = false;
+        if(count($children) > 0){
+            foreach($children as $child){
+                $view = $child->createView();
                 if($request->request->get($view->vars['id'])){
-    	            if(!array_key_exists($view->vars['name'], $refresh)){
-	                    $refresh[$view->vars['name']] = $request->request->get($view->vars['id']);
-	                    $restart = true;
-	                }
+                    if(!array_key_exists($view->vars['name'], $refresh)){
+                        $refresh[$view->vars['name']] = $request->request->get($view->vars['id']);
+                        $restart = true;
+                    }
                 }
                 else{
                     if(!array_key_exists($view->vars['name'], $refresh)){
-                    	$refresh[$view->vars['name']] = array();
+                        $refresh[$view->vars['name']] = array();
                     }
-                	list($restart, $refresh[$view->vars['name']]) = $this->getRecRefresh($request, $child, $refresh[$view->vars['name']]);
+                    list($restart, $refresh[$view->vars['name']]) = $this->getRecRefresh($request, $child, $refresh[$view->vars['name']]);
                 }
-	            if($restart){
-	            	break;
-	            }
-	        }
-    	}
+                if($restart){
+                    break;
+                }
+            }
+        }
         return array($restart, $refresh);
     }
     /**
@@ -142,8 +142,8 @@ class BlockController extends Controller
             list($restart, $refresh) = $this->getRecRefresh($request, $form, $refresh);
             while($restart){
                 $form = $this->createForm('blocks', $refresh);
-            	list($restart, $refresh) = $this->getRecRefresh($request, $form, $refresh);
-        	}
+                list($restart, $refresh) = $this->getRecRefresh($request, $form, $refresh);
+            }
         }
         $form = $this->createForm(
             'blocks',
