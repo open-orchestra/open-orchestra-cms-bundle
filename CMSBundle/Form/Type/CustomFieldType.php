@@ -78,7 +78,7 @@ class CustomFieldType extends AbstractType
                 'fieldId',
                 'text',
                 array(
-                    'label' => 'ContentTypes.Form.Identifier',
+                    'label' => 'content_types.form.identifier',
                     'translation_domain' => 'backOffice',
                     'constraints' => array(new NotBlank(), new Type('string'))
                 )

@@ -39,7 +39,7 @@ class ContentTypeType extends AbstractType
                 'contentTypeId',
                 'text',
                 array(
-                    'label' => 'ContentTypes.Form.Identifier',
+                    'label' => 'content_types.form.identifier',
                     'translation_domain' => 'backOffice',
                     'constraints' => new NotBlank()
                 )
@@ -48,7 +48,7 @@ class ContentTypeType extends AbstractType
                 'name',
                 'multilingualText',
                 array(
-                    'label' => 'ContentTypes.Form.Label',
+                    'label' => 'content_types.form.label',
                     'translation_domain' => 'backOffice'
                 )
             )
@@ -60,7 +60,7 @@ class ContentTypeType extends AbstractType
                         ContentTypeModel::STATUS_DRAFT => ContentTypeModel::STATUS_DRAFT,
                         ContentTypeModel::STATUS_PUBLISHED => ContentTypeModel::STATUS_PUBLISHED
                     ),
-                    'label' => 'ContentTypes.Form.Status',
+                    'label' => 'content_types.form.status',
                     'translation_domain' => 'backOffice'
                 )
             )
