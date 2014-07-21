@@ -15,10 +15,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContentTypeType extends AbstractType
 {
+    protected $serializer = null;
     protected $customTypes = null;
 
-    public function __construct($orchestraCustomTypes = array())
+    public function __construct($serializer, $orchestraCustomTypes = array())
     {
+        $this->serializer = $serializer;
         $this->customTypes = $orchestraCustomTypes;
     }
 
@@ -29,7 +31,7 @@ class ContentTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new ContentTypeTransformer($this->customTypes);
+        $transformer = new ContentTypeTransformer($this->serializer, $this->customTypes);
         $builder->addModelTransformer($transformer);
         
         $builder

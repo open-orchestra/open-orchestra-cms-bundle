@@ -11,6 +11,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ContentTypeTransformer implements DataTransformerInterface
 {
+    protected $serializer = null;
     protected $customTypes = array();
 
     /**
@@ -18,8 +19,9 @@ class ContentTypeTransformer implements DataTransformerInterface
      * 
      * @param array $customTypes list of availables custom Types
      */
-    public function __construct(array $customTypes = array())
+    public function __construct($serializer, array $customTypes = array())
     {
+        $this->serializer = $serializer;
         $this->customTypes = $customTypes;
     }
 
@@ -57,7 +59,8 @@ class ContentTypeTransformer implements DataTransformerInterface
                 }
             }
             
-            $fields = json_decode($contentType->getFields());
+            $fields = $this->serializer->deserialize($contentType->getFields(), 'array', 'json');
+            
             $fields[] = array(
                 'fieldId' => '',
                 'label' => '',
@@ -68,7 +71,7 @@ class ContentTypeTransformer implements DataTransformerInterface
                 'options' => $fieldOptions
             );
             
-            $contentType->setFields(json_encode($fields));
+            $contentType->setFields($this->serializer->serialize($fields, 'json'));
         }
         
         return $contentType;
