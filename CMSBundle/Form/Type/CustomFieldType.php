@@ -70,7 +70,7 @@ class CustomFieldType extends AbstractType
                 'checkbox',
                 array(
                     'required' => false,
-                    'label' => 'contentTypes.form.removeField',
+                    'label' => 'php_orchestra_cms.content_types.form.remove_field',
                     'translation_domain' => 'backOffice'
                 )
             )
@@ -78,7 +78,7 @@ class CustomFieldType extends AbstractType
                 'fieldId',
                 'text',
                 array(
-                    'label' => 'content_types.form.identifier',
+                    'label' => 'php_orchestra_cms.content_types.form.identifier',
                     'translation_domain' => 'backOffice',
                     'constraints' => array(new NotBlank(), new Type('string'))
                 )
@@ -87,7 +87,7 @@ class CustomFieldType extends AbstractType
                 'label',
                 'multilingualText',
                 array(
-                    'label' => 'contentTypes.form.fieldLabel',
+                    'label' => 'php_orchestra_cms.content_types.form.field_label',
                     'translation_domain' => 'backOffice'
                 )
             )
@@ -95,7 +95,7 @@ class CustomFieldType extends AbstractType
                 'defaultValue',
                 'text',
                 array(
-                    'label' => 'contentTypes.form.defaultValue',
+                    'label' => 'php_orchestra_cms.content_types.form.default_value',
                     'translation_domain' => 'backOffice',
                     'required' => false,
                     'constraints' => $this->getConstraints($options['data']->symfonyType)
@@ -106,7 +106,7 @@ class CustomFieldType extends AbstractType
                 'checkbox',
                 array(
                     'required' => false,
-                    'label' => 'contentTypes.form.indexable',
+                    'label' => 'php_orchestra_cms.content_types.form.indexable',
                     'translation_domain' => 'backOffice'
                 )
             )

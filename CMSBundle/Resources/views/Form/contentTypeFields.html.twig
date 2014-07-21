@@ -17,9 +17,9 @@
 <fieldset>
     <legend>
         {% if form.vars.value.fieldId != '' %}
-            {{ 'contentTypes.form.field%fieldId%'|trans({'fieldId':form.vars.value.fieldId}, 'backOffice') }}
+            {{ 'php_orchestra_cms.content_types.form.field_%fieldId%'|trans({'fieldId':form.vars.value.fieldId}, 'backOffice') }}
         {% else %}
-            {{ 'contentTypes.form.newField'|trans({}, 'backOffice') }}
+            {{ 'php_orchestra_cms.content_types.form.new_field'|trans({}, 'backOffice') }}
         {% endif %}
         [{{ form.vars.value.type }}]
     </legend>

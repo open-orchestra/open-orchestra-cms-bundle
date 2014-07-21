@@ -6,136 +6,136 @@
 <!-- GENERAL -->
 
             <group id="general">
-                <trans-unit id="loading">
-                    <source>loading</source>
+                <trans-unit id="php_orchestra_cms.general.loading">
+                    <source>php_orchestra_cms.general.loading</source>
                     <target>Loading ...</target>
                 </trans-unit>
             </group>
 
 <!-- TOP MENU -->
 
-            <group id="topMenu">
-                <trans-unit id="site">
-                    <source>site</source>
+            <group id="top_menu">
+                <trans-unit id="php_orchestra_cms.top_menu.site">
+                    <source>php_orchestra_cms.top_menu.site</source>
                     <target>Site:</target>
                 </trans-unit>
-                <trans-unit id="collapse_menu">
-                    <source>collapse_menu</source>
+                <trans-unit id="php_orchestra_cms.top_menu.collapse_menu">
+                    <source>php_orchestra_cms.top_menu.collapse_menu</source>
                     <target>Collapse menu</target>
                 </trans-unit>
-                <trans-unit id="sign_out">
-                    <source>sign_out</source>
+                <trans-unit id="php_orchestra_cms.top_menu.sign_out">
+                    <source>php_orchestra_cms.top_menu.sign_out</source>
                     <target>Sign out</target>
                 </trans-unit>
-                <trans-unit id="improve_security_closing_browser">
-                    <source>improve_security_closing_browser</source>
+                <trans-unit id="php_orchestra_cms.top_menu.improve_security">
+                    <source>php_orchestra_cms.top_menu.improve_security</source>
                     <target>You can improve your security further after logging out by closing this opened browser</target>
                 </trans-unit>
-                <trans-unit id="fullscreen">
-                    <source>fullscreen</source>
+                <trans-unit id="php_orchestra_cms.top_menu.fullscreen">
+                    <source>php_orchestra_cms.top_menu.fullscreen</source>
                     <target>Full screen</target>
                 </trans-unit>
-                <trans-unit id="language_flag">
-                    <source>%language%_flag</source>
+                <trans-unit id="php_orchestra_cms.top_menu.language_flag_x">
+                    <source>php_orchestra_cms.top_menu.language_flag_%language%</source>
                     <target>language flag</target>
                 </trans-unit>
             </group>
 
 <!-- LEFT MENU -->
 
-            <group id="leftMenu">
+            <group id="left_menu">
                 
-                <group id="editorial">
-                    <trans-unit id="edito.editorial">
-                        <source>edito.editorial</source>
+                <group id="left_menu.editorial">
+                    <trans-unit id="php_orchestra_cms.left_menu.editorial.title">
+                        <source>php_orchestra_cms.left_menu.editorial.title</source>
                         <target>Editorial</target>
                     </trans-unit>
-                    <trans-unit id="edito.nodes">
-                        <source>edito.nodes</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.editorial.nodes">
+                        <source>php_orchestra_cms.left_menu.editorial.nodes</source>
                         <target>Pages</target>
                     </trans-unit>
-                    <trans-unit id="edito.templates">
-                        <source>edito.templates</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.editorial.templates">
+                        <source>php_orchestra_cms.left_menu.editorial.templates</source>
                         <target>Templates</target>
                     </trans-unit>
-                    <trans-unit id="edito.contents">
-                        <source>edito.contents</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.editorial.contents">
+                        <source>php_orchestra_cms.left_menu.editorial.contents</source>
                         <target>Contents</target>
                     </trans-unit>
                 </group>
                 
-                <group id="administration">
-                    <trans-unit id="admin.administration">
-                        <source>admin.administration</source>
+                <group id="left_menu.administration">
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.title">
+                        <source>php_orchestra_cms.left_menu.administration.title</source>
                         <target>Administration</target>
                     </trans-unit>
-                    <trans-unit id="admin.sites">
-                        <source>admin.sites</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.sites">
+                        <source>php_orchestra_cms.left_menu.administration.sites</source>
                         <target>Websites</target>
                     </trans-unit>
-                    <trans-unit id="admin.contentTypes">
-                        <source>admin.contentTypes</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.content_types">
+                        <source>php_orchestra_cms.left_menu.administration.content_types</source>
                         <target>Content types</target>
                     </trans-unit>
-                    <trans-unit id="admin.routingCache">
-                        <source>admin.routingCache</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache">
+                        <source>php_orchestra_cms.left_menu.administration.routing_cache</source>
                         <target>Routing cache</target>
                     </trans-unit>
-                    <trans-unit id="admin.routingCache.dialog.title">
-                        <source>admin.routingCache.dialog.title</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache.dialog.title">
+                        <source>php_orchestra_cms.left_menu.administration.routing_cache.dialog.title</source>
                         <target>Purge routing cache</target>
                     </trans-unit>
-                    <trans-unit id="admin.routingCache.dialog.message">
-                        <source>admin.routingCache.dialog.message</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache.dialog.message">
+                        <source>php_orchestra_cms.left_menu.administration.routing_cache.dialog.message</source>
                         <target>You are about to remove the routing cache. Would you like to continue?</target>
                     </trans-unit>
-                    <trans-unit id="admin.routingCache.ok">
-                        <source>admin.routingCache.ok</source>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache.ok">
+                        <source>php_orchestra_cms.left_menu.administration.routing_cache.ok</source>
                         <target>The routing cache was successfully purged.</target>
                     </trans-unit>
                 </group>
 
 <!-- TABLE VIEW -->
 
-                <group id="tableView">
-                    <trans-unit id="tableView.deleteDialog.title">
-                        <source>tableView.deleteDialog.title</source>
+                <group id="table_view">
+                    <trans-unit id="php_orchestra_cms.table_view.delete_dialog.title">
+                        <source>php_orchestra_cms.table_view.delete_dialog.title</source>
                         <target>Delete the document</target>
                     </trans-unit>
-                    <trans-unit id="tableView.deleteDialog.message">
-                        <source>tableView.deleteDialog.message</source>
+                    <trans-unit id="php_orchestra_cms.table_view.delete_dialog.message">
+                        <source>php_orchestra_cms.table_view.delete_dialog.message</source>
                         <target>You are about to delete the document. Would you like to continue?</target>
                     </trans-unit>
-                    <trans-unit id="tableView.filterLabel">
-                        <source>filter%label%</source>
+                    <trans-unit id="php_orchestra_cms.table_view.filter_label_x">
+                        <source>php_orchestra_cms.table_view.filter_label_%label%</source>
                         <target>Filter label</target>
                     </trans-unit>
-                    <trans-unit id="tableView.edition">
-                        <source>tableView.edition</source>
+                    <trans-unit id="php_orchestra_cms.table_view.edition">
+                        <source>php_orchestra_cms.table_view.edition</source>
                         <target>Edition</target>
                     </trans-unit>
-                    <trans-unit id="tableView.list">
-                        <source>tableView.list</source>
+                    <trans-unit id="php_orchestra_cms.table_view.list">
+                        <source>php_orchestra_cms.table_view.list</source>
                         <target>List</target>
                     </trans-unit>
-                    <trans-unit id="tableView.modify">
-                        <source>tableView.modify</source>
+                    <trans-unit id="php_orchestra_cms.table_view.modify">
+                        <source>php_orchestra_cms.table_view.modify</source>
                         <target>Modify</target>
                     </trans-unit>
-                    <trans-unit id="tableView.delete">
-                        <source>tableView.delete</source>
+                    <trans-unit id="php_orchestra_cms.table_view.delete">
+                        <source>php_orchestra_cms.table_view.delete</source>
                         <target>Delete</target>
                     </trans-unit>
-                    <trans-unit id="tableView.add">
-                        <source>tableView.add</source>
+                    <trans-unit id="php_orchestra_cms.table_view.add">
+                        <source>php_orchestra_cms.table_view.add</source>
                         <target>Add</target>
                     </trans-unit>
-                    <trans-unit id="tableView.save">
-                        <source>tableView.save</source>
+                    <trans-unit id="php_orchestra_cms.table_view.save">
+                        <source>php_orchestra_cms.table_view.save</source>
                         <target>Save</target>
                     </trans-unit>
-                    <trans-unit id="tableView.back">
-                        <source>tableView.back</source>
+                    <trans-unit id="php_orchestra_cms.table_view.back">
+                        <source>php_orchestra_cms.table_view.back</source>
                         <target>Back</target>
                     </trans-unit>
                 </group>
@@ -144,84 +144,88 @@
 
 <!-- CONTENT TYPES -->
 
-            <group id="contentTypes">
+            <group id="content_types">
                 
-                <trans-unit id="contentTypes.mainTitle">
-                    <source>contentTypes.mainTitle</source>
+                <trans-unit id="php_orchestra_cms.content_types.main_title">
+                    <source>php_orchestra_cms.content_types.main_title</source>
                     <target>Content types</target>
                 </trans-unit>
                 
-                <group id="contentTypes.list">
-                    <trans-unit id="contentTypes.list.identifier">
-                        <source>contentTypes.list.identifier</source>
+                <group id="content_types.list">
+                    <trans-unit id="php_orchestra_cms.content_types.list.identifier">
+                        <source>php_orchestra_cms.content_types.list.identifier</source>
                         <target>Identifier</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.list.name">
-                        <source>contentTypes.list.name</source>
+                    <trans-unit id="php_orchestra_cms.content_types.list.name">
+                        <source>php_orchestra_cms.content_types.list.name</source>
                         <target>Name</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.list.version">
-                        <source>contentTypes.list.version</source>
+                    <trans-unit id="php_orchestra_cms.content_types.list.version">
+                        <source>php_orchestra_cms.content_types.list.version</source>
                         <target>Version</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.list.status">
-                        <source>contentTypes.list.status</source>
+                    <trans-unit id="php_orchestra_cms.content_types.list.status">
+                        <source>php_orchestra_cms.content_types.list.status</source>
                         <target>Status</target>
                     </trans-unit>
                 </group>
                 
-                <group id="contentTypes.form">
-                    <trans-unit id="content_types.form.identifier">
-                        <source>content_types.form.identifier</source>
+                <group id="content_types.form">
+                    <trans-unit id="php_orchestra_cms.content_types.form.identifier">
+                        <source>php_orchestra_cms.content_types.form.identifier</source>
                         <target>Technical identifier</target>
                     </trans-unit>
-                    <trans-unit id="content_types.form.label">
-                        <source>content_types.form.label</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.label">
+                        <source>php_orchestra_cms.content_types.form.label</source>
                         <target>Content type label</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.version">
-                        <source>contentTypes.form.version</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.version">
+                        <source>php_orchestra_cms.content_types.form.version</source>
                         <target>Version</target>
                     </trans-unit>
-                    <trans-unit id="content_types.form.status">
-                        <source>content_types.form.status</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.status">
+                        <source>php_orchestra_cms.content_types.form.status</source>
                         <target>Status</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.newVersion">
-                        <source>contentTypes.form.newVersion</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.new_version">
+                        <source>php_orchestra_cms.content_types.form.new_version</source>
                         <target>Create a new version</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.versX">
-                        <source>contentTypes.form.version%versionNumber%</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.version_x">
+                        <source>php_orchestra_cms.content_types.form.version_%versionNumber%</source>
                         <target>Version versionNumber</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.typeDefinition">
-                        <source>contentTypes.form.typeDefinition</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.type_definition">
+                        <source>php_orchestra_cms.content_types.form.type_definition</source>
                         <target>Content type definition</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.fieldX">
-                        <source>contentTypes.form.field%fieldId%</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.field_x">
+                        <source>php_orchestra_cms.content_types.form.field_%fieldId%</source>
                         <target>Field "fieldId"</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.newField">
-                        <source>contentTypes.form.newField</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.new_field">
+                        <source>php_orchestra_cms.content_types.form.new_field</source>
                         <target>New field</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.fieldLabel">
-                        <source>contentTypes.form.fieldLabel</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.field_label">
+                        <source>php_orchestra_cms.content_types.form.field_label</source>
                         <target>Field label</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.defaultValue">
-                        <source>contentTypes.form.defaultValue</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.default_value">
+                        <source>php_orchestra_cms.content_types.form.default_value</source>
                         <target>Default value</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.indexable">
-                        <source>contentTypes.form.indexable</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.indexable">
+                        <source>php_orchestra_cms.content_types.form.indexable</source>
                         <target>Indexable</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.removeField">
-                        <source>contentTypes.form.removeField</source>
+                    <trans-unit id="php_orchestra_cms.content_types.form.remove_field">
+                        <source>php_orchestra_cms.content_types.form.remove_field</source>
                         <target>Remove field</target>
+                    </trans-unit>
+                    <trans-unit id="php_orchestra_cms.content_types.form.add_field">
+                        <source>php_orchestra_cms.content_types.form.add_field</source>
+                        <target>Add</target>
                     </trans-unit>
                 </group>
                 
@@ -231,45 +235,45 @@
 
             <group id="contents">
                 
-                <trans-unit id="contents.mainTitleX">
-                    <source>contents.mainTitle%contentType%</source>
+                <trans-unit id="php_orchestra_cms.contents.main_title_x">
+                    <source>php_orchestra_cms.contents.main_title_%contentType%</source>
                     <target>Contents type contentType</target>
                 </trans-unit>
                 
                 <group id="contents.list">
-                    <trans-unit id="contents.list.contentId">
-                        <source>contents.list.contentId</source>
+                    <trans-unit id="php_orchestra_cms.contents.list.content_id">
+                        <source>php_orchestra_cms.contents.list.content_id</source>
                         <target>Identifier</target>
                     </trans-unit>
-                    <trans-unit id="contents.list.label">
-                        <source>contents.list.label</source>
+                    <trans-unit id="php_orchestra_cms.contents.list.label">
+                        <source>php_orchestra_cms.contents.list.label</source>
                         <target>Label</target>
                     </trans-unit>
-                    <trans-unit id="contents.list.language">
-                        <source>contents.list.language</source>
+                    <trans-unit id="php_orchestra_cms.contents.list.language">
+                        <source>php_orchestra_cms.contents.list.language</source>
                         <target>Language</target>
                     </trans-unit>
-                    <trans-unit id="contents.list.version">
-                        <source>contents.list.version</source>
+                    <trans-unit id="php_orchestra_cms.contents.list.version">
+                        <source>php_orchestra_cms.contents.list.version</source>
                         <target>Version</target>
                     </trans-unit>
                 </group>
                 
                 <group id="contents.form">
-                    <trans-unit id="contents.form.name">
-                        <source>contents.form.name</source>
+                    <trans-unit id="php_orchestra_cms.contents.form.name">
+                        <source>php_orchestra_cms.contents.form.name</source>
                         <target>Content label</target>
                     </trans-unit>
-                    <trans-unit id="contents.form.version">
-                        <source>contents.form.version</source>
+                    <trans-unit id="php_orchestra_cms.contents.form.version">
+                        <source>php_orchestra_cms.contents.form.version</source>
                         <target>Version</target>
                     </trans-unit>
-                    <trans-unit id="contents.form.newVersion">
-                        <source>contents.form.newVersion</source>
+                    <trans-unit id="php_orchestra_cms.contents.form.new_version">
+                        <source>php_orchestra_cms.contents.form.new_version</source>
                         <target>Create a new version</target>
                     </trans-unit>
-                    <trans-unit id="contents.form.versX">
-                        <source>contents.form.version%versionNumber%</source>
+                    <trans-unit id="php_orchestra_cms.contents.form.version_x">
+                        <source>php_orchestra_cms.contents.form.version_%versionNumber%</source>
                         <target>Version versionNumber</target>
                     </trans-unit>
                 </group>
