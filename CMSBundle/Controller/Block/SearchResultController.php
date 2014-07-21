@@ -329,7 +329,6 @@ class SearchResultController extends Controller
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
                     'facetsArray' => $facets,
-                    'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
                     'firstField' => $firstField,
                     'limitField' => $limitField
                 )
@@ -344,7 +343,6 @@ class SearchResultController extends Controller
                     'page' => $page,
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
-                    'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
                     'firstField' => $firstField,
                     'limitField' => $limitField
                 )
