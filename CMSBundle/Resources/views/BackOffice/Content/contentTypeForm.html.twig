@@ -50,7 +50,7 @@
     
     <fieldset>
         <legend>{{ 'contentTypes.form.typeDefinition'|trans({}, 'backOffice') }}</legend>
-        {{ form_row(form.new_field) }}
+        {{ form_row(form.newField) }}
         {{ form_row(form.contentTypeId) }}
         {{ form_row(form.status) }}
         {{ form_widget(form.name) }}
@@ -68,7 +68,7 @@
     
     <script type="text/javascript">
         $('#newFieldSelector').change(function() {
-            $('#contentType_new_field').val($(this).val());
+            $('#content_type_newField').val($(this).val());
         });
     </script>
 {% endblock %}

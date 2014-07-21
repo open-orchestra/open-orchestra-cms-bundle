@@ -171,20 +171,20 @@
                 </group>
                 
                 <group id="contentTypes.form">
-                    <trans-unit id="contentTypes.form.identifier">
-                        <source>contentTypes.form.identifier</source>
+                    <trans-unit id="content_types.form.identifier">
+                        <source>content_types.form.identifier</source>
                         <target>Identifiant technique</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.label">
-                        <source>contentTypes.form.label</source>
+                    <trans-unit id="content_types.form.label">
+                        <source>content_types.form.label</source>
                         <target>Intitulé du type de contenu</target>
                     </trans-unit>
                     <trans-unit id="contentTypes.form.version">
                         <source>contentTypes.form.version</source>
                         <target>Version</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.status">
-                        <source>contentTypes.form.status</source>
+                    <trans-unit id="content_types.form.status">
+                        <source>content_types.form.status</source>
                         <target>Statut</target>
                     </trans-unit>
                     <trans-unit id="contentTypes.form.newVersion">
@@ -201,7 +201,7 @@
                     </trans-unit>
                     <trans-unit id="contentTypes.form.fieldX">
                         <source>contentTypes.form.field%fieldId%</source>
-                        <target>Champ "fieldName"</target>
+                        <target>Champ "fieldId"</target>
                     </trans-unit>
                     <trans-unit id="contentTypes.form.newField">
                         <source>contentTypes.form.newField</source>

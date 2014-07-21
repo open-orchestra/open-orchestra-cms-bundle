@@ -15,6 +15,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContentTypeType extends AbstractType
 {
+    protected $serializer = null;
+    protected $customTypes = null;
+
+    public function __construct($serializer, $orchestraCustomTypes = array())
+    {
+        $this->serializer = $serializer;
+        $this->customTypes = $orchestraCustomTypes;
+    }
+
     /**
      * (non-PHPdoc)
      * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
@@ -22,16 +31,15 @@ class ContentTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new ContentTypeTransformer();
+        $transformer = new ContentTypeTransformer($this->serializer, $this->customTypes);
         $builder->addModelTransformer($transformer);
         
         $builder
-            ->add('id', 'hidden', array('mapped' => false, 'data' => (string)$options['data']->getId()))
             ->add(
                 'contentTypeId',
                 'text',
                 array(
-                    'label' => 'contentTypes.form.identifier',
+                    'label' => 'content_types.form.identifier',
                     'translation_domain' => 'backOffice',
                     'constraints' => new NotBlank()
                 )
@@ -40,16 +48,7 @@ class ContentTypeType extends AbstractType
                 'name',
                 'multilingualText',
                 array(
-                    'label' => 'contentTypes.form.label',
-                    'translation_domain' => 'backOffice'
-                )
-            )
-            ->add(
-                'version',
-                'hidden',
-                array(
-                    'read_only' => true,
-                    'label' => 'contentTypes.form.version',
+                    'label' => 'content_types.form.label',
                     'translation_domain' => 'backOffice'
                 )
             )
@@ -61,12 +60,14 @@ class ContentTypeType extends AbstractType
                         ContentTypeModel::STATUS_DRAFT => ContentTypeModel::STATUS_DRAFT,
                         ContentTypeModel::STATUS_PUBLISHED => ContentTypeModel::STATUS_PUBLISHED
                     ),
-                    'label' => 'contentTypes.form.status',
+                    'label' => 'content_types.form.status',
                     'translation_domain' => 'backOffice'
                 )
             )
-            ->add('fields', 'contentTypeFields', array('data' => $options['data']->getFields()))
-            ->add('new_field', 'hidden', array('label' => 'Nouveau champ', 'required' => false));
+            ->add('fields', 'content_type_fields', array('data' => $options['data']->getFields()))
+            ->add('id', 'hidden', array('mapped' => false, 'data' => (string)$options['data']->getId()))
+            ->add('version', 'hidden', array('read_only' => true))
+            ->add('newField', 'hidden', array('required' => false));
     }
 
     /**
@@ -76,6 +77,6 @@ class ContentTypeType extends AbstractType
      */
     public function getName()
     {
-        return 'contentType';
+        return 'content_type';
     }
 }

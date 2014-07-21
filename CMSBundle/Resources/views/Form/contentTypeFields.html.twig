@@ -4,7 +4,7 @@
  # @author Noël GILAIN <noel.gilain@businessdecision.com>
  ##}
 
-{% block contentTypeFields_widget %}
+{% block content_type_fields_widget %}
     {% for key, value in form %}
         {% if key starts with 'customField' %}
             {{ form_widget(form[key]) }}

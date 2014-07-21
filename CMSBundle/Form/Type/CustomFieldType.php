@@ -44,8 +44,8 @@ class CustomFieldType extends AbstractType
         $builder->addModelTransformer($transformer);
         
         if (!isset($options['data'])
-            || !isset($options['data']->type)
-            || !isset($options['data']->symfonyType)
+            || !isset($options['data']->type) || '' == $options['data']->type
+            || !isset($options['data']->symfonyType) || '' == $options['data']->symfonyType
         ) {
             throw new UnknownFieldTypeException('No data or incomplete data');
         }
@@ -63,6 +63,7 @@ class CustomFieldType extends AbstractType
         if (!isset($parameters['options']) || !is_array($parameters['options'])) {
             throw new UnknownFieldTypeException('Field type not described : ' . $options['data']->type);
         }
+        
         $builder
             ->add(
                 'removeField',
@@ -77,7 +78,7 @@ class CustomFieldType extends AbstractType
                 'fieldId',
                 'text',
                 array(
-                    'label' => 'contentTypes.form.identifier',
+                    'label' => 'content_types.form.identifier',
                     'translation_domain' => 'backOffice',
                     'constraints' => array(new NotBlank(), new Type('string'))
                 )

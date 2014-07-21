@@ -11,6 +11,20 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ContentTypeTransformer implements DataTransformerInterface
 {
+    protected $serializer = null;
+    protected $customTypes = array();
+
+    /**
+     * Constructor
+     * 
+     * @param array $customTypes list of availables custom Types
+     */
+    public function __construct($serializer, array $customTypes = array())
+    {
+        $this->serializer = $serializer;
+        $this->customTypes = $customTypes;
+    }
+
     /**
      * Transforms a ContentType entity to inject customfields as standard fields
      *
@@ -19,7 +33,7 @@ class ContentTypeTransformer implements DataTransformerInterface
      */
     public function transform($contentType) // entity => formfield
     {
-        $contentType->new_field = '';
+        $contentType->newField = '';
         
         return $contentType;
     }
@@ -32,19 +46,32 @@ class ContentTypeTransformer implements DataTransformerInterface
      */
     public function reverseTransform($contentType) // formfield => entity
     {
-        if ($contentType->new_field != '') {
-            $fields = json_decode($contentType->getFields());
+        if ($contentType->newField != ''
+            && array_key_exists($contentType->newField, $this->customTypes)
+            && array_key_exists('type', $this->customTypes[$contentType->newField])
+        ) {
+            $fieldStructure = $this->customTypes[$contentType->newField];
+            $fieldOptions = array();
             
-            $fields[] = (object) array(
+            if (is_array($fieldStructure) && array_key_exists('options', $fieldStructure)) {
+                foreach ($fieldStructure['options'] as $optionType => $optionParams) {
+                    $fieldOptions[$optionType] = $optionParams['default_value'];
+                }
+            }
+            
+            $fields = $this->serializer->deserialize($contentType->getFields(), 'array', 'json');
+            
+            $fields[] = array(
                 'fieldId' => '',
                 'label' => '',
                 'defaultValue' => '',
                 'searchable' => false,
-                'type' => $contentType->new_field,
-                'symfonyType' => '',
-                'options' => (object) array()
+                'type' => $contentType->newField,
+                'symfonyType' => $fieldStructure['type'],
+                'options' => $fieldOptions
             );
-            $contentType->setFields(json_encode($fields));
+            
+            $contentType->setFields($this->serializer->serialize($fields, 'json'));
         }
         
         return $contentType;

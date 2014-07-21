@@ -1,5 +1,8 @@
 parameters:
 
+#--[ORCHESTRA CLASSES]----------#
+    php_orchestra_cms.type.contentType.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeType'
+
 #--[EXTEND SYMFONY 2 ROUTING]---#
 
     router.class : 'PHPOrchestra\CMSBundle\Routing\PhpOrchestraRouter'

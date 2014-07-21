@@ -47,10 +47,10 @@ services:
             - { name: form.type, alias: contentAttributes }
 
     # contentType fields 
-    php_orchestra_cms.type.contentTypeFields:
+    php_orchestra_cms.type.content_type_fields:
         class: PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType
         tags:
-            - { name: form.type, alias: contentTypeFields }
+            - { name: form.type, alias: content_type_fields }
 
     # Custom field form field type
     php_orchestra_cms.type.customField:
@@ -134,10 +134,11 @@ services:
             - { name: form.type, alias: content }
 
     # ContentType Form Builder
-    php_orchestra_cms.type.contentType:
-        class: PHPOrchestra\CMSBundle\Form\Type\ContentTypeType
+    php_orchestra_cms.type.content_type:
+        class: "%php_orchestra_cms.type.contentType.class%"
+        arguments: [@jms_serializer, "%php_orchestra.custom_types%"]
         tags:
-            - { name: form.type, alias: contentType }
+            - { name: form.type, alias: content_type }
 
     # Site Form Builder
     php_orchestra_cms.type.site:

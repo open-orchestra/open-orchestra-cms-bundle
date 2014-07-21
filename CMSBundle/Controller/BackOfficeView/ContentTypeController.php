@@ -131,17 +131,17 @@ class ContentTypeController extends TableViewController
         
         $documentId = (string) $contentType->getId();
         
-        $form = $this->createForm('contentType', $contentType);
+        $form = $this->createForm('content_type', $contentType);
         
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             
-            if ($contentType->new_field != '') {
+            if ($contentType->newField != '') {
                 $contentType->save();
-                $form = $this->createForm('contentType', $contentType);
+                $form = $this->createForm('content_type', $contentType);
             }
             
-            if ($form->isValid() && $contentType->new_field == '') {
+            if ($form->isValid() && $contentType->newField == '') {
                 $contentType->save();
                 if ($contentType->getStatus() == contentType::STATUS_PUBLISHED) {
                     $this->unpublishOtherPublishedVersions(
