@@ -43,6 +43,6 @@ class ContentTypeFieldsType extends AbstractType
      */
     public function getName()
     {
-        return 'contentTypeFields';
+        return 'content_type_fields';
     }
 }

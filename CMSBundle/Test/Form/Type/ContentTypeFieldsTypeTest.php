@@ -52,7 +52,7 @@ class ContentTypeFieldsTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('contentTypeFields', $this->ContentTypeFieldsType->getName());
+        $this->assertEquals('content_type_fields', $this->ContentTypeFieldsType->getName());
     }
     
     public function getOptions()

@@ -37,7 +37,7 @@ class ContentTypeType extends AbstractType
                 'contentTypeId',
                 'text',
                 array(
-                    'label' => 'contentTypes.form.identifier',
+                    'label' => 'ContentTypes.Form.Identifier',
                     'translation_domain' => 'backOffice',
                     'constraints' => new NotBlank()
                 )
@@ -46,7 +46,7 @@ class ContentTypeType extends AbstractType
                 'name',
                 'multilingualText',
                 array(
-                    'label' => 'contentTypes.form.label',
+                    'label' => 'ContentTypes.Form.Label',
                     'translation_domain' => 'backOffice'
                 )
             )
@@ -58,14 +58,14 @@ class ContentTypeType extends AbstractType
                         ContentTypeModel::STATUS_DRAFT => ContentTypeModel::STATUS_DRAFT,
                         ContentTypeModel::STATUS_PUBLISHED => ContentTypeModel::STATUS_PUBLISHED
                     ),
-                    'label' => 'contentTypes.form.status',
+                    'label' => 'ContentTypes.Form.Status',
                     'translation_domain' => 'backOffice'
                 )
             )
-            ->add('fields', 'contentTypeFields', array('data' => $options['data']->getFields()))
+            ->add('fields', 'content_type_fields', array('data' => $options['data']->getFields()))
             ->add('id', 'hidden', array('mapped' => false, 'data' => (string)$options['data']->getId()))
             ->add('version', 'hidden', array('read_only' => true))
-            ->add('new_field', 'hidden', array('required' => false));
+            ->add('newField', 'hidden', array('required' => false));
     }
 
     /**
@@ -75,6 +75,6 @@ class ContentTypeType extends AbstractType
      */
     public function getName()
     {
-        return 'contentType';
+        return 'content_type';
     }
 }

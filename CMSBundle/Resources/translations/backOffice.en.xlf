@@ -171,20 +171,20 @@
                 </group>
                 
                 <group id="contentTypes.form">
-                    <trans-unit id="contentTypes.form.identifier">
-                        <source>contentTypes.form.identifier</source>
+                    <trans-unit id="ContentTypes.Form.Identifier">
+                        <source>ContentTypes.Form.Identifier</source>
                         <target>Technical identifier</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.label">
-                        <source>contentTypes.form.label</source>
+                    <trans-unit id="ContentTypes.Form.Label">
+                        <source>ContentTypes.Form.Label</source>
                         <target>Content type label</target>
                     </trans-unit>
                     <trans-unit id="contentTypes.form.version">
                         <source>contentTypes.form.version</source>
                         <target>Version</target>
                     </trans-unit>
-                    <trans-unit id="contentTypes.form.status">
-                        <source>contentTypes.form.status</source>
+                    <trans-unit id="ContentTypes.Form.Status">
+                        <source>ContentTypes.Form.Status</source>
                         <target>Status</target>
                     </trans-unit>
                     <trans-unit id="contentTypes.form.newVersion">

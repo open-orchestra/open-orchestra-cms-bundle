@@ -18,11 +18,9 @@ class ContentTypeTransformer implements DataTransformerInterface
      * 
      * @param array $customTypes list of availables custom Types
      */
-    public function __construct($customTypes = array())
+    public function __construct(array $customTypes = array())
     {
-        if (is_array($customTypes)) {
-            $this->customTypes = $customTypes;
-        }
+        $this->customTypes = $customTypes;
     }
 
     /**
@@ -33,7 +31,7 @@ class ContentTypeTransformer implements DataTransformerInterface
      */
     public function transform($contentType) // entity => formfield
     {
-        $contentType->new_field = '';
+        $contentType->newField = '';
         
         return $contentType;
     }
@@ -46,11 +44,11 @@ class ContentTypeTransformer implements DataTransformerInterface
      */
     public function reverseTransform($contentType) // formfield => entity
     {
-        if ($contentType->new_field != ''
-            && array_key_exists($contentType->new_field, $this->customTypes)
-            && array_key_exists('type', $this->customTypes[$contentType->new_field])
+        if ($contentType->newField != ''
+            && array_key_exists($contentType->newField, $this->customTypes)
+            && array_key_exists('type', $this->customTypes[$contentType->newField])
         ) {
-            $fieldStructure = $this->customTypes[$contentType->new_field];
+            $fieldStructure = $this->customTypes[$contentType->newField];
             $fieldOptions = array();
             
             if (is_array($fieldStructure) && array_key_exists('options', $fieldStructure)) {
@@ -60,14 +58,14 @@ class ContentTypeTransformer implements DataTransformerInterface
             }
             
             $fields = json_decode($contentType->getFields());
-            $fields[] = (object) array(
+            $fields[] = array(
                 'fieldId' => '',
                 'label' => '',
                 'defaultValue' => '',
                 'searchable' => false,
-                'type' => $contentType->new_field,
+                'type' => $contentType->newField,
                 'symfonyType' => $fieldStructure['type'],
-                'options' => (object) $fieldOptions
+                'options' => $fieldOptions
             );
             
             $contentType->setFields(json_encode($fields));

@@ -52,7 +52,7 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('contentType', $this->contentTypeType->getName());
+        $this->assertEquals('content_type', $this->contentTypeType->getName());
     }
     
     public function getOptions()
