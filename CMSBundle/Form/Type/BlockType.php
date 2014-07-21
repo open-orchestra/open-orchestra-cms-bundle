@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Form\Type;
 
@@ -16,29 +11,21 @@ use PHPOrchestra\CMSBundle\Form\Type\BlockChoiceType;
 use Symfony\Component\Form\FormEvents;
 use PHPOrchestra\CMSBundle\Form\Type\Block;
 
+/**
+ * Class BlockType
+ */
 class BlockType extends AbstractType
 {
-    /**
-     * documentManager service
-     * @var documentManager
-     */
     protected $documentManager = null;
-
-    /**
-     * filters values
-     */
-    protected $filters = array();
-
 
     /**
      * Constructor, require documentManager service
      *
      * @param $documentManager
      */
-    public function __construct($documentManager, $filters = array())
+    public function __construct($documentManager)
     {
         $this->documentManager = $documentManager;
-        $this->filters = $filters;
     }
 
     /**

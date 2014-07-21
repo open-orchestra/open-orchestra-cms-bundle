@@ -19,11 +19,18 @@ class PHPOrchestraCMSExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        // $configuration = new Configuration();
-        // $config = $this->processConfiguration($configuration, $configs);
+         $configuration = new Configuration();
+         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('config.yml');
         $loader->load('services.yml');
+
+        $blockType = array();
+        if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
+            $blockType = $config['blocks'];
+        }
+
+        $container->setParameter('php_orchestra.blocks', $blockType);
     }
 }
