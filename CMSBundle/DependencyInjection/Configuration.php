@@ -19,11 +19,13 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        // $rootNode = $treeBuilder->root('php_orchestra_cms');
+        $rootNode = $treeBuilder->root('php_orchestra_cms');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode->children()
+            ->arrayNode('blocks')
+                ->prototype('scalar')->end()
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

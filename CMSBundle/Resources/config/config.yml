@@ -25,22 +25,6 @@ parameters:
         h: Horizontal
         v: Vertical
 
-#--[BLOCKS]---------------------#
-    
-    php_orchestra.blocks:
-        
-        show0 BlockExample: 
-            action: "PHPOrchestraCMSBundle:Block/BlockExample:show0"
-            form: "PHPOrchestraCMSBundle:Block/BlockExample:form0"
-        
-        show1 BlockExample: 
-            action: "PHPOrchestraCMSBundle:Block/BlockExample:show1"
-            form: "PHPOrchestraCMSBundle:Block/BlockExample:form1"
-        
-        Sample Block: 
-            action: "PHPOrchestraCMSBundle:Block/Sample:show"
-            form: "PHPOrchestraCMSBundle:Block/Sample:form"
-
 #--[CUSTOM FIELDS]--------------#
     
     php_orchestra.custom_types:
