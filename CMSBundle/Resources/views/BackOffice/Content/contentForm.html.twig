@@ -36,7 +36,7 @@
                                 'contentTypeId' : form.vars.value.contentType,
                                 'id' : form.vars.value.id.__toString()
                             }
-                        ) }}" data-loadmode="ajax">{{ 'contents.form.newVersion'|trans({}, 'backOffice') }}</option>
+                        ) }}" data-loadmode="ajax">{{ 'php_orchestra_cms.contents.form.new_version'|trans({}, 'backOffice') }}</option>
                     {% for version in contentVersions %}
                         <option value="{{ path(
                             'phporchestra_cms_backofficeview_content_index',
@@ -46,7 +46,7 @@
                                 'id' : version.id.__toString()
                             }
                         ) }}" {% if version.version == form.vars.value.version %}selected="selected"{% endif %}
-                        >{{ 'contents.form.version%versionNumber%'|trans({'versionNumber':version.version}, 'backOffice') }}  ({{ version.status }})</option>
+                        >{{ 'php_orchestra_cms.contents.form.version_%versionNumber%'|trans({'versionNumber':version.version}, 'backOffice') }}  ({{ version.status }})</option>
                     {% endfor %}
                     </select>
                 </div>

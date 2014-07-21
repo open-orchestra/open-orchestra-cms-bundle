@@ -37,7 +37,7 @@ class ContentType extends AbstractType
                 'shortName',
                 'text',
                 array(
-                    'label' => 'contents.form.name',
+                    'label' => 'php_orchestra_cms.contents.form.name',
                     'translation_domain' => 'backOffice'
                 )
             )
@@ -50,7 +50,7 @@ class ContentType extends AbstractType
                         Content::STATUS_PUBLISHED => Content::STATUS_PUBLISHED,
                         Content::STATUS_UNPUBLISHED => Content::STATUS_UNPUBLISHED
                     ),
-                    'label' => 'contents.form.version',
+                    'label' => 'php_orchestra_cms.contents.form.version',
                     'translation_domain' => 'backOffice'
                 )
             )

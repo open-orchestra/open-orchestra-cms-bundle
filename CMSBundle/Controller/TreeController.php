@@ -56,7 +56,7 @@ class TreeController extends Controller
         
         $nodes = TreeHelper::createTree($nodes, '_id', 'parentId');
 
-        return $this->getRender($nodes, $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'moveNode')), $this->get('translator')->trans('edito.nodes', array(), 'backOffice'));
+        return $this->getRender($nodes, $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'moveNode')), $this->get('translator')->trans('php_orchestra_cms.left_menu.editorial.nodes', array(), 'backOffice'));
     }
     /**
      * List all templates
@@ -96,7 +96,7 @@ class TreeController extends Controller
         ));
 
         $templates = TreeHelper::createTree($templates);
-        return $this->getRender($templates, '', $this->get('translator')->trans('edito.templates', array(), 'backOffice'));
+        return $this->getRender($templates, '', $this->get('translator')->trans('php_orchestra_cms.left_menu.editorial.templates', array(), 'backOffice'));
     }
     
     /**

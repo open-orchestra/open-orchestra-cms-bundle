@@ -28,7 +28,7 @@ class ContentTypeController extends TableViewController
         parent::init();
         
         $this->setEntity('ContentType');
-        $this->setMainTitle($this->get('translator')->trans('contentTypes.mainTitle', array(), 'backOffice'));
+        $this->setMainTitle($this->get('translator')->trans('php_orchestra_cms.content_types.main_title', array(), 'backOffice'));
         //$this->setCriteria(array('deleted' => false));
         $this->callback['selectLanguageName'] = function ($jsonLanguages) {
             $languages = (array) json_decode($jsonLanguages);
@@ -54,23 +54,23 @@ class ContentTypeController extends TableViewController
             array(
                 'name' => 'contentTypeId',
                 'search' => 'text',
-                'label' => $translator->trans('contentTypes.list.identifier', array(), 'backOffice')
+                'label' => $translator->trans('php_orchestra_cms.content_types.list.identifier', array(), 'backOffice')
             ),
             array(
                 'name' => 'name',
                 'search' => 'text',
-                'label' => $translator->trans('contentTypes.list.name', array(), 'backOffice'),
+                'label' => $translator->trans('php_orchestra_cms.content_types.list.name', array(), 'backOffice'),
                 'callback' => 'selectLanguageName'
             ),
             array(
                 'name' => 'version',
                 'search' => 'text',
-                'label' =>  $translator->trans('contentTypes.list.version', array(), 'backOffice')
+                'label' =>  $translator->trans('php_orchestra_cms.content_types.list.version', array(), 'backOffice')
             ),
             array(
                 'name' => 'status',
                 'search' => 'text',
-                'label' =>  $translator->trans('contentTypes.list.status', array(), 'backOffice')
+                'label' =>  $translator->trans('php_orchestra_cms.content_types.list.status', array(), 'backOffice')
             ),
             array('button' =>'modify'),
             array('button' =>'delete')

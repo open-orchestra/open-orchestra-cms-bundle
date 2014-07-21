@@ -14,27 +14,30 @@
 <nav>
     <ul style="">
         <li>
-            <a href="{{ path('php_orchestra_cms_bo_edito') }}"><i class="fa fa-lg fa-fw fa-edit"></i><span class="menu-item-parent">{{ 'edito.editorial'|trans({}, 'backOffice') }}</span></a>
+            <a href="{{ path('php_orchestra_cms_bo_edito') }}">
+                <i class="fa fa-lg fa-fw fa-edit"></i>
+                <span class="menu-item-parent">{{ 'php_orchestra_cms.left_menu.editorial.title'|trans({}, 'backOffice') }}</span>
+            </a>
             <ul style="display:block;">
                 {{ render(controller('PHPOrchestraCMSBundle:Tree:showTreeNodes')) }}
                 {{ render(controller('PHPOrchestraCMSBundle:Tree:showTreeTemplates')) }}
                 <li>
-                    <a href="{{ path('php_orchestra_cms_bo_contentType_ajaxmenu', {'language':context.currentLocale, 'siteId':''}) }}" target="_menu">{{ 'edito.contents'|trans({}, 'backOffice') }}</a>
-                    <ul><li><a href="">{{ 'loading'|trans({}, 'backOffice') }}</a></li></ul>
+                    <a href="{{ path('php_orchestra_cms_bo_contentType_ajaxmenu', {'language':context.currentLocale, 'siteId':''}) }}" target="_menu">{{ 'php_orchestra_cms.left_menu.editorial.contents'|trans({}, 'backOffice') }}</a>
+                    <ul><li><a href="">{{ 'php_orchestra_cms.general.loading'|trans({}, 'backOffice') }}</a></li></ul>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i><span class="menu-item-parent">{{ 'admin.administration'|trans({}, 'backOffice') }}</span></a>
+            <a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i><span class="menu-item-parent">{{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}</span></a>
             <ul style="">
                 <li>
-                    <a href="{{ path('phporchestra_cms_backofficeview_site_index', {'action' : 'catalog'}) }}">{{ 'admin.sites'|trans({}, 'backOffice') }}</a>
+                    <a href="{{ path('phporchestra_cms_backofficeview_site_index', {'action' : 'catalog'}) }}">{{ 'php_orchestra_cms.left_menu.administration.sites'|trans({}, 'backOffice') }}</a>
                 </li>
                 <li>
-                    <a href="{{ path('phporchestra_cms_backofficeview_contenttype_index', {'action':'catalog'}) }}">{{ 'admin.contentTypes'|trans({}, 'backOffice') }}</a>
+                    <a href="{{ path('phporchestra_cms_backofficeview_contenttype_index', {'action':'catalog'}) }}">{{ 'php_orchestra_cms.left_menu.administration.content_types'|trans({}, 'backOffice') }}</a>
                 </li>
                 <li>
-                    <a href="#" id="clearRoutingCache">{{ 'admin.routingCache'|trans({}, 'backOffice') }}</a>
+                    <a href="#" id="clearRoutingCache">{{ 'php_orchestra_cms.left_menu.administration.routing_cache'|trans({}, 'backOffice') }}</a>
                     {% include 'PHPOrchestraCMSBundle:BackOffice/Tools:clearRoutingCacheDialog.html.twig' %}
                 </li>
             </ul>

@@ -187,7 +187,7 @@ abstract class TableViewController extends Controller
     
     public function editAction(Request $request, $id = null)
     {
-        $this->setTableTitle($this->get('translator')->trans('tableView.edition', array(), 'backOffice'));
+        $this->setTableTitle($this->get('translator')->trans('php_orchestra_cms.table_view.edition', array(), 'backOffice'));
         
         if ($this->getEntity() !== null) {
             return $this->editEntity($request, $id);
@@ -207,7 +207,7 @@ abstract class TableViewController extends Controller
 
     public function catalogAction(Request $request)
     {
-        $this->setTableTitle($this->get('translator')->trans('tableView.list', array(), 'backOffice'));
+        $this->setTableTitle($this->get('translator')->trans('php_orchestra_cms.table_view.list', array(), 'backOffice'));
         
         if ($this->getEntity() !== null) {
             return $this->catalogEntity($request);
@@ -251,7 +251,7 @@ abstract class TableViewController extends Controller
         return $this->genericButton(
             $value,
             'edit',
-            $this->get('translator')->trans('tableView.modify', array(), 'backOffice'),
+            $this->get('translator')->trans('php_orchestra_cms.table_view.modify', array(), 'backOffice'),
             'btn btn-primary redirect',
             'fa fa-edit'
         );
@@ -261,7 +261,7 @@ abstract class TableViewController extends Controller
         return $this->genericButton(
             $value,
             'delete',
-            $this->get('translator')->trans('tableView.delete', array(), 'backOffice'),
+            $this->get('translator')->trans('php_orchestra_cms.table_view.delete', array(), 'backOffice'),
             'btn btn-danger delete',
             'fa fa-trash-o'
         );
@@ -271,7 +271,7 @@ abstract class TableViewController extends Controller
         return $this->genericButton(
             '',
             'edit',
-            $this->get('translator')->trans('tableView.add', array(), 'backOffice'),
+            $this->get('translator')->trans('php_orchestra_cms.table_view.add', array(), 'backOffice'),
             'btn btn-small btn-ribbon bt-primary redirect',
             'fa fa-plus'
         );
@@ -281,7 +281,7 @@ abstract class TableViewController extends Controller
         return $this->genericButton(
             $value,
             'edit',
-            $this->get('translator')->trans('tableView.save', array(), 'backOffice'),
+            $this->get('translator')->trans('php_orchestra_cms.table_view.save', array(), 'backOffice'),
             'btn btn-small btn-ribbon bt-primary submit',
             'fa fa-save'
         );
@@ -291,7 +291,7 @@ abstract class TableViewController extends Controller
         return $this->genericButton(
             '',
             'catalog',
-            $this->get('translator')->trans('tableView.back', array(), 'backOffice'),
+            $this->get('translator')->trans('php_orchestra_cms.table_view.back', array(), 'backOffice'),
             'btn btn-small btn-ribbon bt-primary redirect',
             'fa fa-undo'
         );

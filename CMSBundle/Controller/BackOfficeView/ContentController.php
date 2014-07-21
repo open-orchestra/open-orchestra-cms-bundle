@@ -31,7 +31,7 @@ class ContentController extends TableViewController
         
         $this->setMainTitle(
             $this->get('translator')->trans(
-                'contents.mainTitle%contentType%',
+                'php_orchestra_cms.contents.main_title_%contentType%',
                 array('contentType' => $this->routeParameters['contentTypeId']),
                 'backOffice'
             )
@@ -58,22 +58,22 @@ class ContentController extends TableViewController
             array(
                 'name' => 'contentId',
                 'search' => 'text',
-                'label' => $translator->trans('contents.list.contentId', array(), 'backOffice')
+                'label' => $translator->trans('php_orchestra_cms.contents.list.content_id', array(), 'backOffice')
             ),
             array(
                 'name' => 'shortName',
                 'search' => 'text',
-                'label' => $translator->trans('contents.list.label', array(), 'backOffice')
+                'label' => $translator->trans('php_orchestra_cms.contents.list.label', array(), 'backOffice')
             ),
             array(
                 'name' => 'language',
                 'search' => 'text',
-                'label' => $translator->trans('contents.list.language', array(), 'backOffice')
+                'label' => $translator->trans('php_orchestra_cms.contents.list.language', array(), 'backOffice')
             ),
             array(
                 'name' => 'version',
                 'search' => 'text',
-                'label' => $translator->trans('contents.list.version', array(), 'backOffice')
+                'label' => $translator->trans('php_orchestra_cms.contents.list.version', array(), 'backOffice')
             ),
             array('button' =>'modify'),
             array('button' =>'delete')
