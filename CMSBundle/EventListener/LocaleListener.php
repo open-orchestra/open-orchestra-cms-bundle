@@ -23,7 +23,7 @@ class LocaleListener implements EventSubscriberInterface
     /**
      * Constructor
      * 
-     * @param text $defaultLocale
+     * @param string $defaultLocale
      */
     public function __construct($defaultLocale = 'en')
     {
