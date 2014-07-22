@@ -33,7 +33,7 @@ class ContentTypeController extends TableViewController
         $this->callback['selectLanguageName'] = function ($jsonLanguages) {
             $languages = (array) json_decode($jsonLanguages);
             $value = '';
-            $currentLanguage = $this->get('phporchestra_cms.contextmanager')->getCurrentLocale();
+            $currentLanguage = $this->get('php_orchestra_cms.context_manager')->getCurrentLocale();
             if (is_array($languages) && isset($languages[$currentLanguage])) {
                 $value = $languages[$currentLanguage];
             }
@@ -84,7 +84,7 @@ class ContentTypeController extends TableViewController
      */
     public function getCatalogRecords(Request $request)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         
         $sort = array();
         if (is_array($request->get('sort'))) {
@@ -120,7 +120,7 @@ class ContentTypeController extends TableViewController
      */
     public function editEntity(Request $request, $documentId)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         
         if (empty($documentId)) {
             $contentType = $documentManager->createDocument('ContentType');
@@ -179,12 +179,12 @@ class ContentTypeController extends TableViewController
         $select = $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Content:customFieldSelect.html.twig',
             array(
-                'availableFields' => $this->container->getParameter('php_orchestra.custom_types'),
+                'availableFields' => $this->container->getParameter('php_orchestra_cms.custom_types'),
                 'saveAction' => $this->generateUrlValue('edit', $documentId)
             )
         );
         
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         $criteria = array('contentTypeId' => $form->get('contentTypeId')->getData());
         $versions = $documentManager->getDocuments('ContentType', $criteria, array('version' => -1), true);
         
@@ -208,7 +208,7 @@ class ContentTypeController extends TableViewController
      */
     protected function unpublishOtherPublishedVersions($contentTypeId, $documentId)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         
         $versions = $documentManager->getDocuments(
             'ContentType',
@@ -234,7 +234,7 @@ class ContentTypeController extends TableViewController
      */
     public function deleteEntity(Request $request, $documentId)
     {
-        $documentManager = $this->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->get('php_orchestra_cms.document_manager');
         
         $contentType = $documentManager->getDocumentById('ContentType', $documentId);
         $contentTypeId = $contentType->getContentTypeId();
@@ -256,7 +256,7 @@ class ContentTypeController extends TableViewController
      */
     public function ajaxMenuAction($language, $siteId)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         $contentTypes = $documentManager->getContentTypesInLastVersion();
         
         $contentTypesArray = array();
@@ -292,7 +292,7 @@ class ContentTypeController extends TableViewController
      */
     public function findForEditAction(Request $request, $mongoId)
     {
-        $documentManager = $this->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->get('php_orchestra_cms.document_manager');
         
         $criteria = array(
             'contentTypeId' => $request->get('contentTypeId'),
@@ -317,7 +317,7 @@ class ContentTypeController extends TableViewController
      */
     public function duplicateAction(Request $request, $mongoId)
     {
-        $documentManager = $this->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->get('php_orchestra_cms.document_manager');
         
         $contentType = $documentManager->getDocumentById('ContentType', $mongoId);
         $contentType->generateDraft();

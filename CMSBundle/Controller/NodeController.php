@@ -70,7 +70,7 @@ class NodeController extends Controller
      */
     public function showAction($nodeId)
     {
-        $node = $this->get('phporchestra_cms.documentmanager')->getDocument('Node', array('nodeId' => $nodeId));
+        $node = $this->get('php_orchestra_cms.document_manager')->getDocument('Node', array('nodeId' => $nodeId));
         if (is_null($node)) {
             throw new NonExistingDocumentException("Node not found");
         }
@@ -159,7 +159,7 @@ class NodeController extends Controller
     protected function getBlocksFromNode($nodeId)
     {
         $this->externalBlocks[$nodeId] = array();
-        $node = $this->get('phporchestra_cms.documentmanager')->getDocument('Node', array('nodeId' => $nodeId));
+        $node = $this->get('php_orchestra_cms.document_manager')->getDocument('Node', array('nodeId' => $nodeId));
         
         if ($node) {
             $blocks = $node->getBlocks();
@@ -183,7 +183,7 @@ class NodeController extends Controller
     public function formAction($nodeId = 0)
     {
         $request = $this->get('request');
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         
         if (empty($nodeId)) {
             $node = $documentManager->createDocument('Node');
@@ -258,7 +258,7 @@ class NodeController extends Controller
         /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
           $indexManager->deleteIndex($nodeId);*/
         
-        $documentManager = $this->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->get('php_orchestra_cms.document_manager');
         
         $nodeVersions = $documentManager->getDocuments('Node', array('nodeId' => $nodeId));
         

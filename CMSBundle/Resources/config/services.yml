@@ -3,26 +3,25 @@ services:
 #--[STANDARD SERVICES]----------#
 
     # Cache service
-    phporchestra_cms.cachemanager:
-        class: PHPOrchestra\CMSBundle\Cache\RedisCacheManager
+    php_orchestra_cms.cache_manager:
+        class: "%php_orchestra_cms.manager.cache.class%"
         arguments: [@snc_redis.default]
 
     # DocumentManager service
-    phporchestra_cms.documentmanager:
-        class: PHPOrchestra\CMSBundle\Document\DocumentManager
+    php_orchestra_cms.document_manager:
+        class: "%php_orchestra_cms.manager.document.class%"
         arguments: [@mandango]
 
     # Context service
-    phporchestra_cms.contextmanager:
-        class: PHPOrchestra\CMSBundle\Context\ContextManager
-        arguments: [@session, @phporchestra_cms.documentmanager, "%kernel.default_locale%"]
+    php_orchestra_cms.context_manager:
+        class: "%php_orchestra_cms.manager.context.class%"
+        arguments: [@session, @php_orchestra_cms.document_manager, "%kernel.default_locale%"]
 
     # Locale listener
-    phporchestra_cms.locale_listener:
-        class: PHPOrchestra\CMSBundle\EventListener\LocaleListener
+    php_orchestra_cms.locale_listener:
+        class: "%php_orchestra_cms.listener.locale.class%"
         arguments: ["%kernel.default_locale%"]
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: [{name: kernel.event_subscriber}]
 
 #--[CONTROLLER SERVICES]----------#
 
@@ -33,31 +32,27 @@ services:
 #--[FORM FIELDS]----------------#
 
     # Multilingual text field
-    php_orchestra_cms.type.multilingualText:
-        class: PHPOrchestra\CMSBundle\Form\Type\MultilingualTextType
+    php_orchestra_cms.type.multilingual_text:
+        class: "%php_orchestra_cms.type.multilingual_text.class%"
         arguments: [@service_container]
-        tags:
-            - { name: form.type, alias: multilingualText }
+        tags: [{name: form.type, alias: multilingualText}]
 
     # Orchestra content type attributes
-    php_orchestra_cms.type.contentAttributes:
-        class: PHPOrchestra\CMSBundle\Form\Type\ContentAttributesType
-        arguments: [@phporchestra_cms.documentmanager]
-        tags:
-            - { name: form.type, alias: contentAttributes }
+    php_orchestra_cms.type.content_attributes:
+        class: "%php_orchestra_cms.type.content_attributes.class%"
+        arguments: [@php_orchestra_cms.document_manager]
+        tags: [{name: form.type, alias: contentAttributes}]
 
-    # contentType fields 
+    # Content type fields 
     php_orchestra_cms.type.content_type_fields:
-        class: PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType
-        tags:
-            - { name: form.type, alias: content_type_fields }
+        class: "%php_orchestra_cms.type.content_type_fields.class%"
+        tags: [{name: form.type, alias: content_type_fields}]
 
-    # Custom field form field type
-    php_orchestra_cms.type.customField:
-        class: PHPOrchestra\CMSBundle\Form\Type\CustomFieldType
+    # Custom field
+    php_orchestra_cms.type.custom_field:
+        class: "%php_orchestra_cms.type.custom_field.class%"
         arguments: [@service_container]
-        tags:
-            - { name: form.type, alias: orchestra_customField }
+        tags: [{name: form.type, alias: orchestra_customField}]
 
     # Areas form field type
     php_orchestra_cms.type.areas:
@@ -68,35 +63,35 @@ services:
     # Blocks form field type
     php_orchestra_cms.type.blocks:
         class: PHPOrchestra\CMSBundle\Form\Type\BlocksType
-        arguments: [@phporchestra_cms.documentmanager]
+        arguments: [@php_orchestra_cms.document_manager]
         tags:
             - { name: form.type, alias: orchestra_blocks }
 
     # Templates select form field type
     php_orchestra_cms.type.template_choice:
         class: PHPOrchestra\CMSBundle\Form\Type\TemplateChoiceType
-        arguments: [@phporchestra_cms.documentmanager]
+        arguments: [@php_orchestra_cms.document_manager]
         tags:
             - { name: form.type, alias: orchestra_template_choice }
 
     # Block select after node form field type
     php_orchestra_cms.type.block:
         class: PHPOrchestra\CMSBundle\Form\Type\BlockType
-        arguments: [@phporchestra_cms.documentmanager]
+        arguments: [@php_orchestra_cms.document_manager]
         tags:
             - { name: form.type, alias: blocks }
 
     # Block select form field type
     php_orchestra_cms.type.block_choice:
         class: PHPOrchestra\CMSBundle\Form\Type\BlockChoiceType
-        arguments: [@phporchestra_cms.documentmanager, "%php_orchestra.blocks%", 0, 0]
+        arguments: [@php_orchestra_cms.document_manager, "%php_orchestra.blocks%", 0, 0]
         tags:
             - { name: form.type, alias: orchestra_block_choice }
 
     # Nodes select form field type
     php_orchestra_cms.type.node_choice:
         class: PHPOrchestra\CMSBundle\Form\Type\NodeChoiceType
-        arguments: [@phporchestra_cms.documentmanager]
+        arguments: [@php_orchestra_cms.document_manager]
         tags:
             - { name: form.type, alias: orchestra_node_choice }
 
@@ -128,17 +123,15 @@ services:
 
     # Content Form Builder
     php_orchestra_cms.type.content:
-        class: PHPOrchestra\CMSBundle\Form\Type\ContentType
-        arguments: [@phporchestra_cms.contextmanager]
-        tags:
-            - { name: form.type, alias: content }
+        class: "%php_orchestra_cms.type.content.class%"
+        arguments: [@php_orchestra_cms.context_manager]
+        tags: [{name: form.type, alias: content}]
 
     # ContentType Form Builder
     php_orchestra_cms.type.content_type:
-        class: "%php_orchestra_cms.type.contentType.class%"
-        arguments: [@jms_serializer, "%php_orchestra.custom_types%"]
-        tags:
-            - { name: form.type, alias: content_type }
+        class: "%php_orchestra_cms.type.content_type.class%"
+        arguments: [@jms_serializer, "%php_orchestra_cms.custom_types%"]
+        tags: [{name: form.type, alias: content_type}]
 
     # Site Form Builder
     php_orchestra_cms.type.site:

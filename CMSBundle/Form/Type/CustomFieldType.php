@@ -30,7 +30,7 @@ class CustomFieldType extends AbstractType
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->availableFields = $container->getParameter('php_orchestra.custom_types');
+        $this->availableFields = $container->getParameter('php_orchestra_cms.custom_types');
     }
 
     /**

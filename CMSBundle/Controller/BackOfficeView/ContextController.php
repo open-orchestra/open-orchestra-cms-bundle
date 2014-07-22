@@ -19,7 +19,7 @@ class ContextController extends Controller
      */
     public function SetLanguageAction($language)
     {
-        $contextManager = $this->container->get('phporchestra_cms.contextmanager');
+        $contextManager = $this->container->get('php_orchestra_cms.context_manager');
         
         $contextManager->setCurrentLocale($language);
         
@@ -34,7 +34,7 @@ class ContextController extends Controller
      */
     public function SetSiteAction($siteId, $siteDomain)
     {
-        $contextManager = $this->container->get('phporchestra_cms.contextmanager');
+        $contextManager = $this->container->get('php_orchestra_cms.context_manager');
         
         $contextManager->setCurrentsite($siteId, $siteDomain);
         

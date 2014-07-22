@@ -81,7 +81,7 @@ class NodeTypeTransformer implements DataTransformerInterface
                         $block['method'] = self::BLOCK_LOAD;
                     }
                     $request = new Request(array(), $block);
-                    $form = $this->container->get('form.factory')->create(new BlockType($this->container->get('phporchestra_cms.documentmanager')), array_merge($block, array('is_node' => $this->isNode)));
+                    $form = $this->container->get('form.factory')->create(new BlockType($this->container->get('php_orchestra_cms.document_manager')), array_merge($block, array('is_node' => $this->isNode)));
                     $block['ui-model'] = $this->getInformationsFromType($form);
                     $blockController = $this->container->get('phporchestra_cms.blockcontroller');
                     $blockController->setContainer($this->container);
@@ -98,7 +98,7 @@ class NodeTypeTransformer implements DataTransformerInterface
                 foreach($value as &$area){
                     $area = $this->recTransform($area, $blocks);
                     $area[self::CLASSES_TAG] = implode(',', $area[self::CLASSES_TAG]);
-                    $form = $this->container->get('form.factory')->create(new AreaType($this->container->get('phporchestra_cms.documentmanager')), $area);
+                    $form = $this->container->get('form.factory')->create(new AreaType($this->container->get('php_orchestra_cms.document_manager')), $area);
                     $area['ui-model'] = $this->getInformationsFromType($form);
                 }
                 if(count($value) > 0){
@@ -123,7 +123,7 @@ class NodeTypeTransformer implements DataTransformerInterface
                         unset($block['ui-model']);
                         $attributs = $block;
                         $attributs = array_combine(array_map(function($value) { return preg_replace('/^attributs_/', '', $value); }, array_keys($attributs)), array_values($attributs));
-                        $blockDoc = $this->container->get('phporchestra_cms.documentmanager')->createDocument('Block')
+                        $blockDoc = $this->container->get('php_orchestra_cms.document_manager')->createDocument('Block')
                             ->setComponent($component)
                             ->setAttributes($attributs);
                         $block = array('nodeId' => 0, 'blockId' => $node->getBlocks()->count());

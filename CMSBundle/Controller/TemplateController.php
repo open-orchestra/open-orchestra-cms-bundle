@@ -28,7 +28,7 @@ class TemplateController extends Controller
     {
         
         $request = $this->get('request');
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         
         if (empty($templateId)) {
             $template = $documentManager->createDocument('Template');
@@ -100,7 +100,7 @@ class TemplateController extends Controller
      */
     public function deleteTree($templateId)
     {
-        $documentManager = $this->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->get('php_orchestra_cms.document_manager');
         $templateVersions = $documentManager->getDocuments('Template', array('templateId' => $templateId));
         
         foreach ($templateVersions as $templateVersion) {
@@ -120,7 +120,7 @@ class TemplateController extends Controller
      */
     public function ajaxRequestAction($templateId)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         $template = $documentManager->getDocument(
             'Template',
             array('templateId' => $templateId)

@@ -22,7 +22,7 @@ class TreeController extends Controller
      */
     public function showTreeNodesAction()
     {
-        $nodes = $this->get('phporchestra_cms.documentmanager')->getNodesInLastVersion(array(array('$match' => array('deleted' => false))));
+        $nodes = $this->get('php_orchestra_cms.document_manager')->getNodesInLastVersion(array(array('$match' => array('deleted' => false))));
         
         $listParentId = array();
         foreach ($nodes as &$node) {
@@ -65,7 +65,7 @@ class TreeController extends Controller
     public function showTreeTemplatesAction()
     {
     	
-    	$templates = $this->get('phporchestra_cms.documentmanager')->getTemplatesInLastVersion(array(array('$match' => array('deleted' => false))));
+    	$templates = $this->get('php_orchestra_cms.document_manager')->getTemplatesInLastVersion(array(array('$match' => array('deleted' => false))));
     	
         
         foreach ($templates as $key => &$template) {

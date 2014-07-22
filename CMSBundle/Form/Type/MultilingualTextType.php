@@ -23,7 +23,7 @@ class MultilingualTextType extends AbstractType
      */
     public function __construct(ContainerInterface $container)
     {
-        $availableLanguages = $container->getParameter('php_orchestra.languages.availables');
+        $availableLanguages = $container->getParameter('php_orchestra_cms.languages.availables');
         foreach ($availableLanguages as $language) {
             $this->languages[$language] = '';
         }
