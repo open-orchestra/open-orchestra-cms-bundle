@@ -42,7 +42,7 @@ class SampleStrategy extends AbstractStrategy
                 'title' => $attributes['title'],
                 'author' => $attributes['author'],
                 'news' => $attributes['news'],
-                'parameters' => $attributes['_page_parameters'],
+                'parameters' => array(),
                 'datetime' => $datetime,
             )
         );

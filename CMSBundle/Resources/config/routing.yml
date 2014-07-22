@@ -43,11 +43,11 @@ php_orchestra_cms_nodeform:
     defaults: { _controller: PHPOrchestraCMSBundle:Node:form, nodeId: 0 }
 
 php_orchestra_cms_block:
-    pattern: /block/{blockId}
+    pattern: /block/{nodeId}/{blockId}
     defaults: { _controller: PHPOrchestraCMSBundle:Block:show }
 
 php_orchestra_cms_block_back:
-    pattern: /back/block/{blockId}
+    pattern: /back/block/{nodeId}/{blockId}
     defaults: { _controller: PHPOrchestraCMSBundle:Block:showBack }
 
 php_orchestra_cms_node:

@@ -10,15 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 interface DisplayBlockInterface
 {
-    const CONTACT = 'contact';
-    const CARROUSEL = 'carrousel';
-    const FOOTER = 'footer';
-    const HEADER = 'header';
-    const MENU = 'menu';
-    const NEWS = 'news';
-    const SAMPLE = 'sample';
-    const SEARCH = 'search';
-    const SEARCH_RESULT = 'SerchaResult';
+    const CONTACT = 'Contact';
+    const CARROUSEL = 'Carrousel';
+    const FOOTER = 'Footer';
+    const HEADER = 'Header';
+    const MENU = 'Menu';
+    const NEWS = 'News';
+    const SAMPLE = 'Sample';
+    const SEARCH = 'Search';
+    const SEARCH_RESULT = 'SearchResult';
     const TINYMCEWYSIWYG = 'tinyMCEWysiwyg';
 
     /**

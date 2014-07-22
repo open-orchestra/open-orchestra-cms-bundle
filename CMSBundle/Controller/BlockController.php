@@ -15,33 +15,39 @@ class BlockController extends Controller
     /**
      * Display the response linked to a block
      *
+     * @param string $nodeId
      * @param string $blockId
      *
      * @return Response
      */
-    public function showAction($blockId)
+    public function showAction($nodeId, $blockId)
     {
-        $block = $this->get('mandango')->getRepository('PHPOrchestra\CMSBundle\Model\Block')
-            ->findOneById($blockId);
+        $node = $this->get('mandango')->getRepository('Model\PHPOrchestraCMSBundle\Node')
+            ->getOne($nodeId);
+
+        $blocks = $node->getBlocks()->all();
 
         return $this->get('php_orchestra_cms.display_block_manager')
-            ->show($block);
+            ->show($blocks[$blockId]);
     }
 
     /**
-     * Display the response linked to a block for the BO
+     * Display the response linked to a block
      *
+     * @param string $nodeId
      * @param string $blockId
      *
      * @return Response
      */
-    public function showBackAction($blockId)
+    public function showBackAction($nodeId, $blockId)
     {
-        $block = $this->get('mandango')->getRepository('PHPOrchestra\CMSBundle\Model\Block')
-            ->findOneById($blockId);
+        $node = $this->get('mandango')->getRepository('Model\PHPOrchestraCMSBundle\Node')
+            ->getOne($nodeId);
+
+        $blocks = $node->getBlocks()->all();
 
         return $this->get('php_orchestra_cms.display_block_manager')
-            ->showBack($block);
+            ->showBack($blocks[$blockId]);
     }
 
     /**
