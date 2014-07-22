@@ -345,7 +345,7 @@ abstract class TableViewController extends Controller
      */
     protected function getDocument($mongoId)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         if (empty($mongoId)) {
             $document = $documentManager->createDocument($this->getEntity());
             $document = $this->modifyDocumentAfterCreate($document);
@@ -500,7 +500,7 @@ abstract class TableViewController extends Controller
     
     public function deleteEntity(Request $request, $id)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         if (!empty($id)) {
             if ($this->getKey() === null) {
                 $document = $documentManager->getDocumentById($this->getEntity(), $id);
@@ -540,7 +540,7 @@ abstract class TableViewController extends Controller
      */
     public function getCatalogRecords(Request $request)
     {
-        $documentManager = $this->container->get('phporchestra_cms.documentmanager');
+        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         $sort = is_array($request->get('sort')) ? $request->get('sort') : $this->sort;
         $sort = array_map('intval', $sort);
         

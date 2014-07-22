@@ -48,8 +48,8 @@ class PhpOrchestraRouter extends Router
     ) {
         parent::__construct($container, $resource, $options, $context);
         
-        $this->documentManager = $container->get('phporchestra_cms.documentmanager');
-        $this->cacheService = $container->get('phporchestra_cms.cachemanager');
+        $this->documentManager = $container->get('php_orchestra_cms.document_manager');
+        $this->cacheService = $container->get('php_orchestra_cms.cache_manager');
     }
     
     /**

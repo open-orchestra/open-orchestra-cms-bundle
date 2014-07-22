@@ -24,7 +24,7 @@ class PhpOrchestraRouterTest extends \PHPUnit_Framework_TestCase
             ->method('load')
             ->will($this->returnValue(new RouteCollection()));
         
-        $container->expects($this->at(1)) // 'phporchestra_cms.documentmanager'
+        $container->expects($this->at(1)) // 'php_orchestra_cms.document_manager'
             ->method('get')
             ->will($this->returnValue(null));
         

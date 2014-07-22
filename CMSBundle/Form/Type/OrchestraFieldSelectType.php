@@ -23,7 +23,7 @@ class OrchestraFieldSelectType extends AbstractType
      */
     public function __construct(ContainerInterface $container)
     {
-        $availableFields = $container->getParameter('php_orchestra.custom_types');
+        $availableFields = $container->getParameter('php_orchestra_cms.custom_types');
         foreach ($availableFields as $fieldId => $field) {
             $this->availableFields[$fieldId] = $field['type'];
         }

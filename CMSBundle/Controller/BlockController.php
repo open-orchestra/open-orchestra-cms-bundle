@@ -55,7 +55,7 @@ class BlockController extends Controller
     {
         $component = '';
         $attributs = array();
-        $block = $this->get('phporchestra_cms.documentmanager')->getBlockInNode(
+        $block = $this->get('php_orchestra_cms.document_manager')->getBlockInNode(
             $request->request->get('nodeId'),
             $request->request->get('blockId')
         );
