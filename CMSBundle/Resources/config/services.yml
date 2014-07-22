@@ -34,7 +34,7 @@ services:
     # Multilingual text field
     php_orchestra_cms.type.multilingual_text:
         class: "%php_orchestra_cms.type.multilingual_text.class%"
-        arguments: [@service_container]
+        arguments: ["%php_orchestra_cms.languages.availables%"]
         tags: [{name: form.type, alias: multilingualText}]
 
     # Orchestra content type attributes
