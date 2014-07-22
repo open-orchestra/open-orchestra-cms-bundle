@@ -30,14 +30,7 @@ class MultilingualTest extends \PHPUnit_Framework_TestCase
     {
         $availableLanguages = array('fr', 'en', 'es');
         
-        $container = $this->getMock('\\Symfony\\Component\\DependencyInjection\\ContainerInterface');
-        
-        $container
-            ->expects($this->any())
-            ->method('getParameter')
-            ->will($this->returnValue($availableLanguages));
-        
-        $this->multilingualTextTest = new MultilingualTextType($container);
+        $this->multilingualTextTest = new MultilingualTextType($availableLanguages);
     }
     
     /**

@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\CMSBundle\Test\Form\DataTransformer;
 
+use PHPOrchestra\CMSBundle\Test\Mock\Serializer;
+
 use \PHPOrchestra\CMSBundle\Form\DataTransformer\ContentTypeTransformer;
 use PHPOrchestra\CMSBundle\Test\Mock\TestContentType;
 
@@ -16,7 +18,17 @@ class ContentTypeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         
-        $this->transformer = new ContentTypeTransformer();
+        $customFields = array(
+            'fakeField' => array(
+                'type' => 'fakeType',
+                'options' => array(
+                    'option1' => array('default_value' => 'value1'),
+                    'option2' => array('default_value' => 'value2')
+                )
+            )
+        );
+        
+        $this->transformer = new ContentTypeTransformer(new Serializer(), $customFields);
     }
     
     /**
@@ -83,7 +95,7 @@ class ContentTypeTransformerTest extends \PHPUnit_Framework_TestCase
         
         $datasFull = new TestContentType(
             $fields,
-            'newField'
+            'fakeField'
         );
         
         $resultFull = clone $datasFull;
@@ -98,9 +110,12 @@ class ContentTypeTransformerTest extends \PHPUnit_Framework_TestCase
                         'label' => '',
                         'defaultValue' => '',
                         'searchable' => false,
-                        'type' => 'newField',
-                        'symfonyType' => '',
-                        'options' => (object) array()
+                        'type' => 'fakeField',
+                        'symfonyType' => 'fakeType',
+                        'options' => (object) array(
+                            'option1' => 'value1',
+                            'option2' => 'value2'
+                        )
                     )
                 )
             )

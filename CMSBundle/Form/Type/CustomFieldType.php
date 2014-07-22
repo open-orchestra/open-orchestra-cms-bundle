@@ -28,7 +28,7 @@ class CustomFieldType extends AbstractType
      * 
      * @param array $availableFields
      */
-    public function __construct($availableFields = array())
+    public function __construct(array $availableFields = array())
     {
         $this->availableFields = $availableFields;
     }

@@ -43,14 +43,7 @@ class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             ),
         );
         
-        $container = $this->getMock('\\Symfony\\Component\\DependencyInjection\\ContainerInterface');
-        
-        $container
-            ->expects($this->any())
-            ->method('getParameter')
-            ->will($this->returnValue($availableFields));
-        
-        $this->customField = new CustomFieldType($container);
+        $this->customField = new CustomFieldType($availableFields);
         
         $this->formBuilderMock =
             $this->getMock('\\Symfony\\Component\\Form\\FormBuilderInterface');
