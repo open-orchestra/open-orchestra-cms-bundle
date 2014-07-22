@@ -15,20 +15,20 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $transformer;
 
+    protected $response;
     protected $container;
-    protected $controller;
-    protected $jsonResponse;
+    protected $displayBlockManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->jsonResponse = Phake::mock('Symfony\Component\HttpFoundation\JsonResponse');
-        $this->controller = Phake::mock('PHPOrchestra\CMSBundle\Controller\BlockController');
-        Phake::when($this->controller)->getPreview(Phake::anyParameters())->thenReturn($this->jsonResponse);
+        $this->response = Phake::mock('Symfony\Component\HttpFoundation\Response');
+        $this->displayBlockManager = Phake::mock('PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockManager');
+        Phake::when($this->displayBlockManager)->showBack(Phake::anyParameters())->thenReturn($this->response);
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        Phake::when($this->container)->get('phporchestra_cms.blockcontroller')->thenReturn($this->controller);
+        Phake::when($this->container)->get('php_orchestra_cms.display_block_manager')->thenReturn($this->displayBlockManager);
 
         $this->transformer = new NodeTypeTransformer($this->container, true);
     }
@@ -39,8 +39,7 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
     public function testTransformWithLoadMethod()
     {
         $htmlData = 'Some html data';
-        $jsonString = json_encode(array('data' => $htmlData));
-        Phake::when($this->jsonResponse)->getContent()->thenReturn($jsonString);
+        Phake::when($this->response)->getContent()->thenReturn($htmlData);
 
         $blocks = array();
 
@@ -96,8 +95,7 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
     public function testTransformWithGenerateMethod()
     {
         $htmlData = 'Some html data';
-        $jsonString = json_encode(array('data' => $htmlData));
-        Phake::when($this->jsonResponse)->getContent()->thenReturn($jsonString);
+        Phake::when($this->response)->getContent()->thenReturn($htmlData);
 
         $areaId = 'testId';
         $blockId = 'blockId';

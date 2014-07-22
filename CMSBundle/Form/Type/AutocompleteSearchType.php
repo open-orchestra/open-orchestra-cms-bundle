@@ -41,8 +41,9 @@ class AutocompleteSearchType extends AbstractType
             )
         ));
 
-        $builder->add($this->value, 'submit', array(
+        $builder->add('submit', 'submit', array(
             'attr' => array('class' => $this->class,),
+            'label' => $this->value
         ));
     }
 

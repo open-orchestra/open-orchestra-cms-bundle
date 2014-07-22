@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\CMSBundle\Test\Model;
 
+use Phake;
 use PHPOrchestra\CMSBundle\Model\NodeRepository;
 use Model\PHPOrchestraCMSBundle\Node;
 
@@ -13,7 +14,6 @@ use Model\PHPOrchestraCMSBundle\Node;
  */
 class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
 {
-    
     /**
      * repository to be tested
      * 
@@ -27,7 +27,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
      * @var \PHPOrchestra\CMSBundle\Test\Mock\Mandango
      */
     protected $mandango = null;
-
 
     /**
      * Tests setup
@@ -77,7 +76,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repository = new NodeRepository($this->mandango);
     }
 
-
     /**
      * Create a tree with menu nodes
      */
@@ -89,7 +87,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }*/
 
-
     /**
      * Test getMenuTree
      */
@@ -98,7 +95,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $result   = $this->repository->getMenuTree();
         $this->assertEquals(array(), $result);
     }
-
 
     /**
      * Create a tree with footer nodes
@@ -116,7 +112,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $result = $this->repository->getFooterTree();
         $this->assertEquals(array(), $result);
     }
-
 
     /**
      * Take nodes from mandango and create a tree
@@ -136,7 +131,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }*/
 
-
     /**
      * Take nodes from mandango and create a tree
      */
@@ -153,7 +147,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-
     /**
      * Take a list of nodes and create a tree
      */
@@ -165,28 +158,24 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-
     /**
      * Test unit getTreeUrl()
      */
     public function testGetTreeUrl()
     {
         $tree = $this->createTreeData();
-        $generateUrl = $this->getMockBuilder('\\PHPOrchestra\\CMSBundle\\Routing\\PhpOrchestraUrlGenerator')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $container = $this->getMock('\\Symfony\\Component\\DependencyInjection\\Container');
-        $container->expects($this->any())->method('get')->willReturn($generateUrl);
-        $generateUrl->expects($this->at(0))->method('generate')->will($this->returnValue('/app_dev.php'));
-        $generateUrl->expects($this->at(1))->method('generate')->will($this->returnValue('/app_dev.php/fixture-full'));
-        
-        $result = $this->repository->getTreeUrl($tree, $container);
+        $generateUrl = Phake::mock('PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlGenerator');
+        Phake::when($generateUrl)->generate('superroot')->thenReturn('/app_dev.php/fixture-full');
+        Phake::when($generateUrl)->generate('root')->thenReturn('/app_dev.php');
+
+        $result = $this->repository->getTreeUrl($tree, $generateUrl);
         $expected = $this->createTreeUrl();
-        
+
         $this->assertEquals($expected, $result);
+        Phake::verify($generateUrl)->generate('root');
+        Phake::verify($generateUrl)->generate('superroot');
     }
 
-    
     /**
      * Test getAllNodes function
      */
@@ -233,7 +222,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-    
 
     public function createTreeUrl()
     {
@@ -250,7 +238,6 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-
 
     /**
      * List of nodes object

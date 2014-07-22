@@ -1,15 +1,10 @@
 <?php
 
+namespace PHPOrchestra\BlockBundle\Controller\Block;
 
-namespace PHPOrchestra\BlockBundle\Controller;
-
-
+use PHPOrchestra\CMSBundle\Form\Type\ContactType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DomCrawler\Form;
-use Symfony\Component\Form\FormBuilder;
-use PHPOrchestra\BlockBundle\Type\ContactType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Description of ContactController
@@ -19,28 +14,9 @@ use PHPOrchestra\BlockBundle\Type\ContactType;
 class ContactController extends Controller
 {
     /**
-     * 
-     * Function to show contact form
+     * Function send a email
      *
-     * @param string $id id of block
-     * @param string $class class of block
-     */
-    function showAction($id, $class)
-    {
-        $form = $this->createForm(new ContactType());
-       
-        return $this->render(
-            'PHPOrchestraCMSBundle:Block/Contact:show.html.twig',
-            array('form' => $form->createView())
-        );
-    }
-    
-    /**
-     *
-     * Function send a email 
-     *
-     * @param none
-     *
+     * @return RedirectResponse
      */
     function ContactMailSendAction()
     {
@@ -87,23 +63,5 @@ class ContactController extends Controller
         }
         
         return $this->redirect($this->generateUrl('orchestra_page_home'));
-    }
-
-
-    /**
-     *
-     * Function to show contact form
-     *
-     * @param string $id id of block
-     * @param string $class class of block
-     */
-    function showBackAction($id, $class)
-    {
-        $form = $this->createForm(new ContactType());
-
-        return $this->render(
-            'PHPOrchestraCMSBundle:Block/Contact:showBack.html.twig',
-            array('form' => $form->createView())
-        );
     }
 }

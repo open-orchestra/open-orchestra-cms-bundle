@@ -62,13 +62,9 @@ class NodeTypeTransformer implements DataTransformerInterface
                     else{
                         $block['method'] = self::BLOCK_LOAD;
                     }
-                    $request = new Request(array(), $block);
-                    $blockController = $this->container->get('phporchestra_cms.blockcontroller');
-                    $blockController->setContainer($this->container);
-                    $response = json_decode($blockController->getPreview($request)->getContent(), true);
-                    if(is_array($response) && array_key_exists('data', $response)){
-                        $block['ui-model']['html'] = $response['data'];
-                    }
+                    $displayBlockManager = $this->container->get('php_orchestra_cms.display_block_manager');
+                    $response = $displayBlockManager->showBack($block)->getContent();
+                    $block['ui-model']['html'] = $response;
                 }
                 if(count($value) == 0){
                     unset($values['blocks']);

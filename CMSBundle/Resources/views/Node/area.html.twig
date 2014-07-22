@@ -20,7 +20,7 @@
         {% if block %} <span>{{ block.component }}</span>{% endif %}
         </legend>
     {% if block %}
-        {{ render_esi(controller('PHPOrchestraCMSBundle:Block/' ~ block.component ~ ':show', block.attributes), {'ignore_errors' : true} ) }}
+        {{ render_esi(url('php_orchestra_cms_block', {'blockId': block.blockId})) }}
     {% endif %}
     </fieldset>
 {% endfor %}

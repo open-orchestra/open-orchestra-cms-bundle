@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas Anne <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Controller;
 
@@ -12,19 +7,89 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Class BlockController
+ */
 class BlockController extends Controller
 {
-    
     /**
-     * 
-     * Get the component and attributs informations in block generate case 
-     * @param Request $request
-     * 
+     * Display the response linked to a block
+     *
+     * @param string $blockId
+     *
+     * @return Response
      */
-    public function getGenerateInformations($request)
+    public function showAction($blockId)
     {
-        $component = '';
-        $attributs = array();
+        $block = $this->get('mandango')->getRepository('PHPOrchestra\CMSBundle\Model\Block')
+            ->findOneById($blockId);
+
+        return $this->get('php_orchestra_cms.display_block_manager')
+            ->show($block);
+    }
+
+    /**
+     * Display the response linked to a block for the BO
+     *
+     * @param string $blockId
+     *
+     * @return Response
+     */
+    public function showBackAction($blockId)
+    {
+        $block = $this->get('mandango')->getRepository('PHPOrchestra\CMSBundle\Model\Block')
+            ->findOneById($blockId);
+
+        return $this->get('php_orchestra_cms.display_block_manager')
+            ->showBack($block);
+    }
+
+    /**
+     * Render the node Block form
+     *
+     * @param string $type
+     *
+     * @return JsonResponse|Response
+     */
+    public function formAction($type)
+    {
+        $request = $this->get('request');
+
+        if ($request->request->get('preview') !== null) {
+            return $this->getPreview($request);
+        } elseif ($request->request->get('refresh') !== null) {
+            return $this->getRefresh($request, $type);
+        } else {
+            $refresh = array('is_node' => ($type == 'node'));
+            $form = $this->createForm(
+                'blocks',
+                $refresh,
+                array(
+                    'action' => $this->generateUrl('php_orchestra_cms_blockform', array('type' => $type)),
+                    'inDialog' => true,
+                    'subForm' => true,
+                    'beginJs' => array('pagegenerator/'.$type.'_block.js?'.time(), 'pagegenerator/dialogNode.js'),
+                )
+            );
+
+            return $this->render(
+                'PHPOrchestraCMSBundle:Form:form.html.twig',
+                array(
+                    'form' => $form->createView()
+                )
+            );
+        }
+    }
+
+    /**
+     * Get the component and attributs informations in block generate case
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    protected function getGenerateInformations(Request $request)
+    {
         $attributs = $request->request->all();
         $allowed=array_filter(
             array_keys($attributs),
@@ -43,15 +108,18 @@ class BlockController extends Controller
             array_values($attributs)
         );
         $component = $request->request->get('component');
+
         return array($component, $attributs);
     }
+
     /**
-     * 
-     * Get the component and attributs informations in block load case 
+     * Get the component and attributs informations in block load case
+     *
      * @param Request $request
-     * 
+     *
+     * @return array
      */
-    public function getLoadInformations($request)
+    protected function getLoadInformations(Request $request)
     {
         $component = '';
         $attributs = array();
@@ -63,16 +131,18 @@ class BlockController extends Controller
             $component = $block['component'];
             $attributs = $block['attributes'];
         }
+
         return array($component, $attributs);
     }
     
     /**
-     * 
      * Render the preview of a Block
+     *
      * @param Request $request
-     * 
+     *
+     * @return JsonResponse
      */
-    public function getPreview($request)
+    public function getPreview(Request $request)
     {
         $component = '';
         $attributs = array();
@@ -98,8 +168,15 @@ class BlockController extends Controller
             );
         }
     }
-    
-    public function getRecRefresh($request, $form, $refresh){
+
+    /**
+     * @param Request $request
+     * @param mixed   $form
+     * @param array   $refresh
+     *
+     * @return array
+     */
+    protected function getRecRefresh(Request $request, $form, $refresh){
         $children = $form->all();
         $restart = false;
         if(count($children) > 0){
@@ -127,11 +204,13 @@ class BlockController extends Controller
     /**
      * 
      * Render the node Block form after refresh request
+     *
      * @param Request $request
-     * @param $type
-     * 
+     * @param mixed   $type
+     *
+     * @return JsonResponse
      */
-    public function getRefresh($request, $type)
+    protected function getRefresh($request, $type)
     {
         $refresh = array('is_node' => ($type == 'node'));
         if(is_array($request->request->get('blocks'))){
@@ -167,40 +246,5 @@ class BlockController extends Controller
                 'data' => $render->getContent()
             )
         );
-    }
-    /**
-     * 
-     * Render the node Block form
-     * @param $type
-     * 
-     */
-    public function formAction($type)
-    {
-        $request = $this->get('request');
-        
-        if ($request->request->get('preview') !== null) {
-            return $this->getPreview($request);
-        } elseif ($request->request->get('refresh') !== null) {
-            return $this->getRefresh($request, $type);
-        } else {
-            $refresh = array('is_node' => ($type == 'node'));
-            $form = $this->createForm(
-                'blocks',
-                $refresh,
-                array(
-                    'action' => $this->generateUrl('php_orchestra_cms_blockform', array('type' => $type)),
-                    'inDialog' => true,
-                    'subForm' => true,
-                    'beginJs' => array('pagegenerator/'.$type.'_block.js?'.time(), 'pagegenerator/dialogNode.js'),
-                )
-            );
-            
-            return $this->render(
-                'PHPOrchestraCMSBundle:Form:form.html.twig',
-                array(
-                    'form' => $form->createView()
-                )
-            );
-        }
     }
 }
