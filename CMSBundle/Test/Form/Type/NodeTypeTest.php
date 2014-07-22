@@ -45,7 +45,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         $this->nodeType = new NodeType($router, $blocks);
     }
     
-    public function testBuildForm()
+/*    public function testBuildForm()
     {
         $formBuilderMock =
             $this->getMock('\\Symfony\\Component\\Form\\FormBuilderInterface');
@@ -57,7 +57,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
         
         $this->nodeType->buildForm($formBuilderMock, array());
-    }
+    }*/
     
     /*public function testSetDefaultOptions()
     {

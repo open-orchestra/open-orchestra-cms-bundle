@@ -17,6 +17,7 @@
 
 namespace PHPOrchestra\CMSBundle\Test\Form\Type;
 
+use PHPOrchestra\CMSBundle\Test\Mock\Serializer;
 use \PHPOrchestra\CMSBundle\Form\Type\ContentTypeType;
 
 /**
@@ -28,7 +29,7 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->contentTypeType = new ContentTypeType();
+        $this->contentTypeType = new ContentTypeType(new Serializer());
     }
 
     /**
