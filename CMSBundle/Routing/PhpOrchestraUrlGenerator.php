@@ -46,6 +46,8 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
      * (non-PHPdoc)
      * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Routing/Generator/Symfony
      * \Component\Routing\Generator.UrlGenerator::generate()
+     *
+     * @return string
      */
     public function generate($name, $parameters = array(), $referenceType = self::ABSOLUTE_PATH)
     {
@@ -54,6 +56,7 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
         } catch (RouteNotFoundException $e) {
             $uri = $this->dynamicGenerate($name, $parameters, $referenceType);
         }
+
         return $uri;
     }
 
@@ -61,8 +64,10 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
      * Generate url for a PHPOrchestra node
      * 
      * @param string $nodeId
-     * @param array $parameters
+     * @param array  $parameters
      * @param string $referenceType
+     *
+     * @return string
      */
     protected function dynamicGenerate($nodeId, $parameters, $referenceType)
     {
@@ -70,7 +75,7 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
         $url = $this->getNodeAlias($nodeId);
         $scheme = $this->context->getScheme();
         $host = $this->context->getHost();
-        
+
         if (self::ABSOLUTE_URL === $referenceType || self::NETWORK_PATH === $referenceType) {
             $port = '';
             if ('http' === $scheme && 80 != $this->context->getHttpPort()) {
@@ -78,33 +83,35 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
             } elseif ('https' === $scheme && 443 != $this->context->getHttpsPort()) {
                 $port = ':' . $this->context->getHttpsPort();
             }
-            
+
             $schemeAuthority = self::NETWORK_PATH === $referenceType ? '//' : "$scheme://";
             $schemeAuthority .= $host.$port;
         }
-        
+
         if (self::RELATIVE_PATH === $referenceType) {
             $url = self::getRelativePath($this->context->getPathInfo(), $url);
         } else {
             $url = $schemeAuthority . $this->context->getBaseUrl() . $url;
         }
-        
+
         return $url;
     }
-    
+
     /**
      * return relative path to $nodeId
-     * 
-     * @param unknown_type $nodeId
+     *
+     * @param string $nodeId
+     *
+     * @return string
      * @throws RouteNotFoundException
      */
     protected function getNodeAlias($nodeId)
     {
         $alias = '';
-        
+
         if ($nodeId != Node::ROOT_NODE_ID) {
             $node = $this->documentManager->getDocument('Node', array('nodeId' => $nodeId));
-            
+
             if (isset($node)) {
                 $alias = $this->getNodeAlias($node->getParentId()) . '/' . $node->getAlias();
             } else {
@@ -113,7 +120,7 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
                 );
             }
         }
-        
+
         return $alias;
     }
 }

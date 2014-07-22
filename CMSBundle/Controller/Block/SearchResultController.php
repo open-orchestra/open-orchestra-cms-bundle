@@ -17,6 +17,7 @@
 
 namespace PHPOrchestra\CMSBundle\Controller\Block;
 
+use Nelmio\SolariumBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,16 +31,16 @@ class SearchResultController extends Controller
     /**
      * Render the search's result block
      *
-     * @param string $nodeId node identifiant
-     * @param int    $nbdoc number of documents per page
-     * @param array  $fielddisplayed array of field name which are display
-     * @param int    $nbspellcheck number of spell check result
-     * @param int    $limitField number of letter per field
-     * @param array  $facets
-     * @param array  $filter array of filter
-     * @param array  $optionsearch array of option
-     * @param array  $optionsdismax array of option for dismax component
-     * @param int    $page page number
+     * @param string $nodeId           node identifiant
+     * @param int    $nbdoc            number of documents per page
+     * @param array  $fielddisplayed   array of field name which are display
+     * @param int    $nbspellcheck     number of spell check result
+     * @param int    $limitField       number of letter per field
+     * @param array  $facets           array of facets parameters
+     * @param array  $filter           array of filter parameters
+     * @param array  $optionsearch     array of option
+     * @param array  $optionsdismax    array of option for dismax component
+     * @param int    $page             page number
      * @param array  $_page_parameters additional parameters extracted from url
      *
      * @return Response
@@ -56,7 +57,8 @@ class SearchResultController extends Controller
         $optionsdismax = array(),
         $page = 1,
         $_page_parameters = array()
-    ) {
+    )
+    {
         return $this->show(
             $nodeId,
             $nbdoc,
@@ -89,7 +91,8 @@ class SearchResultController extends Controller
         $optionsdismax = array(),
         $page = 1,
         $_page_parameters = array()
-    ) {
+    )
+    {
         return $this->show(
             $nodeId,
             $nbdoc,
@@ -142,21 +145,21 @@ class SearchResultController extends Controller
     /**
      * Search in solr
      *
-     * @param string $data searching word
-     * @param $nbspellcheck
-     * @param array $optionSearch array of option to the search
-     * @param array $facets array of option to the facets
-     * @param $filters
-     * @param $dismax
+     * @param string $data         searching word
+     * @param int    $nbspellcheck number max of spellcheck result
+     * @param array  $optionSearch array of search parameters
+     * @param array  $facets       array of facets parameters
+     * @param array  $filters      array of filter parameters
+     * @param array  $dismax       array of dixmax parameters
      *
-     * @return Solarium\QueryType\Select\Result\Result
+     * @return Solarium/QueryType/Select/Result\Result
      */
     protected function callResearch($data, $nbspellcheck, $optionSearch, $facets, $filters, $dismax)
     {
         // Research
         $searchManager = $this->get('php_orchestra_indexation.search_manager');
         $query = $searchManager->search($data, null, $optionSearch);
-    
+
         // Spell check setting
         $query = $searchManager->spellCheck($query, $data, $nbspellcheck);
 
@@ -164,7 +167,7 @@ class SearchResultController extends Controller
         if (isset($facets) && !empty($facets)) {
             $this->callFacet($query, $searchManager, $facets);
         }
-        
+
         // Filtering
         if (isset($filters) && !empty($filters)) {
             if (!isset($filters['name'])) {
@@ -176,7 +179,7 @@ class SearchResultController extends Controller
                 $searchManager->filter($query, $filters['name'], $filters['field']);
             }
         }
-        
+
         /*/ Dismax
         if (isset($dismax) && !empty($dismax)) {
             if (isset($dismax['mm'])) {
@@ -185,56 +188,59 @@ class SearchResultController extends Controller
                 $searchManager->disMax($query, $dismax['fields'], $dismax['boost']);
             }
         }*/
-    
+
         return $this->result($query, $searchManager);
     }
 
     /**
      * Create a filter query
      *
-     * @param string $data search word
-     * @param string $filter query filter
+     * @param string $data      search word
+     * @param string $filter    query filter
      * @param string $facetName facet name
+     *
+     * @return Solarium/QueryType/Select/Result/Result
      */
     protected function callFilter($data, $filter, $facetName)
     {
         $client = $this->get('solarium.client');
         $query  = $client->createSelect();
-    
+
         $query->setQuery($data);
         $query->createFilterQuery($facetName)->setQuery($filter);
-    
+
         return $client->select($query);
     }
 
     /**
      * Return result of the query
      *
-     * @param Solarium\QueryType\Select\Query\Query $query
-     * @param PHPOrchestra\BlockBundle\IndexCommand\SolrSearchCommand $search
+     * @param Solarium/QueryType/Select/Query/Query                        $query
+     * @param IndexationBundle/SearchStrategy/Strategies/SolrSearchCommand $search
      *
-     * @return mixed|NULL|array|Solarium\QueryType\Select\Result\Result
+     * @return mixed|NULL|array|Solarium/QueryType/Select/Result/Result
      */
     protected function result($query, $search)
     {
         // Result
-        $resultset = $this->get('php_orchestra_indexation.search_manager')->select($query);
-    
+        $resultset = $this->get("php_orchestra_indexation.search_manager")->select($query);
+
         if ($resultset->getNumFound() < 1) {
             $result = array();
             $spellcheck = $resultset->getSpellcheck();
-    
+
             if (isset($spellcheck)) {
                 $suggestions = $resultset->getSpellcheck()->getSuggestions();
-    
+
                 if (isset($suggestions)) {
                     foreach ($suggestions as $suggest) {
                         $search->search($suggest->getword(), $query);
-    
+
                         $result[] = $this->get('php_orchestra_indexation.search_manager')->select($query);
                     }
                 }
             }
+
             return $result;
         } else {
             return $resultset;
@@ -244,9 +250,9 @@ class SearchResultController extends Controller
     /**
      * Call facet services
      *
-     * @param Solarium\QueryType\Select\Query\Query $query
-     * @param PHPOrchestra\BlockBundle\IndexCommand\SolrSearchCommand $search search services
-     * @param array $facets
+     * @param Solarium/QueryType/Select/Query/Query                        $query  The query
+     * @param IndexationBundle/SearchStrategy/Strategies/SolrSearchCommand $search search services
+     * @param array                                                        $facets array of facet parameters
      */
     protected function callFacet($query, $search, $facets)
     {
@@ -307,14 +313,14 @@ class SearchResultController extends Controller
     /**
      * Call search template
      *
-     * @param string $data search word
-     * @param Solarium\QueryType\Result\Result $resultSet
-     * @param string $nodeId identifiant of node
-     * @param int $page number of page
-     * @param int $nbdoc number of documents per page selected by the user
-     * @param array $fields array of field displayed
-     * @param int $limitField number of letters per field
-     * @param array $facets array if they have facets
+     * @param string                           $data       search word
+     * @param Solarium/QueryType/Select/Result $resultSet  Result
+     * @param string                           $nodeId     identifiant of node
+     * @param int                              $page       number of page
+     * @param int                              $nbdoc      number of documents per page selected by the user
+     * @param array                            $fields     array of field displayed
+     * @param int                              $limitField number of letters per field
+     * @param array                            $facets     array if they have facets
      *
      * @return Response
      */
@@ -332,7 +338,6 @@ class SearchResultController extends Controller
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
                     'facetsArray' => $facets,
-                    'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
                     'firstField' => $firstField,
                     'limitField' => $limitField
                 )
@@ -347,7 +352,6 @@ class SearchResultController extends Controller
                     'page' => $page,
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
-                    'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
                     'firstField' => $firstField,
                     'limitField' => $limitField
                 )
@@ -357,16 +361,16 @@ class SearchResultController extends Controller
 
 
     /**
-     * @param string $nodeId node identifiant
-     * @param int    $nbdoc number of documents per page
-     * @param array  $fielddisplayed array of field name which are display
-     * @param int    $nbspellcheck number of spell check result
-     * @param int    $limitField number of letter per field
-     * @param array  $facets
-     * @param array  $filter array of filter
-     * @param array  $optionsearch array of option
-     * @param array  $optionsdismax array of option for dismax component
-     * @param int    $page page number
+     * @param string $nodeId           node identifiant
+     * @param int    $nbdoc            number of documents per page
+     * @param array  $fielddisplayed   array of field name which are display
+     * @param int    $nbspellcheck     number of spell check result
+     * @param int    $limitField       number of letter per field
+     * @param array  $facets           array of facets parameters
+     * @param array  $filter           array of filter parameters
+     * @param array  $optionsearch     array of search parameters
+     * @param array  $optionsdismax    array of dismax parameters
+     * @param int    $page             page number
      * @param array  $_page_parameters additional parameters extracted from url
      *
      * @return Response
