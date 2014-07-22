@@ -26,7 +26,7 @@ class PHPOrchestraCMSExtension extends Extension
         $loader->load('config.yml');
         $loader->load('services.yml');
 
-        $blockType = array();
+        $blockType = array('TinyMCEWysiwyg', 'Sample', 'Footer', 'Menu', 'Search', 'SearchResult');
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
             $blockType = $config['blocks'];
         }
