@@ -51,7 +51,7 @@ services:
     # Custom field
     php_orchestra_cms.type.custom_field:
         class: "%php_orchestra_cms.type.custom_field.class%"
-        arguments: [@service_container]
+        arguments: ["%php_orchestra_cms.custom_types%"]
         tags: [{name: form.type, alias: orchestra_customField}]
 
     # Areas form field type
