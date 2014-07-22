@@ -8,12 +8,14 @@
  {# Display all documents in resultset #}
 {% for doc in resultset %}
             <ul>
-                <li><a href="{{ url(doc.id) }}" class="doclink">{{ attribute(doc, firstField) }}</a></li>
-                {% for fieldname, fieldvalue in doc %}
-                    {% if fieldname in fieldsdisplayed %}
-                        <li class="field">{{ fieldvalue | truncate(limitField, true, '...') }}</li>
-                    {% endif %}
-                {% endfor %}
+                {% if doc[firstField] is defined %}
+                    <li><a href="{{ baseUrl }}{{ doc.url }}" class="doclink">{{ doc[firstField] }} </a></li>
+                    {% for fieldname, fieldvalue in doc %}
+                        {% if fieldname in fieldsdisplayed %}
+                            <li class="field">{{ fieldvalue | truncate(limitField, true, '...') }}</li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </ul>
 {% endfor %}
 </div>

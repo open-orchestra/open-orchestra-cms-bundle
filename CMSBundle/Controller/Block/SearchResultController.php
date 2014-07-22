@@ -42,7 +42,7 @@ class SearchResultController extends Controller
      * @param int    $page page number
      * @param array  $_page_parameters additional parameters extracted from url
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function showAction(
         $nodeId,
@@ -74,6 +74,8 @@ class SearchResultController extends Controller
 
     /**
      * @see \PHPOrchestra\CMSBundle\Controller\Block\BlockInterface::showAction()
+     *
+     * @return Response
      */
     public function showBackAction(
         $nodeId,
@@ -133,6 +135,7 @@ class SearchResultController extends Controller
                 $result[] = $name;
             }
         }
+
         return new JsonResponse($result);
     }
 
@@ -313,7 +316,7 @@ class SearchResultController extends Controller
      * @param int $limitField number of letters per field
      * @param array $facets array if they have facets
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     protected function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $limitField, $facets = array())
     {
@@ -329,6 +332,7 @@ class SearchResultController extends Controller
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
                     'facetsArray' => $facets,
+                    'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
                     'firstField' => $firstField,
                     'limitField' => $limitField
                 )
@@ -343,6 +347,7 @@ class SearchResultController extends Controller
                     'page' => $page,
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
+                    'baseUrl' => $this->container->get('router')->getContext()->getBaseUrl(),
                     'firstField' => $firstField,
                     'limitField' => $limitField
                 )
