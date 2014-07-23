@@ -7,21 +7,20 @@
 <fieldset id="{{ area.areaId }}" style="background-color:#98BDE2;border-color:#000000;margin-top:8px;">
     <legend style="background-color:#BADFF4;border:1px solid #000000;">AREA | {{ area.areaId }}</legend>
 {% for subArea in area.subAreas %}
-    {% include "PHPOrchestraCMSBundle:Node:area.html.twig" with {"area" : subArea, "blocks" : blocks} only %}
+    {% include "PHPOrchestraCMSBundle:Node:area.html.twig" with {"area" : subArea, "nodeId": nodeId} only %}
 {% endfor %}
 {% for blockReference in area.blocks %}
-    {% set block = false %}
-    {% if blocks[blockReference.nodeId][blockReference.blockId] is defined %}
-        {% set block = blocks[blockReference.nodeId][blockReference.blockId] %}
-    {% endif %}
     <fieldset style="background-color:#3B6691;border-color:#000000;margin-top:8px;">
         <legend style="background-color:#5D88B3;border:1px solid #000000;">
-            NodeId : {{ blockReference.nodeId }} BlockId : {{ blockReference.blockId }}
-        {% if block %} <span>{{ block.component }}</span>{% endif %}
+            NodeId : {{ blockReference.nodeId }} BlockId : {{ blockReference.blockId}}
         </legend>
-    {% if block %}
-        {{ render_esi(controller('PHPOrchestraCMSBundle:Block/' ~ block.component ~ ':show', block.attributes), {'ignore_errors' : true} ) }}
-    {% endif %}
+        {% if blockReference.nodeId == 0 %}
+            {% set nodeReference = nodeId %}
+        {% else %}
+            {% set nodeReference = blockReference.nodeId %}
+        {% endif %}
+        {% set queryParams = app.request.query.all|merge({'nodeId': nodeReference, 'blockId': blockReference.blockId }) %}
+        {{ render_esi(url('php_orchestra_cms_block', queryParams)) }}
     </fieldset>
 {% endfor %}
 </fieldset>

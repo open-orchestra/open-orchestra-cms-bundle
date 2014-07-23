@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Form\Type;
 
@@ -17,20 +12,14 @@ use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 class TemplateType extends AbstractType
 {
-    /**
-    * container service
-    * @var container
-    */
-    protected $container = null;
+    protected $nodeTypeTransformer;
 
     /**
-     * Constructor
-     * 
-     * @param $container
+     * @param NodeTypeTransformer $nodeTypeTransformer
      */
-    public function __construct($container)
+    public function __construct(NodeTypeTransformer $nodeTypeTransformer)
     {
-        $this->container = $container;
+        $this->nodeTypeTransformer = $nodeTypeTransformer;
     }
 
     /**
@@ -40,8 +29,7 @@ class TemplateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new NodeTypeTransformer($this->container, false);
-        $builder->addModelTransformer($transformer);
+        $builder->addModelTransformer($this->nodeTypeTransformer);
 
         $builder
             ->add('templateId', 'hidden')

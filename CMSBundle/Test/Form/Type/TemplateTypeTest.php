@@ -1,22 +1,8 @@
 <?php
 
-/*
- * Business & Decision - Commercial License
- *
- * Copyright 2014 Business & Decision.
- *
- * All rights reserved. You CANNOT use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell this Software or any parts of this
- * Software, without the written authorization of Business & Decision.
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * See LICENSE.txt file for the full LICENSE text.
- */
-
 namespace PHPOrchestra\CMSBundle\Test\Form\Type;
 
+use Phake;
 use \PHPOrchestra\CMSBundle\Form\Type\TemplateType;
 
 /**
@@ -26,85 +12,54 @@ use \PHPOrchestra\CMSBundle\Form\Type\TemplateType;
  */
 class TemplateTypeTest extends \PHPUnit_Framework_TestCase
 {
+    protected $templateType;
+    protected $nodeTypeTransformer;
+    protected $formBuilder;
+
+    /**
+     * Set up the test
+     */
     public function setUp()
     {
-        $blocks = array();
-        /**
-         * A dummy router
-         * 
-         * @var \Symfony\Component\Routing\Router
-         */
-        $router = $this->getMockBuilder('\\Symfony\\Component\\Routing\\Router')
-                ->disableOriginalConstructor()
-                ->getMock();
-        
-        $router->expects($this->any())
-            ->method('generate')
-            ->will($this->returnValue('/dummy/url'));
-        
-        $this->templateType = new TemplateType($router, $blocks);
+        $this->nodeTypeTransformer = Phake::mock('PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer');
+
+        $this->formBuilder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($this->formBuilder)->addModelTransformer(Phake::anyParameters())->thenReturn($this->formBuilder);
+        Phake::when($this->formBuilder)->add(Phake::anyParameters())->thenReturn($this->formBuilder);
+
+        $this->templateType = new TemplateType($this->nodeTypeTransformer);
     }
-    
+
+    /**
+     * test Build form method
+     */
     public function testBuildForm()
     {
-        $formBuilderMock =
-            $this->getMock('\\Symfony\\Component\\Form\\FormBuilderInterface');
-        
-        // TODO Improves this test, check some specific added types
-        $formBuilderMock
-            ->expects($this->exactly(11))
-            ->method('add')
-            ->will($this->returnSelf());
-        
-        $this->templateType->buildForm($formBuilderMock, array());
-    }
-    
-    /*public function testSetDefaultOptions()
-    {
-        $resolverMock =
-            $this->getMock('\\Symfony\\Component\\OptionsResolver\\OptionsResolverInterface');
-        
-        $resolverMock
-            ->expects($this->once())
-            ->method('setDefaults')
-            ->with(
-                $this->equalTo(
-                    array(
-                        'showDialog' => true,
-                        'js' => array(),
-                        'objects' => array('areas')
-                    )
-                )
-            );
-        
-        $this->templateType->setDefaultOptions($resolverMock);
-    }*/
-    
-    /*public function testBuildView()
-    {
-        $viewMock =
-            $this->getMock('\\Symfony\\Component\\Form\\FormView');
-        
-        $formMock =
-            $this->getMock('\\Symfony\\Component\\Form\\FormInterface');
-        
-        $options = array(
-            'showDialog'   => 'value1',
-            'js'           => 'value2',
-            'objects'      => array('object1', 'object2'),
-            'unusedOption' => 'useless'
-        );
-        
-        $this->templateType->buildView($viewMock, $formMock, $options);
-        
-        $expectedViewVars = $options;
-        $expectedViewVars['value'] = null;
-        $expectedViewVars['attr'] = array();
-        unset($expectedViewVars['unusedOption']);
-        
-        $this->assertEquals($expectedViewVars, $viewMock->vars);
-    }*/
+        $this->templateType->buildForm($this->formBuilder, array());
 
+        Phake::verify($this->formBuilder)->addModelTransformer($this->nodeTypeTransformer);
+        Phake::verify($this->formBuilder, Phake::times(11))->add(Phake::anyParameters());
+    }
+
+    /**
+     * test set default option
+     */
+    public function testSetDefaultOptions()
+    {
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+
+        $this->templateType->setDefaultOptions($resolverMock);
+
+        Phake::verify($resolverMock)->setDefaults(array(
+            'inDialog' => false,
+            'beginJs' => array(),
+            'endJs' => array()
+        ));
+    }
+
+    /**
+     * test get name
+     */
     public function testGetName()
     {
         $this->assertEquals('template', $this->templateType->getName());

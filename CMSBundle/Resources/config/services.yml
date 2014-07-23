@@ -119,40 +119,6 @@ services:
         tags:
             - { name: form.type, alias: orchestra_direction }
 
-#--[FORM]-----------------------#
-
-    # Content Form Builder
-    php_orchestra_cms.type.content:
-        class: "%php_orchestra_cms.type.content.class%"
-        arguments: [@php_orchestra_cms.context_manager]
-        tags: [{name: form.type, alias: content}]
-
-    # ContentType Form Builder
-    php_orchestra_cms.type.content_type:
-        class: "%php_orchestra_cms.type.content_type.class%"
-        arguments: [@jms_serializer, "%php_orchestra_cms.custom_types%"]
-        tags: [{name: form.type, alias: content_type}]
-
-    # Site Form Builder
-    php_orchestra_cms.type.site:
-        class: PHPOrchestra\CMSBundle\Form\Type\SiteType
-        tags:
-            - { name: form.type, alias: site }
-
-    # Template form type
-    php_orchestra_cms.type.template:
-        class: PHPOrchestra\CMSBundle\Form\Type\TemplateType
-        arguments: [@service_container]
-        tags:
-            - { name: form.type, alias: template }
-
-    # Node form type
-    php_orchestra_cms.type.node:
-        class: PHPOrchestra\CMSBundle\Form\Type\NodeType
-        arguments: [@service_container]
-        tags:
-            - { name: form.type, alias: node }
-
 #--[TWIG]-----------------------#
 
     php_orchestra_cms.twig.lexicon_translator:

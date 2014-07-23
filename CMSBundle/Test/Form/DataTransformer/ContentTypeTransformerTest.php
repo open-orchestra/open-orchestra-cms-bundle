@@ -3,7 +3,6 @@
 namespace PHPOrchestra\CMSBundle\Test\Form\DataTransformer;
 
 use PHPOrchestra\CMSBundle\Test\Mock\Serializer;
-
 use \PHPOrchestra\CMSBundle\Form\DataTransformer\ContentTypeTransformer;
 use PHPOrchestra\CMSBundle\Test\Mock\TestContentType;
 
@@ -14,6 +13,11 @@ use PHPOrchestra\CMSBundle\Test\Mock\TestContentType;
  */
 class ContentTypeTransformerTest extends \PHPUnit_Framework_TestCase
 {
+    protected $serializer;
+
+    /**
+     * Set up the test
+     */
     public function setUp()
     {
         parent::setUp();

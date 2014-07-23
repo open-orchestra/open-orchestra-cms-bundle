@@ -74,20 +74,11 @@ class NodeController extends Controller
         if (is_null($node)) {
             throw new NonExistingDocumentException("Node not found");
         }
-        $areas = $node->getAreas();
-        $this->externalBlocks = array();
-        
-        if (is_array($areas)) {
-            foreach ($areas as $area) {
-                $this->getBlocks(new Area($area), $nodeId);
-            }
-        }
-        
+
         $response = $this->render(
             'PHPOrchestraCMSBundle:Node:show.html.twig',
             array(
                 'node' => $node,
-                'blocks' => $this->blocks,
                 'datetime' => time()
             )
         );
@@ -98,93 +89,17 @@ class NodeController extends Controller
         
         return $response;
     }
-    
-    
-    /** 
-     * Get blocks referenced in an area and its subareas
-     * 
-     * @param Area $area
-     * @param string $currentNodeId
-     */
-    protected function getBlocks(Area $area, $currentNodeId)
-    {
-        foreach ($area->getBlockReferences() as $blockReference) {
-            $this->getBlockWithReference($blockReference, $currentNodeId);
-        }
-        
-        foreach ($area->getSubAreas() as $subArea) {
-            $this->getBlocks($subArea, $currentNodeId);
-        }
-    }
-    
-    
+
     /**
-     * Get block with matching nodeId/blockId
-     * and set it in the controller
-     * 
-     * @param Array $blockReference
-     * @param string $currentNodeId
-     */
-    protected function getBlockWithReference($blockReference, $currentNodeId)
-    {
-        $realNodeId = $blockReference['nodeId'];
-        if ($realNodeId == 0) {
-            $realNodeId = $currentNodeId;
-        }
-        
-        if (!(isset($this->externalBlocks[$realNodeId]))) {
-            $this->getBlocksFromNode($realNodeId);
-        }
-        
-        if (isset($this->externalBlocks[$realNodeId][$blockReference['blockId']])) {
-            $this->blocks[$blockReference['nodeId']][$blockReference['blockId']] =
-                $this->externalBlocks[$realNodeId][$blockReference['blockId']];
-            $this->blocks[$blockReference['nodeId']][$blockReference['blockId']]
-                ['attributes']['_page_parameters']['url'] =
-                    $this->container->get('request')->attributes->get('module_parameters');
-        }
-        
-        $this->blocks[$blockReference['nodeId']][$blockReference['blockId']]['attributes']
-            ['_page_parameters']['query'] = $this->getRequest()->query->all();
-        $this->blocks[$blockReference['nodeId']][$blockReference['blockId']]['attributes']
-            ['_page_parameters']['post'] = $this->getRequest()->request->all();
-    }
-    
-    
-    /**
-     * Get blocks from specific Node, and cache them temporary for further request
-     * 
+     * @param Request $request
      * @param int $nodeId
+     *
+     * @return JsonResponse|Response
      */
-    protected function getBlocksFromNode($nodeId)
+    public function formAction(Request $request, $nodeId = 0)
     {
-        $this->externalBlocks[$nodeId] = array();
-        $node = $this->get('php_orchestra_cms.document_manager')->getDocument('Node', array('nodeId' => $nodeId));
-        
-        if ($node) {
-            $blocks = $node->getBlocks();
-            if (!is_null($blocks)) {
-                foreach ($blocks as $key => $block) {
-                    $this->externalBlocks[$nodeId][$key]['component'] = $block->getComponent();
-                    $this->externalBlocks[$nodeId][$key]['attributes'] = $block->getAttributes();
-                }
-            }
-        }
-    }
-    
-    
-     /**
-     * Test purpose : render a basic Node form
-     * 
-     * @param int nodeId
-     * @param string parentId
-     * @return Response
-     */
-    public function formAction($nodeId = 0)
-    {
-        $request = $this->get('request');
         $documentManager = $this->container->get('php_orchestra_cms.document_manager');
-        
+
         if (empty($nodeId)) {
             $node = $documentManager->createDocument('Node');
             $node->setSiteId(1);
@@ -196,27 +111,29 @@ class NodeController extends Controller
             );
             $node->setVersion($node->getVersion() + 1);
         }
-        $doSave = ($request->getMethod() == 'POST');
-        if ($request->request->get('refreshRecord')) {
+
+        $form = $this->createForm(
+            'node',
+            $node,
+            array(
+                'inDialog' => true,
+                'beginJs' => array('pagegenerator/dialogNode.js', 'pagegenerator/model.js'),
+                'endJs' => array('pagegenerator/node.js?'.time()),
+                'action' => $request->getUri()
+            )
+        );
+
+        if ($request->isXmlHttpRequest() && $request->get('refreshRecord')) {
             $node->fromArray($request->request->all());
-            $doSave = true;
-        } else {
-            $form = $this->createForm(
-                'node',
-                $node,
-                array(
-                    'inDialog' => true,
-                    'beginJs' => array('pagegenerator/dialogNode.js', 'pagegenerator/model.js'),
-                    'endJs' => array('pagegenerator/node.js?'.time()),
-                    'action' => $this->getRequest()->getUri()
-                )
-            );
-            if ($doSave) {
-                $form->handleRequest($request);
-                $doSave = $form->isValid();
-            }
+        } elseif ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $node = $form->getData();
         }
-        if ($doSave) {
+
+        if (
+            ($request->get('refreshRecord') || $request->isMethod('POST'))
+            && $this->get('validator')->validate($node)
+        ) {
            $response['dialog'] = $this->render(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(
@@ -238,6 +155,7 @@ class NodeController extends Controller
             }
             return new JsonResponse($response);
         }
+
         return $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
             array(

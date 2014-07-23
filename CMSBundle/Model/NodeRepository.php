@@ -3,6 +3,8 @@
 namespace PHPOrchestra\CMSBundle\Model;
 
 use PHPOrchestra\CMSBundle\Helper\TreeHelper;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Model\PHPOrchestraCMSBundle\Node bundle document repository.
@@ -97,22 +99,23 @@ class NodeRepository extends \Model\PHPOrchestraCMSBundle\Base\NodeRepository
 
     /**
      * Give url foreach node in the tree
-     * 
+     *
      * @param array $tree tree of node
-     * @param Symfony\Component\DependencyInjection\ContainerAware $container
-     * 
+     * @param UrlGeneratorInterface $router
+     *
      * @return array tree of node
      */
-    public function getTreeUrl($tree, $container)
+    public function getTreeUrl($tree, UrlGeneratorInterface $router)
     {
         $wood = array();
         foreach ($tree as $node) {
-            $node['url'] = $container->get('router')->generate($node['id']);
+            $node['url'] = $router->generate($node['id']);
             if (isset($node['sublinks'])) {
-                $node['sublinks'] = $this->getTreeUrl($node['sublinks'], $container);
+                $node['sublinks'] = $this->getTreeUrl($node['sublinks'], $router);
             }
             $wood[] = $node;
         }
+
         return $wood;
     }
 

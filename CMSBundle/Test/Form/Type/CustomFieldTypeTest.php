@@ -1,26 +1,10 @@
 <?php
 
-/*
- * Business & Decision - Commercial License
- *
- * Copyright 2014 Business & Decision.
- *
- * All rights reserved. You CANNOT use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell this Software or any parts of this
- * Software, without the written authorization of Business & Decision.
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * See LICENSE.txt file for the full LICENSE text.
- */
-
 namespace PHPOrchestra\CMSBundle\Test\Form\Type;
 
+use Phake;
 use Symfony\Component\Validator\Constraints\Email;
-
 use Symfony\Component\Validator\Constraints\Type;
-
 use PHPOrchestra\CMSBundle\Form\Type\CustomFieldType;
 
 /**
@@ -30,6 +14,12 @@ use PHPOrchestra\CMSBundle\Form\Type\CustomFieldType;
  */
 class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 {
+    protected $formBuilderMock;
+    protected $customField;
+
+    /**
+     * Set up the test
+     */
     public function setUp()
     {
         $availableFields = array(
@@ -45,8 +35,7 @@ class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         
         $this->customField = new CustomFieldType($availableFields);
         
-        $this->formBuilderMock =
-            $this->getMock('\\Symfony\\Component\\Form\\FormBuilderInterface');
+        $this->formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
     }
 
     /**
@@ -57,14 +46,16 @@ class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildForm($options, $expectedAddCount)
     {
-        $this->formBuilderMock
-            ->expects($this->exactly($expectedAddCount))
-            ->method('add')
-            ->will($this->returnSelf());
-        
+        Phake::when($this->formBuilderMock)->add(Phake::anyParameters())->thenReturn($this->formBuilderMock);
+
         $this->customField->buildForm($this->formBuilderMock, $options);
+
+        Phake::verify($this->formBuilderMock, Phake::times(7))->add(Phake::anyParameters());
     }
 
+    /**
+     * @return array
+     */
     public function getOptions()
     {
         $dataWithNoOptions = (object) array(
@@ -95,6 +86,9 @@ class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         $this->customField->buildForm($this->formBuilderMock, $options);
     }
 
+    /**
+     * @return array
+     */
     public function getExceptionsData()
     {
         $unknownFieldType = (object) array(
@@ -117,18 +111,21 @@ class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             array(array('data' =>  $fieldtypeNoDesc)), // Field type not described
         );
     }
-    
+
     /**
      * @dataProvider getConstraintsData
-     * 
-     * @param string  $fieldType
-     * @param array  $expectedContraints
+     *
+     * @param string $fieldType
+     * @param mixed  $expectedConstraints
      */
     public function testGetConstraints($fieldType, $expectedConstraints)
     {
         $this->assertEquals($this->customField->getConstraints($fieldType), $expectedConstraints);
     }
-    
+
+    /**
+     * @return array
+     */
     public function getConstraintsData()
     {
         return array(
@@ -137,7 +134,10 @@ class CustomFieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             array('email', array(new Email()))
         );
     }
-    
+
+    /**
+     * Test name
+     */
     public function testGetName()
     {
         $this->assertEquals('orchestra_customField', $this->customField->getName());
