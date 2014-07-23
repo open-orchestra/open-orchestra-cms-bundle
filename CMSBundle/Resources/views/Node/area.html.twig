@@ -20,7 +20,8 @@
         {% if block %} <span>{{ block.component }}</span>{% endif %}
         </legend>
     {% if block %}
-        {{ render_esi(url('php_orchestra_cms_block', {'nodeId': nodeId, 'blockId': blockReference.blockId })) }}
+        {% set queryParams = app.request.query.all|merge({'nodeId': nodeId, 'blockId': blockReference.blockId }) %}
+        {{ render_esi(url('php_orchestra_cms_block', queryParams)) }}
     {% endif %}
     </fieldset>
 {% endfor %}

@@ -8,6 +8,8 @@ use PHPOrchestra\IndexationBundle\SearchStrategy\SearchManager;
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -19,21 +21,25 @@ class SearchResultStrategy extends AbstractStrategy
     protected $solariumClient;
     protected $searchManager;
     protected $translator;
+    protected $container;
 
     /**
      * @param Client              $solariumClient
      * @param SearchManager       $searchManager
      * @param TranslatorInterface $translator
+     * @param Container           $container
      */
     public function __construct(
         Client $solariumClient,
         SearchManager $searchManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        Container $container
     )
     {
         $this->solariumClient = $solariumClient;
         $this->searchManager = $searchManager;
         $this->translator = $translator;
+        $this->container = $container;
     }
 
     /**
@@ -68,7 +74,11 @@ class SearchResultStrategy extends AbstractStrategy
         $optionsearch = $attributes['optionsearch'];
         $optionsdismax = $attributes['optiondismax'];
         $page = $attributes['page'];
-        $_page_parameters = $attributes['_page_parameters'];
+        if ($this->getRequest()) {
+            $_page_parameters['query'] = $this->getRequest()->query->all();
+        } else {
+            $_page_parameters = array();
+        }
 
         if (isset($_page_parameters['query']) && is_array($_page_parameters['query'])) {
             $paramQuery = $_page_parameters['query'];
@@ -373,5 +383,13 @@ class SearchResultStrategy extends AbstractStrategy
                 )
             );
         }
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->container->get('request');
     }
 }

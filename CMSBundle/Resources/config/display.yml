@@ -51,7 +51,7 @@ services:
             - { name: php_orchestra_cms.display_block.strategy }
     php_orchestra_cms.display.search_result:
         class: %php_orchestra_cms.display.search_result.class%
-        arguments: [@solarium.client, @php_orchestra_indexation.search_manager, @translator]
+        arguments: [@solarium.client, @php_orchestra_indexation.search_manager, @translator, @service_container]
         tags:
             - { name: php_orchestra_cms.display_block.strategy }
     php_orchestra_cms.display.search:
