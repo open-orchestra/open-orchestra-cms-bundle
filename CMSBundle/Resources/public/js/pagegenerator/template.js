@@ -1,4 +1,5 @@
 var allowed_object = ['areas', 'blocks'];
+var navigation = $('#3990486829');
 
 function returnActions(options, length, direction){
 	id = 'none';

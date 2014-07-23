@@ -21,7 +21,7 @@ function treeParameter(name, moveUrl, target){
 	    helper: 'clone',
 	    items: "li:not(.ui-state-unsortable)",
 	    stop: function(event, ui){
-	        treeAjaxCall(moveUrl, {'node':ui.item.data('tree-parameter'), 'parentNode':ui.item.parents('li').eq(0).data('tree-parameter')});
+	        treeAjaxCall(moveUrl, {'node':ui.item.data('tree-parameter'), 'parentNode':ui.item.parents('li').eq(0).data('tree-parameter')}, target);
 	    }
 	};
 }

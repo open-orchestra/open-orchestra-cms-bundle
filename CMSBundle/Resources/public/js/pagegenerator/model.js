@@ -44,20 +44,20 @@ function formIdToName(prefix, data){
 		        		data['ui-model'].label = (!$(this).is('select')) ? $(this).val() : $(this).find(":selected").text();
 		        	}
 	        });
-    		if('ui-model' in data && 'html' in data['ui-model'] && (url = $(this).find('form').attr("action")) != ''){
-    			if(url != ''){
-				    $.ajax({
-				        'type': 'POST',
-				        'url': url,
-				        'success': function(response){
-				    		data['ui-model']['html'] = response.data;
-				        },
-				        'data': $.extend(data, {'preview': true}),
-				        'dataType': 'json',
-				        'async': false
-				    });
-    			}
-    		}
+	        try{
+	        	'html' in data['ui-model'];
+	        	var url = $(this).find('form').attr("action")
+			    $.ajax({
+			        'type': 'POST',
+			        'url': url,
+			        'success': function(response){
+			    		data['ui-model']['html'] = response.data;
+			        },
+			        'data': $.extend(data, {'preview': true}),
+			        'dataType': 'json',
+			        'async': false
+			    });
+	        } catch(e){}
 		});
     }
     $.fn.fromJsToForm = function()
@@ -209,6 +209,9 @@ function formIdToName(prefix, data){
 			var father_bo_direction = (father_bo_direction = getValueInObject(container.data('settings'), options.parent_path, 'boDirection')) ? father_bo_direction : 'h';
 
 			var div = $("<div/>");
+			try{
+				div.addClass(this_settings['method']);
+			} catch(e){}
 			$("<span/>").addClass("title")
 						.text(getValueInObject(container.data('settings'), options.path + "['ui-model']", 'label'))
 						.appendTo(div);
@@ -243,7 +246,7 @@ function formIdToName(prefix, data){
 							subli.appendTo(ul);
 							boPercent = (boPercent = getValueInObject(container.data('settings'), path, "boPercent")) ? boPercent : 100 / (this_settings[i].length);
 							subli.css(bo_direction_tools.vector, boPercent + '%');
-							subli.addClass('ui-model-' + i)
+							subli.addClass('ui-model-' + i);
 							subli.model({'path' : path, 'parent_path': options.path, 'type' : i});
 							if(container.data('resizable')){
 								if(j != this_settings[i].length -1){
