@@ -74,20 +74,11 @@ class NodeController extends Controller
         if (is_null($node)) {
             throw new NonExistingDocumentException("Node not found");
         }
-        $areas = $node->getAreas();
-        $this->externalBlocks = array();
-        
-        if (is_array($areas)) {
-            foreach ($areas as $area) {
-                $this->getBlocks(new Area($area), $nodeId);
-            }
-        }
-        
+
         $response = $this->render(
             'PHPOrchestraCMSBundle:Node:show.html.twig',
             array(
                 'node' => $node,
-                'blocks' => $this->blocks,
                 'datetime' => time()
             )
         );
@@ -97,71 +88,6 @@ class NodeController extends Controller
         $response->headers->addCacheControlDirective('must-revalidate', true);
         
         return $response;
-    }
-    
-    
-    /** 
-     * Get blocks referenced in an area and its subareas
-     * 
-     * @param Area $area
-     * @param string $currentNodeId
-     */
-    protected function getBlocks(Area $area, $currentNodeId)
-    {
-        foreach ($area->getBlockReferences() as $blockReference) {
-            $this->getBlockWithReference($blockReference, $currentNodeId);
-        }
-        
-        foreach ($area->getSubAreas() as $subArea) {
-            $this->getBlocks($subArea, $currentNodeId);
-        }
-    }
-    
-    
-    /**
-     * Get block with matching nodeId/blockId
-     * and set it in the controller
-     * 
-     * @param Array $blockReference
-     * @param string $currentNodeId
-     */
-    protected function getBlockWithReference($blockReference, $currentNodeId)
-    {
-        $realNodeId = $blockReference['nodeId'];
-        if ($realNodeId == 0) {
-            $realNodeId = $currentNodeId;
-        }
-        
-        if (!(isset($this->externalBlocks[$realNodeId]))) {
-            $this->getBlocksFromNode($realNodeId);
-        }
-        
-        if (isset($this->externalBlocks[$realNodeId][$blockReference['blockId']])) {
-            $this->blocks[$blockReference['nodeId']][$blockReference['blockId']] =
-                $this->externalBlocks[$realNodeId][$blockReference['blockId']];
-        }
-    }
-    
-    
-    /**
-     * Get blocks from specific Node, and cache them temporary for further request
-     * 
-     * @param int $nodeId
-     */
-    protected function getBlocksFromNode($nodeId)
-    {
-        $this->externalBlocks[$nodeId] = array();
-        $node = $this->get('php_orchestra_cms.document_manager')->getDocument('Node', array('nodeId' => $nodeId));
-        
-        if ($node) {
-            $blocks = $node->getBlocks();
-            if (!is_null($blocks)) {
-                foreach ($blocks as $key => $block) {
-                    $this->externalBlocks[$nodeId][$key]['component'] = $block->getComponent();
-                    $this->externalBlocks[$nodeId][$key]['attributes'] = $block->getAttributes();
-                }
-            }
-        }
     }
 
     /**
