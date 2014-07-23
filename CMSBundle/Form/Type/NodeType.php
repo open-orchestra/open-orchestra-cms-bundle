@@ -7,21 +7,30 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
+/**
+ * Class NodeType
+ */
 class NodeType extends AbstractType
 {
-    protected $container = null;
+    protected $router;
+    protected $nodeTypeTransformer;
 
     /**
-     * @param $container
+     * @param NodeTypeTransformer $nodeTypeTransformer
+     * @param UrlGeneratorInterface $router
      */
-    public function __construct($container)
+    public function __construct(
+        NodeTypeTransformer $nodeTypeTransformer,
+        UrlGeneratorInterface $router
+    )
     {
-        $this->container = $container;
+        $this->nodeTypeTransformer = $nodeTypeTransformer;
+        $this->router = $router;
     }
-                
+
     /**
      * (non-PHPdoc)
      * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
@@ -29,10 +38,9 @@ class NodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new NodeTypeTransformer($this->container, true);
-        $builder->addModelTransformer($transformer);
+        $builder->addModelTransformer($this->nodeTypeTransformer);
 
-        $templateUrl = $this->container->get('router')->generate('php_orchestra_cms_templateajaxrequest', array('templateId' => '%s'));
+        $templateUrl = $this->router->generate('php_orchestra_cms_templateajaxrequest', array('templateId' => '%s'));
         $templateUrl = urldecode($templateUrl);
         
         $builder
@@ -91,7 +99,8 @@ class NodeType extends AbstractType
             array(
                 'inDialog' => false,
                 'beginJs' => array(),
-                'endJs' => array()
+                'endJs' => array(),
+                'data_class' => 'Model\PHPOrchestraCMSBundle\Node',
             )
         );
     }

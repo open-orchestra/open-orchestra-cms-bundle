@@ -112,26 +112,28 @@ class NodeController extends Controller
             $node->setVersion($node->getVersion() + 1);
         }
 
-        if ($request->request->get('refreshRecord')) {
+        $form = $this->createForm(
+            'node',
+            $node,
+            array(
+                'inDialog' => true,
+                'beginJs' => array('pagegenerator/dialogNode.js', 'pagegenerator/model.js'),
+                'endJs' => array('pagegenerator/node.js?'.time()),
+                'action' => $request->getUri()
+            )
+        );
+
+        if ($request->isXmlHttpRequest() && $request->get('refreshRecord')) {
             $node->fromArray($request->request->all());
-        } else {
-            $form = $this->createForm(
-                'node',
-                $node,
-                array(
-                    'inDialog' => true,
-                    'beginJs' => array('pagegenerator/dialogNode.js', 'pagegenerator/model.js'),
-                    'endJs' => array('pagegenerator/node.js?'.time()),
-                    'action' => $request->getUri()
-                )
-            );
-            if ($request->isMethod('POST')) {
-                $form->handleRequest($request);
-                $node = $form->getData();
-            }
+        } elseif ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $node = $form->getData();
         }
 
-        if ($this->get('validator')->validate($node)) {
+        if (
+            ($request->get('refreshRecord') || $request->isMethod('POST'))
+            && $this->get('validator')->validate($node)
+        ) {
            $response['dialog'] = $this->render(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(
@@ -153,6 +155,7 @@ class NodeController extends Controller
             }
             return new JsonResponse($response);
         }
+
         return $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
             array(

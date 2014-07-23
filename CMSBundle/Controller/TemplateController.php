@@ -125,8 +125,7 @@ class TemplateController extends Controller
             'Template',
             array('templateId' => $templateId)
         );
-        $transformer = new NodeTypeTransformer($this->container, false);
-        $template = $transformer->transform($template);
+        $template = $this->get('php_orchestra_cms.transformer.node_type')->transform($template);
         $result = json_decode($template->getAreas(), true);
         $result = $result['areas'];
         return new JsonResponse(

@@ -10,8 +10,6 @@ parameters:
     php_orchestra_cms.type.content_attributes.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentAttributesType'
     php_orchestra_cms.type.content_type_fields.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType'
     php_orchestra_cms.type.custom_field.class : 'PHPOrchestra\CMSBundle\Form\Type\CustomFieldType'
-    php_orchestra_cms.type.content.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentType'
-    php_orchestra_cms.type.content_type.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeType'
 
 #--[EXTEND SYMFONY 2 ROUTING]---#
 
