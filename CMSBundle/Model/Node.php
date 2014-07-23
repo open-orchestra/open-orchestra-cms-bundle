@@ -10,11 +10,11 @@ abstract class Node extends \Model\PHPOrchestraCMSBundle\Base\Node
     const STATUS_DRAFT = 'draft';
     const STATUS_PENDING = 'pending';
     const STATUS_PUBLISHED = 'published';
-    
+
     const TYPE_DEFAULT = 'page';
-    
+
     const ROOT_NODE_ID = 'root';
-    
+
     /**
      * Initializes the document defaults.
      */
@@ -42,41 +42,48 @@ abstract class Node extends \Model\PHPOrchestraCMSBundle\Base\Node
             $this->setDeleted(false);
         }
     }
-    
+
     /**
      * Alias to addBlocks as used by symfony standard forms
-     * 
+     *
      * @param document | document[] $documents
+     *
+     * @return $this
      */
     public function setBlocks($documents)
     {
         $this->addBlocks($documents);
-        
+
         return $this;
     }
-    
+
     /**
      * Alias to getDeleted
+     *
+     * @return mixed
      */
     public function isDeleted()
     {
         return $this->getDeleted();
     }
-    
+
+    /**
+     * @return \Mandango\Document\Document
+     */
     public function markAsDeleted()
     {
         $this->setDeleted('true');
+
         return $this->save();
     }
 
-
     /**
      * Give content for the document
-     * 
-     * @param Solarium\QueryType\Update\Query\Document\Document $doc
-     * @param array $fields 
-     * 
-     * @return Solarium\QueryType\Update\Query\Document\Document
+     *
+     * @param Solarium/QueryType/Update/Query/Document/Document $doc
+     * @param array                                             $fields
+     *
+     * @return mixed
      */
     public function toSolrDocument($doc, $fields)
     {
@@ -89,13 +96,13 @@ abstract class Node extends \Model\PHPOrchestraCMSBundle\Base\Node
         $doc->parentId = $this->getParentId();
         $doc->status = $this->getStatus();
         $doc->idPath = $this->getPath();
-        
+
         foreach ($fields as $name => $value) {
             if (!empty($value)) {
-                $doc->$name = implode("", $value);
+                $doc->$name = $value;
             }
         }
-        
+
         return $doc;
     }
 }
