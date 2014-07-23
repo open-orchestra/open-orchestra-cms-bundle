@@ -48,6 +48,9 @@
     margin:-29px 0 0 -18px;
     line-height:20px;
     font-weight:bold;
+    width:100%;
+    overflow:hidden;
+    white-space:nowrap;
 }
 .ui-model span.action{
     position:absolute;
@@ -83,12 +86,16 @@
     border:1px solid #4e4e4e;
 }
 .ui-model .ui-model-areas div{
-    color:#1e5799;
-	border:1px solid #1e5799;
+    color:#4e4e4e;
+	border:1px solid #4e4e4e;
+}
+.ui-model .ui-model-blocks div.generate {
+    color:#6aa84f;
+	border:1px solid #6aa84f;
 }
 .ui-model .ui-model-blocks div{
-    color:#1e9a52;
-	border:1px solid #1e9a52;
+    color:#085394;
+    border:1px solid #085394;
 }
 .ui-model div.over{
     color:#9a381e;
@@ -102,4 +109,15 @@
 .ui-model div.dialog-selected{
     background-image: url(../img/alpha.png);
     background-size: 10px 100%;
+}
+#all-blocks{
+	position:relative;
+	display:inline;
+	float:left;
+	top:0px;
+	left:100%;
+	height:100%;
+	width:100%;
+	background-color:#880000;
+	margin-left:-30px;
 }
