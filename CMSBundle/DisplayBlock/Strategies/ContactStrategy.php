@@ -79,4 +79,4 @@ class ContactStrategy extends AbstractStrategy
         return 'contact';
     }
 
-} 
+}
