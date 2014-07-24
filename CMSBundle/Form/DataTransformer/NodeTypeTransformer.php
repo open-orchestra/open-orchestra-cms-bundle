@@ -66,7 +66,6 @@ class NodeTypeTransformer implements DataTransformerInterface
             $areas = json_decode($node->getAreas(), true);
             $node->removeBlocks($node->getBlocks()->getSaved());
             if (is_array($areas)) {
-                $areas = array(self::JSON_AREA_TAG => $areas);
                 $areas = $this->reverseRecTransform($areas, $node);
                 $node->setAreas($areas[self::PHP_AREA_TAG]);
             }
@@ -85,7 +84,6 @@ class NodeTypeTransformer implements DataTransformerInterface
         foreach($values as $key => &$value){
             if($key === 'blocks'){
                 foreach($value as &$block){
-                    $block['ui-model']['label'] = $block['blockId'];
                     if(array_key_exists('nodeId', $block) && array_key_exists('blockId', $block) && array_key_exists($block['blockId'], $blocks) && $block['nodeId'] === 0){
                         $blockRef = $blocks[$block['blockId']];
                         unset($block['blockId']);
@@ -102,6 +100,7 @@ class NodeTypeTransformer implements DataTransformerInterface
                         $blocks = $node->getBlocks()->all();
                         $blockRef = $blocks[$block['blockId']];
                     }
+                    $block['ui-model']['label'] = $block['component'];
                     $response = $this->blockManager->showBack($blockRef)->getContent();
                     $block['ui-model']['html'] = $response;
                 }
