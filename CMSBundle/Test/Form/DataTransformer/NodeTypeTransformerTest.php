@@ -264,6 +264,14 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
         
         $returnedNode = $this->transformer->reverseTransform($node);
         
+        Phake::verify($blocksGroup)->getSaved();
+        Phake::verify($blocksGroup)->count();
+        Phake::verify($block)->setComponent(Phake::anyParameters());
+        Phake::verify($block)->setAttributes(Phake::anyParameters());
+        Phake::verify($node)->getAreas();
+        Phake::verify($node, Phake::times(2))->getBlocks();
+        Phake::verify($this->documentManager)->createDocument('Block');
+        Phake::verify($node)->removeBlocks(Phake::anyParameters());
         Phake::verify($node)->setAreas(
             array(
                 array(
@@ -332,6 +340,10 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
         
         $returnedNode = $this->transformer->reverseTransform($node);
         
+        Phake::verify($blocksGroup)->getSaved();
+        Phake::verify($node)->getAreas();
+        Phake::verify($node)->getBlocks();
+        Phake::verify($node)->removeBlocks(Phake::anyParameters());
         Phake::verify($node)->setAreas(
             array(
                 array(
