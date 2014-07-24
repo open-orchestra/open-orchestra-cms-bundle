@@ -19,58 +19,17 @@ use PHPOrchestra\CMSBundle\Helper\NodeHelper;
 
 class NodeController extends Controller
 {
-    
-    /**
-     * Cache containing blocks potentially used in current node.
-     * This cache contains all blocks defined in nodes that are mentionned
-     * in block references of the current node.
-     * This is to prevent multiple loading of the same node document
-     * when same external node is linked several times in the current node
-     * 
-     * @var Array
-     */
-    private $externalBlocks = array();
-    
-    
-    /**
-     * Contains blocks used in the current node,
-     * either defined in current or external node
-     * 
-     * @var Array
-     */
-    private $blocks = array();
-    
-    
-    
-    /**
-     * A getter for the variable externalBlocks
-     *
-     * @param none
-     */
-    public function getExternalBlocks()
-    {
-        return $this->externalBlocks;
-    }
-    
-    /**
-     * A getter for the variable externalBlocks
-     *
-     * @param none
-     */
-    public function getBlocksNoparam()
-    {
-        return $this->blocks;
-    }
-    
     /**
      * Render Node
-     * 
+     *
      * @param int $nodeId
+     *
+     * @throws NonExistingDocumentException
      * @return Response
      */
     public function showAction($nodeId)
     {
-        $node = $this->get('php_orchestra_cms.document_manager')->getDocument('Node', array('nodeId' => $nodeId));
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
         if (is_null($node)) {
             throw new NonExistingDocumentException("Node not found");
         }

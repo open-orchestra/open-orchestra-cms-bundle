@@ -22,13 +22,10 @@ class BlockController extends Controller
      */
     public function showAction($nodeId, $blockId)
     {
-        $node = $this->get('mandango')->getRepository('Model\PHPOrchestraCMSBundle\Node')
-            ->getOne($nodeId);
-
-        $blocks = $node->getBlocks()->all();
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
         return $this->get('php_orchestra_cms.display_block_manager')
-            ->show($blocks[$blockId]);
+            ->show($node->getBlocks()->get($blockId));
     }
 
     /**

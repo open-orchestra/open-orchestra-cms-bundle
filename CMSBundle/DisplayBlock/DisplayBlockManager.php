@@ -3,7 +3,7 @@
 namespace PHPOrchestra\CMSBundle\DisplayBlock;
 
 use PHPOrchestra\CMSBundle\Exception\DisplayBlockStrategyNotFoundException;
-use PHPOrchestra\CMSBundle\Model\Block;
+use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,12 +35,12 @@ class DisplayBlockManager
     /**
      * Perform the show action for a block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @throws DisplayBlockStrategyNotFoundException
      * @return Response
      */
-    public function show(Block $block)
+    public function show(BlockInterface $block)
     {
         /** @var DisplayBlockInterface $strategy */
         foreach ($this->strategies as $strategy) {
@@ -54,12 +54,12 @@ class DisplayBlockManager
     /**
      * Perform the show action for a block on the backend
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @throws DisplayBlockStrategyNotFoundException
      * @return Response
      */
-    public function showBack(Block $block)
+    public function showBack(BlockInterface $block)
     {
         /** @var DisplayBlockInterface $strategy */
         foreach ($this->strategies as $strategy) {
