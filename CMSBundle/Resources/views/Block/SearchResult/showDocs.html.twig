@@ -12,7 +12,13 @@
                     <li><a href="{{ doc.url }}" class="doclink">{{ doc[firstField] }} </a></li>
                     {% for fieldname, fieldvalue in doc %}
                         {% if fieldname in fieldsdisplayed %}
-                            <li class="field">{{ fieldvalue | truncate(limitField, true, '...') }}</li>
+                            {% if fieldvalue is iterable %}
+                                {% for field in fieldvalue %}
+                                    <li class="field">{{ field | truncate(limitField, true, '...') }}</li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="field">{{ fieldvalue | truncate(limitField, true, '...') }}</li>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 {% endif %}

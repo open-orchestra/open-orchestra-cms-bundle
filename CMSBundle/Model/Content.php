@@ -10,7 +10,7 @@ abstract class Content extends \Model\PHPOrchestraCMSBundle\Base\Content
     const STATUS_UNPUBLISHED = 'unpublished';
     const STATUS_PUBLISHED = 'published';
     const STATUS_DRAFT = 'draft';
-    
+
     /**
      * Initializes the document defaults.
      */
@@ -32,24 +32,29 @@ abstract class Content extends \Model\PHPOrchestraCMSBundle\Base\Content
             $this->setContentId(\time());
         }
     }
-    
+
     /**
      * Alias to getDeleted
+     *
+     * @return mixed
      */
     public function isDeleted()
     {
         return $this->getDeleted();
     }
-    
+
     /**
      * Mark the document as deleted
+     *
+     * @return \Mandango\Document\Document
      */
     public function markAsDeleted()
     {
         $this->setDeleted(true);
+
         return $this->save();
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see src/symfony2/src/Model/PHPOrchestraCMSBundle/Base/Model\PHPOrchestraCMSBundle\Base.Content::toArray()
@@ -57,17 +62,17 @@ abstract class Content extends \Model\PHPOrchestraCMSBundle\Base\Content
     public function toArray($withReferenceFields = false)
     {
         $document = parent::toArray($withReferenceFields);
-        
+
         $attributes = $this->getAttributes();
         $attributesToArray = array();
         foreach ($attributes as $attribute) {
             $attributesToArray[] = $attribute->toArray();
         }
         $document['attributes'] = $attributesToArray;
-        
+
         return $document;
     }
-    
+
     /**
      * Generate a draft version of the Content
      */
@@ -84,31 +89,33 @@ abstract class Content extends \Model\PHPOrchestraCMSBundle\Base\Content
         foreach ($attributes as $attribute) {
             $this->addAttributes($attribute);
         }
-        
+
         $this->setIsNew(true);
         $this->save();
     }
-    
+
     /**
      * Alias to addAttributes as used by symfony standard forms
      * 
      * @param document | document[] $documents
+     *
+     * @return $this
      */
     public function setAttributes($documents)
     {
         $this->addAttributes($documents);
-        
+
         return $this;
     }
-    
+
 
     /**
      * Give content for the document
      *
-     * @param Solarium\QueryType\Update\Query\Document\Document $doc
-     * @param array $fields
+     * @param Solarium/QueryType/Update/Query/Document/Document $doc
+     * @param array                                             $fields
      *
-     * @return Solarium\QueryType\Update\Query\Document\Document
+     * @return Solarium/QueryType/Update/Query/Document/Document
      */
     public function toSolrDocument($doc, $fields)
     {
@@ -118,13 +125,13 @@ abstract class Content extends \Model\PHPOrchestraCMSBundle\Base\Content
         $doc->language = $this->getLanguage();
         $doc->type = $this->getContentType();
         $doc->status = $this->getStatus();
-         
+
         foreach ($fields as $name => $value) {
             if (!empty($value)) {
-                $doc->$name = implode("", $value);
+                $doc->$name = $value;
             }
         }
-    
+
         return $doc;
     }
 }
