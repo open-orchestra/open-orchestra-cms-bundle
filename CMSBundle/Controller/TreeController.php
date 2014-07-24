@@ -22,7 +22,8 @@ class TreeController extends Controller
      */
     public function showTreeNodesAction()
     {
-        $nodes = $this->get('php_orchestra_cms.document_manager')->getNodesInLastVersion(array(array('$match' => array('deleted' => false))));
+        $nodes = $this->get('php_orchestra_cms.document_manager')
+            ->getNodesInLastVersion(array(array('$match' => array('deleted' => false))));
         
         $listParentId = array();
         foreach ($nodes as &$node) {
@@ -35,9 +36,10 @@ class TreeController extends Controller
             );
             $node['parameter'] = array('nodeId' => $node['_id'], 'name' => $node['name']);
             if(!in_array($node['_id'], $listParentId)){
-            	$listParentId[] = $node['_id'];
+                $listParentId[] = $node['_id'];
             }
         }
+
         foreach($listParentId as $parentId){
             array_push($nodes, array(
                 '_id' => uniqid('node-'),
@@ -54,7 +56,7 @@ class TreeController extends Controller
             ));
         }
         
-        $nodes = TreeHelper::createTree($nodes, '_id', 'parentId');
+        $nodes = TreeHelper::createTree($nodes);
 
         return $this->getRender($nodes, $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'moveNode')), $this->get('translator')->trans('php_orchestra_cms.left_menu.editorial.nodes', array(), 'backOffice'));
     }
@@ -64,9 +66,9 @@ class TreeController extends Controller
      */
     public function showTreeTemplatesAction()
     {
-    	
-    	$templates = $this->get('php_orchestra_cms.document_manager')->getTemplatesInLastVersion(array(array('$match' => array('deleted' => false))));
-    	
+
+        $templates = $this->get('php_orchestra_cms.document_manager')->getTemplatesInLastVersion(array(array('$match' => array('deleted' => false))));
+
         
         foreach ($templates as $key => &$template) {
             $template['url'] = $this->generateUrl(
