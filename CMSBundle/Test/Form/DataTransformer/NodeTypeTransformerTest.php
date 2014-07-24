@@ -218,15 +218,14 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransformWithGenerateMethod()
     {
-
         $areaId = 'testId';
         $blockId = 'blockId';
         $component = 'Sample';
         $attributNews = 'test';
         $nodeId = 0;
         $htmlData = 'Some html data';
-    	
-    	$areas = json_encode(array(
+        
+        $areas = json_encode(array(
             'areas' => array(
                 array(
                     'areaId' => $areaId,
@@ -243,18 +242,18 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
                         )
                     ),
                     'ui-model' => array('label' => $areaId),
-	            )
-	        )
-	    ));
-    	
+                )
+            )
+        ));
+        
 
         $blocksGroup = Phake::mock('Mandango\Group\EmbeddedGroup');
         Phake::when($blocksGroup)->getSaved()->thenReturn(array());
-	    Phake::when($blocksGroup)->count()->thenReturn(0);
-	    
-	    $node = Phake::mock('PHPOrchestra\CMSBundle\Model\Node');
-	    $block = Phake::mock('PHPOrchestra\CMSBundle\Model\Block');
-	    
+        Phake::when($blocksGroup)->count()->thenReturn(0);
+        
+        $node = Phake::mock('PHPOrchestra\CMSBundle\Model\Node');
+        $block = Phake::mock('PHPOrchestra\CMSBundle\Model\Block');
+        
         Phake::when($block)->setComponent(Phake::anyParameters())->thenReturn($block);
         Phake::when($block)->setAttributes(Phake::anyParameters())->thenReturn($block);
                 
@@ -263,21 +262,21 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->documentManager)->createDocument('Block')->thenReturn($block);
         Phake::when($node)->removeBlocks(Phake::anyParameters())->thenReturn(null);
         
-    	$returnedNode = $this->transformer->reverseTransform($node);
-    	
+        $returnedNode = $this->transformer->reverseTransform($node);
+        
         Phake::verify($node)->setAreas(
             array(
-	            array(
-	                'areaId' => $areaId,
-	                'classes' => array(''),
-	                'blocks' => array(
-	                    array(
-	                        'nodeId' => 0,
-	                        'blockId' => 0,
-	                    )
-	                )
-	            )
-	        )
+                array(
+                    'areaId' => $areaId,
+                    'classes' => array(''),
+                    'blocks' => array(
+                        array(
+                            'nodeId' => 0,
+                            'blockId' => 0,
+                        )
+                    )
+                )
+            )
         );
     }
 
@@ -286,7 +285,6 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransformWithLoadMethod()
     {
-
         $areaId = 'testId';
         $blockId = 'blockId';
         $component = 'Sample';
@@ -349,5 +347,4 @@ class NodeTypeTransformerTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-
 }
