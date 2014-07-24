@@ -1,20 +1,5 @@
 <?php
 
-/*
- * Business & Decision - Commercial License
- *
- * Copyright 2014 Business & Decision.
- *
- * All rights reserved. You CANNOT use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell this Software or any parts of this
- * Software, without the written authorization of Business & Decision.
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * See LICENSE.txt file for the full LICENSE text.
- */
-
 namespace PHPOrchestra\CMSBundle\Test\Helper;
 
 use \PHPOrchestra\CMSBundle\Helper\TreeHelper;
@@ -27,14 +12,15 @@ use \PHPOrchestra\CMSBundle\Helper\TreeHelper;
 class NodesHelperTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider createTreeData
      * @param array $expectedResult
      * @param array $nodes
+     *
+     * @dataProvider createTreeData
      */
     public function testCreateTree($expectedResult, $nodes)
     {
-        /*$result = TreeHelper::createTree($nodes);
-        $this->assertEquals($expectedResult, $result);*/
+        $result = TreeHelper::createTree($nodes);
+        $this->assertEquals($expectedResult, $result);
     }
     
     public function createTreeData()
@@ -69,7 +55,52 @@ class NodesHelperTest extends \PHPUnit_Framework_TestCase
                         'deleted'   => true
                     ),
                 )
-            )
+            ),
+            array(
+                array(
+                    array(
+                        'id' => 'root',
+                        'class' => '',
+                        'text' => 'Home page',
+                    )
+                ),
+                array(
+                    array(
+                        '_id'       => 'root',
+                        'parentId'  => '0',
+                        'name'      => 'Home page',
+                        'deleted'   => false
+                    ),
+                )
+            ),
+            array(
+                array(
+                    array(
+                        'id' => 'root',
+                        'class' => '',
+                        'text' => 'Home page',
+                    ),
+                    array(
+                        'id' => '2',
+                        'class' => '',
+                        'text' => 'Second page',
+                    ),
+                ),
+                array(
+                    array(
+                        '_id'       => 'root',
+                        'parentId'  => '0',
+                        'name'      => 'Home page',
+                        'deleted'   => false
+                    ),
+                    array(
+                        '_id'       => '2',
+                        'parentId'  => '0',
+                        'name'      => 'Second page',
+                        'deleted'   => false
+                    ),
+                )
+            ),
         );
     }
 }

@@ -94,6 +94,7 @@ class NodeRepository extends \Model\PHPOrchestraCMSBundle\Base\NodeRepository
                 $links2[$superroot][] = array('id' => $nodeId, 'text' => $name);
             }
         }
+
         return TreeHelper::createRecTree($links2, $links2[$superroot]);
     }
 

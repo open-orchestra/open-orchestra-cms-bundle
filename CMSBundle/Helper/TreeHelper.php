@@ -1,56 +1,74 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Helper;
 
-use Model\PHPOrchestraCMSBundle\Node;
-
+/**
+ * Class TreeHelper
+ */
 class TreeHelper
 {
-    public static function createTree($values, $l_id = null, $l_pid = null)
+    /**
+     * @param array  $values
+     * @param string $l_id
+     * @param string $l_pid
+     *
+     * @return array
+     */
+    public static function createTree($values, $l_id = '_id', $l_pid = 'parentId')
     {
-        if ($l_id === null) {
-            foreach ($values as $key => $value) {
-                $values[$key] = array();
-                $values[$key]['id'] = $value;
-            }
-            return $values;
-        } else {
-            $connection = array();
-            foreach ($values as $value) {
-                $connection[$value[$l_id]] = $value[$l_pid];
-            }
-            $links = array();
+        $tree = array();
 
-            $superRoot = '';
-            foreach ($connection as $key => $value) {
-                $id = $key;
-                $pid = $value;
-                if (!array_key_exists($pid, $connection)) {
-                    $superRoot = $pid;
-                }
-                $links[$pid][] = array('id' => $id);
-            }
-            
-            $links = TreeHelper::createRecTree($links, $links[$superRoot]);
-            
-            $connection = array();
-            foreach ($values as $value) {
-                $connection[$value[$l_id]] = $value;
-            }
-            array_walk_recursive($links, function (&$value) use ($connection) {
-                $value = $connection[$value];
-            });
-            
-            return $links;
+        $newValues = array();
+        foreach ($values as $node) {
+            $newValues[$node[$l_id]] = $node;
         }
+        $values = $newValues;
+
+        $parents = array();
+        foreach ($values as $node) {
+            if ('0' !== $node[$l_pid]) {
+                $parents[$node[$l_pid]][] = $node[$l_id];
+            }
+        }
+
+        if (!empty($parents)) {
+            foreach ($parents as $parentId => $sons) {
+                $tmpTree = self::createTreeFromNode($values[$parentId]);
+                foreach ($sons as $sonId) {
+                    $tmpTree['sublinks'][] = self::createTreeFromNode($values[$sonId]);
+                }
+                $tree[] = $tmpTree;
+            }
+        } else {
+            foreach ($values as $node) {
+                $tree[] = self::createTreeFromNode($node);
+            }
+
+        }
+
+        return $tree;
     }
-    
-    
+
+    /**
+     * @param array $node
+     *
+     * @return array
+     */
+    public static function createTreeFromNode($node)
+    {
+        return array(
+            'id' => $node['_id'],
+            'class' => $node['deleted']? 'deleted':'',
+            'text' => $node['name']
+        );
+    }
+
+    /**
+     * @param array $list
+     * @param array $parent
+     *
+     * @return array
+     */
     public static function createRecTree(&$list, $parent)
     {
         $tree = array();
@@ -60,7 +78,7 @@ class TreeHelper
             }
             $tree[] = $l;
         }
-        
+
         return $tree;
     }
 }
