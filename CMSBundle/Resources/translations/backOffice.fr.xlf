@@ -93,6 +93,10 @@
                         <source>php_orchestra_cms.left_menu.administration.routing_cache.ok</source>
                         <target>Le cache de routage a été purgé avec succès.</target>
                     </trans-unit>
+                    <trans-unit id="php_orchestra_cms.left_menu.administration.translation">
+                        <source>php_orchestra_cms.left_menu.administration.translation</source>
+                        <target>Traduction</target>
+                    </trans-unit>
                 </group>
 
 <!-- TABLE VIEW -->

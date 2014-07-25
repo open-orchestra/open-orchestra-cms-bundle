@@ -1,3 +1,7 @@
+php_orchestra_cms:
+    resource: "@PHPOrchestraTranslationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 php_orchestra_cms_bo:
     pattern: /admin
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/BackOffice:home }
