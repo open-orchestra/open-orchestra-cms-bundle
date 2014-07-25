@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ApiBundle\Facade\NodeFacade;
+use PHPOrchestra\ModelBundle\Model\NodeInterface;
 
 /**
  * Class NodeTransformer
@@ -10,12 +12,19 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 class NodeTransformer extends AbstractTransformer
 {
     /**
-     * @param mixed $mixed
+     * @param NodeInterface $mixed
+     *
      * @return FacadeInterface
      */
     public function transform($mixed)
     {
-        // TODO: Implement transform() method.
+        $facade = new NodeFacade();
+
+        foreach ($mixed->getAreas() as $area) {
+            $facade->addAreas($this->getTransformer('area')->transform($area, $mixed));
+        }
+
+        return $facade;
     }
 
     /**

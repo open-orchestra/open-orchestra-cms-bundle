@@ -27,7 +27,7 @@ class TransformerCompilerPass implements CompilerPassInterface
         $manager = $container->getDefinition('php_orchestra_api.transformer_manager');
         $strategies = $container->findTaggedServiceIds('php_orchestra_api.transformer.strategy');
         foreach ($strategies as $id => $attributes) {
-            $manager->addMethodCall('addStrategy', array(new Reference($id)));
+            $manager->addMethodCall('addTransformer', array(new Reference($id)));
         }
     }
 }

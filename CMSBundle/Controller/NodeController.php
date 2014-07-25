@@ -1,21 +1,12 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PHPOrchestra\CMSBundle\Model\Area;
-use PHPOrchestra\CMSBundle\Model\Node;
 use PHPOrchestra\CMSBundle\Exception\NonExistingDocumentException;
 use Symfony\Component\HttpFoundation\Request;
-use PHPOrchestra\CMSBundle\Form\Type\NodeType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use PHPOrchestra\CMSBundle\Helper\NodeHelper;
 
 class NodeController extends Controller
 {

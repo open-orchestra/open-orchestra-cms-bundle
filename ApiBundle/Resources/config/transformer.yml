@@ -1,0 +1,27 @@
+parameters:
+    php_orchestra_api.transformer_manager.class: PHPOrchestra\ApiBundle\Transformer\TransformerManager
+    php_orchestra_api.transformer.node.class: PHPOrchestra\ApiBundle\Transformer\NodeTransformer
+    php_orchestra_api.transformer.area.class: PHPOrchestra\ApiBundle\Transformer\AreaTransformer
+    php_orchestra_api.transformer.block.class: PHPOrchestra\ApiBundle\Transformer\BlockTransformer
+    php_orchestra_api.transformer.ui_model.class: PHPOrchestra\ApiBundle\Transformer\UiModelTransformer
+
+services:
+    php_orchestra_api.transformer_manager:
+        class: %php_orchestra_api.transformer_manager.class%
+    php_orchestra_api.transformer.node:
+        class: %php_orchestra_api.transformer.node.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.area:
+        class: %php_orchestra_api.transformer.area.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.block:
+        class: %php_orchestra_api.transformer.block.class%
+        arguments: [@php_orchestra_cms.display_block_manager]
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.ui_model:
+        class: %php_orchestra_api.transformer.ui_model.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
