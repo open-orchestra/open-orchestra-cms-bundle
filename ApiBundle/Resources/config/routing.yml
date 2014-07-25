@@ -1,0 +1,5 @@
+php_orchestra_api_node_show:
+    pattern: /node/{nodeId}
+    defaults: { _controller: PHPOrchestraApiBundle:Node:show }
+    requirements:
+        _method: GET

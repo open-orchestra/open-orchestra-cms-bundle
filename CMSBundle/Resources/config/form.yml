@@ -34,10 +34,13 @@ services:
     # Node form type
     php_orchestra_cms.type.node:
         class: %php_orchestra_cms.type.node.class%
-        arguments: [@php_orchestra_cms.transformer.node_type, @router]
+        arguments:
+            - @php_orchestra_cms.transformer.node_type
+            - @router
+            - %php_orchestra_model.document.node.class%
         tags:
             - { name: form.type, alias: node }
 
     php_orchestra_cms.transformer.node_type:
         class: %php_orchestra_cms.transformer.node_type.class%
-        arguments: [@php_orchestra_cms.document_manager, @php_orchestra_cms.display_block_manager]
+        arguments: [@php_orchestra_model.repository.node, @php_orchestra_cms.display_block_manager]

@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\EventSubscriber;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use JMS\Serializer\Serializer;
+use Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,15 +18,18 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class SerializerSubscriber implements EventSubscriberInterface
 {
+    protected $resolver;
     protected $serializer;
     protected $annotationReader;
 
     /**
-     * @param Serializer       $serializer
+     * @param Serializer $serializer
      * @param AnnotationReader $annotationReader
+     * @param ControllerResolver $resolver
      */
-    public function __construct(Serializer $serializer, AnnotationReader $annotationReader)
+    public function __construct(Serializer $serializer, AnnotationReader $annotationReader, ControllerResolver $resolver)
     {
+        $this->resolver = $resolver;
         $this->serializer = $serializer;
         $this->annotationReader = $annotationReader;
     }
@@ -45,9 +49,9 @@ class SerializerSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $controller = $this->getResolver()->getController($event->getRequest());
+        $controller = $this->resolver->getController($event->getRequest());
         $reflectionClass = new \ReflectionClass($controller[0]);
-        $annot = $this->annotationReader->getMethodAnnotation($reflectionClass->getMethod($controller[1]), 'GlobalPlatform\Bundle\ApiBundle\Controller\Annotation\Serialize');
+        $annot = $this->annotationReader->getMethodAnnotation($reflectionClass->getMethod($controller[1]), 'PHPOrchestra\ApiBundle\Controller\Annotation\Serialize');
 
         if (!$annot) {
             return;
@@ -69,7 +73,7 @@ class SerializerSubscriber implements EventSubscriberInterface
      */
     protected function isApiRequest(Request $request)
     {
-        return true;
+        return 0 === strpos($request->get('_route'), 'php_orchestra_api');
     }
 
     /**

@@ -48,19 +48,16 @@ class NodeController extends Controller
      */
     public function formAction(Request $request, $nodeId = 0)
     {
-        $documentManager = $this->container->get('php_orchestra_cms.document_manager');
+        $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
 
-        if (empty($nodeId)) {
-            $node = $documentManager->createDocument('Node');
-            $node->setSiteId(1);
-            $node->setLanguage('fr');
-        } else {
-            $node = $documentManager->getDocument(
-                'Node',
-                array('nodeId' => $nodeId)
-            );
+//        if (empty($nodeId)) {
+//            $node = $documentManager->createDocument('Node');
+//            $node->setSiteId(1);
+//            $node->setLanguage('fr');
+//        } else {
+            $node = $nodeRepository->findOneByNodeId($nodeId);
             $node->setVersion($node->getVersion() + 1);
-        }
+//        }
 
         $form = $this->createForm(
             'node',
