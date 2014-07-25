@@ -17,7 +17,6 @@ class TreeHelper
     public static function createTree($values, $l_id = '_id', $l_pid = 'parentId')
     {
         $tree = array();
-
         
         $newValues = array();
         foreach ($values as $node) {
