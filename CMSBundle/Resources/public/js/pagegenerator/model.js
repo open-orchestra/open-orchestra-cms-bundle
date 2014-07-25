@@ -44,20 +44,20 @@ function formIdToName(prefix, data){
 		        		data['ui-model'].label = (!$(this).is('select')) ? $(this).val() : $(this).find(":selected").text();
 		        	}
 	        });
-	        try{
-	        	'html' in data['ui-model'];
+	        if('ui-model' in data && 'html' in data['ui-model']){
 	        	var url = $(this).find('form').attr("action")
 			    $.ajax({
 			        'type': 'POST',
 			        'url': url,
 			        'success': function(response){
 			    		data['ui-model']['html'] = response.data;
+			        	console.log(data['ui-model']);
 			        },
 			        'data': $.extend(data, {'preview': true}),
 			        'dataType': 'json',
 			        'async': false
 			    });
-	        } catch(e){}
+	        }
 		});
     }
     $.fn.fromJsToForm = function()
