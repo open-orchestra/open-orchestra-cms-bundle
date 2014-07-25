@@ -66,6 +66,9 @@ class NodeRepository extends \Model\PHPOrchestraCMSBundle\Base\NodeRepository
 
     /**
      * Transform a list of node in tree
+
+
+     * 
      * 
      * @param unknown $nodes list of nodes
      * 
@@ -95,7 +98,7 @@ class NodeRepository extends \Model\PHPOrchestraCMSBundle\Base\NodeRepository
             }
         }
 
-        return TreeHelper::createRecTree($links2, $links2[$superroot]);
+        return TreeHelper::createRecTree($links2, $links2[$superroot], 'id');
     }
 
     /**

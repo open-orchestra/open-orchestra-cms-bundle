@@ -18,6 +18,7 @@ class TreeHelper
     {
         $tree = array();
 
+        
         $newValues = array();
         foreach ($values as $node) {
             $newValues[$node[$l_id]] = $node;
@@ -26,24 +27,18 @@ class TreeHelper
 
         $parents = array();
         foreach ($values as $node) {
-            if ('0' !== $node[$l_pid]) {
-                $parents[$node[$l_pid]][] = $node[$l_id];
-            }
+        	if(array_key_exists($l_pid, $node)){
+	            $parents[$node[$l_pid]][] = $node;
+	            if(!array_key_exists($node[$l_pid], $values)){
+	            	$root = $node;
+	            }
+        	}
         }
-
-        if (!empty($parents)) {
-            foreach ($parents as $parentId => $sons) {
-                $tmpTree = self::createTreeFromNode($values[$parentId]);
-                foreach ($sons as $sonId) {
-                    $tmpTree['sublinks'][] = self::createTreeFromNode($values[$sonId]);
-                }
-                $tree[] = $tmpTree;
-            }
+        
+        if (!empty($parents) && isset($root)) {
+        	$tree = self::createRecTree($parents, array($root));
         } else {
-            foreach ($values as $node) {
-                $tree[] = self::createTreeFromNode($node);
-            }
-
+        	return $values;
         }
 
         return $tree;
@@ -58,7 +53,7 @@ class TreeHelper
     {
         return array(
             'id' => $node['_id'],
-            'class' => $node['deleted']? 'deleted':'',
+            'class' => array_key_exists('deleted', $node) && $node['deleted']? 'deleted':'',
             'text' => $node['name']
         );
     }
@@ -69,12 +64,12 @@ class TreeHelper
      *
      * @return array
      */
-    public static function createRecTree(&$list, $parent)
+    public static function createRecTree(&$list, $parent, $l_id = '_id')
     {
         $tree = array();
         foreach ($parent as $l) {
-            if (isset($list[$l['id']])) {
-                $l['sublinks'] = TreeHelper::createRecTree($list, $list[$l['id']]);
+            if (isset($list[$l[$l_id]])) {
+                $l['sublinks'] = TreeHelper::createRecTree($list, $list[$l[$l_id]], $l_id);
             }
             $tree[] = $l;
         }

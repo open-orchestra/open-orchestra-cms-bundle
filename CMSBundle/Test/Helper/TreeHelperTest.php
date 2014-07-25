@@ -29,14 +29,16 @@ class NodesHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     array(
-                        'id' => 'root',
-                        'class' => '',
-                        'text' => 'Home page',
+                        '_id'       => 'root',
+                        'parentId'  => '0',
+                        'name'      => 'Home page',
+                        'deleted'   => false,
                         'sublinks' => array(
                             array(
-                                'id' => '2',
-                                'class' => 'deleted',
-                                'text' => 'Home child'
+		                        '_id'       => '2',
+		                        'parentId'  => 'root',
+		                        'name'      => 'Home child',
+		                        'deleted'   => true
                             )
                         )
                     )
@@ -59,9 +61,10 @@ class NodesHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     array(
-                        'id' => 'root',
-                        'class' => '',
-                        'text' => 'Home page',
+                        '_id'       => 'root',
+                        'parentId'  => '0',
+                        'name'      => 'Home page',
+                        'deleted'   => false
                     )
                 ),
                 array(
@@ -76,14 +79,10 @@ class NodesHelperTest extends \PHPUnit_Framework_TestCase
             array(
                 array(
                     array(
-                        'id' => 'root',
-                        'class' => '',
-                        'text' => 'Home page',
-                    ),
-                    array(
-                        'id' => '2',
-                        'class' => '',
-                        'text' => 'Second page',
+                        '_id'       => '2',
+                        'parentId'  => '0',
+                        'name'      => 'Second page',
+                        'deleted'   => false
                     ),
                 ),
                 array(
