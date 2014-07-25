@@ -1,0 +1,7 @@
+parameters:
+#    php_orchestra_api.example.class: PHPOrchestra\ApiBundle\Example
+
+services:
+#    php_orchestra_api.example:
+#        class: %php_orchestra_api.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
