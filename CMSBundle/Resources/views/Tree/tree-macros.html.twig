@@ -2,7 +2,7 @@
     {% set create = '' %}
     <ul class="{{ name }}-connectedSortable">
     {% for link in links %}
-        {% set id = name ~ '-' ~ e_crc32(link.id) %}
+        {% set id = name ~ '-' ~ e_crc32(link._id) %}
         <li class="{{ link.class }}" id="{{ id }}">
             <div>
                 <a href="{{ link.url }}">
