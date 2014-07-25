@@ -1,5 +1,5 @@
 php_orchestra_cms:
-    resource: "@PHPOrchestraTranslationBundle/Resources/config/routing.yml"
+    resource: "@LexikTranslationBundle/Resources/config/routing.yml"
     prefix:   /
 
 php_orchestra_cms_bo:
