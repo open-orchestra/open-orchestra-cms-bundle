@@ -19,8 +19,8 @@
                     <span class="menu-item-parent">{{ 'php_orchestra_cms.left_menu.editorial.title'|trans({}, 'backOffice') }}</span>
                 </a>
                 <ul style="display:block;">
-                    {#{ render(controller('PHPOrchestraCMSBundle:Tree:showTreeNodes')) }#}
-                    {#{ render(controller('PHPOrchestraCMSBundle:Tree:showTreeTemplates')) }#}
+                    {{ render(controller('PHPOrchestraCMSBundle:Tree:showTreeNodes')) }}
+                    {{ render(controller('PHPOrchestraCMSBundle:Tree:showTreeTemplates')) }}
                     <li>
                         <a href="{{ path('php_orchestra_cms_bo_contentType_ajaxmenu', {'language':context.currentLocale, 'siteId':''}) }}" target="_menu">{{ 'php_orchestra_cms.left_menu.editorial.contents'|trans({}, 'backOffice') }}</a>
                         <ul><li><a href="">{{ 'php_orchestra_cms.general.loading'|trans({}, 'backOffice') }}</a></li></ul>
