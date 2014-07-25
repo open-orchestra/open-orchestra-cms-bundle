@@ -16,19 +16,18 @@ use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 class NodeType extends AbstractType
 {
     protected $router;
-    protected $nodeTypeTransformer;
+    protected $nodeClass;
 
     /**
-     * @param NodeTypeTransformer $nodeTypeTransformer
      * @param UrlGeneratorInterface $router
      */
     public function __construct(
-        NodeTypeTransformer $nodeTypeTransformer,
-        UrlGeneratorInterface $router
+        UrlGeneratorInterface $router,
+        $nodeClass
     )
     {
-        $this->nodeTypeTransformer = $nodeTypeTransformer;
         $this->router = $router;
+        $this->nodeClass = $nodeClass;
     }
 
     /**
@@ -38,8 +37,6 @@ class NodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->nodeTypeTransformer);
-
         $templateUrl = $this->router->generate('php_orchestra_cms_templateajaxrequest', array('templateId' => '%s'));
         $templateUrl = urldecode($templateUrl);
         
@@ -55,14 +52,6 @@ class NodeType extends AbstractType
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
             ->add('status', 'orchestra_status')
-            ->add(
-                'areas',
-                'orchestra_areas',
-                array(
-                    'controller' => 'PHPOrchestraCMSBundle:Area:form',
-                    'parameter' => array('type' => 'node')
-                )
-            )
             ->add(
                 'blocks',
                 'orchestra_blocks',
@@ -100,7 +89,7 @@ class NodeType extends AbstractType
                 'inDialog' => false,
                 'beginJs' => array(),
                 'endJs' => array(),
-                'data_class' => 'Model\PHPOrchestraCMSBundle\Node',
+                'data_class' => $this->nodeClass,
             )
         );
     }

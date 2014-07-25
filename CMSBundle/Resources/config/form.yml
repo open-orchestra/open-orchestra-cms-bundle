@@ -27,7 +27,6 @@ services:
     # Template form type
     php_orchestra_cms.type.template:
         class: %php_orchestra_cms.type.template.class%
-        arguments: [@php_orchestra_cms.transformer.node_type]
         tags:
             - { name: form.type, alias: template }
 
@@ -35,7 +34,6 @@ services:
     php_orchestra_cms.type.node:
         class: %php_orchestra_cms.type.node.class%
         arguments:
-            - @php_orchestra_cms.transformer.node_type
             - @router
             - %php_orchestra_model.document.node.class%
         tags:

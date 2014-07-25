@@ -11,6 +11,7 @@ use \PHPOrchestra\CMSBundle\Form\Type\NodeType;
 class NodeTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $nodeType;
+    protected $nodeClass = 'nodeClass';
 
     /**
      * Set up the test
@@ -20,9 +21,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         $router = Phake::mock('Symfony\Component\Routing\Router');
         Phake::when($router)->generate(Phake::anyParameters())->thenReturn('/dummy/url');
 
-        $nodeTypeTransformer = Phake::mock('PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer');
-
-        $this->nodeType = new NodeType($nodeTypeTransformer, $router);
+        $this->nodeType = new NodeType($router, $this->nodeClass);
     }
 
     /**
@@ -32,12 +31,11 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
-        Phake::when($formBuilderMock)->addModelTransformer(Phake::anyParameters())->thenReturn($formBuilderMock);
 
         $this->nodeType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(15))->add(Phake::anyParameters());
-        Phake::verify($formBuilderMock)->addModelTransformer(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(14))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
     }
 
     /**
@@ -53,7 +51,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
             'inDialog' => false,
             'beginJs' => array(),
             'endJs' => array(),
-            'data_class' => 'Model\PHPOrchestraCMSBundle\Node',
+            'data_class' => $this->nodeClass,
 
         ));
     }

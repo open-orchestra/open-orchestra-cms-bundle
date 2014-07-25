@@ -25,4 +25,3 @@ class NodeController extends Controller
         return $this->get('php_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
 }
- 

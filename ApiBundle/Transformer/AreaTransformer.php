@@ -45,4 +45,3 @@ class AreaTransformer extends AbstractTransformer
         return 'area';
     }
 }
- 

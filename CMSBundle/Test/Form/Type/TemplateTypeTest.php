@@ -21,13 +21,11 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nodeTypeTransformer = Phake::mock('PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer');
-
         $this->formBuilder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->formBuilder)->addModelTransformer(Phake::anyParameters())->thenReturn($this->formBuilder);
         Phake::when($this->formBuilder)->add(Phake::anyParameters())->thenReturn($this->formBuilder);
 
-        $this->templateType = new TemplateType($this->nodeTypeTransformer);
+        $this->templateType = new TemplateType();
     }
 
     /**
@@ -37,8 +35,8 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->templateType->buildForm($this->formBuilder, array());
 
-        Phake::verify($this->formBuilder)->addModelTransformer($this->nodeTypeTransformer);
-        Phake::verify($this->formBuilder, Phake::times(11))->add(Phake::anyParameters());
+        Phake::verify($this->formBuilder, Phake::never())->addModelTransformer(Phake::anyParameters());
+        Phake::verify($this->formBuilder, Phake::times(10))->add(Phake::anyParameters());
     }
 
     /**
