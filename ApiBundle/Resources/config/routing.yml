@@ -3,3 +3,8 @@ php_orchestra_api_node_show:
     defaults: { _controller: PHPOrchestraApiBundle:Node:show }
     requirements:
         _method: GET
+php_orchestra_api_node_edit:
+    pattern: /node/{nodeId}
+    defaults: { _controller: PHPOrchestraApiBundle:Node:edit, nodeId: 0}
+    requirements:
+        _method: POST

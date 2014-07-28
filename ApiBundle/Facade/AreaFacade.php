@@ -43,10 +43,26 @@ class AreaFacade implements FacadeInterface
     }
 
     /**
+     * @return array
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
+    /**
      * @param FacadeInterface $facade
      */
     public function addArea(FacadeInterface $facade)
     {
         $this->areas[] = $facade;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAreas()
+    {
+        return $this->areas;
     }
 }

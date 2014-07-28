@@ -70,39 +70,6 @@ class NodeController extends Controller
             )
         );
 
-        if ($request->isXmlHttpRequest() && $request->get('refreshRecord')) {
-            $node->fromArray($request->request->all());
-        } elseif ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            $node = $form->getData();
-        }
-
-        if (
-            ($request->get('refreshRecord') || $request->isMethod('POST'))
-            && $this->get('validator')->validate($node)
-        ) {
-           $response['dialog'] = $this->render(
-                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
-                array(
-                    'dialogId' => '',
-                    'dialogTitle' => 'Modification du node',
-                    'dialogMessage' => 'Modification ok',
-                )
-            )->getContent();
-            if (!$node->getDeleted()) {
-                $node->setId(null);
-                $node->setIsNew(true);
-                $node->save();
-
-                /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
-                $indexManager->index($node, 'Node');*/
-            } else {
-                $this->deleteTree($node->getNodeId());
-                $response['redirect'] = $this->generateUrl('php_orchestra_cms_bo_edito');
-            }
-            return new JsonResponse($response);
-        }
-
         return $this->render(
             'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
             array(
@@ -111,31 +78,5 @@ class NodeController extends Controller
                 'form' => $form->createView()
             )
         );
-    }
-
-    /**
-     * Recursivly delete a tree
-     * 
-     * @param string $nodeId
-     */
-    protected function deleteTree($nodeId)
-    {
-        /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
-          $indexManager->deleteIndex($nodeId);*/
-        
-        $documentManager = $this->get('php_orchestra_cms.document_manager');
-        
-        $nodeVersions = $documentManager->getDocuments('Node', array('nodeId' => $nodeId));
-        
-        foreach ($nodeVersions as $node) {
-            $node->markAsDeleted();
-        };
-        
-        $sons = $documentManager->getNodeSons($nodeId);
-        
-        foreach ($sons as $son) {
-            $this->deleteTree($son['_id']);
-        }
-        return true;
     }
 }

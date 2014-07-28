@@ -9,6 +9,9 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class BlockFacade implements FacadeInterface
 {
+    const GENERATE = 'generate';
+    const LOAD = 'load';
+
     /**
      * @Serializer\Type("string")
      */
@@ -25,6 +28,16 @@ class BlockFacade implements FacadeInterface
     public $uiModel;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $nodeId;
+
+    /**
+     * @Serializer\Type("int")
+     */
+    public $blockId;
+
+    /**
      * @Serializer\Type("array<string>")
      */
     protected $attributes = array();
@@ -36,5 +49,13 @@ class BlockFacade implements FacadeInterface
     public function addAttribute($key, $value)
     {
         $this->attributes[$key] = $value;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }
