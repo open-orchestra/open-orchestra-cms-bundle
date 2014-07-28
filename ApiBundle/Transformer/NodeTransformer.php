@@ -30,7 +30,7 @@ class NodeTransformer extends AbstractTransformer
 
     /**
      * @param NodeFacade|FacadeInterface $facade
-     * @param mixed|null                 $source
+     * @param Node|null                  $source
      *
      * @return mixed
      */
@@ -38,6 +38,9 @@ class NodeTransformer extends AbstractTransformer
     {
         if (null === $source) {
             $source = new Node();
+            $source->setSiteId(1);
+            $source->setLanguage('fr');
+            $source->setNodeId($facade->nodeId);
         }
 
         if (isset($facade->siteId)) {

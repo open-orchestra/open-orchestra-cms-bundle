@@ -10,7 +10,12 @@ use JMS\Serializer\Annotation as Serializer;
 class NodeFacade implements FacadeInterface
 {
     /**
-     * @Serializer\Type("int")
+     * @Serializer\Type("string")
+     */
+    public $nodeId;
+
+    /**
+     * @Serializer\Type("integer")
      */
     public $siteId;
 

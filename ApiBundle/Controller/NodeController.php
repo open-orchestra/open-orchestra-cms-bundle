@@ -38,13 +38,10 @@ class NodeController extends Controller
     {
         $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
 
-        if (empty($nodeId)) {
-            $node = $this->get('php_orchestra_cms.document_manager')->createDocument('Node');
-            $node->setSiteId(1);
-            $node->setLanguage('fr');
-        } else {
-            $node = $nodeRepository->findOneByNodeId($nodeId);
+        $node = $nodeRepository->findOneByNodeId($nodeId);
+        if (!empty($node)) {
             $node->setVersion($node->getVersion() + 1);
+            $node->removeAllArea();
         }
 
         $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\NodeFacade', $request->get('_format', 'json'));

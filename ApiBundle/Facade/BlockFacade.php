@@ -33,12 +33,12 @@ class BlockFacade implements FacadeInterface
     public $nodeId;
 
     /**
-     * @Serializer\Type("int")
+     * @Serializer\Type("integer")
      */
     public $blockId;
 
     /**
-     * @Serializer\Type("array<string>")
+     * @Serializer\Type("array<string,string>")
      */
     protected $attributes = array();
 
