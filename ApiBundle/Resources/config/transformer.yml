@@ -14,6 +14,7 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.area:
         class: %php_orchestra_api.transformer.area.class%
+        arguments: [@php_orchestra_model.repository.node]
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.block:

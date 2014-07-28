@@ -24,14 +24,15 @@ class BlockTransformer extends AbstractTransformer
 
     /**
      * @param BlockInterface $mixed
+     * @param boolean        $isInside
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, $isInside = true)
     {
         $facade = new BlockFacade();
 
-        $facade->method = 'generate';
+        $facade->method = $isInside ? 'generate': 'load';
         $facade->component = $mixed->getComponent();
 
         foreach ($mixed->getAttributes() as $key => $attribute) {
