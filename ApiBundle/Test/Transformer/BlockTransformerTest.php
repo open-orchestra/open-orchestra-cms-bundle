@@ -71,9 +71,8 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function testReverseTransformWithGenerateAndExistingBlock($nodeId, $blockId, $component)
     {
         $block = new BlockFacade();
-        $block->nodeId = $nodeId;
-        $block->blockId = $blockId;
         $block->component = $component;
+        $block->blockId = $blockId;
         $block->method = BlockFacade::GENERATE;
         $block->addAttribute('testKey', 'testValue');
 
@@ -83,7 +82,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 
         $blockReturned = $this->transformer->reverseTransform($block, $node);
 
-        $this->assertSame(array('nodeId' => $nodeId, 'blockId' => $blockId, 'block' => $blockDocument), $blockReturned);
+        $this->assertSame(array('nodeId' => 0, 'blockId' => $blockId, 'block' => $blockDocument), $blockReturned);
         Phake::verify($blockDocument)->setComponent($component);
         Phake::verify($blockDocument)->setAttributes(array('testKey' => 'testValue'));
     }
@@ -98,18 +97,18 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function testReverseTransformWithGenerateAndNoExistingBlock($nodeId, $blockId, $component)
     {
         $block = new BlockFacade();
-        $block->nodeId = $nodeId;
-        $block->blockId = $blockId;
         $block->component = $component;
         $block->method = BlockFacade::GENERATE;
         $block->addAttribute('testKey', 'testValue');
 
+        $blockDocument = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
         $node = new Node();
+        $node->setBlock(0, $blockDocument);
 
         $blockReturned = $this->transformer->reverseTransform($block, $node);
 
-        $this->assertSame($nodeId, $blockReturned['nodeId']);
-        $this->assertSame($blockId, $blockReturned['blockId']);
+        $this->assertSame(0, $blockReturned['nodeId']);
+        $this->assertSame(1, $blockReturned['blockId']);
         $this->assertInstanceOf('PHPOrchestra\ModelBundle\Model\BlockInterface', $blockReturned['block']);
         $this->assertSame($component, $blockReturned['block']->getComponent());
         $this->assertSame(array('testKey' => 'testValue'), $blockReturned['block']->getAttributes());
