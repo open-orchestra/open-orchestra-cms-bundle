@@ -66,9 +66,7 @@ class NodeRepository extends \Model\PHPOrchestraCMSBundle\Base\NodeRepository
 
     /**
      * Transform a list of node in tree
-
-
-     * 
+     *
      * 
      * @param unknown $nodes list of nodes
      * 

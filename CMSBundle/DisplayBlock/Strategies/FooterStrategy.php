@@ -2,10 +2,10 @@
 
 namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
-use Mandango\Mandango;
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
+use PHPOrchestra\CMSBundle\Helper\TreeHelper;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\CMSBundle\Model\NodeRepository;
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -14,16 +14,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class FooterStrategy extends AbstractStrategy
 {
-    protected $mandango;
+    protected $nodeRepository;
     protected $router;
 
     /**
-     * @param Mandango              $mandango
+     * @param NodeRepository        $nodeRepository
      * @param UrlGeneratorInterface $router
      */
-    public function __construct(Mandango $mandango, UrlGeneratorInterface $router)
+    public function __construct(NodeRepository $nodeRepository, UrlGeneratorInterface $router)
     {
-        $this->mandango = $mandango;
+        $this->nodeRepository = $nodeRepository;
         $this->router = $router;
     }
 
@@ -48,16 +48,13 @@ class FooterStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        /** @var NodeRepository $repository */
-        $repository = $this->mandango->getRepository('Model\PHPOrchestraCMSBundle\Node');
-        $tree = $repository->getFooterTree();
-        $tree = $repository->getTreeUrl($tree, $this->router);
+        $nodes = $this->nodeRepository->getFooterTree();
         $attributes = $block->getAttributes();
 
         return $this->render(
             'PHPOrchestraCMSBundle:Block/Footer:show.html.twig',
             array(
-                'tree' => $tree,
+                'tree' => $nodes,
                 'id' => $attributes['id'],
                 'class' => $attributes['class'],
             )
@@ -73,20 +70,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function showBack(BlockInterface $block)
     {
-        /** @var NodeRepository $repository */
-        $repository = $this->mandango->getRepository('Model\PHPOrchestraCMSBundle\Node');
-        $tree = $repository->getFooterTree();
-        $tree = $repository->getTreeUrl($tree, $this->router);
-        $attributes = $block->getAttributes();
-
-        return $this->render(
-            'PHPOrchestraCMSBundle:Block/Footer:show.html.twig',
-            array(
-                'tree' => $tree,
-                'id' => $attributes['id'],
-                'class' => $attributes['class'],
-            )
-        );
+       return $this->show($block);
     }
 
     /**

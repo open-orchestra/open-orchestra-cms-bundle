@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class BlockController
@@ -18,14 +19,19 @@ class BlockController extends Controller
      * @param string $nodeId
      * @param string $blockId
      *
+     * @throws NotFoundHttpException
      * @return Response
      */
     public function showAction($nodeId, $blockId)
     {
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
-        return $this->get('php_orchestra_cms.display_block_manager')
-            ->show($node->getBlocks()->get($blockId));
+        if (null !== ($block = $node->getBlocks()->get($blockId))) {
+            return $this->get('php_orchestra_cms.display_block_manager')
+                ->show($node->getBlocks()->get($blockId));
+        }
+
+        throw new NotFoundHttpException();
     }
 
     /**

@@ -58,9 +58,9 @@ class NodeController extends Controller
                     'dialogMessage' => 'Modification ok',
                 )
             )->getContent();
+            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             if (!$node->getDeleted()) {
-                $this->get('doctrine.odm.mongodb.document_manager')->persist($node);
-                $this->get('doctrine.odm.mongodb.document_manager')->flush();
+                $documentManager->persist($node);
 
                 /*$indexManager = $this->get('php_orchestra_indexation.indexer_manager');
                 $indexManager->index($node, 'Node');*/
@@ -68,6 +68,8 @@ class NodeController extends Controller
                 $this->deleteTree($node->getNodeId());
                 $response['redirect'] = $this->generateUrl('php_orchestra_cms_bo_edito');
             }
+            $documentManager->flush();
+
             return new JsonResponse($response);
         }
 
@@ -89,7 +91,7 @@ class NodeController extends Controller
         $nodeVersions = $nodeRepository->findByNodeId($nodeId);
 
         foreach ($nodeVersions as $node) {
-            $node->markAsDeleted();
+            $node->setDeleted(true);
         };
 
         $sons = $nodeRepository->findByParentId($nodeId);

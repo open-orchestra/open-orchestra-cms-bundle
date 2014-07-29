@@ -17,19 +17,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PhpOrchestraRouter extends Router
 {
-    /**
-     * Documents service
-     * 
-     * @var unknown_type
-     */
-    protected $documentManager = null;
-    
-    /**
-     * Cache service
-     * 
-     * @var unknown_type
-     */
-    protected $cacheService = null;
+    protected $documentManager;
+    protected $cacheService;
+    protected $nodeRepository;
     
     /**
      * Extends parent constructor to get documents service
@@ -50,6 +40,7 @@ class PhpOrchestraRouter extends Router
         
         $this->documentManager = $container->get('php_orchestra_cms.document_manager');
         $this->cacheService = $container->get('php_orchestra_cms.cache_manager');
+        $this->nodeRepository = $container->get('php_orchestra_model.repository.node');
     }
     
     /**
@@ -82,7 +73,7 @@ class PhpOrchestraRouter extends Router
         return $this->generator = new $this->options['generator_class'](
             $this->getRouteCollection(),
             $this->context,
-            $this->documentManager,
+            $this->nodeRepository,
             $this->logger
         );
     }

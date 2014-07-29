@@ -1,12 +1,9 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Routing;
 
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RequestContext;
@@ -15,31 +12,26 @@ use Model\PHPOrchestraCMSBundle\Node;
 
 class PhpOrchestraUrlGenerator extends UrlGenerator
 {
-    /**
-     * Documents service
-     * @var unknown_type
-     */
-    protected $documentManager = null;
-
+    protected $nodeRepository;
 
     /**
      * Constructor
      * 
      * @param RouteCollection $routes
      * @param RequestContext $context
-     * @param unknown_type $documentManager
+     * @param NodeRepository $nodeRepository
      * @param LoggerInterface $logger
      */
     public function __construct(
         RouteCollection $routes,
         RequestContext $context,
-        $documentManager,
+        NodeRepository $nodeRepository,
         LoggerInterface $logger = null
     ) {
         $this->routes = $routes;
         $this->context = $context;
         $this->logger = $logger;
-        $this->documentManager = $documentManager;
+        $this->nodeRepository = $nodeRepository;
     }
 
     /**
@@ -110,7 +102,7 @@ class PhpOrchestraUrlGenerator extends UrlGenerator
         $alias = '';
 
         if ($nodeId != Node::ROOT_NODE_ID) {
-            $node = $this->documentManager->getDocument('Node', array('nodeId' => $nodeId));
+            $node = $this->nodeRepository->findOneByNodeId($nodeId);
 
             if (isset($node)) {
                 $alias = $this->getNodeAlias($node->getParentId()) . '/' . $node->getAlias();
