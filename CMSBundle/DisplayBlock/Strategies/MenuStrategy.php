@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
-use Mandango\Mandango;
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\CMSBundle\Model\Block;
-use PHPOrchestra\CMSBundle\Model\NodeRepository;
+use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -18,23 +17,23 @@ class MenuStrategy extends AbstractStrategy
     protected $router;
 
     /**
-     * @param Mandango              $mandango
+     * @param NodeRepository        $nodeRepository
      * @param UrlGeneratorInterface $router
      */
-    public function __construct(Mandango $mandango, UrlGeneratorInterface $router)
+    public function __construct(NodeRepository $nodeRepository, UrlGeneratorInterface $router)
     {
-        $this->mandango = $mandango;
+        $this->nodeRepository = $nodeRepository;
         $this->router = $router;
     }
 
     /**
      * Check if the strategy support this block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return boolean
      */
-    public function support(Block $block)
+    public function support(BlockInterface $block)
     {
         return DisplayBlockInterface::MENU == $block->getComponent();
     }
@@ -42,22 +41,19 @@ class MenuStrategy extends AbstractStrategy
     /**
      * Perform the show action for a block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return Response
      */
-    public function show(Block $block)
+    public function show(BlockInterface $block)
     {
-        /** @var NodeRepository $repository */
-        $repository = $this->mandango->getRepository('Model\PHPOrchestraCMSBundle\Node');
-        $tree = $repository->getFooterTree();
-        $tree = $repository->getTreeUrl($tree, $this->router);
+        $nodes = $this->nodeRepository->getFooterTree();
         $attributes = $block->getAttributes();
 
         return $this->render(
             'PHPOrchestraCMSBundle:Block/Menu:show.html.twig',
             array(
-                'tree' => $tree,
+                'tree' => $nodes,
                 'id' => $attributes['id'],
                 'class' => $attributes['class'],
             )
@@ -67,22 +63,19 @@ class MenuStrategy extends AbstractStrategy
     /**
      * Perform the show action for a block on the backend
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return Response
      */
-    public function showBack(Block $block)
+    public function showBack(BlockInterface $block)
     {
-        /** @var NodeRepository $repository */
-        $repository = $this->mandango->getRepository('Model\PHPOrchestraCMSBundle\Node');
-        $tree = $repository->getFooterTree();
-        $tree = $repository->getTreeUrl($tree, $this->router);
+        $nodes = $this->nodeRepository->getFooterTree();
         $attributes = $block->getAttributes();
 
         return $this->render(
             'PHPOrchestraCMSBundle:Block/Menu:showBack.html.twig',
             array(
-                'tree' => $tree,
+                'tree' => $nodes,
                 'id' => $attributes['id'],
                 'class' => $attributes['class'],
             )

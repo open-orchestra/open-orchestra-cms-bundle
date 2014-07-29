@@ -22,7 +22,7 @@ class NodesHelperTest extends \PHPUnit_Framework_TestCase
         $result = TreeHelper::createTree($nodes);
         $this->assertEquals($expectedResult, $result);
     }
-    
+
     public function createTreeData()
     {
         return array(
@@ -35,10 +35,10 @@ class NodesHelperTest extends \PHPUnit_Framework_TestCase
                         'deleted'   => false,
                         'sublinks' => array(
                             array(
-		                        '_id'       => '2',
-		                        'parentId'  => 'root',
-		                        'name'      => 'Home child',
-		                        'deleted'   => true
+                                '_id'       => '2',
+                                'parentId'  => 'root',
+                                'name'      => 'Home child',
+                                'deleted'   => true
                             )
                         )
                     )

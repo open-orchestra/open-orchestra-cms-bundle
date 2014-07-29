@@ -1,12 +1,32 @@
 <?php
 
 namespace PHPOrchestra\CMSBundle\Helper;
+use PHPOrchestra\ModelBundle\Document\Node;
 
 /**
  * Class TreeHelper
  */
 class TreeHelper
 {
+    /**
+     * @param array  $values
+     *
+     * @return array
+     */
+    public static function createTreeFromObject($values)
+    {
+    }
+
+    /**
+     * @param array $list
+     * @param array $parent
+     *
+     * @return array
+     */
+    public static function createRecTreeFromObject($list, $parent)
+    {
+    }
+
     /**
      * @param array  $values
      * @param string $l_id
@@ -16,8 +36,6 @@ class TreeHelper
      */
     public static function createTree($values, $l_id = '_id', $l_pid = 'parentId')
     {
-        $tree = array();
-        
         $newValues = array();
         foreach ($values as $node) {
             $newValues[$node[$l_id]] = $node;
@@ -26,40 +44,25 @@ class TreeHelper
 
         $parents = array();
         foreach ($values as $node) {
-        	if(array_key_exists($l_pid, $node)){
-	            $parents[$node[$l_pid]][] = $node;
-	            if(!array_key_exists($node[$l_pid], $values)){
-	            	$root = $node;
-	            }
-        	}
+            if(array_key_exists($l_pid, $node)){
+                $parents[$node[$l_pid]][] = $node;
+                if(!array_key_exists($node[$l_pid], $values)){
+                    $root = $node;
+                }
+            }
         }
-        
+
         if (!empty($parents) && isset($root)) {
-        	$tree = self::createRecTree($parents, array($root));
+            return self::createRecTree($parents, array($root));
         } else {
-        	return $values;
+            return $values;
         }
-
-        return $tree;
-    }
-
-    /**
-     * @param array $node
-     *
-     * @return array
-     */
-    public static function createTreeFromNode($node)
-    {
-        return array(
-            'id' => $node['_id'],
-            'class' => array_key_exists('deleted', $node) && $node['deleted']? 'deleted':'',
-            'text' => $node['name']
-        );
     }
 
     /**
      * @param array $list
      * @param array $parent
+     * @param string $l_id
      *
      * @return array
      */

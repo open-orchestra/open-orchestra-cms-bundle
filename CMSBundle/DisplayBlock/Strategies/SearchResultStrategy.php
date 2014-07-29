@@ -3,7 +3,7 @@
 namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\CMSBundle\Model\Block;
+use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\IndexationBundle\SearchStrategy\SearchManager;
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
@@ -45,11 +45,11 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Check if the strategy support this block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return boolean
      */
-    public function support(Block $block)
+    public function support(BlockInterface $block)
     {
         return DisplayBlockInterface::SEARCH_RESULT == $block->getComponent();
     }
@@ -57,11 +57,11 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Perform the show action for a block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return Response
      */
-    public function show(Block $block)
+    public function show(BlockInterface $block)
     {
         $attributes = $block->getAttributes();
         $nodeId = $attributes['nodeId'];
@@ -153,11 +153,11 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Perform the show action for a block on the backend
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return Response
      */
-    public function showBack(Block $block)
+    public function showBack(BlockInterface $block)
     {
         return $this->show($block);
     }

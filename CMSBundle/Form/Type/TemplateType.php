@@ -12,16 +12,6 @@ use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 class TemplateType extends AbstractType
 {
-    protected $nodeTypeTransformer;
-
-    /**
-     * @param NodeTypeTransformer $nodeTypeTransformer
-     */
-    public function __construct(NodeTypeTransformer $nodeTypeTransformer)
-    {
-        $this->nodeTypeTransformer = $nodeTypeTransformer;
-    }
-
     /**
      * (non-PHPdoc)
      * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
@@ -29,8 +19,6 @@ class TemplateType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->nodeTypeTransformer);
-
         $builder
             ->add('templateId', 'hidden')
             ->add('siteId', 'hidden')
@@ -40,14 +28,6 @@ class TemplateType extends AbstractType
             ->add('language', 'orchestra_language')
             ->add('status', 'orchestra_status')
             ->add('boDirection', 'orchestra_direction')
-            ->add(
-                'areas',
-                'orchestra_areas',
-                array(
-                    'controller' => 'PHPOrchestraCMSBundle:Area:form',
-                    'parameter' => array('type' => 'template')
-                )
-            )
             ->add(
                 'blocks',
                 'orchestra_blocks',

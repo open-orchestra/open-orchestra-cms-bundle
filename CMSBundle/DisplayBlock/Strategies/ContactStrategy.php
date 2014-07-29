@@ -4,7 +4,7 @@ namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\CMSBundle\Form\Type\ContactType;
-use PHPOrchestra\CMSBundle\Model\Block;
+use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,11 +26,11 @@ class ContactStrategy extends AbstractStrategy
     /**
      * Check if the strategy support this block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return boolean
      */
-    public function support(Block $block)
+    public function support(BlockInterface $block)
     {
         return DisplayBlockInterface::CONTACT == $block->getComponent();
     }
@@ -38,11 +38,11 @@ class ContactStrategy extends AbstractStrategy
     /**
      * Perform the show action for a block
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return Response
      */
-    public function show(Block $block)
+    public function show(BlockInterface $block)
     {
         $form = $this->formFactory->create(new ContactType());
 
@@ -55,11 +55,11 @@ class ContactStrategy extends AbstractStrategy
     /**
      * Perform the show action for a block on the backend
      *
-     * @param Block $block
+     * @param BlockInterface $block
      *
      * @return Response
      */
-    public function showBack(Block $block)
+    public function showBack(BlockInterface $block)
     {
         $form = $this->formFactory->create(new ContactType());
 
