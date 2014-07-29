@@ -17,7 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PhpOrchestraRouter extends Router
 {
-    protected $documentManager;
     protected $cacheService;
     protected $nodeRepository;
     
@@ -38,7 +37,6 @@ class PhpOrchestraRouter extends Router
     ) {
         parent::__construct($container, $resource, $options, $context);
         
-        $this->documentManager = $container->get('php_orchestra_cms.document_manager');
         $this->cacheService = $container->get('php_orchestra_cms.cache_manager');
         $this->nodeRepository = $container->get('php_orchestra_model.repository.node');
     }
@@ -56,7 +54,7 @@ class PhpOrchestraRouter extends Router
         return $this->matcher = new $this->options['matcher_class'](
             $this->getRouteCollection(),
             $this->context,
-            $this->documentManager,
+            $this->nodeRepository,
             $this->cacheService
         );
     }
