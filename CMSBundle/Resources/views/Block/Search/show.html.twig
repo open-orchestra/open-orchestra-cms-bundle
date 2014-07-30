@@ -4,9 +4,14 @@
  # @author Benjamin Fouché <benjamin.fouche@businessdecision.com>
  ##}
 
-{% javascripts
-'@PHPOrchestraCMSBundle/Resources/public/js/autocomple.js'
-%} {% endjavascripts %}
+<script type="text/javascript">
+$(function () {
+    $('#autocomplete_search_terms').autocomplete({
+        source: $('#autocomplete_search_terms').data('autocomplete-url'),
+        minLength: $('#autocomplete_search_terms').data('min-length')
+    });
+});
+</script>
 
 <div class="ui-widget">
     {{ form(form) }}
