@@ -52,7 +52,7 @@ class SearchStrategy extends AbstractStrategy
         $value = $attributes['value'];
         $class = $attributes['class'];
         $nodeId = $attributes['nodeId'];
-        $limit = 7;//$attributes['limit'];
+        $limit = $attributes['limit'];
 
         // Search form
         $form = $this->generateSearchForm($value, $class, $nodeId, $limit);

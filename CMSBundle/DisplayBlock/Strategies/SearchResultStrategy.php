@@ -68,12 +68,12 @@ class SearchResultStrategy extends AbstractStrategy
         $nbdoc = $attributes['nbdoc'];
         $fielddisplayed = $attributes['fielddisplayed'];
         $nbspellcheck = $attributes['nbspellcheck'];
-        $limitField = 20;//$attributes['limitField'];
+        $limitField = $attributes['limitField'];
         $facets = $attributes['facets'];
         $filter = $attributes['filter'];
         $optionsearch = $attributes['optionsearch'];
-        $optionsdismax = array();//$attributes['optiondismax'];
-        $page = 1;//$attributes['page'];
+        $optionsdismax = $attributes['optiondismax'];
+        $page = $attributes['page'];
         if ($this->getRequest()) {
             $_page_parameters['query'] = $this->getRequest()->query->all();
         } else {
