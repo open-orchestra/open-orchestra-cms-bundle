@@ -54,7 +54,7 @@ class FooterStrategy extends AbstractStrategy
         return $this->render(
             'PHPOrchestraCMSBundle:Block/Footer:show.html.twig',
             array(
-                'tree' => $nodes,
+                'tree' => $nodes->toArray(),
                 'id' => $attributes['id'],
                 'class' => $attributes['class'],
             )

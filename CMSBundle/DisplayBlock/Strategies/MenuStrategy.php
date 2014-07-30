@@ -47,13 +47,13 @@ class MenuStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $nodes = $this->nodeRepository->getFooterTree();
+        $nodes = $this->nodeRepository->getMenuTree();
         $attributes = $block->getAttributes();
 
         return $this->render(
             'PHPOrchestraCMSBundle:Block/Menu:show.html.twig',
             array(
-                'tree' => $nodes,
+                'tree' => $nodes->toArray(),
                 'id' => $attributes['id'],
                 'class' => $attributes['class'],
             )
@@ -69,17 +69,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function showBack(BlockInterface $block)
     {
-        $nodes = $this->nodeRepository->getFooterTree();
-        $attributes = $block->getAttributes();
-
-        return $this->render(
-            'PHPOrchestraCMSBundle:Block/Menu:showBack.html.twig',
-            array(
-                'tree' => $nodes,
-                'id' => $attributes['id'],
-                'class' => $attributes['class'],
-            )
-        );
+        return $this->show($block);
     }
 
     /**
