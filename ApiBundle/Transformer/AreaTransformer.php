@@ -51,6 +51,7 @@ class AreaTransformer extends AbstractTransformer
                 ));
             }
         }
+        $facade->boDirection = $mixed->getBoDirection();
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
 
         return $facade;

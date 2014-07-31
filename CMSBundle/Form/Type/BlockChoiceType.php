@@ -33,9 +33,9 @@ class BlockChoiceType extends AbstractType
             $blocks = $node->getBlocks();
             $intRank = 0;
             foreach ($blocks as $block) {
-                $attributs = $block->getAttributes();
+                $attributes = $block->getAttributes();
                 $result = array();
-                array_walk_recursive($attributs, function($val, $key) use (&$result) {$result[] = $val;});
+                array_walk_recursive($attributes, function($val, $key) use (&$result) {$result[] = $val;});
                 $result = implode(', ', $result);
                 $result = (strlen($result) > 50) ? substr($result, 0, 47).'...' : $result;
                 $result = ' ['.$result.']';
@@ -44,9 +44,11 @@ class BlockChoiceType extends AbstractType
             }
         } elseif ($siteId !== 0) {
             $site = $documentManager->getDocument('Site', array('siteId' => $siteId));
-            $blocks = $site->getBlocks();
-            foreach ($blocks as $block) {
-                $this->choices[$block] = $block;
+            if(null !== $site){
+	            $blocks = $site->getBlocks();
+	            foreach ($blocks as $block) {
+	                $this->choices[$block] = $block;
+	            }
             }
         }
     }

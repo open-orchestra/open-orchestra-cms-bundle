@@ -19,7 +19,7 @@
                         data[name] = [];
                     }
                     resetPercent(data[name]);
-                    data[name].push({'ui-model' : {}});
+                    data[name].push({'ui_model' : {}});
                     var rank = data[name].length - 1;
                     if($('form', this)[0].checkValidity()){
                         $(this).dialog( "close" );

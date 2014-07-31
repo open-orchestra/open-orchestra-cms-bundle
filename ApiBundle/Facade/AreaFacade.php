@@ -30,6 +30,11 @@ class AreaFacade implements FacadeInterface
     protected $areas = array();
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $boDirection;
+    
+    /**
      * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;

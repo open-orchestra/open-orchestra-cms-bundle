@@ -71,7 +71,7 @@ class BlockType extends AbstractType
                         $type = new \ReflectionClass(
                             'PHPOrchestra\CMSBundle\Form\Type\Block\\'.$options['data']['component'].'Type'
                         );
-                        $builder->add('attributs', $type->newInstance());
+                        $builder->add('attributes', $type->newInstance());
                     }
                 }
             }
