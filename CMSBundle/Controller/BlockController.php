@@ -91,7 +91,7 @@ class BlockController extends Controller
     }
 
     /**
-     * Get the component and attributs informations in block generate case
+     * Get the component and attributes informations in block generate case
      *
      * @param Request $request
      *
@@ -99,30 +99,30 @@ class BlockController extends Controller
      */
     protected function getGenerateInformations(Request $request)
     {
-        $attributs = $request->request->all();
+        $attributes = $request->request->all();
         $allowed=array_filter(
-            array_keys($attributs),
+            array_keys($attributes),
             function ($key) {
-                return preg_match('/^attributs_/', $key);
+                return preg_match('/^attributes_/', $key);
             }
         );
-        $attributs = array_intersect_key($attributs, array_flip($allowed));
-        $attributs = array_combine(
+        $attributes = array_intersect_key($attributes, array_flip($allowed));
+        $attributes = array_combine(
             array_map(
                 function ($value) {
-                    return preg_replace('/^attributs_/', '', $value);
+                    return preg_replace('/^attributes_/', '', $value);
                 },
-                array_keys($attributs)
+                array_keys($attributes)
             ),
-            array_values($attributs)
+            array_values($attributes)
         );
         $component = $request->request->get('component');
 
-        return array($component, $attributs);
+        return array($component, $attributes);
     }
 
     /**
-     * Get the component and attributs informations in block load case
+     * Get the component and attributes informations in block load case
      *
      * @param Request $request
      *
@@ -131,17 +131,17 @@ class BlockController extends Controller
     protected function getLoadInformations(Request $request)
     {
         $component = '';
-        $attributs = array();
+        $attributes = array();
         $block = $this->get('php_orchestra_cms.document_manager')->getBlockInNode(
             $request->request->get('nodeId'),
             $request->request->get('blockId')
         );
         if ($block) {
             $component = $block['component'];
-            $attributs = $block['attributes'];
+            $attributes = $block['attributes'];
         }
 
-        return array($component, $attributs);
+        return array($component, $attributes);
     }
     
     /**
@@ -154,14 +154,14 @@ class BlockController extends Controller
     public function getPreview(Request $request)
     {
         $component = '';
-        $attributs = array();
+        $attributes = array();
         if ($request->request->get('component') !== null) {
-            list($component, $attributs) = $this->getGenerateInformations($request);
+            list($component, $attributes) = $this->getGenerateInformations($request);
         } elseif ($request->request->get('nodeId') !== null && $request->request->get('blockId') !== null) {
-            list($component, $attributs) = $this->getLoadInformations($request);
+            list($component, $attributes) = $this->getLoadInformations($request);
         }
         if ($component !== '') {
-            $response  = $this->forward('PHPOrchestraCMSBundle:Block/'.$component.':showBack', $attributs);
+            $response  = $this->forward('PHPOrchestraCMSBundle:Block/'.$component.':showBack', $attributes);
             return new JsonResponse(
                 array(
                     'success' => true,

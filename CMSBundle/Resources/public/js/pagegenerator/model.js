@@ -1,3 +1,22 @@
+function flatArray(data, result, path){
+	if(!result){
+		result = {};
+		path = '';
+	}
+	for(var i in data){
+		if(i != 'ui_model'){
+			if(typeof data[i] == 'object'){
+				result = flatArray(data[i], result, path + i + '_');
+			}
+			else{
+				result[path + i] = data[i];
+			}
+		}
+	}
+	return result;
+}
+
+
 function getValueInObject(data, path, key){
     try{
         return (key) ? eval('data' + path + '.' + key) : eval('data' + path);
@@ -26,10 +45,10 @@ function formIdToName(prefix, data){
             var ref = $(this);
             for(var i in data){
                 try{
-                    'ui-model' in data[i][0];
+                    'ui_model' in data[i][0];
                 }
                 catch(e){
-                    if(i != 'ui-model'){
+                    if(i != 'ui_model'){
                         delete data[i];
                     }
                 }
@@ -41,17 +60,16 @@ function formIdToName(prefix, data){
                     var id = $(this).attr( "id" ).replace(prefix + '_', '');
                     data[id] = $(this).val();
                     if($(this).hasClass('used-as-label')){
-                        data['ui-model'].label = (!$(this).is('select')) ? $(this).val() : $(this).find(":selected").text();
+                        data['ui_model'].label = (!$(this).is('select')) ? $(this).val() : $(this).find(":selected").text();
                     }
             });
-            if('ui-model' in data && 'html' in data['ui-model']){
+            if('ui_model' in data && 'html' in data['ui_model']){
                 var url = $(this).find('form').attr("action")
                 $.ajax({
                     'type': 'POST',
                     'url': url,
                     'success': function(response){
-                        data['ui-model']['html'] = response.data;
-                        console.log(data['ui-model']);
+                        data['ui_model']['html'] = response.data;
                     },
                     'data': $.extend(data, {'preview': true}),
                     'dataType': 'json',
@@ -64,14 +82,14 @@ function formIdToName(prefix, data){
     {
         return this.each(function(){
             var data = getValueInObject($(this).data('container').data('settings'), $(this).data('path'));
+            var dataTemp = flatArray(data);
             var prefix = $(this).data('type');
-            var ref = $(this);
             if($(this).find(":input.refresh").length){
-                $('form', this).refreshForm(formIdToName(prefix, data));
+                $('form', this).refreshForm(formIdToName(prefix, dataTemp));
             }
             $(this).find(':input[id!="' + prefix + '__token"]').each(function(){
                 var id = $(this).attr("id").replace(prefix + '_', '');
-                $(this).val(getValueInObject(data, '', id));
+                $(this).val(getValueInObject(dataTemp, '', id));
             });
         });
     }
@@ -106,9 +124,16 @@ function formIdToName(prefix, data){
     {
         return this.each(function(){
             var settings = $(this).data('settings');
-            eval('values = ' + $("#" + options.type + "_areas").val() + ';');
-            settings.areas = getValueInObject(values, '', 'areas');
-            settings['ui-model'] = {};
+            $.ajax({
+                'type': 'GET',
+                'url': "./api/node/fixture_full",
+                'success': function(response){
+            		settings.areas = response.areas;
+                },
+                'dataType': 'json',
+                'async': false
+            });
+            settings['ui_model'] = {};
             $("#dialog-" + options.type).data('path', '');
             $("#dialog-" + options.type).fromFormToJs();
         });
@@ -203,20 +228,20 @@ function formIdToName(prefix, data){
             $(this).data(options);
 
             var this_settings = getValueInObject(container.data('settings'), options.path);
-            var bo_direction_tools = (this_settings.boDirection == 'v') ? {'axe' : 'x', 'origine': 'left', 'vector':'width', 'css':'inline', 'prefix':'v'} : {'axe' : 'y', 'origine': 'top', 'vector':'height', 'css':'block', 'prefix':'h'};
+            var bo_direction_tools = (this_settings.bo_direction == 'v') ? {'axe' : 'x', 'origine': 'left', 'vector':'width', 'css':'inline', 'prefix':'v'} : {'axe' : 'y', 'origine': 'top', 'vector':'height', 'css':'block', 'prefix':'h'};
             var is_container = $(this).find('.ui-model').length > 0;
             var father_length = getValueInObject(container.data('settings'), options.parent_path + '.' + options.type, 'length');
-            var father_bo_direction = (father_bo_direction = getValueInObject(container.data('settings'), options.parent_path, 'boDirection')) ? father_bo_direction : 'h';
+            var father_bo_direction = (father_bo_direction = getValueInObject(container.data('settings'), options.parent_path, 'bo_direction')) ? father_bo_direction : 'h';
 
             var div = $("<div/>");
             try{
                 div.addClass(this_settings['method']);
             } catch(e){}
             $("<span/>").addClass("title")
-                        .text(getValueInObject(container.data('settings'), options.path + "['ui-model']", 'label'))
+                        .text(getValueInObject(container.data('settings'), options.path + "['ui_model']", 'label'))
                         .appendTo(div);
             $("<span/>").addClass("preview")
-                        .html(getValueInObject(container.data('settings'), options.path + "['ui-model']", 'html'))
+                        .html(getValueInObject(container.data('settings'), options.path + "['ui_model']", 'html'))
                         .appendTo(div);
             $("<span/>").addClass("action")
                         .addAction(returnActions(options, father_length, father_bo_direction))
@@ -235,7 +260,7 @@ function formIdToName(prefix, data){
 
             for(var i in this_settings){
                 try{
-                    if('ui-model' in this_settings[i][0]){
+                    if('ui_model' in this_settings[i][0]){
                         addArray = [i];
                         var ul = $( "<ul/>");
                         ul.appendTo(div);

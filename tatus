@@ -1,0 +1,128 @@
+* [31mcbbccc0[m -[33m (HEAD, nanne/update_js, master)[madd api bundle[32m(Nicolas Thal 4 days ago)[m
+* [31m511c31d[m -[33m[mstart using doctrin to display front page[32m(Nicolas Thal 4 days ago)[m
+*   [31m9d48d0f[m -[33m[mMerge pull request #23 from itkg/fix-bugs[32m(itkg-nanne 4 days ago)[m
+[32m|[m[33m\[m  
+[32m|[m * [31m7424f7b[m -[33m (composer/fix-bugs)[mPull request corrections : PhpUnit verify call[32m(nicolas ANNE 4 days ago)[m
+[32m|[m * [31mb794a70[m -[33m[mpull request corrections[32m(nicolas ANNE 4 days ago)[m
+[32m|[m * [31mf36d2c7[m -[33m[madd test with full coverage[32m(nicolas ANNE 4 days ago)[m
+[32m|[m * [31m7eb9336[m -[33m[mfix bugs[32m(nicolas ANNE 4 days ago)[m
+[32m|[m[32m/[m  
+*   [31ma532b5a[m -[33m[mMerge pull request #20 from itkg/index_multiValue[32m(itkg-bfouche 5 days ago)[m
+[34m|[m[35m\[m  
+[34m|[m * [31ma425a4c[m -[33m[mdelete array implode in toSolrDocument, display multiValued field and fix a bug in spellcheck[32m(itkg-bfouche 6 days ago)[m
+* [35m|[m   [31m18f1da9[m -[33m[mMerge pull request #22 from itkg/add_test_for_tree_helper[32m(Nicolas Thal 5 days ago)[m
+[35m|[m[1;31m\[m [35m\[m  
+[35m|[m [1;31m|[m[35m/[m  
+[35m|[m[35m/[m[1;31m|[m   
+[35m|[m * [31mcf9a59c[m -[33m[madd test for TreeHelper[32m(Nicolas Thal 5 days ago)[m
+[35m|[m[35m/[m  
+* [31mbea43bb[m -[33m[mfix error in conf[32m(Nicolas Thal 6 days ago)[m
+*   [31mb5a8175[m -[33m[mMerge pull request #17 from itkg/try_simplification[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [31md5c89e7[m -[33m[mUpdate ContactStrategy.php[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31mda5fce2[m -[33m[mfix node type transformer and move into services[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31m9f32458[m -[33m[msuppress unused code[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31m84732c2[m -[33m[mtransfert the request parameter to the subrequest[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31m815d95c[m -[33m[muse nodeId to find a block[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31m643af83[m -[33m[mrefacto all the block display method[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31m32c0367[m -[33m[madd base parameters for blocks[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m * [31m57b7179[m -[33m[madd test and try to simplify method[32m(Nicolas Thal 6 days ago)[m
+[1;32m|[m[1;32m/[m  
+*   [31m5c32d4b[m -[33m[mMerge pull request #15 from itkg/field_displayed[32m(itkg-bfouche 6 days ago)[m
+[1;34m|[m[1;35m\[m  
+[1;34m|[m * [31me197427[m -[33m[mdelete baseUrl and some checkstyle mistake[32m(itkg-bfouche 6 days ago)[m
+[1;34m|[m * [31me12a235[m -[33m[madd Base url and test if the first field exist[32m(itkg-bfouche 6 days ago)[m
+[1;34m|[m * [31md271b8f[m -[33m[mdelete base url[32m(itkg-bfouche 6 days ago)[m
+[1;34m|[m * [31mceaf1c0[m -[33m[mchange the first field displayed in the search result[32m(itkg-bfouche 6 days ago)[m
+[1;34m|[m[1;34m/[m  
+*   [31m5a7af6f[m -[33m[mMerge pull request #14 from itkg/fix-bugs[32m(itkg-nanne 6 days ago)[m
+[1;36m|[m[31m\[m  
+[1;36m|[m * [31me662846[m -[33m[mMise en page Template Generator[32m(nicolas ANNE 6 days ago)[m
+[1;36m|[m[1;36m/[m  
+*   [31m04bf5e0[m -[33m[mMerge pull request #19 from itkg/broken-tests[32m(Noël GILAIN 7 days ago)[m
+[32m|[m[33m\[m  
+[32m|[m * [31m2ea0b0f[m -[33m[mUpdate some broken tests[32m(Noël Gilain 7 days ago)[m
+[32m|[m[32m/[m  
+*   [31m17f735f[m -[33m[mMerge pull request #18 from itkg/conf-normalization[32m(Noël GILAIN 7 days ago)[m
+[34m|[m[35m\[m  
+[34m|[m * [31m13116ec[m -[33m[mRemove container dependancy on CustomFieldType[32m(Noël Gilain 7 days ago)[m
+[34m|[m * [31me053c8b[m -[33m[mRemove container dependency on multilingualTextType service[32m(Noël Gilain 7 days ago)[m
+[34m|[m * [31m95d8b22[m -[33m[mNormalize some conf[32m(Noël Gilain 7 days ago)[m
+[34m|[m[34m/[m  
+*   [31me2ad12b[m -[33m[mMerge pull request #16 from itkg/translation-normalize[32m(Noël GILAIN 8 days ago)[m
+[36m|[m[1;31m\[m  
+[36m|[m * [31mcd39dce[m -[33m[mNormalize translation keys[32m(Noël Gilain 8 days ago)[m
+* [1;31m|[m   [31m2a1732f[m -[33m[mMerge pull request #13 from itkg/suppress_conf[32m(Nicolas Thal 8 days ago)[m
+[1;31m|[m[1;33m\[m [1;31m\[m  
+[1;31m|[m [1;33m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;33m|[m   
+[1;31m|[m * [31m44d430c[m -[33m[mUpdate index.md[32m(Nicolas Thal 8 days ago)[m
+[1;31m|[m * [31m53d30d3[m -[33m[mUpdate index.md[32m(Nicolas Thal 8 days ago)[m
+[1;31m|[m * [31m060e0d2[m -[33m[madd doc[32m(Nicolas Thal 8 days ago)[m
+[1;31m|[m * [31m9b41f65[m -[33m[msuppress conf[32m(Nicolas Thal 8 days ago)[m
+[1;31m|[m[1;31m/[m  
+*   [31mdee7bf6[m -[33m[mMerge pull request #12 from itkg/ContentTypeForm-NewFieldValidation[32m(Noël GILAIN 8 days ago)[m
+[1;34m|[m[1;35m\[m  
+[1;34m|[m * [31m882919f[m -[33m[mAdjust translates leys[32m(Noël Gilain 8 days ago)[m
+[1;34m|[m * [31m1713cf5[m -[33m[mUse of jms/serializer[32m(Noël Gilain 8 days ago)[m
+[1;34m|[m * [31m01a1078[m -[33m[mCode review modifications[32m(Noël Gilain 8 days ago)[m
+[1;34m|[m * [31mf305551[m -[33m[mTypo[32m(Noël Gilain 11 days ago)[m
+[1;34m|[m * [31mfca3120[m -[33m[mFix a bug on Content Type Form where newly created custom field wasn't correctly validated[32m(Noël Gilain 11 days ago)[m
+* [1;35m|[m   [31mffd862f[m -[33m[mMerge pull request #11 from itkg/use_search_manager[32m(Nicolas Thal 8 days ago)[m
+[1;36m|[m[31m\[m [1;35m\[m  
+[1;36m|[m * [1;35m|[m [31m6e26c1e[m -[33m[mrefacto + use search manager[32m(Nicolas Thal 8 days ago)[m
+[1;36m|[m[1;36m/[m [1;35m/[m  
+* [1;35m|[m   [31mf812f47[m -[33m[mMerge pull request #10 from itkg/load-template-from-node[32m(Nicolas Thal 11 days ago)[m
+[32m|[m[33m\[m [1;35m\[m  
+[32m|[m * [1;35m|[m [31m87da33b[m -[33m[mAdd pul request corrections[32m(nicolas ANNE 11 days ago)[m
+[32m|[m * [1;35m|[m [31m4a84247[m -[33m[mLoad template in node context[32m(nicolas ANNE 11 days ago)[m
+[32m|[m[32m/[m [1;35m/[m  
+* [1;35m|[m   [31ma15908e[m -[33m[mMerge pull request #4 from itkg/nanne/Wip[32m(Nicolas Thal 11 days ago)[m
+[1;35m|[m[35m\[m [1;35m\[m  
+[1;35m|[m [35m|[m[1;35m/[m  
+[1;35m|[m[1;35m/[m[35m|[m   
+[1;35m|[m * [31mda7cbd4[m -[33m[mfix pr[32m(Nicolas Thal 11 days ago)[m
+[1;35m|[m * [31m5c76781[m -[33m[mcorrection from pull request[32m(nicolas ANNE 11 days ago)[m
+[1;35m|[m * [31m2b8209e[m -[33m[mWIP[32m(nicolas ANNE 11 days ago)[m
+[1;35m|[m[1;35m/[m  
+*   [31m790e9d9[m -[33m[mMerge pull request #9 from itkg/change_indexation_service_name[32m(itkg-bfouche 11 days ago)[m
+[36m|[m[1;31m\[m  
+[36m|[m * [31m1851209[m -[33m[mchange the service name for indexation[32m(itkg-bfouche 11 days ago)[m
+[36m|[m[36m/[m  
+*   [31m38607e7[m -[33m[mMerge pull request #7 from itkg/contextManager-updatedTests[32m(Noël GILAIN 11 days ago)[m
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [31me67da20[m -[33m[mcorrect test by using phake for mocking[32m(Nicolas Thal 11 days ago)[m
+[1;32m|[m * [31m03645e5[m -[33m[mModify test to create only one instance of contextManager[32m(Noël Gilain 11 days ago)[m
+[1;32m|[m * [31m6026a7c[m -[33m (composer/contextManager-updatedTests)[mFix doc[32m(Noël Gilain 12 days ago)[m
+[1;32m|[m * [31mfd3e126[m -[33m[mUpdate contextManager tests[32m(Noël Gilain 12 days ago)[m
+* [1;33m|[m   [31m24b0140[m -[33m[mMerge pull request #6 from itkg/move_indexer[32m(Nicolas Thal 12 days ago)[m
+[1;33m|[m[1;35m\[m [1;33m\[m  
+[1;33m|[m [1;35m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;35m|[m   
+[1;33m|[m * [31m9577821[m -[33m[mmove index command and index helper[32m(Nicolas Thal 12 days ago)[m
+[1;33m|[m[1;33m/[m  
+*   [31mb6fe992[m -[33m[mMerge pull request #5 from itkg/contextManager-siteSwitcher[32m(Noël GILAIN 12 days ago)[m
+[1;36m|[m[31m\[m  
+[1;36m|[m * [31me1dfc50[m -[33m[mModify after code review[32m(Noël Gilain 12 days ago)[m
+[1;36m|[m * [31m7331970[m -[33m[mAdd current site to contextManager + site Switcher in BO[32m(Noël Gilain 12 days ago)[m
+* [31m|[m   [31m443c31c[m -[33m[mMerge pull request #3 from itkg/test-contextManager[32m(Noël GILAIN 12 days ago)[m
+[31m|[m[33m\[m [31m\[m  
+[31m|[m [33m|[m[31m/[m  
+[31m|[m[31m/[m[33m|[m   
+[31m|[m * [31m88909b3[m -[33m[mModify files after code review[32m(Noël Gilain 12 days ago)[m
+[31m|[m * [31m6072d2f[m -[33m[mAdd ContextManager unit tests[32m(Noël Gilain 12 days ago)[m
+[31m|[m[31m/[m  
+*   [31m0fe8762[m -[33m[mMerge pull request #2 from itkg/change_var[32m(Nicolas Thal 12 days ago)[m
+[34m|[m[35m\[m  
+[34m|[m * [31ma27b6e0[m -[33m[mcorrection of some test unit[32m(itkg-bfouche 12 days ago)[m
+[34m|[m * [31md8f515f[m -[33m[mchange a variable name $form into $paramQuery[32m(itkg-bfouche 12 days ago)[m
+[34m|[m[34m/[m  
+* [31mf6d22b3[m -[33m[madd subfolder[32m(Nicolas Thal 12 days ago)[m
+*   [31m9cb15c0[m -[33m[mMerge pull request #1 from itkg/add_argument[32m(itkg-bfouche 13 days ago)[m
+[36m|[m[1;31m\[m  
+[36m|[m * [31m8258780[m -[33m[mmodify showBack and add a variable limit in SearchResult[32m(itkg-bfouche 13 days ago)[m
+[36m|[m * [31m7c4013b[m -[33m[madd argument in method signature[32m(itkg-bfouche 13 days ago)[m
+[36m|[m[36m/[m  
+* [31m3ee6a1d[m -[33m[mfix typo[32m(Nicolas Thal 13 days ago)[m
+* [31md775e78[m -[33m[mimport existing sources[32m(Nicolas Thal 13 days ago)[m
+* [31m6714ed6[m -[33m[mInitial commit[32m(Nicolas Thal 13 days ago)[m
