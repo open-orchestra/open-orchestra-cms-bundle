@@ -40,33 +40,36 @@ class BlockController extends Controller
      * @param string $nodeId
      * @param string $blockId
      *
+     * @throws NotFoundHttpException
      * @return Response
      */
     public function showBackAction($nodeId, $blockId)
     {
-        $node = $this->get('mandango')->getRepository('Model\PHPOrchestraCMSBundle\Node')
-            ->getOne($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
-        $blocks = $node->getBlocks()->all();
+        if (null !== ($block = $node->getBlocks()->get($blockId))) {
+            return $this->get('php_orchestra_cms.display_block_manager')
+                ->show($node->getBlocks()->get($blockId));
+        }
 
-        return $this->get('php_orchestra_cms.display_block_manager')
-            ->showBack($blocks[$blockId]);
+        throw new NotFoundHttpException();
     }
 
     /**
      * Render the node Block form
      *
-     * @param string $type
+     * @param Request $request
+     * @param string  $type
      *
+     * @throws \Exception
      * @return JsonResponse|Response
      */
-    public function formAction($type)
+    public function formAction(Request $request, $type)
     {
-        $request = $this->get('request');
-
         if ($request->request->get('preview') !== null) {
-            return $this->getPreview($request);
-        } elseif ($request->request->get('refresh') !== null) {
+            throw new \Exception("use directly the showBack method");
+        }
+        if ($request->request->get('refresh') !== null) {
             return $this->getRefresh($request, $type);
         } else {
             $refresh = array('is_node' => ($type == 'node'));
@@ -85,94 +88,6 @@ class BlockController extends Controller
                 'PHPOrchestraCMSBundle:Form:form.html.twig',
                 array(
                     'form' => $form->createView()
-                )
-            );
-        }
-    }
-
-    /**
-     * Get the component and attributs informations in block generate case
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    protected function getGenerateInformations(Request $request)
-    {
-        $attributs = $request->request->all();
-        $allowed=array_filter(
-            array_keys($attributs),
-            function ($key) {
-                return preg_match('/^attributs_/', $key);
-            }
-        );
-        $attributs = array_intersect_key($attributs, array_flip($allowed));
-        $attributs = array_combine(
-            array_map(
-                function ($value) {
-                    return preg_replace('/^attributs_/', '', $value);
-                },
-                array_keys($attributs)
-            ),
-            array_values($attributs)
-        );
-        $component = $request->request->get('component');
-
-        return array($component, $attributs);
-    }
-
-    /**
-     * Get the component and attributs informations in block load case
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    protected function getLoadInformations(Request $request)
-    {
-        $component = '';
-        $attributs = array();
-        $block = $this->get('php_orchestra_cms.document_manager')->getBlockInNode(
-            $request->request->get('nodeId'),
-            $request->request->get('blockId')
-        );
-        if ($block) {
-            $component = $block['component'];
-            $attributs = $block['attributes'];
-        }
-
-        return array($component, $attributs);
-    }
-    
-    /**
-     * Render the preview of a Block
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function getPreview(Request $request)
-    {
-        $component = '';
-        $attributs = array();
-        if ($request->request->get('component') !== null) {
-            list($component, $attributs) = $this->getGenerateInformations($request);
-        } elseif ($request->request->get('nodeId') !== null && $request->request->get('blockId') !== null) {
-            list($component, $attributs) = $this->getLoadInformations($request);
-        }
-        if ($component !== '') {
-            $response  = $this->forward('PHPOrchestraCMSBundle:Block/'.$component.':showBack', $attributs);
-            return new JsonResponse(
-                array(
-                    'success' => true,
-                    'data' => $response->getContent()
-                )
-            );
-        } else {
-            return new JsonResponse(
-                array(
-                    'success' => true,
-                    'data' => 'No Preview'
                 )
             );
         }

@@ -81,6 +81,7 @@ class PhpOrchestraUrlMatcher extends RedirectableUrlMatcher
         $slugs = explode('/', $pathinfo);
         $nodeId = Node::ROOT_NODE_ID;
         $nodeFound = false;
+        $parameters = array();
 
         foreach ($slugs as $position => $slug) {
             

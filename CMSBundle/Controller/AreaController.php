@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas Anne <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Controller;
 
@@ -12,14 +7,17 @@ use Symfony\Component\HttpFoundation\Request;
 use PHPOrchestra\CMSBundle\Form\Type\AreaType;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class AreaController
+ */
 class AreaController extends Controller
 {
-    
     /**
-     * 
      * Render the node Area form
-     * @param Request $request
-     * 
+     *
+     * @param string $type
+     *
+     * @return Response
      */
     public function formAction($type)
     {
