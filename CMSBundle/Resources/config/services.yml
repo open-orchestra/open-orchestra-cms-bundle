@@ -15,7 +15,7 @@ services:
     # Context service
     php_orchestra_cms.context_manager:
         class: "%php_orchestra_cms.manager.context.class%"
-        arguments: [@session, @php_orchestra_cms.document_manager, "%kernel.default_locale%"]
+        arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
 
     # Locale listener
     php_orchestra_cms.locale_listener:
