@@ -30,6 +30,10 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
                 $languages = array('en', 'fr', 'de', 'es');
             }
             $twig->addMethodCall('addGlobal', array('available_languages', $languages));
+
+            $formResources = $container->getParameter('twig.form.resources');
+            $formResources[] = 'PHPOrchestraCMSBundle:Form:contentTypeFields.html.twig';
+            $container->setParameter('twig.form.resources', $formResources);
         }
     }
 
