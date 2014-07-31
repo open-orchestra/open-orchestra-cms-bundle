@@ -58,7 +58,16 @@ function formIdToName(prefix, data){
                 .not('#' + prefix + '_token')
                 .each(function(){
                     var id = $(this).attr( "id" ).replace(prefix + '_', '');
-                    data[id] = $(this).val();
+                    if(id.indexOf('attributes_') !== -1){
+                    	if(!('attributes' in data)){
+                    		data['attributes'] = {};
+                    	}
+                    	id = id.replace('attributes_', '');
+                    	data['attributes'][id] = $(this).val();
+                    }
+                    else{
+                    	data[id] = $(this).val();
+                    }
                     if($(this).hasClass('used-as-label')){
                         data['ui_model'].label = (!$(this).is('select')) ? $(this).val() : $(this).find(":selected").text();
                     }
