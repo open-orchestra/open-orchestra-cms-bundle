@@ -1,18 +1,13 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Context;
 
+use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Centralize app contextual datas
- * 
- * @author Noël GILAIN <noel.gilain@businessdecision.com>
  */
 class ContextManager
 {
@@ -20,23 +15,23 @@ class ContextManager
     const KEY_SITE = '_site';
 
     protected $session;
-    protected $documentManager;
+    protected $siteRepository;
 
     /**
      * Constructor
      * 
-     * @param object $session
-     * @param object $documentManager
-     * @param string $defaultLocale
+     * @param Session        $session
+     * @param SiteRepository $siteRepository
+     * @param string         $defaultLocale
      */
-    public function __construct($session, $documentManager, $defaultLocale = 'en')
+    public function __construct(Session $session, SiteRepository $siteRepository, $defaultLocale = 'en')
     {
         $this->session = $session;
         if ($this->getCurrentLocale() == '') {
             $this->setCurrentLocale($defaultLocale);
         }
         
-        $this->documentManager = $documentManager;
+        $this->siteRepository = $siteRepository;
     }
 
     /**
@@ -62,21 +57,12 @@ class ContextManager
      */
     public function getAvailableSites()
     {
-        $documentSites = $this->documentManager->getDocuments('Site');
-        $sites = array();
-        
-        foreach ($documentSites as $site) {
-            $mongoId = (string) $site->getId();
-            $domain = $site->getDomain();
-            if ($mongoId != '' && $domain != '') {
-                $sites[] = array(
-                    'id' => $mongoId,
-                    'domain' => $domain
-                );
-            }
-        }
-        
-        return $sites;
+        $documentSites = $this->siteRepository->findAll();
+
+        /** @var SiteInterface $site */
+        return array_filter($documentSites, function($site) {
+            return $site->getSiteId() != '' && $site->getDomain() != '';
+        });
     }
 
     /**
@@ -90,7 +76,7 @@ class ContextManager
         $this->session->set(
             self::KEY_SITE,
             array(
-                'id' => $siteId,
+                'siteId' => $siteId,
                 'domain' => $siteDomain
             )
         );
@@ -98,21 +84,25 @@ class ContextManager
 
     /**
      * Get current selected site (BO Context)
+     *
+     * @return array
      */
     public function getCurrentSite()
     {
         $currentSite = $this->session->get(self::KEY_SITE);
-        
-        if (!isset($currentSite)) {
+
+        if ($currentSite) {
+            return $currentSite;
+        } else {
             $sites = $this->getAvailableSites();
-            
-            if (isset($sites[0]) && isset($sites[0]['id']) && isset($sites[0]['domain'])) {
-                $this->setCurrentSite($sites[0]['id'], $sites[0]['domain']);
+
+            if (isset($sites[0])) {
+                $this->setCurrentSite($sites[0]->getSiteId(), $sites[0]->getDomain());
             } else {
                 $this->setCurrentSite(0, 'No site available');
             }
         }
-        
+
         return $this->session->get(self::KEY_SITE);
     }
 }

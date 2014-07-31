@@ -60,8 +60,8 @@
                 <!-- Suggestion: populate this list with fetch and push technique -->
                 <ul class="dropdown-menu">
                     {% for site in availableSites %}
-                    <li{% if context.getCurrentSite().id == site.id %} class="active"{% endif %}>
-                        <a href="javascript:callAndReload('{{ path('php_orchestra_setSite', {'siteId':site.id, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
+                    <li{% if context.getCurrentSite().siteId == site.siteId %} class="active"{% endif %}>
+                        <a href="javascript:callAndReload('{{ path('php_orchestra_setSite', {'siteId':site.siteId, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -111,7 +111,10 @@
                 <ul class="header-dropdown-list hidden-xs">
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':context.currentLocale}, 'backOffice') }}" src="{{ asset('bundles/phporchestracms/img/flags/' ~ context.currentLocale ~ '.png') }}">
+                            <img
+                                alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':context.currentLocale}, 'backOffice') }}"
+                                src="{{ asset('bundles/phporchestracms/img/flags/' ~ context.currentLocale ~ '.png') }}"
+                                >
                             <span> {{ context.currentLocale|upper }} </span> <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu pull-right">

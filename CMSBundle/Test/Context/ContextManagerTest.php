@@ -1,60 +1,45 @@
 <?php
 
-/*
- * Business & Decision - Commercial License
- *
- * Copyright 2014 Business & Decision.
- *
- * All rights reserved. You CANNOT use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell this Software or any parts of this
- * Software, without the written authorization of Business & Decision.
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * See LICENSE.txt file for the full LICENSE text.
- */
-
 namespace PHPOrchestra\CMSBundle\Test\Context;
 
 use PHPOrchestra\CMSBundle\Context\ContextManager;
-use PHPOrchestra\CMSBundle\Test\Mock\SessionManager;
 use PHPOrchestra\CMSBundle\Test\Mock\Site;
 use Phake;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Unit tests of contextManager
- *
- * @author Noël GILAIN <noel.gilain@businessdecision.com>
  */
 class ContextManagerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $sessionManager;
+    protected $session;
     protected $contextManager;
-    protected $documentManager;
-    
+    protected $siteRepository;
+
     /**
      * Tests setup
      */
     public function setUp()
     {
-        $this->sessionManager = new SessionManager();
-        $this->documentManager = Phake::mock('PHPOrchestra\CMSBundle\Document\DocumentManager');
-        $this->contextManager = new ContextManager($this->sessionManager, $this->documentManager);
+        $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
+        $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        $this->contextManager = new ContextManager($this->session, $this->siteRepository);
     }
-
 
     /**
      * @param string $locale
-     * 
+     *
      * @dataProvider getLocale
      */
     public function testGetCurrentLocale($locale)
     {
-        $this->sessionManager->set('_locale', $locale);
-        $this->assertEquals($locale, $this->contextManager->getCurrentLocale());
-    }
+        Phake::when($this->session)->get(ContextManager::KEY_LOCALE)->thenReturn($locale);
 
+        $localReturned = $this->contextManager->getCurrentLocale();
+
+        $this->assertEquals($locale, $localReturned);
+        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_LOCALE);
+    }
 
     /**
      * @param string $locale
@@ -64,23 +49,22 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetCurrentLocale($locale)
     {
         $this->contextManager->setCurrentLocale($locale);
-        $this->assertEquals($locale, $this->sessionManager->get('_locale'));
+
+        Phake::verify($this->session)->set(ContextManager::KEY_LOCALE, $locale);
     }
 
-
     /**
-     * @param array $documentsList
+     * @param array $siteList
      * @param array $expectedArray
      *  
      * @dataProvider getAvailableSites
      */
-    public function testGetAvailableSites($documentsList, $expectedArray)
+    public function testGetAvailableSites($siteList, $expectedArray)
     {
-        Phake::when($this->documentManager)->getDocuments(Phake::anyParameters())->thenReturn($documentsList);
+        Phake::when($this->siteRepository)->findAll(Phake::anyParameters())->thenReturn($siteList);
         
         $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
-
 
     /**
      * @param array $site
@@ -89,10 +73,13 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetCurrentSite($site)
     {
-        $this->contextManager->setCurrentSite($site['id'], $site['domain']);
-        $this->assertEquals($site, $this->sessionManager->get('_site'));
-    }
+        $this->contextManager->setCurrentSite($site['siteId'], $site['domain']);
 
+        Phake::verify($this->session)->set(ContextManager::KEY_SITE, array(
+            'siteId' => $site['siteId'],
+            'domain' => $site['domain']
+        ));
+    }
 
     /**
      * @param array $site
@@ -101,10 +88,12 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCurrentSite($site)
     {
-        $this->sessionManager->set('_site', $site);
-        $this->assertEquals($site, $this->contextManager->getCurrentSite());
-    }
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
 
+        $this->assertEquals($site, $this->contextManager->getCurrentSite());
+
+        Phake::verify($this->session)->get(ContextManager::KEY_SITE);
+    }
 
     /**
      * Locale provider
@@ -119,32 +108,37 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-
     /**
      * Site provider
      */
     public function getSite()
     {
         return array(
-            array(array('id' => 'fakeId', 'domain' => 'fakeDomain'))
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'))
         );
     }
-
 
     /**
      * Available sites provider
      */
     public function getAvailableSites()
     {
-        $site1 = new Site('site1');
-        $site2 = new Site('site2');
-        
+        $site1 = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+        $site2 = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+
+        $siteId1 = 'siteId';
+        $domain1 = 'domain';
+
+        Phake::when($site1)->getSiteId()->thenReturn($siteId1);
+        Phake::when($site1)->getDomain()->thenReturn($domain1);
+        Phake::when($site2)->getSiteId()->thenReturn('');
+        Phake::when($site2)->getDomain()->thenReturn('');
+
         return array(
             array(
                 array($site1, $site2),
                 array(
-                    array('id' => $site1->getId(), 'domain' => $site1->getDomain()),
-                    array('id' => $site2->getId(), 'domain' => $site2->getDomain())
+                    $site1
                 )
             )
         );
