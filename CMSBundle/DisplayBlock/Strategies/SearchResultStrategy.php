@@ -67,13 +67,13 @@ class SearchResultStrategy extends AbstractStrategy
         $nodeId = $attributes['nodeId'];
         $nbdoc = $attributes['nbdoc'];
         $fielddisplayed = $attributes['fielddisplayed'];
-        $nbspellcheck = $attributes['nbspellcheck'];
-        $limitField = 20;//$attributes['limitField'];
-        $facets = $attributes['facets'];
-        $filter = $attributes['filter'];
-        $optionsearch = $attributes['optionsearch'];
-        $optionsdismax = array();//$attributes['optiondismax'];
-        $page = 1;//$attributes['page'];
+        $nbspellcheck = (array_key_exists('nbspellcheck', $attributes)?$attributes['nbspellcheck']:5);
+        $limitField = (array_key_exists('limitField', $attributes)?$attributes['limitField']:50);
+        $facets = (array_key_exists('facets', $attributes)?$attributes['facets']:array());
+        $filter = (array_key_exists('filter', $attributes)?$attributes['filter']:array());
+        $optionsearch = (array_key_exists('optionsearch', $attributes)?$attributes['optionsearch']:array());
+        $optionsdismax = (array_key_exists('optiondismax', $attributes)?$attributes['optinodismax']:array());
+        $page = (array_key_exists('page', $attributes)?$attributes['page']:1);
         if ($this->getRequest()) {
             $_page_parameters['query'] = $this->getRequest()->query->all();
         } else {
@@ -174,12 +174,12 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Search in solr
      *
-     * @param string $data searching word
-     * @param $nbspellcheck
-     * @param array $optionSearch array of option to the search
-     * @param array $facets array of option to the facets
-     * @param $filters
-     * @param $dismax
+     * @param string $data         searching word
+     * @param int    $nbspellcheck number of spellcheck result
+     * @param array  $optionSearch array of option to the search
+     * @param array  $facets       array of option to the facets
+     * @param array  $filters      array of filters
+     * @param array  $dismax       array of dismax options
      *
      * @return Result
      */
@@ -223,8 +223,8 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Create a filter query
      *
-     * @param string $data search word
-     * @param string $filter query filter
+     * @param string $data      search word
+     * @param string $filter    query filter
      * @param string $facetName facet name
      *
      * @return Result
@@ -267,6 +267,7 @@ class SearchResultStrategy extends AbstractStrategy
                     }
                 }
             }
+
             return $result;
         } else {
             return $resultset;
@@ -276,9 +277,9 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Call facet services
      *
-     * @param Query         $query
+     * @param Query         $query  query
      * @param SearchManager $search search services
-     * @param array         $facets
+     * @param array         $facets array of facets
      */
     protected function callFacet($query, $search, $facets)
     {
@@ -339,14 +340,14 @@ class SearchResultStrategy extends AbstractStrategy
     /**
      * Call search template
      *
-     * @param string $data search word
-     * @param Result $resultSet
-     * @param string $nodeId identifiant of node
-     * @param int    $page number of page
-     * @param int    $nbdoc number of documents per page selected by the user
-     * @param array  $fields array of field displayed
+     * @param string $data       search word
+     * @param Result $resultSet  object solarium result
+     * @param string $nodeId     identifiant of node
+     * @param int    $page       number of page
+     * @param int    $nbdoc      number of documents per page selected by the user
+     * @param array  $fields     array of field displayed
      * @param int    $limitField number of letters per field
-     * @param array  $facets array if they have facets
+     * @param array  $facets     array if they have facets
      *
      * @return Response
      */
