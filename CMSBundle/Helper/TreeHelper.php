@@ -1,32 +1,12 @@
 <?php
 
 namespace PHPOrchestra\CMSBundle\Helper;
-use PHPOrchestra\ModelBundle\Document\Node;
 
 /**
  * Class TreeHelper
  */
 class TreeHelper
 {
-    /**
-     * @param array  $values
-     *
-     * @return array
-     */
-    public static function createTreeFromObject($values)
-    {
-    }
-
-    /**
-     * @param array $list
-     * @param array $parent
-     *
-     * @return array
-     */
-    public static function createRecTreeFromObject($list, $parent)
-    {
-    }
-
     /**
      * @param array  $values
      * @param string $l_id

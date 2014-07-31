@@ -34,5 +34,7 @@ class PHPOrchestraCMSExtension extends Extension
         $loader->load('services.yml');
         $loader->load('display.yml');
         $loader->load('form.yml');
+        $loader->load('manager.yml');
+        $loader->load('twig.yml');
     }
 }

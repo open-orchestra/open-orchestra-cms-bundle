@@ -1,0 +1,9 @@
+parameters:
+    php_orchestra_cms.twig.tree.extension.class: PHPOrchestra\CMSBundle\Twig\TreeHelperExtension
+
+services:
+    php_orchestra_cms.twig.tree.extension:
+        class: %php_orchestra_cms.twig.tree.extension.class%
+        arguments: [@php_orchestra_cms.manager.tree]
+        tags:
+            - { name: twig.extension }

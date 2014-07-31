@@ -36,7 +36,7 @@ class PHPOrchestraCMSExtensionTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         
         $container
-            ->expects($this->exactly(4))
+            ->expects($this->atLeastOnce())
             ->method('addResource')
             ->with($this->isInstanceOf('\\Symfony\\Component\\Config\\Resource\\FileResource'));
         

@@ -1,0 +1,6 @@
+parameters:
+    php_orchestra_cms.manager.tree.class: PHPOrchestra\CMSBundle\Manager\TreeManager
+
+services:
+    php_orchestra_cms.manager.tree:
+        class: %php_orchestra_cms.manager.tree.class%
