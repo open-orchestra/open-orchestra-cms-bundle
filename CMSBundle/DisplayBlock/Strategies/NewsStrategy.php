@@ -2,9 +2,10 @@
 
 namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
-use Mandango\Mandango;
+
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelBundle\Repository\ContentRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -12,11 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NewsStrategy extends AbstractStrategy
 {
-    protected $mandango;
+    protected $contentRepository;
 
-    public function __construct(Mandango $mandango)
+    /**
+     * @param ContentRepository $contentRepository
+     */
+    public function __construct(ContentRepository $contentRepository)
     {
-        $this->mandango = $mandango;
+        $this->contentRepository = $contentRepository;
     }
 
     /**
@@ -40,7 +44,7 @@ class NewsStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $allNews = $this->mandango->getRepository('Model\PHPOrchestraCMSBundle\Content')->getAllNews();
+        $allNews = $this->contentRepository->findAllNews();
 
         return $this->render(
             'PHPOrchestraCMSBundle:Block/News:show.html.twig',
@@ -57,7 +61,7 @@ class NewsStrategy extends AbstractStrategy
      */
     public function showBack(BlockInterface $block)
     {
-        $allNews = $this->mandango->getRepository('Model\PHPOrchestraCMSBundle\Content')->getAllNews();
+        $allNews = $this->contentRepository->findAllNews();
 
         return $this->render(
             'PHPOrchestraCMSBundle:Block/News:showBack.html.twig',
