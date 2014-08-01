@@ -263,7 +263,9 @@ class SearchResultStrategy extends AbstractStrategy
                     foreach ($suggestions as $suggest) {
                         $search->search($suggest->getword(), $query);
 
-                        $result[] = $this->get('php_orchestra_indexation.search_manager')->select($query);
+                        $result[] = $this->container
+                            ->get('php_orchestra_indexation.search_manager')
+                            ->select($query);
                     }
                 }
             }
