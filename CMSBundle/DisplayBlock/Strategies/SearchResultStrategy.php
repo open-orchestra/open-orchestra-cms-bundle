@@ -208,14 +208,14 @@ class SearchResultStrategy extends AbstractStrategy
             }
         }
 
-        /*/ Dismax
+        // Dismax
         if (isset($dismax) && !empty($dismax)) {
             if (isset($dismax['mm'])) {
                 $this->searchManager->disMax($query, $dismax['fields'], $dismax['boost'], $dismax['mm']);
             } else {
                 $this->searchManager->disMax($query, $dismax['fields'], $dismax['boost']);
             }
-        }*/
+        }
 
         return $this->result($query, $this->searchManager);
     }
