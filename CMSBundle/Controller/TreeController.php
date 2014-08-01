@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Controller;
 
@@ -13,106 +8,37 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use PHPOrchestra\CMSBundle\Helper\TreeHelper;
 
+/**
+ * Class TreeController
+ */
 class TreeController extends Controller
 {
-    
     /**
      * List all nodes
-     * 
      */
     public function showTreeNodesAction()
     {
-        $nodes = $this->get('php_orchestra_cms.document_manager')
-            ->getNodesInLastVersion(array(array('$match' => array('deleted' => false))));
-        
-        $listParentId = array();
-        foreach ($nodes as &$node) {
-            $node['url'] = $this->generateUrl('php_orchestra_cms_nodeform', array('nodeId' => $node['_id']));
-            $node['class'] = ($node['deleted'] == true) ? 'deleted' : '';
-            $node['action'] = array(
-                'css' => 'fa fa-trash-o',
-                'text' => '',
-                'url' => $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'confirmDeleteNode')),
-            );
-            $node['parameter'] = array('nodeId' => $node['_id'], 'name' => $node['name']);
-            if(!in_array($node['_id'], $listParentId)){
-                $listParentId[] = $node['_id'];
-            }
-        }
+        $nodes = $this->get('php_orchestra_model.repository.node')->findByDeleted(false);
 
-        foreach($listParentId as $parentId){
-            array_push($nodes, array(
-                '_id' => uniqid('node-'),
-                'parentId' => $parentId,
-                'name' => '',
-                'url' => '#',
-                'class' => 'ui-state-unsortable',
-                'action' => array(
-                    'css' => 'fa fa-file',
-                    'text' => 'Nouvelle page',
-                    'url' => $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'createNode')),
-                ),
-                'parameter' => array('parentId' => $parentId)
-            ));
-        }
-        
-        $nodes = TreeHelper::createTree($nodes);
-
-        return $this->getRender($nodes, $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'moveNode')), $this->get('translator')->trans('php_orchestra_cms.left_menu.editorial.nodes', array(), 'backOffice'));
+        return $this->render(
+            'PHPOrchestraCMSBundle:Tree:showTreeNodes.html.twig',
+            array(
+                'nodes' => $nodes
+            )
+        );
     }
+
     /**
      * List all templates
-     * 
      */
     public function showTreeTemplatesAction()
     {
+        $templates = $this->get('php_orchestra_model.repository.template')->findByDeleted(false);
 
-        $templates = $this->get('php_orchestra_cms.document_manager')->getTemplatesInLastVersion(array(array('$match' => array('deleted' => false))));
-
-        
-        foreach ($templates as $key => &$template) {
-            $template['url'] = $this->generateUrl(
-                'php_orchestra_cms_templateform',
-                array('templateId' => $template['_id'])
-            );
-            $template['class'] = ($template['deleted'] == true) ? 'deleted' : '';
-            $template['action'] = array(
-                'css' => 'fa fa-trash-o',
-                'text' => '',
-                'url' => $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'confirmDeleteTemplate')),
-            );
-            $template['parameter'] = array('templateId' => $template['_id'], 'name' => $template['name']);
-        }
-        
-        array_push($templates, array(
-            '_id' => uniqid('template-'),
-            'name' => '',
-            'url' => '#',
-            'class' => 'ui-state-unsortable',
-            'action' => array(
-                'css' => 'fa fa-file',
-                'text' => 'Nouveau gabarit',
-                'url' => $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'createTemplate')),
-            ),
-            'parameter' => array()
-        ));
-
-        $templates = TreeHelper::createTree($templates);
-        return $this->getRender($templates, '', $this->get('translator')->trans('php_orchestra_cms.left_menu.editorial.templates', array(), 'backOffice'));
-    }
-    
-    /**
-     * Render tree
-     * 
-     */
-    public function getRender($links, $moveUrl, $name)
-    {
         return $this->render(
-            'PHPOrchestraCMSBundle:Tree:tree.html.twig',
+            'PHPOrchestraCMSBundle:Tree:showTreeTemplates.html.twig',
             array(
-                'name' => $name,
-                'moveUrl' => $moveUrl,
-                'links' => $links
+                'templates' => $templates
             )
         );
     }

@@ -1,29 +1,79 @@
-{% macro menu_links(links, name) %}
-    {% set create = '' %}
-    <ul class="{{ name }}-connectedSortable">
-    {% for link in links %}
-        {% set id = name ~ '-' ~ e_crc32(link._id) %}
-        <li class="{{ link.class }}" id="{{ id }}">
+{% macro menu_nodes(nodes, name) %}
+    {% for element in nodes %}
+        {% set node = element.node %}
+        {% set id = name ~ '-' ~ e_crc32(node.id) %}
+        <li id="{{ id }}">
             <div>
-                <a href="{{ link.url }}">
-                    {% if link.action is defined %}
-                    <i class="{{ link.action.css }}">
-                        {{ link.action.text }}
+                <a href="{{ path('php_orchestra_cms_nodeform', {'nodeId': node.nodeId}) }}">
+                    <i class="fa fa-trash-o">
                         <script>
-                            $('#{{ id }} i').eq(0).data({{ {'url':link.action.url}|json_encode|raw }});
+                            $('#{{ id }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'})}|json_encode|raw }});
                         </script>
                     </i>
-                    {% endif %}
-                    {{ link.name }}
+                    {{ node.name }}
                 </a>
-                {% if 'sublinks' in link|keys %}
-                    {{ _self.menu_links(link.sublinks, name) }}
+                {% if 'child' in element|keys %}
+                    <ul class="{{ name }}-connectedSortable">
+                        {{ _self.menu_nodes(element.child, name) }}
+                        {% set newId = name ~ '-' ~ e_crc32(random()) %}
+                        <li id="{{ newId }}">
+                            <div class="ui-state-unsortable">
+                                <a href="#">
+                                    <i class="fa fa-file">
+                                        <script>
+                                            $('#{{ newId }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createNode'})}|json_encode|raw }});
+                                        </script>
+                                    </i>
+                                    {{ 'php_orchestra_cms.left_menu.tree.new_page'|trans({}, 'backOffice') }}
+                                </a>
+                                <script>
+                                    $('#{{ newId }}').data({{ {'tree-parameter': { 'parentId': node.nodeId} }|json_encode|raw }});
+                                </script>
+                            </div>
+                        </li>
+                    </ul>
                 {% endif %}
                 <script>
-                    $('#{{ id }}').data({{ {'tree-parameter':link.parameter}|json_encode|raw }});
+                    $('#{{ id }}').data({{ {'tree-parameter': { 'nodeId': node.id, 'name' :node.name} }|json_encode|raw }});
                 </script>
             </div>
         </li>
     {% endfor %}
-    </ul>
+{% endmacro %}
+
+{% macro menu_templates(templates, name) %}
+    {% for template in templates %}
+        {% set id = name ~ '-' ~ e_crc32(template.id) %}
+        <li id="{{ id }}">
+            <div>
+                <a href="{{ path('php_orchestra_cms_templateform', {'templateId': template.templateId}) }}">
+                    <i class="fa fa-trash-o">
+                        <script>
+                            $('#{{ id }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeletetemplate'})}|json_encode|raw }});
+                        </script>
+                    </i>
+                    {{ template.name }}
+                </a>
+                <script>
+                    $('#{{ id }}').data({{ {'tree-parameter': { 'templateId': template.id, 'name': template.name} }|json_encode|raw }});
+                </script>
+            </div>
+        </li>
+    {% endfor %}
+    {% set newId = name ~ '-' ~ e_crc32(random()) %}
+    <li id="{{ newId }}">
+        <div class="ui-state-unsortable">
+            <a href="#">
+                <i class="fa fa-file">
+                    <script>
+                        $('#{{ newId }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createTemplate'})}|json_encode|raw }});
+                    </script>
+                </i>
+                {{ 'php_orchestra_cms.left_menu.tree.new_template'|trans({}, 'backOffice') }}
+            </a>
+            <script>
+                $('#{{ newId }}').data({{ {'tree-parameter': {} }|json_encode|raw }});
+            </script>
+        </div>
+    </li>
 {% endmacro %}

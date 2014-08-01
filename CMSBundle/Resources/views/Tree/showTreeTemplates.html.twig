@@ -1,0 +1,7 @@
+{% extends 'PHPOrchestraCMSBundle:Tree:tree.html.twig' %}
+
+{% set name = 'php_orchestra_cms.left_menu.editorial.templates'|trans({}, 'backOffice') %}
+
+{% block menu %}
+    {{ macros.menu_templates(templates, id) }}
+{% endblock %}
