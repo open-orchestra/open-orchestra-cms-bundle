@@ -2,7 +2,10 @@
 <script src="{{ asset('bundles/phporchestracms/js/pagegenerator/tree.js') }}"></script>
 {% set id = e_crc32(name) %}
 <li id="{{ id }}"><a href="#"><span class="menu-item-parent">{{ name }}</span></a>
-{{ macros.menu_links(links, id) }}
+    <ul class="{{ name }}-connectedSortable">
+        {% block menu %}
+        {% endblock %}
+    </ul>
     <script>
         $('#{{ id }}').data({{ {'url':path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd' : 'refresh'}), 'controller':app.request.attributes.get("_controller")}|json_encode|raw }});
     </script>

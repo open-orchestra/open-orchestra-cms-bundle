@@ -62,6 +62,14 @@
                         <source>php_orchestra_cms.left_menu.editorial.contents</source>
                         <target>Contenus</target>
                     </trans-unit>
+                    <trans-unit id="php_orchestra_cms.left_menu.tree.new_page">
+                        <source>php_orchestra_cms.left_menu.tree.new_page</source>
+                        <target>Nouvelle Page</target>
+                    </trans-unit>
+                    <trans-unit id="php_orchestra_cms.left_menu.tree.new_template">
+                        <source>php_orchestra_cms.left_menu.tree.new_template</source>
+                        <target>Nouveau gabarit</target>
+                    </trans-unit>
                 </group>
                 
                 <group id="left_menu.administration">

@@ -51,7 +51,8 @@ class NodeController extends Controller
         $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
 
         if (empty($nodeId)) {
-            $node = $this->get('php_orchestra_cms.document_manager')->createDocument('Node');
+            $nodeClass = $this->container->getParameter('php_orchestra_model.document.node.class');
+            $node = new $nodeClass();
             $node->setSiteId(1);
             $node->setLanguage('fr');
         } else {
