@@ -3,6 +3,7 @@
 namespace PHPOrchestra\CMSBundle;
 
 use PHPOrchestra\CMSBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
+use PHPOrchestra\CMSBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -19,5 +20,6 @@ class PHPOrchestraCMSBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new DisplayBlockCompilerPass());
+        $container->addCompilerPass(new TwigGlobalsCompilerPass());
     }
 }
