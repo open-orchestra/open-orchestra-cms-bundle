@@ -8,18 +8,15 @@
 {# if they are 0 result #}
 {% if resultset.numfound is not defined %}
     {% if resultset is empty %}
-        {{ 'Sorry no results for'|trans }} "{{ data }}".
+        {{ 'php_orchestra_cms.search_result.view.no_result_found'|trans }} "{{ data }}".
     {% else %}
         {# Browse the result list and call this template #}
         {% for result in resultset %}
-            {#{ dump(result) }#}
             {% include "PHPOrchestraCMSBundle:Block/SearchResult:show.html.twig" with {"data": data, "resultset": result, "nodeId": nodeId} %}        
         {% endfor %}
     {% endif %}
 {% else %}
     <div id="searchid">
-    {#{ dump(resultset) }#}
-    
     {% if resultset.spellcheck is not empty %}
         {# Call spellCheck template #}
         {% include "PHPOrchestraCMSBundle:Block/SearchResult:spellcheck.html.twig" %}
@@ -34,7 +31,7 @@
         {# This template display list of documents in the result#}
         {% include "PHPOrchestraCMSBundle:Block/SearchResult:showDocs.html.twig" %}
     {% else %}
-        {{ 'Sorry no results for'|trans }} "{{ data }}".
+        {{ 'php_orchestra_cms.search_result.view.no_result_found'|trans }} "{{ data }}".
     {% endif %}
     
     </div>

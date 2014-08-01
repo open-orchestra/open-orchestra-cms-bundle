@@ -208,14 +208,14 @@ class SearchResultStrategy extends AbstractStrategy
             }
         }
 
-        /*/ Dismax
+        // Dismax
         if (isset($dismax) && !empty($dismax)) {
             if (isset($dismax['mm'])) {
                 $this->searchManager->disMax($query, $dismax['fields'], $dismax['boost'], $dismax['mm']);
             } else {
                 $this->searchManager->disMax($query, $dismax['fields'], $dismax['boost']);
             }
-        }*/
+        }
 
         return $this->result($query, $this->searchManager);
     }
@@ -263,7 +263,7 @@ class SearchResultStrategy extends AbstractStrategy
                     foreach ($suggestions as $suggest) {
                         $search->search($suggest->getword(), $query);
 
-                        $result[] = $this->get('php_orchestra_indexation.search_manager')->select($query);
+                        $result[] = $this->searchManager->select($query);
                     }
                 }
             }
