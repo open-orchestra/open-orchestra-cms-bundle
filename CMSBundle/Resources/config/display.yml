@@ -42,7 +42,7 @@ services:
             - { name: php_orchestra_cms.display_block.strategy }
     php_orchestra_cms.display.news:
         class: %php_orchestra_cms.display.news.class%
-        arguments: [@mandango]
+        arguments: [@php_orchestra_model.repository.content]
         tags:
             - { name: php_orchestra_cms.display_block.strategy }
     php_orchestra_cms.display.sample:
