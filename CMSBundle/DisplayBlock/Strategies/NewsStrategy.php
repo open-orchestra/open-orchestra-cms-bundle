@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
-
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Repository\ContentRepository;
