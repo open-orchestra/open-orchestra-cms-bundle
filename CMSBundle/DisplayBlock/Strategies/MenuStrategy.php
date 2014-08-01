@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class MenuStrategy extends AbstractStrategy
 {
-    protected $mandango;
+    protected $nodeRepository;
     protected $router;
 
     /**

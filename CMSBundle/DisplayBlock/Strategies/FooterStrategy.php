@@ -3,7 +3,6 @@
 namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\CMSBundle\Helper\TreeHelper;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\HttpFoundation\Response;
