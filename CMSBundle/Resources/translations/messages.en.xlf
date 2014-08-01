@@ -7,7 +7,7 @@
                 <target>No result found</target>
             </trans-unit>
             <trans-unit id="searchResult_resultNotFound">
-                <source>Sorry no results for</source>
+                <source>php_orchestra_cms.search_result.view.no_result_found</source>
                 <target>Sorry no results for</target>
             </trans-unit>
         </body>
