@@ -1,3 +1,13 @@
+parameters:
+    php_orchestra_cms.manager.cache.class : 'PHPOrchestra\CMSBundle\Cache\RedisCacheManager'
+    php_orchestra_cms.manager.document.class : 'PHPOrchestra\CMSBundle\Document\DocumentManager'
+    php_orchestra_cms.manager.context.class : 'PHPOrchestra\CMSBundle\Context\ContextManager'
+    php_orchestra_cms.listener.locale.class : 'PHPOrchestra\CMSBundle\EventListener\LocaleListener'
+    php_orchestra_cms.type.multilingual_text.class : 'PHPOrchestra\CMSBundle\Form\Type\MultilingualTextType'
+    php_orchestra_cms.type.content_attributes.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentAttributesType'
+    php_orchestra_cms.type.content_type_fields.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType'
+    php_orchestra_cms.type.custom_field.class : 'PHPOrchestra\CMSBundle\Form\Type\CustomFieldType'
+
 services:
 
 #--[STANDARD SERVICES]----------#

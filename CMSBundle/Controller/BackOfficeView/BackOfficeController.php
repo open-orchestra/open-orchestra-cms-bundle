@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Controller\BackOfficeView;
 
@@ -11,7 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use PHPOrchestra\CMSBundle\Exception\UnrecognizedCommandTypeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class BackOfficeController
+ */
 class BackOfficeController extends Controller
 {
     /**
@@ -29,12 +28,15 @@ class BackOfficeController extends Controller
     {
         return $this->render('PHPOrchestraCMSBundle:BackOffice/Editorial:editoHome.html.twig');
     }
-    
+
     /**
      * Tree menu Dispatcher
-     * 
+     *
      * @param string $cmd
      * @param Request $request
+     *
+     * @throws UnrecognizedCommandTypeException
+     * @return JsonResponse|Response
      */
     public function jsContextMenuDispatchAction($cmd, Request $request)
     {
@@ -42,29 +44,29 @@ class BackOfficeController extends Controller
         switch ($cmd)
         {
             case 'createNode':
-            	$request->setMethod('GET');
-            	return $this->forward('PHPOrchestraCMSBundle:Node:form', array());
-            	break;
-	        case 'confirmDeleteNode':
-	            $response = $this->render(
-	                'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
-	                array(
-	                    'dialogId' => '',
-	                    'dialogTitle' => 'Suppression du node',
-	                    'dialogMessage' => 'Vous êtes sur le point de supprimer le node "'.$request->request->get('name').'"<br /><br />Souhaitez-vous continuer ?',
-	                )
-	            );
-	            return new JsonResponse(
-	                array(
-	                    'dialog' => $response->getContent(),
-	                    'url' => $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'deleteNode')),
-	                    'value' => array('nodeId' => $request->request->get('nodeId')),
-	                )
-	            );
-	            break;
+                $request->setMethod('GET');
+                return $this->forward('PHPOrchestraCMSBundle:Node:form', array());
+                break;
+            case 'confirmDeleteNode':
+                $response = $this->render(
+                    'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
+                    array(
+                        'dialogId' => '',
+                        'dialogTitle' => 'Suppression du node',
+                        'dialogMessage' => 'Vous êtes sur le point de supprimer le node "'.$request->request->get('name').'"<br /><br />Souhaitez-vous continuer ?',
+                    )
+                );
+                return new JsonResponse(
+                    array(
+                        'dialog' => $response->getContent(),
+                        'url' => $this->generateUrl('php_orchestra_cms_bo_jscontextmenudispatcher', array('cmd' => 'deleteNode')),
+                        'value' => array('nodeId' => $request->request->get('nodeId')),
+                    )
+                );
+                break;
             case 'deleteNode':
-            	$request->request->add(array('refreshRecord' => true));
-            	$request->request->add(array('deleted' => true));
+                $request->request->add(array('refreshRecord' => true));
+                $request->request->add(array('deleted' => true));
                 return $this->forward('PHPOrchestraCMSBundle:Node:form', array('nodeId' => $request->request->get('nodeId')));
                 break;
             case 'moveNode':

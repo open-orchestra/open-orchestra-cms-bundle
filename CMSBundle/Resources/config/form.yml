@@ -1,20 +1,19 @@
 parameters:
     php_orchestra_cms.type.content.class : PHPOrchestra\CMSBundle\Form\Type\ContentType
     php_orchestra_cms.type.content_type.class : PHPOrchestra\CMSBundle\Form\Type\ContentTypeType
-    php_orchestra_cms.transformer.node_type.class: PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer
     php_orchestra_cms.type.template.class: PHPOrchestra\CMSBundle\Form\Type\TemplateType
     php_orchestra_cms.type.node.class: PHPOrchestra\CMSBundle\Form\Type\NodeType
 
 services:
     # Content Form Builder
     php_orchestra_cms.type.content:
-        class: "%php_orchestra_cms.type.content.class%"
+        class: %php_orchestra_cms.type.content.class%
         arguments: [@php_orchestra_cms.context_manager]
         tags: [{name: form.type, alias: content}]
 
     # ContentType Form Builder
     php_orchestra_cms.type.content_type:
-        class: "%php_orchestra_cms.type.content_type.class%"
+        class: %php_orchestra_cms.type.content_type.class%
         arguments: [@jms_serializer, "%php_orchestra_cms.custom_types%"]
         tags: [{name: form.type, alias: content_type}]
 
@@ -38,7 +37,3 @@ services:
             - %php_orchestra_model.document.node.class%
         tags:
             - { name: form.type, alias: node }
-
-    php_orchestra_cms.transformer.node_type:
-        class: %php_orchestra_cms.transformer.node_type.class%
-        arguments: [@php_orchestra_model.repository.node, @php_orchestra_cms.display_block_manager]
