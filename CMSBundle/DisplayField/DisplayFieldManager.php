@@ -1,6 +1,7 @@
 <?php
 
 namespace PHPOrchestra\CMSBundle\DisplayField;
+use PHPOrchestra\CMSBundle\Exception\DisplayFieldStrategyNotFoundException;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
@@ -21,7 +22,7 @@ class DisplayFieldManager
     /**
      * @param string $fieldType
      *
-     * @throws Exception
+     * @throws DisplayFieldStrategyNotFoundException
      * @return string
      */
     public function getHtmlField($fieldType)
@@ -33,13 +34,13 @@ class DisplayFieldManager
             }
         }
 
-        throw new Exception('No html field for field s type : '.$fieldType);
+        throw new DisplayFieldStrategyNotFoundException('No html field for field \'s type : '.$fieldType);
     }
 
     /**
      * @param string $fieldType
      *
-     * @throws Exception
+     * @throws DisplayFieldStrategyNotFoundException
      * @return string
      */
     public function getHtmlEnd($fieldType)
@@ -51,14 +52,14 @@ class DisplayFieldManager
             }
         }
 
-        throw new Exception('No html field for field s type : '.$fieldType);
+        throw new DisplayFieldStrategyNotFoundException('No html field for field \'s type : '.$fieldType);
     }
 
     /**
      * @param string $fieldType
      * @param string $class
      *
-     * @throws Exception
+     * @throws DisplayFieldStrategyNotFoundException
      * @return string
      */
     public function setClass($fieldType, $class)
@@ -70,13 +71,13 @@ class DisplayFieldManager
             }
         }
 
-        throw new Exception('No html field for field s type : '.$fieldType);
+        throw new DisplayFieldStrategyNotFoundException('No html field for field \'s type : '.$fieldType);
     }
 
     /**
      * @param string $fieldType
      *
-     * @throws Exception
+     * @throws DisplayFieldStrategyNotFoundException
      * @return string
      */
     public function getClass($fieldType)
@@ -88,6 +89,6 @@ class DisplayFieldManager
             }
         }
 
-        throw new Exception('No html field for field s type : '.$fieldType);
+        throw new DisplayFieldStrategyNotFoundException('No html field for field \'s type : '.$fieldType);
     }
 }

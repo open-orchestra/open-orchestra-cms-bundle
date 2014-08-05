@@ -6,8 +6,8 @@
 
 {% if fieldvalue is iterable %}
     {% for field in fieldvalue %}
-        {{ field_html(fieldname)|raw }} {{ field | truncate(limitField, true, '...') }} {{ end_field_html(fieldname)|raw }}
+        {{ field_html(fieldname) }} {{ field | truncate(limitField, true, '...') }} {{ end_field_html(fieldname) }}
     {% endfor %}
 {% else %}
-    {{ field_html(fieldname)|raw }} {{ fieldvalue | truncate(limitField, true, '...') }} {{ end_field_html(fieldname)|raw}}
+    {{ field_html(fieldname) }} {{ fieldvalue | truncate(limitField, true, '...') }} {{ end_field_html(fieldname) }}
 {% endif %}

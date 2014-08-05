@@ -18,11 +18,7 @@ class ImageStrategy implements DisplayFieldInterface
      */
     public function support($fieldName)
     {
-        if (preg_match('/[_]'.$this->getName().'$/', $fieldName)) {
-            return true;
-        }
-
-        return false;
+        return preg_match('/[_]'.$this->getName().'$/', $fieldName);
     }
 
     /**

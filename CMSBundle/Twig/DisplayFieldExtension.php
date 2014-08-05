@@ -25,8 +25,8 @@ class DisplayFieldExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('field_html', array($this, 'fieldHtml')),
-            new \Twig_SimpleFunction('end_field_html', array($this, 'endFieldHtml')),
+            new \Twig_SimpleFunction('field_html', array($this, 'fieldHtml'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('end_field_html', array($this, 'endFieldHtml'), array('is_safe' => array('html'))),
         );
     }
 
