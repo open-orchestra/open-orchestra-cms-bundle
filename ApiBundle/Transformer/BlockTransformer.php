@@ -4,7 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockManager;
+use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;

@@ -27,7 +27,7 @@ class BlockController extends Controller
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
         if (null !== ($block = $node->getBlocks()->get($blockId))) {
-            return $this->get('php_orchestra_cms.display_block_manager')
+            return $this->get('php_orchestra_display.display_block_manager')
                 ->show($node->getBlocks()->get($blockId));
         }
 
@@ -49,7 +49,7 @@ class BlockController extends Controller
 
         $blocks = $node->getBlocks()->all();
 
-        return $this->get('php_orchestra_cms.display_block_manager')
+        return $this->get('php_orchestra_display.display_block_manager')
             ->showBack($blocks[$blockId]);
     }
 
