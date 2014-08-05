@@ -38,7 +38,7 @@
         "itkg/phporchestra-base-bundle": "dev-master",
         "itkg/phporchestra-translation-bundle": "dev-master",
         "itkg/phporchestra-display-bundle": "dev-master",
-        "itkg/phporchestra-domain-bundle": "dev-master",
+        "itkg/phporchestra-model-bundle": "dev-master",
         "itkg/phporchestra-indexation-bundle": "dev-master",
         "itkg/phporchestra-theme-bundle": "dev-master"
     },
