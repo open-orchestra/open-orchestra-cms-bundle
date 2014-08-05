@@ -1,5 +1,6 @@
 parameters:
     php_orchestra_cms.display_block_manager.class: PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockManager
+    php_orchestra_cms.display_field_manager.class: PHPOrchestra\CMSBundle\DisplayField\DisplayFieldManager
 
     php_orchestra_cms.display.carrousel.class: PHPOrchestra\CMSBundle\DisplayBlock\Strategies\CarrouselStrategy
     php_orchestra_cms.display.contact.class: PHPOrchestra\CMSBundle\DisplayBlock\Strategies\ContactStrategy
@@ -11,6 +12,9 @@ parameters:
     php_orchestra_cms.display.search_result.class: PHPOrchestra\CMSBundle\DisplayBlock\Strategies\SearchResultStrategy
     php_orchestra_cms.display.search.class: PHPOrchestra\CMSBundle\DisplayBlock\Strategies\SearchStrategy
     php_orchestra_cms.display.tiny_mce_wysiwyg.class: PHPOrchestra\CMSBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
+
+    php_orchestra_cms.display_field.image.class: PHPOrchestra\CMSBundle\DisplayField\Strategies\ImageStrategy
+    php_orchestra_cms.display_field.text.class: PHPOrchestra\CMSBundle\DisplayField\Strategies\TextStrategy
 
 services:
     php_orchestra_cms.display_block_manager:
@@ -51,7 +55,13 @@ services:
             - { name: php_orchestra_cms.display_block.strategy }
     php_orchestra_cms.display.search_result:
         class: %php_orchestra_cms.display.search_result.class%
-        arguments: [@solarium.client, @php_orchestra_indexation.search_manager, @translator, @service_container]
+        arguments:
+            - @solarium.client
+            - @php_orchestra_indexation.search_manager
+            - @translator
+            - @service_container
+            - @php_orchestra_model.repository.field_index
+            - @php_orchestra_cms.display_field_manager
         tags:
             - { name: php_orchestra_cms.display_block.strategy }
     php_orchestra_cms.display.search:
@@ -63,3 +73,16 @@ services:
         class: %php_orchestra_cms.display.tiny_mce_wysiwyg.class%
         tags:
             - { name: php_orchestra_cms.display_block.strategy }
+    php_orchestra_cms.display_field_manager:
+        class: %php_orchestra_cms.display_field_manager.class%
+    php_orchestra_cms.display_field.image:
+        class: %php_orchestra_cms.display_field.image.class%
+        tags:
+            - { name: php_orchestra_cms.display_field.strategy }
+    php_orchestra_cms.display_field.text:
+        class: %php_orchestra_cms.display_field.text.class%
+        arguments:
+            fields:
+                - 'img'
+        tags:
+            - { name: php_orchestra_cms.display_field.strategy }

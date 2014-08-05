@@ -8,20 +8,24 @@
  {# Display all documents in resultset #}
 {% for doc in resultset %}
             <ul>
-                {% if doc[firstField] is defined %}
-                    <li><a href="{{ doc.url }}" class="doclink">{{ doc[firstField] }} </a></li>
+                {% for link in fieldLink if doc[link] is defined %}
+                    <li><a href="{{ doc.url }}" class="doclink">{{ doc[link] }} </a></li>
                     {% for fieldname, fieldvalue in doc %}
                         {% if fieldname in fieldsdisplayed %}
-                            {% if fieldvalue is iterable %}
+                            {% include
+                            "PHPOrchestraCMSBundle:Block/SearchResult:showField.html.twig"
+                            with {"fieldname": fieldname, "fieldvalue": fieldvalue}
+                            %}
+                            {#% if fieldvalue is iterable %}
                                 {% for field in fieldvalue %}
                                     <li class="field">{{ field | truncate(limitField, true, '...') }}</li>
                                 {% endfor %}
                             {% else %}
                                 <li class="field">{{ fieldvalue | truncate(limitField, true, '...') }}</li>
-                            {% endif %}
+                            {% endif %#}
                         {% endif %}
                     {% endfor %}
-                {% endif %}
+                {% endfor %}
             </ul>
 {% endfor %}
 </div>

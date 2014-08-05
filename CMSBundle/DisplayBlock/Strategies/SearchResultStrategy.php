@@ -5,6 +5,7 @@ namespace PHPOrchestra\CMSBundle\DisplayBlock\Strategies;
 use PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\IndexationBundle\SearchStrategy\SearchManager;
+use PHPOrchestra\ModelBundle\Repository\FieldIndexRepository;
 use Solarium\Client;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
@@ -22,24 +23,28 @@ class SearchResultStrategy extends AbstractStrategy
     protected $searchManager;
     protected $translator;
     protected $container;
+    protected $fieldIndexRepository;
 
     /**
-     * @param Client              $solariumClient
-     * @param SearchManager       $searchManager
-     * @param TranslatorInterface $translator
-     * @param Container           $container
+     * @param Client               $solariumClient
+     * @param SearchManager        $searchManager
+     * @param TranslatorInterface  $translator
+     * @param Container            $container
+     * @param FieldIndexRepository $fieldIndexRepository
      */
     public function __construct(
         Client $solariumClient,
         SearchManager $searchManager,
         TranslatorInterface $translator,
-        Container $container
+        Container $container,
+        FieldIndexRepository $fieldIndexRepository
     )
     {
         $this->solariumClient = $solariumClient;
         $this->searchManager = $searchManager;
         $this->translator = $translator;
         $this->container = $container;
+        $this->fieldIndexRepository = $fieldIndexRepository;
     }
 
     /**
@@ -353,7 +358,8 @@ class SearchResultStrategy extends AbstractStrategy
      */
     protected function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $limitField, $facets = array())
     {
-        $firstField = array_shift($fields);
+        $fieldLink = $this->fieldIndexRepository->findAllLink();
+
         if (isset($facets)) {
             return $this->render(
                 "PHPOrchestraCMSBundle:Block/SearchResult:show.html.twig",
@@ -365,8 +371,8 @@ class SearchResultStrategy extends AbstractStrategy
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
                     'facetsArray' => $facets,
-                    'firstField' => $firstField,
-                    'limitField' => $limitField
+                    'fieldLink' => $fieldLink,
+                    'limitField' => $limitField,
                 )
             );
         } else {
@@ -379,8 +385,8 @@ class SearchResultStrategy extends AbstractStrategy
                     'page' => $page,
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
-                    'firstField' => $firstField,
-                    'limitField' => $limitField
+                    'fieldLink' => $fieldLink,
+                    'limitField' => $limitField,
                 )
             );
         }
