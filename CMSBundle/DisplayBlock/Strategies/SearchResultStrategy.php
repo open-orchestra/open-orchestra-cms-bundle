@@ -358,7 +358,13 @@ class SearchResultStrategy extends AbstractStrategy
      */
     protected function callTemplate($data, $resultSet, $nodeId, $page, $nbdoc, $fields, $limitField, $facets = array())
     {
-        $fieldLink = $this->fieldIndexRepository->findAllLink();
+        $fieldLinks = $this->fieldIndexRepository->findAllLink();
+
+        $completeFields = array();
+
+        foreach ($fieldLinks as $link) {
+            $completeFields[] = $link->getFieldName().'_'.$link->getFieldType();
+        }
 
         if (isset($facets)) {
             return $this->render(
@@ -371,7 +377,7 @@ class SearchResultStrategy extends AbstractStrategy
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
                     'facetsArray' => $facets,
-                    'fieldLink' => $fieldLink,
+                    'fieldLink' => $completeFields,
                     'limitField' => $limitField,
                 )
             );
@@ -385,7 +391,7 @@ class SearchResultStrategy extends AbstractStrategy
                     'page' => $page,
                     'nbdocs' => $nbdoc,
                     'fieldsdisplayed' => $fields,
-                    'fieldLink' => $fieldLink,
+                    'fieldLink' => $completeFields,
                     'limitField' => $limitField,
                 )
             );
