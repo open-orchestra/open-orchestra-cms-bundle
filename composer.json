@@ -7,9 +7,40 @@
             "email": "nico.th4l@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-translation-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-model-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-theme-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-indexation-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-base-bundle"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-display-bundle"
+        }
+    ],
     "minimum-stability": "dev",
     "require": {
-
+        "itkg/phporchestra-base-bundle": "dev-master",
+        "itkg/phporchestra-translation-bundle": "dev-master",
+        "itkg/phporchestra-display-bundle": "dev-master",
+        "itkg/phporchestra-domain-bundle": "dev-master",
+        "itkg/phporchestra-indexation-bundle": "dev-master",
+        "itkg/phporchestra-theme-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": {

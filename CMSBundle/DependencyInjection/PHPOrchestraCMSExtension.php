@@ -37,9 +37,6 @@ class PHPOrchestraCMSExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('config.yml');
         $loader->load('services.yml');
-        $loader->load('display.yml');
         $loader->load('form.yml');
-        $loader->load('manager.yml');
-        $loader->load('twig.yml');
     }
 }
