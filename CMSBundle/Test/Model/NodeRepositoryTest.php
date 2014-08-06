@@ -164,7 +164,7 @@ class NodeRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testGetTreeUrl()
     {
         $tree = $this->createTreeData();
-        $generateUrl = Phake::mock('PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlGenerator');
+        $generateUrl = Phake::mock('PHPOrchestra\BaseBundle\Routing\PhpOrchestraUrlGenerator');
         Phake::when($generateUrl)->generate('superroot')->thenReturn('/app_dev.php/fixture-full');
         Phake::when($generateUrl)->generate('root')->thenReturn('/app_dev.php');
 
