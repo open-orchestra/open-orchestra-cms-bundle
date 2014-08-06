@@ -70,27 +70,29 @@ class PhpOrchestraUrlMatcherTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->cacheService)->get(Phake::anyParameters());
     }
 
-    // route, controller, nodeId, moduleParams, pathinfo
+    /**
+     * @return array
+     */
     public function matchDataProvider()
     {
         return array(
             array(
-                'php_orchestra_cms_node',
-                'PHPOrchestra\\CMSBundle\\Controller\\NodeController::showAction',
+                'php_orchestra_front_node',
+                'PHPOrchestra\\FrontBundle\\Controller\\NodeController::showAction',
                 2,
                 '',
                 '/test/'
             ),
             array(
-                'php_orchestra_cms_node',
-                'PHPOrchestra\\CMSBundle\\Controller\\NodeController::showAction',
+                'php_orchestra_front_node',
+                'PHPOrchestra\\FrontBundle\\Controller\\NodeController::showAction',
                 3,
                 array('param1', 'param2'),
                 '/test/module/param1/param2'
             ),
             array(
-                'php_orchestra_cms_node',
-                'PHPOrchestra\\CMSBundle\\Controller\\NodeController::showAction',
+                'php_orchestra_front_node',
+                'PHPOrchestra\\FrontBundle\\Controller\\NodeController::showAction',
                 3,
                 array(),
                 '/test/module'
