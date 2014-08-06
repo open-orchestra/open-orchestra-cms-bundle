@@ -11,9 +11,12 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class PhpOrchestraRouterTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Set up the test
+     */
     public function setUp()
     {
-        $cacheService = Phake::mock('PHPOrchestra\CMSBundle\Cache\CacheManagerInterface');
+        $cacheService = Phake::mock('PHPOrchestra\BaseBundle\Cache\CacheManagerInterface');
         $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
 
         $mockRoutingLoader = Phake::mock('Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader');
@@ -22,7 +25,7 @@ class PhpOrchestraRouterTest extends \PHPUnit_Framework_TestCase
         $container = Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         Phake::when($container)->get('routing.loader')->thenReturn($mockRoutingLoader);
         Phake::when($container)->get('php_orchestra_model.repository.node')->thenReturn($nodeRepository);
-        Phake::when($container)->get('php_orchestra_cms.cache_manager')->thenReturn($cacheService);
+        Phake::when($container)->get('php_orchestra_base.cache_manager')->thenReturn($cacheService);
 
         $this->router = new PhpOrchestraRouter(
             $container,
@@ -35,7 +38,10 @@ class PhpOrchestraRouterTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
-    
+
+    /**
+     * Test get matcher
+     */
     public function testGetMatcher()
     {
         $this->assertInstanceOf(
@@ -43,7 +49,10 @@ class PhpOrchestraRouterTest extends \PHPUnit_Framework_TestCase
             $this->router->getMatcher()
         );
     }
-    
+
+    /**
+     * test get generator
+     */
     public function testGetGenerator()
     {
         $this->assertInstanceOf(

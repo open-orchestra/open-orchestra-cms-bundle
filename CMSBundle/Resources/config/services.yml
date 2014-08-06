@@ -1,8 +1,6 @@
 parameters:
-    php_orchestra_cms.manager.cache.class : 'PHPOrchestra\CMSBundle\Cache\RedisCacheManager'
     php_orchestra_cms.manager.document.class : 'PHPOrchestra\CMSBundle\Document\DocumentManager'
     php_orchestra_cms.manager.context.class : 'PHPOrchestra\CMSBundle\Context\ContextManager'
-    php_orchestra_cms.listener.locale.class : 'PHPOrchestra\CMSBundle\EventListener\LocaleListener'
     php_orchestra_cms.type.multilingual_text.class : 'PHPOrchestra\CMSBundle\Form\Type\MultilingualTextType'
     php_orchestra_cms.type.content_attributes.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentAttributesType'
     php_orchestra_cms.type.content_type_fields.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType'
@@ -12,10 +10,7 @@ services:
 
 #--[STANDARD SERVICES]----------#
 
-    # Cache service
-    php_orchestra_cms.cache_manager:
-        class: "%php_orchestra_cms.manager.cache.class%"
-        arguments: [@snc_redis.default]
+
 
     # DocumentManager service
     php_orchestra_cms.document_manager:
@@ -27,11 +22,6 @@ services:
         class: "%php_orchestra_cms.manager.context.class%"
         arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
 
-    # Locale listener
-    php_orchestra_cms.locale_listener:
-        class: "%php_orchestra_cms.listener.locale.class%"
-        arguments: ["%kernel.default_locale%"]
-        tags: [{name: kernel.event_subscriber}]
 
 #--[CONTROLLER SERVICES]----------#
 

@@ -32,7 +32,7 @@ class PhpOrchestraRouter extends Router
     ) {
         parent::__construct($container, $resource, $options, $context);
         
-        $this->cacheService = $container->get('php_orchestra_cms.cache_manager');
+        $this->cacheService = $container->get('php_orchestra_base.cache_manager');
         $this->nodeRepository = $container->get('php_orchestra_model.repository.node');
     }
     

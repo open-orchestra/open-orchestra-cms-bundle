@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\FrontBundle\Routing;
 
-use PHPOrchestra\CMSBundle\Cache\CacheManagerInterface;
+use PHPOrchestra\BaseBundle\Cache\CacheManagerInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
