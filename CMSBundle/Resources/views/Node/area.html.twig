@@ -20,7 +20,7 @@
             {% set nodeReference = blockReference.nodeId %}
         {% endif %}
         {% set queryParams = app.request.query.all|merge({'nodeId': nodeReference, 'blockId': blockReference.blockId }) %}
-        {{ render_esi(url('php_orchestra_cms_block', queryParams)) }}
+        {{ render_esi(url('php_orchestra_front_block', queryParams)) }}
     </fieldset>
 {% endfor %}
 </fieldset>

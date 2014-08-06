@@ -108,6 +108,8 @@ class PhpOrchestraUrlMatcher extends RedirectableUrlMatcher
      * Get the route parameters from cache if already set
      * 
      * @param string $pathinfo
+     *
+     * @return array
      */
     protected function getFromCache($pathinfo)
     {
@@ -123,8 +125,10 @@ class PhpOrchestraUrlMatcher extends RedirectableUrlMatcher
     /**
      * Set route parameters to cache for pathinfo
      * 
-     * @param string $pathinfo
+     * @param string   $pathinfo
      * @param string[] $routeParameters
+     *
+     * @return mixed
      */
     protected function setToCache($pathinfo, $routeParameters)
     {
@@ -147,8 +151,8 @@ class PhpOrchestraUrlMatcher extends RedirectableUrlMatcher
     protected function getModuleRoute($nodeId, $parameters = array())
     {
         return array(
-             "_route" => "php_orchestra_cms_node",
-             "_controller" => 'PHPOrchestra\CMSBundle\Controller\NodeController::showAction',
+             "_route" => "php_orchestra_front_node",
+             "_controller" => 'PHPOrchestra\FrontBundle\Controller\NodeController::showAction',
              "nodeId" => $nodeId,
              "module_parameters" => $parameters
         );
@@ -166,7 +170,7 @@ class PhpOrchestraUrlMatcher extends RedirectableUrlMatcher
     protected function getNode($slug, $parentId)
     {
         $criteria = array(
-            'parentId' => (string)$parentId,
+            'parentId' => (string) $parentId,
             'alias' => $slug
         );
 

@@ -46,14 +46,6 @@ php_orchestra_cms_nodeform:
     pattern: /admin/node/form/{nodeId}/
     defaults: { _controller: PHPOrchestraCMSBundle:Node:form, nodeId: 0 }
 
-php_orchestra_cms_block:
-    pattern: /block/{nodeId}/{blockId}
-    defaults: { _controller: PHPOrchestraCMSBundle:Block:show }
-
-php_orchestra_cms_node:
-    pattern: /node/{nodeId}
-    defaults: { _controller: PHPOrchestraCMSBundle:Node:show }
-
 php_orchestra_cms_blockform:
     pattern: /admin/block/form/{type}
     defaults: { _controller: PHPOrchestraCMSBundle:Block:form, type: node }

@@ -7,9 +7,8 @@
 
 namespace PHPOrchestra\CMSBundle\Controller;
 
+use PHPOrchestra\FrontBundle\Routing\PhpOrchestraUrlMatcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlMatcher;
 
 class CacheController extends Controller
 {

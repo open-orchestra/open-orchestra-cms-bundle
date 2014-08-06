@@ -14,27 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class BlockController extends Controller
 {
     /**
-     * Display the response linked to a block
-     *
-     * @param string $nodeId
-     * @param string $blockId
-     *
-     * @throws NotFoundHttpException
-     * @return Response
-     */
-    public function showAction($nodeId, $blockId)
-    {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-
-        if (null !== ($block = $node->getBlocks()->get($blockId))) {
-            return $this->get('php_orchestra_display.display_block_manager')
-                ->show($node->getBlocks()->get($blockId));
-        }
-
-        throw new NotFoundHttpException();
-    }
-
-    /**
      * Render the node Block form
      *
      * @param string $type

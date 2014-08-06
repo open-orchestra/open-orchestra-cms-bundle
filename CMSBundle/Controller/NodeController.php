@@ -10,35 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NodeController extends Controller
 {
-    /**
-     * Render Node
-     *
-     * @param int $nodeId
-     *
-     * @throws NonExistingDocumentException
-     * @return Response
-     */
-    public function showAction($nodeId)
-    {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        if (is_null($node)) {
-            throw new NonExistingDocumentException("Node not found");
-        }
-
-        $response = $this->render(
-            'PHPOrchestraCMSBundle:Node:show.html.twig',
-            array(
-                'node' => $node,
-                'datetime' => time()
-            )
-        );
-        
-        $response->setPublic();
-        $response->setSharedMaxAge(100);
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        
-        return $response;
-    }
 
     /**
      * @param Request $request
