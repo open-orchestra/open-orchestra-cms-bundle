@@ -24,13 +24,6 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
             $twig = $container->getDefinition('twig');
             $twig->addMethodCall('addGlobal', array('context', new Reference('php_orchestra_cms.context_manager')));
 
-            if ($container->has('php_orchestra_cms.languages.availables')) {
-                $languages = $container->getParameter('php_orchestra_cms.languages.availables');
-            } else {
-                $languages = array('en', 'fr', 'de', 'es');
-            }
-            $twig->addMethodCall('addGlobal', array('available_languages', $languages));
-
             $formResources = $container->getParameter('twig.form.resources');
             $formResources[] = 'PHPOrchestraCMSBundle:Form:contentTypeFields.html.twig';
             $container->setParameter('twig.form.resources', $formResources);

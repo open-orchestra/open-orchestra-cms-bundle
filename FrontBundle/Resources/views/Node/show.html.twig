@@ -35,7 +35,7 @@
             <span>datetime : {{ datetime }}</span>
             <div id="orchestra-main">
         {% for area in node.areas %}
-            {% include "PHPOrchestraCMSBundle:Node:area.html.twig" with {"area": area, 'nodeId': node.nodeId } only %}
+            {% include "PHPOrchestraFrontBundle:Node:area.html.twig" with {"area": area, 'nodeId': node.nodeId } only %}
         {% endfor %}
             </div>
         </div>

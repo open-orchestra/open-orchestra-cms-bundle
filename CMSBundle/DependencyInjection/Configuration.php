@@ -25,10 +25,6 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('blocks')
                 ->prototype('scalar')->end()
             ->end()
-            ->arrayNode('languages_availables')
-                ->prototype('scalar')->end()
-                ->defaultValue(array('en', 'fr', 'de', 'es'))
-            ->end()
         ->end();
 
         return $treeBuilder;

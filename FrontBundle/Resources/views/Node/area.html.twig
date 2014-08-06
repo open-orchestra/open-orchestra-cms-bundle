@@ -7,7 +7,7 @@
 <fieldset id="{{ area.areaId }}" style="background-color:#98BDE2;border-color:#000000;margin-top:8px;">
     <legend style="background-color:#BADFF4;border:1px solid #000000;">AREA | {{ area.areaId }}</legend>
 {% for subArea in area.subAreas %}
-    {% include "PHPOrchestraCMSBundle:Node:area.html.twig" with {"area" : subArea, "nodeId": nodeId} only %}
+    {% include "PHPOrchestraFrontBundle:Node:area.html.twig" with {"area" : subArea, "nodeId": nodeId} only %}
 {% endfor %}
 {% for blockReference in area.blocks %}
     <fieldset style="background-color:#3B6691;border-color:#000000;margin-top:8px;">

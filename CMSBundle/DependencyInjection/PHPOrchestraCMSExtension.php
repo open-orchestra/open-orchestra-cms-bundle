@@ -28,12 +28,6 @@ class PHPOrchestraCMSExtension extends Extension
         }
         $container->setParameter('php_orchestra.blocks', $blockType);
 
-        $languagesAvailables = array('en', 'fr', 'de', 'es');
-        if (array_key_exists('languages_availables', $config) && !empty($config['languages_availables'])) {
-            $languagesAvailables = $config['languages_availables'];
-        }
-        $container->setParameter('php_orchestra_cms.languages_availables', $languagesAvailables);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('config.yml');
         $loader->load('services.yml');
