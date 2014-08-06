@@ -25,13 +25,12 @@ class PhpOrchestraUrlMatcherTest extends \PHPUnit_Framework_TestCase
     {
         $this->context = Phake::mock('Symfony\Component\Routing\RequestContext');
 
-        $this->cacheService = Phake::mock('PHPOrchestra\CMSBundle\Cache\CacheManagerInterface');
+        $this->cacheService = Phake::mock('PHPOrchestra\BaseBundle\Cache\CacheManagerInterface');
 
         $routes = new RouteCollection();
 
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-
 
         $this->matcher = new PhpOrchestraUrlMatcher(
             $routes,

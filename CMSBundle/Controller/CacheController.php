@@ -17,7 +17,7 @@ class CacheController extends Controller
      */
     public function clearRoutingCacheAction()
     {
-        $cacheService = $this->container->get('php_orchestra_cms.cache_manager');
+        $cacheService = $this->container->get('php_orchestra_base.cache_manager');
         
         $cacheService->deleteKeys(PhpOrchestraUrlMatcher::PATH_PREFIX . '*');
         
