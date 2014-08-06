@@ -22,7 +22,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->displayBlockManager = Phake::mock('PHPOrchestra\CMSBundle\DisplayBlock\DisplayBlockManager');
+        $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
 
         $this->transformer = new BlockTransformer($this->displayBlockManager);
