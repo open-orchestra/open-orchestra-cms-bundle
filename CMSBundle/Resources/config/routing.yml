@@ -54,10 +54,6 @@ php_orchestra_cms_areaform:
     pattern: /admin/area/form/{type}
     defaults: { _controller: PHPOrchestraCMSBundle:Area:form, type: node }
 
-php_orchestra_autocomplete:
-    pattern: /ajax/search/autocomplete
-    defaults: { _controller: PHPOrchestraCMSBundle:Block/SearchResult:autocomplete }
-
 php_orchestra_setLanguage:
     pattern: /ajax/context/setLanguage/{language}
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Context:SetLanguage, language:en }
