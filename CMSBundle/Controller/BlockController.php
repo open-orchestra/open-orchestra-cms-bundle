@@ -35,25 +35,6 @@ class BlockController extends Controller
     }
 
     /**
-     * Display the response linked to a block
-     *
-     * @param string $nodeId
-     * @param string $blockId
-     *
-     * @return Response
-     */
-    public function showBackAction($nodeId, $blockId)
-    {
-        $node = $this->get('mandango')->getRepository('Model\PHPOrchestraCMSBundle\Node')
-            ->getOne($nodeId);
-
-        $blocks = $node->getBlocks()->all();
-
-        return $this->get('php_orchestra_display.display_block_manager')
-            ->showBack($blocks[$blockId]);
-    }
-
-    /**
      * Render the node Block form
      *
      * @param string $type
@@ -161,7 +142,7 @@ class BlockController extends Controller
             list($component, $attributes) = $this->getLoadInformations($request);
         }
         if ($component !== '') {
-            $response  = $this->forward('PHPOrchestraCMSBundle:Block/'.$component.':showBack', $attributes);
+            $response  = $this->forward('PHPOrchestraCMSBundle:Block/'.$component.':show', $attributes);
             return new JsonResponse(
                 array(
                     'success' => true,
