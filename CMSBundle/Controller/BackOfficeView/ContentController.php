@@ -123,7 +123,7 @@ class ContentController extends TableViewController
      */
     protected function getRender($mongoId, $form)
     {
-        $availableLanguages = $this->container->getParameter('php_orchestra_cms.languages.availables');
+        $availableLanguages = $this->container->getParameter('php_orchestra_base.languages.availables');
         
         $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         $criteria = array(

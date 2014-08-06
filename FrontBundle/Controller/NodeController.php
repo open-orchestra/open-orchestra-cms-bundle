@@ -31,7 +31,7 @@ class NodeController extends Controller
         }
 
         $response = $this->render(
-            'PHPOrchestraCMSBundle:Node:show.html.twig',
+            'PHPOrchestraFrontBundle:Node:show.html.twig',
             array(
                 'node' => $node,
                 'datetime' => time()
