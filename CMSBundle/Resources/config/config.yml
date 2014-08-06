@@ -1,14 +1,5 @@
 parameters:
 
-#--[EXTEND SYMFONY 2 ROUTING]---#
-
-    router.class : 'PHPOrchestra\CMSBundle\Routing\PhpOrchestraRouter'
-    router.options.matcher_class : 'PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlMatcher'
-    router.options.matcher_base_class : 'PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlMatcher'
-    router.options.matcher.cache_class : null
-    router.options.generator_class : 'PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlGenerator'
-    router.options.generator_base_class : 'PHPOrchestra\CMSBundle\Routing\PhpOrchestraUrlGenerator'
-
 #--[CHOICES PARAMETERS]---------#
 
     php_orchestra.orchestra_choice.status:
