@@ -45,6 +45,8 @@
     "autoload": {
         "psr-0": {
             "PHPOrchestra\\CMSBundle": "",
+            "PHPOrchestra\\FrontBundle": "",
+            "PHPOrchestra\\BackofficeBundle": "",
             "PHPOrchestra\\ApiBundle": ""
         }
     },
