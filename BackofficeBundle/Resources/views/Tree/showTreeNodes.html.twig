@@ -1,7 +1,7 @@
-{% extends 'PHPOrchestraCMSBundle:Tree:tree.html.twig' %}
+{% extends 'PHPOrchestraBackofficeBundle:Tree:tree.html.twig' %}
 
 {% set moveUrl = url('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd': 'moveNode'}) %}
-{% set name = 'php_orchestra_cms.left_menu.editorial.nodes'|trans({}, 'backOffice') %}
+{% set name = 'php_orchestra_backoffice.left_menu.editorial.nodes'|trans %}
 
 {% block menu %}
     {{ macros.menu_nodes(tree_formatter(nodes), id) }}
