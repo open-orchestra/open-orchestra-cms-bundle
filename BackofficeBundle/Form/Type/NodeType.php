@@ -51,15 +51,6 @@ class NodeType extends AbstractType
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
             ->add('status', 'orchestra_status')
-            ->add(
-                'blocks',
-                'orchestra_blocks',
-                array(
-                    'mapped' => false,
-                    'controller' => 'PHPOrchestraBackofficeBundle:Block:form',
-                    'parameter' => array('type' => 'node')
-                )
-            )
             ->add('theme', 'orchestra_theme_choice')
             ->add('save', 'submit', array('attr' => array('class' => 'not-mapped')));
     }

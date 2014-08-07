@@ -45,7 +45,7 @@ class BackOfficeController extends Controller
         {
             case 'createNode':
                 $request->setMethod('GET');
-                return $this->forward('PHPOrchestraCMSBundle:Node:form', array());
+                return $this->forward('PHPOrchestraBackofficeBundle:Node:form', array());
                 break;
             case 'confirmDeleteNode':
                 $response = $this->render(
@@ -67,14 +67,14 @@ class BackOfficeController extends Controller
             case 'deleteNode':
                 $request->request->add(array('refreshRecord' => true));
                 $request->request->add(array('deleted' => true));
-                return $this->forward('PHPOrchestraCMSBundle:Node:form', array('nodeId' => $request->request->get('nodeId')));
+                return $this->forward('PHPOrchestraBackofficeBundle:Node:form', array('nodeId' => $request->request->get('nodeId')));
                 break;
             case 'moveNode':
                 $request->request->add(array('refreshRecord' => true));
                 $node = $request->request->get('node');
                 $parentNode = $request->request->get('parentNode');
                 $request->request->add(array('parentId' => $parentNode['nodeId']));
-                return $this->forward('PHPOrchestraCMSBundle:Node:form', array('nodeId' => $node['nodeId']));
+                return $this->forward('PHPOrchestraBackofficeBundle:Node:form', array('nodeId' => $node['nodeId']));
                 break;
             case 'createTemplate':
                 $request->setMethod('GET');
