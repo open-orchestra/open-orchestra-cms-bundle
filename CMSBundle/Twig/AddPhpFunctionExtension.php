@@ -1,22 +1,22 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\ThemeBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine;
 
+/**
+ * Class AddPhpFunctionExtension
+ */
 class AddPhpFunctionExtension extends \Twig_Extension
 {
-    
-    protected $container;
- 
-    public function __construct(ContainerInterface $container = null)
+    protected $templating;
+
+    /**
+     * @param TimedTwigEngine $templating
+     */
+    public function __construct(TimedTwigEngine $templating)
     {
-        $this->container = $container;
+        $this->templating = $templating;
     }
 
     /**
@@ -25,28 +25,44 @@ class AddPhpFunctionExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'file_exists' => new \Twig_Function_Method($this, 'file_exists'),
-            'twig_exists' => new \Twig_Function_Method($this, 'twig_exists'),
-            'e_crc32' => new \Twig_Function_Method($this, 'e_crc32'),
+            new \Twig_SimpleFunction('file_exists', array($this, 'fileExists')),
+            new \Twig_SimpleFunction('twig_exists', array($this, 'twigExists')),
+            new \Twig_SimpleFunction('e_crc32', array($this, 'eCrc32')),
         );
     }
 
-    public function file_exists($file)
+    /**
+     * @param string $file
+     *
+     * @return bool
+     */
+    public function fileExists($file)
     {
         return file_exists($file);
     }
-    public function twig_exists($file)
+
+    /**
+     * @param string $file
+     *
+     * @return bool
+     */
+    public function twigExists($file)
     {
-        return $this->container->get('templating')->exists($file);
+        return $this->templating->exists($file);
     }
-    public function e_crc32($value)
+
+    /**
+     * @param string $value
+     *
+     * @return int
+     */
+    public function eCrc32($value)
     {
         return crc32($value);
     }
+
     /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
+     * @return string
      */
     public function getName()
     {
