@@ -1,0 +1,8 @@
+php_orchestra_backoffice:
+    left_menu:
+        tree:
+            new_page: Nouvelle page
+            new_template: Nouveau gabarit
+        editorial:
+            nodes: Pages
+            templates: Gabarit

@@ -1,0 +1,8 @@
+php_orchestra_backoffice:
+    left_menu:
+        tree:
+            new_page: New page
+            new_template: New template
+        editorial:
+            nodes: Pages
+            templates: Templates

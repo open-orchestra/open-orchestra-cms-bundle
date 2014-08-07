@@ -24,7 +24,7 @@
                                             $('#{{ newId }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createNode'})}|json_encode|raw }});
                                         </script>
                                     </i>
-                                    {{ 'php_orchestra_cms.left_menu.tree.new_page'|trans({}, 'backOffice') }}
+                                    {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
                                 </a>
                                 <script>
                                     $('#{{ newId }}').data({{ {'tree-parameter': { 'parentId': node.nodeId} }|json_encode|raw }});
@@ -69,7 +69,7 @@
                         $('#{{ newId }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createTemplate'})}|json_encode|raw }});
                     </script>
                 </i>
-                {{ 'php_orchestra_cms.left_menu.tree.new_template'|trans({}, 'backOffice') }}
+                {{ 'php_orchestra_backoffice.left_menu.tree.new_template'|trans }}
             </a>
             <script>
                 $('#{{ newId }}').data({{ {'tree-parameter': {} }|json_encode|raw }});
