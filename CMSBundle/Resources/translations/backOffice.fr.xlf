@@ -77,22 +77,6 @@
                         <source>php_orchestra_cms.left_menu.administration.content_types</source>
                         <target>Types de contenus</target>
                     </trans-unit>
-                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache">
-                        <source>php_orchestra_cms.left_menu.administration.routing_cache</source>
-                        <target>Cache de routage</target>
-                    </trans-unit>
-                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache.dialog.title">
-                        <source>php_orchestra_cms.left_menu.administration.routing_cache.dialog.title</source>
-                        <target>Cache de routage</target>
-                    </trans-unit>
-                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache.dialog.message">
-                        <source>php_orchestra_cms.left_menu.administration.routing_cache.dialog.message</source>
-                        <target>Vous êtes sur le point de supprimer le cache de routage. Souhaitez-vous continuer ?</target>
-                    </trans-unit>
-                    <trans-unit id="php_orchestra_cms.left_menu.administration.routing_cache.ok">
-                        <source>php_orchestra_cms.left_menu.administration.routing_cache.ok</source>
-                        <target>Le cache de routage a été purgé avec succès.</target>
-                    </trans-unit>
                     <trans-unit id="php_orchestra_cms.left_menu.administration.translation">
                         <source>php_orchestra_cms.left_menu.administration.translation</source>
                         <target>Traduction</target>

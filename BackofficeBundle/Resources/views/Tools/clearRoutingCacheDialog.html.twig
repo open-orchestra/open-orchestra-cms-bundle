@@ -1,0 +1,20 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    var clearRoutingCache = new ConfirmDialog(
+        'clearRoutingCache',
+        function(){window.location.hash = '{{ path('php_orchestra_backoffice_clear_routing_cache') }}';},
+        370
+    );
+    
+    clearRoutingCache.create();
+});
+</script>
+
+{% set vars = {
+    'dialogId' : 'dialog-clearRoutingCache',
+    'dialogTitle' : 'php_orchestra_backoffice.left_menu.administration.routing_cache.dialog.title'|trans,
+    'dialogMessage' : 'php_orchestra_backoffice.left_menu.administration.routing_cache.dialog.message'|trans
+   }
+%}
+
+{% include 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig' with vars %}

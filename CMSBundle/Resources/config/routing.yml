@@ -26,10 +26,6 @@ php_orchestra_cms_bo_content:
     resource: "@PHPOrchestraCMSBundle/Controller/BackOfficeView/ContentController.php"
     type: annotation
 
-php_orchestra_cms_clearroutingcache:
-    pattern: /clear/cache/routing
-    defaults: { _controller: PHPOrchestraCMSBundle:Cache:clearRoutingCache }
-
 php_orchestra_cms_bo_jscontextmenudispatcher:
     pattern: /admin/js-menu-dispatcher/{cmd}
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/BackOffice:jsContextMenuDispatch, cmd: '' }
