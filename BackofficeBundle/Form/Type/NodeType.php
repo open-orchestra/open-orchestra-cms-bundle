@@ -56,7 +56,7 @@ class NodeType extends AbstractType
                 'orchestra_blocks',
                 array(
                     'mapped' => false,
-                    'controller' => 'PHPOrchestraCMSBundle:Block:form',
+                    'controller' => 'PHPOrchestraBackofficeBundle:Block:form',
                     'parameter' => array('type' => 'node')
                 )
             )

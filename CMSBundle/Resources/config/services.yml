@@ -22,13 +22,6 @@ services:
         class: "%php_orchestra_cms.manager.context.class%"
         arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
 
-
-#--[CONTROLLER SERVICES]----------#
-
-    # Render Block Controller
-    phporchestra_cms.blockcontroller:
-        class: PHPOrchestra\CMSBundle\Controller\BlockController
-
 #--[FORM FIELDS]----------------#
 
     # Multilingual text field
