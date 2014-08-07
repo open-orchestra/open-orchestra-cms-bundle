@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\Form\Type;
+namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 /**
  * Class NodeType
@@ -20,6 +19,7 @@ class NodeType extends AbstractType
 
     /**
      * @param UrlGeneratorInterface $router
+     * @param string                $nodeClass
      */
     public function __construct(
         UrlGeneratorInterface $router,
@@ -31,9 +31,8 @@ class NodeType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
-     * \Component\Form.AbstractType::buildForm()
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -64,11 +63,11 @@ class NodeType extends AbstractType
             ->add('theme', 'orchestra_theme_choice')
             ->add('save', 'submit', array('attr' => array('class' => 'not-mapped')));
     }
-    
+
     /**
-     * (non-PHPdoc)
-     * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
-     * \Component\Form.AbstractType::buildView()
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -76,11 +75,9 @@ class NodeType extends AbstractType
         $view->vars['beginJs'] = $options['beginJs'];
         $view->vars['endJs'] = $options['endJs'];
     }
-    
+
     /**
-     * (non-PHPdoc)
-     * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
-     * \Component\Form.AbstractType::setDefaultOptions()
+     * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -93,11 +90,9 @@ class NodeType extends AbstractType
             )
         );
     }
-            
+
     /**
-     * (non-PHPdoc)
-     * @see src/symfony2/vendor/symfony/symfony/src/Symfony/Component/Form/Symfony
-     * \Component\Form.FormTypeInterface::getName()
+     * @return string
      */
     public function getName()
     {

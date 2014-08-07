@@ -42,10 +42,6 @@ php_orchestra_cms_templateajaxrequest:
     pattern: /admin/template/ajaxRequest/{templateId}
     defaults: { _controller: PHPOrchestraCMSBundle:Template:ajaxRequest}
 
-php_orchestra_cms_nodeform:
-    pattern: /admin/node/form/{nodeId}/
-    defaults: { _controller: PHPOrchestraCMSBundle:Node:form, nodeId: 0 }
-
 php_orchestra_cms_blockform:
     pattern: /admin/block/form/{type}
     defaults: { _controller: PHPOrchestraCMSBundle:Block:form, type: node }
