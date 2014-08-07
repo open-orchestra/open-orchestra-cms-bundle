@@ -6,3 +6,10 @@ php_orchestra_backoffice:
         editorial:
             nodes: Pages
             templates: Templates
+        administration:
+            routing_cache:
+                dialog:
+                    title: Purge routing cache
+                    message: You are about to remove the routing cache. Would you like to continue?
+                title: Routing cache
+                ok: Routing cache has been cleared

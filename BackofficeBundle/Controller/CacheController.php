@@ -1,19 +1,21 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Noël Gilain <noel.gilain@businessdecision.com>
- */
 
-namespace PHPOrchestra\CMSBundle\Controller;
+namespace PHPOrchestra\BackofficeBundle\Controller;
 
 use PHPOrchestra\FrontBundle\Routing\PhpOrchestraUrlMatcher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
+/**
+ * Class CacheController
+ */
 class CacheController extends Controller
 {
     /**
-     * Delete all routing cache 
+     * @Config\Route("/clear/cache/routing", name="php_orchestra_backoffice_clear_routing_cache")
+     *
+     * @return Response
      */
     public function clearRoutingCacheAction()
     {
@@ -21,6 +23,6 @@ class CacheController extends Controller
         
         $cacheService->deleteKeys(PhpOrchestraUrlMatcher::PATH_PREFIX . '*');
         
-        return $this->render('PHPOrchestraCMSBundle:BackOffice/Tools:clearRoutingCache.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Tools:clearRoutingCache.html.twig');
     }
 }

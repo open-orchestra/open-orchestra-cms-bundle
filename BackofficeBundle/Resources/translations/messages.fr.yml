@@ -6,3 +6,10 @@ php_orchestra_backoffice:
         editorial:
             nodes: Pages
             templates: Gabarit
+        administration:
+            routing_cache:
+                dialog:
+                    title: Cache de routage
+                    message: Vous êtes sur le point de supprimer le cache de routage. Souhaitez-vous continuer ?
+                title: Cache de routage
+                ok: Cache de routing nettoyé
