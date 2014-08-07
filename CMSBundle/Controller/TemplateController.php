@@ -1,9 +1,4 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas Anne <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Controller;
 
@@ -15,19 +10,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
+/**
+ * Class TemplateController
+ */
 class TemplateController extends Controller
 {
-    
     /**
-     * 
-     * Render the templates form
-     * @param int $templateId
-     * 
+     * @param Request $request
+     * @param int     $templateId
+     *
+     * @return JsonResponse|Response
      */
-    public function formAction($templateId = 0)
+    public function formAction(Request $request, $templateId = 0)
     {
-        
-        $request = $this->get('request');
         $documentManager = $this->container->get('php_orchestra_cms.document_manager');
         
         if (empty($templateId)) {
@@ -43,11 +38,11 @@ class TemplateController extends Controller
         }
         
         $doSave = ($request->getMethod() == 'POST');
-        if($request->request->get('refreshRecord')){
+
+        if ($request->request->get('refreshRecord')) {
             $template->fromArray($request->request->all());
             $doSave = true;
-        }
-        else{
+        } else {
             $form = $this->createForm(
                 'template',
                 $template,
@@ -58,33 +53,35 @@ class TemplateController extends Controller
                     'action' => $this->getRequest()->getUri()
                 )
             );
-            if($doSave){
+            if ($doSave) {
                 $form->handleRequest($request);
                 $doSave = $form->isValid();
             }
         }
+
         if ($doSave) {
-            $response['dialog'] = $this->render(
+            $response['dialog'] = $this->renderView(
                 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig',
                 array(
                     'dialogId' => '',
                     'dialogTitle' => 'Modification du template',
                     'dialogMessage' => 'Modification ok',
                 )
-            )>getContent();
-            if(!$template->getDeleted()){
+            );
+            if (!$template->getDeleted()) {
                 $template->setId(null);
                 $template->setIsNew(true);
                 $template->save();
-            }
-            else{
+            } else {
                 $this->deleteTree($template->getNodeId());
                 $response['redirect'] = $this->generateUrl('php_orchestra_cms_bo_edito');
             }
+
             return new JsonResponse($response);
         }
+
         return $this->render(
-            'PHPOrchestraCMSBundle:BackOffice/Editorial:template.html.twig',
+            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
                 'mainTitle' => 'Gestion des gabarits',
                 'tableTitle' => '',
@@ -92,7 +89,7 @@ class TemplateController extends Controller
             )
         );
     }
-    
+
     /**
      * Delete all version of a template
      * 
@@ -112,6 +109,7 @@ class TemplateController extends Controller
             array('message' => 'Delete template process on ' . $templateId)
         );
     }
+
     /**
      * 
      * Get template Information

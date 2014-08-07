@@ -4,7 +4,7 @@
         {% set id = name ~ '-' ~ e_crc32(node.id) %}
         <li id="{{ id }}">
             <div>
-                <a href="{{ path('php_orchestra_cms_nodeform', {'nodeId': node.nodeId}) }}">
+                <a href="{{ path('php_orchestra_backoffice_node_form', {'nodeId': node.nodeId}) }}">
                     <i class="fa fa-trash-o">
                         <script>
                             $('#{{ id }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'})}|json_encode|raw }});

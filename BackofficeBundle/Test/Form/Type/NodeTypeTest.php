@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\Test\Form\Type;
+namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use \PHPOrchestra\CMSBundle\Form\Type\NodeType;
+use PHPOrchestra\BackofficeBundle\Form\Type\NodeType;
 
 /**
  * Description of NodeTypeTest
