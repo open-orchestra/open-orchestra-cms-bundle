@@ -15,6 +15,8 @@ class TreeController extends Controller
 {
     /**
      * List all nodes
+     *
+     * @return Response
      */
     public function showTreeNodesAction()
     {
@@ -30,6 +32,8 @@ class TreeController extends Controller
 
     /**
      * List all templates
+     *
+     * @return Response
      */
     public function showTreeTemplatesAction()
     {
