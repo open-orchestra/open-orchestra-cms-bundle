@@ -2,13 +2,10 @@
     {% for element in nodes %}
         {% set node = element.node %}
         {% set id = name ~ '-' ~ e_crc32(node.id) %}
-        <li id="{{ id }}">
+        <li id="{{ id }}" data-tree-parameter="{ 'nodeId': {{ node.id }}, 'name' : {{ node.name }} }">
             <div>
                 <a href="{{ path('php_orchestra_backoffice_node_form', {'nodeId': node.nodeId}) }}">
-                    <i class="fa fa-trash-o">
-                        <script>
-                            $('#{{ id }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'})}|json_encode|raw }});
-                        </script>
+                    <i class="fa fa-trash-o" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'}) }}">
                     </i>
                     {{ node.name }}
                 </a>
@@ -16,26 +13,17 @@
                     <ul class="{{ name }}-connectedSortable">
                         {{ _self.menu_nodes(element.child, name) }}
                         {% set newId = name ~ '-' ~ e_crc32(random()) %}
-                        <li id="{{ newId }}">
+                        <li id="{{ newId }}" data-tree-parameter="{ 'parentId' : {{ node.nodeId }} }">
                             <div class="ui-state-unsortable">
                                 <a href="#">
-                                    <i class="fa fa-file">
-                                        <script>
-                                            $('#{{ newId }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createNode'})}|json_encode|raw }});
-                                        </script>
+                                    <i class="fa fa-file" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createNode'}) }}">
                                     </i>
                                     {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
                                 </a>
-                                <script>
-                                    $('#{{ newId }}').data({{ {'tree-parameter': { 'parentId': node.nodeId} }|json_encode|raw }});
-                                </script>
                             </div>
                         </li>
                     </ul>
                 {% endif %}
-                <script>
-                    $('#{{ id }}').data({{ {'tree-parameter': { 'nodeId': node.id, 'name' :node.name} }|json_encode|raw }});
-                </script>
             </div>
         </li>
     {% endfor %}
@@ -44,36 +32,24 @@
 {% macro menu_templates(templates, name) %}
     {% for template in templates %}
         {% set id = name ~ '-' ~ e_crc32(template.id) %}
-        <li id="{{ id }}">
+        <li id="{{ id }}" data-tree-parameter="{ 'templateId': {{ template.id }}, 'name': {{ template.name }}}">
             <div>
                 <a href="{{ path('php_orchestra_cms_templateform', {'templateId': template.templateId}) }}">
-                    <i class="fa fa-trash-o">
-                        <script>
-                            $('#{{ id }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeletetemplate'})}|json_encode|raw }});
-                        </script>
+                    <i class="fa fa-trash-o" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeletetemplate'}) }}">
                     </i>
                     {{ template.name }}
                 </a>
-                <script>
-                    $('#{{ id }}').data({{ {'tree-parameter': { 'templateId': template.id, 'name': template.name} }|json_encode|raw }});
-                </script>
             </div>
         </li>
     {% endfor %}
     {% set newId = name ~ '-' ~ e_crc32(random()) %}
-    <li id="{{ newId }}">
+    <li id="{{ newId }}" data-tree-parameter="{}">
         <div class="ui-state-unsortable">
             <a href="#">
-                <i class="fa fa-file">
-                    <script>
-                        $('#{{ newId }} i').eq(0).data({{ {'url': path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createTemplate'})}|json_encode|raw }});
-                    </script>
+                <i class="fa fa-file" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createTemplate'}) }}">
                 </i>
                 {{ 'php_orchestra_backoffice.left_menu.tree.new_template'|trans }}
             </a>
-            <script>
-                $('#{{ newId }}').data({{ {'tree-parameter': {} }|json_encode|raw }});
-            </script>
         </div>
     </li>
 {% endmacro %}

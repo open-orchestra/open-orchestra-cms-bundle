@@ -124,6 +124,6 @@ services:
             - { name: twig.extension }
     php_orchestra_cms.twig.php_function:
         class: PHPOrchestra\CMSBundle\Twig\AddPhpFunctionExtension
-        arguments: [@templating]
+        arguments: [@service_container]
         tags:
             - { name: twig.extension }

@@ -3,20 +3,21 @@
 namespace PHPOrchestra\CMSBundle\Twig;
 
 use Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class AddPhpFunctionExtension
  */
 class AddPhpFunctionExtension extends \Twig_Extension
 {
-    protected $templating;
+    protected $container;
 
     /**
-     * @param TimedTwigEngine $templating
+     * @param Container $container
      */
-    public function __construct(TimedTwigEngine $templating)
+    public function __construct(Container $container)
     {
-        $this->templating = $templating;
+        $this->container = $container;
     }
 
     /**
@@ -48,7 +49,7 @@ class AddPhpFunctionExtension extends \Twig_Extension
      */
     public function twigExists($file)
     {
-        return $this->templating->exists($file);
+        return $this->container->get('templating')->exists($file);
     }
 
     /**

@@ -1,6 +1,6 @@
-php_orchestra_cms:
-    resource: "@LexikTranslationBundle/Resources/config/routing.yml"
-    prefix:   /
+#php_orchestra_cms:
+#    resource: "@LexikTranslationBundle/Resources/config/routing.yml"
+#    prefix:   /
 
 php_orchestra_cms_bo:
     pattern: /admin
