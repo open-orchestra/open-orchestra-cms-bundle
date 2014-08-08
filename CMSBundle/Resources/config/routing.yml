@@ -38,10 +38,6 @@ php_orchestra_cms_templateajaxrequest:
     pattern: /admin/template/ajaxRequest/{templateId}
     defaults: { _controller: PHPOrchestraCMSBundle:Template:ajaxRequest}
 
-php_orchestra_cms_blockform:
-    pattern: /admin/block/form/{type}
-    defaults: { _controller: PHPOrchestraCMSBundle:Block:form, type: node }
-
 php_orchestra_setLanguage:
     pattern: /ajax/context/setLanguage/{language}
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Context:SetLanguage, language:en }
