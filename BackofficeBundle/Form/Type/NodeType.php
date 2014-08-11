@@ -44,7 +44,7 @@ class NodeType extends AbstractType
             ->add('siteId', 'hidden')
             ->add('deleted', 'hidden')
             ->add('templateId', 'orchestra_template_choice', array('empty_value' => '--------', 'attr' => array('data-url'=> $templateUrl)))
-            ->add('name', 'text', array('attr' => array('class' => 'used-as-label')))
+            ->add('name', 'text')
             ->add('nodeType', 'choice', array('choices' => array('page' => 'Page simple')))
             ->add('parentId', 'hidden')
             ->add('path', 'text')
