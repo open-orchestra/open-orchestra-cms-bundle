@@ -18,10 +18,6 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/itkg/phporchestra-theme-bundle"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/itkg/phporchestra-indexation-bundle"
         },
         {
@@ -39,8 +35,7 @@
         "itkg/phporchestra-translation-bundle": "dev-master",
         "itkg/phporchestra-display-bundle": "dev-master",
         "itkg/phporchestra-model-bundle": "dev-master",
-        "itkg/phporchestra-indexation-bundle": "dev-master",
-        "itkg/phporchestra-theme-bundle": "dev-master"
+        "itkg/phporchestra-indexation-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": {
