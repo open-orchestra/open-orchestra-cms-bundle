@@ -1,18 +1,16 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\ThemeBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Twig;
 
+/**
+ * Class AddHtmlExtension
+ */
 class AddHtmlExtension extends \Twig_Extension
 {
     private $top_html = array();
     private $bottom_html = array();
     private $js = array();
-    
+
     /**
      * {@inheritdoc}
      */
@@ -28,6 +26,9 @@ class AddHtmlExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @param mixed $value
+     */
     public function unshiftHtml($value)
     {
         $html = $this->top_html;
@@ -35,18 +36,29 @@ class AddHtmlExtension extends \Twig_Extension
         $this->top_html = $html;
     }
 
+    /**
+     * @param mixed $value
+     */
     public function pushHtml($value)
     {
         $html = $this->bottom_html;
         array_push($html, $value);
         $this->bottom_html = $html;
     }
-    
+
+    /**
+     * @param mixed $value
+     *
+     * @return string
+     */
     public function printHtml($value)
     {
         return implode(PHP_EOL, $this->top_html).$value.implode(PHP_EOL, $this->bottom_html);
     }
-    
+
+    /**
+     * @param mixed $value
+     */
     public function unshiftJs($value)
     {
         $js = $this->js;
@@ -54,13 +66,21 @@ class AddHtmlExtension extends \Twig_Extension
         $this->js = $js;
     }
 
+    /**
+     * @param mixed $value
+     */
     public function pushJs($value)
     {
         $js = $this->js;
         array_push($js, $value);
         $this->js = $js;
     }
-        
+
+    /**
+     * @param bool $debug
+     *
+     * @return string
+     */
     public function printJs($debug = false)
     {
         $html = '';
@@ -78,6 +98,7 @@ class AddHtmlExtension extends \Twig_Extension
             $html .= 'dt_0();';
             $html .= '</script>';
         }
+
         return $html;
     }
 

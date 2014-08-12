@@ -38,7 +38,7 @@ class NodeType extends AbstractType
     {
         $templateUrl = $this->router->generate('php_orchestra_cms_templateajaxrequest', array('templateId' => '%s'));
         $templateUrl = urldecode($templateUrl);
-        
+
         $builder
             ->add('nodeId', 'hidden')
             ->add('siteId', 'hidden')
@@ -51,7 +51,6 @@ class NodeType extends AbstractType
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
             ->add('status', 'orchestra_status')
-            ->add('theme', 'orchestra_theme_choice')
             ->add('save', 'submit', array('attr' => array('class' => 'not-mapped')));
     }
 

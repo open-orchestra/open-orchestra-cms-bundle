@@ -1,18 +1,19 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\ThemeBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
 namespace PHPOrchestra\CMSBundle\Twig;
 
+/**
+ * Class LexiconTranslatorExtension
+ */
 class LexiconTranslatorExtension extends \Twig_Extension
 {
 
     protected $lexic = array('symfonyTypeToSmartType' => array('choice' => 'select',
                                     'text' => 'input'));
-    
+
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return array(
@@ -20,6 +21,12 @@ class LexiconTranslatorExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * @param mixed  $key
+     * @param string $fromto
+     *
+     * @return mixed
+     */
     public function lexiconTranslatorFilter($key, $fromto = "symfonyTypeToSmartType")
     {
         if (array_key_exists($fromto, $this->lexic) && array_key_exists($key, $this->lexic[$fromto])) {
@@ -29,6 +36,9 @@ class LexiconTranslatorExtension extends \Twig_Extension
         }
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'lexicon_translator';
