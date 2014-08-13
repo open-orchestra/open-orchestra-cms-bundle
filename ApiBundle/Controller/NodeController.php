@@ -6,16 +6,21 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class NodeController
+ *
+ * @Config\Route("node")
  */
 class NodeController extends Controller
 {
     /**
-     * @param $nodeId
+     * @param string $nodeId
      *
+     * @Config\Route("/{nodeId}", name="php_orchestra_api_node_show")
+     * @Config\Method({"GET"})
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -31,6 +36,9 @@ class NodeController extends Controller
     /**
      * @param Request    $request
      * @param string|int $nodeId
+     *
+     * @Config\Route("/{nodeId}", name="php_orchestra_api_node_edit", defaults={"nodeId" = 0 })
+     * @Config\Method({"POST"})
      *
      * @return JsonResponse
      */

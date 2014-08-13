@@ -1,20 +1,24 @@
 {% import "PHPOrchestraBackofficeBundle:Tree:tree-macros.html.twig" as macros %}
-<script src="{{ asset('bundles/phporchestracms/js/pagegenerator/tree.js') }}"></script>
 {% set id = e_crc32(name) %}
-<li id="{{ id }}"><a href="#"><span class="menu-item-parent">{{ name }}</span></a>
+<li
+        id="{{ id }}"
+        data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd' : 'refresh'}) }}"
+        data-controller="{{ app.request.attributes.get("_controller") }}"
+        >
+    <a href="#">
+        <span class="menu-item-parent">
+            {{ name }}
+        </span>
+    </a>
     <ul class="{{ name }}-connectedSortable">
         {% block menu %}
         {% endblock %}
     </ul>
-    <script>
-        $('#{{ id }}').data({{ {'url':path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd' : 'refresh'}), 'controller':app.request.attributes.get("_controller")}|json_encode|raw }});
-    </script>
 </li>
 
-<script>
-{% if moveUrl is defined and moveUrl != '' %}
-    $(".{{ id }}-connectedSortable").sortable(treeParameter('{{ id }}', ' {{ moveUrl }}', $('#{{ id }}')));
-    $('.{{ id }}-connectedSortable').bind('sortstart', function(event, ui) { treePlaceHolder('{{ id }}', ui)}); 
-{% endif %}
-$('.{{ id }}-connectedSortable i').click(function(e){$(this).treeRedirect($('#{{ id }}'))});
-</script>
+    {#TODO put this file in a proper coffe file #}
+{#{% if moveUrl is defined and moveUrl != '' %}#}
+    {#$(".{{ id }}-connectedSortable").sortable(treeParameter('{{ id }}', ' {{ moveUrl }}', $('#{{ id }}')));#}
+    {#$('.{{ id }}-connectedSortable').bind('sortstart', function(event, ui) { treePlaceHolder('{{ id }}', ui)}); #}
+{#{% endif %}#}
+{#$('.{{ id }}-connectedSortable i').click(function(e){$(this).treeRedirect($('#{{ id }}'))});#}

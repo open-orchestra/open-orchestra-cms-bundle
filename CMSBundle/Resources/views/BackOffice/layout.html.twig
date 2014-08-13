@@ -12,12 +12,23 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        
-        {% include 'PHPOrchestraCMSBundle:BackOffice/Include:headFiles.html.twig' %}
-        
+
+        {% block stylesheets %}
+            {% if app.debug %}
+                {% stylesheets 'built/all.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+                {% endstylesheets %}
+            {% else %}
+                {% stylesheets 'built/all.min.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+                {% endstylesheets %}
+            {% endif %}
+        {% endblock %}
+        {#{% include 'PHPOrchestraCMSBundle:BackOffice/Include:headFiles.html.twig' %}#}
+
     </head>
     <body class="fixed-header fixed-navigation fixed-ribbon desktop-detected">
-        
+
         <!-- HEADER -->
         {% include 'PHPOrchestraCMSBundle:BackOffice/Include:header.html.twig' %}
         <!-- END HEADER -->
@@ -34,14 +45,49 @@
             <!-- END RIBBON -->
             
             <!-- MAIN CONTENT -->
-            <div id="content"></div>
+            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display: none">
+                Launch demo modal
+            </button>
+            <div id="content">
+
+            </div>
             <!-- END MAIN CONTENT -->
-            
+
+            {% include 'PHPOrchestraBackofficeBundle:Editorial:backboneTemplate.html.twig' %}
+
         </div>
-        
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
         <!--================================================== -->
-        
-        {% include 'PHPOrchestraCMSBundle:BackOffice/Include:bottomFiles.html.twig' %}
+
+        {% block javascripts %}
+            {% if app.debug %}
+                {% javascripts 'built/all.js' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+            {% else %}
+                {% javascripts 'built/all.min.js' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+                {% endjavascripts %}
+            {% endif %}
+        {% endblock %}
+        {#{% include 'PHPOrchestraCMSBundle:BackOffice/Include:bottomFiles.html.twig' %}#}
         
     </body>
     

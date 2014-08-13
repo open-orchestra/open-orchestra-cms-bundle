@@ -1,0 +1,79 @@
+
+<script type="text/html" id="headInclude">
+    <section class="" id="widget-grid">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2> vars.tableTitle </h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body">
+</script>
+<script type="text/html" id="footerInclude">
+    </div>
+    <!-- end widget content -->
+    </div>
+    <!-- end widget div -->
+    </div>
+    <!-- end widget -->
+    </article>
+    <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+    </section>
+</script>
+<script type="text/html" id="nodeView">
+    <% include headInclude %>
+    <div role="container">
+        <div class="ui-model">
+            <span class="title"><%= node.get('name') %></span>
+            <span class="preview"></span>
+                <span class="action">
+                    <i class="fa fa-cog <%= node.get('node_id') %>" data-toggle="modal" data-target="#myModal"></i>
+                </span>
+            <ul class="ui-model-areas">
+            </ul>
+        </div>
+    </div>
+    <% include footerInclude %>
+</script>
+<script type="text/html" id="areaView">
+    <div>
+        <span class="title"><%= area.get('ui_model').label %></span>
+        <span class="preview"></span>
+                    <span class="action">
+                        <i class="fa fa-cog"></i>
+                    </span>
+        <ul class="ui-model-areas">
+        </ul>
+        <ul class="ui-model-blocks">
+        </ul>
+    </div>
+</script>
+<script type="text/html" id="blockView">
+    <div class="generate">
+        <span class="title"><%= block.get('ui_model').label %></span>
+                    <span class="preview">
+                        <div>
+                            <%= block.get('ui_model').html %><br>
+                            Title : <%= block.get('attributes').title %><br>
+                            Author : <%= block.get('attributes').author %><br>
+                            News : <%= block.get('attributes').news %><br>
+
+                        </div>
+                    </span>
+        <span class="action"><i class="fa fa-cog"></i></span>
+    </div>
+</script>

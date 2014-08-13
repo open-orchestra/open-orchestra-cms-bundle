@@ -1,0 +1,126 @@
+.ui-model ul, .ui-model li {
+    position:relative;
+    padding:0px;
+    margin:0px;
+}
+.ui-model {
+    width:100%;
+    height:600px;
+    ul {
+        display:block;
+        width:100%;
+        height:100%;
+    }
+    li {
+        display:block;
+        width:100%;
+        height:100%;
+        z-index:1;
+    }
+    li.separator-h {
+        position:absolute;
+        left:30%;
+        display:block;
+        border:1px dotted #000000;
+        height:1px;
+        margin:-7px -5px;
+        width:40%;
+        cursor:ns-resize;
+        z-index:2;
+    }
+    li.separator-v {
+        position:absolute;
+        top:30%;
+        display:inline-block;
+        height:40%;
+        width:1px;
+        margin:-5px -7px;
+        border:1px dotted #000000;
+        cursor:ew-resize;
+        z-index:2;
+    }
+    li.block {
+        display : block;
+    }
+    li.inline {
+        display : inline-block;
+    }
+    span.title {
+        position:absolute;
+        display:block;
+        margin:-29px 0 0 -18px;
+        line-height:20px;
+        font-weight:bold;
+        width:100%;
+        overflow:hidden;
+        white-space:nowrap;
+    }
+    span.action {
+        position:absolute;
+        display:block;
+        height:12px;
+        top:-12px;
+        right:0px;
+        i {
+            position:relative;
+            float:right;
+            padding:1px;
+            cursor:pointer;
+        }
+    }
+    span.preview {
+        bottom: 0;
+        left: 2px;
+        margin: 0;
+        position: absolute;
+        top: 2px;
+        overflow:hidden;
+    }
+    div {
+        font:10px arial,sans-serif;
+        position:absolute;
+        border-radius:8px;
+        top:0px;
+        left:0px;
+        bottom:12px;
+        right:12px;
+        padding:12px 0px 0px 12px;
+        color:#4e4e4e;
+        border:1px solid #4e4e4e;
+    }
+    .ui-model-areas {
+        div {
+            color:#4e4e4e;
+            border:1px solid #4e4e4e;
+        }
+    }
+    .ui-model-blocks {
+        div.generate {
+            color:#6aa84f;
+            border:1px solid #6aa84f;
+        }
+        div {
+            color:#085394;
+            border:1px solid #085394;
+        }
+    }
+    div.over {
+        color:#9a381e;
+        border:1px solid #9a381e;
+    }
+    div.dialog-selected {
+        background-image: url(../img/alpha.png);
+        background-size: 10px 100%;
+    }
+}
+#all-blocks {
+    position:relative;
+    display:inline;
+    float:left;
+    top:0px;
+    left:100%;
+    height:100%;
+    width:100%;
+    background-color:#880000;
+    margin-left:-30px;
+}

@@ -18,7 +18,7 @@ class NodeController extends Controller
      * @param int     $nodeId
      *
      * @Config\Route("/admin/node/form/{nodeId}", name="php_orchestra_backoffice_node_form", defaults={"nodeId" = 0})
-     * @Config\Method({"GET"})
+     * @Config\Method({"GET", "POST"})
      *
      * @return JsonResponse|Response
      */
@@ -40,18 +40,22 @@ class NodeController extends Controller
             'node',
             $node,
             array(
-                'inDialog' => true,
-                'beginJs' => array('pagegenerator/dialogNode.js', 'pagegenerator/model.js'),
-                'endJs' => array('pagegenerator/node.js?'.time()),
-                'action' => $request->getUri()
+                'action' => $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId))
             )
         );
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.odm.mongodb.document_manager');
+            $em->persist($node);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('php_orchestra_cms_bo'));
+        }
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'mainTitle' => 'Gestion des pages',
-                'tableTitle' => '',
                 'form' => $form->createView()
             )
         );

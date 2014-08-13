@@ -40,11 +40,12 @@ class NodeType extends AbstractType
         $templateUrl = urldecode($templateUrl);
 
         $builder
-            ->add('nodeId', 'hidden')
-            ->add('siteId', 'hidden')
-            ->add('deleted', 'hidden')
-            ->add('templateId', 'orchestra_template_choice', array('empty_value' => '--------', 'attr' => array('data-url'=> $templateUrl)))
-            ->add('name', 'text', array('attr' => array('class' => 'used-as-label')))
+            ->add('templateId', 'orchestra_template_choice', array(
+                'empty_value' => '--------',
+                'attr' => array('data-url'=> $templateUrl),
+                'required' => false,
+            ))
+            ->add('name', 'text')
             ->add('nodeType', 'choice', array('choices' => array('page' => 'Page simple')))
             ->add('parentId', 'hidden')
             ->add('path', 'text')
@@ -55,27 +56,12 @@ class NodeType extends AbstractType
     }
 
     /**
-     * @param FormView      $view
-     * @param FormInterface $form
-     * @param array         $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['inDialog'] = $options['inDialog'];
-        $view->vars['beginJs'] = $options['beginJs'];
-        $view->vars['endJs'] = $options['endJs'];
-    }
-
-    /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             array(
-                'inDialog' => false,
-                'beginJs' => array(),
-                'endJs' => array(),
                 'data_class' => $this->nodeClass,
             )
         );
