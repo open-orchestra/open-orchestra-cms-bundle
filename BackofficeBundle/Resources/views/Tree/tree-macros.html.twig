@@ -8,7 +8,6 @@
                     data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
                     href="#"
                     class="ajax-load">
-                {#<a href="{{ path('php_orchestra_backoffice_node_form', {'nodeId': node.nodeId}) }}">#}
                     <i class="fa fa-trash-o" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'}) }}">
                     </i>
                     {{ node.name }}
