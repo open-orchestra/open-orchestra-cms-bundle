@@ -6,7 +6,8 @@ $(".ajax-load").click (e) ->
     type: "GET"
     url: url
     success: (response) ->
-      node = new Node response
-      $('#content').html(node.printHtml())
+      node = new Node
+      node.set response
+      nodeView = new NodeView(node: node)
       return
   return

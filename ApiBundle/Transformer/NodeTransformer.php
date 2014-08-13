@@ -25,6 +25,7 @@ class NodeTransformer extends AbstractTransformer
             $facade->addArea($this->getTransformer('area')->transform($area, $mixed));
         }
 
+        $facade->nodeId = $mixed->getNodeId();
         $facade->name = $mixed->getName();
         $facade->siteId = $mixed->getSiteId();
         $facade->deleted = $mixed->getDeleted();
