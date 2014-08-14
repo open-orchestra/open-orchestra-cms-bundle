@@ -13,6 +13,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class BlocksType
+ *
+ * @Deprecated This class will go away with the template refactoring
+ */
 class BlocksType extends AbstractType
 {
     

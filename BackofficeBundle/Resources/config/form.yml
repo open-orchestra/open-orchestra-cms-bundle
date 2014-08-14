@@ -1,12 +1,17 @@
 parameters:
     php_orchestra_backoffice.type.node.class: PHPOrchestra\BackofficeBundle\Form\Type\NodeType
+    php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
 
 services:
     # Node form type
     php_orchestra_backoffice.type.node:
         class: %php_orchestra_backoffice.type.node.class%
         arguments:
-            - @router
             - %php_orchestra_model.document.node.class%
         tags:
             - { name: form.type, alias: node }
+    # Block form type
+    php_orchestra_backoffice.type.block:
+        class: %php_orchestra_backoffice.type.block.class%
+        tags:
+            - { name: form.type, alias: block }

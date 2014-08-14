@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Class NodeFacade
  */
-class NodeFacade implements FacadeInterface
+class NodeFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("string")

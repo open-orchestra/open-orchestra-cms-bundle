@@ -55,7 +55,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facade = new AreaFacade();
         $facade->areaId = $areaId;
-        $facade->classes = implode(',',$classes);
+        $facade->classes = implode(',', $classes);
         $facade->addArea($subArea);
         $facade->addArea($subArea);
         $facade->addBlock($block);
