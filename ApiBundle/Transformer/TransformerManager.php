@@ -1,6 +1,7 @@
 <?php
 
 namespace PHPOrchestra\ApiBundle\Transformer;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class TransformerManager
@@ -8,6 +9,15 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 class TransformerManager
 {
     protected $transformers = array();
+    protected $router;
+
+    /**
+     * @param UrlGeneratorInterface $router
+     */
+    public function __construct(UrlGeneratorInterface $router)
+    {
+        $this->router = $router;
+    }
 
     /**
      * @param TransformerInterface $transformer
@@ -26,5 +36,13 @@ class TransformerManager
     public function get($name)
     {
         return $this->transformers[$name];
+    }
+
+    /**
+     * @return UrlGeneratorInterface
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 }

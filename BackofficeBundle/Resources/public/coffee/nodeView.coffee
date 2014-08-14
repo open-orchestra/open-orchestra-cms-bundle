@@ -15,7 +15,7 @@ NodeView = Backbone.View.extend(
     if event.currentTarget.parentElement.parentElement.parentElement.getAttribute('role') is 'container'
       $('.modal-title').text @node.get('name')
       $.ajax
-        url: '/app_dev.php/admin/node/form/' + @node.get('node_id')
+        url: @node.get('links')._self_form
         method: 'GET'
         success: (response) ->
           $('.modal-body').html response

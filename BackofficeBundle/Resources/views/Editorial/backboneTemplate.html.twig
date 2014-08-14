@@ -65,15 +65,15 @@
 <script type="text/html" id="blockView">
     <div class="generate">
         <span class="title"><%= block.get('ui_model').label %></span>
-                    <span class="preview">
-                        <div>
-                            <%= block.get('ui_model').html %><br>
-                            Title : <%= block.get('attributes').title %><br>
-                            Author : <%= block.get('attributes').author %><br>
-                            News : <%= block.get('attributes').news %><br>
+            <span class="preview">
+                <div>
+                    <%= block.get('ui_model').html %><br>
+                    Title : <%= block.get('attributes').title %><br>
+                    Author : <%= block.get('attributes').author %><br>
+                    News : <%= block.get('attributes').news %><br>
 
-                        </div>
-                    </span>
-        <span class="action"><i class="fa fa-cog"></i></span>
+                </div>
+            </span>
+        <span class="action"><i class="fa fa-cog" data-toggle="modal" data-target="#myModal"></i></span>
     </div>
 </script>
