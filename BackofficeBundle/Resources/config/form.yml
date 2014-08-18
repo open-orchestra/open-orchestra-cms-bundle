@@ -1,5 +1,6 @@
 parameters:
     php_orchestra_backoffice.type.node.class: PHPOrchestra\BackofficeBundle\Form\Type\NodeType
+    php_orchestra_backoffice.type.area.class: PHPOrchestra\BackofficeBundle\Form\Type\AreaType
     php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
 
 services:
@@ -10,6 +11,11 @@ services:
             - %php_orchestra_model.document.node.class%
         tags:
             - { name: form.type, alias: node }
+    # Area form type
+    php_orchestra_backoffice.type.area:
+        class: %php_orchestra_backoffice.type.area.class%
+        tags:
+            - { name: form.type, alias: area }
     # Block form type
     php_orchestra_backoffice.type.block:
         class: %php_orchestra_backoffice.type.block.class%

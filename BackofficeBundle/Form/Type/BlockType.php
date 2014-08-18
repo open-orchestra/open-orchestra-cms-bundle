@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,7 @@ class BlockType extends AbstractType
     {
         $builder->add('component', 'orchestra_block');
         $builder->addEventSubscriber(new BlockTypeSubscriber());
+        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
 

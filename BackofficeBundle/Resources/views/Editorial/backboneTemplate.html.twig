@@ -9,7 +9,7 @@
                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2> vars.tableTitle </h2>
+                        <h2 class="js-widget-title"></h2>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -38,10 +38,10 @@
     <% include headInclude %>
     <div role="container">
         <div class="ui-model">
-            <span class="title"><%= node.get('name') %></span>
+            <span class="title"></span>
             <span class="preview"></span>
                 <span class="action">
-                    <i class="fa fa-cog <%= node.get('node_id') %>" data-toggle="modal" data-target="#myModal"></i>
+                    <i class="fa fa-cog <%= node.cid %>" data-toggle="modal" data-target="#myModal"></i>
                 </span>
             <ul class="ui-model-areas">
             </ul>
@@ -53,9 +53,9 @@
     <div>
         <span class="title"><%= area.get('ui_model').label %></span>
         <span class="preview"></span>
-                    <span class="action">
-                        <i class="fa fa-cog"></i>
-                    </span>
+            <span class="action">
+                <i class="fa fa-cog <%= area.cid %>" data-toggle="modal" data-target="#myModal"></i>
+            </span>
         <ul class="ui-model-areas">
         </ul>
         <ul class="ui-model-blocks">

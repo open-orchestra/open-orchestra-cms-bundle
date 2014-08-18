@@ -1,13 +1,28 @@
 AreaView = Backbone.View.extend(
   tagName: 'li'
   className: 'ui-model-areas'
+  events:
+    'click i#none' : 'clickButton'
   initialize: (options) ->
     @area = options.area
+    key = "click i." + @area.cid
+    @events[key] = "clickButton"
     @height = options.height
     @direction = options.direction || 'height'
     @displayClass = (if @direction is "width" then "inline" else "block")
-    _.bindAll this, "render", "addAreaToView", "addBlockToView"
+    _.bindAll this, "render", "addAreaToView", "addBlockToView", "clickButton"
     @areaTemplate = _.template($('#areaView').html())
+    return
+  clickButton: (event) ->
+    $('.modal-title').text @area.get('area_id')
+    $.ajax
+      url: @area.get('links')._self_form
+      method: 'GET'
+      success: (response) ->
+        $('.modal-body').html response
+        $("[data-prototype]").each ->
+          PO.formPrototypes.addPrototype $(this)
+          return
     return
   render: ->
     $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @areaTemplate(

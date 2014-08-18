@@ -52,7 +52,12 @@ class BlockTransformer extends AbstractTransformer
             }
         }
 
-        $html = $this->displayBlockManager->show($mixed)->getContent();
+        if (!empty ($attribute)) {
+            $html = $this->displayBlockManager->show($mixed)->getContent();
+        } else {
+            $html = null;
+        }
+
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
             'label' => $label ,
             'html' => $html

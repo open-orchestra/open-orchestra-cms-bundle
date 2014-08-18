@@ -50,18 +50,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(FormEvents::POST_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::PRE_SUBMIT, $this->subscriber->getSubscribedEvents());
-    }
-
-    /**
-     * Test add a submit button
-     */
-    public function testPostSetData()
-    {
-        $this->subscriber->postSetData($this->event);
-
-        Phake::verify($this->form)->add('submit', 'submit');
     }
 
     /**

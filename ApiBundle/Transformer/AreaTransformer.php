@@ -9,6 +9,7 @@ use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\AreaInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class AreaTransformer
@@ -60,6 +61,13 @@ class AreaTransformer extends AbstractTransformer
         }
         $facade->boDirection = $mixed->getBoDirection();
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
+        $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_area_form',
+            array(
+                'nodeId' => $node->getNodeId(),
+                'areaId' => $mixed->getAreaId(),
+            ),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }

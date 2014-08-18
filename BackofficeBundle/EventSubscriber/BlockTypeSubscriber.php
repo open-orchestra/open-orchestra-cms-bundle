@@ -34,15 +34,6 @@ class BlockTypeSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function postSetData(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $form->add('submit', 'submit');
-    }
-
-    /**
-     * @param FormEvent $event
-     */
     public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();
@@ -59,6 +50,7 @@ class BlockTypeSubscriber implements EventSubscriberInterface
 
         $block->setAttributes($blockAttributes);
     }
+
     /**
      * @return array The event names to listen to
      */
@@ -66,7 +58,6 @@ class BlockTypeSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::POST_SET_DATA => 'postSetData',
             FormEvents::PRE_SUBMIT => 'preSubmit'
         );
     }
