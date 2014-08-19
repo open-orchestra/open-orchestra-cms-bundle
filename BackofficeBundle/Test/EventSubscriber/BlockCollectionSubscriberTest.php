@@ -4,16 +4,16 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaTypeSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockCollectionSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
- * Class AreaTypeSubscriberTest
+ * Class BlockCollectionSubscriberTest
  */
-class AreaTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class BlockCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var AreaTypeSubscriber
+     * @var BlockCollectionSubscriber
      */
     protected $subscriber;
 
@@ -37,7 +37,7 @@ class AreaTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new AreaTypeSubscriber($this->node);
+        $this->subscriber = new BlockCollectionSubscriber($this->node);
     }
 
     /**
@@ -90,52 +90,20 @@ class AreaTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'nodeId' => 0,
             'blockId' => $blockIndex
         ));
-        Phake::verify($this->area, Phake::never())->addSubArea(Phake::anyParameters());
-    }
-
-    /**
-     * @param array $newAreas
-     *
-     * @dataProvider provideNewAreas
-     */
-    public function testWithMultipleAreaAddition($newAreas)
-    {
-        Phake::when($this->event)->getData()->thenReturn(array('newAreas' => $newAreas));
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->node, Phake::never())->addBlock(Phake::anyParameters());
-        Phake::verify($this->node, Phake::never())->getBlockIndex(Phake::anyParameters());
-        Phake::verify($this->area, Phake::never())->addBlock(Phake::anyParameters());
-        Phake::verify($this->area, Phake::times(count($newAreas)))->addSubArea(Phake::anyParameters());
-    }
-
-    /**
-     * @return array
-     */
-    public function provideNewAreas()
-    {
-        return array(
-            array(array('Sample')),
-            array(array('Sample', 'Test')),
-            array(array('Sample', 'new_area')),
-        );
     }
 
     /**
      * @param int   $areaNumber
-     * @param array $blockArray
      *
-     * @dataProvider provideAreaOrBlockNumber
+     * @dataProvider provideAreaNumber
      */
-    public function testPreSetData($areaNumber, $blockArray)
+    public function testPreSetData($areaNumber)
     {
         Phake::when($this->event)->getData()->thenReturn($this->area);
 
         $areaArrayCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
         Phake::when($areaArrayCollection)->count()->thenReturn($areaNumber);
-        Phake::when($this->area)->getSubAreas()->thenReturn($areaArrayCollection);
-        Phake::when($this->area)->getBlocks()->thenReturn($blockArray);
+        Phake::when($this->area)->getAreas()->thenReturn($areaArrayCollection);
 
         $this->subscriber->preSetData($this->event);
 
@@ -148,8 +116,8 @@ class AreaTypeSubscriberTest extends \PHPUnit_Framework_TestCase
                 'data-prototype-label-remove' => 'Suppression',
             )
         ));
-        Phake::verify($this->form, Phake::times(1 - count($blockArray)))->add('newAreas', 'collection', array(
-            'type' => 'text',
+        Phake::verify($this->form, Phake::times(1 - $areaNumber))->add('existingBlocks', 'collection', array(
+            'type' => 'existing_block',
             'allow_add' => true,
             'mapped' => false,
             'attr' => array(
@@ -162,13 +130,37 @@ class AreaTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideAreaOrBlockNumber()
+    public function provideAreaNumber()
     {
         return array(
-            array(0, array()),
-            array(0, array('blocks')),
-            array(1, array()),
-            array(1, array('blocks')),
+            array(0),
+            array(1),
         );
+    }
+
+    /**
+     * Test one existing block addition
+     */
+    public function testWithOneExistingBlockAddition()
+    {
+        Phake::when($this->event)->getData()->thenReturn(array(
+            'existingBlocks' => array(
+                array('existingBlock' => 'fixture_full:0'),
+                array('existingBlock' => 'root:1'),
+            )
+        ));
+
+        $this->subscriber->preSubmit($this->event);
+
+        Phake::verify($this->node, Phake::never())->addBlock(Phake::anyParameters());
+        Phake::verify($this->node, Phake::never())->getBlockIndex(Phake::anyParameters());
+        Phake::verify($this->area)->addBlock(array(
+            'nodeId' => 'fixture_full',
+            'blockId' => 0
+        ));
+        Phake::verify($this->area)->addBlock(array(
+            'nodeId' => 'root',
+            'blockId' => 1
+        ));
     }
 }

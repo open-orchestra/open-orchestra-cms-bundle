@@ -15,7 +15,7 @@ BlockView = Backbone.View.extend(
       url: @block.get('links')._self_form
       method: 'GET'
       success: (response) ->
-        $('.modal-body').html response
+        view = new adminFormView(html: response)
   render: ->
     $(@el).attr('style', 'height:' + @height + '%').html @blockTemplate(
       block: @block

@@ -19,10 +19,7 @@ AreaView = Backbone.View.extend(
       url: @area.get('links')._self_form
       method: 'GET'
       success: (response) ->
-        $('.modal-body').html response
-        $("[data-prototype]").each ->
-          PO.formPrototypes.addPrototype $(this)
-          return
+        view = new adminFormView(html: response)
     return
   render: ->
     $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @areaTemplate(

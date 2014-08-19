@@ -17,7 +17,7 @@ NodeView = Backbone.View.extend(
       url: @node.get('links')._self_form
       method: 'GET'
       success: (response) ->
-        $('.modal-body').html response
+        view = new adminFormView(html: response)
   render: ->
     $(@el).html @nodeTemplate(
       node: @node

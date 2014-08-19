@@ -38,11 +38,11 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
-        foreach ($mixed->getSubAreas() as $subArea) {
+        foreach ($mixed->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area')->transform($subArea, $node));
         }
         foreach ($mixed->getBlocks() as $block) {
-            if (0 == $block['nodeId']) {
+            if (0 === $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $node->getBlocks()->get($block['blockId']),
                     true,
@@ -50,11 +50,11 @@ class AreaTransformer extends AbstractTransformer
                     $block['blockId']
                 ));
             } else {
-                $node = $this->nodeRepository->findOneByNodeId($block['nodeId']);
+                $otherNode = $this->nodeRepository->findOneByNodeId($block['nodeId']);
                 $facade->addBlock($this->getTransformer('block')->transform(
-                    $node->getBlocks()->get($block['blockId']),
+                    $otherNode->getBlocks()->get($block['blockId']),
                     false,
-                    $node->getNodeId(),
+                    $otherNode->getNodeId(),
                     $block['blockId']
                 ));
             }
@@ -94,7 +94,7 @@ class AreaTransformer extends AbstractTransformer
         }
 
         foreach ($facade->getAreas() as $area) {
-            $source->addSubArea($this->getTransformer('area')->reverseTransform($area, null, $node));
+            $source->addArea($this->getTransformer('area')->reverseTransform($area, null, $node));
         }
 
         foreach ($facade->getBlocks() as $block) {

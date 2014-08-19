@@ -3,7 +3,8 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaTypeSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockCollectionSubscriber;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +29,8 @@ class AreaType extends AbstractType
         $builder->add('boPercent', 'text', array(
             'required' => false
         ));
-        $builder->addEventSubscriber(new AreaTypeSubscriber($options['node']));
+        $builder->addEventSubscriber(new BlockCollectionSubscriber($options['node']));
+        $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
