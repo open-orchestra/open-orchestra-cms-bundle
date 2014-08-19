@@ -8,6 +8,7 @@ parameters:
 services:
     php_orchestra_api.transformer_manager:
         class: %php_orchestra_api.transformer_manager.class%
+        arguments: [@router]
     php_orchestra_api.transformer.node:
         class: %php_orchestra_api.transformer.node.class%
         tags:

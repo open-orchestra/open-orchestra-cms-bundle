@@ -18,10 +18,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $router = Phake::mock('Symfony\Component\Routing\Router');
-        Phake::when($router)->generate(Phake::anyParameters())->thenReturn('/dummy/url');
-
-        $this->nodeType = new NodeType($router, $this->nodeClass);
+        $this->nodeType = new NodeType($this->nodeClass);
     }
 
     /**
@@ -34,7 +31,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->nodeType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(12))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(8))->add(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
     }
 
@@ -48,11 +45,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         $this->nodeType->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'inDialog' => false,
-            'beginJs' => array(),
-            'endJs' => array(),
             'data_class' => $this->nodeClass,
-
         ));
     }
 

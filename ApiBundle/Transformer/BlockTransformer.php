@@ -8,6 +8,7 @@ use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class BlockTransformer
@@ -27,29 +28,45 @@ class BlockTransformer extends AbstractTransformer
     /**
      * @param BlockInterface $mixed
      * @param boolean        $isInside
+     * @param string|null    $nodeId
+     * @param int|null       $blockNumber
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $isInside = true)
+    public function transform($mixed, $isInside = true, $nodeId = null, $blockNumber = null)
     {
         $facade = new BlockFacade();
 
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $mixed->getComponent();
 
+        $label = $mixed->getComponent();
         foreach ($mixed->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
                 $facade->addAttribute($key, json_encode($attribute));
             } else {
                 $facade->addAttribute($key, $attribute);
             }
+            if ('title' == $key) {
+                $label = $attribute;
+            }
         }
 
         $html = $this->displayBlockManager->show($mixed)->getContent();
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
-            'label' => $mixed->getComponent(),
+            'label' => $label ,
             'html' => $html
         ));
+
+        if (null !== $nodeId && null !== $blockNumber) {
+            $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_block_form',
+                array(
+                    'nodeId' => $nodeId,
+                    'blockNumber' => $blockNumber
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ));
+        }
 
         return $facade;
     }
