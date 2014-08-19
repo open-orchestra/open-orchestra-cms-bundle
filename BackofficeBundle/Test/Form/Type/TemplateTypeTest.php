@@ -1,20 +1,19 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\Test\Form\Type;
+namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use \PHPOrchestra\CMSBundle\Form\Type\TemplateType;
+use PHPOrchestra\BackofficeBundle\Form\Type\TemplateType;
 
 /**
  * Description of TemplateTypeTest
- *
- * @author Nicolas BOUQUET <nicolas.bouquet@businessdecision.com>
  */
 class TemplateTypeTest extends \PHPUnit_Framework_TestCase
 {
+    protected $formBuilder;
     protected $templateType;
     protected $nodeTypeTransformer;
-    protected $formBuilder;
+    protected $templateClass = 'templateClass';
 
     /**
      * Set up the test
@@ -25,7 +24,7 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->formBuilder)->addModelTransformer(Phake::anyParameters())->thenReturn($this->formBuilder);
         Phake::when($this->formBuilder)->add(Phake::anyParameters())->thenReturn($this->formBuilder);
 
-        $this->templateType = new TemplateType();
+        $this->templateType = new TemplateType($this->templateClass);
     }
 
     /**
@@ -36,7 +35,8 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         $this->templateType->buildForm($this->formBuilder, array());
 
         Phake::verify($this->formBuilder, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($this->formBuilder, Phake::times(10))->add(Phake::anyParameters());
+        Phake::verify($this->formBuilder, Phake::times(4))->add(Phake::anyParameters());
+        Phake::verify($this->formBuilder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
@@ -49,9 +49,7 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         $this->templateType->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'inDialog' => false,
-            'beginJs' => array(),
-            'endJs' => array()
+            'data_class' => $this->templateClass,
         ));
     }
 

@@ -10,6 +10,8 @@ services:
     # Template form type
     php_orchestra_cms.type.template:
         class: %php_orchestra_backoffice.type.template.class%
+        arguments:
+            - %php_orchestra_model.document.template.class%
         tags:
             - { name: form.type, alias: template }
     # Node form type

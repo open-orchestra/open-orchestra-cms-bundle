@@ -7,13 +7,22 @@ use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 /**
  * Class TemplateType
  */
 class TemplateType extends AbstractType
 {
+    protected $templateClass;
+
+    /**
+     * @param string $templateClass
+     */
+    public function __construct($templateClass)
+    {
+        $this->templateClass = $templateClass;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -37,6 +46,7 @@ class TemplateType extends AbstractType
     {
         $resolver->setDefaults(
             array(
+                'data_class' => $this->templateClass,
             )
         );
     }
