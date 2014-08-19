@@ -2,7 +2,7 @@
 $(".ajax-load").click (e) ->
   e.preventDefault()
   url = $(this).data("url")
-  nodeId = url.substr(url.lastIndexOf("/") + 1)
+  nodeId = $(this).data("node")
   self.location.hash = nodeId
   $.ajax
     type: "GET"
