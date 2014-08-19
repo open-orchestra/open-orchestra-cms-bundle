@@ -6,6 +6,7 @@
             <div>
                 <a
                     data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
+                    data-node="{{ node.nodeId }}"
                     href="#"
                     class="ajax-load">
                     <i class="fa fa-trash-o" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'}) }}">
