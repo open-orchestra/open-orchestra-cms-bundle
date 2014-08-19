@@ -39,12 +39,17 @@
 {% macro menu_templates(templates, name) %}
     {% for template in templates %}
         {% set id = name ~ '-' ~ e_crc32(template.id) %}
-        <li id="{{ id }}" data-tree-parameter="{ 'templateId': {{ template.id }}, 'name': {{ template.name }}}">
+        <li id="{{ id }}">
             <div>
-                <a href="{{ path('php_orchestra_cms_templateform', {'templateId': template.templateId}) }}">
-                    <i class="fa fa-trash-o" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeletetemplate'}) }}">
+                <a
+                    href="#"
+                    data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
+                    data-template="{{ template.templateId }}"
+                    class="template-ajax-load"
+                    >
+                    <i class="fa fa-trash-o">
                     </i>
-                    {{ template.name }}
+                    <span>{{ template.name }}</span>
                 </a>
             </div>
         </li>

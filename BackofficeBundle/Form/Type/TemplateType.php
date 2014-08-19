@@ -4,14 +4,15 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockCollectionSubscriber;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use PHPOrchestra\CMSBundle\Form\DataTransformer\NodeTypeTransformer;
 
 /**
- * Class AreaType
+ * Class TemplateType
  */
-class AreaType extends TemplateAreaType
+class TemplateType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,8 +20,14 @@ class AreaType extends TemplateAreaType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-        $builder->addEventSubscriber(new BlockCollectionSubscriber($options['node']));
+        $builder
+            ->add('name', 'text')
+            ->add('language', 'orchestra_language')
+            ->add('status', 'orchestra_status')
+            ->add('boDirection', 'orchestra_direction');
+
+        $builder->addEventSubscriber(new AreaCollectionSubscriber());
+        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
     /**
@@ -28,19 +35,17 @@ class AreaType extends TemplateAreaType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\Area',
-            'node' => null,
-        ));
+        $resolver->setDefaults(
+            array(
+            )
+        );
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
     public function getName()
     {
-        return 'area';
+        return 'template';
     }
 }

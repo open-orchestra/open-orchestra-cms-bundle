@@ -4,14 +4,14 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockCollectionSubscriber;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class AreaType
+ * Class TemplateAreaType
  */
-class AreaType extends TemplateAreaType
+class TemplateAreaType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -19,8 +19,16 @@ class AreaType extends TemplateAreaType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-        $builder->addEventSubscriber(new BlockCollectionSubscriber($options['node']));
+        $builder->add('areaId', 'text');
+        $builder->add('boDirection', 'choice', array(
+            'choices' => array('v' => 'vertical', 'h' => 'horizontal'),
+            'required' => false,
+        ));
+        $builder->add('boPercent', 'text', array(
+            'required' => false
+        ));
+        $builder->addEventSubscriber(new AreaCollectionSubscriber());
+        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
     /**
@@ -41,6 +49,6 @@ class AreaType extends TemplateAreaType
      */
     public function getName()
     {
-        return 'area';
+        return 'template_area';
     }
 }

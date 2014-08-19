@@ -9,3 +9,7 @@ Node = Backbone.Model.extend(
   areas: AreaCollection,
   blocks: BlockCollection
 )
+Template = Backbone.Model.extend(
+  areas: AreaCollection,
+  blocks: BlockCollection
+)
