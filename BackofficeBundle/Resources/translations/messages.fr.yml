@@ -6,6 +6,7 @@ php_orchestra_backoffice:
             new_page: Nouvelle page
             new_template: Nouveau gabarit
             delete_node: Etes vous certain du supprimer le node %nodeId% ?
+            delete_template: Etes vous certain de supprime le gabarit %templateName% ?
         editorial:
             nodes: Pages
             templates: Gabarit

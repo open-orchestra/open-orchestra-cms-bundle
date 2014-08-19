@@ -49,6 +49,21 @@
     </div>
     <% include footerInclude %>
 </script>
+<script type="text/html" id="templateView">
+    <% include headInclude %>
+    <div role="container">
+        <div class="ui-model">
+            <span class="title"></span>
+            <span class="preview"></span>
+                <span class="action">
+                    <i class="fa fa-cog <%= template.cid %>" data-toggle="modal" data-target="#myModal"></i>
+                </span>
+            <ul class="ui-model-areas">
+            </ul>
+        </div>
+    </div>
+    <% include footerInclude %>
+</script>
 <script type="text/html" id="areaView">
     <div>
         <span class="title"><%= area.get('ui_model').label %></span>

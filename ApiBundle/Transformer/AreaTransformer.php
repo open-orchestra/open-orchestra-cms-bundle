@@ -8,6 +8,7 @@ use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\AreaInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelBundle\Model\TemplateInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -64,6 +65,34 @@ class AreaTransformer extends AbstractTransformer
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_area_form',
             array(
                 'nodeId' => $node->getNodeId(),
+                'areaId' => $mixed->getAreaId(),
+            ),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+
+        return $facade;
+    }
+
+    /**
+     * @param AreaInterface     $mixed
+     * @param TemplateInterface $template
+     *
+     * @return FacadeInterface
+     */
+    public function transformFromTemplate($mixed, TemplateInterface $template = null)
+    {
+        $facade = new AreaFacade();
+
+        $facade->areaId = $mixed->getAreaId();
+        $facade->classes = implode(',', $mixed->getClasses());
+        foreach ($mixed->getAreas() as $subArea) {
+            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template));
+        }
+        $facade->boDirection = $mixed->getBoDirection();
+        $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
+        $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_template_area_form',
+            array(
+                'templateId' => $template->getTemplateId(),
                 'areaId' => $mixed->getAreaId(),
             ),
             UrlGeneratorInterface::ABSOLUTE_URL

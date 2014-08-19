@@ -47,7 +47,6 @@ class NodeType extends AbstractType
             ->add('status', 'orchestra_status');
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
-
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

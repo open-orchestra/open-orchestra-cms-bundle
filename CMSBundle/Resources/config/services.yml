@@ -9,9 +9,6 @@ parameters:
 services:
 
 #--[STANDARD SERVICES]----------#
-
-
-
     # DocumentManager service
     php_orchestra_cms.document_manager:
         class: "%php_orchestra_cms.manager.document.class%"
