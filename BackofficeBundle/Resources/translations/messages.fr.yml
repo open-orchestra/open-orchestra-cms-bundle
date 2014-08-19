@@ -5,6 +5,7 @@ php_orchestra_backoffice:
         tree:
             new_page: Nouvelle page
             new_template: Nouveau gabarit
+            delete_node: Etes vous certain du supprimer le node %nodeId% ?
         editorial:
             nodes: Pages
             templates: Gabarit
