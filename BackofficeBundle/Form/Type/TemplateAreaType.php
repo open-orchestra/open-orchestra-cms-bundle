@@ -38,7 +38,6 @@ class TemplateAreaType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PHPOrchestra\ModelBundle\Document\Area',
-            'node' => null,
         ));
     }
 
