@@ -9,9 +9,12 @@
                     data-node="{{ node.nodeId }}"
                     href="#"
                     class="ajax-load">
-                    <i class="fa fa-trash-o" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'confirmDeleteNode'}) }}">
+                    <i
+                            class="fa fa-trash-o ajax-delete"
+                            data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
+                            data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeId%': node.nodeId}) }}">
                     </i>
-                    {{ node.name }}
+                    <span>{{ node.name }}</span>
                 </a>
                 {% if 'child' in element|keys %}
                     <ul class="{{ name }}-connectedSortable">

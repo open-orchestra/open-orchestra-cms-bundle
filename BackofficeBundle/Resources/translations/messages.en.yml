@@ -5,6 +5,7 @@ php_orchestra_backoffice:
         tree:
             new_page: New page
             new_template: New template
+            delete_node: Are you sure to delete the node %nodeId% ?
         editorial:
             nodes: Pages
             templates: Templates

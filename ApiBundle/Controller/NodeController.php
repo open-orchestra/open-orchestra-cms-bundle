@@ -3,11 +3,11 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class NodeController
@@ -30,5 +30,38 @@ class NodeController extends Controller
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node')->transform($node);
+    }
+
+    /**
+     * @param string $nodeId
+     *
+     * @Config\Route("/{nodeId}/delete", name="php_orchestra_api_node_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($nodeId)
+    {
+        /** @var NodeInterface $node */
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $this->deleteTree($node);
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return new Response('', 200);
+    }
+
+    /**
+     * @param NodeInterface $node
+     */
+    protected function deleteTree(NodeInterface $node)
+    {
+        $node->setDeleted(true);
+
+        $nodeRepository = $this->get('php_orchestra_model.repository.node');
+        $sons = $nodeRepository->findByParentId($node->getNodeId());
+
+        foreach ($sons as $son) {
+            $this->deleteTree($son);
+        }
     }
 }
