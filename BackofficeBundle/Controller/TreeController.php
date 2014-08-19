@@ -34,7 +34,7 @@ class TreeController extends Controller
      */
     public function showTreeTemplatesAction()
     {
-        $templates = $this->get('php_orchestra_model.repository.template')->findByStatus('published');
+        $templates = $this->get('php_orchestra_model.repository.template')->findByDeleted(false);
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Tree:showTreeTemplates.html.twig',

@@ -45,7 +45,6 @@ class TemplateController extends Controller
         /** @var TemplateInterface $template */
         $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $template->setDeleted(true);
-        $template->setStatus('deleted');
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

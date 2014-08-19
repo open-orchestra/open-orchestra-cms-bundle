@@ -12,7 +12,7 @@
                     <i
                             class="fa fa-trash-o ajax-delete"
                             data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
-                            data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeId%': node.nodeId}) }}">
+                            data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeName%': node.name}) }}">
                     </i>
                     <span>{{ node.name }}</span>
                 </a>
@@ -47,7 +47,10 @@
                     data-template="{{ template.templateId }}"
                     class="template-ajax-load"
                     >
-                    <i class="fa fa-trash-o">
+                    <i
+                            class="fa fa-trash-o ajax-delete"
+                            data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
+                            data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
                     </i>
                     <span>{{ template.name }}</span>
                 </a>
