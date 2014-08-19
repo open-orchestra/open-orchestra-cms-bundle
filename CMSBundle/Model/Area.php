@@ -174,7 +174,7 @@ class Area
      * 
      * @param Area $area
      */
-    public function addSubArea(Area $area)
+    public function addArea(Area $area)
     {
         $this->subAreas[] = $area;
         return $this;
@@ -183,7 +183,7 @@ class Area
     /**
      * Get sub areas
      */
-    public function getSubAreas()
+    public function getAreas()
     {
         return $this->subAreas;
     }
@@ -239,7 +239,7 @@ class Area
     {
         $formattedSubAreas = array();
         
-        foreach ($this->getSubAreas() as $area) {
+        foreach ($this->getAreas() as $area) {
             $formattedSubAreas[] = $area->toArray();
         }
         

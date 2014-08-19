@@ -2,7 +2,7 @@ parameters:
     php_orchestra_cms.type.content.class : PHPOrchestra\CMSBundle\Form\Type\ContentType
     php_orchestra_cms.type.content_type.class : PHPOrchestra\CMSBundle\Form\Type\ContentTypeType
     php_orchestra_cms.type.template.class: PHPOrchestra\CMSBundle\Form\Type\TemplateType
-    php_orchestra_backoffice.type.node.class: PHPOrchestra\CMSBundle\Form\Type\NodeType
+    php_orchestra_cms.type.orchestra_block.class: PHPOrchestra\CMSBundle\Form\Type\BlockChoiceType
 
 services:
     # Content Form Builder
@@ -28,3 +28,9 @@ services:
         class: %php_orchestra_cms.type.template.class%
         tags:
             - { name: form.type, alias: template }
+
+    php_orchestra_cms.type.orchestra_block:
+        class: %php_orchestra_cms.type.orchestra_block.class%
+        arguments: [%php_orchestra.blocks%]
+        tags:
+            - { name: form.type, alias: orchestra_block }

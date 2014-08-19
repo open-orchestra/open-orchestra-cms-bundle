@@ -66,12 +66,12 @@
     {% if form.vars.beginJs is defined %}
         {% for js in form.vars.beginJs %}
             {{ unshift_js(asset('bundles/phporchestracms/js/') ~ js) }}
-        {% endfor %} 
+        {% endfor %}
     {% endif %}
     {% if form.vars.endJs is defined %}
         {% for js in form.vars.endJs %}
             {{ push_js(asset('bundles/phporchestracms/js/') ~ js) }}
-        {% endfor %} 
+        {% endfor %}
     {% endif %}
     {% if form.vars.inDialog is defined and form.vars.inDialog %}
         <div id="dialog-{{ form.vars.name }}" style="display:none;" title="{{ form.vars.name }}">

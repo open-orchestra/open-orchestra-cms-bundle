@@ -1,12 +1,30 @@
 parameters:
     php_orchestra_backoffice.type.node.class: PHPOrchestra\BackofficeBundle\Form\Type\NodeType
+    php_orchestra_backoffice.type.area.class: PHPOrchestra\BackofficeBundle\Form\Type\AreaType
+    php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
+    php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
 
 services:
     # Node form type
     php_orchestra_backoffice.type.node:
         class: %php_orchestra_backoffice.type.node.class%
         arguments:
-            - @router
             - %php_orchestra_model.document.node.class%
         tags:
             - { name: form.type, alias: node }
+    # Area form type
+    php_orchestra_backoffice.type.area:
+        class: %php_orchestra_backoffice.type.area.class%
+        tags:
+            - { name: form.type, alias: area }
+    # Block form type
+    php_orchestra_backoffice.type.block:
+        class: %php_orchestra_backoffice.type.block.class%
+        tags:
+            - { name: form.type, alias: block }
+    php_orchestra_backoffice.type.existing_block_choice:
+        class: %php_orchestra_backoffice.type.existing_block_choice.class%
+        arguments:
+            - @php_orchestra_model.repository.node
+        tags:
+            - { name: form.type, alias: existing_block }

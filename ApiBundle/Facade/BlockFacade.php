@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Class BlockFacade
  */
-class BlockFacade implements FacadeInterface
+class BlockFacade extends AbstractFacade
 {
     const GENERATE = 'generate';
     const LOAD = 'load';

@@ -4,7 +4,7 @@ NodeView = Backbone.View.extend(
     'click i#none' : 'clickButton'
   initialize: (options) ->
     @node = options.node
-    key = "click i." + @node.get("node_id")
+    key = "click i." + @node.cid
     @events[key] = "clickButton"
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @nodeTemplate = _.template($("#nodeView").html())
@@ -12,17 +12,17 @@ NodeView = Backbone.View.extend(
     nav_page_height()
     return
   clickButton: (event) ->
-    if event.currentTarget.parentElement.parentElement.parentElement.getAttribute('role') is 'container'
-      $('.modal-title').text @node.get('name')
-      $.ajax
-        url: '/app_dev.php/admin/node/form/' + @node.get('node_id')
-        method: 'GET'
-        success: (response) ->
-          $('.modal-body').html response
+    $('.modal-title').text @node.get('name')
+    $.ajax
+      url: @node.get('links')._self_form
+      method: 'GET'
+      success: (response) ->
+        view = new adminFormView(html: response)
   render: ->
     $(@el).html @nodeTemplate(
       node: @node
     )
+    $('.js-widget-title', @$el).text @node.get('name')
     areaHeight = 100 / @node.get('areas').length if @node.get('areas').length > 0
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area], areaHeight)

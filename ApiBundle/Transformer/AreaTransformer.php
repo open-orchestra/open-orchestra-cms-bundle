@@ -9,6 +9,7 @@ use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\AreaInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class AreaTransformer
@@ -37,22 +38,36 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
-        foreach ($mixed->getSubAreas() as $subArea) {
+        foreach ($mixed->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area')->transform($subArea, $node));
         }
         foreach ($mixed->getBlocks() as $block) {
-            if (0 == $block['nodeId']) {
-                $facade->addBlock($this->getTransformer('block')->transform($node->getBlocks()->get($block['blockId'])));
-            } else {
-                $node = $this->nodeRepository->findOneByNodeId($block['nodeId']);
+            if (0 === $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $node->getBlocks()->get($block['blockId']),
-                    false
+                    true,
+                    $node->getNodeId(),
+                    $block['blockId']
+                ));
+            } else {
+                $otherNode = $this->nodeRepository->findOneByNodeId($block['nodeId']);
+                $facade->addBlock($this->getTransformer('block')->transform(
+                    $otherNode->getBlocks()->get($block['blockId']),
+                    false,
+                    $otherNode->getNodeId(),
+                    $block['blockId']
                 ));
             }
         }
         $facade->boDirection = $mixed->getBoDirection();
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
+        $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_area_form',
+            array(
+                'nodeId' => $node->getNodeId(),
+                'areaId' => $mixed->getAreaId(),
+            ),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }
@@ -79,7 +94,7 @@ class AreaTransformer extends AbstractTransformer
         }
 
         foreach ($facade->getAreas() as $area) {
-            $source->addSubArea($this->getTransformer('area')->reverseTransform($area, null, $node));
+            $source->addArea($this->getTransformer('area')->reverseTransform($area, null, $node));
         }
 
         foreach ($facade->getBlocks() as $block) {

@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -14,19 +16,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class NodeType extends AbstractType
 {
-    protected $router;
     protected $nodeClass;
 
     /**
-     * @param UrlGeneratorInterface $router
-     * @param string                $nodeClass
+     * @param string $nodeClass
      */
-    public function __construct(
-        UrlGeneratorInterface $router,
-        $nodeClass
-    )
+    public function __construct($nodeClass)
     {
-        $this->router = $router;
         $this->nodeClass = $nodeClass;
     }
 
@@ -36,23 +32,23 @@ class NodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $templateUrl = $this->router->generate('php_orchestra_cms_templateajaxrequest', array('templateId' => '%s'));
-        $templateUrl = urldecode($templateUrl);
-
         $builder
-            ->add('templateId', 'orchestra_template_choice', array(
+            ->add('templateId', 'document', array(
                 'empty_value' => '--------',
-                'attr' => array('data-url'=> $templateUrl),
-                'required' => false,
+                'class' => 'PHPOrchestraModelBundle:Template',
             ))
             ->add('name', 'text')
-            ->add('nodeType', 'choice', array('choices' => array('page' => 'Page simple')))
-            ->add('parentId', 'hidden')
+            ->add('nodeType', 'choice', array(
+                'choices' => array('page' => 'Page simple')
+            ))
             ->add('path', 'text')
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
-            ->add('status', 'orchestra_status')
-            ->add('save', 'submit', array('attr' => array('class' => 'not-mapped')));
+            ->add('status', 'orchestra_status');
+
+        $builder->addEventSubscriber(new AreaCollectionSubscriber());
+
+        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
     /**
@@ -60,11 +56,9 @@ class NodeType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'data_class' => $this->nodeClass,
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => $this->nodeClass,
+        ));
     }
 
     /**

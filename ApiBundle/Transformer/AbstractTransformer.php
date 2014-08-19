@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 
 /**
  * Class AbstractTransformer
@@ -29,7 +30,16 @@ abstract class AbstractTransformer implements TransformerInterface
     }
 
     /**
+     * @return UrlGenerator
+     */
+    protected function getRouter()
+    {
+        return $this->context->getRouter();
+    }
+
+    /**
      * @param mixed $mixed
+     *
      * @return FacadeInterface
      */
     public function transform($mixed)
@@ -39,7 +49,7 @@ abstract class AbstractTransformer implements TransformerInterface
 
     /**
      * @param FacadeInterface $facade
-     * @param mixed|null $source
+     * @param mixed|null      $source
      *
      * @return mixed
      */

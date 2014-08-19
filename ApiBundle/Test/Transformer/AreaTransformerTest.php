@@ -55,7 +55,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facade = new AreaFacade();
         $facade->areaId = $areaId;
-        $facade->classes = implode(',',$classes);
+        $facade->classes = implode(',', $classes);
         $facade->addArea($subArea);
         $facade->addArea($subArea);
         $facade->addBlock($block);
@@ -81,7 +81,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->abstractTransformer, Phake::times(2))->reverseTransform($block, Phake::anyParameters());
         Phake::verify($this->abstractTransformer, Phake::times(2))->reverseTransform($subArea, null, null);
         Phake::verify($area, Phake::times(2))->addBlock(array('nodeId' => $nodeId, 'blockId' => $blockId));
-        Phake::verify($area, Phake::times(2))->addSubArea($subAreaDocument);
+        Phake::verify($area, Phake::times(2))->addArea($subAreaDocument);
     }
 
     /**
@@ -145,6 +145,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->abstractTransformer, Phake::times(2))->reverseTransform($subArea, null, $node);
         Phake::verify($area, Phake::times(2))->addBlock(array('nodeId' => $nodeId, 'blockId' => $blockId));
         Phake::verify($node, Phake::times(2))->setBlock($blockId, $blockDocument);
-        Phake::verify($area, Phake::times(2))->addSubArea($subAreaDocument);
+        Phake::verify($area, Phake::times(2))->addArea($subAreaDocument);
     }
 }
