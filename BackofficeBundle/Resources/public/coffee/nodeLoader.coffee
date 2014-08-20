@@ -3,12 +3,5 @@ $(".ajax-load span").click (e) ->
   url = $(this).parent().data("url")
   nodeId = $(this).parent().data("node")
   self.location.hash = nodeId
-  $.ajax
-    type: "GET"
-    url: url
-    success: (response) ->
-      node = new Node
-      node.set response
-      view = new NodeView(node: node)
-      return
+  showNode(url)
   return
