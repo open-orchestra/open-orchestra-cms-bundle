@@ -74,19 +74,3 @@ services:
             - "%php_orchestra.orchestra_choice.direction%"
         tags:
             - { name: form.type, alias: orchestra_direction }
-
-#--[TWIG]-----------------------#
-
-    php_orchestra_cms.twig.lexicon_translator:
-        class: PHPOrchestra\CMSBundle\Twig\LexiconTranslatorExtension
-        tags:
-            - { name: twig.extension }
-    php_orchestra_cms.twig.add_html:
-        class: PHPOrchestra\CMSBundle\Twig\AddHtmlExtension
-        tags:
-            - { name: twig.extension }
-    php_orchestra_cms.twig.php_function:
-        class: PHPOrchestra\CMSBundle\Twig\AddPhpFunctionExtension
-        arguments: [@service_container]
-        tags:
-            - { name: twig.extension }
