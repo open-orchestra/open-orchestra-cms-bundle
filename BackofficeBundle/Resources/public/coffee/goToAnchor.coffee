@@ -6,7 +6,7 @@ $("document").ready ->
     $(this).find("li").each ->
       if $(this).data("tree-parameter") is nodeId
         openMenu($(this), 'page')
-        $(this).find("a:first").click();
+        showNode($(this).find("a:first").data("url"))
       return
   return
 
