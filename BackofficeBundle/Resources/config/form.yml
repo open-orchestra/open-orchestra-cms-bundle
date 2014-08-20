@@ -5,6 +5,7 @@ parameters:
     php_orchestra_backoffice.type.template_area.class: PHPOrchestra\BackofficeBundle\Form\Type\TemplateAreaType
     php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
     php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
+    php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
 
 services:
     # Template form type
@@ -41,3 +42,9 @@ services:
             - @php_orchestra_model.repository.node
         tags:
             - { name: form.type, alias: existing_block }
+
+    php_orchestra_backoffice.type.orchestra_block:
+        class: %php_orchestra_backoffice.type.orchestra_block.class%
+        arguments: [%php_orchestra.blocks%]
+        tags:
+            - { name: form.type, alias: orchestra_block }
