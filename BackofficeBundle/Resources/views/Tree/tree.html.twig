@@ -1,7 +1,5 @@
 {% import "PHPOrchestraBackofficeBundle:Tree:tree-macros.html.twig" as macros %}
-{% set id = e_crc32(name) %}
 <li
-        id="{{ id }}"
         data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd' : 'refresh'}) }}"
         data-controller="{{ app.request.attributes.get("_controller") }}"
         >
