@@ -5,6 +5,10 @@ parameters:
     php_orchestra_api.transformer.area.class: PHPOrchestra\ApiBundle\Transformer\AreaTransformer
     php_orchestra_api.transformer.block.class: PHPOrchestra\ApiBundle\Transformer\BlockTransformer
     php_orchestra_api.transformer.ui_model.class: PHPOrchestra\ApiBundle\Transformer\UiModelTransformer
+    php_orchestra_api.transformer.content_type.class: PHPOrchestra\ApiBundle\Transformer\ContentTypeTransformer
+    php_orchestra_api.transformer.content_type_collection.class: PHPOrchestra\ApiBundle\Transformer\ContentTypeCollectionTransformer
+    php_orchestra_api.transformer.site.class: PHPOrchestra\ApiBundle\Transformer\SiteTransformer
+    php_orchestra_api.transformer.site_collection.class: PHPOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
 
 services:
     php_orchestra_api.transformer_manager:
@@ -30,5 +34,21 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.ui_model:
         class: %php_orchestra_api.transformer.ui_model.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.content_type:
+        class: %php_orchestra_api.transformer.content_type.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.content_type_collection:
+        class: %php_orchestra_api.transformer.content_type_collection.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.site:
+        class: %php_orchestra_api.transformer.site.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.site_collection:
+        class: %php_orchestra_api.transformer.site_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}

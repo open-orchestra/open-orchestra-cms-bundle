@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Class SiteCollection
  */
-class SiteCollection extends AbstractFacade
+class SiteCollectionFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\SiteFacade>")
