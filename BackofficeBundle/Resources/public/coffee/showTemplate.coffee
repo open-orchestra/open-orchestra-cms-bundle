@@ -7,6 +7,5 @@ showTemplate = (url)->
       template = new Template
       template.set response
       view = new TemplateView(template: template)
-      console.log "tadadadadadadadad"
       return
   return
