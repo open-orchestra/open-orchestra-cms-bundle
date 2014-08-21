@@ -34,7 +34,7 @@ AreaView = Backbone.View.extend(
     for area of @area.get('areas')
       @addAreaToView(@area.get('areas')[area], areaHeight, childrenDirection)
     for block of @area.get('blocks')
-      @addBlockToView(@area.get('blocks')[block], blockHeight)
+      @addBlockToView(@area.get('blocks')[block], blockHeight, childrenDirection)
     $("ul.ui-model-blocks", @el).remove() if $("ul.ui-model-blocks", @el).children().length == 0
     $("ul.ui-model-areas", @el).remove() if $("ul.ui-model-areas", @el).children().length == 0
     this
@@ -48,12 +48,13 @@ AreaView = Backbone.View.extend(
     )
     $("ul.ui-model-areas", @el).append areaView.render().el
     return
-  addBlockToView: (block, blockHeight) ->
+  addBlockToView: (block, blockHeight, childrenDirection) ->
     blockElement = new Block
     blockElement.set block
     blockView = new BlockView(
       block: blockElement
       height: blockHeight
+      direction: childrenDirection
     )
     $("ul.ui-model-blocks", @el).append blockView.render().el
 )

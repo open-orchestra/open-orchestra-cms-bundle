@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
+use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -11,6 +12,16 @@ use Symfony\Component\Form\FormEvents;
  */
 class BlockTypeSubscriber implements EventSubscriberInterface
 {
+    protected $generateFormManager;
+
+    /**
+     * @param GenerateFormManager $generateFormManager
+     */
+    public function __construct(GenerateFormManager $generateFormManager)
+    {
+        $this->generateFormManager = $generateFormManager;
+    }
+
     /**
      * @param FormEvent $event
      */
@@ -19,16 +30,7 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        foreach ($data->getAttributes() as $key => $value) {
-            if (is_array($value)) {
-                $value = json_encode($value);
-            }
-            $form->add('field_' . $key, 'text', array(
-                'label' => $key,
-                'data' => $value,
-                'mapped' => false
-            ));
-        }
+        $this->generateFormManager->buildForm($form, $data);
     }
 
     /**

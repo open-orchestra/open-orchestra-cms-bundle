@@ -45,7 +45,10 @@ class AreaController extends Controller
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->flush();
 
-            return $this->redirect($this->generateUrl('php_orchestra_cms_bo'));
+            return $this->redirect(
+                $this->generateUrl('php_orchestra_cms_bo')
+                . '#' . $nodeId
+            );
         }
 
         return $this->render(
