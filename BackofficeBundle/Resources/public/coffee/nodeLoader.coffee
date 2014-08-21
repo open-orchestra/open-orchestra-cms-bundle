@@ -3,7 +3,6 @@ $(".ajax-load span").click (e) ->
   url = $(this).parent().data("url")
   nodeId = $(this).parent().data("node")
   self.location.hash = nodeId
-  showNode(url)
   return
 $(".ajax-new").click (e) ->
   e.preventDefault()
