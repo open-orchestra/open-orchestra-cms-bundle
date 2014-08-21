@@ -14,7 +14,7 @@
     <nav>
         <ul style="">
             <li>
-                <a href="{{ path('php_orchestra_cms_bo_edito') }}">
+                <a href="#" class="ajax-remove-hash">
                     <i class="fa fa-lg fa-fw fa-edit"></i>
                     <span class="menu-item-parent">{{ 'php_orchestra_cms.left_menu.editorial.title'|trans({}, 'backOffice') }}</span>
                 </a>
@@ -32,7 +32,12 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i><span class="menu-item-parent">{{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}</span></a>
+                <a href="#" class="ajax-remove-hash">
+                    <i class="fa fa-lg fa-fw fa-desktop"></i>
+                    <span class="menu-item-parent">
+                        {{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}
+                    </span>
+                </a>
                 <ul style="">
                     <li>
                         <a href="{{ path('phporchestra_cms_backofficeview_site_index', {'action' : 'catalog'}) }}">{{ 'php_orchestra_cms.left_menu.administration.sites'|trans({}, 'backOffice') }}</a>
