@@ -5,3 +5,11 @@ $(".ajax-load span").click (e) ->
   self.location.hash = nodeId
   showNode(url)
   return
+$(".ajax-new").click (e) ->
+  e.preventDefault()
+  $('.modal-title').text $(this).text()
+  $.ajax
+    url: $(this).data('url')
+    method: 'GET'
+    success: (response) ->
+      view = new adminFormView(html: response)

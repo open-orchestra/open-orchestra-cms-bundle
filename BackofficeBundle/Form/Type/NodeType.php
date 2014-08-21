@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -33,10 +34,6 @@ class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('templateId', 'document', array(
-                'empty_value' => '--------',
-                'class' => 'PHPOrchestraModelBundle:Template',
-            ))
             ->add('name', 'text')
             ->add('nodeType', 'choice', array(
                 'choices' => array('page' => 'Page simple')
@@ -46,6 +43,7 @@ class NodeType extends AbstractType
             ->add('language', 'orchestra_language')
             ->add('status', 'orchestra_status');
 
+        $builder->addEventSubscriber(new NodeTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

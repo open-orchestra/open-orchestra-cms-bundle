@@ -8,19 +8,24 @@
                 href="#"
                 class="ajax-load">
                 <i
-                        class="fa fa-trash-o ajax-delete"
-                        data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
-                        data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeName%': node.name}) }}">
+                    class="fa fa-trash-o ajax-delete"
+                    data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
+                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeName%': node.name}) }}">
                 </i>
                 <span>{{ node.name }}</span>
             </a>
             {% if 'child' in element|keys %}
                 <ul class="{{ name }}-connectedSortable">
                     {{ _self.menu_nodes(element.child, name) }}
-                    <li data-tree-parameter="{ 'parentId' : {{ node.nodeId }} }">
+                    <li>
                         <div class="ui-state-unsortable">
-                            <a href="#">
-                                <i class="fa fa-file" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createNode'}) }}">
+                            <a
+                                href="#"
+                                data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
+                                class="ajax-new"
+                                data-toggle="modal"
+                                data-target="#myModal">
+                                <i class="fa fa-file">
                                 </i>
                                 {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
                             </a>
@@ -43,9 +48,9 @@
                     class="template-ajax-load"
                     >
                     <i
-                            class="fa fa-trash-o ajax-delete"
-                            data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
-                            data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
+                        class="fa fa-trash-o ajax-delete"
+                        data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
+                        data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
                     </i>
                     <span>{{ template.name }}</span>
                 </a>
@@ -54,8 +59,13 @@
     {% endfor %}
     <li data-tree-parameter="{}">
         <div class="ui-state-unsortable">
-            <a href="#">
-                <i class="fa fa-file" data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd':'createTemplate'}) }}">
+            <a
+                href="#"
+                data-url="{{ path('php_orchestra_backoffice_template_form') }}"
+                class="ajax-new"
+                data-toggle="modal"
+                data-target="#myModal">
+                <i class="fa fa-file">
                 </i>
                 {{ 'php_orchestra_backoffice.left_menu.tree.new_template'|trans }}
             </a>

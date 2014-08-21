@@ -16,9 +16,10 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     protected $subscriber;
 
-    protected $event;
     protected $form;
+    protected $event;
     protected $block;
+    protected $generateFormManager;
 
     /**
      * Set up the test
@@ -27,13 +28,15 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
 
-        $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
+        $this->form = Phake::mock('Symfony\Component\Form\Form');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new BlockTypeSubscriber();
+        $this->generateFormManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
+
+        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager);
     }
 
     /**
@@ -60,51 +63,10 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         Phake::when($this->event)->getData()->thenReturn($this->block);
 
-        $attributes = array();
-        Phake::when($this->block)->getAttributes()->thenReturn($attributes);
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
-    }
-
-    /**
-     * Test with string or int attributes
-     */
-    public function testPreSetDataWithMultipleStringAttributes()
-    {
-        Phake::when($this->event)->getData()->thenReturn($this->block);
-
-        $attributes = array('test' => 'test', 'tentative' => 'tentative', 'number' => 5);
-        Phake::when($this->block)->getAttributes()->thenReturn($attributes);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->form)->add('field_test', 'text', array('data' => 'test', 'mapped' => false, 'label' => 'test'));
-        Phake::verify($this->form)->add('field_tentative', 'text', array('data' => 'tentative', 'mapped' => false, 'label' => 'tentative'));
-        Phake::verify($this->form)->add('field_number', 'text', array('data' => 5, 'mapped' => false, 'label' => 'number'));
-    }
-
-    /**
-     * @param string $key
-     * @param array  $value
-     *
-     * @dataProvider provideKeyAndData
-     */
-    public function testPreSetDataWithArrayAttributes($key, array $value)
-    {
-        Phake::when($this->event)->getData()->thenReturn($this->block);
-
-        $attributes = array($key => $value);
-        Phake::when($this->block)->getAttributes()->thenReturn($attributes);
-
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->form)->add('field_' . $key, 'text', array(
-            'label' => $key,
-            'data' => json_encode($value),
-            'mapped' => false
-        ));
+        Phake::verify($this->generateFormManager)->buildForm($this->form, $this->block);
     }
 
     /**

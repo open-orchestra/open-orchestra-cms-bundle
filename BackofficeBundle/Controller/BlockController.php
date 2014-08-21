@@ -28,7 +28,7 @@ class BlockController extends Controller
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
         $form = $this->createForm(
-            new BlockType(),
+            'block',
             $node->getBlocks()->get($blockNumber),
             array(
                 'action' => $this->generateUrl('php_orchestra_backoffice_block_form', array(
@@ -44,7 +44,10 @@ class BlockController extends Controller
             $documentManager->persist($node);
             $documentManager->flush();
 
-            return $this->redirect($this->generateUrl('php_orchestra_cms_bo'));
+            return $this->redirect(
+                $this->generateUrl('php_orchestra_cms_bo')
+                . '#' . $nodeId
+            );
         }
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(

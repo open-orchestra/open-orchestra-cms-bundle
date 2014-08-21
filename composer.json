@@ -41,6 +41,7 @@
         "psr-0": {
             "PHPOrchestra\\CMSBundle": "",
             "PHPOrchestra\\BackofficeBundle": "",
+            "PHPOrchestra\\Backoffice": "",
             "PHPOrchestra\\ApiBundle": ""
         }
     },

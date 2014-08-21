@@ -34,6 +34,8 @@ services:
     # Block form type
     php_orchestra_backoffice.type.block:
         class: %php_orchestra_backoffice.type.block.class%
+        arguments:
+            - @php_orchestra_backoffice.generate_form_manager
         tags:
             - { name: form.type, alias: block }
     php_orchestra_backoffice.type.existing_block_choice:
