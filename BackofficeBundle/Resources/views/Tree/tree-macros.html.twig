@@ -1,7 +1,9 @@
 {% macro menu_nodes(nodes, name) %}
     {% for element in nodes %}
         {% set node = element.node %}
-        <li data-tree-parameter="{{ node.nodeId }}">
+        <li data-element-id="{{ node.nodeId }}"
+            data-type="Node"
+        >
             <a
                 data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
                 data-node="{{ node.nodeId }}"
@@ -39,7 +41,9 @@
 
 {% macro menu_templates(templates, name) %}
     {% for template in templates %}
-        <li>
+        <li data-element-id="{{ template.templateId }}"
+            data-type="Template"
+        >
             <div>
                 <a
                     href="#"
@@ -57,7 +61,7 @@
             </div>
         </li>
     {% endfor %}
-    <li data-tree-parameter="{}">
+    <li>
         <div class="ui-state-unsortable">
             <a
                 href="#"
