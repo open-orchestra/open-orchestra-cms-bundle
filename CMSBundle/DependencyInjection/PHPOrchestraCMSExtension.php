@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\CMSBundle\DependencyInjection;
 
+use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -22,7 +23,18 @@ class PHPOrchestraCMSExtension extends Extension
          $configuration = new Configuration();
          $config = $this->processConfiguration($configuration, $configs);
 
-        $blockType = array('TinyMCEWysiwyg', 'Sample', 'Footer', 'Menu', 'Search', 'SearchResult');
+        $blockType = array(
+            DisplayBlockInterface::CARROUSEL,
+            DisplayBlockInterface::CONTACT,
+            DisplayBlockInterface::FOOTER,
+            DisplayBlockInterface::HEADER,
+            DisplayBlockInterface::MENU,
+            DisplayBlockInterface::NEWS,
+            DisplayBlockInterface::SAMPLE,
+            DisplayBlockInterface::SEARCH,
+            DisplayBlockInterface::SEARCH_RESULT,
+            DisplayBlockInterface::TINYMCEWYSIWYG,
+        );
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
             $blockType = $config['blocks'];
         }
