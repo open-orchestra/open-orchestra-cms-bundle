@@ -11,6 +11,8 @@ php_orchestra_backoffice:
             nodes: Pages
             templates: Templates
         administration:
+            sites:
+                list: Websites
             routing_cache:
                 dialog:
                     title: Purge routing cache

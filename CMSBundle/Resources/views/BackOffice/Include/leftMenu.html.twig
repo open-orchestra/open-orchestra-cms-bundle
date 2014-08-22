@@ -40,7 +40,13 @@
                 </a>
                 <ul style="">
                     <li>
-                        <a href="{{ path('phporchestra_cms_backofficeview_site_index', {'action' : 'catalog'}) }}">{{ 'php_orchestra_cms.left_menu.administration.sites'|trans({}, 'backOffice') }}</a>
+                        <a
+                            href="#"
+                            class="ajax-tableview-load"
+                            data-url="{{ path('php_orchestra_api_site_list') }}"
+                            data-displayed-elements="site_id, domain, aliasC">
+                            {{ 'php_orchestra_backoffice.left_menu.administration.sites.list'|trans }}
+                        </a>
                     </li>
                     <li>
                         <a href="{{ path('phporchestra_cms_backofficeview_contenttype_index', {'action':'catalog'}) }}">{{ 'php_orchestra_cms.left_menu.administration.content_types'|trans({}, 'backOffice') }}</a>
