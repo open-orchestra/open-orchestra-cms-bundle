@@ -11,6 +11,8 @@ php_orchestra_backoffice:
             nodes: Pages
             templates: Gabarit
         administration:
+            sites:
+                list: Sites
             routing_cache:
                 dialog:
                     title: Cache de routage

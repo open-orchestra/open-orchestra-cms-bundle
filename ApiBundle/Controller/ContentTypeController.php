@@ -17,7 +17,7 @@ class ContentTypeController extends Controller
     /**
      * @param string $contentTypeId
      *
-     * @Config\Route("/{contentTypeId}", name="php_orchestra_content_type_show")
+     * @Config\Route("/{contentTypeId}", name="php_orchestra_api_content_type_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -32,7 +32,7 @@ class ContentTypeController extends Controller
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_content_type_list")
+     * @Config\Route("", name="php_orchestra_api_content_type_list")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()

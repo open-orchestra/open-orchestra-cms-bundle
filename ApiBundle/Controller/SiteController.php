@@ -15,9 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 class SiteController extends Controller
 {
     /**
-     * @param string $siteId
+     * @param int $siteId
      *
-     * @Config\Route("/{siteId}", name="php_orchestra_site_show")
+     * @Config\Route("/{siteId}", name="php_orchestra_api_site_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -26,15 +26,14 @@ class SiteController extends Controller
      */
     public function showAction($siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => (int) $siteId));
 
         return $this->get('php_orchestra_api.transformer_manager')->get('site')->transform($site);
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_site_list")
+     * @Config\Route("", name="php_orchestra_api_site_list")
      * @Config\Method({"GET"})
-     *
      * @Api\Serialize()
      *
      * @return FacadeInterface

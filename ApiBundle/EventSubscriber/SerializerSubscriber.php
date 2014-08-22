@@ -23,8 +23,8 @@ class SerializerSubscriber implements EventSubscriberInterface
     protected $annotationReader;
 
     /**
-     * @param Serializer $serializer
-     * @param AnnotationReader $annotationReader
+     * @param Serializer         $serializer
+     * @param AnnotationReader   $annotationReader
      * @param ControllerResolver $resolver
      */
     public function __construct(Serializer $serializer, AnnotationReader $annotationReader, ControllerResolver $resolver)

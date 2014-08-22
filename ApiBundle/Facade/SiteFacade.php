@@ -40,12 +40,11 @@ class SiteFacade extends AbstractFacade
     protected $blocks = array();
 
     /**
-     * @param string $key
      * @param string $value
      */
-    public function addBlocks($key, $value)
+    public function addBlocks($value)
     {
-        $this->blocks[$key] = $value;
+        $this->blocks[] = $value;
     }
 
     /**

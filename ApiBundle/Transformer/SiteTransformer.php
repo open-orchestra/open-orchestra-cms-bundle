@@ -5,6 +5,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\SiteFacade;
 use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class SiteTransformer
@@ -29,9 +30,15 @@ class SiteTransformer extends AbstractTransformer
             $facade->addLanguage($language);
         }
 
-        foreach ($mixed->getBlocks() as $key => $value) {
-            $facade->addBlocks($key, $value);
+        foreach ($mixed->getBlocks() as $value) {
+            $facade->addBlocks($value);
         }
+
+        $facade->addLink('_self', $this->getRouter()->generate(
+            'php_orchestra_api_site_show',
+            array('siteId' => $mixed->getSiteId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }

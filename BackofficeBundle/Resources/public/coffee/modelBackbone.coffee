@@ -13,3 +13,8 @@ Template = Backbone.Model.extend(
   areas: AreaCollection,
   blocks: BlockCollection
 )
+TableviewModel = Backbone.Model.extend({})
+TableviewCollection = Backbone.Collection.extend(model: TableviewModel)
+TableviewElement = Backbone.Model.extend(
+  sites: TableviewCollection
+)

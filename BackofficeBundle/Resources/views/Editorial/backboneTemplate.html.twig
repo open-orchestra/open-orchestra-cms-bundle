@@ -92,3 +92,25 @@
         <span class="action"><i class="fa fa-cog" data-toggle="modal" data-target="#myModal"></i></span>
     </div>
 </script>
+
+<script type="text/html" id="tableviewCollectionView">
+    <% include headInclude %>
+    <div role="container">
+        <table id="tableviewCollectionTable">
+            <thead>
+                <tr>
+                    <% _.each(displayedElements, function(displayedElement) { %>
+                        <td><%= displayedElement %></td>
+                    <% }); %>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <% include footerInclude %>
+</script>
+
+<script type="text/html" id="tableviewView">
+    <td><%= value %></td>
+</script>
