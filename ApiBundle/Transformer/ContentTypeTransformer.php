@@ -1,11 +1,11 @@
 <?php
 
 namespace PHPOrchestra\ApiBundle\Transformer;
+
 use PHPOrchestra\ApiBundle\Facade\ContentTypeFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelBundle\Model\ContentTypeInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 
 /**
  * Class ContentTypeTransformer
