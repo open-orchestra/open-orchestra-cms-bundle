@@ -33,7 +33,7 @@ class AreaFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $boDirection;
-    
+
     /**
      * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\UiModelFacade")
      */

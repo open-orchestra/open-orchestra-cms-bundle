@@ -12,6 +12,7 @@ parameters:
     php_orchestra_api.transformer.content_collection.class: PHPOrchestra\ApiBundle\Transformer\ContentCollectionTransformer
     php_orchestra_api.transformer.site.class: PHPOrchestra\ApiBundle\Transformer\SiteTransformer
     php_orchestra_api.transformer.site_collection.class: PHPOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
+    php_orchestra_api.transformer.field_type.class: PHPOrchestra\ApiBundle\Transformer\FieldTypeTransformer
 
 services:
     php_orchestra_api.transformer_manager:
@@ -67,3 +68,7 @@ services:
         class: %php_orchestra_api.transformer.site_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.field_type:
+        class: %php_orchestra_api.transformer.field_type.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy }
