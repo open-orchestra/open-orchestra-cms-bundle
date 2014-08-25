@@ -10,6 +10,11 @@ use JMS\Serializer\Annotation as Serializer;
 class ContentTypeCollectionFacade extends AbstractFacade
 {
     /**
+     * @Serializer\Type("string")
+     */
+    public $collectionName = 'content_types';
+
+    /**
      * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\ContentTypeFacade>")
      */
     protected $contentTypes = array();

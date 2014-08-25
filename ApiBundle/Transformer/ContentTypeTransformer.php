@@ -25,12 +25,12 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade->name = $mixed->getName();
         $facade->version = $mixed->getVersion();
         $facade->status = $mixed->getStatus();
-        foreach ($mixed->getFields() as $key => $value) {
-            $facade->addField($key, $value);
+        foreach ($mixed->getFields() as $field) {
+            $facade->addField($this->getTransformer('field_type')->transform($field));
         }
 
         $facade->addLink('_self', $this->getRouter()->generate(
-            'php_orchestra_content_type_show',
+            'php_orchestra_api_content_type_show',
             array('contentTypeId' => $mixed->getContentTypeId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));

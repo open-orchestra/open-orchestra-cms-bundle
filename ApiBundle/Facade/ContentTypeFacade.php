@@ -20,7 +20,7 @@ class ContentTypeFacade extends AbstractFacade
     public $name;
 
     /**
-     * @Serializer\Type("int")
+     * @Serializer\Type("integer")
      */
     public $version;
 
@@ -30,16 +30,23 @@ class ContentTypeFacade extends AbstractFacade
     public $status;
 
     /**
-     * @Serializer\Type("array<string>")
+     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\FieldTypeFacade>")
      */
     protected $fields = array();
 
     /**
-     * @param string $key
-     * @param string $value
+     * @param FacadeInterface $facade
      */
-    public function addField($key, $value)
+    public function addField(FacadeInterface $facade)
     {
-        $this->fields[$key] = $value;
+        $this->fields[] = $facade;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
     }
 }
