@@ -6,6 +6,7 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SiteController
@@ -43,5 +44,22 @@ class SiteController extends Controller
         $siteCollection = $this->get('php_orchestra_model.repository.site')->findAll();
 
         return $this->get('php_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
+    }
+
+    /**
+     * @param int $siteId
+     *
+     * @Config\Route("/{siteId}/delete", name="php_orchestra_api_site_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($siteId)
+    {
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => (int) $siteId));
+        $this->get('doctrine.odm.mongodb.document_manager')->remove($site);
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return new Response('', 200);
     }
 }

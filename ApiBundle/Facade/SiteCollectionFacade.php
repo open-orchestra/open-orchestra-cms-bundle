@@ -10,6 +10,11 @@ use JMS\Serializer\Annotation as Serializer;
 class SiteCollectionFacade extends AbstractFacade
 {
     /**
+     * @Serializer\Type("string")
+     */
+    public $collectionName = 'sites';
+
+    /**
      * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\SiteFacade>")
      */
     protected $sites = array();

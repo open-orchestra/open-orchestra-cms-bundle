@@ -10,6 +10,7 @@ php_orchestra_backoffice:
         editorial:
             nodes: Pages
             templates: Templates
+            contents: Contents
         administration:
             sites:
                 list: Websites
