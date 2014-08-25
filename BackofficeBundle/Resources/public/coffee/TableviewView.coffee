@@ -1,17 +1,41 @@
 TableviewView = Backbone.View.extend(
   tagName: 'tr'
+  events:
+    'click a.ajax-delete': 'clickDelete'
+    'click a.ajax-edit': 'clickEdit'
   initialize: (options) ->
     @element = options.element
     @displayedElements = options.displayedElements
     _.bindAll this, "render"
     @elementTemplate = _.template($('#tableviewView').html())
+    @actionsTemplate = _.template($('#tableviewActions').html())
     return
   render: ->
     for displayedElement in @displayedElements
       $(@el).append @elementTemplate(
         value: @element.get(displayedElement)
       )
+    $(@el).append @actionsTemplate(
+      links: @element.get('links')
+    )
     this
+  clickDelete: (event) ->
+    event.preventDefault()
+    if confirm('Delete this element ?')
+      $.ajax
+        url: @element.get('links')._self_delete
+        method: 'DELETE'
+        success: (response) ->
+          return
+      @$el.hide()
+  clickEdit: (event) ->
+    event.preventDefault()
+    $('.modal-title').text 'Edit'
+    $.ajax
+      url: @element.get('links')._self_form
+      method: 'GET'
+      success: (response) ->
+        view = new adminFormView(html: response)
 )
 
 TableviewCollectionView = Backbone.View.extend(
@@ -19,6 +43,7 @@ TableviewCollectionView = Backbone.View.extend(
   initialize: (options) ->
     @elements = options.elements
     @displayedElements = options.displayedElements
+    @title = options.title
     _.bindAll this, "render"
     @elementsTemplate = _.template($('#tableviewCollectionView').html())
     @render()
@@ -27,6 +52,7 @@ TableviewCollectionView = Backbone.View.extend(
     $(@el).html @elementsTemplate (
       displayedElements: @displayedElements
     )
+    $('.js-widget-title', @$el).text @title
     for element of @elements.get('sites')
       @addElementToView (@elements.get('sites')[element])
     $('#tableviewCollectionTable').dataTable(

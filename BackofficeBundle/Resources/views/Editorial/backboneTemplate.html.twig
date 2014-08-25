@@ -102,6 +102,7 @@
                     <% _.each(displayedElements, function(displayedElement) { %>
                         <td><%= displayedElement %></td>
                     <% }); %>
+                    <td>Actions</td>
                 </tr>
             </thead>
             <tbody>
@@ -113,4 +114,15 @@
 
 <script type="text/html" id="tableviewView">
     <td><%= value %></td>
+</script>
+
+<script type="text/html" id="tableviewActions">
+    <td>
+        <% if (typeof links._self_form !== 'undefined' ) { %>
+            <a href="#" class="ajax-edit" data-toggle="modal" data-target="#myModal">Edit</a>
+        <% } %>
+        <% if (typeof links._self_delete !== 'undefined' ) { %>
+            <a href="#" class="ajax-delete">Delete </a>
+        <% } %>
+    </td>
 </script>

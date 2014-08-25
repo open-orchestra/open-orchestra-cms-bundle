@@ -39,6 +39,16 @@ class SiteTransformer extends AbstractTransformer
             array('siteId' => $mixed->getSiteId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
+        $facade->addLink('_self_delete', $this->getRouter()->generate(
+            'php_orchestra_api_site_delete',
+            array('siteId' => $mixed->getSiteId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+        $facade->addLink('_self_form', $this->getRouter()->generate(
+            'php_orchestra_backoffice_site_form',
+            array('siteId' => $mixed->getSiteId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }
