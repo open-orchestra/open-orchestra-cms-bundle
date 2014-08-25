@@ -50,3 +50,10 @@ services:
         arguments: [%php_orchestra.blocks%]
         tags:
             - { name: form.type, alias: orchestra_block }
+    # Site Form Builder
+    php_orchestra_cms.type.site:
+        class: PHPOrchestra\BackofficeBundle\Form\Type\SiteType
+        arguments:
+            - %php_orchestra_model.document.site.class%
+        tags:
+            - { name: form.type, alias: site }

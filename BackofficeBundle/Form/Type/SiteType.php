@@ -1,12 +1,8 @@
 <?php
-/**
- * This file is part of the PHPOrchestra\CMSBundle.
- *
- * @author Nicolas ANNE <nicolas.anne@businessdecision.com>
- */
 
-namespace PHPOrchestra\CMSBundle\Form\Type;
+namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -15,30 +11,45 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Router;
 use PHPOrchestra\CMSBundle\Form\DataTransformer\SiteTypeTransformer;
 
+/**
+ * Class SiteType
+ */
 class SiteType extends AbstractType
 {
-        
+    protected $siteClass;
+
+    /**
+     * @param string $siteClass
+     */
+    public function __construct($siteClass)
+    {
+        $this->siteClass = $siteClass;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = (array_key_exists('subblocks', $options['data'])) ? $options['data']['subblocks'] : array();
-        
         $builder
-            ->add('siteId', 'hidden')
-            ->add('domain', 'text', array('label' => 'Domain'))
-            ->add('alias', 'text', array('label' => 'Alias'))
+            ->add('domain', 'text')
+            ->add('alias', 'text')
             ->add('defaultLanguage', 'orchestra_language', array('label' => 'Default Language'))
             ->add('languages', 'orchestra_language', array('label' => 'Languages', 'multiple' => true))
-            ->add('blocks', 'orchestra_block_choice', array('multiple' => true));
+            ->add('blocks', 'orchestra_block', array('multiple' => true));
+
+        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
-    
+
     /**
-     * @param array $options
+     * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             array(
-                'refresh' => array()
+                'data_class' => $this->siteClass,
             )
         );
     }
