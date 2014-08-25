@@ -23,11 +23,12 @@
                     {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeTemplates')) }}
                     <li>
                         <a
-                            href="{{ path('php_orchestra_cms_bo_contentType_ajaxmenu', {'language':context.currentLocale, 'siteId':''}) }}"
-                            target="_menu">
-                            {{ 'php_orchestra_cms.left_menu.editorial.contents'|trans({}, 'backOffice') }}
+                                href="#contents"
+                                class="ajax-tableview-load"
+                                data-url="{{ path('php_orchestra_api_content_list') }}"
+                                data-displayed-elements="content_id, content_type, name, status">
+                            {{ 'php_orchestra_backoffice.left_menu.editorial.contents'|trans }}
                         </a>
-                        <ul><li><a href="">{{ 'php_orchestra_cms.general.loading'|trans({}, 'backOffice') }}</a></li></ul>
                     </li>
                 </ul>
             </li>

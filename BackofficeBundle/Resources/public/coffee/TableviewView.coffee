@@ -53,8 +53,8 @@ TableviewCollectionView = Backbone.View.extend(
       displayedElements: @displayedElements
     )
     $('.js-widget-title', @$el).text @title
-    for element of @elements.get('sites')
-      @addElementToView (@elements.get('sites')[element])
+    for element of @elements.get(@elements.get('collection_name'))
+      @addElementToView (@elements.get(@elements.get('collection_name'))[element])
     $('#tableviewCollectionTable').dataTable(
       searching: false
       ordering: true
