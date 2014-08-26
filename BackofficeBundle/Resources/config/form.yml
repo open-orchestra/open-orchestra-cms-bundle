@@ -6,6 +6,7 @@ parameters:
     php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
     php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
     php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
+    php_orchestra_backoffice.type.content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
 
 services:
     # Template form type
@@ -69,3 +70,11 @@ services:
         class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
         tags:
             - { name: form.type, alias: orchestra_status }
+
+    # Content Form Builder
+    php_orchestra_backoffice.type.content:
+        class: %php_orchestra_backoffice.type.content.class%
+        arguments: [ @php_orchestra_model.repository.content_type ]
+        tags:
+            - {name: form.type, alias: content}
+
