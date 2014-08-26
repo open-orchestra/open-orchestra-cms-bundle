@@ -14,9 +14,6 @@ services:
         arguments: [@mandango]
 
     # Context service
-    php_orchestra_cms.context_manager:
-        class: "%php_orchestra_cms.manager.context.class%"
-        arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
 
 #--[FORM FIELDS]----------------#
 

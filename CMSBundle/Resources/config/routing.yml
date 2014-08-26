@@ -9,11 +9,3 @@ php_orchestra_cms_bo_edito:
 php_orchestra_cms_bo_jscontextmenudispatcher:
     pattern: /admin/js-menu-dispatcher/{cmd}
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/BackOffice:jsContextMenuDispatch, cmd: '' }
-
-php_orchestra_setLanguage:
-    pattern: /ajax/context/setLanguage/{language}
-    defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Context:SetLanguage, language:en }
-
-php_orchestra_setSite:
-    pattern: /ajax/context/setSite/{siteId}/{siteDomain}
-    defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/Context:SetSite}

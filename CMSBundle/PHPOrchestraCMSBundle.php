@@ -20,6 +20,6 @@ class PHPOrchestraCMSBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new TwigGlobalsCompilerPass());
+
     }
 }

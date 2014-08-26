@@ -1,3 +1,7 @@
 parameters:
+    php_orchestra_backoffice.manager.context.class: PHPOrchestra\Backoffice\Context\ContextManager
 
 services:
+    php_orchestra_backoffice.context_manager:
+        class: "%php_orchestra_backoffice.manager.context.class%"
+        arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
