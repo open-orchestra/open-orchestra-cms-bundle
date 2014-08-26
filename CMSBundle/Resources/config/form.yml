@@ -1,6 +1,5 @@
 parameters:
     php_orchestra_cms.type.content.class : PHPOrchestra\CMSBundle\Form\Type\ContentType
-    php_orchestra_cms.type.content_type.class : PHPOrchestra\CMSBundle\Form\Type\ContentTypeType
 
 services:
     # Content Form Builder
@@ -8,10 +7,3 @@ services:
         class: %php_orchestra_cms.type.content.class%
         arguments: [@php_orchestra_cms.context_manager]
         tags: [{name: form.type, alias: content}]
-
-    # ContentType Form Builder
-    php_orchestra_cms.type.content_type:
-        class: %php_orchestra_cms.type.content_type.class%
-        arguments: [@jms_serializer, "%php_orchestra_cms.custom_types%"]
-        tags: [{name: form.type, alias: content_type}]
-
