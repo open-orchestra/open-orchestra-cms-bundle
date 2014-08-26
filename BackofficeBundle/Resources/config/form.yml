@@ -67,7 +67,5 @@ services:
     # Status Type
     php_orchestra_cms.type.status:
         class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
-        arguments:
-            - @translator
         tags:
             - { name: form.type, alias: orchestra_status }

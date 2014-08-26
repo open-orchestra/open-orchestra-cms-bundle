@@ -2,9 +2,9 @@ php_orchestra_backoffice:
     form:
         submit: Sauvegarder
         status:
-            published: Published
-            draft: Draft
-            Pending: Pending
+            published: Publié
+            draft: Brouillon
+            Pending: En attente
     left_menu:
         tree:
             new_page: Nouvelle page

@@ -59,8 +59,7 @@ class ContentTypeController extends Controller
     {
         $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneBy(array('contentTypeId' => $contentTypeId));
         $contentType->setDeleted(true);
-        $odm = $this->get('doctrine.odm.mongodb.document_manager');
-        $odm->flush();
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
     }

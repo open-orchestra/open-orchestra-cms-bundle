@@ -16,10 +16,8 @@ class StatusType extends AbstractType
 
     /**
      * Constructor
-     *
-     * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct()
     {
         $this->choices[StatusableInterface::STATUS_PUBLISHED] = 'php_orchestra_backoffice.form.status.published';
         $this->choices[StatusableInterface::STATUS_DRAFT] = 'php_orchestra_backoffice.form.status.draft';
