@@ -16,7 +16,7 @@ class SiteController extends Controller
      * @param Request $request
      * @param int     $siteId
      *
-     * @Config\Route("/admin/site/form/{siteId}", name="php_orchestra_backoffice_site_form")
+     * @Config\Route("/site/form/{siteId}", name="php_orchestra_backoffice_site_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -42,7 +42,7 @@ class SiteController extends Controller
             $documentManager->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
             );
         }
 

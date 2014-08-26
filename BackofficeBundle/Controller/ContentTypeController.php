@@ -16,7 +16,7 @@ class ContentTypeController extends Controller
      * @param Request $request
      * @param string  $contentTypeId
      *
-     * @Config\Route("/admin/content-type/form/{contentTypeId}", name="php_orchestra_backoffice_content_type_form")
+     * @Config\Route("/content-type/form/{contentTypeId}", name="php_orchestra_backoffice_content_type_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -43,7 +43,7 @@ class ContentTypeController extends Controller
             $documentManager->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
             );
         }
 

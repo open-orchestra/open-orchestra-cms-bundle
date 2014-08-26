@@ -17,7 +17,7 @@ class NodeController extends Controller
      * @param Request $request
      * @param int     $nodeId
      *
-     * @Config\Route("/admin/node/form/{nodeId}", name="php_orchestra_backoffice_node_form")
+     * @Config\Route("/node/form/{nodeId}", name="php_orchestra_backoffice_node_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return RedirectResponse|Response
@@ -44,7 +44,7 @@ class NodeController extends Controller
             $em->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
                 . '#' . $nodeId
             );
         }
@@ -61,7 +61,7 @@ class NodeController extends Controller
      * @param Request $request
      * @param string  $parentId
      *
-     * @Config\Route("/admin/node/new/{parentId}", name="php_orchestra_backoffice_node_new")
+     * @Config\Route("/node/new/{parentId}", name="php_orchestra_backoffice_node_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return RedirectResponse|Response
@@ -89,7 +89,7 @@ class NodeController extends Controller
             $em->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
                 . '#' . $node->getNodeId()
             );
         }

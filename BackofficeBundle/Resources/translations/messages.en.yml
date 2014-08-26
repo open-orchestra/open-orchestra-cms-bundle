@@ -12,6 +12,7 @@ php_orchestra_backoffice:
             delete_node: Are you sure to delete the node %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
         editorial:
+            title: Editorial
             nodes: Pages
             templates: Templates
             contents: Contents

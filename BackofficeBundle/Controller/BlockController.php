@@ -18,7 +18,7 @@ class BlockController extends Controller
      * @param string  $nodeId
      * @param int     $blockNumber
      *
-     * @Config\Route("/admin/block/form/{nodeId}/{blockNumber}", name="php_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d"}, defaults={"blockNumber" = 0})
+     * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="php_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d"}, defaults={"blockNumber" = 0})
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -45,7 +45,7 @@ class BlockController extends Controller
             $documentManager->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
                 . '#' . $nodeId
             );
         }

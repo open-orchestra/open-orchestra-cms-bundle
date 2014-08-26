@@ -17,7 +17,7 @@ class TemplateController extends Controller
      * @param Request $request
      * @param int     $templateId
      *
-     * @Config\Route("/admin/template/form/{templateId}", name="php_orchestra_backoffice_template_form", defaults={"templateId" = 0})
+     * @Config\Route("/template/form/{templateId}", name="php_orchestra_backoffice_template_form", defaults={"templateId" = 0})
      * @Config\Method({"GET", "POST"})
      *
      * @return JsonResponse|Response
@@ -50,7 +50,7 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('php_orchestra_cms_bo'));
+            return $this->redirect($this->generateUrl('homepage'));
         }
 
         return $this->render(

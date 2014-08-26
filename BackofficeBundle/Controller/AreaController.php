@@ -18,7 +18,7 @@ class AreaController extends Controller
      * @param string  $nodeId
      * @param string  $areaId
      *
-     * @config\Route("/admin/area/form/{nodeId}/{areaId}", name="php_orchestra_backoffice_area_form")
+     * @config\Route("/area/form/{nodeId}/{areaId}", name="php_orchestra_backoffice_area_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -46,7 +46,7 @@ class AreaController extends Controller
             $documentManager->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
                 . '#' . $nodeId
             );
         }
@@ -64,7 +64,7 @@ class AreaController extends Controller
      * @param string  $templateId
      * @param string  $areaId
      *
-     * @config\Route("/admin/template/area/form/{templateId}/{areaId}", name="php_orchestra_backoffice_template_area_form")
+     * @config\Route("/template/area/form/{templateId}/{areaId}", name="php_orchestra_backoffice_template_area_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -90,7 +90,7 @@ class AreaController extends Controller
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->flush();
 
-            return $this->redirect($this->generateUrl('php_orchestra_cms_bo'));
+            return $this->redirect($this->generateUrl('homepage'));
         }
 
         return $this->render(
