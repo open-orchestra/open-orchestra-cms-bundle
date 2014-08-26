@@ -2,7 +2,6 @@ parameters:
     php_orchestra_cms.manager.document.class : 'PHPOrchestra\CMSBundle\Document\DocumentManager'
     php_orchestra_cms.manager.context.class : 'PHPOrchestra\CMSBundle\Context\ContextManager'
     php_orchestra_cms.type.multilingual_text.class : 'PHPOrchestra\CMSBundle\Form\Type\MultilingualTextType'
-    php_orchestra_cms.type.content_attributes.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentAttributesType'
     php_orchestra_cms.type.content_type_fields.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType'
     php_orchestra_cms.type.custom_field.class : 'PHPOrchestra\CMSBundle\Form\Type\CustomFieldType'
 
@@ -27,13 +26,7 @@ services:
         arguments: ["%php_orchestra_base.languages_availables%"]
         tags: [{name: form.type, alias: multilingualText}]
 
-    # Orchestra content type attributes
-    php_orchestra_cms.type.content_attributes:
-        class: "%php_orchestra_cms.type.content_attributes.class%"
-        arguments: [@php_orchestra_cms.document_manager]
-        tags: [{name: form.type, alias: contentAttributes}]
-
-    # Content type fields 
+    # Content type fields
     php_orchestra_cms.type.content_type_fields:
         class: "%php_orchestra_cms.type.content_type_fields.class%"
         tags: [{name: form.type, alias: content_type_fields}]
@@ -43,14 +36,6 @@ services:
         class: "%php_orchestra_cms.type.custom_field.class%"
         arguments: ["%php_orchestra_cms.custom_types%"]
         tags: [{name: form.type, alias: orchestra_customField}]
-
-    # Status form field type
-    php_orchestra_cms.type.status:
-        class: PHPOrchestra\CMSBundle\Form\Type\StatusType
-        arguments: 
-            - "%php_orchestra.orchestra_choice.status%"
-        tags:
-            - { name: form.type, alias: orchestra_status }
 
     # Language form field type
     php_orchestra_cms.type.language:

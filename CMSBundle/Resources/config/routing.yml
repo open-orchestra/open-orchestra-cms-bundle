@@ -6,10 +6,6 @@ php_orchestra_cms_bo_edito:
     pattern: /edito
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/BackOffice:edito }
 
-php_orchestra_cms_bo_contentType_ajaxmenu:
-    pattern: /ajax/contenttype/menu/{language}/{siteId}
-    defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/ContentType:ajaxMenu, language: 'fr', siteId: '' }
-
 php_orchestra_cms_bo_jscontextmenudispatcher:
     pattern: /admin/js-menu-dispatcher/{cmd}
     defaults: { _controller: PHPOrchestraCMSBundle:BackOfficeView/BackOffice:jsContextMenuDispatch, cmd: '' }
