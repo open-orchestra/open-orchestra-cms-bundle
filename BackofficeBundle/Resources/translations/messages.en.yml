@@ -1,6 +1,10 @@
 php_orchestra_backoffice:
     form:
         submit: Save
+        status:
+            published: Published
+            draft: Draft
+            pending: Pending
     left_menu:
         tree:
             new_page: New page

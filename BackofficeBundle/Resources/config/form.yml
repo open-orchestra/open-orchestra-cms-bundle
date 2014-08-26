@@ -57,3 +57,15 @@ services:
             - %php_orchestra_model.document.site.class%
         tags:
             - { name: form.type, alias: site }
+    # Content Type Form Builder
+    php_orchestra_cms.type.content_type:
+        class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
+        arguments:
+            - %php_orchestra_model.document.content_type.class%
+        tags:
+            - { name: form.type, alias: content_type }
+    # Status Type
+    php_orchestra_cms.type.status:
+        class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
+        tags:
+            - { name: form.type, alias: orchestra_status }
