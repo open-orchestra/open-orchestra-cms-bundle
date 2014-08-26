@@ -45,9 +45,9 @@
                     <li>
                         <a href="{{ path('phporchestra_cms_backofficeview_contenttype_index', {'action':'catalog'}) }}">{{ 'php_orchestra_cms.left_menu.administration.content_types'|trans({}, 'backOffice') }}</a>
                     </li>
-                    <li>
+                    {#<li>
                         <a href="#" class="ajax-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
-                    </li>
+                    </li>#}
                     <li>
                         <a href="#" id="clearRoutingCache">{{ 'php_orchestra_cms.left_menu.administration.routing_cache'|trans({}, 'backOffice') }}</a>
                         {% include 'PHPOrchestraBackofficeBundle:Tools:clearRoutingCacheDialog.html.twig' %}
