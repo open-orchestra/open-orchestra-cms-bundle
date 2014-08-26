@@ -39,6 +39,16 @@ class ContentTransformer extends AbstractTransformer
             array('contentId' => $mixed->getContentId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
+        $facade->addLink('_self_delete', $this->getRouter()->generate(
+            'php_orchestra_api_content_delete',
+            array('contentId' => $mixed->getContentId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+        $facade->addLink('_self_form', $this->getRouter()->generate(
+            'php_orchestra_backoffice_content_form',
+            array('contentId' => $mixed->getContentId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }

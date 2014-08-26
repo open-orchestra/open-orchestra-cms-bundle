@@ -1,9 +1,0 @@
-parameters:
-    php_orchestra_cms.type.content.class : PHPOrchestra\CMSBundle\Form\Type\ContentType
-
-services:
-    # Content Form Builder
-    php_orchestra_cms.type.content:
-        class: %php_orchestra_cms.type.content.class%
-        arguments: [@php_orchestra_cms.context_manager]
-        tags: [{name: form.type, alias: content}]
