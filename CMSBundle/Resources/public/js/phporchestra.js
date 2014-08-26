@@ -66,7 +66,7 @@ function orchestraAjaxLoad(url)
         if (response.success) {
             window.location.hash = response.data;
         } else {
-            $('#content').html(response.data);
+            $('#content').html(response);
         }
     });
 }
