@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\ContentAttributesTransformer;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,13 +15,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ContentType extends AbstractType
 {
     protected $contentTypeRepository;
+    protected $contentClass;
+    protected $contentAttributClass;
 
     /**
      * @param ContentTypeRepository $contentTypeRepository
+     * @param string                $contentClass
+     * @param string                $contentAttributClass
      */
-    public function __construct(ContentTypeRepository $contentTypeRepository)
+    public function __construct(ContentTypeRepository $contentTypeRepository, $contentClass, $contentAttributClass)
     {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->contentClass = $contentClass;
+        $this->contentAttributClass = $contentAttributClass;
     }
 
     /**
@@ -39,7 +44,7 @@ class ContentType extends AbstractType
                 'class' => 'PHPOrchestra\ModelBundle\Document\ContentType'
             ));
 
-        $builder->addEventSubscriber(new ContentTypeSubscriber($this->contentTypeRepository));
+        $builder->addEventSubscriber(new ContentTypeSubscriber($this->contentTypeRepository, $this->contentAttributClass));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
@@ -49,5 +54,15 @@ class ContentType extends AbstractType
     public function getName()
     {
         return 'content';
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => $this->contentClass,
+        ));
     }
 }

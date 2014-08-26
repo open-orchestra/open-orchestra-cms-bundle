@@ -14,13 +14,16 @@ use Symfony\Component\Form\FormEvents;
 class ContentTypeSubscriber implements EventSubscriberInterface
 {
     protected $contentTypeRepository;
+    protected $contentAttributClass;
 
     /**
      * @param ContentTypeRepository $contentTypeRepository
+     * @param string                $contentAttributClass
      */
-    public function __construct(ContentTypeRepository $contentTypeRepository)
+    public function __construct(ContentTypeRepository $contentTypeRepository, $contentAttributClass)
     {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->contentAttributClass = $contentAttributClass;
     }
 
     /**
@@ -54,12 +57,36 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param FormEvent $event
+     */
+    public function preSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $content = $form->getData();
+        $data = $event->getData();
+        $contentType = $this->contentTypeRepository->find($data['contentType']);
+
+        foreach ($contentType->getFields() as $field) {
+            if ($attribute = $content->getAttributeByName($field->getFieldId())) {
+                $attribute->setValue($data[$field->getFieldId()]);
+            } else {
+                $contentAttributClass = $this->contentAttributClass;
+                $attribute = new $contentAttributClass;
+                $attribute->setName($field->getFieldId());
+                $attribute->setValue($data[$field->getFieldId()]);
+                $content->addAttribute($attribute);
+            }
+        }
+    }
+
+    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SET_DATA => 'preSetData'
+            FormEvents::PRE_SET_DATA => 'preSetData',
+            FormEvents::PRE_SUBMIT => 'preSubmit'
         );
     }
 }

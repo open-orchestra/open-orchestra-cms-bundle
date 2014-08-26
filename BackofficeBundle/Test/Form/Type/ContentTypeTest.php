@@ -16,13 +16,17 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $contentClass = 'content';
+    protected $contentAttributeClass = 'attribute';
+    protected $contentTypeRepository;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new ContentType($this->contentClass);
+        $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentTypeRepository');
+
+        $this->form = new ContentType($this->contentTypeRepository, $this->contentClass, $this->contentAttributeClass);
     }
 
     /**
@@ -52,7 +56,22 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
-        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
+
+    /**
+     * Test the default options
+     */
+    public function testSetDefaultOptions()
+    {
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+
+        $this->form->setDefaultOptions($resolverMock);
+
+        Phake::verify($resolverMock)->setDefaults(array(
+            'data_class' => $this->contentClass,
+        ));
+    }
+
 }
