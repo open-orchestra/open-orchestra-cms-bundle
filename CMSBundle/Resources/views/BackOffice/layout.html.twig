@@ -15,11 +15,11 @@
 
         {% block stylesheets %}
             {% if app.debug %}
-                {% stylesheets 'built/all.css' %}
+                {% stylesheets 'built/all.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% else %}
-                {% stylesheets 'built/all.min.css' %}
+                {% stylesheets 'built/all.min.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% endif %}
