@@ -102,43 +102,6 @@ class AreaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface|AreaFacade $facade
-     * @param Area|null                  $source
-     * @param Node|null                  $node
-     *
-     * @return mixed|void
-     */
-    public function reverseTransform(FacadeInterface $facade, $source = null, $node = null)
-    {
-        if (null === $source) {
-            $source = new Area();
-        }
-
-        if (isset($facade->areaId)) {
-            $source->setAreaId($facade->areaId);
-        }
-
-        if (isset($facade->classes) && '' != $facade->classes) {
-            $source->setClasses(explode(',', $facade->classes));
-        }
-
-        foreach ($facade->getAreas() as $area) {
-            $source->addArea($this->getTransformer('area')->reverseTransform($area, null, $node));
-        }
-
-        foreach ($facade->getBlocks() as $block) {
-            $blockArray = $this->getTransformer('block')->reverseTransform($block, $node);
-            if (array_key_exists('block', $blockArray)) {
-                $node->setBlock($blockArray['blockId'], $blockArray['block']);
-                unset($blockArray['block']);
-            }
-            $source->addBlock($blockArray);
-        }
-
-        return $source;
-    }
-
-    /**
      * @return string
      */
     public function getName()

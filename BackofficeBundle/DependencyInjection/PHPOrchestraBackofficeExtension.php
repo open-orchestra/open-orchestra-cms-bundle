@@ -22,6 +22,20 @@ class PHPOrchestraBackofficeExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        if (!empty($config['front_languages'])) {
+            $container->setParameter('php_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
+        } else {
+            $container->setParameter('php_orchestra_backoffice.orchestra_choice.front_language', array(
+                'en' => 'English',
+                'fr' => 'French'
+            ));
+        }
+
+        $container->setParameter('php_orchestra_backoffice.orchestra_choice.direction', array(
+            'h' => 'Horizontal',
+            'v' => 'Vertical',
+        ));
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('form.yml');

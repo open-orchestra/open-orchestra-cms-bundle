@@ -1,14 +1,5 @@
 parameters:
 
-#--[CHOICES PARAMETERS]---------#
-
-    php_orchestra.orchestra_choice.language:
-        fr: Français
-        en: English
-    php_orchestra.orchestra_choice.direction:
-        h: Horizontal
-        v: Vertical
-
 #--[CUSTOM FIELDS]--------------#
     
     php_orchestra_cms.custom_types:
