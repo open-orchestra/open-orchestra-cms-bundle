@@ -20,9 +20,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('php_orchestra_backoffice');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode->children()
+            ->arrayNode('front_languages')
+                ->info('Add the language available for the front with the key')
+                ->useAttributeAsKey('key')
+                ->prototype('scalar')
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

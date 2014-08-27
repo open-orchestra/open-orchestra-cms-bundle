@@ -87,7 +87,7 @@ services:
     php_orchestra_backoffice.type.language:
         class: %php_orchestra_backoffice.type.orchestra_choice.class%
         arguments:
-            - "%php_orchestra.orchestra_choice.language%"
+            - %php_orchestra_backoffice.orchestra_choice.front_language%
         tags:
             - { name: form.type, alias: orchestra_language }
 
