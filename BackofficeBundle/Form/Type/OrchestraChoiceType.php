@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\Form\Type;
+namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Class OrchestraChoiceType
  */
-abstract class OrchestraChoiceType extends AbstractType
+class OrchestraChoiceType extends AbstractType
 {
     protected $choices;
 

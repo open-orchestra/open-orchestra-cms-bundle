@@ -24,19 +24,3 @@ services:
         class: "%php_orchestra_cms.type.custom_field.class%"
         arguments: ["%php_orchestra_cms.custom_types%"]
         tags: [{name: form.type, alias: orchestra_customField}]
-
-    # Language form field type
-    php_orchestra_cms.type.language:
-        class: PHPOrchestra\CMSBundle\Form\Type\LanguageType
-        arguments: 
-            - "%php_orchestra.orchestra_choice.language%"
-        tags:
-            - { name: form.type, alias: orchestra_language }
-
-    # Direction form field type
-    php_orchestra_cms.type.direction:
-        class: PHPOrchestra\CMSBundle\Form\Type\DirectionType
-        arguments: 
-            - "%php_orchestra.orchestra_choice.direction%"
-        tags:
-            - { name: form.type, alias: orchestra_direction }
