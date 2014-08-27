@@ -31,6 +31,12 @@ class SiteCollectionTransformer extends AbstractTransformer
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
 
+        $facade->addLink('_self_add', $this->getRouter()->generate(
+            'php_orchestra_backoffice_site_new',
+            array(),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+
         return $facade;
     }
 

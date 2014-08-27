@@ -12,7 +12,7 @@ class AbstractFacade implements FacadeInterface
     /**
      * @Serializer\XmlMap(inline=false, entry="link", keyAttribute="location")
      */
-    protected $links;
+    protected $links = array();
 
     /**
      * @param array $links

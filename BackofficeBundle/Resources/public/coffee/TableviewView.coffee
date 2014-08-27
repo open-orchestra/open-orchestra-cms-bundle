@@ -40,6 +40,8 @@ TableviewView = Backbone.View.extend(
 
 TableviewCollectionView = Backbone.View.extend(
   el: '#content'
+  events:
+    'click a.ajax-add': 'clickAdd'
   initialize: (options) ->
     @elements = options.elements
     @displayedElements = options.displayedElements
@@ -51,6 +53,7 @@ TableviewCollectionView = Backbone.View.extend(
   render: ->
     $(@el).html @elementsTemplate (
       displayedElements: @displayedElements
+      links: @elements.get('links')
     )
     $('.js-widget-title', @$el).text @title
     for element of @elements.get(@elements.get('collection_name'))
@@ -70,4 +73,12 @@ TableviewCollectionView = Backbone.View.extend(
     )
     this.$el.find('tbody').append view.render().el
     return
+  clickAdd: (event) ->
+    event.preventDefault()
+    $('.modal-title').text 'Add'
+    $.ajax
+      url: @elements.get('links')._self_add
+      method: 'GET'
+      success: (response) ->
+        view = new adminFormView(html: response)
 )
