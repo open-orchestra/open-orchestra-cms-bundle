@@ -1,33 +1,17 @@
 <?php
 
-/*
- * Business & Decision - Commercial License
- *
- * Copyright 2014 Business & Decision.
- *
- * All rights reserved. You CANNOT use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell this Software or any parts of this
- * Software, without the written authorization of Business & Decision.
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * See LICENSE.txt file for the full LICENSE text.
- */
+namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
-namespace PHPOrchestra\CMSBundle\Test\Form\Type;
-
-use PHPOrchestra\CMSBundle\Form\Type\LanguageType;
+use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType;
 use PHPOrchestra\CMSBundle\Test\Mock;
 use Phake;
 
 /**
  * Description of OrchestraChoiceTypeTest
- *
- * @author Nicolas BOUQUET <nicolas.bouquet@businessdecision.com>
  */
 class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
+    protected $name;
     protected $choices;
     protected $orchestraChoiceType;
 
@@ -36,13 +20,15 @@ class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->name = 'name';
+
         $this->choices = array(
             'key1' => 'value1',
             'key2' => 'value2',
             'key3' => 'value3',
         );
         
-        $this->orchestraChoiceType = new LanguageType($this->choices);
+        $this->orchestraChoiceType = new OrchestraChoiceType($this->choices, $this->name);
     }
 
     /**
@@ -58,14 +44,20 @@ class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
             array('choices' => $this->choices)
         );
     }
-    
+
+    /**
+     * Test parent
+     */
     public function testGetParent()
     {
         $this->assertEquals('choice', $this->orchestraChoiceType->getParent());
     }
 
+    /**
+     * test Name
+     */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_language', $this->orchestraChoiceType->getName());
+        $this->assertEquals($this->name, $this->orchestraChoiceType->getName());
     }
 }

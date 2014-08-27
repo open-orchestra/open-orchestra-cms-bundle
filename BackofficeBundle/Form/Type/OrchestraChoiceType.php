@@ -12,13 +12,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class OrchestraChoiceType extends AbstractType
 {
     protected $choices;
+    protected $name;
 
     /**
-     * @param array $choices
+     * @param array  $choices
+     * @param string $name
      */
-    public function __construct(array $choices)
+    public function __construct(array $choices, $name)
     {
         $this->choices = $choices;
+        $this->name = $name;
     }
 
     /**
@@ -46,6 +49,6 @@ class OrchestraChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_choice';
+        return $this->name;
     }
 }

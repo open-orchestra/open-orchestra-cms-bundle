@@ -77,35 +77,6 @@ class BlockTransformer extends AbstractTransformer
     }
 
     /**
-     * @param BlockFacade|FacadeInterface $facade
-     * @param NodeInterface|null          $node
-     *
-     * @return array
-     */
-    public function reverseTransform(FacadeInterface $facade, $node = null)
-    {
-        $nodeId = (isset($facade->nodeId))? $facade->nodeId: 0;
-        $blockId = (isset($facade->blockId))?$facade->blockId: $node->getBlocks()->count();
-
-        $blockArray = array(
-            'nodeId' => $nodeId,
-            'blockId' => $blockId
-        );
-
-        if (BlockFacade::GENERATE == $facade->method && null !== $node) {
-            if (null === ($block = $node->getBlocks()->get($blockId))) {
-                $block = new Block();
-            }
-            $block->setComponent($facade->component);
-            $block->setAttributes($facade->getAttributes());
-
-            $blockArray['block'] = $block;
-        }
-
-        return $blockArray;
-    }
-
-    /**
      * @return string
      */
     public function getName()
