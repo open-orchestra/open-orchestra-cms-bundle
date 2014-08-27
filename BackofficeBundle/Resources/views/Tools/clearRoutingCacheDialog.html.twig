@@ -16,5 +16,8 @@
     'dialogMessage' : 'php_orchestra_backoffice.left_menu.administration.routing_cache.dialog.message'|trans
    }
 %}
-
-{% include 'PHPOrchestraCMSBundle:BackOffice/Dialogs:confirmation.html.twig' with vars %}
+<div id="{{ vars.dialogId }}" title="{{ vars.dialogTitle }}">
+    <p>
+        {{ vars.dialogMessage | raw }}
+    </p>
+</div>

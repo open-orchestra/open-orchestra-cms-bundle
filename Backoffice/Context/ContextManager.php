@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\Context;
+namespace PHPOrchestra\Backoffice\Context;
 
 use PHPOrchestra\ModelBundle\Model\SiteInterface;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
@@ -36,6 +36,8 @@ class ContextManager
 
     /**
      * Get current locale value
+     *
+     * @return string
      */
     public function getCurrentLocale()
     {
@@ -54,6 +56,8 @@ class ContextManager
 
     /**
      * Get availables sites on platform
+     *
+     * @return array
      */
     public function getAvailableSites()
     {

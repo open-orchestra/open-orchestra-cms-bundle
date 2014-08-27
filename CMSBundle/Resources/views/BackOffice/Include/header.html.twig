@@ -61,7 +61,7 @@
         <ul class="dropdown-menu">
             {% for site in availableSites %}
             <li{% if context.getCurrentSite().siteId == site.siteId %} class="active"{% endif %}>
-                <a href="javascript:callAndReload('{{ path('php_orchestra_setSite', {'siteId':site.siteId, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
+                <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_site', {'siteId':site.siteId, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
             </li>
             {% endfor %}
         </ul>
@@ -120,7 +120,7 @@
                 <ul class="dropdown-menu pull-right">
                     {% for language in available_languages %}
                     <li{% if context.currentLocale == language %} class="active"{% endif %}>
-                        <a href="javascript:callAndReload('{{ path('php_orchestra_setLanguage', {'language':language}) }}');">
+                        <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_language', {'language':language}) }}');">
                             <img alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}" src="{{ asset('bundles/phporchestracms/img/flags/' ~ language ~ '.png') }}"> {{ ('php_orchestra_cms.language.' ~ language)|trans({}, 'languages') }}</a>
                     </li>
                     {% endfor %}

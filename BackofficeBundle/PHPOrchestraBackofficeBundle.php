@@ -3,6 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle;
 
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
+use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -19,5 +20,6 @@ class PHPOrchestraBackofficeBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new GenerateFormCompilerPass());
+        $container->addCompilerPass(new TwigGlobalsCompilerPass());
     }
 }

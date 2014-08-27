@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\DependencyInjection\Compiler;
+namespace PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,7 +22,7 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
     {
         if ($container->hasDefinition('twig')) {
             $twig = $container->getDefinition('twig');
-            $twig->addMethodCall('addGlobal', array('context', new Reference('php_orchestra_cms.context_manager')));
+            $twig->addMethodCall('addGlobal', array('context', new Reference('php_orchestra_backoffice.context_manager')));
 
             $formResources = $container->getParameter('twig.form.resources');
             $formResources[] = 'PHPOrchestraCMSBundle:Form:contentTypeFields.html.twig';

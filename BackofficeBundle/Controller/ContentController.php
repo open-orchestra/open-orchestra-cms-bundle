@@ -16,7 +16,7 @@ class ContentController extends Controller
      * @param Request $request
      * @param int     $contentId
      *
-     * @Config\Route("/admin/content/form/{contentId}", name="php_orchestra_backoffice_content_form")
+     * @Config\Route("/content/form/{contentId}", name="php_orchestra_backoffice_content_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -42,7 +42,7 @@ class ContentController extends Controller
             $documentManager->flush();
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_cms_bo')
+                $this->generateUrl('homepage')
             );
         }
 

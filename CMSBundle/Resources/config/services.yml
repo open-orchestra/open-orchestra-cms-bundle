@@ -1,22 +1,10 @@
 parameters:
-    php_orchestra_cms.manager.document.class : 'PHPOrchestra\CMSBundle\Document\DocumentManager'
     php_orchestra_cms.manager.context.class : 'PHPOrchestra\CMSBundle\Context\ContextManager'
     php_orchestra_cms.type.multilingual_text.class : 'PHPOrchestra\CMSBundle\Form\Type\MultilingualTextType'
     php_orchestra_cms.type.content_type_fields.class : 'PHPOrchestra\CMSBundle\Form\Type\ContentTypeFieldsType'
     php_orchestra_cms.type.custom_field.class : 'PHPOrchestra\CMSBundle\Form\Type\CustomFieldType'
 
 services:
-
-#--[STANDARD SERVICES]----------#
-    # DocumentManager service
-    php_orchestra_cms.document_manager:
-        class: "%php_orchestra_cms.manager.document.class%"
-        arguments: [@mandango]
-
-    # Context service
-    php_orchestra_cms.context_manager:
-        class: "%php_orchestra_cms.manager.context.class%"
-        arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
 
 #--[FORM FIELDS]----------------#
 

@@ -2,10 +2,8 @@
 
 namespace PHPOrchestra\CMSBundle\Test\Context;
 
-use PHPOrchestra\CMSBundle\Context\ContextManager;
-use PHPOrchestra\CMSBundle\Test\Mock\Site;
 use Phake;
-use Symfony\Component\HttpFoundation\Session\Session;
+use PHPOrchestra\Backoffice\Context\ContextManager;
 
 /**
  * Unit tests of contextManager
@@ -97,6 +95,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Locale provider
+     *
+     * @return array
      */
     public function getLocale()
     {
@@ -110,6 +110,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Site provider
+     *
+     * @return array
      */
     public function getSite()
     {
@@ -120,6 +122,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Available sites provider
+     *
+     * @return array
      */
     public function getAvailableSites()
     {

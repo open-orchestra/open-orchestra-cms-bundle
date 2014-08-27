@@ -1,9 +1,5 @@
 {% import "PHPOrchestraBackofficeBundle:Tree:tree-macros.html.twig" as macros %}
-<li
-        data-url="{{ path('php_orchestra_cms_bo_jscontextmenudispatcher', {'cmd' : 'refresh'}) }}"
-        data-controller="{{ app.request.attributes.get("_controller") }}"
-        data-element-id="page"
-        >
+<li data-element-id="page">
     <a href="#" class="ajax-remove-hash">
         <span class="menu-item-parent">
             {{ name }}
@@ -14,10 +10,3 @@
         {% endblock %}
     </ul>
 </li>
-
-    {#TODO put this file in a proper coffe file #}
-{#{% if moveUrl is defined and moveUrl != '' %}#}
-    {#$(".{{ id }}-connectedSortable").sortable(treeParameter('{{ id }}', ' {{ moveUrl }}', $('#{{ id }}')));#}
-    {#$('.{{ id }}-connectedSortable').bind('sortstart', function(event, ui) { treePlaceHolder('{{ id }}', ui)}); #}
-{#{% endif %}#}
-{#$('.{{ id }}-connectedSortable i').click(function(e){$(this).treeRedirect($('#{{ id }}'))});#}
