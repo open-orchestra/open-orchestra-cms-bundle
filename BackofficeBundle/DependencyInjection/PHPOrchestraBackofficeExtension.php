@@ -31,6 +31,11 @@ class PHPOrchestraBackofficeExtension extends Extension
             ));
         }
 
+        $container->setParameter('php_orchestra_backoffice.orchestra_choice.direction', array(
+            'h' => 'Horizontal',
+            'v' => 'Vertical',
+        ));
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('form.yml');
