@@ -14,5 +14,8 @@ before_script:
   - phpenv config-add .travis.php.ini
   - composer install
 
-script: ./bin/phpunit ApiBundle BackofficeBundle CMSBundle
+script: 
+  - ./bin/phpunit ApiBundle
+  - ./bin/phpunit BackofficeBundle
+  - ./bin/phpunit CMSBundle
 
