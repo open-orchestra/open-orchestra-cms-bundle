@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
@@ -33,6 +34,16 @@ class ContentTypeType extends AbstractType
             ->add('name', 'text')
             ->add('version', 'text')
             ->add('status', 'orchestra_status');
+        $builder->add('fields', 'collection', array(
+            'type' => new FieldTypeType(),
+            'allow_add' => false,
+            'allow_delete' => true,
+            'label' => 'existing fields',
+            'attr' => array(
+                'data-prototype-label-add' => 'Ajout',
+                'data-prototype-label-remove' => 'Suppression',
+            )
+        ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

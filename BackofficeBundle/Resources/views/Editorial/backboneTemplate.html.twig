@@ -108,6 +108,11 @@
             <tbody>
             </tbody>
         </table>
+        <% if (typeof links._self_add !== 'undefined' ) { %>
+            <div>
+                <a href="#" class="ajax-add"  data-toggle="modal" data-target="#myModal">Add</a>
+            </div>
+        <% } %>
     </div>
     <% include footerInclude %>
 </script>

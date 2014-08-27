@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelBundle\Document\Site;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +37,43 @@ class SiteController extends Controller
         );
 
         $form->handleRequest($request);
+        if ($form->isValid()) {
+            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+            $documentManager->persist($site);
+            $documentManager->flush();
+
+            return $this->redirect(
+                $this->generateUrl('homepage')
+            );
+        }
+
+        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/site/new", name="php_orchestra_backoffice_site_new")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function newAction(Request $request)
+    {
+        $siteClass = $this->container->getParameter('php_orchestra_model.document.site.class');
+        $site = new $siteClass();
+        $form = $this->createForm(
+            'site',
+            $site,
+            array(
+                'action' => $this->generateUrl('php_orchestra_backoffice_site_new'),
+            )
+        );
+
+        $form->handleRequest($request);
+
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($site);
