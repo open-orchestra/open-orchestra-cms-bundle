@@ -44,7 +44,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
                 } else {
                     $defaultValue = $field->getDefaultValue();
                 }
-                $form->add($field->getFieldId(), $field->getSymfonyType(), array_merge(
+                $form->add($field->getFieldId(), $field->getType(), array_merge(
                     array(
                         'data' => $defaultValue,
                         'label' => $field->getLabel(),
