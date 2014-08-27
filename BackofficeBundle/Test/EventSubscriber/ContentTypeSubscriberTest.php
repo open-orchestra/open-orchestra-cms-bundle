@@ -89,7 +89,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $fieldId = 'title';
         $label = 'Title';
         $defaultValue = '';
-        $symfonyType = 'text';
+        $type = 'text';
         $options = array(
             'max_length' => 25,
             'required' => true
@@ -98,13 +98,13 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
-        Phake::when($this->fieldType1)->getSymfonyType()->thenReturn($symfonyType);
+        Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getOptions()->thenReturn($options);
 
         $this->subscriber->preSetData($this->event);
 
         Phake::verify($this->repository)->findOneByContentTypeId($this->contentTypeId);
-        Phake::verify($this->form, Phake::times(2))->add($fieldId, $symfonyType, array_merge(
+        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
             array(
                 'data' => $defaultValue,
                 'label' => $label,
@@ -140,7 +140,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $fieldId = 'title';
         $label = 'Title';
         $defaultValue = '';
-        $symfonyType = 'text';
+        $type = 'text';
         $options = array(
             'max_length' => 25,
             'required' => true
@@ -148,7 +148,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
-        Phake::when($this->fieldType1)->getSymfonyType()->thenReturn($symfonyType);
+        Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getOptions()->thenReturn($options);
 
         $realValue = 'realValue';
@@ -159,7 +159,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->repository)->findOneByContentTypeId($this->contentTypeId);
         Phake::when($this->content)->getAttributeByName($fieldId);
-        Phake::verify($this->form, Phake::times(2))->add($fieldId, $symfonyType, array_merge(
+        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
             array(
                 'data' => $realValue,
                 'label' => $label,
@@ -194,7 +194,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $fieldId = 'title';
         $label = 'Title';
         $defaultValue = '';
-        $symfonyType = 'text';
+        $type = 'text';
         $options = array(
             'max_length' => 25,
             'required' => true
@@ -202,7 +202,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
-        Phake::when($this->fieldType1)->getSymfonyType()->thenReturn($symfonyType);
+        Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getOptions()->thenReturn($options);
 
         Phake::when($this->content)->getAttributeByName(Phake::anyParameters())->thenReturn($this->contentAttribute);
