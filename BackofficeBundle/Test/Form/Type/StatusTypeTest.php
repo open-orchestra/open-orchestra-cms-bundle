@@ -56,4 +56,4 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
             'choices' => $choices,
         ));
     }
-} 
+}
