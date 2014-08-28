@@ -15,11 +15,11 @@
 
         {% block stylesheets %}
             {% if app.debug %}
-                {% stylesheets 'built/all.css' %}
+                {% stylesheets 'built/all.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% else %}
-                {% stylesheets 'built/all.min.css' %}
+                {% stylesheets 'built/all.min.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% endif %}
@@ -27,7 +27,7 @@
 
     </head>
     <body class="fixed-header fixed-navigation fixed-ribbon desktop-detected">
-
+        
         <!-- HEADER -->
         {% include 'PHPOrchestraCMSBundle:BackOffice/Include:header.html.twig' %}
         <!-- END HEADER -->
@@ -44,37 +44,32 @@
             <!-- END RIBBON -->
             
             <!-- MAIN CONTENT -->
-            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display: none">
-                Launch demo modal
-            </button>
-            <div id="content" class="full-width">
-
-            </div>
+            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display: none"></button>
+            <div id="content"></div>
             <!-- END MAIN CONTENT -->
-
+            
             {% include 'PHPOrchestraBackofficeBundle:Editorial:backboneTemplate.html.twig' %}
-
+            
         </div>
-
+        
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <h4 class="modal-title" id="myModalLabel"></h4>
                     </div>
-                    <div class="modal-body">
-                    </div>
+                    <div class="modal-body"></div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        </div>
+        
         <!--================================================== -->
 
+<<<<<<< HEAD
         {% block javascripts %}
             {% if app.debug %}
                 {% javascripts 'built/all.js' %}
@@ -87,6 +82,21 @@
             {% endif %}
         {% endblock %}
 
+=======
+{% block javascripts %}
+    {% if app.debug %}
+        {% javascripts 'built/all.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% else %}
+        {% javascripts 'built/all.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+{% endblock %}
+
+        {#% include 'PHPOrchestraCMSBundle:BackOffice/Include:bottomFiles.html.twig' %#}
+        
+>>>>>>> Remove useless stuff
     </body>
-    
 </html>
