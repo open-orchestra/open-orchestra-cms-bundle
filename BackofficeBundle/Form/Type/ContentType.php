@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\ContentAttributesTransformer;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
