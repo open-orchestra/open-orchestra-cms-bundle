@@ -69,7 +69,6 @@
         
         <!--================================================== -->
 
-<<<<<<< HEAD
         {% block javascripts %}
             {% if app.debug %}
                 {% javascripts 'built/all.js' %}
@@ -82,21 +81,5 @@
             {% endif %}
         {% endblock %}
 
-=======
-{% block javascripts %}
-    {% if app.debug %}
-        {% javascripts 'built/all.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% else %}
-        {% javascripts 'built/all.min.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endif %}
-{% endblock %}
-
-        {#% include 'PHPOrchestraCMSBundle:BackOffice/Include:bottomFiles.html.twig' %#}
-        
->>>>>>> Remove useless stuff
     </body>
 </html>
