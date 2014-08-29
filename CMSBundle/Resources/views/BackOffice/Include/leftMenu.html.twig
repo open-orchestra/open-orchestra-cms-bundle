@@ -21,15 +21,7 @@
                 <ul style="display:block;">
                     {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeNodes')) }}
                     {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeTemplates')) }}
-                    <li>
-                        <a
-                                href="#contents"
-                                class="ajax-tableview-load"
-                                data-url="{{ path('php_orchestra_api_content_list') }}"
-                                data-displayed-elements="content_id, content_type, name, status">
-                            {{ 'php_orchestra_backoffice.left_menu.editorial.contents'|trans }}
-                        </a>
-                    </li>
+                    {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent')) }}
                 </ul>
             </li>
             <li>
