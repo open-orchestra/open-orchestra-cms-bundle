@@ -16,6 +16,6 @@ before_script:
 
 script: 
   - ./bin/phpunit ApiBundle
-  - ./bin/phpunit BackofficeBundle
+  - ./bin/phpunit BackofficeBundle/Test
   - ./bin/phpunit CMSBundle
 
