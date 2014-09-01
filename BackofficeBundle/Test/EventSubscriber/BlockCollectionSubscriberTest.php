@@ -113,6 +113,7 @@ class BlockCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             'mapped' => false,
             'attr' => array(
                 'data-prototype-label-add' => 'Ajout',
+                'data-prototype-label-new' => 'Nouveau',
                 'data-prototype-label-remove' => 'Suppression',
             )
         ));
@@ -122,6 +123,7 @@ class BlockCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             'mapped' => false,
             'attr' => array(
                 'data-prototype-label-add' => 'Ajout',
+                'data-prototype-label-new' => 'Nouveau',
                 'data-prototype-label-remove' => 'Suppression',
             )
         ));

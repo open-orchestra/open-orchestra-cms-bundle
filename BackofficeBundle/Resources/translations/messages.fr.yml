@@ -5,6 +5,16 @@ php_orchestra_backoffice:
             published: Publié
             draft: Brouillon
             Pending: En attente
+        field_option:
+            label: Option existante
+            new: Nouvelle option
+            add: Ajouter une option
+            delete: Supprimer l'option
+        field_type:
+            label: Champ existant
+            add: Ajout d'un champ
+            new: Nouveau champ
+            delete: Suppression d'un champ
     left_menu:
         tree:
             new_page: Nouvelle page

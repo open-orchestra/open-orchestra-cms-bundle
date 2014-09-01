@@ -7,8 +7,12 @@ parameters:
     php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
     php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
     php_orchestra_backoffice.type.content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
+    php_orchestra_backoffice.type.content_type.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
     php_orchestra_backoffice.document.content_attribute.class : PHPOrchestra\ModelBundle\Document\ContentAttribute
     php_orchestra_backoffice.type.orchestra_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
+    php_orchestra_backoffice.type.status.class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
+    php_orchestra_backoffice.type.field_type.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType
+    php_orchestra_backoffice.type.field_option.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldOptionType
 
 services:
     # Template form type
@@ -61,15 +65,29 @@ services:
         tags:
             - { name: form.type, alias: site }
     # Content Type Form Builder
-    php_orchestra_cms.type.content_type:
-        class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
+    php_orchestra_backoffice.type.content_type:
+        class: %php_orchestra_backoffice.type.content_type.class%
         arguments:
             - %php_orchestra_model.document.content_type.class%
+            - @translator
         tags:
             - { name: form.type, alias: content_type }
+    php_orchestra_backoffice.type.field_type:
+        class: %php_orchestra_backoffice.type.field_type.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: field_type }
+    php_orchestra_backoffice.type.field_option:
+        class: %php_orchestra_backoffice.type.field_option.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: field_option }
+
     # Status Type
-    php_orchestra_cms.type.status:
-        class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
+    php_orchestra_backoffice.type.status:
+        class: %php_orchestra_backoffice.type.status.class%
         tags:
             - { name: form.type, alias: orchestra_status }
 

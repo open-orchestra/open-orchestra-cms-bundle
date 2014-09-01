@@ -23,23 +23,6 @@ class PHPOrchestraCMSExtension extends Extension
          $configuration = new Configuration();
          $config = $this->processConfiguration($configuration, $configs);
 
-        $blockType = array(
-            DisplayBlockInterface::CARROUSEL,
-            DisplayBlockInterface::CONTACT,
-            DisplayBlockInterface::FOOTER,
-            DisplayBlockInterface::HEADER,
-            DisplayBlockInterface::MENU,
-            DisplayBlockInterface::NEWS,
-            DisplayBlockInterface::SAMPLE,
-            DisplayBlockInterface::SEARCH,
-            DisplayBlockInterface::SEARCH_RESULT,
-            DisplayBlockInterface::TINYMCEWYSIWYG,
-        );
-        if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
-            $blockType = $config['blocks'];
-        }
-        $container->setParameter('php_orchestra.blocks', $blockType);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('config.yml');
         $loader->load('services.yml');

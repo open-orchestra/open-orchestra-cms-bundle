@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class ContentTypeType
@@ -14,13 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ContentTypeType extends AbstractType
 {
     protected $contentTypeClass;
+    protected $translator;
 
     /**
-     * @param string $contentTypeClass
+     * @param string              $contentTypeClass
+     * @param TranslatorInterface $translator
      */
-    public function __construct($contentTypeClass)
+    public function __construct($contentTypeClass, TranslatorInterface $translator)
     {
         $this->contentTypeClass = $contentTypeClass;
+        $this->translator = $translator;
     }
 
     /**
@@ -35,13 +39,14 @@ class ContentTypeType extends AbstractType
             ->add('version', 'text')
             ->add('status', 'orchestra_status');
         $builder->add('fields', 'collection', array(
-            'type' => new FieldTypeType(),
-            'allow_add' => false,
+            'type' => 'field_type',
+            'allow_add' => true,
             'allow_delete' => true,
-            'label' => 'existing fields',
+            'label' => 'New fields',
             'attr' => array(
-                'data-prototype-label-add' => 'Ajout',
-                'data-prototype-label-remove' => 'Suppression',
+                'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_type.add'),
+                'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_type.new'),
+                'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_type.delete'),
             )
         ));
 

@@ -15,6 +15,7 @@ PO.formPrototype = (collectionHolder) ->
   @limit = @collectionHolder.data("limit")
   @addButton = $(PO.formPrototypes.addButton.replace(/__label__/g, @collectionHolder.data("prototype-label-add")))
   @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
+  @newElementLabel = @collectionHolder.data("prototype-label-new")
   @addButtonContainer = $(PO.formPrototypes.addButtonContainer).append(@addButton)
   @addButtonExist = false
   self = this
@@ -23,7 +24,7 @@ PO.formPrototype = (collectionHolder) ->
   @collectionHolder.children().each ->
     prototype = self.createRemoveButton($(this))
     if prototype.find(".alert-error").length is 0
-      prototype.addClass("old").removeClass("new").find("button").text "X"
+      prototype.addClass("old").removeClass("new")
     else
       prototype.addClass "error"
     return
@@ -76,7 +77,8 @@ PO.formPrototype:: =
     return
 
   addPrototype: ->
-    newPrototype = @::replace(/__name__/g, @index)
+    newPrototype = @::replace(/__name__label__/g, @newElementLabel)
+    newPrototype = newPrototype.replace(/__name__/g, @index)
 
     # increase the index with one for the next item
     @index++
