@@ -21,12 +21,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('php_orchestra_cms');
 
-        $rootNode->children()
-            ->arrayNode('blocks')
-                ->prototype('scalar')->end()
-            ->end()
-        ->end();
-
         return $treeBuilder;
     }
 }

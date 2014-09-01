@@ -50,7 +50,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
                         'label' => $field->getLabel(),
                         'mapped' => false,
                     ),
-                    $field->getOptions()
+                    $field->getFormOptions()
                 ));
             }
         }
