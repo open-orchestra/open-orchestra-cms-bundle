@@ -43,4 +43,21 @@ class TreeController extends Controller
             )
         );
     }
+
+    /**
+     * List all contentType to sort the contents
+     *
+     * @return Response
+     */
+    public function showContentTypeForContentAction()
+    {
+        $contentTypes = $this->get('php_orchestra_model.repository.content_type')->findAll();
+
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
+            array(
+                'contentTypes' => $contentTypes,
+            )
+        );
+    }
 }
