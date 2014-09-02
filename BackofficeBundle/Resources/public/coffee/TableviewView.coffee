@@ -7,6 +7,7 @@ TableviewView = Backbone.View.extend(
     @element = options.element
     @displayedElements = options.displayedElements
     @title = options.title
+    @listUrl = options.listUrl
     _.bindAll this, "render"
     @elementTemplate = _.template($('#tableviewView').html())
     @actionsTemplate = _.template($('#tableviewActions').html())
@@ -32,6 +33,8 @@ TableviewView = Backbone.View.extend(
   clickEdit: (event) ->
     event.preventDefault()
     title = @title
+    listUrl = @listUrl
+    displayedElements = @displayedElements
     $('.modal-title').text 'Edit'
     $.ajax
       url: @element.get('links')._self_form
@@ -40,5 +43,7 @@ TableviewView = Backbone.View.extend(
         view = new FullPageFormView(
           html: response
           title: title
+          listUrl: listUrl
+          displayedElements: displayedElements
         )
 )

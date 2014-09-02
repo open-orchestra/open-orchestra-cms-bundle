@@ -6,6 +6,7 @@ TableviewCollectionView = Backbone.View.extend(
     @elements = options.elements
     @displayedElements = options.displayedElements
     @title = options.title
+    @listUrl = options.listUrl
     _.bindAll this, "render"
     @elementsTemplate = _.template($('#tableviewCollectionView').html())
     @render()
@@ -31,6 +32,7 @@ TableviewCollectionView = Backbone.View.extend(
       element: elementModel
       displayedElements: @displayedElements
       title: @title
+      listUrl: @listUrl
     )
     this.$el.find('tbody').append view.render().el
     return

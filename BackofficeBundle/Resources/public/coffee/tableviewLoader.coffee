@@ -12,4 +12,5 @@ $('.ajax-tableview-load').click (e) ->
         elements: elements
         displayedElements: displayedElements
         title: title
+        listUrl: listUrl
       )
