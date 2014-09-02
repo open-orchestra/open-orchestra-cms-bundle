@@ -124,10 +124,18 @@
 <script type="text/html" id="tableviewActions">
     <td>
         <% if (typeof links._self_form !== 'undefined' ) { %>
-            <a href="#" class="ajax-edit" data-toggle="modal" data-target="#myModal">Edit</a>
+            <a href="#" class="ajax-edit">Edit</a>
         <% } %>
         <% if (typeof links._self_delete !== 'undefined' ) { %>
             <a href="#" class="ajax-delete">Delete </a>
         <% } %>
     </td>
+</script>
+
+<script type="text/html" id="fullPageFormView">
+    <% include headInclude %>
+    <div role="container">
+        <%= html %>
+    </div>
+    <% include footerInclude %>
 </script>
