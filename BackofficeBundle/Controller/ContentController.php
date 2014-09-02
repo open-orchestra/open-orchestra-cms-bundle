@@ -41,8 +41,9 @@ class ContentController extends Controller
             $documentManager->persist($content);
             $documentManager->flush();
 
-            return $this->redirect(
-                $this->generateUrl('homepage')
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.content.success')
             );
         }
 

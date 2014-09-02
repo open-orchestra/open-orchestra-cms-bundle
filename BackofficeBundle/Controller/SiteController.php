@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Controller;
 use PHPOrchestra\ModelBundle\Document\Site;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,8 +43,9 @@ class SiteController extends Controller
             $documentManager->persist($site);
             $documentManager->flush();
 
-            return $this->redirect(
-                $this->generateUrl('homepage')
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.website.success')
             );
         }
 
