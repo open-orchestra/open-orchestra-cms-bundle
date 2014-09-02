@@ -81,6 +81,7 @@ class BlockCollectionSubscriber implements EventSubscriberInterface
                 'mapped' => false,
                 'attr' => array(
                     'data-prototype-label-add' => 'Ajout',
+                    'data-prototype-label-new' => 'Nouveau',
                     'data-prototype-label-remove' => 'Suppression',
                 )
             ));
@@ -90,6 +91,7 @@ class BlockCollectionSubscriber implements EventSubscriberInterface
                 'mapped' => false,
                 'attr' => array(
                     'data-prototype-label-add' => 'Ajout',
+                    'data-prototype-label-new' => 'Nouveau',
                     'data-prototype-label-remove' => 'Suppression',
                 )
             ));

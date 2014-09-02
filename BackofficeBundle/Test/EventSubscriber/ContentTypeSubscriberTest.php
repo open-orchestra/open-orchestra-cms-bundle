@@ -99,7 +99,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
-        Phake::when($this->fieldType1)->getOptions()->thenReturn($options);
+        Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
         $this->subscriber->preSetData($this->event);
 
@@ -149,7 +149,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
-        Phake::when($this->fieldType1)->getOptions()->thenReturn($options);
+        Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
         $realValue = 'realValue';
         Phake::when($this->contentAttribute)->getValue()->thenReturn($realValue);
@@ -203,7 +203,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
-        Phake::when($this->fieldType1)->getOptions()->thenReturn($options);
+        Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
         Phake::when($this->content)->getAttributeByName(Phake::anyParameters())->thenReturn($this->contentAttribute);
 

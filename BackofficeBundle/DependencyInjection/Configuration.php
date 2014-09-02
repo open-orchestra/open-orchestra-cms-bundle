@@ -24,7 +24,11 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('front_languages')
                 ->info('Add the language available for the front with the key')
                 ->useAttributeAsKey('key')
-                ->prototype('scalar')
+                ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('blocks')
+                ->info('Add the block activated for the project')
+                ->prototype('scalar')->end()
             ->end()
         ->end();
 

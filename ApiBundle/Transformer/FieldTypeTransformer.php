@@ -27,8 +27,8 @@ class FieldTypeTransformer extends AbstractTransformer
         $facade->searchable = $mixed->getSearchable();
         $facade->type = $mixed->getType();
 
-        foreach ($mixed->getOptions() as $key => $attribute) {
-            $facade->addOption($key, (string) $attribute);
+        foreach ($mixed->getOptions() as $option) {
+            $facade->addOption($option->getKey(), $option->getValue());
         }
 
         return $facade;
