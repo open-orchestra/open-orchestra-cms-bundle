@@ -59,14 +59,23 @@ function displayLoader()
 }
 
 // Specific orchestra ajax loading
-function orchestraAjaxLoad(url)
+function orchestraAjaxLoad(url, method)
 {
     displayLoader();
-    $.post(url, function(response) {
-        if (response.success) {
-            window.location.hash = response.data;
-        } else {
-            $('#content').html(response);
+    
+    if (method == undefined) {
+        method = 'POST';
+    }
+    
+    $.ajax({
+        url: url,
+        type: method,
+        success: function(response) {
+            if (response.success) {
+                window.location.hash = response.data;
+            } else {
+                $('#content').html(response);
+            }
         }
     });
 }
