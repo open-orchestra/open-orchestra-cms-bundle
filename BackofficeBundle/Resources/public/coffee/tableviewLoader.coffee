@@ -11,4 +11,5 @@ tableViewLoad = (link) ->
         elements: elements
         displayedElements: displayedElements
         title: title
+        listUrl: listUrl
       )
