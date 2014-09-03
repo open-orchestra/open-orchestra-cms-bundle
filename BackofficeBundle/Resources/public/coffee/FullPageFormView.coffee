@@ -1,18 +1,21 @@
 FullPageFormView = Backbone.View.extend(
   el: '#content'
   events:
-    'click a.ajax-back-to-list': 'clickBackToList'
+    'click a#none': 'clickBackToList'
   initialize: (options) ->
     @html = options.html
     @title = options.title
     @listUrl = options.listUrl
     @displayedElements = options.displayedElements
     @formTemplate = _.template($('#fullPageFormView').html())
+    key = "click a." + @cid
+    @events[key] = "clickBackToList"
     @render()
     return
   render: ->
     $(@el).html @formTemplate (
       html: @html
+      cid: @cid
     )
     $('.js-widget-title', @$el).text @title
     $("[data-prototype]").each ->
