@@ -59,11 +59,11 @@ function displayLoader()
 }
 
 // Specific orchestra ajax loading
-function orchestraAjaxLoad(url, method)
+function orchestraAjaxLoad(url, method, successCallback)
 {
     displayLoader();
     
-    if (method == undefined) {
+    if (typeof method == 'undefined') {
         method = 'POST';
     }
     
@@ -75,6 +75,9 @@ function orchestraAjaxLoad(url, method)
                 window.location.hash = response.data;
             } else {
                 $('#content').html(response);
+                if (typeof successCallback !== 'undefined') {
+                    successCallback();
+                }
             }
         }
     });
