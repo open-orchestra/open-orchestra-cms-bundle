@@ -33,6 +33,7 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('siteId', 'integer')
             ->add('domain', 'text')
             ->add('alias', 'text')
             ->add('defaultLanguage', 'orchestra_language', array('label' => 'Default Language'))

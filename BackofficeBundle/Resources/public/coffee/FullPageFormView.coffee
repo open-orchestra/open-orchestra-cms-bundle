@@ -26,6 +26,7 @@ FullPageFormView = Backbone.View.extend(
   addEventOnForm: ->
     title = @title
     listUrl = @listUrl
+    displayedElements = @displayedElements
     $("form", @$el).on "submit", (e) ->
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
@@ -34,6 +35,7 @@ FullPageFormView = Backbone.View.extend(
             html: response
             title: title
             listUrl: listUrl
+            displayedElements: displayedElements
           )
       return
   clickBackToList: (event) ->

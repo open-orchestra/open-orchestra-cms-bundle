@@ -17,6 +17,7 @@ php_orchestra_backoffice:
             delete: Suppression d'un champ
         website:
             success: Le site a été modifié
+            creation: Le site a été crée
         content:
             success: Le contenu a été modifié
         content_type:

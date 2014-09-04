@@ -35,7 +35,6 @@ TableviewView = Backbone.View.extend(
     title = @title
     listUrl = @listUrl
     displayedElements = @displayedElements
-    $('.modal-title').text 'Edit'
     $.ajax
       url: @element.get('links')._self_form
       method: 'GET'
