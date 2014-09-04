@@ -5,10 +5,10 @@
             data-type="Node"
         >
             <a
+                id="nav-node-{{ node.nodeId }}"
                 data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
                 data-node="{{ node.nodeId }}"
-                href="#"
-                class="ajax-load">
+                href="#node/show/{{ node.nodeId }}">
                 <i
                     class="fa fa-trash-o ajax-delete"
                     data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
@@ -22,7 +22,8 @@
                     <li>
                         <div class="ui-state-unsortable">
                             <a
-                                href="#"
+                                id="nav-createNode-{{ node.nodeId }}"
+                                href="#node/create/{{ node.nodeId }}"
                                 data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
                                 class="ajax-new"
                                 data-toggle="modal"
@@ -46,11 +47,10 @@
         >
             <div>
                 <a
-                    href="#"
+                    id="nav-template-{{ template.templateId }}"
+                    href="#template/show/{{ template.templateId }}"
                     data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
-                    data-template="{{ template.templateId }}"
-                    class="template-ajax-load"
-                    >
+                    data-template="{{ template.templateId }}">
                     <i
                         class="fa fa-trash-o ajax-delete"
                         data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
@@ -64,7 +64,8 @@
     <li>
         <div class="ui-state-unsortable">
             <a
-                href="#"
+                id="nav-createTemplate"
+                href="#template/create"
                 data-url="{{ path('php_orchestra_backoffice_template_form') }}"
                 class="ajax-new"
                 data-toggle="modal"
