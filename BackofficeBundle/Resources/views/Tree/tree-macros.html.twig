@@ -8,7 +8,8 @@
                 id="nav-node-{{ node.nodeId }}"
                 data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
                 data-node="{{ node.nodeId }}"
-                href="#node/show/{{ node.nodeId }}">
+                href="#node/show/{{ node.nodeId }}"
+            >
                 <i
                     class="fa fa-trash-o ajax-delete"
                     data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
@@ -25,9 +26,8 @@
                                 id="nav-createNode-{{ node.nodeId }}"
                                 href="#node/create/{{ node.nodeId }}"
                                 data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
-                                >
-                                <i class="fa fa-file">
-                                </i>
+                            >
+                                <i class="fa fa-file"></i>
                                 {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
                             </a>
                         </div>
@@ -47,7 +47,8 @@
                 id="nav-template-{{ template.templateId }}"
                 href="#template/show/{{ template.templateId }}"
                 data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
-                data-template="{{ template.templateId }}">
+                data-template="{{ template.templateId }}"
+            >
                 <i
                     class="fa fa-trash-o ajax-delete"
                     data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
@@ -62,9 +63,9 @@
             <a
                 id="nav-createTemplate"
                 href="#template/create"
-                data-url="{{ path('php_orchestra_backoffice_template_form') }}">
-                <i class="fa fa-file">
-                </i>
+                data-url="{{ path('php_orchestra_backoffice_template_form') }}"
+            >
+                <i class="fa fa-file"></i>
                 {{ 'php_orchestra_backoffice.left_menu.tree.new_template'|trans }}
             </a>
         </div>
@@ -73,7 +74,8 @@
 
 {% macro menu_content_types_for_content(contentTypes, name) %}
     {% for contentType in contentTypes %}
-        <li data-element-id="{{ contentType.contentTypeId }}"
+        <li
+            data-element-id="{{ contentType.contentTypeId }}"
             data-type="ContentType"
         >
             <a
