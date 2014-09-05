@@ -34,8 +34,8 @@
                 <ul style="">
                     <li>
                         <a
-                            href="#websites"
-                            class="ajax-tableview-load"
+                            href="#websites/list"
+                            id="nav-websites"
                             data-url="{{ path('php_orchestra_api_site_list') }}"
                             data-displayed-elements="site_id, domain, alias, default_language">
                             {{ 'php_orchestra_backoffice.left_menu.administration.sites.list'|trans }}
@@ -43,8 +43,8 @@
                     </li>
                     <li>
                         <a
-                            href="#content-type"
-                            class="ajax-tableview-load"
+                            href="#content-types/list"
+                            id="nav-contentTypes"
                             data-url="{{ path('php_orchestra_api_content_type_list') }}"
                             data-displayed-elements="content_type_id, name, version, status">
                             {{ 'php_orchestra_backoffice.left_menu.administration.content_type.list'|trans }}

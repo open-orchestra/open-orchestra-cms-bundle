@@ -1,26 +1,58 @@
 var OrchestraBORouter = Backbone.Router.extend({
-  
+
+//========[ROUTES LIST]===============================//
+
   routes: {
     'node/show/:nodeId': 'showNode',
     'node/create/:parentNodeId': 'createNode',
     'template/show/:templateId': 'showTemplate',
     'template/create': 'createTemplate',
+    'websites/list': 'listSites',
+    'content-types/list': 'listContentTypes',
     'translation': 'listTranslations'
   },
 
   initialize: function() {
   },
 
+//========[ACTIONS LIST]==============================//
+
   showNode: function(nodeId) {
-    var url = $("#nav-node-" + nodeId).data("url");
-    showNode(url);
+    displayLoader();
+    showNode($("#nav-node-" + nodeId).data("url"));
   },
 
   createNode: function(parentNodeId) {
-    var parentNode = $("#nav-createNode-" + parentNodeId);
-    this.showNodeForm(parentNode);
+    this.showNodeForm($("#nav-createNode-" + parentNodeId));
   },
-  
+
+  showTemplate: function(templateId) {
+    displayLoader();
+    showTemplate($("#nav-template-" + templateId).data("url"));
+  },
+
+  createTemplate: function() {
+    this.showNodeForm($("#nav-createTemplate"));
+  },
+
+  listSites: function() {
+    displayLoader();
+    tableViewLoad($("#nav-websites"));
+  },
+
+  listContentTypes: function() {
+    displayLoader();
+    tableViewLoad($("#nav-contentTypes"));
+  },
+
+  listTranslations: function() {
+    return new TranslationView(
+      {url : $("#nav-translation").data("url")}
+    );
+  },
+
+//========[INTERNAL FUNCTIONS]========================//
+
   showNodeForm: function(parentNode) {
     $('.modal-title').text(parentNode.text());
     $.ajax({
@@ -34,21 +66,6 @@ var OrchestraBORouter = Backbone.Router.extend({
         });
       }
     }); 
-  },
-
-  showTemplate: function(templateId) {
-    var url = $("#nav-template-" + templateId).data("url");
-    showTemplate(url);
-  },
-
-  createTemplate: function() {
-    var templateRoot = $("#nav-createTemplate");
-    this.showNodeForm(templateRoot);
-  },
-
-  listTranslations: function() {
-    var url = $("#nav-translation").data("url");
-    return new TranslationView({url : url});
   }
 
 });
