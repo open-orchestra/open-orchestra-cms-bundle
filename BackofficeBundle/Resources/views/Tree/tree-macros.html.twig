@@ -43,20 +43,18 @@
         <li data-element-id="{{ template.templateId }}"
             data-type="Template"
         >
-            <div>
-                <a
-                    id="nav-template-{{ template.templateId }}"
-                    href="#template/show/{{ template.templateId }}"
-                    data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
-                    data-template="{{ template.templateId }}">
-                    <i
-                        class="fa fa-trash-o ajax-delete"
-                        data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
-                        data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
-                    </i>
-                    <span>{{ template.name }}</span>
-                </a>
-            </div>
+            <a
+                id="nav-template-{{ template.templateId }}"
+                href="#template/show/{{ template.templateId }}"
+                data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
+                data-template="{{ template.templateId }}">
+                <i
+                    class="fa fa-trash-o ajax-delete"
+                    data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
+                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
+                </i>
+                <span>{{ template.name }}</span>
+            </a>
         </li>
     {% endfor %}
     <li>
