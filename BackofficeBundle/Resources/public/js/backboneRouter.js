@@ -41,6 +41,11 @@ var OrchestraBORouter = Backbone.Router.extend({
     tableViewLoad($("#nav-contents-" + contentTypeId));
   },
 
+  listContents: function(contentTypeId) {
+    this.initDisplayRouteChanges();
+    tableViewLoad($("#nav-contents-" + contentTypeId));
+  },
+
   listSites: function() {
     this.initDisplayRouteChanges();
     tableViewLoad($("#nav-websites"));
