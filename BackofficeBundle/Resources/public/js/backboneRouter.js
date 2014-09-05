@@ -5,6 +5,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   routes: {
     'node/show/:nodeId': 'showNode',
     'template/show/:templateId': 'showTemplate',
+    'template/create': 'createTemplate',
     'contents/list/:contentTypeId': 'listContents',
     'websites/list': 'listSites',
     'content-types/list': 'listContentTypes',
@@ -27,23 +28,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   createNode: function(parentNodeId) {
-    var parentNode = $("#nav-createNode-" + parentNodeId);
-    this.showNodeForm(parentNode);
-  },
-  
-  showNodeForm: function(parentNode) {
-    $('.modal-title').text(parentNode.text());
-    $.ajax({
-      url: parentNode.data('url'),
-      method: 'GET',
-      success: function(response) {
-        $('#OrchestraBOModal').modal('show');
-        var view;
-        return view = new adminFormView({
-          html: response
-        });
-      }
-    }); 
+    this.showNodeForm($("#nav-createNode-" + parentNodeId));
   },
 
   showTemplate: function(templateId) {
@@ -76,6 +61,23 @@ var OrchestraBORouter = Backbone.Router.extend({
     return new TranslationView(
       {url : $("#nav-translation").data("url")}
     );
+  },
+
+//========[INTERNAL FUNCTIONS]========================//
+
+  showNodeForm: function(parentNode) {
+    $('.modal-title').text(parentNode.text());
+    $.ajax({
+      url: parentNode.data('url'),
+      method: 'GET',
+      success: function(response) {
+        $('#OrchestraBOModal').modal('show');
+        var view;
+        return view = new adminFormView({
+          html: response
+        });
+      }
+    }); 
   },
 
 //========[INTERNAL FUNCTIONS]========================//
