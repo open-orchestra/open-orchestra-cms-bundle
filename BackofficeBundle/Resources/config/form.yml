@@ -70,12 +70,14 @@ services:
         arguments:
             - %php_orchestra_model.document.content_type.class%
             - @translator
+            - @php_orchestra_backoffice.listener.translate_value_initializer
         tags:
             - { name: form.type, alias: content_type }
     php_orchestra_backoffice.type.field_type:
         class: %php_orchestra_backoffice.type.field_type.class%
         arguments:
             - @translator
+            - @php_orchestra_backoffice.listener.translate_value_initializer
         tags:
             - { name: form.type, alias: field_type }
     php_orchestra_backoffice.type.field_option:
@@ -98,6 +100,7 @@ services:
             - @php_orchestra_model.repository.content_type
             - %php_orchestra_model.document.content.class%
             - %php_orchestra_backoffice.document.content_attribute.class%
+            - @php_orchestra_backoffice.manager.translation_choice
         tags:
             - {name: form.type, alias: content}
 
