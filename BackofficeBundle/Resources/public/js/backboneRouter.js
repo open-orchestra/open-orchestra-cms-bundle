@@ -7,6 +7,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/create/:parentNodeId': 'createNode',
     'template/show/:templateId': 'showTemplate',
     'template/create': 'createTemplate',
+    'contents/list/:contentTypeId': 'listContents',
     'websites/list': 'listSites',
     'content-types/list': 'listContentTypes',
     'translation': 'listTranslations',
@@ -38,6 +39,11 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   createTemplate: function() {
     showNodeForm($("#nav-createTemplate"));
+  },
+
+  listContents: function(contentTypeId) {
+    this.initDisplayRouteChanges();
+    tableViewLoad($("#nav-contents-" + contentTypeId));
   },
 
   listSites: function() {
