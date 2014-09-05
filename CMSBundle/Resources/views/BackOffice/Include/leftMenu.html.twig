@@ -14,7 +14,7 @@
     <nav>
         <ul style="">
             <li>
-                <a href="#" class="ajax-remove-hash">
+                <a href="#">
                     <i class="fa fa-lg fa-fw fa-edit"></i>
                     <span class="menu-item-parent">{{ 'php_orchestra_backoffice.left_menu.editorial.title'|trans }}</span>
                 </a>
@@ -25,7 +25,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#" class="ajax-remove-hash">
+                <a href="#">
                     <i class="fa fa-lg fa-fw fa-desktop"></i>
                     <span class="menu-item-parent">
                         {{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}
@@ -34,8 +34,8 @@
                 <ul style="">
                     <li>
                         <a
-                            href="#websites"
-                            class="ajax-tableview-load"
+                            href="#websites/list"
+                            id="nav-websites"
                             data-url="{{ path('php_orchestra_api_site_list') }}"
                             data-displayed-elements="site_id, domain, alias, default_language">
                             {{ 'php_orchestra_backoffice.left_menu.administration.sites.list'|trans }}
@@ -43,15 +43,15 @@
                     </li>
                     <li>
                         <a
-                            href="#content-type"
-                            class="ajax-tableview-load"
+                            href="#content-types/list"
+                            id="nav-contentTypes"
                             data-url="{{ path('php_orchestra_api_content_type_list') }}"
                             data-displayed-elements="content_type_id, name, version, status">
                             {{ 'php_orchestra_backoffice.left_menu.administration.content_type.list'|trans }}
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="ajax-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
+                        <a href="#translation" id="nav-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
                     </li>
                     <li>
                         <a href="#" id="clearRoutingCache">{{ 'php_orchestra_cms.left_menu.administration.routing_cache'|trans({}, 'backOffice') }}</a>

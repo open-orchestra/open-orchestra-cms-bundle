@@ -5,10 +5,11 @@
             data-type="Node"
         >
             <a
+                id="nav-node-{{ node.nodeId }}"
                 data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
                 data-node="{{ node.nodeId }}"
-                href="#"
-                class="ajax-load">
+                href="#node/show/{{ node.nodeId }}"
+            >
                 <i
                     class="fa fa-trash-o ajax-delete"
                     data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
@@ -22,13 +23,11 @@
                     <li>
                         <div class="ui-state-unsortable">
                             <a
+                                class="ajax-new"
                                 href="#"
                                 data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
-                                class="ajax-new"
-                                data-toggle="modal"
-                                data-target="#myModal">
-                                <i class="fa fa-file">
-                                </i>
+                            >
+                                <i class="fa fa-file"></i>
                                 {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
                             </a>
                         </div>
@@ -44,33 +43,29 @@
         <li data-element-id="{{ template.templateId }}"
             data-type="Template"
         >
-            <div>
-                <a
-                    href="#"
-                    data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
-                    data-template="{{ template.templateId }}"
-                    class="template-ajax-load"
-                    >
-                    <i
-                        class="fa fa-trash-o ajax-delete"
-                        data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
-                        data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
-                    </i>
-                    <span>{{ template.name }}</span>
-                </a>
-            </div>
+            <a
+                id="nav-template-{{ template.templateId }}"
+                href="#template/show/{{ template.templateId }}"
+                data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
+                data-template="{{ template.templateId }}"
+            >
+                <i
+                    class="fa fa-trash-o ajax-delete"
+                    data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
+                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
+                </i>
+                <span>{{ template.name }}</span>
+            </a>
         </li>
     {% endfor %}
     <li>
         <div class="ui-state-unsortable">
             <a
+                class="ajax-new"
                 href="#"
                 data-url="{{ path('php_orchestra_backoffice_template_form') }}"
-                class="ajax-new"
-                data-toggle="modal"
-                data-target="#myModal">
-                <i class="fa fa-file">
-                </i>
+            >
+                <i class="fa fa-file"></i>
                 {{ 'php_orchestra_backoffice.left_menu.tree.new_template'|trans }}
             </a>
         </div>
@@ -79,19 +74,18 @@
 
 {% macro menu_content_types_for_content(contentTypes, name) %}
     {% for contentType in contentTypes %}
-        <li data-element-id="{{ contentType.contentTypeId }}"
+        <li
+            data-element-id="{{ contentType.contentTypeId }}"
             data-type="ContentType"
-                >
-            <div>
-                <a
-                        href="#contents"
-                        class="ajax-tableview-load"
-                        data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
-                        data-displayed-elements="content_id, content_type, name, status"
-                        >
-                    {{ contentType.name }}
-                </a>
-            </div>
+        >
+            <a
+                id="nav-contents-{{contentType.contentTypeId}}" 
+                href="#contents/list/{{contentType.contentTypeId}}"
+                data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
+                data-displayed-elements="content_id, content_type, name, status"
+            >
+                {{ contentType.name }}
+            </a>
         </li>
     {% endfor %}
 {% endmacro %}
