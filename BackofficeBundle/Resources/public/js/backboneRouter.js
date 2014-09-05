@@ -55,6 +55,13 @@ var OrchestraBORouter = Backbone.Router.extend({
 //========[INTERNAL FUNCTIONS]========================//
 
   initDisplayRouteChanges: function() {
+    var url = '#' + Backbone.history.fragment;
+    $('nav li.active').removeClass("active");
+    $('nav li:has(a[href="' + url + '"])').addClass("active");
+    
+    var title = ($('nav a[href="' + url + '"]').attr('title'))
+    document.title = (title || document.title);
+    
     drawBreadCrumb();
     displayLoader();
   },
