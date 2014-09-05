@@ -28,7 +28,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   createNode: function(parentNodeId) {
-    this.showNodeForm($("#nav-createNode-" + parentNodeId));
+    showNodeForm($("#nav-createNode-" + parentNodeId));
   },
 
   showTemplate: function(templateId) {
@@ -90,20 +90,6 @@ var OrchestraBORouter = Backbone.Router.extend({
         });
       }
     }); 
-  },
-
-//========[INTERNAL FUNCTIONS]========================//
-
-  initDisplayRouteChanges: function() {
-    var url = '#' + Backbone.history.fragment;
-    $('nav li.active').removeClass("active");
-    $('nav li:has(a[href="' + url + '"])').addClass("active");
-    
-    var title = ($('nav a[href="' + url + '"]').attr('title'))
-    document.title = (title || document.title);
-    
-    drawBreadCrumb();
-    displayLoader();
   },
 
 });
