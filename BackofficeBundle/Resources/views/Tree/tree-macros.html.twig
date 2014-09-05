@@ -23,8 +23,8 @@
                     <li>
                         <div class="ui-state-unsortable">
                             <a
-                                id="nav-createNode-{{ node.nodeId }}"
-                                href="#node/create/{{ node.nodeId }}"
+                                class="ajax-new"
+                                href="#"
                                 data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
                             >
                                 <i class="fa fa-file"></i>
@@ -61,8 +61,8 @@
     <li>
         <div class="ui-state-unsortable">
             <a
-                id="nav-createTemplate"
-                href="#template/create"
+                class="ajax-new"
+                href="#"
                 data-url="{{ path('php_orchestra_backoffice_template_form') }}"
             >
                 <i class="fa fa-file"></i>
