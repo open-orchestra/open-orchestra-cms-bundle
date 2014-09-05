@@ -9,13 +9,18 @@ var OrchestraBORouter = Backbone.Router.extend({
     'template/create': 'createTemplate',
     'websites/list': 'listSites',
     'content-types/list': 'listContentTypes',
-    'translation': 'listTranslations'
+    'translation': 'listTranslations',
+    '': 'showHome'
   },
 
   initialize: function() {
   },
 
 //========[ACTIONS LIST]==============================//
+
+  showHome: function() {
+    drawBreadCrumb();
+  },
 
   showNode: function(nodeId) {
   this.initDisplayRouteChanges();
