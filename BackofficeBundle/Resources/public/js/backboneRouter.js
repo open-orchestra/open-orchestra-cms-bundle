@@ -18,7 +18,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 //========[ACTIONS LIST]==============================//
 
   showNode: function(nodeId) {
-    displayLoader();
+  this.initDisplayRouteChanges();
     showNode($("#nav-node-" + nodeId).data("url"));
   },
 
@@ -27,7 +27,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   showTemplate: function(templateId) {
-    displayLoader();
+    this.initDisplayRouteChanges();
     showTemplate($("#nav-template-" + templateId).data("url"));
   },
 
@@ -36,22 +36,28 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   listSites: function() {
-    displayLoader();
+    this.initDisplayRouteChanges();
     tableViewLoad($("#nav-websites"));
   },
 
   listContentTypes: function() {
-    displayLoader();
+    this.initDisplayRouteChanges();
     tableViewLoad($("#nav-contentTypes"));
   },
 
   listTranslations: function() {
+    drawBreadCrumb();
     return new TranslationView(
       {url : $("#nav-translation").data("url")}
     );
   },
 
 //========[INTERNAL FUNCTIONS]========================//
+
+  initDisplayRouteChanges: function() {
+    drawBreadCrumb();
+    displayLoader();
+  },
 
   showNodeForm: function(parentNode) {
     $('.modal-title').text(parentNode.text());
