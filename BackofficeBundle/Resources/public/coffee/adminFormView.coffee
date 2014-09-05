@@ -1,5 +1,5 @@
 adminFormView = Backbone.View.extend(
-  el: '#myModal'
+  el: '#OrchestraBOModal'
   initialize: (options) ->
     @html = options.html
     @render()
