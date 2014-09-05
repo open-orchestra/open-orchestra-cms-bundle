@@ -65,6 +65,11 @@ var OrchestraBORouter = Backbone.Router.extend({
 
 //========[INTERNAL FUNCTIONS]========================//
 
+  initDisplayRouteChanges: function() {
+    drawBreadCrumb();
+    displayLoader();
+  },
+
   showNodeForm: function(parentNode) {
     $('.modal-title').text(parentNode.text());
     $.ajax({
