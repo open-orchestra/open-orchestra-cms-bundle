@@ -17,7 +17,6 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   createNode: function(parentNodeId) {
-alert('createNode' + parentNodeId);
     var parentNode = $("#nav-createNode-" + parentNodeId);
     this.showNodeForm(parentNode);
   },
@@ -28,6 +27,7 @@ alert('createNode' + parentNodeId);
       url: parentNode.data('url'),
       method: 'GET',
       success: function(response) {
+        $('#OrchestraBOModal').modal('show');
         var view;
         return view = new adminFormView({
           html: response
@@ -43,7 +43,7 @@ alert('createNode' + parentNodeId);
 
   createTemplate: function() {
     var templateRoot = $("#nav-createTemplate");
-    this.createNode(templateRoot);
+    this.showNodeForm(templateRoot);
   },
 
   listTranslations: function() {

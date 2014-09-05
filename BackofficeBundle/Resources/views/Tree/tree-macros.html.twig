@@ -25,9 +25,7 @@
                                 id="nav-createNode-{{ node.nodeId }}"
                                 href="#node/create/{{ node.nodeId }}"
                                 data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
-                                class="ajax-new"
-                                data-toggle="modal"
-                                data-target="#myModal">
+                                >
                                 <i class="fa fa-file">
                                 </i>
                                 {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
@@ -66,10 +64,7 @@
             <a
                 id="nav-createTemplate"
                 href="#template/create"
-                data-url="{{ path('php_orchestra_backoffice_template_form') }}"
-                class="ajax-new"
-                data-toggle="modal"
-                data-target="#myModal">
+                data-url="{{ path('php_orchestra_backoffice_template_form') }}">
                 <i class="fa fa-file">
                 </i>
                 {{ 'php_orchestra_backoffice.left_menu.tree.new_template'|trans }}
