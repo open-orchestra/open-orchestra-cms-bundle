@@ -42,6 +42,8 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.content_type:
         class: %php_orchestra_api.transformer.content_type.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.content_type_collection:
@@ -70,5 +72,7 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.field_type:
         class: %php_orchestra_api.transformer.field_type.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: php_orchestra_api.transformer.strategy }

@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
+use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Model\FieldTypeInterface;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,17 +14,24 @@ use Symfony\Component\Form\FormEvents;
  */
 class ContentTypeSubscriber implements EventSubscriberInterface
 {
+    protected $translationChoiceManager;
     protected $contentTypeRepository;
     protected $contentAttributClass;
 
     /**
-     * @param ContentTypeRepository $contentTypeRepository
-     * @param string                $contentAttributClass
+     * @param ContentTypeRepository    $contentTypeRepository
+     * @param string                   $contentAttributClass
+     * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(ContentTypeRepository $contentTypeRepository, $contentAttributClass)
+    public function __construct(
+        ContentTypeRepository $contentTypeRepository,
+        $contentAttributClass,
+        TranslationChoiceManager $translationChoiceManager
+    )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentAttributClass = $contentAttributClass;
+        $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
@@ -47,7 +55,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
                 $form->add($field->getFieldId(), $field->getType(), array_merge(
                     array(
                         'data' => $defaultValue,
-                        'label' => $field->getLabel(),
+                        'label' => $this->translationChoiceManager->choose($field->getLabels()),
                         'mapped' => false,
                     ),
                     $field->getFormOptions()
