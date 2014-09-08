@@ -4,8 +4,6 @@ filter:
         - 'app/*'
         - 'web/*'
         - 'Tests/*'
-before_commands:
-    - 'composer --prefer-source --dev install'
 tools:
     php_mess_detector:
         config:
