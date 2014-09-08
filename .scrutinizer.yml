@@ -1,0 +1,4 @@
+build:
+    dependencies:
+        before:
+            - sudo apt-get search php5-mongodb
