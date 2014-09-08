@@ -1,7 +1,4 @@
 build:
-    dependencies:
-        before:
-            - 'pecl install mongo'
     environment:
         php: '5.4.28'
 
