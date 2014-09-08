@@ -1,9 +1,9 @@
 tableViewLoad = (link) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
-  listUrl = link.data('url')
+  listUrl = Backbone.history.fragment
   $.ajax
-    url: listUrl
+    url: link.data('url')
     method: 'GET'
     success: (response) ->
       elements = new TableviewElement

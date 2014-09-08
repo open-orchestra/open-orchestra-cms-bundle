@@ -41,9 +41,9 @@ TableviewCollectionView = Backbone.View.extend(
     return
   clickAdd: (event) ->
     event.preventDefault()
+    Backbone.history.navigate('/add')
     title = @title
     listUrl = @listUrl
-    displayedElements = @displayedElements
     $.ajax
       url: @elements.get('links')._self_add
       method: 'GET'
@@ -52,6 +52,5 @@ TableviewCollectionView = Backbone.View.extend(
           html: response
           title: title
           listUrl: listUrl
-          displayedElements: displayedElements
         )
 )
