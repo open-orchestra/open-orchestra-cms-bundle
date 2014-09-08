@@ -1,7 +1,24 @@
 parameters:
     php_orchestra_backoffice.manager.context.class: PHPOrchestra\Backoffice\Context\ContextManager
+    php_orchestra_backoffice.listener.translate_value_initializer.class: PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
+    php_orchestra_backoffice.manager.translation_choice.class: PHPOrchestra\Backoffice\Manager\TranslationChoiceManager
+    php_orchestra_backoffice.twig_extension.translation_choice.class: PHPOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
 
 services:
     php_orchestra_backoffice.context_manager:
         class: "%php_orchestra_backoffice.manager.context.class%"
         arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
+    php_orchestra_backoffice.listener.translate_value_initializer:
+        class: %php_orchestra_backoffice.listener.translate_value_initializer.class%
+        arguments:
+            - %php_orchestra_base.languages_availables%
+    php_orchestra_backoffice.manager.translation_choice:
+        class: %php_orchestra_backoffice.manager.translation_choice.class%
+        arguments:
+            - @php_orchestra_backoffice.context_manager
+    php_orchestra_backoffice.twig_extension.translation_choice:
+        class: %php_orchestra_backoffice.twig_extension.translation_choice.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.translation_choice
+        tags:
+            - { name: twig.extension}

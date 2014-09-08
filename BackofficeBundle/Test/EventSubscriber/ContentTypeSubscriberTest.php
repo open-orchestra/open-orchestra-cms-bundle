@@ -20,21 +20,25 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $form;
     protected $event;
     protected $content;
+    protected $collection;
     protected $repository;
     protected $fieldType1;
     protected $fieldType2;
     protected $fieldType3;
     protected $contentType;
-    protected $contentAttributClass;
     protected $contentTypeId;
     protected $fieldCollection;
     protected $contentAttribute;
+    protected $contentAttributClass;
+    protected $transaltionChoiceManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->collection = Phake::mock('Doctrine\Common\Collections\Collection');
+
         $this->contentAttributClass = 'PHPOrchestra\ModelBundle\Document\ContentAttribute';
 
         $this->contentTypeId = 'contentTypeId';
@@ -47,8 +51,11 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
         $this->fieldType1 = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        Phake::when($this->fieldType1)->getLabels()->thenReturn($this->collection);
         $this->fieldType2 = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        Phake::when($this->fieldType2)->getLabels()->thenReturn($this->collection);
         $this->fieldType3 = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        Phake::when($this->fieldType3)->getLabels()->thenReturn($this->collection);
         $this->fieldCollection = new ArrayCollection();
         $this->contentType = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentTypeInterface');
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
@@ -57,7 +64,13 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->repository)->findOneByContentTypeId(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
-        $this->subscriber = new ContentTypeSubscriber($this->repository, $this->contentAttributClass);
+        $this->transaltionChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
+
+        $this->subscriber = new ContentTypeSubscriber(
+            $this->repository,
+            $this->contentAttributClass,
+            $this->transaltionChoiceManager
+        );
     }
 
     /**
@@ -96,7 +109,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
+        Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
@@ -146,7 +159,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'required' => true
         );
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
+        Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
@@ -200,7 +213,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'required' => true
         );
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->fieldType1)->getLabel()->thenReturn($label);
+        Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);

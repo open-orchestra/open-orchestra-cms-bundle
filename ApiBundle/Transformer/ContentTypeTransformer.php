@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\ContentTypeFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Model\ContentTypeInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -12,6 +13,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class ContentTypeTransformer extends AbstractTransformer
 {
+    protected $translationChoiceManager;
+
+    /**
+     * @param TranslationChoiceManager $translationChoiceManager
+     */
+    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    {
+        $this->translationChoiceManager = $translationChoiceManager;
+    }
+
     /**
      * @param ContentTypeInterface $mixed
      *
@@ -22,7 +33,7 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade = new ContentTypeFacade();
 
         $facade->contentTypeId = $mixed->getContentTypeId();
-        $facade->name = $mixed->getName();
+        $facade->name = $this->translationChoiceManager->choose($mixed->getNames());
         $facade->version = $mixed->getVersion();
         $facade->status = $mixed->getStatus();
         foreach ($mixed->getFields() as $field) {
