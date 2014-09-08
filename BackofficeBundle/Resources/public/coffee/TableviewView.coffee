@@ -32,9 +32,9 @@ TableviewView = Backbone.View.extend(
       @$el.hide()
   clickEdit: (event) ->
     event.preventDefault()
+    Backbone.history.navigate('/edit')
     title = @title
     listUrl = @listUrl
-    displayedElements = @displayedElements
     $.ajax
       url: @element.get('links')._self_form
       method: 'GET'
@@ -43,6 +43,5 @@ TableviewView = Backbone.View.extend(
           html: response
           title: title
           listUrl: listUrl
-          displayedElements: displayedElements
         )
 )
