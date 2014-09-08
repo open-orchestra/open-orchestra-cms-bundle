@@ -1,9 +1,9 @@
-$('.ajax-tableview-load').click (e) ->
-  e.preventDefault()
-  displayedElements = $(this).data('displayed-elements').replace(/\s/g, '').split(",")
-  title = $(this).text()
+tableViewLoad = (link) ->
+  displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
+  title = link.text()
+  listUrl = link.data('url')
   $.ajax
-    url: $(this).data('url')
+    url: listUrl
     method: 'GET'
     success: (response) ->
       elements = new TableviewElement
