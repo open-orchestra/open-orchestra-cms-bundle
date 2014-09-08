@@ -1,8 +1,9 @@
 tableViewLoad = (link) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
+  listUrl = link.data('url')
   $.ajax
-    url: link.data('url')
+    url: listUrl
     method: 'GET'
     success: (response) ->
       elements = new TableviewElement
