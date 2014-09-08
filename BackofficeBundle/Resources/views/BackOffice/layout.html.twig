@@ -15,11 +15,11 @@
 
         {% block stylesheets %}
             {% if app.debug %}
-                {% stylesheets 'built/all.css' filter='cssrewrite' %}
+                {% stylesheets 'css/all.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% else %}
-                {% stylesheets 'built/all.min.css' filter='cssrewrite' %}
+                {% stylesheets 'css/all.min.css' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% endif %}
@@ -70,11 +70,11 @@
 
         {% block javascripts %}
             {% if app.debug %}
-                {% javascripts 'built/all.js' %}
+                {% javascripts 'js/all.js' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
             {% else %}
-                {% javascripts 'built/all.min.js' %}
+                {% javascripts 'js/all.min.js' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
             {% endif %}

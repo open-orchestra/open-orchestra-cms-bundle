@@ -20,6 +20,6 @@ class HomepageController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('PHPOrchestraCMSBundle:BackOffice:home.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:home.html.twig');
     }
 }
