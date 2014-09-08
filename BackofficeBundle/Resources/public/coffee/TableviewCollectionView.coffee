@@ -40,7 +40,6 @@ TableviewCollectionView = Backbone.View.extend(
     this.$el.find('tbody').append view.render().el
     return
   clickAdd: (event) ->
-    event.preventDefault()
     Backbone.history.navigate('/add')
     title = @title
     listUrl = @listUrl
