@@ -88,18 +88,6 @@ function runDataTables(path, listurl, order) {
     } );
 }
 
-function createDeleteConfirmDialog(){
-	var deleteDocument = new ConfirmDialog(
-	        'deleteDocument',
-	        function(params){
-	            window.location.hash = params.url;
-	        },
-	        370
-	    );
-	    
-	deleteDocument.create();
-}
-
 $(document).ready(function() {
 	
 	$('#content').on('click', 'button.redirect', function(){
