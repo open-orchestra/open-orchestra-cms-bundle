@@ -13,6 +13,7 @@ BlockView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text @block.get('component')
+    displayLoader('.modal-body')
     $.ajax
       url: @block.get('links')._self_form
       method: 'GET'

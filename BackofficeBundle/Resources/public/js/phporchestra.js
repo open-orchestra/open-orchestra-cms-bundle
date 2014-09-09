@@ -51,9 +51,12 @@ $(document).on('change', '.selectSwitcher', function(e) {
     }
 });
 
-function displayLoader()
+function displayLoader(element)
 {
-    $('#content').html('<h1><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
+    if (typeof element == 'undefined') {
+        element = '#content';
+    }
+    $(element).html('<h1><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
     
     return true;
 }
