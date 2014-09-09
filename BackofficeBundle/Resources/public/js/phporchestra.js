@@ -59,11 +59,11 @@ function displayLoader()
 }
 
 // Specific orchestra ajax loading
-function orchestraAjaxLoad(url, method)
+function orchestraAjaxLoad(url, method, successCallback)
 {
     displayLoader();
     
-    if (method == undefined) {
+    if (typeof method == 'undefined') {
         method = 'POST';
     }
     
@@ -75,6 +75,9 @@ function orchestraAjaxLoad(url, method)
                 window.location.hash = response.data;
             } else {
                 $('#content').html(response);
+                if (typeof successCallback !== 'undefined') {
+                    successCallback();
+                }
             }
         }
     });
@@ -102,19 +105,7 @@ function loadCss(cssName) {
     if (!cssArray[cssName]) {
         cssArray[cssName] = true;
         
-/*
-        doc = doc || document;
-        var head = doc.getElementsByTagName("head")[0];
-        if (head && addRule) {
-            var styleEl = doc.createElement("style");
-            styleEl.type = "text/css";
-            styleEl.media = "screen";
-            head.appendChild(styleEl);
-            addRule(selector, rule, styleEl, doc);
-            styleEl = null;
-        }*/
-        
-        // adding the css tag to the head as suggested before
+       // adding the css tag to the head as suggested before
         var body = document.getElementsByTagName('body')[0];
         var css = document.createElement('link');
         css.href = cssName;
