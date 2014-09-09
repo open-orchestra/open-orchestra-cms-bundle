@@ -110,7 +110,7 @@
         </table>
         <% if (typeof links._self_add !== 'undefined' ) { %>
             <div>
-                <a href="#" class="ajax-add"  data-toggle="modal" data-target="#myModal">Add</a>
+                <a href="#" class="ajax-add-<%= cid %>">Add</a>
             </div>
         <% } %>
     </div>
@@ -124,10 +124,23 @@
 <script type="text/html" id="tableviewActions">
     <td>
         <% if (typeof links._self_form !== 'undefined' ) { %>
-            <a href="#" class="ajax-edit" data-toggle="modal" data-target="#myModal">Edit</a>
+            <a href="#" class="ajax-edit">Edit</a>
         <% } %>
         <% if (typeof links._self_delete !== 'undefined' ) { %>
             <a href="#" class="ajax-delete">Delete </a>
         <% } %>
     </td>
+</script>
+
+<script type="text/html" id="fullPageFormView">
+    <% include headInclude %>
+    <div role="container">
+        <%= html %>
+        <a
+            href="#<%= listUrl %>"
+            class="btn btn-primary pull-right">
+            Back to list
+        </a>
+    </div>
+    <% include footerInclude %>
 </script>

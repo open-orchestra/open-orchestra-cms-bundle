@@ -15,6 +15,13 @@ php_orchestra_backoffice:
             add: Add field
             new: New field
             delete: Delete field
+        website:
+            success: The website has been modified
+            creation: The website has been created
+        content:
+            success: The content has been modified
+        content_type:
+            success: The content type has been modified
     left_menu:
         tree:
             new_page: New page

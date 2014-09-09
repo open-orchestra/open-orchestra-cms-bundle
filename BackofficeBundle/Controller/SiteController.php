@@ -42,8 +42,9 @@ class SiteController extends Controller
             $documentManager->persist($site);
             $documentManager->flush();
 
-            return $this->redirect(
-                $this->generateUrl('homepage')
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.website.success')
             );
         }
 
@@ -69,6 +70,7 @@ class SiteController extends Controller
             $site,
             array(
                 'action' => $this->generateUrl('php_orchestra_backoffice_site_new'),
+                'method' => 'POST',
             )
         );
 
@@ -79,8 +81,15 @@ class SiteController extends Controller
             $documentManager->persist($site);
             $documentManager->flush();
 
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.website.creation')
+            );
+
             return $this->redirect(
-                $this->generateUrl('homepage')
+                $this->generateUrl('php_orchestra_backoffice_site_form', array(
+                    'siteId' => $site->getSiteId(),
+                ))
             );
         }
 
