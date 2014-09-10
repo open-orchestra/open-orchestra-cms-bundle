@@ -48,6 +48,7 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::SEARCH,
             DisplayBlockInterface::SEARCH_RESULT,
             DisplayBlockInterface::TINYMCEWYSIWYG,
+            DisplayBlockInterface::CONFIGURABLE_CONTENT,
         );
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
             $blockType = $config['blocks'];

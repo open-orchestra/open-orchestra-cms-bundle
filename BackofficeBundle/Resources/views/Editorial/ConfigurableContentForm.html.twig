@@ -1,0 +1,20 @@
+{{ form(form) }}
+
+<script type="text/javascript">
+$("#block_contentTypeId_contentTypeId").change(function() {
+    var contentTypeId = $("#block_contentTypeId_contentTypeId").val();
+    
+    $.ajax({
+        type: 'GET',
+        url: '{{ path('php_orchestra_api_content_list') }}',
+        data: {content_type: contentTypeId},
+        success: function(response)
+        {
+            $('#block_contentId').find("option").remove();
+            $.each(response.contents, function(index, item) {
+                $('#block_contentId').append(new Option(item['name'], item['content_id']));
+            });
+        }
+    });
+});
+</script>
