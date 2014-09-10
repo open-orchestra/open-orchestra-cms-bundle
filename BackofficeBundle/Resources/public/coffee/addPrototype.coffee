@@ -85,6 +85,9 @@ PO.formPrototype:: =
 
     # Display the input in the page before the add button
     @addButtonContainer.before newPrototype
+    $("[data-prototype]", @addButtonContainer.prev()).each ->
+      PO.formPrototypes.addPrototype $(this)
+      return
     @createRemoveButton @addButtonContainer.prev()
     @toogleAddButton()
     return

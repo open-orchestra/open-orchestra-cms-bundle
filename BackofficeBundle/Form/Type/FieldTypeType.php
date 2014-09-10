@@ -41,7 +41,7 @@ class FieldTypeType extends AbstractType
         $builder
             ->add('fieldId', 'text')
             ->add('labels', 'collection', array(
-                'type' => new TranslatedValueType(),
+                'type' => 'translated_value',
                 'allow_add' => false,
                 'allow_delete' => false,
                 'required' => false,

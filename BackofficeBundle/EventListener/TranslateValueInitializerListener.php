@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventListener;
 
+use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelBundle\Document\TranslatedValue;
 use PHPOrchestra\ModelBundle\Model\TranslatedValueContainerInterface;
 use Symfony\Component\Form\FormEvent;
@@ -29,18 +30,19 @@ class TranslateValueInitializerListener
         /** @var TranslatedValueContainerInterface $data */
         $data = $event->getData();
 
-        $translatedProperties = $data->getTranslatedProperties();
-        foreach ($translatedProperties as $property) {
-            $properties = $data->$property();
-            $this->generateDefaultValues($properties);
+        if ($data) {
+            $translatedProperties = $data->getTranslatedProperties();
+            foreach ($translatedProperties as $property) {
+                $properties = $data->$property();
+                $this->generateDefaultValues($properties);
+            }
         }
-
     }
 
     /**
-     * @param $properties
+     * @param Collection $properties
      */
-    protected function generateDefaultValues($properties)
+    protected function generateDefaultValues(Collection $properties)
     {
         foreach ($this->defaultLanguages as $defaultLanguage) {
             if (!$properties->exists(function ($key, $element) use ($defaultLanguage) {

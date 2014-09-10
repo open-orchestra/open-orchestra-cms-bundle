@@ -46,7 +46,7 @@ class ContentTypeType extends AbstractType
         $builder
             ->add('contentTypeId', 'text')
             ->add('names', 'collection', array(
-                'type' => new TranslatedValueType(),
+                'type' => 'translated_value',
                 'allow_add' => false,
                 'allow_delete' => false,
                 'required' => false,
