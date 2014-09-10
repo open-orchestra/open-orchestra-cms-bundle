@@ -81,17 +81,15 @@
     {% for contentType in contentTypes %}
         <li data-element-id="{{ contentType.contentTypeId }}"
             data-type="ContentType"
-                >
-            <div>
-                <a
-                        href="#contents"
-                        class="ajax-tableview-load"
-                        data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
-                        data-displayed-elements="content_id, content_type, name, status"
-                        >
-                    {{ contentType.name }}
-                </a>
-            </div>
+        >
+            <a
+                id="nav-contents-{{contentType.contentTypeId}}" 
+                href="#contents/list/{{contentType.contentTypeId}}"
+                data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
+                data-displayed-elements="content_id, content_type, name, status"
+            >
+                {{ contentType.names| trans_choose }}
+            </a>
         </li>
     {% endfor %}
 {% endmacro %}

@@ -15,9 +15,10 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
+    protected $contentTypeRepository;
+    protected $transaltionChoiceManager;
     protected $contentClass = 'content';
     protected $contentAttributeClass = 'attribute';
-    protected $contentTypeRepository;
 
     /**
      * Set up the test
@@ -26,7 +27,14 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentTypeRepository');
 
-        $this->form = new ContentType($this->contentTypeRepository, $this->contentClass, $this->contentAttributeClass);
+        $this->transaltionChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
+
+        $this->form = new ContentType(
+            $this->contentTypeRepository,
+            $this->contentClass,
+            $this->contentAttributeClass,
+            $this->transaltionChoiceManager
+        );
     }
 
     /**

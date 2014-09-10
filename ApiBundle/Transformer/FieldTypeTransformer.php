@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\FieldTypeFacade;
+use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Document\FieldType;
 use PHPOrchestra\ModelBundle\Model\FieldTypeInterface;
 
@@ -12,6 +13,16 @@ use PHPOrchestra\ModelBundle\Model\FieldTypeInterface;
  */
 class FieldTypeTransformer extends AbstractTransformer
 {
+    protected $translationChoiceManager;
+
+    /**
+     * @param TranslationChoiceManager $translationChoiceManager
+     */
+    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    {
+        $this->translationChoiceManager = $translationChoiceManager;
+    }
+
     /**
      * @param FieldTypeInterface $mixed
      *
@@ -22,7 +33,7 @@ class FieldTypeTransformer extends AbstractTransformer
         $facade = new FieldTypeFacade();
 
         $facade->fieldId = $mixed->getFieldId();
-        $facade->label = $mixed->getLabel();
+        $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
         $facade->defaultValue = $mixed->getDefaultValue();
         $facade->searchable = $mixed->getSearchable();
         $facade->type = $mixed->getType();
