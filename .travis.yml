@@ -14,8 +14,7 @@ before_script:
   - phpenv config-add .travis.php.ini
   - composer install
 
-script: 
-  - ./bin/phpunit ApiBundle
-  - ./bin/phpunit BackofficeBundle/Test
-  - ./bin/phpunit CMSBundle
+script: ./bin/phpunit
 
+after_script:
+  - ./bin/ocular code-coverage:upload --access-token="0ab85d09ea536dc6a7f03316b495cc078d8bee02c7c74974bbfd1fe280425a16" --format=php-clover build/logs/clover.xml

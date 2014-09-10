@@ -12,4 +12,4 @@ tools:
     php_pdepend: true
     php_analyzer: false
     sensiolabs_security_checker: true
-    
+    external_code_coverage: true
