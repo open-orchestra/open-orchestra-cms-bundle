@@ -3,13 +3,12 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
-use PHPOrchestra\ModelBundle\Model\StatusableInterface;
+use PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType;
 
 /**
- * Class StatusTypeTest
+ * Class TranslatedValueCollectionTypeTest
  */
-class StatusTypeTest extends \PHPUnit_Framework_TestCase
+class TranslatedValueCollectionTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
 
@@ -18,7 +17,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->form = new StatusType();
+        $this->form = new TranslatedValueCollectionType();
     }
 
     /**
@@ -26,7 +25,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('status', $this->form->getName());
+        $this->assertSame('translated_value_collection', $this->form->getName());
     }
 
     /**
@@ -34,7 +33,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testParent()
     {
-        $this->assertSame('document', $this->form->getParent());
+        $this->assertSame('collection', $this->form->getParent());
     }
 
     /**
@@ -47,8 +46,10 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'class' => 'PHPOrchestra\ModelBundle\Document\Status',
-            'property' => 'labels',
+            'type' => 'translated_value',
+            'allow_add' => false,
+            'allow_delete' => false,
+            'required' => false,
         ));
     }
 }

@@ -45,17 +45,9 @@ class ContentTypeType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
             ->add('contentTypeId', 'text')
-            ->add('names', 'collection', array(
-                'type' => 'translated_value',
-                'allow_add' => false,
-                'allow_delete' => false,
-                'required' => false,
-            ))
+            ->add('names', 'translated_value_collection')
             ->add('version', 'text')
-            ->add('status', 'document', array(
-                'class' => 'PHPOrchestra\ModelBundle\Document\Status',
-                'property' => 'name'
-            ));
+            ->add('status', 'status');
         $builder->add('fields', 'collection', array(
             'type' => 'field_type',
             'allow_add' => true,

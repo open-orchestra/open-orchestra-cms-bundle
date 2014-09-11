@@ -40,12 +40,7 @@ class FieldTypeType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
             ->add('fieldId', 'text')
-            ->add('labels', 'collection', array(
-                'type' => 'translated_value',
-                'allow_add' => false,
-                'allow_delete' => false,
-                'required' => false,
-            ))
+            ->add('labels', 'translated_value_collection')
             ->add('defaultValue', 'text')
             ->add('searchable', 'text')
             ->add('type', 'text');

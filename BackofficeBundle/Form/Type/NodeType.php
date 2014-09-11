@@ -41,10 +41,7 @@ class NodeType extends AbstractType
             ->add('path', 'text')
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
-            ->add('status', 'document', array(
-                'class' => 'PHPOrchestra\ModelBundle\Document\Status',
-                'property' => 'name'
-            ));
+            ->add('status', 'status');
 
         $builder->addEventSubscriber(new NodeTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());

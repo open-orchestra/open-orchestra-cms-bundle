@@ -12,18 +12,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class StatusType extends AbstractType
 {
-    protected $choices;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->choices[StatusableInterface::STATUS_PUBLISHED] = 'php_orchestra_backoffice.form.status.published';
-        $this->choices[StatusableInterface::STATUS_DRAFT] = 'php_orchestra_backoffice.form.status.draft';
-        $this->choices[StatusableInterface::STATUS_PENDING] = 'php_orchestra_backoffice.form.status.pending';
-    }
-
     /**
      * @param OptionsResolverInterface $resolver
      */
@@ -31,7 +19,8 @@ class StatusType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'choices' => $this->choices,
+                'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+                'property' => 'labels',
             )
         );
     }
@@ -41,7 +30,7 @@ class StatusType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
+        return 'document';
     }
 
     /**
@@ -49,6 +38,6 @@ class StatusType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_status';
+        return 'status';
     }
 }
