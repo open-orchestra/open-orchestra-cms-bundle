@@ -22,7 +22,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   showNode: function(nodeId) {
-  this.initDisplayRouteChanges();
+    this.initDisplayRouteChanges();
     showNode($("#nav-node-" + nodeId).data("url"));
   },
 
@@ -46,6 +46,11 @@ var OrchestraBORouter = Backbone.Router.extend({
     tableViewLoad($("#nav-contentTypes"));
   },
 
+  createTemplate: function() {
+    var templateRoot = $("#nav-createTemplate");
+    this.showNodeForm(templateRoot);
+  },
+
   listTranslations: function() {
     drawBreadCrumb();
     return new TranslationView(
@@ -65,6 +70,21 @@ var OrchestraBORouter = Backbone.Router.extend({
     
     drawBreadCrumb();
     displayLoader();
+  },
+
+  showNodeForm: function(parentNode) {
+    $('.modal-title').text(parentNode.text());
+    $.ajax({
+      url: parentNode.data('url'),
+      method: 'GET',
+      success: function(response) {
+        $('#OrchestraBOModal').modal('show');
+        var view;
+        return view = new adminFormView({
+          html: response
+        });
+      }
+    }); 
   },
 
 });

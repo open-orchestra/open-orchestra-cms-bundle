@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class FieldTypeTypeTest
@@ -18,6 +19,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     protected $builder;
     protected $resolver;
     protected $translator;
+    protected $translateValueInitializer;
     protected $translatedLabel = 'existing option';
 
     /**
@@ -33,7 +35,9 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
 
-        $this->form = new FieldTypeType($this->translator);
+        $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+
+        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer);
     }
 
     /**
@@ -69,5 +73,9 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_option.add');
         Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_option.new');
         Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_option.delete');
+        Phake::verify($this->builder)->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            array($this->translateValueInitializer, 'preSetData')
+        );
     }
 }

@@ -84,7 +84,7 @@
                 data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
                 data-displayed-elements="content_id, content_type, name, status"
             >
-                {{ contentType.name }}
+                {{ contentType.names| trans_choose }}
             </a>
         </li>
     {% endfor %}

@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
@@ -17,17 +18,25 @@ class ContentType extends AbstractType
     protected $contentTypeRepository;
     protected $contentClass;
     protected $contentAttributClass;
+    protected $translationChoiceManager;
 
     /**
-     * @param ContentTypeRepository $contentTypeRepository
-     * @param string                $contentClass
-     * @param string                $contentAttributClass
+     * @param ContentTypeRepository    $contentTypeRepository
+     * @param string                   $contentClass
+     * @param string                   $contentAttributClass
+     * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(ContentTypeRepository $contentTypeRepository, $contentClass, $contentAttributClass)
+    public function __construct(
+        ContentTypeRepository $contentTypeRepository,
+        $contentClass,
+        $contentAttributClass,
+        TranslationChoiceManager $translationChoiceManager
+    )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentClass = $contentClass;
         $this->contentAttributClass = $contentAttributClass;
+        $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
@@ -44,7 +53,11 @@ class ContentType extends AbstractType
                 'class' => 'PHPOrchestra\ModelBundle\Document\ContentType'
             ));
 
-        $builder->addEventSubscriber(new ContentTypeSubscriber($this->contentTypeRepository, $this->contentAttributClass));
+        $builder->addEventSubscriber(new ContentTypeSubscriber(
+            $this->contentTypeRepository,
+            $this->contentAttributClass,
+            $this->translationChoiceManager
+        ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

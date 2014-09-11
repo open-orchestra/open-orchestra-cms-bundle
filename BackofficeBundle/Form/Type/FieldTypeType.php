@@ -2,9 +2,11 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -13,13 +15,19 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class FieldTypeType extends AbstractType
 {
+    protected $translateValueInitializer;
     protected $translator;
 
     /**
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface               $translator
+     * @param TranslateValueInitializerListener $translateValueInitializer
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(
+        TranslatorInterface $translator,
+        TranslateValueInitializerListener $translateValueInitializer
+    )
     {
+        $this->translateValueInitializer = $translateValueInitializer;
         $this->translator = $translator;
     }
 
@@ -29,9 +37,15 @@ class FieldTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
             ->add('fieldId', 'text')
-            ->add('label', 'text')
+            ->add('labels', 'collection', array(
+                'type' => 'translated_value',
+                'allow_add' => false,
+                'allow_delete' => false,
+                'required' => false,
+            ))
             ->add('defaultValue', 'text')
             ->add('searchable', 'text')
             ->add('type', 'text');
