@@ -71,7 +71,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
                 'data' => $contentTypeId,
                 'attr' => array(
                     'class' => 'contentTypeSelector',
-                    'data-url' => $this->router->generate('php_orchestra_api_content_type_list')
+                    'data-url' => $this->router->generate('php_orchestra_api_content_list')
                 )
             )
         );
