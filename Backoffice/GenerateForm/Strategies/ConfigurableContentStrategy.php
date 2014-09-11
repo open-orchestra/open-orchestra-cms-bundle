@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
+use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Transformer\TransformerManager;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use PHPOrchestra\ModelBundle\Repository\ContentRepository;
@@ -18,6 +19,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $contentTypeRepository = null;
     protected $contentRepository = null;
     protected $router = null;
+    protected $translator = null;
     
     /**
      * Constructor
@@ -29,11 +31,13 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     public function __construct(
         ContentTypeRepository $contentTypeRepository,
         ContentRepository $contentRepository,
-        $router
+        $router,
+        TranslatorInterface $translator
     ) {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
         $this->router = $router;
+        $this->translator = $translator;
     }
 
     /**
@@ -79,7 +83,8 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
                 'attr' => array(
                     'class' => 'contentTypeSelector',
                     'data-url' => $this->router->generate('php_orchestra_api_content_list')
-                )
+                ),
+                'label' => $this->translator->trans('php_orchestra_backoffice.block.configurable_content.contentTypeId')
             )
         );
         
@@ -132,7 +137,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         $options = array(
             'mapped' => false,
             'choices' => $contents,
-            'label' => 'Content'
+            'label' => $this->translator->trans('php_orchestra_backoffice.block.configurable_content.contentId')
         );
         if ($contentId != '') {
             $options['data'] = $contentId;

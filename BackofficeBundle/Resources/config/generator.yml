@@ -62,6 +62,7 @@ services:
             - @php_orchestra_model.repository.content_type
             - @php_orchestra_model.repository.content
             - @router
+            - @translator
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
             
