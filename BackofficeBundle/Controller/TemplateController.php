@@ -33,7 +33,6 @@ class TemplateController extends Controller
             $template->setLanguage('fr');
         } else {
             $template = $templateRepository->findOneByTemplateId($templateId);
-            $template->setVersion($template->getVersion() + 1);
         }
 
         $form = $this->createForm(
