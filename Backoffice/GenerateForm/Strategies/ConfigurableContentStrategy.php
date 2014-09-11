@@ -93,18 +93,11 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         if (array_key_exists('contentTypeId', $attributes)) {
             $contentTypeId = $attributes['contentTypeId'];
         }
+        $contentId = '';
+        if (array_key_exists('contentId', $attributes)) {
+            $contentId = $attributes['contentId'];
+        }
         
-        $this->formModifier($form, $contentTypeId);
-    }
-
-    /**
-     * Populate content choice formType according to contentType choice formType selected value
-     *
-     * @param FormInterface $form
-     * @param string        $contentTypeId
-     */
-    protected function formModifier (FormInterface $form, $contentTypeId, $contentId = '')
-    {
         $contents = array();
         if ($contentTypeId != '') {
             $criteria = array(
