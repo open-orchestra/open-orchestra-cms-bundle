@@ -60,7 +60,7 @@ class NodeFacade extends AbstractFacade
     public $language;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\StatusFacade")
      */
     public $status;
 
