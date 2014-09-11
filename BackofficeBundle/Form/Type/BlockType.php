@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
@@ -16,13 +17,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class BlockType extends AbstractType
 {
     protected $generateFormManager;
+    protected $translator;
 
     /**
      * @param GenerateFormManager $generateFormManager
      */
-    public function __construct(GenerateFormManager $generateFormManager)
+    public function __construct(GenerateFormManager $generateFormManager, TranslatorInterface $translator)
     {
         $this->generateFormManager = $generateFormManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -31,7 +34,11 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('component', 'orchestra_block');
+        $builder->add(
+            'component',
+            'orchestra_block',
+            array('label' => $this->translator->trans('php_orchestra_backoffice.block.component'))
+        );
         $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

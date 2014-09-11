@@ -16,10 +16,10 @@ use Symfony\Component\Form\FormInterface;
  */
 class ConfigurableContentStrategy extends AbstractBlockStrategy
 {
-    protected $contentTypeRepository = null;
-    protected $contentRepository = null;
-    protected $router = null;
-    protected $translator = null;
+    protected $contentTypeRepository;
+    protected $contentRepository;
+    protected $router;
+    protected $translator;
     
     /**
      * Constructor

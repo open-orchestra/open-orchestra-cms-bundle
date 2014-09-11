@@ -42,6 +42,7 @@ php_orchestra_backoffice:
             content_type:
                 list: Type de contenu
     block:
+        component: Choisissez un type de bloc
         configurable_content:
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
