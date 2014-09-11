@@ -19,6 +19,13 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $contentRepository = null;
     protected $router = null;
     
+    /**
+     * Constructor
+     * 
+     * @param $contentTypeRepository
+     * @param $contentRepository
+     * @param $router
+     */
     public function __construct(
         ContentTypeRepository $contentTypeRepository,
         ContentRepository $contentRepository,
@@ -80,11 +87,21 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         
     }
 
+    /**
+     * (non-PHPdoc)
+     * @see itkg/phporchestra-cms-bundle/PHPOrchestra/Backoffice/GenerateForm/Strategies/PHPOrchestra\Backoffice\GenerateForm\Strategies.AbstractBlockStrategy::alterFormAfterSubmit()
+     */
     public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block)
     {
         $this->updateContentChoice($form, $block);
     }
-    
+
+    /**
+     * Update form by populating contents choice according to content type selected
+     * 
+     * @param FormInterface $form
+     * @param BlockInterface $block
+     */
     protected function updateContentChoice(FormInterface $form, BlockInterface $block)
     {
         $attributes = $block->getAttributes();
