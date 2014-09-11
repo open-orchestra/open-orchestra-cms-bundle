@@ -24,6 +24,12 @@ interface GenerateFormInterface
     public function buildForm(FormInterface $form, BlockInterface $block);
 
     /**
+     * @param FormInterface  $form
+     * @param BlockInterface $block
+     */
+    public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block);
+
+    /**
      * @return string
      */
     public function getName();

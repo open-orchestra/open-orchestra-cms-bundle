@@ -42,15 +42,44 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $block = $form->getData();
         $blockAttributes = $block->getAttributes();
         $data = $event->getData();
-
+        
         foreach ($data as $key => $value) {
             if ('component' == $key || 'submit' == $key) {
                 continue;
             }
-            $blockAttributes[$key] = (is_array(json_decode($value, true)))?json_decode($value, true): $value;
+            
+            $blockAttributes[$key] = $value;
+            
+           /* print_r($key."<br>");
+            print_r($value);exit();*/
+            
+            if (is_array($value) && isset($value['contentTypeId']))
+                $blockAttributes[$key] = $value['contentTypeId'];
+            
+            /*if (is_array($value)) {
+                foreach($value as $id => $name) {
+                    $blockAttributes[$key] = $id;
+                }
+            }*/
+            
+            if (is_string($value) && is_array(json_decode($value, true))) {
+                $blockAttributes[$key] = json_decode($value, true);
+            }
         }
-
+        
         $block->setAttributes($blockAttributes);
+      //  print_r($data);exit();
+        $this->generateFormManager->alterFormAfterSubmit($form, $block);
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function postSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+        
     }
 
     /**

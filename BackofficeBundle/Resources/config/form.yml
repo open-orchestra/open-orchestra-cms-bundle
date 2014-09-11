@@ -5,7 +5,6 @@ parameters:
     php_orchestra_backoffice.type.template_area.class: PHPOrchestra\BackofficeBundle\Form\Type\TemplateAreaType
     php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
     php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
-    php_orchestra_backoffice.type.content_type_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeChoiceType
     php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
     php_orchestra_backoffice.type.content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
     php_orchestra_backoffice.type.content_type.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
@@ -55,13 +54,6 @@ services:
             - @php_orchestra_model.repository.node
         tags:
             - { name: form.type, alias: existing_block }
-    # Content Type Choice from type
-    php_orchestra_backoffice.type.content_type_choice:
-        class: %php_orchestra_backoffice.type.content_type_choice.class%
-        arguments:
-            - @php_orchestra_model.repository.content_type
-        tags:
-            - { name: form.type, alias: content_type_choice }
 
     php_orchestra_backoffice.type.orchestra_block:
         class: %php_orchestra_backoffice.type.orchestra_block.class%

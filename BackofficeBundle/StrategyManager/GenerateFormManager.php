@@ -34,4 +34,18 @@ class GenerateFormManager
             }
         }
     }
+    
+    /**
+     * @param FormInterface  $form
+     * @param BlockInterface $block
+     */
+    public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block)
+    {
+        /** @var GenerateFormInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                $strategy->alterFormAfterSubmit($form, $block);
+            }
+        }
+    }
 }

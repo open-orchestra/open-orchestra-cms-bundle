@@ -50,12 +50,7 @@ class BlockController extends Controller
             );
         }
 
-        $template = 'PHPOrchestraBackofficeBundle:Editorial:template.html.twig';
-        if (isset($form->template)) {
-            $template = $form->template;
-        }
-        
-        return $this->render($template, array(
+        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView()
         ));
     }
