@@ -33,7 +33,10 @@ class TemplateType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('language', 'orchestra_language')
-            ->add('status', 'orchestra_status')
+            ->add('status', 'document', array(
+                'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+                'property' => 'name'
+            ))
             ->add('boDirection', 'orchestra_direction');
 
         $builder->addEventSubscriber(new TemplateTypeSubscriber());

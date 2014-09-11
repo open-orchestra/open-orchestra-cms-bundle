@@ -52,7 +52,10 @@ class ContentTypeType extends AbstractType
                 'required' => false,
             ))
             ->add('version', 'text')
-            ->add('status', 'orchestra_status');
+            ->add('status', 'document', array(
+                'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+                'property' => 'name'
+            ));
         $builder->add('fields', 'collection', array(
             'type' => 'field_type',
             'allow_add' => true,
