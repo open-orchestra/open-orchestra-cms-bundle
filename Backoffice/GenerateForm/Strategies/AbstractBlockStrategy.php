@@ -12,35 +12,10 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractBlockStrategy implements GenerateFormInterface
 {
     /**
-     * @param BlockInterface $block
-     *
-     * @return bool
-     */
-    public function support(BlockInterface $block)
-    {
-        return false;
-    }
-
-    /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
-     */
-    public function buildForm(FormInterface $form, BlockInterface $block)
-    {
-    }
-
-    /**
      * @param FormInterface  $form
      * @param BlockInterface $block
      */
     public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block)
     {
-    }
-
-    /**
-     * @return string
-     */
-    public function getName() {
-        return 'abstract_block_strategy';
     }
 }

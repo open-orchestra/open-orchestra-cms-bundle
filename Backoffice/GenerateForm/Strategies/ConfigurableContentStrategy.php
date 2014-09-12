@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Transformer\TransformerManager;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use PHPOrchestra\ModelBundle\Repository\ContentRepository;
@@ -19,7 +18,6 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $contentTypeRepository;
     protected $contentRepository;
     protected $router;
-    protected $translator;
     
     /**
      * Constructor
@@ -31,13 +29,11 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     public function __construct(
         ContentTypeRepository $contentTypeRepository,
         ContentRepository $contentRepository,
-        $router,
-        TranslatorInterface $translator
+        $router
     ) {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
         $this->router = $router;
-        $this->translator = $translator;
     }
 
     /**
@@ -72,21 +68,17 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
             
         }
         
-        $form->add(
-            'contentTypeId',
-            'choice',
-            array(
-                'mapped' => false,
-                'required' => false,
-                'choices' => $choices,
-                'data' => $contentTypeId,
-                'attr' => array(
-                    'class' => 'contentTypeSelector',
-                    'data-url' => $this->router->generate('php_orchestra_api_content_list')
-                ),
-                'label' => $this->translator->trans('php_orchestra_backoffice.block.ConfigurableContent.contentTypeId')
-            )
-        );
+        $form->add('contentTypeId', 'choice', array(
+            'mapped' => false,
+            'required' => false,
+            'choices' => $choices,
+            'data' => $contentTypeId,
+            'attr' => array(
+                'class' => 'contentTypeSelector',
+                'data-url' => $this->router->generate('php_orchestra_api_content_list')
+            ),
+            'label' => 'php_orchestra_backoffice.block.ConfigurableContent.contentTypeId'
+        ));
         
         $this->updateContentChoice($form, $block);
         
@@ -137,7 +129,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         $options = array(
             'mapped' => false,
             'choices' => $contents,
-            'label' => $this->translator->trans('php_orchestra_backoffice.block.ConfigurableContent.contentId')
+            'label' => 'php_orchestra_backoffice.block.ConfigurableContent.contentId'
         );
         if ($contentId != '') {
             $options['data'] = $contentId;
