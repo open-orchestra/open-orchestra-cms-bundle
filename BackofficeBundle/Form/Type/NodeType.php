@@ -41,7 +41,7 @@ class NodeType extends AbstractType
             ->add('path', 'text')
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
-            ->add('status', 'status');
+            ->add('status', 'orchestra_status');
 
         $builder->addEventSubscriber(new NodeTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());

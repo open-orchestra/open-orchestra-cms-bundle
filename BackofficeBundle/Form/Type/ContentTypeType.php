@@ -47,7 +47,7 @@ class ContentTypeType extends AbstractType
             ->add('contentTypeId', 'text')
             ->add('names', 'translated_value_collection')
             ->add('version', 'text')
-            ->add('status', 'status');
+            ->add('status', 'orchestra_status');
         $builder->add('fields', 'collection', array(
             'type' => 'field_type',
             'allow_add' => true,

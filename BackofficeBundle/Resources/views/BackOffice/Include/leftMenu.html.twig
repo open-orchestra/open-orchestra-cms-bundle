@@ -51,6 +51,15 @@
                         </a>
                     </li>
                     <li>
+                        <a
+                            href="#status/list"
+                            id="nav-status"
+                            data-url="{{ path('php_orchestra_api_status_list') }}"
+                            data-displayed-elements="label, published">
+                            {{ 'php_orchestra_backoffice.left_menu.administration.status.list'|trans }}
+                        </a>
+                    </li>
+                    <li>
                         <a href="#translation" id="nav-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
                     </li>
                 </ul>

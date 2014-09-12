@@ -3,26 +3,29 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\SiteType;
+use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
+use Symfony\Component\Form\FormEvents;
 
 /**
- * Class SiteTypeTest
+ * Class StatusTypeTest
  */
-class SiteTypeTest extends \PHPUnit_Framework_TestCase
+class StatusTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SiteType
+     * @var StatusType
      */
     protected $form;
 
-    protected $siteClass = 'site';
+    protected $statusClass = 'site';
+    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new SiteType($this->siteClass);
+        $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->form = new StatusType($this->statusClass, $this->translateValueInitializer);
     }
 
     /**
@@ -38,7 +41,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('site', $this->form->getName());
+        $this->assertSame('status', $this->form->getName());
     }
 
     /**
@@ -52,8 +55,14 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(6))->add(Phake::anyParameters());
+        Phake::verify($builder)->add('name');
+        Phake::verify($builder)->add('published', null, array('required' => false));
+        Phake::verify($builder)->add('labels', 'translated_value_collection');
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder)->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            array($this->translateValueInitializer, 'preSetData')
+        );
     }
 
     /**
@@ -66,7 +75,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteClass
+            'data_class' => $this->statusClass
         ));
     }
 }

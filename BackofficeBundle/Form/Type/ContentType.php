@@ -47,7 +47,7 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('name', 'text')
-            ->add('status', 'status')
+            ->add('status', 'orchestra_status')
             ->add('language', 'orchestra_language')
             ->add('contentType', 'document', array(
                 'class' => 'PHPOrchestra\ModelBundle\Document\ContentType'

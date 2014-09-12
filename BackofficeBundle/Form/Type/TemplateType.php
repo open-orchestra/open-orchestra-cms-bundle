@@ -33,7 +33,7 @@ class TemplateType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('language', 'orchestra_language')
-            ->add('status', 'status')
+            ->add('status', 'orchestra_status')
             ->add('boDirection', 'orchestra_direction');
 
         $builder->addEventSubscriber(new TemplateTypeSubscriber());

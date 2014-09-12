@@ -38,6 +38,8 @@ php_orchestra_backoffice:
                 list: Websites
             content_type:
                 list: Content type
+            status:
+                list: Status
             routing_cache:
                 dialog:
                     title: Purge routing cache
