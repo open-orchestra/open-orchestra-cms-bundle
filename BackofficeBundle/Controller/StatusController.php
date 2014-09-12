@@ -42,8 +42,9 @@ class StatusController extends Controller
             $documentManager->persist($status);
             $documentManager->flush();
 
-            return $this->redirect(
-                $this->generateUrl('homepage')
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.status.success')
             );
         }
 
@@ -79,8 +80,9 @@ class StatusController extends Controller
             $documentManager->persist($status);
             $documentManager->flush();
 
-            return $this->redirect(
-                $this->generateUrl('homepage')
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.status.creation')
             );
         }
 

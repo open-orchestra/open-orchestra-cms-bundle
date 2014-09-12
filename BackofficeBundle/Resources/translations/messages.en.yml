@@ -18,6 +18,9 @@ php_orchestra_backoffice:
         website:
             success: The website has been modified
             creation: The website has been created
+        status:
+            success: The status has been modified
+            creation: The status has been created
         content:
             success: The content has been modified
         content_type:
