@@ -84,7 +84,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
                     'class' => 'contentTypeSelector',
                     'data-url' => $this->router->generate('php_orchestra_api_content_list')
                 ),
-                'label' => $this->translator->trans('php_orchestra_backoffice.block.configurable_content.contentTypeId')
+                'label' => $this->translator->trans('php_orchestra_backoffice.block.ConfigurableContent.contentTypeId')
             )
         );
         
@@ -137,7 +137,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         $options = array(
             'mapped' => false,
             'choices' => $contents,
-            'label' => $this->translator->trans('php_orchestra_backoffice.block.configurable_content.contentId')
+            'label' => $this->translator->trans('php_orchestra_backoffice.block.ConfigurableContent.contentId')
         );
         if ($contentId != '') {
             $options['data'] = $contentId;
@@ -151,7 +151,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'ConfigurableContent';
+        return 'configurable_content';
     }
 
 }

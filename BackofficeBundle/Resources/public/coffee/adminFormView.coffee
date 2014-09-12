@@ -6,6 +6,7 @@ adminFormView = Backbone.View.extend(
     return
   render: ->
     $('.modal-body', @$el).html @html
+    $('.modal-title', @$el).html $('#dynamic-modal-title').html()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
