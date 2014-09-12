@@ -8,9 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class StatusType
+ * Class OrchestraStatusType
  */
-class StatusType extends AbstractType
+class OrchestraStatusType extends AbstractType
 {
     /**
      * @param OptionsResolverInterface $resolver
@@ -38,6 +38,6 @@ class StatusType extends AbstractType
      */
     public function getName()
     {
-        return 'status';
+        return 'orchestra_status';
     }
 }

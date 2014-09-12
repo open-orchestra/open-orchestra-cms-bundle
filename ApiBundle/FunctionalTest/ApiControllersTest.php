@@ -47,6 +47,7 @@ class ApiControllersTest extends WebTestCase
             array('/api/content'),
             array('/api/content-type'),
             array('/api/site'),
+            array('/api/status'),
             array('/api/template/template_full'),
         );
     }

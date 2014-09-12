@@ -6,6 +6,7 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\StatusFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Model\StatusInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class StatusTransformer
@@ -33,6 +34,17 @@ class StatusTransformer extends AbstractTransformer
 
         $facade->published = $mixed->isPublished();
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
+
+        $facade->addLink('_self_delete', $this->getRouter()->generate(
+            'php_orchestra_api_status_delete',
+            array('statusId' => $mixed->getId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+        $facade->addLink('_self_form', $this->getRouter()->generate(
+            'php_orchestra_backoffice_status_form',
+            array('statusId' => $mixed->getId()),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }

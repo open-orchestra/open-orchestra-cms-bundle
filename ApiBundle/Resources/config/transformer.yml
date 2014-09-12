@@ -10,6 +10,7 @@ parameters:
     php_orchestra_api.transformer.content.class: PHPOrchestra\ApiBundle\Transformer\ContentTransformer
     php_orchestra_api.transformer.content_attribute.class: PHPOrchestra\ApiBundle\Transformer\ContentAttributeTransformer
     php_orchestra_api.transformer.content_collection.class: PHPOrchestra\ApiBundle\Transformer\ContentCollectionTransformer
+    php_orchestra_api.transformer.status_collection.class: PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer
     php_orchestra_api.transformer.site.class: PHPOrchestra\ApiBundle\Transformer\SiteTransformer
     php_orchestra_api.transformer.site_collection.class: PHPOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
     php_orchestra_api.transformer.field_type.class: PHPOrchestra\ApiBundle\Transformer\FieldTypeTransformer
@@ -69,6 +70,10 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.site_collection:
         class: %php_orchestra_api.transformer.site_collection.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.status_collection:
+        class: %php_orchestra_api.transformer.status_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.field_type:

@@ -3,13 +3,13 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
+use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraStatusType;
 use PHPOrchestra\ModelBundle\Model\StatusableInterface;
 
 /**
- * Class StatusTypeTest
+ * Class OrchestraStatusTypeTest
  */
-class StatusTypeTest extends \PHPUnit_Framework_TestCase
+class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
 
@@ -18,7 +18,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->form = new StatusType();
+        $this->form = new OrchestraStatusType();
     }
 
     /**
@@ -26,7 +26,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('status', $this->form->getName());
+        $this->assertSame('orchestra_status', $this->form->getName());
     }
 
     /**
