@@ -43,8 +43,9 @@ class ContentTypeController extends Controller
             $documentManager->persist($contentType);
             $documentManager->flush();
 
-            return $this->redirect(
-                $this->generateUrl('homepage')
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success')
             );
         }
 
@@ -55,7 +56,6 @@ class ContentTypeController extends Controller
 
     /**
      * @param Request $request
-     * @param string  $contentTypeId
      *
      * @Config\Route("/content-type/new", name="php_orchestra_backoffice_content_type_new")
      * @Config\Method({"GET", "POST"})
