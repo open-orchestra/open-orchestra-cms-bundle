@@ -61,15 +61,6 @@ class BlockTypeSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param FormEvent $event
-     */
-    public function postSubmit(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $data = $event->getData();
-    }
-
-    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
