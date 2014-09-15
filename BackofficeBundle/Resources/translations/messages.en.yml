@@ -41,11 +41,9 @@ php_orchestra_backoffice:
                 list: Websites
             content_type:
                 list: Content type
-            status:
-                list: Status
-            routing_cache:
-                dialog:
-                    title: Purge routing cache
-                    message: You are about to remove the routing cache. Would you like to continue?
-                title: Routing cache
-                ok: Routing cache has been cleared
+    block:
+        component: Choose a block type
+        ConfigurableContent:
+            title: Configurable content block
+            contentTypeId: Choose a content type
+            contentId: Choose a content

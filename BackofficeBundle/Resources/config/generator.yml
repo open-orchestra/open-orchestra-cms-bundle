@@ -10,6 +10,7 @@ parameters:
     php_orchestra_backoffice.tinymcewysiwyg.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\TinyMCEWysiwygStrategy
     php_orchestra_backoffice.search.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\SearchStrategy
     php_orchestra_backoffice.search_result.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\SearchResultStrategy
+    php_orchestra_backoffice.configurable_content.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\ConfigurableContentStrategy
 
 services:
     php_orchestra_backoffice.generate_form_manager:
@@ -53,5 +54,13 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.search_result.generate_form:
         class: %php_orchestra_backoffice.search_result.generate_form.class%
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.configurable_content.generate_form:
+        class: %php_orchestra_backoffice.configurable_content.generate_form.class%
+        arguments: 
+            - @php_orchestra_model.repository.content_type
+            - @php_orchestra_model.repository.content
+            - @router
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }

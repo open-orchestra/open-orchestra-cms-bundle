@@ -31,7 +31,11 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('component', 'orchestra_block');
+        $builder->add(
+            'component',
+            'orchestra_block',
+            array('label' => 'php_orchestra_backoffice.block.component')
+        );
         $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

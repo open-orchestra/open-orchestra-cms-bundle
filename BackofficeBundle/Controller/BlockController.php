@@ -46,12 +46,13 @@ class BlockController extends Controller
 
             return $this->redirect(
                 $this->generateUrl('homepage')
-                . '#' . $nodeId
+                . '#node/show/' . $nodeId
             );
         }
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'blockType' => $form->get('component')->getData()
         ));
     }
 }

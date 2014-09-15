@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
+use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * Class SearchResultStrategy
  */
-class SearchResultStrategy implements GenerateFormInterface
+class SearchResultStrategy extends AbstractBlockStrategy
 {
     /**
      * @param BlockInterface $block

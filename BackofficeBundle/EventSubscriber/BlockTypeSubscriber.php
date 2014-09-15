@@ -47,10 +47,17 @@ class BlockTypeSubscriber implements EventSubscriberInterface
             if ('component' == $key || 'submit' == $key) {
                 continue;
             }
-            $blockAttributes[$key] = (is_array(json_decode($value, true)))?json_decode($value, true): $value;
+
+            $blockAttributes[$key] = $value;
+
+            if (is_string($value) && is_array(json_decode($value, true))) {
+                $blockAttributes[$key] = json_decode($value, true);
+            }
         }
 
         $block->setAttributes($blockAttributes);
+
+        $this->generateFormManager->alterFormAfterSubmit($form, $block);
     }
 
     /**
