@@ -43,27 +43,27 @@ php_orchestra_backoffice:
                 list: Content type
     block:
         component: Choose a block type
-        ConfigurableContent:
+        configurable_content:
             title: Configurable content block
             contentTypeId: Choose a content type
             contentId: Choose a content
-        Sample:
+        sample:
             title: Sample block
-        Carrousel:
+        carrousel:
             title: Carousel block
-        Contact:
+        contact:
             title: Contact block
-        Footer:
+        footer:
             title: Footer block
-        Header:
+        header:
             title: Header block
-        Menu:
+        menu:
             title: Menu block
-        Search:
+        search:
             title: Search block
-        SearchResult:
+        search_result:
             title: Search result block
-        tinyMCEWysiwyg:
+        tiny_mce_wysiwyg:
             title: Rich text block
-        News:
+        news:
             title: News block

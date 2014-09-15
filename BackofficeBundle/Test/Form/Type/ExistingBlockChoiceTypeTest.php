@@ -56,9 +56,9 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
     public function provideBlockInfos()
     {
         return array(
-            array('Sample', 'Main', 1),
-            array('News', 'Welcome', 3),
-            array('Search', 'fixture_full', 5),
+            array('sample', 'Main', 1),
+            array('news', 'Welcome', 3),
+            array('search', 'fixture_full', 5),
         );
     }
 

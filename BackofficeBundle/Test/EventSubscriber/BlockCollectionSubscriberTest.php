@@ -77,7 +77,7 @@ class BlockCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testWithOneNewBlockAddition()
     {
         $blockIndex = 1;
-        $newBlocks = array('Sample');
+        $newBlocks = array('sample');
         Phake::when($this->event)->getData()->thenReturn(array('newBlocks' => $newBlocks));
 
         Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
