@@ -85,8 +85,10 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * (non-PHPdoc)
-     * @see itkg/phporchestra-cms-bundle/PHPOrchestra/Backoffice/GenerateForm/Strategies/PHPOrchestra\Backoffice\GenerateForm\Strategies.AbstractBlockStrategy::alterFormAfterSubmit()
+     * Refresh the content choice after submission and before validation
+     * 
+     * @param FormInterface  $form
+     * @param BlockInterface $block
      */
     public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block)
     {
