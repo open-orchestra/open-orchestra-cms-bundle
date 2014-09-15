@@ -5,12 +5,14 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeTypeSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 
 /**
  * Class NodeType
@@ -18,13 +20,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class NodeType extends AbstractType
 {
     protected $nodeClass;
+    
+    protected $templateRepository;
 
     /**
-     * @param string $nodeClass
+     * @param string             $nodeClass
+     * @param TemplateRepository $templateRepository
      */
-    public function __construct($nodeClass)
+    public function __construct($nodeClass, TemplateRepository $templateRepository)
     {
         $this->nodeClass = $nodeClass;
+        $this->templateRepository = $templateRepository;
     }
 
     /**
@@ -38,6 +44,9 @@ class NodeType extends AbstractType
             ->add('nodeType', 'choice', array(
                 'choices' => array('page' => 'Page simple')
             ))
+            ->add('templateId', 'choice', array(
+                'choices' => $this->getChoices()
+            ))
             ->add('path', 'text')
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
@@ -46,6 +55,7 @@ class NodeType extends AbstractType
         $builder->addEventSubscriber(new NodeTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
     }
 
     /**
@@ -58,6 +68,19 @@ class NodeType extends AbstractType
         ));
     }
 
+    /**
+     * @return array
+     */
+    protected function getChoices(){
+        $templates = $this->templateRepository->findByDeleted(false);
+        $templatesChoices = array();
+        foreach($templates as $template){
+            $templatesChoices[$template->getTemplateId()] = $template->getName();
+        }
+        
+        return $templatesChoices;
+    }
+    
     /**
      * @return string
      */
