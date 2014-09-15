@@ -31,7 +31,6 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('component', 'hidden');
         $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

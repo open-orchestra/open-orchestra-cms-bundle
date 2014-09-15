@@ -52,7 +52,7 @@ class BlockController extends Controller
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView(),
-            'blockType' => $form->get('component')->getData()
+            'blockType' => $node->getBlocks()->get($blockNumber)->getComponent()
         ));
     }
 }
