@@ -29,7 +29,7 @@ class TemplateTransformer extends AbstractTransformer
         $facade->siteId = $mixed->getSiteId();
         $facade->templateId = $mixed->getTemplateId();
         $facade->language = $mixed->getLanguage();
-        $facade->status = $mixed->getStatus();
+        $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
         $facade->deleted = $mixed->getDeleted();
         $facade->boDirection = $mixed->getBoDirection();
 

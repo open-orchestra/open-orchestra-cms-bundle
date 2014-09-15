@@ -25,7 +25,7 @@ class ContentTypeFacade extends AbstractFacade
     public $version;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\StatusFacade")
      */
     public $status;
 

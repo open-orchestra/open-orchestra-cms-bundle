@@ -26,6 +26,7 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
 
             $formResources = $container->getParameter('twig.form.resources');
             $formResources[] = 'PHPOrchestraCMSBundle:Form:contentTypeFields.html.twig';
+            $formResources[] = 'PHPOrchestraBackofficeBundle:Form:form_div_layout.html.twig';
             $container->setParameter('twig.form.resources', $formResources);
         }
     }

@@ -2,26 +2,54 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Model\StatusableInterface;
+use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class StatusType
  */
 class StatusType extends AbstractType
 {
-    protected $choices;
+    protected $statusClass;
+    protected $translateValueInitializer;
 
     /**
-     * Constructor
+     * @param string                            $statusClass
+     * @param TranslateValueInitializerListener $translateValueInitializer
      */
-    public function __construct()
+    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer)
     {
-        $this->choices[StatusableInterface::STATUS_PUBLISHED] = 'php_orchestra_backoffice.form.status.published';
-        $this->choices[StatusableInterface::STATUS_DRAFT] = 'php_orchestra_backoffice.form.status.draft';
-        $this->choices[StatusableInterface::STATUS_PENDING] = 'php_orchestra_backoffice.form.status.pending';
+        $this->translateValueInitializer = $translateValueInitializer;
+        $this->statusClass = $statusClass;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
+
+        $builder->add('name');
+        $builder->add('published', null, array('required' => false));
+        $builder->add('labels', 'translated_value_collection');
+
+        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+    }
+
+    /**
+     * Returns the name of this type.
+     *
+     * @return string The name of this type
+     */
+    public function getName()
+    {
+        return 'status';
     }
 
     /**
@@ -29,26 +57,9 @@ class StatusType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'choices' => $this->choices,
-            )
-        );
+        $resolver->setDefaults(array(
+            'data_class' => $this->statusClass
+        ));
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return 'choice';
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'orchestra_status';
-    }
 }

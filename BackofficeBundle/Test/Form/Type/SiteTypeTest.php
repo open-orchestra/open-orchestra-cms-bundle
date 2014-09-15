@@ -55,4 +55,18 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($builder, Phake::times(6))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
+
+    /**
+     * Test resolver
+     */
+    public function testSetDefaultOptions()
+    {
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+
+        $this->form->setDefaultOptions($resolver);
+
+        Phake::verify($resolver)->setDefaults(array(
+            'data_class' => $this->siteClass
+        ));
+    }
 }

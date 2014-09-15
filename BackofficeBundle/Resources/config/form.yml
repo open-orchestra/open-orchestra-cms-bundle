@@ -10,10 +10,12 @@ parameters:
     php_orchestra_backoffice.type.content_type.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
     php_orchestra_backoffice.document.content_attribute.class : PHPOrchestra\ModelBundle\Document\ContentAttribute
     php_orchestra_backoffice.type.orchestra_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
+    php_orchestra_backoffice.type.orchestra_status.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraStatusType
     php_orchestra_backoffice.type.status.class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
     php_orchestra_backoffice.type.field_type.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType
     php_orchestra_backoffice.type.field_option.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldOptionType
     php_orchestra_backoffice.type.translated_value.class: PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueType
+    php_orchestra_backoffice.type.translated_value_collection.class: PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
 
 services:
     # Template form type
@@ -89,10 +91,17 @@ services:
             - { name: form.type, alias: field_option }
 
     # Status Type
-    php_orchestra_backoffice.type.status:
-        class: %php_orchestra_backoffice.type.status.class%
+    php_orchestra_backoffice.type.orchestra_status:
+        class: %php_orchestra_backoffice.type.orchestra_status.class%
         tags:
             - { name: form.type, alias: orchestra_status }
+    php_orchestra_backoffice.type.status:
+        class: %php_orchestra_backoffice.type.status.class%
+        arguments:
+            - %php_orchestra_model.document.status.class%
+            - @php_orchestra_backoffice.listener.translate_value_initializer
+        tags:
+            - { name: form.type, alias: status }
 
     # Content Form Builder
     php_orchestra_backoffice.type.content:
@@ -127,3 +136,7 @@ services:
         class: %php_orchestra_backoffice.type.translated_value.class%
         tags:
             - { name: form.type, alias: translated_value }
+    php_orchestra_backoffice.type.translated_value_collection:
+        class: %php_orchestra_backoffice.type.translated_value_collection.class%
+        tags:
+            - { name: form.type, alias: translated_value_collection }

@@ -10,9 +10,11 @@ parameters:
     php_orchestra_api.transformer.content.class: PHPOrchestra\ApiBundle\Transformer\ContentTransformer
     php_orchestra_api.transformer.content_attribute.class: PHPOrchestra\ApiBundle\Transformer\ContentAttributeTransformer
     php_orchestra_api.transformer.content_collection.class: PHPOrchestra\ApiBundle\Transformer\ContentCollectionTransformer
+    php_orchestra_api.transformer.status_collection.class: PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer
     php_orchestra_api.transformer.site.class: PHPOrchestra\ApiBundle\Transformer\SiteTransformer
     php_orchestra_api.transformer.site_collection.class: PHPOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
     php_orchestra_api.transformer.field_type.class: PHPOrchestra\ApiBundle\Transformer\FieldTypeTransformer
+    php_orchestra_api.transformer.status.class: PHPOrchestra\ApiBundle\Transformer\StatusTransformer
 
 services:
     php_orchestra_api.transformer_manager:
@@ -70,8 +72,18 @@ services:
         class: %php_orchestra_api.transformer.site_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.status_collection:
+        class: %php_orchestra_api.transformer.status_collection.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.field_type:
         class: %php_orchestra_api.transformer.field_type.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.translation_choice
+        tags:
+            - { name: php_orchestra_api.transformer.strategy }
+    php_orchestra_api.transformer.status:
+        class: %php_orchestra_api.transformer.status.class%
         arguments:
             - @php_orchestra_backoffice.manager.translation_choice
         tags:

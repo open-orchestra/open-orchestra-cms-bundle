@@ -4,56 +4,78 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
-use PHPOrchestra\ModelBundle\Model\StatusableInterface;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class StatusTypeTest
  */
 class StatusTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var StatusType
+     */
     protected $form;
 
+    protected $statusClass = 'site';
+    protected $translateValueInitializer;
+
     /**
-     * Set up the text
+     * Set up the test
      */
     public function setUp()
     {
-        $this->form = new StatusType();
+        $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->form = new StatusType($this->statusClass, $this->translateValueInitializer);
     }
 
     /**
-     * Test Name
+     * Test instance
+     */
+    public function testInstance()
+    {
+        $this->assertInstanceOf('Symfony\Component\Form\AbstractType', $this->form);
+    }
+
+    /**
+     * Test name
      */
     public function testName()
     {
-        $this->assertSame('orchestra_status', $this->form->getName());
+        $this->assertSame('status', $this->form->getName());
     }
 
     /**
-     * Test Parent
+     * Test builder
      */
-    public function testParent()
+    public function testBuilder()
     {
-        $this->assertSame('choice', $this->form->getParent());
+        $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
+        Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
+
+        $this->form->buildForm($builder, array());
+
+        Phake::verify($builder)->add('name');
+        Phake::verify($builder)->add('published', null, array('required' => false));
+        Phake::verify($builder)->add('labels', 'translated_value_collection');
+        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder)->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            array($this->translateValueInitializer, 'preSetData')
+        );
     }
 
     /**
-     * Test the default options
+     * Test resolver
      */
     public function testSetDefaultOptions()
     {
-        $choices = array(
-            StatusableInterface::STATUS_PUBLISHED => 'php_orchestra_backoffice.form.status.published',
-            StatusableInterface::STATUS_DRAFT => 'php_orchestra_backoffice.form.status.draft',
-            StatusableInterface::STATUS_PENDING => 'php_orchestra_backoffice.form.status.pending',
-        );
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
 
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $this->form->setDefaultOptions($resolver);
 
-        $this->form->setDefaultOptions($resolverMock);
-
-        Phake::verify($resolverMock)->setDefaults(array(
-            'choices' => $choices,
+        Phake::verify($resolver)->setDefaults(array(
+            'data_class' => $this->statusClass
         ));
     }
 }
