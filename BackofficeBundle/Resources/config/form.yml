@@ -58,7 +58,7 @@ services:
 
     php_orchestra_backoffice.type.orchestra_block:
         class: %php_orchestra_backoffice.type.orchestra_block.class%
-        arguments: [%php_orchestra.blocks%]
+        arguments: [%php_orchestra.blocks%, @translator]
         tags:
             - { name: form.type, alias: orchestra_block }
     # Site Form Builder
