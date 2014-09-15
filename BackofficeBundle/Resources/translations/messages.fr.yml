@@ -47,3 +47,23 @@ php_orchestra_backoffice:
             title: Bloc contenu paramétrable
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
+        Sample:
+            title: Bloc example
+        Carrousel:
+            title: Bloc carrousel
+        Contact:
+            title: Bloc contact
+        Footer:
+            title: Bloc pied de page
+        Header:
+            title: Bloc entête
+        Menu:
+            title: Bloc menu
+        Search:
+            title: Bloc recherche
+        SearchResult:
+            title: Bloc résultat de recherche
+        tinyMCEWysiwyg:
+            title: Bloc texte riche
+        News:
+            title: Bloc actualités

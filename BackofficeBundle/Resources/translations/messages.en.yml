@@ -47,3 +47,23 @@ php_orchestra_backoffice:
             title: Configurable content block
             contentTypeId: Choose a content type
             contentId: Choose a content
+        Sample:
+            title: Sample block
+        Carrousel:
+            title: Carousel block
+        Contact:
+            title: Contact block
+        Footer:
+            title: Footer block
+        Header:
+            title: Header block
+        Menu:
+            title: Menu block
+        Search:
+            title: Search block
+        SearchResult:
+            title: Search result block
+        tinyMCEWysiwyg:
+            title: Rich text block
+        News:
+            title: News block
