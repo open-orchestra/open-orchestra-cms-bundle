@@ -92,12 +92,10 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
     
         return array(
             array(
-                array('templateId' => 1),
-                $template
+                array('templateId' => 1), $template
             ),
             array(
-                array('templateId' => 1),
-                null
+                array('templateId' => 1), null
             ),
         );
     }
