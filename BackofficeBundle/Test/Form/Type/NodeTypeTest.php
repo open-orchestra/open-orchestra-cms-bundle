@@ -25,6 +25,9 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * test the build form
+     * @param TemplateInterface $templates
+     * @param array             $expectedResult
+     * 
      * @dataProvider getTemplate
      */
     public function testBuildForm($templates, $expectedResult)
@@ -91,8 +94,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         
         return array(
             array(
-                array($template0, $template1),
-                array($id0 => $name0, $id1 => $name1)
+                array($template0, $template1), array($id0 => $name0, $id1 => $name1)
             )
         );
     }

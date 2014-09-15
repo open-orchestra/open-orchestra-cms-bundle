@@ -55,8 +55,9 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array            $data
+     * @param array             $data
      * @param TemplateInterface $template
+     * 
      * @dataProvider getDataTemplate
      */
     public function testPreSubmit($data, $template)
@@ -71,12 +72,13 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         
         $this->subscriber->preSubmit($this->event);
 
-       	Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setAreas((null !== $template)? $template->getAreas() : '');
-       	Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setBlocks((null !== $template)? $template->getBlocks() : '');
+        Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setAreas((null !== $template)? $template->getAreas() : '');
+        Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setBlocks((null !== $template)? $template->getBlocks() : '');
     }
 
     /**
      * Templates provider
+     * 
      * @return array
      */
     public function getDataTemplate()

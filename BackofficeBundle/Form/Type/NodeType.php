@@ -24,7 +24,7 @@ class NodeType extends AbstractType
     protected $templateRepository;
 
     /**
-     * @param string $nodeClass
+     * @param string             $nodeClass
      * @param TemplateRepository $templateRepository
      */
     public function __construct($nodeClass, TemplateRepository $templateRepository)
