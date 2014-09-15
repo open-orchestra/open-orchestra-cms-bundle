@@ -83,8 +83,8 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function getDataTemplate()
     {
-        $areas = Phake::mock('Doctrine\ODM\MongoDB\PersistentCollection');
-        $blocks = Phake::mock('Doctrine\ODM\MongoDB\PersistentCollection');
+        $areas = Phake::mock('Doctrine\Common\Collections\Collection;');
+        $blocks = Phake::mock('Doctrine\Common\Collections\Collection;');
             
         $template = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
         Phake::when($template)->getAreas()->thenReturn($areas);
