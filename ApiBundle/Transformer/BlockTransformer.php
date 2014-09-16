@@ -30,10 +30,12 @@ class BlockTransformer extends AbstractTransformer
      * @param boolean        $isInside
      * @param string|null    $nodeId
      * @param int|null       $blockNumber
+     * @param int|null       $areaId
+     * @param int|null       $blockPosition
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $isInside = true, $nodeId = null, $blockNumber = null)
+    public function transform($mixed, $isInside = true, $nodeId = null, $blockNumber = null, $areaId = 0, $blockPosition = 0)
     {
         $facade = new BlockFacade();
 
@@ -68,6 +70,14 @@ class BlockTransformer extends AbstractTransformer
                 array(
                     'nodeId' => $nodeId,
                     'blockNumber' => $blockNumber
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ));
+            $facade->addLink('_self_remove', $this->getRouter()->generate('php_orchestra_backoffice_area_remove_block',
+                array(
+                    'nodeId' => $nodeId,
+                    'areaId' => $areaId,
+                    'blockPosition' => $blockPosition
                 ),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ));

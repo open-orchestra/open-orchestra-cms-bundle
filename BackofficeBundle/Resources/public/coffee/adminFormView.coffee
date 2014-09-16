@@ -2,6 +2,7 @@ adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
   initialize: (options) ->
     @url = options.url
+    @method = if options.method then options.method else 'GET'
     @call()
     return
   call: ->
@@ -10,7 +11,7 @@ adminFormView = Backbone.View.extend(
     $("#OrchestraBOModal").modal "show"
     $.ajax
       url: @url
-      method: 'GET'
+      method: @method
       success: (response) ->
         current.render(
           html: response

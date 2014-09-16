@@ -100,4 +100,39 @@ class AreaController extends Controller
             )
         );
     }
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param int     $areaId
+     * @param int     $blockPosition
+     *
+     * @Config\Route("/block/form/{nodeId}/{areaId}/{blockPosition}", name="php_orchestra_backoffice_area_remove_block", requirements={"blockPosition" = "\d+"}, defaults={"blockPosition" = 0})
+     * @Config\Method({"POST", "DELETE"})
+     *
+     * @return Response
+     */
+    public function removeAction(Request $request, $nodeId, $areaId, $blockPosition = 0)
+    {
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $areas = $node->getAreas();
+        
+        foreach ($areas as $area) {
+            if ($area->getAreaId() == $areaId) {
+                $blocks = $area->getBlocks();
+                unset($blocks[$blockPosition]);
+                $area->setBlocks($blocks);
+                break;
+            }
+        }
+        
+        $node->setAreas($areas);
+        
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+exit();
+       /* return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+            'form' => $form->createView(),
+            'blockType' => $block->getComponent()
+        ));*/
+    }
 }
