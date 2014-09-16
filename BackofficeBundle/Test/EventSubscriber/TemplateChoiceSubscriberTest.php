@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
 use Phake;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
+use PHPOrchestra\ModelBundle\Model\TemplateInterface;
 use Symfony\Component\Form\FormEvents;
 use PHPOrchestra\ModelBundle\Document\Node;
 
@@ -91,12 +92,31 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($template)->getBlocks()->thenReturn($blocks);
     
         return array(
-            array(
-                array('templateId' => 1), $template
-            ),
-            array(
-                array('templateId' => 1), null
-            ),
+            array(array('templateId' => 1), $template),
+            array(array('templateId' => 1), null),
         );
+    }
+
+    /**
+     * @param array             $data
+     * @param TemplateInterface $template
+     *
+     * @dataProvider getDataTemplate
+     */
+    public function testPreSubmitWithExistingNode($data, $template)
+    {
+        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+
+        Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
+        Phake::when($templateChoiceContainer)->getId()->thenReturn('nodeId');
+        Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
+
+        Phake::when($this->event)->getData()->thenReturn($data);
+        Phake::when($this->templateRepository)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
+
+        $this->subscriber->preSubmit($this->event);
+
+        Phake::verify($templateChoiceContainer, Phake::never())->setAreas(Phake::anyParameters());
+        Phake::verify($templateChoiceContainer, Phake::never())->setBlocks(Phake::anyParameters());
     }
 }
