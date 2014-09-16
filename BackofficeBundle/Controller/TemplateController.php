@@ -20,7 +20,7 @@ class TemplateController extends Controller
      * @Config\Route("/template/form/{templateId}", name="php_orchestra_backoffice_template_form", defaults={"templateId" = 0})
      * @Config\Method({"GET", "POST"})
      *
-     * @return JsonResponse|Response
+     * @return Response
      */
     public function formAction(Request $request, $templateId)
     {
