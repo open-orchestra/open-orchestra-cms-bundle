@@ -121,7 +121,11 @@
                     {% for language in available_languages %}
                     <li{% if context.currentLocale == language %} class="active"{% endif %}>
                         <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_language', {'language':language}) }}');">
-                            <img alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}" src="{{ asset('bundles/phporchestracms/img/flags/' ~ language ~ '.png') }}"> {{ ('php_orchestra_cms.language.' ~ language)|trans({}, 'languages') }}</a>
+                            <img
+                                    alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}"
+                                    src="{{ asset('bundles/phporchestracms/img/flags/' ~ language ~ '.png') }}">
+                            {{ ('php_orchestra_backoffice.language.' ~ language)|trans }}
+                        </a>
                     </li>
                     {% endfor %}
                 </ul>
