@@ -33,9 +33,12 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
         $templateChoiceContainer = $form->getData();
         $data = $event->getData();
 
-        if (array_key_exists('templateId', $data)) {
+        if (
+            array_key_exists('templateId', $data) &&
+            null === $templateChoiceContainer->getId()
+        ) {
             $template = $this->templateRepository->findOneByTemplateId($data['templateId']);
-            if(null !== $template){
+            if (null !== $template) {
                 $templateChoiceContainer->setAreas($template->getAreas());
                 $templateChoiceContainer->setBlocks($template->getBlocks());
             }
