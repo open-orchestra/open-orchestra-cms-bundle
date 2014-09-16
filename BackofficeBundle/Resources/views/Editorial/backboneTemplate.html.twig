@@ -69,7 +69,7 @@
         <span class="title"><%= area.get('ui_model').label %></span>
         <span class="preview"></span>
             <span class="action">
-                <i class="fa fa-cog <%= area.cid %>"></i>
+                <i class="fa fa-wrench <%= area.cid %>"></i>
             </span>
         <ul class="ui-model-areas">
         </ul>
@@ -86,10 +86,12 @@
                     Title : <%= block.get('attributes').title %><br>
                     Author : <%= block.get('attributes').author %><br>
                     News : <%= block.get('attributes').news %><br>
-
                 </div>
             </span>
-        <span class="action"><i class="fa fa-cog"></i></span>
+        <span class="action">
+            <i class="fa fa-wrench"></i>
+            <i class="fa fa-trash-o"></i>
+        </span>
     </div>
 </script>
 
