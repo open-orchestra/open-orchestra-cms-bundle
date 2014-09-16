@@ -36,7 +36,7 @@ class NodeController extends Controller
             )
         );
         
-        return $this->commonAction($form, $request, $node);
+        return $this->formHandler($form, $request, $node);
     }
 
     /**
@@ -55,7 +55,7 @@ class NodeController extends Controller
         $node->setSiteId(1);
         $node->setLanguage('fr');
         $node->setParentId($parentId);
-        
+
         $form = $this->createForm(
             'node',
             $node,
@@ -63,11 +63,11 @@ class NodeController extends Controller
                 'action' => $this->generateUrl('php_orchestra_backoffice_node_new', array('parentId' => $parentId))
             )
         );
-        
-        return $this->commonAction($form, $request, $node);
+
+        return $this->formHandler($form, $request, $node);
     }
     
-    protected function commonAction($form, $request, $node)
+    protected function formHandler($form, $request, $node)
     {
         $form->handleRequest($request);
         if ($form->isValid()) {
