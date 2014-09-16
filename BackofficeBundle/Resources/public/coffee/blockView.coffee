@@ -13,12 +13,7 @@ BlockView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text 'Please wait ...'
-    displayLoader('.modal-body')
-    $.ajax
-      url: @block.get('links')._self_form
-      method: 'GET'
-      success: (response) ->
-        view = new adminFormView(html: response)
+    view = new adminFormView(url: @block.get('links')._self_form)
   render: ->
     $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @blockTemplate(
       block: @block
