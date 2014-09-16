@@ -48,10 +48,12 @@ class TemplateController extends Controller
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($template);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('homepage'));
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.template.success')
+            );
         }
-
+        
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(

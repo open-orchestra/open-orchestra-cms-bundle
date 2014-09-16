@@ -20,5 +20,16 @@ adminFormView = Backbone.View.extend(
           return
       error: ->
         $('.modal-body', el).html 'Erreur durant le chargement'
+    @addEventOnForm()
     return
+  addEventOnForm: ->
+    $("form", @$el).on "submit", (e) ->
+      e.preventDefault() # prevent native submit
+      $(this).ajaxSubmit
+        success: (response) ->
+          view = new adminFormView(
+            html: response
+          )
+      return
 )
+

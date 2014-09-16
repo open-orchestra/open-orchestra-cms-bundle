@@ -35,25 +35,8 @@ class NodeController extends Controller
                 'action' => $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId))
             )
         );
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->get('doctrine.odm.mongodb.document_manager');
-            $em->persist($node);
-            $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl('homepage')
-                . '#' . $nodeId
-            );
-        }
-
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            )
-        );
+        
+        return $this->commonAction($form, $request, $node);
     }
 
     /**
@@ -72,7 +55,7 @@ class NodeController extends Controller
         $node->setSiteId(1);
         $node->setLanguage('fr');
         $node->setParentId($parentId);
-
+        
         $form = $this->createForm(
             'node',
             $node,
@@ -80,19 +63,23 @@ class NodeController extends Controller
                 'action' => $this->generateUrl('php_orchestra_backoffice_node_new', array('parentId' => $parentId))
             )
         );
-
+        
+        return $this->commonAction($form, $request, $node);
+    }
+    
+    protected function commonAction($form, $request, $node)
+    {
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
             $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl('homepage')
-                . '#' . $node->getNodeId()
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.node.success')
             );
         }
-
+        
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
