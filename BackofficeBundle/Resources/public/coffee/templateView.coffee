@@ -13,6 +13,7 @@ TemplateView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text @template.get('name')
+    displayLoader('.modal-body')
     $.ajax
       url: @template.get('links')._self_form
       method: 'GET'

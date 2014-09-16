@@ -41,6 +41,8 @@ php_orchestra_backoffice:
                 list: Sites
             content_type:
                 list: Type de contenu
+            status:
+                list: Status
     block:
         configurable_content:
             title: Bloc contenu paramétrable

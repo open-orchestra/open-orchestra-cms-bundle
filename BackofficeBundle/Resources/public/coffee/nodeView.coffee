@@ -13,6 +13,7 @@ NodeView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
+    displayLoader('.modal-body')
     $.ajax
       url: @node.get('links')._self_form
       method: 'GET'

@@ -15,6 +15,7 @@ AreaView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text @area.get('area_id')
+    displayLoader('.modal-body')
     $.ajax
       url: @area.get('links')._self_form
       method: 'GET'

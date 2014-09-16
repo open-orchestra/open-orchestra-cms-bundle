@@ -11,11 +11,11 @@ showNode = (url)->
 
 showNodeForm = (parentNode) ->
   $(".modal-title").text parentNode.text()
+  displayLoader('.modal-body')
+  $("#OrchestraBOModal").modal "show"
   $.ajax
     url: parentNode.data("url")
     method: "GET"
     success: (response) ->
-      $("#OrchestraBOModal").modal "show"
-      view = undefined
       view = new adminFormView(html: response)
   return
