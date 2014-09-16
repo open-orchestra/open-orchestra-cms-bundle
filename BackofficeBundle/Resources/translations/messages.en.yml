@@ -1,4 +1,9 @@
 php_orchestra_backoffice:
+    language:
+        en: English
+        fr: Français
+        es: Español
+        de: Deutsch
     form:
         submit: Save
         status:
