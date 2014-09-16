@@ -3,7 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Translation\Translator;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
