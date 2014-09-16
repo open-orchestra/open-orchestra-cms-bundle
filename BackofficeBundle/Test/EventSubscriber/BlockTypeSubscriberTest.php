@@ -90,7 +90,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->getData()->thenReturn($this->block);
         Phake::when($this->block)->getAttributes()->thenReturn(array());
 
-        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'Sample'), $sentData);
+        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample'), $sentData);
         Phake::when($this->event)->getData()->thenReturn($sentDataFull);
 
         $this->subscriber->preSubmit($this->event);
@@ -121,7 +121,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->getData()->thenReturn($this->block);
         Phake::when($this->block)->getAttributes()->thenReturn($startData);
 
-        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'Sample'), $sentData);
+        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample'), $sentData);
         Phake::when($this->event)->getData()->thenReturn($sentDataFull);
 
         $this->subscriber->preSubmit($this->event);

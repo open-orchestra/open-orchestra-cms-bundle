@@ -5,6 +5,6 @@ To limit the number of blocks available on the website, add the chosen one on th
 ```
 php_orchestra_cms:
     blocks:
-        - Sample
-        - Footer
+        - sample
+        - footer
 ```

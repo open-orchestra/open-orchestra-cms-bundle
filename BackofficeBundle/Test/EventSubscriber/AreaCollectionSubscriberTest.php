@@ -88,9 +88,9 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
     public function provideNewAreas()
     {
         return array(
-            array(array('Sample')),
-            array(array('Sample', 'Test')),
-            array(array('Sample', 'new_area')),
+            array(array('sample')),
+            array(array('sample', 'Test')),
+            array(array('sample', 'new_area')),
         );
     }
 

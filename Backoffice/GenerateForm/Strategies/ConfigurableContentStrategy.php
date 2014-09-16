@@ -77,7 +77,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
                 'class' => 'contentTypeSelector',
                 'data-url' => $this->router->generate('php_orchestra_api_content_list')
             ),
-            'label' => 'php_orchestra_backoffice.block.ConfigurableContent.contentTypeId'
+            'label' => 'php_orchestra_backoffice.block.configurable_content.contentTypeId'
         ));
         
         $this->updateContentChoice($form, $block);
@@ -131,7 +131,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         $options = array(
             'mapped' => false,
             'choices' => $contents,
-            'label' => 'php_orchestra_backoffice.block.ConfigurableContent.contentId'
+            'label' => 'php_orchestra_backoffice.block.configurable_content.contentId'
         );
         if ($contentId != '') {
             $options['data'] = $contentId;
