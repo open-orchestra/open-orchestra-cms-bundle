@@ -15,12 +15,7 @@ AreaView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text @area.get('area_id')
-    $.ajax
-      url: @area.get('links')._self_form
-      method: 'GET'
-      success: (response) ->
-        view = new adminFormView(html: response)
-    return
+    view = new adminFormView(url: @area.get('links')._self_form)
   render: ->
     $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @areaTemplate(
       area: @area

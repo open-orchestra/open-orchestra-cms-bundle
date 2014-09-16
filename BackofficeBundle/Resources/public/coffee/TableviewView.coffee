@@ -32,6 +32,7 @@ TableviewView = Backbone.View.extend(
       @$el.hide()
   clickEdit: (event) ->
     event.preventDefault()
+    displayLoader('div[role="container"]')
     Backbone.history.navigate('/edit')
     title = @title
     listUrl = @listUrl
