@@ -3,7 +3,7 @@ BlockView = Backbone.View.extend(
   className: 'ui-model-blocks'
   events:
     'click i.block-param': 'paramBlock'
-    'click i.block-remove': 'removeBlock'
+    'click i.block-remove': 'confirmRemoveBlock'
   initialize: (options) ->
     @block = options.block
     @height = options.height
@@ -15,6 +15,9 @@ BlockView = Backbone.View.extend(
   paramBlock: (event) ->
     $('.modal-title').text 'Please wait ...'
     view = new adminFormView(url: @block.get('links')._self_form)
+  confirmRemoveBlock: (event) ->
+    if confirm 'Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?'
+      @removeBlock event
   removeBlock: (event) ->
     switchLoaderFullPage('on')
     $.ajax
