@@ -17,7 +17,7 @@ adminFormView = Backbone.View.extend(
           html: response
         )
       error: ->
-        $('.modal-body', el).html 'Erreur durant le chargement'
+        $('.modal-body', current.el).html 'Erreur durant le chargement'
     return
   render: (options) ->
     @html = options.html
