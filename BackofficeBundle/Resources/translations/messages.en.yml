@@ -34,6 +34,10 @@ php_orchestra_backoffice:
             success: The template has been saved
         node:
             success: The node has been saved
+        area:
+            success: The area has been modified
+        block:
+            success: The block has been modified
     left_menu:
         tree:
             new_page: New page

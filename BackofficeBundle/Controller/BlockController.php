@@ -44,10 +44,9 @@ class BlockController extends Controller
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($node);
             $documentManager->flush();
-
-            return $this->redirect(
-                $this->generateUrl('homepage')
-                . '#node/show/' . $nodeId
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.block.success')
             );
         }
 
