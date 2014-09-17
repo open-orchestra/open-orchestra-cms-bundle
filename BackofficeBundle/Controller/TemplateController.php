@@ -20,7 +20,7 @@ class TemplateController extends Controller
      * @Config\Route("/template/form/{templateId}", name="php_orchestra_backoffice_template_form", defaults={"templateId" = 0})
      * @Config\Method({"GET", "POST"})
      *
-     * @return JsonResponse|Response
+     * @return Response
      */
     public function formAction(Request $request, $templateId)
     {
@@ -48,8 +48,10 @@ class TemplateController extends Controller
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($template);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('homepage'));
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.template.success')
+            );
         }
 
         return $this->render(

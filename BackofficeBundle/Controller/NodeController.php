@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\Form\Form;
+use  PHPOrchestra\ModelBundle\Document\Node;
 
 /**
  * Class NodeController
@@ -20,7 +22,7 @@ class NodeController extends Controller
      * @Config\Route("/node/form/{nodeId}", name="php_orchestra_backoffice_node_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
     public function formAction(Request $request, $nodeId)
     {
@@ -35,25 +37,8 @@ class NodeController extends Controller
                 'action' => $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId))
             )
         );
-
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->get('doctrine.odm.mongodb.document_manager');
-            $em->persist($node);
-            $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl('homepage')
-                . '#' . $nodeId
-            );
-        }
-
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            )
-        );
+        
+        return $this->formHandler($form, $request, $node);
     }
 
     /**
@@ -63,7 +48,7 @@ class NodeController extends Controller
      * @Config\Route("/node/new/{parentId}", name="php_orchestra_backoffice_node_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
     public function newAction(Request $request, $parentId)
     {
@@ -81,15 +66,26 @@ class NodeController extends Controller
             )
         );
 
+        return $this->formHandler($form, $request, $node);
+    }
+
+    /**
+     * @param Form    $form
+     * @param Request $request
+     * @param Node    $node
+     *
+     * @return Response
+     */
+    protected function formHandler(Form $form, Request $request, Node $node)
+    {
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
             $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl('homepage')
-                . '#' . $node->getNodeId()
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.node.success')
             );
         }
 

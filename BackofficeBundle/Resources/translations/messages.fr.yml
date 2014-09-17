@@ -25,6 +25,10 @@ php_orchestra_backoffice:
             success: Le contenu a été modifié
         content_type:
             success: Le type de contenu a été modifié
+        template:
+            success: Le template a été sauvé
+        node:
+            success: Le node a été sauvé
     left_menu:
         tree:
             new_page: Nouvelle page
