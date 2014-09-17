@@ -16,8 +16,16 @@ BlockView = Backbone.View.extend(
     $('.modal-title').text 'Please wait ...'
     view = new adminFormView(url: @block.get('links')._self_form)
   removeBlock: (event) ->
-    $('.modal-title').text 'Please wait ...'
-    view = new adminFormView(url: @block.get('links')._self_remove, method: 'POST')
+    $.ajax
+      url: @block.get('links')._self_remove
+      method: 'POST'
+      success: (response) ->
+        Backbone.history.loadUrl Backbone.history.fragment
+      error: ->
+        $('.modal-title').text 'Block removal'
+        $('.modal-body').html 'Erreur durant la suppression'
+        $("#OrchestraBOModal").modal "show"
+    return
   render: ->
     $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @blockTemplate(
       block: @block

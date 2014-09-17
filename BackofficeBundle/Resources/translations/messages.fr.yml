@@ -52,6 +52,8 @@ php_orchestra_backoffice:
             status:
                 list: Status
     block:
+        remove:
+            success: Le %blockComponent% a été retiré avec succès
         configurable_content:
             title: Bloc contenu paramétrable
             contentTypeId: Choisissez un type de contenu

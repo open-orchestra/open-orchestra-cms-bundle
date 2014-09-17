@@ -107,7 +107,7 @@ class AreaController extends Controller
      * @param int     $areaId
      * @param int     $blockPosition
      *
-     * @Config\Route("/block/form/{nodeId}/{areaId}/{blockPosition}", name="php_orchestra_backoffice_area_remove_block", requirements={"blockPosition" = "\d+"}, defaults={"blockPosition" = 0})
+     * @Config\Route("/block/remove/{nodeId}/{areaId}/{blockPosition}", name="php_orchestra_backoffice_area_remove_block", requirements={"blockPosition" = "\d+"}, defaults={"blockPosition" = 0})
      * @Config\Method({"POST", "DELETE"})
      *
      * @return Response
@@ -115,12 +115,40 @@ class AreaController extends Controller
     public function removeAction(Request $request, $nodeId, $areaId, $blockPosition = 0)
     {
         $area = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $areaId);
-        
+
         $blocks = $area->getBlocks();
+        $blockComponent = $this->getBlockComponent($blocks[$blockPosition], $nodeId);
         unset($blocks[$blockPosition]);
+
         $area->setBlocks($blocks);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
-        
-        return $this->render('Ok');
+
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            $this->get('translator')->trans(
+                'php_orchestra_backoffice.block.remove.success',
+                array(
+                    '%blockComponent%' => strtolower(
+                        $this->get('translator')->trans('php_orchestra_backoffice.block.' . $blockComponent . '.title')
+                    )
+                )
+            )
+        );
+
+        return new Response();
+    }
+
+    protected function getBlockComponent($block, $currentNodeId)
+    {
+        $blockId = $block['blockId'];
+
+        $targetNodeId = $block['nodeId'];
+        if (0 == $targetNodeId) {
+            $targetNodeId = $currentNodeId;
+        }
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($targetNodeId);
+
+        $blocks = $node->getBlocks();
+        return $blocks[$blockId]->getComponent();
     }
 }
