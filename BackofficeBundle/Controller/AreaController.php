@@ -70,7 +70,6 @@ class AreaController extends Controller
      */
     public function templateFormAction(Request $request, $templateId, $areaId)
     {
-        $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $area = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $areaId);
 
         $form = $this->createForm(
@@ -88,8 +87,10 @@ class AreaController extends Controller
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->flush();
-
-            return $this->redirect($this->generateUrl('homepage'));
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
+            );
         }
 
         return $this->render(
