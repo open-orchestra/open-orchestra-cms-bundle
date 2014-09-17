@@ -88,7 +88,7 @@ class NodeController extends Controller
                 $this->get('translator')->trans('php_orchestra_backoffice.form.node.success')
             );
         }
-        
+
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
