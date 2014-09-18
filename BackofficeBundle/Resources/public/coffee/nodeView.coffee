@@ -2,11 +2,12 @@ NodeView = Backbone.View.extend(
   el: '#content'
   events:
     'click i#none' : 'clickButton'
+    'click a.ajax-node-duplicate' : 'duplicateNode'
   initialize: (options) ->
     @node = options.node
     key = "click i." + @node.cid
     @events[key] = "clickButton"
-    _.bindAll this, "render", "addAreaToView", "clickButton"
+    _.bindAll this, "render", "addAreaToView", "clickButton", "duplicateNode"
     @nodeTemplate = _.template($("#nodeView").html())
     @render()
     nav_page_height()
@@ -14,6 +15,16 @@ NodeView = Backbone.View.extend(
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
     view = new adminFormView(url: @node.get('links')._self_form)
+  duplicateNode: (event) ->
+    current = this
+    $.ajax
+      url: @node.get('links')._self_duplicate
+      method: 'GET'
+      success: (response) ->
+        $(current.el).html current.nodeTemplate(
+          node: response
+        )
+    return
   render: ->
     $(@el).html @nodeTemplate(
       node: @node

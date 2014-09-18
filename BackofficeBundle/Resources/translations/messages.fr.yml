@@ -76,3 +76,6 @@ php_orchestra_backoffice:
             title: Bloc texte riche
         news:
             title: Bloc actualités
+    node:
+        version:
+            create: Créer une nouvelle version du node
