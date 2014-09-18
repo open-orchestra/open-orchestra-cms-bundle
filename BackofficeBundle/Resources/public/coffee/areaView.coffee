@@ -5,19 +5,26 @@ AreaView = Backbone.View.extend(
     'click i#none' : 'clickButton'
     'sortupdate ul.ui-model-blocks': 'updateBlockSize'
     'click i.block-remove': 'confirmRemoveBlock'
+    'click i.area-param' : 'paramArea'
+    'click .area-remove': 'confirmRemoveArea'
   initialize: (options) ->
     @area = options.area
     key = "click i." + @area.cid
-    @events[key] = "clickButton"
+    @events[key] = "paramArea"
     @height = options.height
     @direction = options.direction || 'height'
     @displayClass = (if @direction is "width" then "inline" else "block")
-    _.bindAll this, "render", "addAreaToView", "addBlockToView", "clickButton"
+    _.bindAll this, "render", "addAreaToView", "addBlockToView", "paramArea"
     @areaTemplate = _.template($('#areaView').html())
     return
-  clickButton: (event) ->
+  paramArea: (event) ->
     $('.modal-title').text @area.get('area_id')
     view = new adminFormView(url: @area.get('links')._self_form)
+  confirmRemoveArea: (event) ->
+    if confirm 'Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?'
+      @removeArea event
+  removeArea: (event) ->
+      alert 'ok'
   render: ->
     if @area.get('bo_direction') is 'v'
       @childrenDirection = 'width'
