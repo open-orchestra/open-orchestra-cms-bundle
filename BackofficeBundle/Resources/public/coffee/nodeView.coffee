@@ -17,6 +17,8 @@ NodeView = Backbone.View.extend(
     view = new adminFormView(url: @node.get('links')._self_form)
   duplicateNode: (event) ->
     current = this
+    displayLoader('.modal-body')
+    $("#OrchestraBOModal").modal "show"
     $.ajax
       url: @node.get('links')._self_duplicate
       method: 'GET'
@@ -24,6 +26,8 @@ NodeView = Backbone.View.extend(
         $(current.el).html current.nodeTemplate(
           node: response
         )
+      error: ->
+        $('.modal-body', el).html 'Erreur durant le chargement'
     return
   render: ->
     $(@el).html @nodeTemplate(

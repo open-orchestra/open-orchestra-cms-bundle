@@ -88,11 +88,7 @@ class NodeController extends Controller
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($node);
         $em->flush();
-        $this->get('session')->getFlashBag()->add(
-            'success',
-            $this->get('translator')->trans('php_orchestra_backoffice.form.node.success')
-        );
-        
+
         return $this->redirect(
             $this->generateUrl('php_orchestra_api_node_show', array('nodeId' => $nodeId))
         );
