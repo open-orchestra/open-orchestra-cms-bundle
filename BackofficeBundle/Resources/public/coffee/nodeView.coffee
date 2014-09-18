@@ -17,14 +17,10 @@ NodeView = Backbone.View.extend(
     view = new adminFormView(url: @node.get('links')._self_form)
   duplicateNode: (event) ->
     event.preventDefault() #
-    current = this
+    viewContext = this
     $.ajax
       url: @node.get('links')._self_duplicate
-      method: 'GET'
-      success: (response) ->
-        $(current.el).html current.nodeTemplate(
-          node: response
-        )
+      method: 'POST'
     return
   render: ->
     $(@el).html @nodeTemplate(

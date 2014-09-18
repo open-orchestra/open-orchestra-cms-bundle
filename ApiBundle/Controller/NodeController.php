@@ -51,6 +51,25 @@ class NodeController extends Controller
     }
 
     /**
+     * @param string $nodeId
+     *
+     * @Config\Route("/{nodeId}/duplicate", name="php_orchestra_api_node_duplicate")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function duplicateAction($nodeId)
+    {
+        /** @var NodeInterface $node */
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $newNode = clone $node;
+        $newNode->setVersion($node->getVersion() + 1);
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return new Response('', 200);
+    }
+
+    /**
      * @param NodeInterface $node
      */
     protected function deleteTree(NodeInterface $node)
@@ -64,4 +83,7 @@ class NodeController extends Controller
             $this->deleteTree($son);
         }
     }
+    
+    
+    
 }

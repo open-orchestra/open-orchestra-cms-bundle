@@ -70,31 +70,6 @@ class NodeController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int     $nodeId
-     *
-     * @Config\Route("/node/duplicate/{nodeId}", name="php_orchestra_backoffice_node_duplicate")
-     * @Config\Method({"GET"})
-     *
-     * @return Response
-     */
-    public function duplicateAction(Request $request, $nodeId)
-    {
-        $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
-        $node = $nodeRepository->findOneByNodeId($nodeId);
-        $node->setId(null);
-        $node->setVersion($node->getVersion() + 1);
-
-        $em = $this->get('doctrine.odm.mongodb.document_manager');
-        $em->persist($node);
-        $em->flush();
-
-        return $this->redirect(
-            $this->generateUrl('php_orchestra_api_node_show', array('nodeId' => $nodeId))
-        );
-    }
-
-    /**
      * @param Form    $form
      * @param Request $request
      * @param Node    $node

@@ -44,7 +44,7 @@ class NodeTransformer extends AbstractTransformer
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
 
-        $facade->addLink('_self_duplicate', $this->getRouter()->generate('php_orchestra_backoffice_node_duplicate',
+        $facade->addLink('_self_duplicate', $this->getRouter()->generate('php_orchestra_api_node_duplicate',
             array('nodeId' => $mixed->getNodeId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
