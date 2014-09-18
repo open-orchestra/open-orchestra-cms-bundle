@@ -21,8 +21,10 @@ class AreaManager
     {
         $blocks = $area->getBlocks();
 
-        unset($blocks[$blockPosition]);
-        $area->setBlocks($blocks);
+        if (is_array($blocks) && isset($blocks[$blockPosition])) {
+            unset($blocks[$blockPosition]);
+            $area->setBlocks($blocks);
+        }
 
         return $area;
     }
