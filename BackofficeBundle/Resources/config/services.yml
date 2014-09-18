@@ -3,6 +3,7 @@ parameters:
     php_orchestra_backoffice.listener.translate_value_initializer.class: PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
     php_orchestra_backoffice.manager.translation_choice.class: PHPOrchestra\Backoffice\Manager\TranslationChoiceManager
     php_orchestra_backoffice.twig_extension.translation_choice.class: PHPOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
+    php_orchestra_backoffice.manager.area.class: PHPOrchestra\BackofficeBundle\Manager\AreaManager
 
 services:
     php_orchestra_backoffice.context_manager:
@@ -22,3 +23,5 @@ services:
             - @php_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: twig.extension}
+    php_orchestra_backoffice.manager.area:
+        class: %php_orchestra_backoffice.manager.area.class%
