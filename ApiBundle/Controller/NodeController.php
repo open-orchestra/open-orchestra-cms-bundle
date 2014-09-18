@@ -69,4 +69,30 @@ class NodeController extends Controller
 
         return new Response('', 200);
     }
+
+    /**
+     * 
+     * @param string $nodeId
+     * 
+     * @Config\Route("/{nodeId}/{areaId}/delete", name="php_orchestra_api_area_delete")
+     * @Config\Method({"POST", "DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAreaAction($nodeId, $areaId)
+    {
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $areas = $node->getAreas();
+
+        foreach ($areas as $key => $area) {
+            if ($areaId == $area->getAreaId()) {
+                $this->get('doctrine.odm.mongodb.document_manager')->remove($area);
+                unset($areas[$key]);
+            } 
+        }
+
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return new Response();
+    }
 }

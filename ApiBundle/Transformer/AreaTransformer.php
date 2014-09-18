@@ -81,6 +81,14 @@ class AreaTransformer extends AbstractTransformer
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
 
+        $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete',
+            array(
+                'nodeId' => $node->getNodeId(),
+                'areaId' => $mixed->getAreaId(),
+            ),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+
         return $facade;
     }
 

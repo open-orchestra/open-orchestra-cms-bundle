@@ -1,29 +1,50 @@
 AreaView = Backbone.View.extend(
   tagName: 'li'
+  
   className: 'ui-model-areas'
+  
   events:
     'click i#none' : 'clickButton'
     'sortupdate ul.ui-model-blocks': 'updateBlockSize'
     'click i.block-remove': 'confirmRemoveBlock'
     'click i.area-param' : 'paramArea'
     'click i.area-remove': 'confirmRemoveArea'
+  
   initialize: (options) ->
     @area = options.area
     @height = options.height
     @direction = options.direction || 'height'
+    @node_id = options.node_id
     @displayClass = (if @direction is "width" then "inline" else "block")
     @areaTemplate = _.template($('#areaView').html())
     return
+  
   paramArea: (event) ->
     event.stopPropagation()
     $('.modal-title').text @area.get('area_id')
     view = new adminFormView(url: @area.get('links')._self_form)
+  
   confirmRemoveArea: (event) ->
     event.stopPropagation()
     if confirm 'Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?'
       @removeArea event
+  
   removeArea: (event) ->
-      alert 'ok'
+    switchLoaderFullPage('on')
+    that = this
+    $.ajax
+      url: @area.get('links')._self_delete
+      method: 'POST'
+      success: (response) ->
+        showNode $("#nav-node-" + that.node_id).data("url")
+        return
+      error: ->
+        $('.modal-title').text 'Block removal'
+        $('.modal-body').html 'Erreur durant la suppression de la zone'
+        switchLoaderFullPage('off')
+        $("#OrchestraBOModal").modal "show"
+    return
+  
   render: ->
     if @area.get('bo_direction') is 'v'
       @childrenDirection = 'width'
