@@ -25,7 +25,7 @@ class AreaController extends Controller
      *
      * @return Response
      */
-    public function removeBlockFromArea(Request $request, $nodeId, $areaId, $blockPosition = 0)
+    public function removeBlockFromAreaAction(Request $request, $nodeId, $areaId, $blockPosition = 0)
     {
         $area = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $areaId);
 
