@@ -61,6 +61,22 @@ function displayLoader(element)
     return true;
 }
 
+function switchLoaderFullPage(state)
+{
+    if (typeof state == 'undefined') {
+        state = 'on';
+    }
+    
+    if (state == 'on') {
+        $(document).scrollTop(0);
+        $('#loader-fullpage').show();
+    } else {
+        $('#loader-fullpage').hide();
+    }
+    
+    return true;
+}
+
 // Specific orchestra ajax loading
 function orchestraAjaxLoad(url, method, successCallback)
 {

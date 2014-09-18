@@ -2,6 +2,7 @@ adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
   initialize: (options) ->
     @url = options.url
+    @method = if options.method then options.method else 'GET'
     @call()
     return
   call: ->
@@ -10,19 +11,18 @@ adminFormView = Backbone.View.extend(
     $("#OrchestraBOModal").modal "show"
     $.ajax
       url: @url
-      method: 'GET'
+      method: @method
       success: (response) ->
         current.render(
           html: response
         )
       error: ->
-        $('.modal-body', el).html 'Erreur durant le chargement'
+        $('.modal-body', current.el).html 'Erreur durant le chargement'
     return
   render: (options) ->
     @html = options.html
-    el = @$el
-    $('.modal-body', el).html @html
-    $('.modal-title', el).html $('#dynamic-modal-title').html()
+    $('.modal-body', @el).html @html
+    $('.modal-title', @el).html $('#dynamic-modal-title').html()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return

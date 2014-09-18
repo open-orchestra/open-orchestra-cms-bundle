@@ -42,13 +42,15 @@ class AreaTransformer extends AbstractTransformer
         foreach ($mixed->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area')->transform($subArea, $node));
         }
-        foreach ($mixed->getBlocks() as $block) {
+        foreach ($mixed->getBlocks() as $blockPosition => $block) {
             if (0 === $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $node->getBlocks()->get($block['blockId']),
                     true,
                     $node->getNodeId(),
-                    $block['blockId']
+                    $block['blockId'],
+                    $mixed->getAreaId(),
+                    $blockPosition
                 ));
             } else {
                 $otherNode = $this->nodeRepository->findOneByNodeId($block['nodeId']);
@@ -56,7 +58,9 @@ class AreaTransformer extends AbstractTransformer
                     $otherNode->getBlocks()->get($block['blockId']),
                     false,
                     $otherNode->getNodeId(),
-                    $block['blockId']
+                    $block['blockId'],
+                    $mixed->getAreaId(),
+                    $blockPosition
                 ));
             }
         }
