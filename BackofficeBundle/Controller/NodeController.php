@@ -76,7 +76,7 @@ class NodeController extends Controller
      * @Config\Route("/node/duplicate/{nodeId}", name="php_orchestra_backoffice_node_duplicate")
      * @Config\Method({"GET"})
      *
-     * @return jsonResponse
+     * @return Response
      */
     public function duplicateAction(Request $request, $nodeId)
     {
