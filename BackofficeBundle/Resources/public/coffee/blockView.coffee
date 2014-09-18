@@ -37,6 +37,7 @@ BlockView = Backbone.View.extend(
     $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @blockTemplate(
       block: @block
       height: @height
+      cid: @cid
     )
     this
 )
