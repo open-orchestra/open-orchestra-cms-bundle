@@ -20,12 +20,13 @@ BlockView = Backbone.View.extend(
       @removeBlock event
   removeBlock: (event) ->
     switchLoaderFullPage('on')
+    that = this
     $.ajax
       url: @block.get('links')._self_remove
       method: 'POST'
       success: (response) ->
-        switchLoaderFullPage('off')
-        Backbone.history.loadUrl Backbone.history.fragment
+        showNode $("#nav-node-" + that.block.get('node_id')).data("url")
+        return
       error: ->
         $('.modal-title').text 'Block removal'
         $('.modal-body').html 'Erreur durant la suppression'

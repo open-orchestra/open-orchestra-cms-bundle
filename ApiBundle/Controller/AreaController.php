@@ -30,38 +30,11 @@ class AreaController extends Controller
         $area = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $areaId);
 
         $blocks = $area->getBlocks();
-        $blockComponent = $this->getBlockComponent($blocks[$blockPosition], $nodeId);
         unset($blocks[$blockPosition]);
 
         $area->setBlocks($blocks);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
-        $this->get('session')->getFlashBag()->add(
-            'success',
-            $this->get('translator')->trans(
-                'php_orchestra_backoffice.block.remove.success',
-                array(
-                    '%blockComponent%' => strtolower(
-                        $this->get('translator')->trans('php_orchestra_backoffice.block.' . $blockComponent . '.title')
-                    )
-                )
-            )
-        );
-
         return new Response();
-    }
-
-    protected function getBlockComponent($block, $currentNodeId)
-    {
-        $blockId = $block['blockId'];
-
-        $targetNodeId = $block['nodeId'];
-        if (0 == $targetNodeId) {
-            $targetNodeId = $currentNodeId;
-        }
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($targetNodeId);
-
-        $blocks = $node->getBlocks();
-        return $blocks[$blockId]->getComponent();
     }
 }
