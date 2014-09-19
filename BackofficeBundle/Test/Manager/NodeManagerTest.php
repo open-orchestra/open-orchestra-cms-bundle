@@ -44,6 +44,19 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param NodeInterface   $node
+     * @param int             $expectedVersion
+     *
+     * @dataProvider provideNodeToDelete
+     */
+    public function testDeleteTree(NodeInterface $node, $expectedValue)
+    {
+        $this->manager->deleteTree($node);
+        $this->assertSame($node->getDeleted(), $expectedValue);
+        
+    }
+
+    /**
      * @return array
      */
     public function provideNode()
@@ -60,6 +73,22 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array($node0, 1),
             array($node1, 2),
             array($node2, 1),
+        );
+    }
+    /**
+     * @return array
+     */
+    public function provideNodeToDelete()
+    {
+        $node0 = new Node();
+        $node0->setDeleted(false);
+
+        $node1 = new Node();
+        $node1->setDeleted(true);
+        
+        return array(
+            array($node0, true),
+            array($node1, true)
         );
     }
 }
