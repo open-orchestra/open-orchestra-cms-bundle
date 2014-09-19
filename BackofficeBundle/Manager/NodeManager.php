@@ -8,7 +8,6 @@ use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 /**
  * Class NodeManager
  */
-
 class NodeManager
 {
     /**
@@ -43,13 +42,14 @@ class NodeManager
      * @param NodeInterface  $node
      * @param NodeRepository $nodeRepository
      */
-    protected function deleteTree(NodeInterface $node)
+    public function deleteTree(NodeInterface $node)
     {
         $node->setDeleted(true);
         $sons = $this->nodeRepository->findByParentId($node->getNodeId());
         foreach ($sons as &$son) {
             $son = $this->deleteTree($son);
         }
+
         return $node;
     }
 }
