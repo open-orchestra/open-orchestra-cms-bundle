@@ -38,4 +38,34 @@ class AreaController extends Controller
 
         return new Response();
     }
+
+    /**
+     * 
+     * @param string $areaId
+     * @param string $nodeId
+     * @param string $parentAreaId
+     * 
+     * @Config\Route("/{areaId}/delete/{nodeId}/{parentAreaId}", name="php_orchestra_api_area_delete", defaults={"parentAreaId" = null})
+     * @Config\Method({"POST", "DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAreaAction($areaId, $nodeId, $parentAreaId)
+    {
+        $areas = null;
+
+        if (is_null($parentAreaId)) {
+            $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+            $areas = $node->getAreas();
+        } else {
+            $parentArea = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $parentAreaId);
+            $areas = $parentArea->getAreas();
+        }
+
+        $areas = $this->get('php_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areas, $areaId);
+
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return new Response();
+    }
 }

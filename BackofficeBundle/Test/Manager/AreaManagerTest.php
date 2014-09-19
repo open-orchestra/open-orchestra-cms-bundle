@@ -21,14 +21,46 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->manager = new AreaManager();
+        $this->manager = new AreaManager(Phake::mock('Doctrine\ODM\MongoDB\DocumentManager'));
     }
 
     /**
-     * dummy test
+     * @param array  $areas
+     * @param string $areaId
+     * @param array  $expectedAreas
+     *
+     * @dataProvider provideAreasAndAreaId
      */
-    public function test()
+    public function testDeleteAreaFromAreas($areas, $areaId, $expectedAreas)
     {
-        $this->assertTrue(true);
+        $alteredAreas = $this->manager->deleteAreaFromAreas($areas, $areaId);
+
+        $this->assertSame($expectedAreas, $alteredAreas);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideAreasAndAreaId()
+    {
+        $area1 = new Area(); $area1->setAreaId('area1');
+        $area2 = new Area(); $area2->setAreaId('area2');
+        $area3 = new Area(); $area3->setAreaId('area3');
+        
+        $areas = array(
+            'area1' => $area1,
+            'area2' => $area2,
+            'area3' => $area3
+        );
+        $filteredAreas = array(
+            'area1' => $area1,
+            'area3' => $area3
+        );
+
+        return array(
+            array(array(), 'miscId', array()),
+            array($areas, 'miscId', $areas),
+            array($areas, 'area2', $filteredAreas)
+        );
     }
 }

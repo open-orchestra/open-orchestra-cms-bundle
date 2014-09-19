@@ -30,24 +30,30 @@ class AreaTransformer extends AbstractTransformer
     /**
      * @param AreaInterface $mixed
      * @param NodeInterface $node
+     * @param string $parentAreaId
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, NodeInterface $node = null)
+    public function transform($mixed, NodeInterface $node = null, $parentAreaId = null)
     {
         $facade = new AreaFacade();
+
+        $nodeId = null;
+        if (!is_null($node)) {
+            $nodeId = $node->getNodeId();
+        }
 
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
         foreach ($mixed->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area')->transform($subArea, $node));
+            $facade->addArea($this->getTransformer('area')->transform($subArea, $node, $mixed->getAreaId()));
         }
         foreach ($mixed->getBlocks() as $blockPosition => $block) {
             if (0 === $block['nodeId'] || $node->getNodeId() == $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $node->getBlocks()->get($block['blockId']),
                     true,
-                    $node->getNodeId(),
+                    $nodeId,
                     $block['blockId'],
                     $mixed->getAreaId(),
                     $blockPosition
@@ -68,7 +74,7 @@ class AreaTransformer extends AbstractTransformer
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_area_form',
             array(
-                'nodeId' => $node->getNodeId(),
+                'nodeId' => $nodeId,
                 'areaId' => $mixed->getAreaId(),
             ),
             UrlGeneratorInterface::ABSOLUTE_URL
@@ -83,7 +89,8 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete',
             array(
-                'nodeId' => $node->getNodeId(),
+                'nodeId' => $nodeId,
+                'parentAreaId' => $parentAreaId,
                 'areaId' => $mixed->getAreaId(),
             ),
             UrlGeneratorInterface::ABSOLUTE_URL
