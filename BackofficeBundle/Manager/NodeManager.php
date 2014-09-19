@@ -11,6 +11,20 @@ use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 class NodeManager
 {
+    /**
+     * @var NodeRepository $nodeRepository
+     */
+    protected $nodeRepository;
+
+    /**
+     * Constructor
+     *
+     * @param NodeRepository $nodeRepository
+     */
+    public function __construct(NodeRepository $nodeRepository)
+    {
+        $this->nodeRepository = $nodeRepository;
+    }
 
     /**
      * Duplicate a node
@@ -21,7 +35,7 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
-        
+
         return $newNode;
     }
 
@@ -29,14 +43,13 @@ class NodeManager
      * @param NodeInterface  $node
      * @param NodeRepository $nodeRepository
      */
-    protected function deleteTree(NodeInterface $node, NodeRepository $nodeRepository)
+    protected function deleteTree(NodeInterface $node)
     {
         $node->setDeleted(true);
-    
-        $sons = $nodeRepository->findByParentId($node->getNodeId());
-    
-        foreach ($sons as $son) {
-            $this->deleteTree($son);
+        $sons = $this->nodeRepository->findByParentId($node->getNodeId());
+        foreach ($sons as &$son) {
+            $son = $this->deleteTree($son);
         }
+        return $node;
     }
 }
