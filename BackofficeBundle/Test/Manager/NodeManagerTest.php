@@ -55,8 +55,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $node->setVersion(1);
 
         return array(
-            array($node),
-            array(2)
+            array($node, 2)
         );
     }
 }
