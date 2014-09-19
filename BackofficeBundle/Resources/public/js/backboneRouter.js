@@ -7,6 +7,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'template/show/:templateId': 'showTemplate',
     'contents/list/:contentTypeId': 'listContents',
     'websites/list': 'listSites',
+    ':list/list/edit': 'redirectToList',
     'status/list': 'listStatus',
     'content-types/list': 'listContentTypes',
     'translation': 'listTranslations',
@@ -64,6 +65,9 @@ var OrchestraBORouter = Backbone.Router.extend({
     );
   },
 
+  redirectToList: function(list) {
+      Backbone.history.navigate(list + '/list', true);
+  },
 //========[INTERNAL FUNCTIONS]========================//
 
   initDisplayRouteChanges: function() {

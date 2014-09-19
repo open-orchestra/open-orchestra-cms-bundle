@@ -33,7 +33,7 @@ TableviewView = Backbone.View.extend(
   clickEdit: (event) ->
     event.preventDefault()
     displayLoader('div[role="container"]')
-    Backbone.history.navigate('/edit')
+    Backbone.history.navigate(Backbone.history.fragment + '/edit')
     title = @title
     listUrl = @listUrl
     $.ajax
