@@ -7,15 +7,15 @@ use PHPOrchestra\ModelBundle\Document\Area;
 /**
  * Class AreaManager
  */
-
 class AreaManager
 {
-
     /**
      * Remove a block reference from an area
      * 
-     * @param $area
-     * @param $blockPosition
+     * @param Area $area
+     * @param int  $blockPosition
+     *
+     * @return Area
      */
     public function removeBlockFromArea(Area $area, $blockPosition)
     {

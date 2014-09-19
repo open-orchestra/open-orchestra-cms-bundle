@@ -42,6 +42,7 @@ class BlockTransformer extends AbstractTransformer
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $mixed->getComponent();
         $facade->nodeId = $nodeId;
+        $facade->blockId = $blockNumber;
 
         $label = $mixed->getComponent();
         foreach ($mixed->getAttributes() as $key => $attribute) {
@@ -85,6 +86,25 @@ class BlockTransformer extends AbstractTransformer
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface|BlockFacade $facade
+     * @param NodeInterface               $node
+     *
+     * @return array
+     */
+    public function reverseTransformToArray(FacadeInterface $facade, NodeInterface $node)
+    {
+        $block  = array();
+        $block['blockId'] = $facade->blockId;
+        if ($facade->nodeId == $node->getNodeId()) {
+            $block['nodeId'] = 0;
+        } else {
+            $block['nodeId'] = $facade->nodeId;
+        }
+
+        return $block;
     }
 
     /**

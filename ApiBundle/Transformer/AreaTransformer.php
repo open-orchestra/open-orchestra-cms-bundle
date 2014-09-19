@@ -73,6 +73,13 @@ class AreaTransformer extends AbstractTransformer
             ),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
+        $facade->addLink('_self_block', $this->getRouter()->generate('php_orchestra_api_area_update_block',
+            array(
+                'nodeId' => $node->getNodeId(),
+                'areaId' => $mixed->getAreaId()
+            ),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
 
         return $facade;
     }
@@ -103,6 +110,28 @@ class AreaTransformer extends AbstractTransformer
         ));
 
         return $facade;
+    }
+
+    /**
+     * @param AreaFacade|FacadeInterface $facade
+     * @param AreaInterface|null         $source
+     * @param NodeInterface|null         $node
+     *
+     * @return mixed|AreaInterface
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null, NodeInterface $node = null)
+    {
+        $blocks = $facade->getBlocks();
+        $blockDocument = array();
+
+        foreach ($blocks as $position => $blockFacade) {
+            $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
+            $blockDocument[$position] = $blockArray;
+        }
+
+        $source->setBlocks($blockDocument);
+
+        return $source;
     }
 
     /**

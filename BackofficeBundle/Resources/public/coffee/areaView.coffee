@@ -3,12 +3,11 @@ AreaView = Backbone.View.extend(
   className: 'ui-model-areas'
   events:
     'click i#none' : 'clickButton'
+    'sortupdate ul.ui-model-blocks': 'updateBlockSize'
   initialize: (options) ->
     @area = options.area
     key = "click i." + @area.cid
     @events[key] = "clickButton"
-    key = "sortupdate ul.ui-model-blocks"
-    @events[key] = "updateBlockSize"
     @height = options.height
     @direction = options.direction || 'height'
     @displayClass = (if @direction is "width" then "inline" else "block")
@@ -36,7 +35,7 @@ AreaView = Backbone.View.extend(
     $("ul.ui-model-blocks", @el).remove() if $("ul.ui-model-blocks", @el).children().length == 0
     if $("ul.ui-model-areas", @el).children().length == 0
       $("ul.ui-model-areas", @el).remove()
-    $("ul.ui-model-blocks", @el).sortable(connectWith: "ul.ui-model-blocks").disableSelection()
+      $("ul.ui-model-blocks", @el).sortable(connectWith: "ul.ui-model-blocks").disableSelection()
     this
   addAreaToView: (area, areaHeight) ->
     areaElement = new Area
@@ -66,4 +65,17 @@ AreaView = Backbone.View.extend(
         $("li.block", "ul.resizable-" + @cid).removeClass('block').addClass('inline')
       else
         $("li.inline", "ul.resizable-" + @cid).removeClass('inline').addClass('block')
+    @sendBlockData()
+  sendBlockData: ->
+    blocks = $("ul.resizable-" + @cid, @el).children()
+    blockData = []
+    for block in blocks
+      blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
+    areaData = {}
+    areaData['blocks'] = blockData
+    $.ajax
+      url: @area.get('links')._self_block
+      method: 'POST'
+      data: JSON.stringify(areaData)
+
 )
