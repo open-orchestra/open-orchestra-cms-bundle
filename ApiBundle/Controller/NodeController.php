@@ -64,7 +64,10 @@ class NodeController extends Controller
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        
+        $em = $this->get('doctrine.odm.mongodb.document_manager');
+        $em->persist($newNode);
+        $em->flush();
 
         return new Response('', 200);
     }
