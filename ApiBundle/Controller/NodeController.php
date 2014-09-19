@@ -43,8 +43,9 @@ class NodeController extends Controller
     public function deleteAction($nodeId)
     {
         /** @var NodeInterface $node */
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        $this->deleteTree($node);
+        $repositoryNode = $this->get('php_orchestra_model.repository.node');
+        $node = $repositoryNode->findOneByNodeId($nodeId);
+        $this->get('php_orchestra_backoffice.manager.node')->deleteTree($node, $repositoryNode);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
@@ -62,28 +63,11 @@ class NodeController extends Controller
     {
         /** @var NodeInterface $node */
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        $newNode = clone $node;
-        $newNode->setVersion($node->getVersion() + 1);
-        
+        $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newNode);
         $em->flush();
 
         return new Response('', 200);
-    }
-
-    /**
-     * @param NodeInterface $node
-     */
-    protected function deleteTree(NodeInterface $node)
-    {
-        $node->setDeleted(true);
-
-        $nodeRepository = $this->get('php_orchestra_model.repository.node');
-        $sons = $nodeRepository->findByParentId($node->getNodeId());
-
-        foreach ($sons as $son) {
-            $this->deleteTree($son);
-        }
     }
 }
