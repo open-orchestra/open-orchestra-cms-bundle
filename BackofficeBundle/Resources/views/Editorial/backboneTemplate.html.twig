@@ -73,12 +73,12 @@
             </span>
         <ul class="ui-model-areas">
         </ul>
-        <ul class="ui-model-blocks">
+        <ul class="ui-model-blocks resizable-<%= cid %>">
         </ul>
     </div>
 </script>
 <script type="text/html" id="blockView">
-    <div class="<%= block.get('method') %>">
+    <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <span class="title"><%= block.get('ui_model').label %></span>
             <span class="preview">
                 <div>
