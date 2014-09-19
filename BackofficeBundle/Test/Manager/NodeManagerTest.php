@@ -49,7 +49,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideAreasAndBlockPosition()
+    public function provideNode()
     {
         $node = new Node();
         $node->setVersion(1);
