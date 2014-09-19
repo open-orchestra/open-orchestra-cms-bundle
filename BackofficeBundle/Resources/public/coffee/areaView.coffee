@@ -74,6 +74,7 @@ AreaView = Backbone.View.extend(
       area: areaElement
       height: areaHeight
       direction: @childrenDirection
+      node_id: @node_id
     )
     $("ul.ui-model-areas", @el).append areaView.render().el
     return
