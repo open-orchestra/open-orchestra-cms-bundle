@@ -45,7 +45,8 @@ class AreaController extends Controller
      * @param string $nodeId
      * @param string $parentAreaId
      * 
-     * @Config\Route("/{areaId}/delete/{nodeId}/{parentAreaId}", name="php_orchestra_api_area_delete", defaults={"parentAreaId" = null})
+     * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="php_orchestra_api_area_delete_in_node", defaults={"parentAreaId" = null})
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/{nodeId}", name="php_orchestra_api_area_delete_in_area")
      * @Config\Method({"POST", "DELETE"})
      *
      * @return Response

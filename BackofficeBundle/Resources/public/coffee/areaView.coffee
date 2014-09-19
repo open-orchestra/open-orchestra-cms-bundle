@@ -17,15 +17,17 @@ AreaView = Backbone.View.extend(
     @node_id = options.node_id
     @displayClass = (if @direction is "width" then "inline" else "block")
     @areaTemplate = _.template($('#areaView').html())
+    paramkey = 'click i.area-param-' + @area.cid
+    @events[paramkey] = 'paramArea'
+    removekey = 'click i.area-remove-' + @area.cid
+    @events[removekey] = 'confirmRemoveArea'
     return
   
   paramArea: (event) ->
-    event.stopPropagation()
     $('.modal-title').text @area.get('area_id')
     view = new adminFormView(url: @area.get('links')._self_form)
   
   confirmRemoveArea: (event) ->
-    event.stopPropagation()
     if confirm 'Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?'
       @removeArea event
   
