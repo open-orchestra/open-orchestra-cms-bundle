@@ -83,7 +83,4 @@ class NodeController extends Controller
             $this->deleteTree($son);
         }
     }
-    
-    
-    
 }

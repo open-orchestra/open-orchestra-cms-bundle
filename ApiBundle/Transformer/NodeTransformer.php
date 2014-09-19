@@ -48,7 +48,7 @@ class NodeTransformer extends AbstractTransformer
             array('nodeId' => $mixed->getNodeId()),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
-        
+
         return $facade;
     }
 
