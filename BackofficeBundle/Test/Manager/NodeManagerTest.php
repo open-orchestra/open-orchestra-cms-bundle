@@ -21,7 +21,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      * @var NodeRepositoryr
      */
     protected $nodeRepository;
-    
+
     /**
      * Set up the test
      */
@@ -29,13 +29,11 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
         $this->manager = new NodeManager($this->nodeRepository);
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
     }
 
-    
     /**
      * @param NodeInterface   $node
-     * @param int   $expectedVersion
+     * @param int             $expectedVersion
      *
      * @dataProvider provideNode
      */
@@ -43,19 +41,25 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     {
         $alteredNode = $this->manager->duplicateNode($node);
         $this->assertSame($alteredNode->getVersion(), $expectedVersion);
-        
     }
-    
+
     /**
      * @return array
      */
     public function provideNode()
     {
-        $node = new Node();
-        $node->setVersion(1);
+        $node0 = new Node();
+        $node0->setVersion(0);
+
+        $node1 = new Node();
+        $node1->setVersion(1);
+
+        $node2 = new Node();
 
         return array(
-            array($node, 2)
+            array($node0, 1),
+            array($node1, 2),
+            array($node2, 1),
         );
     }
 }
