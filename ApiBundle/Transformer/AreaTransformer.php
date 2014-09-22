@@ -43,7 +43,7 @@ class AreaTransformer extends AbstractTransformer
             $facade->addArea($this->getTransformer('area')->transform($subArea, $node));
         }
         foreach ($mixed->getBlocks() as $blockPosition => $block) {
-            if (0 === $block['nodeId']) {
+            if (0 === $block['nodeId'] || $node->getNodeId() == $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $node->getBlocks()->get($block['blockId']),
                     true,
