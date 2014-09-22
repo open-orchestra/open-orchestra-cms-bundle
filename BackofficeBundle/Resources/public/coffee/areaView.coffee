@@ -4,6 +4,7 @@ AreaView = Backbone.View.extend(
   events:
     'click i#none' : 'clickButton'
     'sortupdate ul.ui-model-blocks': 'updateBlockSize'
+    'click i.block-remove': 'confirmRemoveBlock'
   initialize: (options) ->
     @area = options.area
     key = "click i." + @area.cid
@@ -67,15 +68,21 @@ AreaView = Backbone.View.extend(
         $("li.inline", "ul.resizable-" + @cid).removeClass('inline').addClass('block')
     @sendBlockData()
   sendBlockData: ->
-    blocks = $("ul.resizable-" + @cid, @el).children()
-    blockData = []
-    for block in blocks
-      blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
-    areaData = {}
-    areaData['blocks'] = blockData
-    $.ajax
-      url: @area.get('links')._self_block
-      method: 'POST'
-      data: JSON.stringify(areaData)
-
+    if $("ul.ui-model-areas", @el).length == 0
+      blocks = $("ul.resizable-" + @cid, @el).children()
+      blockData = []
+      for block in blocks
+        blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
+      areaData = {}
+      areaData['blocks'] = blockData
+      $.ajax
+        url: @area.get('links')._self_block
+        method: 'POST'
+        data: JSON.stringify(areaData)
+  confirmRemoveBlock: (event) ->
+    if confirm 'Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?'
+      @removeBlock event
+  removeBlock: (event) ->
+    event.currentTarget.parentNode.parentNode.parentNode.remove()
+    @updateBlockSize()
 )
