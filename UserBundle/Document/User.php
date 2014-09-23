@@ -6,9 +6,9 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document(
- *   collection="user"
- * )
+ * Document User
+ *
+ * @MongoDB\Document(collection="user")
  */
 class User extends BaseUser
 {

@@ -1,0 +1,32 @@
+{% extends 'PHPOrchestraBackofficeBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ 'php_orchestra_user.login.title'|trans }}
+{% endblock %}
+
+{% block body_opener %}
+    <body id="login" class="animated fadeInDown dark-background desktop-detected">
+{% endblock %}
+
+{% block content %}
+    <div id="main" role="main">
+        <!-- MAIN CONTENT -->
+        <div id="content" class="container lockscreen">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="well no-padding">
+                        <header>
+                            <span id="logo"> <img src="{{ asset('bundles/phporchestracms/img/logo-orchestra.png') }}" alt="PHP Ochestra"> </span>
+                            Bienvenue sur PHP Orchestra
+                        </header>
+
+                        {% block fos_user_content %}
+                        {% endblock %}
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
