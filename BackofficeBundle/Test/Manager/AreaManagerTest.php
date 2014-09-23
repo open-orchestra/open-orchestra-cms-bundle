@@ -3,9 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
-
 use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
 use PHPOrchestra\ModelBundle\Document\Area;
 use Phake;
