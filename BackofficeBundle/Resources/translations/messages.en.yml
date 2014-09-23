@@ -81,3 +81,6 @@ php_orchestra_backoffice:
             title: Rich text block
         news:
             title: News block
+    node:
+        version:
+            create: Create a new version of node

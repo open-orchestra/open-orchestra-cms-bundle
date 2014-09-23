@@ -44,24 +44,29 @@ class NodeController extends Controller
     {
         /** @var NodeInterface $node */
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        $this->deleteTree($node);
+        $this->get('php_orchestra_backoffice.manager.node')->deleteTree($node);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
     }
 
     /**
-     * @param NodeInterface $node
+     * @param string $nodeId
+     *
+     * @Config\Route("/{nodeId}/duplicate", name="php_orchestra_api_node_duplicate")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
      */
-    protected function deleteTree(NodeInterface $node)
+    public function duplicateAction($nodeId)
     {
-        $node->setDeleted(true);
+        /** @var NodeInterface $node */
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
+        $em = $this->get('doctrine.odm.mongodb.document_manager');
+        $em->persist($newNode);
+        $em->flush();
 
-        $nodeRepository = $this->get('php_orchestra_model.repository.node');
-        $sons = $nodeRepository->findByParentId($node->getNodeId());
-
-        foreach ($sons as $son) {
-            $this->deleteTree($son);
-        }
+        return new Response('', 200);
     }
 }
