@@ -38,8 +38,8 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->deleteAreaFromAreas($areaContainer, $areaId);
 
         $this->assertTrue(
-            $this->array_contains($expectedArea->getAreas(), $areaContainer->getAreas())
-            && $this->array_contains($areaContainer->getAreas(), $expectedArea->getAreas())
+            $this->arrayContains($expectedArea->getAreas(), $areaContainer->getAreas())
+            && $this->arrayContains($areaContainer->getAreas(), $expectedArea->getAreas())
         );
     }
 
@@ -49,19 +49,17 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      * @param array $refArray
      * @param array $includedArray
      */
-    protected function array_contains(ArrayCollection $refArray, ArrayCollection $includedArray) {
-        $res = true;
-
+    protected function arrayContains(ArrayCollection $refArray, ArrayCollection $includedArray)
+    {
         if (count($includedArray) > 0) {
             foreach($includedArray as $element) {
                 if (!$refArray->contains($element)) {
-                    $res = false;
-                    break;
+                    return false;
                 }
             }
         }
 
-        return $res;
+        return true;
     }
 
     /**

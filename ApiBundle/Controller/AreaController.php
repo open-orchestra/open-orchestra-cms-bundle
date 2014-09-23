@@ -51,14 +51,14 @@ class AreaController extends Controller
      *
      * @return Response
      */
-    public function deleteAreaAction($areaId, $nodeId, $parentAreaId)
+    public function deleteAreaAction($areaId, $nodeId, $parentAreaId = null)
     {
         $areas = null;
 
-        if (is_null($parentAreaId)) {
-            $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        } else {
+        if ($parentAreaId) {
             $areaContainer = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $parentAreaId);
+        } else {
+            $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
         }
 
         $areas = $this->get('php_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areaContainer, $areaId);

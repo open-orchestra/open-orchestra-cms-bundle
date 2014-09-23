@@ -38,9 +38,10 @@ class AreaTransformer extends AbstractTransformer
     {
         $facade = new AreaFacade();
 
-        $nodeId = null;
-        if (!is_null($node)) {
+        if ($node instanceof NodeInterface) {
             $nodeId = $node->getNodeId();
+        } else {
+            $nodeId = null;
         }
 
         $facade->areaId = $mixed->getAreaId();
@@ -87,23 +88,21 @@ class AreaTransformer extends AbstractTransformer
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
 
-        if (is_null($parentAreaId)) {
-
-            $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_node',
-                array(
-                    'nodeId' => $nodeId,
-                    'areaId' => $mixed->getAreaId(),
-                ),
-                UrlGeneratorInterface::ABSOLUTE_URL
-            ));
-
-        } else {
-
+        if ($parentAreaId) {
             $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_area',
                 array(
                     'nodeId' => $nodeId,
                     'parentAreaId' => $parentAreaId,
                     'areaId' => $mixed->getAreaId()
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ));
+
+        } else {
+            $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_node',
+                array(
+                    'nodeId' => $nodeId,
+                    'areaId' => $mixed->getAreaId(),
                 ),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ));

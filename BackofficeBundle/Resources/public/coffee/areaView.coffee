@@ -7,8 +7,6 @@ AreaView = Backbone.View.extend(
     'click i#none' : 'clickButton'
     'sortupdate ul.ui-model-blocks': 'updateBlockSize'
     'click i.block-remove': 'confirmRemoveBlock'
-    'click i.area-param' : 'paramArea'
-    'click i.area-remove': 'confirmRemoveArea'
   
   initialize: (options) ->
     @area = options.area
@@ -21,7 +19,8 @@ AreaView = Backbone.View.extend(
     @events[paramkey] = 'paramArea'
     removekey = 'click i.area-remove-' + @area.cid
     @events[removekey] = 'confirmRemoveArea'
-    return
+    _.bindAll this, "render", "addAreaToView", "addBlockToView"
+        return
   
   paramArea: (event) ->
     $('.modal-title').text @area.get('area_id')
