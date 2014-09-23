@@ -70,7 +70,8 @@
         <span class="title"><%= area.get('ui_model').label %></span>
         <span class="preview"></span>
             <span class="action">
-                <i class="fa fa-wrench <%= area.cid %>"></i>
+                <i class="fa fa-wrench area-param-<%= area.cid %>"></i>
+                <i class="fa fa-trash-o area-remove-<%= area.cid %>"></i>
             </span>
         <ul class="ui-model-areas">
         </ul>

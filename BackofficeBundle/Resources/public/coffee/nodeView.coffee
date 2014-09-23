@@ -37,6 +37,7 @@ NodeView = Backbone.View.extend(
     areaView = new AreaView(
       area: areaElement
       height: areaHeight
+      node_id: @node.get('node_id')
     )
     this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas').append areaView.render().el
     return
