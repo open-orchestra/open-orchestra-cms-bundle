@@ -20,7 +20,7 @@ AreaView = Backbone.View.extend(
     removekey = 'click i.area-remove-' + @area.cid
     @events[removekey] = 'confirmRemoveArea'
     _.bindAll this, "render", "addAreaToView", "addBlockToView"
-        return
+    return
   
   paramArea: (event) ->
     $('.modal-title').text @area.get('area_id')
@@ -31,18 +31,28 @@ AreaView = Backbone.View.extend(
       @removeArea event
   
   removeArea: (event) ->
-    switchLoaderFullPage('on')
+    brothers = $(@el).siblings()
+    $(@el).remove()
+    if brothers
+      if $(brothers[0]).hasClass("block")
+        attribute = "height"
+      else
+        attribute = "width"
+      dimension = 100 / brothers.length
+      brothers.each ->
+        $(this).css attribute, dimension + "%"
+        return
+    @sendRemoveArea()
+    return
+  
+  sendRemoveArea: ->
     that = this
     $.ajax
       url: @area.get('links')._self_delete
       method: 'POST'
-      success: (response) ->
-        showNode $("#nav-node-" + that.node_id).data("url")
-        return
       error: ->
         $('.modal-title').text 'Block removal'
-        $('.modal-body').html 'Erreur durant la suppression de la zone'
-        switchLoaderFullPage('off')
+        $('.modal-body').html 'Erreur durant la suppression de la zone, veuillez recharger la page'
         $("#OrchestraBOModal").modal "show"
     return
   
@@ -66,6 +76,7 @@ AreaView = Backbone.View.extend(
       $("ul.ui-model-areas", @el).remove()
       $("ul.ui-model-blocks", @el).sortable(connectWith: "ul.ui-model-blocks").disableSelection()
     this
+  
   addAreaToView: (area, areaHeight) ->
     areaElement = new Area
     areaElement.set area
@@ -77,6 +88,7 @@ AreaView = Backbone.View.extend(
     )
     $("ul.ui-model-areas", @el).append areaView.render().el
     return
+  
   addBlockToView: (block, blockHeight) ->
     blockElement = new Block
     blockElement.set block
@@ -86,6 +98,7 @@ AreaView = Backbone.View.extend(
       direction: @childrenDirection
     )
     $("ul.ui-model-blocks", @el).append blockView.render().el
+  
   updateBlockSize: ->
     numberOfBlocks = $("ul.resizable-" + @cid, @el).children().length
     if numberOfBlocks > 0
@@ -96,6 +109,7 @@ AreaView = Backbone.View.extend(
       else
         $("li.inline", "ul.resizable-" + @cid).removeClass('inline').addClass('block')
     @sendBlockData()
+  
   sendBlockData: ->
     if $("ul.ui-model-areas", @el).length == 0
       blocks = $("ul.resizable-" + @cid, @el).children()
@@ -108,9 +122,11 @@ AreaView = Backbone.View.extend(
         url: @area.get('links')._self_block
         method: 'POST'
         data: JSON.stringify(areaData)
+  
   confirmRemoveBlock: (event) ->
     if confirm 'Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?'
       @removeBlock event
+  
   removeBlock: (event) ->
     event.currentTarget.parentNode.parentNode.parentNode.remove()
     @updateBlockSize()
