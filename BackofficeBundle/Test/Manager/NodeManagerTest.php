@@ -5,7 +5,9 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Phake;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class NodeManagerTest
@@ -23,15 +25,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $nodeRepository;
 
     /**
-     * Set up the test
-     */
-    public function setUp()
-    {
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-        $this->manager = new NodeManager($this->nodeRepository);
-    }
-
-    /**
      * @param NodeInterface   $node
      * @param int             $expectedVersion
      *
@@ -39,21 +32,27 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDuplicateNode(NodeInterface $node, $expectedVersion)
     {
-        $alteredNode = $this->manager->duplicateNode($node);
+        $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $manager = new NodeManager($nodeRepository);
+        $alteredNode = $manager->duplicateNode($node);
         $this->assertSame($alteredNode->getVersion(), $expectedVersion);
     }
 
     /**
-     * @param NodeInterface   $node
-     * @param int             $expectedVersion
-     *
+     * @param NodeRepository $nodeRepository
+     * @param NodeInterface  $nodeToDelete
+     * @param array          $nodes
+     * 
      * @dataProvider provideNodeToDelete
      */
-    public function testDeleteTree(NodeInterface $node, $expectedValue)
+    public function testDeleteTree(NodeRepository $nodeRepository, NodeInterface $nodeToDelete, $nodes)
     {
-        $this->manager->deleteTree($node);
-        $this->assertSame($node->getDeleted(), $expectedValue);
-        
+        $manager = new NodeManager($nodeRepository);
+        $manager->deleteTree($nodeToDelete);
+
+        foreach($nodes as $node){
+            Phake::verify($node, Phake::times(1))->setDeleted(true);
+        }
     }
 
     /**
@@ -80,15 +79,28 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNodeToDelete()
     {
-        $node0 = new Node();
-        $node0->setDeleted(false);
 
-        $node1 = new Node();
-        $node1->setDeleted(true);
-        
+        $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+
+        $nodesId = array('rootNodeId', 'childNodeId', 'otherChildNodeId');
+
+        $nodes = array();
+        foreach($nodesId as $nodeId){
+            $nodes[$nodeId] = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+            Phake::when($nodes[$nodeId])->getNodeId()->thenReturn($nodeId);
+        }
+
+        $sons = new ArrayCollection();
+        $sons->add($nodes[$nodesId[1]]);
+        $sons->add($nodes[$nodesId[2]]);
+
+        Phake::when($nodeRepository)->findByParentId($nodesId[0])->thenReturn($sons);
+        Phake::when($nodeRepository)->findByParentId($nodesId[1])->thenReturn(new ArrayCollection());
+        Phake::when($nodeRepository)->findByParentId($nodesId[2])->thenReturn(new ArrayCollection());
+
         return array(
-            array($node0, true),
-            array($node1, true)
+            array($nodeRepository, $nodes[$nodesId[0]], $nodes)
         );
+        
     }
 }

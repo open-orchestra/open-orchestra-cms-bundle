@@ -46,10 +46,8 @@ class NodeManager
     {
         $node->setDeleted(true);
         $sons = $this->nodeRepository->findByParentId($node->getNodeId());
-        if($sons !== null && count($sons) > 0){
-            foreach ($sons as &$son) {
-                $son = $this->deleteTree($son);
-            }
+        foreach ($sons as $son) {
+            $son = $this->deleteTree($son);
         }
     }
 }
