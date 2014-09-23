@@ -2,6 +2,10 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
+use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
+
+use Doctrine\Common\Collections\ArrayCollection;
+
 use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
 use PHPOrchestra\ModelBundle\Document\Area;
 use Phake;
@@ -25,42 +29,69 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array  $areas
-     * @param string $areaId
-     * @param array  $expectedAreas
+     * @param AreaContainerInterface $areaContainer
+     * @param string                 $areaId
+     * @param AreaContainerInterface $expectedArea
      *
-     * @dataProvider provideAreasAndAreaId
+     * @dataProvider provideAreaAndAreaId
      */
-    public function testDeleteAreaFromAreas($areas, $areaId, $expectedAreas)
+    public function testDeleteAreaFromAreas(AreaContainerInterface $areaContainer, $areaId, AreaContainerInterface $expectedArea)
     {
-        $alteredAreas = $this->manager->deleteAreaFromAreas($areas, $areaId);
+        $this->manager->deleteAreaFromAreas($areaContainer, $areaId);
 
-        $this->assertSame($expectedAreas, $alteredAreas);
+        $this->assertTrue(
+            $this->array_contains($expectedArea->getAreas(), $areaContainer->getAreas())
+            && $this->array_contains($areaContainer->getAreas(), $expectedArea->getAreas())
+        );
+    }
+
+    /**
+     * Check if values of $includedArray are present in $refArray
+     * 
+     * @param array $refArray
+     * @param array $includedArray
+     */
+    protected function array_contains(ArrayCollection $refArray, ArrayCollection $includedArray) {
+        $res = true;
+
+        if (count($includedArray) > 0) {
+            foreach($includedArray as $element) {
+                if (!$refArray->contains($element)) {
+                    $res = false;
+                    break;
+                }
+            }
+        }
+
+        return $res;
     }
 
     /**
      * @return array
      */
-    public function provideAreasAndAreaId()
+    public function provideAreaAndAreaId()
     {
-        $area1 = new Area(); $area1->setAreaId('area1');
-        $area2 = new Area(); $area2->setAreaId('area2');
-        $area3 = new Area(); $area3->setAreaId('area3');
-        
-        $areas = array(
-            'area1' => $area1,
-            'area2' => $area2,
-            'area3' => $area3
-        );
-        $filteredAreas = array(
-            'area1' => $area1,
-            'area3' => $area3
-        );
+        $area1 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        Phake::when($area1)->getAreaId()->thenReturn('area1');
+
+        $area2 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        Phake::when($area2)->getAreaId()->thenReturn('area2');
+
+        $area3 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        Phake::when($area3)->getAreaId()->thenReturn('area3');
+
+        $emptyArea = new Area();
+
+        $area = new Area();
+        $area->addArea($area1); $area->addArea($area2); $area->addArea($area3);
+
+        $filteredArea = new Area();
+        $filteredArea->addArea($area1); $filteredArea->addArea($area3);
 
         return array(
-            array(array(), 'miscId', array()),
-            array($areas, 'miscId', $areas),
-            array($areas, 'area2', $filteredAreas)
+            array($emptyArea, 'miscId', $emptyArea),
+            array($area, 'miscId', $area),
+            array($area, 'area2', $filteredArea)
         );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
+use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
 use PHPOrchestra\ModelBundle\Document\Area;
 
 /**
@@ -25,19 +26,13 @@ class AreaManager
     /**
      * Remove an area from an AreaCollections
      *
-     * @param BaseCollection $areas
+     * @param Collection $areas
      * @param string $areaId
      */
-    public function deleteAreaFromAreas($areas, $areaId)
+    public function deleteAreaFromAreas(AreaContainerInterface $areaContainer, $areaId)
     {
-        foreach ($areas as $key => $area) {
-            if ($areaId == $area->getAreaId()) {
-                $this->documentManager->remove($area);
-                unset($areas[$key]);
-                break;
-            }
-        }
+        $areaContainer->removeAreaByAreaId($areaId);
 
-        return $areas;
+        return $areaContainer;
     }
 }

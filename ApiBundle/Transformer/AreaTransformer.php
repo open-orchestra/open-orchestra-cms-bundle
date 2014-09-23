@@ -30,7 +30,7 @@ class AreaTransformer extends AbstractTransformer
     /**
      * @param AreaInterface $mixed
      * @param NodeInterface $node
-     * @param string $parentAreaId
+     * @param string        $parentAreaId
      *
      * @return FacadeInterface
      */

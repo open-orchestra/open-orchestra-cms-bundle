@@ -56,14 +56,12 @@ class AreaController extends Controller
         $areas = null;
 
         if (is_null($parentAreaId)) {
-            $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-            $areas = $node->getAreas();
+            $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
         } else {
-            $parentArea = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $parentAreaId);
-            $areas = $parentArea->getAreas();
+            $areaContainer = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $parentAreaId);
         }
 
-        $areas = $this->get('php_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areas, $areaId);
+        $areas = $this->get('php_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areaContainer, $areaId);
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
