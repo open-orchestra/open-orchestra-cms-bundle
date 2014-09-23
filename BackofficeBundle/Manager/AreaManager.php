@@ -10,19 +10,6 @@ use PHPOrchestra\ModelBundle\Document\Area;
  */
 class AreaManager
 {
-    /*
-     * The document manager service
-     */
-    protected $documentManager;
-
-    /**
-     * Constructor
-     */
-    public function __construct($documentManager)
-    {
-        $this->documentManager = $documentManager;
-    }
-
     /**
      * Remove an area from an AreaCollections
      *

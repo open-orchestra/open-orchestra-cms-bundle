@@ -23,7 +23,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->manager = new AreaManager(Phake::mock('Doctrine\ODM\MongoDB\DocumentManager'));
+        $this->manager = new AreaManager();
     }
 
     /**
