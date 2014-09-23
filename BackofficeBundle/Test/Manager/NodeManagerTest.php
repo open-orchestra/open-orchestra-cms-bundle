@@ -35,7 +35,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
         $manager = new NodeManager($nodeRepository);
         $alteredNode = $manager->duplicateNode($node);
-        $this->assertSame($alteredNode->getVersion(), $expectedVersion);
+        Phake::verify($alteredNode, Phake::times(1))->setVersion($expectedVersion);
     }
 
     /**
@@ -60,13 +60,15 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNode()
     {
-        $node0 = new Node();
-        $node0->setVersion(0);
 
-        $node1 = new Node();
-        $node1->setVersion(1);
+        $node0 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($node0)->getVersion()->thenReturn(0);
 
-        $node2 = new Node();
+        $node1 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($node1)->getVersion()->thenReturn(1);
+
+        $node2 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($node2)->getVersion()->thenReturn(null);
 
         return array(
             array($node0, 1),
