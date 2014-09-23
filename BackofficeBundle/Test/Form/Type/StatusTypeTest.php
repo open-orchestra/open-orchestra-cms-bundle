@@ -57,6 +57,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($builder)->add('name');
         Phake::verify($builder)->add('published', null, array('required' => false));
+        Phake::verify($builder)->add('role', null, array('required' => false));
         Phake::verify($builder)->add('labels', 'translated_value_collection');
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($builder)->addEventListener(

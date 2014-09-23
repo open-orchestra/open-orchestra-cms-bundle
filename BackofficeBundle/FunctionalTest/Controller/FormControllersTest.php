@@ -21,6 +21,13 @@ class FormControllersTest extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
+        $this->client->setServerParameters(
+            array(
+                'PHP_AUTH_USER' => 'nicolas',
+                'PHP_AUTH_PW'   => 'nicolas',
+            )
+        );
+        $this->client->followRedirects();
     }
 
     /**
