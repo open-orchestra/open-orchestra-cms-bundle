@@ -75,14 +75,6 @@ class BlockTransformer extends AbstractTransformer
                 ),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ));
-            $facade->addLink('_self_remove', $this->getRouter()->generate('php_orchestra_api_area_remove_block',
-                array(
-                    'nodeId' => $nodeId,
-                    'areaId' => $areaId,
-                    'blockPosition' => $blockPosition
-                ),
-                UrlGeneratorInterface::ABSOLUTE_URL
-            ));
         }
 
         return $facade;

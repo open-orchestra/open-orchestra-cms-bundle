@@ -1,15 +1,44 @@
-{##
- # This file is part of the PHPOrchestra\CMSBundle.
- #
- # @author Noël GILAIN <noel.gilain@businessdecision.com>
- ##}
-{% extends 'PHPOrchestraBackofficeBundle:BackOffice:layout.html.twig' %}
-
-{% block contentTitle %}
-<i class="fa-fw fa fa-home"></i> 
-Accueil 
-{% endblock %}
+{% extends 'PHPOrchestraBackofficeBundle::layout.html.twig' %}
 
 {% block content %}
-Bienvenue sur le Back Office de PHPOrchestra.
+    <!-- LOADER FULL PAGE -->
+    <div id="loader-fullpage">
+        <div id="bg-loader-fullpage"></div>
+        <div id="fg-loader-fullpage"><h1><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>
+    </div>
+
+    <!-- HEADER -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:header.html.twig' %}
+    <!-- END HEADER -->
+
+    <!-- Left panel : Navigation area -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:leftMenu.html.twig' %}
+    <!-- END NAVIGATION -->
+
+    <!-- MAIN PANEL -->
+    <div id="main" role="main">
+
+        <!-- RIBBON -->
+        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:ribbon.html.twig' %}
+        <!-- END RIBBON -->
+
+        <!-- MAIN CONTENT -->
+        <div id="content"></div>
+        <!-- END MAIN CONTENT -->
+
+        {% include 'PHPOrchestraBackofficeBundle:Editorial:backboneTemplate.html.twig' %}
+
+    </div>
+
+    <div class="modal fade" id="OrchestraBOModal" tabindex="-1" role="dialog" aria-labelledby="OrchestraBOModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="OrchestraBOModalLabel"></h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
