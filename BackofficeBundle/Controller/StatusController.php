@@ -61,6 +61,8 @@ class StatusController extends Controller
      * @return Response
      */
     protected function formHandler($url, Request $request, AbstractStatus $status, $message){
+        $eventManager = new EventManager();
+        $eventManager->addEventSubscriber(new StatusSubscriber());
         $form = $this->createForm(
             'status',
             $status,
@@ -70,11 +72,6 @@ class StatusController extends Controller
         );
         $form->handleRequest($request);
         if ($form->isValid()) {
-            if($status->isInitial()){
-                $eventManager = new EventManager();
-                $eventManager->addEventSubscriber(new StatusSubscriber());
-            }
-
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($status);
             $documentManager->flush();
