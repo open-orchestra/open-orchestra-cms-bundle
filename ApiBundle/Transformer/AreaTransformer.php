@@ -89,7 +89,7 @@ class AreaTransformer extends AbstractTransformer
         ));
 
         if ($parentAreaId) {
-            $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_area',
+            $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_node_area',
                 array(
                     'nodeId' => $nodeId,
                     'parentAreaId' => $parentAreaId,
@@ -117,24 +117,50 @@ class AreaTransformer extends AbstractTransformer
      *
      * @return FacadeInterface
      */
-    public function transformFromTemplate($mixed, TemplateInterface $template = null)
+    public function transformFromTemplate($mixed, TemplateInterface $template = null, $parentAreaId = null)
     {
         $facade = new AreaFacade();
+
+        if ($template instanceof TemplateInterface) {
+            $templateId = $template->getTemplateId();
+        } else {
+            $templateId = null;
+        }
 
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
         foreach ($mixed->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template));
+            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $parentAreaId));
         }
         $facade->boDirection = $mixed->getBoDirection();
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_template_area_form',
             array(
-                'templateId' => $template->getTemplateId(),
+                'templateId' => $templateId,
                 'areaId' => $mixed->getAreaId(),
             ),
             UrlGeneratorInterface::ABSOLUTE_URL
         ));
+
+        if ($parentAreaId) {
+            $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_template_area',
+                array(
+                    'templateId' => $templateId,
+                    'parentAreaId' => $parentAreaId,
+                    'areaId' => $mixed->getAreaId()
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ));
+
+        } else {
+            $facade->addLink('_self_delete', $this->getRouter()->generate('php_orchestra_api_area_delete_in_template',
+                array(
+                    'templateId' => $templateId,
+                    'areaId' => $mixed->getAreaId(),
+                ),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            ));
+        }
 
         return $facade;
     }
