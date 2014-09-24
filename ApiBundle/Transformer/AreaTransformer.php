@@ -130,7 +130,7 @@ class AreaTransformer extends AbstractTransformer
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
         foreach ($mixed->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $parentAreaId));
+            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $mixed->getAreaId()));
         }
         $facade->boDirection = $mixed->getBoDirection();
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
