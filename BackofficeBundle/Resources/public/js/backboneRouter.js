@@ -101,4 +101,6 @@ var OrchestraBORouter = Backbone.Router.extend({
 
 var appRouter = new OrchestraBORouter();
 
-Backbone.history.start();
+if (window.location.pathname.indexOf('login') == -1) {
+    Backbone.history.start();
+}
