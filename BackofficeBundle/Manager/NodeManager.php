@@ -27,7 +27,7 @@ class NodeManager
 
     /**
      * Duplicate a node
-     * 
+     *
      * @param NodeInterface $node
      */
     public function duplicateNode(NodeInterface $node)

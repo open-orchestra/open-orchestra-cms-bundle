@@ -18,10 +18,10 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $contentTypeRepository;
     protected $contentRepository;
     protected $router;
-    
+
     /**
      * Constructor
-     * 
+     *
      * @param $contentTypeRepository
      * @param $contentRepository
      * @param $router
@@ -53,21 +53,21 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     public function buildForm(FormInterface $form, BlockInterface $block)
     {
         $attributes = $block->getAttributes();
-        
+
         $contentTypeId = '';
         if (array_key_exists('contentTypeId', $attributes)) {
             $contentTypeId = $attributes['contentTypeId'];
         }
-        
+
         $choices = array();
         $contentTypes = $this->contentTypeRepository->findAll();
         if (!empty($contentTypes)) {
             foreach ($contentTypes as $contentType) {
                 $choices[$contentType->getContentTypeId()] = $contentType->getName();
             }
-            
+
         }
-        
+
         $form->add('contentTypeId', 'choice', array(
             'mapped' => false,
             'required' => false,
@@ -79,14 +79,14 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
             ),
             'label' => 'php_orchestra_backoffice.block.configurable_content.contentTypeId'
         ));
-        
+
         $this->updateContentChoice($form, $block);
-        
+
     }
 
     /**
      * Refresh the content choice after submission and before validation
-     * 
+     *
      * @param FormInterface  $form
      * @param BlockInterface $block
      */
@@ -97,14 +97,14 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
 
     /**
      * Update form by populating contents choice according to content type selected
-     * 
+     *
      * @param FormInterface $form
      * @param BlockInterface $block
      */
     protected function updateContentChoice(FormInterface $form, BlockInterface $block)
     {
         $attributes = $block->getAttributes();
-        
+
         $contentTypeId = '';
         if (array_key_exists('contentTypeId', $attributes)) {
             $contentTypeId = $attributes['contentTypeId'];
@@ -113,21 +113,21 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         if (array_key_exists('contentId', $attributes)) {
             $contentId = $attributes['contentId'];
         }
-        
+
         $contents = array();
         if ($contentTypeId != '') {
             $criteria = array(
                 'deleted' => false,
                 'contentType' => $contentTypeId
             );
-            
+
             $contentCollection = $this->contentRepository->findBy($criteria);
-            
+
             foreach($contentCollection as $content) {
                 $contents[$content->getContentId()] = $content->getName();
             }
         }
-        
+
         $options = array(
             'mapped' => false,
             'choices' => $contents,
@@ -136,7 +136,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         if ($contentId != '') {
             $options['data'] = $contentId;
         }
-        
+
         $form->add('contentId', 'choice', $options);
     }
 

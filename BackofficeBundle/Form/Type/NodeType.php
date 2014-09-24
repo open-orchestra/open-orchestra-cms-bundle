@@ -20,7 +20,7 @@ use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 class NodeType extends AbstractType
 {
     protected $nodeClass;
-    
+
     protected $templateRepository;
 
     /**
@@ -71,16 +71,17 @@ class NodeType extends AbstractType
     /**
      * @return array
      */
-    protected function getChoices(){
+    protected function getChoices()
+    {
         $templates = $this->templateRepository->findByDeleted(false);
         $templatesChoices = array();
         foreach($templates as $template){
             $templatesChoices[$template->getTemplateId()] = $template->getName();
         }
-        
+
         return $templatesChoices;
     }
-    
+
     /**
      * @return string
      */

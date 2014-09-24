@@ -42,7 +42,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      * @param NodeRepository $nodeRepository
      * @param NodeInterface  $nodeToDelete
      * @param array          $nodes
-     * 
+     *
      * @dataProvider provideNodeToDelete
      */
     public function testDeleteTree(NodeRepository $nodeRepository, NodeInterface $nodeToDelete, $nodes)
@@ -103,6 +103,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array($nodeRepository, $nodes[$nodesId[0]], $nodes)
         );
-        
+
     }
 }

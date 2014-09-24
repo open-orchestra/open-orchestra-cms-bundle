@@ -27,7 +27,7 @@ class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
             'key2' => 'value2',
             'key3' => 'value3',
         );
-        
+
         $this->orchestraChoiceType = new OrchestraChoiceType($this->choices, $this->name);
     }
 

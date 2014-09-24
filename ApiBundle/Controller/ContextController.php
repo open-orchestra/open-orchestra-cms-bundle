@@ -16,7 +16,7 @@ class ContextController extends Controller
 {
     /**
      * Switch context language
-     * 
+     *
      * @param string $language
      *
      * @Config\Route("/language/{language}", name="php_orchestra_api_context_language")
@@ -35,7 +35,7 @@ class ContextController extends Controller
 
     /**
      * Switch context current site
-     * 
+     *
      * @param string $siteId
      * @param string $siteDomain
      *
@@ -47,7 +47,7 @@ class ContextController extends Controller
     public function siteAction($siteId, $siteDomain)
     {
         $contextManager = $this->get('php_orchestra_backoffice.context_manager');
-        
+
         $contextManager->setCurrentsite($siteId, $siteDomain);
 
         return array('success' => true);

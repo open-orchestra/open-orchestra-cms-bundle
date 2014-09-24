@@ -29,17 +29,17 @@ class PHPOrchestraCMSExtensionTest extends \PHPUnit_Framework_TestCase
     public function testLoad()
     {
         $configs = array();
-        
+
         $container = $this
             ->getMockBuilder('\\Symfony\\Component\\DependencyInjection\\ContainerBuilder')
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $container
             ->expects($this->atLeastOnce())
             ->method('addResource')
             ->with($this->isInstanceOf('\\Symfony\\Component\\Config\\Resource\\FileResource'));
-        
+
         $extension = new PHPOrchestraCMSExtension();
         $extension->load($configs, $container);
     }

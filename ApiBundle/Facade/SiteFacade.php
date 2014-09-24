@@ -32,7 +32,7 @@ class SiteFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<string>")
      */
-    protected  $languages = array();
+    protected $languages = array();
 
     /**
      * @Serializer\Type("array<string>")

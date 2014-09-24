@@ -34,7 +34,7 @@ class GenerateFormManager
             }
         }
     }
-    
+
     /**
      * @param FormInterface  $form
      * @param BlockInterface $block

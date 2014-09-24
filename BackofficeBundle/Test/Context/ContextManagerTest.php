@@ -41,7 +41,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $locale
-     * 
+     *
      * @dataProvider getLocale
      */
     public function testSetCurrentLocale($locale)
@@ -54,19 +54,19 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array $siteList
      * @param array $expectedArray
-     *  
+     *
      * @dataProvider getAvailableSites
      */
     public function testGetAvailableSites($siteList, $expectedArray)
     {
         Phake::when($this->siteRepository)->findAll(Phake::anyParameters())->thenReturn($siteList);
-        
+
         $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
 
     /**
      * @param array $site
-     * 
+     *
      * @dataProvider getSite
      */
     public function testSetCurrentSite($site)
@@ -81,7 +81,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $site
-     * 
+     *
      * @dataProvider getSite
      */
     public function testGetCurrentSite($site)

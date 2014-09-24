@@ -45,7 +45,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check if values of $includedArray are present in $refArray
-     * 
+     *
      * @param array $refArray
      * @param array $includedArray
      */

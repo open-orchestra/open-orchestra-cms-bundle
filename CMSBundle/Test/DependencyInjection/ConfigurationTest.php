@@ -30,7 +30,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $configuration = new Configuration();
         $treebuilder   = $configuration->getConfigTreeBuilder();
-        
+
         $this->assertInstanceOf(
             '\\Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
             $treebuilder

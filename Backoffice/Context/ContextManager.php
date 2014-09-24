@@ -19,7 +19,7 @@ class ContextManager
 
     /**
      * Constructor
-     * 
+     *
      * @param Session        $session
      * @param SiteRepository $siteRepository
      * @param string         $defaultLocale
@@ -30,7 +30,7 @@ class ContextManager
         if ($this->getCurrentLocale() == '') {
             $this->setCurrentLocale($defaultLocale);
         }
-        
+
         $this->siteRepository = $siteRepository;
     }
 
@@ -46,7 +46,7 @@ class ContextManager
 
     /**
      * Set current locale
-     * 
+     *
      * @param string $locale
      */
     public function setCurrentLocale($locale)
@@ -64,14 +64,14 @@ class ContextManager
         $documentSites = $this->siteRepository->findAll();
 
         /** @var SiteInterface $site */
-        return array_filter($documentSites, function($site) {
+        return array_filter($documentSites, function ($site) {
             return $site->getSiteId() != '' && $site->getDomain() != '';
         });
     }
 
     /**
      * Set current site
-     * 
+     *
      * @param string $siteId
      * @param string $siteDomain
      */

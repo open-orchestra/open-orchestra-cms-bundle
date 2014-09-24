@@ -35,7 +35,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
         $this->templateRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\TemplateRepository');
-        
+
         $this->subscriber = new TemplateChoiceSubscriber($this->templateRepository);
     }
 
@@ -58,7 +58,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array             $data
      * @param TemplateInterface $template
-     * 
+     *
      * @dataProvider getDataTemplate
      */
     public function testPreSubmit($data, $template)
@@ -67,10 +67,10 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
         Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
-        
+
         Phake::when($this->event)->getData()->thenReturn($data);
         Phake::when($this->templateRepository)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
-        
+
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setAreas((null !== $template)? $template->getAreas() : '');
@@ -79,18 +79,18 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Templates provider
-     * 
+     *
      * @return array
      */
     public function getDataTemplate()
     {
         $areas = Phake::mock('Doctrine\Common\Collections\Collection');
         $blocks = Phake::mock('Doctrine\Common\Collections\Collection');
-            
+
         $template = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
         Phake::when($template)->getAreas()->thenReturn($areas);
         Phake::when($template)->getBlocks()->thenReturn($blocks);
-    
+
         return array(
             array(array('templateId' => 1), $template),
             array(array('templateId' => 1), null),

@@ -14,7 +14,7 @@ class LoadUserData implements FixtureInterface
     /**
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $nicolas = $this->generateNicolas();
         $manager->persist($nicolas);

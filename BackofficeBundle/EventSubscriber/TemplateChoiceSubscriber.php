@@ -15,7 +15,7 @@ use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 class TemplateChoiceSubscriber implements EventSubscriberInterface
 {
     protected $templateRepository;
-    
+
     /**
      * @param TemplateRepository $templateRepository
      */
@@ -23,7 +23,7 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
     {
         $this->templateRepository = $templateRepository;
     }
-    
+
     /**
      * @param FormEvent $event
      */

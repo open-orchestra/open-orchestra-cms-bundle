@@ -54,7 +54,7 @@ class SiteType extends AbstractType
             )
         );
     }
-    
+
     /**
      * @return string
      */

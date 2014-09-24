@@ -43,7 +43,7 @@ class AreaController extends Controller
     /**
      * @param string $areaId
      * @param string $nodeId
-     * 
+     *
      * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="php_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
      *
@@ -61,7 +61,7 @@ class AreaController extends Controller
     /**
      * @param string $areaId
      * @param string $nodeId
-     * 
+     *
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="php_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
      *
@@ -81,7 +81,7 @@ class AreaController extends Controller
      * @param string $parentAreaId
      * @param string $nodeId
      * @param string $templateId
-     * 
+     *
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="php_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="php_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
      * @Config\Method({"POST", "DELETE"})
@@ -103,7 +103,7 @@ class AreaController extends Controller
 
     /**
      * Remove an area from an areaContainer
-     * 
+     *
      * @param string $areaId
      * @param AreaContainerInterface $areaContainer
      */

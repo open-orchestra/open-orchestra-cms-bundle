@@ -37,7 +37,7 @@ class NodeController extends Controller
                 'action' => $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId))
             )
         );
-        
+
         return $this->formHandler($form, $request, $node);
     }
 
