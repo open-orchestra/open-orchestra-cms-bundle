@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\Form\Form;
 use  PHPOrchestra\ModelBundle\Document\Node;
 
 /**
@@ -27,18 +26,12 @@ class NodeController extends Controller
     public function formAction(Request $request, $nodeId)
     {
         $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
-
         $node = $nodeRepository->findOneByNodeIdAndVersion($nodeId);
 
-        $form = $this->createForm(
-            'node',
-            $node,
-            array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId))
-            )
-        );
+        $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId));
+        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.node.success');
 
-        return $this->formHandler($form, $request, $node);
+        return $this->formHandler($url, $request, $node, $message);
     }
 
     /**
@@ -58,26 +51,29 @@ class NodeController extends Controller
         $node->setLanguage('fr');
         $node->setParentId($parentId);
 
+        $url = $this->generateUrl('php_orchestra_backoffice_node_new', array('parentId' => $parentId));
+        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.node.success');
+
+        return $this->formHandler($url, $request, $node, $message);
+    }
+
+    /**
+     * @param String  $url
+     * @param Request $request
+     * @param Node    $node
+     * @param String  $message
+     *
+     * @return Response
+     */
+    protected function formHandler($url, Request $request, Node $node, $message)
+    {
         $form = $this->createForm(
             'node',
             $node,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_node_new', array('parentId' => $parentId))
+                'action' => $url
             )
         );
-
-        return $this->formHandler($form, $request, $node);
-    }
-
-    /**
-     * @param Form    $form
-     * @param Request $request
-     * @param Node    $node
-     *
-     * @return Response
-     */
-    protected function formHandler(Form $form, Request $request, Node $node)
-    {
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
@@ -85,7 +81,7 @@ class NodeController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.node.success')
+                $message
             );
         }
 

@@ -37,6 +37,7 @@ class StatusType extends AbstractType
 
         $builder->add('name');
         $builder->add('published', null, array('required' => false));
+        $builder->add('initial', null, array('required' => false));
         $builder->add('labels', 'translated_value_collection');
         $builder->add('role', null, array('required' => false));
 
