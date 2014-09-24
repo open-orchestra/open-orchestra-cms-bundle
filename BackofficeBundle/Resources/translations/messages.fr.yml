@@ -51,6 +51,8 @@ php_orchestra_backoffice:
                 list: Type de contenu
             status:
                 list: Status
+            user:
+                list: Utilisateurs
     block:
         configurable_content:
             title: Bloc contenu paramétrable

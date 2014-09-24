@@ -1,7 +1,10 @@
 parameters:
-#    php_orchestra_user.example.class: PHPOrchestra\UserBundle\Example
+    php_orchestra_user.repository.user.class: PHPOrchestra\UserBundle\Repository\UserRepository
 
 services:
-#    php_orchestra_user.example:
-#        class: %php_orchestra_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    php_orchestra_user.repository.user:
+        class: %php_orchestra_user.repository.user.class%
+        factory_service: doctrine.odm.mongodb.document_manager
+        factory_method: getRepository
+        arguments:
+            - PHPOrchestra\UserBundle\Document\User

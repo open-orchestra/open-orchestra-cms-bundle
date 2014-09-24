@@ -9,6 +9,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'websites/list': 'listSites',
     ':list/list/edit': 'redirectToList',
     'status/list': 'listStatus',
+    'user/list': 'listUser',
     'content-types/list': 'listContentTypes',
     'translation': 'listTranslations',
     '': 'showHome'
@@ -46,6 +47,11 @@ var OrchestraBORouter = Backbone.Router.extend({
   listStatus: function() {
     this.initDisplayRouteChanges();
     tableViewLoad($("#nav-status"));
+  },
+
+  listUser: function() {
+    this.initDisplayRouteChanges();
+    tableViewLoad($("#nav-user"));
   },
 
   listContentTypes: function() {

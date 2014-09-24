@@ -1,0 +1,10 @@
+parameters:
+    php_orchestra_user.form.user.class: PHPOrchestra\UserBundle\Form\Type\UserType
+
+services:
+    php_orchestra_user.form.user:
+        class: %php_orchestra_user.form.user.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: form.type, alias: user}

@@ -60,6 +60,15 @@
                         </a>
                     </li>
                     <li>
+                        <a
+                            href="#user/list"
+                            id="nav-user"
+                            data-url="{{ path('php_orchestra_api_user_list') }}"
+                            data-displayed-elements="username, roles">
+                            {{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}
+                        </a>
+                    </li>
+                    <li>
                         <a href="#translation" id="nav-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
                     </li>
                 </ul>
