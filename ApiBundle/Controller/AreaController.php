@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,31 +41,76 @@ class AreaController extends Controller
     }
 
     /**
-     * 
      * @param string $areaId
      * @param string $nodeId
-     * @param string $parentAreaId
      * 
-     * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="php_orchestra_api_area_delete_in_node", defaults={"parentAreaId" = null})
-     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/{nodeId}", name="php_orchestra_api_area_delete_in_area")
+     * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="php_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
      *
      * @return Response
      */
-    public function deleteAreaAction($areaId, $nodeId, $parentAreaId = null)
+    public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
-        $areas = null;
+        $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
-        if ($parentAreaId) {
+        $this->deleteAreaFromContainer($areaId, $areaContainer);
+
+        return new Response();
+    }
+
+    /**
+     * @param string $areaId
+     * @param string $nodeId
+     * 
+     * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="php_orchestra_api_area_delete_in_template")
+     * @Config\Method({"POST", "DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAreaFromTemplateAction($areaId, $templateId)
+    {
+        $areaContainer = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+
+        $this->deleteAreaFromContainer($areaId, $areaContainer);
+
+        return new Response();
+    }
+
+    /**
+     * @param string $areaId
+     * @param string $parentAreaId
+     * @param string $nodeId
+     * @param string $templateId
+     * 
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="php_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="php_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
+     * @Config\Method({"POST", "DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAreaFromAreaAction($areaId, $parentAreaId, $nodeId = null, $templateId = null)
+    {
+        if ($nodeId) {
             $areaContainer = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $parentAreaId);
         } else {
-            $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+            $areaContainer = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
         }
 
+        $this->deleteAreaFromContainer($areaId, $areaContainer);
+
+        return new Response();
+    }
+
+    /**
+     * Remove an area from an areaContainer
+     * 
+     * @param string $areaId
+     * @param AreaContainerInterface $areaContainer
+     */
+    protected function deleteAreaFromContainer($areaId, AreaContainerInterface $areaContainer)
+    {
         $areas = $this->get('php_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areaContainer, $areaId);
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
-
-        return new Response();
     }
 }
