@@ -59,5 +59,6 @@ class PHPOrchestraBackofficeExtension extends Extension
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('generator.yml');
+        $loader->load('display.yml');
     }
 }

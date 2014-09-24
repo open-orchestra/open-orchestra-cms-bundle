@@ -1,0 +1,6 @@
+parameters:
+    php_orchestra_display.display.footer.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
+    php_orchestra_display.display.menu.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\MenuStrategy
+    php_orchestra_display.display.sample.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SampleStrategy
+    php_orchestra_indexation.display.search.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchStrategy
+    
