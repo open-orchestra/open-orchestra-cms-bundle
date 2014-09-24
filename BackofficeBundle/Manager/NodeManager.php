@@ -29,6 +29,8 @@ class NodeManager
      * Duplicate a node
      *
      * @param NodeInterface $node
+     *
+     * @return NodeInterface
      */
     public function duplicateNode(NodeInterface $node)
     {
@@ -40,7 +42,6 @@ class NodeManager
 
     /**
      * @param NodeInterface  $node
-     * @param NodeRepository $nodeRepository
      */
     public function deleteTree(NodeInterface $node)
     {
