@@ -19,10 +19,16 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
-    /**
-     * @var NodeRepositoryr
-     */
     protected $nodeRepository;
+
+    /**
+     * Set up the test
+     */
+    public function setUp()
+    {
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->manager = new NodeManager($this->nodeRepository);
+    }
 
     /**
      * @param NodeInterface   $node
@@ -32,9 +38,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDuplicateNode(NodeInterface $node, $expectedVersion)
     {
-        $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-        $manager = new NodeManager($nodeRepository);
-        $alteredNode = $manager->duplicateNode($node);
+        $alteredNode = $this->manager->duplicateNode($node);
         Phake::verify($alteredNode, Phake::times(1))->setVersion($expectedVersion);
     }
 
@@ -50,7 +54,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $manager = new NodeManager($nodeRepository);
         $manager->deleteTree($nodeToDelete);
 
-        foreach($nodes as $node){
+        foreach ($nodes as $node) {
             Phake::verify($node, Phake::times(1))->setDeleted(true);
         }
     }
@@ -60,15 +64,20 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNode()
     {
-
         $node0 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($node0)->getVersion()->thenReturn(0);
+        Phake::when($node0)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($node0)->getBlocks()->thenReturn(new ArrayCollection());
 
         $node1 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($node1)->getVersion()->thenReturn(1);
+        Phake::when($node1)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($node1)->getBlocks()->thenReturn(new ArrayCollection());
 
         $node2 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($node2)->getVersion()->thenReturn(null);
+        Phake::when($node2)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($node2)->getBlocks()->thenReturn(new ArrayCollection());
 
         return array(
             array($node0, 1),
@@ -76,18 +85,18 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array($node2, 1),
         );
     }
+
     /**
      * @return array
      */
     public function provideNodeToDelete()
     {
-
         $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
 
         $nodesId = array('rootNodeId', 'childNodeId', 'otherChildNodeId');
 
         $nodes = array();
-        foreach($nodesId as $nodeId){
+        foreach ($nodesId as $nodeId) {
             $nodes[$nodeId] = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
             Phake::when($nodes[$nodeId])->getNodeId()->thenReturn($nodeId);
         }
