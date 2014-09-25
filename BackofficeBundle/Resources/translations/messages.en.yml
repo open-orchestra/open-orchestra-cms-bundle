@@ -86,3 +86,6 @@ php_orchestra_backoffice:
     node:
         version:
             create: Create a new version of node
+        last_update:
+            at: Last update
+            by: by

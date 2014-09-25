@@ -3,12 +3,17 @@
 namespace PHPOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use PHPOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
+use PHPOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
 
 /**
  * Class NodeFacade
  */
 class NodeFacade extends AbstractFacade
 {
+    use BlameableFacade;
+    use TimestampableFacade;
+
     /**
      * @Serializer\Type("string")
      */

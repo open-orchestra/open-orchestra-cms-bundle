@@ -38,6 +38,10 @@ class NodeTransformer extends AbstractTransformer
         $facade->language = $mixed->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
         $facade->theme = $mixed->getTheme();
+        $facade->createdBy = $mixed->getCreatedBy();
+        $facade->updatedBy = $mixed->getUpdatedBy();
+        $facade->createdAt = $mixed->getCreatedAt();
+        $facade->updatedAt = $mixed->getUpdatedAt();
 
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_node_form',
             array('nodeId' => $mixed->getNodeId()),
