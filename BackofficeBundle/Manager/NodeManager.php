@@ -36,6 +36,14 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
+        foreach ($node->getAreas() as $area) {
+            $newArea = clone $area;
+            $newNode->addArea($newArea);
+        }
+        foreach ($node->getBlocks() as $block) {
+            $newBlock = clone $block;
+            $newNode->addBlock($newBlock);
+        }
 
         return $newNode;
     }
@@ -48,7 +56,7 @@ class NodeManager
         $node->setDeleted(true);
         $sons = $this->nodeRepository->findByParentId($node->getNodeId());
         foreach ($sons as $son) {
-            $son = $this->deleteTree($son);
+            $this->deleteTree($son);
         }
     }
 }
