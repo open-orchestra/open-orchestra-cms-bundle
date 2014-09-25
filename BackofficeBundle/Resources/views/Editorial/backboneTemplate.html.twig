@@ -89,14 +89,9 @@
 <script type="text/html" id="blockView">
     <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <span class="title"><%= block.get('ui_model').label %></span>
-            <span class="preview">
-                <div>
-                    <%= block.get('ui_model').html %><br>
-                    Title : <%= block.get('attributes').title %><br>
-                    Author : <%= block.get('attributes').author %><br>
-                    News : <%= block.get('attributes').news %><br>
-                </div>
-            </span>
+        <div class="preview">
+            <%= block.get('ui_model').html %>
+        </div>
         <span class="action">
             <i class="block-param fa fa-wrench"></i>
             <i class="block-remove fa fa-trash-o"></i>
