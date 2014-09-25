@@ -33,7 +33,8 @@ class StatusTransformer extends AbstractTransformer
         $facade = new StatusFacade();
 
         $facade->published = $mixed->isPublished();
-        $facade->initial = $mixed->isInitial();
+        $facade->initial = $mixed->getInitial();
+        $facade->initial = implode(',', $mixed->getInitial());
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
         $facade->role = $mixed->getRole();
 

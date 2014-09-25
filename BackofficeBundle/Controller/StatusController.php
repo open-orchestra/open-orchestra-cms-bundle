@@ -8,8 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use PHPOrchestra\ModelBundle\Document\AbstractStatus;
-use Doctrine\Common\EventManager;
-use PHPOrchestra\ModelBundle\EventSubscriber\StatusSubscriber;
 
 /**
  * Class StatusController
@@ -61,8 +59,6 @@ class StatusController extends Controller
      * @return Response
      */
     protected function formHandler($url, Request $request, AbstractStatus $status, $message){
-        $eventManager = new EventManager();
-        $eventManager->addEventSubscriber(new StatusSubscriber());
         $form = $this->createForm(
             'status',
             $status,

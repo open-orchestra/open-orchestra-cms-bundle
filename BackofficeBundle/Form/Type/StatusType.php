@@ -8,6 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
+use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class StatusType
@@ -16,15 +18,23 @@ class StatusType extends AbstractType
 {
     protected $statusClass;
     protected $translateValueInitializer;
-
+    protected $contentTypeRepository;
+    protected $translationChoiceManager;
+    protected $translator;
+    
     /**
      * @param string                            $statusClass
      * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param ContentTypeRepository             $contentTypeRepository
+     * @param TranslationChoiceManager          $translationChoiceManager
      */
-    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer)
+    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer, ContentTypeRepository $contentTypeRepository, TranslationChoiceManager $translationChoiceManager, $translator)
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->statusClass = $statusClass;
+        $this->contentTypeRepository = $contentTypeRepository;
+        $this->translationChoiceManager = $translationChoiceManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -37,11 +47,29 @@ class StatusType extends AbstractType
 
         $builder->add('name');
         $builder->add('published', null, array('required' => false));
-        $builder->add('initial', null, array('required' => false));
+        $contentTypes = $this->contentTypeRepository->findByDeleted(false);
+        $builder->add('initial', 'choice', array(
+            'choices' => $this->getChoices(),
+            'multiple' => true,
+            'expanded' => true
+        ));
         $builder->add('labels', 'translated_value_collection');
         $builder->add('role', null, array('required' => false));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChoices(){
+        $contentTypes = $this->contentTypeRepository->findByDeleted(false);
+        $contentTypesChoices = array();
+        foreach($contentTypes as $contentType){
+            $contentTypesChoices[$contentType->getContentTypeId()] = $this->translationChoiceManager->choose($contentType->getNames());
+        }
+        $contentTypesChoices['node'] = $this->translator->trans('php_orchestra_backoffice.left_menu.editorial.nodes');
+        return $contentTypesChoices;
     }
 
     /**
