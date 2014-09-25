@@ -22,21 +22,28 @@
                         <div class="widget-body">
 </script>
 <script type="text/html" id="footerInclude">
-    </div>
-    <!-- end widget content -->
-    </div>
-    <!-- end widget div -->
-    </div>
-    <!-- end widget -->
-    </article>
-    <!-- WIDGET END -->
-    </div>
+                        </div>
+                    <!-- end widget content -->
+                    </div>
+                <!-- end widget div -->
+                </div>
+            <!-- end widget -->
+            </article>
+        <!-- WIDGET END -->
+        </div>
     <!-- end row -->
     </section>
 </script>
 <script type="text/html" id="nodeView">
     <a href="#" class="ajax-node-duplicate">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</a>
     <% include headInclude %>
+    <div id="generated-title" style="display: none">
+        <%= node.get('name') %>
+        {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
+        <%= node.get('updated_at') %>
+        {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
+        <%= node.get('updated_by') %>
+    </div>
     <div role="container">
         <div class="ui-model">
             <span class="title"></span>
