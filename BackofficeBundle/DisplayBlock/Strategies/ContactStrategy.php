@@ -4,26 +4,27 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use PHPOrchestra\DisplayBundle\Form\Type\ContactType;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Class FooterStrategy
+ * Class ContactStrategy
  */
-class FooterStrategy extends AbstractStrategy
+class ContactStrategy extends AbstractStrategy
 {
-    protected $nodeRepository;
+    protected $formFactory;
     protected $router;
 
     /**
-     * @param NodeRepository        $nodeRepository
+     * @param FormFactory           $formFactory
      * @param UrlGeneratorInterface $router
      */
-    public function __construct(NodeRepository $nodeRepository, UrlGeneratorInterface $router)
+    public function __construct(FormFactory $formFactory, UrlGeneratorInterface $router)
     {
-        $this->nodeRepository = $nodeRepository;
+        $this->formFactory = $formFactory;
         $this->router = $router;
     }
 
@@ -36,7 +37,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::FOOTER == $block->getComponent();
+        return DisplayBlockInterface::CONTACT == $block->getComponent();
     }
 
     /**
@@ -51,10 +52,10 @@ class FooterStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
+            'PHPOrchestraBackofficeBundle:Block/Contact:show.html.twig',
             array(
                 'id' => $attributes['id'],
-                'class' => implode(' ', $attributes['class'])
+                'class' => $attributes['class']
             )
         );
     }
@@ -66,6 +67,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'contact';
     }
+
 }

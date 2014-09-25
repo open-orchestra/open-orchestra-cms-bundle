@@ -4,27 +4,23 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use PHPOrchestra\ModelBundle\Repository\ContentRepository;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Class FooterStrategy
+ * Class ConfigurableContentStrategy
  */
-class FooterStrategy extends AbstractStrategy
+class ConfigurableContentStrategy extends AbstractStrategy
 {
-    protected $nodeRepository;
-    protected $router;
+    protected $contentRepository;
 
     /**
-     * @param NodeRepository        $nodeRepository
-     * @param UrlGeneratorInterface $router
+     * @param ContentRepository $contentRepository
      */
-    public function __construct(NodeRepository $nodeRepository, UrlGeneratorInterface $router)
+    public function __construct(ContentRepository $contentRepository)
     {
-        $this->nodeRepository = $nodeRepository;
-        $this->router = $router;
+        $this->contentRepository = $contentRepository;
     }
 
     /**
@@ -36,7 +32,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::FOOTER == $block->getComponent();
+        return DisplayBlockInterface::CONFIGURABLE_CONTENT == $block->getComponent();
     }
 
     /**
@@ -50,12 +46,21 @@ class FooterStrategy extends AbstractStrategy
     {
         $attributes = $block->getAttributes();
 
+        $criteria = array(
+            'contentId' => $attributes['contentId']
+        );
+
+        $content = $this->contentRepository->findOneBy($criteria);
+
+        if ($content) {
+            $contentAttributes = $content->getAttributes();
+        } else {
+            $contentAttributes = array();
+        }
+
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
-            array(
-                'id' => $attributes['id'],
-                'class' => implode(' ', $attributes['class'])
-            )
+            'PHPOrchestraBackofficeBundle:Block/ConfigurableContent:show.html.twig',
+            array('contentAttributes' => $contentAttributes)
         );
     }
 
@@ -66,6 +71,6 @@ class FooterStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'configurable_content';
     }
 }

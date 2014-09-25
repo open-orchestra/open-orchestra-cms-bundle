@@ -1,8 +1,11 @@
 parameters:
     php_orchestra_display.display.carrousel.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\CarrouselStrategy
+    php_orchestra_display.display.contact.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContactStrategy
+    php_orchestra_display.display.header.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\HeaderStrategy
     php_orchestra_display.display.footer.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
     php_orchestra_display.display.menu.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\MenuStrategy
     php_orchestra_display.display.sample.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SampleStrategy
     php_orchestra_display.display.tiny_mce_wysiwyg.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
+    php_orchestra_display.display.configurable_content.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ConfigurableContentStrategy
     php_orchestra_indexation.display.search.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchStrategy
     php_orchestra_indexation.display.search_result.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchResultStrategy

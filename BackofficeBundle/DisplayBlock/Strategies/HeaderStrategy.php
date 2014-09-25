@@ -5,28 +5,13 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Class FooterStrategy
+ * Class HeaderStrategy
  */
-class FooterStrategy extends AbstractStrategy
+class HeaderStrategy extends AbstractStrategy
 {
-    protected $nodeRepository;
-    protected $router;
-
-    /**
-     * @param NodeRepository        $nodeRepository
-     * @param UrlGeneratorInterface $router
-     */
-    public function __construct(NodeRepository $nodeRepository, UrlGeneratorInterface $router)
-    {
-        $this->nodeRepository = $nodeRepository;
-        $this->router = $router;
-    }
-
     /**
      * Check if the strategy support this block
      *
@@ -36,7 +21,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::FOOTER == $block->getComponent();
+        return DisplayBlockInterface::HEADER == $block->getComponent();
     }
 
     /**
@@ -51,10 +36,11 @@ class FooterStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
+            'PHPOrchestraBackofficeBundle:Block/Header:show.html.twig',
             array(
                 'id' => $attributes['id'],
-                'class' => implode(' ', $attributes['class'])
+                'class' => $attributes['class'],
+                'logo' => $attributes['logo']
             )
         );
     }
@@ -66,6 +52,6 @@ class FooterStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'header';
     }
 }
