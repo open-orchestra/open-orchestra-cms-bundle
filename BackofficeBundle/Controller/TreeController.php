@@ -17,7 +17,7 @@ class TreeController extends Controller
      */
     public function showTreeNodesAction()
     {
-        $nodes = $this->get('php_orchestra_model.repository.node')->findByDeleted(false);
+        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersion();
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
