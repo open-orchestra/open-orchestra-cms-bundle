@@ -6,7 +6,6 @@ use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Repository\ContentRepository;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ConfigurableContentStrategy

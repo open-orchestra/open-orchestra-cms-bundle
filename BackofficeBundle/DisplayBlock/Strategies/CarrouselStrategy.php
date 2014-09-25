@@ -5,7 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CarrouselStrategy

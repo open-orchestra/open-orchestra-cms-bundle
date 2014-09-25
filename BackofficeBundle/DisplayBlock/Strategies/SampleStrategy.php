@@ -5,7 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SampleStrategy
@@ -35,19 +34,13 @@ class SampleStrategy extends AbstractStrategy
     {
         $attributes = $block->getAttributes();
 
-        $response = $this->render(
+        return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Sample:show.html.twig',
             array(
                 'title' => $attributes['title'],
                 'author' => $attributes['author']
             )
         );
-
-        $response->setPublic();
-        $response->setSharedMaxAge(5);
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-
-        return $response;
     }
 
     /**
