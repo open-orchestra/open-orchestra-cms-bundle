@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
+use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
@@ -16,13 +17,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
+    protected $translator;
 
     /**
      * @param DisplayBlockManager $displayBlockManager
      */
-    public function __construct(DisplayBlockManager $displayBlockManager)
+    public function __construct(DisplayBlockManager $displayBlockManager, TranslatorInterface $translator)
     {
         $this->displayBlockManager = $displayBlockManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -44,7 +47,8 @@ class BlockTransformer extends AbstractTransformer
         $facade->nodeId = $nodeId;
         $facade->blockId = $blockNumber;
 
-        $label = $mixed->getComponent();
+        $label = $this->translator->trans('php_orchestra_backoffice.block.' . $mixed->getComponent() . '.title');
+
         foreach ($mixed->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
                 $facade->addAttribute($key, json_encode($attribute));

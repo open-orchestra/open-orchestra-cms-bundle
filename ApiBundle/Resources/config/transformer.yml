@@ -37,7 +37,9 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.block:
         class: %php_orchestra_api.transformer.block.class%
-        arguments: [@php_orchestra_display.display_block_manager]
+        arguments: 
+            - @php_orchestra_display.display_block_manager
+            - @translator
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.ui_model:
