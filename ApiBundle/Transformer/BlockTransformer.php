@@ -51,6 +51,7 @@ class BlockTransformer extends AbstractTransformer
             } else {
                 $facade->addAttribute($key, $attribute);
             }
+        }
 
         if (!empty ($attribute)) {
             $html = $this->displayBlockManager->show($mixed)->getContent();
