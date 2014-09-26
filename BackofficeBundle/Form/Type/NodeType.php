@@ -44,6 +44,7 @@ class NodeType extends AbstractType
             ->add('nodeType', 'choice', array(
                 'choices' => array('page' => 'Page simple')
             ))
+            ->add('theme', 'orchestra_theme_choice')
             ->add('templateId', 'choice', array(
                 'choices' => $this->getChoices()
             ))

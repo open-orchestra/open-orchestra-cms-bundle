@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\NodeType;
+use PHPOrchestra\ModelBundle\Model\TemplateInterface;
 
 /**
  * Description of NodeTypeTest
@@ -39,7 +40,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->nodeType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(8))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock)->add('templateId', 'choice', array(
             'choices' => $expectedResult
