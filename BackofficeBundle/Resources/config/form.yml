@@ -17,6 +17,7 @@ parameters:
     php_orchestra_backoffice.type.translated_value.class: PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueType
     php_orchestra_backoffice.type.translated_value_collection.class: PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
     php_orchestra_backoffice.type.orchestra_theme_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraThemeChoiceType
+    php_orchestra_backoffice.type.theme.class: PHPOrchestra\BackofficeBundle\Form\Type\ThemeType
 
 services:
     # Template form type
@@ -148,3 +149,9 @@ services:
             - @php_orchestra_model.repository.theme
         tags:
             - { name: form.type, alias: orchestra_theme_choice}
+    php_orchestra_backoffice.type.theme:
+        class: %php_orchestra_backoffice.type.theme.class%
+        arguments:
+            - %php_orchestra_model.document.theme.class%
+        tags:
+            - { name: form.type, alias: theme}

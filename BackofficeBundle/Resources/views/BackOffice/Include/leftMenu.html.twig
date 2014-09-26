@@ -43,6 +43,15 @@
                     </li>
                     <li>
                         <a
+                            href="#themes/list"
+                            id="nav-themes"
+                            data-url="{{ path('php_orchestra_api_theme_list') }}"
+                            data-displayed-elements="name">
+                            {{ 'php_orchestra_backoffice.left_menu.administration.themes.list'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a
                             href="#content-types/list"
                             id="nav-contentTypes"
                             data-url="{{ path('php_orchestra_api_content_type_list') }}"
