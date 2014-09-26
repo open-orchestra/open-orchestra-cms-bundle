@@ -28,7 +28,7 @@ class AreaController extends Controller
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
-        $node = $nodeRepository->findOneByNodeId($nodeId);
+        $node = $nodeRepository->findOneByNodeIdAndVersion($nodeId);
         $area = $nodeRepository->findAreaByNodeIdAndAreaId($nodeId, $areaId);
 
         $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
@@ -51,7 +51,7 @@ class AreaController extends Controller
      */
     public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
-        $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
