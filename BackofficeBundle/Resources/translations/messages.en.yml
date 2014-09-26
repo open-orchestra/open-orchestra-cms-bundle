@@ -23,6 +23,9 @@ php_orchestra_backoffice:
         website:
             success: The website has been modified
             creation: The website has been created
+        theme:
+            success: The theme has been modified
+            creation: The theme has been created
         status:
             success: The status has been modified
             creation: The status has been created
@@ -52,6 +55,8 @@ php_orchestra_backoffice:
         administration:
             sites:
                 list: Websites
+            themes:
+                list: Themes
             content_type:
                 list: Content type
             status:
