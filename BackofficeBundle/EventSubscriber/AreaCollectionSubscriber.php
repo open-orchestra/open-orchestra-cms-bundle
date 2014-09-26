@@ -30,6 +30,9 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                 $areaContainer->addArea($newArea);
             }
         }
+
+        $data['areaHtmlClass'] = preg_replace('/["\']/', '-', $data['areaHtmlClass']);
+        $event->setData($data);
     }
 
     /**

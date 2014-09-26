@@ -20,6 +20,7 @@ class TemplateAreaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('areaId', 'text');
+        $builder->add('areaHtmlClass', 'text');
         $builder->add('boDirection', 'choice', array(
             'choices' => array('v' => 'vertical', 'h' => 'horizontal'),
             'required' => false,
