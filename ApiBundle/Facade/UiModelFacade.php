@@ -17,5 +17,10 @@ class UiModelFacade implements FacadeInterface
     /**
      * @Serializer\Type("string")
      */
+    public $class;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $html;
 }
