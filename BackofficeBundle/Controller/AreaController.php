@@ -25,7 +25,7 @@ class AreaController extends Controller
      */
     public function formAction(Request $request, $nodeId, $areaId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
         $area = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $areaId);
 
         $form = $this->createForm(

@@ -28,7 +28,7 @@ class NodeController extends Controller
     {
         $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
 
-        $node = $nodeRepository->findOneByNodeId($nodeId);
+        $node = $nodeRepository->findOneByNodeIdAndVersion($nodeId);
 
         $form = $this->createForm(
             'node',

@@ -25,7 +25,7 @@ class BlockController extends Controller
      */
     public function formAction(Request $request, $nodeId, $blockNumber = 0)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
         $block = $node->getBlocks()->get($blockNumber);
 
         $form = $this->createForm(
