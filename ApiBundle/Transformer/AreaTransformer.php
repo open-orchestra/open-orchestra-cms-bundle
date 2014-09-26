@@ -72,7 +72,7 @@ class AreaTransformer extends AbstractTransformer
             }
         }
         $facade->boDirection = $mixed->getBoDirection();
-        $label = $mixed->getAreaId() . ' class="' . $mixed->getAreaHtmlClass() . '"';
+        $label = $mixed->getAreaId() . ' class="' . $mixed->getHtmlClass() . '"';
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $label));
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_area_form',
             array(

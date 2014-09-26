@@ -31,7 +31,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
             }
         }
 
-        $data['areaHtmlClass'] = preg_replace('/["\']/', '-', $data['areaHtmlClass']);
+        $data['htmlClass'] = preg_replace('/["\']/', '-', $data['htmlClass']);
         $event->setData($data);
     }
 
