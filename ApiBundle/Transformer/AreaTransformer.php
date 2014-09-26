@@ -72,7 +72,13 @@ class AreaTransformer extends AbstractTransformer
             }
         }
         $facade->boDirection = $mixed->getBoDirection();
-        $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
+
+        $facade->uiModel = $this->getTransformer('ui_model')->transform(
+            array(
+                'label' => $mixed->getAreaId(),
+                'class' => $mixed->getHtmlClass()
+            )
+        );
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_area_form',
             array(
                 'nodeId' => $nodeId,
@@ -133,7 +139,13 @@ class AreaTransformer extends AbstractTransformer
             $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $mixed->getAreaId()));
         }
         $facade->boDirection = $mixed->getBoDirection();
-        $facade->uiModel = $this->getTransformer('ui_model')->transform(array('label' => $mixed->getAreaId()));
+
+        $facade->uiModel = $this->getTransformer('ui_model')->transform(
+            array(
+                'label' => $mixed->getAreaId(),
+                'class' => $mixed->getHtmlClass()
+            )
+        );
         $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_template_area_form',
             array(
                 'templateId' => $templateId,

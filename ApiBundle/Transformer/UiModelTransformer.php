@@ -23,6 +23,10 @@ class UiModelTransformer extends AbstractTransformer
             $facade->label = $mixed['label'];
         }
 
+        if (array_key_exists('class', $mixed)) {
+            $facade->class = $mixed['class'];
+        }
+
         if (array_key_exists('html', $mixed)) {
             $facade->html = $mixed['html'];
         }

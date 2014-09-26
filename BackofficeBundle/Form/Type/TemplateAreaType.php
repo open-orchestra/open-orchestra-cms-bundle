@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\Transformer\HtmlClassTransformer;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,13 @@ class TemplateAreaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $htmlClassTransformer = new HtmlClassTransformer($options['data']);
+
         $builder->add('areaId', 'text');
+        $builder->add(
+            $builder->create('htmlClass', 'text')
+                ->addViewTransformer($htmlClassTransformer)
+        );
         $builder->add('boDirection', 'choice', array(
             'choices' => array('v' => 'vertical', 'h' => 'horizontal'),
             'required' => false,
