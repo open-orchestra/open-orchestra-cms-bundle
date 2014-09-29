@@ -53,8 +53,10 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test builder
+     * @param array $contentTypes
+     * @param array $expectedResult
      * 
-     *  @dataProvider getContentType
+     * @dataProvider getContentType
      */
     public function testBuilder($contentTypes, $expectedResult)
     {
