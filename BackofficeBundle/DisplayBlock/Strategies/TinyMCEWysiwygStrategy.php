@@ -33,11 +33,11 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
     public function show(BlockInterface $block)
     {
         $attributes = $block->getAttributes();
-        $_htmlContent = $attributes['_htmlContent'];
+        $htmlContent = $attributes['htmlContent'];
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
-            array('htmlContent' => strip_tags($_htmlContent))
+            array('htmlContent' => strip_tags($htmlContent))
         );
     }
 
