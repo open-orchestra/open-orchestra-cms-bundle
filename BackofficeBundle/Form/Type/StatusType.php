@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use Lexik\Bundle\TranslationBundle\Translation\Translator;
 
 /**
  * Class StatusType
@@ -27,8 +28,9 @@ class StatusType extends AbstractType
      * @param TranslateValueInitializerListener $translateValueInitializer
      * @param ContentTypeRepository             $contentTypeRepository
      * @param TranslationChoiceManager          $translationChoiceManager
+     * @param Translator                        $translator
      */
-    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer, ContentTypeRepository $contentTypeRepository, TranslationChoiceManager $translationChoiceManager, $translator)
+    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer, ContentTypeRepository $contentTypeRepository, TranslationChoiceManager $translationChoiceManager, Translator $translator)
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->statusClass = $statusClass;
@@ -47,7 +49,6 @@ class StatusType extends AbstractType
 
         $builder->add('name');
         $builder->add('published', null, array('required' => false));
-        $contentTypes = $this->contentTypeRepository->findByDeleted(false);
         $builder->add('initial', 'choice', array(
             'choices' => $this->getChoices(),
             'multiple' => true,
@@ -55,7 +56,6 @@ class StatusType extends AbstractType
         ));
         $builder->add('labels', 'translated_value_collection');
         $builder->add('role', null, array('required' => false));
-
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
