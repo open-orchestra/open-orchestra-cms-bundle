@@ -1,3 +1,4 @@
+
 AreaView = Backbone.View.extend(
   tagName: 'li'
   
@@ -124,8 +125,9 @@ AreaView = Backbone.View.extend(
         data: JSON.stringify(areaData)
   
   confirmRemoveBlock: (event) ->
-    if confirm 'Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?'
-      @removeBlock event
+    if @area.get('blocks').length > 0
+      if confirm 'Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?'
+        @removeBlock event
   
   removeBlock: (event) ->
     event.currentTarget.parentNode.parentNode.parentNode.remove()
