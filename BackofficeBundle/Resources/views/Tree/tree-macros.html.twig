@@ -1,4 +1,18 @@
 {% macro menu_nodes(nodes, name) %}
+    {% if nodes is empty  %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                  class="ajax-new"
+                  href="#"
+                  data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
+                </a>
+            </div>
+        </li>
+    {% endif %}
     {% for element in nodes %}
         {% set node = element.node %}
         <li data-element-id="{{ node.nodeId }}"
