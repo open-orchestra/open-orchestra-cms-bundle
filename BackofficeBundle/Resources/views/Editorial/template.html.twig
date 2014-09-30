@@ -1,3 +1,9 @@
+{% if refresh %}
+    <script type="text/javascript">
+        Backbone.history.loadUrl(Backbone.history.fragment);
+    </script>
+{% endif %}
+
 {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
 
 {{ form(form) }}

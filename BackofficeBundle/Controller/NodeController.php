@@ -75,6 +75,8 @@ class NodeController extends Controller
             )
         );
         $form->handleRequest($request);
+
+        $refresh = false;
         if ($form->isValid()) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
@@ -83,12 +85,14 @@ class NodeController extends Controller
                 'success',
                 $message
             );
+            $refresh = true;
         }
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'refresh' => $refresh
             )
         );
     }

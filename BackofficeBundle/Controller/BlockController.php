@@ -39,6 +39,7 @@ class BlockController extends Controller
             )
         );
 
+        $refresh = false;
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
@@ -48,11 +49,13 @@ class BlockController extends Controller
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.block.success')
             );
+            $refresh = true;
         }
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView(),
-            'blockType' => $block->getComponent()
+            'blockType' => $block->getComponent(),
+            'refresh' => $refresh
         ));
     }
 }

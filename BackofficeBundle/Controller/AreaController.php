@@ -40,6 +40,7 @@ class AreaController extends Controller
             )
         );
 
+        $refresh = false;
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
@@ -48,12 +49,14 @@ class AreaController extends Controller
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
             );
+            $refresh = true;
         }
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'refresh' => $refresh
             )
         );
     }
@@ -83,6 +86,7 @@ class AreaController extends Controller
             )
         );
 
+        $refresh = false;
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
@@ -91,12 +95,14 @@ class AreaController extends Controller
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
             );
+            $refresh = true;
         }
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'refresh' => $refresh
             )
         );
     }
