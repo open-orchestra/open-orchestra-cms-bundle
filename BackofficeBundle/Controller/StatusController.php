@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PHPOrchestra\ModelBundle\Document\AbstractStatus;
 
 /**
  * Class StatusController
@@ -26,31 +27,10 @@ class StatusController extends Controller
     {
         $status = $this->get('php_orchestra_model.repository.status')->find($statusId);
 
-        $form = $this->createForm(
-            'status',
-            $status,
-            array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_status_form', array(
-                    'statusId' => $statusId,
-                ))
-            )
-        );
+        $url = $this->generateUrl('php_orchestra_backoffice_status_form', array('statusId' => $statusId));
+        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.success');
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($status);
-            $documentManager->flush();
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.status.success')
-            );
-        }
-
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->formHandler($url, $request, $status, $message);
     }
 
     /**
@@ -65,16 +45,30 @@ class StatusController extends Controller
     {
         $statusClass = $this->container->getParameter('php_orchestra_model.document.status.class');
         $status = new $statusClass();
+
+        $url = $this->generateUrl('php_orchestra_backoffice_status_new');
+        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.creation');
+
+        return $this->formHandler($url, $request, $status, $message);
+    }
+
+    /**
+     * @param String         $url
+     * @param Request        $request
+     * @param AbstractStatus $status
+     * @param String         $message
+     *
+     * @return Response
+     */
+    protected function formHandler($url, Request $request, AbstractStatus $status, $message){
         $form = $this->createForm(
             'status',
             $status,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_status_new'),
+                'action' => $url,
             )
         );
-
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($status);
@@ -82,7 +76,7 @@ class StatusController extends Controller
 
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.status.creation')
+                $message
             );
         }
 
@@ -90,4 +84,5 @@ class StatusController extends Controller
             'form' => $form->createView()
         ));
     }
+    
 }

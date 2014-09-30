@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class StatusTypeTest
@@ -59,6 +60,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($builder)->add('published', null, array('required' => false));
         Phake::verify($builder)->add('role', null, array('required' => false));
         Phake::verify($builder)->add('labels', 'translated_value_collection');
+        Phake::verify($builder)->add('initial', null, array('required' => false));
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
