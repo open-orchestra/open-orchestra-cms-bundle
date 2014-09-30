@@ -36,5 +36,6 @@ adminFormView = Backbone.View.extend(
           view = current.render(
             html: response
           )
+          Backbone.history.loadUrl(Backbone.history.fragment) if $("#modal-action[data-action='refresh']").length > 0
       return
 )

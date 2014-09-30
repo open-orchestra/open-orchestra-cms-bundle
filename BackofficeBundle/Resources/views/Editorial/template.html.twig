@@ -1,7 +1,5 @@
 {% if refresh %}
-    <script type="text/javascript">
-        Backbone.history.loadUrl(Backbone.history.fragment);
-    </script>
+    <div id='modal-action' data-action='refresh'></div>
 {% endif %}
 
 {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
