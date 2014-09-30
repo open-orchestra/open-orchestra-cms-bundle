@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use Lexik\Bundle\TranslationBundle\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class StatusType
@@ -30,7 +30,7 @@ class StatusType extends AbstractType
      * @param TranslationChoiceManager          $translationChoiceManager
      * @param Translator                        $translator
      */
-    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer, ContentTypeRepository $contentTypeRepository, TranslationChoiceManager $translationChoiceManager, Translator $translator)
+    public function __construct($statusClass, TranslateValueInitializerListener $translateValueInitializer, ContentTypeRepository $contentTypeRepository, TranslationChoiceManager $translationChoiceManager, TranslatorInterface $translator)
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->statusClass = $statusClass;
@@ -68,7 +68,8 @@ class StatusType extends AbstractType
         foreach($contentTypes as $contentType){
             $contentTypesChoices[$contentType->getContentTypeId()] = $this->translationChoiceManager->choose($contentType->getNames());
         }
-        $contentTypesChoices['node'] = $this->translator->trans('php_orchestra_backoffice.left_menu.editorial.nodes');
+        $contentTypesChoices['node'] = $this->translator->trans('php_orchestra_backoffice.form.node.name');
+
         return $contentTypesChoices;
     }
 

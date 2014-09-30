@@ -29,6 +29,7 @@ class StatusController extends Controller
 
         $url = $this->generateUrl('php_orchestra_backoffice_status_form', array('statusId' => $statusId));
         $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.success');
+
         return $this->formHandler($url, $request, $status, $message);
     }
 
@@ -47,6 +48,7 @@ class StatusController extends Controller
 
         $url = $this->generateUrl('php_orchestra_backoffice_status_new');
         $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.creation');
+
         return $this->formHandler($url, $request, $status, $message);
     }
 

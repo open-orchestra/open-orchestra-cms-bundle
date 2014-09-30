@@ -31,7 +31,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
         $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
         $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentTypeRepository');
         $this->translationChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
-        $this->translator = Phake::mock('Lexik\Bundle\TranslationBundle\Translation\Translator');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->form = new StatusType($this->statusClass, $this->translateValueInitializer, $this->contentTypeRepository, $this->translationChoiceManager, $this->translator);
     }
 
