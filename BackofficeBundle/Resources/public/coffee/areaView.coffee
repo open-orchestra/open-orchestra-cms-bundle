@@ -1,4 +1,3 @@
-
 AreaView = Backbone.View.extend(
   tagName: 'li'
   
