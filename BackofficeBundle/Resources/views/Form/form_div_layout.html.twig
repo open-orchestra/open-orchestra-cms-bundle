@@ -29,3 +29,28 @@
         </select>
     {% endspaceless %}
 {% endblock %}
+
+{% block translated_value_collection_widget %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            <ul class="nav nav-tabs" role="tablist" id="myTab">
+                {% for key, field in form %}
+                    <li {% if key is sameas(0) %}class="active" {% endif %}>
+                        <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">{{ form_label(field.value) }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for key, field in form %}
+                    <div class="tab-pane {% if key is sameas(0) %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
+                        <div class="form-group">
+                            {{ form_widget(field.value) }}
+                            {{ form_rest(field) }}
+                            {{ form_errors(field) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
