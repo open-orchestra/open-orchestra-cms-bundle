@@ -46,7 +46,6 @@ AreaView = Backbone.View.extend(
     return
   
   sendRemoveArea: ->
-    that = this
     $.ajax
       url: @area.get('links')._self_delete
       method: 'POST'
