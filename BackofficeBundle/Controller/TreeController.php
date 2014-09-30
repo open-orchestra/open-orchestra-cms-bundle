@@ -21,7 +21,7 @@ class TreeController extends Controller
         $site = $contextManager->getCurrentSite();
         $siteId = $site['siteId'];
 
-        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersion($siteId);
+        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersionBySiteId($siteId);
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
