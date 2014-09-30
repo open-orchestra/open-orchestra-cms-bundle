@@ -15,7 +15,7 @@ class StatusFacade extends AbstractFacade
     public $published;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("boolean")
      */
     public $initial;
 
