@@ -19,7 +19,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
 
     protected $statusClass = 'site';
     protected $translateValueInitializer;
-    
+
     /**
      * Set up the test
      */
@@ -47,7 +47,6 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test builder
-     * 
      */
     public function testBuilder()
     {
@@ -62,7 +61,6 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($builder)->add('role', null, array('required' => false));
         Phake::verify($builder)->add('labels', 'translated_value_collection');
         Phake::verify($builder)->add('initial', null, array('required' => false));
-
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
