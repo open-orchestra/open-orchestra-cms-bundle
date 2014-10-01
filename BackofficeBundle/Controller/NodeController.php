@@ -76,7 +76,6 @@ class NodeController extends Controller
         );
         $form->handleRequest($request);
 
-        $refresh = false;
         if ($form->isValid()) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
@@ -85,15 +84,22 @@ class NodeController extends Controller
                 'success',
                 $message
             );
-            $refresh = true;
         }
+
+        if ($form->getErrors()->count() > 0) {
+            $statusCode = 400;
+        } else {
+            $statusCode = 200;
+        };
+
+        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'form' => $form->createView(),
-                'refresh' => $refresh
-            )
+                'form' => $form->createView()
+            ),
+            $response
         );
     }
 }

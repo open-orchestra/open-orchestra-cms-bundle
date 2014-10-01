@@ -40,37 +40,31 @@ class AreaController extends Controller
             )
         );
 
-//        $response = new Response();
-//        $response->setContentType('text/html; charset=utf-8');
-        
         $form->handleRequest($request);
-
-        if ('POST' == $request->getMethod())
-        {
-            if ($form->isValid()) {
-                $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-                $documentManager->flush();
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
-                );
-//                $response->setStatusCode(500);
-            } else {
-//                $response->setStatusCode(400);
-            }
+        if ($form->isValid()) {
+            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+            $documentManager->flush();
+            $this->get('session')->getFlashBag()->add(
+               'success',
+               $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
+            );
         }
 
-        $response = new Response(
-            $this->render(
-                'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-                    array(
-                        'form' => $form->createView()
-                    )
-            )
+        if ($form->getErrors()->count() > 0) {
+            $statusCode = 400;
+        } else {
+            $statusCode = 200;
+        };
+
+        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
+            array(
+                'form' => $form->createView()
+            ),
+            $response
         );
-        
-        $response->setStatusCode(500);
-        return $response;
     }
 
     /**
@@ -98,7 +92,6 @@ class AreaController extends Controller
             )
         );
 
-        $refresh = false;
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
@@ -107,15 +100,22 @@ class AreaController extends Controller
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
             );
-            $refresh = true;
         }
+
+        if ($form->getErrors()->count() > 0) {
+            $statusCode = 400;
+        } else {
+            $statusCode = 200;
+        };
+
+        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'form' => $form->createView(),
-                'refresh' => $refresh
-            )
+                'form' => $form->createView()
+            ),
+            $response
         );
     }
 }

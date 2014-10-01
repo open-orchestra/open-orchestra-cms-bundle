@@ -34,9 +34,8 @@ adminFormView = Backbone.View.extend(
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
-            alert(response)
             view = current.render(
-              html: response.data
+              html: response
             )
             Backbone.history.loadUrl(Backbone.history.fragment)
     return

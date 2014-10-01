@@ -43,7 +43,6 @@ class TemplateController extends Controller
             )
         );
 
-        $refresh = false;
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
@@ -53,15 +52,22 @@ class TemplateController extends Controller
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.template.success')
             );
-            $refresh = true;
         }
+
+        if ($form->getErrors()->count() > 0) {
+            $statusCode = 400;
+        } else {
+            $statusCode = 200;
+        };
+
+        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
             array(
-                'form' => $form->createView(),
-                'refresh' => $refresh
-            )
+                'form' => $form->createView()
+            ),
+            $response
         );
     }
 }
