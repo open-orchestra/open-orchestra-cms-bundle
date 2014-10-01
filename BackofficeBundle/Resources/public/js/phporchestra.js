@@ -107,7 +107,7 @@ function callAndReload(action)
     displayLoader();
     $.post(action, function(response) {
         if (response.success) {
-            window.location.hash="";
+            Backbone.history.navigate('#', true);
             window.location.reload();
         }
     });

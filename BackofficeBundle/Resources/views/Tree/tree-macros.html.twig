@@ -1,46 +1,34 @@
 {% macro menu_nodes(nodes, name) %}
-    {% if nodes is empty  %}
-        <li>
-            <div class="ui-state-unsortable">
-                <a
-                  class="ajax-new"
-                  href="#"
-                  data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
-                >
-                    <i class="fa fa-file"></i>
-                    {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
-                </a>
-            </div>
-        </li>
-    {% endif %}
     {% for element in nodes %}
         {% set node = element.node %}
         <li data-element-id="{{ node.nodeId }}"
             data-type="Node"
-        >
+                >
             <a
-                id="nav-node-{{ node.nodeId }}"
-                data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
-                data-node="{{ node.nodeId }}"
-                href="#node/show/{{ node.nodeId }}"
-            >
+                    id="nav-node-{{ node.nodeId }}"
+                    data-url="{{ path('php_orchestra_api_node_show', {'nodeId': node.nodeId}) }}"
+                    data-node="{{ node.nodeId }}"
+                    href="#node/show/{{ node.nodeId }}"
+                    >
                 <i
-                    class="fa fa-trash-o ajax-delete"
-                    data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
-                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeName%': node.name}) }}">
+                        class="fa fa-trash-o ajax-delete"
+                        data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
+                        data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeName%': node.name}) }}">
                 </i>
                 <span>{{ node.name }}</span>
             </a>
             {% if 'child' in element|keys %}
                 <ul class="{{ name }}-connectedSortable">
-                    {{ _self.menu_nodes(element.child, name) }}
+                    {% if element.child is not empty %}
+                        {{ _self.menu_nodes(element.child, name) }}
+                    {% endif %}
                     <li>
                         <div class="ui-state-unsortable">
                             <a
-                                class="ajax-new"
-                                href="#"
-                                data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
-                            >
+                                    class="ajax-new"
+                                    href="#"
+                                    data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
+                                    >
                                 <i class="fa fa-file"></i>
                                 {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
                             </a>
@@ -49,6 +37,19 @@
                 </ul>
             {% endif %}
         </li>
+        {% else %}
+            <li>
+                <div class="ui-state-unsortable">
+                    <a
+                            class="ajax-new"
+                            href="#"
+                            data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
+                            >
+                        <i class="fa fa-file"></i>
+                        {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
+                    </a>
+                </div>
+            </li>
     {% endfor %}
 {% endmacro %}
 
