@@ -40,25 +40,37 @@ class AreaController extends Controller
             )
         );
 
-        $refresh = false;
+//        $response = new Response();
+//        $response->setContentType('text/html; charset=utf-8');
+        
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->flush();
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
-            );
-            $refresh = true;
+
+        if ('POST' == $request->getMethod())
+        {
+            if ($form->isValid()) {
+                $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+                $documentManager->flush();
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
+                );
+//                $response->setStatusCode(500);
+            } else {
+//                $response->setStatusCode(400);
+            }
         }
 
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView(),
-                'refresh' => $refresh
+        $response = new Response(
+            $this->render(
+                'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
+                    array(
+                        'form' => $form->createView()
+                    )
             )
         );
+        
+        $response->setStatusCode(500);
+        return $response;
     }
 
     /**

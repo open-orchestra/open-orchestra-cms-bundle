@@ -32,10 +32,12 @@ adminFormView = Backbone.View.extend(
     $("form", @$el).on "submit", (e) ->
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
-        success: (response) ->
-          view = current.render(
-            html: response
-          )
-          Backbone.history.loadUrl(Backbone.history.fragment) if $("#modal-action[data-action='refresh']").length > 0
-      return
+        statusCode:
+          200: (response) ->
+            alert(response)
+            view = current.render(
+              html: response.data
+            )
+            Backbone.history.loadUrl(Backbone.history.fragment)
+    return
 )
