@@ -45,8 +45,8 @@ class AreaController extends Controller
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->flush();
             $this->get('session')->getFlashBag()->add(
-               'success',
-               $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
+                'success',
+                $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
             );
         }
 
