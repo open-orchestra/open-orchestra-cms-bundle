@@ -5,7 +5,6 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\ThemeCollectionFacade;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class ThemeCollectionTransformer
@@ -25,16 +24,14 @@ class ThemeCollectionTransformer extends AbstractTransformer
             $facade->addTheme($this->getTransformer('theme')->transform($theme));
         }
 
-        $facade->addLink('_self', $this->getRouter()->generate(
+        $facade->addLink('_self', $this->generateRoute(
             'php_orchestra_api_theme_list',
-            array(),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array()
         ));
 
-        $facade->addLink('_self_add', $this->getRouter()->generate(
+        $facade->addLink('_self_add', $this->generateRoute(
             'php_orchestra_backoffice_theme_new',
-            array(),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array()
         ));
 
         return $facade;

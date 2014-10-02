@@ -6,10 +6,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
-use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class BlockTransformer
@@ -69,12 +67,11 @@ class BlockTransformer extends AbstractTransformer
         ));
 
         if (null !== $nodeId && null !== $blockNumber) {
-            $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_block_form',
+            $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_block_form',
                 array(
                     'nodeId' => $nodeId,
                     'blockNumber' => $blockNumber
-                ),
-                UrlGeneratorInterface::ABSOLUTE_URL
+                )
             ));
         }
 

@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class AbstractTransformer
@@ -36,6 +37,17 @@ abstract class AbstractTransformer implements TransformerInterface
     protected function getRouter()
     {
         return $this->context->getRouter();
+    }
+
+    /**
+     * @param string $name
+     * @param array  $parameter
+     *
+     * @return string
+     */
+    protected function generateRoute($name, $parameter = array())
+    {
+        return $this->getRouter()->generate($name, $parameter, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     /**

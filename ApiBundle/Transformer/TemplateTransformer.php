@@ -2,10 +2,8 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\TemplateFacade;
 use PHPOrchestra\ModelBundle\Model\TemplateInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class TemplateTransformer
@@ -33,9 +31,8 @@ class TemplateTransformer extends AbstractTransformer
         $facade->deleted = $mixed->getDeleted();
         $facade->boDirection = $mixed->getBoDirection();
 
-        $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_template_form',
-            array('templateId' => $mixed->getTemplateId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_template_form',
+            array('templateId' => $mixed->getTemplateId())
         ));
 
         return $facade;

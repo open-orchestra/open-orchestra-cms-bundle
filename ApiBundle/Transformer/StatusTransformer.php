@@ -6,7 +6,6 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\StatusFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Model\StatusInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class StatusTransformer
@@ -38,15 +37,13 @@ class StatusTransformer extends AbstractTransformer
         $facade->toRole = $mixed->getToRole();
         $facade->fromRole = $mixed->getFromRole();
 
-        $facade->addLink('_self_delete', $this->getRouter()->generate(
+        $facade->addLink('_self_delete', $this->generateRoute(
             'php_orchestra_api_status_delete',
-            array('statusId' => $mixed->getId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array('statusId' => $mixed->getId())
         ));
-        $facade->addLink('_self_form', $this->getRouter()->generate(
+        $facade->addLink('_self_form', $this->generateRoute(
             'php_orchestra_backoffice_status_form',
-            array('statusId' => $mixed->getId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array('statusId' => $mixed->getId())
         ));
 
         return $facade;

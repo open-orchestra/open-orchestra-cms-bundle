@@ -5,7 +5,6 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\SiteFacade;
 use PHPOrchestra\ModelBundle\Model\SiteInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class SiteTransformer
@@ -34,20 +33,17 @@ class SiteTransformer extends AbstractTransformer
             $facade->addBlocks($value);
         }
 
-        $facade->addLink('_self', $this->getRouter()->generate(
+        $facade->addLink('_self', $this->generateRoute(
             'php_orchestra_api_site_show',
-            array('siteId' => $mixed->getSiteId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array('siteId' => $mixed->getSiteId())
         ));
-        $facade->addLink('_self_delete', $this->getRouter()->generate(
+        $facade->addLink('_self_delete', $this->generateRoute(
             'php_orchestra_api_site_delete',
-            array('siteId' => $mixed->getSiteId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array('siteId' => $mixed->getSiteId())
         ));
-        $facade->addLink('_self_form', $this->getRouter()->generate(
+        $facade->addLink('_self_form', $this->generateRoute(
             'php_orchestra_backoffice_site_form',
-            array('siteId' => $mixed->getSiteId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array('siteId' => $mixed->getSiteId())
         ));
 
         return $facade;

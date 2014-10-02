@@ -5,7 +5,6 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\ContentCollectionFacade;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class ContentCollectionTransformer
@@ -25,10 +24,9 @@ class ContentCollectionTransformer extends AbstractTransformer
             $facade->addContent($this->getTransformer('content')->transform($content));
         }
 
-        $facade->addLink('_self', $this->getRouter()->generate(
+        $facade->addLink('_self', $this->generateRoute(
             'php_orchestra_api_content_list',
-            array(),
-            UrlGeneratorInterface::ABSOLUTE_URL
+            array()
         ));
 
         return $facade;
