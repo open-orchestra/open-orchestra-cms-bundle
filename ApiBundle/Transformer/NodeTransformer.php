@@ -6,7 +6,6 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class NodeTransformer
@@ -43,14 +42,12 @@ class NodeTransformer extends AbstractTransformer
         $facade->createdAt = $mixed->getCreatedAt();
         $facade->updatedAt = $mixed->getUpdatedAt();
 
-        $facade->addLink('_self_form', $this->getRouter()->generate('php_orchestra_backoffice_node_form',
-            array('nodeId' => $mixed->getNodeId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_node_form',
+            array('nodeId' => $mixed->getNodeId())
         ));
 
-        $facade->addLink('_self_duplicate', $this->getRouter()->generate('php_orchestra_api_node_duplicate',
-            array('nodeId' => $mixed->getNodeId()),
-            UrlGeneratorInterface::ABSOLUTE_URL
+        $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_node_duplicate',
+            array('nodeId' => $mixed->getNodeId())
         ));
 
         return $facade;

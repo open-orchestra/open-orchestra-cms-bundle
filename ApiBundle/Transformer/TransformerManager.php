@@ -1,6 +1,7 @@
 <?php
 
 namespace PHPOrchestra\ApiBundle\Transformer;
+
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
