@@ -48,12 +48,10 @@ class NodeType extends AbstractType
             ->add('templateId', 'choice', array(
                 'choices' => $this->getChoices()
             ))
-            ->add('path', 'text')
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
             ->add('status', 'orchestra_status');
 
-        $builder->addEventSubscriber(new NodeTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
         $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
