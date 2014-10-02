@@ -1,14 +1,14 @@
 <nav data-url="{{ path('php_orchestra_backoffice_menu') }}">
-    <ul style="">
+    <ul>
         <li>
-            <a href="javascript:displayMenu();">Refresh menu</a>
+            <a href="javascript:displayMenu();">#Test menu refresh#</a>
         </li>
         <li>
             <a href="#">
                 <i class="fa fa-lg fa-fw fa-edit"></i>
                 <span class="menu-item-parent">{{ 'php_orchestra_backoffice.left_menu.editorial.title'|trans }}</span>
             </a>
-            <ul style="display:block;">
+            <ul>
                 {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeNodes')) }}
                 {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeTemplates')) }}
                 {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent')) }}
@@ -21,7 +21,7 @@
                     {{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}
                 </span>
             </a>
-            <ul style="">
+            <ul>
                 <li>
                     <a
                         href="#websites/list"

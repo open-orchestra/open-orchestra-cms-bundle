@@ -102,10 +102,10 @@ function displayMenu()
         url: $('#left-panel nav').data("url"),
         type: 'GET',
         success: function(response) {
-            // render menu
+            // render html
             $('#left-panel nav').replaceWith(response);
             
-            // activate jarvis menu
+            // create the jarvis menu
             var opts = {
                 accordion : true,
                 speed : $.menu_speed,
