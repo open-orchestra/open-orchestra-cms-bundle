@@ -96,6 +96,8 @@ function callAndReload(action)
 
 function displayMenu()
 {
+    var selectedPath = "#" + Backbone.history.fragment;
+    
     $.ajax({
         url: $('#left-panel nav').data("url"),
         type: 'GET',
@@ -103,18 +105,24 @@ function displayMenu()
             // render menu
             $('#left-panel nav').replaceWith(response);
             
-            // activate menu
-            $('nav ul').jarvismenu({
+            // activate jarvis menu
+            var opts = {
                 accordion : true,
                 speed : $.menu_speed,
                 closedSign : '<em class="fa fa-expand-o"></em>',
                 openedSign : '<em class="fa fa-collapse-o"></em>'
-            });
+            };
+            $('nav ul').jarvismenu(opts);
             
             // tag selected path 
-            $('nav li:has(a[href="#node/show/root"])').addClass("active open");
-
-            // open menu ?
+            $('nav li:has(a[href="' + selectedPath + '"])').addClass("active");
+            
+            // open selected path
+            $('#left-panel nav').find("li.active").each(function() {
+                $(this).parents("ul").slideDown(opts.speed);
+                $(this).parents("ul").parent("li").find("b:first").html(opts.openedSign);
+                $(this).parents("ul").parent("li").addClass("open")
+            });
         }
     });
 }
