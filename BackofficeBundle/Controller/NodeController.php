@@ -2,17 +2,15 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use  PHPOrchestra\ModelBundle\Document\Node;
 
 /**
  * Class NodeController
  */
-class NodeController extends Controller
+class NodeController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -74,22 +72,11 @@ class NodeController extends Controller
                 'action' => $url
             )
         );
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->get('doctrine.odm.mongodb.document_manager');
-            $em->persist($node);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $message
-            );
-        }
 
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            )
-        );
+        $form->handleRequest($request);
+
+        $this->handleForm($form, $message, $node);
+
+        return $this->renderAdminForm($form);
     }
 }
