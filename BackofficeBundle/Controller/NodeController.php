@@ -75,7 +75,7 @@ class NodeController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->ifFormIsValid($form, $message, $node);
+        $this->handleForm($form, $message, $node);
 
         return $this->renderAdminForm($form);
     }

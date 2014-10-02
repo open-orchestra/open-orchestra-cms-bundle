@@ -18,15 +18,11 @@ abstract class AbstractAdminController extends Controller
      * @param string        $successMessage
      * @param mixed         $persistingItem
      */
-    protected function ifFormIsValid(FormInterface $form, $successMessage, $persistingItem = null)
+    protected function handleForm(FormInterface $form, $successMessage, $persistingItem = null)
     {
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-
-            if ($persistingItem) {
-                $documentManager->persist($persistingItem);
-            }
-
+            $documentManager->persist($persistingItem);
             $documentManager->flush();
 
             $this->get('session')->getFlashBag()->add('success', $successMessage);

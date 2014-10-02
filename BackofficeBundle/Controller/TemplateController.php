@@ -43,7 +43,7 @@ class TemplateController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->ifFormIsValid(
+        $this->handleForm(
             $form,
             $this->get('translator')->trans('php_orchestra_backoffice.form.template.success'),
             $template

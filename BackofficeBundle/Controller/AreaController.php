@@ -40,7 +40,7 @@ class AreaController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->ifFormIsValid(
+        $this->handleForm(
             $form,
             $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
         );
@@ -78,7 +78,7 @@ class AreaController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->ifFormIsValid(
+        $this->handleForm(
             $form,
             $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
         );
