@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 class MenuController extends Controller {
 
     /**
-     * 
      * @config\Route("/menu", name="php_orchestra_backoffice_menu")
      * @Config\Method({"GET"})
      */
