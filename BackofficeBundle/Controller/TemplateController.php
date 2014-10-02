@@ -2,16 +2,14 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
 /**
  * Class TemplateController
  */
-class TemplateController extends Controller
+class TemplateController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -44,30 +42,13 @@ class TemplateController extends Controller
         );
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $em = $this->get('doctrine.odm.mongodb.document_manager');
-            $em->persist($template);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.template.success')
-            );
-        }
 
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } else {
-            $statusCode = 200;
-        };
-
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            ),
-            $response
+        $this->ifFormIsValid(
+            $form,
+            $this->get('translator')->trans('php_orchestra_backoffice.form.template.success'),
+            $template
         );
+
+        return $this->renderAdminForm($form);
     }
 }

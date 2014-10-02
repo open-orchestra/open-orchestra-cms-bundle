@@ -3,15 +3,13 @@
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
 use PHPOrchestra\BackofficeBundle\Form\Type\AreaType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AreaController
  */
-class AreaController extends Controller
+class AreaController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -41,30 +39,13 @@ class AreaController extends Controller
         );
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->flush();
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
-            );
-        }
 
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } else {
-            $statusCode = 200;
-        };
-
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            ),
-            $response
+        $this->ifFormIsValid(
+            $form,
+            $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
         );
+
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -85,37 +66,23 @@ class AreaController extends Controller
             'template_area',
             $area,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_template_area_form', array(
+                'action' => $this->generateUrl(
+                    'php_orchestra_backoffice_template_area_form',
+                    array(
                         'templateId' => $templateId,
                         'areaId' => $areaId
-                    )),
+                    )
+                ),
             )
         );
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->flush();
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
-            );
-        }
 
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } else {
-            $statusCode = 200;
-        };
-
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            ),
-            $response
+        $this->ifFormIsValid(
+            $form,
+            $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
         );
+
+        return $this->renderAdminForm($form);
     }
 }
