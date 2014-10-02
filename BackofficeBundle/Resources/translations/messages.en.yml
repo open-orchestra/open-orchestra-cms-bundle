@@ -53,6 +53,7 @@ php_orchestra_backoffice:
             nodes: Pages
             templates: Templates
             contents: Contents
+            mediatheque: Mediatheque
         administration:
             sites:
                 list: Websites

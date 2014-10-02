@@ -64,4 +64,18 @@ class TreeController extends Controller
             )
         );
     }
+
+    /**
+     * List all root folders
+     *
+     * @return Response
+     */
+    public function showFolderTreeAction()
+    {
+        $rootFolders = $this->get('php_orchestra_model.repository.folder')->findAllRootFolder();
+
+        return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showFolderTree.html.twig', array(
+                'folders' => $rootFolders,
+        ));
+    }
 }
