@@ -1,92 +1,76 @@
-<aside id="left-panel">
-
-    <!-- User info -->
-    <div class="login-info">
-        <span> <!-- User image size is adjusted inside CSS, it should stay as it --> 
-            <img src="{{ asset('bundles/phporchestracms/img/avatars/male.png') }}" alt="me" class="online" /> 
-            <a href="javascript:void(0);" id="show-shortcut">
-                {{ app.user }} <i class="fa fa-angle-down"></i>
-            </a> 
-        </span>
-    </div>
-    <!-- end user info -->
-    
-    <nav>
-        <ul style="">
-            <li>
-                <a href="#">
-                    <i class="fa fa-lg fa-fw fa-edit"></i>
-                    <span class="menu-item-parent">{{ 'php_orchestra_backoffice.left_menu.editorial.title'|trans }}</span>
-                </a>
-                <ul style="display:block;">
-                    {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeNodes')) }}
-                    {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeTemplates')) }}
-                    {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent')) }}
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-lg fa-fw fa-desktop"></i>
-                    <span class="menu-item-parent">
-                        {{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}
-                    </span>
-                </a>
-                <ul style="">
-                    <li>
-                        <a
-                            href="#websites/list"
-                            id="nav-websites"
-                            data-url="{{ path('php_orchestra_api_site_list') }}"
-                            data-displayed-elements="site_id, domain, alias, default_language">
-                            {{ 'php_orchestra_backoffice.left_menu.administration.sites.list'|trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#themes/list"
-                            id="nav-themes"
-                            data-url="{{ path('php_orchestra_api_theme_list') }}"
-                            data-displayed-elements="name">
-                            {{ 'php_orchestra_backoffice.left_menu.administration.themes.list'|trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#content-types/list"
-                            id="nav-contentTypes"
-                            data-url="{{ path('php_orchestra_api_content_type_list') }}"
-                            data-displayed-elements="content_type_id, name, version, status">
-                            {{ 'php_orchestra_backoffice.left_menu.administration.content_type.list'|trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#status/list"
-                            id="nav-status"
-                            data-url="{{ path('php_orchestra_api_status_list') }}"
-                            data-displayed-elements="label, published, to_role, from_role, initial">
-                            {{ 'php_orchestra_backoffice.left_menu.administration.status.list'|trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#user/list"
-                            id="nav-user"
-                            data-url="{{ path('php_orchestra_api_user_list') }}"
-                            data-displayed-elements="username, roles">
-                            {{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#translation" id="nav-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    
-    <span class="minifyme">
-        <i class="fa fa-arrow-circle-left hit"></i>
-    </span>
-
-</aside>
+<nav data-url="{{ path('php_orchestra_backoffice_menu') }}">
+    <ul style="">
+        <li>
+            <a href="javascript:displayMenu();">Refresh menu</a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-lg fa-fw fa-edit"></i>
+                <span class="menu-item-parent">{{ 'php_orchestra_backoffice.left_menu.editorial.title'|trans }}</span>
+            </a>
+            <ul style="display:block;">
+                {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeNodes')) }}
+                {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeTemplates')) }}
+                {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent')) }}
+            </ul>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fa fa-lg fa-fw fa-desktop"></i>
+                <span class="menu-item-parent">
+                    {{ 'php_orchestra_cms.left_menu.administration.title'|trans({}, 'backOffice') }}
+                </span>
+            </a>
+            <ul style="">
+                <li>
+                    <a
+                        href="#websites/list"
+                        id="nav-websites"
+                        data-url="{{ path('php_orchestra_api_site_list') }}"
+                        data-displayed-elements="site_id, domain, alias, default_language">
+                        {{ 'php_orchestra_backoffice.left_menu.administration.sites.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#themes/list"
+                        id="nav-themes"
+                        data-url="{{ path('php_orchestra_api_theme_list') }}"
+                        data-displayed-elements="name">
+                        {{ 'php_orchestra_backoffice.left_menu.administration.themes.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#content-types/list"
+                        id="nav-contentTypes"
+                        data-url="{{ path('php_orchestra_api_content_type_list') }}"
+                        data-displayed-elements="content_type_id, name, version, status">
+                        {{ 'php_orchestra_backoffice.left_menu.administration.content_type.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#status/list"
+                        id="nav-status"
+                        data-url="{{ path('php_orchestra_api_status_list') }}"
+                        data-displayed-elements="label, published, to_role, from_role, initial">
+                        {{ 'php_orchestra_backoffice.left_menu.administration.status.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#user/list"
+                        id="nav-user"
+                        data-url="{{ path('php_orchestra_api_user_list') }}"
+                        data-displayed-elements="username, roles">
+                        {{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a href="#translation" id="nav-translation" data-url="{{ path('lexik_translation_grid') }}">{{ 'php_orchestra_cms.left_menu.administration.translation'|trans({}, 'backOffice') }}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
