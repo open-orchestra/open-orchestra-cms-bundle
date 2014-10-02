@@ -12,17 +12,21 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractAdminController extends Controller
 {
     /**
-     * Do some stuff when admin form is valid
+     * Do some stuff if admin form is valid
      * 
      * @param FormInterface $form
      * @param string        $successMessage
      * @param mixed         $persistingItem
      */
-    protected function handleForm(FormInterface $form, $successMessage, $persistingItem = null)
+    protected function handleForm(FormInterface $form, $successMessage, $itemTopersist = null)
     {
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($persistingItem);
+
+            if ($itemTopersist) {
+                $documentManager->persist($itemTopersist);
+            }
+
             $documentManager->flush();
 
             $this->get('session')->getFlashBag()->add('success', $successMessage);
