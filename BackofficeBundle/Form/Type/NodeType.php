@@ -1,5 +1,4 @@
 <?php
-
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
@@ -20,11 +19,11 @@ use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 class NodeType extends AbstractType
 {
     protected $nodeClass;
-
     protected $templateRepository;
 
     /**
-     * @param string             $nodeClass
+     *
+     * @param string $nodeClass
      * @param TemplateRepository $templateRepository
      */
     public function __construct($nodeClass, TemplateRepository $templateRepository)
@@ -34,24 +33,24 @@ class NodeType extends AbstractType
     }
 
     /**
+     *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', 'text')
+        $builder->add('name', 'text')
             ->add('nodeType', 'choice', array(
-                'choices' => array('page' => 'Page simple')
-            ))
+            'choices' => array(
+                'page' => 'Page simple'
+            )
+        ))
             ->add('theme', 'orchestra_theme_choice')
             ->add('templateId', 'choice', array(
-                'choices' => $this->getChoices()
-            ))
+            'choices' => $this->getChoices()
+        ))
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
-            ->add('nodeId', 'hidden')
-            ->add('path', 'hidden')
             ->add('status', 'orchestra_status');
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
@@ -60,23 +59,25 @@ class NodeType extends AbstractType
     }
 
     /**
+     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->nodeClass,
+            'data_class' => $this->nodeClass
         ));
     }
 
     /**
+     *
      * @return array
      */
     protected function getChoices()
     {
         $templates = $this->templateRepository->findByDeleted(false);
         $templatesChoices = array();
-        foreach($templates as $template){
+        foreach ($templates as $template) {
             $templatesChoices[$template->getTemplateId()] = $template->getName();
         }
 
@@ -84,6 +85,7 @@ class NodeType extends AbstractType
     }
 
     /**
+     *
      * @return string
      */
     public function getName()
