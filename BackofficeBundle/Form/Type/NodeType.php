@@ -50,6 +50,8 @@ class NodeType extends AbstractType
             ))
             ->add('alias', 'text')
             ->add('language', 'orchestra_language')
+            ->add('nodeId', 'hidden')
+            ->add('path', 'hidden')
             ->add('status', 'orchestra_status');
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
