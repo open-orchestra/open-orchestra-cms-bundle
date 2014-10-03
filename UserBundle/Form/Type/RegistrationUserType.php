@@ -31,8 +31,12 @@ class RegistrationUserType extends RegistrationFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', 'text')
-            ->add('lastName', 'text');
+            ->add('firstName', 'text', array(
+                'label' => 'php_orchestra_user.form.registration_user.first_name'
+            ))
+            ->add('lastName', 'text', array(
+                'label' => 'php_orchestra_user.form.registration_user.last_name'
+            ));
 
         parent::buildForm($builder, $options);
 
@@ -42,7 +46,8 @@ class RegistrationUserType extends RegistrationFormType
             'attr' => array(
                 'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
                 'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_option.delete'),
-            )
+            ),
+            'label' => 'php_orchestra_user.form.registration_user.roles'
         ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
