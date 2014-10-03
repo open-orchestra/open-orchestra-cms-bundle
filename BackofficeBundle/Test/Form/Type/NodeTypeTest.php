@@ -26,10 +26,10 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * test the build form
-     * @param TemplateInterface $templates
-     * @param array             $expectedResult
      *
-     * @dataProvider getTemplate
+     * @param TemplateInterface $templates
+     * @param array $expectedResult
+     *        @dataProvider getTemplate
      */
     public function testBuildForm($templates, $expectedResult)
     {
@@ -40,14 +40,14 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->nodeType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(8))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(7))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock)->add('templateId', 'choice', array(
             'choices' => $expectedResult
         ));
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(4))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
@@ -60,10 +60,9 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         $this->nodeType->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => $this->nodeClass,
+            'data_class' => $this->nodeClass
         ));
     }
-
 
     /**
      * Test the form name
