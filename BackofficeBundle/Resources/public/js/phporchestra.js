@@ -33,24 +33,6 @@ $(document).on('click', 'nav a[target="_menu"]', function(e) {
     }, 200);
 });
 
-// click on links inside content
-$(document).on('click', '.tabLink', function(e) {
-    e.preventDefault();
-    orchestraAjaxLoad($(e.currentTarget).attr('href'));
-});
-
-// change a select switcher
-$(document).on('change', '.selectSwitcher', function(e) {
-    e.preventDefault();
-    $this = $(e.currentTarget);
-    
-    if ($this.find("option:selected").attr('data-loadmode') == 'ajax') {
-        orchestraAjaxLoad($this.val());
-    } else {
-        window.location.hash = $this.val();
-    }
-});
-
 function displayLoader(element)
 {
     if (typeof element == 'undefined') {
@@ -77,7 +59,6 @@ function switchLoaderFullPage(state)
     return true;
 }
 
-// Specific orchestra ajax loading
 function orchestraAjaxLoad(url, method, successCallback)
 {
     displayLoader();
@@ -113,40 +94,35 @@ function callAndReload(action)
     });
 }
 
-/*
- * LOAD CSS
- * Usage:
- * loadCss("css/my_lovely_css.css");
- */
-
-var cssArray = {};
-
-function loadCss(cssName) {
-    if (!cssArray[cssName]) {
-        cssArray[cssName] = true;
-        
-       // adding the css tag to the head as suggested before
-        var body = document.getElementsByTagName('body')[0];
-        var css = document.createElement('link');
-        css.href = cssName;
-        css.media = "screen";
-        css.type = 'text/css';
-        css.rel = 'stylesheet';
-        // fire the loading
-        body.appendChild(css);
-    }
+function displayMenu()
+{
+    var selectedPath = "#" + Backbone.history.fragment;
+    
+    $.ajax({
+        url: $('#left-panel nav').data("url"),
+        type: 'GET',
+        success: function(response) {
+            // render html
+            $('#left-panel nav').replaceWith(response);
+            
+            // create the jarvis menu
+            var opts = {
+                accordion : true,
+                speed : $.menu_speed,
+                closedSign : '<em class="fa fa-expand-o"></em>',
+                openedSign : '<em class="fa fa-collapse-o"></em>'
+            };
+            $('nav ul').jarvismenu(opts);
+            
+            // tag selected path 
+            $('nav li:has(a[href="' + selectedPath + '"])').addClass("active");
+            
+            // open selected path
+            $('#left-panel nav').find("li.active").each(function() {
+                $(this).parents("ul").slideDown(opts.speed);
+                $(this).parents("ul").parent("li").find("b:first").html(opts.openedSign);
+                $(this).parents("ul").parent("li").addClass("open")
+            });
+        }
+    });
 }
-/* ~ END: LOAD SCRIPTS */
-
-/* Generate jQuery selector from attributs of jQuery object */
-(function($){
-	$.getSelector = function(obj, exclude){
-		var selector = $.makeArray(obj[0].attributes);
-		selector = $.map(selector, function(val, i){
-			return (exclude && exclude.indexOf(val.name) > -1) ? '' : '[' + val.name + '="' + val.value + '"]';
-		});
-		selector = obj.prop('tagName') + selector.join('');
-		return selector;
-	}
-})(jQuery);
-

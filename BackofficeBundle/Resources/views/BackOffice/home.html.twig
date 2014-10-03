@@ -12,7 +12,21 @@
     <!-- END HEADER -->
 
     <!-- Left panel : Navigation area -->
-    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:leftMenu.html.twig' %}
+    <aside id="left-panel">
+
+        <!-- User info -->
+        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:userInfo.html.twig' %}
+        <!-- end user info -->
+
+        <!-- Navigation -->
+        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:leftMenu.html.twig' %}
+        <!-- Navigation -->
+
+        <span class="minifyme">
+            <i class="fa fa-arrow-circle-left hit"></i>
+        </span>
+
+    </aside>
     <!-- END NAVIGATION -->
 
     <!-- MAIN PANEL -->
