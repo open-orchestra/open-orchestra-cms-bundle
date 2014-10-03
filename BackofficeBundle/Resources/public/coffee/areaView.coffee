@@ -23,7 +23,10 @@ AreaView = Backbone.View.extend(
     return
   
   paramArea: (event) ->
-    $('.modal-title').text @area.get('area_id')
+    label = "~no label yet~"
+    unless @area.get('label') is undefined
+      label = @area.get('label')
+    $('.modal-title').text('Area : ' + label)
     view = new adminFormView(url: @area.get('links')._self_form)
   
   confirmRemoveArea: (event) ->

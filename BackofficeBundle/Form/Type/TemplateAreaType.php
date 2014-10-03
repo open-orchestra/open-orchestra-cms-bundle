@@ -24,6 +24,8 @@ class TemplateAreaType extends AbstractType
         $htmlClassTransformer = new HtmlClassTransformer($options['data']);
         $htmlIdTransformer = new HtmlIdTransformer($options['data']);
 
+        $builder->add('label', 'text');
+
         $builder->add(
             $builder->create('areaId', 'text', array('label' => 'php_orchestra_backoffice.form.area.area_id'))
                 ->addViewTransformer($htmlIdTransformer)
