@@ -31,5 +31,4 @@ class MediaTransformer extends AbstractTransformer
     {
         return 'media';
     }
-
 }
