@@ -10,7 +10,11 @@ use PHPOrchestra\UserBundle\Form\Type\RegistrationUserType;
  */
 class RegistrationUserTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var RegistrationUserType
+     */
     protected $form;
+
     protected $string = 'string';
     protected $translator;
     protected $class = 'PHPOrchestra\UserBundle\Document\User';
@@ -47,5 +51,14 @@ class RegistrationUserTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($builder, Phake::times(6))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+    }
+
+    public function testResolver()
+    {
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+
+        $this->form->setDefaultOptions($resolver);
+
+        Phake::verify($resolver)->setDefaults(Phake::anyParameters());
     }
 }
