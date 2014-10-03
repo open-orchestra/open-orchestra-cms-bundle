@@ -5,6 +5,12 @@ php_orchestra_backoffice:
             published: Publié
             draft: Brouillon
             Pending: En attente
+            name: Nom
+            published: Published
+            initial: Initial
+            labels: Labels dans toutes les langues
+            from_role: Role recquis pour partir de ce status
+            to_role: Role recquis pour arriver sur ce status
         field_option:
             label: Option existante
             new: Nouvelle option
@@ -18,9 +24,16 @@ php_orchestra_backoffice:
         website:
             success: Le site a été modifié
             creation: Le site a été crée
+            site_id: Le numéro du site
+            domain: Le domain principal du site
+            alias: L'alias du site
+            default_language: Langue par défaut
+            languages: Langues possibles
+            blocks: Block affichable
         theme:
             success: Le theme a été modifié
             creation: Le theme a été crée
+            name: Nom
         status:
             success: Le status a été modifié
             creation: Le status a été crée
@@ -39,6 +52,10 @@ php_orchestra_backoffice:
             fields: Champs de formulaire
         template:
             success: Le template a été sauvé
+            name: Nom
+            language: Langue
+            status: Status
+            boDirection: Direction des fils
         node:
             success: Le node a été sauvé
             name: Page

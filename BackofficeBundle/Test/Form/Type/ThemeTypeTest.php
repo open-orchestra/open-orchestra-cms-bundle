@@ -54,7 +54,9 @@ class ThemeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder)->add('name');
+        Phake::verify($builder)->add('name', null, array(
+            'label' => 'php_orchestra_backoffice.form.theme.name'
+        ));
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 

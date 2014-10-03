@@ -10,6 +10,12 @@ php_orchestra_backoffice:
             published: Published
             draft: Draft
             pending: Pending
+            name: Name
+            published: Published
+            initial: Initial
+            labels: Labels in all languages
+            from_role: Role needed to change the status from this one
+            to_role: Role needed to get to this status
         field_option:
             label: Existing option
             new: New option
@@ -23,9 +29,16 @@ php_orchestra_backoffice:
         website:
             success: The website has been modified
             creation: The website has been created
+            site_id: The website id
+            domain: Domain
+            alias: Alias
+            default_language: Default language
+            languages: Languages
+            blocks: Blocks available
         theme:
             success: The theme has been modified
             creation: The theme has been created
+            name: Name
         status:
             success: The status has been modified
             creation: The status has been created
@@ -44,6 +57,10 @@ php_orchestra_backoffice:
             fields: Fields
         template:
             success: The template has been saved
+            name: Name
+            language: Language
+            status: Status
+            boDirection: Children direction
         node:
             success: The node has been saved
             name: Page

@@ -33,12 +33,26 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('siteId', 'integer')
-            ->add('domain', 'text')
-            ->add('alias', 'text')
-            ->add('defaultLanguage', 'orchestra_language', array('label' => 'Default Language'))
-            ->add('languages', 'orchestra_language', array('label' => 'Languages', 'multiple' => true))
-            ->add('blocks', 'orchestra_block', array('multiple' => true));
+            ->add('siteId', 'integer', array(
+                'label' => 'php_orchestra_backoffice.form.website.site_id'
+            ))
+            ->add('domain', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.domain'
+            ))
+            ->add('alias', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.alias'
+            ))
+            ->add('defaultLanguage', 'orchestra_language', array(
+                'label' => 'php_orchestra_backoffice.form.website.default_language'
+            ))
+            ->add('languages', 'orchestra_language', array(
+                'label' => 'php_orchestra_backoffice.form.website.languages',
+                'multiple' => true
+            ))
+            ->add('blocks', 'orchestra_block', array(
+                'multiple' => true,
+                'label' => 'php_orchestra_backoffice.form.website.blocks'
+            ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
