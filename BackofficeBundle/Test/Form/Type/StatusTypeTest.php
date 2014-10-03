@@ -56,12 +56,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder)->add('name');
-        Phake::verify($builder)->add('published', null, array('required' => false));
-        Phake::verify($builder)->add('fromRole', null, array('required' => false));
-        Phake::verify($builder)->add('toRole', null, array('required' => false));
-        Phake::verify($builder)->add('labels', 'translated_value_collection');
-        Phake::verify($builder)->add('initial', null, array('required' => false));
+        Phake::verify($builder, Phake::times(6))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($builder)->addEventListener(
             FormEvents::PRE_SET_DATA,

@@ -31,10 +31,18 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('language', 'orchestra_language')
-            ->add('status', 'orchestra_status')
-            ->add('boDirection', 'orchestra_direction');
+            ->add('name', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.template.name',
+            ))
+            ->add('language', 'orchestra_language', array(
+                'label' => 'php_orchestra_backoffice.form.template.language',
+            ))
+            ->add('status', 'orchestra_status', array(
+                'label' => 'php_orchestra_backoffice.form.template.status',
+            ))
+            ->add('boDirection', 'orchestra_direction', array(
+                'label' => 'php_orchestra_backoffice.form.template.boDirection',
+            ));
 
         $builder->addEventSubscriber(new TemplateTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());

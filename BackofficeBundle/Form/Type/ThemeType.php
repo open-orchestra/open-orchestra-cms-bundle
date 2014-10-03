@@ -28,7 +28,9 @@ class ThemeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
+        $builder->add('name', null, array(
+            'label' => 'php_orchestra_backoffice.form.theme.name'
+        ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

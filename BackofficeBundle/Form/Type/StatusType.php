@@ -38,12 +38,28 @@ class StatusType extends AbstractType
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
 
-        $builder->add('name');
-        $builder->add('published', null, array('required' => false));
-        $builder->add('initial', null, array('required' => false));
-        $builder->add('labels', 'translated_value_collection');
-        $builder->add('fromRole', null, array('required' => false));
-        $builder->add('toRole', null, array('required' => false));
+        $builder->add('name', null, array(
+            'label' => 'php_orchestra_backoffice.form.status.name'
+        ));
+        $builder->add('published', null, array(
+            'required' => false,
+            'label' => 'php_orchestra_backoffice.form.status.published'
+        ));
+        $builder->add('initial', null, array(
+            'required' => false,
+            'label' => 'php_orchestra_backoffice.form.status.initial'
+        ));
+        $builder->add('labels', 'translated_value_collection', array(
+            'label' => 'php_orchestra_backoffice.form.status.labels'
+        ));
+        $builder->add('fromRole', null, array(
+            'required' => false,
+            'label' => 'php_orchestra_backoffice.form.status.from_role'
+        ));
+        $builder->add('toRole', null, array(
+            'required' => false,
+            'label' => 'php_orchestra_backoffice.form.status.to_role'
+        ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
