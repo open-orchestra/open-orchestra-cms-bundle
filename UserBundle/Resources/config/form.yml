@@ -1,5 +1,6 @@
 parameters:
     php_orchestra_user.form.user.class: PHPOrchestra\UserBundle\Form\Type\UserType
+    php_orchestra_user.type.registration_user.class: PHPOrchestra\UserBundle\Form\Type\RegistrationUserType
 
 services:
     php_orchestra_user.form.user:
@@ -8,3 +9,10 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: user}
+    php_orchestra_user.type.registration_user:
+        class: %php_orchestra_user.type.registration_user.class%
+        arguments:
+            - %php_orchestra_user.document.user.class%
+            - @translator
+        tags:
+            - { name: form.type, alias: registration_user}

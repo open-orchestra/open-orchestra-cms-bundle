@@ -16,4 +16,46 @@ class User extends BaseUser
      * @MongoDB\Id()
      */
     protected $id;
+
+    /**
+     * @var string $lastName
+     */
+    protected $lastName;
+
+    /**
+     * @var string $firstName
+     */
+    protected $firstName;
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
 }
