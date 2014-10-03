@@ -1,5 +1,7 @@
 adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
+  events:
+    'blur input#node_name' : 'refreshAlias'
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
@@ -39,4 +41,7 @@ adminFormView = Backbone.View.extend(
             )
             Backbone.history.loadUrl(Backbone.history.fragment)
     return
+  refreshAlias: (event) ->
+    if $('input#node_alias').val() is ''
+        $('input#node_alias').val(event.target.value)
 )
