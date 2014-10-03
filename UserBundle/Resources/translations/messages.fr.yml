@@ -6,3 +6,5 @@ php_orchestra_user:
             first_name: Prénom
             last_name: Nom
             roles: rôles
+    new:
+        success: L'utilisateur a bien été créé.
