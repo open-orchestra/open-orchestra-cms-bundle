@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
