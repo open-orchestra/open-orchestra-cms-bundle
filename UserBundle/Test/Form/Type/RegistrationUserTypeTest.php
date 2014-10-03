@@ -53,6 +53,9 @@ class RegistrationUserTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 
+    /**
+     * Test setDefaultOptions
+     */
     public function testResolver()
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');

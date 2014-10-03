@@ -3,8 +3,8 @@ php_orchestra_user:
         title: Login
     form:
         registration_user:
-            first_name: First Name
-            last_name: Last Name
-            roles: roles
+            first_name: First name
+            last_name: Last name
+            roles: Roles
     new:
         success: The user has been created
