@@ -49,22 +49,4 @@ class MediaController extends Controller
 
         return $this->get('php_orchestra_api.transformer_manager')->get('media_collection')->transform($mediaCollection);
     }
-
-    /**
-     * @param int $mediaId
-     *
-     * @Config\Route("/{mediaId}/delete", name="php_orchestra_api_media_delete")
-     * @Config\Method({"DELETE"})
-     *
-     * @return Response
-     */
-    public function deleteAction($mediaId)
-    {
-        $media = $this->get('php_orchestra_model.repository.media')->find($mediaId);
-        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-        $documentManager->remove($media);
-        $documentManager->flush();
-
-        return new Response('', 200);
-    }
 }
