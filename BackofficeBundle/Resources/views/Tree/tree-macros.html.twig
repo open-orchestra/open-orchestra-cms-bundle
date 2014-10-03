@@ -116,9 +116,9 @@
                 data-displayed-elements="name">
                 {{ folder.name }}
             </a>
-            {% if folder.sons is not empty %}
+            {% if folder.subFolders is not empty %}
                 <ul >
-                    {{ _self.menu_folder(folder.sons, name) }}
+                    {{ _self.menu_folder(folder.subFolders, name) }}
                 </ul>
             {% endif %}
         </li>
