@@ -35,6 +35,13 @@ php_orchestra_backoffice:
             name: Page
         area:
             success: L'aire a été modifiée
+            bo_direction: Direction des enfants
+            bo_percent: Pourcentage de la taille des enfaints
+            html_class: Class html pour l'aire
+            area_id: Id de l'aire
+            new_areas: Ajouter une nouvelle aire
+            new_blocks: Ajouter de nouveaux blocks
+            existing_blocks: Ajouter des blocks existants
         block:
             success: Le bloc a été modifié
     left_menu:

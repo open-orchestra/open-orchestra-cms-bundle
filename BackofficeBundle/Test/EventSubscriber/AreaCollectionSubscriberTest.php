@@ -111,6 +111,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             'type' => 'text',
             'allow_add' => true,
             'mapped' => false,
+            'label' => 'php_orchestra_backoffice.form.area.new_areas',
             'attr' => array(
                 'data-prototype-label-add' => 'Ajout',
                 'data-prototype-label-new' => 'Nouveau',

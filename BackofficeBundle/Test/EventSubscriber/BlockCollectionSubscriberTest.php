@@ -115,7 +115,8 @@ class BlockCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
                 'data-prototype-label-add' => 'Ajout',
                 'data-prototype-label-new' => 'Nouveau',
                 'data-prototype-label-remove' => 'Suppression',
-            )
+            ),
+            'label' => 'php_orchestra_backoffice.form.area.new_blocks'
         ));
         Phake::verify($this->form, Phake::times(1 - $areaNumber))->add('existingBlocks', 'collection', array(
             'type' => 'existing_block',
@@ -125,7 +126,8 @@ class BlockCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
                 'data-prototype-label-add' => 'Ajout',
                 'data-prototype-label-new' => 'Nouveau',
                 'data-prototype-label-remove' => 'Suppression',
-            )
+            ),
+            'label' => 'php_orchestra_backoffice.form.area.existing_blocks'
         ));
     }
 

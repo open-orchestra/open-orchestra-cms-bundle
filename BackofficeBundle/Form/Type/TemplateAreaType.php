@@ -25,19 +25,24 @@ class TemplateAreaType extends AbstractType
         $htmlIdTransformer = new HtmlIdTransformer($options['data']);
 
         $builder->add(
-            $builder->create('areaId', 'text')
+            $builder->create('areaId', 'text', array('label' => 'php_orchestra_backoffice.form.area.area_id'))
                 ->addViewTransformer($htmlIdTransformer)
         );
         $builder->add(
-            $builder->create('htmlClass', 'text', array('required' => false))
+            $builder->create('htmlClass', 'text', array(
+                'required' => false,
+                'label' => 'php_orchestra_backoffice.form.area.html_class'
+            ))
                 ->addViewTransformer($htmlClassTransformer)
         );
         $builder->add('boDirection', 'choice', array(
             'choices' => array('v' => 'vertical', 'h' => 'horizontal'),
             'required' => false,
+            'label' => 'php_orchestra_backoffice.form.area.bo_direction'
         ));
         $builder->add('boPercent', 'text', array(
-            'required' => false
+            'required' => false,
+            'label' => 'php_orchestra_backoffice.form.area.bo_percent'
         ));
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

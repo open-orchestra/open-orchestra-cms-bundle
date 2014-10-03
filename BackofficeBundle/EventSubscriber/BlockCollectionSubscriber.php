@@ -83,7 +83,8 @@ class BlockCollectionSubscriber implements EventSubscriberInterface
                     'data-prototype-label-add' => 'Ajout',
                     'data-prototype-label-new' => 'Nouveau',
                     'data-prototype-label-remove' => 'Suppression',
-                )
+                ),
+                'label' => 'php_orchestra_backoffice.form.area.new_blocks'
             ));
             $form->add('existingBlocks', 'collection', array(
                 'type' => 'existing_block',
@@ -93,7 +94,8 @@ class BlockCollectionSubscriber implements EventSubscriberInterface
                     'data-prototype-label-add' => 'Ajout',
                     'data-prototype-label-new' => 'Nouveau',
                     'data-prototype-label-remove' => 'Suppression',
-                )
+                ),
+                'label' => 'php_orchestra_backoffice.form.area.existing_blocks'
             ));
         }
     }
