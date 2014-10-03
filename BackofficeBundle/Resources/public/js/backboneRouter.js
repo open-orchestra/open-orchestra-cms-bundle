@@ -8,11 +8,11 @@ var OrchestraBORouter = Backbone.Router.extend({
     'contents/list/:contentTypeId': 'listContents',
     'websites/list': 'listSites',
     'themes/list': 'listThemes',
-    ':list/list/edit': 'redirectToList',
     'status/list': 'listStatus',
     'user/list': 'listUser',
-    ':folderId/list': 'listFolder',
     'content-types/list': 'listContentTypes',
+    ':folderId/list': 'listFolder',
+    ':list/list/edit': 'redirectToList',
     'translation': 'listTranslations',
     '': 'showHome'
   },
