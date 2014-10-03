@@ -23,6 +23,8 @@ class UserCollectionTransformer extends AbstractTransformer
             $facade->addUser($this->getTransformer('user')->transform($user));
         }
 
+        $facade->addLink('_self_add', $this->generateRoute('php_orchestra_user_new'));
+
         return $facade;
     }
 

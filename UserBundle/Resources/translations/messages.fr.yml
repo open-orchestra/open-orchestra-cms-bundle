@@ -1,3 +1,10 @@
 php_orchestra_user:
     login:
         title: Login
+    form:
+        registration_user:
+            first_name: Prénom
+            last_name: Nom
+            roles: Rôles
+    new:
+        success: L'utilisateur a bien été créé.

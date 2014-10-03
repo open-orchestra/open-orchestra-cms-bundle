@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\UserBundle\Controller;
 
+use PHPOrchestra\UserBundle\Document\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,43 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UserController extends Controller
 {
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/new", name="php_orchestra_user_new")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function newAction(Request $request)
+    {
+        $user = new User();
+
+        $form = $this->createForm(
+            'registration_user',
+            $user,
+            array(
+                'action' => $this->generateUrl('php_orchestra_user_new')
+            )
+        );
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+            $documentManager->persist($user);
+            $documentManager->flush();
+
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('php_orchestra_user.new.success')
+            );
+        }
+
+        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
     /**
      * @param Request $request
      * @param string  $userId
