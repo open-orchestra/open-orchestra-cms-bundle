@@ -21,6 +21,8 @@ php_orchestra_backoffice:
             add: Ajout d'un champ
             new: Nouveau champ
             delete: Suppression d'un champ
+            key: Clé
+            value: Valeur
         website:
             success: Le site a été modifié
             creation: Le site a été crée
@@ -67,6 +69,7 @@ php_orchestra_backoffice:
             area_id: Id de l'aire
             new_areas: Ajouter une nouvelle aire
             new_blocks: Ajouter de nouveaux blocks
+            existing_block: Block existant
             existing_blocks: Ajouter des blocks existants
         block:
             success: Le bloc a été modifié

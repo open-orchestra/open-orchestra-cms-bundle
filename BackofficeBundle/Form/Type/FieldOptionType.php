@@ -28,8 +28,8 @@ class FieldOptionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('key', 'text');
-        $builder->add('value', 'text');
+        $builder->add('key', 'text', array('php_orchestra_backoffice.form.field_option.key'));
+        $builder->add('value', 'text', array('php_orchestra_backoffice.form.field_option.value'));
     }
 
     /**

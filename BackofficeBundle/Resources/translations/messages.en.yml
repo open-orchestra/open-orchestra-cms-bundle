@@ -21,6 +21,8 @@ php_orchestra_backoffice:
             new: New option
             add: Add option
             delete: Delete option
+            key: Key
+            value: Value
         field_type:
             label: Existing field
             add: Add field
@@ -72,6 +74,7 @@ php_orchestra_backoffice:
             area_id: The area id
             new_areas: Add new areas
             new_blocks: Add new blocks
+            existing_block: Existing block
             existing_blocks: Add an existing block
         block:
             success: The block has been modified
