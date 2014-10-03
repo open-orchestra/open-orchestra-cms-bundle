@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
