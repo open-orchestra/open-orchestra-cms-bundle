@@ -11,8 +11,9 @@ use PHPOrchestra\UserBundle\Form\Type\RegistrationUserType;
 class RegistrationUserTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
-
+    protected $string = 'string';
     protected $translator;
+    protected $class = 'PHPOrchestra\UserBundle\Document\User';
 
     /**
      * Set up the test
@@ -20,9 +21,9 @@ class RegistrationUserTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('string');
+        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->string);
 
-        $this->form = new RegistrationUserType('PHPOrchestra\UserBundle\Document\User', $this->translator);
+        $this->form = new RegistrationUserType($this->class, $this->translator);
     }
 
     /**
