@@ -26,8 +26,17 @@ php_orchestra_backoffice:
             creation: Le status a été crée
         content:
             success: Le contenu a été modifié
+            name: Nom du contenu
+            status: Status
+            language: Langue
+            content_type: Type de contenu
         content_type:
             success: Le type de contenu a été modifié
+            content_type_id: Id du content type
+            names: Nom dans les différentes langue
+            version: Version
+            status: Status
+            fields: Champs de formulaire
         template:
             success: Le template a été sauvé
         node:
