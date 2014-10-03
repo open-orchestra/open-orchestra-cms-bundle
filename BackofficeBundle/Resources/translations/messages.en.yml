@@ -31,8 +31,17 @@ php_orchestra_backoffice:
             creation: The status has been created
         content:
             success: The content has been modified
+            name: Content name
+            status: Status
+            language: Language
+            content_type: Content type
         content_type:
             success: The content type has been modified
+            content_type_id: Content type id
+            names: Names in all the languages
+            version: Version
+            status: Status
+            fields: Fields
         template:
             success: The template has been saved
         node:
@@ -40,6 +49,13 @@ php_orchestra_backoffice:
             name: Page
         area:
             success: The area has been modified
+            bo_direction: Children direction
+            bo_percent: Children size percent
+            html_class: Html class for the area
+            area_id: The area id
+            new_areas: Add new areas
+            new_blocks: Add new blocks
+            existing_blocks: Add an existing block
         block:
             success: The block has been modified
     left_menu:

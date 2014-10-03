@@ -44,15 +44,23 @@ class ContentTypeType extends AbstractType
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
-            ->add('contentTypeId', 'text')
-            ->add('names', 'translated_value_collection')
-            ->add('version', 'text')
-            ->add('status', 'orchestra_status');
+            ->add('contentTypeId', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.content_type.content_type_id'
+            ))
+            ->add('names', 'translated_value_collection', array(
+                'label' => 'php_orchestra_backoffice.form.content_type.names'
+            ))
+            ->add('version', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.content_type.version'
+            ))
+            ->add('status', 'orchestra_status', array(
+                'label' => 'php_orchestra_backoffice.form.content_type.status'
+            ));
         $builder->add('fields', 'collection', array(
             'type' => 'field_type',
             'allow_add' => true,
             'allow_delete' => true,
-            'label' => 'New fields',
+            'label' => 'php_orchestra_backoffice.form.content_type.fields',
             'attr' => array(
                 'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_type.add'),
                 'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_type.new'),

@@ -46,11 +46,18 @@ class ContentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text')
-            ->add('status', 'orchestra_status')
-            ->add('language', 'orchestra_language')
+            ->add('name', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.content.name'
+            ))
+            ->add('status', 'orchestra_status', array(
+                'label' => 'php_orchestra_backoffice.form.content.status'
+            ))
+            ->add('language', 'orchestra_language', array(
+                'label' => 'php_orchestra_backoffice.form.content.language'
+            ))
             ->add('contentType', 'document', array(
-                'class' => 'PHPOrchestra\ModelBundle\Document\ContentType'
+                'class' => 'PHPOrchestra\ModelBundle\Document\ContentType',
+                'label' => 'php_orchestra_backoffice.form.content.content_type'
             ));
 
         $builder->addEventSubscriber(new ContentTypeSubscriber(
