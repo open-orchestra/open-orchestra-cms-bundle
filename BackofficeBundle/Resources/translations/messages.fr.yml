@@ -48,6 +48,7 @@ php_orchestra_backoffice:
             nodes: Pages
             templates: Gabarit
             contents: Contenu
+            mediatheque: Médiathèque
         administration:
             sites:
                 list: Sites
