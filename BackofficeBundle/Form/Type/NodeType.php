@@ -24,7 +24,7 @@ class NodeType extends AbstractType
 
     /**
      *
-     * @param string $nodeClass
+     * @param string             $nodeClass
      * @param TemplateRepository $templateRepository
      */
     public function __construct($nodeClass, TemplateRepository $templateRepository)
@@ -36,7 +36,7 @@ class NodeType extends AbstractType
     /**
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
