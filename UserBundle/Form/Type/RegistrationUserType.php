@@ -38,6 +38,7 @@ class RegistrationUserType extends RegistrationFormType
 
         $builder->add('roles', 'collection', array(
             'allow_add' => true,
+            'allow_delete' => true,
             'attr' => array(
                 'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
                 'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_option.delete'),

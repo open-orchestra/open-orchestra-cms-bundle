@@ -16,12 +16,12 @@ class UserController extends Controller
     /**
      * @param Request $request
      *
-     * @Config\Route("/form/new_user", name="php_orchestra_user_new")
+     * @Config\Route("/new", name="php_orchestra_user_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
         $user = new User();
 
@@ -41,7 +41,7 @@ class UserController extends Controller
 
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_user.form.user.success')
+                $this->get('translator')->trans('php_orchestra_user.new.success')
             );
         }
 
