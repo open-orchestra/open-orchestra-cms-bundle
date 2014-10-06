@@ -39,7 +39,7 @@
     <% include headInclude %>
     <div id="generated-title" style="display: none">
         <%= node.get('name') %>
-        (version: #<%= node.get('version') %>)
+        ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
         {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
         <%= node.get('updated_at') %>
         {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
