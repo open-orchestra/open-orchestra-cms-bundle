@@ -70,15 +70,8 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
     public function getOptions()
     {
         return array(
-            array(
-                array('fakeKey' => 'fakeValue'), 2
-            ),
-            array(
-                array(
-                    'node' => Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface')
-                ),
-                3
-            )
+            array(array('fakeKey' => 'fakeValue'), 2),
+            array(array('node' => Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface')), 3)
         );
     }
 }
