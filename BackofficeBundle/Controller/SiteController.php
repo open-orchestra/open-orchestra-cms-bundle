@@ -23,7 +23,7 @@ class SiteController extends Controller
      */
     public function formAction(Request $request, $siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => $siteId));
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $form = $this->createForm(
             'site',

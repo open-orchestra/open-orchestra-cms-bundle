@@ -27,7 +27,7 @@ class SiteController extends Controller
      */
     public function showAction($siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => $siteId));
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('site')->transform($site);
     }
