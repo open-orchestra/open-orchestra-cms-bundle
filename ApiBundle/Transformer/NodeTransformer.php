@@ -37,6 +37,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->language = $mixed->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
         $facade->theme = $mixed->getTheme();
+        $facade->version = $mixed->getVersion();
         $facade->createdBy = $mixed->getCreatedBy();
         $facade->updatedBy = $mixed->getUpdatedBy();
         $facade->createdAt = $mixed->getCreatedAt();
