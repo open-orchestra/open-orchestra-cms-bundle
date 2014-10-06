@@ -39,16 +39,26 @@ class FieldTypeType extends AbstractType
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
-            ->add('fieldId', 'text')
-            ->add('labels', 'translated_value_collection')
-            ->add('defaultValue', 'text')
-            ->add('searchable', 'text')
-            ->add('type', 'text');
+            ->add('fieldId', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.field_type.field_id'
+            ))
+            ->add('labels', 'translated_value_collection', array(
+                'label' => 'php_orchestra_backoffice.form.field_type.field_labels'
+            ))
+            ->add('defaultValue', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.field_type.default_value'
+            ))
+            ->add('searchable', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.field_type.searchable'
+            ))
+            ->add('type', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.field_type.type'
+            ));
         $builder->add('options', 'collection', array(
             'type' => 'field_option',
             'allow_add' => true,
             'allow_delete' => false,
-            'label' => 'Options',
+            'label' => 'php_orchestra_backoffice.form.field_type.options',
             'attr' => array(
                 'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
                 'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_option.new'),

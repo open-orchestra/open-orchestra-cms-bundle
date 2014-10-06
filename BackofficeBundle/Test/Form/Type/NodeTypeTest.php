@@ -29,7 +29,8 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
      *
      * @param TemplateInterface $templates
      * @param array $expectedResult
-     *        @dataProvider getTemplate
+     *
+     * @dataProvider getTemplate
      */
     public function testBuildForm($templates, $expectedResult)
     {
@@ -43,7 +44,8 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($formBuilderMock, Phake::times(7))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock)->add('templateId', 'choice', array(
-            'choices' => $expectedResult
+            'choices' => $expectedResult,
+            'label' => 'php_orchestra_backoffice.form.node.template_id'
         ));
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());

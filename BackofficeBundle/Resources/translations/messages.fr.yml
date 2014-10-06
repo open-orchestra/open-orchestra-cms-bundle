@@ -16,11 +16,19 @@ php_orchestra_backoffice:
             new: Nouvelle option
             add: Ajouter une option
             delete: Supprimer l'option
+            key: Clé
+            value: Valeur
         field_type:
             label: Champ existant
             add: Ajout d'un champ
             new: Nouveau champ
             delete: Suppression d'un champ
+            field_id: Field id
+            labels: Label
+            default_value: Valeur par défaut
+            searchable: Recherchable
+            type: Type
+            options: Champ existant
         website:
             success: Le site a été modifié
             creation: Le site a été crée
@@ -59,6 +67,12 @@ php_orchestra_backoffice:
         node:
             success: Le node a été sauvé
             name: Page
+            node_type: Type of Node
+            theme: Le thème
+            template_id: Id du modèle
+            alias: Alias
+            language: Langue
+            status: Status
         area:
             success: L'aire a été modifiée
             bo_direction: Direction des enfants
@@ -67,6 +81,7 @@ php_orchestra_backoffice:
             area_id: Id de l'aire
             new_areas: Ajouter une nouvelle aire
             new_blocks: Ajouter de nouveaux blocks
+            existing_block: Block existant
             existing_blocks: Ajouter des blocks existants
         block:
             success: Le bloc a été modifié

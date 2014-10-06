@@ -45,6 +45,7 @@ class ExistingBlockChoiceType extends AbstractType
             $builder->add('existingBlock', 'choice', array(
                 'required' => false,
                 'choices' => $choices,
+                'label' => 'php_orchestra_backoffice.form.area.existing_block'
             ));
         }
     }

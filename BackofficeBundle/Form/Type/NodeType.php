@@ -40,19 +40,31 @@ class NodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text')
+        $builder->add('name', 'text', array(
+            'label' => 'php_orchestra_backoffice.form.node.name'
+        ))
             ->add('nodeType', 'choice', array(
-            'choices' => array(
-                'page' => 'Page simple'
-            )
+                'choices' => array(
+                    'page' => 'Page simple'
+                ),
+                'label' => 'php_orchestra_backoffice.form.node.node_type'
         ))
-            ->add('theme', 'orchestra_theme_choice')
+            ->add('theme', 'orchestra_theme_choice', array(
+                'label' => 'php_orchestra_backoffice.form.node.theme'
+            ))
             ->add('templateId', 'choice', array(
-            'choices' => $this->getChoices()
+                'choices' => $this->getChoices(),
+                'label' => 'php_orchestra_backoffice.form.node.template_id'
         ))
-            ->add('alias', 'text')
-            ->add('language', 'orchestra_language')
-            ->add('status', 'orchestra_status');
+            ->add('alias', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.node.alias'
+            ))
+            ->add('language', 'orchestra_language', array(
+                'label' => 'php_orchestra_backoffice.form.node.language'
+            ))
+            ->add('status', 'orchestra_status', array(
+                'label' => 'php_orchestra_backoffice.form.node.status'
+            ));
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

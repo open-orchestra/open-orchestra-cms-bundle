@@ -109,7 +109,8 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
                     $otherNodeId . ':' . $blockIndex => $component,
                     $otherNodeId . ':' . $otherBlockIndex => $title,
                 ),
-            )
+            ),
+            'label' => 'php_orchestra_backoffice.form.area.existing_block'
         ));
         Phake::verify($this->nodeRepository)->findAll();
     }

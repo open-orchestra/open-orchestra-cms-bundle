@@ -21,11 +21,19 @@ php_orchestra_backoffice:
             new: New option
             add: Add option
             delete: Delete option
+            key: Key
+            value: Value
         field_type:
             label: Existing field
             add: Add field
             new: New field
             delete: Delete field
+            field_id: Field id
+            labels: Label
+            default_value: Default value
+            searchable: Searchable
+            type: Type
+            options: Existing field
         website:
             success: The website has been modified
             creation: The website has been created
@@ -64,6 +72,12 @@ php_orchestra_backoffice:
         node:
             success: The node has been saved
             name: Page
+            node_type: Type of Node
+            theme: The theme
+            template_id: Template id
+            alias: Alias
+            language: Language
+            status: Status
         area:
             success: The area has been modified
             bo_direction: Children direction
@@ -72,6 +86,7 @@ php_orchestra_backoffice:
             area_id: The area id
             new_areas: Add new areas
             new_blocks: Add new blocks
+            existing_block: Existing block
             existing_blocks: Add an existing block
         block:
             success: The block has been modified
