@@ -5,7 +5,7 @@ adminFormView = Backbone.View.extend(
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
-    _.bindAll this, "refreshAlias", "bindEvent"
+    _.bindAll this, "refreshAlias", "bindEvent", "render", "call", "addEventOnForm"
     @call()
     return
   call: ->
