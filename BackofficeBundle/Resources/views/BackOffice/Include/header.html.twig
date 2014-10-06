@@ -60,7 +60,7 @@
         <!-- Suggestion: populate this list with fetch and push technique -->
         <ul class="dropdown-menu">
             {% for site in availableSites %}
-            <li{% if context.getCurrentSite().siteId == site.siteId %} class="active"{% endif %}>
+            <li{% if context.getCurrentSite().siteId is same as(site.siteId) %} class="active"{% endif %}>
                 <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_site', {'siteId':site.siteId, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
             </li>
             {% endfor %}

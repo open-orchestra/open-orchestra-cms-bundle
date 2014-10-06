@@ -20,7 +20,7 @@ class ContentFacade extends AbstractFacade
     public $contentType;
 
     /**
-     * @Serializer\Type("integer")
+     * @Serializer\Type("string")
      */
     public $siteId;
 

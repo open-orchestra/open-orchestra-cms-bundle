@@ -33,7 +33,7 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('siteId', 'integer', array(
+            ->add('siteId', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.website.site_id'
             ))
             ->add('domain', 'text', array(

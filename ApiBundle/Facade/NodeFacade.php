@@ -20,7 +20,7 @@ class NodeFacade extends AbstractFacade
     public $nodeId;
 
     /**
-     * @Serializer\Type("integer")
+     * @Serializer\Type("string")
      */
     public $siteId;
 

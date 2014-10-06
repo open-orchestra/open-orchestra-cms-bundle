@@ -14,7 +14,7 @@ class SiteController extends Controller
 {
     /**
      * @param Request $request
-     * @param int     $siteId
+     * @param string  $siteId
      *
      * @Config\Route("/site/form/{siteId}", name="php_orchestra_backoffice_site_form")
      * @Config\Method({"GET", "POST"})
@@ -23,7 +23,7 @@ class SiteController extends Controller
      */
     public function formAction(Request $request, $siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => (int) $siteId));
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $form = $this->createForm(
             'site',

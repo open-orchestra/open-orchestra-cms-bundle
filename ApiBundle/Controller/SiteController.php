@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SiteController extends Controller
 {
     /**
-     * @param int $siteId
+     * @param string $siteId
      *
      * @Config\Route("/{siteId}", name="php_orchestra_api_site_show")
      * @Config\Method({"GET"})
@@ -27,7 +27,7 @@ class SiteController extends Controller
      */
     public function showAction($siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => (int) $siteId));
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('site')->transform($site);
     }
@@ -47,7 +47,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @param int $siteId
+     * @param string $siteId
      *
      * @Config\Route("/{siteId}/delete", name="php_orchestra_api_site_delete")
      * @Config\Method({"DELETE"})
@@ -56,7 +56,7 @@ class SiteController extends Controller
      */
     public function deleteAction($siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => (int) $siteId));
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $this->get('doctrine.odm.mongodb.document_manager')->remove($site);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 

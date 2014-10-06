@@ -45,7 +45,7 @@ class NodeController extends AbstractAdminController
     {
         $nodeClass = $this->container->getParameter('php_orchestra_model.document.node.class');
         $node = new $nodeClass();
-        $node->setSiteId(1);
+        $node->setSiteId('1');
         $node->setLanguage('fr');
         $node->setParentId($parentId);
 
