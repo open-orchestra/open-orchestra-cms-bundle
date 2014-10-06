@@ -73,7 +73,7 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
-                'label' => $miwed->getLabel(),
+                'label' => $mixed->getLabel(),
                 'class' => $mixed->getHtmlClass(),
                 'id' => $mixed->getAreaId()
             )
@@ -134,7 +134,7 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
-                'label' => $miwed->getLabel(),
+                'label' => $mixed->getLabel(),
                 'class' => $mixed->getHtmlClass(),
                 'id' => $mixed->getAreaId()
             )
