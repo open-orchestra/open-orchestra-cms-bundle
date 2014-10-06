@@ -56,7 +56,7 @@ class SiteController extends Controller
      */
     public function deleteAction($siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBy(array('siteId' => $siteId));
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $this->get('doctrine.odm.mongodb.document_manager')->remove($site);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
