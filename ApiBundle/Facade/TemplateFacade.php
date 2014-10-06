@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
 class TemplateFacade extends AbstractFacade
 {
     /**
-     * @Serializer\Type("integer")
+     * @Serializer\Type("string")
      */
     public $siteId;
 

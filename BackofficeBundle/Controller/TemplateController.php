@@ -27,7 +27,7 @@ class TemplateController extends AbstractAdminController
         if (empty($templateId)) {
             $templateClass = $this->container->getParameter('php_orchestra_model.document.template.class');
             $template = new $templateClass();
-            $template->setSiteId(1);
+            $template->setSiteId('1');
             $template->setLanguage('fr');
         } else {
             $template = $templateRepository->findOneByTemplateId($templateId);
