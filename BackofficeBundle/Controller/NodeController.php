@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use  PHPOrchestra\ModelBundle\Document\Node;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class NodeController
@@ -45,7 +46,11 @@ class NodeController extends AbstractAdminController
     {
         $nodeClass = $this->container->getParameter('php_orchestra_model.document.node.class');
         $node = new $nodeClass();
-        $node->setSiteId('1');
+
+        $contextManager = $this->get('php_orchestra_backoffice.context_manager');
+        $site = $contextManager->getCurrentSite();
+
+        $node->setSiteId(array_shift($site));
         $node->setLanguage('fr');
         $node->setParentId($parentId);
 
