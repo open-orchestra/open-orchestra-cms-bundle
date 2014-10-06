@@ -43,5 +43,5 @@ adminFormView = Backbone.View.extend(
     return
   refreshAlias: (event) ->
     if $('input#node_alias').val() is ''
-        $('input#node_alias').val(event.target.value)
+        $('input#node_alias').val(event.target.value.replace(/[^a-z0-9]/gi,'_'))
 )
