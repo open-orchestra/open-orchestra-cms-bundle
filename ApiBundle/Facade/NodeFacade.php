@@ -75,6 +75,11 @@ class NodeFacade extends AbstractFacade
     public $theme;
 
     /**
+     * @Serializer\Type("integer")
+     */
+    public $version;
+
+    /**
      * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\AreaFacade>")
      */
     protected $areas = array();

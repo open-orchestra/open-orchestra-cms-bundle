@@ -28,6 +28,15 @@ class User extends BaseUser
     protected $firstName;
 
     /**
+     * Class constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setEnabled(true);
+    }
+
+    /**
      * @return string
      */
     public function getLastName()
