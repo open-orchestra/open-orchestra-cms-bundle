@@ -1,25 +1,26 @@
 adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
   events:
-    'blur input#node_name' : 'refreshAlias'
+    'keyup input#none' : 'refreshAlias'
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
+    _.bindAll this, "refreshAlias"
     @call()
     return
   call: ->
-    current = this
+    viewContext = this
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
     $.ajax
       url: @url
       method: @method
       success: (response) ->
-        current.render(
+        viewContext.render(
           html: response
         )
       error: ->
-        $('.modal-body', current.el).html 'Erreur durant le chargement'
+        $('.modal-body', viewContext.el).html 'Erreur durant le chargement'
     return
   render: (options) ->
     @html = options.html
@@ -29,19 +30,25 @@ adminFormView = Backbone.View.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnForm()
+    @bindEvent()
   addEventOnForm: ->
-    current = this
+    viewContext = this
     $("form", @$el).on "submit", (e) ->
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
-            view = current.render(
+            view = viewContext.render(
               html: response
             )
             Backbone.history.loadUrl(Backbone.history.fragment)
     return
   refreshAlias: (event) ->
+    console.log 'RefreshAlias'
+    $('input#node_alias').val(event.target.value.replace(/[^a-z0-9]/gi,'_'))
+  bindEvent: ->
     if $('input#node_alias').val() is ''
-        $('input#node_alias').val(event.target.value.replace(/[^a-z0-9]/gi,'_'))
+      @events['keyup input#node_name'] = "refreshAlias"
+      _.bindAll this, "refreshAlias"
+    console.log @events
 )
