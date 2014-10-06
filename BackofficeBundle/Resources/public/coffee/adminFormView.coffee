@@ -1,11 +1,12 @@
 adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
   events:
-    'keyup input#none' : 'refreshAlias'
+    'keyup input#node_name' : 'refreshAlias'
   initialize: (options) ->
     @url = options.url
+    @aliasIsRefreshable = false
     @method = if options.method then options.method else 'GET'
-    _.bindAll this, "refreshAlias", "bindEvent", "render", "call", "addEventOnForm"
+    _.bindAll this, "refreshAlias"
     @call()
     return
   call: ->
@@ -29,8 +30,8 @@ adminFormView = Backbone.View.extend(
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
+    @aliasIsRefreshable = $('input#node_alias').val() is ''
     @addEventOnForm()
-    @bindEvent()
   addEventOnForm: ->
     viewContext = this
     $("form", @$el).on "submit", (e) ->
@@ -44,9 +45,6 @@ adminFormView = Backbone.View.extend(
             Backbone.history.loadUrl(Backbone.history.fragment)
     return
   refreshAlias: (event) ->
-    console.log 'RefreshAlias'
-    $('input#node_alias').val(event.target.value.replace(/[^a-z0-9]/gi,'_'))
-  bindEvent: ->
-    if $('input#node_alias').val() is ''
-      @events['keyup input#node_name'] = "refreshAlias"
+    if @aliasIsRefreshable
+      $('input#node_alias').val(event.target.value.replace(/[^a-z0-9]/gi,'_'))
 )
