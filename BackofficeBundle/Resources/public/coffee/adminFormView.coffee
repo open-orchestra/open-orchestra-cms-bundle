@@ -5,7 +5,7 @@ adminFormView = Backbone.View.extend(
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
-    _.bindAll this, "refreshAlias"
+    _.bindAll this, "refreshAlias", "bindEvent"
     @call()
     return
   call: ->
@@ -49,6 +49,4 @@ adminFormView = Backbone.View.extend(
   bindEvent: ->
     if $('input#node_alias').val() is ''
       @events['keyup input#node_name'] = "refreshAlias"
-      _.bindAll this, "refreshAlias"
-    console.log @events
 )
