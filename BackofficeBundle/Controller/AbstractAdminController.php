@@ -40,7 +40,7 @@ abstract class AbstractAdminController extends Controller
      *
      * @return Response
      */
-    protected function renderAdminForm(FormInterface $form)
+    protected function renderAdminForm(FormInterface $form, array $additionalParameters = array())
     {
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
@@ -50,11 +50,14 @@ abstract class AbstractAdminController extends Controller
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
+        $params = array_merge(
+            $additionalParameters,
+            array('form' => $form->createView())
+        );
+
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            ),
+            $params,
             $response
         );
     }

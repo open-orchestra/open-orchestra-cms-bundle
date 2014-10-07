@@ -46,7 +46,7 @@ class BlockController extends AbstractAdminController
             $node
         );
 
-        return $this->renderAdminForm($form);
+        return $this->renderAdminForm($form, array('blockType' => $block->getComponent()));
     }
 
     /**
