@@ -7,5 +7,6 @@ showTemplate = (url)->
       template = new Template
       template.set response
       view = new TemplateView(template: template)
+      appRouter.setCurrentMainView(view)
       return
   return

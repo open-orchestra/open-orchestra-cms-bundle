@@ -14,3 +14,4 @@ tableViewLoad = (link) ->
         title: title
         listUrl: listUrl
       )
+      appRouter.setCurrentMainView(view)
