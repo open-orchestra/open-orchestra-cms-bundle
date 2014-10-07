@@ -2,48 +2,48 @@
 
 namespace PHPOrchestra\UserBundle\Controller;
 
-use PHPOrchestra\UserBundle\Document\User;
+use PHPOrchestra\UserBundle\Document\Role;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class UserController
+ * Class RoleController
  *
- * @Config\Route("user")
+ * @Config\Route("role")
  */
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * @param Request $request
      *
-     * @Config\Route("/new", name="php_orchestra_user_new")
+     * @Config\Route("/new", name="php_orchestra_user_role_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $user = new User();
+        $role = new Role();
 
         $form = $this->createForm(
-            'registration_user',
-            $user,
+            'role',
+            $role,
             array(
-                'action' => $this->generateUrl('php_orchestra_user_new')
+                'action' => $this->generateUrl('php_orchestra_user_role_new')
             )
         );
 
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($user);
+            $documentManager->persist($role);
             $documentManager->flush();
 
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_user.new.success')
+                $this->get('translator')->trans('php_orchestra_user.form.role.new.success')
             );
         }
 
@@ -54,23 +54,23 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @param string  $userId
+     * @param string  $roleId
      *
-     * @Config\Route("/form/{userId}", name="php_orchestra_user_user_form")
+     * @Config\Route("/form/{roleId}", name="php_orchestra_user_role_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function formAction(Request $request, $userId)
+    public function formAction(Request $request, $roleId)
     {
-        $user = $this->get('php_orchestra_user.repository.user')->find($userId);
+        $role = $this->get('php_orchestra_user.repository.role')->find($roleId);
 
         $form = $this->createForm(
-            'user',
-            $user,
+            'role',
+            $role,
             array(
-                'action' => $this->generateUrl('php_orchestra_user_user_form', array(
-                    'userId' => $userId,
+                'action' => $this->generateUrl('php_orchestra_user_role_form', array(
+                    'roleId' => $roleId,
                 ))
             )
         );
@@ -78,12 +78,12 @@ class UserController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($user);
+            $documentManager->persist($role);
             $documentManager->flush();
 
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_user.form.user.success')
+                $this->get('translator')->trans('php_orchestra_user.form.role.edit.success')
             );
         }
 

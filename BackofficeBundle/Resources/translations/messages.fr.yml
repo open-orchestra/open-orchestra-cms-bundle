@@ -1,6 +1,9 @@
 php_orchestra_backoffice:
     form:
         submit: Sauvegarder
+        edit: Editer
+        delete: Supprimer
+        add: Ajouter
         status:
             published: Publié
             draft: Brouillon
@@ -9,8 +12,8 @@ php_orchestra_backoffice:
             published: Published
             initial: Initial
             labels: Labels dans toutes les langues
-            from_role: Role recquis pour partir de ce status
-            to_role: Role recquis pour arriver sur ce status
+            from_role: Rôle recquis pour partir de ce status
+            to_role: Rôle recquis pour arriver sur ce status
         field_option:
             label: Option existante
             new: Nouvelle option
@@ -109,6 +112,8 @@ php_orchestra_backoffice:
                 list: Status
             user:
                 list: Utilisateurs
+            role:
+                list: Rôles
     block:
         configurable_content:
             title: Bloc contenu paramétrable

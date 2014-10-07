@@ -41,6 +41,7 @@ class RegistrationUserType extends RegistrationFormType
         parent::buildForm($builder, $options);
 
         $builder->add('roles', 'collection', array(
+            'type' => 'orchestra_role_choice',
             'allow_add' => true,
             'allow_delete' => true,
             'attr' => array(

@@ -1,24 +1,24 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace PHPOrchestra\UserBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Repository\ThemeRepository;
+use PHPOrchestra\UserBundle\Repository\RoleRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class OrchestraThemeChoiceType
+ * Class OrchestraRoleType
  */
-class OrchestraThemeChoiceType extends AbstractType
+class OrchestraRoleType extends AbstractType
 {
-    protected $themeRepository;
+    protected $roleRepository;
 
     /**
-     * @param ThemeRepository $themeRepository
+     * @param RoleRepository $roleRepository
      */
-    public function __construct(ThemeRepository $themeRepository)
+    public function __construct(RoleRepository $roleRepository)
     {
-        $this->themeRepository = $themeRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -38,8 +38,8 @@ class OrchestraThemeChoiceType extends AbstractType
     {
         $choices = array();
 
-        foreach ($this->themeRepository->findAll() as $theme) {
-            $choices[$theme->getName()] = $theme->getName();
+        foreach ($this->roleRepository->findAll() as $role) {
+            $choices[$role->getName()] = $role->getName();
         }
 
         return $choices;
@@ -52,7 +52,7 @@ class OrchestraThemeChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_theme_choice';
+        return 'orchestra_role_choice';
     }
 
     /**
