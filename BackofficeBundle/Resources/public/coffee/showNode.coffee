@@ -13,5 +13,19 @@ showNode = (url)->
 
 showNodeForm = (parentNode) ->
   $(".modal-title").text parentNode.text()
-  view = new adminFormView(url: parentNode.data("url"), triggers: [{event: 'keyup input#node_name', name: 'refreshAlias', fct : refreshAlias}, {event: 'blur input#node_alias', name: 'stopRefreshAlias', fct : stopRefreshAlias}])
+  view = new adminFormView(
+    url: parentNode.data("url")
+    triggers: [
+      {
+        event: "keyup input.alias-source"
+        name: "refreshAlias"
+        fct: refreshAlias
+      }
+      {
+        event: "blur input.alias-dest"
+        name: "stopRefreshAlias"
+        fct: stopRefreshAlias
+      }
+    ]
+  )
   return

@@ -1,6 +1,6 @@
 refreshAlias = ->
-  $("input#node_alias").val $("input#node_name").val()
+  $("input.alias-dest").val $("input.alias-source").val().replace(/[^a-z0-9]/gi,'_')
   return
 stopRefreshAlias = ->
-  $("input#node_alias").unbind()
+  $("input.alias-dest").unbind()
   return
