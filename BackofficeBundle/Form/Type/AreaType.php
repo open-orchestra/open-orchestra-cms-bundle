@@ -18,7 +18,10 @@ class AreaType extends TemplateAreaType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->addEventSubscriber(new BlockCollectionSubscriber($options['node']));
+
+        if (isset($options['node'])) {
+            $builder->addEventSubscriber(new BlockCollectionSubscriber($options['node']));
+        }
     }
 
     /**

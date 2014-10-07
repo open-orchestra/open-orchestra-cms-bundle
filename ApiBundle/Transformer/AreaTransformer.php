@@ -41,6 +41,7 @@ class AreaTransformer extends AbstractTransformer
             $nodeId = null;
         }
 
+        $facade->label = $mixed->getLabel();
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
         foreach ($mixed->getAreas() as $subArea) {
@@ -72,6 +73,7 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
+                'label' => $mixed->getLabel(),
                 'class' => $mixed->getHtmlClass(),
                 'id' => $mixed->getAreaId()
             )
@@ -122,6 +124,7 @@ class AreaTransformer extends AbstractTransformer
             $templateId = null;
         }
 
+        $facade->label = $mixed->getLabel();
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
         foreach ($mixed->getAreas() as $subArea) {
@@ -131,6 +134,7 @@ class AreaTransformer extends AbstractTransformer
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
+                'label' => $mixed->getLabel(),
                 'class' => $mixed->getHtmlClass(),
                 'id' => $mixed->getAreaId()
             )

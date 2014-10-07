@@ -12,6 +12,11 @@ class AreaFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
+    public $label;
+
+    /**
+     * @Serializer\Type("string")
+     */
     public $areaId;
 
     /**

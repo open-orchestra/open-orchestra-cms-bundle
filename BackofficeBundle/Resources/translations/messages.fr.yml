@@ -76,8 +76,9 @@ php_orchestra_backoffice:
         area:
             success: L'aire a été modifiée
             bo_direction: Direction des enfants
-            bo_percent: Pourcentage de la taille des enfaints
+            bo_percent: Pourcentage de la taille des enfants
             html_class: Class html pour l'aire
+            label: Libellé de l'aire
             area_id: Id de l'aire
             new_areas: Ajouter une nouvelle aire
             new_blocks: Ajouter de nouveaux blocks

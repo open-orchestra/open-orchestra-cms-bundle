@@ -83,6 +83,7 @@ php_orchestra_backoffice:
             bo_direction: Children direction
             bo_percent: Children size percent
             html_class: Html class for the area
+            label: Area label
             area_id: The area id
             new_areas: Add new areas
             new_blocks: Add new blocks
