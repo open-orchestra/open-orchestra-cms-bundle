@@ -8,9 +8,9 @@ php_orchestra_user:
             roles: Rôles
         role:
             new:
-                success: Le role a été crée
+                success: Le rôle a été crée
             edit:
-                success: Le role a été mis à jour
+                success: Le rôle a été mis à jour
             name: Nom
     new:
         success: L'utilisateur a bien été créé.
