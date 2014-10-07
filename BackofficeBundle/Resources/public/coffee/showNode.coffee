@@ -1,3 +1,4 @@
+vent = _.extend({}, Backbone.Events)
 showNode = (url)->
   $.ajax
     type: "GET"
@@ -13,5 +14,11 @@ showNode = (url)->
 
 showNodeForm = (parentNode) ->
   $(".modal-title").text parentNode.text()
-  view = new adminFormView(url: parentNode.data("url"))
+  refreshAlias = ->
+    $("input#node_alias").val $("input#node_name").val()
+    return
+  stopRefreshAlias = ->
+    $("input#node_alias").unbind()
+    return
+  view = new adminFormView(url: parentNode.data("url"), triggers: [{event: 'keyup input#node_name', name: 'refreshAlias', fct : refreshAlias}, {event: 'blur input#node_alias', name: 'stopRefreshAlias', fct : stopRefreshAlias}])
   return

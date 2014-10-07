@@ -1,12 +1,14 @@
+vent = _.extend({}, Backbone.Events)
 adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
-  events:
-    'keyup input#node_name' : 'refreshAlias'
   initialize: (options) ->
     @url = options.url
-    @aliasIsRefreshable = false
     @method = if options.method then options.method else 'GET'
-    _.bindAll this, "refreshAlias"
+    @events = {}
+    if options.triggers
+      for i of options.triggers
+        @events[options.triggers[i].event] = options.triggers[i].name
+        eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
     @call()
     return
   call: ->
@@ -30,7 +32,6 @@ adminFormView = Backbone.View.extend(
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    @aliasIsRefreshable = $('input#node_alias').val() is ''
     @addEventOnForm()
   addEventOnForm: ->
     viewContext = this
@@ -44,7 +45,4 @@ adminFormView = Backbone.View.extend(
             )
             Backbone.history.loadUrl(Backbone.history.fragment)
     return
-  refreshAlias: (event) ->
-    if @aliasIsRefreshable
-      $('input#node_alias').val(event.target.value.replace(/[^a-z0-9]/gi,'_'))
 )

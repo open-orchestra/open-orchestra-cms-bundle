@@ -5,6 +5,7 @@ NodeView = Backbone.View.extend(
     'click a.ajax-node-duplicate' : 'duplicateNode'
   initialize: (options) ->
     @node = options.node
+    @vent = options.vent
     key = "click i." + @node.cid
     @events[key] = "clickButton"
     _.bindAll this, "render", "addAreaToView", "clickButton", "duplicateNode"
