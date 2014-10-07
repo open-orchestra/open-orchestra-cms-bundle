@@ -1,23 +1,29 @@
+vent = _.extend({}, Backbone.Events)
 adminFormView = Backbone.View.extend(
   el: '#OrchestraBOModal'
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
+    @events = {}
+    if options.triggers
+      for i of options.triggers
+        @events[options.triggers[i].event] = options.triggers[i].name
+        eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
     @call()
     return
   call: ->
-    current = this
+    viewContext = this
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
     $.ajax
       url: @url
       method: @method
       success: (response) ->
-        current.render(
+        viewContext.render(
           html: response
         )
       error: ->
-        $('.modal-body', current.el).html 'Erreur durant le chargement'
+        $('.modal-body', viewContext.el).html 'Erreur durant le chargement'
     return
   render: (options) ->
     @html = options.html
@@ -28,13 +34,13 @@ adminFormView = Backbone.View.extend(
       return
     @addEventOnForm()
   addEventOnForm: ->
-    current = this
+    viewContext = this
     $("form", @$el).on "submit", (e) ->
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
-            view = current.render(
+            view = viewContext.render(
               html: response
             )
             Backbone.history.loadUrl(Backbone.history.fragment)

@@ -14,7 +14,24 @@ NodeView = Backbone.View.extend(
     return
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
-    view = new adminFormView(url: @node.get('links')._self_form)
+    if @node.attributes.alias is ''
+      view = new adminFormView(
+        url: parentNode.data("url")
+        triggers: [
+          {
+            event: "keyup input.alias-source"
+            name: "refreshAlias"
+            fct: refreshAlias
+          }
+          {
+            event: "blur input.alias-dest"
+            name: "stopRefreshAlias"
+            fct: stopRefreshAlias
+          }
+        ]
+      )
+    else
+      view = new adminFormView(url: parentNode.data("url"))
   duplicateNode: (event) ->
     event.preventDefault() #
     viewContext = this
