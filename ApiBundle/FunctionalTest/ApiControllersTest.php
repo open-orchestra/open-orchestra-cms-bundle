@@ -52,6 +52,7 @@ class ApiControllersTest extends WebTestCase
             array('/api/role'),
             array('/api/status'),
             array('/api/template/template_full'),
+            array('/api/context/site/2/www.bphpOrchestra.fr'),
         );
     }
 }
