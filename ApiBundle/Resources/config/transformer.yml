@@ -17,6 +17,8 @@ parameters:
     php_orchestra_api.transformer.media_collection.class: PHPOrchestra\ApiBundle\Transformer\MediaCollectionTransformer
     php_orchestra_api.transformer.theme.class: PHPOrchestra\ApiBundle\Transformer\ThemeTransformer
     php_orchestra_api.transformer.theme_collection.class: PHPOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
+    php_orchestra_api.transformer.role.class: PHPOrchestra\ApiBundle\Transformer\RoleTransformer
+    php_orchestra_api.transformer.role_collection.class: PHPOrchestra\ApiBundle\Transformer\RoleCollectionTransformer
     php_orchestra_api.transformer.field_type.class: PHPOrchestra\ApiBundle\Transformer\FieldTypeTransformer
     php_orchestra_api.transformer.status.class: PHPOrchestra\ApiBundle\Transformer\StatusTransformer
     php_orchestra_api.transformer.user.class: PHPOrchestra\ApiBundle\Transformer\UserTransformer
@@ -94,6 +96,14 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.theme_collection:
         class: %php_orchestra_api.transformer.theme_collection.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.role:
+        class: %php_orchestra_api.transformer.role.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.role_collection:
+        class: %php_orchestra_api.transformer.role_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.status_collection:

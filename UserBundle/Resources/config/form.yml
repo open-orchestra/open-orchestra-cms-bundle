@@ -1,10 +1,12 @@
 parameters:
-    php_orchestra_user.form.user.class: PHPOrchestra\UserBundle\Form\Type\UserType
+    php_orchestra_user.type.user.class: PHPOrchestra\UserBundle\Form\Type\UserType
     php_orchestra_user.type.registration_user.class: PHPOrchestra\UserBundle\Form\Type\RegistrationUserType
+    php_orchestra_user.type.role.class: PHPOrchestra\UserBundle\Form\Type\RoleType
+    php_orchestra_user.type.orchestra_role_choice.class: PHPOrchestra\UserBundle\Form\Type\OrchestraRoleType
 
 services:
-    php_orchestra_user.form.user:
-        class: %php_orchestra_user.form.user.class%
+    php_orchestra_user.type.user:
+        class: %php_orchestra_user.type.user.class%
         arguments:
             - @translator
         tags:
@@ -16,3 +18,13 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: registration_user}
+    php_orchestra_user.type.role:
+        class: %php_orchestra_user.type.role.class%
+        tags:
+            - { name: form.type, alias: role }
+    php_orchestra_user.type.orchestra_role_choice:
+        class: %php_orchestra_user.type.orchestra_role_choice.class%
+        arguments:
+            - @php_orchestra_user.repository.role
+        tags:
+            - { name: form.type, alias: orchestra_role_choice }

@@ -30,6 +30,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('roles', 'collection', array(
+            'type' => 'orchestra_role_choice',
             'allow_add' => true,
             'attr' => array(
                 'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),

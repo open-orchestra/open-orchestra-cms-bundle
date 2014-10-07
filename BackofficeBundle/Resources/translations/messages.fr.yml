@@ -1,6 +1,9 @@
 php_orchestra_backoffice:
     form:
         submit: Sauvegarder
+        edit: Editer
+        delete: Supprimer
+        add: Ajouter
         status:
             published: Publié
             draft: Brouillon
@@ -109,6 +112,8 @@ php_orchestra_backoffice:
                 list: Status
             user:
                 list: Utilisateurs
+            role:
+                list: Roles
     block:
         configurable_content:
             title: Bloc contenu paramétrable

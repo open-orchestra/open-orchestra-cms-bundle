@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\FunctionalTest;
+namespace PHPOrchestra\UserBundle\FunctionalTest\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class ApiControllersTest
+ * Class FormControllersTest
  */
-class ApiControllersTest extends WebTestCase
+class FormControllersTest extends WebTestCase
 {
     /**
      * @var Client
@@ -21,6 +21,13 @@ class ApiControllersTest extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
+        $this->client->setServerParameters(
+            array(
+                'PHP_AUTH_USER' => 'nicolas',
+                'PHP_AUTH_PW'   => 'nicolas',
+            )
+        );
+        $this->client->followRedirects();
     }
 
     /**
@@ -28,12 +35,11 @@ class ApiControllersTest extends WebTestCase
      *
      * @dataProvider provideApiUrl
      */
-    public function testApi($url)
+    public function testForm($url)
     {
         $crawler = $this->client->request('GET', $url);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
     }
 
     /**
@@ -42,16 +48,8 @@ class ApiControllersTest extends WebTestCase
     public function provideApiUrl()
     {
         return array(
-            array('/api/node/root'),
-            array('/api/node/fixture_full'),
-            array('/api/content'),
-            array('/api/content-type'),
-            array('/api/site'),
-            array('/api/theme'),
-            array('/api/user'),
-            array('/api/role'),
-            array('/api/status'),
-            array('/api/template/template_full'),
+            array('/admin/user/new'),
+            array('/admin/role/new'),
         );
     }
 }
