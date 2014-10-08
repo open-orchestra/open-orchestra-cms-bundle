@@ -76,7 +76,12 @@ AreaView = Backbone.View.extend(
     $("ul.ui-model-blocks", @el).remove() if $("ul.ui-model-blocks", @el).children().length == 0
     if $("ul.ui-model-areas", @el).children().length == 0
       $("ul.ui-model-areas", @el).remove()
-      $("ul.ui-model-blocks", @el).sortable(connectWith: "ul.ui-model-blocks").disableSelection()
+      $("ul.ui-model-blocks", @el).sortable(
+        connectWith: "ul.ui-model-blocks",
+        start: (event, ui)->
+            ui.placeholder.css('height', ui.helper.css('height'))
+            ui.placeholder.css('width', ui.helper.css('width'))
+      ).disableSelection()
     this
   
   addAreaToView: (area, areaHeight) ->
