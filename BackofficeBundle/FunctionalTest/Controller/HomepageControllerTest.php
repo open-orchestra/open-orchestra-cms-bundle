@@ -71,7 +71,6 @@ class HomepageControllerTest extends WebTestCase
      */
     public function testNewNodePageHome()
     {
-        $this->markTestSkipped();
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/login');
@@ -91,12 +90,12 @@ class HomepageControllerTest extends WebTestCase
 
         $formUser = $crawler->selectButton('node_submit')->form();
 
-        $formUser['node[name]'] = 'fixture test';
+        $formUser['node[name]'] = 'fixture test ' . time();
         $formUser['node[alias]'] = 'page-test';
 
         $crawler = $client->submit($formUser);
         $crawler = $client->request('GET', '/admin/');
 
-        $this->assertEquals($nbLink+1, $crawler->filter('a')->count());
+        $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
     }
 }
