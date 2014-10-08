@@ -19,7 +19,7 @@ class BlockTypeSubscriber implements EventSubscriberInterface
      * @param GenerateFormManager $generateFormManager
      * @param int                 $blockPosition
      */
-    public function __construct(GenerateFormManager $generateFormManager, $blockPosition)
+    public function __construct(GenerateFormManager $generateFormManager, $blockPosition = 0)
     {
         $this->generateFormManager = $generateFormManager;
         $this->blockPosition = $blockPosition;
