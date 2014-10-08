@@ -19,9 +19,14 @@ adminFormView = Backbone.View.extend(
       url: @url
       method: @method
       success: (response) ->
-        viewContext.render(
-          html: response
-        )
+        nbhtml = response.indexOf "<html>"
+        if nbhtml > 0
+          Backbone.history.navigate('#', true);
+          window.location.reload()
+        else
+          viewContext.render(
+            html: response
+          )
       error: ->
         $('.modal-body', viewContext.el).html 'Erreur durant le chargement'
     return
