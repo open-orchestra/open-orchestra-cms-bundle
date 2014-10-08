@@ -30,6 +30,8 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
+        $form->add('label', 'text');
+
         $this->generateFormManager->buildForm($form, $data);
     }
 
@@ -44,7 +46,7 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         foreach ($data as $key => $value) {
-            if ('component' == $key || 'submit' == $key) {
+            if ('component' == $key || 'submit' == $key || 'label' == $key) {
                 continue;
             }
 

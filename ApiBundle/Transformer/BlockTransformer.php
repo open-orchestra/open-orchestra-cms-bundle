@@ -42,10 +42,12 @@ class BlockTransformer extends AbstractTransformer
 
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $mixed->getComponent();
+        $facade->label = $mixed->getLabel();
         $facade->nodeId = $nodeId;
         $facade->blockId = $blockNumber;
 
         $label = $this->translator->trans('php_orchestra_backoffice.block.' . $mixed->getComponent() . '.title');
+        $label = $mixed->getLabel();
 
         foreach ($mixed->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
