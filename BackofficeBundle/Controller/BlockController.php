@@ -34,7 +34,8 @@ class BlockController extends AbstractAdminController
                 'action' => $this->generateUrl('php_orchestra_backoffice_block_form', array(
                     'nodeId' => $nodeId,
                     'blockNumber' => $blockNumber
-                ))
+                )),
+                'blockPosition' => $blockNumber
             )
         );
 

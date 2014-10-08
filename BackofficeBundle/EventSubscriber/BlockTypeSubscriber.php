@@ -13,13 +13,16 @@ use Symfony\Component\Form\FormEvents;
 class BlockTypeSubscriber implements EventSubscriberInterface
 {
     protected $generateFormManager;
+    protected $blockPosition;
 
     /**
      * @param GenerateFormManager $generateFormManager
+     * @param int                 $blockPosition
      */
-    public function __construct(GenerateFormManager $generateFormManager)
+    public function __construct(GenerateFormManager $generateFormManager, $blockPosition)
     {
         $this->generateFormManager = $generateFormManager;
+        $this->blockPosition = $blockPosition;
     }
 
     /**
@@ -30,7 +33,12 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        $form->add('label', 'text');
+        $label = $data->getLabel();
+        if ('' == $label) {
+            $label = $data->getComponent() . ' #' . ($this->blockPosition + 1);
+        }
+
+        $form->add('label', 'text', array('data' => $label));
 
         $this->generateFormManager->buildForm($form, $data);
     }
