@@ -32,13 +32,9 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
-
-
         $this->nodeType->buildForm($formBuilderMock, array());
 
         Phake::verify($formBuilderMock, Phake::times(6))->add(Phake::anyParameters());
-
-
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
