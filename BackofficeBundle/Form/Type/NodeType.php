@@ -55,10 +55,6 @@ class NodeType extends AbstractType
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
             ))
-            ->add('templateId', 'choice', array(
-                'choices' => $this->getChoices(),
-                'label' => 'php_orchestra_backoffice.form.node.template_id'
-            ))
             ->add('alias', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.node.alias',
                 'attr' => array(
@@ -72,9 +68,9 @@ class NodeType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.node.status'
             ));
 
+        $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
-        $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
     }
 
     /**
@@ -88,20 +84,7 @@ class NodeType extends AbstractType
         ));
     }
 
-    /**
-     *
-     * @return array
-     */
-    protected function getChoices()
-    {
-        $templates = $this->templateRepository->findByDeleted(false);
-        $templatesChoices = array();
-        foreach ($templates as $template) {
-            $templatesChoices[$template->getTemplateId()] = $template->getName();
-        }
 
-        return $templatesChoices;
-    }
 
     /**
      *

@@ -25,28 +25,16 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test the build form
-     *
-     * @param TemplateInterface $templates
-     * @param array $expectedResult
-     *
-     * @dataProvider getTemplate
+     * test build form
      */
-    public function testBuildForm($templates, $expectedResult)
+    public function testBuildForm()
     {
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
 
-        Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);
-
         $this->nodeType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(7))->add(Phake::anyParameters());
-
-        Phake::verify($formBuilderMock)->add('templateId', 'choice', array(
-            'choices' => $expectedResult,
-            'label' => 'php_orchestra_backoffice.form.node.template_id'
-        ));
+        Phake::verify($formBuilderMock, Phake::times(6))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
@@ -72,32 +60,5 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $this->assertEquals('node', $this->nodeType->getName());
-    }
-
-    /**
-     * Templates provider
-     *
-     * @return array
-     */
-    public function getTemplate()
-    {
-        $id0 = 'fakeId0';
-        $name0 = 'fakeName0';
-        $id1 = 'fakeId1';
-        $name1 = 'fakeName1';
-
-        $template0 = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
-        Phake::when($template0)->getTemplateId()->thenReturn($id0);
-        Phake::when($template0)->getName()->thenReturn($name0);
-
-        $template1 = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
-        Phake::when($template1)->getTemplateId()->thenReturn($id1);
-        Phake::when($template1)->getName()->thenReturn($name1);
-
-        return array(
-            array(
-                array($template0, $template1), array($id0 => $name0, $id1 => $name1)
-            )
-        );
     }
 }
