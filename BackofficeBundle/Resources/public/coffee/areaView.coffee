@@ -1,3 +1,23 @@
+refreshUl = undefined
+stockedUl = undefined
+refreshUl = (ul) ->
+  childs = undefined
+  direction = undefined
+  nbrChildren = undefined
+  childs = undefined
+  direction = undefined
+  nbrChildren = undefined
+  childs = ul.children().not(".ui-sortable-helper")
+  nbrChildren = childs.length
+  direction = ((if nbrChildren > 0 and ul.width() is childs.first().width() then "height" else "width"))
+  childs.each ->
+    $(this).css direction, (100 / nbrChildren) + "%"
+    return
+
+  return
+
+stockedUl = null
+
 AreaView = Backbone.View.extend(
   tagName: 'li'
   
@@ -79,11 +99,16 @@ AreaView = Backbone.View.extend(
       $("ul.ui-model-blocks", @el).sortable(
         connectWith: "ul.ui-model-blocks",
         start: (event, ui)->
-            ui.placeholder.css('height', ui.helper.css('height'))
-            ui.placeholder.css('width', ui.helper.css('width'))
+          ui.placeholder.css "width", (100 * ui.item.width() / $(this).width()) + "%"
+          ui.placeholder.css "height", (100 * ui.item.height() / $(this).height()) + "%"
+        change: (event, ui) ->
+          refreshUl stockedUl  if stockedUl isnt null
+          stockedUl = ui.placeholder.parent()
+          refreshUl stockedUl
+          ui.helper.height ui.placeholder.height()
+          ui.helper.width ui.placeholder.width()
       ).disableSelection()
     this
-  
   addAreaToView: (area, areaHeight) ->
     areaElement = new Area
     areaElement.set area
