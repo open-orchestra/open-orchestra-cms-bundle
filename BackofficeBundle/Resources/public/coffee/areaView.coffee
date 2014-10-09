@@ -1,5 +1,3 @@
-refreshUl = undefined
-stockedUl = undefined
 refreshUl = (ul) ->
   childs = undefined
   direction = undefined
