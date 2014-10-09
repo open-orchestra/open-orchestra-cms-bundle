@@ -1,7 +1,4 @@
-// TODO
-// verify if it is useless with new smartAdmin version
-// don't forget if you remove this file to remove the call into grunt.js
-.demo {
+.blocks-panel {
   position: absolute;
   top: 5px;
   right: 0;
@@ -10,14 +7,14 @@
   background: #F1DA91;
 }
 
-.demo.activate {
+.blocks-panel.activate {
   right: 0!important;
   box-shadow: -11px 12px 23px;
   padding: 5px 10px 10px;
   height: 550px;
 }
 
-.demo>span {
+.blocks-panel>span {
   position: absolute;
   right: 0;
   top: 0;
@@ -32,18 +29,18 @@
   background: #F1DA91;
 }
 
-.demo.activate>span {
+.blocks-panel.activate>span {
   left: -30px;
 }
 
-.demo>span i {
+.blocks-panel>span i {
   font-size: 17px;
 }
 
-.demo #demo-setting+h2 {
+.blocks-panel #blocks-panel-setting+h2 {
   display: none;
 }
 
-.demo.activate #demo-setting+h2 {
+.blocks-panel.activate #blocks-panel-setting+h2 {
   display: block;
 }
