@@ -16,15 +16,15 @@ abstract class AbstractAdminController extends Controller
      * 
      * @param FormInterface $form
      * @param string        $successMessage
-     * @param mixed         $persistingItem
+     * @param mixed|null    $itemToPersist
      */
-    protected function handleForm(FormInterface $form, $successMessage, $itemTopersist = null)
+    protected function handleForm(FormInterface $form, $successMessage, $itemToPersist = null)
     {
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
 
-            if ($itemTopersist) {
-                $documentManager->persist($itemTopersist);
+            if ($itemToPersist) {
+                $documentManager->persist($itemToPersist);
             }
 
             $documentManager->flush();
@@ -37,6 +37,8 @@ abstract class AbstractAdminController extends Controller
      * Render admin form and tag response with status 400 if form is badly completed
      * 
      * @param FormInterface $form
+     *
+     * @return Response
      */
     protected function renderAdminForm(FormInterface $form)
     {

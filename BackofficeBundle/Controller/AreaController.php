@@ -2,9 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\BackofficeBundle\Form\Type\AreaType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AreaController
@@ -16,7 +16,7 @@ class AreaController extends AbstractAdminController
      * @param string  $nodeId
      * @param string  $areaId
      *
-     * @config\Route("/area/form/{nodeId}/{areaId}", name="php_orchestra_backoffice_area_form")
+     * @Config\Route("/area/form/{nodeId}/{areaId}", name="php_orchestra_backoffice_area_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response

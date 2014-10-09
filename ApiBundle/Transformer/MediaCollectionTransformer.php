@@ -13,16 +13,21 @@ class MediaCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param ArrayCollection $mixed
+     * @param string|null     $folderId
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, $folderId = null)
     {
         $facade = new MediaCollectionFacade();
 
         foreach ($mixed as $media) {
             $facade->addMedia($this->getTransformer('media')->transform($media));
         }
+
+        $facade->addLink('_self_add', $this->generateRoute('php_orchestra_backoffice_media_new', array(
+            'folderId' => $folderId
+        )));
 
         return $facade;
     }
