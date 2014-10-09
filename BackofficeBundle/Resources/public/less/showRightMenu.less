@@ -1,0 +1,49 @@
+// TODO
+// verify if it is useless with new smartAdmin version
+// don't forget if you remove this file to remove the call into grunt.js
+.demo {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 160px;
+  z-index: 11;
+  background: #F1DA91;
+}
+
+.demo.activate {
+  right: 0!important;
+  box-shadow: -11px 12px 23px;
+  padding: 5px 10px 10px;
+  height: 550px;
+}
+
+.demo>span {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  height: 30px;
+  width: 30px;
+  border-radius: 5px 0 0 5px;
+  padding: 2px;
+  text-align: center;
+  line-height: 28px;
+  cursor: pointer;
+  background: #F1DA91;
+}
+
+.demo.activate>span {
+  left: -30px;
+}
+
+.demo>span i {
+  font-size: 17px;
+}
+
+.demo #demo-setting+h2 {
+  display: none;
+}
+
+.demo.activate #demo-setting+h2 {
+  display: block;
+}
