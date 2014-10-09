@@ -62,6 +62,7 @@ class FormControllersTest extends WebTestCase
             array('/admin/content/form/1'),
             array('/admin/content-type/form/car'),
             array('/admin/content-type/new'),
+            array('/admin/media/new/54354a8b0f870926168b45aa'),
             array('/admin/node/new/fixture_page_what_is_orchestra'),
         );
     }
