@@ -6,6 +6,8 @@ use PHPOrchestra\BackofficeBundle\Form\Type\BlockType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelBundle\Model\BlockInterface;
 
 /**
  * Class BlockController
@@ -64,4 +66,30 @@ class BlockController extends AbstractAdminController
             array('blocks' => $blocks)
         );
     }
+     *
+     * @return Response
+     */
+    public function showExistingBlocksAction()
+    {
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion(NodeInterface::ROOT_NODE_ID);
+        $blocks = $node->getBlocks();
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocks.html.twig',
+            array(
+                'blocks' => $blocks
+            )
+        );
+    }
+
+    /**
+     * @param BlockInterface $block
+     *
+     * @return Response
+     */
+    public function showExistingBlockAction(BlockInterface $block)
+    {
+
+        return $this->get('php_orchestra_display.display_block_manager')->show($block);
+    }
+>>>>>>> Add existing blocks to right pannel
 }
