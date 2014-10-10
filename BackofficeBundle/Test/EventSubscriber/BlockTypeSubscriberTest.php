@@ -66,7 +66,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form, Phake::times(1))->add(Phake::anyParameters());
+        Phake::verify($this->form)->add(Phake::anyParameters());
         Phake::verify($this->generateFormManager)->buildForm($this->form, $this->block);
     }
 
