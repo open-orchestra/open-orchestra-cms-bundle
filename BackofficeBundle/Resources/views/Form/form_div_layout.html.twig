@@ -59,7 +59,7 @@
     {% spaceless %}
         {% set type = 'hidden' %}
         {{ block('form_widget') }}&nbsp;
-        <a href="javascript:void(0);" class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
+        <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
             <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
         </a>
 
