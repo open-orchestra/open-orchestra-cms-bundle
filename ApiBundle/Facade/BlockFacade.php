@@ -23,6 +23,11 @@ class BlockFacade extends AbstractFacade
     public $component;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $label;
+
+    /**
      * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;

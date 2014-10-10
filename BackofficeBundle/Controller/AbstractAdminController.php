@@ -37,10 +37,11 @@ abstract class AbstractAdminController extends Controller
      * Render admin form and tag response with status 400 if form is badly completed
      * 
      * @param FormInterface $form
+     * @param array         $params additional view parameters
      *
      * @return Response
      */
-    protected function renderAdminForm(FormInterface $form)
+    protected function renderAdminForm(FormInterface $form, array $params = array())
     {
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
@@ -50,11 +51,14 @@ abstract class AbstractAdminController extends Controller
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
+        $params = array_merge(
+            $params,
+            array('form' => $form->createView())
+        );
+
         return $this->render(
             'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array(
-                'form' => $form->createView()
-            ),
+            $params,
             $response
         );
     }

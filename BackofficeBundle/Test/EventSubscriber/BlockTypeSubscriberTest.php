@@ -61,11 +61,12 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithNoAttributes()
     {
+        Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->block);
-
 
         $this->subscriber->preSetData($this->event);
 
+        Phake::verify($this->form)->add(Phake::anyParameters());
         Phake::verify($this->generateFormManager)->buildForm($this->form, $this->block);
     }
 
