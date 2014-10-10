@@ -1,3 +1,12 @@
-{% for block in blocks %}
-    {{ render(controller('PHPOrchestraBackofficeBundle:Block:showExistingBlock', {'block': block})) }}
+<ul class="ui-model-blocks ui-sortable">
+{% for key, block in blocks %}
+    <li class="ui-model-blocks block" style="height: 40px;">
+        <div data-block-id="{{ key }}" data-node-id="{{ node }}" class="generate">
+            <span class="title">{{ block.name }}</span>
+            <div class="preview">
+                {{ render(controller('PHPOrchestraBackofficeBundle:Block:showExistingBlock', {'block': block.value})) }}
+            </div>
+        </div>
+    </li>
 {% endfor %}
+</ul>

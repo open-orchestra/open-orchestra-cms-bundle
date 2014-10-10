@@ -72,11 +72,19 @@ class BlockController extends AbstractAdminController
     public function showExistingBlocksAction()
     {
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion(NodeInterface::ROOT_NODE_ID);
+        $transformer = $facade = $this->get('php_orchestra_api.transformer_manager')->get('block');
         $blocks = $node->getBlocks();
+        $result = array();
+        foreach($blocks as $block){
+            $name = $transformer->transform($block);
+            $result[] = array('name' => $name->uiModel->label, 'value' => $block);
+        }
+
         return $this->render(
             'PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocks.html.twig',
             array(
-                'blocks' => $blocks
+                'blocks' => $result,
+                'node' => $node->getNodeId()
             )
         );
     }
