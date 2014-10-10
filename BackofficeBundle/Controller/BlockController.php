@@ -58,7 +58,7 @@ class BlockController extends AbstractAdminController
     {
         $blocks = $this->container->getParameter('php_orchestra.blocks');
 
-        return $this->render('PHPOrchestraBackofficeBundle:BackOffice/Include:possibleBlocksList.html.twig', array(
+        return $this->render('PHPOrchestraBackofficeBundle:Block:possibleBlocksList.html.twig', array(
             'blocks' => $blocks
         ));
     }
@@ -77,7 +77,7 @@ class BlockController extends AbstractAdminController
             $blocksFacade[$key] = $transformer->transform($block, false);
         }
 
-        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocksList.html.twig', array(
+        return $this->render('PHPOrchestraBackofficeBundle:Block:existingBlocksList.html.twig', array(
             'blocks' => $blocksFacade,
             'nodeId' => $node->getNodeId()
         ));
