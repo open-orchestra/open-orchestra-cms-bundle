@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
+use PHPOrchestra\ModelBundle\Document\Block;
 use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
@@ -19,6 +20,7 @@ class BlockTransformer extends AbstractTransformer
 
     /**
      * @param DisplayBlockManager $displayBlockManager
+     * @param TranslatorInterface $translator
      */
     public function __construct(DisplayBlockManager $displayBlockManager, TranslatorInterface $translator)
     {
@@ -89,11 +91,21 @@ class BlockTransformer extends AbstractTransformer
     public function reverseTransformToArray(FacadeInterface $facade, NodeInterface $node)
     {
         $block  = array();
-        $block['blockId'] = $facade->blockId;
-        if ($facade->nodeId == $node->getNodeId()) {
+
+        if (empty($facade->blockId) && empty($facade->nodeId)) {
+            $newBlock = new Block();
+            $newBlock->setComponent($facade->component);
+            $node->addBlock($newBlock);
+            $blockIndex = $node->getBlockIndex($newBlock);
+            $block['blockId'] = $blockIndex;
             $block['nodeId'] = 0;
         } else {
-            $block['nodeId'] = $facade->nodeId;
+            $block['blockId'] = $facade->blockId;
+            if ($facade->nodeId == $node->getNodeId()) {
+                $block['nodeId'] = 0;
+            } else {
+                $block['nodeId'] = $facade->nodeId;
+            }
         }
 
         return $block;
