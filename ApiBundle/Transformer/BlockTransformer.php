@@ -92,14 +92,14 @@ class BlockTransformer extends AbstractTransformer
     {
         $block  = array();
 
-        if (empty($facade->blockId) && empty($facade->nodeId)) {
+        if (!empty($facade->component)) {
             $newBlock = new Block();
             $newBlock->setComponent($facade->component);
             $node->addBlock($newBlock);
             $blockIndex = $node->getBlockIndex($newBlock);
             $block['blockId'] = $blockIndex;
             $block['nodeId'] = 0;
-        } else {
+        } elseif (!empty($facade->nodeId) && !empty($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             if ($facade->nodeId == $node->getNodeId()) {
                 $block['nodeId'] = 0;
