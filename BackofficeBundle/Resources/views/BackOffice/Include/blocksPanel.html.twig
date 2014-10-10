@@ -5,9 +5,9 @@
                     </span>
                     <h2>Blocks</h2>
                     <div class="ui-model scroll padding-10">
-                        {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
-                    </div>
-                    <div class="ui-model scroll padding-10">
-                        {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
+                        <ul class="ui-model-blocks ui-sortable">
+                            {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
+                            {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
+                        </ul>
                     </div>
                 </div>
