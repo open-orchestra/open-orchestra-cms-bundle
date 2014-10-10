@@ -1,0 +1,13 @@
+{% for block in blocks %}
+    <li class="ui-model-blocks block" style="height: 40px;">
+        <div class="generate" data-block-type="{{ block }}">
+            <span class="title">{{ block }}</span>
+            <div class="preview">
+            </div>
+            <span class="action">
+                <i class="block-param fa fa-wrench"></i>
+                <i class="block-remove fa fa-trash-o"></i>
+            </span>
+        </div>
+    </li>
+{% endfor %}
