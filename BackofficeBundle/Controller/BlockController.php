@@ -14,9 +14,7 @@ use PHPOrchestra\ModelBundle\Model\BlockInterface;
  */
 class BlockController extends AbstractAdminController
 {
-
     /**
-     *
      * @param Request $request
      * @param string  $nodeId
      * @param int     $blockNumber
