@@ -57,12 +57,12 @@ class BlockController extends AbstractAdminController
      *
      * @return Response
      */
-    public function listAction()
+    public function listPossibleBlocksAction()
     {
         $blocks = $this->container->getParameter('php_orchestra.blocks');
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:BackOffice/Include:blockList.html.twig',
+            'PHPOrchestraBackofficeBundle:BackOffice/Include:possibleBlocksList.html.twig',
             array('blocks' => $blocks)
         );
     }
@@ -70,7 +70,7 @@ class BlockController extends AbstractAdminController
      *
      * @return Response
      */
-    public function showExistingBlocksAction()
+    public function listExistingBlocksAction()
     {
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion(NodeInterface::ROOT_NODE_ID);
         $transformer = $facade = $this->get('php_orchestra_api.transformer_manager')->get('block');
@@ -80,7 +80,7 @@ class BlockController extends AbstractAdminController
         }
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocks.html.twig',
+            'PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocksList.html.twig',
             array(
                 'blocks' => $blocksFacade,
                 'nodeId' => $node->getNodeId()
