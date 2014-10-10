@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Controller;
 use PHPOrchestra\BackofficeBundle\Form\Type\BlockType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class BlockController
@@ -46,5 +47,20 @@ class BlockController extends AbstractAdminController
         );
 
         return $this->renderAdminForm($form);
+    }
+
+    /**
+     * List all blocks
+     *
+     * @return Response
+     */
+    public function listAction()
+    {
+        $blocks = $this->container->getParameter('php_orchestra.blocks');
+
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:BackOffice/Include:blockList.html.twig',
+            array('blocks' => $blocks)
+        );
     }
 }

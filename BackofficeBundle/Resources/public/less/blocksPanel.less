@@ -11,7 +11,7 @@
   right: 0!important;
   box-shadow: -11px 12px 23px;
   padding: 5px 10px 10px;
-  height: 550px;
+  height: auto;
 }
 
 .blocks-panel>span {
@@ -42,5 +42,13 @@
 }
 
 .blocks-panel.activate #blocks-panel-setting+h2 {
+  display: block;
+}
+
+.blocks-panel .ui-model {
+  display: none;
+}
+
+.blocks-panel.activate .ui-model {
   display: block;
 }
