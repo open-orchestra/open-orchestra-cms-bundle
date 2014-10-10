@@ -62,6 +62,7 @@ class BlockController extends AbstractAdminController
             'blocks' => $blocks
         ));
     }
+
     /**
      * List all existing blocks
      *
