@@ -1,10 +1,10 @@
 <ul class="ui-model-blocks ui-sortable">
 {% for key, block in blocks %}
     <li class="ui-model-blocks block" style="height: 40px;">
-        <div data-block-id="{{ key }}" data-node-id="{{ node }}" class="generate">
-            <span class="title">{{ block.name }}</span>
+        <div class="{{ block.method }}" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
+            <span class="title">{{ block.uiModel.label }}</span>
             <div class="preview">
-                {{ render(controller('PHPOrchestraBackofficeBundle:Block:showExistingBlock', {'block': block.value})) }}
+                {{ block.uiModel.html }}
             </div>
         </div>
     </li>

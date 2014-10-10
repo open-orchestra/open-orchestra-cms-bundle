@@ -66,6 +66,7 @@ class BlockController extends AbstractAdminController
             array('blocks' => $blocks)
         );
     }
+    /*
      *
      * @return Response
      */
@@ -74,30 +75,16 @@ class BlockController extends AbstractAdminController
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion(NodeInterface::ROOT_NODE_ID);
         $transformer = $facade = $this->get('php_orchestra_api.transformer_manager')->get('block');
         $blocks = $node->getBlocks();
-        $result = array();
-        foreach($blocks as $block){
-            $name = $transformer->transform($block);
-            $result[] = array('name' => $name->uiModel->label, 'value' => $block);
+        foreach($blocks as $key => $block){
+            $blocksFacade[$key] = $transformer->transform($block, false);
         }
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocks.html.twig',
             array(
-                'blocks' => $result,
-                'node' => $node->getNodeId()
+                'blocks' => $blocksFacade,
+                'nodeId' => $node->getNodeId()
             )
         );
     }
-
-    /**
-     * @param BlockInterface $block
-     *
-     * @return Response
-     */
-    public function showExistingBlockAction(BlockInterface $block)
-    {
-
-        return $this->get('php_orchestra_display.display_block_manager')->show($block);
-    }
->>>>>>> Add existing blocks to right pannel
 }
