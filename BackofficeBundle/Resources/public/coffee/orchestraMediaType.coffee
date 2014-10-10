@@ -18,6 +18,12 @@ $(document).on "click", ".mediaModalOpen", (event) ->
   mediaModalBody.css "min-height", (mediaModal.height() - 120) + "px"
   
   mediaModal.modal "show"
+  
+  view = new mediaFormView(
+    menuUrl: $('#' + modalId + ' .modal-body-menu').data('url'),
+    el: '#' + modalId;
+  )
+  
   return
 
 

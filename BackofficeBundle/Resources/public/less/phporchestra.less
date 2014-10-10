@@ -30,17 +30,33 @@
 
 .mediaModalContainer {
     position:absolute;
-    left:-200px;
-    top:0px;
+    left: -200px;
+    top: 0px;
 
     div.modal {
         position: absolute;
         display: block;
-        width:0px;
-        height:0px;
+        width: 0px;
+        height: 0px;
 
         div.modal-dialog {
-            width:998px;
+            width: 998px;
+
+            div.modal-body-menu {
+                float: left;
+                width: 200px;
+                min-height: 449px;
+                border-right: 1px solid #E5E5E5;
+            }
+
+            div.modal-body-content {
+                float: left;
+                margin-left: 15px;
+            }
+
+            div.modal-body-end {
+                clear: both;
+            }
         }
     }
 }

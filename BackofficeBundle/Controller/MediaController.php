@@ -45,4 +45,19 @@ class MediaController extends AbstractAdminController
 
         return $this->renderAdminForm($form);
     }
+
+    /**
+     * @Config\Route("/media/list/folders", name="php_orchestra_backoffice_media_list_form")
+     * @Config\Method({"GET"})
+     *
+     * @return Response
+     */
+    public function showFolders()
+    {
+        $rootFolders = $this->get('php_orchestra_model.repository.media_folder')->findAllRootFolder();
+
+        return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showFolderTree.html.twig', array(
+                'folders' => $rootFolders,
+        ));
+    }
 }
