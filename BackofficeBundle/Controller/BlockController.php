@@ -14,7 +14,9 @@ use PHPOrchestra\ModelBundle\Model\BlockInterface;
  */
 class BlockController extends AbstractAdminController
 {
+
     /**
+     *
      * @param Request $request
      * @param string  $nodeId
      * @param int     $blockNumber
@@ -43,17 +45,14 @@ class BlockController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.block.success'),
-            $node
-        );
+        $this->handleForm($form, $this->get('translator')
+            ->trans('php_orchestra_backoffice.form.block.success'), $node);
 
         return $this->renderAdminForm($form, array('blockType' => $block->getComponent()));
     }
 
     /**
-     * List all blocks
+     * List all possible blocks
      *
      * @return Response
      */
@@ -61,12 +60,12 @@ class BlockController extends AbstractAdminController
     {
         $blocks = $this->container->getParameter('php_orchestra.blocks');
 
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:BackOffice/Include:possibleBlocksList.html.twig',
-            array('blocks' => $blocks)
-        );
+        return $this->render('PHPOrchestraBackofficeBundle:BackOffice/Include:possibleBlocksList.html.twig', array(
+            'blocks' => $blocks
+        ));
     }
-    /*
+    /**
+     * List all existing blocks
      *
      * @return Response
      */
@@ -75,16 +74,13 @@ class BlockController extends AbstractAdminController
         $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion(NodeInterface::ROOT_NODE_ID);
         $transformer = $facade = $this->get('php_orchestra_api.transformer_manager')->get('block');
         $blocks = $node->getBlocks();
-        foreach($blocks as $key => $block){
+        foreach ($blocks as $key => $block) {
             $blocksFacade[$key] = $transformer->transform($block, false);
         }
 
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocksList.html.twig',
-            array(
-                'blocks' => $blocksFacade,
-                'nodeId' => $node->getNodeId()
-            )
-        );
+        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:Include/existingBlocksList.html.twig', array(
+            'blocks' => $blocksFacade,
+            'nodeId' => $node->getNodeId()
+        ));
     }
 }
