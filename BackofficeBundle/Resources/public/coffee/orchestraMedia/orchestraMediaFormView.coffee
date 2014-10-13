@@ -12,11 +12,8 @@ mediaFormView = Backbone.View.extend(
       url: @menuUrl
       method: @method
       success: (response) ->
-        nbUserName = response.indexOf "_username"
-        nbPassword = response.indexOf "_password"
-        if nbUserName > 0 && nbPassword > 0
-          Backbone.history.navigate('#', true);
-          window.location.reload()
+        if isLoginForm(response)
+          redirectToLogin
         else
           viewContext.render(
             html: response
