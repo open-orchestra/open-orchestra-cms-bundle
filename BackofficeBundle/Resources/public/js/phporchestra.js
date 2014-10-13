@@ -94,9 +94,15 @@ function callAndReload(action)
     });
 }
 
-function displayMenu()
+function displayMenu(route)
 {
-    var selectedPath = "#" + Backbone.history.fragment;
+    var selectedPath;
+
+    if (typeof route !== 'undefined') {
+        selectedPath = "#" + route;
+    } else {
+        selectedPath = "#" + Backbone.history.fragment;
+    }
     
     $.ajax({
         url: $('#left-panel nav').data("url"),
@@ -123,6 +129,10 @@ function displayMenu()
                 $(this).parents("ul").parent("li").find("b:first").html(opts.openedSign);
                 $(this).parents("ul").parent("li").addClass("open")
             });
+
+            if (typeof route !== 'undefined') {
+                Backbone.history.navigate(route, {trigger: true});
+            }
         }
     });
 }
