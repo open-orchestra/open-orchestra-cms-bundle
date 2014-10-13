@@ -124,3 +124,20 @@
         </li>
     {% endfor %}
 {% endmacro %}
+
+{% macro menu_modal_folder(folders, name) %}
+    {% for folder in folders %}
+        <li>
+            <a
+                id="media-modal-{{ folder.id }}"
+                data-url="{{folder.id}}">
+                {{ folder.name }}
+            </a>
+            {% if folder.subFolders is not empty %}
+                <ul >
+                    {{ _self.menu_modal_folder(folder.subFolders, name) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}

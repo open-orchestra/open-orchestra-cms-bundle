@@ -56,7 +56,7 @@ class MediaController extends AbstractAdminController
     {
         $rootFolders = $this->get('php_orchestra_model.repository.media_folder')->findAllRootFolder();
 
-        return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showFolderTree.html.twig', array(
+        return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showModalFolderTree.html.twig', array(
                 'folders' => $rootFolders,
         ));
     }
