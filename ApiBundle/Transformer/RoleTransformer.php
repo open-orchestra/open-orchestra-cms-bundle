@@ -20,6 +20,8 @@ class RoleTransformer extends AbstractTransformer
         $facade = new RoleFacade();
 
         $facade->name = $mixed->getName();
+        $facade->fromStatus = $mixed->getFromStatus();
+        $facade->toStatus = $mixed->getToStatus();
 
         $facade->addLink('_self', $this->generateRoute(
             'php_orchestra_api_role_show',
