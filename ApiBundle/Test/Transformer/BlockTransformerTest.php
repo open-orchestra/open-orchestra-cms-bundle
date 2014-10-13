@@ -87,14 +87,14 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
             array('sample', array('title' => 'title one', 'author' => 'me'), 'Sample'),
             array(
                 'sample',
-                array('title' => 'news', 'author' => 'benj', 'text' => 'hello world'),
+                array('title' => 'news', 'author' => 'benj', 'text' => 'Hello world'),
                 'Sample',
                 'fixture_full',
                 5
             ),
             array(
                 'news',
-                array('title' => 'news', 'author' => 'benj', 'text' => 'hello every body'),
+                array('title' => 'news', 'author' => 'benj', 'text' => 'Hello everybody'),
                 'News',
                 'fixture_home',
                 3
