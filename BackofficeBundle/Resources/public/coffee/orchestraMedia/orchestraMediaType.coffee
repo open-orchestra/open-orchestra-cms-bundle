@@ -1,4 +1,5 @@
 #--[ OPEN MEDIA MODAL ]--#
+
 $(document).on "click", ".mediaModalOpen", (event) ->
   button = event.currentTarget
   modalId = $(button).data("target")
@@ -28,6 +29,7 @@ $(document).on "click", ".mediaModalOpen", (event) ->
 
 
 #--[ CLOSE MEDIA MODAL ]--#
+
 $(document).on "click", ".mediaModalClose", (event) ->
   button = event.currentTarget
   modalId = $(button).data("target")
