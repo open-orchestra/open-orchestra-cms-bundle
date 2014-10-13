@@ -84,17 +84,17 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function blockTransformProvider()
     {
         return array(
-            array('sample', array('titre' => 'titre', 'author' => 'auteur'), 'Sample'),
+            array('sample', array('title' => 'title one', 'author' => 'me'), 'Sample'),
             array(
                 'sample',
-                array('titre' => 'news', 'author' => 'benj', 'text' => 'salut a tous'),
+                array('title' => 'news', 'author' => 'benj', 'text' => 'hello world'),
                 'Sample',
                 'fixture_full',
                 5
             ),
             array(
                 'news',
-                array('titre' => 'news', 'author' => 'benj', 'text' => 'salut a tous'),
+                array('title' => 'news', 'author' => 'benj', 'text' => 'hello every body'),
                 'News',
                 'fixture_home',
                 3
