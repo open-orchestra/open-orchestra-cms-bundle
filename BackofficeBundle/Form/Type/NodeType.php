@@ -66,6 +66,9 @@ class NodeType extends AbstractType
             ))
             ->add('status', 'orchestra_status', array(
                 'label' => 'php_orchestra_backoffice.form.node.status'
+            ))
+            ->add('nodeId', 'hidden', array(
+                'disabled' => true
             ));
 
         $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
