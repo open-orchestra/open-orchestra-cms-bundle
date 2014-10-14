@@ -3,7 +3,7 @@
         <div class="{{ block.method }}" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
             <span class="title">{{ block.uiModel.label }}</span>
             <div class="preview">
-                {{ block.uiModel.html }}
+                {{ block.uiModel.html|raw }}
             </div>
             <span class="action">
                 <i class="block-param fa fa-wrench"></i>
