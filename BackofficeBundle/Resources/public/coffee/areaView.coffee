@@ -145,7 +145,10 @@ AreaView = Backbone.View.extend(
       blocks = $("ul.resizable-" + @cid, @el).children()
       blockData = []
       for block in blocks
-        blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
+        if $('div[data-node-id]', block).length > 0
+          blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
+        else if $('div[data-block-type]', block).length > 0
+          blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
       areaData = {}
       areaData['blocks'] = blockData
       $.ajax
