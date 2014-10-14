@@ -63,7 +63,7 @@
             <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
         </a>
 
-        <div class="mediaModalContainer">
+        <div class="mediaModalContainer" data-input="{{ id }}">
             <div class="modal fade" id="{{ id }}_modal" tabindex="-1" role="dialog" aria-labelledby="{{ id }}_modal" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog">
                     <div class="modal-content">

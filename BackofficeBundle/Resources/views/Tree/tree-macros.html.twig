@@ -130,7 +130,9 @@
         <li>
             <a
                 id="media-modal-{{ folder.id }}"
-                data-url="{{folder.id}}">
+                class="media-modal-menu-folder"
+                data-url="{{ path('php_orchestra_api_media_list', {'folder_id': folder.id}) }}"
+                data-displayed-elements="name">
                 {{ folder.name }}
             </a>
             {% if folder.subFolders is not empty %}

@@ -38,3 +38,11 @@ $(document).on "click", ".mediaModalClose", (event) ->
   mediaModal.css "width", "0px"
   mediaModal.css "height", "0px"
   return
+
+
+#--[ FOLDER CLICKED ]--#
+
+$(document).on "click", ".media-modal-menu-folder", (event) ->
+  modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
+  displayLoader("#" + modalId + " .modal-body-content")
+  tableViewLoad($(event.target), "#" + modalId + " .modal-body-content")

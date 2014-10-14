@@ -1,5 +1,4 @@
 TableviewCollectionView = Backbone.View.extend(
-  el: '#content'
   events:
     'click #none': 'clickAdd'
   initialize: (options) ->
