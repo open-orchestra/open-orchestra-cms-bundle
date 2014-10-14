@@ -1,145 +1,84 @@
-refreshUl = (ul) ->
-  childs = undefined
-  direction = undefined
-  nbrChildren = undefined
-  childs = undefined
-  direction = undefined
-  nbrChildren = undefined
-  childs = ul.children().not(".ui-sortable-helper")
-  nbrChildren = childs.length
-  direction = ((if nbrChildren > 0 and ul.width() is childs.first().width() then "height" else "width"))
-  childs.each ->
-    $(this).css direction, (100 / nbrChildren) + "%"
-    return
-
-  return
-
-stockedUl = null
-
 AreaView = Backbone.View.extend(
-  tagName: 'li'
-  
-  className: 'ui-model-areas'
-  
+  tagName: "li"
+  className: "ui-model-areas"
   events:
-    'click i#none' : 'clickButton'
-    'sortupdate ul.ui-model-blocks': 'updateBlockSize'
-    'click i.block-remove': 'confirmRemoveBlock'
-  
+    "click i#none": "clickButton"
+    "click i.block-remove": "confirmRemoveBlock"
+
   initialize: (options) ->
     @area = options.area
     @height = options.height
-    @direction = options.direction || 'height'
     @node_id = options.node_id
-    @displayClass = (if @direction is "width" then "inline" else "block")
-    @areaTemplate = _.template($('#areaView').html())
-    paramkey = 'click i.area-param-' + @area.cid
-    @events[paramkey] = 'paramArea'
-    removekey = 'click i.area-remove-' + @area.cid
-    @events[removekey] = 'confirmRemoveArea'
+    @displayClass = options.displayClass
+    @areaTemplate = _.template($("#areaView").html())
+    paramkey = "click i.area-param-" + @area.cid
+    @events[paramkey] = "paramArea"
+    removekey = "click i.area-remove-" + @area.cid
+    @events[removekey] = "confirmRemoveArea"
     _.bindAll this, "render", "addAreaToView", "addBlockToView"
     return
-  
+
   paramArea: (event) ->
     label = "~no label yet~"
-    unless @area.get('label') is undefined
-      label = @area.get('label')
-    $('.modal-title').text('Area : ' + label)
-    view = new adminFormView(url: @area.get('links')._self_form)
-  
+    label = @area.get("label")  if @area.get("label") isnt undefined
+    $(".modal-title").text "Area : " + label
+    view = new adminFormView(url: @area.get("links")._self_form)
+    return
+
   confirmRemoveArea: (event) ->
-    if confirm 'Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?'
-      @removeArea event
-  
+    @removeArea event  if confirm("Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?")
+
   removeArea: (event) ->
-    brothers = $(@el).siblings()
+    ul = @el.parent()
     $(@el).remove()
-    if brothers
-      if $(brothers[0]).hasClass("block")
-        attribute = "height"
-      else
-        attribute = "width"
-      dimension = 100 / brothers.length
-      brothers.each ->
-        $(this).css attribute, dimension + "%"
-        return
+    refreshUl ul
     @sendRemoveArea()
     return
-  
+
   sendRemoveArea: ->
     $.ajax
-      url: @area.get('links')._self_delete
-      method: 'POST'
+      url: @area.get("links")._self_delete
+      method: "POST"
       error: ->
-        $('.modal-title').text 'Block removal'
-        $('.modal-body').html 'Erreur durant la suppression de la zone, veuillez recharger la page'
+        $(".modal-title").text "Block removal"
+        $(".modal-body").html "Erreur durant la suppression de la zone, veuillez recharger la page"
         $("#OrchestraBOModal").modal "show"
     return
-  
+
   render: ->
-    if @area.get('bo_direction') is 'v'
-      @childrenDirection = 'width'
-    else
-      @childrenDirection = 'height'
-    $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @areaTemplate(
+    $(@el).addClass(@displayClass).html @areaTemplate(
       area: @area
       cid: @cid
     )
-    areaHeight = 100 / @area.get('areas').length if @area.get('areas').length > 0
-    blockHeight = 100 / @area.get('blocks').length if @area.get('blocks').length > 0
-    for area of @area.get('areas')
-      @addAreaToView(@area.get('areas')[area], areaHeight)
-    for block of @area.get('blocks')
-      @addBlockToView(@area.get('blocks')[block], blockHeight)
-    $("ul.ui-model-blocks", @el).remove() if $("ul.ui-model-blocks", @el).children().length == 0
-    if $("ul.ui-model-areas", @el).children().length == 0
+    for area of @area.get("areas")
+      @addAreaToView @area.get("areas")[area]
+    for block of @area.get("blocks")
+      @addBlockToView @area.get("blocks")[block]
+    $("ul.ui-model-blocks", @el).remove()  if $("ul.ui-model-blocks", @el).children().length is 0
+    if $("ul.ui-model-areas", @el).children().length is 0
       $("ul.ui-model-areas", @el).remove()
-      $("ul.ui-model-blocks", @el).sortable(
-        connectWith: "ul.ui-model-blocks",
-        start: (event, ui)->
-          ui.placeholder.css "width", (100 * ui.item.width() / $(this).width()) + "%"
-          ui.placeholder.css "height", (100 * ui.item.height() / $(this).height()) + "%"
-        change: (event, ui) ->
-          refreshUl stockedUl  if stockedUl isnt null
-          stockedUl = ui.placeholder.parent()
-          refreshUl stockedUl
-          ui.helper.height ui.placeholder.height()
-          ui.helper.width ui.placeholder.width()
-      ).disableSelection()
+      makeSortable @el
     this
-  addAreaToView: (area, areaHeight) ->
-    areaElement = new Area
+
+  addAreaToView: (area) ->
+    areaElement = new Area()
     areaElement.set area
     areaView = new AreaView(
       area: areaElement
-      height: areaHeight
-      direction: @childrenDirection
       node_id: @node_id
+      displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
     )
     $("ul.ui-model-areas", @el).append areaView.render().el
-    return
-  
-  addBlockToView: (block, blockHeight) ->
-    blockElement = new Block
+
+  addBlockToView: (block) ->
+    blockElement = new Block()
     blockElement.set block
     blockView = new BlockView(
       block: blockElement
-      height: blockHeight
-      direction: @childrenDirection
+      displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
     )
     $("ul.ui-model-blocks", @el).append blockView.render().el
-  
-  updateBlockSize: ->
-    numberOfBlocks = $("ul.resizable-" + @cid, @el).children().length
-    if numberOfBlocks > 0
-      size = 100 / numberOfBlocks
-      $("li", "ul.resizable-" + @cid).attr('style', @childrenDirection + ':' + size + '%')
-      if @childrenDirection == 'width'
-        $("li.block", "ul.resizable-" + @cid).removeClass('block').addClass('inline')
-      else
-        $("li.inline", "ul.resizable-" + @cid).removeClass('inline').addClass('block')
-    @sendBlockData()
-  
+
   sendBlockData: ->
     if $("ul.ui-model-areas", @el).length == 0
       blocks = $("ul.resizable-" + @cid, @el).children()
@@ -155,13 +94,12 @@ AreaView = Backbone.View.extend(
         url: @area.get('links')._self_block
         method: 'POST'
         data: JSON.stringify(areaData)
-  
+
   confirmRemoveBlock: (event) ->
-    if @area.get('blocks').length > 0
-      if confirm 'Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?'
-        @removeBlock event
-  
+    @removeBlock event  if confirm("Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?")  if @area.get("blocks").length > 0
+
   removeBlock: (event) ->
-    event.currentTarget.parentNode.parentNode.parentNode.remove()
-    @updateBlockSize()
+    event.parents("li").first().remove()
+    refreshUl event.parents("ul").first()
+    @sendBlockData()
 )

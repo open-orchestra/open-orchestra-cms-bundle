@@ -46,18 +46,19 @@ NodeView = Backbone.View.extend(
       node: @node
     )
     $('.js-widget-title', @$el).text $('#generated-title', @$el).text()
-    areaHeight = 100 / @node.get('areas').length if @node.get('areas').length > 0
     for area of @node.get('areas')
-      @addAreaToView(@node.get('areas')[area], areaHeight)
+      @addAreaToView(@node.get('areas')[area])
     return
-  addAreaToView: (area, areaHeight) ->
+  addAreaToView: (area) ->
     areaElement = new Area
     areaElement.set area
     areaView = new AreaView(
       area: areaElement
-      height: areaHeight
-      node_id: @node.get('node_id')
+      node_id: @node.get('node_id'),
+      displayClass: (if @node.get("bo_direction") is "v" then "inline" else "block")
     )
     this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas').append areaView.render().el
+    $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
+      refreshUl $(this)
     return
 )

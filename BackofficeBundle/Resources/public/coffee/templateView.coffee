@@ -19,22 +19,18 @@ TemplateView = Backbone.View.extend(
       template: @template
     )
     $('.js-widget-title', @$el).text @template.get('name')
-    if @template.get('bo_direction') is 'v'
-      childrenDirection = 'width'
-    else
-      childrenDirection = 'height'
-    areaHeight = 100 / @template.get('areas').length if @template.get('areas').length > 0
     for area of @template.get('areas')
-      @addAreaToView(@template.get('areas')[area], areaHeight, childrenDirection)
+      @addAreaToView(@template.get('areas')[area])
     return
-  addAreaToView: (area, areaHeight, childrenDirection) ->
+  addAreaToView: (area) ->
     areaElement = new Area
     areaElement.set area
     areaView = new AreaView(
-      area: areaElement
-      height: areaHeight
-      direction: childrenDirection
+      area: areaElement,
+      displayClass: (if @template.get("bo_direction") is "v" then "inline" else "block")
     )
     this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas').append areaView.render().el
+    $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
+      refreshUl $(this)
     return
 )
