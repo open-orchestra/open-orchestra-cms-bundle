@@ -9,6 +9,7 @@ php_orchestra_backoffice:
         edit: Edit
         delete: Delete
         add: Add
+        select: Select
         status:
             published: Published
             draft: Draft

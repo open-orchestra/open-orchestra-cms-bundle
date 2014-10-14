@@ -144,6 +144,9 @@
         <% if (typeof links._self_delete !== 'undefined' ) { %>
             <a href="#" class="ajax-delete">{{ 'php_orchestra_backoffice.form.delete'|trans }}</a>
         <% } %>
+        <% if (typeof links._self_select !== 'undefined' ) { %>
+            <a href="<%= links._self_select %>" class="ajax-select">{{ 'php_orchestra_backoffice.form.select'|trans }}</a>
+        <% } %>
     </td>
 </script>
 

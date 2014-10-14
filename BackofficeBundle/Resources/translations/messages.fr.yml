@@ -4,6 +4,7 @@ php_orchestra_backoffice:
         edit: Editer
         delete: Supprimer
         add: Ajouter
+        select: Sélectionner
         status:
             published: Publié
             draft: Brouillon

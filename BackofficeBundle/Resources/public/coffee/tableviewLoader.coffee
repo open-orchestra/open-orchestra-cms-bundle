@@ -1,4 +1,6 @@
-tableViewLoad = (link) ->
+tableViewLoad = (link, target) ->
+  if typeof target is "undefined"
+    target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
   listUrl = Backbone.history.fragment
@@ -13,5 +15,6 @@ tableViewLoad = (link) ->
         displayedElements: displayedElements
         title: title
         listUrl: listUrl
+        el: target
       )
       appRouter.setCurrentMainView(view)

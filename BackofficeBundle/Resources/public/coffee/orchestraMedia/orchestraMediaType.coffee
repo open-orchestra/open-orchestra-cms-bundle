@@ -38,3 +38,20 @@ $(document).on "click", ".mediaModalClose", (event) ->
   mediaModal.css "width", "0px"
   mediaModal.css "height", "0px"
   return
+
+
+#--[ FOLDER CLICKED ]--#
+
+$(document).on "click", ".media-modal-menu-folder", (event) ->
+  modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
+  displayLoader("#" + modalId + " .modal-body-content")
+  tableViewLoad($(event.target), "#" + modalId + " .modal-body-content")
+
+#--[ MEDIA SELECTED ]--#
+
+$(document).on "click", ".mediaModalContainer .ajax-select", (event) ->
+  event.preventDefault()
+  mediaModalContainer = $(event.target).parents(".mediaModalContainer")
+  mediaId = $(event.target).attr('href')
+  $('#' + mediaModalContainer.data('input')).val(mediaId)
+  modalId = mediaModalContainer.find('.mediaModalClose').click()
