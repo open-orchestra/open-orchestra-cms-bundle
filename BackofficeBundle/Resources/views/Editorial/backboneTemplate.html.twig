@@ -138,13 +138,13 @@
 
 <script type="text/html" id="tableviewActions">
     <td>
-        <% if (typeof links._self_form !== 'undefined' ) { %>
+        <% if (typeof actions.form !== 'undefined' && typeof links._self_form !== 'undefined') { %>
             <a href="#" class="ajax-edit">{{ 'php_orchestra_backoffice.form.edit'|trans }}</a>
         <% } %>
-        <% if (typeof links._self_delete !== 'undefined' ) { %>
+        <% if (typeof actions.delete !== 'undefined' && typeof links._self_delete !== 'undefined' ) { %>
             <a href="#" class="ajax-delete">{{ 'php_orchestra_backoffice.form.delete'|trans }}</a>
         <% } %>
-        <% if (typeof links._self_select !== 'undefined' ) { %>
+        <% if (typeof actions.select !== 'undefined' && typeof links._self_select !== 'undefined' ) { %>
             <a href="<%= links._self_select %>" class="ajax-select">{{ 'php_orchestra_backoffice.form.select'|trans }}</a>
         <% } %>
     </td>

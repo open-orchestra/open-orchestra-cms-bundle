@@ -18,6 +18,8 @@ $(document).on "click", ".mediaModalOpen", (event) ->
   mediaModal.css "height", orchestraModal.css("height")
   mediaModalBody.css "min-height", (mediaModal.height() - 120) + "px"
   
+  $('#' + modalId + ' .modal-body-content').empty()
+  
   mediaModal.modal "show"
   
   view = new mediaFormView(
@@ -45,4 +47,4 @@ $(document).on "click", ".mediaModalClose", (event) ->
 $(document).on "click", ".media-modal-menu-folder", (event) ->
   modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
   displayLoader("#" + modalId + " .modal-body-content")
-  tableViewLoad($(event.target), "#" + modalId + " .modal-body-content")
+  tableViewLoad($(event.target), "#" + modalId + " .modal-body-content", {'select': true})

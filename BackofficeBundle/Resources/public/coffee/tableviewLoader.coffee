@@ -1,4 +1,4 @@
-tableViewLoad = (link, target) ->
+tableViewLoad = (link, target, documentActions) ->
   if typeof target is "undefined"
     target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
@@ -16,5 +16,6 @@ tableViewLoad = (link, target) ->
         title: title
         listUrl: listUrl
         el: target
+        documentActions: documentActions
       )
       appRouter.setCurrentMainView(view)

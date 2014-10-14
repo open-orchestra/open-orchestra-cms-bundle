@@ -62,23 +62,7 @@
         <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
             <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
         </a>
-
-        <div class="mediaModalContainer" data-input="{{ id }}">
-            <div class="modal fade" id="{{ id }}_modal" tabindex="-1" role="dialog" aria-labelledby="{{ id }}_modal" aria-hidden="true" data-backdrop="static">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close mediaModalClose" data-target="{{ id }}_modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="{{ id }}_modal_title">{{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-body-menu" data-url="{{ path('php_orchestra_backoffice_media_list_form') }}"></div>
-                            <div class="modal-body-content"></div>
-                            <div class="modal-body-end"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
+        {% include 'PHPOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
     {% endspaceless %}
 {% endblock %}
