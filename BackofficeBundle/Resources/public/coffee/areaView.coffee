@@ -103,7 +103,8 @@ AreaView = Backbone.View.extend(
       @removeBlock event  if confirm("Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?")
 
   removeBlock: (event) ->
-    event.parents("li").first().remove()
-    refreshUl event.parents("ul").first()
-    @sendBlockData()
+    ul = $(event.target).parents("ul").first()
+    $(event.target).parents("li").first().remove()
+    refreshUl ul
+    @sendBlockData({target: ul})
 )

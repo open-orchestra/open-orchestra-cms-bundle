@@ -1,40 +1,57 @@
 .blocks-panel {
   position: absolute;
-  top: 5px;
-  right: 0;
+  top: 70px;
+  right: 14px;
   width: 160px;
   z-index: 11;
-  background: #F1DA91;
+  background: #ffffff;
 }
 
 .blocks-panel.activate {
-  right: 0!important;
+  right: 14px!important;
   box-shadow: -11px 12px 23px;
   padding: 5px 10px 10px;
   height: auto;
 }
 
-.blocks-panel>span {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: block;
-  height: 30px;
-  width: 30px;
-  border-radius: 5px 0 0 5px;
-  padding: 2px;
-  text-align: center;
-  line-height: 28px;
-  cursor: pointer;
-  background: #F1DA91;
-}
-
-.blocks-panel.activate>span {
-  left: -30px;
-}
-
-.blocks-panel>span i {
+.blocks-panel #blocks-panel-setting i.fa-arrow-circle-left {
   font-size: 17px;
+}
+
+.blocks-panel.activate #blocks-panel-setting i.fa-arrow-circle-left:before{
+    content: "\f0a9";
+}
+
+#blocks-panel-setting {
+    background: none repeat scroll 0 0 #454545;
+    border-bottom: 1px solid #302f2f;
+    border-radius: 5px 0 0 5px;
+    color: #a8a8a8;
+    cursor: pointer;
+    display: block;
+    font-size: 19px;
+    height: 34px;
+    line-height: 34px;
+    padding: 0;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    top:0px;
+    transition: all 0.1s linear 0s;
+    width: 33px;
+}
+
+#blocks-panel-setting:hover {
+    background: none repeat scroll 0 0 #646464;
+    color: #e4e4e4;
+    width: 36px;
+}
+
+.blocks-panel.activate #blocks-panel-setting {
+  left: -33px;
+}
+.blocks-panel.activate #blocks-panel-setting:hover {
+  left: -36px;
 }
 
 .blocks-panel #blocks-panel-setting+h2 {
@@ -55,4 +72,8 @@
 
 .blocks-panel li.ui-model-blocks span.action {
   display: none;
+}
+
+#content .jarviswidget div.activate {
+  padding-right: 170px;
 }
