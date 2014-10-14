@@ -48,8 +48,11 @@ class BlockTransformer extends AbstractTransformer
         $facade->nodeId = $nodeId;
         $facade->blockId = $blockNumber;
 
-        $label = $this->translator->trans('php_orchestra_backoffice.block.' . $mixed->getComponent() . '.title');
-        $label = $mixed->getLabel();
+        if (is_null($mixed->getLabel())) {
+            $label = $mixed->getComponent();
+        } else {
+            $label = $mixed->getLabel();
+        }
 
         foreach ($mixed->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
@@ -92,14 +95,14 @@ class BlockTransformer extends AbstractTransformer
     {
         $block  = array();
 
-        if (!empty($facade->component)) {
+        if (!is_null($facade->component)) {
             $newBlock = new Block();
             $newBlock->setComponent($facade->component);
             $node->addBlock($newBlock);
             $blockIndex = $node->getBlockIndex($newBlock);
             $block['blockId'] = $blockIndex;
             $block['nodeId'] = 0;
-        } elseif (!empty($facade->nodeId) && !empty($facade->blockId)) {
+        } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             if ($facade->nodeId == $node->getNodeId()) {
                 $block['nodeId'] = 0;

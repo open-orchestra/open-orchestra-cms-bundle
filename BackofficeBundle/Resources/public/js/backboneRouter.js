@@ -157,7 +157,7 @@ var OrchestraBORouter = Backbone.Router.extend({
         this.setCurrentMainView(null);
         $('#main').append('<div id="content" />');
     }
-  },
+  }
 });
 
 

@@ -141,6 +141,12 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
                 5
             ),
             array(
+                'fixture_full',
+                array('blockId' => 0, 'nodeId' => 0),
+                'fixture_full',
+                0
+            ),
+            array(
                 'fixture_about_us',
                 array('blockId' => 3, 'nodeId' => 'fixture_full'),
                 'fixture_full',

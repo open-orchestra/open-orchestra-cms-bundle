@@ -109,8 +109,9 @@ class AreaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param AreaInterface     $mixed
-     * @param TemplateInterface $template
+     * @param AreaInterface          $mixed
+     * @param TemplateInterface|null $template
+     * @param string|null            $parentAreaId
      *
      * @return FacadeInterface
      */
