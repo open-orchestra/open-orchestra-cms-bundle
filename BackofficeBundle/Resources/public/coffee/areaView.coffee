@@ -5,7 +5,6 @@ AreaView = Backbone.View.extend(
     "click i#none": "clickButton"
     "sortupdate ul.ui-model-blocks": "sendBlockData"
     "click i.block-remove": "confirmRemoveBlock"
-    "sortupdate ul.ui-model-blocks": 'sendBlockData' 
 
   initialize: (options) ->
     @area = options.area
