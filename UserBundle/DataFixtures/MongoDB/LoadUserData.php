@@ -39,8 +39,7 @@ class LoadUserData implements FixtureInterface
         $nicolas->setPlainPassword('nicolas');
         $nicolas->addRole('ROLE_ADMIN');
         $nicolas->addRole('ROLE_USER');
-        $nicolas->addRole('ROLE_FROM_DRAFT');
-        $nicolas->addRole('ROLE_TO_PUBLISHED');
+        $nicolas->addRole('ROLE_FROM_PUBLISHED_TO_DRAFT');
         $nicolas->setEnabled(true);
 
         return $nicolas;
@@ -57,8 +56,7 @@ class LoadUserData implements FixtureInterface
         $benjamin->setPlainPassword('benjamin');
         $benjamin->addRole('ROLE_ADMIN');
         $benjamin->addRole('ROLE_USER');
-        $benjamin->addRole('ROLE_FROM_DRAFT');
-        $benjamin->addRole('ROLE_TO_PENDING');
+        $benjamin->addRole('ROLE_FROM_DRAFT_TO_PENDING');
         $benjamin->setEnabled(true);
 
         return $benjamin;
@@ -75,8 +73,7 @@ class LoadUserData implements FixtureInterface
         $noel->setPlainPassword('noel');
         $noel->addRole('ROLE_ADMIN');
         $noel->addRole('ROLE_USER');
-        $noel->addRole('ROLE_FROM_PENDING');
-        $noel->addRole('ROLE_TO_PUBLISHED');
+        $noel->addRole('ROLE_FROM_PENDING_TO_PUBLISHED');
         $noel->setEnabled(true);
 
         return $noel;

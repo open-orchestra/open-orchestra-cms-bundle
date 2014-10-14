@@ -21,6 +21,16 @@ class RoleType extends AbstractType
         $builder->add('name', null, array(
             'label' => 'php_orchestra_user.form.role.name',
         ));
+        $builder->add('fromStatus', 'document',array(
+            'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+            'label' => 'php_orchestra_user.form.role.from_status',
+            'required' => false,
+        ));
+        $builder->add('toStatus', 'document',array(
+            'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+            'label' => 'php_orchestra_user.form.role.to_status',
+            'required' => false,
+        ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
@@ -31,7 +41,7 @@ class RoleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\UserBundle\Document\Role',
+            'data_class' => 'PHPOrchestra\ModelBundle\Document\Role',
         ));
     }
 

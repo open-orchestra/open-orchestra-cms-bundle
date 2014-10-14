@@ -25,16 +25,16 @@ class OrchestraRoleTypeTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->role1 = Phake::mock('PHPOrchestra\UserBundle\Document\Role');
+        $this->role1 = Phake::mock('PHPOrchestra\ModelBundle\Document\Role');
         Phake::when($this->role1)->getName()->thenReturn($this->role1Name);
-        $this->role2 = Phake::mock('PHPOrchestra\UserBundle\Document\Role');
+        $this->role2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Role');
         Phake::when($this->role2)->getName()->thenReturn($this->role2Name);
 
         $this->roles = new ArrayCollection();
         $this->roles->add($this->role1);
         $this->roles->add($this->role2);
 
-        $this->roleRepository = Phake::mock('PHPOrchestra\UserBundle\Repository\RoleRepository');
+        $this->roleRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\RoleRepository');
         Phake::when($this->roleRepository)->findAll()->thenReturn($this->roles);
 
         $this->form = new OrchestraRoleType($this->roleRepository);

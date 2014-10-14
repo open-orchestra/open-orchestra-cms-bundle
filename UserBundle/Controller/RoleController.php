@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\UserBundle\Controller;
 
-use PHPOrchestra\UserBundle\Document\Role;
+use PHPOrchestra\ModelBundle\Document\Role;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,7 +63,7 @@ class RoleController extends Controller
      */
     public function formAction(Request $request, $roleId)
     {
-        $role = $this->get('php_orchestra_user.repository.role')->find($roleId);
+        $role = $this->get('php_orchestra_model.repository.role')->find($roleId);
 
         $form = $this->createForm(
             'role',

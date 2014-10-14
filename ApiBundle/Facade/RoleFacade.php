@@ -13,4 +13,14 @@ class RoleFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $name;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $fromStatus;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $toStatus;
 }

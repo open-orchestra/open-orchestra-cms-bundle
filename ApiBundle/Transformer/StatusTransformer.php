@@ -34,8 +34,17 @@ class StatusTransformer extends AbstractTransformer
         $facade->published = $mixed->isPublished();
         $facade->initial = $mixed->isInitial();
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
-        $facade->toRole = $mixed->getToRole();
-        $facade->fromRole = $mixed->getFromRole();
+
+        $toRoles = array();
+        foreach ($mixed->getToRoles() as $toRole) {
+            $toRoles[] = $toRole->getName();
+        }
+        $facade->toRole = implode(',', $toRoles);
+        $fromRoles = array();
+        foreach ($mixed->getFromRoles() as $fromRole) {
+            $fromRoles[] = $fromRole->getName();
+        }
+        $facade->fromRole = implode(',', $fromRoles);
 
         $facade->addLink('_self_delete', $this->generateRoute(
             'php_orchestra_api_status_delete',
