@@ -54,9 +54,8 @@ class NodeController extends AbstractAdminController
         $node = new $nodeClass();
 
         $contextManager = $this->get('php_orchestra_backoffice.context_manager');
-        $site = $contextManager->getCurrentSite();
 
-        $node->setSiteId(array_shift($site));
+        $node->setSiteId($contextManager->getCurrentSiteId());
         $node->setLanguage('fr');
         $node->setParentId($parentId);
 
