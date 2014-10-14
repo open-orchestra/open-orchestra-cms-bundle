@@ -11,6 +11,12 @@ TableviewView = Backbone.View.extend(
     _.bindAll this, "render"
     @elementTemplate = _.template($('#tableviewView').html())
     @actionsTemplate = _.template($('#tableviewActions').html())
+    @actions =
+      'form': true
+      'delete' : true
+    if (typeof options.actions isnt "undefined")
+      for action of options.actions
+        @actions[action] = options.actions[action]
     return
   render: ->
     for displayedElement in @displayedElements
@@ -19,6 +25,7 @@ TableviewView = Backbone.View.extend(
       )
     $(@el).append @actionsTemplate(
       links: @element.get('links')
+      actions: @actions
     )
     this
   clickDelete: (event) ->
