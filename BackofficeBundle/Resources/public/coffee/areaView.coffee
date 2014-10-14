@@ -4,6 +4,7 @@ AreaView = Backbone.View.extend(
   events:
     "click i#none": "clickButton"
     "click i.block-remove": "confirmRemoveBlock"
+    "sortupdate ul.ui-model-blocks": 'sendBlockData' 
 
   initialize: (options) ->
     @area = options.area
@@ -79,9 +80,11 @@ AreaView = Backbone.View.extend(
     )
     $("ul.ui-model-blocks", @el).append blockView.render().el
 
-  sendBlockData: ->
+  sendBlockData: (event)->
     if $("ul.ui-model-areas", @el).length == 0
-      blocks = $("ul.resizable-" + @cid, @el).children()
+      ul = $(event.target)
+      refreshUl ul
+      blocks = ul.children()
       blockData = []
       for block in blocks
         if $('div[data-node-id]', block).length > 0
