@@ -87,11 +87,35 @@ class ContextManager
     }
 
     /**
+     * Get the current site id
+     *
+     * @return string
+     */
+    public function getCurrentSiteId()
+    {
+        $site = $this->getCurrentSite();
+
+        return array_shift($site);
+    }
+
+    /**
+     * Get the current domain
+     *
+     * @return string
+     */
+    public function getCurrentSiteDomain()
+    {
+        $site = $this->getCurrentSite();
+
+        return $site['domain'];
+    }
+
+    /**
      * Get current selected site (BO Context)
      *
      * @return array
      */
-    public function getCurrentSite()
+    protected function getCurrentSite()
     {
         $currentSite = $this->session->get(self::KEY_SITE);
 

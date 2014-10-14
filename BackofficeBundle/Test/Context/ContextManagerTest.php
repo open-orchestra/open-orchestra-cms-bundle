@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\CMSBundle\Test\Context;
+namespace PHPOrchestra\BackOfficeBundle\Test\Context;
 
 use Phake;
 use PHPOrchestra\Backoffice\Context\ContextManager;
@@ -80,15 +80,31 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $site
+     * @param array  $site
+     * @param string $siteId
      *
-     * @dataProvider getSite
+     * @dataProvider getSiteId
      */
-    public function testGetCurrentSite($site)
+    public function testGetCurrentSiteId($site, $siteId)
     {
         Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
 
-        $this->assertEquals($site, $this->contextManager->getCurrentSite());
+        $this->assertEquals($siteId, $this->contextManager->getCurrentSiteId());
+
+        Phake::verify($this->session)->get(ContextManager::KEY_SITE);
+    }
+
+    /**
+     * @param array  $site
+     * @param string $domain
+     *
+     * @dataProvider getSiteDomain
+     */
+    public function testGetCurrentDomain($site, $domain)
+    {
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
+
+        $this->assertEquals($domain, $this->contextManager->getCurrentSiteDomain());
 
         Phake::verify($this->session)->get(ContextManager::KEY_SITE);
     }
@@ -109,14 +125,41 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Site provider
+     * SiteId provider
      *
      * @return array
      */
     public function getSite()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'))
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain')),
+            array(array('siteId' => 'id', 'domain' => 'domain')),
+        );
+    }
+
+    /**
+     * SiteId provider
+     *
+     * @return array
+     */
+    public function getSiteId()
+    {
+        return array(
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'), 'fakeId'),
+            array(array('siteId' => 'id', 'domain' => 'domain'), 'id'),
+        );
+    }
+
+    /**
+     * SiteId provider
+     *
+     * @return array
+     */
+    public function getSiteDomain()
+    {
+        return array(
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'), 'fakeDomain'),
+            array(array('siteId' => 'id', 'domain' => 'domain'), 'domain'),
         );
     }
 
