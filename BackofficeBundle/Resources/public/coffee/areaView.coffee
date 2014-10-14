@@ -3,6 +3,7 @@ AreaView = Backbone.View.extend(
   className: "ui-model-areas"
   events:
     "click i#none": "clickButton"
+    "sortupdate ul.ui-model-blocks": "sendBlockData"
     "click i.block-remove": "confirmRemoveBlock"
     "sortupdate ul.ui-model-blocks": 'sendBlockData' 
 
@@ -99,7 +100,8 @@ AreaView = Backbone.View.extend(
         data: JSON.stringify(areaData)
 
   confirmRemoveBlock: (event) ->
-    @removeBlock event  if confirm("Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?")  if @area.get("blocks").length > 0
+    if @area.get("blocks").length > 0
+      @removeBlock event  if confirm("Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?")
 
   removeBlock: (event) ->
     event.parents("li").first().remove()

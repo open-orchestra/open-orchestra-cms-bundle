@@ -20,7 +20,7 @@ class AreaController extends Controller
      * @param string  $nodeId
      * @param int     $areaId
      *
-     * @Config\Route("{nodeId}/{areaId}/update-block", name="php_orchestra_api_area_update_block")
+     * @Config\Route("/{nodeId}/{areaId}/update-block", name="php_orchestra_api_area_update_block")
      * @Config\Method({"POST"})
      *
      * @return Response
