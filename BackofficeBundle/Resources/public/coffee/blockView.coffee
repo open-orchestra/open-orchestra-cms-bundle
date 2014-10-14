@@ -5,9 +5,7 @@ BlockView = Backbone.View.extend(
     'click i.block-param': 'paramBlock'
   initialize: (options) ->
     @block = options.block
-    @height = options.height
-    @direction = options.direction || 'height'
-    @displayClass = (if @direction is "width" then "inline" else "block")
+    @displayClass = options.displayClass
     _.bindAll this, "render"
     @blockTemplate = _.template($('#blockView').html())
     return
@@ -15,7 +13,7 @@ BlockView = Backbone.View.extend(
     $('.modal-title').text 'Please wait ...'
     view = new adminFormView(url: @block.get('links')._self_form)
   render: ->
-    $(@el).attr('style', @direction + ':' + @height + '%').addClass(@displayClass).html @blockTemplate(
+    $(@el).addClass(@displayClass).html @blockTemplate(
       block: @block
     )
     this

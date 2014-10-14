@@ -1,9 +1,8 @@
 stockedUl = null
 refreshUl = (ul) ->
   childs = ul.children(':visible')
-  childOutFocus = childs.not(".ui-sortable-placeholder")
   nbrChildren = childs.length
-  direction = if childOutFocus.length > 0 and ul.width() is childOutFocus.first().width() then "height" else "width"
+  direction = if childs.filter(".block").length > 0 then "height" else "width"
   childs.each ->
     $(this).css direction, (100 / nbrChildren) + "%"
     return
