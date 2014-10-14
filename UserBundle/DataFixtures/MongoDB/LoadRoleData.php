@@ -5,7 +5,7 @@ namespace PHPOrchestra\UserBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\UserBundle\Document\Role;
+use PHPOrchestra\ModelBundle\Document\Role;
 
 /**
  * Class LoadRoleData

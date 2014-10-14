@@ -27,7 +27,7 @@ class RoleController extends Controller
      */
     public function showAction($roleId)
     {
-        $role = $this->get('php_orchestra_user.repository.role')->find($roleId);
+        $role = $this->get('php_orchestra_model.repository.role')->find($roleId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('role')->transform($role);
     }
@@ -41,7 +41,7 @@ class RoleController extends Controller
      */
     public function listAction()
     {
-        $roleCollection = $this->get('php_orchestra_user.repository.role')->findAll();
+        $roleCollection = $this->get('php_orchestra_model.repository.role')->findAll();
 
         return $this->get('php_orchestra_api.transformer_manager')->get('role_collection')->transform($roleCollection);
     }
@@ -56,7 +56,7 @@ class RoleController extends Controller
      */
     public function deleteAction($roleId)
     {
-        $role = $this->get('php_orchestra_user.repository.role')->find($roleId);
+        $role = $this->get('php_orchestra_model.repository.role')->find($roleId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
         $dm->remove($role);
         $dm->flush();

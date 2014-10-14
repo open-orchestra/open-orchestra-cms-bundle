@@ -52,12 +52,16 @@ class StatusType extends AbstractType
         $builder->add('labels', 'translated_value_collection', array(
             'label' => 'php_orchestra_backoffice.form.status.labels'
         ));
-        $builder->add('fromRoles', 'orchestra_role_choice', array(
+        $builder->add('fromRoles', 'document', array(
+            'class' => 'PHPOrchestra\ModelBundle\Document\Role',
             'required' => false,
+            'multiple' => true,
             'label' => 'php_orchestra_backoffice.form.status.from_role'
         ));
-        $builder->add('toRoles', 'orchestra_role_choice', array(
+        $builder->add('toRoles', 'document', array(
+            'class' => 'PHPOrchestra\ModelBundle\Document\Role',
             'required' => false,
+            'multiple' => true,
             'label' => 'php_orchestra_backoffice.form.status.to_role'
         ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

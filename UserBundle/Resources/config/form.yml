@@ -25,6 +25,6 @@ services:
     php_orchestra_user.type.orchestra_role_choice:
         class: %php_orchestra_user.type.orchestra_role_choice.class%
         arguments:
-            - @php_orchestra_user.repository.role
+            - @php_orchestra_model.repository.role
         tags:
             - { name: form.type, alias: orchestra_role_choice }

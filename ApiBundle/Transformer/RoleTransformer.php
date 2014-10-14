@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\RoleFacade;
-use PHPOrchestra\UserBundle\Document\Role;
+use PHPOrchestra\ModelBundle\Document\Role;
 
 /**
  * Class RoleTransformer

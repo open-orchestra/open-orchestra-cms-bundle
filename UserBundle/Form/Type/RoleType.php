@@ -41,7 +41,7 @@ class RoleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\UserBundle\Document\Role',
+            'data_class' => 'PHPOrchestra\ModelBundle\Document\Role',
         ));
     }
 

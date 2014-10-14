@@ -1,8 +1,6 @@
 parameters:
     php_orchestra_user.repository.user.class: PHPOrchestra\UserBundle\Repository\UserRepository
     php_orchestra_user.document.user.class: PHPOrchestra\UserBundle\Document\User
-    php_orchestra_user.repository.role.class: PHPOrchestra\UserBundle\Repository\RoleRepository
-    php_orchestra_user.document.role.class: PHPOrchestra\UserBundle\Document\Role
 
 services:
     php_orchestra_user.repository.user:
@@ -11,9 +9,3 @@ services:
         factory_method: getRepository
         arguments:
             - %php_orchestra_user.document.user.class%
-    php_orchestra_user.repository.role:
-        class: %php_orchestra_user.repository.role.class%
-        factory_service: doctrine.odm.mongodb.document_manager
-        factory_method: getRepository
-        arguments:
-            - %php_orchestra_user.document.role.class%

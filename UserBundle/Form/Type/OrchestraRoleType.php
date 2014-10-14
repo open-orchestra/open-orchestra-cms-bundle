@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\UserBundle\Form\Type;
 
-use PHPOrchestra\UserBundle\Repository\RoleRepository;
+use PHPOrchestra\ModelBundle\Repository\RoleRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

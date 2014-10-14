@@ -64,7 +64,7 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => 'PHPOrchestra\UserBundle\Document\Role'
+            'data_class' => 'PHPOrchestra\ModelBundle\Document\Role'
         ));
     }
 }
