@@ -10,6 +10,7 @@
                     <header>
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2 class="js-widget-title"></h2>
+                        <div class="js-widget-tools"></div>
                     </header>
                     <!-- widget div-->
                     <div>
@@ -45,6 +46,20 @@
         {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
         <%= node.get('updated_by') %>
     </div>
+    <div id="generated-tools" style="display: none">
+        <div class="blocks-panel">
+            <span class="blocks-panel-setting">
+                <i class="fa fa-arrow-circle-left"></i>
+            </span>
+            <h2>Blocks</h2>
+            <div class="ui-model scroll padding-10">
+                <ul class="ui-model-blocks">
+                    {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
+                    {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
+                </ul>
+            </div>
+        </div>
+    </div>
     <div role="container">
         <div class="ui-model">
             <span class="title"></span>
@@ -60,6 +75,22 @@
 </script>
 <script type="text/html" id="templateView">
     <% include headInclude %>
+    <div id="generated-title" style="display: none">
+        <%= template.get('name') %>
+    </div>
+    <div id="generated-tools" style="display: none">
+        <div class="blocks-panel">
+            <span class="blocks-panel-setting">
+                <i class="fa fa-arrow-circle-left"></i>
+            </span>
+            <h2>Blocks</h2>
+            <div class="ui-model scroll padding-10">
+                <ul class="ui-model-blocks">
+                    {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
+                </ul>
+            </div>
+        </div>
+    </div>
     <div role="container">
         <div class="ui-model">
             <span class="title"></span>
@@ -76,7 +107,7 @@
 <script type="text/html" id="areaView">
     <div>
         <span class="title">
-            <%= area.get('ui_model').label %> 
+            <%= area.get('ui_model').label %>
             <% if (area.get('ui_model').id) { %>
                 id="<%= area.get('ui_model').id %>"
             <% } %>

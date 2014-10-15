@@ -1,65 +1,51 @@
-.blocks-panel {
-  position: absolute;
-  top: 70px;
-  right: 14px;
-  width: 160px;
-  z-index: 11;
-  background: #ffffff;
-}
-
 .blocks-panel.activate {
-  right: 14px!important;
-  box-shadow: -11px 12px 23px;
-  padding: 5px 10px 10px;
   height: auto;
+  width: 170px;
 }
 
-.blocks-panel #blocks-panel-setting i.fa-arrow-circle-left {
+.blocks-panel .blocks-panel-setting i.fa-arrow-circle-left {
   font-size: 17px;
 }
 
-.blocks-panel.activate #blocks-panel-setting i.fa-arrow-circle-left:before{
+.blocks-panel.activate .blocks-panel-setting i.fa-arrow-circle-left:before{
     content: "\f0a9";
 }
 
-#blocks-panel-setting {
+.blocks-panel-setting {
     background: none repeat scroll 0 0 #454545;
     border-bottom: 1px solid #302f2f;
     border-radius: 5px 0 0 5px;
     color: #a8a8a8;
     cursor: pointer;
-    display: block;
+    display: inline-block;
     font-size: 19px;
-    height: 34px;
-    line-height: 34px;
+    height: 33px;
+    line-height: 37px;
     padding: 0;
-    position: absolute;
-    right: 0px;
     text-align: center;
-    top:0px;
     transition: all 0.1s linear 0s;
     width: 33px;
 }
+.activate .blocks-panel-setting {
+    margin-left:-33px;
+}
+.activate .blocks-panel-setting:hover {
+    margin-left:-36px;
+}
 
-#blocks-panel-setting:hover {
+.blocks-panel-setting:hover {
     background: none repeat scroll 0 0 #646464;
     color: #e4e4e4;
     width: 36px;
 }
 
-.blocks-panel.activate #blocks-panel-setting {
-  left: -33px;
-}
-.blocks-panel.activate #blocks-panel-setting:hover {
-  left: -36px;
-}
-
-.blocks-panel #blocks-panel-setting+h2 {
+.blocks-panel .blocks-panel-setting+h2 {
   display: none;
 }
 
-.blocks-panel.activate #blocks-panel-setting+h2 {
-  display: block;
+.blocks-panel.activate .blocks-panel-setting+h2 {
+  display:inline-block;
+  font-weight:800;
 }
 
 .blocks-panel .ui-model {
@@ -68,12 +54,22 @@
 
 .blocks-panel.activate .ui-model {
   display: block;
+  position:relative;
+  z-index:999;
+  margin-top:-6px;
+  -moz-box-shadow: -11px 12px 23px #aaa; 
+  -webkit-box-shadow: -11px 12px 23px #aaa; 
+  box-shadow: -11px 12px 23px #555; 
 }
 
 .blocks-panel li.ui-model-blocks span.action {
   display: none;
 }
 
-#content .jarviswidget div.activate {
-  padding-right: 170px;
+.js-widget-tools{
+    float: right;
+    height:34px;
+}
+#content div.panel-activate{
+    padding-right: 180px;
 }

@@ -18,7 +18,8 @@ TemplateView = Backbone.View.extend(
     $(@el).html @templateTemplate(
       template: @template
     )
-    $('.js-widget-title', @$el).text @template.get('name')
+    $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
+    $('.js-widget-tools', @$el).html $('#generated-tools', @$el).html()
     for area of @template.get('areas')
       @addAreaToView(@template.get('areas')[area])
     return
