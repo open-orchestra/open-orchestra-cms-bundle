@@ -4,19 +4,12 @@ $(document).on "click", ".mediaModalOpen", (event) ->
   button = event.currentTarget
   modalId = $(button).data("target")
   mediaModal = $("#" + modalId)
-  
   orchestraModal = $("#OrchestraBOModal")
   
-  mediaModalDialog = mediaModal.find(".modal-dialog:first")
-  left = (mediaModalDialog.width() - orchestraModal.width() - $.scrollbarWidth()) / 2
+  mediaModal.parent().detach().appendTo('body')
   
-  mediaModalBody = mediaModal.find(".modal-body:first")
-  
-  mediaModal.css "top", "-88px"
-  mediaModal.css "left", left + "px"
   mediaModal.css "width", orchestraModal.css("width")
   mediaModal.css "height", orchestraModal.css("height")
-  mediaModalBody.css "min-height", (mediaModal.height() - 120) + "px"
   
   $('#' + modalId + ' .modal-body-content').empty()
   
