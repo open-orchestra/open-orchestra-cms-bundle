@@ -40,15 +40,19 @@ $(document).on "click", ".mediaModalClose", (event) ->
 #--[ FOLDER CLICKED ]--#
 
 $(document).on "click", ".media-modal-menu-folder", (event) ->
-  modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
-  displayLoader("#" + modalId + " .modal-body-content")
-  tableViewLoad($(event.target), "#" + modalId + " .modal-body-content", {'select': true})
+  modalId = $(event.target).parents(".mediaModalContainer").find(".fade").attr("id")
+  displayLoader "#" + modalId + " .modal-body-content"
+  tableViewLoad $(event.target), "#" + modalId + " .modal-body-content",
+    select: true
 
 
 #--[ ADD MEDIA ]--#
 
 $(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
   modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
+  
+  folderName = $("#" + modalId + " .js-widget-title").text()
+  
   displayLoader("#" + modalId + " .modal-body-content")
   
   $.ajax
@@ -58,4 +62,5 @@ $(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
       view = new mediaFormView(
         html: response
         el: ("#" + modalId + " .modal-body-content")
+        title: $.trim(folderName)
       )

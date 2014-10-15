@@ -1,7 +1,7 @@
 mediaFormView = Backbone.View.extend(
   initialize: (options) ->
     @html = options.html
-    @title = 'Add a media'
+    @title = options.title
     @formTemplate = _.template($('#fullPageFormView').html())
     @render()
     return
