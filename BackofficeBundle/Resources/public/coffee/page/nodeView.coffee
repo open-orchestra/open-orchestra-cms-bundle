@@ -40,6 +40,8 @@ NodeView = Backbone.View.extend(
     $.ajax
       url: @node.get('links')._self_duplicate
       method: 'POST'
+      success: (response) ->
+        Backbone.history.loadUrl(Backbone.history.fragment)
     return
   render: ->
     $(@el).html @nodeTemplate(
