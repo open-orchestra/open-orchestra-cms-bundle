@@ -1,23 +1,22 @@
 #--[ OPEN MEDIA MODAL ]--#
 
 $(document).on "click", ".mediaModalOpen", (event) ->
-  button = event.currentTarget
-  modalId = $(button).data("target")
+  modalId = $(event.currentTarget).data("target")
   mediaModal = $("#" + modalId)
   orchestraModal = $("#OrchestraBOModal")
   
   mediaModal.parent().detach().appendTo('body')
+  $('#' + modalId + ' .modal-body-menu').empty()
+  $('#' + modalId + ' .modal-body-content').empty()
   
   mediaModal.css "width", orchestraModal.css("width")
   mediaModal.css "height", orchestraModal.css("height")
-  
-  $('#' + modalId + ' .modal-body-content').empty()
   
   mediaModal.modal "show"
   
   view = new mediaModalView(
     menuUrl: $('#' + modalId + ' .modal-body-menu').data('url'),
-    el: '#' + modalId;
+    el: '#' + modalId
   )
   
   return
@@ -26,12 +25,15 @@ $(document).on "click", ".mediaModalOpen", (event) ->
 #--[ CLOSE MEDIA MODAL ]--#
 
 $(document).on "click", ".mediaModalClose", (event) ->
-  button = event.currentTarget
-  modalId = $(button).data("target")
-  mediaModal = $("#" + modalId)
+  mediaModal = $("#" + $(event.currentTarget).data("target"))
   mediaModal.modal "hide"
+  mediaModalContainer = mediaModal.parent()
+  
+  mediaModalContainer.detach().appendTo($('#' + mediaModalContainer.data('input')).parent())
+  
   mediaModal.css "width", "0px"
   mediaModal.css "height", "0px"
+  
   return
 
 
@@ -53,7 +55,6 @@ $(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
     url: $(event.target).attr('href')
     method: 'GET'
     success: (response) ->
-#      $("#" + modalId + " .modal-body-content").html response
       view = new mediaFormView(
         html: response
         el: ("#" + modalId + " .modal-body-content")
