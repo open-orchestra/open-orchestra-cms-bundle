@@ -41,17 +41,18 @@ TableviewCollectionView = Backbone.View.extend(
     this.$el.find('tbody').append view.render().el
     return
   clickAdd: (event) ->
-    displayLoader('div[role="container"]')
-    Backbone.history.navigate('/add')
-    title = @title
-    listUrl = @listUrl
-    $.ajax
-      url: @elements.get('links')._self_add
-      method: 'GET'
-      success: (response) ->
-        view = new FullPageFormView(
-          html: response
-          title: title
-          listUrl: listUrl
-        )
+    if $('#main .' + $(event.target).attr('class')).length
+      displayLoader('div[role="container"]')
+      Backbone.history.navigate('/add')
+      title = @title
+      listUrl = @listUrl
+      $.ajax
+        url: @elements.get('links')._self_add
+        method: 'GET'
+        success: (response) ->
+          view = new FullPageFormView(
+            html: response
+            title: title
+            listUrl: listUrl
+          )
 )

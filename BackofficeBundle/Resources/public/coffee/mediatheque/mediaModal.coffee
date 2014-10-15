@@ -48,3 +48,9 @@ $(document).on "click", ".media-modal-menu-folder", (event) ->
   modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
   displayLoader("#" + modalId + " .modal-body-content")
   tableViewLoad($(event.target), "#" + modalId + " .modal-body-content", {'select': true})
+
+
+#--[ ADD MEDIA ]--#
+
+$(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
+  alert('step2')
