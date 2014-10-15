@@ -1,4 +1,6 @@
-showNode = (url)->
+showNode = (url, version)->
+  if (typeof version != 'undefined')
+    url = url + '?version=' + version
   $.ajax
     type: "GET"
     url: url
@@ -6,7 +8,10 @@ showNode = (url)->
       node = new Node
       node.set response
       switchLoaderFullPage('off')
-      view = new NodeView(node: node)
+      view = new NodeView(
+        node: node
+        version: version
+      )
       appRouter.setCurrentMainView(view)
       return
   return

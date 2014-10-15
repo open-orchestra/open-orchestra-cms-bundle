@@ -51,6 +51,35 @@ class NodeTransformer extends AbstractTransformer
             array('nodeId' => $mixed->getNodeId())
         ));
 
+        $facade->addLink('_self_version', $this->generateRoute('php_orchestra_api_node_list_version', array(
+            'nodeId' => $mixed->getNodeId()
+        )));
+
+        return $facade;
+    }
+
+    /**
+     * @param NodeInterface $mixed
+     *
+     * @return FacadeInterface
+     */
+    public function transformVersion($mixed)
+    {
+        $facade = new NodeFacade();
+
+        $facade->nodeId = $mixed->getNodeId();
+        $facade->name = $mixed->getName();
+        $facade->version = $mixed->getVersion();
+        $facade->createdBy = $mixed->getCreatedBy();
+        $facade->updatedBy = $mixed->getUpdatedBy();
+        $facade->createdAt = $mixed->getCreatedAt();
+        $facade->updatedAt = $mixed->getUpdatedAt();
+
+        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_node_show', array(
+            'nodeId' => $mixed->getNodeId(),
+            'version' => $mixed->getVersion(),
+        )));
+
         return $facade;
     }
 

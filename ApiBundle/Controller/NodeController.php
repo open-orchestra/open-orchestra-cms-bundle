@@ -7,6 +7,7 @@ use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class NodeController extends Controller
 {
     /**
+     * @param Request $request
      * @param string $nodeId
      *
      * @Config\Route("/{nodeId}", name="php_orchestra_api_node_show")
@@ -25,9 +27,10 @@ class NodeController extends Controller
      *
      * @return FacadeInterface
      */
-    public function showAction($nodeId)
+    public function showAction(Request $request, $nodeId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndLastVersion($nodeId);
+        $version = $request->get('version');
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId, $version);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
@@ -68,5 +71,21 @@ class NodeController extends Controller
         $em->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param string $nodeId
+     *
+     * @Config\Route("/{nodeId}/list-version", name="php_orchestra_api_node_list_version")
+     * @Config\Method({"GET"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function listVersionAction($nodeId)
+    {
+        $node = $this->get('php_orchestra_model.repository.node')->findByNodeId($nodeId);
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
     }
 }

@@ -2,14 +2,17 @@ NodeView = Backbone.View.extend(
   el: '#content'
   events:
     'click i#none' : 'clickButton'
+    'change select#selectbox': 'clickOption'
   initialize: (options) ->
     @node = options.node
+    @version = options.version
     key = "click i." + @node.cid
     @events[key] = "clickButton"
     key = 'click a.ajax-node-duplicate-' + @node.cid
     @events[key] = 'duplicateNode'
     _.bindAll this, "render", "addAreaToView", "clickButton", "duplicateNode"
     @nodeTemplate = _.template($("#nodeView").html())
+    @nodeTitle = _.template($("#nodeTitle").html())
     @render()
     nav_page_height()
     return
@@ -42,13 +45,16 @@ NodeView = Backbone.View.extend(
       method: 'POST'
     return
   render: ->
+    title = @nodeTitle(node: @node)
     $(@el).html @nodeTemplate(
       node: @node
+      title: title
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     $('.js-widget-tools', @$el).html $('#generated-tools', @$el).html()
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
+    @addVersionToView()
     return
   addAreaToView: (area) ->
     areaElement = new Area
@@ -61,5 +67,27 @@ NodeView = Backbone.View.extend(
     this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas').append areaView.render().el
     $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
       refreshUl $(this)
+    return
+  addVersionToView: ->
+    viewContext = this
+    $.ajax
+      type: "GET"
+      url: @node.get('links')._self_version
+      success: (response) ->
+        nodeCollection = new NodeCollectionElement
+        nodeCollection.set response
+        for nodeVersion of nodeCollection.get('nodes')
+          viewContext.addChoiceToSelectBox(nodeCollection.get('nodes')[nodeVersion])
+        return
+  addChoiceToSelectBox: (nodeVersion) ->
+    nodeVersionElement = new Node
+    nodeVersionElement.set nodeVersion
+    view = new NodeVersionView(
+      node: nodeVersionElement
+      version: @version
+    )
+    this.$el.find('select').append view.render()
+  clickOption: (event) ->
+    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + event.currentTarget.value, {trigger: true})
     return
 )

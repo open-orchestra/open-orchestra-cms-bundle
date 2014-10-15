@@ -1,6 +1,7 @@
 parameters:
     php_orchestra_api.transformer_manager.class: PHPOrchestra\ApiBundle\Transformer\TransformerManager
     php_orchestra_api.transformer.node.class: PHPOrchestra\ApiBundle\Transformer\NodeTransformer
+    php_orchestra_api.transformer.node_collection.class: PHPOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
     php_orchestra_api.transformer.template.class: PHPOrchestra\ApiBundle\Transformer\TemplateTransformer
     php_orchestra_api.transformer.area.class: PHPOrchestra\ApiBundle\Transformer\AreaTransformer
     php_orchestra_api.transformer.block.class: PHPOrchestra\ApiBundle\Transformer\BlockTransformer
@@ -30,6 +31,10 @@ services:
         arguments: [@router]
     php_orchestra_api.transformer.node:
         class: %php_orchestra_api.transformer.node.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.node_collection:
+        class: %php_orchestra_api.transformer.node_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.template:
