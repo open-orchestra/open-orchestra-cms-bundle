@@ -1,48 +1,53 @@
-.blocks-panel {
-  position: absolute;
-  top: 5px;
-  right: 0;
-  width: 160px;
-  z-index: 11;
-  background: #F1DA91;
-}
-
 .blocks-panel.activate {
-  right: 0!important;
-  box-shadow: -11px 12px 23px;
-  padding: 5px 10px 10px;
   height: auto;
+  width: 170px;
 }
 
-.blocks-panel>span {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: block;
-  height: 30px;
-  width: 30px;
-  border-radius: 5px 0 0 5px;
-  padding: 2px;
-  text-align: center;
-  line-height: 28px;
-  cursor: pointer;
-  background: #F1DA91;
-}
-
-.blocks-panel.activate>span {
-  left: -30px;
-}
-
-.blocks-panel>span i {
+.blocks-panel .blocks-panel-setting i.fa-arrow-circle-left {
   font-size: 17px;
 }
 
-.blocks-panel #blocks-panel-setting+h2 {
+.blocks-panel.activate .blocks-panel-setting i.fa-arrow-circle-left:before{
+    content: "\f0a9";
+}
+
+.blocks-panel-setting {
+    background: none repeat scroll 0 0 #454545;
+    border-bottom: 1px solid #302f2f;
+    border-radius: 5px 0 0 5px;
+    color: #a8a8a8;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 19px;
+    height: 33px;
+    line-height: 37px;
+    padding: 0;
+    text-align: center;
+    transition: all 0.1s linear 0s;
+    width: 33px;
+}
+
+.activate .blocks-panel-setting {
+    margin-left:-33px;
+}
+
+.activate .blocks-panel-setting:hover {
+    margin-left:-36px;
+}
+
+.blocks-panel-setting:hover {
+    background: none repeat scroll 0 0 #646464;
+    color: #e4e4e4;
+    width: 36px;
+}
+
+.blocks-panel .blocks-panel-setting+h2 {
   display: none;
 }
 
-.blocks-panel.activate #blocks-panel-setting+h2 {
-  display: block;
+.blocks-panel.activate .blocks-panel-setting+h2 {
+  display:inline-block;
+  font-weight:800;
 }
 
 .blocks-panel .ui-model {
@@ -51,8 +56,25 @@
 
 .blocks-panel.activate .ui-model {
   display: block;
+  position:relative;
+  z-index:999;
+  margin-top:-6px;
+}
+
+.panel-shadow {
+  -moz-box-shadow: -11px 12px 23px #aaa; 
+  -webkit-box-shadow: -11px 12px 23px #aaa; 
+  box-shadow: -11px 12px 23px #555; 
 }
 
 .blocks-panel li.ui-model-blocks span.action {
   display: none;
+}
+
+.js-widget-tools{
+    float: right;
+    height:34px;
+}
+#content div.panel-activate{
+    padding-right: 180px;
 }
