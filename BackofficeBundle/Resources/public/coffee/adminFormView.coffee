@@ -53,6 +53,7 @@ adminFormView = Backbone.View.extend(
               displayRoute = route.toString().replace(/,/g, '/')
             else
               displayRoute = Backbone.history.fragment
+              Backbone.history.loadUrl(displayRoute)
             displayMenu(displayRoute)
     return
 )

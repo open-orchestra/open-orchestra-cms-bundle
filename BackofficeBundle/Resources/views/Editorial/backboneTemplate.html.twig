@@ -35,16 +35,27 @@
     <!-- end row -->
     </section>
 </script>
+<script type="text/html" id="nodeTitle">
+    <%= node.get('name') %>
+    ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
+    {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
+    <%= node.get('updated_at') %>
+    {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
+    <%= node.get('updated_by') %>
+</script>
+<script type="text/html" id="nodeChoice">
+    <option class="version-select-<%= cid %>" value="<%= node.get('version') %>" <% if (node.get('version') == version) { %>selected="selected"<% } %>>
+        <%= title %>
+    </option>
+</script>
 <script type="text/html" id="nodeView">
     <a href="#" class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</a>
     <% include headInclude %>
+    <div id="additionalContent" style="margin-bottom: 15px">
+        <select id="selectbox"></select>
+    </div>
     <div id="generated-title" style="display: none">
-        <%= node.get('name') %>
-        ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
-        {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
-        <%= node.get('updated_at') %>
-        {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
-        <%= node.get('updated_by') %>
+        <%= title %>
     </div>
     <div id="generated-tools" style="display: none">
         <div class="blocks-panel">
