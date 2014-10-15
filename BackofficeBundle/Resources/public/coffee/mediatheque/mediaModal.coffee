@@ -22,7 +22,7 @@ $(document).on "click", ".mediaModalOpen", (event) ->
   
   mediaModal.modal "show"
   
-  view = new mediaFormView(
+  view = new mediaModalView(
     menuUrl: $('#' + modalId + ' .modal-body-menu').data('url'),
     el: '#' + modalId;
   )
@@ -53,4 +53,16 @@ $(document).on "click", ".media-modal-menu-folder", (event) ->
 #--[ ADD MEDIA ]--#
 
 $(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
-  alert('step2')
+  modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
+  displayLoader("#" + modalId + " .modal-body-content")
+  
+  $.ajax
+    url: $(event.target).attr('href')
+    method: 'GET'
+    success: (response) ->
+#      $("#" + modalId + " .modal-body-content").html response
+      view = new adminFormView(
+        html: response
+        title: 'title'
+        listUrl: 'listUrl'
+      )

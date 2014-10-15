@@ -1,4 +1,4 @@
-mediaFormView = Backbone.View.extend(
+mediaModalView = Backbone.View.extend(
   initialize: (options) ->
     @el = options.el
     @menuUrl = options.menuUrl
