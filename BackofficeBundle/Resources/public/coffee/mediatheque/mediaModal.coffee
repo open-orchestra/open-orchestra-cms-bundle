@@ -61,8 +61,7 @@ $(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
     method: 'GET'
     success: (response) ->
 #      $("#" + modalId + " .modal-body-content").html response
-      view = new adminFormView(
+      view = new mediaFormView(
         html: response
-        title: 'title'
-        listUrl: 'listUrl'
+        el: ("#" + modalId + " .modal-body-content")
       )
