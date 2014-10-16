@@ -2,6 +2,9 @@ build:
     environment:
         php: '5.4.28'
         mongodb: true
+    dependencies:
+        override:
+            - 'ls'
     tests:
         override:
             - 'ls'
