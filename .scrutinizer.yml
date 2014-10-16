@@ -2,7 +2,10 @@ build:
     environment:
         php: '5.4.28'
         mongodb: true
-    tests: { }
+    tests:
+        override:
+            -
+                command: ls
 
 tools:
     php_sim: true
