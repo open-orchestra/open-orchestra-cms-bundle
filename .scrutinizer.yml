@@ -2,6 +2,12 @@ build:
     environment:
         php: '5.4.28'
         mongodb: true
+    tests:
+            inference:
+                -
+                    command: 'bin/phpunit --coverage-clover=coverage0'
+                    coverage: { file: coverage0, format: php-clover }
+                    not_if: true
 
 tools:
     php_sim: true
@@ -13,9 +19,3 @@ tools:
     php_analyzer: false
     sensiolabs_security_checker: true
     external_code_coverage: true
-    tests:
-            inference:
-                -
-                    command: 'bin/phpunit --coverage-clover=coverage0'
-                    coverage: { file: coverage0, format: php-clover }
-                    not_if: true
