@@ -11,7 +11,7 @@ class HtmlClassTransformer implements DataTransformerInterface
 {
     /**
      * Transforms a normalized html class to a view html class
-     * 
+     *
      * @param string $normData
      * @return string
      */
@@ -22,7 +22,7 @@ class HtmlClassTransformer implements DataTransformerInterface
 
     /**
      * Transforms a view html class to a normalized html class
-     * 
+     *
      * @param string $viewData
      * @return string
      */

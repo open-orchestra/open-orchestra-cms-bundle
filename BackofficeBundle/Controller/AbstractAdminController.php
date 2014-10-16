@@ -13,7 +13,7 @@ abstract class AbstractAdminController extends Controller
 {
     /**
      * Do some stuff if admin form is valid
-     * 
+     *
      * @param FormInterface $form
      * @param string        $successMessage
      * @param mixed|null    $itemToPersist
@@ -35,7 +35,7 @@ abstract class AbstractAdminController extends Controller
 
     /**
      * Render admin form and tag response with status 400 if form is badly completed
-     * 
+     *
      * @param FormInterface $form
      * @param array         $params additional view parameters
      *
