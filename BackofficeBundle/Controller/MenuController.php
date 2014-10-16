@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 /**
  * Class MenuController
  */
-
 class MenuController extends Controller
 {
     /**
