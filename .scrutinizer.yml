@@ -2,12 +2,7 @@ build:
     environment:
         php: '5.4.28'
         mongodb: true
-    tests:
-            inference:
-                -
-                    command: 'bin/phpunit --coverage-clover=coverage0'
-                    coverage: { file: coverage0, format: php-clover }
-                    not_if: true
+    tests: { }
 
 tools:
     php_sim: true
