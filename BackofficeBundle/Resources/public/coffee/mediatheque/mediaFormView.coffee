@@ -1,26 +1,29 @@
 mediaFormView = Backbone.View.extend(
   initialize: (options) ->
-    @el = options.el
-    @menuUrl = options.menuUrl
-    @method = if options.method then options.method else 'GET'
-    @call()
+    @html = options.html
+    @title = options.title
+    @formTemplate = _.template($('#fullPageFormView').html())
+    @render()
     return
-  call: ->
+  render: ->
+    $(@el).html @formTemplate (
+      html: @html
+      listUrl: @listUrl
+    )
+    $('.js-widget-title', @$el).text @title
+    $('.back-to-list', @el).remove()
+    $("[data-prototype]").each ->
+      PO.formPrototypes.addPrototype $(this)
+      return
+    @addEventOnForm()
+    return
+  addEventOnForm: ->
     viewContext = this
-    displayLoader(@el + ' .modal-body-menu')
-    $.ajax
-      url: @menuUrl
-      method: @method
-      success: (response) ->
-        if isLoginForm(response)
-          redirectToLogin
-        else
-          viewContext.render(
-            html: response
-          )
-      error: ->
-        $(@el + ' .modal-body').html 'Erreur durant le chargement'
-    return
-  render: (options) ->
-    $(@el + ' .modal-body-menu').html options.html
+    $("form", @$el).on "submit", (e) ->
+      e.preventDefault() # prevent native submit
+      $(this).ajaxSubmit
+        success: (response) ->
+          viewContext.html = response
+          viewContext.render()
+      return
 )
