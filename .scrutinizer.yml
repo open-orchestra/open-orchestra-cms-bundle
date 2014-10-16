@@ -4,8 +4,7 @@ build:
         mongodb: true
     tests:
         override:
-            -
-                command: ls
+            - 'ls'
 
 tools:
     php_sim: true
