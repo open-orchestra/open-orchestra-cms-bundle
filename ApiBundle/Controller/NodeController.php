@@ -49,7 +49,10 @@ class NodeController extends Controller
     public function deleteAction($nodeId)
     {
         /** @var NodeInterface $node */
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
         $this->get('php_orchestra_backoffice.manager.node')->deleteTree($node);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
@@ -67,7 +70,10 @@ class NodeController extends Controller
     public function duplicateAction($nodeId)
     {
         /** @var NodeInterface $node */
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndLastVersion($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
         $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newNode);
@@ -87,7 +93,10 @@ class NodeController extends Controller
      */
     public function listVersionAction($nodeId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findByNodeId($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findByNodeIdAndSiteId(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
     }
