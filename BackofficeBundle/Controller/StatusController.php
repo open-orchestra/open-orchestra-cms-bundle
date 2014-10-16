@@ -60,7 +60,8 @@ class StatusController extends Controller
      *
      * @return Response
      */
-    protected function formHandler($url, Request $request, AbstractStatus $status, $message){
+    protected function formHandler($url, Request $request, AbstractStatus $status, $message)
+    {
         $form = $this->createForm(
             'status',
             $status,
@@ -84,5 +85,5 @@ class StatusController extends Controller
             'form' => $form->createView()
         ));
     }
-    
+
 }

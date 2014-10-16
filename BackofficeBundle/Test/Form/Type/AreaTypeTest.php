@@ -33,7 +33,7 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
     {
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($formBuilderMock)->create(Phake::anyParameters())->thenReturn($formBuilderMock);
-        
+
         $this->areaType->buildForm($formBuilderMock, $options);
 
         Phake::verify($formBuilderMock, Phake::times($expectedCount))->addEventSubscriber(Phake::anyParameters());
@@ -61,7 +61,7 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('area', $this->areaType->getName());
     }
-    
+
     /**
      * Options provider
      *
