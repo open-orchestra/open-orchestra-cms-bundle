@@ -26,7 +26,10 @@ class BlockController extends AbstractAdminController
      */
     public function formAction(Request $request, $nodeId, $blockNumber = 0)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
         $block = $node->getBlocks()->get($blockNumber);
 
         $form = $this->createForm(
@@ -70,7 +73,10 @@ class BlockController extends AbstractAdminController
      */
     public function listExistingBlocksAction()
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion(NodeInterface::ROOT_NODE_ID);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            NodeInterface::ROOT_NODE_ID,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
         $transformer = $facade = $this->get('php_orchestra_api.transformer_manager')->get('block');
         $blocks = $node->getBlocks();
         foreach ($blocks as $key => $block) {

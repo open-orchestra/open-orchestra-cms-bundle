@@ -30,7 +30,10 @@ class NodeController extends Controller
     public function showAction(Request $request, $nodeId)
     {
         $version = $request->get('version');
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId, $version);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node')->transform($node);
     }

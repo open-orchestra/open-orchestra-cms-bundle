@@ -23,8 +23,11 @@ class AreaController extends AbstractAdminController
      */
     public function formAction(Request $request, $nodeId, $areaId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
-        $area = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $areaId);
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
+        $area = $this->get('php_orchestra_model.repository.node')->findAreaFromNodeAndAreaId($node, $areaId);
 
         $form = $this->createForm(
             'area',

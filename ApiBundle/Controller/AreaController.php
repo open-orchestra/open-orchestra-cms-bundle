@@ -51,7 +51,10 @@ class AreaController extends Controller
      */
     public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
-        $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
+        $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion(
+            $nodeId,
+            $this->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId()
+        );
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
@@ -60,7 +63,7 @@ class AreaController extends Controller
 
     /**
      * @param string $areaId
-     * @param string $nodeId
+     * @param string $templateId
      *
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="php_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
