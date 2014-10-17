@@ -26,7 +26,7 @@ class FolderController extends Controller
      */
     public function deleteAction($folderId)
     {
-        $folder = $this->get('php_orchestra_model.repository.media_folder')->findOne($folderId);
+        $folder = $this->get('php_orchestra_model.repository.media_folder')->findOneById($folderId);
         $this->get('php_orchestra_backoffice.manager.media_folder')->deleteTree($folder);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
