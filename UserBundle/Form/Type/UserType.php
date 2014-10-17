@@ -11,15 +11,17 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class UserType
  */
-class UserType extends AbstractType
+class UserType extends RegistrationUserType
 {
     protected $translator;
 
     /**
+     * @param string              $class
      * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct($class, TranslatorInterface $translator)
     {
+        parent::__construct($class, $translator);
         $this->translator = $translator;
     }
 
@@ -29,26 +31,11 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('roles', 'collection', array(
-            'type' => 'orchestra_role_choice',
-            'allow_add' => true,
-            'attr' => array(
-                'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
-                'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_option.new'),
-                'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_option.delete'),
-            )
-        ));
+        parent::buildForm($builder, $options);
+        $builder->remove('firstName')
+            ->remove('lastName')
+            ->remove('username');
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\UserBundle\Document\User'
-        ));
     }
 
     /**
