@@ -45,6 +45,10 @@ class UserController extends Controller
                 'success',
                 $this->get('translator')->trans('php_orchestra_user.new.success')
             );
+
+            $url = $this->generateUrl('php_orchestra_user_user_form', array('userId' => $user->getId()));
+
+            return $this->redirect($url);
         }
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
