@@ -27,7 +27,7 @@ class FolderController extends AbstractAdminController
         $folderRepository = $this->container->get('php_orchestra_model.repository.media_folder');
         $folder = $folderRepository->find($folderId);
 
-        $url = $this->generateUrl('php_orchestra_backoffice_folder_new', array('parentId' => $parentId));
+        $url = $this->generateUrl('php_orchestra_backoffice_folder_form', array('folderId' => $folderId));
         $form = $this->generateForm($folder, $url);
 
         $form->handleRequest($request);
@@ -37,8 +37,7 @@ class FolderController extends AbstractAdminController
             $this->get('translator')->trans('php_orchestra_backoffice.form.folder.success'),
             $folder
         );
-
-        return $this->renderAdminForm($form);
+        return $this->renderAdminForm($form, array('path' => $this->generateUrl('php_orchestra_api_media_list', array('folderId' => $folder->getId()))));
     }
 
     /**
@@ -67,7 +66,6 @@ class FolderController extends AbstractAdminController
             $statusCode = 400;
         } elseif (!is_null($folder->getName())) {
             $url = $this->generateUrl('php_orchestra_backoffice_folder_form', array('folderId' => $folder->getId()));
-
             return $this->redirect($url);
         } else {
             $statusCode = 200;

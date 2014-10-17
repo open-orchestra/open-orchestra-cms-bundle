@@ -46,14 +46,13 @@ adminFormView = Backbone.View.extend(
             view = viewContext.render(
               html: response
             )
-            if $('#node_nodeId', viewContext.$el).length > 0
-              nodeId = $('#node_nodeId', viewContext.$el).val()
-              route = Backbone.history.fragment.split('/')
-              route[2] = nodeId
-              displayRoute = route.toString().replace(/,/g, '/')
+            if $('.redirect-path', viewContext.$el).length > 0
+              path = $('.redirect-path', viewContext.$el).html()
+              displayRoute = 'a[data-url="' + path + '"]'
             else
               displayRoute = Backbone.history.fragment
               Backbone.history.loadUrl(displayRoute)
+              displayRoute = 'a[href="#' + path + '"]'
             displayMenu(displayRoute)
     return
 )

@@ -99,9 +99,9 @@ function displayMenu(route)
     var selectedPath;
 
     if (typeof route !== 'undefined') {
-        selectedPath = "#" + route;
+        selectedPath = route;
     } else {
-        selectedPath = "#" + Backbone.history.fragment;
+        selectedPath = 'a[href="#' + Backbone.history.fragment + '"]';
     }
     
     $.ajax({
@@ -121,8 +121,8 @@ function displayMenu(route)
             $('nav ul').jarvismenu(opts);
             
             // tag selected path 
-            $('nav li:has(a[href="' + selectedPath + '"])').addClass("active");
-            
+            $('nav li:has(' + selectedPath + ')').addClass("active");
+            var href = $(selectedPath).attr('href');
             // open selected path
             $('#left-panel nav').find("li.active").each(function() {
                 $(this).parents("ul").slideDown(opts.speed);
@@ -131,7 +131,7 @@ function displayMenu(route)
             });
 
             if (typeof route !== 'undefined') {
-                Backbone.history.navigate(route, {trigger: true});
+                Backbone.history.navigate(href, {trigger: true});
             }
         }
     });
