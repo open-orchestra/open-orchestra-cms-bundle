@@ -106,7 +106,7 @@
     {% endfor %}
 {% endmacro %}
 
-{% macro menu_folder(folders, name) %}
+{% macro menu_folder(folders, parent_id) %}
     {% for folder in folders %}
         <li>
             <a
@@ -124,36 +124,23 @@
             </a>
             {% if folder.subFolders is not empty %}
                 <ul >
-                    {{ _self.menu_folder(folder.subFolders, name) }}
-                    <li>
-                        <div class="ui-state-unsortable">
-                            <a
-                                class="ajax-new"
-                                href="#"
-                                data-url="{{ path('php_orchestra_backoffice_folder_new', {'parent_id': folder.id}) }}"
-                            >
-                                <i class="fa fa-file"></i>
-                                {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
-                            </a>
-                        </div>
-                    </li>
+                    {{ _self.menu_folder(folder.subFolders, folder.id) }}
                 </ul>
             {% endif %}
         </li>
-    {%  else %}
+{% endfor %}
         <li>
             <div class="ui-state-unsortable">
                 <a
                     class="ajax-new"
                     href="#"
-                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parent_id': '-'}) }}"
+                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parent_id': parent_id}) }}"
                 >
                     <i class="fa fa-file"></i>
-                    {{ 'php_orchestra_backoffice.left_menu.tree.new_folder'|trans }}
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
                 </a>
             </div>
         </li>
-{% endfor %}
 {% endmacro %}
 
 {% macro menu_modal_folder(folders, name) %}
