@@ -17,16 +17,16 @@ use Symfony\Component\HttpFoundation\Response;
 class FolderController extends Controller
 {
     /**
-     * @param string $folder_id
+     * @param string $folderId
      *
-     * @Config\Route("/{folder_id}/delete", name="php_orchestra_api_folder_delete")
+     * @Config\Route("/{folderId}/delete", name="php_orchestra_api_folder_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
-    public function deleteAction($folder_id)
+    public function deleteAction($folderId)
     {
-        $folder = $this->get('php_orchestra_model.repository.media_folder')->findOneById($folder_id);
+        $folder = $this->get('php_orchestra_model.repository.media_folder')->findOne($folderId);
         $this->get('php_orchestra_backoffice.manager.media_folder')->deleteTree($folder);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
