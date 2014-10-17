@@ -112,11 +112,11 @@
             <a
                 href="#{{ folder.id }}/list"
                 id="{{ folder.id }}"
-                data-url="{{ path('php_orchestra_api_media_list', {'folder_id': folder.id}) }}"
+                data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
                 <i
                     class="fa fa-trash-o ajax-delete"
-                    data-delete-url="{{ path('php_orchestra_api_folder_delete', {'folder_id': folder.id}) }}"
+                    data-delete-url="{{ path('php_orchestra_api_folder_delete', {'folderId': folder.id}) }}"
                     data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_media_folder'|trans({'%folderName%': folder.name}) }}"
                 >
                 </i>
@@ -134,7 +134,7 @@
                 <a
                     class="ajax-new"
                     href="#"
-                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parent_id': parent_id}) }}"
+                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parentId': parent_id}) }}"
                 >
                     <i class="fa fa-file"></i>
                     {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
