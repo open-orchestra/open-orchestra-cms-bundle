@@ -82,12 +82,10 @@ class HomepageControllerTest extends WebTestCase
 
         $crawler = $client->submit($form);
         $crawler = $client->request('GET', '/admin/');
-        $crawler = $client->request('GET', '/api/context/site/2/www.bphpOrchestra.fr');
-        $crawler = $client->request('GET', '/admin/');
 
         $nbLink = $crawler->filter('a')->count();
 
-        $crawler = $client->request('GET', '/admin/node/new/fixture_page_what_is_orchestra');
+        $crawler = $client->request('GET', '/admin/node/new/fixture_full');
 
         $formUser = $crawler->selectButton('node_submit')->form();
 

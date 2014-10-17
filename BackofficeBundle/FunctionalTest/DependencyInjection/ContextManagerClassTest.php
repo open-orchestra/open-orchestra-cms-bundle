@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\DependencyInjection;
+namespace PHPOrchestra\BackofficeBundle\FunctionalTest\DependencyInjection;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
