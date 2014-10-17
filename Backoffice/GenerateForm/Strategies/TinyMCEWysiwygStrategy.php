@@ -30,12 +30,10 @@ class TinyMCEWysiwygStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $form->add('htmlContent', 'ckeditor', array(
+        $form->add('htmlContent', 'textarea', array(
+            'attr' => array('class' => 'tinymce'),
             'mapped' => false,
             'data' => array_key_exists('htmlContent', $attributes)? $attributes['htmlContent']: '',
-            'attr' => array(
-                'class' => 'tinymce'
-            )
         ));
     }
 
