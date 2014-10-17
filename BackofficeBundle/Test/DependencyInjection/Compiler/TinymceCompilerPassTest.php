@@ -21,7 +21,6 @@ class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $this->tinymce = Phake::mock('Stfalcon\Bundle\TinymceBundle\DependencyInjection\StfalconTinymceExtension');
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\ContainerBuilder');
-        Phake::when($this->container)->getDefinition(Phake::anyParameters())->thenReturn($this->tinymce);
 
         $this->compiler = new TinymceCompilerPass();
     }
@@ -44,11 +43,12 @@ class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testWithDefinition($param)
     {
         Phake::when($this->container)->hasDefinition(Phake::anyParameters())->thenReturn(true);
-        Phake::when($this->container)->getDefinition(Phake::anyParameters())->thenReturn($this->tinymce);
+        Phake::when($this->container)->getParameter('stfalcon_tinymce.config')->thenReturn($param);
 
         $this->compiler->process($this->container);
 
-        Phake::verify($this->container)->setParameter($this->tinymce, $param);
+        Phake::verify($this->container)->getParameter('stfalcon_tinymce.config');
+        Phake::verify($this->container)->setParameter('stfalcon_tinymce.config', $param);
     }
 
     /**
@@ -64,8 +64,8 @@ class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
 
         $this->compiler->process($this->container);
 
-        Phake::verify($this->container, Phake::never())->getDefinition(Phake::anyParameters());
-        Phake::verify($this->container, Phake::never())->setParameter($this->tinymce, $param);
+        Phake::verify($this->container, Phake::never())->getParameter('stfalcon_tinymce.config');
+        Phake::verify($this->container, Phake::never())->setParameter('stfalcon_tinymce.config', $param);
     }
 
     /**

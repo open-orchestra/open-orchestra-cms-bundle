@@ -14,21 +14,17 @@ class TinymceCompilerPass implements CompilerPassInterface
      * You can modify the container here before it is dumped to PHP code.
      *
      * @param ContainerBuilder $container
-     *
-     * @api
      */
     public function process(ContainerBuilder $container)
     {
         if ($container->hasDefinition('twig.extension.stfalcon_tinymce')) {
-            $tinymce = $container->getDefinition('twig.extension.stfalcon_tinymce');
+            $param = $container->getParameter('stfalcon_tinymce.config');
 
-            $param = array(
-                'tinymce_jquery' => false,
-                'include_jquery' => false,
-                'selector' => ".tinymce"
-            );
+            $param['tinymce_jquery'] = false;
+            $param['include_jquery'] = false;
+            $param['selector'] = ".tinymce";
 
-            $container->setParameter($tinymce, $param);
+            $container->setParameter('stfalcon_tinymce.config', $param);
         }
     }
 }
