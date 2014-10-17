@@ -27,11 +27,8 @@ class FolderController extends AbstractAdminController
         $folderRepository = $this->container->get('php_orchestra_model.repository.media_folder');
         $folder = $folderRepository->find($folderId);
 
-        $form = $this->createForm('folder', $folder, array(
-            'action' => $this->generateUrl('php_orchestra_backoffice_folder_form', array(
-                'folderId' => $folderId,
-            ))
-        ));
+        $url = $this->generateUrl('php_orchestra_backoffice_folder_new', array('parentId' => $parentId));
+        $form = $this->generateForm($folder, $url);
 
         $form->handleRequest($request);
 
