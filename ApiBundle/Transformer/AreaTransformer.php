@@ -58,7 +58,7 @@ class AreaTransformer extends AbstractTransformer
                     $blockPosition
                 ));
             } else {
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndVersion($block['nodeId']);
+                $otherNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($block['nodeId']);
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $otherNode->getBlocks()->get($block['blockId']),
                     false,

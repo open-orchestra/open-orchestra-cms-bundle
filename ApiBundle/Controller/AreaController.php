@@ -28,8 +28,8 @@ class AreaController extends Controller
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
-        $node = $nodeRepository->findOneByNodeIdAndVersion($nodeId);
-        $area = $nodeRepository->findAreaByNodeIdAndAreaId($nodeId, $areaId);
+        $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
 
         $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
 
@@ -51,7 +51,8 @@ class AreaController extends Controller
      */
     public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
-        $areaContainer = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndVersion($nodeId);
+        $areaContainer = $this->get('php_orchestra_model.repository.node')
+            ->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
@@ -60,7 +61,7 @@ class AreaController extends Controller
 
     /**
      * @param string $areaId
-     * @param string $nodeId
+     * @param string $templateId
      *
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="php_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
@@ -91,7 +92,9 @@ class AreaController extends Controller
     public function deleteAreaFromAreaAction($areaId, $parentAreaId, $nodeId = null, $templateId = null)
     {
         if ($nodeId) {
-            $areaContainer = $this->get('php_orchestra_model.repository.node')->findAreaByNodeIdAndAreaId($nodeId, $parentAreaId);
+            $nodeRepository = $this->get('php_orchestra_model.repository.node');
+            $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+            $areaContainer = $nodeRepository->findAreaFromNodeAndAreaId($node, $parentAreaId);
         } else {
             $areaContainer = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
         }

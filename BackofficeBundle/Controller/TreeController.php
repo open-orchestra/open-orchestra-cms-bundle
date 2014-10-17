@@ -17,10 +17,7 @@ class TreeController extends Controller
      */
     public function showTreeNodesAction()
     {
-        $contextManager = $this->get('php_orchestra_backoffice.context_manager');
-        $siteId = $contextManager->getCurrentSiteId();
-
-        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersionBySiteId($siteId);
+        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersionBySiteId();
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
