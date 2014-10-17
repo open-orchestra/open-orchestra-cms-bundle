@@ -61,7 +61,7 @@ class FolderController extends AbstractAdminController
         $folder->setParent($parentFolder);
 
         $url = $this->generateUrl('php_orchestra_backoffice_folder_new', array('parentId' => $parentId));
-        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.form.success');
+        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.folder.success');
         $form = $this->generateForm($folder, $url);
         $form->handleRequest($request);
         $this->handleForm($form, $message, $folder);
