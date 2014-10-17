@@ -38,19 +38,19 @@
                 </ul>
             {% endif %}
         </li>
-        {% else %}
-            <li>
-                <div class="ui-state-unsortable">
-                    <a
-                        class="ajax-new"
-                        href="#"
-                        data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
-                    >
-                        <i class="fa fa-file"></i>
-                        {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
-                    </a>
-                </div>
-            </li>
+    {% else %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
+                </a>
+            </div>
+        </li>
     {% endfor %}
 {% endmacro %}
 
@@ -95,7 +95,7 @@
             data-type="ContentType"
         >
             <a
-                id="nav-contents-{{contentType.contentTypeId}}" 
+                id="nav-contents-{{contentType.contentTypeId}}"
                 href="#contents/list/{{contentType.contentTypeId}}"
                 data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
                 data-displayed-elements="content_id, content_type, name, status"
@@ -114,15 +114,46 @@
                 id="{{ folder.id }}"
                 data-url="{{ path('php_orchestra_api_media_list', {'folder_id': folder.id}) }}"
                 data-displayed-elements="name">
-                {{ folder.name }}
+                <i
+                    class="fa fa-trash-o ajax-delete"
+                    data-delete-url="{{ path('php_orchestra_api_folder_delete', {'folder_id': folder.id}) }}"
+                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_media_folder'|trans({'%folderName%': folder.name}) }}"
+                >
+                </i>
+                <span>{{ folder.name }}</span>
             </a>
             {% if folder.subFolders is not empty %}
                 <ul >
                     {{ _self.menu_folder(folder.subFolders, name) }}
+                    <li>
+                        <div class="ui-state-unsortable">
+                            <a
+                                class="ajax-new"
+                                href="#"
+                                data-url="{{ path('php_orchestra_backoffice_folder_new', {'parent_id': folder.id}) }}"
+                            >
+                                <i class="fa fa-file"></i>
+                                {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
+                            </a>
+                        </div>
+                    </li>
                 </ul>
             {% endif %}
         </li>
-    {% endfor %}
+    {%  else %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parent_id': '-'}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_folder'|trans }}
+                </a>
+            </div>
+        </li>
+{% endfor %}
 {% endmacro %}
 
 {% macro menu_modal_folder(folders, name) %}

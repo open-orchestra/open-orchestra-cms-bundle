@@ -20,6 +20,7 @@ parameters:
     php_orchestra_backoffice.type.theme.class: PHPOrchestra\BackofficeBundle\Form\Type\ThemeType
     php_orchestra_backoffice.type.media.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaType
     php_orchestra_backoffice.type.orchestra_media.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraMediaType
+    php_orchestra_backoffice.type.folder.class: PHPOrchestra\BackofficeBundle\Form\Type\FolderType
 
 services:
     # Template form type
@@ -167,3 +168,9 @@ services:
         class: %php_orchestra_backoffice.type.orchestra_media.class%
         tags:
             - { name: form.type, alias: orchestra_media}
+    php_orchestra_backoffice.type.folder:
+        class: %php_orchestra_backoffice.type.folder.class%
+        arguments:
+            - %php_orchestra_model.document.media_folder.class%
+        tags:
+            - { name: form.type, alias: folder}
