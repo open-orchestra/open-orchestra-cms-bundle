@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\Backoffice\Context;
 
+use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use PHPOrchestra\ModelBundle\Model\SiteInterface;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Centralize app contextual datas
  */
-class ContextManager
+class ContextManager implements CurrentSiteIdInterface
 {
     const KEY_LOCALE = '_locale';
     const KEY_SITE = '_site';
@@ -95,7 +96,7 @@ class ContextManager
     {
         $site = $this->getCurrentSite();
 
-        return array_shift($site);
+        return $site['siteId'];
     }
 
     /**

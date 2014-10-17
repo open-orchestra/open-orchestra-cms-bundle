@@ -10,6 +10,8 @@ services:
     php_orchestra_backoffice.context_manager:
         class: "%php_orchestra_backoffice.manager.context.class%"
         arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
+    php_orchestra.manager.current_site:
+        alias: php_orchestra_backoffice.context_manager
     php_orchestra_backoffice.listener.translate_value_initializer:
         class: %php_orchestra_backoffice.listener.translate_value_initializer.class%
         arguments:

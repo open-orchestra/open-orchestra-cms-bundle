@@ -44,6 +44,7 @@ class HomepageControllerTest extends WebTestCase
      */
     public function testHomePageWithTree2()
     {
+        $this->markTestSkipped();
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/login');
