@@ -8,6 +8,7 @@ services:
     php_orchestra_user.type.user:
         class: %php_orchestra_user.type.user.class%
         arguments:
+            - %php_orchestra_user.document.user.class%
             - @translator
         tags:
             - { name: form.type, alias: user}
