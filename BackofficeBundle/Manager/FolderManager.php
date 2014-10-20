@@ -34,17 +34,7 @@ class FolderManager
     {
         $medias = $folder->getMedias();
         foreach ($medias as $media) {
-            $folder->removeMedia($media);
-        }
-        $medias = $this->mediaRepository->findByFolderId($folder->getId());
-        foreach ($medias as $media) {
-            $this->documentManager->remove($media);
-        }
-
-        $sons = $folder->getSubFolders();
-        foreach ($sons as $son) {
-            $this->deleteTree($son);
-            $folder->removeSubFolder($son);
+            $media->setMedialFolder(null);
         }
         $this->documentManager->remove($folder);
     }
