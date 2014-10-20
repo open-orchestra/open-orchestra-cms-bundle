@@ -9,7 +9,6 @@ TemplateView = Backbone.View.extend(
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @templateTemplate = _.template($("#templateView").html())
     @render()
-    nav_page_height()
     return
   clickButton: (event) ->
     $('.modal-title').text @template.get('name')

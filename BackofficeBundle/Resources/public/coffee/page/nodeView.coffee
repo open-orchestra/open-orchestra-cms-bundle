@@ -14,7 +14,6 @@ NodeView = Backbone.View.extend(
     @nodeTemplate = _.template($("#nodeView").html())
     @nodeTitle = _.template($("#nodeTitle").html())
     @render()
-    nav_page_height()
     return
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
