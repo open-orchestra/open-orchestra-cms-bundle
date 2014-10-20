@@ -1,0 +1,19 @@
+<!-- projects dropdown -->
+<div class="project-context hidden-xs">
+
+    {% set availableSites = context.getAvailableSites() %}
+    <span class="label">{{ 'php_orchestra_cms.top_menu.site'|trans({}, 'backOffice') }}</span>
+    <span class="project-selector dropdown-toggle" data-toggle="dropdown">{{ context.getCurrentSiteDomain() }} <i class="fa fa-angle-down"></i></span>
+
+    <!-- Suggestion: populate this list with fetch and push technique -->
+    <ul class="dropdown-menu">
+        {% for site in availableSites %}
+            <li{% if context.getCurrentSiteId() is same as(site.siteId) %} class="active"{% endif %}>
+                <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_site', {'siteId':site.siteId, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <!-- end dropdown-menu-->
+
+</div>
+<!-- end projects dropdown -->

@@ -10,66 +10,10 @@
         Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
         <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> *21* </b> </span>
 
-        <!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
-        <div class="ajax-dropdown">
-
-            <!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-                <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/mail.html">
-                    *Msgs* (14) </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/notifications.html">
-                    *notify* (3) </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="activity" id="ajax/notify/tasks.html">
-                    *Tasks* (4) </label>
-            </div>
-
-            <!-- notification content -->
-            <div class="ajax-notifications custom-scroll">
-
-                <div class="alert alert-transparent">
-                    <h4>*Click a button to show messages here*</h4>
-                    *This blank page message helps protect your privacy, or you can show the first message here automatically.*
-                </div>
-
-                <i class="fa fa-lock fa-4x fa-border"></i>
-
-            </div>
-            <!-- end notification content -->
-
-            <!-- footer: refresh area -->
-            <span> *Last updated on: 12/12/2013 9:43AM*
-                <button type="button" data-loading-text="<i class='fa fa-refresh fa-spin'></i> *Loading...*" class="btn btn-xs btn-default pull-right">
-                    <i class="fa fa-refresh"></i>
-                </button> 
-            </span>
-            <!-- end footer -->
-
-        </div>
-        <!-- END AJAX-DROPDOWN -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:ajaxDropdown.html.twig' %}
     </div>
 
-    <!-- projects dropdown -->
-    <div class="project-context hidden-xs">
-
-        {% set availableSites = context.getAvailableSites() %}
-        <span class="label">{{ 'php_orchestra_cms.top_menu.site'|trans({}, 'backOffice') }}</span>
-        <span class="project-selector dropdown-toggle" data-toggle="dropdown">{{ context.getCurrentSiteDomain() }} <i class="fa fa-angle-down"></i></span>
-
-        <!-- Suggestion: populate this list with fetch and push technique -->
-        <ul class="dropdown-menu">
-            {% for site in availableSites %}
-                <li{% if context.getCurrentSiteId() is same as(site.siteId) %} class="active"{% endif %}>
-                    <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_site', {'siteId':site.siteId, 'siteDomain':site.domain}) }}');">{{ site.domain }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <!-- end dropdown-menu-->
-
-    </div>
-    <!-- end projects dropdown -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:projectDropdown.html.twig' %}
 
     <!-- pulled right: nav area -->
     <div class="pull-right">
@@ -80,36 +24,7 @@
         </div>
         <!-- end collapse menu -->
 
-        <!-- #MOBILE -->
-        <!-- Top menu profile link : this shows only when top menu is active -->
-        <ul id="mobile-profile-img" class="header-dropdown-list hidden-xs padding-5">
-            <li class="">
-                <a href="#" class="dropdown-toggle no-margin userdropdown" data-toggle="dropdown"> 
-                    <img src="img/avatars/sunny.png" alt="John Doe" class="online" />  
-                </a>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0"><i class="fa fa-cog"></i> Setting</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="profile.html" class="padding-10 padding-top-0 padding-bottom-0"> <i class="fa fa-user"></i> <u>P</u>rofile</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="toggleShortcut"><i class="fa fa-arrow-down"></i> <u>S</u>hortcut</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="javascript:void(0);" class="padding-10 padding-top-0 padding-bottom-0" data-action="launchFullscreen"><i class="fa fa-arrows-alt"></i> Full <u>S</u>creen</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="login.html" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:mobileProfile.html.twig' %}
 
         <!-- logout button -->
         <div id="logout" class="btn-header transparent pull-right">
@@ -139,52 +54,9 @@
         </div>
         <!-- end fullscreen button -->
 
-        <!-- #Voice Command: Start Speech -->
-        <div id="speech-btn" class="btn-header transparent pull-right hidden-sm hidden-xs">
-            <div> 
-                <a href="javascript:void(0)" title="Voice Command" data-action="voiceCommand"><i class="fa fa-microphone"></i></a> 
-                <div class="popover bottom"><div class="arrow"></div>
-                    <div class="popover-content">
-                        <h4 class="vc-title">*Voice command activated *<br><small>*Please speak clearly into the mic*</small></h4>
-                        <h4 class="vc-title-error text-center">
-                            <i class="fa fa-microphone-slash"></i>* Voice command failed*
-                            <br><small class="txt-color-red">*Must* <strong>*"Allow"*</strong> *Microphone*</small>
-                            <br><small class="txt-color-red">*Must have* <strong>*Internet Connection*</strong></small>
-                        </h4>
-                        <a href="javascript:void(0);" class="btn btn-success" onclick="commands.help()">*See Commands*</a> 
-                        <a href="javascript:void(0);" class="btn bg-color-purple txt-color-white" onclick="$('#speech-btn .popover').fadeOut(50);">*Close Popup*</a> 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end voice command -->
+        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:voiceCommand.html.twig' %}
 
-        <!-- multiple lang dropdown : find all flags in the flags page -->
-        <ul class="header-dropdown-list hidden-xs">
-            <li>
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <!-- img src="img/blank.gif" class="flag flag-us" alt="United States" -->
-                    <img
-                        alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':context.currentLocale}, 'backOffice') }}"
-                        src="{{ asset('bundles/phporchestracms/img/flags/' ~ context.currentLocale ~ '.png') }}"
-                        >
-                    <span> {{ context.currentLocale|upper }} </span> <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="dropdown-menu pull-right">
-                    {% for language in available_languages %}
-                    <li{% if context.currentLocale == language %} class="active"{% endif %}>
-                        <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_language', {'language':language}) }}');">
-                            <img
-                                    alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}"
-                                    src="{{ asset('bundles/phporchestracms/img/flags/' ~ language ~ '.png') }}">
-                            {{ ('php_orchestra_backoffice.language.' ~ language)|trans }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </li>
-        </ul>
-        <!-- end multiple lang -->
+        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:languageDropdown.html.twig' %}
 
     </div>
     <!-- end pulled right: nav area -->
