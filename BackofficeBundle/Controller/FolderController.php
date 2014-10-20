@@ -57,7 +57,7 @@ class FolderController extends AbstractAdminController
         $folderClass = $this->container->getParameter('php_orchestra_model.document.media_folder.class');
         $folder = new $folderClass();
         if($parentFolder !== null){
-            $folder->setParent($parentFolder);
+             $folder->setParent($parentFolder);
         }
 
         $url = $this->generateUrl('php_orchestra_backoffice_folder_new', array('parentId' => $parentId));
