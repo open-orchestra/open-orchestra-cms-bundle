@@ -6,21 +6,19 @@ use PHPOrchestra\ModelBundle\Model\MediaFolderInterface;
 use PHPOrchestra\ModelBundle\Repository\FolderRepository;
 use PHPOrchestra\ModelBundle\Repository\MediaRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
+
 /**
  * Class FolderManager
  */
 class FolderManager
 {
-    /**
-     * @var FolderRepository $folderRepository
-     */
     protected $folderRepository;
 
     /**
      * Constructor
      *
      * @param FolderRepository $folderRepository
-     * @param DocumentManager $documentManager
+     * @param DocumentManager  $documentManager
      */
     public function __construct(FolderRepository $folderRepository, MediaRepository $mediaRepository, DocumentManager $documentManager)
     {

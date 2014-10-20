@@ -37,6 +37,7 @@ class FolderController extends AbstractAdminController
             $this->get('translator')->trans('php_orchestra_backoffice.form.folder.success'),
             $folder
         );
+
         return $this->renderAdminForm($form, array('path' => $this->generateUrl('php_orchestra_api_media_list', array('folderId' => $folder->getId()))));
     }
 
@@ -66,6 +67,7 @@ class FolderController extends AbstractAdminController
             $statusCode = 400;
         } elseif (!is_null($folder->getName())) {
             $url = $this->generateUrl('php_orchestra_backoffice_folder_form', array('folderId' => $folder->getId()));
+
             return $this->redirect($url);
         } else {
             $statusCode = 200;
