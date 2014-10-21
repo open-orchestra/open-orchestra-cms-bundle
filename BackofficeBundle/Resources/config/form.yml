@@ -11,6 +11,7 @@ parameters:
     php_orchestra_backoffice.document.content_attribute.class : PHPOrchestra\ModelBundle\Document\ContentAttribute
     php_orchestra_backoffice.type.orchestra_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
     php_orchestra_backoffice.type.orchestra_status.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraStatusType
+    php_orchestra_backoffice.type.orchestra_site.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraSiteType
     php_orchestra_backoffice.type.status.class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
     php_orchestra_backoffice.type.field_type.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType
     php_orchestra_backoffice.type.field_option.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldOptionType
@@ -67,6 +68,10 @@ services:
         tags:
             - { name: form.type, alias: orchestra_block }
     # Site Form Builder
+    php_orchestra_backoffice.type.orchestra_site:
+        class: %php_orchestra_backoffice.type.orchestra_site.class%
+        tags:
+            - { name: form.type, alias: orchestra_site }
     php_orchestra_cms.type.site:
         class: PHPOrchestra\BackofficeBundle\Form\Type\SiteType
         arguments:
