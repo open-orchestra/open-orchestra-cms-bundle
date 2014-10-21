@@ -23,4 +23,9 @@ class MediaFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $publicLink;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $mimeType;
 }
