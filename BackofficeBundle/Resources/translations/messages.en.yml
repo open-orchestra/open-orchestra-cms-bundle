@@ -82,6 +82,9 @@ php_orchestra_backoffice:
             alias: Alias
             language: Language
             status: Status
+        folder:
+            success: The folder has been saved
+            name: Name
         area:
             success: The area has been modified
             bo_direction: Children direction
@@ -99,8 +102,10 @@ php_orchestra_backoffice:
         tree:
             new_page: New page
             new_template: New template
+            new_media_folder: New Folder
             delete_node: Are you sure to delete the node %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
+            delete_media_folder: Are you sure to delete the folder %folderName% and its media?
         editorial:
             title: Editorial
             nodes: Pages

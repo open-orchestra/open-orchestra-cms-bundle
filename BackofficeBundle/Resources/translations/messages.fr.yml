@@ -77,6 +77,9 @@ php_orchestra_backoffice:
             alias: Alias
             language: Langue
             status: Status
+        folder:
+            success: Le répertoire a été sauvegardé
+            name: Nom
         area:
             success: L'aire a été modifiée
             bo_direction: Direction des enfants
@@ -94,8 +97,10 @@ php_orchestra_backoffice:
         tree:
             new_page: Nouvelle page
             new_template: Nouveau gabarit
+            new_media_folder: Nouveau répertoire
             delete_node: Etes vous certain du supprimer le node %nodeId% ?
-            delete_template: Etes vous certain de supprime le gabarit %templateName% ?
+            delete_template: Etes vous certain de supprimer le gabarit %templateName% ?
+            delete_media_folder: Etes vous certain de supprimer le repertoire %folderName% et ses médias?
         editorial:
             title: Editorial
             nodes: Pages
