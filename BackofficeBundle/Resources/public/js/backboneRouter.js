@@ -52,7 +52,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   listFolder: function(folderId)
   {
     this.initDisplayRouteChanges();
-    tableViewLoad($('#' + folderId));
+    GalleryLoad($('#' + folderId));
   },
 
   listContents: function(contentTypeId)
