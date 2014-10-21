@@ -28,7 +28,7 @@ class FolderController extends AbstractAdminController
 
         $folderClass = $this->container->getParameter('php_orchestra_model.document.media_folder.class');
         $folder = new $folderClass();
-        if($parentFolder !== null){
+        if ($parentFolder) {
             $folder->setParent($parentFolder);
         }
 
