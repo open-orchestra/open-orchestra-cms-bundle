@@ -93,6 +93,8 @@ php_orchestra_backoffice:
             existing_blocks: Ajouter des blocks existants
         block:
             success: Le bloc a été modifié
+        media:
+            file: Fichier
     left_menu:
         tree:
             new_page: Nouvelle page
