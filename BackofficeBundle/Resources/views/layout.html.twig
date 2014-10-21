@@ -47,30 +47,30 @@
     <body class="desktop-detected fixed-header fixed-navigation pace-done fixed-ribbon">
 {% endblock %}
 
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
 
 <!--================================================== -->
 
-{% block javascripts %}
-    {% if app.debug %}
-        {% javascripts 'js/all.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% else %}
-        {% javascripts 'js/all.min.js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endif %}
-{% endblock %}
+    {% block javascripts %}
+        {% if app.debug %}
+            {% javascripts 'js/all.js' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% else %}
+            {% javascripts 'js/all.min.js' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endif %}
+    {% endblock %}
 
-<script>
-$(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
-    // DO NOT REMOVE : GLOBAL FUNCTIONS!
-    pageSetUp();
-});
-</script>
+            // DO NOT REMOVE : GLOBAL FUNCTIONS!
+            pageSetUp();
+        });
+    </script>
 
-</body>
+    </body>
 </html>
