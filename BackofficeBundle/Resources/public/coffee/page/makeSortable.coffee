@@ -9,7 +9,7 @@ refreshUl = (ul) ->
   return
 makeSortable = (el, duplicate) ->
   $("ul.ui-model-blocks", el).sortable(
-    connectWith: "#content ul.ui-model-blocks",
+    connectWith: "#content div.panel-activate ul.ui-model-blocks",
     appendTo: 'body',
     tolerance: 'pointer',
     helper: (event, obj) ->
@@ -22,6 +22,8 @@ makeSortable = (el, duplicate) ->
       @duplicate = duplicate
       @evaluateRefreshable = ->
         not @duplicate or not $(this).is(@stockedUl)
+      if @duplicate
+        @clone = $(this).clone()
     start: (event, ui)->
       if @duplicate
         ui.placeholder.hide()
@@ -40,5 +42,9 @@ makeSortable = (el, duplicate) ->
         ui.placeholder.hide()
         ui.helper.css "width", ui.item.width()
         ui.helper.css "height", ui.item.height()
+    remove: (event, ui)->
+      if @duplicate and @clone
+        $(this).replaceWith(@clone)
+        makeSortable el, duplicate
   ).disableSelection()
   return
