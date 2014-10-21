@@ -137,21 +137,33 @@
         </li>
 {% endmacro %}
 
-{% macro menu_modal_folder(folders, name) %}
+{% macro menu_modal_folder(folders, parent_id) %}
     {% for folder in folders %}
         <li>
             <a
                 id="media-modal-{{ folder.id }}"
                 class="media-modal-menu-folder"
-                data-url="{{ path('php_orchestra_api_media_list', {'folder_id': folder.id}) }}"
+                data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
                 {{ folder.name }}
             </a>
             {% if folder.subFolders is not empty %}
                 <ul >
-                    {{ _self.menu_modal_folder(folder.subFolders, name) }}
+                    {{ _self.menu_modal_folder(folder.subFolders, folder.id) }}
                 </ul>
             {% endif %}
         </li>
     {% endfor %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="media-modal-menu-new-folder"
+                    href="#"
+                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parentId': parent_id}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
 {% endmacro %}
