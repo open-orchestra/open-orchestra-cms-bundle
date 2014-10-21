@@ -116,11 +116,11 @@
                 data-displayed-elements="name">
                 <span>{{ folder.name }}</span>
             </a>
-        {% if folder.subFolders is not empty %}
-            <ul >
-            {{ _self.menu_folder(folder.subFolders, folder.id) }}
-            </ul>
-        {% endif %}
+            {% if folder.subFolders is not empty %}
+                <ul >
+                    {{ _self.menu_folder(folder.subFoldersBySiteId(context.currentSiteId), folder.id) }}
+                </ul>
+            {% endif %}
         </li>
     {% endfor %}
         <li>
@@ -149,7 +149,7 @@
             </a>
             {% if folder.subFolders is not empty %}
                 <ul >
-                    {{ _self.menu_modal_folder(folder.subFolders, folder.id) }}
+                    {{ _self.menu_modal_folder(folder.subFoldersBySiteId(context.currentSiteId), folder.id) }}
                 </ul>
             {% endif %}
         </li>
