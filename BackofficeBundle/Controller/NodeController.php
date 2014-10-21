@@ -36,7 +36,7 @@ class NodeController extends AbstractAdminController
 
         $this->handleForm($form, $message, $node);
 
-        return $this->renderAdminForm($form);
+        return $this->renderAdminForm($form, array('path' => $this->generateUrl('php_orchestra_api_node_show', array('nodeId' => $node->getNodeId()))));
     }
 
     /**

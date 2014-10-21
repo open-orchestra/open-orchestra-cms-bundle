@@ -49,6 +49,6 @@ class TemplateController extends AbstractAdminController
             $template
         );
 
-        return $this->renderAdminForm($form);
+        return $this->renderAdminForm($form, array('path' => $this->generateUrl('php_orchestra_api_template_show', array('templateId' => $template->getTemplateId()))));
     }
 }

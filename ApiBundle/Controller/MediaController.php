@@ -44,7 +44,7 @@ class MediaController extends Controller
      */
     public function listAction(Request $request)
     {
-        $folderId = $request->get('folder_id');
+        $folderId = $request->get('folderId');
         $mediaCollection = $this->get('php_orchestra_model.repository.media')->findByFolderId($folderId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('media_collection')->transform($mediaCollection, $folderId);
