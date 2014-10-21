@@ -32,10 +32,19 @@ class FolderManager
      */
     public function deleteTree(MediaFolderInterface $folder)
     {
-        $medias = $folder->getMedias();
-        foreach ($medias as $media) {
-            $media->setMedialFolder(null);
+        if($this->countMediaTree($folder) == 0){
+            $this->documentManager->remove($folder);
         }
-        $this->documentManager->remove($folder);
+    }
+
+    public function countMediaTree(MediaFolderInterface $folder, $count = 0)
+    {
+        $subFolders = $folder->getSubFolders();
+        foreach($subFolders as $subFolder){
+            $count += count($subFolder->getMedias());
+            $count = $this->countMediaTree($subFolder, $count);
+        }
+
+        return $count;
     }
 }
