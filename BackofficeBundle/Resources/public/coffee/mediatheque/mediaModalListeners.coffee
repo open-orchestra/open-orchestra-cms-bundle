@@ -45,18 +45,19 @@ $(document).on "click", ".media-modal-menu-folder", (event) ->
   tableViewLoad $(event.target), "#" + modalId + " .modal-body-content",
     select: true
 
-
+#--[ NEW FOLDER CLICKED ]--#
 #--[ ADD MEDIA ]--#
 
-$(document).on "click", ".modal-body-content a[class^='ajax-add-']", (event) ->
+$(document).on "click", ".modal-body-content a[class^='ajax-add-'], .media-modal-menu-new-folder", (event) ->
+  event.preventDefault()
   modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
   
   folderName = $("#" + modalId + " .js-widget-title").text()
   
   displayLoader("#" + modalId + " .modal-body-content")
-  
+
   $.ajax
-    url: $(event.target).attr('href')
+    url: $(event.target).attr('data-url')
     method: 'GET'
     success: (response) ->
       view = new mediaFormView(

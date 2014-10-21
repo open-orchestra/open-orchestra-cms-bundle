@@ -38,19 +38,19 @@
                 </ul>
             {% endif %}
         </li>
-        {% else %}
-            <li>
-                <div class="ui-state-unsortable">
-                    <a
-                        class="ajax-new"
-                        href="#"
-                        data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
-                    >
-                        <i class="fa fa-file"></i>
-                        {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
-                    </a>
-                </div>
-            </li>
+    {% else %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('php_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_page'|trans }}
+                </a>
+            </div>
+        </li>
     {% endfor %}
 {% endmacro %}
 
@@ -95,7 +95,7 @@
             data-type="ContentType"
         >
             <a
-                id="nav-contents-{{contentType.contentTypeId}}" 
+                id="nav-contents-{{contentType.contentTypeId}}"
                 href="#contents/list/{{contentType.contentTypeId}}"
                 data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
                 data-displayed-elements="content_id, content_type, name, status"
@@ -106,40 +106,64 @@
     {% endfor %}
 {% endmacro %}
 
-{% macro menu_folder(folders, name) %}
+{% macro menu_folder(folders, parent_id) %}
     {% for folder in folders %}
         <li>
             <a
                 href="#{{ folder.id }}/list"
                 id="{{ folder.id }}"
-                data-url="{{ path('php_orchestra_api_media_list', {'folder_id': folder.id}) }}"
+                data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
-                {{ folder.name }}
+                <span>{{ folder.name }}</span>
             </a>
-            {% if folder.subFolders is not empty %}
-                <ul >
-                    {{ _self.menu_folder(folder.subFolders, name) }}
-                </ul>
-            {% endif %}
+        {% if folder.subFolders is not empty %}
+            <ul >
+            {{ _self.menu_folder(folder.subFolders, folder.id) }}
+            </ul>
+        {% endif %}
         </li>
     {% endfor %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parentId': parent_id}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
 {% endmacro %}
 
-{% macro menu_modal_folder(folders, name) %}
+{% macro menu_modal_folder(folders, parent_id) %}
     {% for folder in folders %}
         <li>
             <a
                 id="media-modal-{{ folder.id }}"
                 class="media-modal-menu-folder"
-                data-url="{{ path('php_orchestra_api_media_list', {'folder_id': folder.id}) }}"
+                data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
                 {{ folder.name }}
             </a>
             {% if folder.subFolders is not empty %}
                 <ul >
-                    {{ _self.menu_modal_folder(folder.subFolders, name) }}
+                    {{ _self.menu_modal_folder(folder.subFolders, folder.id) }}
                 </ul>
             {% endif %}
         </li>
     {% endfor %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="media-modal-menu-new-folder"
+                    href="#"
+                    data-url="{{ path('php_orchestra_backoffice_folder_new', {'parentId': parent_id}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
 {% endmacro %}
