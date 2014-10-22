@@ -213,7 +213,7 @@
     </div>
     <% if (typeof links._self_add !== 'undefined' ) { %>
         <div>
-            <a href="<%= links._self_add %>" class="ajax-add-<%= cid %>">{{ 'php_orchestra_backoffice.form.add'|trans }}</a>
+            <a href="<%= links._self_add %>" data-url="<%= links._self_add %>" class="ajax-add-<%= cid %>">{{ 'php_orchestra_backoffice.form.add'|trans }}</a>
         </div>
     <% } %>
     <% include footerInclude %>
@@ -222,23 +222,23 @@
 <script type="text/html" id="galleryView">
     <% if (media.get('mime_type') == 'image/png') { %>
         {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
-            <img src="{{ asset_url }}" class="superbox-img" title="<%= media.get('name') %>"/>
+            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
         {% endimage %}
     <% } else if (media.get('mime_type') == 'image/jpg') { %>
         {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
-            <img src="{{ asset_url }}" class="superbox-img" title="<%= media.get('name') %>"/>
+            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
         {% endimage %}
     <% } else if (media.get('mime_type') == 'image/jpeg') { %>
         {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
-            <img src="{{ asset_url }}" class="superbox-img" title="<%= media.get('name') %>"/>
+            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
         {% endimage %}
     <% } else if (media.get('mime_type') == 'application/pdf') { %>
         {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-pdf.png' %}
-            <img src="{{ asset_url }}" class="superbox-img" title="<%= media.get('name') %>"/>
+            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
         {% endimage %}
     <% } else { %>
         {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-content.png' %}
-            <img src="{{ asset_url }}" class="superbox-img" title="<%= media.get('name') %>"/>
+            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
         {% endimage %}
     <% } %>
 </script>
