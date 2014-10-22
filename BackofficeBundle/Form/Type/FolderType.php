@@ -33,7 +33,7 @@ class FolderType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.folder.name'
             ))
             ->add('sites', 'orchestra_site', array(
-                'label' => 'php_orchestra_backoffice.form.content.language',
+                'label' => 'php_orchestra_backoffice.form.folder.site',
                 'multiple' => true
             ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
