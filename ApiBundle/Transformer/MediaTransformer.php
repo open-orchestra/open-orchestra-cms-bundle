@@ -19,6 +19,7 @@ class MediaTransformer extends AbstractTransformer
     {
         $facade = new MediaFacade();
 
+        $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->mimeType = $mixed->getMimeType();
 
