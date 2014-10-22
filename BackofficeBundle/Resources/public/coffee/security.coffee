@@ -1,7 +1,10 @@
 isLoginForm = (html) ->
   nbUserName = html.indexOf "_username"
   nbPassword = html.indexOf "_password"
-  nbUserName > 0 and nbPassword > 0
+  if nbUserName > 0 and nbPassword > 0
+    true
+  else
+    false
 
 redirectToLogin = ->
   Backbone.history.navigate('#', true);
