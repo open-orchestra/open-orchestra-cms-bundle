@@ -80,6 +80,7 @@ php_orchestra_backoffice:
         folder:
             success: Le répertoire a été sauvegardé
             name: Nom
+            site: Sélectionné des sites pour ce répertoire
         area:
             success: L'aire a été modifiée
             bo_direction: Direction des enfants
