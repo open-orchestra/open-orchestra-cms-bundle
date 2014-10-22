@@ -2,7 +2,7 @@ BlockView = Backbone.View.extend(
   tagName: 'li'
   className: 'ui-model-blocks'
   events:
-    'click i.block-param': 'paramBlock'
+    'click div.block-param': 'paramBlock'
   initialize: (options) ->
     @block = options.block
     @displayClass = options.displayClass
