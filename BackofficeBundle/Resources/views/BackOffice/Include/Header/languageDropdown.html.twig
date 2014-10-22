@@ -2,11 +2,11 @@
 <ul class="header-dropdown-list hidden-xs">
     <li>
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <!-- img src="img/blank.gif" class="flag flag-us" alt="United States" -->
             <img
+                src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
+                class="flag flag-{{ context.currentLocale }}"
                 alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':context.currentLocale}, 'backOffice') }}"
-                src="{{ asset('bundles/phporchestracms/img/flags/' ~ context.currentLocale ~ '.png') }}"
-                >
+            >
             <span> {{ context.currentLocale|upper }} </span> <i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu pull-right">
@@ -14,8 +14,10 @@
             <li{% if context.currentLocale == language %} class="active"{% endif %}>
                 <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_language', {'language':language}) }}');">
                     <img
-                            alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}"
-                            src="{{ asset('bundles/phporchestracms/img/flags/' ~ language ~ '.png') }}">
+                        src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
+                        class="flag flag-{{ language }}"
+                        alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}"
+                    >
                     {{ ('php_orchestra_backoffice.language.' ~ language)|trans }}
                 </a>
             </li>
