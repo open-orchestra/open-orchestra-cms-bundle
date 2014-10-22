@@ -14,7 +14,6 @@ NodeView = Backbone.View.extend(
     @nodeTemplate = _.template($("#nodeView").html())
     @nodeTitle = _.template($("#nodeTitle").html())
     @render()
-    nav_page_height()
     return
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
@@ -53,7 +52,7 @@ NodeView = Backbone.View.extend(
       title: title
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    $('.js-widget-tools', @$el).html $('#generated-tools', @$el).html()
+    $('.widget-toolbar', @$el).html $('#generated-tools', @$el).html()
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addVersionToView()

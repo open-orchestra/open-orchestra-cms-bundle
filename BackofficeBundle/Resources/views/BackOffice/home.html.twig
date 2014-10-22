@@ -1,58 +1,19 @@
 {% extends 'PHPOrchestraBackofficeBundle::layout.html.twig' %}
 
 {% block content %}
-    <!-- LOADER FULL PAGE -->
-    <div id="loader-fullpage">
-        <div id="bg-loader-fullpage"></div>
-        <div id="fg-loader-fullpage"><h1><i class="fa fa-cog fa-spin"></i> Loading...</h1></div>
-    </div>
 
-    <!-- HEADER -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:loaderFullPage.html.twig' %}
+
     {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:header.html.twig' %}
-    <!-- END HEADER -->
 
-    <!-- Left panel : Navigation area -->
-    <aside id="left-panel">
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:leftPanel.html.twig' %}
 
-        <!-- User info -->
-        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:userInfo.html.twig' %}
-        <!-- end user info -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:mainPanel.html.twig' %}
 
-        <!-- Navigation -->
-        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:leftMenu.html.twig' %}
-        <!-- Navigation -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:footer.html.twig' %}
 
-        <span class="minifyme">
-            <i class="fa fa-arrow-circle-left hit"></i>
-        </span>
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:shortcutArea.html.twig' %}
 
-    </aside>
-    <!-- END NAVIGATION -->
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:orchestraModal.html.twig' %}
 
-    <!-- MAIN PANEL -->
-    <div id="main" role="main">
-
-        <!-- RIBBON -->
-        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include:ribbon.html.twig' %}
-        <!-- END RIBBON -->
-
-        <!-- MAIN CONTENT -->
-        <div id="content"></div>
-        <!-- END MAIN CONTENT -->
-
-        {% include 'PHPOrchestraBackofficeBundle:Editorial:backboneTemplate.html.twig' %}
-
-    </div>
-
-    <div class="modal fade" id="OrchestraBOModal" tabindex="-1" role="dialog" aria-labelledby="OrchestraBOModalLabel" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="OrchestraBOModalLabel"></h4>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div>
 {% endblock %}

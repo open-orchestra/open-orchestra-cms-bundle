@@ -1,40 +1,69 @@
-
 <script type="text/html" id="headInclude">
-    <section class="" id="widget-grid">
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
         <!-- row -->
         <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+            <article class="col-sm-12">
+                <!-- new widget -->
+                <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
+
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+
                     <header>
-                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-                        <h2 class="js-widget-title"></h2>
-                        <div class="js-widget-tools"></div>
+                        <h2 class="js-widget-title"> *SmartChat* </h2>
+                        <div class="widget-toolbar">
+                            <!-- add: non-hidden - to disable auto hide -->
+
+                        </div>
                     </header>
+
                     <!-- widget div-->
                     <div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
-                            <!-- This area used as dropdown edit box -->
+                            <div>
+                                <label>*Title:*</label>
+                                <input type="text" />
+                            </div>
                         </div>
                         <!-- end widget edit box -->
-                        <!-- widget content -->
+
                         <div class="widget-body">
+                            <!-- content goes here -->
 </script>
+
 <script type="text/html" id="footerInclude">
+                            <!-- end content -->
                         </div>
-                    <!-- end widget content -->
+
                     </div>
-                <!-- end widget div -->
+                    <!-- end widget div -->
                 </div>
-            <!-- end widget -->
+                <!-- end widget -->
+
             </article>
-        <!-- WIDGET END -->
+
         </div>
-    <!-- end row -->
+
+        <!-- end row -->
+
     </section>
+    <!-- end widget grid -->
 </script>
+
 <script type="text/html" id="nodeTitle">
     <%= node.get('name') %>
     ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
@@ -43,11 +72,13 @@
     {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
     <%= node.get('updated_by') %>
 </script>
+
 <script type="text/html" id="nodeChoice">
     <option class="version-select-<%= cid %>" value="<%= node.get('version') %>" <% if (node.get('version') == version) { %>selected="selected"<% } %>>
         <%= title %>
     </option>
 </script>
+
 <script type="text/html" id="nodeView">
     <a href="#" class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</a>
     <% include headInclude %>
@@ -84,6 +115,7 @@
     </div>
     <% include footerInclude %>
 </script>
+
 <script type="text/html" id="templateView">
     <% include headInclude %>
     <div id="generated-title" style="display: none">
@@ -115,6 +147,7 @@
     </div>
     <% include footerInclude %>
 </script>
+
 <script type="text/html" id="areaView">
     <div>
         <span class="title">
@@ -137,6 +170,7 @@
         </ul>
     </div>
 </script>
+
 <script type="text/html" id="blockView">
     <div class="<%= block.get('method') %> block-param" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <span class="title"><%= block.get('ui_model').label %></span>

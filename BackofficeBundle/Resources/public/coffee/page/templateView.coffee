@@ -9,7 +9,6 @@ TemplateView = Backbone.View.extend(
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @templateTemplate = _.template($("#templateView").html())
     @render()
-    nav_page_height()
     return
   clickButton: (event) ->
     $('.modal-title').text @template.get('name')
@@ -19,7 +18,7 @@ TemplateView = Backbone.View.extend(
       template: @template
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    $('.js-widget-tools', @$el).html $('#generated-tools', @$el).html()
+    $('.widget-toolbar', @$el).html $('#generated-tools', @$el).html()
     for area of @template.get('areas')
       @addAreaToView(@template.get('areas')[area])
     return
