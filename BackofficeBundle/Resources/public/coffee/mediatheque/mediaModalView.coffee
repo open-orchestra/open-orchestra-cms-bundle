@@ -13,7 +13,7 @@ mediaModalView = Backbone.View.extend(
       method: @method
       success: (response) ->
         if isLoginForm(response)
-          redirectToLogin
+          redirectToLogin()
         else
           viewContext.render(
             html: response
