@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,25 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AreaController extends Controller
 {
+    /**
+     * @param string $areaId
+     *
+     * @Config\Route("/{areaId}/get-in-node/{nodeId}", name="php_orchestra_api_area_get_in_node")
+     * @Config\Method({"GET"})
+     *
+     * @Api\Serialize()
+     *
+     * @return FacadeInterface
+     */
+    public function showAction($areaId, $nodeId)
+    {
+        $nodeRepository = $this->get('php_orchestra_model.repository.node');
+        $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
+    }
+
     /**
      * @param Request $request
      * @param string  $nodeId
