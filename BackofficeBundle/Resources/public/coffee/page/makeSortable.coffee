@@ -15,12 +15,9 @@ makeSortable = (el, duplicate) ->
     tolerance: 'pointer',
     helper: (event, obj) ->
       helper = obj.clone()
-      $('div', helper).removeClass('panel-block')
-      $("<div></div>")
-      .addClass("ui-model")
-      .append $("<span></span>")
-      .addClass("ui-model-blocks")
-      .html(helper.html())
+      $('.panel-block', helper).removeClass('panel-block')
+      $('.preview', helper).addClass('scroll')
+      $("<div></div>").addClass("ui-model").append helper
     create: (event, ui)->
       @stockedUl = $(this)
       @duplicate = duplicate
@@ -33,8 +30,8 @@ makeSortable = (el, duplicate) ->
         else
           ui.placeholder.hide()
           placeholder = ui.item
-        ui.helper.height placeholder.height()
-        ui.helper.width placeholder.width()
+        $('li', ui.helper).height placeholder.height()
+        $('li', ui.helper).width placeholder.width()
       if @duplicate
         @clone = $(this).clone()
     start: (event, ui)->
@@ -49,7 +46,7 @@ makeSortable = (el, duplicate) ->
       @stockedUl = ui.placeholder.parent()
       refreshUl @stockedUl  if @evaluateRefreshable()
       @refreshHelper(ui)
-    remove: (event, ui)->
+    stop: (event, ui)->
       if @duplicate and @clone
         $(this).replaceWith(@clone)
         makeSortable el, duplicate
