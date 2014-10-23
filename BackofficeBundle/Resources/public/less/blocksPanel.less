@@ -67,14 +67,45 @@
   box-shadow: -11px 12px 23px #555; 
 }
 
-.blocks-panel li.ui-model-blocks span.action {
-  display: none;
-}
-
 .widget-toolbar{
     float: right;
     height:34px;
 }
 #content div.panel-activate{
     padding-right: 180px;
+}
+
+.blocks-panel li.ui-model-blocks span.action, li.hover.ui-model-blocks span.action {
+  display: none;
+}
+
+div.panel-block {
+    height: 28px;
+    position:absolute;
+}
+
+li.hover div.panel-block {
+    height: auto;
+    position:relative;
+    margin: 0 12px 12px 0;
+}
+
+div.blocks-panel li{
+    height: 40px;
+    margin-right: 12px;
+}
+
+div.blocks-panel li.hover{
+    height: auto;
+}
+
+div.blocks-panel .ui-model div.preview{
+    height: 26px;
+    overflow: hidden;
+}
+
+div.blocks-panel .ui-model li.hover div.preview{
+    height: auto;
+    max-height: 200px;
+    min-height: 26px;
 }

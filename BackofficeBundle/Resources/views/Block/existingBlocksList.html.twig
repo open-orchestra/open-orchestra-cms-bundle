@@ -1,12 +1,11 @@
 {% for key, block in blocks %}
-    <li class="ui-model-blocks block" style="height: 40px;">
-        <div class="{{ block.method }}" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
+    <li class="ui-model-blocks block">
+        <div class="panel-block {{ block.method }}" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
             <span class="title">{{ block.uiModel.label }}</span>
             <div class="preview">
                 {{ block.uiModel.html|raw }}
             </div>
             <span class="action">
-                <i class="block-param fa fa-wrench"></i>
                 <i class="block-remove fa fa-trash-o"></i>
             </span>
         </div>
