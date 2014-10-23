@@ -93,10 +93,15 @@ AreaView = Backbone.View.extend(
           blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
       areaData = {}
       areaData['blocks'] = blockData
+      mustRefresh = false
+      mustRefresh = true  if ul.find(".newly-inserted").length > 0      
       $.ajax
         url: @area.get('links')._self_block
         method: 'POST'
         data: JSON.stringify(areaData)
+        success: (response) ->
+        if mustRefresh
+          alert('refresh(this)')
 
   confirmRemoveBlock: (event) ->
     if @area.get("blocks").length > 0
