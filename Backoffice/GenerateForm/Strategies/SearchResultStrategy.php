@@ -30,41 +30,54 @@ class SearchResultStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
+        $empty = array(
+            'nodeId' => '',
+            'nbdoc' => null,
+            'nbspellcheck' => null,
+            'limitField' => null,
+            'fielddisplayed' => '',
+            'facets' => '',
+            'filter' => '',
+            'optionsearch' => '',
+            'optionsdismax' => '',
+        );
+        $attributes = array_merge($empty, $attributes);
+
         $form->add('nodeId', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('nodeId', $attributes)? $attributes['nodeId']: '',
+            'data' => $attributes['nodeId'],
         ));
         $form->add('nbdoc', 'integer', array(
             'mapped' => false,
-            'data' => array_key_exists('nbdoc', $attributes)? $attributes['nbdoc']: null,
+            'data' => $attributes['nbdoc'],
         ));
         $form->add('nbspellcheck', 'integer', array(
             'mapped' => false,
-            'data' => array_key_exists('nbspellcheck', $attributes)? $attributes['nbspellcheck']: null,
+            'data' => $attributes['nbspellcheck'],
         ));
         $form->add('limitField', 'integer', array(
             'mapped' => false,
-            'data' => array_key_exists('limitField', $attributes)? $attributes['limitField']: null,
+            'data' => $attributes['limitField'],
         ));
         $form->add('fielddisplayed', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('fielddisplayed', $attributes)? json_encode($attributes['fielddisplayed']): '',
+            'data' => json_encode($attributes['fielddisplayed']),
         ));
         $form->add('facets', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('facets', $attributes)? json_encode($attributes['facets']): '',
+            'data' => json_encode($attributes['facets']),
         ));
         $form->add('filter', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('filter', $attributes)? json_encode($attributes['filter']): '',
+            'data' => json_encode($attributes['filter']),
         ));
         $form->add('optionsearch', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('optionsearch', $attributes)? json_encode($attributes['optionsearch']): '',
+            'data' => json_encode($attributes['optionsearch']),
         ));
         $form->add('optionsdismax', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('optionsdismax', $attributes)? json_encode($attributes['optionsdismax']): '',
+            'data' => json_encode($attributes['optionsdismax']),
         ));
     }
 
