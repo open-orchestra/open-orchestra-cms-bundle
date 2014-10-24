@@ -116,7 +116,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider blockReverseTransformProvider
      */
-    public function testReverseTransformToArray($nodeId,$result, $facadeNodeId, $blockId)
+    public function testReverseTransformToArray($nodeId, $result, $facadeNodeId, $blockId)
     {
         $this->blockFacade->nodeId = $facadeNodeId;
         $this->blockFacade->blockId = $blockId;
@@ -187,6 +187,42 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
             array(
                 array('blockId' => 3, 'nodeId' => 0),
                 'menu',
+                3
+            ),
+        );
+    }
+
+    /**
+     * @param array  $result
+     * @param string $facadeNodeId
+     * @param int    $blockId
+     *
+     * @dataProvider blockReverseTransformProviderWithoutNode
+     */
+    public function testReverseTransformWithoutNode($result, $facadeNodeId, $blockId)
+    {
+        $this->blockFacade->nodeId = $facadeNodeId;
+        $this->blockFacade->blockId = $blockId;
+
+        $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade);
+
+        $this->assertSame($result, $expected);
+    }
+
+    /**
+     * @return array
+     */
+    public function blockReverseTransformProviderWithoutNode()
+    {
+        return array(
+            array(
+                array('blockId' => 0, 'nodeId' => 'fixture_full'),
+                'fixture_full',
+                0
+            ),
+            array(
+                array('blockId' => 3, 'nodeId' => 'fixture_full'),
+                'fixture_full',
                 3
             ),
         );

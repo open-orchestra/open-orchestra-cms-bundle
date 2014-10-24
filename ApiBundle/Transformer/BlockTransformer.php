@@ -87,11 +87,11 @@ class BlockTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface|BlockFacade $facade
-     * @param NodeInterface               $node
+     * @param NodeInterface|null          $node
      *
      * @return array
      */
-    public function reverseTransformToArray(FacadeInterface $facade, NodeInterface $node)
+    public function reverseTransformToArray(FacadeInterface $facade, NodeInterface $node = null)
     {
         $block  = array();
 
@@ -104,7 +104,7 @@ class BlockTransformer extends AbstractTransformer
             $block['nodeId'] = 0;
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
-            if ($facade->nodeId == $node->getNodeId()) {
+            if (!is_null($node) && ($facade->nodeId == $node->getNodeId())) {
                 $block['nodeId'] = 0;
             } else {
                 $block['nodeId'] = $facade->nodeId;
