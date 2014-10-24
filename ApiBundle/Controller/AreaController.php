@@ -18,6 +18,7 @@ class AreaController extends Controller
 {
     /**
      * @param string $areaId
+     * @param string $nodeId
      *
      * @Config\Route("/{areaId}/get-in-node/{nodeId}", name="php_orchestra_api_area_get_in_node")
      * @Config\Method({"GET"})
