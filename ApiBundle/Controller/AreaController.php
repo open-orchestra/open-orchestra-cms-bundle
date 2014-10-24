@@ -27,7 +27,7 @@ class AreaController extends Controller
      *
      * @return FacadeInterface
      */
-    public function showAction($areaId, $nodeId)
+    public function showInNodeAction($areaId, $nodeId)
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
         $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
