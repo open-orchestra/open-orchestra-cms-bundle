@@ -29,6 +29,10 @@ class MediaCollectionTransformer extends AbstractTransformer
             'folderId' => $folderId
         )));
 
+        $facade->addLink('_self_folder', $this->generateRoute('php_orchestra_backoffice_folder_form', array(
+            'folderId' => $folderId
+        )));
+
         return $facade;
     }
 
