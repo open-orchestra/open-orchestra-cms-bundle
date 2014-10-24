@@ -86,7 +86,11 @@ class AreaTransformer extends AbstractTransformer
             'nodeId' => $node->getNodeId(),
             'areaId' => $mixed->getAreaId()
         )));
-
+        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_node', array(
+            'nodeId' => $node->getNodeId(),
+            'areaId' => $mixed->getAreaId()
+        )));
+        
         if ($parentAreaId) {
             $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node_area',
                 array(

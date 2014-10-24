@@ -51,6 +51,9 @@ AreaView = Backbone.View.extend(
       area: @area
       cid: @cid
     )
+    this.drawContent()
+    
+  drawContent: ->
     for area of @area.get("areas")
       @addAreaToView @area.get("areas")[area]
     for block of @area.get("blocks")
@@ -60,6 +63,10 @@ AreaView = Backbone.View.extend(
       $("ul.ui-model-areas", @el).remove()
       makeSortable @el
     this
+
+  purgeContent: ->
+    $("ul.ui-model-areas", @el).empty()
+    $("ul.ui-model-blocks", @el).empty()
 
   addAreaToView: (area) ->
     areaElement = new Area()
@@ -93,10 +100,25 @@ AreaView = Backbone.View.extend(
           blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
       areaData = {}
       areaData['blocks'] = blockData
+      mustRefresh = !! ul.find(".newly-inserted").length > 0
+      currentView = this
       $.ajax
         url: @area.get('links')._self_block
         method: 'POST'
         data: JSON.stringify(areaData)
+        success: (response) ->
+          currentView.refresh() if mustRefresh
+
+  refresh: ->
+    currentView = this
+    $.ajax
+      url: @area.get('links')._self
+      method: 'GET'
+      success: (response) ->
+        currentView.area.set(response)
+        currentView.purgeContent()
+        currentView.drawContent()
+        refreshUl $("ul.ui-model-blocks", currentView.el)
 
   confirmRemoveBlock: (event) ->
     if @area.get("blocks").length > 0
