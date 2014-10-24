@@ -36,7 +36,6 @@
         "itkg/phporchestra-translation-bundle": "dev-master",
         "itkg/phporchestra-display-bundle": "dev-master",
         "itkg/phporchestra-model-bundle": "dev-master",
-        "itkg/phporchestra-indexation-bundle": "dev-master",
         "braincrafted/bootstrap-bundle": "2.1.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "stfalcon/tinymce-bundle": "0.3.8"
