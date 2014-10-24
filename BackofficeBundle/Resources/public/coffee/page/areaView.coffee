@@ -100,27 +100,25 @@ AreaView = Backbone.View.extend(
           blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
       areaData = {}
       areaData['blocks'] = blockData
-      mustRefresh = false
-      mustRefresh = true  if ul.find(".newly-inserted").length > 0
-      that = this
+      mustRefresh = !! ul.find(".newly-inserted").length > 0
+      currentView = this
       $.ajax
         url: @area.get('links')._self_block
         method: 'POST'
         data: JSON.stringify(areaData)
         success: (response) ->
-          if mustRefresh
-            that.refresh()
+          currentView.refresh() if mustRefresh
 
   refresh: ->
-    that = this
+    currentView = this
     $.ajax
-      url: @area.get('links')._self_get
+      url: @area.get('links')._self
       method: 'GET'
       success: (response) ->
-        that.area.set(response)
-        that.purgeContent()
-        that.drawContent()
-        refreshUl $("ul.ui-model-blocks", that.el)
+        currentView.area.set(response)
+        currentView.purgeContent()
+        currentView.drawContent()
+        refreshUl $("ul.ui-model-blocks", currentView.el)
 
   confirmRemoveBlock: (event) ->
     if @area.get("blocks").length > 0
