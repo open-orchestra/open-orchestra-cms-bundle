@@ -55,7 +55,14 @@ class FolderController extends AbstractAdminController
         return $this->generateForm($request, $folder, $url);
     }
 
-    public function generateForm(Request $request, FolderInterface $folder, $url)
+    /**
+     * @param Request         $request
+     * @param FolderInterface $folder
+     * @param string          $url
+     *
+     * @return Response
+     */
+    protected function generateForm(Request $request, FolderInterface $folder, $url)
     {
         $form = $this->createForm('folder', $folder, array('action' => $url));
         $form->handleRequest($request);
