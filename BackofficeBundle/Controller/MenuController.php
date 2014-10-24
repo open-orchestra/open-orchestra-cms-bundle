@@ -16,6 +16,6 @@ class MenuController extends Controller
      */
     public function renderAction()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:Include/leftMenu.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:Include/LeftPanel/navigation.html.twig');
     }
 }
