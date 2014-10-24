@@ -58,7 +58,6 @@ GalleryCollectionView = Backbone.View.extend(
           )
   clickRedirect: (event) ->
     event.preventDefault()
-    console.log event
     $('.modal-title').text $(event.target).html()
     view = new adminFormView(url: @medias.get('links')._self_folder)
 )
