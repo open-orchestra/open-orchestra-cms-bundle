@@ -86,6 +86,7 @@ php_orchestra_backoffice:
             success: The folder has been saved
             name: Name
             site: Select sites for this folder
+            edit: Edit folder
         area:
             success: The area has been modified
             bo_direction: Children direction

@@ -7,6 +7,8 @@ GalleryCollectionView = Backbone.View.extend(
     @listUrl = options.listUrl
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
+    key = 'click a.ajax-folder-' + @cid
+    @events[key] = 'clickRedirect'
     _.bindAll this, "render"
     @mediasTemplate = _.template($('#galleryCollectionView').html())
     @render()
@@ -54,4 +56,8 @@ GalleryCollectionView = Backbone.View.extend(
             title: title
             listUrl: listUrl
           )
+  clickRedirect: (event) ->
+    event.preventDefault()
+    $('.modal-title').text $(event.target).html()
+    view = new adminFormView(url: @medias.get('links')._self_folder)
 )
