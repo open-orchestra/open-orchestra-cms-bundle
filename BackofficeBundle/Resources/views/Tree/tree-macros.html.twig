@@ -114,7 +114,7 @@
                 id="{{ folder.id }}"
                 data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
-                {%  if not check_media_exist(folder.id) %}
+                {%  if is_folder_deletable(folder.id) %}
                 <i
                     class="fa fa-trash-o ajax-delete"
                     data-delete-url="{{ path('php_orchestra_api_folder_delete', {'folderId': folder.id}) }}"

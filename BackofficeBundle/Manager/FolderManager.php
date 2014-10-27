@@ -28,16 +28,33 @@ class FolderManager
     }
 
     /**
-     * @param FolderInterface  $folder
+     * @param int  $folderId
      */
-    public function deleteTree(MediaFolderInterface $folder)
+    public function deleteTree($folderId)
     {
-        if($this->countMediaTree($folder) == 0){
+        if($this->isDeletable($folderId)){
+            $folder = $this->folderRepository->find($folderId);
             $this->documentManager->remove($folder);
         }
     }
 
-    public function countMediaTree(MediaFolderInterface $folder)
+    /**
+     * @param int  $folderId
+     */
+    public function isDeletable($folderId)
+    {
+        $folder = $this->folderRepository->find($folderId);
+        if($folder){
+            return $this->countMediaTree($folder) == 0;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param FolderInterface  $folder
+     */
+    protected function countMediaTree(MediaFolderInterface $folder)
     {
         $count = count($folder->getMedias());
         $subFolders = $folder->getSubFolders();

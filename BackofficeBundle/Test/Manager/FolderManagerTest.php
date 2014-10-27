@@ -38,12 +38,11 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideFolder
      */
-    public function testDeleteTree($folder, $expectedCall, $nbrMedias)
+    public function testDeleteTree($folder, $expectedCall, $isDeletable)
     {
-        $this->manager->deleteTree($folder);
-
+        Phake::when($this->folderRepository)->find($folder->getId())->thenReturn($folder);
+        $this->manager->deleteTree($folder->getId());
         Phake::verify($this->documentManager, Phake::times($expectedCall))->remove($folder);
-
     }
 
     /**
@@ -53,9 +52,10 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideFolder
      */
-    public function testCountMediaTree($folder, $expectedCall, $nbrMedias)
+    public function testIsDeletable($folder, $expectedCall, $isDeletable)
     {
-        $this->assertEquals($this->manager->countMediaTree($folder), $nbrMedias);
+        Phake::when($this->folderRepository)->find($folder->getId())->thenReturn($folder);
+        $this->assertEquals($this->manager->isDeletable($folder->getId()), $isDeletable);
     }
 
     /**
@@ -82,14 +82,16 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $folder0 = Phake::mock('PHPOrchestra\ModelBundle\Model\MediaFolderInterface');
         Phake::when($folder0)->getMedias()->thenReturn($medias);
         Phake::when($folder0)->getSubFolders()->thenReturn($subfolders);
+        Phake::when($folder0)->getId()->thenReturn('folder0');
 
         $folder1 = Phake::mock('PHPOrchestra\ModelBundle\Model\MediaFolderInterface');
         Phake::when($folder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($folder1)->getSubFolders()->thenReturn(new ArrayCollection());
+        Phake::when($folder1)->getId()->thenReturn('folder1');
 
         return array(
-            array($folder0, 0, 2),
-            array($folder1, 1, 0),
+            array($folder0, 0, false),
+            array($folder1, 1, true),
         );
     }
 }
