@@ -3,7 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
 use PHPOrchestra\ModelBundle\Model\MediaFolderInterface;
-use PHPOrchestra\ModelBundle\Repository\FolderRepository;
 use PHPOrchestra\ModelBundle\Repository\MediaRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
@@ -18,12 +17,10 @@ class FolderManager
     /**
      * Constructor
      *
-     * @param FolderRepository $folderRepository
      * @param DocumentManager  $documentManager
      */
-    public function __construct(FolderRepository $folderRepository, DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager)
     {
-        $this->folderRepository = $folderRepository;
         $this->documentManager = $documentManager;
     }
 
@@ -42,11 +39,7 @@ class FolderManager
      */
     public function isDeletable(MediaFolderInterface $folder)
     {
-        if($folder){
-            return $this->countMediaTree($folder) == 0;
-        }
-
-        return true;
+        return $this->countMediaTree($folder) == 0;
     }
 
     /**

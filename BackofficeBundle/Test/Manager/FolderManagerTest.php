@@ -5,7 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
 use PHPOrchestra\ModelBundle\Document\Folder;
 use PHPOrchestra\ModelBundle\Model\FolderInterface;
-use PHPOrchestra\ModelBundle\Repository\FolderRepository;
 use PHPOrchestra\ModelBundle\Document\MediaFolder;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -17,7 +16,6 @@ use Phake;
 class FolderManagerTest extends \PHPUnit_Framework_TestCase
 {
     protected $manager;
-    protected $folderRepository;
     protected $documentManager;
 
     /**
@@ -25,10 +23,9 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->folderRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\FolderRepository');
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
 
-        $this->manager = new FolderManager($this->folderRepository, $this->documentManager);
+        $this->manager = new FolderManager($this->documentManager);
     }
 
     /**
