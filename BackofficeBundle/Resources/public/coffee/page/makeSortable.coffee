@@ -47,6 +47,8 @@ makeSortable = (el, duplicate) ->
       refreshUl @stockedUl  if @evaluateRefreshable()
       @refreshHelper(ui)
     stop: (event, ui)->
+      console.log event
+      console.log ui
       if @duplicate and @clone
         $(this).replaceWith(@clone)
         makeSortable el, duplicate

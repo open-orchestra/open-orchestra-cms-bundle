@@ -37,12 +37,12 @@ class FolderManager
         }
     }
 
-    public function countMediaTree(MediaFolderInterface $folder, $count = 0)
+    public function countMediaTree(MediaFolderInterface $folder)
     {
-        $count += count($folder->getMedias());
+        $count = count($folder->getMedias());
         $subFolders = $folder->getSubFolders();
         foreach($subFolders as $subFolder){
-            $count = $this->countMediaTree($subFolder, $count);
+            $count += $this->countMediaTree($subFolder, $count);
         }
 
         return $count;
