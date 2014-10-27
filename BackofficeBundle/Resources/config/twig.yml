@@ -1,0 +1,17 @@
+parameters:
+    php_orchestra_backoffice.twig_extension.translation_choice.class: PHPOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
+    php_orchestra_backoffice.twig_extension.is_folder_deletable.class: PHPOrchestra\BackofficeBundle\Twig\IsFolderDeletableExtension
+
+services:
+    php_orchestra_backoffice.twig_extension.translation_choice:
+        class: %php_orchestra_backoffice.twig_extension.translation_choice.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.translation_choice
+        tags:
+            - { name: twig.extension}
+    php_orchestra_backoffice.twig_extension.is_folder_deletable:
+        class: %php_orchestra_backoffice.twig_extension.is_folder_deletable.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.media_folder
+        tags:
+            - { name: twig.extension}

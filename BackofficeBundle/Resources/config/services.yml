@@ -2,9 +2,9 @@ parameters:
     php_orchestra_backoffice.manager.context.class: PHPOrchestra\Backoffice\Context\ContextManager
     php_orchestra_backoffice.listener.translate_value_initializer.class: PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
     php_orchestra_backoffice.manager.translation_choice.class: PHPOrchestra\Backoffice\Manager\TranslationChoiceManager
-    php_orchestra_backoffice.twig_extension.translation_choice.class: PHPOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
     php_orchestra_backoffice.manager.area.class: PHPOrchestra\BackofficeBundle\Manager\AreaManager
     php_orchestra_backoffice.manager.node.class: PHPOrchestra\BackofficeBundle\Manager\NodeManager
+    php_orchestra_backoffice.manager.media_folder.class: PHPOrchestra\BackofficeBundle\Manager\FolderManager
 
 services:
     php_orchestra_backoffice.context_manager:
@@ -20,12 +20,6 @@ services:
         class: %php_orchestra_backoffice.manager.translation_choice.class%
         arguments:
             - @php_orchestra_backoffice.context_manager
-    php_orchestra_backoffice.twig_extension.translation_choice:
-        class: %php_orchestra_backoffice.twig_extension.translation_choice.class%
-        arguments:
-            - @php_orchestra_backoffice.manager.translation_choice
-        tags:
-            - { name: twig.extension}
     php_orchestra_backoffice.manager.area:
         class: %php_orchestra_backoffice.manager.area.class%
         arguments:
@@ -33,3 +27,6 @@ services:
     php_orchestra_backoffice.manager.node:
         class: %php_orchestra_backoffice.manager.node.class%
         arguments: [@php_orchestra_model.repository.node]
+    php_orchestra_backoffice.manager.media_folder:
+        class: %php_orchestra_backoffice.manager.media_folder.class%
+        arguments: [@doctrine.odm.mongodb.document_manager]
