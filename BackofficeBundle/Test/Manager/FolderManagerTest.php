@@ -54,8 +54,8 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsDeletable($folder, $expectedCall, $isDeletable)
     {
-        Phake::when($this->folderRepository)->find($folder->getId())->thenReturn($folder);
-        $this->assertEquals($this->manager->isDeletable($folder->getId()), $isDeletable);
+        Phake::when($this->folderRepository)->find(Phake::anyParameters())->thenReturn($folder);
+        $this->assertEquals($this->manager->isDeletable('test'), $isDeletable);
     }
 
     /**
