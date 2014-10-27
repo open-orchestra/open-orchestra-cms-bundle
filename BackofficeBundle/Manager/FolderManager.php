@@ -13,6 +13,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 class FolderManager
 {
     protected $folderRepository;
+    protected $documentManager;
 
     /**
      * Constructor
@@ -20,10 +21,9 @@ class FolderManager
      * @param FolderRepository $folderRepository
      * @param DocumentManager  $documentManager
      */
-    public function __construct(FolderRepository $folderRepository, MediaRepository $mediaRepository, DocumentManager $documentManager)
+    public function __construct(FolderRepository $folderRepository, DocumentManager $documentManager)
     {
         $this->folderRepository = $folderRepository;
-        $this->mediaRepository = $mediaRepository;
         $this->documentManager = $documentManager;
     }
 

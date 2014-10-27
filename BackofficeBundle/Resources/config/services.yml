@@ -37,7 +37,7 @@ services:
         arguments: [@php_orchestra_model.repository.node]
     php_orchestra_backoffice.manager.media_folder:
         class: %php_orchestra_backoffice.manager.media_folder.class%
-        arguments: [@php_orchestra_model.repository.media_folder, @php_orchestra_model.repository.media, @doctrine.odm.mongodb.document_manager]
+        arguments: [@php_orchestra_model.repository.media_folder, @doctrine.odm.mongodb.document_manager]
     php_orchestra_backoffice.twig_extension.check_media_exist:
         class: %php_orchestra_backoffice.twig_extension.check_media_exist.class%
         arguments:

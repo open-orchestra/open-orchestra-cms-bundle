@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Twig;
+namespace PHPOrchestra\BackofficeBundle\Test\Twig;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Twig\CheckMediaExistExtension;
@@ -60,6 +60,4 @@ class CheckMediaExistExtensionTest extends \PHPUnit_Framework_TestCase
             array(1, true),
         );
     }
-
-
 }
