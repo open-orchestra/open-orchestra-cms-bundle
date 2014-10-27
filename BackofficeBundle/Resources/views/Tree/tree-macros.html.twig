@@ -114,6 +114,14 @@
                 id="{{ folder.id }}"
                 data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
+                {%  if not check_media_exist(folder.id) %}
+                <i
+                    class="fa fa-trash-o ajax-delete"
+                    data-delete-url="{{ path('php_orchestra_api_folder_delete', {'folderId': folder.id}) }}"
+                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_media_folder'|trans({'%folderName%': folder.name}) }}"
+                >
+                </i>
+                {% endif %}
                 <span>{{ folder.name }}</span>
             </a>
             {% if folder.subFolders is not empty %}

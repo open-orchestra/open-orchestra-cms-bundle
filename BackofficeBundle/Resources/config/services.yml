@@ -3,8 +3,10 @@ parameters:
     php_orchestra_backoffice.listener.translate_value_initializer.class: PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
     php_orchestra_backoffice.manager.translation_choice.class: PHPOrchestra\Backoffice\Manager\TranslationChoiceManager
     php_orchestra_backoffice.twig_extension.translation_choice.class: PHPOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
+    php_orchestra_backoffice.twig_extension.check_media_exist.class: PHPOrchestra\BackofficeBundle\Twig\CheckMediaExistExtension
     php_orchestra_backoffice.manager.area.class: PHPOrchestra\BackofficeBundle\Manager\AreaManager
     php_orchestra_backoffice.manager.node.class: PHPOrchestra\BackofficeBundle\Manager\NodeManager
+    php_orchestra_backoffice.manager.media_folder.class: PHPOrchestra\BackofficeBundle\Manager\FolderManager
 
 services:
     php_orchestra_backoffice.context_manager:
@@ -33,3 +35,13 @@ services:
     php_orchestra_backoffice.manager.node:
         class: %php_orchestra_backoffice.manager.node.class%
         arguments: [@php_orchestra_model.repository.node]
+    php_orchestra_backoffice.manager.media_folder:
+        class: %php_orchestra_backoffice.manager.media_folder.class%
+        arguments: [@php_orchestra_model.repository.media_folder, @php_orchestra_model.repository.media, @doctrine.odm.mongodb.document_manager]
+    php_orchestra_backoffice.twig_extension.check_media_exist:
+        class: %php_orchestra_backoffice.twig_extension.check_media_exist.class%
+        arguments:
+            - @php_orchestra_backoffice.manager.media_folder
+            - @php_orchestra_model.repository.media_folder
+        tags:
+            - { name: twig.extension}

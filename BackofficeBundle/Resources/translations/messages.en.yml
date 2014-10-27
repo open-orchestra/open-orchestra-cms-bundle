@@ -109,7 +109,7 @@ php_orchestra_backoffice:
             new_media_folder: New Folder
             delete_node: Are you sure to delete the node %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
-            delete_media_folder: Are you sure to delete the folder %folderName% and its media?
+            delete_media_folder: Are you sure to delete the folder %folderName% ?
         editorial:
             title: Editorial
             nodes: Pages

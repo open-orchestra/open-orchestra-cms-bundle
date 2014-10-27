@@ -104,7 +104,7 @@ php_orchestra_backoffice:
             new_media_folder: Nouveau répertoire
             delete_node: Etes vous certain du supprimer le node %nodeId% ?
             delete_template: Etes vous certain de supprimer le gabarit %templateName% ?
-            delete_media_folder: Etes vous certain de supprimer le repertoire %folderName% et ses médias?
+            delete_media_folder: Etes vous certain de supprimer le repertoire %folderName%?
         editorial:
             title: Editorial
             nodes: Pages
