@@ -6,7 +6,7 @@ use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
 use PHPOrchestra\ModelBundle\Document\Folder;
 use PHPOrchestra\ModelBundle\Model\FolderInterface;
 use PHPOrchestra\ModelBundle\Repository\FolderRepository;
-use PHPOrchestra\ModelBundle\Model\MediaFolderInterface;
+use PHPOrchestra\ModelBundle\Document\MediaFolder;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Phake;
@@ -40,8 +40,8 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteTree($folder, $expectedCall, $isDeletable)
     {
-        Phake::when($this->folderRepository)->find($folder->getId())->thenReturn($folder);
-        $this->manager->deleteTree($folder->getId());
+        Phake::when($this->folderRepository)->find(Phake::anyParameters())->thenReturn($folder);
+        $this->manager->deleteTree('test');
         Phake::verify($this->documentManager, Phake::times($expectedCall))->remove($folder);
     }
 
@@ -63,11 +63,11 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideFolder()
     {
-        $subfolder0 = Phake::mock('PHPOrchestra\ModelBundle\Model\MediaFolderInterface');
+        $subfolder0 = Phake::mock('PHPOrchestra\ModelBundle\Document\MediaFolder');
         Phake::when($subfolder0)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($subfolder0)->getSubFolders()->thenReturn(new ArrayCollection());
 
-        $subfolder1 = Phake::mock('PHPOrchestra\ModelBundle\Model\MediaFolderInterface');
+        $subfolder1 = Phake::mock('PHPOrchestra\ModelBundle\Document\MediaFolder');
         Phake::when($subfolder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($subfolder1)->getSubFolders()->thenReturn(new ArrayCollection());
 
@@ -79,15 +79,13 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $subfolders->add($subfolder0);
         $subfolders->add($subfolder1);
 
-        $folder0 = Phake::mock('PHPOrchestra\ModelBundle\Model\MediaFolderInterface');
+        $folder0 = Phake::mock('PHPOrchestra\ModelBundle\Document\MediaFolder');
         Phake::when($folder0)->getMedias()->thenReturn($medias);
         Phake::when($folder0)->getSubFolders()->thenReturn($subfolders);
-        Phake::when($folder0)->getId()->thenReturn('folder0');
 
-        $folder1 = Phake::mock('PHPOrchestra\ModelBundle\Model\MediaFolderInterface');
+        $folder1 = Phake::mock('PHPOrchestra\ModelBundle\Document\MediaFolder');
         Phake::when($folder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($folder1)->getSubFolders()->thenReturn(new ArrayCollection());
-        Phake::when($folder1)->getId()->thenReturn('folder1');
 
         return array(
             array($folder0, 0, false),
