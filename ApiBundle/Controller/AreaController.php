@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
@@ -34,6 +35,26 @@ class AreaController extends Controller
         $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
+    }
+
+    /**
+     * @param string $areaId
+     * @param string $templateId
+     *
+     * @Config\Route("/{areaId}/show-in-template/{templateId}", name="php_orchestra_api_area_show_in_template")
+     * @Config\Method({"GET"})
+     *
+     * @Api\Serialize()
+     *
+     * @return FacadeInterface
+     */
+    public function showInTemplateAction($areaId, $templateId)
+    {
+        $templateRepository = $this->get('php_orchestra_model.repository.template');
+        $template = $templateRepository->findOneByTemplateId($templateId);
+        $area = $templateRepository->findAreaByTemplateIdAndAreaId($templateId, $areaId);
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('area')->transformFromTemplate($area, $template);
     }
 
     /**
