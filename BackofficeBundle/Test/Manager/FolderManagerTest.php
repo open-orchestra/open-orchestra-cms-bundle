@@ -34,7 +34,7 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param MediaFolderInterface $folder
      * @param int                  $expectedCall
-     * @param int                  $nbrMedias
+     * @param boolean              $isDeletable
      *
      * @dataProvider provideFolder
      */
@@ -48,7 +48,7 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param MediaFolderInterface $folder
      * @param int                  $expectedCall
-     * @param int                  $nbrMedias
+     * @param boolean              $isDeletable
      *
      * @dataProvider provideFolder
      */
