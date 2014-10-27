@@ -227,4 +227,35 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
             ),
         );
     }
+
+    /**
+     * @param string $component
+     * @param int    $blockIndex
+     *
+     * @dataProvider provideComponentAndBlockIndex
+     */
+    public function testReverseTransformWithComponent($component, $blockIndex)
+    {
+        $this->blockFacade->component = $component;
+        Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
+
+        $result = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
+
+        $this->assertSame(array('blockId' => $blockIndex, 'nodeId' => 0), $result);
+        Phake::verify($this->node)->addBlock(Phake::anyParameters());
+        Phake::verify($this->node)->getBlockIndex(Phake::anyParameters());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideComponentAndBlockIndex()
+    {
+        return array(
+            array('Sample', 1),
+            array('TinyMCE', 2),
+            array('Carrossel', 0),
+            array('News', 1),
+        );
+    }
 }
