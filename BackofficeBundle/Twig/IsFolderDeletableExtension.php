@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Twig;
 
 use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
+use PHPOrchestra\ModelBundle\Model\MediaFolderInterface;
 
 /**
  * Class IsFolderDeletableExtension
@@ -21,13 +22,13 @@ class IsFolderDeletableExtension extends \Twig_Extension
     }
 
     /**
-     * @param string $folderId
+     * @param MediaFolderInterface $folder
      *
      * @return boolean
      */
-    public function isFolderDeletable($folderId)
+    public function isFolderDeletable(MediaFolderInterface $folder)
     {
-        return $this->folderManager->isDeletableFromId($folderId);
+        return $this->folderManager->isDeletable($folder);
     }
 
     /**
