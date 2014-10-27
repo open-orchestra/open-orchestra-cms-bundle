@@ -33,6 +33,9 @@ class CheckMediaExistExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param int     $countMedia
+     * @param boolean $expectedResult
+     *
      * @dataProvider provideCountMedia
      */
     public function testCheckMediaExist($countMedia, $expectedResult)
