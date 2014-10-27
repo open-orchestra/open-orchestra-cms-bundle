@@ -32,8 +32,8 @@ class FolderManager
      */
     public function deleteTree($folderId)
     {
-        if($this->isDeletable($folderId)){
-            $folder = $this->folderRepository->find($folderId);
+        $folder = $this->folderRepository->find($folderId);
+        if($this->isDeletable($folder)){
             $this->documentManager->remove($folder);
         }
     }
@@ -41,9 +41,17 @@ class FolderManager
     /**
      * @param int  $folderId
      */
-    public function isDeletable($folderId)
+    public function isDeletableFromId($folderId)
     {
         $folder = $this->folderRepository->find($folderId);
+        return $this->isDeletable($folder);
+    }
+
+    /**
+     * @param MediaFolderInterface $folder
+     */
+    public function isDeletable(MediaFolderInterface $folder)
+    {
         if($folder){
             return $this->countMediaTree($folder) == 0;
         }

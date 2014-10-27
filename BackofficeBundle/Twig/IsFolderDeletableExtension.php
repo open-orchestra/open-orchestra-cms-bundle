@@ -27,7 +27,7 @@ class IsFolderDeletableExtension extends \Twig_Extension
      */
     public function isFolderDeletable($folderId)
     {
-        return $this->folderManager->isDeletable($folderId);
+        return $this->folderManager->isDeletableFromId($folderId);
     }
 
     /**
