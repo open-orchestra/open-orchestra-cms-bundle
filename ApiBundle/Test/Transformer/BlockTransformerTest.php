@@ -116,7 +116,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider blockReverseTransformProvider
      */
-    public function testReverseTransformToArray($nodeId,$result, $facadeNodeId, $blockId)
+    public function testReverseTransformToArray($nodeId, $result, $facadeNodeId, $blockId)
     {
         $this->blockFacade->nodeId = $facadeNodeId;
         $this->blockFacade->blockId = $blockId;
@@ -189,6 +189,73 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
                 'menu',
                 3
             ),
+        );
+    }
+
+    /**
+     * @param array  $result
+     * @param string $facadeNodeId
+     * @param int    $blockId
+     *
+     * @dataProvider blockReverseTransformProviderWithoutNode
+     */
+    public function testReverseTransformWithoutNode($result, $facadeNodeId, $blockId)
+    {
+        $this->blockFacade->nodeId = $facadeNodeId;
+        $this->blockFacade->blockId = $blockId;
+
+        $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade);
+
+        $this->assertSame($result, $expected);
+    }
+
+    /**
+     * @return array
+     */
+    public function blockReverseTransformProviderWithoutNode()
+    {
+        return array(
+            array(
+                array('blockId' => 0, 'nodeId' => 'fixture_full'),
+                'fixture_full',
+                0
+            ),
+            array(
+                array('blockId' => 3, 'nodeId' => 'fixture_full'),
+                'fixture_full',
+                3
+            ),
+        );
+    }
+
+    /**
+     * @param string $component
+     * @param int    $blockIndex
+     *
+     * @dataProvider provideComponentAndBlockIndex
+     */
+    public function testReverseTransformWithComponent($component, $blockIndex)
+    {
+        $this->blockFacade->component = $component;
+        Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
+
+        $result = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
+
+        $this->assertSame(array('blockId' => $blockIndex, 'nodeId' => 0), $result);
+        Phake::verify($this->node)->addBlock(Phake::anyParameters());
+        Phake::verify($this->node)->getBlockIndex(Phake::anyParameters());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideComponentAndBlockIndex()
+    {
+        return array(
+            array('Sample', 1),
+            array('TinyMCE', 2),
+            array('Carrossel', 0),
+            array('News', 1),
         );
     }
 }

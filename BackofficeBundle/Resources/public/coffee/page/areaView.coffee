@@ -3,7 +3,6 @@ AreaView = Backbone.View.extend(
   className: "ui-model-areas"
   events:
     "click i#none": "clickButton"
-    "sortupdate ul.ui-model-blocks": "sendBlockData"
     "click i.block-remove": "confirmRemoveBlock"
 
   initialize: (options) ->
@@ -16,6 +15,8 @@ AreaView = Backbone.View.extend(
     @events[paramkey] = "paramArea"
     removekey = "click i.area-remove-" + @area.cid
     @events[removekey] = "confirmRemoveArea"
+    sortUpdateKey = "sortupdate ul.blocks-" + @cid
+    @events[sortUpdateKey] = "sendBlockData"
     _.bindAll this, "render", "addAreaToView", "addBlockToView"
     return
 
@@ -58,15 +59,16 @@ AreaView = Backbone.View.extend(
       @addAreaToView @area.get("areas")[area]
     for block of @area.get("blocks")
       @addBlockToView @area.get("blocks")[block]
-    $("ul.ui-model-blocks", @el).remove()  if $("ul.ui-model-blocks", @el).children().length is 0
-    if $("ul.ui-model-areas", @el).children().length is 0
-      $("ul.ui-model-areas", @el).remove()
+    if $("ul.areas-" + @cid, @el).children().length is 0
+      $("ul.areas-" + @cid, @el).remove()
       makeSortable @el
+    else
+      $("ul.blocks-" + @cid, @el).remove() if $("ul.blocks-" + @cid, @el).children().length is 0
     this
 
   purgeContent: ->
-    $("ul.ui-model-areas", @el).empty()
-    $("ul.ui-model-blocks", @el).empty()
+    $("ul.areas-" + @cid, @el).empty()
+    $("ul.blocks-" + @cid, @el).empty()
 
   addAreaToView: (area) ->
     areaElement = new Area()
@@ -76,7 +78,7 @@ AreaView = Backbone.View.extend(
       node_id: @node_id
       displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
     )
-    $("ul.ui-model-areas", @el).append areaView.render().el
+    $("ul.areas-" + @cid, @el).append areaView.render().el
 
   addBlockToView: (block) ->
     blockElement = new Block()
@@ -85,29 +87,28 @@ AreaView = Backbone.View.extend(
       block: blockElement
       displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
     )
-    $("ul.ui-model-blocks", @el).append blockView.render().el
+    $("ul.blocks-" + @cid, @el).append blockView.render().el
 
   sendBlockData: (event)->
-    if $("ul.ui-model-areas", @el).length == 0
-      ul = $(event.target)
-      refreshUl ul
-      blocks = ul.children()
-      blockData = []
-      for block in blocks
-        if $('div[data-node-id]', block).length > 0
-          blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
-        else if $('div[data-block-type]', block).length > 0
-          blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
-      areaData = {}
-      areaData['blocks'] = blockData
-      mustRefresh = !! ul.find(".newly-inserted").length > 0
-      currentView = this
-      $.ajax
-        url: @area.get('links')._self_block
-        method: 'POST'
-        data: JSON.stringify(areaData)
-        success: (response) ->
-          currentView.refresh() if mustRefresh
+    ul = $(event.target)
+    refreshUl ul
+    blocks = ul.children()
+    blockData = []
+    for block in blocks
+      if $('div[data-node-id]', block).length > 0
+        blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
+      else if $('div[data-block-type]', block).length > 0
+        blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
+    areaData = {}
+    areaData['blocks'] = blockData
+    mustRefresh = !! ul.find(".newly-inserted").length > 0
+    currentView = this
+    $.ajax
+      url: @area.get('links')._self_block
+      method: 'POST'
+      data: JSON.stringify(areaData)
+      success: (response) ->
+        currentView.refresh() if mustRefresh
 
   refresh: ->
     currentView = this
@@ -118,7 +119,7 @@ AreaView = Backbone.View.extend(
         currentView.area.set(response)
         currentView.purgeContent()
         currentView.drawContent()
-        refreshUl $("ul.ui-model-blocks", currentView.el)
+        refreshUl $("ul.blocks-" + currentView.cid, currentView.el)
 
   confirmRemoveBlock: (event) ->
     if @area.get("blocks").length > 0
