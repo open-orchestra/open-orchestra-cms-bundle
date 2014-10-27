@@ -60,6 +60,7 @@ class PHPOrchestraBackofficeExtension extends Extension
         $loader->load('form.yml');
         $loader->load('generator.yml');
         $loader->load('display.yml');
+        $loader->load('twig.yml');
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }
