@@ -21,6 +21,14 @@ class ApiControllersTest extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
+
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Login')->form();
+        $form['_username'] = 'nicolas';
+        $form['_password'] = 'nicolas';
+
+        $crawler = $this->client->submit($form);
     }
 
     /**
