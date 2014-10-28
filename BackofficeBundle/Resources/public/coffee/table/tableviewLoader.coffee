@@ -8,14 +8,17 @@ tableViewLoad = (link, target, documentActions) ->
     url: link.data('url')
     method: 'GET'
     success: (response) ->
-      elements = new TableviewElement
-      elements.set response
-      view = new TableviewCollectionView(
-        elements: elements
-        displayedElements: displayedElements
-        title: title
-        listUrl: listUrl
-        el: target
-        documentActions: documentActions
-      )
-      appRouter.setCurrentMainView(view)
+      if isLoginForm(response)
+        redirectToLogin()
+      else
+        elements = new TableviewElement
+        elements.set response
+        view = new TableviewCollectionView(
+          elements: elements
+          displayedElements: displayedElements
+          title: title
+          listUrl: listUrl
+          el: target
+          documentActions: documentActions
+        )
+        appRouter.setCurrentMainView(view)

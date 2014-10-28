@@ -5,15 +5,18 @@ showNode = (url, version)->
     type: "GET"
     url: url
     success: (response) ->
-      node = new Node
-      node.set response
-      switchLoaderFullPage('off')
-      view = new NodeView(
-        node: node
-        version: version
-      )
-      appRouter.setCurrentMainView(view)
-      return
+      if isLoginForm(response)
+        redirectToLogin()
+      else
+        node = new Node
+        node.set response
+        switchLoaderFullPage('off')
+        view = new NodeView(
+          node: node
+          version: version
+        )
+        appRouter.setCurrentMainView(view)
+        return
   return
 
 showNodeForm = (parentNode) ->
