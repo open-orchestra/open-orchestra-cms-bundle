@@ -2,7 +2,7 @@
 
 renderPageTitle = ->
   $('#title-logo').addClass($('nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
-  $('#title-universe').text($('nav li.active:first > a > span').text())
+  $('#title-universe').text($('.breadcrumb li:nth-child(2)').text())
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 
 
