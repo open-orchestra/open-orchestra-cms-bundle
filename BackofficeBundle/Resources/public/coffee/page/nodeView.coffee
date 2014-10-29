@@ -65,7 +65,7 @@ NodeView = Backbone.View.extend(
       node_id: @node.get('node_id'),
       displayClass: (if @node.get("bo_direction") is "v" then "inline" else "block")
     )
-    this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas').append areaView.render().el
+    @$el.find('ul.ui-model-areas').first().append  areaView.render().el
     $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
       refreshUl $(this)
     return
