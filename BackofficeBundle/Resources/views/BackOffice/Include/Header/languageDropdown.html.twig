@@ -7,7 +7,7 @@
                 class="flag flag-{{ context.currentLocale }}"
                 alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':context.currentLocale}, 'backOffice') }}"
             >
-            <span> {{ context.currentLocale|upper }} </span> <i class="fa fa-angle-down"></i>
+            <span> {{ ('php_orchestra_backoffice.language.' ~ context.currentLocale)|trans }} ({{ context.currentLocale|capitalize }})</span> <i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu pull-right">
             {% for language in available_languages %}
@@ -18,7 +18,7 @@
                         class="flag flag-{{ language }}"
                         alt="{{ 'php_orchestra_cms.top_menu.language_flag_%language%'|trans({'language':language}, 'backOffice') }}"
                     >
-                    {{ ('php_orchestra_backoffice.language.' ~ language)|trans }}
+                    {{ ('php_orchestra_backoffice.language.' ~ language)|trans }} ({{ language|capitalize }})
                 </a>
             </li>
             {% endfor %}
