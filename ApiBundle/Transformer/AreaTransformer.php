@@ -90,7 +90,7 @@ class AreaTransformer extends AbstractTransformer
             'nodeId' => $node->getNodeId(),
             'areaId' => $mixed->getAreaId()
         )));
-        
+
         if ($parentAreaId) {
             $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node_area',
                 array(
@@ -135,17 +135,7 @@ class AreaTransformer extends AbstractTransformer
         foreach ($mixed->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $mixed->getAreaId()));
         }
-        foreach ($mixed->getBlocks() as $blockPosition => $block) {
-            $otherNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($block['nodeId']);
-            $facade->addBlock($this->getTransformer('block')->transform(
-                $otherNode->getBlocks()->get($block['blockId']),
-                false,
-                $otherNode->getNodeId(),
-                $block['blockId'],
-                $mixed->getAreaId(),
-                $blockPosition
-            ));
-        }
+
         $facade->boDirection = $mixed->getBoDirection();
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
@@ -161,10 +151,7 @@ class AreaTransformer extends AbstractTransformer
                 'areaId' => $mixed->getAreaId(),
             )
         ));
-        $facade->addLink('_self_block', $this->generateRoute('php_orchestra_api_area_template_update_block', array(
-            'templateId' => $templateId,
-            'areaId' => $mixed->getAreaId()
-        )));
+
         $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_template', array(
             'templateId' => $templateId,
             'areaId' => $mixed->getAreaId()

@@ -83,30 +83,6 @@ class AreaController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param string  $templateId
-     * @param int     $areaId
-     *
-     * @Config\Route("/{templateId}/{areaId}/update-block-template", name="php_orchestra_api_area_template_update_block")
-     * @Config\Method({"POST"})
-     *
-     * @return Response
-     */
-    public function updateBlockInAreaTemplateAction(Request $request, $templateId, $areaId)
-    {
-        $templateRepository = $this->get('php_orchestra_model.repository.template');
-        $area = $templateRepository->findAreaByTemplateIdAndAreaId($templateId, $areaId);
-
-        $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
-
-        $this->get('php_orchestra_api.transformer_manager')->get('area')->reverseTransform($facade, $area);
-
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
-
-        return new Response();
-    }
-
-    /**
      * @param string $areaId
      * @param string $nodeId
      *
@@ -173,7 +149,7 @@ class AreaController extends Controller
     /**
      * Remove an area from an areaContainer
      *
-     * @param string $areaId
+     * @param string                 $areaId
      * @param AreaContainerInterface $areaContainer
      */
     protected function deleteAreaFromContainer($areaId, AreaContainerInterface $areaContainer)

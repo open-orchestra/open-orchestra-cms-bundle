@@ -14,8 +14,7 @@ NodeCollectionElement = Backbone.Model.extend(
   nodes: NodeCollection
 )
 Template = Backbone.Model.extend(
-  areas: AreaCollection,
-  blocks: BlockCollection
+  areas: AreaCollection
 )
 TableviewModel = Backbone.Model.extend({})
 TableviewCollection = Backbone.Collection.extend(model: TableviewModel)
