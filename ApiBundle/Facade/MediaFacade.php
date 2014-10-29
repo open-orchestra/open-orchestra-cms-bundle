@@ -33,4 +33,9 @@ class MediaFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $mimeType;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $displayedImage;
 }

@@ -22,6 +22,7 @@ class MediaTransformer extends AbstractTransformer
         $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->mimeType = $mixed->getMimeType();
+        $facade->displayedImage = '/upload/' . $mixed->getFilesystemName();
 
         $facade->addLink('_self_select', $mixed->getId());
 
