@@ -10,7 +10,6 @@ showNode = (url, version)->
       else
         node = new Node
         node.set response
-        switchLoaderFullPage('off')
         view = new NodeView(
           node: node
           version: version
