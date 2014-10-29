@@ -1,11 +1,11 @@
-#--[ Jarvis widgets ]----------#
+# JARVIS WIDGETS
 
 $(".widget-grid").DOMNodeAppear ->
   setup_widgets_desktop()
   return
 
 
-#--[ Content titles ]----------#
+# CONTENT TITLES
 
 $(".page-title").DOMNodeAppear ->
   renderPageTitle()
