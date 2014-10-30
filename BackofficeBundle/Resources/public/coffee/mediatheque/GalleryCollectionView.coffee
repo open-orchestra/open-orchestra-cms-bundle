@@ -18,7 +18,7 @@ GalleryCollectionView = Backbone.View.extend(
       links: @medias.get('links')
       cid: @cid
     )
-    $('.js-widget-title', @$el).text @title 
+    $('.js-widget-title', @$el).text @title
     $('.js-widget-edit', @$el).html($('#generated-edit', @$el).html()).show()
     for mediaKey of @medias.get(@medias.get('collection_name'))
       @addElementToView (@medias.get(@medias.get('collection_name'))[mediaKey])
