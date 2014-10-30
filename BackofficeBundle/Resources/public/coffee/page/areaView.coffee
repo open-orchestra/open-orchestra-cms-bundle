@@ -101,7 +101,7 @@ AreaView = Backbone.View.extend(
         blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
     areaData = {}
     areaData['blocks'] = blockData
-    mustRefresh = !! ul.find(".panel-block").length > 0
+    mustRefresh = !! ul.find(".newly-inserted").length > 0
     currentView = this
     $.ajax
       url: @area.get('links')._self_block
