@@ -7,7 +7,7 @@ GalleryCollectionView = Backbone.View.extend(
     @listUrl = options.listUrl
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
-    key = 'click a.ajax-folder-' + @cid
+    key = 'click i.ajax-folder-' + @cid
     @events[key] = 'clickRedirect'
     _.bindAll this, "render"
     @mediasTemplate = _.template($('#galleryCollectionView').html())
@@ -18,7 +18,8 @@ GalleryCollectionView = Backbone.View.extend(
       links: @medias.get('links')
       cid: @cid
     )
-    $('.js-widget-title', @$el).text @title
+    $('.js-widget-title', @$el).text @title 
+    $('.js-widget-edit', @$el).html $('#generated-edit', @$el).html()
     for mediaKey of @medias.get(@medias.get('collection_name'))
       @addElementToView (@medias.get(@medias.get('collection_name'))[mediaKey])
     $("img", @$el).each ->
