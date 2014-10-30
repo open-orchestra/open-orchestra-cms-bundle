@@ -56,6 +56,12 @@ NodeView = Backbone.View.extend(
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addVersionToView()
+    if @node.attributes.status.published
+        $('.ui-model *', @el).unbind()
+        $('.js-widget-panel').hide()
+    else
+      $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
+        refreshUl $(this)
     return
   addAreaToView: (area) ->
     areaElement = new Area
@@ -66,12 +72,6 @@ NodeView = Backbone.View.extend(
       displayClass: (if @node.get("bo_direction") is "v" then "inline" else "block")
     )
     @$el.find('ul.ui-model-areas').first().append  areaView.render().el
-    if @node.attributes.status.published
-        $('.ui-model *', @el).unbind()
-        $('.js-widget-panel').hide()
-    else
-      $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
-        refreshUl $(this)
     return
   addVersionToView: ->
     viewContext = this
