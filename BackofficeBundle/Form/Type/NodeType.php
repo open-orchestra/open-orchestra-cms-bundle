@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddRemoveButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeTypeSubscriber;
@@ -77,7 +78,6 @@ class NodeType extends AbstractType
     }
 
     /**
-     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)

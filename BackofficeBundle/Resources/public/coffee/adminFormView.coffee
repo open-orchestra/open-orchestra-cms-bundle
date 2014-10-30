@@ -4,6 +4,7 @@ adminFormView = Backbone.View.extend(
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
+    @deleteurl = options.deleteurl if options.deleteurl
     @events = {}
     if options.triggers
       for i of options.triggers
@@ -32,6 +33,9 @@ adminFormView = Backbone.View.extend(
     @html = options.html
     $('.modal-body', @el).html @html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
+    if @deleteurl != undefined
+      $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
+      $('.modal-footer', @el).show()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return

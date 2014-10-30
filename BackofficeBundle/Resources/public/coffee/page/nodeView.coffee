@@ -18,9 +18,11 @@ NodeView = Backbone.View.extend(
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
     url = @node.get('links')._self_form
+    deleteurl = @node.get('links')._self_delete
     if @node.attributes.alias is ''
       view = new adminFormView(
         url: url
+        deleteurl: deleteurl
         triggers: [
           {
             event: "keyup input.alias-source"
@@ -35,7 +37,10 @@ NodeView = Backbone.View.extend(
         ]
       )
     else
-      view = new adminFormView(url: url)
+      view = new adminFormView(
+        url: url
+        deleteurl: deleteurl
+      )
   duplicateNode: (event) ->
     event.preventDefault() #
     viewContext = this
