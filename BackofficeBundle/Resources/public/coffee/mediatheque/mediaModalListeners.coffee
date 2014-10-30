@@ -1,4 +1,4 @@
-#--[ OPEN MEDIA MODAL ]--#
+# OPEN MEDIA MODAL
 
 $(document).on "click", ".mediaModalOpen", (event) ->
   modalId = $(event.currentTarget).data("target")
@@ -9,10 +9,11 @@ $(document).on "click", ".mediaModalOpen", (event) ->
   $('#' + modalId + ' .modal-body-menu').empty()
   $('#' + modalId + ' .modal-body-content').empty()
   
-  mediaModal.css "width", orchestraModal.css("width")
-  mediaModal.css "height", orchestraModal.css("height")
+  mediaModal.css('width', orchestraModal.css('width'))
+  mediaModal.css('height', orchestraModal.css('height'))
+  mediaModal.parent().css('top', orchestraModal.css('top'))
   
-  mediaModal.modal "show"
+  mediaModal.modal("show")
   
   view = new mediaModalView(
     menuUrl: $('#' + modalId + ' .modal-body-menu').data('url'),
@@ -22,7 +23,8 @@ $(document).on "click", ".mediaModalOpen", (event) ->
   return
 
 
-#--[ CLOSE MEDIA MODAL ]--#
+
+# CLOSE MEDIA MODAL
 
 $(document).on "click", ".mediaModalClose", (event) ->
   mediaModal = $("#" + $(event.currentTarget).data("target"))
@@ -37,15 +39,17 @@ $(document).on "click", ".mediaModalClose", (event) ->
   return
 
 
-#--[ FOLDER CLICKED ]--#
+
+# FOLDER CLICKED
 
 $(document).on "click", ".media-modal-menu-folder", (event) ->
   modalId = $(event.target).parents(".mediaModalContainer").find(".fade").attr("id")
   displayLoader "#" + modalId + " .modal-body-content"
   GalleryLoad $(event.target), "#" + modalId + " .modal-body-content"
 
-#--[ NEW FOLDER CLICKED ]--#
-#--[ ADD MEDIA ]--#
+
+
+# NEW FOLDER, ADD MEDIA
 
 $(document).on "click", ".modal-body-content a[class^='ajax-add-'], .media-modal-menu-new-folder", (event) ->
   event.preventDefault()
