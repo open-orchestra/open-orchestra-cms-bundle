@@ -58,7 +58,7 @@
   display: block;
   position:relative;
   z-index:1;
-  margin-top:-6px;
+  margin-top:-7px;
 }
 
 .panel-shadow {
@@ -67,52 +67,49 @@
   box-shadow: -11px 12px 23px #555; 
 }
 
-.blocks-panel li.ui-model-blocks span.action {
-  display: none;
-}
-
-.widget-toolbar{
+.js-widget-panel {
     float: right;
     height:34px;
 }
-#content div.panel-activate{
+
+.js-widget-panel .activate{
+    margin-right: -60px
+}
+
+#content div.panel-activate {
     padding-right: 180px;
 }
 
-.newly-inserted div {
+div.panel-block {
     background-color:#EEEEEE;
 }
-.blocks-panel li.ui-model-blocks span.action, li.hover.ui-model-blocks span.action {
+
+div.panel-block span.action {
   display: none;
 }
 
-div.panel-block {
-    height: 28px;
-    position:absolute;
+.ui-model div.panel-block div.preview {
+  overflow: hidden;
+  background-color: #eeeeee;
+  min-width: 0;
+  min-height: 0;
 }
 
-li.hover div.panel-block {
-    height: auto;
-    position:relative;
-    margin: 0 12px 12px 0;
-}
-
-div.blocks-panel li{
-    height: 40px;
-    margin-right: 12px;
-}
-
-div.blocks-panel li.hover{
-    height: auto;
-}
-
-div.blocks-panel .ui-model div.preview{
-    height: 26px;
-    overflow: hidden;
-}
-
-div.blocks-panel .ui-model li.hover div.preview{
-    height: auto;
-    max-height: 200px;
-    min-height: 26px;
+div.blocks-panel {
+    li, li div.panel-block {
+        height: 40px;
+    }
+    li.hover, li.hover div.panel-block {
+        height: auto;
+    }
+    .ui-model div.preview {
+        height: 38px;
+        max-height: 38px;
+        min-height: 38px;
+    }
+    .ui-model li.hover div.preview {
+        height: auto;
+        max-height: 200px;
+        min-height: 38px;
+    }
 }

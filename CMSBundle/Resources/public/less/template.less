@@ -5,17 +5,22 @@
 }
 .ui-model {
     width:100%;
-    height:600px;
+    height:auto;
     ul {
-        display:block;
         width:100%;
-        height:100%;
+        height: 78px;
+        display:table;
+        border-spacing:12px;
     }
     li {
+        vertical-align:top;
         display:block;
-        width:100%;
-        height:100%;
-        z-index:1;
+    }
+    ul li.block {
+        display:table-row;
+    }
+    ul li.inline {
+        display:table-cell;
     }
     li.separator-h {
         position:absolute;
@@ -39,16 +44,10 @@
         cursor:ew-resize;
         z-index:2;
     }
-    li.block {
-        display : block;
-    }
-    li.inline {
-        display : inline-block;
-    }
     span.title {
         position:absolute;
         display:block;
-        margin:-29px 0 0 -18px;
+        margin:-17px 0 0 -6px;
         line-height:20px;
         font-weight:bold;
         width:100%;
@@ -77,21 +76,19 @@
         overflow:hidden;
     }
     div {
-        font:10px arial,sans-serif;
-        position:absolute;
-        border-radius:8px;
-        top:0px;
-        left:0px;
-        bottom:12px;
-        right:12px;
-        padding:12px 0px 0px 12px;
-        color:#4e4e4e;
         border:1px solid #4e4e4e;
+        border-radius:8px;
+        color:#4e4e4e;
+        font:10px arial,sans-serif;
+        height: 100%;
+        position:relative;
     }
     .ui-model-areas {
         div {
             color:#4e4e4e;
             border:1px solid #4e4e4e;
+            min-width: 80px;
+            min-height: 80px;
         }
     }
     .ui-model-blocks {
@@ -99,16 +96,19 @@
             color:#6aa84f;
             border:1px solid #6aa84f;
         }
-        div.preview {
-            border: 0px;
-            margin: -12px 0 0 -12px;
-            padding-top: 2px;
-            height: 100%;
-            position: relative;
-        }
         div.load {
             color: #006EC4;
             border-color: #006EC4;
+        }
+        div.preview {
+            border: 0px;
+            padding-top: 2px;
+            margin: 0px;
+            height: 100%;
+            position: relative;
+            min-width: 80px;
+            min-height: 80px;
+            background-color: #ffffff;
         }
     }
     div.over {
@@ -119,17 +119,6 @@
         background-image: url(../img/alpha.png);
         background-size: 10px 100%;
     }
-}
-#all-blocks {
-    position:relative;
-    display:inline;
-    float:left;
-    top:0px;
-    left:100%;
-    height:100%;
-    width:100%;
-    background-color:#880000;
-    margin-left:-30px;
 }
 
 .scroll {

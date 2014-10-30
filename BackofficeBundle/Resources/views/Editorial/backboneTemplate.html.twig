@@ -40,9 +40,7 @@
 
                     <header>
                         <h2 class="js-widget-title"></h2>
-                        <div class="widget-toolbar">
-                            <!-- add: non-hidden - to disable auto hide -->
-
+                        <div class="js-widget-panel">
                         </div>
                     </header>
 
@@ -190,7 +188,7 @@
 <script type="text/html" id="blockView">
     <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <span class="title"><%= block.get('ui_model').label %></span>
-        <div class="preview scroll  block-param">
+        <div class="preview scroll block-param">
             <%= block.get('ui_model').html %>
         </div>
         <span class="action">

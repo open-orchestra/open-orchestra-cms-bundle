@@ -1,6 +1,14 @@
+applyClass = (li) ->
+  li.attr('class', li.siblings().attr('class'))
+  li.css('display', '')
 refreshUl = (ul) ->
   if ul isnt null
     childs = ul.children(':visible')
+    placeholder = childs.filter(".ui-sortable-placeholder")
+    if placeholder.length > 0
+      applyClass placeholder
+      placeholder.addClass "ui-sortable-placeholder"
+      placeholder.html '<div class="preview"></div>'
     nbrChildren = childs.length
     direction = if childs.filter(".inline").length > 0 then "width" else "height"
     childs.each ->
@@ -14,39 +22,32 @@ makeSortable = (el, duplicate) ->
     appendTo: 'body',
     tolerance: 'pointer',
     helper: (event, obj) ->
-      helper = obj.clone()
-      $('.panel-block', helper).removeClass('panel-block')
-      $('.preview', helper).addClass('scroll')
-      $("<div></div>").addClass("ui-model").append helper
+      $("<div></div>").addClass("ui-model").append obj.clone()
     create: (event, ui)->
       @stockedUl = $(this)
       @duplicate = duplicate
+      @clone = $(this).clone() if @duplicate
       @evaluateRefreshable = ->
         not @duplicate or not $(this).is(@stockedUl)
       @refreshHelper = (ui) ->
+        refreshUl @stockedUl  if @evaluateRefreshable()
         placeholder = ui.placeholder
+        @stockedUl = ui.placeholder.parent()
         if @evaluateRefreshable()
           ui.placeholder.show()
+          refreshUl @stockedUl
         else
           ui.placeholder.hide()
           placeholder = ui.item
         $('li', ui.helper).height placeholder.height()
         $('li', ui.helper).width placeholder.width()
-      if @duplicate
-        @clone = $(this).clone()
     start: (event, ui)->
-      if @duplicate
-        ui.item.show()
-        ui.placeholder.hide()
-      else
-        refreshUl @stockedUl
+      ui.item.show()  if @duplicate
       @refreshHelper(ui)
     change: (event, ui) ->
-      refreshUl @stockedUl  if @evaluateRefreshable()
-      @stockedUl = ui.placeholder.parent()
-      refreshUl @stockedUl  if @evaluateRefreshable()
       @refreshHelper(ui)
     stop: (event, ui)->
+      applyClass ui.item
       if @duplicate and @clone
         $(this).replaceWith(@clone)
         makeSortable el, duplicate
