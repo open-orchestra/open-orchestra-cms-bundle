@@ -40,8 +40,8 @@
 
                     <header>
                         <h2 class="js-widget-title"></h2>
-                        <div class="js-widget-panel">
-                        </div>
+                        <div class="widget-toolbar js-widget-panel" style="display: none"></div>
+                        <div class="widget-toolbar js-widget-edit" style="display: none"></div>
                     </header>
 
                     <!-- widget div-->
@@ -102,7 +102,7 @@
     <div id="generated-title" style="display: none">
         <%= title %>
     </div>
-    <div id="generated-tools" style="display: none">
+    <div id="generated-panel" style="display: none">
         <div class="blocks-panel">
             <span class="blocks-panel-setting">
                 <i class="fa fa-arrow-circle-left"></i>
@@ -264,8 +264,8 @@
         </div>
     <% } %>
     <% if (typeof links._self_folder !== 'undefined' ) { %>
-        <div>
-            <a href="<%= links._self_folder %>" data-url="<%= links._self_folder %>" class="ajax-folder-<%= cid %>">{{ 'php_orchestra_backoffice.form.folder.edit'|trans }}</a>
+        <div id="generated-edit" style="display: none">
+            <i class="fa fa-edit ajax-folder-<%= cid %>"></i>
         </div>
     <% } %>
     <% include footerInclude %>
