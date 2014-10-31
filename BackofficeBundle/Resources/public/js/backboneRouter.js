@@ -124,9 +124,9 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   generateRoutePatterns: function()
   {
-    var that = this;
+    var currentRouter = this;
     $.each(this.routes, function(pattern, name) {
-      that.routePatterns[name] = pattern;
+      currentRouter.routePatterns[name] = pattern;
     });
   },
 
