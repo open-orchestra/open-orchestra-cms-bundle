@@ -59,6 +59,7 @@ NodeView = Backbone.View.extend(
     if @node.attributes.status.published
       $('.ui-model *', @el).unbind()
       $('.js-widget-panel').hide()
+      $('span.action', @el).hide()
     else
       $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
         refreshUl $(this)
