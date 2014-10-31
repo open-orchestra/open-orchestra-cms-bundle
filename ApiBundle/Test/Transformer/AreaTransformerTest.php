@@ -24,6 +24,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     protected $nodeRepository;
     protected $transformer;
     protected $otherNode;
+    protected $router;
     protected $block;
     protected $node;
     protected $area;
@@ -49,12 +50,83 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
             ->thenReturn($this->otherNode);
 
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
+        $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
+        Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
+        Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
         $this->areaTransformer = new AreaTransformer($this->nodeRepository);
 
         $this->areaTransformer->setContext($this->transformerManager);
+    }
+
+    /**
+     * @param string|null $parentAreaId
+     *
+     * @dataProvider provideParentAreaId
+     */
+    public function testTransform($parentAreaId = null)
+    {
+        Phake::when($this->otherNode)->getNodeId()->thenReturn('otherNodeId');
+        $blockFacade = new BlockFacade();
+        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($blockFacade);
+
+        $area = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        Phake::when($area)->getLabel()->thenReturn('label');
+        Phake::when($area)->getAreaId()->thenReturn('areaId');
+        Phake::when($area)->getClasses()->thenReturn(array('area_class'));
+        Phake::when($area)->getHtmlClass()->thenReturn('html_class');
+        Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($area)->getBlocks()->thenReturn(array(
+            array('nodeId' => 0, 'blockId' => 0),
+            array('nodeId' => 'root', 'blockId' => 0),
+            array('nodeId' => $this->currentNodeId, 'blockId' => 0),
+        ));
+
+        $areaFacade = $this->areaTransformer->transform($area, $this->node, $parentAreaId);
+
+        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
+        $this->assertArrayHasKey('_self_form', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_block', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_delete', $areaFacade->getLinks());
+        Phake::verify($this->router, Phake::times(4))->generate(Phake::anyParameters());
+        Phake::verify($this->transformer)->transform(
+            $this->block,
+            true,
+            $this->currentNodeId,
+            0,
+            'areaId',
+            0
+        );
+        Phake::verify($this->transformer)->transform(
+            $this->block,
+            false,
+            'otherNodeId',
+            0,
+            'areaId',
+            1
+        );
+        Phake::verify($this->transformer)->transform(
+            $this->block,
+            true,
+            $this->currentNodeId,
+            0,
+            'areaId',
+            2
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provideParentAreaId()
+    {
+        return array(
+            array('main'),
+            array(null),
+        );
     }
 
     /**
