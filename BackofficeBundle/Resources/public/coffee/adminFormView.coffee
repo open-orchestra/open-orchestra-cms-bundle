@@ -10,12 +10,14 @@ adminFormView = Backbone.View.extend(
       for i of options.triggers
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
+    @renderButton = _.template($("#deleteButton").html())
     @call()
     return
   call: ->
     viewContext = this
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
+    $('.modal-footer', @el).html @renderButton
     $.ajax
       url: @url
       method: @method

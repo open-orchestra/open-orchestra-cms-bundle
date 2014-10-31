@@ -1,4 +1,4 @@
-$("button.ajax-delete").click (e) ->
+$(document).on 'click', "button.ajax-delete", (e) ->
   e.preventDefault()
   url = $(this).data("delete-url")
   confirm_text = $(this).data("confirm-text")
