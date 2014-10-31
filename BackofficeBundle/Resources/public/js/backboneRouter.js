@@ -1,6 +1,7 @@
 var OrchestraBORouter = Backbone.Router.extend({
 
-    currentMainView: null,
+  currentMainView: null,
+  routePatterns: {},
 
 //========[ROUTES LIST]===============================//
 
@@ -22,6 +23,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   },
 
   initialize: function() {
+    this.generateRoutePatterns();
   },
 
 //========[ACTIONS LIST]==============================//
@@ -115,10 +117,18 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   redirectToList: function(list)
   {
-      Backbone.history.navigate(list + '/list', true);
+    Backbone.history.navigate(list + '/list', true);
   },
 
 //========[INTERNAL FUNCTIONS]========================//
+
+  generateRoutePatterns: function()
+  {
+    var currentRouter = this;
+    $.each(this.routes, function(pattern, name) {
+      currentRouter.routePatterns[name] = pattern;
+    });
+  },
 
   initDisplayRouteChanges: function()
   {
@@ -160,10 +170,26 @@ var OrchestraBORouter = Backbone.Router.extend({
   removeCurrentMainView: function()
   {
     if (this.currentMainView) {
-        this.currentMainView.remove();
-        this.setCurrentMainView(null);
-        $('#main').append('<div id="content" />');
+      this.currentMainView.remove();
+      this.setCurrentMainView(null);
+      $('#main').append('<div id="content" />');
     }
+  },
+
+  generateUrl: function(routeName, paramsObject)
+  {
+    var route = this.routePatterns[routeName];
+    
+    if (typeof route !== "undefined") {
+      $.each(paramsObject, function(paramName, paramValue) {
+        route = route.replace(':' + paramName, paramValue);
+      });
+    } else {
+      alert('Error, route name is unknown');
+      return false;
+    }
+    
+    return route;
   }
 });
 
