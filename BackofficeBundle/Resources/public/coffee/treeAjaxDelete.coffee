@@ -11,8 +11,8 @@ $("button.ajax-delete").click (e) ->
         Backbone.history.navigate "#", true
         window.location.reload()
         return
-      error: ->
-        $('.modal-footer', this.el).html 'Erreur vous ne pouvez pas supprimé ce répertoire'
+      error: (response) ->
+        $('.modal-footer', this.el).html response.responseJSON.error.message
         return
     return
   return

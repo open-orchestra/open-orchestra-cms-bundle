@@ -2,12 +2,11 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Exceptions\FolderNotDeletableException;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+
+use PHPOrchestra\ApiBundle\Exceptions\HttpException\FolderNotDeletableException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -38,7 +37,7 @@ class FolderController extends Controller
                 $folderManager->deleteTree($folder);
                 $this->get('doctrine.odm.mongodb.document_manager')->flush();
             } else {
-                throw new FolderNotDeletableException('php_orchestra_backoffice.form.folder.delete');
+                throw new FolderNotDeletableException();
             }
         }
 
