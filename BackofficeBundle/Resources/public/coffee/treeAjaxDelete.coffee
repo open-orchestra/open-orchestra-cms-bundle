@@ -8,8 +8,9 @@ $("button.ajax-delete").click (e) ->
       type: "DELETE"
       url: url
       success: (response) ->
-        Backbone.history.navigate "#", true
-        window.location.reload()
+        Backbone.history.history.back()
+        displayMenu(Backbone.history.fragment)
+        $("#OrchestraBOModal").modal "hide"
         return
       error: (response) ->
         $('.modal-footer', this.el).html response.responseJSON.error.message
