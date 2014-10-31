@@ -130,6 +130,32 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string|null $parentAreaId
+     *
+     * @dataProvider provideParentAreaId
+     */
+    public function testTransformFromTemplate($parentAreaId = null)
+    {
+        $template = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
+        Phake::when($template)->getTemplateId()->thenReturn('templateId');
+
+        $area = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        Phake::when($area)->getLabel()->thenReturn('label');
+        Phake::when($area)->getAreaId()->thenReturn('areaId');
+        Phake::when($area)->getClasses()->thenReturn(array('area_class'));
+        Phake::when($area)->getHtmlClass()->thenReturn('html_class');
+        Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
+
+        $areaFacade = $this->areaTransformer->transformFromTemplate($area, $template, $parentAreaId);
+
+        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
+        $this->assertArrayHasKey('_self_form', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_delete', $areaFacade->getLinks());
+        Phake::verify($this->router, Phake::times(3))->generate(Phake::anyParameters());
+    }
+
+    /**
      * @param string $nodeId
      * @param int    $blockId
      *
