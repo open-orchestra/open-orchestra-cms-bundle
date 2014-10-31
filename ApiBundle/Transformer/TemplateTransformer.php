@@ -35,6 +35,10 @@ class TemplateTransformer extends AbstractTransformer
             array('templateId' => $mixed->getTemplateId())
         ));
 
+        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_template_delete',
+            array('templateId' => $mixed->getTemplateId())
+        ));
+
         return $facade;
     }
 

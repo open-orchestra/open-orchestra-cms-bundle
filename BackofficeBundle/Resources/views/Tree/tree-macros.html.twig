@@ -10,12 +10,6 @@
                 data-node="{{ node.nodeId }}"
                 href="#node/show/{{ node.nodeId }}"
             >
-                <i
-                    class="fa fa-trash-o ajax-delete"
-                    data-delete-url="{{ path('php_orchestra_api_node_delete', {'nodeId': node.nodeId}) }}"
-                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_node'|trans({'%nodeName%': node.name}) }}"
-                >
-                </i>
                 <span>{{ node.name }}</span>
             </a>
             {% if 'child' in element|keys %}
@@ -65,11 +59,6 @@
                 data-url="{{ path('php_orchestra_api_template_show', {'templateId': template.templateId}) }}"
                 data-template="{{ template.templateId }}"
             >
-                <i
-                    class="fa fa-trash-o ajax-delete"
-                    data-delete-url="{{ path('php_orchestra_api_template_delete', {'templateId': template.templateId}) }}"
-                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_template'|trans({'%templateName%': template.name}) }}">
-                </i>
                 <span>{{ template.name }}</span>
             </a>
         </li>
@@ -114,14 +103,6 @@
                 id="{{ folder.id }}"
                 data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">
-            {%  if is_folder_deletable(folder) %}
-                <i
-                    class="fa fa-trash-o ajax-delete"
-                    data-delete-url="{{ path('php_orchestra_api_folder_delete', {'folderId': folder.id}) }}"
-                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.delete_media_folder'|trans({'%folderName%': folder.name}) }}"
-                >
-                </i>
-            {% endif %}
                 <span>{{ folder.name }}</span>
             </a>
             {% if folder.subFolders is not empty %}

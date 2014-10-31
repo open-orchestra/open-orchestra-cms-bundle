@@ -84,6 +84,7 @@ php_orchestra_backoffice:
             status: Status
         folder:
             success: The folder has been saved
+            delete: This folder contains media you cant delete it.
             name: Name
             site: Select sites for this folder
             edit: Edit folder

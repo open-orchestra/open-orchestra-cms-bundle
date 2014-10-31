@@ -4,17 +4,20 @@ adminFormView = Backbone.View.extend(
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
+    @deleteurl = options.deleteurl if options.deleteurl
     @events = {}
     if options.triggers
       for i of options.triggers
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
+    @renderButton = _.template($("#deleteButton").html())
     @call()
     return
   call: ->
     viewContext = this
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
+    $('.modal-footer', @el).html @renderButton
     $.ajax
       url: @url
       method: @method
@@ -32,6 +35,9 @@ adminFormView = Backbone.View.extend(
     @html = options.html
     $('.modal-body', @el).html @html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
+    if @deleteurl != undefined
+      $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
+      $('.modal-footer', @el).show()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return

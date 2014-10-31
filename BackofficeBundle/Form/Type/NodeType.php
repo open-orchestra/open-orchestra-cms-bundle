@@ -4,14 +4,10 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeTypeSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 
 /**
@@ -23,7 +19,6 @@ class NodeType extends AbstractType
     protected $templateRepository;
 
     /**
-     *
      * @param string             $nodeClass
      * @param TemplateRepository $templateRepository
      */
@@ -34,7 +29,6 @@ class NodeType extends AbstractType
     }
 
     /**
-     *
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -77,7 +71,6 @@ class NodeType extends AbstractType
     }
 
     /**
-     *
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -90,7 +83,6 @@ class NodeType extends AbstractType
 
 
     /**
-     *
      * @return string
      */
     public function getName()

@@ -33,6 +33,10 @@ class MediaCollectionTransformer extends AbstractTransformer
             'folderId' => $folderId
         )));
 
+        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_folder_delete', array(
+            'folderId' => $folderId
+        )));
+
         return $facade;
     }
 

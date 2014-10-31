@@ -55,6 +55,10 @@ class NodeTransformer extends AbstractTransformer
             'nodeId' => $mixed->getNodeId()
         )));
 
+        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_node_delete', array(
+            'nodeId' => $mixed->getNodeId()
+        )));
+
         return $facade;
     }
 
