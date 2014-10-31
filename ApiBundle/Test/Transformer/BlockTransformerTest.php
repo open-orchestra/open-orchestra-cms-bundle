@@ -14,7 +14,6 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $blockTransformer;
     protected $blockFacade;
-    protected $translator;
     protected $router;
     protected $node;
 
@@ -24,7 +23,6 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
 
@@ -33,7 +31,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->translator);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -72,7 +70,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = Phake::mock('PHPOrchestra\ApiBundle\Facade\UiModelFacade');
 
         Phake::when($block)->getComponent()->thenReturn($component);
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($label);
+        Phake::when($block)->getLabel()->thenReturn($label);
         Phake::when($block)->getAttributes()->thenReturn($attributes);
         Phake::when($this->displayBlockManager)->show($block)->thenReturn($response);
         Phake::when($response)->getContent()->thenReturn($html);

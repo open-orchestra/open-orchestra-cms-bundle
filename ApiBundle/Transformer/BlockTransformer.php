@@ -16,16 +16,13 @@ use PHPOrchestra\ModelBundle\Model\NodeInterface;
 class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
-    protected $translator;
 
     /**
      * @param DisplayBlockManager $displayBlockManager
-     * @param TranslatorInterface $translator
      */
-    public function __construct(DisplayBlockManager $displayBlockManager, TranslatorInterface $translator)
+    public function __construct(DisplayBlockManager $displayBlockManager)
     {
         $this->displayBlockManager = $displayBlockManager;
-        $this->translator = $translator;
     }
 
     /**
