@@ -73,14 +73,12 @@ class BlockTransformer extends AbstractTransformer
             'html' => $html
         ));
 
-        if (null !== $nodeId && null !== $blockNumber) {
-            $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_block_form',
-                array(
-                    'nodeId' => $nodeId,
-                    'blockNumber' => $blockNumber
-                )
-            ));
-        }
+        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_block_form',
+            array(
+                'nodeId' => $nodeId,
+                'blockNumber' => $blockNumber
+            )
+        ));
 
         return $facade;
     }

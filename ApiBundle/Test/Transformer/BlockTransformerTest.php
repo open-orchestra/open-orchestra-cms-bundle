@@ -11,9 +11,11 @@ use PHPOrchestra\ApiBundle\Transformer\BlockTransformer;
 class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 {
     protected $displayBlockManager;
-    protected $translator;
+    protected $transformerManager;
     protected $blockTransformer;
     protected $blockFacade;
+    protected $translator;
+    protected $router;
     protected $node;
 
     /**
@@ -26,7 +28,13 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
 
+        $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
+        Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
+        $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
+        Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
+
         $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->translator);
+        $this->blockTransformer->setContext($this->transformerManager);
     }
 
     /**
@@ -42,15 +50,19 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * Test transform
      *
-     * @param string      $component
-     * @param array       $attributes
-     * @param string      $label
-     * @param string|null $nodeId
-     * @param int|null    $blockNumber
+     * @param string     $component
+     * @param array      $attributes
+     * @param string     $label
+     * @param array|null $expectedAttributes
      *
      * @dataProvider blockTransformProvider
      */
-    public function testTransform($component, $attributes, $label, $nodeId = null, $blockNumber = null)
+    public function testTransform(
+        $component,
+        $attributes,
+        $label = null,
+        $expectedAttributes = null
+    )
     {
         $html = 'ok';
         $block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
@@ -69,13 +81,20 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($transformerManager)->get('ui_model')->thenReturn($transformer);
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
+        Phake::when($transformerManager)->getRouter()->thenReturn($this->router);
 
-        $facadeExcepted = $this->blockTransformer->transform($block, true);
+        $facadeExcepted = $this->blockTransformer->transform($block, true, 'root', 0);
 
         $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\BlockFacade', $facadeExcepted);
         $this->assertSame($component, $facadeExcepted->component);
         $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\UiModelFacade', $facadeExcepted->uiModel);
-        $this->assertSame($attributes, $facadeExcepted->getAttributes());
+        $this->assertArrayHasKey('_self_form', $facadeExcepted->getLinks());
+        if ($expectedAttributes) {
+            $this->assertSame($expectedAttributes, $facadeExcepted->getAttributes());
+        } else {
+            $this->assertSame($attributes, $facadeExcepted->getAttributes());
+        }
+        Phake::verify($this->router)->generate(Phake::anyParameters());
     }
 
     /**
@@ -85,26 +104,11 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('sample', array('title' => 'title one', 'author' => 'me'), 'Sample'),
-            array(
-                'sample',
-                array('title' => 'news', 'author' => 'benj', 'text' => 'Hello world'),
-                'Sample',
-                'fixture_full',
-                5
-            ),
-            array(
-                'news',
-                array('title' => 'news', 'author' => 'benj', 'text' => 'Hello everybody'),
-                'News',
-                'fixture_home',
-                3
-            ),
-            array(
-                'menu',
-                array(),
-                'Menu',
-                2
-            ),
+            array('sample', array('title' => 'news', 'author' => 'benj', 'text' => 'Hello world'), 'Sample'),
+            array('news', array('title' => 'news', 'author' => 'benj', 'text' => 'Hello everybody'), 'News'),
+            array('menu', array(), 'Menu'),
+            array('menu', array('array' => array('test' => 'test')), 'Menu', array('array' => '{"test":"test"}')),
+            array('menu', array(), null),
         );
     }
 
