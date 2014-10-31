@@ -29,13 +29,15 @@ class FolderManager
      */
     public function deleteTree($folder)
     {
-        if($this->isDeletable($folder)){
+        if ($this->isDeletable($folder)) {
             $this->documentManager->remove($folder);
         }
     }
 
     /**
      * @param MediaFolderInterface $folder
+     *
+     * @return bool
      */
     public function isDeletable(MediaFolderInterface $folder)
     {
@@ -43,13 +45,15 @@ class FolderManager
     }
 
     /**
-     * @param FolderInterface  $folder
+     * @param MediaFolderInterface $folder
+     *
+     * @return int
      */
     protected function countMediaTree(MediaFolderInterface $folder)
     {
         $count = count($folder->getMedias());
         $subFolders = $folder->getSubFolders();
-        foreach($subFolders as $subFolder){
+        foreach ($subFolders as $subFolder) {
             $count += $this->countMediaTree($subFolder, $count);
         }
 

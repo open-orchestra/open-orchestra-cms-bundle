@@ -79,6 +79,7 @@ php_orchestra_backoffice:
             status: Status
         folder:
             success: Le répertoire a été sauvegardé
+            delete: Ce répertoire contient des média vous ne pouvez pas le supprimez.
             name: Nom
             site: Sélectionné des sites pour ce répertoire
             edit: Editer le dossier

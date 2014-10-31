@@ -8,8 +8,11 @@ $("button.ajax-delete").click (e) ->
       type: "DELETE"
       url: url
       success: (response) ->
+        Backbone.history.navigate "#", true
+        window.location.reload()
         return
-    Backbone.history.navigate "#", true
-    window.location.reload()
+      error: ->
+        $('.modal-footer', this.el).html 'Erreur vous ne pouvez pas supprimé ce répertoire'
+        return
     return
   return
