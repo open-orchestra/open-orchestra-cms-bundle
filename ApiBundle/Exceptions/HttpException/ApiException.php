@@ -11,27 +11,21 @@ abstract class ApiException extends BaseApiAxception
 {
     protected $statusCode;
     protected $errorCode;
-    protected $errorSupport;
     protected $developerMessage;
     protected $humanMessage;
-    protected $redirection;
 
     /**
      * @param string      $statusCode
      * @param int         $errorCode
-     * @param string      $errorSupport
      * @param string      $developerMessage
      * @param string      $humanMessage
-     * @param string|null $redirection
      */
-    public function __construct($statusCode, $errorCode, $errorSupport, $developerMessage, $humanMessage, $redirection = null)
+    public function __construct($statusCode, $errorCode, $developerMessage, $humanMessage)
     {
         $this->statusCode        = $statusCode;
         $this->errorCode         = $errorCode;
-        $this->errorSupport      = $errorSupport;
         $this->developerMessage  = $developerMessage;
         $this->humanMessage      = $humanMessage;
-        $this->redirection       = $redirection;
 
         parent::__construct($developerMessage);
     }
@@ -42,14 +36,6 @@ abstract class ApiException extends BaseApiAxception
     public function getErrorCode()
     {
         return $this->errorCode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getErrorSupport()
-    {
-        return $this->errorSupport;
     }
 
     /**
@@ -86,17 +72,5 @@ abstract class ApiException extends BaseApiAxception
     public function getHeaders()
     {
         return array();
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getRedirection()
-    {
-        if (null === $this->redirection) {
-            return 'logout';
-        }
-
-        return $this->redirection;
     }
 }

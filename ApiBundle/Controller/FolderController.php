@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
-
 use PHPOrchestra\ApiBundle\Exceptions\HttpException\FolderNotDeletableException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
