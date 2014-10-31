@@ -50,7 +50,7 @@ class AreaTransformer extends AbstractTransformer
         foreach ($mixed->getBlocks() as $blockPosition => $block) {
             if (0 === $block['nodeId'] || $node->getNodeId() == $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
-                    $node->getBlocks()->get($block['blockId']),
+                    $node->getBlock($block['blockId']),
                     true,
                     $nodeId,
                     $block['blockId'],
@@ -60,7 +60,7 @@ class AreaTransformer extends AbstractTransformer
             } else {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($block['nodeId']);
                 $facade->addBlock($this->getTransformer('block')->transform(
-                    $otherNode->getBlocks()->get($block['blockId']),
+                    $otherNode->getBlock($block['blockId']),
                     false,
                     $otherNode->getNodeId(),
                     $block['blockId'],
@@ -83,11 +83,11 @@ class AreaTransformer extends AbstractTransformer
             'areaId' => $mixed->getAreaId(),
         )));
         $facade->addLink('_self_block', $this->generateRoute('php_orchestra_api_area_update_block', array(
-            'nodeId' => $node->getNodeId(),
+            'nodeId' => $nodeId,
             'areaId' => $mixed->getAreaId()
         )));
         $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_node', array(
-            'nodeId' => $node->getNodeId(),
+            'nodeId' => $nodeId,
             'areaId' => $mixed->getAreaId()
         )));
 
@@ -193,6 +193,14 @@ class AreaTransformer extends AbstractTransformer
         foreach ($blocks as $position => $blockFacade) {
             $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
             $blockDocument[$position] = $blockArray;
+            if ($blockArray['nodeId'] === 0) {
+                $block = $node->getBlock($blockArray['blockId']);
+                $block->addArea(array('nodeId' => 0, 'areaId' => $source->getAreaId()));
+            } else {
+                $blockNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($blockArray['nodeId']);
+                $block = $blockNode->getBlock($blockArray['blockId']);
+                $block->addArea(array('nodeId' => $node->getNodeId(), 'areaId' => $source->getAreaId()));
+            }
         }
 
         $source->setBlocks($blockDocument);
