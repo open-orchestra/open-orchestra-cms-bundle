@@ -53,8 +53,7 @@
             "PHPOrchestra\\CMSBundle": "",
             "PHPOrchestra\\BackofficeBundle": "",
             "PHPOrchestra\\Backoffice": "",
-            "PHPOrchestra\\ApiBundle": "",
-            "PHPOrchestra\\UserBundle": ""
+            "PHPOrchestra\\ApiBundle": ""
         }
     },
     "target-dir": "PHPOrchestra"

@@ -1,5 +1,0 @@
-PHPOrchestra\UserBundle\Document\User:
-    constraints:
-        - Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique:
-            fields: username
-            message: php_orchestra_user.form.registration_user.unique_user_name
