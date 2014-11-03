@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\AbstractType;

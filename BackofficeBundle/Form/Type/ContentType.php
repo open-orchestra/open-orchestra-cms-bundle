@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Component\Form\AbstractType;
