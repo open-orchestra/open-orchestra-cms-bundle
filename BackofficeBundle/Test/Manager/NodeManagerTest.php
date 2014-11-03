@@ -39,7 +39,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     public function testDuplicateNode(NodeInterface $node, $expectedVersion)
     {
         $alteredNode = $this->manager->duplicateNode($node);
-        Phake::verify($alteredNode, Phake::times(1))->setVersion($expectedVersion);
+
+        Phake::verify($alteredNode)->setVersion($expectedVersion);
+        Phake::verify($alteredNode)->setStatus(null);
     }
 
     /**
