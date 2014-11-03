@@ -1,4 +1,0 @@
-php_orchestra_user:
-    form:
-        registration_user:
-            unique_user_name: Ce nom d'utilisateur existe déjà.
