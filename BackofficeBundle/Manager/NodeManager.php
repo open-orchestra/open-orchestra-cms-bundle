@@ -37,6 +37,7 @@ class NodeManager
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
         $newNode->setAlias('');
+        $newNode->setStatus(null);
         foreach ($node->getAreas() as $area) {
             $newArea = clone $area;
             $newNode->addArea($newArea);
