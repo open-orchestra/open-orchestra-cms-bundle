@@ -226,7 +226,8 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->area)->setBlocks(array(
             0 => array('nodeId' => 0, 'blockId' => $blockId)
         ));
-        Phake::verify($this->block)->addArea(array('nodeId' => 0, 'areaId' => $this->areaId));
+        Phake::verify($this->node)->getBlock($blockId);
+        Phake::verify($this->block)->addArea(array('nodeId' => $this->currentNodeId, 'areaId' => $this->areaId));
         Phake::verify($this->nodeRepository, Phake::never())->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters());
     }
 }

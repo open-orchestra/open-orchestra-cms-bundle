@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\AreaFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
 use PHPOrchestra\ModelBundle\Model\AreaInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Model\TemplateInterface;
@@ -15,13 +16,16 @@ use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 class AreaTransformer extends AbstractTransformer
 {
     protected $nodeRepository;
+    protected $areaManager;
 
     /**
      * @param NodeRepository $nodeRepository
+     * @param AreaManager    $areaManager
      */
-    public function __construct(NodeRepository $nodeRepository)
+    public function __construct(NodeRepository $nodeRepository, AreaManager $areaManager)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->areaManager = $areaManager;
     }
 
     /**
@@ -198,14 +202,14 @@ class AreaTransformer extends AbstractTransformer
             $blockDocument[$position] = $blockArray;
             if ($blockArray['nodeId'] === 0) {
                 $block = $node->getBlock($blockArray['blockId']);
-                $block->addArea(array('nodeId' => 0, 'areaId' => $source->getAreaId()));
             } else {
                 $blockNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($blockArray['nodeId']);
                 $block = $blockNode->getBlock($blockArray['blockId']);
-                $block->addArea(array('nodeId' => $node->getNodeId(), 'areaId' => $source->getAreaId()));
             }
+            $block->addArea(array('nodeId' => $node->getNodeId(), 'areaId' => $source->getAreaId()));
         }
 
+        $this->areaManager->deleteAreaFromBlock($source->getBlocks(), $blockDocument, $source->getAreaId(), $node);
         $source->setBlocks($blockDocument);
 
         return $source;
