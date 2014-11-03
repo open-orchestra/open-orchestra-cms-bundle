@@ -16,7 +16,36 @@ NodeView = Backbone.View.extend(
     @nodeTemplate = _.template($("#nodeView").html())
     @nodeTitle = _.template($("#nodeTitle").html())
     @widgetStatus = _.template($("#widgetStatusView").html())
-    @render()
+    @loadTemplates()
+    return
+
+  loadTemplates: ->
+    @templates = {}
+    
+    @loadTemplates('node', 'templates/node.tpl')
+    @loadTemplates('nodeTitle', 'templates/nodeTitle.tpl')
+    
+    return
+  
+  loadTemplate: (templateName, templateFile) ->
+    currentView = this
+    
+    @templates[templateName] = false
+    templateLoader.loadRemoteTemplate templateName, templateFile, (data) ->
+      currentView.updateTemplates(templateName, data)
+      return
+    
+    return
+  
+  updateTemplates = (templateName, templateData) ->
+    @templates[templateName] = _.template(templateData)
+    
+    ready = true
+    $.each @templates, (templateName, templateData) ->
+      ready = false if templateData is false
+      return
+    
+    @render() if ready
     return
 
   clickButton: (event) ->
