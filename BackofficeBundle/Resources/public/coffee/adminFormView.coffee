@@ -59,5 +59,9 @@ adminFormView = Backbone.View.extend(
               displayRoute = Backbone.history.fragment
               Backbone.history.loadUrl(displayRoute)
             displayMenu(displayRoute)
+          400: (response) ->
+            view = viewContext.render(
+              html: response.responseText
+            )
     return
 )
