@@ -78,7 +78,7 @@ php_orchestra_backoffice:
             language: Langue
             status: Status
             in_menu: Affiché dans les menus
-            in_footer: Affiché dans le footer
+            in_footer: Affiché dans le pied de page
         folder:
             success: Le répertoire a été sauvegardé
             delete: Ce répertoire contient des média vous ne pouvez pas le supprimez.
