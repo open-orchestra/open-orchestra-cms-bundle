@@ -30,8 +30,6 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.footer.generate_form:
         class: %php_orchestra_backoffice.footer.generate_form.class%
-        arguments:
-            - @php_orchestra_model.repository.node
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.header.generate_form:
@@ -40,8 +38,6 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.menu.generate_form:
         class: %php_orchestra_backoffice.menu.generate_form.class%
-        arguments:
-            - @php_orchestra_model.repository.node
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.news.generate_form:

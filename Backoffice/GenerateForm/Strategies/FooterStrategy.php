@@ -12,16 +12,6 @@ use Symfony\Component\Form\FormInterface;
  */
 class FooterStrategy extends AbstractBlockStrategy
 {
-    protected $nodeRepository;
-
-    /**
-     * @param NodeRepository $nodeRepository
-     */
-    public function __construct(NodeRepository $nodeRepository)
-    {
-        $this->nodeRepository = $nodeRepository;
-    }
-
     /**
      * @param BlockInterface $block
      *
@@ -38,20 +28,17 @@ class FooterStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormInterface $form, BlockInterface $block)
     {
-        $nodes = $this->nodeRepository->findLastVersionBySiteId();
-        $newNodes = array_map(function($element) {
-            return $element->getName();
-        }, $nodes);
-
         $attributes = $block->getAttributes();
 
         $form->add('class', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):array(
+            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):json_encode(
+                array(
                     'div' => 'divclass',
                     'ul' => 'ulclass',
                     'link' => 'linkclass'
-                ),
+                )
+            ),
         ));
         $form->add('id', 'text', array(
             'mapped' => false,
@@ -62,10 +49,9 @@ class FooterStrategy extends AbstractBlockStrategy
             'data' => array_key_exists('nbLevel', $attributes)? $attributes['nbLevel']:4,
             'label' => 'php_orchestra_backoffice.form.footer.level'
         ));
-        $form->add('nodeName', 'choice', array(
-            'choices' => $newNodes,
+        $form->add('nodeName', 'orchestra_node_choice', array(
             'mapped' => false,
-            'data' => array_key_exists('node', $attributes)? $attributes['node']:'root',
+            'data' => array_key_exists('node', $attributes)? $attributes['node']:'',
             'label' => 'php_orchestra_backoffice.form.footer.node',
         ));
     }
