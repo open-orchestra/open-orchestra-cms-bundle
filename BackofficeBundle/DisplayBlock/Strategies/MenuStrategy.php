@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -39,7 +40,9 @@ class MenuStrategy extends AbstractStrategy
             'PHPOrchestraBackofficeBundle:Block/Menu:show.html.twig',
             array(
                 'id' => $attributes['id'],
-                'class' => implode(' ', $attributes['class'])
+                'class' => implode(' ', $attributes['class']),
+                'nbLevel' => $attributes['nbLevel'],
+                'node' => $attributes['node']
             )
         );
     }

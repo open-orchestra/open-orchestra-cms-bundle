@@ -106,6 +106,12 @@ php_orchestra_backoffice:
             success: The block has been modified
         media:
             file: File
+        menu:
+            node: Root where start the menu
+            level: Level of the menu
+        footer:
+            node: Root where start the footer
+            level: Level of the footer
     left_menu:
         tree:
             new_page: New page

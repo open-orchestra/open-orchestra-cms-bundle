@@ -38,7 +38,9 @@ class FooterStrategy extends AbstractStrategy
             'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
             array(
                 'id' => $attributes['id'],
-                'class' => implode(' ', $attributes['class'])
+                'class' => implode(' ', $attributes['class']),
+                'nbLevel' => $attributes['nbLevel'],
+                'node' => $attributes['node']
             )
         );
     }
