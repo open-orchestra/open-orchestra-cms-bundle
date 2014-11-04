@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\DependencyInjection;
 
+use PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -49,7 +50,9 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::SEARCH_RESULT,
             DisplayBlockInterface::TINYMCEWYSIWYG,
             DisplayBlockInterface::CONFIGURABLE_CONTENT,
+            LoginStrategy::LOGIN
         );
+
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
             $blockType = $config['blocks'];
         }

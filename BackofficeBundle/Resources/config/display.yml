@@ -9,6 +9,7 @@ parameters:
     php_orchestra_display.display.configurable_content.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ConfigurableContentStrategy
     php_orchestra_indexation.display.search.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchStrategy
     php_orchestra_indexation.display.search_result.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchResultStrategy
+    php_orchestra_backoffice.display.login.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy
 
 services:
     php_orchestra_display.display.contact:
@@ -29,5 +30,9 @@ services:
             - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_indexation.display.search:
         class: %php_orchestra_indexation.display.search.class%
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.login:
+        class: %php_orchestra_backoffice.display.login.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }
