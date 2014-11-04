@@ -2,9 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -12,6 +12,16 @@ use Symfony\Component\Form\FormInterface;
  */
 class FooterStrategy extends AbstractBlockStrategy
 {
+    protected $nodeRepository;
+
+    /**
+     * @param NodeRepository $nodeRepository
+     */
+    public function __construct(NodeRepository $nodeRepository)
+    {
+        $this->nodeRepository = $nodeRepository;
+    }
+
     /**
      * @param BlockInterface $block
      *
@@ -28,6 +38,11 @@ class FooterStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormInterface $form, BlockInterface $block)
     {
+        $nodes = $this->nodeRepository->findLastVersionBySiteId();
+        $newNodes = array_map(function($element) {
+            return $element->getName();
+        }, $nodes);
+
         $attributes = $block->getAttributes();
 
         $form->add('class', 'textarea', array(
@@ -37,6 +52,17 @@ class FooterStrategy extends AbstractBlockStrategy
         $form->add('id', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
+        ));
+        $form->add('nbLevel', 'text', array(
+            'mapped' => false,
+            'data' => array_key_exists('nbLevel', $attributes)? $attributes['nbLevel']:4,
+            'label' => 'php_orchestra_backoffice.form.footer.level'
+        ));
+        $form->add('nodeName', 'choice', array(
+            'choices' => $newNodes,
+            'mapped' => false,
+            'data' => array_key_exists('node', $attributes)? $attributes['node']:'root',
+            'label' => 'php_orchestra_backoffice.form.footer.node',
         ));
     }
 
