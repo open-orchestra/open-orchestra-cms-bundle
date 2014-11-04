@@ -51,6 +51,7 @@ class NodeType extends AbstractType
             ))
             ->add('alias', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.node.alias',
+                'required' => false,
                 'attr' => array(
                     'class' => 'alias-dest',
                 )
@@ -71,6 +72,10 @@ class NodeType extends AbstractType
             ))
             ->add('nodeId', 'hidden', array(
                 'disabled' => true
+            ))
+            ->add('role', 'orchestra_role_choice', array(
+                'label' => 'php_orchestra_bacokffice.form.node.role',
+                'required' => false,
             ));
 
         $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
