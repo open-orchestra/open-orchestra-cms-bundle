@@ -166,3 +166,5 @@ php_orchestra_backoffice:
         last_update:
             at: Dernière mies à jour
             by: par
+        status:
+            display: Status
