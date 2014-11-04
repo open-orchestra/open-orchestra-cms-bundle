@@ -47,7 +47,11 @@ class FooterStrategy extends AbstractBlockStrategy
 
         $form->add('class', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):'',
+            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):array(
+                    'div' => 'divclass',
+                    'ul' => 'ulclass',
+                    'link' => 'linkclass'
+                ),
         ));
         $form->add('id', 'text', array(
             'mapped' => false,
