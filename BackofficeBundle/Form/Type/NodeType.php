@@ -58,6 +58,14 @@ class NodeType extends AbstractType
             ->add('language', 'orchestra_language', array(
                 'label' => 'php_orchestra_backoffice.form.node.language'
             ))
+            ->add('inMenu', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.node.in_menu',
+                'required' => false
+            ))
+            ->add('inFooter', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.node.in_footer',
+                'required' => false
+            ))
             ->add('status', 'orchestra_status', array(
                 'label' => 'php_orchestra_backoffice.form.node.status'
             ))

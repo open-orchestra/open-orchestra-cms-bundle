@@ -77,6 +77,8 @@ php_orchestra_backoffice:
             alias: Alias
             language: Langue
             status: Status
+            in_menu: Montré dans les menus
+            in_footer: Montré dans le footer
         folder:
             success: Le répertoire a été sauvegardé
             delete: Ce répertoire contient des média vous ne pouvez pas le supprimez.

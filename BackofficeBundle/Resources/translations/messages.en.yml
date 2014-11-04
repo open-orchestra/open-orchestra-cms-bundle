@@ -82,6 +82,8 @@ php_orchestra_backoffice:
             alias: Alias
             language: Language
             status: Status
+            in_menu: Shown in menus
+            in_footer: Shown in footer
         folder:
             success: The folder has been saved
             delete: This folder contains media you cant delete it.
