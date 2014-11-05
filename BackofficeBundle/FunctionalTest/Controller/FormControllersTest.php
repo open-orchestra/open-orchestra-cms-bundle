@@ -49,6 +49,7 @@ class FormControllersTest extends WebTestCase
     {
         return array(
             array('/admin/node/form/root'),
+            array('/admin/node/new/root'),
             array('/admin/node/form/fixture_full'),
             array('/admin/area/form/fixture_full/left_menu'),
             array('/admin/block/form/fixture_full/1'),

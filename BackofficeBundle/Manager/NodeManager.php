@@ -61,4 +61,28 @@ class NodeManager
             $this->deleteTree($son);
         }
     }
+
+    /**
+     * @param NodeInterface $node
+     * @param string        $nodeId
+     *
+     * @return NodeInterface
+     */
+    public function hydrateNodeFromNodeId(NodeInterface $node, $nodeId)
+    {
+        $oldNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+
+        if ($oldNode) {
+            foreach ($oldNode->getAreas() as $area) {
+                $newArea = clone $area;
+                $node->addArea($newArea);
+            }
+            foreach ($oldNode->getBlocks() as $block) {
+                $newBlock = clone $block;
+                $node->addBlock($newBlock);
+            }
+        }
+
+        return $node;
+    }
 }

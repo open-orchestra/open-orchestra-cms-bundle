@@ -12,8 +12,9 @@ use PHPOrchestra\ModelBundle\Model\TemplateInterface;
 class NodeTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $nodeType;
-    protected $nodeClass = 'nodeClass';
+    protected $nodeManager;
     protected $templateRepository;
+    protected $nodeClass = 'nodeClass';
 
     /**
      * Set up the test
@@ -21,7 +22,9 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->templateRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\TemplateRepository');
-        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository);
+        $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
+
+        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager);
     }
 
     /**
@@ -37,7 +40,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($formBuilderMock, Phake::times(10))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(4))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**

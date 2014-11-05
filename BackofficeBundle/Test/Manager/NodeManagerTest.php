@@ -3,6 +3,8 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
+use PHPOrchestra\ModelBundle\Document\Area;
+use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
@@ -114,6 +116,27 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array($nodeRepository, $nodes[$nodesId[0]], $nodes)
         );
+    }
 
+    public function testHydrateNodeFromNodeId()
+    {
+        $newNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+
+        $area = new Area();
+        $areas = new ArrayCollection();
+        $areas->add($area);
+        $block = new Block();
+        $blocks = new ArrayCollection();
+        $blocks->add($block);
+        $oldNodeId = 'oldNodeId';
+        $oldNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($oldNode)->getAreas()->thenReturn($areas);
+        Phake::when($oldNode)->getBlocks()->thenReturn($blocks);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($oldNode);
+
+        $this->manager->hydrateNodeFromNodeId($newNode, $oldNodeId);
+
+        Phake::verify($newNode)->addBlock($block);
+        Phake::verify($newNode)->addArea($area);
     }
 }

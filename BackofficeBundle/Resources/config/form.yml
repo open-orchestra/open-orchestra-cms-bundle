@@ -38,6 +38,7 @@ services:
         arguments:
             - %php_orchestra_model.document.node.class%
             - @php_orchestra_model.repository.template
+            - @php_orchestra_backoffice.manager.node
         tags:
             - { name: form.type, alias: node }
     # Area form type
