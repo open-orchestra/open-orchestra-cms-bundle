@@ -21,7 +21,7 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENTLIST == $block->getComponent();
+        return DisplayBlockInterface::CONTENT_LIST == $block->getComponent();
     }
 
     /**

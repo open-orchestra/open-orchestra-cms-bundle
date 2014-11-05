@@ -18,7 +18,7 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENTLIST === $block->getComponent();
+        return DisplayBlockInterface::CONTENT_LIST === $block->getComponent();
     }
 
     /**
@@ -31,7 +31,7 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $form->add('contentTypeName', 'orchestra_content_type_choice', array(
             'mapped' => false,
-            'data' => array_key_exists('contenttype', $attributes)? $attributes['contenttype']:'',
+            'data' => array_key_exists('contentType', $attributes)? $attributes['contentType']:'',
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
     }
