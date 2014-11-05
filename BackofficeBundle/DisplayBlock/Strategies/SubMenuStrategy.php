@@ -5,11 +5,12 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class FooterStrategy
+ * Class SubMenuStrategy
  */
-class FooterStrategy extends AbstractStrategy
+class SubMenuStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -20,7 +21,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::FOOTER == $block->getComponent();
+        return DisplayBlockInterface::SUBMENU == $block->getComponent();
     }
 
     /**
@@ -35,10 +36,12 @@ class FooterStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
+            'PHPOrchestraBackofficeBundle:Block/SubMenu:show.html.twig',
             array(
                 'id' => $attributes['id'],
                 'class' => implode(' ', $attributes['class']),
+                'nbLevel' => $attributes['nbLevel'],
+                'node' => $attributes['node']
             )
         );
     }
@@ -50,6 +53,6 @@ class FooterStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'sub_menu';
     }
 }

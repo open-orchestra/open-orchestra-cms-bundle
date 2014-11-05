@@ -41,8 +41,6 @@ class MenuStrategy extends AbstractStrategy
             array(
                 'id' => $attributes['id'],
                 'class' => implode(' ', $attributes['class']),
-                'nbLevel' => $attributes['nbLevel'],
-                'node' => $attributes['node']
             )
         );
     }
