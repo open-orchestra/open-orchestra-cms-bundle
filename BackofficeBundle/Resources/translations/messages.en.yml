@@ -85,6 +85,7 @@ php_orchestra_backoffice:
             in_menu: Shown in menus
             in_footer: Shown in footer
             role: Role needed to display the page
+            node_source: The source page (in case of copy)
         folder:
             success: The folder has been saved
             delete: This folder contains media you cant delete it.
