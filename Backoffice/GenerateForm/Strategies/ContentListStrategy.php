@@ -43,4 +43,4 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         return 'content_list';
     }
-} 
+}
