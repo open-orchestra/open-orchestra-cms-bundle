@@ -78,6 +78,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->updatedBy = $mixed->getUpdatedBy();
         $facade->createdAt = $mixed->getCreatedAt();
         $facade->updatedAt = $mixed->getUpdatedAt();
+        $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
 
         $facade->addLink('_self', $this->generateRoute('php_orchestra_api_node_show', array(
             'nodeId' => $mixed->getNodeId(),

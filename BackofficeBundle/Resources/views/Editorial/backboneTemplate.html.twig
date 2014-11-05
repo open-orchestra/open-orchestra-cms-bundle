@@ -79,6 +79,7 @@
 </script>
 
 <script type="text/html" id="nodeTitle">
+    <b class="page_status_title"><%= node.get('status').label %></b>
     <%= node.get('name') %>
     ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
     {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
