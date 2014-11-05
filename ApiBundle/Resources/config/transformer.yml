@@ -88,6 +88,8 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.media:
         class: %php_orchestra_api.transformer.media.class%
+        arguments:
+            - %php_orchestra_base.mediatheque.url%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.media_collection:

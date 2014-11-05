@@ -10,6 +10,16 @@ use PHPOrchestra\ModelBundle\Model\MediaInterface;
  */
 class MediaTransformer extends AbstractTransformer
 {
+    protected $mediathequeUrl;
+
+    /**
+     * @param string $mediathequeUrl
+     */
+    public function __construct($mediathequeUrl)
+    {
+        $this->mediathequeUrl = $mediathequeUrl;
+    }
+
     /**
      * @param MediaInterface $mixed
      *
@@ -22,7 +32,7 @@ class MediaTransformer extends AbstractTransformer
         $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->mimeType = $mixed->getMimeType();
-        $facade->displayedImage = '/upload/' . $mixed->getThumbnail();
+        $facade->displayedImage = $this->mediathequeUrl .'/' . $mixed->getThumbnail();
 
         $facade->addLink('_self_select', $mixed->getId());
 
