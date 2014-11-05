@@ -31,7 +31,7 @@ class NodeChoiceSubscriber implements EventSubscriberInterface
         $node = $form->getData();
         $data = $event->getData();
 
-        if (array_key_exists('nodeSource', $data) && is_null($node->getId())) {
+        if (array_key_exists('nodeSource', $data) && is_null($node->getId()) && !is_null($data['nodeSource'])) {
             $this->nodeManager->hydrateNodeFromNodeId($node, $data['nodeSource']);
         }
     }

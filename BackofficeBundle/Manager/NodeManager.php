@@ -72,13 +72,15 @@ class NodeManager
     {
         $oldNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
 
-        foreach ($oldNode->getAreas() as $area) {
-            $newArea = clone $area;
-            $node->addArea($newArea);
-        }
-        foreach ($oldNode->getBlocks() as $block) {
-            $newBlock = clone $block;
-            $node->addBlock($newBlock);
+        if ($oldNode) {
+            foreach ($oldNode->getAreas() as $area) {
+                $newArea = clone $area;
+                $node->addArea($newArea);
+            }
+            foreach ($oldNode->getBlocks() as $block) {
+                $newBlock = clone $block;
+                $node->addBlock($newBlock);
+            }
         }
 
         return $node;
