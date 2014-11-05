@@ -23,6 +23,7 @@ parameters:
     php_orchestra_backoffice.type.orchestra_media.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraMediaType
     php_orchestra_backoffice.type.folder.class: PHPOrchestra\BackofficeBundle\Form\Type\FolderType
     php_orchestra_backoffice.type.orchestra_node_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
+    php_orchestra_backoffice.type.orchestra_content_type_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
 
 services:
     # Template form type
@@ -187,3 +188,9 @@ services:
             - @php_orchestra_model.repository.node
         tags:
             - { name: form.type, alias: orchestra_node_choice}
+    php_orchestra_backoffice.type.orchestra_content_type_choice:
+        class: %php_orchestra_backoffice.type.orchestra_content_type_choice.class%
+        arguments:
+            - @php_orchestra_model.repository.content_type
+        tags:
+            - { name: form.type, alias: orchestra_content_type_choice}
