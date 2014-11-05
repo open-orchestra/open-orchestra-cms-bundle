@@ -64,7 +64,12 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSubmit($data, $template)
     {
+        $emptyCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
+        Phake::when($emptyCollection)->count()->thenReturn(0);
+
         $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        Phake::when($templateChoiceContainer)->getAreas()->thenReturn($emptyCollection);
+        Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($emptyCollection);
 
         Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
         Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
@@ -76,6 +81,33 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setAreas((null !== $template)? $template->getAreas() : '');
         Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setBlocks((null !== $template)? $template->getBlocks() : '');
+    }
+
+    /**
+     * @param array             $data
+     * @param TemplateInterface $template
+     *
+     * @dataProvider getDataTemplate
+     */
+    public function testPreSubmitWithExistingAreas($data, $template)
+    {
+        $fullCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
+        Phake::when($fullCollection)->count()->thenReturn(1);
+
+        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        Phake::when($templateChoiceContainer)->getAreas()->thenReturn($fullCollection);
+        Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($fullCollection);
+
+        Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
+        Phake::when($this->form)->getData()->thenReturn($templateChoiceContainer);
+
+        Phake::when($this->event)->getData()->thenReturn($data);
+        Phake::when($this->templateRepository)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
+
+        $this->subscriber->preSubmit($this->event);
+
+        Phake::verify($templateChoiceContainer, Phake::never())->setAreas(Phake::anyParameters());
+        Phake::verify($templateChoiceContainer, Phake::never())->setBlocks(Phake::anyParameters());
     }
 
     /**
@@ -139,6 +171,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->form)->add('templateId', 'choice', array(
             'choices' => $expectedResult,
+            'required' => false,
             'label' => 'php_orchestra_backoffice.form.node.template_id'
         ));
     }

@@ -35,7 +35,9 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
 
         if (
             array_key_exists('templateId', $data) &&
-            null === $templateChoiceContainer->getId()
+            null === $templateChoiceContainer->getId() &&
+            0 === $templateChoiceContainer->getAreas()->count() &&
+            0 === $templateChoiceContainer->getBlocks()->count()
         ) {
             $template = $this->templateRepository->findOneByTemplateId($data['templateId']);
             if (null !== $template) {
@@ -56,6 +58,7 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
         if (null === $data->getId()) {
             $form->add('templateId', 'choice', array(
                 'choices' => $this->getChoices(),
+                'required' => false,
                 'label' => 'php_orchestra_backoffice.form.node.template_id'
             ));
         }
