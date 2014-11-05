@@ -106,12 +106,9 @@ php_orchestra_backoffice:
             success: The block has been modified
         media:
             file: File
-        menu:
+        sub_menu:
             node: Root where start the menu
             level: Level of the menu
-        footer:
-            node: Root where start the footer
-            level: Level of the footer
     left_menu:
         tree:
             new_page: New page
@@ -164,6 +161,8 @@ php_orchestra_backoffice:
             title: Rich text block
         news:
             title: News block
+        sub_menu:
+            title: Sub Menu Block
     node:
         version:
             create: Create a new version of node

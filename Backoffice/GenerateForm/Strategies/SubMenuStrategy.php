@@ -2,16 +2,14 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class MenuStrategy
+ * Class SubMenuStrategy
  */
-class MenuStrategy extends AbstractBlockStrategy
+class SubMenuStrategy extends AbstractBlockStrategy
 {
     /**
      * @param BlockInterface $block
@@ -20,7 +18,7 @@ class MenuStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::MENU === $block->getComponent();
+        return DisplayBlockInterface::SUBMENU === $block->getComponent();
     }
 
     /**
@@ -45,6 +43,16 @@ class MenuStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
         ));
+        $form->add('nbLevel', 'text', array(
+            'mapped' => false,
+            'data' => array_key_exists('nbLevel', $attributes)? $attributes['nbLevel']:2,
+            'label' => 'php_orchestra_backoffice.form.sub_menu.level'
+        ));
+        $form->add('nodeName', 'orchestra_node_choice', array(
+            'mapped' => false,
+            'data' => array_key_exists('node', $attributes)? $attributes['node']:'',
+            'label' => 'php_orchestra_backoffice.form.sub_menu.node',
+        ));
     }
 
     /**
@@ -52,6 +60,6 @@ class MenuStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'menu';
+        return 'sub_menu';
     }
 }

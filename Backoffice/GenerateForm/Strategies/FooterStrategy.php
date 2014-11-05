@@ -44,16 +44,6 @@ class FooterStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
         ));
-        $form->add('nbLevel', 'text', array(
-            'mapped' => false,
-            'data' => array_key_exists('nbLevel', $attributes)? $attributes['nbLevel']:4,
-            'label' => 'php_orchestra_backoffice.form.footer.level'
-        ));
-        $form->add('nodeName', 'orchestra_node_choice', array(
-            'mapped' => false,
-            'data' => array_key_exists('node', $attributes)? $attributes['node']:'',
-            'label' => 'php_orchestra_backoffice.form.footer.node',
-        ));
     }
 
     /**

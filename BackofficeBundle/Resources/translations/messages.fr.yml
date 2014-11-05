@@ -101,12 +101,9 @@ php_orchestra_backoffice:
             success: Le bloc a été modifié
         media:
             file: Fichier
-        menu:
+        sub_menu:
             node: Noeud racine où commence le menu
             level: Nombre de niveau du menu
-        footer:
-            node: Noeud racine où commence le footer
-            level: Nombre de niveau du footer
     left_menu:
         tree:
             new_page: Nouvelle page
@@ -159,6 +156,8 @@ php_orchestra_backoffice:
             title: Bloc texte riche
         news:
             title: Bloc actualités
+        sub_menu:
+            title: Bloc sous menu
     node:
         version:
             create: Créer une nouvelle version du node
