@@ -54,10 +54,6 @@ class ContentType extends AbstractType
             ))
             ->add('language', 'orchestra_language', array(
                 'label' => 'php_orchestra_backoffice.form.content.language'
-            ))
-            ->add('contentType', 'document', array(
-                'class' => 'PHPOrchestra\ModelBundle\Document\ContentType',
-                'label' => 'php_orchestra_backoffice.form.content.content_type'
             ));
 
         $builder->addEventSubscriber(new ContentTypeSubscriber(

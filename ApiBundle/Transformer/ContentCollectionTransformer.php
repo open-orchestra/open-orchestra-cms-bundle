@@ -16,7 +16,7 @@ class ContentCollectionTransformer extends AbstractTransformer
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($mixed, $contentType = null)
     {
         $facade = new ContentCollectionFacade();
 
@@ -28,6 +28,13 @@ class ContentCollectionTransformer extends AbstractTransformer
             'php_orchestra_api_content_list',
             array()
         ));
+
+        if ($contentType) {
+            $facade->addLink('_self_add', $this->generateRoute(
+                'php_orchestra_backoffice_content_new',
+                array('contentType' => $contentType)
+            ));
+        }
 
         return $facade;
     }

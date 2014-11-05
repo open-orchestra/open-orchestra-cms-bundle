@@ -56,6 +56,7 @@ php_orchestra_backoffice:
             creation: The status has been created
         content:
             success: The content has been modified
+            creation: The content has been created
             name: Content name
             status: Status
             language: Language

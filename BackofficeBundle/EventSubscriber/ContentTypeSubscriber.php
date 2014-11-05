@@ -41,7 +41,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $event->getData();
-        $contentType = $this->contentTypeRepository->findOneByContentTypeId($data->getContentType());
+        $contentType = $this->contentTypeRepository->findInLastVersionByContentType($data->getContentType());
 
         if (is_object($contentType)) {
             /** @var FieldTypeInterface $field */
@@ -72,7 +72,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $content = $form->getData();
         $data = $event->getData();
-        $contentType = $this->contentTypeRepository->find($data['contentType']);
+        $contentType = $this->contentTypeRepository->findInLastVersionByContentType($content->getContentType());
 
         foreach ($contentType->getFields() as $field) {
             if ($attribute = $content->getAttributeByName($field->getFieldId())) {
