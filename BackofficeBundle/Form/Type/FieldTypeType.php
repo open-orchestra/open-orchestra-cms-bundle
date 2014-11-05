@@ -43,7 +43,7 @@ class FieldTypeType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.field_type.field_id'
             ))
             ->add('labels', 'translated_value_collection', array(
-                'label' => 'php_orchestra_backoffice.form.field_type.field_labels'
+                'label' => 'php_orchestra_backoffice.form.field_type.labels'
             ))
             ->add('defaultValue', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.field_type.default_value'
