@@ -91,7 +91,7 @@ class ContentController extends Controller
 
             return $this->redirect(
                 $this->generateUrl('php_orchestra_backoffice_content_form', array(
-                    'contentId' => $content->getId(),
+                    'contentId' => $content->getContentId()
                 ))
             );
         }
