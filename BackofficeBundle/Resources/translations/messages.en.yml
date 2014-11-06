@@ -171,6 +171,8 @@ php_orchestra_backoffice:
             title: Sub Menu Block
         content_list:
             title: Content List Block
+        content:
+            title: Display one content Block
     node:
         version:
             create: Create a new version of node

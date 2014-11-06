@@ -166,6 +166,8 @@ php_orchestra_backoffice:
             title: Bloc sous menu
         content_list:
             title: Bloc qui liste les contenus
+        content_list:
+            title: Bloc qui affiche un contenu
     node:
         version:
             create: Créer une nouvelle version du node
