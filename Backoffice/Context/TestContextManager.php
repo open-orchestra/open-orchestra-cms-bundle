@@ -11,7 +11,7 @@ class TestContextManager extends ContextManager
 {
     protected $defaultLocale;
     protected $siteId = '1';
-    protected $defaultLanguage = 'en';
+    protected $defaultLanguage = 'fr';
     protected $siteDomain = 'www.aphpOrchestra.fr';
 
     /**
