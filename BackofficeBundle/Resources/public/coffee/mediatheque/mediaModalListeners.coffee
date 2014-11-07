@@ -3,16 +3,15 @@
 $(document).on "click", ".mediaModalOpen", (event) ->
   modalId = $(event.currentTarget).data("target")
   mediaModal = $("#" + modalId)
-  orchestraModal = $("#OrchestraBOModal")
   
   mediaModal.parent().detach().appendTo('body')
   $('#' + modalId + ' .modal-body-menu').empty()
   $('#' + modalId + ' .modal-body-content').empty()
   
-  mediaModal.css('width', orchestraModal.css('width'))
-  mediaModal.css('height', orchestraModal.css('height'))
-  mediaModal.parent().css('top', orchestraModal.css('top'))
-  
+  mediaModal.css('width', $(window).width() + 'px')
+  mediaModal.css('height', $(window).height() + 'px')
+  mediaModal.css
+    'margin-top': window.pageYOffset - $(this).height() / 2
   mediaModal.modal("show")
   
   view = new mediaModalView(
