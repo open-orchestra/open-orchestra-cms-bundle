@@ -43,20 +43,38 @@ class NodeTransformer extends AbstractTransformer
         $facade->createdAt = $mixed->getCreatedAt();
         $facade->updatedAt = $mixed->getUpdatedAt();
 
-        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_node_form',
-            array('nodeId' => $mixed->getNodeId())
-        ));
+        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_node_form', array(
+            'nodeId' => $mixed->getNodeId(),
+            'version' => $mixed->getVersion(),
+            'language' => $mixed->getLanguage(),
+        )));
 
-        $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_node_duplicate',
-            array('nodeId' => $mixed->getNodeId())
-        ));
+        $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_node_duplicate', array(
+            'nodeId' => $mixed->getNodeId(),
+            'language' => $mixed->getLanguage(),
+        )));
 
         $facade->addLink('_self_version', $this->generateRoute('php_orchestra_api_node_list_version', array(
-            'nodeId' => $mixed->getNodeId()
+            'nodeId' => $mixed->getNodeId(),
+            'language' => $mixed->getLanguage(),
         )));
 
         $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_node_delete', array(
             'nodeId' => $mixed->getNodeId()
+        )));
+
+        $facade->addLink('_self_without_language', $this->generateRoute('php_orchestra_api_node_show', array(
+            'nodeId' => $mixed->getNodeId()
+        )));
+
+        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_node_show', array(
+            'nodeId' => $mixed->getNodeId(),
+            'version' => $mixed->getVersion(),
+            'language' => $mixed->getLanguage(),
+        )));
+
+        $facade->addLink('_site', $this->generateRoute('php_orchestra_api_site_show', array(
+            'siteId' => $mixed->getSiteId(),
         )));
 
         return $facade;
@@ -83,6 +101,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->addLink('_self', $this->generateRoute('php_orchestra_api_node_show', array(
             'nodeId' => $mixed->getNodeId(),
             'version' => $mixed->getVersion(),
+            'language' => $mixed->getLanguage(),
         )));
 
         return $facade;

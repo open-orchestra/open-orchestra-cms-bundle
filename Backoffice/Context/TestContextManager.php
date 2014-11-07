@@ -11,6 +11,7 @@ class TestContextManager extends ContextManager
 {
     protected $defaultLocale;
     protected $siteId = '1';
+    protected $defaultLanguage = 'en';
     protected $siteDomain = 'www.aphpOrchestra.fr';
 
     /**
@@ -42,11 +43,13 @@ class TestContextManager extends ContextManager
     /**
      * @param string $siteId
      * @param string $siteDomain
+     * @param string $defaultLanguage
      */
-    public function setCurrentSite($siteId, $siteDomain)
+    public function setCurrentSite($siteId, $siteDomain, $defaultLanguage)
     {
         $this->siteId = $siteId;
         $this->siteDomain = $siteDomain;
+        $this->defaultLanguage = $defaultLanguage;
     }
 
     /**
@@ -63,5 +66,13 @@ class TestContextManager extends ContextManager
     public function getCurrentSiteDomain()
     {
         return $this->siteDomain;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentSiteDefaultLanguage()
+    {
+        return $this->defaultLanguage;
     }
 }

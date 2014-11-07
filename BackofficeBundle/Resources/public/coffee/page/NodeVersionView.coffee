@@ -1,15 +1,11 @@
 NodeVersionView = Backbone.View.extend(
   tagName: "option"
   el: '#versions'
-  events:
-    'click i#none': 'clickOption'
   initialize: (options) ->
     @node = options.node
     @version = options.version
     @nodeTitle = _.template($("#nodeTitle").html())
     @nodeChoice = _.template($("#nodeChoice").html())
-    key = 'click .version-select-' + @cid
-    @events[key] = 'clickOption'
     return
   render: ->
     title = @nodeTitle(
@@ -21,8 +17,5 @@ NodeVersionView = Backbone.View.extend(
       version: @version
       cid: @cid
     )
-    return
-  clickOption: ->
-    Backbone.router.navigate('#node/show/' + @node.get('node_id') + '/' + @node.get('version'))
     return
 )

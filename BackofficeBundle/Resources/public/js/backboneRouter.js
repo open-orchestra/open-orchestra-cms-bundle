@@ -6,7 +6,8 @@ var OrchestraBORouter = Backbone.Router.extend({
 //========[ROUTES LIST]===============================//
 
   routes: {
-    'node/show/:nodeId/:version': 'showNodeWithVersion',
+    'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
+    'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId': 'showNode',
     'template/show/:templateId': 'showTemplate',
     'contents/list/:contentTypeId': 'listContents',
@@ -39,10 +40,16 @@ var OrchestraBORouter = Backbone.Router.extend({
     showNode($("#nav-node-" + nodeId).data("url"));
   },
 
-  showNodeWithVersion: function(nodeId, version)
+  showNodeWithLanguageAndVersion: function(nodeId, language, version)
   {
     this.initDisplayRouteChanges();
-    showNode($("#nav-node-" + nodeId).data("url"), version);
+    showNode($("#nav-node-" + nodeId).data("url"), language, version);
+  },
+
+  showNodeWithLanguage: function(nodeId, language)
+  {
+    this.initDisplayRouteChanges();
+    showNode($("#nav-node-" + nodeId).data("url"), language);
   },
 
   showTemplate: function(templateId)

@@ -2,10 +2,12 @@ NodeView = Backbone.View.extend(
   el: '#content'
   events:
     'click i#none' : 'clickButton'
-    'change select#selectbox': 'clickOption'
+    'change select#selectbox': 'changeVersion'
+    'click a.change-language': 'changeLanguage'
   initialize: (options) ->
     @node = options.node
     @version = @node.get('version')
+    @language = @node.get('language')
     key = "click i." + @node.cid
     @events[key] = "clickButton"
     _.bindAll this, "render", "addAreaToView", "clickButton"
@@ -58,6 +60,7 @@ NodeView = Backbone.View.extend(
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addVersionToView()
+    @addLanguagesToView()
     if @node.attributes.status.published
       $('.ui-model *', @el).unbind()
       $('.js-widget-panel').hide()
@@ -95,8 +98,28 @@ NodeView = Backbone.View.extend(
       version: @version
     )
     this.$el.find('optgroup#versions').append view.render()
-  clickOption: (event) ->
-    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + event.currentTarget.value, {trigger: true}) if $(':selected', this.$el).closest('optgroup').attr('id') == 'versions'
+  changeVersion: (event) ->
+    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + @language + '/' + event.currentTarget.value, {trigger: true}) if $(':selected', this.$el).closest('optgroup').attr('id') == 'versions'
     @duplicateNode() if $(':selected', this.$el).closest('optgroup').attr('id') == 'duplicate'
     return
+  addLanguagesToView: ->
+    viewContext = this
+    $.ajax
+      type: "GET"
+      url: @node.get('links')._site
+      success: (response) ->
+        site = new Site
+        site.set response
+        for language of site.get('languages')
+          viewContext.addLanguageToPanel(site.get('languages')[language])
+        return
+  addLanguageToPanel: (language) ->
+    view = new NodeLanguageView(
+      language: language
+      nodeId: @node.get('node_id')
+      currentLanguage: @language
+    )
+    this.$el.find('#node-languages').append view.render()
+  changeLanguage: (event) ->
+    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + $(event.currentTarget).data('language'), {trigger: true})
 )
