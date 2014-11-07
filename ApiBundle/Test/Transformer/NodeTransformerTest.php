@@ -63,7 +63,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(4))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(7))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node);
     }
 
