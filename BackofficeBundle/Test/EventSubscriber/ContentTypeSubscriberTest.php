@@ -61,7 +61,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
 
         $this->repository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentTypeRepository');
-        Phake::when($this->repository)->findOneByContentTypeId(Phake::anyParameters())->thenReturn($this->contentType);
+        Phake::when($this->repository)->findInLastVersionByContentType(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
         $this->transaltionChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
@@ -116,7 +116,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->repository)->findOneByContentTypeId($this->contentTypeId);
+        Phake::verify($this->repository)->findInLastVersionByContentType($this->contentTypeId);
         Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
             array(
                 'data' => $defaultValue,
@@ -132,12 +132,12 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithNoContentTypeFound()
     {
-        Phake::when($this->repository)->findOneByContentTypeId(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->repository)->findInLastVersionByContentType(Phake::anyParameters())->thenReturn(null);
         Phake::when($this->event)->getData()->thenReturn($this->content);
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->repository)->findOneByContentTypeId($this->contentTypeId);
+        Phake::verify($this->repository)->findInLastVersionByContentType($this->contentTypeId);
         Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
     }
 
@@ -170,7 +170,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->repository)->findOneByContentTypeId($this->contentTypeId);
+        Phake::verify($this->repository)->findInLastVersionByContentType($this->contentTypeId);
         Phake::when($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
             array(
@@ -190,7 +190,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $name = 'name';
         $status = 'status';
         $language = 'fr';
-        $realContentTypeId = 'thisIsAnId';
+        $realContentTypeId = 'contentTypeId';
         $title = 'Content title';
         $data = array(
             'name' => $name,
@@ -223,7 +223,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->getData();
-        Phake::verify($this->repository)->find($realContentTypeId);
+        Phake::verify($this->repository)->findInLastVersionByContentType($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->contentAttribute)->setValue($title);
     }
@@ -236,7 +236,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $name = 'name';
         $status = 'status';
         $language = 'fr';
-        $realContentTypeId = 'thisIsAnId';
+        $realContentTypeId = 'contentTypeId';
         $title = 'Content title';
         $data = array(
             'name' => $name,
@@ -260,7 +260,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->getData();
-        Phake::verify($this->repository)->find($realContentTypeId);
+        Phake::verify($this->repository)->findInLastVersionByContentType($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->content)->addAttribute(Phake::anyParameters());
     }

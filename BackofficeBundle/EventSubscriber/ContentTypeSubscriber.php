@@ -74,15 +74,17 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $contentType = $this->contentTypeRepository->findInLastVersionByContentType($content->getContentType());
 
-        foreach ($contentType->getFields() as $field) {
-            if ($attribute = $content->getAttributeByName($field->getFieldId())) {
-                $attribute->setValue($data[$field->getFieldId()]);
-            } else {
-                $contentAttributClass = $this->contentAttributClass;
-                $attribute = new $contentAttributClass;
-                $attribute->setName($field->getFieldId());
-                $attribute->setValue($data[$field->getFieldId()]);
-                $content->addAttribute($attribute);
+        if (is_object($contentType)) {
+            foreach ($contentType->getFields() as $field) {
+                if ($attribute = $content->getAttributeByName($field->getFieldId())) {
+                    $attribute->setValue($data[$field->getFieldId()]);
+                } else {
+                    $contentAttributClass = $this->contentAttributClass;
+                    $attribute = new $contentAttributClass;
+                    $attribute->setName($field->getFieldId());
+                    $attribute->setValue($data[$field->getFieldId()]);
+                    $content->addAttribute($attribute);
+                }
             }
         }
     }
