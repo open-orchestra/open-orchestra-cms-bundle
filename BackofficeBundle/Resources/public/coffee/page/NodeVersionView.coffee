@@ -1,6 +1,6 @@
 NodeVersionView = Backbone.View.extend(
   tagName: "option"
-  el: '#selectbox'
+  el: '#versions'
   events:
     'click i#none': 'clickOption'
   initialize: (options) ->

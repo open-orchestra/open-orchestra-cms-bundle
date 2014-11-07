@@ -95,10 +95,14 @@
 </script>
 
 <script type="text/html" id="nodeView">
-    <a href="#" class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</a>
     <% include headInclude %>
     <div id="additionalContent" style="margin-bottom: 15px">
-        <select id="selectbox"></select>
+        <select id="selectbox">
+            <optgroup id="versions"></optgroup>
+            <optgroup id="duplicate">
+                <option class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</option>
+            </optgroup>
+        </select>
     </div>
     <div id="generated-title" style="display: none">
         <%= title %>
