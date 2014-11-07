@@ -34,6 +34,7 @@ class StatusTransformer extends AbstractTransformer
         $facade->published = $mixed->isPublished();
         $facade->initial = $mixed->isInitial();
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
+        $facade->displayColor = $mixed->getDisplayColor();
 
         $toRoles = array();
         foreach ($mixed->getToRoles() as $toRole) {

@@ -20,6 +20,11 @@ php_orchestra_backoffice:
             labels: Labels in all languages
             from_role: Role needed to change the status from this one
             to_role: Role needed to get to this status
+            color:
+                red: Red
+                orange: Orange
+                green: Green
+            display_color: Diplay color
         field_option:
             label: Existing option
             new: New option
