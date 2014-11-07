@@ -42,6 +42,10 @@ class CarrouselStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => array_key_exists('height', $attributes)? $attributes['height']:'',
         ));
+        $form->add('carousel_id', 'text', array(
+            'mapped' => false,
+            'data' => array_key_exists('carousel_id', $attributes)? $attributes['carousel_id']:'',
+        ));
     }
 
     /**
