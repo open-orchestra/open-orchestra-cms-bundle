@@ -34,11 +34,12 @@ class AreaTransformer extends AbstractTransformer
     public function transform($mixed, NodeInterface $node = null, $parentAreaId = null)
     {
         $facade = new AreaFacade();
+        $nodeId = null;
+        $nodeMongoId = null;
 
         if ($node instanceof NodeInterface) {
             $nodeId = $node->getNodeId();
-        } else {
-            $nodeId = null;
+            $nodeMongoId = $node->getId();
         }
 
         $facade->label = $mixed->getLabel();
@@ -79,22 +80,22 @@ class AreaTransformer extends AbstractTransformer
             )
         );
         $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_area_form', array(
-            'nodeId' => $nodeId,
+            'nodeId' => $nodeMongoId,
             'areaId' => $mixed->getAreaId(),
         )));
         $facade->addLink('_self_block', $this->generateRoute('php_orchestra_api_area_update_block', array(
-            'nodeId' => $nodeId,
+            'nodeId' => $nodeMongoId,
             'areaId' => $mixed->getAreaId()
         )));
         $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_node', array(
-            'nodeId' => $nodeId,
+            'nodeId' => $nodeMongoId,
             'areaId' => $mixed->getAreaId()
         )));
 
         if ($parentAreaId) {
             $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node_area',
                 array(
-                    'nodeId' => $nodeId,
+                    'nodeId' => $nodeMongoId,
                     'parentAreaId' => $parentAreaId,
                     'areaId' => $mixed->getAreaId()
                 )
@@ -103,7 +104,7 @@ class AreaTransformer extends AbstractTransformer
         } else {
             $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node',
                 array(
-                    'nodeId' => $nodeId,
+                    'nodeId' => $nodeMongoId,
                     'areaId' => $mixed->getAreaId(),
                 )
             ));

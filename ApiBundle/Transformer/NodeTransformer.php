@@ -44,9 +44,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->updatedAt = $mixed->getUpdatedAt();
 
         $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_node_form', array(
-            'nodeId' => $mixed->getNodeId(),
-            'version' => $mixed->getVersion(),
-            'language' => $mixed->getLanguage(),
+            'id' => $mixed->getId(),
         )));
 
         $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_node_duplicate', array(
