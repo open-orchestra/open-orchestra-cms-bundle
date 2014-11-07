@@ -38,7 +38,10 @@ class ContentListStrategy extends AbstractStrategy
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig',
             array(
-                'contentType' => $attributes['contentType']
+                'contentType' => $attributes['contentType'],
+                'id' => $attributes['id'],
+                'class' => implode(' ', $attributes['class']),
+                'url' => $attributes['url'],
             )
         );
     }

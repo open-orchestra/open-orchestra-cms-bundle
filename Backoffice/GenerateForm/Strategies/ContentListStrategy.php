@@ -34,6 +34,25 @@ class ContentListStrategy extends AbstractBlockStrategy
             'data' => array_key_exists('contentType', $attributes)? $attributes['contentType']:'',
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
+        $form->add('class', 'textarea', array(
+            'mapped' => false,
+            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):json_encode(
+                array(
+                    'div' => 'divclass',
+                    'title' => 'titleclass',
+                    'ul' => 'ulclass'
+                )
+            ),
+        ));
+        $form->add('id', 'text', array(
+            'mapped' => false,
+            'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
+        ));
+        $form->add('url', 'orchestra_node_choice', array(
+            'mapped' => false,
+            'data' => array_key_exists('url', $attributes)? $attributes['url']:'',
+            'label' => 'php_orchestra_backoffice.form.content_list.node',
+        ));
     }
 
     /**
