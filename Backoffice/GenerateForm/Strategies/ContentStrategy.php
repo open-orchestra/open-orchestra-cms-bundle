@@ -7,9 +7,9 @@ use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class ContentListStrategy
+ * Class ContentStrategy
  */
-class ContentListStrategy extends AbstractBlockStrategy
+class ContentStrategy extends AbstractBlockStrategy
 {
     /**
      * @param BlockInterface $block
@@ -18,7 +18,7 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENT_LIST === $block->getComponent();
+        return DisplayBlockInterface::CONTENT === $block->getComponent();
     }
 
     /**
@@ -29,29 +29,20 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $form->add('contentTypeName', 'orchestra_content_type_choice', array(
-            'mapped' => false,
-            'data' => array_key_exists('contentType', $attributes)? $attributes['contentType']:'',
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
-        ));
         $form->add('class', 'textarea', array(
             'mapped' => false,
             'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):json_encode(
                 array(
                     'div' => 'divclass',
                     'title' => 'titleclass',
-                    'ul' => 'ulclass'
-                )
+                    'ul' => 'ulclass',
+                    'content' => 'contentclass'
+                    )
             ),
         ));
         $form->add('id', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
-        ));
-        $form->add('url', 'orchestra_node_choice', array(
-            'mapped' => false,
-            'data' => array_key_exists('url', $attributes)? $attributes['url']:'',
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
     }
 
@@ -60,6 +51,6 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'content_list';
+        return 'content';
     }
 }

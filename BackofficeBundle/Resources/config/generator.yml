@@ -13,6 +13,7 @@ parameters:
     php_orchestra_backoffice.configurable_content.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\ConfigurableContentStrategy
     php_orchestra_backoffice.sub_menu.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\SubMenuStrategy
     php_orchestra_backoffice.content_list.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\ContentListStrategy
+    php_orchestra_backoffice.content.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\ContentStrategy
 
 services:
     php_orchestra_backoffice.generate_form_manager:
@@ -72,5 +73,9 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.content_list.generate_form:
         class: %php_orchestra_backoffice.content_list.generate_form.class%
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.content.generate_form:
+        class: %php_orchestra_backoffice.content.generate_form.class%
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }

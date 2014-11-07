@@ -110,6 +110,8 @@ php_orchestra_backoffice:
         sub_menu:
             node: Noeud racine où commence le menu
             level: Nombre de niveau du menu
+        content_list:
+            node: Url de redirection pour voir un contenu.
     left_menu:
         tree:
             new_page: Nouvelle page
@@ -166,6 +168,8 @@ php_orchestra_backoffice:
             title: Bloc sous menu
         content_list:
             title: Bloc qui liste les contenus
+        content:
+            title: Bloc qui affiche un contenu
     node:
         version:
             create: Créer une nouvelle version du node

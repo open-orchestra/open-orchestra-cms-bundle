@@ -8,9 +8,9 @@ use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ContentListStrategy
+ * Class ContentStrategy
  */
-class ContentListStrategy extends AbstractStrategy
+class ContentStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENT_LIST == $block->getComponent();
+        return DisplayBlockInterface::CONTENT == $block->getComponent();
     }
 
     /**
@@ -36,12 +36,10 @@ class ContentListStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig',
+            'PHPOrchestraBackofficeBundle:Block/Content:show.html.twig',
             array(
-                'contentType' => $attributes['contentType'],
                 'id' => $attributes['id'],
                 'class' => implode(' ', $attributes['class']),
-                'url' => $attributes['url'],
             )
         );
     }
@@ -53,6 +51,6 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'content_list';
+        return 'content';
     }
 }

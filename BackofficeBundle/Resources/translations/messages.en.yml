@@ -115,6 +115,8 @@ php_orchestra_backoffice:
         sub_menu:
             node: Root where start the menu
             level: Level of the menu
+        content_list:
+            node: Url to view one content.
     left_menu:
         tree:
             new_page: New page
@@ -171,6 +173,8 @@ php_orchestra_backoffice:
             title: Sub Menu Block
         content_list:
             title: Content List Block
+        content:
+            title: Display one content Block
     node:
         version:
             create: Create a new version of node
