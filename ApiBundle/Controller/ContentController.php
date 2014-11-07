@@ -46,13 +46,15 @@ class ContentController extends Controller
     public function listAction(Request $request)
     {
         $criteria = array('deleted' => false);
-        if ($contentType = $request->get('content_type')) {
+        $contentType = $request->get('content_type');
+
+        if ($contentType) {
             $criteria['contentType'] = $contentType;
         }
 
         $contentCollection = $this->get('php_orchestra_model.repository.content')->findBy($criteria);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection);
+        return $this->get('php_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
     }
 
     /**
