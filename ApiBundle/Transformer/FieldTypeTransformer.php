@@ -40,8 +40,8 @@ class FieldTypeTransformer extends AbstractTransformer
 
         foreach ($mixed->getOptions() as $option) {
             $value = $option->getValue();
-            if (! is_string($value))
-                $value = serialize($value);
+            if (!is_string($value))
+                $value = \serialize($value);
             $facade->addOption($option->getKey(), $value);
         }
 
