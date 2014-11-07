@@ -64,6 +64,9 @@ class StatusType extends AbstractType
             'multiple' => true,
             'label' => 'php_orchestra_backoffice.form.status.to_role'
         ));
+        $builder->add('displayColor', 'orchestra_color_choice', array(
+            'label' => 'php_orchestra_backoffice.form.status.display_color'
+        ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

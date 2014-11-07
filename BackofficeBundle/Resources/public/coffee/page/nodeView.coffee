@@ -5,12 +5,10 @@ NodeView = Backbone.View.extend(
     'change select#selectbox': 'clickOption'
   initialize: (options) ->
     @node = options.node
-    @version = options.version
+    @version = @node.get('version')
     key = "click i." + @node.cid
     @events[key] = "clickButton"
-    key = 'click a.ajax-node-duplicate-' + @node.cid
-    @events[key] = 'duplicateNode'
-    _.bindAll this, "render", "addAreaToView", "clickButton", "duplicateNode"
+    _.bindAll this, "render", "addAreaToView", "clickButton"
     @nodeTemplate = _.template($("#nodeView").html())
     @nodeTitle = _.template($("#nodeTitle").html())
     @render()
@@ -41,8 +39,7 @@ NodeView = Backbone.View.extend(
         url: url
         deleteurl: deleteurl
       )
-  duplicateNode: (event) ->
-    event.preventDefault() #
+  duplicateNode: ->
     viewContext = this
     $.ajax
       url: @node.get('links')._self_duplicate
@@ -97,8 +94,9 @@ NodeView = Backbone.View.extend(
       node: nodeVersionElement
       version: @version
     )
-    this.$el.find('select').append view.render()
+    this.$el.find('optgroup#versions').append view.render()
   clickOption: (event) ->
-    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + event.currentTarget.value, {trigger: true})
+    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + event.currentTarget.value, {trigger: true}) if $(':selected', this.$el).closest('optgroup').attr('id') == 'versions'
+    @duplicateNode() if $(':selected', this.$el).closest('optgroup').attr('id') == 'duplicate'
     return
 )
