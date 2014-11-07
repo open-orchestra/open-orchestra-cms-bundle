@@ -68,7 +68,7 @@ class AreaTransformer extends AbstractTransformer
                     $block['blockId'],
                     $mixed->getAreaId(),
                     $blockPosition,
-                    $nodeMongoId
+                    $otherNode->getId()
                 ));
             }
         }

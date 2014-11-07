@@ -19,6 +19,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     protected $areaTransformer;
 
     protected $currentNodeId = 'currentNodeId';
+    protected $nodeMongoId = 'nodeMongoId';
     protected $transformerManager;
     protected $areaId = 'areaId';
     protected $nodeRepository;
@@ -41,6 +42,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($this->node)->getNodeId()->thenReturn($this->currentNodeId);
+        Phake::when($this->node)->getId()->thenReturn($this->nodeMongoId);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
 
         $this->otherNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
@@ -69,6 +71,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     public function testTransform($parentAreaId = null)
     {
         Phake::when($this->otherNode)->getNodeId()->thenReturn('otherNodeId');
+        Phake::when($this->otherNode)->getId()->thenReturn('otherMongoId');
         $blockFacade = new BlockFacade();
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($blockFacade);
 
@@ -98,7 +101,8 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
             $this->currentNodeId,
             0,
             'areaId',
-            0
+            0,
+            $this->nodeMongoId
         );
         Phake::verify($this->transformer)->transform(
             $this->block,
@@ -106,7 +110,8 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
             'otherNodeId',
             0,
             'areaId',
-            1
+            1,
+            'otherMongoId'
         );
         Phake::verify($this->transformer)->transform(
             $this->block,
@@ -114,7 +119,8 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
             $this->currentNodeId,
             0,
             'areaId',
-            2
+            2,
+            $this->nodeMongoId
         );
     }
 
