@@ -32,10 +32,11 @@ class BlockTransformer extends AbstractTransformer
      * @param int|null       $blockNumber
      * @param int|null       $areaId
      * @param int|null       $blockPosition
+     * @param string |null   $nodeMongoId
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $isInside = true, $nodeId = null, $blockNumber = null, $areaId = 0, $blockPosition = 0)
+    public function transform($mixed, $isInside = true, $nodeId = null, $blockNumber = null, $areaId = 0, $blockPosition = 0, $nodeMongoId = null)
     {
         $facade = new BlockFacade();
 
@@ -73,7 +74,7 @@ class BlockTransformer extends AbstractTransformer
         if (!is_null($nodeId) && !is_null($blockNumber)) {
             $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_block_form',
                 array(
-                    'nodeId' => $nodeId,
+                    'nodeId' => $nodeMongoId,
                     'blockNumber' => $blockNumber
                 )
             ));

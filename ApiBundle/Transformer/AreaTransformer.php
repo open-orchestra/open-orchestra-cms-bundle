@@ -56,7 +56,8 @@ class AreaTransformer extends AbstractTransformer
                     $nodeId,
                     $block['blockId'],
                     $mixed->getAreaId(),
-                    $blockPosition
+                    $blockPosition,
+                    $nodeMongoId
                 ));
             } else {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($block['nodeId']);
@@ -66,7 +67,8 @@ class AreaTransformer extends AbstractTransformer
                     $otherNode->getNodeId(),
                     $block['blockId'],
                     $mixed->getAreaId(),
-                    $blockPosition
+                    $blockPosition,
+                    $nodeMongoId
                 ));
             }
         }
