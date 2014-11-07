@@ -98,8 +98,18 @@
     </option>
 </script>
 
+<script type="text/html" id="nodeLanguage">
+    <li <% if (currentLanguage == language) { %>class="active"<% } %>>
+        <a class="change-language" data-language="<%= language %>">
+            <%= language %>
+        </a>
+    </li>
+</script>
+
 <script type="text/html" id="nodeView">
     <% include headInclude %>
+    <ul id="node-languages" class="nav nav-tabs">
+    </ul>
     <div id="additionalContent" style="margin-bottom: 15px">
         <select id="selectbox">
             <optgroup id="versions"></optgroup>

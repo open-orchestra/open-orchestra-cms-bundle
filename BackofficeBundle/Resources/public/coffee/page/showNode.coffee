@@ -1,6 +1,6 @@
-showNode = (url, version)->
-  if (typeof version != 'undefined')
-    url = url + '?version=' + version
+showNode = (url, language, version)->
+  url = url + '?language=' + language if (typeof language != 'undefined')
+  url = url + '&version=' + version if (typeof version != 'undefined')
   $.ajax
     type: "GET"
     url: url
@@ -12,7 +12,6 @@ showNode = (url, version)->
         node.set response
         view = new NodeView(
           node: node
-          version: version
         )
         appRouter.setCurrentMainView(view)
         return

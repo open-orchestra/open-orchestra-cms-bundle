@@ -15,19 +15,19 @@ class NodeController extends AbstractAdminController
 {
     /**
      * @param Request $request
-     * @param int     $nodeId
+     * @param string  $id
      *
-     * @Config\Route("/node/form/{nodeId}", name="php_orchestra_backoffice_node_form")
+     * @Config\Route("/node/form/{id}", name="php_orchestra_backoffice_node_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function formAction(Request $request, $nodeId)
+    public function formAction(Request $request, $id)
     {
         $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
-        $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $node = $nodeRepository->find($id);
 
-        $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $nodeId));
+        $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('php_orchestra_backoffice.form.node.success');
 
         $form = $this->generateForm($node, $url);
@@ -71,7 +71,7 @@ class NodeController extends AbstractAdminController
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($node->getNodeId())) {
-                $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('nodeId' => $node->getNodeId()));
+                $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('id' => $node->getId()));
 
                 return $this->redirect($url);
         } else {

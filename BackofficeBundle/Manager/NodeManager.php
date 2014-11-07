@@ -38,14 +38,25 @@ class NodeManager
         $newNode->setVersion($node->getVersion() + 1);
         $newNode->setAlias('');
         $newNode->setStatus(null);
-        foreach ($node->getAreas() as $area) {
-            $newArea = clone $area;
-            $newNode->addArea($newArea);
-        }
-        foreach ($node->getBlocks() as $block) {
-            $newBlock = clone $block;
-            $newNode->addBlock($newBlock);
-        }
+        $newNode = $this->duplicateBlockAndArea($node, $newNode);
+
+        return $newNode;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param string $language
+     *
+     * @return NodeInterface
+     */
+    public function createNewLanguageNode(NodeInterface $node, $language)
+    {
+        $newNode = clone $node;
+        $newNode->setVersion(1);
+        $newNode->setAlias('');
+        $newNode->setStatus(null);
+        $newNode->setLanguage($language);
+        $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
         return $newNode;
     }
@@ -73,16 +84,29 @@ class NodeManager
         $oldNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
 
         if ($oldNode) {
-            foreach ($oldNode->getAreas() as $area) {
-                $newArea = clone $area;
-                $node->addArea($newArea);
-            }
-            foreach ($oldNode->getBlocks() as $block) {
-                $newBlock = clone $block;
-                $node->addBlock($newBlock);
-            }
+            $this->duplicateBlockAndArea($oldNode, $node);
         }
 
         return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param NodeInterface $newNode
+     *
+     * @return NodeInterface
+     */
+    protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
+    {
+        foreach ($node->getAreas() as $area) {
+            $newArea = clone $area;
+            $newNode->addArea($newArea);
+        }
+        foreach ($node->getBlocks() as $block) {
+            $newBlock = clone $block;
+            $newNode->addBlock($newBlock);
+        }
+
+        return $newNode;
     }
 }

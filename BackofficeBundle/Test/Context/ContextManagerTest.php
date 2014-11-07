@@ -71,11 +71,12 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetCurrentSite($site)
     {
-        $this->contextManager->setCurrentSite($site['siteId'], $site['domain']);
+        $this->contextManager->setCurrentSite($site['siteId'], $site['domain'], $site['defaultLanguage']);
 
         Phake::verify($this->session)->set(ContextManager::KEY_SITE, array(
             'siteId' => $site['siteId'],
-            'domain' => $site['domain']
+            'domain' => $site['domain'],
+            'defaultLanguage' => $site['defaultLanguage'],
         ));
     }
 
@@ -110,6 +111,21 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array  $site
+     * @param string $domain
+     *
+     * @dataProvider getSiteDefaultLanguage
+     */
+    public function testGetCurrentSiteDefaultLanguage($site, $domain)
+    {
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
+
+        $this->assertEquals($domain, $this->contextManager->getCurrentSiteDefaultLanguage());
+
+        Phake::verify($this->session)->get(ContextManager::KEY_SITE);
+    }
+
+    /**
      * Locale provider
      *
      * @return array
@@ -132,8 +148,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSite()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain')),
-            array(array('siteId' => 'id', 'domain' => 'domain')),
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain', 'defaultLanguage' => 'en')),
+            array(array('siteId' => 'id', 'domain' => 'domain', 'defaultLanguage' => 'en')),
         );
     }
 
@@ -145,8 +161,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSiteId()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'), 'fakeId'),
-            array(array('siteId' => 'id', 'domain' => 'domain'), 'id'),
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain', 'defaultLanguage' => 'en'), 'fakeId'),
+            array(array('siteId' => 'id', 'domain' => 'domain', 'defaultLanguage' => 'en'), 'id'),
         );
     }
 
@@ -160,6 +176,19 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'), 'fakeDomain'),
             array(array('siteId' => 'id', 'domain' => 'domain'), 'domain'),
+        );
+    }
+
+    /**
+     * SiteId provider
+     *
+     * @return array
+     */
+    public function getSiteDefaultLanguage()
+    {
+        return array(
+            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain', 'defaultLanguage' => 'en'), 'en'),
+            array(array('siteId' => 'id', 'domain' => 'domain', 'defaultLanguage' => 'fr'), 'fr'),
         );
     }
 

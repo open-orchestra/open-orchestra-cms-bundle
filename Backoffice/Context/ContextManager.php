@@ -75,14 +75,16 @@ class ContextManager implements CurrentSiteIdInterface
      *
      * @param string $siteId
      * @param string $siteDomain
+     * @param string $siteDefaultLanguage
      */
-    public function setCurrentSite($siteId, $siteDomain)
+    public function setCurrentSite($siteId, $siteDomain, $siteDefaultLanguage)
     {
         $this->session->set(
             self::KEY_SITE,
             array(
                 'siteId' => $siteId,
-                'domain' => $siteDomain
+                'domain' => $siteDomain,
+                'defaultLanguage' => $siteDefaultLanguage,
             )
         );
     }
@@ -112,6 +114,18 @@ class ContextManager implements CurrentSiteIdInterface
     }
 
     /**
+     * Get the current default language of the current site
+     *
+     * @return string
+     */
+    public function getCurrentSiteDefaultLanguage()
+    {
+        $site = $this->getCurrentSite();
+
+        return $site['defaultLanguage'];
+    }
+
+    /**
      * Get current selected site (BO Context)
      *
      * @return array
@@ -126,9 +140,9 @@ class ContextManager implements CurrentSiteIdInterface
             $sites = $this->getAvailableSites();
 
             if (isset($sites[0])) {
-                $this->setCurrentSite($sites[0]->getSiteId(), $sites[0]->getDomain());
+                $this->setCurrentSite($sites[0]->getSiteId(), $sites[0]->getDomain(), $sites[0]->getDefaultLanguage());
             } else {
-                $this->setCurrentSite(0, 'No site available');
+                $this->setCurrentSite(0, 'No site available', $this->getCurrentLocale());
             }
         }
 

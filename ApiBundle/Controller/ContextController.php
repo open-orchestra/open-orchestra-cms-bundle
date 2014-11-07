@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use PHPOrchestra\ModelBundle\Model\SiteInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
@@ -48,7 +49,9 @@ class ContextController extends Controller
     {
         $contextManager = $this->get('php_orchestra_backoffice.context_manager');
 
-        $contextManager->setCurrentsite($siteId, $siteDomain);
+        /** @var SiteInterface $site */
+        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $contextManager->setCurrentsite($site->getSiteId(), $site->getDomain(), $site->getDefaultLanguage());
 
         return array('success' => true);
     }

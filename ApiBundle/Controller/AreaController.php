@@ -31,7 +31,7 @@ class AreaController extends Controller
     public function showInNodeAction($areaId, $nodeId)
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
-        $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $node = $nodeRepository->find($nodeId);
         $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
@@ -70,7 +70,7 @@ class AreaController extends Controller
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
-        $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $node = $nodeRepository->find($nodeId);
         $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
 
         $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
@@ -94,7 +94,7 @@ class AreaController extends Controller
     public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
         $areaContainer = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+            ->find($nodeId);
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
@@ -135,7 +135,7 @@ class AreaController extends Controller
     {
         if ($nodeId) {
             $nodeRepository = $this->get('php_orchestra_model.repository.node');
-            $node = $nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+            $node = $nodeRepository->find($nodeId);
             $areaContainer = $nodeRepository->findAreaFromNodeAndAreaId($node, $parentAreaId);
         } else {
             $areaContainer = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);

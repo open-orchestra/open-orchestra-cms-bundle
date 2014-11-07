@@ -29,9 +29,18 @@ class NodeController extends Controller
      */
     public function showAction(Request $request, $nodeId)
     {
+        $language = $request->get('language');
         $version = $request->get('version');
         $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndVersionAndSiteId($nodeId, $version);
+            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
+
+        if (!$node) {
+            $oldNode = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId);
+            $node = $this->get('php_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
+            $dm->persist($node);
+            $dm->flush();
+        }
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
@@ -56,18 +65,20 @@ class NodeController extends Controller
     }
 
     /**
-     * @param string $nodeId
+     * @param Request $request
+     * @param string  $nodeId
      *
      * @Config\Route("/{nodeId}/duplicate", name="php_orchestra_api_node_duplicate")
      * @Config\Method({"POST"})
      *
      * @return Response
      */
-    public function duplicateAction($nodeId)
+    public function duplicateAction(Request $request, $nodeId)
     {
+        $language = $request->get('language');
         /** @var NodeInterface $node */
         $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language);
         $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newNode);
@@ -77,7 +88,8 @@ class NodeController extends Controller
     }
 
     /**
-     * @param string $nodeId
+     * @param Request $request
+     * @param string  $nodeId
      *
      * @Config\Route("/{nodeId}/list-version", name="php_orchestra_api_node_list_version")
      * @Config\Method({"GET"})
@@ -85,9 +97,10 @@ class NodeController extends Controller
      *
      * @return Response
      */
-    public function listVersionAction($nodeId)
+    public function listVersionAction(Request $request, $nodeId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId);
+        $language = $request->get('language');
+        $node = $this->get('php_orchestra_model.repository.node')->findByNodeIdAndLanguageAndSiteId($nodeId, $language);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
     }

@@ -47,6 +47,21 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param NodeInterface   $node
+     * @param string          $language
+     *
+     * @dataProvider provideNodeAndLanguage
+     */
+    public function testCreateNewLanguageNode(NodeInterface $node, $language)
+    {
+        $alteredNode = $this->manager->createNewLanguageNode($node, $language);
+
+        Phake::verify($alteredNode)->setVersion(1);
+        Phake::verify($alteredNode)->setStatus(null);
+        Phake::verify($alteredNode)->setLanguage($language);
+    }
+
+    /**
      * @param NodeRepository $nodeRepository
      * @param NodeInterface  $nodeToDelete
      * @param array          $nodes
@@ -87,6 +102,27 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array($node0, 1),
             array($node1, 2),
             array($node2, 1),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeAndLanguage()
+    {
+        $node0 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($node0)->getVersion()->thenReturn(0);
+        Phake::when($node0)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($node0)->getBlocks()->thenReturn(new ArrayCollection());
+
+        $node1 = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($node1)->getVersion()->thenReturn(1);
+        Phake::when($node1)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($node1)->getBlocks()->thenReturn(new ArrayCollection());
+
+        return array(
+            array($node0, 'fr'),
+            array($node1, 'en'),
         );
     }
 

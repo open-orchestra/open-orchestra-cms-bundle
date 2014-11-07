@@ -1,3 +1,4 @@
+Site = Backbone.Model.extend({})
 Block = Backbone.Model.extend({})
 BlockCollection = Backbone.Collection.extend(model: Block)
 Area = Backbone.Model.extend(

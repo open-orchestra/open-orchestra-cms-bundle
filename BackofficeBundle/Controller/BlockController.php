@@ -26,7 +26,7 @@ class BlockController extends AbstractAdminController
      */
     public function formAction(Request $request, $nodeId, $blockNumber = 0)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->find($nodeId);
         $block = $node->getBlocks()->get($blockNumber);
 
         $form = $this->createForm(
