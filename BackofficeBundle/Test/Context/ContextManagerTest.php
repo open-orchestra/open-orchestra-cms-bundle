@@ -13,6 +13,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     protected $session;
     protected $contextManager;
     protected $siteRepository;
+    protected $cursor;
 
     /**
      * Tests setup
@@ -21,6 +22,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
         $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        $this->cursor = Phake::mock('Doctrine\ODM\MongoDB\Cursor');
         $this->contextManager = new ContextManager($this->session, $this->siteRepository);
     }
 
@@ -59,7 +61,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAvailableSites($siteList, $expectedArray)
     {
-        Phake::when($this->siteRepository)->findAll(Phake::anyParameters())->thenReturn($siteList);
+//        $this->markTestSkipped();
+        Phake::when($this->siteRepository)->findAllSite()->thenReturn($this->cursor);
+        Phake::when($this->cursor)->toArray()->thenReturn($siteList);
 
         $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
