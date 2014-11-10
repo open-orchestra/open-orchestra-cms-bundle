@@ -61,7 +61,6 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAvailableSites($siteList, $expectedArray)
     {
-//        $this->markTestSkipped();
         Phake::when($this->siteRepository)->findAllSite()->thenReturn($this->cursor);
         Phake::when($this->cursor)->toArray()->thenReturn($siteList);
 
