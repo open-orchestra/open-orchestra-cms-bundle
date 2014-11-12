@@ -18,25 +18,27 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->areaType = new areaType();
+        $this->areaType = new AreaType();
     }
 
     /**
      * test the build form
-     *
-     * @param array $options
-     * @param int $expectedCount
-     *
-     * @dataProvider getOptions
      */
-    public function testBuildForm($options, $expectedCount)
+    public function testBuildForm()
     {
         $formBuilderMock = Phake::mock('Symfony\Component\Form\FormBuilder');
+        Phake::when($formBuilderMock)->add(Phake::anyParameters())->thenReturn($formBuilderMock);
         Phake::when($formBuilderMock)->create(Phake::anyParameters())->thenReturn($formBuilderMock);
+        Phake::when($formBuilderMock)->addViewTransformer(Phake::anyParameters())->thenReturn($formBuilderMock);
 
-        $this->areaType->buildForm($formBuilderMock, $options);
+        $this->areaType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times($expectedCount))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(5))->add(Phake::anyParameters());
+
+        Phake::verify($formBuilderMock, Phake::times(2))->create(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(2))->addViewTransformer(Phake::anyParameters());
+
+        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
@@ -49,8 +51,7 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
         $this->areaType->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\Area',
-            'node' => null
+            'data_class' => 'PHPOrchestra\ModelBundle\Document\Area'
         ));
     }
 
@@ -60,18 +61,5 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $this->assertEquals('area', $this->areaType->getName());
-    }
-
-    /**
-     * Options provider
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return array(
-            array(array('fakeKey' => 'fakeValue'), 2),
-            array(array('node' => Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface')), 3)
-        );
     }
 }
