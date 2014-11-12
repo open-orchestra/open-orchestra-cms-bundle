@@ -39,7 +39,7 @@
                     -->
 
                     <header>
-                        <span class="js-widget-title display-inline"></span>
+                        <div class="js-widget-title display-inline"></div>
                         <div class="widget-toolbar js-widget-panel" style="display: none"></div>
                         <div class="widget-toolbar js-widget-edit" style="display: none"></div>
                     </header>
@@ -79,9 +79,7 @@
 </script>
 
 <script type="text/html" id="nodeTitle">
-    <b class="page_status_title"><%= node.get('status').label %></b>
-    <%= node.get('name') %>
-    ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
+    <span rel="tooltip" data-placement="top" data-original-title="
     {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
     <%= node.get('updated_at') %>
     {{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
@@ -90,11 +88,18 @@
     <% } else { %>
         anonymous
     <% } %>
+    ">
+        <b class="page_status_title"><%= node.get('status').label %></b>
+        <%= node.get('name') %>
+        ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
+    </span>
 </script>
 
 <script type="text/html" id="nodeChoice">
     <option class="version-select-<%= cid %>" value="<%= node.get('version') %>" <% if (node.get('version') == version) { %>selected="selected"<% } %>>
-        <%= title %>
+        <b class="page_status_title"><%= node.get('status').label %></b>
+        <%= node.get('name') %>
+        ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
     </option>
 </script>
 
