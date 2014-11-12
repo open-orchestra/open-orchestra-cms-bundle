@@ -41,7 +41,7 @@ class SiteController extends Controller
      */
     public function listAction()
     {
-        $siteCollection = $this->get('php_orchestra_model.repository.site')->findAll();
+        $siteCollection = $this->get('php_orchestra_model.repository.site')->findByDeleted(false);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
     }
@@ -57,7 +57,7 @@ class SiteController extends Controller
     public function deleteAction($siteId)
     {
         $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $this->get('doctrine.odm.mongodb.document_manager')->remove($site);
+        $site->setDeleted(true);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

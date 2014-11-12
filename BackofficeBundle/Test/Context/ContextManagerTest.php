@@ -13,6 +13,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     protected $session;
     protected $contextManager;
     protected $siteRepository;
+    protected $cursor;
 
     /**
      * Tests setup
@@ -21,6 +22,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
         $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        $this->cursor = Phake::mock('Doctrine\ODM\MongoDB\Cursor');
         $this->contextManager = new ContextManager($this->session, $this->siteRepository);
     }
 
@@ -59,7 +61,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAvailableSites($siteList, $expectedArray)
     {
-        Phake::when($this->siteRepository)->findAll(Phake::anyParameters())->thenReturn($siteList);
+        Phake::when($this->siteRepository)->findByDeleted(Phake::anyParameters())->thenReturn($siteList);
 
         $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
@@ -207,14 +209,15 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($site1)->getSiteId()->thenReturn($siteId1);
         Phake::when($site1)->getDomain()->thenReturn($domain1);
-        Phake::when($site2)->getSiteId()->thenReturn('');
-        Phake::when($site2)->getDomain()->thenReturn('');
+        Phake::when($site2)->getSiteId()->thenReturn('siteId2');
+        Phake::when($site2)->getDomain()->thenReturn('domain2');
 
         return array(
             array(
                 array($site1, $site2),
                 array(
-                    $site1
+                    $site1,
+                    $site2
                 )
             )
         );
