@@ -95,6 +95,10 @@ class NodeTransformer extends AbstractTransformer
             $facade->addLink('_self_preview', 'http://' . $site->getAlias() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
         }
 
+        $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_status_allowed_node', array(
+            'nodeId' => $mixed->getNodeId()
+        )));
+
         return $facade;
     }
 

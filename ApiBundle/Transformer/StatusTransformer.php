@@ -39,6 +39,7 @@ class StatusTransformer extends AbstractTransformer
         $facade->initial = $mixed->isInitial();
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
         $facade->displayColor = $this->translator->trans('php_orchestra_backoffice.form.status.color.' . $mixed->getDisplayColor());
+        $facade->identifier = $mixed->getId();
 
         $toRoles = array();
         foreach ($mixed->getToRoles() as $toRole) {

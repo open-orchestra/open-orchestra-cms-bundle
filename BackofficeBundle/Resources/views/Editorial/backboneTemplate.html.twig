@@ -88,19 +88,11 @@
                 Status <i class="fa fa-caret-down"></i>
             </button>
             <ul class="dropdown-menu pull-right js-status-update">
-                <li>
-                    <a href="javascript:void(0);"><i class="fa fa-circle txt-color-green"></i> Online</a>
-                </li>
-                <li>
-                    <a href="javascript:void(0);"><i class="fa fa-circle txt-color-red"></i> Busy</a>
-                </li>
-                <li>
-                    <a href="javascript:void(0);"><i class="fa fa-circle txt-color-orange"></i> Away</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Log Off</a>
-                </li>
+                <% _.each(statuses, function(status) { %>
+                    <% if (status.published && node.get('status').identifier != status.identifier) { %>
+                        <li><a href="javascript:void(0);"><i class="fa fa-circle txt-color-<%= status.display_color %>"></i> <%= status.label %></a></li>
+                    <% } %>
+                <% }); %>
             </ul>
         </div>
     </div>

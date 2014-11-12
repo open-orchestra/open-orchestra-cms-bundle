@@ -6,6 +6,7 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -44,5 +45,30 @@ class StatusController extends Controller
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $nodeId
+     *
+     * @Config\Route("/allowed-status-change/node/{nodeId}", name="php_orchestra_api_status_allowed_node")
+     * @Config\Method({"GET"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function listAllowedStatusForNodeAction(Request $request, $nodeId)
+    {
+        $language = $request->get('language');
+        $version = $request->get('version');
+        $node = $this->get('php_orchestra_model.repository.node')
+            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
+        $nodeStatus = $node->getStatus();
+        
+       // var_dump($nodeStatus);
+        
+        $statusCollection = $this->get('php_orchestra_model.repository.status')->findAll();
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
     }
 }
