@@ -34,7 +34,6 @@ class AreaController extends AbstractAdminController
                     'nodeId' => $nodeId,
                     'areaId' => $areaId
                 )),
-                'node' => $node
             )
         );
 
@@ -63,7 +62,7 @@ class AreaController extends AbstractAdminController
         $area = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $areaId);
 
         $form = $this->createForm(
-            'template_area',
+            'area',
             $area,
             array(
                 'action' => $this->generateUrl(
