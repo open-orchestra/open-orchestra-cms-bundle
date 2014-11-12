@@ -2,7 +2,6 @@ parameters:
     php_orchestra_backoffice.type.template.class: PHPOrchestra\BackofficeBundle\Form\Type\TemplateType
     php_orchestra_backoffice.type.node.class: PHPOrchestra\BackofficeBundle\Form\Type\NodeType
     php_orchestra_backoffice.type.area.class: PHPOrchestra\BackofficeBundle\Form\Type\AreaType
-    php_orchestra_backoffice.type.template_area.class: PHPOrchestra\BackofficeBundle\Form\Type\TemplateAreaType
     php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
     php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
     php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
@@ -48,10 +47,6 @@ services:
         class: %php_orchestra_backoffice.type.area.class%
         tags:
             - { name: form.type, alias: area }
-    php_orchestra_backoffice.type.template_area:
-        class: %php_orchestra_backoffice.type.template_area.class%
-        tags:
-            - { name: form.type, alias: template_area }
     # Block form type
     php_orchestra_backoffice.type.block:
         class: %php_orchestra_backoffice.type.block.class%
