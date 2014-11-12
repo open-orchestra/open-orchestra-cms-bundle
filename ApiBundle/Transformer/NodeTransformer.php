@@ -4,14 +4,30 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
+use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 
 /**
  * Class NodeTransformer
  */
 class NodeTransformer extends AbstractTransformer
 {
+    protected $encrypter;
+    protected $siteRepository;
+
+    /**
+     * @param EncryptionManager $encrypter
+     * @param SiteRepository    $siteRepository
+     */
+    public function __construct(EncryptionManager $encrypter, SiteRepository $siteRepository)
+    {
+        $this->encrypter = $encrypter;
+        $this->siteRepository = $siteRepository;
+    }
+
     /**
      * @param NodeInterface $mixed
      *
@@ -74,6 +90,10 @@ class NodeTransformer extends AbstractTransformer
         $facade->addLink('_site', $this->generateRoute('php_orchestra_api_site_show', array(
             'siteId' => $mixed->getSiteId(),
         )));
+
+        if ($site = $this->siteRepository->findOneBySiteId($mixed->getSiteId())) {
+            $facade->addLink('_self_preview', 'http://' . $site->getAlias() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
+        }
 
         return $facade;
     }

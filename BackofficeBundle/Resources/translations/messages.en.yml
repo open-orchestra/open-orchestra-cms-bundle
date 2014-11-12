@@ -183,6 +183,7 @@ php_orchestra_backoffice:
         version:
             create: Create a new version of node
             display: version
+        preview: Preview
         last_update:
             at: Last update
             by: by

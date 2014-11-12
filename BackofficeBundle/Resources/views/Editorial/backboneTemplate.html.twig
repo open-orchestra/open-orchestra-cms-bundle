@@ -115,6 +115,7 @@
     <% include headInclude %>
     <ul id="node-languages" class="nav nav-tabs">
     </ul>
+    <div id="preview"></div>
     <div id="additionalContent" style="margin-bottom: 15px">
         <select id="selectbox">
             <optgroup id="versions"></optgroup>
@@ -328,4 +329,8 @@
         </span>
         Delete
     </button>
+</script>
+
+<script type="text/html" id="previewLink">
+    <a href="<%= previewLink %>" target="_blank">{{ 'php_orchestra_backoffice.node.preview'|trans }}</a>
 </script>
