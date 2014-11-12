@@ -29,18 +29,17 @@ class LanguageListStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $form->add('languages', 'orchestra_language_list', array(
+        $form->add('class', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('languages', $attributes)? json_encode($attributes['languages']):json_encode(
+            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):json_encode(
                 array(
-                    'fr',
-                    'en',
+                    'div' => 'divclass',
                 )
             ),
         ));
-        $form->add('default', 'text', array(
+        $form->add('id', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('default', $attributes)? json_encode($attributes['default']):'fr'
+            'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
         ));
     }
 
