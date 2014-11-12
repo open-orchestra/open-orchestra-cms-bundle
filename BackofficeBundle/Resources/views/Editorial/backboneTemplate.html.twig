@@ -41,6 +41,7 @@
 
                     <header>
                         <div class="js-widget-title display-inline"></div>
+                        <div id="widget-status-placeholder"></div>
                         <div class="widget-toolbar js-widget-edit" style="display: none"></div>
                     </header>
                     <!-- widget div-->
@@ -78,6 +79,33 @@
     <!-- end widget grid -->
 </script>
 
+<script type="text/html" id="widgetStatusView">
+    <div class="widget-toolbar" id="widgetStatus">
+        <!-- add: non-hidden - to disable auto hide -->
+
+        <div class="btn-group">
+            <button class="btn dropdown-toggle btn-xs btn-success" data-toggle="dropdown">
+                Status <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right js-status-update">
+                <li>
+                    <a href="javascript:void(0);"><i class="fa fa-circle txt-color-green"></i> Online</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"><i class="fa fa-circle txt-color-red"></i> Busy</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);"><i class="fa fa-circle txt-color-orange"></i> Away</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="javascript:void(0);"><i class="fa fa-power-off"></i> Log Off</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
 <script type="text/html" id="nodeTitle">
     <span rel="tooltip" data-placement="top" data-original-title="
     {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
@@ -113,6 +141,7 @@
 
 <script type="text/html" id="nodeView">
     <% include headInclude %>
+    <% include widgetStatusView %>
     <ul id="node-languages" class="nav nav-tabs">
     </ul>
     <div id="preview"></div>
