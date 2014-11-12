@@ -61,8 +61,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAvailableSites($siteList, $expectedArray)
     {
-        Phake::when($this->siteRepository)->findAllSite()->thenReturn($this->cursor);
-        Phake::when($this->cursor)->toArray()->thenReturn($siteList);
+        Phake::when($this->siteRepository)->findByDeleted(Phake::anyParameters())->thenReturn($siteList);
 
         $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
     }
@@ -210,14 +209,15 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($site1)->getSiteId()->thenReturn($siteId1);
         Phake::when($site1)->getDomain()->thenReturn($domain1);
-        Phake::when($site2)->getSiteId()->thenReturn('');
-        Phake::when($site2)->getDomain()->thenReturn('');
+        Phake::when($site2)->getSiteId()->thenReturn('siteId2');
+        Phake::when($site2)->getDomain()->thenReturn('domain2');
 
         return array(
             array(
                 array($site1, $site2),
                 array(
-                    $site1
+                    $site1,
+                    $site2
                 )
             )
         );
