@@ -41,7 +41,7 @@ class SiteController extends Controller
      */
     public function listAction()
     {
-        $siteCollection = $this->get('php_orchestra_model.repository.site')->findAllSite();
+        $siteCollection = $this->get('php_orchestra_model.repository.site')->findByDeleted(false);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
     }

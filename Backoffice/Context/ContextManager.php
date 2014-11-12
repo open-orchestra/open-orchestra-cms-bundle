@@ -62,13 +62,7 @@ class ContextManager implements CurrentSiteIdInterface
      */
     public function getAvailableSites()
     {
-        $documentSites = $this->siteRepository->findAllSite();
-
-        /** @var SiteInterface $site */
-        return array_filter($documentSites->toArray(), function ($site) {
-
-            return $site->getSiteId() != '' && $site->getDomain() != '';
-        });
+        return $this->siteRepository->findByDeleted(false);
     }
 
     /**

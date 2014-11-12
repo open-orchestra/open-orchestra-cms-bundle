@@ -55,7 +55,7 @@ class ApiControllersTest extends WebTestCase
             array('/api/node/fixture_full'),
             array('/api/node/fixture_full?language=en'),
             array('/api/content'),
-//            array('/api/content-type'),
+            array('/api/content-type'),
             array('/api/site'),
             array('/api/theme'),
             array('/api/user'),
