@@ -42,7 +42,7 @@ class ContentTypeController extends Controller
      */
     public function listAction()
     {
-        $contentTypeCollection = $this->get('php_orchestra_model.repository.content_type')->findByDeleted(false);
+        $contentTypeCollection = $this->get('php_orchestra_model.repository.content_type')->findAllByDeletedInLastVersion();
 
         return $this->get('php_orchestra_api.transformer_manager')->get('content_type_collection')->transform($contentTypeCollection);
     }
