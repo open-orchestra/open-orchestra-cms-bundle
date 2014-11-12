@@ -40,7 +40,7 @@ class ContentListStrategy extends AbstractBlockStrategy
                 array(
                     'div' => 'divclass',
                     'title' => 'titleclass',
-                    'ul' => 'ulclass'
+                    'each' => 'eachclass'
                 )
             ),
         ));
