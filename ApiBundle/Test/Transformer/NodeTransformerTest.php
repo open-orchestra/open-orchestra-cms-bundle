@@ -19,9 +19,12 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $nodeTransformer;
 
     protected $transformerManager;
+    protected $encryptionManager;
+    protected $siteRepository;
     protected $transformer;
     protected $router;
     protected $node;
+    protected $site;
 
     /**
      * Set up the test
@@ -29,6 +32,11 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->site = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+
+        $this->encryptionManager = Phake::mock('PHPOrchestra\BaseBundle\Manager\EncryptionManager');
+        $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
@@ -38,7 +46,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->nodeTransformer = new NodeTransformer();
+        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository);
 
         $this->nodeTransformer->setContext($this->transformerManager);
     }
@@ -63,8 +71,10 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
+        $this->assertArrayHasKey('_self_preview', $facade->getLinks());
         Phake::verify($this->router, Phake::times(7))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node);
+        Phake::verify($this->siteRepository)->findOneBySiteId(Phake::anyParameters());
     }
 
     /**
