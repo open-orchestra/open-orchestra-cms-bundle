@@ -53,7 +53,8 @@ class PHPOrchestraBackofficeExtension extends Extension
             LoginStrategy::LOGIN,
             DisplayBlockInterface::SUBMENU,
             DisplayBlockInterface::CONTENT_LIST,
-            DisplayBlockInterface::CONTENT
+            DisplayBlockInterface::CONTENT,
+            DisplayBlockInterface::LANGUAGE_LIST
         );
 
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {

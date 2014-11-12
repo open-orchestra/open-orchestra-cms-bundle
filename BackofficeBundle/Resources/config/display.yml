@@ -13,6 +13,7 @@ parameters:
     php_orchestra_backoffice.display.sub_menu.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SubMenuStrategy
     php_orchestra_backoffice.display.content_list.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentListStrategy
     php_orchestra_backoffice.display.content.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentStrategy
+    php_orchestra_backoffice.display.language_list.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LanguageListStrategy
 
 services:
     php_orchestra_backoffice.display.contact:
@@ -49,5 +50,9 @@ services:
             - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_backoffice.display.content:
         class: %php_orchestra_backoffice.display.content.class%
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.language_list:
+        class: %php_orchestra_backoffice.display.language_list.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }

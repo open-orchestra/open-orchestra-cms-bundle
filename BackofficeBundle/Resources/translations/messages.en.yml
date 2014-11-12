@@ -177,6 +177,8 @@ php_orchestra_backoffice:
             title: Content List Block
         content:
             title: Display one content Block
+        language_list:
+            title: Language choice Block
     node:
         version:
             create: Create a new version of node
