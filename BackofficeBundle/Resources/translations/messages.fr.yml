@@ -173,7 +173,7 @@ php_orchestra_backoffice:
         content:
             title: Bloc qui affiche un contenu
         language_list:
-            title: Bloc qui permet de sélectionner une langue.
+            title: Bloc de séléction de langue.
     node:
         version:
             create: Créer une nouvelle version du node
