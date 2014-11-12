@@ -61,6 +61,7 @@ NodeView = Backbone.View.extend(
       @addAreaToView(@node.get('areas')[area])
     @addVersionToView()
     @addLanguagesToView()
+    @addPreviewLink()
     if @node.attributes.status.published
       $('.ui-model *', @el).unbind()
       $('.js-widget-panel').hide()
@@ -122,4 +123,10 @@ NodeView = Backbone.View.extend(
     this.$el.find('#node-languages').append view.render()
   changeLanguage: (event) ->
     Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + $(event.currentTarget).data('language'), {trigger: true})
+  addPreviewLink: ->
+    previewLink = @node.get('links')._self_preview
+    view = new PreviewLinkView(
+      previewLink: previewLink
+    )
+    this.$el.find('#preview').append view.render()
 )
