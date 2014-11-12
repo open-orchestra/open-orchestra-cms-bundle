@@ -1,64 +1,45 @@
-.blocks-panel.activate {
-  height: auto;
-  width: 170px;
-}
-
-.blocks-panel .blocks-panel-setting i.fa-arrow-circle-left {
+.js-widget-panel i.fa-arrow-circle-left {
+  color: #fff;
   font-size: 17px;
 }
 
-.blocks-panel.activate .blocks-panel-setting i.fa-arrow-circle-left:before{
+.js-widget-panel.activate i.fa-arrow-circle-left:before {
     content: "\f0a9";
 }
 
-.blocks-panel-setting {
-    background: none repeat scroll 0 0 #454545;
-    border-bottom: 1px solid #302f2f;
-    border-radius: 5px 0 0 5px;
-    color: #a8a8a8;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 19px;
-    height: 33px;
-    line-height: 37px;
-    padding: 0;
-    text-align: center;
-    transition: all 0.1s linear 0s;
-    width: 33px;
+.js-widget-panel .widget-toolbar {
+    top: 2px;
 }
 
-.activate .blocks-panel-setting {
-    margin-left:-33px;
-}
-
-.activate .blocks-panel-setting:hover {
-    margin-left:-36px;
-}
-
-.blocks-panel-setting:hover {
-    background: none repeat scroll 0 0 #646464;
-    color: #e4e4e4;
-    width: 36px;
-}
-
-.blocks-panel .blocks-panel-setting+h2 {
+.js-widget-panel h2 {
+  color:#fff;
   display: none;
+  margin:0;
 }
 
-.blocks-panel.activate .blocks-panel-setting+h2 {
+.js-widget-panel.activate h2 {
   display:inline-block;
-  font-weight:800;
 }
 
-.blocks-panel .ui-model {
-  display: none;
+.js-widget-panel.activate .widget-toolbar {
+  text-align: left;
+  width: 146px;
 }
 
-.blocks-panel.activate .ui-model {
-  display: block;
-  position:relative;
-  z-index:1;
-  margin-top:-4px;
+.js-widget-panel .ui-model {
+  display:none;
+}
+
+.js-widget-panel.activate .ui-model {
+    display: block;
+    height:100%;
+    left: 66px;
+    position: relative;
+    top:2px;
+}
+
+#content div.panel-activate {
+    padding-right: 220px;
 }
 
 .panel-shadow {
@@ -68,16 +49,10 @@
 }
 
 .js-widget-panel {
-    float: right;
-    height:34px;
-}
-
-.js-widget-panel .activate{
-    margin-right: -74px
-}
-
-#content div.panel-activate {
-    padding-right: 180px;
+    height: 100%;
+    position: absolute;
+    right: 65px;
+    top: -34px;
 }
 
 div.panel-block {
@@ -95,7 +70,7 @@ div.panel-block span.action {
   min-height: 0;
 }
 
-div.blocks-panel {
+.js-widget-panel {
     li, li div.panel-block {
         height: 40px;
     }
