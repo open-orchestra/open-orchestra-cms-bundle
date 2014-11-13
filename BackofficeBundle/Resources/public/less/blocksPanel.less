@@ -1,43 +1,3 @@
-.js-widget-panel i.fa-arrow-circle-left {
-  color: #fff;
-  font-size: 17px;
-}
-
-.js-widget-panel.activate i.fa-arrow-circle-left:before {
-    content: "\f0a9";
-}
-
-.js-widget-panel .widget-toolbar {
-    top: 2px;
-}
-
-.js-widget-panel h2 {
-  color:#fff;
-  display: none;
-  margin:0;
-}
-
-.js-widget-panel.activate h2 {
-  display:inline-block;
-}
-
-.js-widget-panel.activate .widget-toolbar {
-  text-align: left;
-  width: 146px;
-}
-
-.js-widget-panel .ui-model {
-  display:none;
-}
-
-.js-widget-panel.activate .ui-model {
-    display: block;
-    height:100%;
-    left: 66px;
-    position: relative;
-    top:2px;
-}
-
 #content div.panel-activate {
     padding-right: 220px;
 }
@@ -48,19 +8,11 @@
   box-shadow: -11px 12px 23px #555; 
 }
 
-.js-widget-panel {
-    height: 100%;
-    position: absolute;
-    right: 65px;
-    top: -34px;
-}
-
 div.panel-block {
     background-color:#EEEEEE;
-}
-
-div.panel-block span.action {
-  display: none;
+    span.action {
+        display: none;
+    }
 }
 
 .ui-model div.panel-block div.preview {
@@ -70,12 +22,31 @@ div.panel-block span.action {
   min-height: 0;
 }
 
-.js-widget-panel {
+.js-widget-blockpanel {
+    height: 100%;
+    position: absolute;
+    right: 65px;
+    top: -34px;
+    h2 {
+        color:#fff;
+        display: none;
+        margin:0;
+    }
+    i.fa-arrow-circle-left {
+        color: #fff;
+        font-size: 17px;
+    }
+    .widget-toolbar {
+        top: 2px;
+    }
     li, li div.panel-block {
         height: 40px;
     }
     li.hover, li.hover div.panel-block {
         height: auto;
+    }
+    .ui-model {
+        display:none;
     }
     .ui-model div.preview {
         height: 38px;
@@ -86,5 +57,27 @@ div.panel-block span.action {
         height: auto;
         max-height: 200px;
         min-height: 38px;
+    }
+}
+
+.js-widget-blockpanel.activate {
+    h2 {
+      display:inline-block;
+    }
+    i.fa-arrow-circle-left:before {
+        content: "\f0a9";
+    }
+    .widget-toolbar {
+      text-align: left;
+      width: 146px;
+    }
+    .ui-model {
+        display: block;
+        height: auto;
+        margin-right: -65px;
+        max-height: 100%;
+        position: absolute;
+        top: 34px;
+        width: 212px;
     }
 }

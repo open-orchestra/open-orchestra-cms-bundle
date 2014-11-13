@@ -45,7 +45,7 @@
 
                     <!-- widget div-->
                     <div>
-                        <div class="js-widget-panel" id="js-widget-panel" style="display: none"></div>
+                        <div class="js-widget-blockpanel" style="display: none"></div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <div>
@@ -132,7 +132,7 @@
             <i class="fa fa-arrow-circle-left"></i>
             <h2>Blocks</h2>
         </div>
-        <div class="ui-model scroll padding-10 panel-shadow">
+        <div class="ui-model scroll panel-shadow">
             <ul class="ui-model-blocks">
                 {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
                 {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
