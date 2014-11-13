@@ -104,4 +104,32 @@ class NodeController extends Controller
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
     }
+
+    /**
+     * @param Request $request
+     * @param string $nodeId
+     *
+     * @Config\Route("/{nodeId}/change-status", name="php_orchestra_api_node_change_status")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function changeStatusAction(Request $request, $nodeId)
+    {
+        $language = $request->get('language');
+        $version = $request->get('version');
+        $node = $this->get('php_orchestra_model.repository.node')
+            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
+
+        // CHECKER LES DROITS //
+
+        $newStatus = $this->get('php_orchestra_model.repository.status')->find($request->get('newStatusId'));
+        $node->setStatus($newStatus);
+
+        $em = $this->get('doctrine.odm.mongodb.document_manager');
+        $em->persist($node);
+        $em->flush();
+
+        return new Response('', 200);
+    }
 }

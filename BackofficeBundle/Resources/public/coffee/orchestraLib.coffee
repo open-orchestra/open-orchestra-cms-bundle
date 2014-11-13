@@ -7,6 +7,20 @@ renderPageTitle = ->
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 
 
+# CHANGE NODE STATUS
+
+nodeChangeStatus = (url, language, version, newStatusId) ->
+  displayLoader()
+  data =
+    language: language
+    version: version
+    newStatusId: newStatusId
+  $.post(url, data).done (data) ->
+    Backbone.history.loadUrl(Backbone.history.fragment)
+    return
+  return
+
+
 # DISPLAY LOADER
 
 displayLoader = (element) ->

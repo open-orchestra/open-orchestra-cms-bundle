@@ -99,6 +99,10 @@ class NodeTransformer extends AbstractTransformer
             'nodeId' => $mixed->getNodeId()
         )));
 
+        $facade->addLink('_status_change', $this->generateRoute('php_orchestra_api_node_change_status', array(
+            'nodeId' => $mixed->getNodeId()
+        )));
+
         return $facade;
     }
 

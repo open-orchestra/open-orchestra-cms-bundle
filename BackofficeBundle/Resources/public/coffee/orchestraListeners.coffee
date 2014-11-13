@@ -4,7 +4,8 @@ $(".widget-grid").DOMNodeAppear ->
   setup_widgets_desktop()
   return
 
-# Status Wigdet
+# STATUS WIDGET
+
 $("#widgetStatus").DOMNodeAppear ->
   $("#widget-status-placeholder").replaceWith($("#widgetStatus"))
   return
@@ -14,4 +15,14 @@ $("#widgetStatus").DOMNodeAppear ->
 
 $(".page-title").DOMNodeAppear ->
   renderPageTitle()
+  return
+
+# NODE STATUS CHANGE
+
+$(document).on "click", ".node-change-status", (event) ->
+  url = $(event.currentTarget).data("url")
+  language = $(event.currentTarget).data("language")
+  version = $(event.currentTarget).data("version")
+  statusId = $(event.currentTarget).data("status")
+  nodeChangeStatus(url, language, version, statusId)
   return
