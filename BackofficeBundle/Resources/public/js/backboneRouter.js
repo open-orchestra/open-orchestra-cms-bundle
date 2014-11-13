@@ -42,13 +42,13 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showNodeWithLanguageAndVersion: function(nodeId, language, version)
   {
-    this.initDisplayRouteChanges();
+    this.initDisplayRouteChanges("#nav-node-" + nodeId);
     showNode($("#nav-node-" + nodeId).data("url"), language, version);
   },
 
   showNodeWithLanguage: function(nodeId, language)
   {
-    this.initDisplayRouteChanges();
+    this.initDisplayRouteChanges("#nav-node-" + nodeId);
     showNode($("#nav-node-" + nodeId).data("url"), language);
   },
 
@@ -137,19 +137,25 @@ var OrchestraBORouter = Backbone.Router.extend({
     });
   },
 
-  initDisplayRouteChanges: function()
+  initDisplayRouteChanges: function(selector)
   {
-    var url = '#' + Backbone.history.fragment;
     $('nav li.active').removeClass("active");
-    $('nav li:has(a[href="' + url + '"])').addClass("active");
-    
-    var title = ($('nav a[href="' + url + '"]').attr('title'))
-    document.title = (title || document.title);
-    
+      if (selector == undefined) {
+          var url = '#' + Backbone.history.fragment;
+          $('nav li:has(a[href="' + url + '"])').addClass("active");
+          var title = ($('nav a[href="' + url + '"]').attr('title'))
+          document.title = (title || document.title);
+      } else {
+          $('nav li:has(a' + selector + ')').addClass("active");
+          var title = ($('nav a' + selector).attr('title'))
+          document.title = (title || document.title);
+      }
+
+
     drawBreadCrumb();
-    
+
     this.removeCurrentMainView();
-    
+
     displayLoader();
   },
 

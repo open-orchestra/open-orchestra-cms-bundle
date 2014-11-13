@@ -61,9 +61,6 @@ class NodeType extends AbstractType
                     'class' => 'alias-dest',
                 )
             ))
-            ->add('language', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.node.language'
-            ))
             ->add('inMenu', 'checkbox', array(
                 'label' => 'php_orchestra_backoffice.form.node.in_menu',
                 'required' => false
