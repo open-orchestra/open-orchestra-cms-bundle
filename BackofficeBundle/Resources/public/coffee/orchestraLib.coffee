@@ -1,7 +1,8 @@
 # SHOW CONTENT TITLE
 
 renderPageTitle = ->
-  $('#title-logo').addClass($('nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
+  if ($('nav li.active:first > a > i').length > 0)
+    $('#title-logo').addClass($('nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
   $('#title-universe').text($('.breadcrumb li:nth-child(2)').text())
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 

@@ -42,14 +42,20 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showNodeWithLanguageAndVersion: function(nodeId, language, version)
   {
+    var breadcrumb = $("ol.breadcrumb").html();
     this.initDisplayRouteChanges();
+    $("#nav-node-" + nodeId).parent().addClass('active');
     showNode($("#nav-node-" + nodeId).data("url"), language, version);
+    $("ol.breadcrumb").html(breadcrumb);
   },
 
   showNodeWithLanguage: function(nodeId, language)
   {
+    var breadcrumb = $("ol.breadcrumb").html();
     this.initDisplayRouteChanges();
+    $("#nav-node-" + nodeId).parent().addClass('active');
     showNode($("#nav-node-" + nodeId).data("url"), language);
+    $("ol.breadcrumb").html(breadcrumb);
   },
 
   showTemplate: function(templateId)
@@ -139,17 +145,17 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   initDisplayRouteChanges: function()
   {
-    var url = '#' + Backbone.history.fragment;
     $('nav li.active').removeClass("active");
+    var url = '#' + Backbone.history.fragment;
     $('nav li:has(a[href="' + url + '"])').addClass("active");
-    
+
     var title = ($('nav a[href="' + url + '"]').attr('title'))
     document.title = (title || document.title);
-    
+
     drawBreadCrumb();
-    
+
     this.removeCurrentMainView();
-    
+
     displayLoader();
   },
 
