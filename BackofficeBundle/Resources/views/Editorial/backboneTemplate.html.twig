@@ -88,15 +88,17 @@
                 Status <i class="fa fa-caret-down"></i>
             </button>
             <ul class="dropdown-menu pull-right js-status-update">
-                <% _.each(statuses, function(status) { %>
-                    <li>
+                <% if (statuses.length > 0 ) { %>
+                    <% _.each(statuses, function(status) { %>
                         <% if (status.allowed) { %>
-                            <a href="javascript:void(0);"><i class="fa fa-circle txt-color-<%= status.display_color %>"></i> <%= status.label %></a>
+                            <li><a href="javascript:void(0);"><i class="fa fa-circle txt-color-<%= status.display_color %>"></i> <%= status.label %></a></li>
                         <% } else { %>
-                            <a href="javascript:void(0);"><i class="fa fa-circle txt-color-black"></i> <%= status.label %></a>
+                            <li class="status-disabled"><i class="fa fa-circle txt-color-disabled"></i> <%= status.label %></li>
                         <% } %>
-                    </li>
-                <% }); %>
+                    <% }); %>
+                <% } else { %>
+                    <li class="status-disabled">No status available</li>
+                <% } %>
             </ul>
         </div>
     </div>
