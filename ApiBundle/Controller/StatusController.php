@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
@@ -63,12 +64,18 @@ class StatusController extends Controller
         $version = $request->get('version');
         $node = $this->get('php_orchestra_model.repository.node')
             ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
-        $nodeStatus = $node->getStatus();
-        
-       // var_dump($nodeStatus);
-        
-        $statusCollection = $this->get('php_orchestra_model.repository.status')->findAll();
+        $status = $node->getStatus();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
+        $transitions = $status->getFromRoles();
+
+        $possibleStatutes = array();
+
+        foreach ($transitions as $transition) {
+            if ($transition->getToStatus()->isPublished()) {
+                $possibleStatutes[] = $transition->getToStatus();
+            }
+         }
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatutes, $status);
     }
 }

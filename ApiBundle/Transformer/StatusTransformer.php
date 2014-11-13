@@ -7,31 +7,40 @@ use PHPOrchestra\ApiBundle\Facade\StatusFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Model\StatusInterface;
 use Symfony\Component\Translation\Translator;
+use PHPOrchestra\ModelBundle\Repository\RoleRepository;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class StatusTransformer
  */
 class StatusTransformer extends AbstractTransformer
 {
+    protected $securityContext;
+    protected $roleRepository;
     protected $translationChoiceManager;
     protected $translator;
 
     /**
+     * @param SecurityContextInterface $securityContext
+     * @param RoleRepository $roleRepository
      * @param TranslationChoiceManager $translationChoiceManager
      * @param Translator               $translator
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager, Translator $translator)
+    public function __construct(SecurityContextInterface $securityContext, RoleRepository $roleRepository, TranslationChoiceManager $translationChoiceManager)
     {
+        $this->securityContext = $securityContext;
+        $this->roleRepository = $roleRepository;
         $this->translationChoiceManager = $translationChoiceManager;
         $this->translator = $translator;
     }
 
     /**
      * @param StatusInterface $mixed
+     * @param StatusInterface $currentStatus
      *
      * @return FacadeInterface|StatusFacade
      */
-    public function transform($mixed)
+    public function transform($mixed, $currentStatus = null)
     {
         $facade = new StatusFacade();
 
@@ -40,6 +49,12 @@ class StatusTransformer extends AbstractTransformer
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
         $facade->displayColor = $this->translator->trans('php_orchestra_backoffice.form.status.color.' . $mixed->getDisplayColor());
         $facade->identifier = $mixed->getId();
+        $facade->allowed = false;
+        if ($currentStatus) {
+            $role = $this->roleRepository->findOneRoleFromStatusToStatus($currentStatus, $mixed);
+            if ($this->securityContext->isGranted($role->getName()))
+                $facade->allowed = true;
+        }
 
         $toRoles = array();
         foreach ($mixed->getToRoles() as $toRole) {

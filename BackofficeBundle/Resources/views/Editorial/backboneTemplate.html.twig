@@ -89,9 +89,13 @@
             </button>
             <ul class="dropdown-menu pull-right js-status-update">
                 <% _.each(statuses, function(status) { %>
-                    <% if (status.published && node.get('status').identifier != status.identifier) { %>
-                        <li><a href="javascript:void(0);"><i class="fa fa-circle txt-color-<%= status.display_color %>"></i> <%= status.label %></a></li>
-                    <% } %>
+                    <li>
+                        <% if (status.allowed) { %>
+                            <a href="javascript:void(0);"><i class="fa fa-circle txt-color-<%= status.display_color %>"></i> <%= status.label %></a>
+                        <% } else { %>
+                            <a href="javascript:void(0);"><i class="fa fa-circle txt-color-black"></i> <%= status.label %></a>
+                        <% } %>
+                    </li>
                 <% }); %>
             </ul>
         </div>

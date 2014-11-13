@@ -128,6 +128,8 @@ services:
     php_orchestra_api.transformer.status:
         class: %php_orchestra_api.transformer.status.class%
         arguments:
+            - @security.context
+            - @php_orchestra_model.repository.role
             - @php_orchestra_backoffice.manager.translation_choice
             - @translator
         tags:
