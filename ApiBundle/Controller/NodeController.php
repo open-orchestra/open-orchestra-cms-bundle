@@ -121,15 +121,18 @@ class NodeController extends Controller
         $node = $this->get('php_orchestra_model.repository.node')
             ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
 
-        // CHECKER LES DROITS //
-
         $newStatus = $this->get('php_orchestra_model.repository.status')->find($request->get('newStatusId'));
-        $node->setStatus($newStatus);
 
-        $em = $this->get('doctrine.odm.mongodb.document_manager');
-        $em->persist($node);
-        $em->flush();
+        $role = $this->get('php_orchestra_model.repository.role')->findOneRoleFromStatusToStatus($node->getStatus(), $newStatus);
 
-        return new Response('', 200);
+        if ($this->get('security.context')->isGranted($role->getName())) {
+            $node->setStatus($newStatus);
+            $em = $this->get('doctrine.odm.mongodb.document_manager');
+            $em->persist($node);
+            $em->flush();
+            return new Response('', 200);
+        } else {
+            return new Response('', 403);
+        }
     }
 }
