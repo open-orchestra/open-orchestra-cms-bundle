@@ -56,7 +56,7 @@ NodeView = Backbone.View.extend(
       title: title
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    $('.js-widget-panel', @$el).html($('#generated-panel', @$el).html()).show()
+    $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addVersionToView()

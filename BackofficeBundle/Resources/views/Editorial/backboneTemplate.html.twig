@@ -40,12 +40,12 @@
 
                     <header>
                         <div class="js-widget-title display-inline"></div>
-                        <div class="widget-toolbar js-widget-panel" style="display: none"></div>
                         <div class="widget-toolbar js-widget-edit" style="display: none"></div>
                     </header>
 
                     <!-- widget div-->
                     <div>
+                        <div class="js-widget-blockpanel" style="display: none"></div>
                         <!-- widget edit box -->
                         <div class="jarviswidget-editbox">
                             <div>
@@ -128,17 +128,15 @@
         <%= title %>
     </div>
     <div id="generated-panel" style="display: none">
-        <div class="blocks-panel">
-            <span class="blocks-panel-setting">
-                <i class="fa fa-arrow-circle-left"></i>
-            </span>
+        <div class="widget-toolbar">
+            <i class="fa fa-arrow-circle-left"></i>
             <h2>Blocks</h2>
-            <div class="ui-model scroll padding-10 panel-shadow">
-                <ul class="ui-model-blocks">
-                    {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
-                    {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
-                </ul>
-            </div>
+        </div>
+        <div class="ui-model scroll panel-shadow">
+            <ul class="ui-model-blocks">
+                {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
+                {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
+            </ul>
         </div>
     </div>
     <div role="container">
@@ -166,7 +164,7 @@
                 <i class="fa fa-arrow-circle-left"></i>
             </span>
             <h2>Blocks</h2>
-            <div class="ui-model scroll padding-10  panel-shadow">
+            <div class="ui-model scroll panel-shadow">
                 <ul class="ui-model-blocks">
                     {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
                 </ul>
