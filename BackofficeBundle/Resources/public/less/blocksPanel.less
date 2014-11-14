@@ -26,10 +26,10 @@ div.panel-block {
     height: 100%;
     position: absolute;
     right: 65px;
-    top: -34px;
+    /*top: -34px; */
     h2 {
         color:#fff;
-        display: none;
+        display: none !important;
         margin:0;
     }
     i.fa-arrow-circle-left {
@@ -62,7 +62,7 @@ div.panel-block {
 
 .js-widget-blockpanel.activate {
     h2 {
-      display:inline-block;
+      display:inline-block !important;
     }
     i.fa-arrow-circle-left:before {
         content: "\f0a9";
@@ -79,5 +79,6 @@ div.panel-block {
         position: absolute;
         top: 34px;
         width: 212px;
+        z-index: 1;
     }
 }
