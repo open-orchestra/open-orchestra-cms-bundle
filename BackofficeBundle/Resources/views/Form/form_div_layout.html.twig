@@ -62,7 +62,9 @@
         <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
             <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
         </a>
-        
+        &nbsp;
+        <img height="100px" src="{{ value }}" id="previewImage" />
+
         {% include 'PHPOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
     {% endspaceless %}
 {% endblock %}
