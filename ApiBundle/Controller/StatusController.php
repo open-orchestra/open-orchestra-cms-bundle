@@ -71,10 +71,8 @@ class StatusController extends Controller
         $possibleStatutes = array();
 
         foreach ($transitions as $transition) {
-            if ($transition->getToStatus()->isPublished()) {
-                $possibleStatutes[] = $transition->getToStatus();
-            }
-         }
+            $possibleStatutes[] = $transition->getToStatus();
+        }
 
         return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatutes, $status);
     }
