@@ -54,7 +54,7 @@ class StatusTransformer extends AbstractTransformer
         $facade->identifier = $mixed->getId();
         $facade->allowed = false;
         if ($currentStatus) {
-            $role = $this->roleRepository->findOneRoleFromStatusToStatus($currentStatus, $mixed);
+            $role = $this->roleRepository->findOneByFromStatusAndToStatus($currentStatus, $mixed);
             if ($this->securityContext->isGranted($role->getName()))
                 $facade->allowed = true;
         }
