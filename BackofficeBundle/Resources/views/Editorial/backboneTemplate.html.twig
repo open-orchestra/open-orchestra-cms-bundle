@@ -41,20 +41,11 @@
 
                     <header>
                         <div class="js-widget-title display-inline"></div>
-                        <div id="widget-status-placeholder"></div>
                         <div class="widget-toolbar js-widget-edit" style="display: none"></div>
                     </header>
                     <!-- widget div-->
                     <div>
                         <div class="js-widget-blockpanel" style="display: none"></div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <div>
-                                <label>*Title:*</label>
-                                <input type="text" />
-                            </div>
-                        </div>
-                        <!-- end widget edit box -->
 
                         <div class="widget-body">
                             <!-- content goes here -->
@@ -93,9 +84,7 @@
                         <% if (status.allowed) { %>
                             <li>
                                 <a class="node-change-status"
-                                    data-url="<%= node.get('links')._status_change %>"
-                                    data-language="<%= node.get('language') %>"
-                                    data-version="<%= node.get('version') %>"
+                                    data-url="<%= status_change_link %>"
                                     data-status="<%= status.identifier %>"
                                 >
                                     <i class="fa fa-circle txt-color-<%= status.display_color %>"></i> 
@@ -147,7 +136,6 @@
 
 <script type="text/html" id="nodeView">
     <% include headInclude %>
-    <% include widgetStatusView %>
     <ul id="node-languages" class="nav nav-tabs">
     </ul>
     <div id="preview"></div>

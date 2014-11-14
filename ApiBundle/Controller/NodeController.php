@@ -107,19 +107,16 @@ class NodeController extends Controller
 
     /**
      * @param Request $request
-     * @param string $nodeId
+     * @param string $nodeMongoId
      *
-     * @Config\Route("/{nodeId}/change-status", name="php_orchestra_api_node_change_status")
+     * @Config\Route("/{nodeMongoId}/change-status", name="php_orchestra_api_node_change_status")
      * @Config\Method({"POST"})
      *
      * @return Response
      */
-    public function changeStatusAction(Request $request, $nodeId)
+    public function changeStatusAction(Request $request, $nodeMongoId)
     {
-        $language = $request->get('language');
-        $version = $request->get('version');
-        $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
+        $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
 
         $newStatus = $this->get('php_orchestra_model.repository.status')->find($request->get('newStatusId'));
 

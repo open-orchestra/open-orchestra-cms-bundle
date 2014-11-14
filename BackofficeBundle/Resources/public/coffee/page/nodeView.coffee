@@ -15,7 +15,8 @@ NodeView = Backbone.View.extend(
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @nodeTemplate = _.template($("#nodeView").html())
     @nodeTitle = _.template($("#nodeTitle").html())
-    @getStatuses()
+    @widgetStatus = _.template($("#widgetStatusView").html())
+    @render()
     return
 
   clickButton: (event) ->
@@ -54,7 +55,7 @@ NodeView = Backbone.View.extend(
         Backbone.history.loadUrl(Backbone.history.fragment)
     return
 
-  getStatuses: ->
+  renderWidgetStatus: ->
     viewContext = this
     $.ajax
       type: "GET"
@@ -63,8 +64,11 @@ NodeView = Backbone.View.extend(
         version: @node.get('version')
       url: @node.get('links')._status_list
       success: (response) ->
-        viewContext.statusList = response
-        viewContext.render()
+        widgetStatus = viewContext.widgetStatus(
+          statuses: response.statuses
+          status_change_link: viewContext.node.get('links')._status_change
+        )
+        addCustomJarvisWidget(widgetStatus)
         return
 
   render: ->
@@ -72,10 +76,10 @@ NodeView = Backbone.View.extend(
     $(@el).html @nodeTemplate(
       node: @node
       title: title
-      statuses: @statusList.statuses
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
+    @renderWidgetStatus()
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addVersionToView()

@@ -49,31 +49,27 @@ class StatusController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param string $nodeId
+     * @param string $nodeMongoId
      *
-     * @Config\Route("/allowed-status-change/node/{nodeId}", name="php_orchestra_api_status_allowed_node")
+     * @Config\Route("/list-statuses/node/{nodeMongoId}", name="php_orchestra_api_list_status_node")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
      * @return Response
      */
-    public function listAllowedStatusForNodeAction(Request $request, $nodeId)
+    public function listStatusesForNodeAction($nodeMongoId)
     {
-        $language = $request->get('language');
-        $version = $request->get('version');
-        $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
+        $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
         $status = $node->getStatus();
 
         $transitions = $status->getFromRoles();
 
-        $possibleStatutes = array();
+        $possibleStatuses = array();
 
         foreach ($transitions as $transition) {
-            $possibleStatutes[] = $transition->getToStatus();
+            $possibleStatuses[] = $transition->getToStatus();
         }
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatutes, $status);
+        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
     }
 }

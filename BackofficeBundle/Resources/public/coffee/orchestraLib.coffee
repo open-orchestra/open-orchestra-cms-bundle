@@ -7,13 +7,18 @@ renderPageTitle = ->
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 
 
+# ADD CUSTOM JARVIS WIDGET
+
+addCustomJarvisWidget = (widget) ->
+  $(widget).insertAfter($(".js-widget-title"))
+  return
+
+
 # CHANGE NODE STATUS
 
-nodeChangeStatus = (url, language, version, newStatusId) ->
+nodeChangeStatus = (url, newStatusId) ->
   displayLoader()
   data =
-    language: language
-    version: version
     newStatusId: newStatusId
   $.post(url, data).done (data) ->
     Backbone.history.loadUrl(Backbone.history.fragment)
