@@ -89,7 +89,7 @@
         anonymous
     <% } %>
     ">
-        <b class="page_status_title"><%= node.get('status').label %></b>
+        <b class="page_status_title <% if(node.get('status').label == 'published') { %> alert-danger <%}%>" style="display:inline-block;padding:0 3px;line-height:22px;"><%= node.get('status').label %></b>
         <%= node.get('name') %>
         ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
     </span>
