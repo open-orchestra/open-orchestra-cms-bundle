@@ -28,6 +28,7 @@ class ContentTransformer extends AbstractTransformer
         $facade->contentTypeVersion = $mixed->getContentTypeVersion();
         $facade->language = $mixed->getLanguage();
         $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
+        $facade->statusLabel = $facade->status->label;
 
         foreach ($mixed->getAttributes() as $attribute) {
             $facade->addAttribute($this->getTransformer('content_attribute')->transform($attribute));

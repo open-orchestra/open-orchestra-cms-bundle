@@ -30,6 +30,11 @@ class ContentTypeFacade extends AbstractFacade
     public $status;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $statusLabel;
+
+    /**
      * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\FieldTypeFacade>")
      */
     protected $fields = array();
