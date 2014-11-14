@@ -6,6 +6,7 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\StatusFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelBundle\Model\StatusInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Class StatusTransformer
@@ -13,13 +14,16 @@ use PHPOrchestra\ModelBundle\Model\StatusInterface;
 class StatusTransformer extends AbstractTransformer
 {
     protected $translationChoiceManager;
+    protected $translator;
 
     /**
      * @param TranslationChoiceManager $translationChoiceManager
+     * @param Translator               $translator
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    public function __construct(TranslationChoiceManager $translationChoiceManager, Translator $translator)
     {
         $this->translationChoiceManager = $translationChoiceManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -34,7 +38,7 @@ class StatusTransformer extends AbstractTransformer
         $facade->published = $mixed->isPublished();
         $facade->initial = $mixed->isInitial();
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
-        $facade->displayColor = $mixed->getDisplayColor();
+        $facade->displayColor = $this->translator->trans('php_orchestra_backoffice.form.status.color.' . $mixed->getDisplayColor());
 
         $toRoles = array();
         foreach ($mixed->getToRoles() as $toRole) {

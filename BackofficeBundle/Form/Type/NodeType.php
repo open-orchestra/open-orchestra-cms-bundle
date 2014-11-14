@@ -76,7 +76,7 @@ class NodeType extends AbstractType
                 'disabled' => true
             ))
             ->add('role', 'orchestra_role_choice', array(
-                'label' => 'php_orchestra_bacokffice.form.node.role',
+                'label' => 'php_orchestra_backoffice.form.node.role',
                 'required' => false,
             ));
 

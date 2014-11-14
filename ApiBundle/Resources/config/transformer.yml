@@ -129,6 +129,7 @@ services:
         class: %php_orchestra_api.transformer.status.class%
         arguments:
             - @php_orchestra_backoffice.manager.translation_choice
+            - @translator
         tags:
             - { name: php_orchestra_api.transformer.strategy }
     php_orchestra_api.transformer.user:
