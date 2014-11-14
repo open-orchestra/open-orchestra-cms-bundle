@@ -123,9 +123,7 @@ class NodeController extends Controller
 
         $newStatus = $this->get('php_orchestra_model.repository.status')->find($request->get('newStatusId'));
 
-        $role = $this->get('php_orchestra_model.repository.role')->findOneRoleFromStatusToStatus($node->getStatus(), $newStatus);
-
-        if ($this->get('security.context')->isGranted($role->getName())) {
+        if ($this->get('php_orchestra_model.validator.prevent_prohibited_status_change')->canSwitchStatus($node->getStatus(), $newStatus)) {
             $node->setStatus($newStatus);
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
