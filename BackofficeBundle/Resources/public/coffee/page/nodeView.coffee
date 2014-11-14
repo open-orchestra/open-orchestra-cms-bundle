@@ -64,7 +64,7 @@ NodeView = Backbone.View.extend(
     @addPreviewLink()
     if @node.attributes.status.published
       $('.ui-model *', @el).unbind()
-      $('.js-widget-panel').hide()
+      $('.js-widget-blockpanel', @$el).hide()
       $('span.action', @el).hide()
     else
       $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
