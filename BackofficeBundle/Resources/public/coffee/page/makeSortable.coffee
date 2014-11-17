@@ -21,6 +21,7 @@ makeSortable = (el, duplicate) ->
     connectWith: '#content div[role="container"] ul.ui-model-blocks',
     appendTo: 'body',
     tolerance: 'pointer',
+    zIndex: 100000,
     helper: (event, obj) ->
       $("<div></div>").addClass("ui-model").append obj.clone()
     create: (event, ui)->

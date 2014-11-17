@@ -25,19 +25,33 @@ div.panel-block {
 .js-widget-blockpanel {
     height: 100%;
     position: absolute;
-    right: 65px;
-    /*top: -34px; */
+    right: 0px;
+    top: 0px;
+    z-index: 2;
     h2 {
-        color:#fff;
-        display: inline-block !important;
+        position: relative;
+        top: 32px;
         margin:0;
+        -webkit-transform: rotate(270deg);
+        -moz-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        writing-mode: lr-tb;
     }
     i.fa-arrow-circle-left {
-        color: #fff;
         font-size: 17px;
     }
-    .widget-toolbar {
+    .header{
+        background: none repeat scroll 0 0 #454545;
+        border-bottom: 1px solid #302f2f;
+        border-radius: 5px 0 0 5px;
+        color: #a8a8a8;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
         top: 2px;
+        width: 24px;
+        height: 80px;
+        z-index: 2;
     }
     li, li div.panel-block {
         height: 40px;
@@ -61,15 +75,12 @@ div.panel-block {
 }
 
 .js-widget-blockpanel.activate {
-    h2 {
-      display:inline-block !important;
-    }
+    right: 188px;
     i.fa-arrow-circle-left:before {
         content: "\f0a9";
     }
-    .widget-toolbar {
-      text-align: left;
-      width: 146px;
+    .header{
+        left: -24px;
     }
     .ui-model {
         display: block;
@@ -77,7 +88,7 @@ div.panel-block {
         margin-right: -65px;
         max-height: 100%;
         position: absolute;
-        top: 34px;
+        top: 2px;
         width: 212px;
         z-index: 1;
     }

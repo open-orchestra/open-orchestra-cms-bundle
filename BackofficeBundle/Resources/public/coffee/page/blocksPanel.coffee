@@ -1,4 +1,4 @@
-$(document).on "click", ".js-widget-blockpanel .widget-toolbar", (event) ->
+$(document).on "click", ".js-widget-blockpanel .header", (event) ->
   $(this).parent().toggleClass "activate"
   $('#content .jarviswidget > div').toggleClass "panel-activate"
   $(this).effect "highlight", {}, 500
