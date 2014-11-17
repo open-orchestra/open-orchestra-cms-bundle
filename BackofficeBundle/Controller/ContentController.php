@@ -63,7 +63,8 @@ class ContentController extends Controller
      */
     public function newAction(Request $request, $contentType)
     {
-        $content = new Content();
+        $contentClass = $this->container->getParameter('php_orchestra_model.document.content.class');
+        $content = new $contentClass();
         $content->setContentType($contentType);
         $content->setLanguage($this->get('php_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage());
 
