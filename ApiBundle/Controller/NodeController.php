@@ -119,7 +119,7 @@ class NodeController extends BaseController
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'PHPOrchestra\ApiBundle\Facade\NodeFacade',
-            'json'
+            $request->get('_format', 'json')
         );
 
         $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
@@ -129,11 +129,12 @@ class NodeController extends BaseController
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
             $em->flush();
+
             return new Response('', 200);
         }
 
         return new response(
-            $this->get('jms_serializer')->serialize($this->getViolations(), 'json'),
+            $this->get('jms_serializer')->serialize($this->getViolations(), $request->get('_format', 'json')),
             400
         );
     }

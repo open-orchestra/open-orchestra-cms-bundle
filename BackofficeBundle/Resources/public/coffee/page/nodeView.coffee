@@ -66,7 +66,7 @@ NodeView = Backbone.View.extend(
       success: (response) ->
         widgetStatus = viewContext.widgetStatus(
           statuses: response.statuses
-          status_change_link: viewContext.node.get('links')._status_change
+          status_change_link: viewContext.node.get('links')._self_status_change
         )
         addCustomJarvisWidget(widgetStatus)
         return

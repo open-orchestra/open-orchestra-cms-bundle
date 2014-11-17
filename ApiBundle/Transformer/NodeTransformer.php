@@ -103,7 +103,7 @@ class NodeTransformer extends AbstractTransformer
             'nodeMongoId' => $mixed->getId()
         )));
 
-        $facade->addLink('_status_change', $this->generateRoute('php_orchestra_api_node_update', array(
+        $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_node_update', array(
             'nodeMongoId' => $mixed->getId()
         )));
 
@@ -146,7 +146,9 @@ class NodeTransformer extends AbstractTransformer
         if ($source) {
             if ($facade->statusId) {
                 $newStatus = $this->statusRepository->find($facade->statusId);
-                $source->setStatus($newStatus);
+                if ($newStatus) {
+                    $source->setStatus($newStatus);
+                }
             }
         }
 
