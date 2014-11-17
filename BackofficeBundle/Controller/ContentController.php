@@ -27,7 +27,7 @@ class ContentController extends Controller
         $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
 
         $form = $this->createForm(
-            'content',
+            'orchestra_content',
             $content,
             array(
                 'action' => $this->generateUrl('php_orchestra_backoffice_content_form', array(

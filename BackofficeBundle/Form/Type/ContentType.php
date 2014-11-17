@@ -63,7 +63,7 @@ class ContentType extends AbstractType
      */
     public function getName()
     {
-        return 'content';
+        return 'orchestra_content';
     }
 
     /**

@@ -5,7 +5,7 @@ parameters:
     php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
     php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
     php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
-    php_orchestra_backoffice.type.content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
+    php_orchestra_backoffice.type.orchestra_content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
     php_orchestra_backoffice.type.content_type.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
     php_orchestra_backoffice.document.content_attribute.class : PHPOrchestra\ModelBundle\Document\ContentAttribute
     php_orchestra_backoffice.type.orchestra_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
@@ -114,15 +114,15 @@ services:
             - { name: form.type, alias: status }
 
     # Content Form Builder
-    php_orchestra_backoffice.type.content:
-        class: %php_orchestra_backoffice.type.content.class%
+    php_orchestra_backoffice.type.orchestra_content:
+        class: %php_orchestra_backoffice.type.orchestra_content.class%
         arguments:
             - @php_orchestra_model.repository.content_type
             - %php_orchestra_model.document.content.class%
             - %php_orchestra_backoffice.document.content_attribute.class%
             - @php_orchestra_backoffice.manager.translation_choice
         tags:
-            - {name: form.type, alias: content}
+            - {name: form.type, alias: orchestra_content}
 
     # Language form field type
     php_orchestra_backoffice.type.language:
