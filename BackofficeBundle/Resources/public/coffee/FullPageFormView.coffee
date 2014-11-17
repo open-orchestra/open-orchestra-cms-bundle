@@ -8,10 +8,10 @@ FullPageFormView = Backbone.View.extend(
     @render()
     return
   render: ->
-    $(@el).html @formTemplate (
+    $(".widget-body", @el).replaceWith $("<div/>").html(@formTemplate(
       html: @html
       listUrl: @listUrl
-    )
+    )).find(".widget-body")
     $('.js-widget-title', @$el).text @title
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
