@@ -4,7 +4,6 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("node")
  */
-class NodeController extends Controller
+class NodeController extends BaseController
 {
     /**
      * @param Request $request
@@ -109,25 +108,33 @@ class NodeController extends Controller
      * @param Request $request
      * @param string $nodeMongoId
      *
-     * @Config\Route("/{nodeMongoId}/change-status", name="php_orchestra_api_node_change_status")
+     * @Config\Route("/update/{nodeMongoId}", name="php_orchestra_api_node_update")
      * @Config\Method({"POST"})
+     * @Api\Serialize()
      *
      * @return Response
      */
     public function changeStatusAction(Request $request, $nodeMongoId)
     {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'PHPOrchestra\ApiBundle\Facade\NodeFacade',
+            'json'
+        );
+
         $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
+        $node = $this->get('php_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
 
-        $newStatus = $this->get('php_orchestra_model.repository.status')->find($request->get('newStatusId'));
-
-        if ($this->get('php_orchestra_model.validator.prevent_prohibited_status_change')->canSwitchStatus($node->getStatus(), $newStatus)) {
-            $node->setStatus($newStatus);
+        if ($this->isValid($node)) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($node);
             $em->flush();
             return new Response('', 200);
-        } else {
-            return new Response('', 403);
         }
+
+        return new response(
+            $this->get('jms_serializer')->serialize($this->getViolations(), 'json'),
+            400
+        );
     }
 }

@@ -19,8 +19,9 @@ addCustomJarvisWidget = (widget) ->
 nodeChangeStatus = (url, newStatusId) ->
   displayLoader()
   data =
-    newStatusId: newStatusId
-  $.post(url, data).done (data) ->
+    status_id: newStatusId
+  data = JSON.stringify(data)
+  $.post(url, data).always (response) ->
     Backbone.history.loadUrl(Backbone.history.fragment)
     return
   return

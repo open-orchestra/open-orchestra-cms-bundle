@@ -34,6 +34,7 @@ services:
         arguments:
             - @php_orchestra_base.manager.encryption
             - @php_orchestra_model.repository.site
+            - @php_orchestra_model.repository.status
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.node_collection:
