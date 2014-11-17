@@ -18,8 +18,8 @@ refreshUl = (ul) ->
   return
 makeSortable = (el, duplicate) ->
   $("ul.ui-model-blocks", el).sortable(
-    connectWith: '#content div[role="container"] ul.ui-model-blocks',
-    appendTo: 'body',
+    connectWith: '#content',
+    appendTo: '#content div[role="container"]',
     tolerance: 'pointer',
     helper: (event, obj) ->
       $("<div></div>").addClass("ui-model").append obj.clone()
