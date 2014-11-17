@@ -8,7 +8,7 @@
 
         <!-- Note: The activity badge color changes when clicked and resets the number to 0
         Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
-        <span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> *21* </b> </span>
+        {#<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> *21* </b> </span>#}
 
     {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:ajaxDropdown.html.twig' %}
     </div>
@@ -32,21 +32,7 @@
         </div>
         <!-- end logout button -->
 
-        <!-- search mobile button (this is hidden till mobile view port) -->
-        <div id="search-mobile" class="btn-header transparent pull-right">
-            <span> <a href="javascript:void(0)" title="*Search*"><i class="fa fa-search"></i></a> </span>
-        </div>
-        <!-- end search mobile button -->
-
-        <!-- input: search field -->
-        <form action="#" class="header-search pull-right">
-            <input id="search-fld"  type="text" name="param" placeholder="*Rechercher*"">
-            <button type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-            <a href="javascript:void(0);" id="cancel-search-js" title="Annuler"><i class="fa fa-times"></i></a>
-        </form>
-        <!-- end input: search field -->
+        {#% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:searchFunctionnality.html.twig' %#}
 
         <!-- fullscreen button -->
         <div id="fullscreen" class="btn-header transparent pull-right">
@@ -54,7 +40,7 @@
         </div>
         <!-- end fullscreen button -->
 
-        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:voiceCommand.html.twig' %}
+        {#% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:voiceCommand.html.twig' %#}
 
         {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:languageDropdown.html.twig' %}
 
