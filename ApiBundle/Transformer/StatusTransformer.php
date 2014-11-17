@@ -29,7 +29,8 @@ class StatusTransformer extends AbstractTransformer
     public function __construct(
         SecurityContextInterface $securityContext,
         RoleRepository $roleRepository,
-        TranslationChoiceManager $translationChoiceManager
+        TranslationChoiceManager $translationChoiceManager,
+        Translator $translator
     ) {
         $this->securityContext = $securityContext;
         $this->roleRepository = $roleRepository;
