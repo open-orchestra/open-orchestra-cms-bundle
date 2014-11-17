@@ -10,11 +10,6 @@ use JMS\Serializer\Annotation as Serializer;
 class ContentFacade extends AbstractFacade
 {
     /**
-     * @Serializer\Type("integer")
-     */
-    public $contentId;
-
-    /**
      * @Serializer\Type("string")
      */
     public $contentType;

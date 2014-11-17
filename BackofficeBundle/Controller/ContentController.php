@@ -15,7 +15,7 @@ class ContentController extends Controller
 {
     /**
      * @param Request $request
-     * @param int     $contentId
+     * @param string  $contentId
      *
      * @Config\Route("/content/form/{contentId}", name="php_orchestra_backoffice_content_form")
      * @Config\Method({"GET", "POST"})
@@ -24,7 +24,7 @@ class ContentController extends Controller
      */
     public function formAction(Request $request, $contentId)
     {
-        $content = $this->get('php_orchestra_model.repository.content')->findOneByContentId($contentId);
+        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
 
         $form = $this->createForm(
             'content',
@@ -65,6 +65,8 @@ class ContentController extends Controller
     {
         $content = new Content();
         $content->setContentType($contentType);
+        $content->setLanguage($this->get('php_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage());
+
         $form = $this->createForm(
             'content',
             $content,
@@ -91,7 +93,7 @@ class ContentController extends Controller
 
             return $this->redirect(
                 $this->generateUrl('php_orchestra_backoffice_content_form', array(
-                    'contentId' => $content->getContentId()
+                    'contentId' => $content->getId()
                 ))
             );
         }

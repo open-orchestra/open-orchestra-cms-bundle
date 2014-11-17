@@ -28,7 +28,7 @@ class ContentController extends Controller
      */
     public function showAction($contentId)
     {
-        $content = $this->get('php_orchestra_model.repository.content')->findOneByContentId($contentId);
+        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('content')->transform($content);
     }
@@ -67,7 +67,7 @@ class ContentController extends Controller
      */
     public function deleteAction($contentId)
     {
-        $content = $this->get('php_orchestra_model.repository.content')->findOneByContentId($contentId);
+        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
         $content->setDeleted(true);
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
