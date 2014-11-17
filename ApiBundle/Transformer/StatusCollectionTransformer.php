@@ -13,15 +13,16 @@ class StatusCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param ArrayCollection $mixed
+     * @param StatusInterface $currentStatus
      *
      * @return FacadeInterface|StatusCollectionFacade
      */
-    public function transform($mixed)
+    public function transform($mixed, $currentStatus = null)
     {
         $facade = new StatusCollectionFacade();
 
         foreach ($mixed as $status) {
-            $facade->addStatus($this->getTransformer('status')->transform($status));
+            $facade->addStatus($this->getTransformer('status')->transform($status, $currentStatus));
         }
 
         $facade->addLink('_self_add', $this->generateRoute(

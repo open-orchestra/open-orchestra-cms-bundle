@@ -34,6 +34,7 @@ services:
         arguments:
             - @php_orchestra_base.manager.encryption
             - @php_orchestra_model.repository.site
+            - @php_orchestra_model.repository.status
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.node_collection:
@@ -128,6 +129,8 @@ services:
     php_orchestra_api.transformer.status:
         class: %php_orchestra_api.transformer.status.class%
         arguments:
+            - @security.context
+            - @php_orchestra_model.repository.role
             - @php_orchestra_backoffice.manager.translation_choice
             - @translator
         tags:

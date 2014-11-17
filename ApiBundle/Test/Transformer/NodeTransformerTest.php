@@ -21,6 +21,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $encryptionManager;
     protected $siteRepository;
+    protected $statusRepository;
     protected $transformer;
     protected $router;
     protected $node;
@@ -33,11 +34,18 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->site = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+        $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $this->statusId = 'StatusId';
+        Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
         $this->encryptionManager = Phake::mock('PHPOrchestra\BaseBundle\Manager\EncryptionManager');
+
         $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
+        $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
+        
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
@@ -46,7 +54,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository);
+        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository, $this->statusRepository);
 
         $this->nodeTransformer->setContext($this->transformerManager);
     }
@@ -72,7 +80,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
         $this->assertArrayHasKey('_self_preview', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(7))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(9))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node);
         Phake::verify($this->siteRepository)->findOneBySiteId(Phake::anyParameters());
     }
@@ -87,5 +95,38 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         $this->assertArrayHasKey('_self', $facade->getLinks());
         Phake::verify($this->router)->generate(Phake::anyParameters());
+    }
+
+    /**
+     * @dataProvider getChangeStatus
+     */
+    public function testReverseTransform($facade, $source, $searchCount, $setCount)
+    {
+        $this->nodeTransformer->reverseTransform($facade, $source);
+
+        Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
+        
+        if ($source) {
+            Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getChangeStatus()
+    {
+        $facadeA = Phake::mock('PHPOrchestra\ApiBundle\Facade\NodeFacade');
+
+        $facadeB = Phake::mock('PHPOrchestra\ApiBundle\Facade\NodeFacade');
+        $facadeB->statusId = 'fakeId';
+        
+        $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        
+        return array(
+            array($facadeA, null, 0, 0),
+            array($facadeA, $node, 0, 0),
+            array($facadeB, $node, 1, 1)
+        );
     }
 }

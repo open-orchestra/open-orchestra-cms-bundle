@@ -2,10 +2,12 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -44,5 +46,30 @@ class StatusController extends Controller
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param string $nodeMongoId
+     *
+     * @Config\Route("/list-statuses/node/{nodeMongoId}", name="php_orchestra_api_list_status_node")
+     * @Config\Method({"GET"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function listStatusesForNodeAction($nodeMongoId)
+    {
+        $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
+        $status = $node->getStatus();
+
+        $transitions = $status->getFromRoles();
+
+        $possibleStatuses = array();
+
+        foreach ($transitions as $transition) {
+            $possibleStatuses[] = $transition->getToStatus();
+        }
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
     }
 }

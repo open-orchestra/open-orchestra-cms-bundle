@@ -4,7 +4,6 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("node")
  */
-class NodeController extends Controller
+class NodeController extends BaseController
 {
     /**
      * @param Request $request
@@ -103,5 +102,40 @@ class NodeController extends Controller
         $node = $this->get('php_orchestra_model.repository.node')->findByNodeIdAndLanguageAndSiteId($nodeId, $language);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $nodeMongoId
+     *
+     * @Config\Route("/update/{nodeMongoId}", name="php_orchestra_api_node_update")
+     * @Config\Method({"POST"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function changeStatusAction(Request $request, $nodeMongoId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'PHPOrchestra\ApiBundle\Facade\NodeFacade',
+            $request->get('_format', 'json')
+        );
+
+        $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
+        $node = $this->get('php_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
+
+        if ($this->isValid($node)) {
+            $em = $this->get('doctrine.odm.mongodb.document_manager');
+            $em->persist($node);
+            $em->flush();
+
+            return new Response('', 200);
+        }
+
+        return new response(
+            $this->get('jms_serializer')->serialize($this->getViolations(), $request->get('_format', 'json')),
+            400
+        );
     }
 }

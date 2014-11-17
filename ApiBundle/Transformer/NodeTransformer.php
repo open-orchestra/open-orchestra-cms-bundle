@@ -9,6 +9,7 @@ use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Model\SiteInterface;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
+use PHPOrchestra\ModelBundle\Repository\StatusRepository;
 
 /**
  * Class NodeTransformer
@@ -17,15 +18,18 @@ class NodeTransformer extends AbstractTransformer
 {
     protected $encrypter;
     protected $siteRepository;
+    protected $statusRepository;
 
     /**
      * @param EncryptionManager $encrypter
      * @param SiteRepository    $siteRepository
+     * @param StatusRepository  $statusRepository
      */
-    public function __construct(EncryptionManager $encrypter, SiteRepository $siteRepository)
+    public function __construct(EncryptionManager $encrypter, SiteRepository $siteRepository, StatusRepository $statusRepository)
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
+        $this->statusRepository = $statusRepository;
     }
 
     /**
@@ -95,6 +99,14 @@ class NodeTransformer extends AbstractTransformer
             $facade->addLink('_self_preview', 'http://' . $site->getAlias() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
         }
 
+        $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_node', array(
+            'nodeMongoId' => $mixed->getId()
+        )));
+
+        $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_node_update', array(
+            'nodeMongoId' => $mixed->getId()
+        )));
+
         return $facade;
     }
 
@@ -123,6 +135,24 @@ class NodeTransformer extends AbstractTransformer
         )));
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param mixed           $node
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if ($source) {
+            if ($facade->statusId) {
+                $newStatus = $this->statusRepository->find($facade->statusId);
+                if ($newStatus) {
+                    $source->setStatus($newStatus);
+                }
+            }
+        }
+
+        return $source;
     }
 
     /**

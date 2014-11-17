@@ -46,14 +46,6 @@
                     <!-- widget div-->
                     <div>
                         <div class="js-widget-blockpanel" style="display: none"></div>
-                        <!-- widget edit box -->
-                        <div class="jarviswidget-editbox">
-                            <div>
-                                <label>*Title:*</label>
-                                <input type="text" />
-                            </div>
-                        </div>
-                        <!-- end widget edit box -->
 
                         <div class="widget-body">
                             <!-- content goes here -->
@@ -76,6 +68,37 @@
 
     </section>
     <!-- end widget grid -->
+</script>
+
+<script type="text/html" id="widgetStatusView">
+    <div class="widget-toolbar" id="widgetStatus">
+        <!-- add: non-hidden - to disable auto hide -->
+
+        <div class="btn-group">
+            <button class="btn dropdown-toggle btn-xs btn-success" data-toggle="dropdown">
+                Status <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right js-status-update">
+                <% if (statuses.length > 0 ) { %>
+                    <% _.each(statuses, function(status) { %>
+                        <% if (status.allowed) { %>
+                            <li>
+                                <a class="node-change-status"
+                                    data-url="<%= status_change_link %>"
+                                    data-status="<%= status.id %>"
+                                >
+                                    <i class="fa fa-circle txt-color-<%= status.code_color %>"></i> 
+                                <%= status.label %></a></li>
+                        <% } else { %>
+                            <li class="status-disabled"><i class="fa fa-circle txt-color-disabled"></i> <%= status.label %></li>
+                        <% } %>
+                    <% }); %>
+                <% } else { %>
+                    <li class="status-disabled">No status available</li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
 </script>
 
 <script type="text/html" id="nodeTitle">
