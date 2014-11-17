@@ -20,7 +20,6 @@ class ContentTransformer extends AbstractTransformer
     {
         $facade = new ContentFacade();
 
-        $facade->contentId = $mixed->getContentId();
         $facade->contentType = $mixed->getContentType();
         $facade->siteId = $mixed->getSiteId();
         $facade->name = $mixed->getName();
@@ -36,15 +35,15 @@ class ContentTransformer extends AbstractTransformer
 
         $facade->addLink('_self', $this->generateRoute(
             'php_orchestra_api_content_show',
-            array('contentId' => $mixed->getContentId())
+            array('contentId' => $mixed->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'php_orchestra_api_content_delete',
-            array('contentId' => $mixed->getContentId())
+            array('contentId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'php_orchestra_backoffice_content_form',
-            array('contentId' => $mixed->getContentId())
+            array('contentId' => $mixed->getId())
         ));
 
         return $facade;
