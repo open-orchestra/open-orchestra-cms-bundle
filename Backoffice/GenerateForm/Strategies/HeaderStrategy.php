@@ -38,9 +38,9 @@ class HeaderStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
         ));
-        $form->add('logo', 'orchestra_media', array(
+        $form->add('mediaId', 'orchestra_media', array(
             'mapped' => false,
-            'data' => array_key_exists('logo', $attributes)? $attributes['logo']:'',
+            'data' => array_key_exists('mediaId', $attributes)? $attributes['mediaId']:'',
         ));
     }
 
