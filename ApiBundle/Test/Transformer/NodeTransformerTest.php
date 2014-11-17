@@ -21,6 +21,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $encryptionManager;
     protected $siteRepository;
+    protected $statusRepository;
     protected $transformer;
     protected $router;
     protected $node;
@@ -33,11 +34,16 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->site = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
-
+        $this->status = Phake::mock('PHPOrchestra\ModelBundle\Model\StatusInterface');
+        
         $this->encryptionManager = Phake::mock('PHPOrchestra\BaseBundle\Manager\EncryptionManager');
+
         $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
+        $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
+        
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
@@ -46,7 +52,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository);
+        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository, $this->statusRepository);
 
         $this->nodeTransformer->setContext($this->transformerManager);
     }
@@ -72,7 +78,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
         $this->assertArrayHasKey('_self_preview', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(7))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(9))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node);
         Phake::verify($this->siteRepository)->findOneBySiteId(Phake::anyParameters());
     }
