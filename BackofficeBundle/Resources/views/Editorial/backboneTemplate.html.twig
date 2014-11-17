@@ -117,12 +117,13 @@
     <div id="preview"></div>
     <div id="additionalContent" class="smart-form" style="margin-bottom: 15px">
         <label class="select">
-            <select id="selectbox" style="width:initial;">
+            <select id="selectbox">
                 <optgroup id="versions"></optgroup>
                 <optgroup id="duplicate">
                     <option class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</option>
                 </optgroup>
             </select>
+            <i></i>
         </label>
     </div>
     <div id="generated-title" style="display: none">
