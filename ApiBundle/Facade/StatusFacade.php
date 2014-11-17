@@ -12,7 +12,7 @@ class StatusFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $identifier;
+    public $id;
 
     /**
      * @Serializer\Type("boolean")
