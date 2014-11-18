@@ -48,11 +48,15 @@ NodeView = Backbone.View.extend(
 
   duplicateNode: ->
     viewContext = @
+    redirectRoute = appRouter.generateUrl( "showNodeWithLanguage",
+      nodeId: @node.get('node_id')
+      language: @node.get('language')
+    )
     $.ajax
       url: @node.get('links')._self_duplicate
       method: 'POST'
       success: (response) ->
-        Backbone.history.loadUrl(Backbone.history.fragment)
+        Backbone.history.navigate(redirectRoute, true)
     return
 
   renderWidgetStatus: ->
