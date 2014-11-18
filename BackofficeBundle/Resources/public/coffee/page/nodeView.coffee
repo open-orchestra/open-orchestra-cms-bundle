@@ -157,10 +157,11 @@ NodeView = Backbone.View.extend(
 
   changeLanguage: (event) ->
     Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + $(event.currentTarget).data('language'), {trigger: true})
+
   addPreviewLink: ->
     previewLink = @node.get('links')._self_preview
     view = new PreviewLinkView(
       previewLink: previewLink
     )
-    this.$el.find('#preview').append view.render()
+    view.render()
 )
