@@ -16,8 +16,8 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     protected $subscriber;
 
-    protected $event;
     protected $form;
+    protected $event;
     protected $areaContainer;
 
     /**
@@ -129,5 +129,19 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             array(array()),
             array(array('blocks')),
         );
+    }
+
+    /**
+     * test with new node
+     */
+    public function testPreSetDataWithNewNode()
+    {
+        $nodeInterface = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($nodeInterface)->getId()->thenReturn(null);
+        Phake::when($this->event)->getData()->thenReturn($nodeInterface);
+
+        $this->subscriber->preSetData($this->event);
+
+        Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
     }
 }
