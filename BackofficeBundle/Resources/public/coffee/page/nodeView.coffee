@@ -69,6 +69,7 @@ NodeView = Backbone.View.extend(
       url: @node.get('links')._status_list
       success: (response) ->
         widgetStatus = viewContext.widgetStatus(
+          current_status: viewContext.node.get('status').label
           statuses: response.statuses
           status_change_link: viewContext.node.get('links')._self_status_change
         )
