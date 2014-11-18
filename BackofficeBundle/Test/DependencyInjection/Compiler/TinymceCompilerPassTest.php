@@ -78,7 +78,22 @@ class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
                 array(
                     'tinymce_jquery' => false,
                     'include_jquery' => false,
-                    'selector' => ".tinymce"
+                    'selector' => ".tinymce",
+                    'theme' => array(
+                        'simple' => array(
+                            "theme"        => "modern",
+                            "plugins"      => array(
+                                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                                "insertdatetime media nonbreaking save table contextmenu directionality",
+                                "emoticons template paste textcolor"
+                            ),
+                            "toolbar1"     => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link",
+                            "toolbar2"     => "print preview | forecolor backcolor",
+                            "menubar"      => false,
+                            "image_advtab" => true,
+                        )
+                    )
                 )
             ),
         );
