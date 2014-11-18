@@ -60,3 +60,7 @@ services:
         class: %php_orchestra_backoffice.display.carrousel.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.tiny_mce_wysiwyg:
+        class: %php_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
