@@ -63,9 +63,6 @@ class NodeType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.node.in_footer',
                 'required' => false
             ))
-            ->add('status', 'orchestra_status', array(
-                'label' => 'php_orchestra_backoffice.form.node.status'
-            ))
             ->add('nodeId', 'hidden', array(
                 'disabled' => true
             ))
