@@ -39,22 +39,22 @@ class PHPOrchestraBackofficeExtension extends Extension
         ));
 
         $blockType = array(
-            DisplayBlockInterface::CARROUSEL,
-            DisplayBlockInterface::CONTACT,
-            DisplayBlockInterface::FOOTER,
             DisplayBlockInterface::HEADER,
-            DisplayBlockInterface::MENU,
-            DisplayBlockInterface::NEWS,
-            DisplayBlockInterface::SAMPLE,
-            DisplayBlockInterface::SEARCH,
-            DisplayBlockInterface::SEARCH_RESULT,
-            DisplayBlockInterface::TINYMCEWYSIWYG,
-            DisplayBlockInterface::CONFIGURABLE_CONTENT,
+            DisplayBlockInterface::FOOTER,
             LoginStrategy::LOGIN,
+            DisplayBlockInterface::LANGUAGE_LIST,
+            DisplayBlockInterface::MENU,
             DisplayBlockInterface::SUBMENU,
             DisplayBlockInterface::CONTENT_LIST,
+            DisplayBlockInterface::CARROUSEL,
             DisplayBlockInterface::CONTENT,
-            DisplayBlockInterface::LANGUAGE_LIST
+//            DisplayBlockInterface::CONFIGURABLE_CONTENT,
+//            DisplayBlockInterface::NEWS,
+//            DisplayBlockInterface::SAMPLE,
+            DisplayBlockInterface::TINYMCEWYSIWYG,
+//            DisplayBlockInterface::CONTACT,
+//            DisplayBlockInterface::SEARCH,
+//            DisplayBlockInterface::SEARCH_RESULT,
         );
 
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
