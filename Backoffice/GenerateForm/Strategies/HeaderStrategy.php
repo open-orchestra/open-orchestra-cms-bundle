@@ -33,10 +33,12 @@ class HeaderStrategy extends AbstractBlockStrategy
         $form->add('class', 'textarea', array(
             'mapped' => false,
             'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):'',
+            'required' => false,
         ));
         $form->add('id', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
+            'required' => false,
         ));
         $form->add('mediaId', 'orchestra_media', array(
             'mapped' => false,
