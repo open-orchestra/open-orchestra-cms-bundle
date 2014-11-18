@@ -91,6 +91,7 @@ class HomepageControllerTest extends WebTestCase
 
         $formUser['node[name]'] = 'fixture test ' . time();
         $formUser['node[alias]'] = 'page-test';
+        $formUser['node[nodeSource]'] = 'root';
 
         $crawler = $client->submit($formUser);
         $crawler = $client->request('GET', '/admin/');
