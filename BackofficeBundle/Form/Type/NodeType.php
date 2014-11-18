@@ -45,12 +45,6 @@ class NodeType extends AbstractType
                 'class' => 'alias-source',
             )
             ))
-            ->add('nodeType', 'choice', array(
-                'choices' => array(
-                    'page' => 'Page simple'
-                ),
-                'label' => 'php_orchestra_backoffice.form.node.node_type'
-            ))
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
             ))
