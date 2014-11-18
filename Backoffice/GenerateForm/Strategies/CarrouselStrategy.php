@@ -32,7 +32,7 @@ class CarrouselStrategy extends AbstractBlockStrategy
 
         $form->add('pictures', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('pictures', $attributes)? $attributes['pictures']:'',
+            'data' => array_key_exists('pictures', $attributes)? json_encode($attributes['pictures']):'',
         ));
         $form->add('width', 'text', array(
             'mapped' => false,
