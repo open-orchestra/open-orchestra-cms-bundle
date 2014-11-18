@@ -69,7 +69,7 @@ class ContentController extends Controller
         $content->setLanguage($this->get('php_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage());
 
         $form = $this->createForm(
-            'content',
+            'orchestra_content',
             $content,
             array(
                 'action' => $this->generateUrl(
