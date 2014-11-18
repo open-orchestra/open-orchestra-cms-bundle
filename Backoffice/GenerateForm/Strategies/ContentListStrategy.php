@@ -36,7 +36,7 @@ class ContentListStrategy extends AbstractBlockStrategy
         ));
         $form->add('class', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):'',
+            'data' => array_key_exists('class', $attributes)? $attributes['class']:'',
             'required' => false,
         ));
         $form->add('id', 'text', array(

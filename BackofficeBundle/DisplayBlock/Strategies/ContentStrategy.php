@@ -39,7 +39,7 @@ class ContentStrategy extends AbstractStrategy
             'PHPOrchestraBackofficeBundle:Block/Content:show.html.twig',
             array(
                 'id' => array_key_exists('id', $attributes)? $attributes['id']: '',
-                'class' => array_key_exists('class', $attributes)? implode(' ', $attributes['class']): '',
+                'class' => array_key_exists('class', $attributes)? $attributes['class']: '',
             )
         );
     }
