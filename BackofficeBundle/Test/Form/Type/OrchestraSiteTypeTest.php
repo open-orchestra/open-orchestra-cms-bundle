@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
+use Doctrine\ODM\MongoDB\DocumentRepository;
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraSiteType;
 
@@ -48,6 +49,9 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($resolverMock)->setDefaults(array(
             'class' => 'PHPOrchestra\ModelBundle\Document\Site',
             'property' => 'domain',
+            'query_builder' => function (DocumentRepository $dr) {
+                return $dr->createQueryBuilder('s')->field('deleted')->equals(false);
+            },
         ));
     }
 }
