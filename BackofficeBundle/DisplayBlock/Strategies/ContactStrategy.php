@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ContactStrategy
@@ -37,8 +38,8 @@ class ContactStrategy extends AbstractStrategy
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Contact:show.html.twig',
             array(
-                'id' => $attributes['id'],
-                'class' => $attributes['class']
+                'id' => array_key_exists('id', $attributes)? $attributes['id']: '',
+                'class' => array_key_exists('class', $attributes)? $attributes['class']: '',
             )
         );
     }

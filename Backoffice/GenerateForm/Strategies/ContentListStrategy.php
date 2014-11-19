@@ -36,17 +36,13 @@ class ContentListStrategy extends AbstractBlockStrategy
         ));
         $form->add('class', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? json_encode($attributes['class']):json_encode(
-                array(
-                    'div' => 'divclass',
-                    'title' => 'titleclass',
-                    'each' => 'eachclass'
-                )
-            ),
+            'data' => array_key_exists('class', $attributes)? $attributes['class']:'',
+            'required' => false,
         ));
         $form->add('id', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
+            'required' => false,
         ));
         $form->add('url', 'orchestra_node_choice', array(
             'mapped' => false,

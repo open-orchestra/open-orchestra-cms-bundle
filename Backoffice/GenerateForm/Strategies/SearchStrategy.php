@@ -37,6 +37,7 @@ class SearchStrategy extends AbstractBlockStrategy
         $form->add('class', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('class', $attributes)? $attributes['class']: '',
+            'required' => false,
         ));
         $form->add('nodeId', 'text', array(
             'mapped' => false,
