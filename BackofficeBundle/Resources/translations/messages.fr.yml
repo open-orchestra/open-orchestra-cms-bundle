@@ -20,6 +20,8 @@ php_orchestra_backoffice:
                 orange: Orange
                 green: Vert
             display_color: Couleur du status
+            creation: Le nouveau status a été sauvegardé
+            success: Le status a été mis à jour
         field_option:
             label: Option existante
             new: Nouvelle option
@@ -109,6 +111,7 @@ php_orchestra_backoffice:
             success: Le bloc a été modifié
         media:
             file: Fichier
+            success: Le média a été sauvegardé
         sub_menu:
             node: Noeud racine où commence le menu
             level: Nombre de niveau du menu
@@ -174,6 +177,7 @@ php_orchestra_backoffice:
             title: Bloc qui affiche un contenu
         language_list:
             title: Bloc de séléction de langue.
+        login: Bloc de connexion
     node:
         version:
             create: Créer une nouvelle version du node
