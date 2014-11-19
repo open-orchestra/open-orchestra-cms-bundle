@@ -37,14 +37,10 @@ class TemplateType extends AbstractType
             ->add('language', 'orchestra_language', array(
                 'label' => 'php_orchestra_backoffice.form.template.language',
             ))
-            ->add('status', 'orchestra_status', array(
-                'label' => 'php_orchestra_backoffice.form.template.status',
-            ))
             ->add('boDirection', 'orchestra_direction', array(
                 'label' => 'php_orchestra_backoffice.form.template.boDirection',
             ));
 
-        $builder->addEventSubscriber(new TemplateTypeSubscriber());
         $builder->addEventSubscriber(new AreaCollectionSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

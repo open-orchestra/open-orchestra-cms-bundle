@@ -35,8 +35,8 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         $this->templateType->buildForm($this->formBuilder, array());
 
         Phake::verify($this->formBuilder, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($this->formBuilder, Phake::times(4))->add(Phake::anyParameters());
-        Phake::verify($this->formBuilder, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($this->formBuilder, Phake::times(3))->add(Phake::anyParameters());
+        Phake::verify($this->formBuilder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**

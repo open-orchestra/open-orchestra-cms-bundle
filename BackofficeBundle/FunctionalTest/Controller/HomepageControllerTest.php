@@ -98,4 +98,34 @@ class HomepageControllerTest extends WebTestCase
 
         $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
     }
+
+    /**
+     * test new Template
+     */
+    public function testNewTemplatePageHome()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Login')->form();
+        $form['_username'] = 'benjamin';
+        $form['_password'] = 'benjamin';
+
+        $crawler = $client->submit($form);
+        $crawler = $client->request('GET', '/admin/');
+
+        $nbLink = $crawler->filter('a')->count();
+
+        $crawler = $client->request('GET', '/admin/template/form');
+
+        $formUser = $crawler->selectButton('template_submit')->form();
+
+        $formUser['template[name]'] = 'template test ' . time();
+
+        $crawler = $client->submit($formUser);
+        $crawler = $client->request('GET', '/admin/');
+
+        $this->assertEquals($nbLink + 1, $crawler->filter('a')->count());
+    }
 }
