@@ -25,6 +25,8 @@ php_orchestra_backoffice:
                 orange: Orange
                 green: Green
             display_color: Diplay color
+            creation: The new status has been saved
+            success: The status has been updated
         field_option:
             label: Existing option
             new: New option
@@ -114,6 +116,7 @@ php_orchestra_backoffice:
             success: The block has been modified
         media:
             file: File
+            success: The media has been saved
         sub_menu:
             node: Root where start the menu
             level: Level of the menu
@@ -179,6 +182,8 @@ php_orchestra_backoffice:
             title: Display one content Block
         language_list:
             title: Language choice Block
+        login:
+            title: Login Block
     node:
         version:
             create: Create a new version of node
