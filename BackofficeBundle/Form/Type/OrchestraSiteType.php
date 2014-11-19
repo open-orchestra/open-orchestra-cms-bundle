@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Model\SiteableInterface;
+use Doctrine\ODM\MongoDB\DocumentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class OrchestraSiteType
@@ -21,6 +20,9 @@ class OrchestraSiteType extends AbstractType
             array(
                 'class' => 'PHPOrchestra\ModelBundle\Document\Site',
                 'property' => 'domain',
+                'query_builder' => function (DocumentRepository $dr) {
+                    return $dr->createQueryBuilder('s')->field('deleted')->equals(false);
+                }
             )
         );
     }
