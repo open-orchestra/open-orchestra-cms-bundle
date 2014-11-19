@@ -25,8 +25,8 @@ php_orchestra_backoffice:
                 orange: Orange
                 green: Green
             display_color: Diplay color
-            creation: The new status has been saved
-            success: The status has been updated
+            creation: The new status has been created
+            success: The status has been modified
         field_option:
             label: Existing option
             new: New option
@@ -58,9 +58,6 @@ php_orchestra_backoffice:
             success: The theme has been modified
             creation: The theme has been created
             name: Name
-        status:
-            success: The status has been modified
-            creation: The status has been created
         content:
             success: The content has been modified
             creation: The content has been created
