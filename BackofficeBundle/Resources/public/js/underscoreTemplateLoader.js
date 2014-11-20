@@ -5,9 +5,10 @@
   var templateLoader = {
     templateVersion: "0.0.1",
     templates: {},
-    loadRemoteTemplate: function(templateName, filename, view) {
+    loadRemoteTemplate: function(templateName, view) {
       if (!this.templates[templateName]) {
         var self = this;
+        filename = appRouter.generateUrl('loadUndescroreTemplate', {templateId: templateName})
         jQuery.get(filename, function(data) {
           self.addTemplate(templateName, data);
           self.saveLocalTemplates();

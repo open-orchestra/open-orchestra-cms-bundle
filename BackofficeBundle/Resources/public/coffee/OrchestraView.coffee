@@ -8,15 +8,15 @@ OrchestraView = Backbone.View.extend(
       currentView.compiledTemplates[templateName] = false
       return
     $.each templates, (index, templateName) ->
-      currentView.loadTemplate(templateName, appRouter.generateUrl('loadUndescroreTemplate', {templateId: templateName}))
+      currentView.loadTemplate(templateName)
       return
     return
 
-  loadTemplate: (templateName, templateFile) ->
+  loadTemplate: (templateName) ->
     alert('loadTemplate ' + templateName)
     
     currentView = @
-    templateLoader.loadRemoteTemplate templateName, templateFile, currentView
+    templateLoader.loadRemoteTemplate templateName, currentView
     return
 
   onTemplateLoaded: (templateName, templateData) ->
