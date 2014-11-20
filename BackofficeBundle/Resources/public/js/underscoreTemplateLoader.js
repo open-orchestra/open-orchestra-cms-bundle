@@ -1,4 +1,4 @@
-// Orchestra adaptation of a plugin found at
+// Orchestra adaptation of the jQuery templateLoader plugin found at
 // https://github.com/Gazler/Underscore-Template-Loader
 
 (function() {
