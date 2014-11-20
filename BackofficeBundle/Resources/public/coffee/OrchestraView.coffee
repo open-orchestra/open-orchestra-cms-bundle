@@ -13,15 +13,10 @@ OrchestraView = Backbone.View.extend(
     return
 
   loadTemplate: (templateName) ->
-    alert('loadTemplate ' + templateName)
-    
-    currentView = @
-    templateLoader.loadRemoteTemplate templateName, currentView
+    templateLoader.loadRemoteTemplate templateName, @
     return
 
   onTemplateLoaded: (templateName, templateData) ->
-    alert('onTemplateLoaded ' + templateName)
-    
     @compiledTemplates[templateName] = _.template(templateData)
     
     ready = true
@@ -33,7 +28,6 @@ OrchestraView = Backbone.View.extend(
     return
 
   renderTemplate: (templateName, parameters) ->
-    alert('renderTemplate ' + templateName)
     @compiledTemplates[templateName](parameters)
 
 )

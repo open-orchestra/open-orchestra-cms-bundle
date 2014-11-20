@@ -1,0 +1,18 @@
+<div>
+    <span class="title">
+        <%= area.get('ui_model').label %>
+        <% if (area.get('ui_model').id) { %>
+            id="<%= area.get('ui_model').id %>"
+        <% } %>
+        <% if (area.get('ui_model').class) { %>
+            class="<%= area.get('ui_model').class %>"
+        <% } %>
+    </span>
+    <span class="preview"></span>
+        <span class="action">
+            <i class="fa fa-wrench area-param-<%= area.cid %>"></i>
+            <i class="fa fa-trash-o area-remove-<%= area.cid %>"></i>
+        </span>
+    <ul class="ui-model-areas areas-<%= cid %>"></ul>
+    <ul class="ui-model-blocks blocks-<%= cid %> resizable-<%= cid %>"></ul>
+</div>

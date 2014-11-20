@@ -1,0 +1,23 @@
+{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
+
+<div role="container">
+    <table id="tableviewCollectionTable">
+        <thead>
+            <tr>
+                <% _.each(displayedElements, function(displayedElement) { %>
+                    <td><%= displayedElement %></td>
+                <% }); %>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <% if (typeof links._self_add !== 'undefined' ) { %>
+        <div>
+            <a href="<%= links._self_add %>" data-url="<%= links._self_add %>" class="ajax-add-<%= cid %>">{{ 'php_orchestra_backoffice.form.add'|trans }}</a>
+        </div>
+    <% } %>
+</div>
+
+{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
