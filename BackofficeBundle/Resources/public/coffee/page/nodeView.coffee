@@ -13,11 +13,11 @@ NodeView = OrchestraView.extend(
     key = "click i." + @node.cid
     @events[key] = "clickButton"
     _.bindAll this, "render", "addAreaToView", "clickButton"
-    @templates =
-      nodeView: false
-      nodeTitle: false
-      widgetStatus: false
-    @loadTemplates()
+    @loadTemplates [
+      "nodeView"
+      "nodeTitle"
+      "widgetStatus"
+    ]
     return
 
   clickButton: (event) ->

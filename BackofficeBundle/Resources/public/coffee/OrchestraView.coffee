@@ -1,7 +1,13 @@
 OrchestraView = Backbone.View.extend(
-  loadTemplates: ->
+
+  compiledTemplates: {}
+
+  loadTemplates: (templates) ->
     currentView = @
-    $.each @templates, (templateName, templateData) ->
+    $.each templates, (index, templateName) ->
+      currentView.compiledTemplates[templateName] = false
+      return
+    $.each templates, (index, templateName) ->
       currentView.loadTemplate(templateName, appRouter.generateUrl('loadUndescroreTemplate', {templateId: templateName}))
       return
     return
@@ -9,7 +15,6 @@ OrchestraView = Backbone.View.extend(
   loadTemplate: (templateName, templateFile) ->
     alert('loadTemplate ' + templateName)
     
-    @templates[templateName] = false
     currentView = @
     templateLoader.loadRemoteTemplate templateName, templateFile, currentView
     return
@@ -17,10 +22,10 @@ OrchestraView = Backbone.View.extend(
   onTemplateLoaded: (templateName, templateData) ->
     alert('onTemplateLoaded ' + templateName)
     
-    @templates[templateName] = _.template(templateData)
+    @compiledTemplates[templateName] = _.template(templateData)
     
     ready = true
-    $.each @templates, (templateName, templateData) ->
+    $.each @compiledTemplates, (templateName, templateData) ->
       ready = false if templateData is false
       return
     
@@ -28,6 +33,7 @@ OrchestraView = Backbone.View.extend(
     return
 
   renderTemplate: (templateName, parameters) ->
-    alert('renderTemplate ' + 'templateName')
-    @templates[templateName](parameters)
+    alert('renderTemplate ' + templateName)
+    @compiledTemplates[templateName](parameters)
+
 )
