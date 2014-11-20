@@ -29,6 +29,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     protected $block;
     protected $node;
     protected $area;
+    protected $areaManager;
 
     /**
      * Set up the test
@@ -58,7 +59,9 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->areaTransformer = new AreaTransformer($this->nodeRepository);
+        $this->areaManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\AreaManager');
+
+        $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager);
 
         $this->areaTransformer->setContext($this->transformerManager);
     }
@@ -187,6 +190,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         ));
         Phake::verify($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->currentNodeId, 'areaId' => $this->areaId));
+        Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }
 
     /**

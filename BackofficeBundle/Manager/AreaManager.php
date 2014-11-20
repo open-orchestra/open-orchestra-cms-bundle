@@ -51,7 +51,7 @@ class AreaManager
                 } else {
                     $blockNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($blockReference['nodeId']);
                     $block = $blockNode->getBlock($blockReference['blockId']);
-                    $block->removeAreaByAreaIdAndNodeId($areaId, $blockNode->getNodeId());
+                    $block->removeAreaByAreaIdAndNodeId($areaId, $node->getNodeId());
                 }
             }
         }

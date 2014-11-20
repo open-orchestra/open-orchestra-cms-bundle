@@ -17,13 +17,20 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      * @var AreaManager
      */
     protected $manager;
+    protected $nodeRepository;
+    protected $node;
+    protected $block;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->manager = new AreaManager();
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+
+        $this->manager = new AreaManager($this->nodeRepository);
     }
 
     /**
@@ -44,10 +51,10 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Check if values of $includedArray are present in $refArray
+     * @param ArrayCollection $refArray
+     * @param ArrayCollection $includedArray
      *
-     * @param array $refArray
-     * @param array $includedArray
+     * @return bool
      */
     protected function arrayContains(ArrayCollection $refArray, ArrayCollection $includedArray)
     {
@@ -88,6 +95,98 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
             array($emptyArea, 'miscId', $emptyArea),
             array($area, 'miscId', $area),
             array($area, 'area2', $filteredArea)
+        );
+    }
+
+    /**
+     * @param array  $oldBlocks
+     * @param array  $newBlocks
+     * @param string $areaId
+     * @param string $nodeId
+     *
+     * @dataProvider provideBlocks
+     */
+    public function testDeleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $nodeId)
+    {
+        Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
+        Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
+
+        $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
+
+        Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
+        Phake::verify($this->block, Phake::times(1))->removeAreaByAreaIdAndNodeId($areaId, $nodeId);
+        Phake::verify($this->node, Phake::times(1))->getNodeId();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideBlocks()
+    {
+        return array(
+            array(
+                array(
+                    array('nodeId' => 0, 'blockId' => 0),
+                    array('nodeId' => 0, 'blockId' => 1),
+                    array('nodeId' => 0, 'blockId' => 2),
+                    array('nodeId' => 0, 'blockId' => 3),
+                ),
+                array(
+                    array('nodeId' => 0, 'blockId' => 0),
+                    array('nodeId' => 0, 'blockId' => 1),
+                    array('nodeId' => 0, 'blockId' => 3),
+                ),
+                'test2',
+                'node-test'
+            ),
+        );
+    }
+
+    /**
+     * @param array  $oldBlocks
+     * @param array  $newBlocks
+     * @param string $areaId
+     * @param string $nodeId
+     * @param string $nodeTransverseId
+     *
+     * @dataProvider provideBlocksWithNodeId
+     */
+    public function testDeleteAreaFromBlockWithNodeId($oldBlocks, $newBlocks, $areaId, $nodeId, $nodeTransverseId)
+    {
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($this->node);
+        Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
+        Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
+
+        $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
+
+        Phake::verify($this->nodeRepository, Phake::times(1))->findOneByNodeIdAndSiteIdAndLastVersion($nodeTransverseId);
+        Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
+        Phake::verify($this->block, Phake::times(1))->removeAreaByAreaIdAndNodeId($areaId, $nodeId);
+        Phake::verify($this->node, Phake::times(1))->getNodeId();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideBlocksWithNodeId()
+    {
+        return array(
+            array(
+                array(
+                    array('nodeId' => 'root', 'blockId' => 0),
+                    array('nodeId' => 'root', 'blockId' => 1),
+                    array('nodeId' => 'root', 'blockId' => 2),
+                    array('nodeId' => 'root', 'blockId' => 3),
+                ),
+                array(
+                    array('nodeId' => 'root', 'blockId' => 0),
+                    array('nodeId' => 'root', 'blockId' => 1),
+                    array('nodeId' => 'root', 'blockId' => 3),
+                ),
+                'test2',
+                'node-test',
+                'root'
+            ),
         );
     }
 }
