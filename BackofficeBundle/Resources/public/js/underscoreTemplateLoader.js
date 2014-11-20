@@ -1,20 +1,21 @@
+// Orchestra adaptation of a plugin found at
 // https://github.com/Gazler/Underscore-Template-Loader
 
 (function() {
   var templateLoader = {
     templateVersion: "0.0.1",
     templates: {},
-    loadRemoteTemplate: function(templateName, filename, callback) {
+    loadRemoteTemplate: function(templateName, filename, view) {
       if (!this.templates[templateName]) {
         var self = this;
         jQuery.get(filename, function(data) {
           self.addTemplate(templateName, data);
           self.saveLocalTemplates();
-          callback(data);
+          view.onTemplateLoaded(templateName, data);
         });
       }
       else {
-        callback(this.templates[templateName]);
+        view.onTemplateLoaded(templateName, this.templates[templateName]);
       }
     },
     

@@ -13,31 +13,31 @@ NodeView = Backbone.View.extend(
     key = "click i." + @node.cid
     @events[key] = "clickButton"
     _.bindAll this, "render", "addAreaToView", "clickButton"
-    @nodeTemplate = _.template($("#nodeView").html())
-    @nodeTitle = _.template($("#nodeTitle").html())
-    @widgetStatus = _.template($("#widgetStatusView").html())
+    @templates =
+      nodeView: false
+      nodeTitle: false
+      widgetStatus: false
     @loadTemplates()
     return
 
   loadTemplates: ->
-    @templates = {}
-    
-    @loadTemplates('node', 'templates/node.tpl')
-    @loadTemplates('nodeTitle', 'templates/nodeTitle.tpl')
-    
+    currentView = @
+    $.each @templates, (templateName, templateData) ->
+      currentView.loadTemplate(templateName, appRouter.generateUrl('loadUndescroreTemplate', {templateId: templateName}))
+      return
     return
-  
+
   loadTemplate: (templateName, templateFile) ->
-    currentView = this
+    alert('loadTemplate ' + templateName)
     
     @templates[templateName] = false
-    templateLoader.loadRemoteTemplate templateName, templateFile, (data) ->
-      currentView.updateTemplates(templateName, data)
-      return
-    
+    currentView = @
+    templateLoader.loadRemoteTemplate templateName, templateFile, currentView
     return
-  
-  updateTemplates = (templateName, templateData) ->
+
+  onTemplateLoaded: (templateName, templateData) ->
+    alert('onTemplateLoaded ' + templateName)
+    
     @templates[templateName] = _.template(templateData)
     
     ready = true
@@ -47,6 +47,10 @@ NodeView = Backbone.View.extend(
     
     @render() if ready
     return
+
+  renderTemplate: (templateName, parameters) ->
+    alert('renderTemplate ' + 'templateName')
+    @templates[templateName](parameters)
 
   clickButton: (event) ->
     $('.modal-title').text @node.get('name')
@@ -97,20 +101,20 @@ NodeView = Backbone.View.extend(
         version: @node.get('version')
       url: @node.get('links')._status_list
       success: (response) ->
-        widgetStatus = viewContext.widgetStatus(
+        widgetStatus = viewContext.renderTemplate 'widgetStatus',
           current_status: viewContext.node.get('status')
           statuses: response.statuses
           status_change_link: viewContext.node.get('links')._self_status_change
-        )
         addCustomJarvisWidget(widgetStatus)
         return
 
   render: ->
-    title = @nodeTitle(node: @node)
-    $(@el).html @nodeTemplate(
+    title = @renderTemplate 'nodeTitle',
+      node: @node
+    $(@el).html @renderTemplate 'nodeView',
       node: @node
       title: title
-    )
+    
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
     @renderWidgetStatus()
