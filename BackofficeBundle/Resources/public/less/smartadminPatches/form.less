@@ -1,0 +1,35 @@
+#content_type_fields {
+    div.form-group {
+        border: 1px solid #ccc;
+    }
+    div.form-group div {
+        border: 0 none;
+    }
+    div[data-prototype] div {
+        border: 1px solid #ccc;
+        margin: 2px;
+        padding: 2px;
+        div{
+           border: 0 none;
+           margin: 0;
+           padding: 0;
+        }
+    }
+    label:not([for]) {
+        display: none;
+    }
+    label.translated-value {
+        display: block;
+    }
+    label:not([for]) + div.col-lg-9 {
+        clear: both;
+        width: 100%;
+    }
+    label.translated-value + div.col-lg-9 {
+        clear: none;
+        width: 75%;
+    }
+    .prototype-add-container {
+        list-style-type: none;
+    }
+}
