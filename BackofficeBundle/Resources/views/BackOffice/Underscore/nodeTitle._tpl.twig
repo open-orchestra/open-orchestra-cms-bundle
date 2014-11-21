@@ -1,7 +1,7 @@
 <span rel="tooltip" data-placement="top" data-original-title="
-{{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
+{{ 'php_orchestra_backoffice.node.last_update.at'| trans({}, 'messages', language) }}
 <%= node.get('updated_at') %>
-{{ 'php_orchestra_backoffice.node.last_update.by'| trans }}
+{{ 'php_orchestra_backoffice.node.last_update.by'| trans({}, 'messages', language) }}
 <% if (node.get('updated_by') !== undefined ) { %>
     <%= node.get('updated_by') %>
 <% } else { %>
@@ -9,5 +9,5 @@
 <% } %>
 ">
     <%= node.get('name') %>
-    ({{ 'php_orchestra_backoffice.node.version.display' | trans }} : #<%= node.get('version') %>)
+    ({{ 'php_orchestra_backoffice.node.version.display' | trans({}, 'messages', language) }} : #<%= node.get('version') %>)
 </span>

@@ -8,7 +8,7 @@
         <select id="selectbox">
             <optgroup id="versions"></optgroup>
             <optgroup id="duplicate">
-                <option class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</option>
+                <option class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}</option>
             </optgroup>
         </select>
         <i></i>
