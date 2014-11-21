@@ -23,7 +23,7 @@ services:
     php_orchestra_backoffice.manager.area:
         class: %php_orchestra_backoffice.manager.area.class%
         arguments:
-            - @doctrine.odm.mongodb.document_manager
+            - @php_orchestra_model.repository.node
     php_orchestra_backoffice.manager.node:
         class: %php_orchestra_backoffice.manager.node.class%
         arguments: [@php_orchestra_model.repository.node]
