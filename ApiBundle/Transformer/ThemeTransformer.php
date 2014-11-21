@@ -20,6 +20,7 @@ class ThemeTransformer extends AbstractTransformer
         $facade = new ThemeFacade();
 
         $facade->name = $mixed->getName();
+        $facade->default = $mixed->isDefault();
 
         $facade->addLink('_self', $this->generateRoute(
             'php_orchestra_api_theme_show',
