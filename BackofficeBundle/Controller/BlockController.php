@@ -71,7 +71,7 @@ class BlockController extends AbstractAdminController
     public function listExistingBlocksAction()
     {
         $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID);
+            ->findOneByNodeIdAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID);
         if ($node) {
             $transformer = $this->get('php_orchestra_api.transformer_manager')->get('block');
             $blocks = $node->getBlocks();
