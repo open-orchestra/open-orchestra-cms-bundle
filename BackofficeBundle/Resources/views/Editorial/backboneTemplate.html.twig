@@ -70,37 +70,6 @@
     <!-- end widget grid -->
 </script>
 
-<script type="text/html" id="widgetStatusView">
-    <div class="widget-toolbar" id="widgetStatus">
-        <!-- add: non-hidden - to disable auto hide -->
-
-        <div class="btn-group">
-            <button class="btn dropdown-toggle btn-xs txt-color-white bg-color-<%= current_status.code_color %>" data-toggle="dropdown">
-                <i class="glyphicon glyphicon-pencil"></i> <%= current_status.label %> <i class="fa fa-caret-down"></i>
-            </button>
-            <ul class="dropdown-menu pull-right js-status-update">
-                <% if (statuses.length > 0 ) { %>
-                    <% _.each(statuses, function(status) { %>
-                        <% if (status.allowed) { %>
-                            <li>
-                                <a class="node-change-status"
-                                    data-url="<%= status_change_link %>"
-                                    data-status="<%= status.id %>"
-                                >
-                                    <i class="fa fa-circle txt-color-<%= status.code_color %>"></i>
-                                <%= status.label %></a></li>
-                        <% } else { %>
-                            <li class="status-disabled"><i class="fa fa-circle txt-color-disabled"></i> <%= status.label %></li>
-                        <% } %>
-                    <% }); %>
-                <% } else { %>
-                    <li class="status-disabled">No status available</li>
-                <% } %>
-            </ul>
-        </div>
-    </div>
-</script>
-
 <script type="text/html" id="nodeTitle">
     <span rel="tooltip" data-placement="top" data-original-title="
     {{ 'php_orchestra_backoffice.node.last_update.at'| trans }}
@@ -131,51 +100,6 @@
             <%= language %>
         </a>
     </li>
-</script>
-
-<script type="text/html" id="nodeView">
-    <% include headInclude %>
-    <ul id="node-languages" class="nav nav-tabs">
-    </ul>
-    <div id="preview"></div>
-    <div id="additionalContent" class="smart-form" style="margin-bottom: 15px">
-        <label class="select">
-            <select id="selectbox">
-                <optgroup id="versions"></optgroup>
-                <optgroup id="duplicate">
-                    <option class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans }}</option>
-                </optgroup>
-            </select>
-            <i></i>
-        </label>
-    </div>
-    <div id="generated-title" style="display: none">
-        <%= title %>
-    </div>
-    <div id="generated-panel" style="display: none">
-        <div class="header">
-            <i class="fa fa-arrow-circle-left"></i>
-            <h2>Blocks</h2>
-        </div>
-        <div class="ui-model scroll panel-shadow">
-            <ul class="ui-model-blocks">
-                {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
-                {{ render(controller('PHPOrchestraBackofficeBundle:Block:listExistingBlocks')) }}
-            </ul>
-        </div>
-    </div>
-    <div role="container">
-        <div class="ui-model">
-            <span class="title"></span>
-            <span class="preview"></span>
-                <span class="action">
-                    <i class="fa fa-cog <%= node.cid %>"></i>
-                </span>
-            <ul class="ui-model-areas">
-            </ul>
-        </div>
-    </div>
-    <% include footerInclude %>
 </script>
 
 <script type="text/html" id="templateView">

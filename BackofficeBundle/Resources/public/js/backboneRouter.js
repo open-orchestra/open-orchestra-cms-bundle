@@ -1,7 +1,14 @@
 var OrchestraBORouter = Backbone.Router.extend({
 
+  // Contains currentMainView, usefull to unbind event when view is changed
   currentMainView: null,
-  routePatterns: {},
+  
+  // Declare here only routes that are not declared in this.routes.
+  // Routes in this.routes will be automatically added to routePatterns at init time
+  // cf this.generateRoutePatterns()
+  routePatterns: {
+    'loadUndescroreTemplate': '/app_dev.php/admin/underscore-template/show/:language/:templateId'
+  },
 
 //========[ROUTES LIST]===============================//
 
