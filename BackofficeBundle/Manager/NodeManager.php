@@ -81,7 +81,7 @@ class NodeManager
      */
     public function hydrateNodeFromNodeId(NodeInterface $node, $nodeId)
     {
-        $oldNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        $oldNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $node->getLanguage());
 
         if ($oldNode) {
             $this->duplicateBlockAndArea($oldNode, $node);

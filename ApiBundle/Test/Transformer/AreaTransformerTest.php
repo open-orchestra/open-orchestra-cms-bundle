@@ -24,18 +24,21 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     protected $areaId = 'areaId';
     protected $nodeRepository;
     protected $transformer;
+    protected $areaManager;
     protected $otherNode;
+    protected $language;
     protected $router;
     protected $block;
     protected $node;
     protected $area;
-    protected $areaManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->language = 'fr';
+
         $this->area = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
         Phake::when($this->area)->getAreaId()->thenReturn($this->areaId);
 
@@ -45,11 +48,12 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->node)->getNodeId()->thenReturn($this->currentNodeId);
         Phake::when($this->node)->getId()->thenReturn($this->nodeMongoId);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
+        Phake::when($this->node)->getLanguage(Phake::anyParameters())->thenReturn($this->language);
 
         $this->otherNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())
             ->thenReturn($this->otherNode);
 
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
@@ -188,7 +192,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->area)->setBlocks(array(
             0 => array('nodeId' => $nodeId, 'blockId' => $blockId)
         ));
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $this->language);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->currentNodeId, 'areaId' => $this->areaId));
         Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }
@@ -232,6 +236,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         ));
         Phake::verify($this->node)->getBlock($blockId);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->currentNodeId, 'areaId' => $this->areaId));
-        Phake::verify($this->nodeRepository, Phake::never())->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters());
+        Phake::verify($this->nodeRepository, Phake::never())->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters());
     }
 }

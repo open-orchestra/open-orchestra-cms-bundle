@@ -17,9 +17,11 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      * @var AreaManager
      */
     protected $manager;
+
+    protected $language = 'fr';
     protected $nodeRepository;
-    protected $node;
     protected $block;
+    protected $node;
 
     /**
      * Set up the test
@@ -28,6 +30,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($this->node)->getLanguage()->thenReturn($this->language);
         $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
 
         $this->manager = new AreaManager($this->nodeRepository);
@@ -153,13 +156,13 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteAreaFromBlockWithNodeId($oldBlocks, $newBlocks, $areaId, $nodeId, $nodeTransverseId)
     {
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($this->node);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($this->node);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
 
         $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
 
-        Phake::verify($this->nodeRepository, Phake::times(1))->findOneByNodeIdAndSiteIdAndLastVersion($nodeTransverseId);
+        Phake::verify($this->nodeRepository, Phake::times(1))->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeTransverseId, $this->language);
         Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
         Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
         Phake::verify($this->node, Phake::times(1))->getNodeId();

@@ -56,7 +56,7 @@ class NodeController extends BaseController
     {
         /** @var NodeInterface $node */
         $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndSiteIdAndLastVersion($nodeId);
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId);
         $this->get('php_orchestra_backoffice.manager.node')->deleteTree($node);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
