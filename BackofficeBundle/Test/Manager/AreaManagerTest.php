@@ -114,7 +114,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
 
         Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
-        Phake::verify($this->block, Phake::times(1))->removeAreaByAreaIdAndNodeId($areaId, $nodeId);
+        Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
         Phake::verify($this->node, Phake::times(1))->getNodeId();
     }
 
@@ -161,7 +161,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->nodeRepository, Phake::times(1))->findOneByNodeIdAndSiteIdAndLastVersion($nodeTransverseId);
         Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
-        Phake::verify($this->block, Phake::times(1))->removeAreaByAreaIdAndNodeId($areaId, $nodeId);
+        Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
         Phake::verify($this->node, Phake::times(1))->getNodeId();
     }
 

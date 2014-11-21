@@ -47,11 +47,11 @@ class AreaManager
             if (!in_array($blockReference, $newBlocks)) {
                 if ($blockReference['nodeId'] === 0) {
                     $block = $node->getBlock($blockReference['blockId']);
-                    $block->removeAreaByAreaIdAndNodeId($areaId, $node->getNodeId());
+                    $block->removeAreaRef($areaId, $node->getNodeId());
                 } else {
                     $blockNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($blockReference['nodeId']);
                     $block = $blockNode->getBlock($blockReference['blockId']);
-                    $block->removeAreaByAreaIdAndNodeId($areaId, $node->getNodeId());
+                    $block->removeAreaRef($areaId, $node->getNodeId());
                 }
             }
         }
