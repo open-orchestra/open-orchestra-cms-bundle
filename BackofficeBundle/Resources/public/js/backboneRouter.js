@@ -10,7 +10,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'loadUndescroreTemplate': '/app_dev.php/admin/underscore-template/show/:language/:templateId'
   },
 
-  //========[ROUTES LIST]===============================//
+//========[ROUTES LIST]===============================//
 
   routes: {
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
