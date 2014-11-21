@@ -64,7 +64,7 @@ class AreaTransformer extends AbstractTransformer
                     $nodeMongoId
                 ));
             } else {
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($block['nodeId']);
+                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $otherNode->getBlock($block['blockId']),
                     false,
@@ -203,7 +203,7 @@ class AreaTransformer extends AbstractTransformer
             if ($blockArray['nodeId'] === 0) {
                 $block = $node->getBlock($blockArray['blockId']);
             } else {
-                $blockNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($blockArray['nodeId']);
+                $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockArray['nodeId'], $node->getLanguage());
                 $block = $blockNode->getBlock($blockArray['blockId']);
             }
             $block->addArea(array('nodeId' => $node->getNodeId(), 'areaId' => $source->getAreaId()));

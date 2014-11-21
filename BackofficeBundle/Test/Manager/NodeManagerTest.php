@@ -168,7 +168,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $oldNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($oldNode)->getAreas()->thenReturn($areas);
         Phake::when($oldNode)->getBlocks()->thenReturn($blocks);
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($oldNode);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($oldNode);
 
         $this->manager->hydrateNodeFromNodeId($newNode, $oldNodeId);
 

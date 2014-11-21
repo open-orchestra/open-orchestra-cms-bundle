@@ -49,7 +49,7 @@ class AreaManager
                     $block = $node->getBlock($blockReference['blockId']);
                     $block->removeAreaRef($areaId, $node->getNodeId());
                 } else {
-                    $blockNode = $this->nodeRepository->findOneByNodeIdAndSiteIdAndLastVersion($blockReference['nodeId']);
+                    $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockReference['nodeId'], $node->getLanguage());
                     $block = $blockNode->getBlock($blockReference['blockId']);
                     $block->removeAreaRef($areaId, $node->getNodeId());
                 }
