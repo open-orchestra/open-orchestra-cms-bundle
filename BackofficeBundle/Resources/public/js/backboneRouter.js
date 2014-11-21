@@ -7,8 +7,8 @@ var OrchestraBORouter = Backbone.Router.extend({
   // Routes in this.routes will be automatically added to routePatterns at init time
   // cf this.generateRoutePatterns()
   routePatterns: {
-    'loadUndescroreTemplate': '/app_dev.php/admin/underscore-template/show/:templateId'
-  }, 
+    'loadUndescroreTemplate': '/app_dev.php/admin/underscore-template/show/:language/:templateId'
+  },
 
   //========[ROUTES LIST]===============================//
 

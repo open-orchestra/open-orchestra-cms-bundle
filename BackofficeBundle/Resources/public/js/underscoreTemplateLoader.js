@@ -5,23 +5,33 @@
   var templateLoader = {
     templateVersion: "0.0.1",
     templates: {},
-    loadRemoteTemplate: function(templateName, view) {
-      if (!this.templates[templateName]) {
+    loadRemoteTemplate: function(templateName, language, view) {
+      if (!this.templates[language]) {
+        this.addLanguage(language);
+      }
+      if (!this.templates[language][templateName]) {
         var self = this;
-        filename = appRouter.generateUrl('loadUndescroreTemplate', {templateId: templateName})
-        jQuery.get(filename, function(data) {
-          self.addTemplate(templateName, data);
+        filename = appRouter.generateUrl('loadUndescroreTemplate', {'language': language, 'templateId': templateName})
+        jQuery.get(filename, function(tpl) {
+          self.addTemplate(templateName, language, tpl);
           self.saveLocalTemplates();
-          view.onTemplateLoaded(templateName, data);
+          view.onTemplateLoaded(templateName, tpl);
         });
       }
       else {
-        view.onTemplateLoaded(templateName, this.templates[templateName]);
+        view.onTemplateLoaded(templateName, this.templates[language][templateName]);
       }
     },
     
-    addTemplate: function(templateName, data) {
-      this.templates[templateName] = data;
+    addTemplate: function(templateName, language, tpl) {
+      if (!this.templates[language]) {
+        this.addLanguage(language);
+      }
+      this.templates[language][templateName] = tpl;
+    },
+    
+    addLanguage: function(language) {
+     this.templates[language] = {};
     },
     
     localStorageAvailable: function() {
@@ -46,14 +56,18 @@
           var templates = localStorage.getItem("templates");
           if (templates) {
             templates = JSON.parse(templates);
-            for (var x in templates) {
-              if (!this.templates[x]) {
-                this.addTemplate(x, templates[x]);
+            for (var language in templates) {
+              if (!this.templates[language]) {
+                this.addLanguage(language);
+              }
+              for (var templateName in templates[language]) {
+                if (!this.templates[language][templateName]) {
+                  this.addTemplate(templateName, language, templates[language][templateName]);
+                }
               }
             }
           }
-        }
-        else {
+        } else {
           localStorage.removeItem("templates");
           localStorage.removeItem("templateVersion");
         }

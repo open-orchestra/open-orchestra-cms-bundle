@@ -189,3 +189,5 @@ php_orchestra_backoffice:
         last_update:
             at: Last update
             by: by
+    status:
+        none_available: No status available

@@ -11,15 +11,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 class UnderscoreTemplateController extends Controller
 {
     /**
+     * @param string     $language
      * @param string     $templateId
      *
-     * @Config\Route("/underscore-template/show/{templateId}", name="php_orchestra_backoffice_underscore_template_show")
+     * @Config\Route("/underscore-template/show/{language}/{templateId}", name="php_orchestra_backoffice_underscore_template_show")
      * @Config\Method({"GET"})
      *
      * @return Response
      */
-    public function showAction($templateId)
+    public function showAction($language, $templateId)
     {
-        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:Underscore/' . $templateId . '._tpl.twig');
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:BackOffice:Underscore/' . $templateId . '._tpl.twig',
+            array('language' => $language)
+        );
     }
 }

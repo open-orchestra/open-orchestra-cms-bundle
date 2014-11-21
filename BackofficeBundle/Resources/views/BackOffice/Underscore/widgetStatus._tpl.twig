@@ -21,7 +21,7 @@
                     <% } %>
                 <% }); %>
             <% } else { %>
-                <li class="status-disabled">No status available</li>
+                <li class="status-disabled">{{ ('php_orchestra_backoffice.status.none_available')|trans({}, 'messages', language) }}</li>
             <% } %>
         </ul>
     </div>

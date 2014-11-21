@@ -1,3 +1,8 @@
+# GET CURRENT LOCALE
+getCurrentLocale = ->
+  $('#contextual-informations').data 'currentLanguage'
+
+
 # SHOW CONTENT TITLE
 
 renderPageTitle = ->

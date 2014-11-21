@@ -13,7 +13,7 @@ OrchestraView = Backbone.View.extend(
     return
 
   loadTemplate: (templateName) ->
-    templateLoader.loadRemoteTemplate templateName, @
+    templateLoader.loadRemoteTemplate templateName, getCurrentLocale(), @
     return
 
   onTemplateLoaded: (templateName, templateData) ->
