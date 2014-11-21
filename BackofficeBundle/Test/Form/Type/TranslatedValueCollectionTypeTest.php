@@ -50,6 +50,7 @@ class TranslatedValueCollectionTypeTest extends \PHPUnit_Framework_TestCase
             'allow_add' => false,
             'allow_delete' => false,
             'required' => false,
+            'label_attr' => array('class' => 'translated-value'),
         ));
     }
 }
