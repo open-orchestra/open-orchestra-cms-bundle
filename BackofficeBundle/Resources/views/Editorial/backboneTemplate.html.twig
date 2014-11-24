@@ -102,37 +102,6 @@
     </li>
 </script>
 
-<script type="text/html" id="templateView">
-    <% include headInclude %>
-    <div id="generated-title" style="display: none">
-        <%= template.get('name') %>
-    </div>
-    <div id="generated-tools" style="display: none">
-        <div class="blocks-panel">
-            <span class="blocks-panel-setting">
-                <i class="fa fa-arrow-circle-left"></i>
-            </span>
-            <h2>Blocks</h2>
-            <div class="ui-model scroll panel-shadow">
-                <ul class="ui-model-blocks rigth-panel-blocks">
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div role="container">
-        <div class="ui-model">
-            <span class="title"></span>
-            <span class="preview"></span>
-                <span class="action">
-                    <i class="fa fa-cog <%= template.cid %>"></i>
-                </span>
-            <ul class="ui-model-areas">
-            </ul>
-        </div>
-    </div>
-    <% include footerInclude %>
-</script>
-
 <script type="text/html" id="areaView">
     <div>
         <span class="title">

@@ -1,29 +1,35 @@
-TemplateView = Backbone.View.extend(
+TemplateView = OrchestraView.extend(
   el: '#content'
+
   events:
     'click i#none' : 'clickButton'
+
   initialize: (options) ->
     @template = options.template
     key = "click i." + @template.cid
     @events[key] = "clickButton"
     _.bindAll this, "render", "addAreaToView", "clickButton"
-    @templateTemplate = _.template($("#templateView").html())
-    @render()
+    @loadTemplates [
+      "templateView"
+    ]
     return
+
   clickButton: (event) ->
     $('.modal-title').text @template.get('name')
     view = new adminFormView(
       url: @template.get('links')._self_form
       deleteurl: @template.get('links')._self_delete
     )
+
   render: ->
-    $(@el).html @templateTemplate(
+    $(@el).html @renderTemplate('templateView',
       template: @template
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     for area of @template.get('areas')
       @addAreaToView(@template.get('areas')[area])
     return
+
   addAreaToView: (area) ->
     areaElement = new Area
     areaElement.set area
