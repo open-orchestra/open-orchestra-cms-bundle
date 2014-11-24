@@ -17,6 +17,7 @@ will not initialize.
                 <span class="menu-item-parent">{{ 'php_orchestra_backoffice.left_menu.editorial.title'|trans }}</span>
             </a>
             <ul>
+                {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showGeneralTreeNodes')) }}
                 {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeNodes')) }}
                 {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showTreeTemplates')) }}
                 {{ render(controller('PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent')) }}

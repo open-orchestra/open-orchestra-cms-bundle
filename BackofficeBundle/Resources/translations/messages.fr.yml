@@ -127,6 +127,7 @@ php_orchestra_backoffice:
         editorial:
             title: Editorial
             nodes: Pages
+            general_nodes: Pages générale
             templates: Gabarit
             contents: Contenu
             mediatheque: Médiathèque
