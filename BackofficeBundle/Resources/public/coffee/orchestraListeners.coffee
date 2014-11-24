@@ -1,3 +1,9 @@
+# INITIAL PAGE LOADING
+
+$(document).ready ->
+  appRouter.addRoutePattern 'loadUndescroreTemplate', $('#contextual-informations').data 'templateUrlPattern'
+  return
+
 # JARVIS WIDGETS
 
 $(".widget-grid").DOMNodeAppear ->

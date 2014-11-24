@@ -6,9 +6,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   // Declare here only routes that are not declared in this.routes.
   // Routes in this.routes will be automatically added to routePatterns at init time
   // cf this.generateRoutePatterns()
-  routePatterns: {
-    'loadUndescroreTemplate': '/app_dev.php/admin/underscore-template/show/:language/:templateId'
-  },
+  routePatterns: {},
 
 //========[ROUTES LIST]===============================//
 
@@ -136,11 +134,16 @@ var OrchestraBORouter = Backbone.Router.extend({
 
 //========[INTERNAL FUNCTIONS]========================//
 
+  addRoutePattern: function(routeName, routePattern)
+  {
+    this.routePatterns[routeName] = routePattern;
+  },
+
   generateRoutePatterns: function()
   {
     var currentRouter = this;
-    $.each(this.routes, function(pattern, name) {
-      currentRouter.routePatterns[name] = pattern;
+    $.each(this.routes, function(routePattern, routeName) {
+      currentRouter.addRoutePattern(routeName, routePattern);
     });
   },
 
@@ -157,7 +160,6 @@ var OrchestraBORouter = Backbone.Router.extend({
           var title = ($('nav a' + selector).attr('title'))
           document.title = (title || document.title);
       }
-
 
     drawBreadCrumb();
 
