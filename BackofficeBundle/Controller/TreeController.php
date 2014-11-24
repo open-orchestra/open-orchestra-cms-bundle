@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,6 +22,23 @@ class TreeController extends Controller
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
+            array(
+                'nodes' => $nodes
+            )
+        );
+    }
+
+    /**
+     * List all general nodes
+     *
+     * @return Response
+     */
+    public function showGeneralTreeNodesAction()
+    {
+        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersionBySiteId(NodeInterface::TYPE_GENERAL);
+
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:Tree:showGeneralTreeNodes.html.twig',
             array(
                 'nodes' => $nodes
             )

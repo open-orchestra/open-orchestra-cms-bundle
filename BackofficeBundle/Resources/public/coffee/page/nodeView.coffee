@@ -85,19 +85,22 @@ NodeView = OrchestraView.extend(
     
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
-    @renderWidgetStatus()
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
-    @addVersionToView()
+    if @node.get('node_type') == 'page'
+      @renderWidgetStatus()
+      @addVersionToView()
+      @addPreviewLink()
+      if @node.attributes.status.published
+        $('.ui-model *', @el).unbind()
+        $('.js-widget-blockpanel', @$el).hide()
+        $('span.action', @el).hide()
+      else
+        $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
+          refreshUl $(this)
+    else if @node.get('node_type') == 'general'
+      @removeVersionFromView()
     @addLanguagesToView()
-    @addPreviewLink()
-    if @node.attributes.status.published
-      $('.ui-model *', @el).unbind()
-      $('.js-widget-blockpanel', @$el).hide()
-      $('span.action', @el).hide()
-    else
-      $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
-        refreshUl $(this)
     return
 
   addAreaToView: (area) ->
@@ -122,6 +125,9 @@ NodeView = OrchestraView.extend(
         for nodeVersion of nodeCollection.get('nodes')
           viewContext.addChoiceToSelectBox(nodeCollection.get('nodes')[nodeVersion])
         return
+
+  removeVersionFromView: ->
+    $('#additionalContent', @$el).hide()
 
   addChoiceToSelectBox: (nodeVersion) ->
     nodeVersionElement = new Node
