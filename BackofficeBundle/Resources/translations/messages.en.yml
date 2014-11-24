@@ -119,6 +119,8 @@ php_orchestra_backoffice:
             level: Level of the menu
         content_list:
             node: Url to view one content.
+            content_type: Content type to display.
+            nb_characters: Number of characters to display before truncate the text.
     left_menu:
         tree:
             new_page: New page

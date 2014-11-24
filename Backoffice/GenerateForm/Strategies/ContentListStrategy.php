@@ -32,7 +32,7 @@ class ContentListStrategy extends AbstractBlockStrategy
         $form->add('contentTypeName', 'orchestra_content_type_choice', array(
             'mapped' => false,
             'data' => array_key_exists('contentType', $attributes)? $attributes['contentType']:'',
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
+            'label' => 'php_orchestra_backoffice.form.content_list.content_type',
         ));
         $form->add('class', 'textarea', array(
             'mapped' => false,
@@ -48,6 +48,12 @@ class ContentListStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => array_key_exists('url', $attributes)? $attributes['url']:'',
             'label' => 'php_orchestra_backoffice.form.content_list.node',
+        ));
+        $form->add('characterNumber', 'text', array(
+            'mapped' => false,
+            'data' => array_key_exists('characterNumber', $attributes)? $attributes['characterNumber']: '',
+            'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
+            'required' => false,
         ));
     }
 
