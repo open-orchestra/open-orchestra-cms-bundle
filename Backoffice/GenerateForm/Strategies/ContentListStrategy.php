@@ -29,25 +29,41 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
+        $empty = array(
+            'contentTypeName' => '',
+            'class' => '',
+            'id' => '',
+            'url' => '',
+            'characterNumber' => 50,
+        );
+
+        $attributes = array_merge($empty, $attributes);
+
         $form->add('contentTypeName', 'orchestra_content_type_choice', array(
             'mapped' => false,
-            'data' => array_key_exists('contentType', $attributes)? $attributes['contentType']:'',
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
+            'data' => $attributes['contentType'],
+            'label' => 'php_orchestra_backoffice.form.content_list.content_type',
         ));
         $form->add('class', 'textarea', array(
             'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? $attributes['class']:'',
+            'data' => $attributes['class'],
             'required' => false,
         ));
         $form->add('id', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
+            'data' => $attributes['id'],
             'required' => false,
         ));
         $form->add('url', 'orchestra_node_choice', array(
             'mapped' => false,
-            'data' => array_key_exists('url', $attributes)? $attributes['url']:'',
+            'data' => $attributes['url'],
             'label' => 'php_orchestra_backoffice.form.content_list.node',
+        ));
+        $form->add('characterNumber', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['characterNumber'],
+            'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
+            'required' => false,
         ));
     }
 
