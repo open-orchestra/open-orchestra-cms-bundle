@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\FunctionalTest;
 
+use Phake;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -14,6 +15,8 @@ class ApiControllersTest extends WebTestCase
      * @var Client
      */
     protected $client;
+    protected $currentSiteManager;
+    protected $nodeRepository;
 
     /**
      * Set up the test
@@ -29,6 +32,11 @@ class ApiControllersTest extends WebTestCase
         $form['_password'] = 'nicolas';
 
         $crawler = $this->client->submit($form);
+
+        $this->currentSiteManager = Phake::mock('PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
+        Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
+        $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
     }
 
     /**
@@ -64,5 +72,48 @@ class ApiControllersTest extends WebTestCase
             array('/api/template/template_full'),
             array('/api/context/site/2/www.bphpOrchestra.fr'),
         );
+    }
+
+    /**
+     * test reverse transform
+     */
+    public function testAreaReverseTransform()
+    {
+        $crawler = $this->client->request('GET', '/admin/');
+        $crawler = $this->client->request('GET', '/api/context/site/1/front-phporchestra.dev');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $crawler = $this->client->request('GET', '/api/node/root');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $json = json_decode($this->client->getResponse()->getContent(), true);
+        $area = $json['areas'][0];
+        $this->assertSame('main', $area['area_id']);
+        $block = $area['blocks'][3];
+        $update = $area['links']['_self_block'];
+
+        // Remove ref of area in block 3
+        $formData = json_encode(array('blocks' => array(
+            array('node_id' => 'root', 'block_id' => 0),
+            array('node_id' => 'root', 'block_id' => 1),
+            array('node_id' => 'root', 'block_id' => 2),
+        )));
+
+        $crawler = $this->client->request('POST', $update, array(), array(), array(), $formData);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['node_id']);
+        $this->assertSame(array(), $nodeAfter->getBlock(3)->getAreas());
+
+        // Add ref of area in block 3
+        $formData = json_encode(array('blocks' => array(
+            array('node_id' => 'root', 'block_id' => 0),
+            array('node_id' => 'root', 'block_id' => 1),
+            array('node_id' => 'root', 'block_id' => 2),
+            array('node_id' => 'root', 'block_id' => 3),
+        )));
+
+        $crawler = $this->client->request('POST', $update, array(), array(), array(), $formData);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }
