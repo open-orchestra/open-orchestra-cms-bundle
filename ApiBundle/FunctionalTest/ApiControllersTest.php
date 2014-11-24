@@ -60,6 +60,7 @@ class ApiControllersTest extends WebTestCase
         return array(
             array('/api/node/root'),
             array('/api/node/root?language=en'),
+            array('/api/node/transverse'),
             array('/api/node/fixture_full'),
             array('/api/node/fixture_full?language=en'),
             array('/api/content'),

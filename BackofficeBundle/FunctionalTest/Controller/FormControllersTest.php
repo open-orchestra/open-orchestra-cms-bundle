@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FormControllersTest
@@ -21,13 +22,14 @@ class FormControllersTest extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
-        $this->client->setServerParameters(
-            array(
-                'PHP_AUTH_USER' => 'nicolas',
-                'PHP_AUTH_PW'   => 'nicolas',
-            )
-        );
-        $this->client->followRedirects();
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Login')->form();
+        $form['_username'] = 'nicolas';
+        $form['_password'] = 'nicolas';
+
+        $crawler = $this->client->submit($form);
+        $crawler = $this->client->request('GET', '/admin/');
     }
 
     /**
@@ -39,7 +41,7 @@ class FormControllersTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', $url);
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertForm($this->client->getResponse());
     }
 
     /**
@@ -47,24 +49,50 @@ class FormControllersTest extends WebTestCase
      */
     public function provideApiUrl()
     {
+
         return array(
-            array('/admin/node/form/root'),
-            array('/admin/node/new/root'),
-            array('/admin/node/form/fixture_full'),
-            array('/admin/area/form/fixture_full/left_menu'),
-            array('/admin/block/form/fixture_full/1'),
-            array('/admin/block/form/fixture_full/3'),
-            array('/admin/block/form/fixture_full/7'),
             array('/admin/site/form/1'),
             array('/admin/status/new'),
             array('/admin/theme/new'),
             array('/admin/template/form/template_full'),
             array('/admin/template/area/form/template_full/left_menu'),
-            array('/admin/content/form/1'),
             array('/admin/content-type/form/car'),
             array('/admin/content-type/new'),
-            array('/admin/media/new/54354a8b0f870926168b45aa'),
-            array('/admin/node/new/fixture_page_what_is_orchestra'),
         );
+    }
+
+    /**
+     * Test content form
+     */
+    public function testContentForm()
+    {
+        $contentRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.content');
+        $content = $contentRepository->findOneByName('Welcome');
+
+        $url = '/admin/content/form/' . $content->getId();
+        $this->client->request('GET', $url);
+        $this->assertForm($this->client->getResponse());
+    }
+    /**
+     * Test media form
+     */
+    public function testMediaForm()
+    {
+        $mediaFolderRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.media_folder');
+        $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
+
+        $url = '/admin/media/new/' . $mediaFolder->getId();
+        $this->client->request('GET', $url);
+        $this->assertForm($this->client->getResponse());
+    }
+
+    /**
+     * @param Response $response
+     */
+    protected function assertForm(Response $response)
+    {
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertRegExp('/form/', $response->getContent());
+        $this->assertNotRegExp('/<html/', $response->getContent());
     }
 }
