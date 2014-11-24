@@ -58,7 +58,7 @@ php_orchestra_backoffice:
             success: The theme has been modified
             creation: The theme has been created
             name: Name
-            default: Default
+            default: by default
         content:
             success: The content has been modified
             creation: The content has been created
