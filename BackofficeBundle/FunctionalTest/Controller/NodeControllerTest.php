@@ -104,5 +104,6 @@ class NodeControllerTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertRegExp('/form/', $response->getContent());
         $this->assertNotRegExp('/<html/', $response->getContent());
+        $this->assertNotRegExp('/_username/', $response->getContent());
     }
 }
