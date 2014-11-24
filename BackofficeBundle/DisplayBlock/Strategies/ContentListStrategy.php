@@ -39,10 +39,10 @@ class ContentListStrategy extends AbstractStrategy
             'PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig',
             array(
                 'contentType' => $attributes['contentType'],
-                'id' => array_key_exists('id', $attributes)? $attributes['id'] : '',
-                'class' => array_key_exists('class', $attributes)? $attributes['class']: '',
+                'id' => $attributes['id'],
+                'class' => $attributes['class'],
                 'url' => $attributes['url'],
-                'characterNumber' => array_key_exists('characterNumber', $attributes)? $attributes['characterNumber']: '50',
+                'characterNumber' => $attributes['characterNumber'],
             )
         );
     }
