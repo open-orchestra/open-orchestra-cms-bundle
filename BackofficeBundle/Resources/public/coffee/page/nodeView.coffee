@@ -163,8 +163,9 @@ NodeView = OrchestraView.extend(
       language: language
       nodeId: @node.get('node_id')
       currentLanguage: @language
+      el: this.$el.find('#node-languages')
     )
-    this.$el.find('#node-languages').append view.render()
+#    this.$el.find('#node-languages').append view.render()
 
   changeLanguage: (event) ->
     Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + $(event.currentTarget).data('language'), {trigger: true})

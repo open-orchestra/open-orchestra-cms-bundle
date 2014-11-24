@@ -1,8 +1,6 @@
 NodeVersionView = OrchestraView.extend(
   tagName: "option"
 
-  el: '#versions'
-
   initialize: (options) ->
     @node = options.node
     @version = options.version
