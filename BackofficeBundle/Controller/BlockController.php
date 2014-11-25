@@ -64,15 +64,17 @@ class BlockController extends AbstractAdminController
     }
 
     /**
-     * List all existing blocks
+     * @param string $language
+     *
+     * @Config\Route("/block/existing/{language}", name="php_orchestra_backoffice_block_exsting")
+     * @Config\Method({"GET"})
      *
      * @return Response
      */
-    public function listExistingBlocksAction()
+    public function listExistingBlocksAction($language)
     {
-        // TODO add the language
         $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID);
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language);
         if ($node) {
             $blocksFacade = array();
             $transformer = $this->get('php_orchestra_api.transformer_manager')->get('block');

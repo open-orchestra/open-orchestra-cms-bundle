@@ -107,6 +107,10 @@ class NodeTransformer extends AbstractTransformer
             'nodeMongoId' => $mixed->getId()
         )));
 
+        $facade->addLink('_existing_block', $this->generateRoute('php_orchestra_backoffice_block_exsting', array(
+            'language' => $mixed->getLanguage(),
+        )));
+
         return $facade;
     }
 
