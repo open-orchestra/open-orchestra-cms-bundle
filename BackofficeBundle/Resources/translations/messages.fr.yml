@@ -194,6 +194,7 @@ php_orchestra_backoffice:
         last_update:
             at: Dernière mies à jour
             by: par
+        delete: Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?
     status:
         none_available: Pas de status disponible
     top_menu:
@@ -202,3 +203,7 @@ php_orchestra_backoffice:
         sign_out: Se déconnecter
         improve_security: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
         fullscreen: Plein écran
+    areas:
+        delete: Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?
+    templates:
+        delete: Vous êtes sur le point de supprimer un template. Souhaitez-vous poursuivre cette action ?

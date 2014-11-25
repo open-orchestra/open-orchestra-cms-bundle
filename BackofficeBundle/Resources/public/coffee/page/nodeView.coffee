@@ -28,11 +28,12 @@ NodeView = OrchestraView.extend(
     $('.modal-title').text @node.get('name')
     url = @node.get('links')._self_form
     deleteurl = @node.get('links')._self_delete
+    confirmText = $(".delete-confirm-txt-"+@node.cid).text()
     if @node.attributes.alias is ''
       view = new adminFormView(
         url: url
         deleteurl: deleteurl
-        confirmtext: "Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?"
+        confirmtext: confirmText
         triggers: [
           {
             event: "keyup input.alias-source"
@@ -50,7 +51,7 @@ NodeView = OrchestraView.extend(
       view = new adminFormView(
         url: url
         deleteurl: deleteurl
-        confirmtext: "Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?"
+        confirmtext: confirmText
       )
 
   duplicateNode: ->

@@ -50,7 +50,7 @@ AreaView = OrchestraView.extend(
     view = new adminFormView(
       url: @area.get("links")._self_form
       deleteurl: @area.get("links")._self_delete
-      confirmtext: "Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?"
+      confirmtext: $(".delete-confirm-txt-"+@cid).text()
     )
 >>>>>>> add delete button on area modal
     return
