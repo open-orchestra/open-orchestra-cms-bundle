@@ -50,7 +50,6 @@ class NodeController extends AbstractAdminController
      */
     public function newAction(Request $request, $parentId)
     {
-
         $themeRepository = $this->container->get('php_orchestra_model.repository.theme');
         $theme = $themeRepository->findOneByDefault(true);
 
