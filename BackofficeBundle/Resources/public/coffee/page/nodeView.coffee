@@ -87,6 +87,7 @@ NodeView = OrchestraView.extend(
     $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
+    @addExistingBlockToView()
     if @node.get('node_type') == 'page'
       @renderWidgetStatus()
       @addVersionToView()
@@ -144,7 +145,7 @@ NodeView = OrchestraView.extend(
     return
 
   addLanguagesToView: ->
-    viewContext = this
+    viewContext = @
     $.ajax
       type: "GET"
       url: @node.get('links')._site
@@ -172,4 +173,12 @@ NodeView = OrchestraView.extend(
       previewLink: previewLink
     )
     view.render()
+
+  addExistingBlockToView: ->
+    viewContext = @
+    $.ajax
+      type: "GET"
+      url: @node.get('links')._existing_block
+      success: (response) ->
+        $('.rigth-panel-blocks', viewContext.$el).append(response)
 )

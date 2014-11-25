@@ -2,7 +2,7 @@
 <div class="project-context hidden-xs">
 
     {% set availableSites = context.getAvailableSites() %}
-    <span class="label">{{ 'php_orchestra_cms.top_menu.site'|trans({}, 'backOffice') }}</span>
+    <span class="label">{{ 'php_orchestra_backoffice.top_menu.site'|trans }}</span>
     <span class="project-selector dropdown-toggle" data-toggle="dropdown">{{ context.getCurrentSiteDomain() }} <i class="fa fa-angle-down"></i></span>
 
     <!-- Suggestion: populate this list with fetch and push technique -->

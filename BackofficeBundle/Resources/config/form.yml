@@ -27,7 +27,7 @@ parameters:
 
 services:
     # Template form type
-    php_orchestra_cms.type.template:
+    php_orchestra_backoffice.type.template:
         class: %php_orchestra_backoffice.type.template.class%
         arguments:
             - %php_orchestra_model.document.template.class%
@@ -71,7 +71,7 @@ services:
         class: %php_orchestra_backoffice.type.orchestra_site.class%
         tags:
             - { name: form.type, alias: orchestra_site }
-    php_orchestra_cms.type.site:
+    php_orchestra_backoffice.type.site:
         class: PHPOrchestra\BackofficeBundle\Form\Type\SiteType
         arguments:
             - %php_orchestra_model.document.site.class%
