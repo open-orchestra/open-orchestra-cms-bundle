@@ -1,8 +1,8 @@
 PO = PO or {}
 PO.formPrototypes =
   addButtonContainer: "<li class=\"prototype-add-container\"></li>"
-  addButton: "<button class=\"button-small prototype-add\">__label__</button>"
-  removeButton: "<button class=\"button-small prototype-remove\">__label__</button>"
+  addButton: "<button class=\"btn btn-success prototype-add\">__label__</button>"
+  removeButton: "<button class=\"btn btn-warning prototype-remove\">__label__</button>"
   prototypes: []
   addPrototype: (collectionHolder) ->
     @prototypes.push new PO.formPrototype(collectionHolder)
