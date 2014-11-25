@@ -37,7 +37,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
-        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer);
+        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, array());
     }
 
     /**
@@ -69,13 +69,11 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_option.add');
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_option.new');
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_option.delete');
+        Phake::verify($this->builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
         );
+        Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 }

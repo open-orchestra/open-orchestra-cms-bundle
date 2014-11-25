@@ -52,6 +52,8 @@ class ContentTypeManagerTest extends KernelTestCase
         $this->assertSame($contentType->getName('fr'), $newContentType->getName('fr'));
         $this->assertSame($contentType->getName('en'), $newContentType->getName('en'));
         $this->assertCount($contentType->getFields()->count(), $newContentType->getFields());
+        $this->assertCount($contentType->getFields()->first()->getLabels()->count(), $newContentType->getFields()->first()->getLabels());
+        $this->assertSame($contentType->getFields()->first()->getLabel('fr'), $newContentType->getFields()->first()->getLabel('fr'));
     }
 
     /**

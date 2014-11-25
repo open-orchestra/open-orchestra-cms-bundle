@@ -4,6 +4,8 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -28,8 +30,15 @@ class FieldOptionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('key', 'text', array('label' => 'php_orchestra_backoffice.form.field_option.key'));
-        $builder->add('value', 'text', array('label' => 'php_orchestra_backoffice.form.field_option.value'));
+        $builder->add('key', 'hidden', array('label' => 'php_orchestra_backoffice.form.field_option.key'));
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $element = $event->getData();
+            $form = $event->getForm();
+            $form->add('value', 'text', array(
+                'label' => $element->getKey(),
+                'attr' => array('class' => 'field_type_option'),
+            ));
+        });
     }
 
     /**

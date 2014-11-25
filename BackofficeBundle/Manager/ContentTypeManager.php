@@ -19,6 +19,11 @@ class ContentTypeManager
         }
         foreach ($contentType->getFields() as $field) {
             $newField = clone $field;
+            foreach ($field->getLabels() as $label) {
+                $newLabel = clone $label;
+                $newField->addLabel($newLabel);
+            }
+
             $newContentType->addFieldType($newField);
         }
 

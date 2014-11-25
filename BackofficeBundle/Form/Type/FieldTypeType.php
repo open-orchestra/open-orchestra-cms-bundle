@@ -3,6 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
 use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,19 +17,23 @@ use Symfony\Component\Translation\TranslatorInterface;
 class FieldTypeType extends AbstractType
 {
     protected $translateValueInitializer;
+    protected $fieldOptions;
     protected $translator;
 
     /**
      * @param TranslatorInterface               $translator
      * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param array                             $fieldOptions
      */
     public function __construct(
         TranslatorInterface $translator,
-        TranslateValueInitializerListener $translateValueInitializer
+        TranslateValueInitializerListener $translateValueInitializer,
+        array $fieldOptions
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->translator = $translator;
+        $this->fieldOptions = $fieldOptions;
     }
 
     /**
@@ -51,20 +56,11 @@ class FieldTypeType extends AbstractType
             ->add('searchable', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.field_type.searchable'
             ))
-            ->add('type', 'text', array(
+            ->add('type', 'choice', array(
+                'choices' => $this->getChoices(),
                 'label' => 'php_orchestra_backoffice.form.field_type.type'
             ));
-        $builder->add('options', 'collection', array(
-            'type' => 'field_option',
-            'allow_add' => true,
-            'allow_delete' => false,
-            'label' => 'php_orchestra_backoffice.form.field_type.options',
-            'attr' => array(
-                'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
-                'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_option.new'),
-                'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_option.delete'),
-            )
-        ));
+        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions));
     }
 
     /**
@@ -84,5 +80,18 @@ class FieldTypeType extends AbstractType
             'data_class' => 'PHPOrchestra\ModelBundle\Document\FieldType',
             'label' => $this->translator->trans('php_orchestra_backoffice.form.field_type.label')
         ));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChoices()
+    {
+        $choices = array();
+        foreach ($this->fieldOptions as $key => $option) {
+            $choices[$key] = $this->translator->trans($option['label']);
+        }
+
+        return $choices;
     }
 }

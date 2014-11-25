@@ -4,8 +4,8 @@ parameters:
     
     php_orchestra_cms.custom_types:
         
-        orchestra_text:
-            type: text
+        text:
+            label: text
             options:
                 max_length:
                     type: integer
@@ -18,8 +18,8 @@ parameters:
                     default_value: false
                     required: false
         
-        orchestra_textarea:
-            type: textarea
+        textarea:
+            label: textarea
             options:
                 max_length:
                     type: integer
@@ -32,8 +32,8 @@ parameters:
                     default_value: false
                     required: false
         
-        orchestra_integer:
-            type: integer
+        integer:
+            label: integer
             options:
                 rounding_mode:
                     type: integer
@@ -51,8 +51,8 @@ parameters:
                     default_value: false
                     required: false
         
-        orchestra_email:
-            type: email
+        email:
+            label: email
             options:
                 max_length:
                     type: integer

@@ -50,9 +50,6 @@ class ContentTypeType extends AbstractType
             ->add('names', 'translated_value_collection', array(
                 'label' => 'php_orchestra_backoffice.form.content_type.names'
             ))
-            ->add('version', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.content_type.version'
-            ))
             ->add('status', 'orchestra_status', array(
                 'label' => 'php_orchestra_backoffice.form.content_type.status'
             ));
