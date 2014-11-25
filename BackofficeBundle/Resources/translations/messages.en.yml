@@ -138,6 +138,8 @@ php_orchestra_backoffice:
             contents: Contents
             mediatheque: Mediatheque
         administration:
+            translation: Translation
+            title: Administration
             sites:
                 list: Websites
             themes:
@@ -195,3 +197,9 @@ php_orchestra_backoffice:
             by: by
     status:
         none_available: No status available
+    top_menu:
+        site: Site:
+        collapse_menu: Collapse menu
+        sign_out: Sign out
+        improve_security: You can improve your security further after logging out by closing this opened browser
+        fullscreen: Full screen
