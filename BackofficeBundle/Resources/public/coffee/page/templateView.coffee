@@ -20,6 +20,7 @@ TemplateView = OrchestraView.extend(
     view = new adminFormView(
       url: @template.get('links')._self_form
       deleteurl: @template.get('links')._self_delete
+      confirmtext: "Vous êtes sur le point de supprimer un template. Souhaitez-vous poursuivre cette action ?"
     )
 
   render: ->

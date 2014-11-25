@@ -32,6 +32,7 @@ NodeView = OrchestraView.extend(
       view = new adminFormView(
         url: url
         deleteurl: deleteurl
+        confirmtext: "Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?"
         triggers: [
           {
             event: "keyup input.alias-source"
@@ -49,6 +50,7 @@ NodeView = OrchestraView.extend(
       view = new adminFormView(
         url: url
         deleteurl: deleteurl
+        confirmtext: "Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?"
       )
 
   duplicateNode: ->
