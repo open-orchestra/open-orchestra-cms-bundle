@@ -50,9 +50,10 @@ php_orchestra_backoffice:
             languages: Langues possibles
             blocks: Block affichable
         theme:
-            success: Le theme a été modifié
-            creation: Le theme a été crée
+            success: Le thème a été modifié
+            creation: Le thème a été crée
             name: Nom
+            default: par defaut
         content:
             success: Le contenu a été modifié
             creation: Le contenu a été créé
