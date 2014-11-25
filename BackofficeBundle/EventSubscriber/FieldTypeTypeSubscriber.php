@@ -84,12 +84,12 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
                     }
                     $keys[] = $key;
                 }
+
                 foreach ($data->getOptions() as $option) {
                     if (!in_array($option->getKey(), $keys)) {
                         $data->removeOption($option);
                     }
                 }
-
 
                 $form->add('options', 'collection', array(
                     'type' => 'field_option',
