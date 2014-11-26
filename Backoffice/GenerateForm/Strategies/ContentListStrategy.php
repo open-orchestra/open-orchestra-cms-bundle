@@ -30,7 +30,7 @@ class ContentListStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'contentTypeName' => '',
+            'contentType' => '',
             'class' => '',
             'id' => '',
             'url' => '',

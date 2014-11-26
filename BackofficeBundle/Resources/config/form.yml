@@ -91,6 +91,7 @@ services:
         arguments:
             - @translator
             - @php_orchestra_backoffice.listener.translate_value_initializer
+            - %php_orchestra_cms.custom_types%
         tags:
             - { name: form.type, alias: field_type }
     php_orchestra_backoffice.type.field_option:

@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 /**
  * Class ContentTypeController
  */
-class ContentTypeController extends Controller
+class ContentTypeController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -24,11 +24,12 @@ class ContentTypeController extends Controller
      */
     public function formAction(Request $request, $contentTypeId)
     {
-        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneBy(array('contentTypeId' => $contentTypeId));
+        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneByContentTypeIdAndLastVersion($contentTypeId);
+        $newContentType = $this->get('php_orchestra_backoffice.manager.content_type')->duplicate($contentType);
 
         $form = $this->createForm(
             'content_type',
-            $contentType,
+            $newContentType,
             array(
                 'action' => $this->generateUrl('php_orchestra_backoffice_content_type_form', array(
                         'contentTypeId' => $contentTypeId,
@@ -37,17 +38,7 @@ class ContentTypeController extends Controller
         );
 
         $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($contentType);
-            $documentManager->flush();
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success')
-            );
-        }
+        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success'), $newContentType);
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView()

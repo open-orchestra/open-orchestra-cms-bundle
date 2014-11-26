@@ -65,6 +65,6 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($this->builder)->add(Phake::anyParameters());
     }
 }
