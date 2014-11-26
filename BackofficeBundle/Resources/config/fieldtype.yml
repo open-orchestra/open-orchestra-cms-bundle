@@ -16,6 +16,13 @@ parameters:
                     default_value: 100
                 required:
                     default_value: false
+        tinymce:
+            label: Wysiwyg
+            options:
+                max_length:
+                    default_value: 500
+                required:
+                    default_value: false
         integer:
             label: integer
             options:

@@ -24,6 +24,7 @@ parameters:
     php_orchestra_backoffice.type.orchestra_node_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
     php_orchestra_backoffice.type.orchestra_content_type_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
     php_orchestra_backoffice.type.orchestra_color_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
+    php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
 
 services:
     # Template form type
@@ -198,3 +199,7 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: orchestra_color_choice}
+    php_orchestra_backoffice.type.tinymce:
+        class: %php_orchestra_backoffice.type.tinymce.class%
+        tags:
+            - { name: form.type, alias: tinymce}
