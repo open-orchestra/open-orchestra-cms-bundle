@@ -178,7 +178,6 @@ NodeView = OrchestraView.extend(
     view = new PreviewLinkView(
       previewLink: previewLink
     )
-    view.render()
 
   addExistingBlockToView: ->
     viewContext = @
