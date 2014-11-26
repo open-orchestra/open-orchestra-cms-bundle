@@ -1,14 +1,17 @@
-FullPageFormView = Backbone.View.extend(
+FullPageFormView = OrchestraView.extend(
   el: '#content'
+
   initialize: (options) ->
     @html = options.html
     @title = options.title
     @listUrl = options.listUrl
-    @formTemplate = _.template($('#fullPageFormView').html())
-    @render()
+    @loadTemplates [
+      'fullPageFormView'
+    ]
     return
+
   render: ->
-    $(".widget-body", @el).replaceWith $("<div/>").html(@formTemplate(
+    $(".widget-body", @el).replaceWith $("<div/>").html(@renderTemplate('fullPageFormView',
       html: @html
       listUrl: @listUrl
     )).find(".widget-body")
@@ -18,6 +21,7 @@ FullPageFormView = Backbone.View.extend(
       return
     @addEventOnForm()
     return
+
   addEventOnForm: ->
     title = @title
     listUrl = @listUrl
