@@ -1,20 +1,26 @@
-BlockView = Backbone.View.extend(
-  tagName: 'li'
-  className: 'ui-model-blocks'
+BlockView = OrchestraView.extend(
   events:
     'click div.block-param': 'paramBlock'
+
   initialize: (options) ->
     @block = options.block
+    @areaCid = options.areaCid
     @displayClass = options.displayClass
     _.bindAll this, "render"
-    @blockTemplate = _.template($('#blockView').html())
+    @loadTemplates [
+        "blockView"
+    ]
     return
+
   paramBlock: (event) ->
     $('.modal-title').text 'Please wait ...'
     view = new adminFormView(url: @block.get('links')._self_form)
+
   render: ->
-    $(@el).addClass(@displayClass).html @blockTemplate(
+    $(@el).append @renderTemplate('blockView',
       block: @block
+      areaCid: @areaCid
+      displayClass: @displayClass
     )
     this
 )

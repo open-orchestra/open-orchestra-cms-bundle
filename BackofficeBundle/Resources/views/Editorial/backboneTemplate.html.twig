@@ -70,18 +70,6 @@
     <!-- end widget grid -->
 </script>
 
-<script type="text/html" id="blockView">
-    <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
-        <span class="title"><%= block.get('ui_model').label %></span>
-        <div class="preview scroll block-param">
-            <%= block.get('ui_model').html %>
-        </div>
-        <span class="action">
-            <i class="block-remove fa fa-trash-o"></i>
-        </span>
-    </div>
-</script>
-
 <script type="text/html" id="tableviewCollectionView">
     <% include headInclude %>
     <div role="container">

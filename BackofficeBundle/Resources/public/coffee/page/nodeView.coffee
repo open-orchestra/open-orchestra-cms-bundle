@@ -20,6 +20,7 @@ NodeView = OrchestraView.extend(
       "areaView"
       "nodeLanguage"
       "nodeChoice"
+      "blockView"
     ]
     return
 

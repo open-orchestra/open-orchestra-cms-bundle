@@ -14,13 +14,14 @@ AreaView = OrchestraView.extend(
   initEvents: ->
     @events = {}
     @events["click i#none"] = "clickButton"
-    @events["click i.block-remove"] = "confirmRemoveBlock"
+    @events["click i.block-remove-" + @area.cid] = "confirmRemoveBlock"
     paramkey = "click i.area-param-" + @area.cid
     @events[paramkey] = "paramArea"
     removekey = "click i.area-remove-" + @area.cid
     @events[removekey] = "confirmRemoveArea"
     sortUpdateKey = "sortupdate ul.blocks-" + @cid
     @events[sortUpdateKey] = "sendBlockData"
+    return
 
   paramArea: (event) ->
     label = "~no label yet~"
@@ -89,8 +90,9 @@ AreaView = OrchestraView.extend(
     blockView = new BlockView(
       block: blockElement
       displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
+      areaCid: @area.cid
+      el: $("ul.blocks-" + @cid, @el)
     )
-    $("ul.blocks-" + @cid, @el).append blockView.render().el
 
   sendBlockData: (event)->
     ul = $(event.target)
