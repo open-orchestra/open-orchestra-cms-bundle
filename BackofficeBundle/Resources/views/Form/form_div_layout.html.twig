@@ -59,12 +59,16 @@
     {% spaceless %}
         {% set type = 'hidden' %}
         {{ block('form_widget') }}&nbsp;
-        <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
-            <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
-        </a>
+        <div class="btn">
+            <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
+                <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
+            </a><br />
+            <button class="btn btn-warning clear-media" data-input="{{ id }}">
+                Delete
+            </button>
+        </div>
         &nbsp;
-        <img height="100px" src="{{ media_preview(value) }}" id="previewImage" />
-
+        <img height="100px" src="{{ media_preview(value) }}" id="previewImage_{{ id }}" class="previewImage" data-none="{{ media_preview('') }}"/>
         {% include 'PHPOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
     {% endspaceless %}
 {% endblock %}
