@@ -18,6 +18,8 @@ NodeView = OrchestraView.extend(
       "nodeTitle"
       "widgetStatus"
       "areaView"
+      "nodeLanguage"
+      "nodeChoice"
     ]
     return
 
