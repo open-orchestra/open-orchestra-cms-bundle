@@ -34,9 +34,8 @@ AreaView = OrchestraView.extend(
     @removeArea event  if confirm("Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?")
 
   removeArea: (event) ->
-    ul = @el.parent()
-    $(@el).remove()
-    refreshUl ul
+    $(event.target).closest('li').remove()
+    refreshUl $(@el)
     @sendRemoveArea()
     return
 
