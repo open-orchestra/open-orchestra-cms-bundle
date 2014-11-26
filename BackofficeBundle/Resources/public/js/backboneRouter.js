@@ -145,6 +145,10 @@ var OrchestraBORouter = Backbone.Router.extend({
     $.each(this.routes, function(routePattern, routeName) {
       currentRouter.addRoutePattern(routeName, routePattern);
     });
+    this.addRoutePattern(
+      'loadUnderscoreTemplate',
+      $('#contextual-informations').data('templateUrlPattern')
+    );
   },
 
   initDisplayRouteChanges: function(selector)

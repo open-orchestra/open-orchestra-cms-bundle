@@ -11,7 +11,7 @@
       }
       if (!this.templates[language][templateName]) {
         var self = this;
-        filename = appRouter.generateUrl('loadUndescroreTemplate', {'language': language, 'templateId': templateName})
+        filename = appRouter.generateUrl('loadUnderscoreTemplate', {'language': language, 'templateId': templateName})
         jQuery.get(filename, function(tpl) {
           self.addTemplate(templateName, language, tpl);
           self.saveLocalTemplates();

@@ -17,6 +17,7 @@ NodeView = OrchestraView.extend(
       "nodeView"
       "nodeTitle"
       "widgetStatus"
+      "areaView"
     ]
     return
 
@@ -113,8 +114,8 @@ NodeView = OrchestraView.extend(
       area: areaElement
       node_id: @node.get('node_id'),
       displayClass: (if @node.get("bo_direction") is "v" then "inline" else "block")
+      el: @$el.find('ul.ui-model-areas').first()
     )
-    @$el.find('ul.ui-model-areas').first().append  areaView.render().el
     return
 
   addVersionToView: ->

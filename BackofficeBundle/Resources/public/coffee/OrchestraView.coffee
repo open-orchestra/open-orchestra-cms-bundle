@@ -36,10 +36,10 @@ OrchestraView = Backbone.View.extend(
     return
 
   renderTemplate: (templateName, parameters) ->
-    console.log('=== Rendering ' + templateName + ' in ===')
-    console.log(@el)
-    console.log('With params')
-    console.log(parameters)
+#    console.log('=== Rendering ' + templateName + ' in ===')
+#    console.log(@el)
+#    console.log('With params')
+#    console.log(parameters)
     
     @compiledTemplates[templateName](parameters)
 

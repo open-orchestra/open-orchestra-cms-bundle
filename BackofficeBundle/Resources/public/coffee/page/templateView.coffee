@@ -11,6 +11,7 @@ TemplateView = OrchestraView.extend(
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @loadTemplates [
       "templateView"
+      "areaView"
     ]
     return
 
@@ -36,8 +37,8 @@ TemplateView = OrchestraView.extend(
     areaView = new AreaView(
       area: areaElement,
       displayClass: (if @template.get("bo_direction") is "v" then "inline" else "block")
+      el: this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas')
     )
-    this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas').append areaView.render().el
     $("ul.ui-model-areas", @$el).each ->
       refreshUl $(this)
     return
