@@ -26,15 +26,11 @@ class ContentController extends Controller
     {
         $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
 
-        $form = $this->createForm(
-            'orchestra_content',
-            $content,
-            array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_content_form', array(
-                    'contentId' => $contentId,
-                ))
-            )
-        );
+        $form = $this->createForm('orchestra_content', $content, array(
+            'action' => $this->generateUrl('php_orchestra_backoffice_content_form', array(
+                'contentId' => $contentId,
+            ))
+        ));
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -68,17 +64,12 @@ class ContentController extends Controller
         $content->setContentType($contentType);
         $content->setLanguage($this->get('php_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage());
 
-        $form = $this->createForm(
-            'orchestra_content',
-            $content,
-            array(
-                'action' => $this->generateUrl(
-                    'php_orchestra_backoffice_content_new',
-                    array('contentType' => $contentType)
-                ),
-                'method' => 'POST',
-            )
-        );
+        $form = $this->createForm('orchestra_content', $content, array(
+            'action' => $this->generateUrl('php_orchestra_backoffice_content_new', array(
+                'contentType' => $contentType
+            )),
+            'method' => 'POST',
+        ));
 
         $form->handleRequest($request);
 

@@ -24,7 +24,7 @@ class ContentTypeController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentTypeId)
     {
-        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneByContentTypeIdAndLastVersion($contentTypeId);
+        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($contentTypeId);
         $newContentType = $this->get('php_orchestra_backoffice.manager.content_type')->duplicate($contentType);
 
         $form = $this->createForm(

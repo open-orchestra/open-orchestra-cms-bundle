@@ -50,7 +50,9 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         $dataSend = $event->getData();
         $type = $dataSend['type'];
 
-        $this->checkFieldType($data, $type, $form);
+        if ($data instanceof FieldTypeInterface) {
+            $this->checkFieldType($data, $type, $form);
+        }
     }
 
     /**
