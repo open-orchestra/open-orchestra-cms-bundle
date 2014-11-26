@@ -17,6 +17,7 @@ NodeView = OrchestraView.extend(
       "nodeView"
       "nodeTitle"
       "widgetStatus"
+      "areaView"
     ]
     return
 
@@ -69,20 +70,22 @@ NodeView = OrchestraView.extend(
         version: @node.get('version')
       url: @node.get('links')._status_list
       success: (response) ->
-        widgetStatus = viewContext.renderTemplate 'widgetStatus',
+        widgetStatus = viewContext.renderTemplate('widgetStatus',
           current_status: viewContext.node.get('status')
           statuses: response.statuses
           status_change_link: viewContext.node.get('links')._self_status_change
+        )
         addCustomJarvisWidget(widgetStatus)
         return
 
   render: ->
-    title = @renderTemplate 'nodeTitle',
+    title = @renderTemplate('nodeTitle',
       node: @node
-    $(@el).html @renderTemplate 'nodeView',
+    )
+    $(@el).html @renderTemplate('nodeView',
       node: @node
       title: title
-    
+    )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
     for area of @node.get('areas')
@@ -111,8 +114,8 @@ NodeView = OrchestraView.extend(
       area: areaElement
       node_id: @node.get('node_id'),
       displayClass: (if @node.get("bo_direction") is "v" then "inline" else "block")
+      el: @$el.find('ul.ui-model-areas').first()
     )
-    @$el.find('ul.ui-model-areas').first().append  areaView.render().el
     return
 
   addVersionToView: ->
@@ -136,8 +139,8 @@ NodeView = OrchestraView.extend(
     view = new NodeVersionView(
       node: nodeVersionElement
       version: @version
+      el: this.$el.find('optgroup#versions')
     )
-    this.$el.find('optgroup#versions').append view.render()
 
   changeVersion: (event) ->
     Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + @language + '/' + event.currentTarget.value, {trigger: true}) if $(':selected', this.$el).closest('optgroup').attr('id') == 'versions'
@@ -161,8 +164,8 @@ NodeView = OrchestraView.extend(
       language: language
       nodeId: @node.get('node_id')
       currentLanguage: @language
+      el: this.$el.find('#node-languages')
     )
-    this.$el.find('#node-languages').append view.render()
 
   changeLanguage: (event) ->
     Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + $(event.currentTarget).data('language'), {trigger: true})

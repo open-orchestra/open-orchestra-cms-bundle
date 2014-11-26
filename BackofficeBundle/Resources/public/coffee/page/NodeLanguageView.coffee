@@ -1,14 +1,17 @@
-NodeLanguageView = Backbone.View.extend(
+NodeLanguageView = OrchestraView.extend(
   tagName: "li"
-  el: '#node-languages'
+
   initialize: (options) ->
     @language = options.language
     @nodeId = options.nodeId
     @currentLanguage = options.currentLanguage
-    @nodeLanguage = _.template($("#nodeLanguage").html())
+    @loadTemplates [
+      "nodeLanguage"
+    ]
     return
+
   render: ->
-    $(@el).append @nodeLanguage(
+    $(@el).append @renderTemplate('nodeLanguage',
       language: @language
       currentLanguage: @currentLanguage
     )

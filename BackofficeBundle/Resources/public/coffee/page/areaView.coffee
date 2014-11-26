@@ -1,24 +1,26 @@
-AreaView = Backbone.View.extend(
-  tagName: "li"
-  className: "ui-model-areas"
-  events:
-    "click i#none": "clickButton"
-    "click i.block-remove": "confirmRemoveBlock"
-
+AreaView = OrchestraView.extend(
   initialize: (options) ->
     @area = options.area
     @height = options.height
     @node_id = options.node_id
     @displayClass = options.displayClass
-    @areaTemplate = _.template($("#areaView").html())
+    @initEvents()
+    _.bindAll this, "render", "addAreaToView", "addBlockToView"
+    @loadTemplates [
+      "areaView"
+    ]
+    return
+
+  initEvents: ->
+    @events = {}
+    @events["click i#none"] = "clickButton"
+    @events["click i.block-remove"] = "confirmRemoveBlock"
     paramkey = "click i.area-param-" + @area.cid
     @events[paramkey] = "paramArea"
     removekey = "click i.area-remove-" + @area.cid
     @events[removekey] = "confirmRemoveArea"
     sortUpdateKey = "sortupdate ul.blocks-" + @cid
     @events[sortUpdateKey] = "sendBlockData"
-    _.bindAll this, "render", "addAreaToView", "addBlockToView"
-    return
 
   paramArea: (event) ->
     label = "~no label yet~"
@@ -48,12 +50,13 @@ AreaView = Backbone.View.extend(
     return
 
   render: ->
-    $(@el).addClass(@displayClass).html @areaTemplate(
+    $(@el).append @renderTemplate('areaView',
       area: @area
       cid: @cid
+      displayClass: @displayClass
     )
     this.drawContent()
-    
+
   drawContent: ->
     for area of @area.get("areas")
       @addAreaToView @area.get("areas")[area]
@@ -77,8 +80,8 @@ AreaView = Backbone.View.extend(
       area: areaElement
       node_id: @node_id
       displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
+      el: $("ul.areas-" + @cid, @el)
     )
-    $("ul.areas-" + @cid, @el).append areaView.render().el
 
   addBlockToView: (block) ->
     blockElement = new Block()

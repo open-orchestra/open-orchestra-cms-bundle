@@ -1,17 +1,20 @@
-NodeVersionView = Backbone.View.extend(
+NodeVersionView = OrchestraView.extend(
   tagName: "option"
-  el: '#versions'
+
   initialize: (options) ->
     @node = options.node
     @version = options.version
-    @nodeTitle = _.template($("#nodeTitle").html())
-    @nodeChoice = _.template($("#nodeChoice").html())
+    @loadTemplates [
+      "nodeTitle"
+      "nodeChoice"
+    ]
     return
+
   render: ->
-    title = @nodeTitle(
+    title = @renderTemplate('nodeTitle',
       node: @node
     )
-    $(@el).prepend @nodeChoice(
+    $(@el).prepend @renderTemplate('nodeChoice',
       title: title
       node: @node
       version: @version
