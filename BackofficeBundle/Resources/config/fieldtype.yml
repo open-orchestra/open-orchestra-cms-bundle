@@ -1,0 +1,59 @@
+parameters:
+
+#--[CUSTOM FIELDS]--------------#
+    php_orchestra_backoffice.custom_types:
+        text:
+            label: text
+            options:
+                max_length:
+                    default_value: 25
+                required:
+                    default_value: false
+        textarea:
+            label: textarea
+            options:
+                max_length:
+                    default_value: 100
+                required:
+                    default_value: false
+        tinymce:
+            label: Wysiwyg
+            options:
+                max_length:
+                    default_value: 500
+                required:
+                    default_value: false
+        integer:
+            label: integer
+            options:
+                rounding_mode:
+                    default_value: 0
+                grouping:
+                    default_value: 0
+                required:
+                    default_value: false
+        email:
+            label: email
+            options:
+                max_length:
+                    default_value: 50
+                required:
+                    default_value: false
+
+    php_orchestra_backoffice.options:
+        max_length:
+            type: integer
+            label: php_orchestra_backoffice.form.orchestra_fields.max_length
+            required: true
+        required:
+            type: checkbox
+            label: php_orchestra_backoffice.form.orchestra_fields.required_field
+            required: false
+        grouping:
+            type: integer
+            label: php_orchestra_backoffice.form.orchestra_fields.format
+            required: true
+        rounding_mode:
+            type: integer
+            label: php_orchestra_backoffice.form.orchestra_fields.rounding_mode
+            required: true

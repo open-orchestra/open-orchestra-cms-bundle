@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -15,13 +16,16 @@ use Symfony\Component\Translation\TranslatorInterface;
 class FieldOptionType extends AbstractType
 {
     protected $translator;
+    protected $options;
 
     /**
      * @param TranslatorInterface $translator
+     * @param array               $options
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, array $options)
     {
         $this->translator = $translator;
+        $this->options = $options;
     }
 
     /**
@@ -31,14 +35,7 @@ class FieldOptionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('key', 'hidden', array('label' => 'php_orchestra_backoffice.form.field_option.key'));
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-            $element = $event->getData();
-            $form = $event->getForm();
-            $form->add('value', 'text', array(
-                'label' => $element->getKey(),
-                'attr' => array('class' => 'field_type_option'),
-            ));
-        });
+        $builder->addEventSubscriber(new FieldOptionTypeSubscriber($this->options));
     }
 
     /**
