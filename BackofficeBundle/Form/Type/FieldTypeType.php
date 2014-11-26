@@ -58,7 +58,10 @@ class FieldTypeType extends AbstractType
             ))
             ->add('type', 'choice', array(
                 'choices' => $this->getChoices(),
-                'label' => 'php_orchestra_backoffice.form.field_type.type'
+                'label' => 'php_orchestra_backoffice.form.field_type.type',
+                'attr' => array(
+                    'class' => 'content_type_change_type'
+                )
             ));
         $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions));
     }

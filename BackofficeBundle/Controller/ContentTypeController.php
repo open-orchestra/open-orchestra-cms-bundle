@@ -33,12 +33,15 @@ class ContentTypeController extends AbstractAdminController
             array(
                 'action' => $this->generateUrl('php_orchestra_backoffice_content_type_form', array(
                         'contentTypeId' => $contentTypeId,
-                    ))
+                    )),
+                'method' => 'POST'
             )
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success'), $newContentType);
+        if (!$request->get('no_save')) {
+            $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success'), $newContentType);
+        }
 
         return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView()
