@@ -39,16 +39,10 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
                 'label' => 'label text',
                 'options' => array(
                     'max_length' => array(
-                        'type' => 'integer',
-                        'label' => 'label max length',
                         'default_value' => 25,
-                        'required' => true
                     ),
                     'required' => array(
-                        'type' => 'checkbox',
-                        'label' => 'label_checkbox',
                         'default_value' => false,
-                        'required' => false,
                     ),
                 ),
             ),

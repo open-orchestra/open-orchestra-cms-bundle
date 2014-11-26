@@ -122,6 +122,11 @@ php_orchestra_backoffice:
             node: Url to view one content.
             content_type: Content type to display.
             nb_characters: Number of characters to display before truncate the text.
+        orchestra_fields:
+            max_length: Max length
+            required_field: Field required
+            format: Format
+            rounding_mode: Rounding mode
     left_menu:
         tree:
             new_page: New page

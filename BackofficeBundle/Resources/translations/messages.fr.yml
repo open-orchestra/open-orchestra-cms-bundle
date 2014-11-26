@@ -117,6 +117,11 @@ php_orchestra_backoffice:
             node: Url de redirection pour voir un contenu.
             content_type: Type de contenu à afficher.
             nb_characters: Nombre de caratère à afficher avant de couper le texte.
+        orchestra_fields:
+            max_length: Longueur max
+            required_field: Champ requis
+            format: Format
+            rounding_mode: Type d'arrondi
     left_menu:
         tree:
             new_page: Nouvelle page

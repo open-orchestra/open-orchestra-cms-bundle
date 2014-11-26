@@ -33,7 +33,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
 
-        $this->form = new FieldOptionType($this->translator);
+        $this->form = new FieldOptionType($this->translator, array());
     }
 
     /**
@@ -66,5 +66,6 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->buildForm($this->builder, array());
 
         Phake::verify($this->builder)->add(Phake::anyParameters());
+        Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 }
