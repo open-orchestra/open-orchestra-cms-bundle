@@ -1,6 +1,7 @@
-TableviewCollectionView = Backbone.View.extend(
+TableviewCollectionView = OrchestraView.extend(
   events:
     'click #none': 'clickAdd'
+
   initialize: (options) ->
     @elements = options.elements
     @displayedElements = options.displayedElements
@@ -9,12 +10,14 @@ TableviewCollectionView = Backbone.View.extend(
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     _.bindAll this, "render"
-    @elementsTemplate = _.template($('#tableviewCollectionView').html())
     @documentActions = options.documentActions
-    @render()
+    @loadTemplates [
+      'tableviewCollectionView'
+    ]
     return
+
   render: ->
-    $(@el).html @elementsTemplate (
+    $(@el).html @renderTemplate('tableviewCollectionView',
       displayedElements: @displayedElements
       links: @elements.get('links')
       cid: @cid
@@ -28,6 +31,7 @@ TableviewCollectionView = Backbone.View.extend(
       lengthChange: false
     )
     return
+
   addElementToView: (elementData) ->
     elementModel = new TableviewModel
     elementModel.set elementData
@@ -40,6 +44,7 @@ TableviewCollectionView = Backbone.View.extend(
     )
     this.$el.find('tbody').append view.render().el
     return
+
   clickAdd: (event) ->
     event.preventDefault()
     if $('#main .' + $(event.target).attr('class')).length
