@@ -15,14 +15,22 @@ class NodeManager
      */
     protected $nodeRepository;
 
+    protected $areaManager;
+
+    protected $blockManager;
+
     /**
      * Constructor
      *
      * @param NodeRepository $nodeRepository
+     * @param AreaManager    $areaManager
+     * @param BlockManager   $blockManager
      */
-    public function __construct(NodeRepository $nodeRepository)
+    public function __construct(NodeRepository $nodeRepository, AreaManager $areaManager, BlockManager $blockManager)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->areaManager = $areaManager;
+        $this->blockManager = $blockManager;
     }
 
     /**
@@ -45,7 +53,7 @@ class NodeManager
 
     /**
      * @param NodeInterface $node
-     * @param string $language
+     * @param string        $language
      *
      * @return NodeInterface
      */
@@ -108,5 +116,25 @@ class NodeManager
         }
 
         return $newNode;
+    }
+
+    /**
+     * @param array $nodes
+     *
+     * @return bool
+     */
+    public function nodeConsistency($nodes)
+    {
+        if (is_array($nodes)) {
+            foreach ($nodes as $node) {
+                if (!$this->areaManager->areaConsistency($node) || !$this->blockManager->blockConsistency($node)) {
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

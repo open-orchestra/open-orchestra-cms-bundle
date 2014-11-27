@@ -6,6 +6,7 @@ parameters:
     php_orchestra_backoffice.manager.node.class: PHPOrchestra\BackofficeBundle\Manager\NodeManager
     php_orchestra_backoffice.manager.media_folder.class: PHPOrchestra\BackofficeBundle\Manager\FolderManager
     php_orchestra_backoffice.manager.content_type.class: PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager
+    php_orchestra_backoffice.manager.block.class: PHPOrchestra\BackofficeBundle\Manager\BlockManager
 
 services:
     php_orchestra_backoffice.context_manager:
@@ -27,9 +28,14 @@ services:
             - @php_orchestra_model.repository.node
     php_orchestra_backoffice.manager.node:
         class: %php_orchestra_backoffice.manager.node.class%
-        arguments: [@php_orchestra_model.repository.node]
+        arguments:
+            - @php_orchestra_model.repository.node
+            - @php_orchestra_backoffice.manager.area
+            - @php_orchestra_backoffice.manager.block
     php_orchestra_backoffice.manager.media_folder:
         class: %php_orchestra_backoffice.manager.media_folder.class%
         arguments: [@doctrine.odm.mongodb.document_manager]
     php_orchestra_backoffice.manager.content_type:
         class: %php_orchestra_backoffice.manager.content_type.class%
+    php_orchestra_backoffice.manager.block:
+        class: %php_orchestra_backoffice.manager.block.class%

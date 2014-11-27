@@ -3,6 +3,8 @@
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
 use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
+use PHPOrchestra\ModelBundle\Model\AreaInterface;
+use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
@@ -20,6 +22,7 @@ class AreaManager
     {
         $this->nodeRepository = $nodeRepository;
     }
+
     /**
      * Remove an area from an AreaCollections
      *
@@ -55,5 +58,62 @@ class AreaManager
                 }
             }
         }
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return bool
+     */
+    public function areaConsistency($node)
+    {
+        foreach ($node->getAreas() as $area) {
+            if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array         $blocks
+     * @param NodeInterface $node
+     * @param AreaInterface $area
+     *
+     * @return bool
+     */
+    protected function checkBlockRef($blocks, $node, $area)
+    {
+        foreach ($blocks as $block) {
+            if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
+
+                if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param BlockInterface $block
+     * @param string         $areaId
+     *
+     * @return bool
+     */
+    protected function blockIdExist($block, $areaId)
+    {
+        $areas = $block->getAreas();
+
+        foreach ($areas as $area) {
+            if ($area['areaId'] === $areaId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
