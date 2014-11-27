@@ -22,14 +22,20 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $manager;
 
     protected $nodeRepository;
+    protected $areaManager;
+    protected $blockManager;
+    protected $node;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-        $this->manager = new NodeManager($this->nodeRepository);
+        $this->areaManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\AreaManager');
+        $this->blockManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\BlockManager');
+        $this->manager = new NodeManager($this->nodeRepository, $this->areaManager, $this->blockManager);
     }
 
     /**
@@ -70,7 +76,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteTree(NodeRepository $nodeRepository, NodeInterface $nodeToDelete, $nodes)
     {
-        $manager = new NodeManager($nodeRepository);
+        $manager = new NodeManager($nodeRepository, $this->areaManager, $this->blockManager);
         $manager->deleteTree($nodeToDelete);
 
         foreach ($nodes as $node) {
@@ -154,6 +160,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * test hydrateNodeFromNodeId
+     */
     public function testHydrateNodeFromNodeId()
     {
         $newNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
@@ -174,5 +183,52 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($newNode)->addBlock($block);
         Phake::verify($newNode)->addArea($area);
+    }
+
+    /**
+     * Test nodeConsistency
+     *
+     * @param array $nodes
+     *
+     * @dataProvider generateConsistencyNode
+     */
+    public function testNodeConsistency($nodes)
+    {
+        Phake::when($this->areaManager)->areaConsistency(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->blockManager)->blockConsistency(Phake::anyParameters())->thenReturn(true);
+
+        $this->assertTrue($this->manager->nodeConsistency($nodes));
+    }
+
+    /**
+     * @return array
+     */
+    public function generateConsistencyNode()
+    {
+        return array(
+            array(array($this->node, $this->node, $this->node)),
+            array(array()),
+        );
+    }
+
+    /**
+     * @param array $nodes
+     *
+     * @dataProvider generateNoConsistencyNode
+     */
+    public function testNodeNoConsistency($nodes)
+    {
+        $this->assertFalse($this->manager->nodeConsistency($nodes));
+    }
+
+    /**
+     * @return array
+     */
+    public function generateNoConsistencyNode()
+    {
+        return array(
+            array(array($this->node, $this->node, $this->node)),
+            array($this->node),
+        );
     }
 }
