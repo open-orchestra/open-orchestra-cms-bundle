@@ -12,7 +12,9 @@ TableviewCollectionView = OrchestraView.extend(
     _.bindAll this, "render"
     @documentActions = options.documentActions
     @loadTemplates [
-      'tableviewCollectionView'
+      'tableviewCollectionView',
+      'tableviewView',
+      'tableviewActions'
     ]
     return
 
@@ -41,8 +43,8 @@ TableviewCollectionView = OrchestraView.extend(
       title: @title
       listUrl: @listUrl
       actions: @documentActions
+      el : this.$el.find('tbody')
     )
-    this.$el.find('tbody').append view.render().el
     return
 
   clickAdd: (event) ->
