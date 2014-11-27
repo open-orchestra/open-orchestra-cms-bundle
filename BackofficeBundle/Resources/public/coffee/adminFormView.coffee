@@ -16,6 +16,7 @@ adminFormView = OrchestraView.extend(
     @loadTemplates [
         'deleteButton'
     ]
+    $('.modal-footer', @el).hide()
     return
 
   render: ->
