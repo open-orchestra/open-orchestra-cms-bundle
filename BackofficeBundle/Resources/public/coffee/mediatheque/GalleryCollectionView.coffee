@@ -1,6 +1,7 @@
-GalleryCollectionView = Backbone.View.extend(
+GalleryCollectionView = OrchestraView.extend(
   events:
     'click #none': 'clickAdd'
+
   initialize: (options) ->
     @medias = options.medias
     @title = options.title
@@ -10,11 +11,13 @@ GalleryCollectionView = Backbone.View.extend(
     key = 'click i.ajax-folder-' + @cid
     @events[key] = 'clickRedirect'
     _.bindAll this, "render"
-    @mediasTemplate = _.template($('#galleryCollectionView').html())
-    @render()
+    @loadTemplates [
+      "galleryCollectionView"
+    ]
     return
+
   render: ->
-    $(@el).html @mediasTemplate (
+    $(@el).html @renderTemplate('galleryCollectionView',
       links: @medias.get('links')
       cid: @cid
     )
@@ -31,6 +34,7 @@ GalleryCollectionView = Backbone.View.extend(
     ).mouseleave ->
       $(this).find(".caption").slideToggle("fast")
       return
+
   addElementToView: (mediaData) ->
     mediaModel = new GalleryModel
     mediaModel.set mediaData
@@ -41,6 +45,7 @@ GalleryCollectionView = Backbone.View.extend(
     )
     this.$el.find('.superbox').append view.render().el
     return
+
   clickAdd: (event) ->
     event.preventDefault()
     if $('#main .' + $(event.target).attr('class')).length
@@ -57,6 +62,7 @@ GalleryCollectionView = Backbone.View.extend(
             title: title
             listUrl: listUrl
           )
+
   clickRedirect: (event) ->
     event.preventDefault()
     $('.modal-title').text $(event.target).html()
