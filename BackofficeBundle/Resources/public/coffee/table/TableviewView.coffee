@@ -1,33 +1,38 @@
-TableviewView = Backbone.View.extend(
-  tagName: 'tr'
-  events:
-    'click a.ajax-delete': 'clickDelete'
-    'click a.ajax-edit': 'clickEdit'
+TableviewView = OrchestraView.extend(
   initialize: (options) ->
+    @events = []
+    @events['click a.ajax-delete-' + @cid] = 'clickDelete'
+    @events['click a.ajax-edit-' + @cid] = 'clickEdit'
     @element = options.element
     @displayedElements = options.displayedElements
     @title = options.title
     @listUrl = options.listUrl
     _.bindAll this, "render"
-    @elementTemplate = _.template($('#tableviewView').html())
-    @actionsTemplate = _.template($('#tableviewActions').html())
     @actions =
       'form': true
       'delete' : true
     if (typeof options.actions isnt "undefined")
       for action of options.actions
         @actions[action] = options.actions[action]
+    @loadTemplates [
+      'tableviewView',
+      'tableviewActions'
+    ]
     return
+
   render: ->
+    $(@el).append('<tr></tr>')
+    row = $(@el).find('tr:last-of-type')
     for displayedElement in @displayedElements
-      $(@el).append @elementTemplate(
+      row.append @renderTemplate('tableviewView'
         value: @element.get(displayedElement)
       )
-    $(@el).append @actionsTemplate(
+    row.append @renderTemplate('tableviewActions',
       links: @element.get('links')
       actions: @actions
+      cid: @cid
     )
-    this
+
   clickDelete: (event) ->
     event.preventDefault()
     if confirm('Delete this element ?')
@@ -37,6 +42,7 @@ TableviewView = Backbone.View.extend(
         success: (response) ->
           return
       @$el.hide()
+
   clickEdit: (event) ->
     event.preventDefault()
     displayLoader('div[role="container"]')

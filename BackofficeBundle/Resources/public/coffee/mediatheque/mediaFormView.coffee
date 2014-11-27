@@ -1,12 +1,14 @@
-mediaFormView = Backbone.View.extend(
+mediaFormView = OrchestraView.extend(
   initialize: (options) ->
     @html = options.html
     @title = options.title
-    @formTemplate = _.template($('#fullPageFormView').html())
-    @render()
+    @loadTemplates [
+      'fullPageFormView'
+    ]
     return
+
   render: ->
-    $(@el).html @formTemplate (
+    $(@el).html @renderTemplate('fullPageFormView',
       html: @html
       listUrl: @listUrl
     )
@@ -17,6 +19,7 @@ mediaFormView = Backbone.View.extend(
       return
     @addEventOnForm()
     return
+
   addEventOnForm: ->
     viewContext = this
     $("form", @$el).on "submit", (e) ->

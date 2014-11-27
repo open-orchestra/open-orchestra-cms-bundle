@@ -1,9 +1,11 @@
-<div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
-    <span class="title"><%= block.get('ui_model').label %></span>
-    <div class="preview scroll block-param">
-        <%= block.get('ui_model').html %>
+<li class="ui-model-blocks <%= displayClass %>">
+    <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
+        <span class="title"><%= block.get('ui_model').label %></span>
+        <div class="preview scroll block-param">
+            <%= block.get('ui_model').html %>
+        </div>
+        <span class="action">
+            <i class="block-remove-<%= areaCid %> fa fa-trash-o"></i>
+        </span>
     </div>
-    <span class="action">
-        <i class="block-remove fa fa-trash-o"></i>
-    </span>
-</div>
+</li>

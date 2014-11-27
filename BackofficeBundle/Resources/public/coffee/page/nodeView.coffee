@@ -18,6 +18,9 @@ NodeView = OrchestraView.extend(
       "nodeTitle"
       "widgetStatus"
       "areaView"
+      "nodeLanguage"
+      "nodeChoice"
+      "blockView"
     ]
     return
 
@@ -175,7 +178,6 @@ NodeView = OrchestraView.extend(
     view = new PreviewLinkView(
       previewLink: previewLink
     )
-    view.render()
 
   addExistingBlockToView: ->
     viewContext = @

@@ -1,6 +1,8 @@
 vent = _.extend({}, Backbone.Events)
-adminFormView = Backbone.View.extend(
+
+adminFormView = OrchestraView.extend(
   el: '#OrchestraBOModal'
+
   initialize: (options) ->
     @url = options.url
     @method = if options.method then options.method else 'GET'
@@ -10,14 +12,16 @@ adminFormView = Backbone.View.extend(
       for i of options.triggers
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
-    @renderButton = _.template($("#deleteButton").html())
-    @call()
+    @loadTemplates [
+        'deleteButton'
+    ]
     return
-  call: ->
+
+  render: ->
     viewContext = this
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
-    $('.modal-footer', @el).html @renderButton
+    $('.modal-footer', @el).html @renderTemplate('deleteButton')
     $.ajax
       url: @url
       method: @method
@@ -25,13 +29,14 @@ adminFormView = Backbone.View.extend(
         if isLoginForm(response)
           redirectToLogin()
         else
-          viewContext.render(
+          viewContext.renderContent(
             html: response
           )
       error: ->
         $('.modal-body', viewContext.el).html 'Erreur durant le chargement'
     return
-  render: (options) ->
+
+  renderContent: (options) ->
     @html = options.html
     $('.modal-body', @el).html @html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
@@ -42,6 +47,7 @@ adminFormView = Backbone.View.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnForm()
+
   addEventOnForm: ->
     viewContext = this
     $("form", @$el).on "submit", (e) ->
@@ -49,7 +55,7 @@ adminFormView = Backbone.View.extend(
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
-            view = viewContext.render(
+            view = viewContext.renderContent(
               html: response
             )
             if $('#node_nodeId', viewContext.$el).length > 0
@@ -60,7 +66,7 @@ adminFormView = Backbone.View.extend(
               Backbone.history.loadUrl(displayRoute)
             displayMenu(displayRoute)
           400: (response) ->
-            view = viewContext.render(
+            view = viewContext.renderContent(
               html: response.responseText
             )
     return

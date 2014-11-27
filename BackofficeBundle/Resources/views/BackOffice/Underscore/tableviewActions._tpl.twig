@@ -1,9 +1,9 @@
 <td>
     <% if (typeof actions.form !== 'undefined' && typeof links._self_form !== 'undefined') { %>
-        <a href="#" class="ajax-edit">{{ 'php_orchestra_backoffice.form.edit'|trans({}, 'messages', language) }}</a>
+        <a href="#" class="ajax-edit-<%= cid %>">{{ 'php_orchestra_backoffice.form.edit'|trans({}, 'messages', language) }}</a>
     <% } %>
     <% if (typeof actions.delete !== 'undefined' && typeof links._self_delete !== 'undefined' ) { %>
-        <a href="#" class="ajax-delete">{{ 'php_orchestra_backoffice.form.delete'|trans({}, 'messages', language) }}</a>
+        <a href="#" class="ajax-delete-<%= cid %>">{{ 'php_orchestra_backoffice.form.delete'|trans({}, 'messages', language) }}</a>
     <% } %>
     <% if (typeof actions.select !== 'undefined' && typeof links._self_select !== 'undefined' ) { %>
         <a href="<%= links._self_select %>" class="ajax-select">{{ 'php_orchestra_backoffice.form.select'|trans({}, 'messages', language) }}</a>

@@ -1,10 +1,13 @@
-PreviewLinkView = Backbone.View.extend(
+PreviewLinkView = OrchestraView.extend(
   initialize: (options) ->
     @previewLink = options.previewLink
-    @preview = _.template($("#previewLink").html())
+    @loadTemplates [
+      "widgetPreviewLink"
+    ]
     return
+
   render: ->
-    widget = @preview(
+    widget = @renderTemplate('widgetPreviewLink',
       previewLink: @previewLink
     )
     addCustomJarvisWidget(widget)
