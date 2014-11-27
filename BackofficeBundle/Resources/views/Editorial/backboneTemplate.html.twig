@@ -111,29 +111,3 @@
         <% } %>
     </td>
 </script>
-
-<script type="text/html" id="galleryView">
-    <% if (media.get('displayed_image') != 'undefined') { %>
-        <img src="<%= media.get('displayed_image') %>" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>" height="117px"/>
-    <% } else if (media.get('mime_type') == 'image/png') { %>
-        {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
-            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
-        {% endimage %}
-    <% } else if (media.get('mime_type') == 'image/jpg') { %>
-        {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
-            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
-        {% endimage %}
-    <% } else if (media.get('mime_type') == 'image/jpeg') { %>
-        {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
-            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
-        {% endimage %}
-    <% } else if (media.get('mime_type') == 'application/pdf') { %>
-        {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-pdf.png' %}
-            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
-        {% endimage %}
-    <% } else { %>
-        {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-content.png' %}
-            <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
-        {% endimage %}
-    <% } %>
-</script>

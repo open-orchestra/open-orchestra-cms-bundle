@@ -12,7 +12,8 @@ GalleryCollectionView = OrchestraView.extend(
     @events[key] = 'clickRedirect'
     _.bindAll this, "render"
     @loadTemplates [
-      "galleryCollectionView"
+      "galleryCollectionView",
+      "galleryView"
     ]
     return
 
@@ -42,8 +43,8 @@ GalleryCollectionView = OrchestraView.extend(
       media: mediaModel
       title: @title
       listUrl: @listUrl
+      el: this.$el.find('.superbox')
     )
-    this.$el.find('.superbox').append view.render().el
     return
 
   clickAdd: (event) ->
