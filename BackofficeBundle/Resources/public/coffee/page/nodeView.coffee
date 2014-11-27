@@ -61,7 +61,7 @@ NodeView = OrchestraView.extend(
       url: @node.get('links')._self_duplicate
       method: 'POST'
       success: (response) ->
-        Backbone.history.navigate(redirectRoute, true)
+        Backbone.history.loadUrl(redirectRoute)
     return
 
   renderWidgetStatus: ->
