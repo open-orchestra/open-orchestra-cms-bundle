@@ -22,10 +22,10 @@ class MediaController extends AbstractAdminController
      */
     public function newAction(Request $request, $folderId)
     {
-        $folderRepository = $this->get('php_orchestra_model.repository.media_folder');
+        $folderRepository = $this->get('php_orchestra_media.repository.media_folder');
         $folder = $folderRepository->find($folderId);
 
-        $mediaClass = $this->container->getParameter('php_orchestra_model.document.media.class');
+        $mediaClass = $this->container->getParameter('php_orchestra_media.document.media.class');
         $media = new $mediaClass();
         $media->setMediaFolder($folder);
 
@@ -54,7 +54,7 @@ class MediaController extends AbstractAdminController
      */
     public function showFolders()
     {
-        $rootFolders = $this->get('php_orchestra_model.repository.media_folder')->findAllRootFolderBySiteId();
+        $rootFolders = $this->get('php_orchestra_media.repository.media_folder')->findAllRootFolderBySiteId();
 
         return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showModalFolderTree.html.twig', array(
                 'folders' => $rootFolders,

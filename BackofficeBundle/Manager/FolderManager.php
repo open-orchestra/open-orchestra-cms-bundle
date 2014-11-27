@@ -2,8 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Model\MediaFolderInterface;
-use PHPOrchestra\ModelBundle\Repository\MediaRepository;
+use PHPOrchestra\MediaBundle\Model\MediaFolderInterface;
+use PHPOrchestra\MediaBundle\Repository\MediaRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**

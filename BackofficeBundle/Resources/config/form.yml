@@ -168,7 +168,7 @@ services:
     php_orchestra_backoffice.type.media:
         class: %php_orchestra_backoffice.type.media.class%
         arguments:
-            - %php_orchestra_model.document.media.class%
+            - %php_orchestra_media.document.media.class%
         tags:
             - { name: form.type, alias: media}
     php_orchestra_backoffice.type.orchestra_media:
@@ -178,7 +178,7 @@ services:
     php_orchestra_backoffice.type.folder:
         class: %php_orchestra_backoffice.type.folder.class%
         arguments:
-            - %php_orchestra_model.document.media_folder.class%
+            - %php_orchestra_media.document.media_folder.class%
         tags:
             - { name: form.type, alias: folder}
     php_orchestra_backoffice.type.orchestra_node_choice:

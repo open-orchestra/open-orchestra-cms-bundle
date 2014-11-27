@@ -78,7 +78,7 @@ class FormControllersTest extends WebTestCase
      */
     public function testMediaForm()
     {
-        $mediaFolderRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.media_folder');
+        $mediaFolderRepository = static::$kernel->getContainer()->get('php_orchestra_media.repository.media_folder');
         $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
 
         $url = '/admin/media/new/' . $mediaFolder->getId();

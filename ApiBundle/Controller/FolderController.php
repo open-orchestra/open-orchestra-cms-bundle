@@ -27,7 +27,7 @@ class FolderController extends Controller
      */
     public function deleteAction($folderId)
     {
-        $folder = $this->get('php_orchestra_model.repository.media_folder')->find($folderId);
+        $folder = $this->get('php_orchestra_media.repository.media_folder')->find($folderId);
 
         if ($folder) {
             $folderManager = $this->get('php_orchestra_backoffice.manager.media_folder');
