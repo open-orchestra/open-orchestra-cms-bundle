@@ -7,24 +7,25 @@
 <ul id="node-languages" class="nav nav-tabs">
 </ul>
 <div id="preview"></div>
-<div id="additionalContent" class="smart-form" style="margin-bottom: 15px">
+<a id="btn-new-version" class="btn btn-info" target="_blank">
+    <i class="glyphicon glyphicon-pencil"></i>
+    {{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}
+</a>
+<div id="additionalContent" class="smart-form">
     <label class="select">
         <select id="selectbox">
             <optgroup id="versions"></optgroup>
-            <optgroup id="duplicate">
-                <option class="ajax-node-duplicate-<%= node.cid %>">{{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}</option>
-            </optgroup>
         </select>
         <i></i>
     </label>
 </div>
-<div id="generated-title" style="display: none">
+<div id="generated-title">
     <%= title %>
 </div>
-<div id="generated-panel" style="display: none">
+<div id="generated-panel">
     <div class="header">
         <i class="fa fa-arrow-circle-left"></i>
-        <h2>Blocks</h2>
+        <h2>{{ ('php_orchestra_backoffice.node.blocks') | trans({}, 'messages', language) }}</h2>
     </div>
     <div class="ui-model scroll panel-shadow">
         <ul class="ui-model-blocks rigth-panel-blocks">

@@ -194,13 +194,14 @@ php_orchestra_backoffice:
             title: Login Block
     node:
         version:
-            create: Create a new version of node
+            create: New version
             display: version
         preview: Preview
         last_update:
             at: Last update
             by: by
         delete: You are about to delete a node. Would you like to continue?
+        blocks: Blocks
     status:
         none_available: No status available
     top_menu:
