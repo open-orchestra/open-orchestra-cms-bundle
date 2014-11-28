@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormEvents;
 class FolderTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
-    protected $class = 'PHPOrchestra\ModelBundle\Document\MediaFolder';
+    protected $class = 'PHPOrchestra\MediaBundle\Document\MediaFolder';
 
     /**
      * Set up the test

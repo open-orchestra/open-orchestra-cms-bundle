@@ -28,7 +28,7 @@ class MediaController extends Controller
      */
     public function showAction($mediaId)
     {
-        $media = $this->get('php_orchestra_model.repository.media')->find($mediaId);
+        $media = $this->get('php_orchestra_media.repository.media')->find($mediaId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('media')->transform($media);
     }
@@ -45,7 +45,7 @@ class MediaController extends Controller
     public function listAction(Request $request)
     {
         $folderId = $request->get('folderId');
-        $mediaCollection = $this->get('php_orchestra_model.repository.media')->findByFolderId($folderId);
+        $mediaCollection = $this->get('php_orchestra_media.repository.media')->findByFolderId($folderId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('media_collection')->transform($mediaCollection, $folderId);
     }

@@ -86,7 +86,7 @@ class TreeController extends Controller
      */
     public function showFolderTreeAction()
     {
-        $rootFolders = $this->get('php_orchestra_model.repository.media_folder')->findAllRootFolderBySiteId();
+        $rootFolders = $this->get('php_orchestra_media.repository.media_folder')->findAllRootFolderBySiteId();
 
         return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showFolderTree.html.twig', array(
                 'folders' => $rootFolders,
