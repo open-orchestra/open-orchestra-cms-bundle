@@ -200,6 +200,7 @@ php_orchestra_backoffice:
         last_update:
             at: Last update
             by: by
+        delete: You are about to delete a node. Would you like to continue?
     status:
         none_available: No status available
     top_menu:
@@ -208,3 +209,7 @@ php_orchestra_backoffice:
         sign_out: Sign out
         improve_security: You can improve your security further after logging out by closing this opened browser
         fullscreen: Full screen
+    areas:
+        delete: You are about to delete an area. Would you like to continue?
+    templates:
+        delete: You are about to delete a template. Would you like to continue?

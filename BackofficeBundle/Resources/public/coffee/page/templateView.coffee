@@ -20,6 +20,7 @@ TemplateView = OrchestraView.extend(
     view = new adminFormView(
       url: @template.get('links')._self_form
       deleteurl: @template.get('links')._self_delete
+      confirmtext: $(".delete-confirm-txt-"+@template.cid).text()
     )
 
   render: ->

@@ -7,6 +7,7 @@ adminFormView = OrchestraView.extend(
     @url = options.url
     @method = if options.method then options.method else 'GET'
     @deleteurl = options.deleteurl if options.deleteurl
+    @confirmtext = options.confirmtext if options.confirmtext
     @events = {}
     if options.triggers
       for i of options.triggers
@@ -15,6 +16,7 @@ adminFormView = OrchestraView.extend(
     @loadTemplates [
         'deleteButton'
     ]
+    $('.modal-footer', @el).hide()
     return
 
   render: ->
@@ -40,8 +42,9 @@ adminFormView = OrchestraView.extend(
     @html = options.html
     $('.modal-body', @el).html @html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
-    if @deleteurl != undefined
+    if @deleteurl != undefined && @confirmtext != undefined
       $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
+      $('.ajax-delete', @el).attr('data-confirm-text', @confirmtext)
       $('.modal-footer', @el).show()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
