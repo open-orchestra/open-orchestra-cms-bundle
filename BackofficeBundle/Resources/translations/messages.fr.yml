@@ -188,13 +188,14 @@ php_orchestra_backoffice:
         login: Bloc de connexion
     node:
         version:
-            create: Créer une nouvelle version du node
+            create: Nouvelle version
             display: version
         preview: Prévisualisation
         last_update:
             at: Dernière mies à jour
             by: par
         delete: Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?
+        blocks: Blocs
     status:
         none_available: Pas de status disponible
     top_menu:

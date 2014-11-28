@@ -5,6 +5,7 @@ NodeView = OrchestraView.extend(
     'click i#none' : 'clickButton'
     'change select#selectbox': 'changeVersion'
     'click a.change-language': 'changeLanguage'
+    'click a#btn-new-version': 'duplicateNode'
 
   initialize: (options) ->
     @node = options.node
@@ -149,8 +150,7 @@ NodeView = OrchestraView.extend(
     )
 
   changeVersion: (event) ->
-    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + @language + '/' + event.currentTarget.value, {trigger: true}) if $(':selected', this.$el).closest('optgroup').attr('id') == 'versions'
-    @duplicateNode() if $(':selected', this.$el).closest('optgroup').attr('id') == 'duplicate'
+    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + @language + '/' + event.currentTarget.value, {trigger: true})
     return
 
   addLanguagesToView: ->
