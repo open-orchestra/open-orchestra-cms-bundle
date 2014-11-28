@@ -150,7 +150,12 @@ NodeView = OrchestraView.extend(
     )
 
   changeVersion: (event) ->
-    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + @language + '/' + event.currentTarget.value, {trigger: true})
+    redirectRoute = appRouter.generateUrl('showNodeWithLanguageAndVersion',
+      nodeId: @node.get('node_id'),
+      language: @language,
+      version: event.currentTarget.value
+    )
+    Backbone.history.navigate(redirectRoute , {trigger: true})
     return
 
   addLanguagesToView: ->
@@ -174,7 +179,11 @@ NodeView = OrchestraView.extend(
     )
 
   changeLanguage: (event) ->
-    Backbone.history.navigate('#node/show/' + @node.get('node_id') + '/' + $(event.currentTarget).data('language'), {trigger: true})
+    redirectRoute = appRouter.generateUrl('showNodeWithLanguage',
+      nodeId: @node.get('node_id'),
+      language: $(event.currentTarget).data('language')
+    )
+    Backbone.history.navigate(redirectRoute , {trigger: true})
 
   addPreviewLink: ->
     previewLink = @node.get('links')._self_preview
