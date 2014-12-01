@@ -47,6 +47,20 @@
 
 </head>
 {% block body_opener %}
+    <!-- #BODY -->
+    <!-- Possible Classes
+
+        * 'smart-style-{SKIN#}'
+        * 'smart-rtl'         - Switch theme mode to RTL
+        * 'menu-on-top'       - Switch to top navigation (no DOM change required)
+        * 'no-menu'           - Hides the menu completely
+        * 'hidden-menu'       - Hides the main menu but still accessable by hovering over left edge
+        * 'fixed-header'      - Fixes the header
+        * 'fixed-navigation'  - Fixes the main menu
+        * 'fixed-ribbon'      - Fixes breadcrumb
+        * 'fixed-page-footer' - Fixes footer
+        * 'container'         - boxed layout mode (non-responsive: will not work with fixed-navigation & fixed-ribbon)
+    -->
     <body class="desktop-detected fixed-header fixed-navigation pace-done fixed-ribbon">
 {% endblock %}
 
