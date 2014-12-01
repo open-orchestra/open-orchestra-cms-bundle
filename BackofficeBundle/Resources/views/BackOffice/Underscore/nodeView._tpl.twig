@@ -7,17 +7,21 @@
 <ul id="node-languages" class="nav nav-tabs">
 </ul>
 <div id="preview"></div>
-<a id="btn-new-version" class="btn btn-info" target="_blank">
-    <i class="glyphicon glyphicon-pencil"></i>
-    {{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}
-</a>
+<% if (node.get('node_type') == 'page') { %>
+    <a id="btn-new-version" class="btn btn-info" target="_blank">
+        <i class="glyphicon glyphicon-pencil"></i>
+        {{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}
+    </a>
+<% } %>
 <div id="additionalContent" class="smart-form">
-    <label class="select">
-        <select id="selectbox">
-            <optgroup id="versions"></optgroup>
-        </select>
-        <i></i>
-    </label>
+    <% if (node.get('node_type') == 'page') { %>
+        <label class="select">
+            <select id="selectbox">
+                <optgroup id="versions"></optgroup>
+            </select>
+            <i></i>
+        </label>
+    <% } %>
 </div>
 <div id="generated-title">
     <%= title %>

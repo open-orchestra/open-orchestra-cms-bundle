@@ -109,8 +109,6 @@ NodeView = OrchestraView.extend(
       else
         $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
           refreshUl $(this)
-    else if @node.get('node_type') == 'general'
-      @removeVersionFromView()
     @addLanguagesToView()
     return
 
@@ -136,9 +134,6 @@ NodeView = OrchestraView.extend(
         for nodeVersion of nodeCollection.get('nodes')
           viewContext.addChoiceToSelectBox(nodeCollection.get('nodes')[nodeVersion])
         return
-
-  removeVersionFromView: ->
-    $('#additionalContent', @$el).hide()
 
   addChoiceToSelectBox: (nodeVersion) ->
     nodeVersionElement = new Node
