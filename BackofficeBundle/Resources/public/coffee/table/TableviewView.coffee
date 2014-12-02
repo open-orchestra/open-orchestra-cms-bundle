@@ -35,13 +35,21 @@ TableviewView = OrchestraView.extend(
 
   clickDelete: (event) ->
     event.preventDefault()
-    if confirm('Delete this element ?')
-      $.ajax
+    smartConfirm(
+      titleWhite: 'Delete'
+      titleColorized: 'this element'
+      text: 'The removal will be final'
+      yesCallbackParams: 
         url: @element.get('links')._self_delete
-        method: 'DELETE'
-        success: (response) ->
-          return
-      @$el.hide()
+        row: $(event.target).closest('tr')
+      yesCallback: (params) ->
+        $.ajax
+          url: params.url
+          method: 'DELETE'
+          success: (response) ->
+            return
+        params.row.hide()
+    )
 
   clickEdit: (event) ->
     event.preventDefault()
