@@ -21,11 +21,15 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * =======================================================================
  * original filename: app.config.js
- * filesize: ??
+ * filesize: 12kb
  * author: Sunny (@bootstraphunt)
  * email: info@myorange.ca
  * =======================================================================
- *
+ * 
+ * GLOBAL ROOT (DO NOT CHANGE)
+ */
+	$.root_ = $('body');	
+/*
  * APP CONFIGURATION (HTML/AJAX/PHP Versions ONLY)
  * Description: Enable / disable certain theme features here
  * GLOBAL: Your left nav in your app will no longer fire ajax calls, set 
@@ -33,24 +37,61 @@
  */	
 	$.navAsAjax = false; 
 /*
- * GLOBAL: Sound Config
+ * GLOBAL: Sound Config (define sound path, enable or disable all sounds)
  */
 	$.sound_path = "sound/";
 	$.sound_on = true; 
 /*
+ * SAVE INSTANCE REFERENCE (DO NOT CHANGE)
+ * Save a reference to the global object (window in the browser)
+ */
+	var root = this,	
+/*
+ * DEBUGGING MODE
+ * debugState = true; will spit all debuging message inside browser console.
+ * The colors are best displayed in chrome browser.
+ */
+	debugState = false,	
+	debugStyle = 'font-weight: bold; color: #00f;',
+	debugStyle_green = 'font-weight: bold; font-style:italic; color: #46C246;',
+	debugStyle_red = 'font-weight: bold; color: #ed1c24;',
+	debugStyle_warning = 'background-color:yellow',
+	debugStyle_success = 'background-color:green; font-weight:bold; color:#fff;',
+	debugStyle_error = 'background-color:#ed1c24; font-weight:bold; color:#fff;',
+/*
  * Impacts the responce rate of some of the responsive elements (lower 
  * value affects CPU but improves speed)
  */
-	var throttle_delay = 350,
+	throttle_delay = 350,
 /*
  * The rate at which the menu expands revealing child elements on click
  */
 	menu_speed = 235,	
 /*
+ * Collapse current menu item as other menu items are expanded
+ * Careful when using this option, if you have a long menu it will
+ * keep expanding and may distrupt the user experience This is best 
+ * used with fixed-menu class
+ */
+	menu_accordion = true,	
+/*
  * Turn on JarvisWidget functionality
+ * Global JarvisWidget Settings
+ * For a greater control of the widgets, please check app.js file
+ * found within COMMON_ASSETS/UNMINIFIED_JS folder and see from line 1355
  * dependency: js/jarviswidget/jarvis.widget.min.js
  */
 	enableJarvisWidgets = true,
+/*
+ * Use localstorage to save widget settings
+ * turn this off if you prefer to use the onSave hook to save
+ * these settings to your datatabse instead
+ */	
+	localStorageJarvisWidgets = true,
+/*
+ * Turn off sortable feature for JarvisWidgets 
+ */	
+	sortableJarvisWidgets = true,		
 /*
  * Warning: Enabling mobile widgets could potentially crash your webApp 
  * if you have too many widgets running at once 
@@ -58,23 +99,41 @@
  */
 	enableMobileWidgets = false,	
 /*
- * Turn on fast click for mobile devices?
+ * Turn on fast click for mobile devices
  * Enable this to activate fastclick plugin
  * dependency: js/plugin/fastclick/fastclick.js 
  */
 	fastClick = false,
 /*
+ * SMARTCHAT PLUGIN ARRAYS & CONFIG
+ * Dependency: js/plugin/moment/moment.min.js 
+ *             js/plugin/cssemotions/jquery.cssemoticons.min.js 
+ *             js/smart-chat-ui/smart.chat.ui.js
+ * (DO NOT CHANGE BELOW) 
+ */	
+	boxList = [],
+	showList = [],
+ 	nameList = [],
+	idList = [],
+/*
+ * Width of the chat boxes, and the gap inbetween in pixel (minus padding)
+ */	
+	chatbox_config = {
+	    width: 200,
+	    gap: 35
+	},
+/*
  * These elements are ignored during DOM object deletion for ajax version 
  * It will delete all objects during page load with these exceptions:
  */
-	ignore_key_elms = ["#header, #left-panel, #main, div.page-footer, #shortcut, #divSmallBoxes, #divMiniIcons, #divbigBoxes, #voiceModal, script"],
+	ignore_key_elms = ["#header, #left-panel, #right-panel, #main, div.page-footer, #shortcut, #divSmallBoxes, #divMiniIcons, #divbigBoxes, #voiceModal, script, .ui-chatbox"],
 /*
  * VOICE COMMAND CONFIG
- * dependency: voicecommand.js
+ * dependency: js/speech/voicecommand.js
  */
 	voice_command = true,
 /*
- * Turns on speech without asking
+ * Turns on speech as soon as the page is loaded
  */	
 	voice_command_auto = false,
 /*
@@ -146,12 +205,13 @@
  */
 	voice_command_lang = 'en-US',
 /*
- * 	Use localstorage to remember on/off (best used with HTML Version)
+ * 	Use localstorage to remember on/off (best used with HTML Version
+ * 	when going from one page to the next)
  */	
 	voice_localStorage = true;
 /*
  * Voice Commands
- * Defines all voice command variables and functions
+ * Defines voice command variables and functions
  */	
  	if (voice_command) {
 	 		
@@ -192,7 +252,7 @@
 			'show maps' : function() { $('nav a[href="gmap-xml.html"]').trigger("click"); },
 			'show pricing tables' : function() { $('nav a[href="pricing-table.html"]').trigger("click"); },
 			'show invoice' : function() { $('nav a[href="invoice.html"]').trigger("click"); },
-			'show search page' : function() { $('nav a[href="search.html"]').trigger("click"); },
+			'show search' : function() { $('nav a[href="search.html"]').trigger("click"); },
 			'go back' :  function() { history.back(1); }, 
 			'scroll up' : function () { $('html, body').animate({ scrollTop: 0 }, 100); },
 			'scroll down' : function () { $('html, body').animate({ scrollTop: $(document).height() }, 100);},
@@ -265,10 +325,7 @@
 	};
 /*
  * END APP.CONFIG
- */
-
- 
- 
+ */ 
  
  
  

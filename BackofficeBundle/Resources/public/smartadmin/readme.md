@@ -1,1 +1,1 @@
-Version used : smartadmin 1.4, html version
+Version used : smartadmin 1.5.2, html version
