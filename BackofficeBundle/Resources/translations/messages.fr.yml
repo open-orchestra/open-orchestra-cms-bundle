@@ -64,6 +64,7 @@ php_orchestra_backoffice:
             content_id: Id de contenu
         content_type:
             success: Le type de contenu a été modifié
+            content_type_id: Id du content type
             names: Nom dans les différentes langue
             version: Version
             status: Status

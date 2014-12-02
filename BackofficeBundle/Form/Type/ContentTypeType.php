@@ -44,7 +44,12 @@ class ContentTypeType extends AbstractType
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
-            ->add('contentTypeId', 'hidden')
+            ->add('contentTypeId', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.content_type.content_type_id',
+                'attr' => array(
+                    'class' => 'content_type_dest',
+                )
+            ))
             ->add('names', 'translated_value_collection', array(
                 'label' => 'php_orchestra_backoffice.form.content_type.names'
             ))
