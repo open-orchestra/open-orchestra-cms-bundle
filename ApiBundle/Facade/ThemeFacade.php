@@ -13,9 +13,4 @@ class ThemeFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $name;
-
-    /**
-     * @Serializer\Type("boolean")
-     */
-    public $default;
 }
