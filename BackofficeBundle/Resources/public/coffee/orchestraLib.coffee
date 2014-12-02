@@ -4,7 +4,6 @@ getCurrentLocale = ->
 
 
 # SHOW CONTENT TITLE
-
 renderPageTitle = ->
   if ($('nav li.active:first > a > i').length > 0)
     $('#title-logo').addClass($('nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
@@ -13,14 +12,12 @@ renderPageTitle = ->
 
 
 # ADD CUSTOM JARVIS WIDGET
-
 addCustomJarvisWidget = (widget) ->
   $(widget).insertAfter($(".js-widget-title"))
   return
 
 
 # CHANGE NODE STATUS
-
 nodeChangeStatus = (url, newStatusId) ->
   displayLoader()
   data =
@@ -33,7 +30,6 @@ nodeChangeStatus = (url, newStatusId) ->
 
 
 # DISPLAY LOADER
-
 displayLoader = (element) ->
   element = "#content"  if typeof element is "undefined"
   $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
@@ -42,7 +38,6 @@ displayLoader = (element) ->
 
 # CALL A URL TO CHANGE SOMETHING IN THE CONTEXT
 # AND RELOAD HOMEPAGE
-
 callAndReload = (action) ->
   displayLoader()
   $.post action, (response) ->
@@ -50,12 +45,10 @@ callAndReload = (action) ->
       Backbone.history.navigate "#", true
       window.location.reload()
     return
-
   return
 
 
 # REFRESH NAV MENU
-
 displayMenu = (route) ->
   selectedPath = undefined
   if typeof route isnt "undefined"
@@ -99,7 +92,6 @@ displayMenu = (route) ->
 
 
 # AJAX LOADER
-
 orchestraAjaxLoad = (url, method, successCallback) ->
   displayLoader()
   method = "POST"  if typeof method is "undefined"
@@ -113,5 +105,15 @@ orchestraAjaxLoad = (url, method, successCallback) ->
         $("#content").html response
         successCallback()  if typeof successCallback isnt "undefined"
       return
+  return
 
+# SMARTADMIN CONFIRMATION
+smartConfirm = (params) ->
+  $.SmartMessageBox
+    title: "<i class='fa fa-sign-out txt-color-orangeDark'></i> " + params.titleWhite + " <span class='txt-color-orangeDark'><strong>" + params.titleColorized + "</strong></span> ?"
+    content: params.text
+    buttons: "[No][Yes]"
+  , (ButtonPressed) ->
+    params.yesCallback(params.yesCallbackParams)  if ButtonPressed is "Yes" and typeof params.yesCallback isnt "undefined"
+    return
   return

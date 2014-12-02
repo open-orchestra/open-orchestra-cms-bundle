@@ -110,7 +110,15 @@ AreaView = OrchestraView.extend(
 
   confirmRemoveBlock: (event) ->
     if @area.get("blocks").length > 0
-      @removeBlock event  if confirm("Vous êtes sur le point de supprimer un bloc. Souhaitez-vous poursuivre cette action ?")
+      smartConfirm(
+        titleWhite: 'Delete'
+        titleColorized: 'this block'
+        text: 'The removal will be final'
+        yesCallbackParams:
+          blockView: @
+        yesCallback: (params) ->
+          params.blockView.removeBlock(event)
+      )
 
   removeBlock: (event) ->
     ul = $(event.target).parents("ul").first()
