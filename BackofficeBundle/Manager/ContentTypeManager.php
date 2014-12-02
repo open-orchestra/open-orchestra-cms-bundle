@@ -9,6 +9,11 @@ use PHPOrchestra\ModelBundle\Model\ContentTypeInterface;
  */
 class ContentTypeManager
 {
+    /**
+     * @param ContentTypeInterface $contentType
+     *
+     * @return ContentTypeInterface
+     */
     public function duplicate(ContentTypeInterface $contentType)
     {
         $newContentType = clone $contentType;

@@ -71,6 +71,7 @@ class ContentTypeController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($contentType);
             $documentManager->flush();
