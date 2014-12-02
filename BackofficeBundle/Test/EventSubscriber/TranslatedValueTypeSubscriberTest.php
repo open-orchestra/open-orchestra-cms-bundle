@@ -59,7 +59,10 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->preSetData($this->event);
 
         Phake::verify($this->form)->add('value', 'text', array(
-            'label' => $language
+            'label' => $language,
+            'attr' => array(
+                'class' => 'content_type_source',
+            )
         ));
     }
 

@@ -20,7 +20,10 @@ class TranslatedValueTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         $form->add('value', 'text', array(
-            'label' => $data->getLanguage()
+            'label' => $data->getLanguage(),
+            'attr' => array(
+                'class' => 'content_type_source',
+            ),
         ));
     }
 
