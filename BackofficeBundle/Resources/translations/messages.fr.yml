@@ -49,6 +49,7 @@ php_orchestra_backoffice:
             default_language: Langue par défaut
             languages: Langues possibles
             blocks: Block affichable
+            theme: Thème par défaut
         theme:
             success: Le thème a été modifié
             creation: Le thème a été crée
