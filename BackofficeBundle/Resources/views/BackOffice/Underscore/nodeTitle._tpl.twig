@@ -9,5 +9,7 @@
 <% } %>
 ">
     <%= node.get('name') %>
-    ({{ 'php_orchestra_backoffice.node.version.display' | trans({}, 'messages', language) }} : #<%= node.get('version') %>)
+    <% if (node.get('node_type') == 'page') { %>
+        ({{ 'php_orchestra_backoffice.node.version.display' | trans({}, 'messages', language) }} : #<%= node.get('version') %>)
+    <% } %>
 </span>
