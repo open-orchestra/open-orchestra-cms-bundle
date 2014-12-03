@@ -27,7 +27,7 @@ GalleryCollectionView = OrchestraView.extend(
     for mediaKey of @medias.get(@medias.get('collection_name'))
       @addElementToView (@medias.get(@medias.get('collection_name'))[mediaKey])
     $("img", @$el).each ->
-      $(this).wrap("<div class=\"figure\"></div>").after("<p class=\"caption\">" + $(this).attr("title") + "</p>").removeAttr "title"
+      $(this).wrap("<div class=\"figure superbox-list\"></div>").after("<p class=\"caption\">" + $(this).attr("title") + "</p>")
     $(".figure").width $(this).find("img").width()
     $(".figure").mouseenter(->
       $(this).find(".caption").slideToggle("fast")

@@ -35,6 +35,9 @@ class MediaTransformer extends AbstractTransformer
         $facade->displayedImage = $this->mediathequeUrl .'/' . $mixed->getThumbnail();
 
         $facade->addLink('_self_select', $mixed->getId());
+        $facade->addLink('_self_crop', $this->generateRoute('php_orchestra_backoffice_media_crop', array(
+            'mediaId' => $mixed->getId()
+        )));
 
         return $facade;
     }
