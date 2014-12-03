@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
 use PHPOrchestra\MediaBundle\Document\Folder;
-use PHPOrchestra\ModelBundle\Model\FolderInterface;
+use PHPOrchestra\MediaBundle\Model\FolderInterface;
 use PHPOrchestra\MediaBundle\Document\MediaFolder;
 use Doctrine\Common\Collections\ArrayCollection;
 
