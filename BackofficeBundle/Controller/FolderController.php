@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelBundle\Model\FolderInterface;
+use PHPOrchestra\MediaBundle\Model\FolderInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
