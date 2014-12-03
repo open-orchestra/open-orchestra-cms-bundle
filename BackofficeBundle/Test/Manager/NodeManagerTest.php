@@ -224,6 +224,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $node = $this->manager->initializeNewNode();
 
         $this->assertInstanceOf($this->nodeClass, $node);
+        $this->assertEquals('fakeSiteId', $node->getSiteId());
+        $this->assertEquals('fakeLanguage', $node->getLanguage());
+        $this->assertEquals('fakeNameTheme', $node->getTheme());
     }
 
     /**
