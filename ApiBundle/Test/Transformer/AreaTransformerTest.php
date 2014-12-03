@@ -53,7 +53,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $this->otherNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->find(Phake::anyParameters())
             ->thenReturn($this->otherNode);
 
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
@@ -91,7 +91,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($area)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 0),
             array('nodeId' => 'root', 'blockId' => 0),
-            array('nodeId' => $this->currentNodeId, 'blockId' => 0),
+            array('nodeId' => $this->nodeMongoId, 'blockId' => 0),
         ));
 
         $areaFacade = $this->areaTransformer->transform($area, $this->node, $parentAreaId);
@@ -105,7 +105,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->transformer)->transform(
             $this->block,
             true,
-            $this->currentNodeId,
             0,
             'areaId',
             0,
@@ -114,7 +113,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->transformer)->transform(
             $this->block,
             false,
-            'otherNodeId',
             0,
             'areaId',
             1,
@@ -123,7 +121,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->transformer)->transform(
             $this->block,
             true,
-            $this->currentNodeId,
             0,
             'areaId',
             2,
@@ -192,8 +189,8 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->area)->setBlocks(array(
             0 => array('nodeId' => $nodeId, 'blockId' => $blockId)
         ));
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $this->language);
-        Phake::verify($this->block)->addArea(array('nodeId' => $this->currentNodeId, 'areaId' => $this->areaId));
+        Phake::verify($this->nodeRepository)->find($nodeId);
+        Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
         Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }
 
@@ -235,7 +232,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
             0 => array('nodeId' => 0, 'blockId' => $blockId)
         ));
         Phake::verify($this->node)->getBlock($blockId);
-        Phake::verify($this->block)->addArea(array('nodeId' => $this->currentNodeId, 'areaId' => $this->areaId));
-        Phake::verify($this->nodeRepository, Phake::never())->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters());
+        Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
+        Phake::verify($this->nodeRepository, Phake::never())->find(Phake::anyParameters());
     }
 }

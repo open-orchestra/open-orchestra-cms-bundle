@@ -53,22 +53,20 @@ class AreaTransformer extends AbstractTransformer
             $facade->addArea($this->getTransformer('area')->transform($subArea, $node, $mixed->getAreaId()));
         }
         foreach ($mixed->getBlocks() as $blockPosition => $block) {
-            if (0 === $block['nodeId'] || $node->getNodeId() == $block['nodeId']) {
+            if (0 === $block['nodeId'] || $node->getId() == $block['nodeId']) {
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $node->getBlock($block['blockId']),
                     true,
-                    $nodeId,
                     $block['blockId'],
                     $mixed->getAreaId(),
                     $blockPosition,
                     $nodeMongoId
                 ));
             } else {
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
+                $otherNode = $this->nodeRepository->find($block['nodeId']);
                 $facade->addBlock($this->getTransformer('block')->transform(
                     $otherNode->getBlock($block['blockId']),
                     false,
-                    $otherNode->getNodeId(),
                     $block['blockId'],
                     $mixed->getAreaId(),
                     $blockPosition,
@@ -203,10 +201,10 @@ class AreaTransformer extends AbstractTransformer
             if ($blockArray['nodeId'] === 0) {
                 $block = $node->getBlock($blockArray['blockId']);
             } else {
-                $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockArray['nodeId'], $node->getLanguage());
+                $blockNode = $this->nodeRepository->find($blockArray['nodeId']);
                 $block = $blockNode->getBlock($blockArray['blockId']);
             }
-            $block->addArea(array('nodeId' => $node->getNodeId(), 'areaId' => $source->getAreaId()));
+            $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));
         }
 
         $this->areaManager->deleteAreaFromBlock($source->getBlocks(), $blockDocument, $source->getAreaId(), $node);

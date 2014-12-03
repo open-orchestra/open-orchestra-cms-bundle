@@ -81,7 +81,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         Phake::when($transformerManager)->getRouter()->thenReturn($this->router);
 
-        $facadeExcepted = $this->blockTransformer->transform($block, true, 'root', 0);
+        $facadeExcepted = $this->blockTransformer->transform($block, true, 0, 0, 0, 'root');
 
         $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\BlockFacade', $facadeExcepted);
         $this->assertSame($component, $facadeExcepted->component);
@@ -123,7 +123,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->blockFacade->nodeId = $facadeNodeId;
         $this->blockFacade->blockId = $blockId;
 
-        Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($this->node)->getId()->thenReturn($nodeId);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 

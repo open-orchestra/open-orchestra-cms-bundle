@@ -93,25 +93,26 @@ class ApiControllersTest extends WebTestCase
         $block = $area['blocks'][3];
         $update = $area['links']['_self_block'];
 
+
         // Remove ref of area in block 3
         $formData = json_encode(array('blocks' => array(
-            array('node_id' => 'root', 'block_id' => 0),
-            array('node_id' => 'root', 'block_id' => 1),
-            array('node_id' => 'root', 'block_id' => 2),
+            array('node_id' => $block['node_id'], 'block_id' => 0),
+            array('node_id' => $block['node_id'], 'block_id' => 1),
+            array('node_id' => $block['node_id'], 'block_id' => 2),
         )));
 
         $crawler = $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['node_id']);
+        $nodeAfter = $this->nodeRepository->find($block['node_id']);
         $this->assertSame(array(), $nodeAfter->getBlock(3)->getAreas());
 
         // Add ref of area in block 3
         $formData = json_encode(array('blocks' => array(
-            array('node_id' => 'root', 'block_id' => 0),
-            array('node_id' => 'root', 'block_id' => 1),
-            array('node_id' => 'root', 'block_id' => 2),
-            array('node_id' => 'root', 'block_id' => 3),
+            array('node_id' => $block['node_id'], 'block_id' => 0),
+            array('node_id' => $block['node_id'], 'block_id' => 1),
+            array('node_id' => $block['node_id'], 'block_id' => 2),
+            array('node_id' => $block['node_id'], 'block_id' => 3),
         )));
 
         $crawler = $this->client->request('POST', $update, array(), array(), array(), $formData);

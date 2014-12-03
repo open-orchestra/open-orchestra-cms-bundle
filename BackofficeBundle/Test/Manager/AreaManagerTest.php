@@ -115,13 +115,13 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
     public function testDeleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $nodeId)
     {
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
-        Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($this->node)->getId()->thenReturn($nodeId);
 
         $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
 
         Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
         Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
-        Phake::verify($this->node, Phake::times(1))->getNodeId();
+        Phake::verify($this->node, Phake::times(1))->getId();
     }
 
     /**
@@ -159,16 +159,16 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteAreaFromBlockWithNodeId($oldBlocks, $newBlocks, $areaId, $nodeId, $nodeTransverseId)
     {
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($this->node);
+        Phake::when($this->nodeRepository)->find(Phake::anyParameters())->thenReturn($this->node);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
-        Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($this->node)->getId()->thenReturn($nodeId);
 
         $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
 
-        Phake::verify($this->nodeRepository, Phake::times(1))->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeTransverseId, $this->language);
+        Phake::verify($this->nodeRepository, Phake::times(1))->find($nodeTransverseId);
         Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
         Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
-        Phake::verify($this->node, Phake::times(1))->getNodeId();
+        Phake::verify($this->node, Phake::times(1))->getId();
     }
 
     /**

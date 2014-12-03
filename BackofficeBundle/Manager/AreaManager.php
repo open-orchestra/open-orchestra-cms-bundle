@@ -50,11 +50,11 @@ class AreaManager
             if (!in_array($blockReference, $newBlocks)) {
                 if ($blockReference['nodeId'] === 0) {
                     $block = $node->getBlock($blockReference['blockId']);
-                    $block->removeAreaRef($areaId, $node->getNodeId());
+                    $block->removeAreaRef($areaId, $node->getId());
                 } else {
-                    $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockReference['nodeId'], $node->getLanguage());
+                    $blockNode = $this->nodeRepository->find($blockReference['nodeId']);
                     $block = $blockNode->getBlock($blockReference['blockId']);
-                    $block->removeAreaRef($areaId, $node->getNodeId());
+                    $block->removeAreaRef($areaId, $node->getId());
                 }
             }
         }
@@ -86,7 +86,7 @@ class AreaManager
     protected function checkBlockRef($blocks, $node, $area)
     {
         foreach ($blocks as $block) {
-            if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
+            if ($block['nodeId'] === $node->getId() || $block['nodeId'] === 0) {
 
                 if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
 
