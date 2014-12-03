@@ -96,7 +96,7 @@ php_orchestra_backoffice:
             node_source: The source page (in case of copy)
         folder:
             success: The folder has been saved
-            delete: This folder contains media you cant delete it.
+            delete: This folder contains media, you can't delete it.
             name: Name
             site: Select sites for this folder
             edit: Edit folder
@@ -117,8 +117,8 @@ php_orchestra_backoffice:
             file: File
             success: The media has been saved
         sub_menu:
-            node: Root where start the menu
-            level: Level of the menu
+            node: Menu root
+            level: Menu depth
         content_list:
             node: Url to view one content.
             content_type: Content type to display.
@@ -163,8 +163,6 @@ php_orchestra_backoffice:
             title: Configurable content block
             contentTypeId: Choose a content type
             contentId: Choose a content
-        sample:
-            title: Sample block
         carrousel:
             title: Carousel block
         contact:
@@ -184,11 +182,11 @@ php_orchestra_backoffice:
         news:
             title: News block
         sub_menu:
-            title: Sub Menu Block
+            title: SubMenu Block
         content_list:
             title: Content List Block
         content:
-            title: Display one content Block
+            title: Content Block
         language_list:
             title: Language choice Block
         login:

@@ -1,4 +1,9 @@
 php_orchestra_backoffice:
+    language:
+        en: English
+        fr: Français
+        es: Español
+        de: Deutsch
     form:
         submit: Sauvegarder
         edit: Editer
@@ -10,18 +15,18 @@ php_orchestra_backoffice:
             draft: Brouillon
             Pending: En attente
             name: Nom
-            published: Published
+            published: Publié
             initial: Initial
-            labels: Labels dans toutes les langues
+            labels: Libellés dans toutes les langues
             from_role: Rôle recquis pour partir de ce status
             to_role: Rôle recquis pour arriver sur ce status
             color:
                 red: Rouge
                 orange: Orange
                 green: Vert
-            display_color: Couleur du status
-            creation: Le nouveau status a été créé
-            success: Le status a été modifié
+            display_color: Couleur du statut
+            creation: Le nouveau statut a été créé
+            success: Le statut a été modifié
         field_option:
             label: Option existante
             new: Nouvelle option
@@ -34,21 +39,21 @@ php_orchestra_backoffice:
             add: Ajout d'un champ
             new: Nouveau champ
             delete: Suppression d'un champ
-            field_id: Field id
-            labels: Label
+            field_id: Id du champ
+            labels: Libellé
             default_value: Valeur par défaut
             searchable: Recherchable
             type: Type
             options: Champ existant
         website:
             success: Le site a été modifié
-            creation: Le site a été crée
-            site_id: Le numéro du site
-            domain: Le domain principal du site
-            alias: L'alias du site
+            creation: Le site a été créé
+            site_id: L'id du site
+            domain: Domaine
+            alias: Alias
             default_language: Langue par défaut
-            languages: Langues possibles
-            blocks: Block affichable
+            languages: Langues
+            blocks: Blocs disponibles
             theme: Thème par défaut
         theme:
             success: Le thème a été modifié
@@ -62,62 +67,62 @@ php_orchestra_backoffice:
             status: Statut
             language: Langue
             content_type: Type de contenu
-            content_id: Id de contenu
+            content_id: Id du contenu
         content_type:
             success: Le type de contenu a été modifié
-            content_type_id: Id du content type
-            names: Nom dans les différentes langue
+            content_type_id: Id du type de contenu
+            names: Nom dans toutes les langues
             version: Version
-            status: Status
-            fields: Champs de formulaire
+            status: Statut
+            fields: Champs
         template:
-            success: Le template a été sauvé
+            success: Le gabarit a été sauvé
             name: Nom
             language: Langue
-            status: Status
+            status: Statut
             boDirection: Direction des fils
         node:
-            success: Le node a été sauvé
+            success: Le noeud a été sauvé
             name: Page
-            node_type: Type of Node
+            node_type: Type de noeud
             theme: Le thème
-            template_id: Id du modèle
+            template_id: Id du gabarit
             alias: Alias
             language: Langue
-            status: Status
+            status: Statut
             in_menu: Affiché dans les menus
             in_footer: Affiché dans le pied de page
-            role: Role nécessaire pour afficher la page
-            node_source: Page source (en cas de copie)
+            role: Rôle nécessaire pour afficher la page
+            node_source: La page source (en cas de copie)
         folder:
             success: Le répertoire a été sauvegardé
-            delete: Ce répertoire contient des média vous ne pouvez pas le supprimez.
+            delete: Ce répertoire contient des média, vous ne pouvez pas le supprimer.
             name: Nom
-            site: Sélectionné des sites pour ce répertoire
+            site: Sélectionner des sites pour ce répertoire
             edit: Editer le dossier
         area:
-            success: L'aire a été modifiée
+            success: La zone a été modifiée
             bo_direction: Direction des enfants
             bo_percent: Pourcentage de la taille des enfants
-            html_class: Class html pour l'aire
-            label: Libellé de l'aire
-            area_id: Id de l'aire
-            new_areas: Ajouter une nouvelle aire
-            new_blocks: Ajouter de nouveaux blocks
-            existing_block: Block existant
-            existing_blocks: Ajouter des blocks existants
+            html_class: Classe html pour la zone
+            label: Libellé de la zone
+            area_id: Id de la zone
+            new_areas: Ajouter de nouvelles zones
+            new_blocks: Ajouter de nouveaux blocs
+            existing_block: Bloc existant
+            existing_blocks: Ajouter un bloc existant
         block:
             success: Le bloc a été modifié
         media:
             file: Fichier
             success: Le média a été sauvegardé
         sub_menu:
-            node: Noeud racine où commence le menu
-            level: Nombre de niveau du menu
+            node: Racine du menu
+            level: Profondeur du menu
         content_list:
-            node: Url de redirection pour voir un contenu.
+            node: Url pour voir un contenu.
             content_type: Type de contenu à afficher.
-            nb_characters: Nombre de caratère à afficher avant de couper le texte.
+            nb_characters: Nombre de caratères à afficher avant de couper le texte.
         orchestra_fields:
             max_length: Longueur max
             required_field: Champ requis
@@ -128,15 +133,15 @@ php_orchestra_backoffice:
             new_page: Nouvelle page
             new_template: Nouveau gabarit
             new_media_folder: Nouveau répertoire
-            delete_node: Etes vous certain du supprimer le node %nodeId% ?
-            delete_template: Etes vous certain de supprimer le gabarit %templateName% ?
-            delete_media_folder: Etes vous certain de supprimer le repertoire %folderName%?
+            delete_node: Etes vous sûr de supprimer le noeud %nodeId% ?
+            delete_template: Etes vous sûr de supprimer le gabarit %templateName% ?
+            delete_media_folder: Etes vous sûr de supprimer le répertoire %folderName%?
         editorial:
             title: Editorial
             nodes: Pages
-            general_nodes: Pages générale
-            templates: Gabarit
-            contents: Contenu
+            general_nodes: Pages générales
+            templates: Gabarits
+            contents: Contenus
             mediatheque: Médiathèque
         administration:
             translation: Traduction
@@ -144,11 +149,11 @@ php_orchestra_backoffice:
             sites:
                 list: Sites
             themes:
-                list: Themes
+                list: Thèmes
             content_type:
                 list: Type de contenu
             status:
-                list: Status
+                list: Statut
             user:
                 list: Utilisateurs
             role:
@@ -158,8 +163,6 @@ php_orchestra_backoffice:
             title: Bloc contenu paramétrable
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
-        sample:
-            title: Bloc example
         carrousel:
             title: Bloc carrousel
         contact:
@@ -179,14 +182,15 @@ php_orchestra_backoffice:
         news:
             title: Bloc actualités
         sub_menu:
-            title: Bloc sous menu
+            title: Bloc sous-menu
         content_list:
-            title: Bloc qui liste les contenus
+            title: Bloc liste de contenus
         content:
-            title: Bloc qui affiche un contenu
+            title: Bloc contenu
         language_list:
-            title: Bloc de séléction de langue.
-        login: Bloc de connexion
+            title: Bloc séléction de langue
+        login: 
+            title: Bloc connexion
     node:
         version:
             create: Nouvelle version
@@ -198,9 +202,9 @@ php_orchestra_backoffice:
         delete: Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?
         blocks: Blocs
     status:
-        none_available: Pas de status disponible
+        none_available: Pas de statut disponible
     top_menu:
-        site: Site:
+        site: Site :
         collapse_menu: Replier le menu
         sign_out: Se déconnecter
         improve_security: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
@@ -208,4 +212,4 @@ php_orchestra_backoffice:
     areas:
         delete: Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?
     templates:
-        delete: Vous êtes sur le point de supprimer un template. Souhaitez-vous poursuivre cette action ?
+        delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
