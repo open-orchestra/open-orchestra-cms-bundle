@@ -42,7 +42,6 @@ callAndReload = (action) ->
   displayLoader()
   $.post action, (response) ->
     if response.success
-      Backbone.history.navigate "#", true
       window.location.reload()
     return
   return
