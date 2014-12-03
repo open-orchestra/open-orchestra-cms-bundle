@@ -22,6 +22,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'user/list': 'listUser',
     'role/list': 'listRole',
     'content-types/list': 'listContentTypes',
+    ':folderId/list/media/edit': 'listFolder',
     ':folderId/list': 'listFolder',
     ':list/list/edit': 'redirectToList',
     'translation': 'listTranslations',

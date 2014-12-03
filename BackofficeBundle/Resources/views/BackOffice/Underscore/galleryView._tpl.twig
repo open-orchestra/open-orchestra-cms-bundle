@@ -1,5 +1,13 @@
 <% if (media.get('displayed_image') != 'undefined') { %>
-    <img src="<%= media.get('displayed_image') %>" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>" height="117px"/>
+    <img
+        src="<%= media.get('displayed_image') %>"
+        data-img="<%= media.get('displayed_image') %>"
+        class="superbox-img selectable superbox-img-<%= cid %>"
+        data-id="<%= media.get('id') %>"
+        title="<%= media.get('name') %>"
+        alt="<%= media.get('name') %>"
+        height="117px"
+        />
 <% } else if (media.get('mime_type') == 'image/png') { %>
     {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-image.png' %}
         <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>

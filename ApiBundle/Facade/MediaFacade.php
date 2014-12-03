@@ -38,4 +38,18 @@ class MediaFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $displayedImage;
+
+    /**
+     * @Serializer\Type("array<string, string>")
+     */
+    protected $thumbnails = array();
+
+    /**
+     * @param string $key
+     * @param string $link
+     */
+    public function addThumbnail($key, $link)
+    {
+        $this->thumbnails[$key] = $link;
+    }
 }

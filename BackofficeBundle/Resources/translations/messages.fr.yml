@@ -116,6 +116,10 @@ php_orchestra_backoffice:
         media:
             file: Fichier
             success: Le média a été sauvegardé
+            format: Format de la preview
+            rectangle: Rectangle
+            max_width: Image de largeur maximale
+            max_height: Image de hauteur maximale
         sub_menu:
             node: Racine du menu
             level: Profondeur du menu
@@ -213,3 +217,5 @@ php_orchestra_backoffice:
         delete: Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?
     templates:
         delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
+    media:
+        current_preview: Image actuelle

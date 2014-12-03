@@ -60,4 +60,42 @@ class MediaController extends AbstractAdminController
                 'folders' => $rootFolders,
         ));
     }
+
+    /**
+     * @param Request $request
+     * @param string  $mediaId
+     *
+     * @Config\Route("/media/{mediaId}/crop", name="php_orchestra_backoffice_media_crop")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     */
+    public function cropAction(Request $request, $mediaId)
+    {
+        $form = $this->createForm('media_crop', null, array(
+            'action' => $this->generateUrl('php_orchestra_backoffice_media_crop', array(
+                'mediaId' => $mediaId,
+            ))
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+            $mediaRepository = $this->get('php_orchestra_media.repository.media');
+            $media = $mediaRepository->find($mediaId);
+
+            $this->get('php_orchestra_media.manager.image_resizer')->crop(
+                $media,
+                $data['x'],
+                $data['y'],
+                $data['h'],
+                $data['w'],
+                $data['format']
+            );
+        }
+
+        return $this->renderAdminForm($form);
+    }
 }
