@@ -96,7 +96,7 @@ php_orchestra_backoffice:
             node_source: The source page (in case of copy)
         folder:
             success: The folder has been saved
-            delete: This folder contains media, you cant delete it.
+            delete: This folder contains media, you can't delete it.
             name: Name
             site: Select sites for this folder
             edit: Edit folder
