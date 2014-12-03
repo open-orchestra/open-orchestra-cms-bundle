@@ -52,6 +52,11 @@ class SiteType extends AbstractType
             ->add('blocks', 'orchestra_block', array(
                 'multiple' => true,
                 'label' => 'php_orchestra_backoffice.form.website.blocks'
+            ))
+            ->add('theme', 'document', array(
+                'class'  => 'PHPOrchestra\ModelBundle\Document\Theme',
+                'property' => 'name',
+                'label' => 'php_orchestra_backoffice.form.website.theme'
             ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

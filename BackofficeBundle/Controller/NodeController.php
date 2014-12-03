@@ -50,20 +50,8 @@ class NodeController extends AbstractAdminController
      */
     public function newAction(Request $request, $parentId)
     {
-        $themeRepository = $this->container->get('php_orchestra_model.repository.theme');
-        $theme = $themeRepository->findOneByDefault(true);
-
-        $nodeClass = $this->container->getParameter('php_orchestra_model.document.node.class');
-        $node = new $nodeClass();
-
-        $contextManager = $this->get('php_orchestra_backoffice.context_manager');
-
-        $node->setSiteId($contextManager->getCurrentSiteId());
-        $node->setLanguage($contextManager->getCurrentLocale());
+        $node = $this->get('php_orchestra_backoffice.manager.node')->initializeNewNode();
         $node->setParentId($parentId);
-        if($theme !== null){
-            $node->setTheme($theme->getName());
-        }
 
         $url = $this->generateUrl('php_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('php_orchestra_backoffice.form.node.success');

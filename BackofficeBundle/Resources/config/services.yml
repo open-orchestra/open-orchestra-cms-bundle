@@ -30,8 +30,11 @@ services:
         class: %php_orchestra_backoffice.manager.node.class%
         arguments:
             - @php_orchestra_model.repository.node
+            - @php_orchestra_model.repository.site
             - @php_orchestra_backoffice.manager.area
             - @php_orchestra_backoffice.manager.block
+            - @php_orchestra_backoffice.context_manager
+            - %php_orchestra_model.document.node.class%
     php_orchestra_backoffice.manager.media_folder:
         class: %php_orchestra_backoffice.manager.media_folder.class%
         arguments: [@doctrine.odm.mongodb.document_manager]

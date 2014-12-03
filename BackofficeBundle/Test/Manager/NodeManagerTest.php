@@ -22,8 +22,11 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $manager;
 
     protected $nodeRepository;
+    protected $siteRepository;
     protected $areaManager;
     protected $blockManager;
+    protected $contextManager;
+    protected $nodeClass;
     protected $node;
 
     /**
@@ -31,11 +34,23 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $theme = Phake::mock('PHPOrchestra\ModelBundle\Model\ThemeInterface');
+        Phake::when($theme)->getName()->thenReturn('fakeNameTheme');
+        $site = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+        Phake::when($site)->getTheme()->thenReturn($theme);
+
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\AreaManager');
         $this->blockManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\BlockManager');
-        $this->manager = new NodeManager($this->nodeRepository, $this->areaManager, $this->blockManager);
+        $this->contextManager = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
+        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
+        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
+        $this->nodeClass = 'PHPOrchestra\ModelBundle\Document\Node';
+
+        $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass);
     }
 
     /**
@@ -76,7 +91,8 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteTree(NodeRepository $nodeRepository, NodeInterface $nodeToDelete, $nodes)
     {
-        $manager = new NodeManager($nodeRepository, $this->areaManager, $this->blockManager);
+        $manager = new NodeManager($nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass);
+
         $manager->deleteTree($nodeToDelete);
 
         foreach ($nodes as $node) {
@@ -198,6 +214,19 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->blockManager)->blockConsistency(Phake::anyParameters())->thenReturn(true);
 
         $this->assertTrue($this->manager->nodeConsistency($nodes));
+    }
+
+    /**
+     * Test initializeNewNode
+     */
+    public function testInitializeNewNode()
+    {
+        $node = $this->manager->initializeNewNode();
+
+        $this->assertInstanceOf($this->nodeClass, $node);
+        $this->assertEquals('fakeSiteId', $node->getSiteId());
+        $this->assertEquals('fakeLanguage', $node->getLanguage());
+        $this->assertEquals('fakeNameTheme', $node->getTheme());
     }
 
     /**

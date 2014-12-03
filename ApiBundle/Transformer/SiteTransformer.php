@@ -24,6 +24,7 @@ class SiteTransformer extends AbstractTransformer
         $facade->domain = $mixed->getDomain();
         $facade->alias = $mixed->getAlias();
         $facade->defaultLanguage = $mixed->getDefaultLanguage();
+        $facade->theme = $this->getTransformer('theme')->transform($mixed->getTheme());
 
         foreach ($mixed->getLanguages() as $language) {
             $facade->addLanguage($language);

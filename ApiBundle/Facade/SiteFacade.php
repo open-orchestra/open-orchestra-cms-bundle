@@ -40,6 +40,11 @@ class SiteFacade extends AbstractFacade
     protected $blocks = array();
 
     /**
+     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\ThemeFacade")
+     */
+    public $theme;
+
+    /**
      * @param string $value
      */
     public function addBlocks($value)

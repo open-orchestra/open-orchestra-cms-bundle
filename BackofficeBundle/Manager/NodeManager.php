@@ -4,6 +4,8 @@ namespace PHPOrchestra\BackofficeBundle\Manager;
 
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use PHPOrchestra\ModelBundle\Repository\SiteRepository;
+use PHPOrchestra\Backoffice\Context\ContextManager;
 
 /**
  * Class NodeManager
@@ -15,22 +17,34 @@ class NodeManager
      */
     protected $nodeRepository;
 
+    protected $siteRepository;
+
     protected $areaManager;
 
     protected $blockManager;
+
+    protected $contextManager;
+
+    protected $nodeClass;
 
     /**
      * Constructor
      *
      * @param NodeRepository $nodeRepository
+     * @param SiteRepository $siteRepository
      * @param AreaManager    $areaManager
      * @param BlockManager   $blockManager
+     * @param ContextManager $contextManager
+     * @param string         $nodeClass
      */
-    public function __construct(NodeRepository $nodeRepository, AreaManager $areaManager, BlockManager $blockManager)
+    public function __construct(NodeRepository $nodeRepository, SiteRepository $siteRepository, AreaManager $areaManager, BlockManager $blockManager, ContextManager $contextManager, $nodeClass)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->siteRepository = $siteRepository;
         $this->areaManager = $areaManager;
         $this->blockManager = $blockManager;
+        $this->contextManager = $contextManager;
+        $this->nodeClass = $nodeClass;
     }
 
     /**
@@ -136,5 +150,23 @@ class NodeManager
         } else {
             return false;
         }
+    }
+
+    /**
+     *
+     * @return PHPOrchestra\ModelBundle\Document\Node
+     */
+    public function initializeNewNode()
+    {
+        $node = new $this->nodeClass();
+        $node->setSiteId($this->contextManager->getCurrentSiteId());
+        $node->setLanguage($this->contextManager->getCurrentLocale());
+
+        $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
+        if ($site && ($theme = $site->getTheme())) {
+            $node->setTheme($theme->getName());
+        }
+
+        return $node;
     }
 }
