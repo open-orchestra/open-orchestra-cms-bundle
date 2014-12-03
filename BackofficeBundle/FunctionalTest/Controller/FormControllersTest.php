@@ -87,6 +87,19 @@ class FormControllersTest extends WebTestCase
     }
 
     /**
+     * Test folder form
+     */
+    public function testMediaFolderForm()
+    {
+        $mediaFolderRepository = static::$kernel->getContainer()->get('php_orchestra_media.repository.media_folder');
+        $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
+
+        $url = '/admin/folder/form/' . $mediaFolder->getId();
+        $this->client->request('GET', $url);
+        $this->assertForm($this->client->getResponse());
+    }
+
+    /**
      * @param Response $response
      */
     protected function assertForm(Response $response)
