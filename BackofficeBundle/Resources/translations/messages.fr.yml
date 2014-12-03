@@ -217,3 +217,5 @@ php_orchestra_backoffice:
         delete: Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?
     templates:
         delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
+    media:
+        current_preview: Image actuelle

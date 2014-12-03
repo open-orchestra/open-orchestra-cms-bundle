@@ -217,3 +217,5 @@ php_orchestra_backoffice:
         delete: You are about to delete an area. Would you like to continue?
     templates:
         delete: You are about to delete a template. Would you like to continue?
+    media:
+        current_preview: Current image

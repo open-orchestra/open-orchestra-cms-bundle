@@ -19,8 +19,8 @@ SuperboxView = OrchestraView.extend(
       listUrl: @listUrl
     )
     $('.js-widget-title', @$el).text @media.get('name')
+    @addPreview()
     @setupCropForm()
-    @setUpCrop()
 
   setUpCrop: ->
     superboxViewParam['$preview'] = $('#preview-pane', @$el)
@@ -71,17 +71,41 @@ SuperboxView = OrchestraView.extend(
       method: 'GET'
       success: (response) ->
         $('.media_crop_form', currentView.$el).html response
+        currentView.addEventOnForm()
 
   changeView: (e) ->
-    superboxViewParam['jcrop_api'].destroy()
+    superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
+    $('.media_crop_preview img', @$el).hide()
     format = e.currentTarget.value
     $('.superbox-current-img', @$el).append('<div id="preview-pane">
           <div class="preview-container">
               <img  class="jcrop-preview" alt="Preview" />
           </div>
       </div>')
-    $('#preview-pane .preview-container', @$el).height(100)
-    $('#preview-pane .preview-container', @$el).width(100)
-    $('#preview-pane .preview-container img', @$el).attr('src', $('.superbox-current-img', @$el).attr('src'))
+    $('#preview-pane .preview-container', @$el).height($('.media_crop_' + format, @$el).height())
+    $('#preview-pane .preview-container', @$el).width($('.media_crop_' + format, @$el).width())
+    $('.media_crop_' + format, @$el).show()
+    $('#preview-pane .preview-container img', @$el).attr 'src', $('.superbox-current-img', @$el).attr('src')
     @setUpCrop()
+
+  addPreview: ->
+    for thumbnail of @media.get('thumbnails')
+      $('.media_crop_preview', @$el).append('<img class="media_crop_' + thumbnail + '" src="' + @media.get('thumbnails')[thumbnail] + '" style="display: none;">')
+
+  addEventOnForm: ->
+    currentView = this
+    $(".media_crop_form form", @$el).on "submit", (e) ->
+      displayLoader('.media_crop_form')
+      e.preventDefault() # prevent native submit
+      $(this).ajaxSubmit
+        statusCode:
+          200: (response) ->
+            $('.media_crop_form', currentView.$el).html response
+            currentView.refreshImages()
+            currentView.addEventOnForm()
+    return
+
+  refreshImages: ->
+    $('.media_crop_preview img').each ->
+      $(this).attr 'src', $(this).attr('src') + '?' + Math.random()
 )

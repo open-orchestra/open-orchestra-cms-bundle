@@ -1,12 +1,10 @@
 {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
 
 <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
-<div id="preview-pane">
-    <div class="preview-container" style="width: 250px; height: 170px;">
-        <img src="<%= media.get('displayed_image') %>" class="jcrop-preview" alt="Preview" />
-    </div>
-</div>
 
+<div class="media_crop_preview">
+    <h3>{{ 'php_orchestra_backoffice.media.current_preview'|trans }}</h3>
+</div>
 <div class="media_crop_form"></div>
 
 {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
