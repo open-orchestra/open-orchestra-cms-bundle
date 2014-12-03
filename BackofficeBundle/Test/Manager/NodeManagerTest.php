@@ -49,6 +49,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
         $this->nodeClass = 'PHPOrchestra\ModelBundle\Document\Node';
+
         $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass);
     }
 
