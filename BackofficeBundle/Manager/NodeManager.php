@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
+use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
@@ -84,14 +85,19 @@ class NodeManager
     }
 
     /**
-     * @param NodeInterface  $node
+     * @param mixed $nodes
      */
-    public function deleteTree(NodeInterface $node)
+    public function deleteTree($nodes)
     {
-        $node->setDeleted(true);
-        $sons = $this->nodeRepository->findByParentId($node->getNodeId());
-        foreach ($sons as $son) {
-            $this->deleteTree($son);
+        $parentId = null;
+        foreach ($nodes as $node) {
+            $node->setDeleted(true);
+            $parentId = $node->getNodeId();
+        }
+
+        if ($parentId) {
+            $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId);
+            $this->deleteTree($sons);
         }
     }
 
@@ -154,13 +160,13 @@ class NodeManager
 
     /**
      *
-     * @return PHPOrchestra\ModelBundle\Document\Node
+     * @return NodeInterface
      */
     public function initializeNewNode()
     {
         $node = new $this->nodeClass();
         $node->setSiteId($this->contextManager->getCurrentSiteId());
-        $node->setLanguage($this->contextManager->getCurrentLocale());
+        $node->setLanguage($this->contextManager->getCurrentSiteDefaultLanguage());
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
         if ($site && ($theme = $site->getTheme())) {
