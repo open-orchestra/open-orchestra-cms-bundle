@@ -54,6 +54,7 @@ class FormControllersTest extends WebTestCase
             array('/admin/site/form/1'),
             array('/admin/status/new'),
             array('/admin/theme/new'),
+            array('/admin/keyword/new'),
             array('/admin/template/form/template_full'),
             array('/admin/template/area/form/template_full/left_menu'),
             array('/admin/content-type/form/car'),
