@@ -69,6 +69,7 @@ class AreaManager
     {
         foreach ($node->getAreas() as $area) {
             if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
+
                 return false;
             }
         }
@@ -87,8 +88,13 @@ class AreaManager
     {
         foreach ($blocks as $block) {
             if ($block['nodeId'] === $node->getId() || $block['nodeId'] === 0) {
-
                 if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
+
+                    return false;
+                }
+            } else {
+                $otherNode = $this->nodeRepository->find($block['nodeId']);
+                if (!$this->blockIdExist($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
 
                     return false;
                 }

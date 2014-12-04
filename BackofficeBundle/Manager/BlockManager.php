@@ -6,12 +6,23 @@ use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Model\AreaInterface;
 use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 /**
  * Class BlockManager
  */
 class BlockManager
 {
+    protected $nodeRepository;
+
+    /**
+     * @param NodeRepository $nodeRepository
+     */
+    public function __construct(NodeRepository $nodeRepository)
+    {
+        $this->nodeRepository = $nodeRepository;
+    }
+
     /**
      * @param NodeInterface $node
      *
@@ -30,24 +41,27 @@ class BlockManager
 
     /**
      * @param array          $refAreas
-     * @param NodeInterface  $node
+     * @param NodeInterface  $nodeRef
      * @param BlockInterface $block
      *
      * @return bool
      */
-    protected function checkAreaRef($refAreas, $node, $block)
+    protected function checkAreaRef($refAreas, $nodeRef, $block)
     {
         foreach ($refAreas as $refArea) {
+            if ($refArea['nodeId'] === $nodeRef->getId() || $refArea['nodeId'] === 0) {
+                $node = $nodeRef;
+            } else {
+                $otherNode = $this->nodeRepository->find($refArea['nodeId']);
+                $node = $otherNode;
+            }
+            $result = $this->AreaIdExist($refArea['areaId'], $node->getAreas());
 
-            if ($refArea['nodeId'] === $node->getNodeId() || $refArea['nodeId'] === 0) {
-                $result = $this->AreaIdExist($refArea['areaId'], $node->getAreas());
-
-                if (null === $result) {
+            if (null === $result) {
+                return false;
+            } else {
+                if (!$this->checkBlock($result->getBlocks(), $block, $node)) {
                     return false;
-                } else {
-                    if (!$this->checkBlock($result->getBlocks(), $block, $node)) {
-                        return false;
-                    }
                 }
             }
         }
@@ -100,7 +114,12 @@ class BlockManager
     protected function checkBlock($refBlocks, $block, $node)
     {
         foreach ($refBlocks as $refBlock) {
-            $blockRef = $node->getBlock($refBlock['blockId']);
+            if ( $node->getId() === $refBlock['nodeId'] || 0 === $refBlock['nodeId']) {
+                $blockRef = $node->getBlock($refBlock['blockId']);
+            } else {
+                $otherNode = $this->nodeRepository->find($refBlock['nodeId']);
+                $blockRef = $otherNode->getBlock($refBlock['blockId']);
+            }
 
             if ($blockRef->getLabel() === $block->getLabel()) {
                 return true;

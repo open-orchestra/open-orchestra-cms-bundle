@@ -42,3 +42,4 @@ services:
         class: %php_orchestra_backoffice.manager.content_type.class%
     php_orchestra_backoffice.manager.block:
         class: %php_orchestra_backoffice.manager.block.class%
+        arguments: [@php_orchestra_model.repository.node]

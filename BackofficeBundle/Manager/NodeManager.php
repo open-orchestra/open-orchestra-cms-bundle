@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
@@ -148,6 +147,7 @@ class NodeManager
         if (is_array($nodes)) {
             foreach ($nodes as $node) {
                 if (!$this->areaManager->areaConsistency($node) || !$this->blockManager->blockConsistency($node)) {
+
                     return false;
                 }
             }
@@ -159,7 +159,6 @@ class NodeManager
     }
 
     /**
-     *
      * @return NodeInterface
      */
     public function initializeNewNode()
