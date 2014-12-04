@@ -24,6 +24,8 @@ parameters:
     php_orchestra_api.transformer.status.class: PHPOrchestra\ApiBundle\Transformer\StatusTransformer
     php_orchestra_api.transformer.user.class: PHPOrchestra\ApiBundle\Transformer\UserTransformer
     php_orchestra_api.transformer.user_collection.class: PHPOrchestra\ApiBundle\Transformer\UserCollectionTransformer
+    php_orchestra_api.transformer.tag.class: PHPOrchestra\ApiBundle\Transformer\TagTransformer
+    php_orchestra_api.transformer.tag_collection.class: PHPOrchestra\ApiBundle\Transformer\TagCollectionTransformer
 
 services:
     php_orchestra_api.transformer_manager:
@@ -142,5 +144,13 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.user_collection:
         class: %php_orchestra_api.transformer.user_collection.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.tag:
+        class: %php_orchestra_api.transformer.tag.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.tag_collection:
+        class: %php_orchestra_api.transformer.tag_collection.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}

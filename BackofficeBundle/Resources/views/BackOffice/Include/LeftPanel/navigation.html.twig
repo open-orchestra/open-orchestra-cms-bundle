@@ -57,6 +57,17 @@
                 </li>
                 <li>
                     <a
+                        href="#tags/list"
+                        id="nav-tags"
+                        data-url="{{ path('php_orchestra_api_tag_list') }}"
+                        data-displayed-elements="label"
+                        title="{{ 'php_orchestra_backoffice.left_menu.administration.tag.list'|trans }}"
+                    >
+                        {{ 'php_orchestra_backoffice.left_menu.administration.tag.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a
                         href="#status/list"
                         id="nav-status"
                         data-url="{{ path('php_orchestra_api_status_list') }}"
@@ -68,17 +79,6 @@
                 </li>
                 <li>
                     <a
-                        href="#user/list"
-                        id="nav-user"
-                        data-url="{{ path('php_orchestra_api_user_list') }}"
-                        data-displayed-elements="username, roles"
-                        title="{{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}"
-                    >
-                        {{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a
                         href="#role/list"
                         id="nav-role"
                         data-url="{{ path('php_orchestra_api_role_list') }}"
@@ -86,6 +86,17 @@
                         title="{{ 'php_orchestra_backoffice.left_menu.administration.role.list'|trans }}"
                     >
                         {{ 'php_orchestra_backoffice.left_menu.administration.role.list'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#user/list"
+                        id="nav-user"
+                        data-url="{{ path('php_orchestra_api_user_list') }}"
+                        data-displayed-elements="username, roles"
+                        title="{{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}"
+                    >
+                        {{ 'php_orchestra_backoffice.left_menu.administration.user.list'|trans }}
                     </a>
                 </li>
             </ul>

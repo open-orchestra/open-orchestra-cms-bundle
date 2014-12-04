@@ -26,6 +26,7 @@ parameters:
     php_orchestra_backoffice.type.orchestra_color_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
     php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
     php_orchestra_backoffice.type.media_crop.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaCropType
+    php_orchestra_backoffice.type.tag.class: PHPOrchestra\BackofficeBundle\Form\Type\TagType
 
 services:
     # Template form type
@@ -211,3 +212,8 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: media_crop}
+    php_orchestra_backoffice.type.tag:
+        class: %php_orchestra_backoffice.type.tag.class%
+        tags:
+            - { name: form.type, alias: tag}
+

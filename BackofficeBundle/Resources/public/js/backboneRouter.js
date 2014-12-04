@@ -22,6 +22,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'user/list': 'listUser',
     'role/list': 'listRole',
     'content-types/list': 'listContentTypes',
+    'tags/list': 'listTags',
     ':folderId/list/media/edit': 'listFolder',
     ':folderId/list': 'listFolder',
     ':list/list/edit': 'redirectToList',
@@ -110,6 +111,12 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.initDisplayRouteChanges();
     tableViewLoad($("#nav-contentTypes"));
+  },
+
+  listTags: function()
+  {
+    this.initDisplayRouteChanges();
+    tableViewLoad($("#nav-tags"));
   },
 
   createTemplate: function()
