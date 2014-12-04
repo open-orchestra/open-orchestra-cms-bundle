@@ -54,10 +54,9 @@ class NodeController extends BaseController
      */
     public function deleteAction($nodeId)
     {
-        /** @var NodeInterface $node */
-        $node = $this->get('php_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId);
-        $this->get('php_orchestra_backoffice.manager.node')->deleteTree($node);
+        $nodes = $this->get('php_orchestra_model.repository.node')
+            ->findByNodeIdAndSiteId($nodeId);
+        $this->get('php_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

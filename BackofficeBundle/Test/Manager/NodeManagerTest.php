@@ -68,39 +68,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param NodeInterface   $node
-     * @param string          $language
-     *
-     * @dataProvider provideNodeAndLanguage
-     */
-    public function testCreateNewLanguageNode(NodeInterface $node, $language)
-    {
-        $alteredNode = $this->manager->createNewLanguageNode($node, $language);
-
-        Phake::verify($alteredNode)->setVersion(1);
-        Phake::verify($alteredNode)->setStatus(null);
-        Phake::verify($alteredNode)->setLanguage($language);
-    }
-
-    /**
-     * @param NodeRepository $nodeRepository
-     * @param NodeInterface  $nodeToDelete
-     * @param array          $nodes
-     *
-     * @dataProvider provideNodeToDelete
-     */
-    public function testDeleteTree(NodeRepository $nodeRepository, NodeInterface $nodeToDelete, $nodes)
-    {
-        $manager = new NodeManager($nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass);
-
-        $manager->deleteTree($nodeToDelete);
-
-        foreach ($nodes as $node) {
-            Phake::verify($node, Phake::times(1))->setDeleted(true);
-        }
-    }
-
-    /**
      * @return array
      */
     public function provideNode()
@@ -128,6 +95,21 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param NodeInterface   $node
+     * @param string          $language
+     *
+     * @dataProvider provideNodeAndLanguage
+     */
+    public function testCreateNewLanguageNode(NodeInterface $node, $language)
+    {
+        $alteredNode = $this->manager->createNewLanguageNode($node, $language);
+
+        Phake::verify($alteredNode)->setVersion(1);
+        Phake::verify($alteredNode)->setStatus(null);
+        Phake::verify($alteredNode)->setLanguage($language);
+    }
+
+    /**
      * @return array
      */
     public function provideNodeAndLanguage()
@@ -149,31 +131,33 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array
+     * Test deleteTree
      */
-    public function provideNodeToDelete()
+    public function testDeleteTree()
     {
-        $nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $nodeId = 'nodeId';
+        $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        $nodes = new ArrayCollection();
+        $nodes->add($node);
+        $nodes->add($node);
 
-        $nodesId = array('rootNodeId', 'childNodeId', 'otherChildNodeId');
-
-        $nodes = array();
-        foreach ($nodesId as $nodeId) {
-            $nodes[$nodeId] = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
-            Phake::when($nodes[$nodeId])->getNodeId()->thenReturn($nodeId);
-        }
-
+        $sonId = 'sonId';
+        $son = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        Phake::when($son)->getNodeId()->thenReturn($sonId);
         $sons = new ArrayCollection();
-        $sons->add($nodes[$nodesId[1]]);
-        $sons->add($nodes[$nodesId[2]]);
+        $sons->add($son);
+        $sons->add($son);
 
-        Phake::when($nodeRepository)->findByParentId($nodesId[0])->thenReturn($sons);
-        Phake::when($nodeRepository)->findByParentId($nodesId[1])->thenReturn(new ArrayCollection());
-        Phake::when($nodeRepository)->findByParentId($nodesId[2])->thenReturn(new ArrayCollection());
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($nodeId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($sonId)->thenReturn(new ArrayCollection());
 
-        return array(
-            array($nodeRepository, $nodes[$nodesId[0]], $nodes)
-        );
+        $this->manager->deleteTree($nodes);
+
+        Phake::verify($node, Phake::times(2))->setDeleted(true);
+        Phake::verify($son, Phake::times(2))->setDeleted(true);
+        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($nodeId);
+        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($sonId);
     }
 
     /**
@@ -217,6 +201,17 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array
+     */
+    public function generateConsistencyNode()
+    {
+        return array(
+            array(array($this->node, $this->node, $this->node)),
+            array(array()),
+        );
+    }
+
+    /**
      * Test initializeNewNode
      */
     public function testInitializeNewNode()
@@ -227,17 +222,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('fakeSiteId', $node->getSiteId());
         $this->assertEquals('fakeLanguage', $node->getLanguage());
         $this->assertEquals('fakeNameTheme', $node->getTheme());
-    }
-
-    /**
-     * @return array
-     */
-    public function generateConsistencyNode()
-    {
-        return array(
-            array(array($this->node, $this->node, $this->node)),
-            array(array()),
-        );
     }
 
     /**
