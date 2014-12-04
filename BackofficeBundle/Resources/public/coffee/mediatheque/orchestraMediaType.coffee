@@ -16,4 +16,4 @@ $(document).on "click", ".clear-media", (event) ->
   inputId = '#' + $(event.target).data('input')
   previewId = '#previewImage_' + $(event.target).data('input')
   $(inputId).val('')
-  $(previewId).attr('src', $(previewId).data('none'))
+  $(previewId).removeAttr('src')
