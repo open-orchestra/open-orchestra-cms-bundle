@@ -5,9 +5,9 @@ namespace PHPOrchestra\ApiBundle\Facade;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class TagFacade
+ * Class KeywordFacade
  */
-class TagFacade extends AbstractFacade
+class KeywordFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("string")

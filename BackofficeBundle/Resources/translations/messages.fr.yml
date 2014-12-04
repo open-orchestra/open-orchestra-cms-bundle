@@ -132,8 +132,9 @@ php_orchestra_backoffice:
             required_field: Champ requis
             format: Format
             rounding_mode: Type d'arrondi
-        tag:
+        keyword:
             label: Libellé
+            creation: Le mot-clé a été créé
             success: Le mot-clé a été mis à jour avec succès
     left_menu:
         tree:
@@ -165,7 +166,7 @@ php_orchestra_backoffice:
                 list: Utilisateurs
             role:
                 list: Rôles
-            tag:
+            keyword:
                 list: Mots-clés
     block:
         configurable_content:

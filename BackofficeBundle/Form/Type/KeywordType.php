@@ -9,9 +9,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
- * Class TagType
+ * Class KeywordType
  */
-class TagType extends AbstractType
+class KeywordType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -21,7 +21,7 @@ class TagType extends AbstractType
     {
         $builder
             ->add('label', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.tag.label'
+                'label' => 'php_orchestra_backoffice.form.keyword.label'
             )
         );
 
@@ -33,6 +33,6 @@ class TagType extends AbstractType
      */
     public function getName()
     {
-        return 'tag';
+        return 'keyword';
     }
 }

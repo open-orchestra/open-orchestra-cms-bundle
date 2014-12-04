@@ -2,36 +2,36 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\TagFacade;
+use PHPOrchestra\ApiBundle\Facade\KeywordFacade;
 use PHPOrchestra\ModelBundle\Document\Role;
 
 /**
- * Class TagTransformer
+ * Class KeywordTransformer
  */
-class TagTransformer extends AbstractTransformer
+class KeywordTransformer extends AbstractTransformer
 {
     /**
-     * @param Tag $mixed
+     * @param Keyword $mixed
      *
-     * @return TagFacade
+     * @return KeywordFacade
      */
     public function transform($mixed)
     {
-        $facade = new TagFacade();
+        $facade = new KeywordFacade();
 
         $facade->label = $mixed->getLabel();
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_tag_show',
-            array('tagId' => $mixed->getId())
+            'php_orchestra_api_keyword_show',
+            array('keywordId' => $mixed->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_tag_delete',
-            array('tagId' => $mixed->getId())
+            'php_orchestra_api_keyword_delete',
+            array('keywordId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_backoffice_tag_form',
-            array('tagId' => $mixed->getId())
+            'php_orchestra_backoffice_keyword_form',
+            array('keywordId' => $mixed->getId())
         ));
 
         return $facade;
@@ -42,6 +42,6 @@ class TagTransformer extends AbstractTransformer
      */
     public function getName()
     {
-        return 'tag';
+        return 'keyword';
     }
 }

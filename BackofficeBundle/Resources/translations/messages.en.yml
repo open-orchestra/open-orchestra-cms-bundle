@@ -132,9 +132,10 @@ php_orchestra_backoffice:
             required_field: Field required
             format: Format
             rounding_mode: Rounding mode
-        tag:
+        keyword:
             label: Label
-            success: Tag has been successfully updated
+            creation: Keyword has been created
+            success: Keyword has been successfully updated
     left_menu:
         tree:
             new_page: New page
@@ -165,8 +166,8 @@ php_orchestra_backoffice:
                 list: Users
             role:
                 list: Roles
-            tag:
-                list: Tags
+            keyword:
+                list: Keywords
     block:
         configurable_content:
             title: Configurable content block
