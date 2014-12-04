@@ -12,22 +12,28 @@ use PHPOrchestra\ModelBundle\Model\NodeInterface;
 class BlockManagerTest extends \PHPUnit_Framework_TestCase
 {
     protected $manager;
+    protected $nodeRepository;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->manager = new BlockManager();
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+
+        $this->manager = new BlockManager($this->nodeRepository);
     }
 
     /**
      * @param NodeInterface $node
+     * @param NodeInterface $node2
      *
      * @dataProvider provideNodeWithAreaAndBlock
      */
-    public function testBlockConsistency($node)
+    public function testBlockConsistency($node, $node2)
     {
+        Phake::when($this->nodeRepository)->find(Phake::anyParameters())->thenReturn($node2);
+
         $this->assertTrue($this->manager->blockConsistency($node));
     }
 
@@ -107,7 +113,7 @@ class BlockManagerTest extends \PHPUnit_Framework_TestCase
 
         $node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         Phake::when($node)->getAreas()->thenReturn(array($areaMain));
-        Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
+        Phake::when($node)->getId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
@@ -118,7 +124,7 @@ class BlockManagerTest extends \PHPUnit_Framework_TestCase
 
         $node2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         Phake::when($node2)->getAreas()->thenReturn(array($areaMain2));
-        Phake::when($node2)->getNodeId()->thenReturn('home');
+        Phake::when($node2)->getId()->thenReturn('home');
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
         Phake::when($node2)->getBlock(0)->thenReturn($block1);
         Phake::when($node2)->getBlock(1)->thenReturn($block2);
@@ -130,8 +136,8 @@ class BlockManagerTest extends \PHPUnit_Framework_TestCase
         $node2->addBlock($block3);
 
         return array(
-            array($node),
-            array($node2)
+            array($node, $node2),
+            array($node2, $node)
         );
     }
 }

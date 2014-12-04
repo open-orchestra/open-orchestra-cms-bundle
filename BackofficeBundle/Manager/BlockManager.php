@@ -55,7 +55,7 @@ class BlockManager
                 $otherNode = $this->nodeRepository->find($refArea['nodeId']);
                 $node = $otherNode;
             }
-            $result = $this->AreaIdExist($refArea['areaId'], $node->getAreas());
+            $result = $this->findAreaIfExist($refArea['areaId'], $node->getAreas());
 
             if (null === $result) {
                 return false;
@@ -75,7 +75,7 @@ class BlockManager
      *
      * @return Area|null
      */
-    protected function AreaIdExist($areaId, $areas)
+    protected function findAreaIfExist($areaId, $areas)
     {
         if (!empty($areas)) {
             foreach ($areas as $area) {
@@ -100,7 +100,7 @@ class BlockManager
         if ($areaId === $area->getAreaId()) {
             return $area;
         } else {
-            return $this->AreaIdExist($areaId, $area->getAreas());
+            return $this->findAreaIfExist($areaId, $area->getAreas());
         }
     }
 
