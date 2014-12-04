@@ -147,7 +147,6 @@ class NodeManager
         if (is_array($nodes)) {
             foreach ($nodes as $node) {
                 if (!$this->areaManager->areaConsistency($node) || !$this->blockManager->blockConsistency($node)) {
-
                     return false;
                 }
             }

@@ -88,7 +88,6 @@ class AreaManager
         foreach ($blocks as $block) {
             if ($block['nodeId'] === $node->getId() || $block['nodeId'] === 0) {
                 if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
-
                     return false;
                 }
             } else {
