@@ -47,7 +47,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->blockManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\BlockManager');
         $this->contextManager = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
-        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
+        Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn('fakeLanguage');
         $this->nodeClass = 'PHPOrchestra\ModelBundle\Document\Node';
 
         $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass);
