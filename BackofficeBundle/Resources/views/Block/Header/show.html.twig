@@ -1,3 +1,4 @@
 Id : <i>{{ id }}</i><br />
 Class : <i>{{ class }}</i><br />
-media : <img height="100px" src="{{ media_preview(mediaId) }}" />
+{% set src= media_preview(mediaId) %}
+media : <img height="100px" {% if src != '' %}src="{{ src }}"{% endif %} />

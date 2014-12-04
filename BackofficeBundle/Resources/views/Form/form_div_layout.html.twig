@@ -68,7 +68,8 @@
             </button>
         </div>
         &nbsp;
-        <img height="100px" src="{{ media_preview(value) }}" id="previewImage_{{ id }}" class="previewImage" data-none="{{ media_preview('') }}"/>
+        {% set src= media_preview(value) %}
+        <img height="100px" {% if src != '' %}src="{{ src }}"{% endif %} id="previewImage_{{ id }}" class="previewImage" />
         {% include 'PHPOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
     {% endspaceless %}
 {% endblock %}
