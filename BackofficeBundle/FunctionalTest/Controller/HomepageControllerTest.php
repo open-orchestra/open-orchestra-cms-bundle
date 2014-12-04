@@ -61,7 +61,8 @@ class HomepageControllerTest extends WebTestCase
 
         $formUser = $crawler->selectButton('node_submit')->form();
 
-        $formUser['node[name]'] = 'fixture test ' . time();
+        $nodeName = 'fixturetest' . time();
+        $formUser['node[name]'] = 'fixturetest' . time();
         $formUser['node[alias]'] = 'page-test';
         $formUser['node[nodeSource]'] = 'root';
 
@@ -69,6 +70,10 @@ class HomepageControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/admin/');
 
         $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
+
+        $crawler = $client->request('GET', '/api/node/' . $nodeName);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSame('application/json', $client->getResponse()->headers->get('content-type'));
     }
 
     /**

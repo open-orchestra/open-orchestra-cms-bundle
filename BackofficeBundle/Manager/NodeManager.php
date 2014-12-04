@@ -154,13 +154,13 @@ class NodeManager
 
     /**
      *
-     * @return PHPOrchestra\ModelBundle\Document\Node
+     * @return NodeInterface
      */
     public function initializeNewNode()
     {
         $node = new $this->nodeClass();
         $node->setSiteId($this->contextManager->getCurrentSiteId());
-        $node->setLanguage($this->contextManager->getCurrentLocale());
+        $node->setLanguage($this->contextManager->getCurrentSiteDefaultLanguage());
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
         if ($site && ($theme = $site->getTheme())) {
