@@ -114,5 +114,6 @@ smartConfirm = (params) ->
     buttons: "[No][Yes]"
   , (ButtonPressed) ->
     params.yesCallback(params.yesCallbackParams)  if ButtonPressed is "Yes" and typeof params.yesCallback isnt "undefined"
+    params.noCallback(params.yesCallbackParams)  if ButtonPressed is "No" and typeof params.noCallback isnt "undefined"
     return
   return
