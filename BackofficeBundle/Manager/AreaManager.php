@@ -69,6 +69,7 @@ class AreaManager
     {
         foreach ($node->getAreas() as $area) {
             if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
+
                 return false;
             }
         }
