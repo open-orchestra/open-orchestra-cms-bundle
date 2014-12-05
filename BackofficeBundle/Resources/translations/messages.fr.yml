@@ -228,4 +228,5 @@ php_orchestra_backoffice:
     command:
         node:
             success: Les références des noeuds sont cohérentes.
+            error: Les références des noeuds ne sont pas cohérentes.
         empty_choices: Choisissez un table à vérifier.

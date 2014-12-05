@@ -228,4 +228,5 @@ php_orchestra_backoffice:
     command:
         node:
             success: Nodes references are consistent.
+            error: Nodes refercences are not consistent.
         empty_choices: Choose which table to check.
