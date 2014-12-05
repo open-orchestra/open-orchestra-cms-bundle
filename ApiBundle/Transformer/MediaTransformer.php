@@ -46,6 +46,9 @@ class MediaTransformer extends AbstractTransformer
         $facade->addLink('_self_crop', $this->generateRoute('php_orchestra_backoffice_media_crop', array(
             'mediaId' => $mixed->getId()
         )));
+        $facade->addLink('_self_meta', $this->generateRoute('php_orchestra_backoffice_media_meta', array(
+            'mediaId' => $mixed->getId()
+        )));
 
         return $facade;
     }

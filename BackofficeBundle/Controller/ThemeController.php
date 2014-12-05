@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class ThemeController
  */
-class ThemeController extends Controller
+class ThemeController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -36,20 +35,14 @@ class ThemeController extends Controller
         );
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($theme);
-            $documentManager->flush();
 
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.theme.success')
-            );
-        }
+        $this->handleForm(
+            $form,
+            $this->get('translator')->trans('php_orchestra_backoffice.form.theme.success'),
+            $theme
+        );
 
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -92,8 +85,6 @@ class ThemeController extends Controller
             );
         }
 
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->renderAdminForm($form);
     }
 }

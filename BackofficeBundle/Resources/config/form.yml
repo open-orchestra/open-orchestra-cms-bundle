@@ -27,6 +27,7 @@ parameters:
     php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
     php_orchestra_backoffice.type.media_crop.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaCropType
     php_orchestra_backoffice.type.keyword.class: PHPOrchestra\BackofficeBundle\Form\Type\KeywordType
+    php_orchestra_backoffice.type.media_meta.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaMetaType
 
 services:
     # Template form type
@@ -216,4 +217,9 @@ services:
         class: %php_orchestra_backoffice.type.keyword.class%
         tags:
             - { name: form.type, alias: keyword}
-
+    php_orchestra_backoffice.type.media_meta:
+        class: %php_orchestra_backoffice.type.media_meta.class%
+        arguments:
+            - %php_orchestra_media.document.media.class%
+        tags:
+            - { name: form.type, alias: media_meta}

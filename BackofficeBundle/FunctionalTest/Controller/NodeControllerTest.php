@@ -3,34 +3,26 @@
 namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Client;
+use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 /**
  * Class NodeControllerTest
  */
-class NodeControllerTest extends WebTestCase
+class NodeControllerTest extends AbstractControllerTest
 {
     /**
-     * @var Client
+     * @var NodeRepository
      */
-    protected $client;
+    protected $nodeRepository;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->client = static::createClient();
-        $crawler = $this->client->request('GET', '/login');
+        parent::setUp();
 
-        $form = $crawler->selectButton('Login')->form();
-        $form['_username'] = 'nicolas';
-        $form['_password'] = 'nicolas';
-
-        $crawler = $this->client->submit($form);
-        $crawler = $this->client->request('GET', '/admin/');
+        $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
     }
 
     /**
@@ -38,10 +30,9 @@ class NodeControllerTest extends WebTestCase
      */
     public function testNodeForms()
     {
-        $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
-        $nodeRoot = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID);
-        $nodeTransverse = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID);
-        $nodeFixtureFull = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full');
+        $nodeRoot = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID);
+        $nodeTransverse = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID);
+        $nodeFixtureFull = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full');
 
         $url = '/admin/node/form/' . $nodeRoot->getId();
         $this->client->request('GET', $url);
@@ -85,8 +76,7 @@ class NodeControllerTest extends WebTestCase
      */
     public function testNodeTransverseEditable()
     {
-        $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
-        $nodeTransverse = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID);
+        $nodeTransverse = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID);
 
         $url = '/admin/node/form/' . $nodeTransverse->getId();
         $crawler = $this->client->request('GET', $url);
@@ -97,13 +87,29 @@ class NodeControllerTest extends WebTestCase
     }
 
     /**
-     * @param Response $response
+     * test new Node
      */
-    protected function assertForm(Response $response)
+    public function testNewNodePageHome()
     {
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertRegExp('/form/', $response->getContent());
-        $this->assertNotRegExp('/<html/', $response->getContent());
-        $this->assertNotRegExp('/_username/', $response->getContent());
+        $crawler = $this->client->request('GET', '/admin/');
+        $nbLink = $crawler->filter('a')->count();
+
+        $crawler = $this->client->request('GET', '/admin/node/new/fixture_full');
+
+        $formUser = $crawler->selectButton('node_submit')->form();
+
+        $nodeName = 'fixturetest' . time();
+        $formUser['node[name]'] = 'fixturetest' . time();
+        $formUser['node[alias]'] = 'page-test';
+        $formUser['node[nodeSource]'] = 'root';
+
+        $crawler = $this->client->submit($formUser);
+        $crawler = $this->client->request('GET', '/admin/');
+
+        $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
+
+        $crawler = $this->client->request('GET', '/api/node/' . $nodeName);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
     }
 }
