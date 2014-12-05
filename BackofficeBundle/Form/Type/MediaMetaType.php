@@ -28,10 +28,22 @@ class MediaMetaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
-        $builder->add('alt');
-        $builder->add('copyright');
-        $builder->add('comment', 'textarea');
+        $builder->add('title', null, array(
+            'label' => 'php_orchestra_backoffice.form.media.meta.title',
+            'required' => false,
+        ));
+        $builder->add('alt', null, array(
+            'label' => 'php_orchestra_backoffice.form.media.meta.alt',
+            'required' => false,
+        ));
+        $builder->add('copyright', null, array(
+            'label' => 'php_orchestra_backoffice.form.media.meta.copyright',
+            'required' => false,
+        ));
+        $builder->add('comment', 'textarea', array(
+            'label' => 'php_orchestra_backoffice.form.media.meta.comment',
+            'required' => false,
+        ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

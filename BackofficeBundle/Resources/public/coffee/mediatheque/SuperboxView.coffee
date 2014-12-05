@@ -21,6 +21,7 @@ SuperboxView = OrchestraView.extend(
     $('.js-widget-title', @$el).text @media.get('name')
     @addPreview()
     @setupCropForm()
+    @setupMetaForm()
 
   setUpCrop: ->
     superboxViewParam['$preview'] = $('#preview-pane', @$el)
@@ -71,7 +72,17 @@ SuperboxView = OrchestraView.extend(
       method: 'GET'
       success: (response) ->
         $('.media_crop_form', currentView.$el).html response
-        currentView.addEventOnForm()
+        currentView.addEventOnCropForm()
+
+  setupMetaForm: ->
+    currentView = this
+    displayLoader('.media_meta_form')
+    $.ajax
+      url: @media.get('links')._self_meta
+      method: 'GET'
+      success: (response) ->
+        $('.media_meta_form', currentView.$el).html response
+        currentView.addEventOnMetaForm()
 
   changeView: (e) ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
@@ -92,7 +103,7 @@ SuperboxView = OrchestraView.extend(
     for thumbnail of @media.get('thumbnails')
       $('.media_crop_preview', @$el).append('<img class="media_crop_' + thumbnail + '" src="' + @media.get('thumbnails')[thumbnail] + '" style="display: none;">')
 
-  addEventOnForm: ->
+  addEventOnCropForm: ->
     currentView = this
     $(".media_crop_form form", @$el).on "submit", (e) ->
       displayLoader('.media_crop_form')
@@ -102,7 +113,21 @@ SuperboxView = OrchestraView.extend(
           200: (response) ->
             $('.media_crop_form', currentView.$el).html response
             currentView.refreshImages()
-            currentView.addEventOnForm()
+            currentView.addEventOnCropForm()
+    return
+
+  addEventOnMetaForm: ->
+    currentView = this
+    $(".media_meta_form form", @$el).on "submit", (e) ->
+      e.preventDefault() # prevent native submit
+      $(this).ajaxSubmit
+        statusCode:
+          200: (response) ->
+            $('.media_meta_form', currentView.$el).html response
+            currentView.addEventOnMetaForm()
+          400: (response) ->
+            $('.media_meta_form', currentView.$el).html response
+            currentView.addEventOnMetaForm()
     return
 
   refreshImages: ->
