@@ -50,7 +50,9 @@ class ContentType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.content.name'
             ))
             ->add('keywords', 'orchestra_keywords', array(
-                'label' => 'php_orchestra_backoffice.form.content_type.keywords'
+                'label' => 'php_orchestra_backoffice.form.content_type.keywords',
+                'multiple' => true,
+                'required' => false
             ));
 
         $builder->addEventSubscriber(new ContentTypeSubscriber(
