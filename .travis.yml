@@ -5,8 +5,6 @@ source_key: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUlJRW93SUJBQUtDQVFFQXV
 cache:
   directories:
     - ~/.composer/cache
-    - vendor
-    - bin
 
 php:
   - 5.4
