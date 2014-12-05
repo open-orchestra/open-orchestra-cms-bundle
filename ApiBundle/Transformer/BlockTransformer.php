@@ -28,6 +28,7 @@ class BlockTransformer extends AbstractTransformer
     /**
      * @param BlockInterface $mixed
      * @param boolean        $isInside
+     * @param string|null    $nodeId
      * @param int|null       $blockNumber
      * @param int|null       $areaId
      * @param int|null       $blockPosition
@@ -35,14 +36,14 @@ class BlockTransformer extends AbstractTransformer
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $isInside = true, $blockNumber = null, $areaId = 0, $blockPosition = 0, $nodeMongoId = null)
+    public function transform($mixed, $isInside = true, $nodeId = null, $blockNumber = null, $areaId = 0, $blockPosition = 0, $nodeMongoId = null)
     {
         $facade = new BlockFacade();
 
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $mixed->getComponent();
         $facade->label = $mixed->getLabel();
-        $facade->nodeId = $nodeMongoId;
+        $facade->nodeId = $nodeId;
         $facade->blockId = $blockNumber;
 
         if (is_null($mixed->getLabel())) {
@@ -70,7 +71,7 @@ class BlockTransformer extends AbstractTransformer
             'html' => $html
         ));
 
-        if (!is_null($nodeMongoId) && !is_null($blockNumber)) {
+        if (!is_null($nodeId) && !is_null($blockNumber)) {
             $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_block_form',
                 array(
                     'nodeId' => $nodeMongoId,
@@ -101,7 +102,7 @@ class BlockTransformer extends AbstractTransformer
             $block['nodeId'] = 0;
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
-            if (!is_null($node) && ($facade->nodeId == $node->getId())) {
+            if (!is_null($node) && ($facade->nodeId == $node->getNodeId())) {
                 $block['nodeId'] = 0;
             } else {
                 $block['nodeId'] = $facade->nodeId;

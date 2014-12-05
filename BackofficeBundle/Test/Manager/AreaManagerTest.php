@@ -204,7 +204,8 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAreaConsistency($node, $node2)
     {
-        Phake::when($this->nodeRepository)->find(Phake::anyParameters())->thenReturn($node2);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($node2);
+
         $this->assertTrue($this->manager->areaConsistency($node));
     }
 
@@ -284,7 +285,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         Phake::when($node)->getAreas()->thenReturn(array($areaMain));
-        Phake::when($node)->getId()->thenReturn(NodeInterface::ROOT_NODE_ID);
+        Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
@@ -295,7 +296,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $node2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         Phake::when($node2)->getAreas()->thenReturn(array($areaMain2));
-        Phake::when($node2)->getId()->thenReturn('home');
+        Phake::when($node2)->getNodeId()->thenReturn('home');
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
         Phake::when($node2)->getBlock(0)->thenReturn($block1);
         Phake::when($node2)->getBlock(1)->thenReturn($block2);

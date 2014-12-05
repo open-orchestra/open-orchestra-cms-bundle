@@ -86,12 +86,12 @@ class AreaManager
     protected function checkBlockRef($blocks, $node, $area)
     {
         foreach ($blocks as $block) {
-            if ($block['nodeId'] === $node->getId() || $block['nodeId'] === 0) {
+            if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
                 if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
             } else {
-                $otherNode = $this->nodeRepository->find($block['nodeId']);
+                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId']);
                 if (!$this->blockIdExist($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
