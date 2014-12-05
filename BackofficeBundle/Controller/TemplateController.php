@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TemplateController

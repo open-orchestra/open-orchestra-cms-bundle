@@ -4,23 +4,16 @@ namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
-use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class SiteControllerTest
  */
-class SiteControllerTest extends WebTestCase
+class SiteControllerTest extends AbstractControllerTest
 {
     /**
      * @var NodeRepository
      */
     protected $nodeRepository;
-
-    /**
-     * @var Client
-     */
-    protected $client;
 
     protected $siteId;
 
@@ -29,16 +22,9 @@ class SiteControllerTest extends WebTestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $this->siteId = (string) microtime(true);
-        $this->client = static::createClient();
-        $crawler = $this->client->request('GET', '/login');
-
-        $form = $crawler->selectButton('Login')->form();
-        $form['_username'] = 'nicolas';
-        $form['_password'] = 'nicolas';
-
-        $crawler = $this->client->submit($form);
-
         $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
     }
 
