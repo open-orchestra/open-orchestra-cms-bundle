@@ -159,13 +159,17 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteAreaFromBlockWithNodeId($oldBlocks, $newBlocks, $areaId, $nodeId, $nodeTransverseId)
     {
-        Phake::when($this->nodeRepository)->find(Phake::anyParameters())->thenReturn($this->node);
+        $siteId = 2;
+        Phake::when($this->nodeRepository)
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($this->node);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         Phake::when($this->node)->getId()->thenReturn($nodeId);
+        Phake::when($this->node)->getSiteId()->thenReturn($siteId);
 
         $this->manager->deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, $this->node);
 
-        Phake::verify($this->nodeRepository, Phake::times(1))->find($nodeTransverseId);
+        Phake::verify($this->nodeRepository, Phake::times(1))
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeTransverseId, $this->language, $siteId);
         Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
         Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
         Phake::verify($this->node, Phake::times(1))->getId();
@@ -179,19 +183,19 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 array(
-                    array('nodeId' => 'root', 'blockId' => 0),
-                    array('nodeId' => 'root', 'blockId' => 1),
-                    array('nodeId' => 'root', 'blockId' => 2),
-                    array('nodeId' => 'root', 'blockId' => 3),
+                    array('nodeId' => 'transverse', 'blockId' => 0),
+                    array('nodeId' => 'transverse', 'blockId' => 1),
+                    array('nodeId' => 'transverse', 'blockId' => 2),
+                    array('nodeId' => 'transverse', 'blockId' => 3),
                 ),
                 array(
-                    array('nodeId' => 'root', 'blockId' => 0),
-                    array('nodeId' => 'root', 'blockId' => 1),
-                    array('nodeId' => 'root', 'blockId' => 3),
+                    array('nodeId' => 'transverse', 'blockId' => 0),
+                    array('nodeId' => 'transverse', 'blockId' => 1),
+                    array('nodeId' => 'transverse', 'blockId' => 3),
                 ),
                 'test2',
                 'node-test',
-                'root'
+                'transverse'
             ),
         );
     }

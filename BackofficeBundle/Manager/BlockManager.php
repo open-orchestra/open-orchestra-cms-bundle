@@ -32,6 +32,7 @@ class BlockManager
     {
         foreach ($node->getBlocks() as $block) {
             if (!$this->checkAreaRef($block->getAreas(), $node, $block)) {
+                var_dump('block');
                 return false;
             }
         }
@@ -111,16 +112,16 @@ class BlockManager
      *
      * @return bool
      */
-    protected function checkBlock($refBlocks, $block, $node)
+    protected function checkBlock($refBlocks, BlockInterface $block, NodeInterface $node)
     {
         foreach ($refBlocks as $refBlock) {
-            if ( $node->getId() === $refBlock['nodeId'] || 0 === $refBlock['nodeId']) {
+            if ($node->getNodeId() === $refBlock['nodeId'] || 0 === $refBlock['nodeId']) {
                 $blockRef = $node->getBlock($refBlock['blockId']);
             } else {
-                $otherNode = $this->nodeRepository->find($refBlock['nodeId']);
+                $otherNode = $this->nodeRepository
+                    ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($refBlock['nodeId'], $node->getLanguage(), $node->getSiteId());
                 $blockRef = $otherNode->getBlock($refBlock['blockId']);
             }
-
             if ($blockRef->getLabel() === $block->getLabel()) {
                 return true;
             }

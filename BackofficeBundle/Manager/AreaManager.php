@@ -50,9 +50,10 @@ class AreaManager
             if (!in_array($blockReference, $newBlocks)) {
                 if ($blockReference['nodeId'] === 0) {
                     $block = $node->getBlock($blockReference['blockId']);
-                    $block->removeAreaRef($areaId, $node->getId());
+                    $block->removeAreaRef($areaId, $node->getId());;
                 } else {
-                    $blockNode = $this->nodeRepository->find($blockReference['nodeId']);
+                    $blockNode = $this->nodeRepository
+                        ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockReference['nodeId'], $node->getLanguage(), $node->getSiteId());
                     $block = $blockNode->getBlock($blockReference['blockId']);
                     $block->removeAreaRef($areaId, $node->getId());
                 }
@@ -83,7 +84,7 @@ class AreaManager
      *
      * @return bool
      */
-    protected function checkBlockRef($blocks, $node, $area)
+    protected function checkBlockRef($blocks, NodeInterface $node, AreaInterface $area)
     {
         foreach ($blocks as $block) {
             if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
@@ -91,7 +92,7 @@ class AreaManager
                     return false;
                 }
             } else {
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId']);
+                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
                 if (!$this->blockIdExist($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
