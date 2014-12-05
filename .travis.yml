@@ -15,7 +15,7 @@ before_install:
   - phpenv config-add .travis.php.ini
 
 install:
-  - if [ -d vendor/itkg ]; then cd vendor/itkg; list=`ls | grep phporchestra`; for i in $list; do cd $i/PHPOrchestra; git pull origin master; cd ../..; done; cd ../../; else composer install --no-progress --prefer-dist; fi;
+  - composer install --no-progress --prefer-dist
 
 script: ./bin/phpunit
 
