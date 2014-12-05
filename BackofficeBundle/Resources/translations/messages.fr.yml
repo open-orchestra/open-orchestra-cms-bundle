@@ -225,3 +225,7 @@ php_orchestra_backoffice:
         delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
     media:
         current_preview: Image actuelle
+    command:
+        node:
+            success: Les références des noeuds sont cohérentes.
+        empty_choices: Choisissez un table à vérifier.

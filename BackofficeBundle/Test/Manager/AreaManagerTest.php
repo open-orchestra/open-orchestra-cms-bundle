@@ -198,11 +198,14 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param NodeInterface $node
+     * @param NodeInterface $node2
      *
      * @dataProvider provideNodeWithAreaAndBlock
      */
-    public function testAreaConsistency($node)
+    public function testAreaConsistency($node, $node2)
     {
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($node2);
+
         $this->assertTrue($this->manager->areaConsistency($node));
     }
 
@@ -305,8 +308,8 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         $node2->addBlock($block3);
 
         return array(
-            array($node),
-            array($node2)
+            array($node, $node2),
+            array($node2, $node)
         );
     }
 }

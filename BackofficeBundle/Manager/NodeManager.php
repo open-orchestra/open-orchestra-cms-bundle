@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
@@ -159,7 +158,6 @@ class NodeManager
     }
 
     /**
-     *
      * @return NodeInterface
      */
     public function initializeNewNode()

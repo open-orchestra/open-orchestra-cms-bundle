@@ -225,3 +225,7 @@ php_orchestra_backoffice:
         delete: You are about to delete a template. Would you like to continue?
     media:
         current_preview: Current image
+    command:
+        node:
+            success: Nodes references are consistent.
+        empty_choices: Choose which table to check.
