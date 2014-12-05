@@ -1,17 +1,21 @@
 # JARVIS WIDGETS
-
 $(".widget-grid").DOMNodeAppear ->
   setup_widgets_desktop()
   return
 
-# CONTENT TITLES
 
+# CONTENT TITLES
 $(".page-title").DOMNodeAppear ->
   renderPageTitle()
   return
 
-# NODE STATUS CHANGE
+# SELECT2
+$("select.select2").DOMNodeAppear ->
+  $(this).select2()
+  return
 
+
+# NODE STATUS CHANGE
 $(document).on "click", ".node-change-status", (event) ->
   url = $(event.currentTarget).data("url")
   statusId = $(event.currentTarget).data("status")
