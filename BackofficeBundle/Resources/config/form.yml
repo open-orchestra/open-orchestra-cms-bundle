@@ -223,6 +223,10 @@ services:
         tags:
             - { name: form.type, alias: media_meta}
     php_orchestra_backoffice.type.keyword:
+        class: %php_orchestra_backoffice.type.keyword.class%
+        tags:
+            - { name: form.type, alias: keyword}
+    php_orchestra_backoffice.type.orchestra_keywords:
         class: %php_orchestra_backoffice.type.orchestra_keywords.class%
         tags:
             - { name: form.type, alias: orchestra_keywords}
