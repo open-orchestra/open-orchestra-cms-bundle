@@ -14,12 +14,12 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
      * @var GenerateFormManager
      */
     protected $manager;
-    
+
     protected $strategy1;
     protected $strategy2;
     protected $block;
     protected $form;
-    
+
     /**
      * Set up the test
      */
@@ -33,7 +33,7 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->strategy2)->support(Phake::anyParameters())->thenReturn(false);
         $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        
+
         $this->manager = new GenerateFormManager();
         $this->manager->addStrategy($this->strategy1);
         $this->manager->addStrategy($this->strategy2);

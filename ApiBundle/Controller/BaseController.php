@@ -14,7 +14,7 @@ class BaseController extends Controller
     /**
      * @param mixed $mixed
      * @param array $validationGroups
-     * 
+     *
      * @return bool
      */
     public function isValid($mixed, array $validationGroups = array())

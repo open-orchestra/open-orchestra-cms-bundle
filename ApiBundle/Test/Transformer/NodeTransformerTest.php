@@ -46,7 +46,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
-        
+
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
@@ -109,7 +109,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->nodeTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
-        
+
         if ($source) {
             Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());
         }
@@ -124,9 +124,9 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facadeB = Phake::mock('PHPOrchestra\ApiBundle\Facade\NodeFacade');
         $facadeB->statusId = 'fakeId';
-        
+
         $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
-        
+
         return array(
             array($facadeA, null, 0, 0),
             array($facadeA, $node, 0, 0),

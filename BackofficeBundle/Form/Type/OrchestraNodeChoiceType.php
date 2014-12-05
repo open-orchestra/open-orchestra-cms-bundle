@@ -39,7 +39,7 @@ class OrchestraNodeChoiceType extends AbstractType
     protected function getChoices()
     {
         $nodes = $this->nodeRepository->findLastVersionBySiteId();
-        $choices = array_map(function($element) {
+        $choices = array_map(function ($element) {
             return $element->getName();
         }, $nodes);
 
