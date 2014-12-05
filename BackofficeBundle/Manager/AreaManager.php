@@ -50,7 +50,7 @@ class AreaManager
             if (!in_array($blockReference, $newBlocks)) {
                 if ($blockReference['nodeId'] === 0) {
                     $block = $node->getBlock($blockReference['blockId']);
-                    $block->removeAreaRef($areaId, $node->getId());;
+                    $block->removeAreaRef($areaId, $node->getId());
                 } else {
                     $blockNode = $this->nodeRepository
                         ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockReference['nodeId'], $node->getLanguage(), $node->getSiteId());
