@@ -26,7 +26,7 @@ parameters:
     php_orchestra_backoffice.type.orchestra_color_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
     php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
     php_orchestra_backoffice.type.media_crop.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaCropType
-    php_orchestra_backoffice.type.keyword.class: PHPOrchestra\BackofficeBundle\Form\Type\KeywordType
+    php_orchestra_backoffice.type.orchestra_keywords.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
 
 services:
     # Template form type
@@ -213,7 +213,7 @@ services:
         tags:
             - { name: form.type, alias: media_crop}
     php_orchestra_backoffice.type.keyword:
-        class: %php_orchestra_backoffice.type.keyword.class%
+        class: %php_orchestra_backoffice.type.orchestra_keywords.class%
         tags:
-            - { name: form.type, alias: keyword}
+            - { name: form.type, alias: orchestra_keywords}
 
