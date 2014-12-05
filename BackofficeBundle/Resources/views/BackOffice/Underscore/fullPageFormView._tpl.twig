@@ -2,11 +2,7 @@
 
 <div role="container">
     <%= html %>
-    <a
-        href="#<%= listUrl %>"
-        class="btn btn-primary pull-right back-to-list">
-        Back to list
-    </a>
+    {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
 </div>
 
 {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}

@@ -230,8 +230,12 @@ php_orchestra_backoffice:
         delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
     media:
         current_preview: Image actuelle
+        crop: Crop
+        meta: Méta
     command:
         node:
             success: Les références des noeuds sont cohérentes.
             error: Les références des noeuds ne sont pas cohérentes.
         empty_choices: Choisissez un table à vérifier.
+    global:
+        back_to_list: Retour à la liste

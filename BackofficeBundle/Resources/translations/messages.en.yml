@@ -230,8 +230,12 @@ php_orchestra_backoffice:
         delete: You are about to delete a template. Would you like to continue?
     media:
         current_preview: Current image
+        crop: Crop
+        meta: Meta
     command:
         node:
             success: Nodes references are consistent.
             error: Nodes refercences are not consistent.
         empty_choices: Choose which table to check.
+    global:
+        back_to_list: Back to list
