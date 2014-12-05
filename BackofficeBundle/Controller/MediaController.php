@@ -98,4 +98,32 @@ class MediaController extends AbstractAdminController
 
         return $this->renderAdminForm($form);
     }
+
+    /**
+     * @param Request $request
+     * @param string  $mediaId
+     *
+     * @Config\Route("/media/{mediaId}/meta", name="php_orchestra_backoffice_media_meta")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     */
+    public function metaAction(Request $request, $mediaId)
+    {
+        $mediaRepository = $this->get('php_orchestra_media.repository.media');
+        $media = $mediaRepository->find($mediaId);
+
+        $form = $this->createForm('media_meta', $media, array(
+            'action' => $this->generateUrl('php_orchestra_backoffice_media_crop', array(
+                'mediaId' => $mediaId,
+            ))
+        ));
+
+        $form->handleRequest($request);
+
+        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.media.success'));
+
+        return $this->renderAdminForm($form);
+    }
 }
