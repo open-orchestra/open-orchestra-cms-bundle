@@ -120,6 +120,11 @@ php_orchestra_backoffice:
             rectangle: Rectangle
             max_width: Image de largeur maximale
             max_height: Image de hauteur maximale
+            meta:
+                title: Titre
+                alt: Alt
+                copyright: Copyright
+                comment: Commentaire
         sub_menu:
             node: Racine du menu
             level: Profondeur du menu

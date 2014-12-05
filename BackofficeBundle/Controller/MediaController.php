@@ -115,7 +115,7 @@ class MediaController extends AbstractAdminController
         $media = $mediaRepository->find($mediaId);
 
         $form = $this->createForm('media_meta', $media, array(
-            'action' => $this->generateUrl('php_orchestra_backoffice_media_crop', array(
+            'action' => $this->generateUrl('php_orchestra_backoffice_media_meta', array(
                 'mediaId' => $mediaId,
             ))
         ));
