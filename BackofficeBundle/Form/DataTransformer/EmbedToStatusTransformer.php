@@ -1,0 +1,46 @@
+<?php
+
+namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
+
+use PHPOrchestra\ModelBundle\Document\EmbedStatus;
+use PHPOrchestra\ModelBundle\Document\Status;
+use PHPOrchestra\ModelBundle\Repository\StatusRepository;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+
+/**
+ * Class EmbedToStatusTransformer
+ */
+class EmbedToStatusTransformer implements DataTransformerInterface
+{
+    protected $statusRepositoy;
+
+    public function __construct(StatusRepository $statusRepository)
+    {
+        $this->statusRepositoy = $statusRepository;
+    }
+
+    /**
+     * @param EmbedStatus $value
+     *
+     * @return Status
+     *
+     * @throws TransformationFailedException When the transformation fails.
+     */
+    public function transform($value)
+    {
+        return $this->statusRepositoy->find($value->getId());
+    }
+
+    /**
+     * @param Status $value
+     *
+     * @return EmbedStatus
+     *
+     * @throws TransformationFailedException When the transformation fails.
+     */
+    public function reverseTransform($value)
+    {
+        return EmbedStatus::createFromStatus($value);
+    }
+}
