@@ -9,9 +9,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * Class EmbedToStatusTransformer
+ * Class EmbedStatusToStatusTransformer
  */
-class EmbedToStatusTransformer implements DataTransformerInterface
+class EmbedStatusToStatusTransformer implements DataTransformerInterface
 {
     protected $statusRepositoy;
 

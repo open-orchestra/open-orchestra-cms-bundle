@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedToStatusTransformer;
+use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,9 +15,9 @@ class OrchestraStatusType extends AbstractType
     protected $statusTransformer;
 
     /**
-     * @param EmbedToStatusTransformer $statusTransformer
+     * @param EmbedStatusToStatusTransformer $statusTransformer
      */
-    public function __construct(EmbedToStatusTransformer $statusTransformer)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer)
     {
         $this->statusTransformer = $statusTransformer;
     }

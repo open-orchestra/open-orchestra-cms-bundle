@@ -4,15 +4,15 @@ namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedToStatusTransformer;
+use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 
 /**
- * Class EmbedToStatusTransformerTest
+ * Class EmbedStatusToStatusTransformerTest
  */
-class EmbedToStatusTransformerTest extends \PHPUnit_Framework_TestCase
+class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var EmbedToStatusTransformer
+     * @var EmbedStatusToStatusTransformer
      */
     protected $transformer;
 
@@ -39,7 +39,7 @@ class EmbedToStatusTransformerTest extends \PHPUnit_Framework_TestCase
         $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
-        $this->transformer = new EmbedToStatusTransformer($this->statusRepository);
+        $this->transformer = new EmbedStatusToStatusTransformer($this->statusRepository);
     }
 
     /**

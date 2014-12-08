@@ -25,7 +25,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformer = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedToStatusTransformer');
+        $this->transformer = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
 
         $this->form = new OrchestraStatusType($this->transformer);
     }
