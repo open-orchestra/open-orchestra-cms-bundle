@@ -46,12 +46,6 @@ class BlockTransformer extends AbstractTransformer
         $facade->nodeId = $nodeId;
         $facade->blockId = $blockNumber;
 
-        if (is_null($mixed->getLabel())) {
-            $label = $mixed->getComponent();
-        } else {
-            $label = $mixed->getLabel();
-        }
-
         foreach ($mixed->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
                 $facade->addAttribute($key, json_encode($attribute));
@@ -60,14 +54,13 @@ class BlockTransformer extends AbstractTransformer
             }
         }
 
-        if (!empty ($attribute)) {
+        $html = null;
+        if (count($mixed->getAttributes()) > 0) {
             $html = $this->displayBlockManager->show($mixed)->getContent();
-        } else {
-            $html = null;
         }
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
-            'label' => $label ,
+            'label' => $mixed->getLabel()?: $mixed->getComponent(),
             'html' => $html
         ));
 
