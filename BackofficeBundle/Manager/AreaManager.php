@@ -62,15 +62,29 @@ class AreaManager
     }
 
     /**
-     * @param NodeInterface $node
+     * @param AreaContainerInterface $container
+     * @param NodeInterface          $node
      *
      * @return bool
      */
-    public function areaConsistency($node)
+    public function areaConsistency(AreaContainerInterface $container, $node = null)
     {
-        foreach ($node->getAreas() as $area) {
-            if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
-                return false;
+        if (is_null($node)) {
+            $node = $container;
+        }
+
+        foreach ($container->getAreas() as $area) {
+            if (is_array($area->getBlocks()) && count($area->getBlocks()) > 0) {
+                if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
+                    return false;
+                }
+            } else {
+                foreach ($container->getAreas() as $area) {
+                    $consistency = $this->areaConsistency($area, $node);
+                    if (false === $consistency) {
+                        return false;
+                    }
+                }
             }
         }
 
