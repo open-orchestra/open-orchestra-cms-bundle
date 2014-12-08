@@ -244,4 +244,63 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array($this->node),
         );
     }
+
+    /**
+     * @param string $oldId
+     * @param string $newId
+     *
+     * @dataProvider provideNodesAndReferences
+     */
+    public function testUpdateBlockReferences($oldId, $newId)
+    {
+        $block1 = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        Phake::when($block1)->getAreas()
+            ->thenReturn(array(array('nodeId' => 0, 'areaId' => 'main'), array('nodeId' => $oldId, 'areaId' => 'main')));
+
+        $block2 = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        Phake::when($block2)->getAreas()->thenReturn(array(array('nodeId' => $oldId, 'areaId' => 'main')));
+
+        $block3 = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        Phake::when($block3)->getAreas()->thenReturn(array(array('nodeId' => 0, 'areaId' => 'main')));
+
+        $area1 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        Phake::when($area1)->getBlocks()
+            ->thenReturn(array(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0)));
+        Phake::when($area1)->getAreaId()->thenReturn('main');
+
+        $area2 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        Phake::when($area2)->getBlocks()
+            ->thenReturn(array(array('nodeId' => 'oldNode', 'blockId' => 0), array('nodeId' => 0, 'blockId' => 1)));
+
+        $transverseNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        Phake::when($transverseNode)->getBlock(0)->thenReturn($block1);
+
+        $newNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        Phake::when($newNode)->getId()->thenReturn($newId);
+        Phake::when($newNode)->getBlock(0)->thenReturn($block2);
+        Phake::when($newNode)->getBlock(1)->thenReturn($block3);
+        Phake::when($newNode)->getAreas()->thenReturn(new ArrayCollection(array($area1, $area2)));
+
+        $oldNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        Phake::when($oldNode)->getId()->thenReturn($oldId);
+
+        Phake::when($this->nodeRepository)
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($transverseNode);
+
+        $this->manager->updateBlockReferences($oldNode, $newNode);
+
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters());
+        Phake::verify($block1)->addArea(array('nodeId' => $newId, 'areaId' => 'main'));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodesAndReferences()
+    {
+        return array(
+            array('oldNode', 'newNode'),
+            array('vieux', 'jeune')
+        );
+    }
 }

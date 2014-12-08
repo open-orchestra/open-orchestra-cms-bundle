@@ -173,4 +173,30 @@ class NodeManager
 
         return $node;
     }
+
+    /**
+     * @param NodeInterface $oldNode
+     * @param NodeInterface $node
+     */
+    public function updateBlockReferences($oldNode, $node)
+    {
+        $nodeTransverse = $this->nodeRepository
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
+
+        foreach($node->getAreas() as $area) {
+            foreach ($area->getBlocks() as $areaBlock) {
+                if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
+                    $block = $nodeTransverse->getBlock($areaBlock['blockId']);
+                    $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
+                } else {
+                    $block = $node->getBlock($areaBlock['blockId']);
+                    foreach ($block->getAreas() as $blockArea) {
+                        if ($blockArea['nodeId'] === $oldNode->getId()) {
+                            $blockArea['nodeId'] = $node->getId();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

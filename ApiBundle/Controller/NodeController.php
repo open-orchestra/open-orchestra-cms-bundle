@@ -38,6 +38,9 @@ class NodeController extends BaseController
             $node = $this->get('php_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($node);
+
+            $this->get('php_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
+
             $dm->flush();
         }
 
@@ -80,6 +83,9 @@ class NodeController extends BaseController
         $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newNode);
+
+        $this->get('php_orchestra_backoffice.manager.node')->updateBlockReferences($node, $newNode);
+
         $em->flush();
 
         return new Response('', 200);
