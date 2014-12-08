@@ -32,7 +32,11 @@ class EmbedStatusToStatusTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        return $this->statusRepositoy->find($value->getId());
+        if ($value instanceof EmbedStatus) {
+            return $this->statusRepositoy->find($value->getId());
+        }
+
+        return '';
     }
 
     /**
