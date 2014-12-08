@@ -177,16 +177,15 @@ class NodeManager
     /**
      * @param NodeInterface $oldNode
      * @param NodeInterface $node
-     *
-     * @return NodeInterface $node
      */
     public function updateBlockReferences($oldNode, $node)
     {
+        $nodeTransverse = $this->nodeRepository
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
+
         foreach($node->getAreas() as $area) {
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
-                    $nodeTransverse = $this->nodeRepository
-                        ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($areaBlock['nodeId'], $node->getLanguage(), $node->getSiteId());
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);
                     $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
                 } else {
@@ -199,7 +198,5 @@ class NodeManager
                 }
             }
         }
-
-        return $node;
     }
 }

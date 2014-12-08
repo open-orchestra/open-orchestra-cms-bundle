@@ -287,9 +287,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->nodeRepository)
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($transverseNode);
 
-        $result = $this->manager->updateBlockReferences($oldNode, $newNode);
-
-        $this->assertSame($newNode->getBlock(0)->getAreas(), $result->getBlock(0)->getAreas());
+        $this->manager->updateBlockReferences($oldNode, $newNode);
 
         Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters());
         Phake::verify($block1)->addArea(array('nodeId' => $newId, 'areaId' => 'main'));
