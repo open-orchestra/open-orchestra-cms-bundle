@@ -8,12 +8,32 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 
 /**
  * Class OrchestraKeywordsType
  */
 class OrchestraKeywordsType extends AbstractType
 {
+    protected $keywordsTransformer;
+
+    /**
+     * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
+     */
+    public function __construct(EmbedKeywordsToKeywordsTransformer $keywordsTransformer)
+    {
+        $this->keywordsTransformer = $keywordsTransformer;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addModelTransformer($this->keywordsTransformer);
+    }
+
     /**
      * @param OptionsResolverInterface $resolver
      */

@@ -228,5 +228,7 @@ services:
             - { name: form.type, alias: keyword}
     php_orchestra_backoffice.type.orchestra_keywords:
         class: %php_orchestra_backoffice.type.orchestra_keywords.class%
+        arguments:
+            - @php_orchestra_backoffice.transformer.embedkeywords_to_keywords
         tags:
             - { name: form.type, alias: orchestra_keywords}
