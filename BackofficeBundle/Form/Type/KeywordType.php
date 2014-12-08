@@ -9,13 +9,13 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
-* Class KeywordType
-*/
+ * Class KeywordType
+ */
 class KeywordType extends AbstractType
 {
     /**
     * @param FormBuilderInterface $builder
-    * @param array $options
+    * @param array                $options
     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
