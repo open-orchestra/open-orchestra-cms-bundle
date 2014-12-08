@@ -14,6 +14,9 @@ class OrchestraStatusType extends AbstractType
 {
     protected $statusTransformer;
 
+    /**
+     * @param EmbedToStatusTransformer $statusTransformer
+     */
     public function __construct(EmbedToStatusTransformer $statusTransformer)
     {
         $this->statusTransformer = $statusTransformer;

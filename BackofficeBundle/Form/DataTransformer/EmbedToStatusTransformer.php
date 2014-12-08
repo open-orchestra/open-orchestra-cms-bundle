@@ -15,6 +15,9 @@ class EmbedToStatusTransformer implements DataTransformerInterface
 {
     protected $statusRepositoy;
 
+    /**
+     * @param StatusRepository $statusRepository
+     */
     public function __construct(StatusRepository $statusRepository)
     {
         $this->statusRepositoy = $statusRepository;
