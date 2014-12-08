@@ -73,3 +73,8 @@
         {% include 'PHPOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
     {% endspaceless %}
 {% endblock %}
+
+{% block checkbox_row %}
+    {% set label_attr = label_attr|merge({'class': 'checkbox'}) %}
+    {{ parent() }}
+{% endblock checkbox_row %}
