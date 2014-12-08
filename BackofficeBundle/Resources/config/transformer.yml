@@ -1,0 +1,8 @@
+parameters:
+    php_orchestra_backoffice.transformer.embed_status_to_status.class: PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedStatusToStatusTransformer
+
+services:
+    php_orchestra_backoffice.transformer.embed_status_to_status:
+        class: %php_orchestra_backoffice.transformer.embed_status_to_status.class%
+        arguments:
+            - @php_orchestra_model.repository.status

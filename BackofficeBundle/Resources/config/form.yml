@@ -109,6 +109,8 @@ services:
     # Status Type
     php_orchestra_backoffice.type.orchestra_status:
         class: %php_orchestra_backoffice.type.orchestra_status.class%
+        arguments:
+            - @php_orchestra_backoffice.transformer.embed_status_to_status
         tags:
             - { name: form.type, alias: orchestra_status }
     php_orchestra_backoffice.type.status:
