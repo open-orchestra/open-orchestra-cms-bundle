@@ -11,14 +11,23 @@ use PHPOrchestra\ModelBundle\Model\StatusableInterface;
  */
 class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var OrchestraStatusType
+     */
     protected $form;
+
+    protected $builder;
+    protected $transformer;
 
     /**
      * Set up the text
      */
     public function setUp()
     {
-        $this->form = new OrchestraStatusType();
+        $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+        $this->transformer = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedToStatusTransformer');
+
+        $this->form = new OrchestraStatusType($this->transformer);
     }
 
     /**
@@ -50,5 +59,15 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
             'class' => 'PHPOrchestra\ModelBundle\Document\Status',
             'property' => 'labels',
         ));
+    }
+
+    /**
+     * Test model transformer
+     */
+    public function testBuildForm()
+    {
+        $this->form->buildForm($this->builder, array());
+
+        Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
 }
