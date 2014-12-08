@@ -80,6 +80,10 @@ class NodeController extends BaseController
         $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newNode);
+
+        $newNode = $this->get('php_orchestra_backoffice.manager.node')->updateBlockReferences($node, $newNode);
+        $em->persist($newNode);
+
         $em->flush();
 
         return new Response('', 200);
