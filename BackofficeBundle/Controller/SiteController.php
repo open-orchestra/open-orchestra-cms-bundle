@@ -68,7 +68,7 @@ class SiteController extends AbstractAdminController
 
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
-        } elseif (!is_null($site->getsiteId())) {
+        } elseif (!is_null($site->getSiteId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_site_form', array('siteId' => $site->getSiteId()));
 
             return $this->redirect($url);
@@ -78,10 +78,6 @@ class SiteController extends AbstractAdminController
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
-        return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
-            array('form' => $form->createView()),
-            $response
-        );
+        return $this->renderAdminForm($form, array(), $response);
     }
 }

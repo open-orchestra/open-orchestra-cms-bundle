@@ -41,7 +41,7 @@ abstract class AbstractAdminController extends Controller
      *
      * @return Response
      */
-    protected function renderAdminForm(FormInterface $form, array $params = array())
+    protected function renderAdminForm(FormInterface $form, array $params = array(), $response = null)
     {
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
@@ -49,7 +49,9 @@ abstract class AbstractAdminController extends Controller
             $statusCode = 200;
         };
 
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+        if (is_null($response)) {
+            $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+        }
 
         $params = array_merge(
             $params,

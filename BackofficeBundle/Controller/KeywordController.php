@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class KeywordController
  */
-class KeywordController extends Controller
+class KeywordController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -27,10 +27,18 @@ class KeywordController extends Controller
     {
         $keyword = $this->get('php_orchestra_model.repository.keyword')->find($keywordId);
 
-        $url = $this->generateUrl('php_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId));
-        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.success');
+        $form = $this->createForm(
+            'keyword',
+            $keyword,
+            array(
+                'action' => $this->generateUrl('php_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId)),
+            )
+        );
 
-        return $this->formHandler($url, $request, $keyword, $message);
+        $form->handleRequest($request);
+        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.success'), $keyword);
+
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -46,43 +54,29 @@ class KeywordController extends Controller
         $keywordClass = $this->container->getParameter('php_orchestra_model.document.keyword.class');
         $keyword = new $keywordClass();
 
-        $url = $this->generateUrl('php_orchestra_backoffice_keyword_new');
-        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.creation');
-
-        return $this->formHandler($url, $request, $keyword, $message);
-    }
-
-    /**
-     * @param String             $url
-     * @param Request            $request
-     * @param KeywordInterface   $keyword
-     * @param String             $message
-     *
-     * @return Response
-     */
-    protected function formHandler($url, Request $request, KeywordInterface $keyword, $message)
-    {
         $form = $this->createForm(
             'keyword',
             $keyword,
             array(
-                'action' => $url,
+                'action' => $this->generateUrl('php_orchestra_backoffice_keyword_new'),
             )
         );
+
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($keyword);
-            $documentManager->flush();
+        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.creation'), $keyword);
 
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $message
-            );
-        }
+        if ($form->getErrors()->count() > 0) {
+            $statusCode = 400;
+        } elseif (!is_null($keyword->getId())) {
+            $url = $this->generateUrl('php_orchestra_backoffice_keyword_form', array('siteId' => $keyword->getId()));
 
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
-            'form' => $form->createView()
-        ));
+            return $this->redirect($url);
+        } else {
+            $statusCode = 200;
+        };
+
+        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+
+        return $this->renderAdminForm($form, array(), $response);
     }
 }
