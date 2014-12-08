@@ -102,12 +102,12 @@ class AreaManager
     {
         foreach ($blocks as $block) {
             if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
-                if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
+                if (!$this->areaIdExistInBlock($node->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
             } else {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
-                if (!$this->blockIdExist($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
+                if (!$this->areaIdExistInBlock($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
             }
@@ -122,7 +122,7 @@ class AreaManager
      *
      * @return bool
      */
-    protected function blockIdExist($block, $areaId)
+    protected function areaIdExistInBlock($block, $areaId)
     {
         $areas = $block->getAreas();
 
