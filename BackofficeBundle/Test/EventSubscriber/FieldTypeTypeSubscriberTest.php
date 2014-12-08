@@ -155,6 +155,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->preSetData($this->event);
 
         Phake::verify($this->fieldType, Phake::never())->addOption(Phake::anyParameters());
+        Phake::verify($this->fieldType, Phake::never())->removeOption(Phake::anyParameters());
         Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelBundle\Model\AreaInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,25 +27,12 @@ class AreaController extends AbstractAdminController
         $node = $this->get('php_orchestra_model.repository.node')->find($nodeId);
         $area = $this->get('php_orchestra_model.repository.node')->findAreaFromNodeAndAreaId($node, $areaId);
 
-        $form = $this->createForm(
-            'area',
-            $area,
-            array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_area_form', array(
-                    'nodeId' => $nodeId,
-                    'areaId' => $areaId
-                )),
-            )
-        );
+        $actionUrl = $this->generateUrl('php_orchestra_backoffice_area_form', array(
+            'nodeId' => $nodeId,
+            'areaId' => $areaId
+        ));
 
-        $form->handleRequest($request);
-
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
-        );
-
-        return $this->renderAdminForm($form);
+        return $this->handleAreaForm($request, $actionUrl, $area);
     }
 
     /**
@@ -60,20 +48,26 @@ class AreaController extends AbstractAdminController
     public function templateFormAction(Request $request, $templateId, $areaId)
     {
         $area = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $areaId);
+        $actionUrl = $this->generateUrl('php_orchestra_backoffice_template_area_form', array(
+            'templateId' => $templateId,
+            'areaId' => $areaId
+        ));
 
-        $form = $this->createForm(
-            'area',
-            $area,
-            array(
-                'action' => $this->generateUrl(
-                    'php_orchestra_backoffice_template_area_form',
-                    array(
-                        'templateId' => $templateId,
-                        'areaId' => $areaId
-                    )
-                ),
-            )
-        );
+        return $this->handleAreaForm($request, $actionUrl, $area);
+    }
+
+    /**
+     * @param Request       $request
+     * @param string        $actionUrl
+     * @param AreaInterface $area
+     *
+     * @return Response
+     */
+    protected function handleAreaForm(Request $request, $actionUrl, $area)
+    {
+        $form = $this->createForm('area', $area, array(
+            'action' => $actionUrl,
+        ));
 
         $form->handleRequest($request);
 
