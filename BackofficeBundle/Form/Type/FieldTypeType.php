@@ -53,7 +53,7 @@ class FieldTypeType extends AbstractType
             ->add('defaultValue', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.field_type.default_value'
             ))
-            ->add('searchable', 'text', array(
+            ->add('searchable', 'checkbox', array(
                 'label' => 'php_orchestra_backoffice.form.field_type.searchable'
             ))
             ->add('type', 'choice', array(
