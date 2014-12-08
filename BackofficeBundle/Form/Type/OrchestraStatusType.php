@@ -5,7 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 use PHPOrchestra\ModelBundle\Model\StatusableInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class OrchestraStatusType
