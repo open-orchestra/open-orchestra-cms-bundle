@@ -41,15 +41,21 @@ AreaView = OrchestraView.extend(
     this.drawContent()
 
   drawContent: ->
-    for area of @area.get("areas")
-      @addAreaToView @area.get("areas")[area]
+    if @area.get("areas").length == 0
+      $(@el).find('#area-' + @cid).addClass('area-leaf')
+    else
+      for area of @area.get("areas")
+        @addAreaToView @area.get("areas")[area]
+    
     for block of @area.get("blocks")
       @addBlockToView @area.get("blocks")[block]
+    
     if $("ul.areas-" + @cid, @el).children().length is 0
       $("ul.areas-" + @cid, @el).remove()
       makeSortable @el
     else
       $("ul.blocks-" + @cid, @el).remove() if $("ul.blocks-" + @cid, @el).children().length is 0
+    
     this
 
   purgeContent: ->
