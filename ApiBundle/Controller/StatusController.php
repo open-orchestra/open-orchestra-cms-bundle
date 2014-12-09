@@ -98,4 +98,29 @@ class StatusController extends Controller
 
         return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
     }
+
+    /**
+     * @param string $contentMongoId
+     *
+     * @Config\Route("/list-statuses/content/{contentMongoId}", name="php_orchestra_api_list_status_content")
+     * @Config\Method({"GET"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function listStatusesForContentAction($contentMongoId)
+    {
+        $content = $this->get('php_orchestra_model.repository.content')->find($contentMongoId);
+        $status = $content->getStatus();
+
+        $transitions = $status->getFromRoles();
+
+        $possibleStatuses = array();
+
+        foreach ($transitions as $transition) {
+            $possibleStatuses[] = $transition->getToStatus();
+        }
+
+        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
+    }
 }
