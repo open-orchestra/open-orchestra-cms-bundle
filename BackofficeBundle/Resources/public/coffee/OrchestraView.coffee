@@ -9,10 +9,6 @@ OrchestraView = Backbone.View.extend(
       @events['click a.change-language'] = 'changeLanguage'
       templates.push "language"
     
-    if @multiStatus
-      @events['change select#selectbox'] = 'changeVersion'
-      templates.push "widgetStatus"
-    
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false
       return
@@ -38,8 +34,6 @@ OrchestraView = Backbone.View.extend(
       @render()
       if @multiLanguage
         @addLanguagesToView()
-      if @multiStatus
-        @renderWidgetStatus()
     return
 
   renderTemplate: (templateName, parameters) ->
@@ -69,28 +63,4 @@ OrchestraView = Backbone.View.extend(
       $.extend(@multiLanguage.path_option, {language: $(event.currentTarget).data('language')})
     )
     Backbone.history.navigate(redirectRoute , {trigger: true})
-
-  renderWidgetStatus: ->
-    viewContext = this
-    $.ajax
-      type: "GET"
-      data:
-        language: @multiStatus.language
-        version: @multiStatus.version
-      url: @multiStatus.status_list
-      success: (response) ->
-        widgetStatus = viewContext.renderTemplate('widgetStatus',
-          current_status: viewContext.multiStatus.status
-          statuses: response.statuses
-          status_change_link: viewContext.multiStatus.status_change_link
-        )
-        addCustomJarvisWidget(widgetStatus)
-        return
-
-  changeVersion: (event) ->
-    redirectRoute = appRouter.generateUrl(@multiStatus.path,
-      $.extend(@multiStatus.path_option, {language: $(event.currentTarget).data('language'), version: event.currentTarget.value})
-    )
-    Backbone.history.navigate(redirectRoute , {trigger: true})
-    return
 )

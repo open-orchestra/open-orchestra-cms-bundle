@@ -3,16 +3,18 @@ NodeView = OrchestraView.extend(
 
   events:
     'click i#none' : 'clickButton'
+    'change select#selectbox': 'changeVersion'
     'click a#btn-new-version': 'duplicateNode'
 
   initialize: (options) ->
     @node = options.node
+    @version = @node.get('version')
+    @language = @node.get('language')
     @multiLanguage = 
       language: @node.get('language')
       language_list: @node.get('links')._language_list
       path: 'showNodeWithLanguage'
       path_option: {nodeId : @node.get('node_id')}
-    
     @multiStatus = 
       status: @node.get('status')
       status_list: @node.get('links')._status_list
@@ -31,6 +33,7 @@ NodeView = OrchestraView.extend(
     @loadTemplates [
       "nodeView"
       "nodeTitle"
+      "widgetStatus"
       "areaView"
       "nodeChoice"
       "blockView"
@@ -83,6 +86,23 @@ NodeView = OrchestraView.extend(
         Backbone.history.loadUrl(redirectRoute)
     return
 
+  renderWidgetStatus: ->
+    viewContext = this
+    $.ajax
+      type: "GET"
+      data:
+        language: @node.get('language')
+        version: @node.get('version')
+      url: @node.get('links')._status_list
+      success: (response) ->
+        widgetStatus = viewContext.renderTemplate('widgetStatus',
+          current_status: viewContext.node.get('status')
+          statuses: response.statuses
+          status_change_link: viewContext.node.get('links')._self_status_change
+        )
+        addCustomJarvisWidget(widgetStatus)
+        return
+
   render: ->
     title = @renderTemplate('nodeTitle',
       node: @node
@@ -97,6 +117,7 @@ NodeView = OrchestraView.extend(
       @addAreaToView(@node.get('areas')[area])
     @addExistingBlockToView()
     if @node.get('node_type') == 'page'
+      @renderWidgetStatus()
       @addVersionToView()
       @addPreviewLink()
       if @node.attributes.status.published
@@ -140,6 +161,15 @@ NodeView = OrchestraView.extend(
       version: @version
       el: this.$el.find('optgroup#versions')
     )
+
+  changeVersion: (event) ->
+    redirectRoute = appRouter.generateUrl('showNodeWithLanguageAndVersion',
+      nodeId: @node.get('node_id'),
+      language: @language,
+      version: event.currentTarget.value
+    )
+    Backbone.history.navigate(redirectRoute , {trigger: true})
+    return
 
   addPreviewLink: ->
     previewLink = @node.get('links')._self_preview
