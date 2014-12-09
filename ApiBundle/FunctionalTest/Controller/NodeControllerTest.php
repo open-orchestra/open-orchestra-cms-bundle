@@ -80,7 +80,7 @@ class NodeControllerTest extends AbstractControllerTest
         }
 
         $nodeTransverse = $this->nodeRepository
-            ->findOneBy(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'language' => 'es', 'siteId' => '1'));
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
         $countAreaRef = $this->countAreaRef($nodeTransverse);
 
         $this->assertSame(null, $node);
@@ -91,7 +91,7 @@ class NodeControllerTest extends AbstractControllerTest
 
         $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
-            ->findOneBy(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'language' => 'es', 'siteId' => '1'));
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
 
         $this->assertGreaterThan($countAreaRef, $this->countAreaRef($nodeTransverseAfter));
     }
