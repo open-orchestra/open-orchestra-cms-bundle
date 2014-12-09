@@ -53,7 +53,7 @@ class NodeControllerTest extends AbstractControllerTest
         $node = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
         $nodeTransverse = $this->nodeRepository
-            ->findOneBy(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'language' => 'fr', 'siteId' => '1'));
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
 
         $crawler = $this->client->request('POST', '/api/node/fixture_full/duplicate?language=fr');
 
@@ -62,7 +62,7 @@ class NodeControllerTest extends AbstractControllerTest
 
         $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
-            ->findOneBy(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'language' => 'fr', 'siteId' => '1'));
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
 
         $this->assertSame($node->getVersion()+1, $nodeLastVersion->getVersion());
         $this->assertGreaterThan($this->countAreaRef($nodeTransverse), $this->countAreaRef($nodeTransverseAfter));
