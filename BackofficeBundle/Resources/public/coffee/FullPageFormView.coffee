@@ -5,10 +5,7 @@ FullPageFormView = OrchestraView.extend(
     @html = options.html
     @title = options.title
     @listUrl = options.listUrl
-    if(options.multiLanguage)
-      @multiLanguage = options.multiLanguage
-    if(options.multiStatus)
-      @multiStatus = options.multiStatus
+    @multiLanguage = options.multiLanguage if options.multiLanguage
     @options = options
     @events = {}
     if options.triggers
