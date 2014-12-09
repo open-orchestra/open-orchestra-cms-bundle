@@ -205,8 +205,10 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function generateConsistencyNode()
     {
+        $areaContainer = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaContainerInterface');
+
         return array(
-            array(array($this->node, $this->node, $this->node)),
+            array(array($areaContainer, $areaContainer, $areaContainer)),
             array(array()),
         );
     }
@@ -225,23 +227,29 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $nodes
+     * @param bool $areaConsistency
+     * @param bool $blockConsistency
      *
-     * @dataProvider generateNoConsistencyNode
+     * @dataProvider provideConsistency
      */
-    public function testNodeNoConsistency($nodes)
+    public function testNodeNoConsistency($areaConsistency, $blockConsistency)
     {
-        $this->assertFalse($this->manager->nodeConsistency($nodes));
+        $areaContainer = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaContainerInterface');
+        Phake::when($this->areaManager)->areaConsistency(Phake::anyParameters())->thenReturn($areaConsistency);
+        Phake::when($this->blockManager)->blockConsistency(Phake::anyParameters())->thenReturn($blockConsistency);
+
+        $this->assertFalse($this->manager->nodeConsistency(array($areaContainer)));
     }
 
     /**
      * @return array
      */
-    public function generateNoConsistencyNode()
+    public function provideConsistency()
     {
         return array(
-            array(array($this->node, $this->node, $this->node)),
-            array($this->node),
+            array(true, false),
+            array(false, false),
+            array(false, true),
         );
     }
 

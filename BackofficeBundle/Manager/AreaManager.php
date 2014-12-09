@@ -62,15 +62,29 @@ class AreaManager
     }
 
     /**
-     * @param NodeInterface $node
+     * @param AreaContainerInterface $container
+     * @param NodeInterface          $node
      *
      * @return bool
      */
-    public function areaConsistency($node)
+    public function areaConsistency(AreaContainerInterface $container, $node = null)
     {
-        foreach ($node->getAreas() as $area) {
-            if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
-                return false;
+        if (is_null($node)) {
+            $node = $container;
+        }
+
+        foreach ($container->getAreas() as $area) {
+            if (is_array($area->getBlocks()) && count($area->getBlocks()) > 0) {
+                if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
+                    return false;
+                }
+            } else {
+                foreach ($container->getAreas() as $area) {
+                    $consistency = $this->areaConsistency($area, $node);
+                    if (false === $consistency) {
+                        return false;
+                    }
+                }
             }
         }
 
@@ -88,12 +102,12 @@ class AreaManager
     {
         foreach ($blocks as $block) {
             if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
-                if (!$this->blockIdExist($node->getBlock($block['blockId']), $area->getAreaId())) {
+                if (!$this->areaIdExistInBlock($node->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
             } else {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
-                if (!$this->blockIdExist($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
+                if (!$this->areaIdExistInBlock($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
                     return false;
                 }
             }
@@ -108,7 +122,7 @@ class AreaManager
      *
      * @return bool
      */
-    protected function blockIdExist($block, $areaId)
+    protected function areaIdExistInBlock($block, $areaId)
     {
         $areas = $block->getAreas();
 
