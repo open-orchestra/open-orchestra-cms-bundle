@@ -321,6 +321,11 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
+        $block3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        Phake::when($block3)->getAreas()->thenReturn(array(
+            array('nodeId' => 0, 'areaId' => 'main')
+        ));
+
         $areaMenu = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
         Phake::when($areaMenu)->getAreaId()->thenReturn('menu');
         Phake::when($areaMenu)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0)));

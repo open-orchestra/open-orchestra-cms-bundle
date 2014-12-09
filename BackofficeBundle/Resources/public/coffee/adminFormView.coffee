@@ -7,6 +7,7 @@ adminFormView = OrchestraView.extend(
     @url = options.url
     @method = if options.method then options.method else 'GET'
     @deleteurl = options.deleteurl if options.deleteurl
+    @redirectUrl = options.redirectUrl if options.redirectUrl
     @confirmtext = options.confirmtext if options.confirmtext
     @events = {}
     if options.triggers
@@ -45,6 +46,7 @@ adminFormView = OrchestraView.extend(
     if @deleteurl != undefined && @confirmtext != undefined
       $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
       $('.ajax-delete', @el).attr('data-confirm-text', @confirmtext)
+      $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
       $('.modal-footer', @el).show()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
