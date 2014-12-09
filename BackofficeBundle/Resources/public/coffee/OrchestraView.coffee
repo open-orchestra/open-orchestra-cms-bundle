@@ -32,8 +32,7 @@ OrchestraView = Backbone.View.extend(
     
     if ready
       @render()
-      if @multiLanguage
-        @addLanguagesToView()
+      @addLanguagesToView() if @multiLanguage
     return
 
   renderTemplate: (templateName, parameters) ->
@@ -59,6 +58,8 @@ OrchestraView = Backbone.View.extend(
     )
 
   changeLanguage: (event) ->
+    $(@el).append('<span style="display:none;" data-url="' + @multiLanguage.url_entity + '" id="url-entity" />') if @multiLanguage.url_entity
+    
     redirectRoute = appRouter.generateUrl(@multiLanguage.path,
       $.extend(@multiLanguage.path_option, {language: $(event.currentTarget).data('language')})
     )

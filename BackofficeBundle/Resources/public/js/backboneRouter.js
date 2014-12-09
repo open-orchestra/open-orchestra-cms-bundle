@@ -14,6 +14,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId': 'showNode',
+    'entity/show/:language': 'showEntityWithLanguage',
     'template/show/:templateId': 'showTemplate',
     ':entityType/list': 'listEntities',
     ':entityType/edit/:entityId': 'showEntity',
@@ -53,6 +54,13 @@ var OrchestraBORouter = Backbone.Router.extend({
       }
   },
 
+  showEntityWithLanguage: function(language)
+  {
+	var url = $("#url-entity").data("url")
+    this.initDisplayRouteChanges();
+    showEntity(url, language);
+  },
+  
   showTemplate: function(templateId)
   {
     this.initDisplayRouteChanges();
@@ -159,7 +167,6 @@ var OrchestraBORouter = Backbone.Router.extend({
   generateUrl: function(routeName, paramsObject)
   {
     var route = this.routePatterns[routeName];
-    
     if (typeof route !== "undefined") {
       $.each(paramsObject, function(paramName, paramValue) {
         route = route.replace(':' + paramName, paramValue);
@@ -168,7 +175,7 @@ var OrchestraBORouter = Backbone.Router.extend({
       alert('Error, route name is unknown');
       return false;
     }
-    
+
     return route;
   }
 });
