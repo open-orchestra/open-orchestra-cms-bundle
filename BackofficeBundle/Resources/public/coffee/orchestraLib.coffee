@@ -117,3 +117,6 @@ smartConfirm = (params) ->
     params.noCallback(params.yesCallbackParams)  if ButtonPressed is "No" and typeof params.noCallback isnt "undefined"
     return
   return
+
+selectorExist = (selector) ->
+  return selector.length
