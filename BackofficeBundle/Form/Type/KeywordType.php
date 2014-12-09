@@ -14,9 +14,9 @@ use Symfony\Component\Form\FormView;
 class KeywordType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
+    * @param FormBuilderInterface $builder
+    * @param array                $options
+    */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,8 +29,8 @@ class KeywordType extends AbstractType
     }
 
     /**
-     * @return string
-     */
+    * @return string
+    */
     public function getName()
     {
         return 'keyword';

@@ -75,6 +75,7 @@ php_orchestra_backoffice:
             version: Version
             status: Statut
             fields: Champs
+            keywords: Mots-clé
         template:
             success: Le gabarit a été sauvé
             name: Nom

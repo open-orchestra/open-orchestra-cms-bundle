@@ -1,8 +1,13 @@
 parameters:
     php_orchestra_backoffice.transformer.embed_status_to_status.class: PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedStatusToStatusTransformer
+    php_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
 
 services:
     php_orchestra_backoffice.transformer.embed_status_to_status:
         class: %php_orchestra_backoffice.transformer.embed_status_to_status.class%
         arguments:
             - @php_orchestra_model.repository.status
+    php_orchestra_backoffice.transformer.embedkeywords_to_keywords:
+        class: %php_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%
+        arguments:
+            - @php_orchestra_model.repository.keyword
