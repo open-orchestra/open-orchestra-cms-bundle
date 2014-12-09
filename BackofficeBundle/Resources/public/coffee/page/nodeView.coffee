@@ -29,12 +29,15 @@ NodeView = OrchestraView.extend(
     $('.modal-title').text @node.get('name')
     url = @node.get('links')._self_form
     deleteurl = @node.get('links')._self_delete
+    redirectUrl = appRouter.generateUrl "showNode",
+      nodeId: @node.get('parent_id')
     confirmText = $(".delete-confirm-txt-"+@node.cid).text()
     if @node.attributes.alias is ''
       view = new adminFormView(
         url: url
         deleteurl: deleteurl
         confirmtext: confirmText
+        redirectUrl: redirectUrl
         triggers: [
           {
             event: "keyup input.alias-source"
