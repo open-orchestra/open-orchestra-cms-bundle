@@ -43,20 +43,32 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showNode: function(nodeId)
   {
-    this.initDisplayRouteChanges();
-    showNode($("#nav-node-" + nodeId).data("url"));
+      if (selectorExist($("#nav-node-" + nodeId))) {
+          this.initDisplayRouteChanges();
+          showNode($("#nav-node-" + nodeId).data("url"));
+      } else {
+          Backbone.history.navigate("");
+      }
   },
 
   showNodeWithLanguageAndVersion: function(nodeId, language, version)
   {
-    this.initDisplayRouteChanges("#nav-node-" + nodeId);
-    showNode($("#nav-node-" + nodeId).data("url"), language, version);
+      if (selectorExist($("#nav-node-" + nodeId))) {
+          this.initDisplayRouteChanges("#nav-node-" + nodeId);
+          showNode($("#nav-node-" + nodeId).data("url"), language, version);
+      } else {
+          Backbone.history.navigate("");
+      }
   },
 
   showNodeWithLanguage: function(nodeId, language)
   {
-    this.initDisplayRouteChanges("#nav-node-" + nodeId);
-    showNode($("#nav-node-" + nodeId).data("url"), language);
+      if (selectorExist($("#nav-node-" + nodeId))) {
+          this.initDisplayRouteChanges("#nav-node-" + nodeId);
+          showNode($("#nav-node-" + nodeId).data("url"), language);
+      } else {
+          Backbone.history.navigate("");
+      }
   },
 
   showTemplate: function(templateId)
@@ -131,7 +143,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     var view = new TranslationView(
       {url : $("#nav-translation").data("url")}
     );
-    this.setCurrentMainView(view)
+    this.setCurrentMainView(view);
     return view;
   },
 
@@ -165,11 +177,11 @@ var OrchestraBORouter = Backbone.Router.extend({
       if (selector == undefined) {
           var url = '#' + Backbone.history.fragment;
           $('nav li:has(a[href="' + url + '"])').addClass("active");
-          var title = ($('nav a[href="' + url + '"]').attr('title'))
+          var title = ($('nav a[href="' + url + '"]').attr('title'));
           document.title = (title || document.title);
       } else {
           $('nav li:has(a' + selector + ')').addClass("active");
-          var title = ($('nav a' + selector).attr('title'))
+          var title = ($('nav a' + selector).attr('title'));
           document.title = (title || document.title);
       }
 
