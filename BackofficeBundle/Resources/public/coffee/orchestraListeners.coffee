@@ -9,12 +9,6 @@ $(".page-title").DOMNodeAppear ->
   renderPageTitle()
   return
 
-# SELECT2
-$("select.select2").DOMNodeAppear ->
-  $(this).select2()
-  return
-
-
 # NODE STATUS CHANGE
 $(document).on "click", ".node-change-status", (event) ->
   url = $(event.currentTarget).data("url")

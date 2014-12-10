@@ -25,6 +25,12 @@ FullPageFormView = OrchestraView.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnForm()
+    tags = $(".select2").data('tags')
+    $(".select2").select2(
+      tags: tags
+#      createSearchChoice: (term) ->
+#        console.log term
+    )
     return
 
   addEventOnForm: ->
