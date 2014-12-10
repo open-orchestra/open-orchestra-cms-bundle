@@ -46,6 +46,7 @@ TableviewView = OrchestraView.extend(
     )
 
   clickEdit: (event) ->
+    event.preventDefault()
     redirectRoute = appRouter.generateUrl('showEntity',
       entityType: @entityType,
       entityId: @element.get('id'),

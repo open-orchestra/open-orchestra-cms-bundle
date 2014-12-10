@@ -16,7 +16,7 @@ FullPageFormView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).replaceWith $("<div/>").html(@renderTemplate('fullPageFormView',
+    $(@el).html(@renderTemplate('fullPageFormView',
       html: @html
       listUrl: @listUrl
     ))
