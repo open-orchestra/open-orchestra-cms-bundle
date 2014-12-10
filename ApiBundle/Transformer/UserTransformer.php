@@ -20,6 +20,7 @@ class UserTransformer extends AbstractTransformer
     {
         $facade = new UserFacade();
 
+        $facade->id = $mixed->getId();
         $facade->username = $mixed->getUsername();
         $facade->roles = implode(',', $mixed->getRoles());
 

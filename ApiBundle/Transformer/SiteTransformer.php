@@ -20,6 +20,7 @@ class SiteTransformer extends AbstractTransformer
     {
         $facade = new SiteFacade();
 
+        $facade->id = $mixed->getId();
         $facade->siteId = $mixed->getSiteId();
         $facade->domain = $mixed->getDomain();
         $facade->alias = $mixed->getAlias();

@@ -19,6 +19,7 @@ class RoleTransformer extends AbstractTransformer
     {
         $facade = new RoleFacade();
 
+        $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->fromStatus = $mixed->getFromStatus();
         $facade->toStatus = $mixed->getToStatus();

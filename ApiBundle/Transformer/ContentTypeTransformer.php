@@ -31,6 +31,7 @@ class ContentTypeTransformer extends AbstractTransformer
     {
         $facade = new ContentTypeFacade();
 
+        $facade->id = $mixed->getId();
         $facade->contentTypeId = $mixed->getContentTypeId();
         $facade->name = $this->translationChoiceManager->choose($mixed->getNames());
         $facade->version = $mixed->getVersion();

@@ -23,6 +23,7 @@ class TemplateTransformer extends AbstractTransformer
             $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $mixed));
         }
 
+        $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->siteId = $mixed->getSiteId();
         $facade->templateId = $mixed->getTemplateId();

@@ -19,6 +19,7 @@ class KeywordTransformer extends AbstractTransformer
     {
         $facade = new KeywordFacade();
 
+        $facade->id = $mixed->getId();
         $facade->label = $mixed->getLabel();
 
         $facade->addLink('_self', $this->generateRoute(

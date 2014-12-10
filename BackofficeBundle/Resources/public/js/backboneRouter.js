@@ -15,17 +15,9 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId': 'showNode',
     'template/show/:templateId': 'showTemplate',
-    'contents/list/:contentTypeId': 'listContents',
-    'websites/list': 'listSites',
-    'themes/list': 'listThemes',
-    'status/list': 'listStatus',
-    'user/list': 'listUser',
-    'role/list': 'listRole',
-    'content-types/list': 'listContentTypes',
-    'keywords/list': 'listKeywords',
-    ':folderId/list/media/edit': 'listFolder',
-    ':folderId/list': 'listFolder',
-    ':list/list/edit': 'redirectToList',
+    ':entityType/list': 'listEntities',
+    ':entityType/edit/:entityId': 'showEntity',
+    'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     '': 'showHome'
   },
@@ -43,12 +35,12 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showNode: function(nodeId)
   {
-      if (selectorExist($("#nav-node-" + nodeId))) {
-          this.initDisplayRouteChanges();
-          showNode($("#nav-node-" + nodeId).data("url"));
-      } else {
-          Backbone.history.navigate("");
-      }
+    this.showNodeWithLanguageAndVersion(nodeId);
+  },
+
+  showNodeWithLanguage: function(nodeId, language)
+  {
+    this.showNodeWithLanguageAndVersion(nodeId, language);
   },
 
   showNodeWithLanguageAndVersion: function(nodeId, language, version)
@@ -56,16 +48,6 @@ var OrchestraBORouter = Backbone.Router.extend({
       if (selectorExist($("#nav-node-" + nodeId))) {
           this.initDisplayRouteChanges("#nav-node-" + nodeId);
           showNode($("#nav-node-" + nodeId).data("url"), language, version);
-      } else {
-          Backbone.history.navigate("");
-      }
-  },
-
-  showNodeWithLanguage: function(nodeId, language)
-  {
-      if (selectorExist($("#nav-node-" + nodeId))) {
-          this.initDisplayRouteChanges("#nav-node-" + nodeId);
-          showNode($("#nav-node-" + nodeId).data("url"), language);
       } else {
           Backbone.history.navigate("");
       }
@@ -83,58 +65,15 @@ var OrchestraBORouter = Backbone.Router.extend({
     GalleryLoad($('#' + folderId));
   },
 
-  listContents: function(contentTypeId)
+  listEntities: function(entityType)
   {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-contents-" + contentTypeId));
+	this.showEntity(entityType)
   },
 
-  listSites: function()
+  showEntity: function(entityType, entityId)
   {
     this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-websites"));
-  },
-
-  listThemes: function()
-  {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-themes"));
-  },
-
-  listStatus: function()
-  {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-status"));
-  },
-
-  listUser: function()
-  {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-user"));
-  },
-
-  listRole: function()
-  {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-role"));
-  },
-
-  listContentTypes: function()
-  {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-contentTypes"));
-  },
-
-  listKeywords: function()
-  {
-    this.initDisplayRouteChanges();
-    tableViewLoad($("#nav-keywords"));
-  },
-
-  createTemplate: function()
-  {
-    var templateRoot = $("#nav-createTemplate");
-    this.showNodeForm(templateRoot);
+    tableViewLoad($("#nav-" + entityType), entityType, entityId);
   },
 
   listTranslations: function()
@@ -145,11 +84,6 @@ var OrchestraBORouter = Backbone.Router.extend({
     );
     this.setCurrentMainView(view);
     return view;
-  },
-
-  redirectToList: function(list)
-  {
-    Backbone.history.navigate(list + '/list', true);
   },
 
 //========[INTERNAL FUNCTIONS]========================//

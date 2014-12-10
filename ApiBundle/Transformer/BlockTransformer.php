@@ -40,6 +40,7 @@ class BlockTransformer extends AbstractTransformer
     {
         $facade = new BlockFacade();
 
+        $facade->id = $mixed->getId();
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $mixed->getComponent();
         $facade->label = $mixed->getLabel();

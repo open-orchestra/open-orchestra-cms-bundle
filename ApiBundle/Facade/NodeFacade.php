@@ -17,11 +17,6 @@ class NodeFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $id;
-
-    /**
-     * @Serializer\Type("string")
-     */
     public $nodeId;
 
     /**

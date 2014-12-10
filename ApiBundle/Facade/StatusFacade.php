@@ -10,11 +10,6 @@ use JMS\Serializer\Annotation as Serializer;
 class StatusFacade extends AbstractFacade
 {
     /**
-     * @Serializer\Type("string")
-     */
-    public $id;
-
-    /**
      * @Serializer\Type("boolean")
      */
     public $published;

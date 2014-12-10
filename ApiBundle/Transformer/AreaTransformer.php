@@ -46,6 +46,7 @@ class AreaTransformer extends AbstractTransformer
             $nodeMongoId = $node->getId();
         }
 
+        $facade->id = $mixed->getId();
         $facade->label = $mixed->getLabel();
         $facade->areaId = $mixed->getAreaId();
         $facade->classes = implode(',', $mixed->getClasses());
