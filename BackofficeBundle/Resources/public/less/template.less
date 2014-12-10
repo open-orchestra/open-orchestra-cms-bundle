@@ -1,13 +1,12 @@
-.ui-model ul, .ui-model li {
-    position:relative;
-    padding:0px;
-    margin:0px;
-}
 .ui-model {
     width:100%;
     height:auto;
     position: relative;
+    background-color:#A8A8A8;
     ul {
+        position:relative;
+        padding:0px;
+        margin:0px;
         width:100%;
         height: 100%;
         display:table;
@@ -17,6 +16,9 @@
         height: 78px;
     }
     li {
+        position:relative;
+        padding:0px;
+        margin:0px;
         vertical-align:top;
         display:block;
     }
@@ -48,16 +50,6 @@
         cursor:ew-resize;
         z-index:2;
     }
-    span.title {
-        position:absolute;
-        display:block;
-        margin:-17px 0 0 -6px;
-        line-height:20px;
-        font-weight:bold;
-        width:100%;
-        overflow:hidden;
-        white-space:nowrap;
-    }
     span.action {
         position:absolute;
         display:block;
@@ -80,7 +72,6 @@
         overflow:hidden;
     }
     div:not(.toolbar) {
-        border:1px solid #4e4e4e;
         border-radius:8px;
         color:#4e4e4e;
         font:10px arial,sans-serif;
@@ -134,29 +125,25 @@
         }
         div.generate {
             color:#6aa84f;
-            border:1px solid #6aa84f;
+            background-color:#F0EBE7;
+            padding:5px;
         }
         div.load {
             color: #006EC4;
-            border-color: #006EC4;
+            background-color:#E0DBD7;
+            padding:5px;
         }
         div.preview {
-            border: 0px;
             padding-top: 2px;
             margin: 0px;
             height: 100%;
             position: relative;
             min-width: 80px;
             min-height: 80px;
-            background-color: #ffffff;
-        }
-        div.preview * {
-            border: 0 none;
         }
     }
     div.over {
         color:#9a381e;
-        border:1px solid #9a381e;
     }
     div.dialog-selected {
         background-image: url(../img/alpha.png);
@@ -165,7 +152,7 @@
 }
 
 li.area-leaf > div {
-    border:15px solid #C8B7B7;
+    background-color:#FFFFFF;
 }
 
 .scroll {
