@@ -16,10 +16,10 @@ FullPageFormView = OrchestraView.extend(
     return
 
   render: ->
-    $(".widget-body", @el).replaceWith $("<div/>").html(@renderTemplate('fullPageFormView',
+    $(@el).html(@renderTemplate('fullPageFormView',
       html: @html
       listUrl: @listUrl
-    )).find(".widget-body")
+    ))
     $('.js-widget-title', @$el).text @title
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)

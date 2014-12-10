@@ -10,6 +10,11 @@ use JMS\Serializer\Annotation as Serializer;
 class AbstractFacade implements FacadeInterface
 {
     /**
+     * @Serializer\Type("string")
+     */
+    public $id;
+
+    /**
      * @Serializer\XmlMap(inline=false, entry="link", keyAttribute="location")
      */
     protected $links = array();

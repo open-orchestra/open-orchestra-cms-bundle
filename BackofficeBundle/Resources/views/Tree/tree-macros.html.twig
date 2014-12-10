@@ -84,8 +84,8 @@
             data-type="ContentType"
         >
             <a
-                id="nav-contents-{{contentType.contentTypeId}}"
-                href="#contents/list/{{contentType.contentTypeId}}"
+                id="nav-contents_{{contentType.contentTypeId}}"
+                href="#contents_{{contentType.contentTypeId}}/list"
                 data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
                 data-displayed-elements="name, status_label"
             >
@@ -99,7 +99,7 @@
     {% for folder in folders %}
         <li>
             <a
-                href="#{{ folder.id }}/list"
+                href="#folder/{{ folder.id }}/list"
                 id="{{ folder.id }}"
                 data-url="{{ path('php_orchestra_api_media_list', {'folderId': folder.id}) }}"
                 data-displayed-elements="name">

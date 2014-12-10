@@ -19,6 +19,7 @@ class ThemeTransformer extends AbstractTransformer
     {
         $facade = new ThemeFacade();
 
+        $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
 
         $facade->addLink('_self', $this->generateRoute(

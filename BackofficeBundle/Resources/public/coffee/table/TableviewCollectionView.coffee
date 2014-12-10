@@ -7,10 +7,10 @@ TableviewCollectionView = OrchestraView.extend(
     @displayedElements = options.displayedElements
     @title = options.title
     @listUrl = options.listUrl
+    @entityType = options.entityType
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     _.bindAll this, "render"
-    @documentActions = options.documentActions
     @loadTemplates [
       'tableviewCollectionView',
       'tableviewView',
@@ -42,7 +42,7 @@ TableviewCollectionView = OrchestraView.extend(
       displayedElements: @displayedElements
       title: @title
       listUrl: @listUrl
-      actions: @documentActions
+      entityType: @entityType
       el : this.$el.find('tbody')
     )
     return
