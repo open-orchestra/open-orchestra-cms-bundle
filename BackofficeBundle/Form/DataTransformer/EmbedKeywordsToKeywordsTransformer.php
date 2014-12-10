@@ -13,7 +13,7 @@ use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
  */
 class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
 {
-    public $keywordRepository;
+    protected $keywordRepository;
 
     /**
      * @param KeywordRepository $keywordRepository
