@@ -72,7 +72,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showEntity: function(entityType, entityId)
   {
-    this.initDisplayRouteChanges();
+    this.initDisplayRouteChanges("#nav-" + entityType);
     tableViewLoad($("#nav-" + entityType), entityType, entityId);
   },
 
