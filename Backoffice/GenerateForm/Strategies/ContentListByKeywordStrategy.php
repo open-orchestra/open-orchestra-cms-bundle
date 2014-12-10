@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * Class ContentListByKeywordStrategy
  */
-class ContentListByKeywordStrategy extends AbstractBlockStrategy
+class ContentListByKeywordStrategy extends AbstractContentListStrategy
 {
     /**
      * @param BlockInterface $block
@@ -22,56 +22,31 @@ class ContentListByKeywordStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
-     */
-    public function buildForm(FormInterface $form, BlockInterface $block)
-    {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
-            'contentTag' => '',
-            'class' => '',
-            'id' => '',
-            'url' => '',
-            'characterNumber' => 50,
-        );
-
-        $attributes = array_merge($empty, $attributes);
-
-        $form->add('contentKeyword', 'orchestra_keyword_choice', array(
-            'mapped' => false,
-            'data' => $attributes['contentKeyword'],
-            'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
-        ));
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => $attributes['class'],
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['id'],
-            'required' => false,
-        ));
-        $form->add('url', 'orchestra_node_choice', array(
-            'mapped' => false,
-            'data' => $attributes['url'],
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
-        ));
-        $form->add('characterNumber', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['characterNumber'],
-            'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
-            'required' => false,
-        ));
-    }
-
-    /**
      * @return string
      */
     public function getName()
     {
         return 'content_list_by_keyword';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEmptyArray()
+    {
+        return array('contentKeyword' => '');
+    }
+
+    /**
+     * @param FormInterface $form
+     * @param array         $attributes
+     */
+    protected function startBuildForm(FormInterface $form, $attributes)
+    {
+        $form->add('contentKeyword', 'orchestra_keyword_choice', array(
+            'mapped' => false,
+            'data' => $attributes['contentType'],
+            'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
+        ));
     }
 }
