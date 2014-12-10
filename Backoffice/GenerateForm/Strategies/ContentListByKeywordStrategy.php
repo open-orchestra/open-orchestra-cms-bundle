@@ -7,9 +7,9 @@ use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class ContentListStrategy
+ * Class ContentListByKeywordStrategy
  */
-class ContentListStrategy extends AbstractBlockStrategy
+class ContentListByKeywordStrategy extends AbstractBlockStrategy
 {
     /**
      * @param BlockInterface $block
@@ -18,7 +18,7 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENT_LIST === $block->getComponent();
+        return DisplayBlockInterface::CONTENT_LIST_BY_KEYWORD === $block->getComponent();
     }
 
     /**
@@ -30,7 +30,7 @@ class ContentListStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'contentType' => '',
+            'contentTag' => '',
             'class' => '',
             'id' => '',
             'url' => '',
@@ -39,10 +39,10 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('contentTypeName', 'orchestra_content_type_choice', array(
+        $form->add('contentKeyword', 'orchestra_keyword_choice', array(
             'mapped' => false,
-            'data' => $attributes['contentType'],
-            'label' => 'php_orchestra_backoffice.form.content_list.content_type',
+            'data' => $attributes['contentKeyword'],
+            'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
         ));
         $form->add('class', 'textarea', array(
             'mapped' => false,
@@ -72,6 +72,6 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'content_list';
+        return 'content_list_by_keyword';
     }
 }

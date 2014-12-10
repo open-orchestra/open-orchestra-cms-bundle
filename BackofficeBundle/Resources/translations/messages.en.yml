@@ -131,7 +131,8 @@ php_orchestra_backoffice:
             level: Menu depth
         content_list:
             node: Url to view one content.
-            content_type: Content type to display.
+            content_type: Content type to display
+            content_keyword: Keyword to display
             nb_characters: Number of characters to display before truncate the text.
         orchestra_fields:
             max_length: Max length
@@ -201,6 +202,8 @@ php_orchestra_backoffice:
             title: SubMenu Block
         content_list:
             title: Content List Block
+        content_list_by_keyword:
+            title: Content list by keyword block
         content:
             title: Content Block
         language_list:

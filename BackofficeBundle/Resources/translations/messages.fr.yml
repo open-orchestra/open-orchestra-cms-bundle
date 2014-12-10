@@ -131,7 +131,8 @@ php_orchestra_backoffice:
             level: Profondeur du menu
         content_list:
             node: Url pour voir un contenu.
-            content_type: Type de contenu à afficher.
+            content_type: Type de contenu à afficher
+            content_keyword: Mot-clé à afficher
             nb_characters: Nombre de caratères à afficher avant de couper le texte.
         orchestra_fields:
             max_length: Longueur max
@@ -201,6 +202,8 @@ php_orchestra_backoffice:
             title: Bloc sous-menu
         content_list:
             title: Bloc liste de contenus
+        content_list_by_keyword:
+            title: Bloc liste de contenu par mot-clé
         content:
             title: Bloc contenu
         language_list:

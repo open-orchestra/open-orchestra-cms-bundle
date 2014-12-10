@@ -1,4 +1,9 @@
-Content Type: <i>{{ contentType }}</i><br />
+{% if contentType is defined %}
+    Content Type: <i>{{ contentType }}</i>
+{% elseif contentKeyword is defined %}
+    Content Keyword: <i>{{ contentKeyword }}</i>
+{% endif %}
+<br />
 id : <i>{{ id }}</i><br />
 class : <i>{{ class }}</i><br />
 url: <i>{{ url }}</i>
