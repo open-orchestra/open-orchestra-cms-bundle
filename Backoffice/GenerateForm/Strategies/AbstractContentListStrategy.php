@@ -7,20 +7,10 @@ use PHPOrchestra\ModelBundle\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class ContentListStrategy
+ * Class AbstractContentListStrategy
  */
-class ContentListStrategy extends AbstractBlockStrategy
+abstract class AbstractContentListStrategy extends AbstractBlockStrategy
 {
-    /**
-     * @param BlockInterface $block
-     *
-     * @return bool
-     */
-    public function support(BlockInterface $block)
-    {
-        return DisplayBlockInterface::CONTENT_LIST === $block->getComponent();
-    }
-
     /**
      * @param FormInterface  $form
      * @param BlockInterface $block
@@ -29,21 +19,20 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $empty = array(
-            'contentType' => '',
-            'class' => '',
-            'id' => '',
-            'url' => '',
-            'characterNumber' => 50,
+        $empty = array_merge(
+            array(
+                'contentKeyword' => '',
+                'class' => '',
+                'id' => '',
+                'url' => '',
+                'characterNumber' => 50,
+            ),
+            $this->getEmptyArray()
         );
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('contentTypeName', 'orchestra_content_type_choice', array(
-            'mapped' => false,
-            'data' => $attributes['contentType'],
-            'label' => 'php_orchestra_backoffice.form.content_list.content_type',
-        ));
+        $this->startBuildForm($form, $attributes);
         $form->add('class', 'textarea', array(
             'mapped' => false,
             'data' => $attributes['class'],
@@ -68,10 +57,13 @@ class ContentListStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getName()
-    {
-        return 'content_list';
-    }
+    abstract protected function getEmptyArray();
+
+    /**
+     * @param FormInterface $form
+     * @param array         $attributes
+     */
+    abstract protected function startBuildForm(FormInterface $form, $attributes);
 }

@@ -23,6 +23,7 @@ parameters:
     php_orchestra_backoffice.type.folder.class: PHPOrchestra\BackofficeBundle\Form\Type\FolderType
     php_orchestra_backoffice.type.orchestra_node_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
     php_orchestra_backoffice.type.orchestra_content_type_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
+    php_orchestra_backoffice.type.orchestra_keyword_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordChoiceType
     php_orchestra_backoffice.type.orchestra_color_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
     php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
     php_orchestra_backoffice.type.media_crop.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaCropType
@@ -199,6 +200,12 @@ services:
             - @php_orchestra_model.repository.content_type
         tags:
             - { name: form.type, alias: orchestra_content_type_choice}
+    php_orchestra_backoffice.type.orchestra_keyword_choice:
+        class: %php_orchestra_backoffice.type.orchestra_keyword_choice.class%
+        arguments:
+            - @php_orchestra_model.repository.keyword
+        tags:
+            - { name: form.type, alias: orchestra_keyword_choice}
     php_orchestra_backoffice.type.orchestra_color_choice:
         class: %php_orchestra_backoffice.type.orchestra_color_choice.class%
         arguments:
