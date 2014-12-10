@@ -78,23 +78,3 @@
     {% set label_attr = label_attr|merge({'class': 'checkbox'}) %}
     {{ parent() }}
 {% endblock checkbox_row %}
-
-{% block orchestra_keywords_widget %}
-    {% spaceless %}
-        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control select2')|trim }) %}
-        <select style="width:100%" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
-            {% if empty_value is not none %}
-                <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %} value="">{{ empty_value|trans({}, translation_domain) }}</option>
-            {% endif %}
-            {% if preferred_choices|length > 0 %}
-                {% set options = preferred_choices %}
-                {{ block('choice_widget_options') }}
-                {% if choices|length > 0 and separator is not none %}
-                    <option disabled="disabled">{{ separator }}</option>
-                {% endif %}
-            {% endif %}
-            {% set options = choices %}
-            {{ block('choice_widget_options') }}
-        </select>
-    {% endspaceless %}
-{% endblock %}

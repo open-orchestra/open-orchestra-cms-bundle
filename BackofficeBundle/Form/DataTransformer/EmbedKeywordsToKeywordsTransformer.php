@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
 
+use PHPOrchestra\ModelBundle\Document\Keyword;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\ModelBundle\Document\EmbedKeyword;
@@ -12,7 +13,7 @@ use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
  */
 class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
 {
-    var $keywordRepository;
+    protected $keywordRepository;
 
     /**
      * @param KeywordRepository $keywordRepository
@@ -30,32 +31,38 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
     public function transform($embedKeywords)
     {
         if (null === $embedKeywords) {
-            return array();
+            return '';
         }
 
-        $keywords = new ArrayCollection();
-
-        foreach($embedKeywords as $embed) {
-            $keyword = $this->keywordRepository->find($embed->getId());
-            if ($keyword) {
-                $keywords->add($keyword);
-            }
+        $keyworks = array();
+        foreach ($embedKeywords as $keyword) {
+            $keyworks[] = $keyword->getLabel();
         }
 
-        return $keywords;
+        return implode(',', $keyworks);
     }
 
     /**
-     * @param ArrayCollection $keywords
+     * @param string $keywords
      *
      * @return ArrayCollection
      */
     public function reverseTransform($keywords)
     {
+        $keywordArray = explode(',', $keywords);
         $embedKeywords = new ArrayCollection();
 
-        foreach($keywords as $keyword) {
-            $embedKeywords->add(EmbedKeyword::createFromKeyword($keyword));
+        foreach($keywordArray as $keyword) {
+            if ('' != $keywords) {
+                $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
+                if (!$keywordEntity) {
+                    $keywordEntity = new Keyword();
+                    $keywordEntity->setLabel($keyword);
+                    $this->keywordRepository->getDocumentManager()->persist($keywordEntity);
+                    $this->keywordRepository->getDocumentManager()->flush($keywordEntity);
+                }
+                $embedKeywords->add(EmbedKeyword::createFromKeyword($keywordEntity));
+            }
         }
 
         return $embedKeywords;

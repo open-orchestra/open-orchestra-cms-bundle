@@ -3,6 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -16,13 +17,15 @@ use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTr
 class OrchestraKeywordsType extends AbstractType
 {
     protected $keywordsTransformer;
+    protected $keywordRepository;
 
     /**
      * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
      */
-    public function __construct(EmbedKeywordsToKeywordsTransformer $keywordsTransformer)
+    public function __construct(EmbedKeywordsToKeywordsTransformer $keywordsTransformer, KeywordRepository $keywordRepository)
     {
         $this->keywordsTransformer = $keywordsTransformer;
+        $this->keywordRepository = $keywordRepository;
     }
 
     /**
@@ -39,12 +42,10 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'class' => 'PHPOrchestra\ModelBundle\Document\Keyword',
-                'property' => 'label',
-            )
-        );
+        $resolver->setDefaults(array('attr' => array(
+            'class' => 'select2',
+            'data-tags' => $this->getTags(),
+        )));
     }
 
     /**
@@ -52,7 +53,7 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function getParent()
     {
-        return 'document';
+        return 'text';
     }
 
     /**
@@ -61,5 +62,19 @@ class OrchestraKeywordsType extends AbstractType
     public function getName()
     {
         return 'orchestra_keywords';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTags()
+    {
+        $keywords = $this->keywordRepository->findAll();
+        $tags = array();
+        foreach ($keywords as $tag) {
+            $tags[] = $tag->getLabel();
+        }
+
+        return json_encode($tags);
     }
 }

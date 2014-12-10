@@ -51,7 +51,6 @@ class ContentType extends AbstractType
             ))
             ->add('keywords', 'orchestra_keywords', array(
                 'label' => 'php_orchestra_backoffice.form.content_type.keywords',
-                'multiple' => true,
                 'required' => false
             ));
 

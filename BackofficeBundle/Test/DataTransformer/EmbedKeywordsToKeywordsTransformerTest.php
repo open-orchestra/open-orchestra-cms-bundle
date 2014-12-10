@@ -20,14 +20,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $transformer;
 
-    protected $keyword1Id;
-    protected $keyword2Id;
-    protected $keywords;
-    protected $keyword1;
-    protected $keyword2;
-    protected $embedKeywords;
-    protected $embedKeyword1;
-    protected $embedKeyword2;
+    protected $documentManager;
     protected $keywordRepository;
 
     /**
@@ -35,32 +28,9 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->keyword1Id = 'keyword1Id';
-        $this->keyword2Id = 'keyword2Id';
-
-        $this->keywords = new ArrayCollection();
-
-        $this->keyword1 = Phake::mock('PHPOrchestra\ModelBundle\Document\Keyword');
-        Phake::when($this->keyword1)->getId()->thenReturn($this->keyword1Id);
-        $this->keywords->add($this->keyword1);
-
-        $this->keyword2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Keyword');
-        Phake::when($this->keyword2)->getId()->thenReturn($this->keyword2Id);
-        $this->keywords->add($this->keyword2);
-
-        $this->embedKeywords = new ArrayCollection();
-
-        $this->embedKeyword1 = Phake::mock('PHPOrchestra\ModelBundle\Document\EmbedKeyword');
-        Phake::when($this->embedKeyword1)->getId()->thenReturn($this->keyword1Id);
-        $this->embedKeywords->add($this->embedKeyword1);
-
-        $this->embedKeyword2 = Phake::mock('PHPOrchestra\ModelBundle\Document\EmbedKeyword');
-        Phake::when($this->embedKeyword2)->getId()->thenReturn($this->keyword2Id);
-        $this->embedKeywords->add($this->embedKeyword2);
-        
+        $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->keywordRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\KeywordRepository');
-        Phake::when($this->keywordRepository)->find($this->keyword1Id)->thenReturn($this->keyword1);
-        Phake::when($this->keywordRepository)->find($this->keyword2Id)->thenReturn($this->keyword2);
+        Phake::when($this->keywordRepository)->getDocumentManager()->thenReturn($this->documentManager);
 
         $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository);
     }
@@ -74,28 +44,97 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test transform
+     * Test with null data
      */
-    public function testTransform()
+    public function testTransformWithNullData()
     {
-        $keywords = $this->transformer->transform($this->embedKeywords);
-
-        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $keywords);
-        $this->assertEquals(2, count($keywords));
-        $this->assertSame(serialize($this->keywords), serialize($keywords));
+        $this->assertSame('', $this->transformer->transform(null));
     }
 
     /**
-     * Test reverse transform
+     * @param string $tagLabel
+     *
+     * @dataProvider provideTagLabel
      */
-    public function testReverseTransform()
+    public function testTransformWithTag($tagLabel)
     {
-        $embedKeywords = $this->transformer->reverseTransform($this->keywords);
+        $keyword = Phake::mock('PHPOrchestra\ModelBundle\Model\KeywordInterface');
+        Phake::when($keyword)->getLabel()->thenReturn($tagLabel);
+        $keywords = new ArrayCollection();
+        $keywords->add($keyword);
+        $keywords->add($keyword);
+
+        $this->assertSame($tagLabel . ',' . $tagLabel, $this->transformer->transform($keywords));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideTagLabel()
+    {
+        return array(
+            array('tag'),
+            array('label'),
+        );
+    }
+
+    /**
+     * Test with no data
+     */
+    public function testReverseTransformWithNullData()
+    {
+        $embedKeywords = $this->transformer->reverseTransform('');
 
         $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $embedKeywords);
-        $this->assertEquals(2, count($embedKeywords));
+        $this->assertCount(0, $embedKeywords);
+    }
 
-        $this->assertSame($embedKeywords[0]->getId(), $this->keyword1Id);
-        $this->assertSame($embedKeywords[1]->getId(), $this->keyword2Id);
+    /**
+     * @param string $tagLabel
+     *
+     * @dataProvider provideTagLabel
+     */
+    public function testReverseTransformWithExistingTag($tagLabel)
+    {
+        $keyword = Phake::mock('PHPOrchestra\ModelBundle\Document\Keyword');
+        Phake::when($keyword)->getLabel()->thenReturn($tagLabel);
+        Phake::when($this->keywordRepository)->findOneByLabel(Phake::anyParameters())->thenReturn($keyword);
+
+        $embedKeywords = $this->transformer->reverseTransform($tagLabel . ',' . $tagLabel);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $embedKeywords);
+        $this->assertCount(2, $embedKeywords);
+        $this->assertSameKeyword($tagLabel, $embedKeywords->get(0));
+        $this->assertSameKeyword($tagLabel, $embedKeywords->get(1));
+    }
+
+    /**
+     * @param string $tagLabel
+     *
+     * @dataProvider provideTagLabel
+     */
+    public function testReverseTransformWithNonExistingTag($tagLabel)
+    {
+        Phake::when($this->keywordRepository)->findOneByLabel(Phake::anyParameters())->thenReturn(null);
+
+        $embedKeywords = $this->transformer->reverseTransform($tagLabel . ',' . $tagLabel);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $embedKeywords);
+        $this->assertCount(2, $embedKeywords);
+        $this->assertSameKeyword($tagLabel, $embedKeywords->get(0));
+        $this->assertSameKeyword($tagLabel, $embedKeywords->get(1));
+        Phake::verify($this->documentManager, Phake::times(2))->persist(Phake::anyParameters());
+        Phake::verify($this->documentManager, Phake::times(2))->flush(Phake::anyParameters());
+        Phake::verify($this->documentManager, Phake::never())->flush();
+    }
+
+    /**
+     * @param string       $tagLabel
+     * @param EmbedKeyword $embedKeyword
+     */
+    protected function assertSameKeyword($tagLabel, $embedKeyword)
+    {
+        $this->assertSame($tagLabel, $embedKeyword->getLabel());
+        $this->assertInstanceOf('PHPOrchestra\ModelBundle\Document\EmbedKeyword', $embedKeyword);
     }
 }
