@@ -40,6 +40,7 @@ class LanguageListStrategy extends AbstractStrategy
             array(
                 'class' => array_key_exists('class', $attributes)? $attributes['class']:'',
                 'id' => array_key_exists('id', $attributes)? $attributes['id']: '',
+                'block' => $block
             )
         );
     }

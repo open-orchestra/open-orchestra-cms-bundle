@@ -41,6 +41,7 @@ class MenuStrategy extends AbstractStrategy
             array(
                 'id' => array_key_exists('id', $attributes)? $attributes['id']: '',
                 'class' => array_key_exists('class', $attributes)? $attributes['class']: '',
+                'block' => $block
             )
         );
     }

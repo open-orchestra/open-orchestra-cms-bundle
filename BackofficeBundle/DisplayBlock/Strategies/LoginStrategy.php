@@ -34,7 +34,8 @@ class LoginStrategy extends AbstractStrategy
     public function show(BlockInterface $block)
     {
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Login:show.html.twig'
+            'PHPOrchestraBackofficeBundle:Block/Login:show.html.twig',
+            array('block' => $block)
         );
     }
 

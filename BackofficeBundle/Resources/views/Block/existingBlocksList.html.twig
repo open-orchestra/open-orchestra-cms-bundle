@@ -3,6 +3,7 @@
         <div class="panel-block {{ block.method }}" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
             <span class="title">{{ block.uiModel.label }}</span>
             <div class="preview">
+                {#{{ display_icon(block.component)|raw }}#}
                 {{ block.uiModel.html|raw }}
             </div>
             <span class="action">

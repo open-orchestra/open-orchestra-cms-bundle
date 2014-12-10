@@ -40,7 +40,8 @@ class HeaderStrategy extends AbstractStrategy
             array(
                 'id' => array_key_exists('id', $attributes)? $attributes['id']: '',
                 'class' => array_key_exists('class', $attributes)? $attributes['class']: '',
-                'mediaId' => $attributes['mediaId']
+                'mediaId' => $attributes['mediaId'],
+                'block' => $block
             )
         );
     }

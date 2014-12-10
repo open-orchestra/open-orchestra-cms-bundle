@@ -33,7 +33,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Carrousel:show.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/Carrousel:show.html.twig', array('block' => $block));
     }
 
     /**

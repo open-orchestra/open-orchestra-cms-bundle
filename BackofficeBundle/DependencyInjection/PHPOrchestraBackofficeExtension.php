@@ -49,13 +49,13 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::CONTENT_LIST_BY_KEYWORD,
             DisplayBlockInterface::CARROUSEL,
             DisplayBlockInterface::CONTENT,
-//            DisplayBlockInterface::CONFIGURABLE_CONTENT,
+            DisplayBlockInterface::CONFIGURABLE_CONTENT,
 //            DisplayBlockInterface::NEWS,
 //            DisplayBlockInterface::SAMPLE,
             DisplayBlockInterface::TINYMCEWYSIWYG,
-//            DisplayBlockInterface::CONTACT,
-//            DisplayBlockInterface::SEARCH,
-//            DisplayBlockInterface::SEARCH_RESULT,
+            DisplayBlockInterface::CONTACT,
+            DisplayBlockInterface::SEARCH,
+            DisplayBlockInterface::SEARCH_RESULT,
         );
 
         if (array_key_exists('blocks', $config) && !empty($config['blocks'])) {
@@ -71,6 +71,7 @@ class PHPOrchestraBackofficeExtension extends Extension
         $loader->load('twig.yml');
         $loader->load('fieldtype.yml');
         $loader->load('transformer.yml');
+        $loader->load('icon.yml');
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }
