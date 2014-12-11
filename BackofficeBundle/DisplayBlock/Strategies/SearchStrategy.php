@@ -40,8 +40,7 @@ class SearchStrategy extends AbstractStrategy
             'PHPOrchestraBackofficeBundle:Block/Search:show.html.twig',
             array(
                 'value' => $value,
-                'limit' => $limit,
-                'block' => $block
+                'limit' => $limit
             )
         );
     }

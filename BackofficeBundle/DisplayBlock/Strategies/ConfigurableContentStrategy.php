@@ -60,7 +60,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/ConfigurableContent:show.html.twig',
-            array('contentAttributes' => $contentAttributes, 'block' => $block)
+            array('contentAttributes' => $contentAttributes)
         );
     }
 

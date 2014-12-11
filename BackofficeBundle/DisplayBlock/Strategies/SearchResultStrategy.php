@@ -41,8 +41,7 @@ class SearchResultStrategy extends AbstractStrategy
                 'nbdoc' => $attributes['nbdoc'],
                 'fielddisplayed' => implode(', ', $attributes['fielddisplayed']),
                 'nbfacet' => count($attributes['facets']),
-                'nbfilter' => count($attributes['filter']),
-                'block' => $block
+                'nbfilter' => count($attributes['filter'])
             )
         );
     }

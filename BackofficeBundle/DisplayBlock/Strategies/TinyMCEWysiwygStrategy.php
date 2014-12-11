@@ -38,7 +38,7 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
-            array('htmlContent' => strip_tags($htmlContent), 'block' => $block)
+            array('htmlContent' => strip_tags($htmlContent))
         );
     }
 
