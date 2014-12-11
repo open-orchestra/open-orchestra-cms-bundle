@@ -23,7 +23,7 @@ makeSortable = (el, duplicate) ->
     tolerance: 'pointer',
     zIndex: 100000,
     helper: (event, obj) ->
-      $("<div></div>").addClass("ui-model").append obj.clone()
+      $("<div></div>").addClass("ui-model drag-helper").append obj.clone()
     create: (event, ui)->
       @stockedUl = $(this)
       @duplicate = duplicate
