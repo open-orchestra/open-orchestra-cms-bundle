@@ -208,6 +208,7 @@ php_orchestra_backoffice:
             title: Bloc contenu
         language_list:
             title: Bloc séléction de langue
+            description: Affiche la liste déroulante avec toutes les langues du site.
         login: 
             title: Bloc connexion
     node:

@@ -208,6 +208,7 @@ php_orchestra_backoffice:
             title: Content Block
         language_list:
             title: Language choice Block
+            description: Display dropdown list with all the languages of the site.
         login:
             title: Login Block
     node:
