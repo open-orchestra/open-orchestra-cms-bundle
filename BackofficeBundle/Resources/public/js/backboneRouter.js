@@ -14,10 +14,10 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId': 'showNode',
-    'entity/show/:language': 'showEntityWithLanguage',
     'template/show/:templateId': 'showTemplate',
     ':entityType/list': 'listEntities',
     ':entityType/edit/:entityId': 'showEntity',
+    ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
     'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     '': 'showHome'
@@ -54,13 +54,6 @@ var OrchestraBORouter = Backbone.Router.extend({
       }
   },
 
-  showEntityWithLanguage: function(language)
-  {
-	var url = $("#url-entity").data("url")
-    this.initDisplayRouteChanges();
-    showEntity(url, language);
-  },
-  
   showTemplate: function(templateId)
   {
     this.initDisplayRouteChanges();
@@ -80,10 +73,15 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showEntity: function(entityType, entityId)
   {
-    this.initDisplayRouteChanges("#nav-" + entityType);
-    tableViewLoad($("#nav-" + entityType), entityType, entityId);
+    this.showEntityWithLanguage(entityType, entityId);
   },
 
+  showEntityWithLanguage: function(entityType, entityId, language)
+  {
+    this.initDisplayRouteChanges("#nav-" + entityType);
+    tableViewLoad($("#nav-" + entityType), entityType, entityId, language);
+  },
+  
   listTranslations: function()
   {
     drawBreadCrumb();

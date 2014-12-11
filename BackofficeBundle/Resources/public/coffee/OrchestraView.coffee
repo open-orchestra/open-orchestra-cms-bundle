@@ -58,10 +58,24 @@ OrchestraView = Backbone.View.extend(
     )
 
   changeLanguage: (event) ->
-    $(@el).append('<span style="display:none;" data-url="' + @multiLanguage.url_entity + '" id="url-entity" />') if @multiLanguage.url_entity
-    
-    redirectRoute = appRouter.generateUrl(@multiLanguage.path,
-      $.extend(@multiLanguage.path_option, {language: $(event.currentTarget).data('language')})
-    )
-    Backbone.history.navigate(redirectRoute , {trigger: true})
+#  
+#@multiLanguage.language_list
+#@multiLanguage.language
+#@multiLanguage.url_entity
+#@multiLanguage.path
+#@multiLanguage.path_option
+#  
+#    @multiLanguage = 
+#      language: @node.get('language')
+#      language_list: @node.get('links')._language_list
+#      path: 'showNodeWithLanguage'
+#      path_option: {nodeId : @node.get('node_id')}
+#
+#  
+#    $(@el).append('<span style="display:none;" data-url="' + @multiLanguage.url_entity + '" id="url-entity" />') if @multiLanguage.url_entity
+#    
+#    redirectRoute = appRouter.generateUrl(@multiLanguage.path,
+#      $.extend(@multiLanguage.path_option, {language: $(event.currentTarget).data('language')})
+#    )
+#    Backbone.history.navigate(redirectRoute , {trigger: true})
 )

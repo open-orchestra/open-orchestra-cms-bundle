@@ -1,4 +1,4 @@
-tableViewLoad = (link, entityType, entityId) ->
+tableViewLoad = (link, entityType, entityId, language) ->
   target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
