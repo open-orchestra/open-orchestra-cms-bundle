@@ -10,7 +10,7 @@
         width:100%;
         height: 100%;
         display:table;
-        border-spacing:12px;
+        border-spacing:17px;
     }
     ul:empty {
         height: 78px;
@@ -50,19 +50,6 @@
         cursor:ew-resize;
         z-index:2;
     }
-    span.action {
-        position:absolute;
-        display:block;
-        height:12px;
-        top:-12px;
-        right:0px;
-        i {
-            position:relative;
-            float:right;
-            padding:1px;
-            cursor:pointer;
-        }
-    }
     span.preview {
         bottom: 0;
         left: 2px;
@@ -85,23 +72,40 @@
             min-height: 80px;
         }
     }
+    div.toolbar-layer {
+        position:absolute;
+        z-index:500;
+        background-color:transparent;
+        width:100%;
+        text-align:center;
+        div.toolbar {
+            position:relative;
+            margin-top:-15px;
+            span.tool {
+                color:#FFFFFF;
+                cursor:pointer;
+                padding:0 3px;
+            }
+            span.tool:hover {
+            }
+            span.tool:first-child {
+                cursor:auto;
+            }
+            span.tool:nth-child(2) {
+            }
+            span.tool:last-child {
+            }
+        }
+    }
     .ui-model-blocks {
         div.toolbar-layer {
             opacity:0;
-            position:absolute;
-            z-index:500;
-            width:100%;
-            text-align:center;
             div.toolbar {
-                position:relative;
-                display:inline-block;
                 margin-top:15px;
                 span.tool {
-                    color:#FFFFFF;
                     font-size: 15px;
                     padding: 8px 8px 5px 8px;
                     background-color:#676564;
-                    cursor:pointer;
                 }
                 span.tool:hover {
                     background-color:#605F5D;
