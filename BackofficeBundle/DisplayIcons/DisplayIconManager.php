@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\DisplayIcons;
 
-use PHPOrchestra\BackofficeBundle\Exception\DisplayBlockIconNotFoundException;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -35,8 +34,6 @@ class DisplayIconManager
      *
      * @param string $block
      *
-     * @throws DisplayBlockIconNotFoundException
-     *
      * @return string
      */
     public function show($block)
@@ -47,8 +44,6 @@ class DisplayIconManager
                 return $strategy->show();
             }
         }
-
-        throw new DisplayBlockIconNotFoundException($block);
     }
 
     /**
