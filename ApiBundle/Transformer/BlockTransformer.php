@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
+use PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager;
 use PHPOrchestra\ModelBundle\Document\Block;
 use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
@@ -16,13 +17,16 @@ use PHPOrchestra\ModelBundle\Model\NodeInterface;
 class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
+    protected $displayIconManager;
 
     /**
      * @param DisplayBlockManager $displayBlockManager
+     * @param DisplayIconManager $displayIconManager
      */
-    public function __construct(DisplayBlockManager $displayBlockManager)
+    public function __construct(DisplayBlockManager $displayBlockManager, DisplayIconManager $displayIconManager)
     {
         $this->displayBlockManager = $displayBlockManager;
+        $this->displayIconManager = $displayIconManager;
     }
 
     /**
@@ -54,9 +58,10 @@ class BlockTransformer extends AbstractTransformer
             }
         }
 
-        $html = null;
         if (count($mixed->getAttributes()) > 0) {
             $html = $this->displayBlockManager->show($mixed)->getContent();
+        } else {
+            $html = $this->displayIconManager->show($mixed->getComponent());
         }
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(

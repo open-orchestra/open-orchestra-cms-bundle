@@ -1,9 +1,14 @@
 {% if contentType is defined %}
+    {{ display_icon('content_list_by_type') }}
+    <br />
     Content Type: <i>{{ contentType }}</i>
 {% elseif contentKeyword is defined %}
+    {{ display_icon('content_list_by_keyword') }}
+    <br />
     Content Keyword: <i>{{ contentKeyword }}</i>
 {% endif %}
 <br />
+
 id : <i>{{ id }}</i><br />
 class : <i>{{ class }}</i><br />
 url: <i>{{ url }}</i>

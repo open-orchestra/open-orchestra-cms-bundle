@@ -56,6 +56,7 @@ services:
         class: %php_orchestra_api.transformer.block.class%
         arguments: 
             - @php_orchestra_display.display_block_manager
+            - @php_orchestra_backoffice.display_icon_manager
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.ui_model:
