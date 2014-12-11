@@ -31,6 +31,9 @@ class BlockIconExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Twig_Extension', $this->twig);
     }
 
+    /**
+     * Test displayIcon
+     */
     public function testDisplayIcon()
     {
         Phake::when($this->iconManager)->show(Phake::anyParameters())->thenReturn('icon');
