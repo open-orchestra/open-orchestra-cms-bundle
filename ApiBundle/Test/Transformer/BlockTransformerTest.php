@@ -11,6 +11,7 @@ use PHPOrchestra\ApiBundle\Transformer\BlockTransformer;
 class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 {
     protected $displayBlockManager;
+    protected $displayIconManager;
     protected $transformerManager;
     protected $blockTransformer;
     protected $blockFacade;
@@ -23,6 +24,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
+        $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager');
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
 
@@ -31,7 +33,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -74,6 +76,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($block)->getAttributes()->thenReturn($attributes);
         Phake::when($this->displayBlockManager)->show($block)->thenReturn($response);
         Phake::when($response)->getContent()->thenReturn($html);
+        Phake::when($this->displayIconManager)->show($component)->thenReturn('icon');
 
         $this->blockTransformer->setContext($transformerManager);
 
