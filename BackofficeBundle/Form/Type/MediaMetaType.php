@@ -44,6 +44,10 @@ class MediaMetaType extends AbstractType
             'label' => 'php_orchestra_backoffice.form.media.meta.comment',
             'required' => false,
         ));
+        $builder->add('keywords', 'orchestra_keywords', array(
+            'label' => 'php_orchestra_backoffice.form.media.meta.keywords',
+            'required' => false
+        ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

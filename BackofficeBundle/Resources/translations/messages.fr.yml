@@ -126,6 +126,7 @@ php_orchestra_backoffice:
                 alt: Alt
                 copyright: Copyright
                 comment: Commentaire
+                keywords: Mot-clés
         sub_menu:
             node: Racine du menu
             level: Profondeur du menu
