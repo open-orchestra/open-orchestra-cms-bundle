@@ -121,6 +121,8 @@ php_orchestra_backoffice:
             rectangle: Rectangle
             max_width: Max width image
             max_height: Max height image
+            list:
+                keyword: Mot-clé
             meta:
                 title: Title
                 alt: Alt
@@ -189,6 +191,8 @@ php_orchestra_backoffice:
             title: Footer block
         header:
             title: Header block
+        media_list_by_keyword:
+            title: Media list by keyword
         menu:
             title: Menu block
         search:

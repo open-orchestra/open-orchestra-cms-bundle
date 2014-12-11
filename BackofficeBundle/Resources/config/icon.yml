@@ -14,6 +14,7 @@ parameters:
     php_orchestra_backoffice.display_icon.login.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\LoginIconStrategy
     php_orchestra_backoffice.display_icon.sub_menu.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\SubMenuIconStrategy
     php_orchestra_backoffice.display_icon.content_list.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\ContentListIconStrategy
+    php_orchestra_backoffice.display_icon.media_list.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\MediaListIconStrategy
     php_orchestra_backoffice.display_icon.content.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\ContentIconStrategy
     php_orchestra_backoffice.display_icon.language_list.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\LanguageListIconStrategy
 
@@ -51,6 +52,10 @@ services:
             - { name: php_orchestra_backoffice.display_icon.strategy }
     php_orchestra_backoffice.display_icon.content_list:
         class: %php_orchestra_backoffice.display_icon.content_list.class%
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.display_icon.media_list:
+        class: %php_orchestra_backoffice.display_icon.media_list.class%
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
     php_orchestra_backoffice.display_icon.content:
