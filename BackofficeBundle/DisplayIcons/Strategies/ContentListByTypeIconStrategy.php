@@ -30,4 +30,4 @@ class ContentListByTypeIconStrategy extends AbstractContentListIconStrategy
     {
         return 'content_list_by_type';
     }
-} 
+}
