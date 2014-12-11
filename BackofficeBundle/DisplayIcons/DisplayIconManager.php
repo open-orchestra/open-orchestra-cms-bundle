@@ -4,8 +4,10 @@ namespace PHPOrchestra\BackofficeBundle\DisplayIcons;
 
 use PHPOrchestra\BackofficeBundle\Exception\DisplayBlockIconNotFoundException;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class DisplayIconManager
+ */
 class DisplayIconManager
 {
     protected $strategies = array();

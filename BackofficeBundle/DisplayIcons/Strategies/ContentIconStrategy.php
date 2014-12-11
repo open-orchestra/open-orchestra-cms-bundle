@@ -5,6 +5,9 @@ namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ContentIconStrategy
+ */
 class ContentIconStrategy extends AbstractStrategy
 {
     /**
@@ -22,7 +25,7 @@ class ContentIconStrategy extends AbstractStrategy
     /**
      * Display an icon for a block
      *
-     * @return Response
+     * @return string
      */
     public function show()
     {

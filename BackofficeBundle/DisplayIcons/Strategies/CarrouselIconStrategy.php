@@ -5,6 +5,9 @@ namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class CarrouselIconStrategy
+ */
 class CarrouselIconStrategy extends AbstractStrategy
 {
     /**
@@ -22,7 +25,7 @@ class CarrouselIconStrategy extends AbstractStrategy
     /**
      * Display an icon for a block
      *
-     * @return Response
+     * @return string
      */
     public function show()
     {
@@ -38,4 +41,4 @@ class CarrouselIconStrategy extends AbstractStrategy
     {
         return 'carrousel';
     }
-} 
+}

@@ -5,6 +5,9 @@ namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class FooterIconStrategy
+ */
 class FooterIconStrategy extends AbstractStrategy
 {
     /**
@@ -22,7 +25,7 @@ class FooterIconStrategy extends AbstractStrategy
     /**
      * Display an icon for a block
      *
-     * @return Response
+     * @return string
      */
     public function show()
     {

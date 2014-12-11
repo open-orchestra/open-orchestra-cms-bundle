@@ -3,12 +3,11 @@
 namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SearchIconStrategy
+ * Class ContentListByKeywordIconStrategy
  */
-class SearchIconStrategy extends AbstractStrategy
+class ContentListByKeywordIconStrategy extends AbstractContentListIconStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,17 +18,7 @@ class SearchIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::SEARCH == $block;
-    }
-
-    /**
-     * Display an icon for a block
-     *
-     * @return string
-     */
-    public function show()
-    {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Search:showIcon.html.twig');
+        return DisplayBlockInterface::CONTENT_LIST_BY_KEYWORD == $block;
     }
 
     /**
@@ -39,6 +28,6 @@ class SearchIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'search';
+        return 'content_list_by_keyword';
     }
 }

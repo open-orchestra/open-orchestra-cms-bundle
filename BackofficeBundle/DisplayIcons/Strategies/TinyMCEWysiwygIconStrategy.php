@@ -3,8 +3,10 @@
 namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class TinyMCEWysiwygIconStrategy
+ */
 class TinyMCEWysiwygIconStrategy extends AbstractStrategy
 {
     /**
@@ -22,7 +24,7 @@ class TinyMCEWysiwygIconStrategy extends AbstractStrategy
     /**
      * Display an icon for a block
      *
-     * @return Response
+     * @return string
      */
     public function show()
     {

@@ -3,9 +3,11 @@
 namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
-class ContentListIconStrategy extends AbstractStrategy
+/**
+ * Class ContentListByTypeIconStrategy
+ */
+class ContentListByTypeIconStrategy extends AbstractContentListIconStrategy
 {
     /**
      * Check if the strategy support this block
@@ -16,17 +18,7 @@ class ContentListIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CONTENT_LIST == $block;
-    }
-
-    /**
-     * Display an icon for a block
-     *
-     * @return Response
-     */
-    public function show()
-    {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:showIcon.html.twig');
+        return DisplayBlockInterface::CONTENT_LIST_BY_TYPE == $block;
     }
 
     /**
@@ -36,6 +28,6 @@ class ContentListIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'content_list';
+        return 'content_list_by_type';
     }
-}
+} 

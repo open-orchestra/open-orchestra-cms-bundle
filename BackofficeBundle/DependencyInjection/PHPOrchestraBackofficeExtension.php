@@ -53,7 +53,7 @@ class PHPOrchestraBackofficeExtension extends Extension
 //            DisplayBlockInterface::NEWS,
 //            DisplayBlockInterface::SAMPLE,
             DisplayBlockInterface::TINYMCEWYSIWYG,
-            DisplayBlockInterface::CONTACT,
+//            DisplayBlockInterface::CONTACT,
             DisplayBlockInterface::SEARCH,
             DisplayBlockInterface::SEARCH_RESULT,
         );

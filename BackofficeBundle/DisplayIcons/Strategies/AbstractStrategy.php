@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 
 use PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconInterface;
 use PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AbstractStrategy
@@ -36,4 +35,4 @@ abstract class AbstractStrategy implements DisplayIconInterface
     {
         return $this->manager->getTemplating()->render($view, $parameters);
     }
-} 
+}

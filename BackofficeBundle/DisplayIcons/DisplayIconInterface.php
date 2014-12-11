@@ -2,8 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\DisplayIcons;
 
-use Symfony\Component\HttpFoundation\Response;
-
+/**
+ * Interface DisplayIconInterface
+ */
 interface DisplayIconInterface
 {
     /**
@@ -35,4 +36,4 @@ interface DisplayIconInterface
      * @param DisplayIconManager $manager
      */
     public function setManager(DisplayIconManager $manager);
-} 
+}

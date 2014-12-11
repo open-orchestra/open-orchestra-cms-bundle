@@ -13,7 +13,8 @@ parameters:
     php_orchestra_backoffice.display_icon.search_result.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\SearchResultIconStrategy
     php_orchestra_backoffice.display_icon.login.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\LoginIconStrategy
     php_orchestra_backoffice.display_icon.sub_menu.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\SubMenuIconStrategy
-    php_orchestra_backoffice.display_icon.content_list.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\ContentListIconStrategy
+    php_orchestra_backoffice.display_icon.content_list_by_keyword.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\ContentListByKeywordIconStrategy
+    php_orchestra_backoffice.display_icon.content_list_by_type.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\ContentListByTypeIconStrategy
     php_orchestra_backoffice.display_icon.content.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\ContentIconStrategy
     php_orchestra_backoffice.display_icon.language_list.class: PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\LanguageListIconStrategy
 
@@ -49,8 +50,12 @@ services:
         class: %php_orchestra_backoffice.display_icon.sub_menu.class%
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
-    php_orchestra_backoffice.display_icon.content_list:
-        class: %php_orchestra_backoffice.display_icon.content_list.class%
+    php_orchestra_backoffice.display_icon.content_list_by_keyword:
+        class: %php_orchestra_backoffice.display_icon.content_list_by_keyword.class%
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.display_icon.content_list_by_type:
+        class: %php_orchestra_backoffice.display_icon.content_list_by_type.class%
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
     php_orchestra_backoffice.display_icon.content:

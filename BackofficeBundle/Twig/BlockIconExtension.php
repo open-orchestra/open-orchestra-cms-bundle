@@ -4,6 +4,9 @@ namespace PHPOrchestra\BackofficeBundle\Twig;
 
 use PHPOrchestra\BackOfficeBundle\DisplayIcons\DisplayIconManager;
 
+/**
+ * Class BlockIconExtension
+ */
 class BlockIconExtension extends \Twig_Extension
 {
     protected $displayIconManager;
@@ -45,4 +48,4 @@ class BlockIconExtension extends \Twig_Extension
     {
         return 'block_icon';
     }
-} 
+}

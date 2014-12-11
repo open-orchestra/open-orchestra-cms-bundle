@@ -2,8 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
 
-use Symfony\Component\HttpFoundation\Response;
-
+/**
+ * Class LoginIconStrategy
+ */
 class LoginIconStrategy extends AbstractStrategy
 {
     /**
@@ -21,7 +22,7 @@ class LoginIconStrategy extends AbstractStrategy
     /**
      * Display an icon for a block
      *
-     * @return Response
+     * @return string
      */
     public function show()
     {
