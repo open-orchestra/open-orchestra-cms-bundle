@@ -87,26 +87,6 @@ class ContentController extends BaseController
      */
     public function changeStatusAction(Request $request, $contentId)
     {
-        $facade = $this->get('jms_serializer')->deserialize(
-            $request->getContent(),
-            'PHPOrchestra\ApiBundle\Facade\ContentFacade',
-            $request->get('_format', 'json')
-        );
-
-        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
-        $content = $this->get('php_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade, $content);
-
-        if ($this->isValid($content)) {
-            $em = $this->get('doctrine.odm.mongodb.document_manager');
-            $em->persist($content);
-            $em->flush();
-
-            return new Response('', 200);
-        }
-
-        return new response(
-            $this->get('jms_serializer')->serialize($this->getViolations(), $request->get('_format', 'json')),
-            400
-        );
+        return $this->reverseTransform($request, $contentId, 'content', 'ContentFacade');
     }
 }

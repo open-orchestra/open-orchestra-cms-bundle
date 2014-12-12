@@ -145,7 +145,9 @@ class NodeTransformer extends AbstractTransformer
 
     /**
      * @param FacadeInterface $facade
-     * @param mixed           $node
+     * @param mixed|null      $source
+     *
+     * @return mixed
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {

@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelBundle\Model\StatusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -60,17 +61,8 @@ class StatusController extends Controller
     public function listStatusesForNodeAction($nodeMongoId)
     {
         $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
-        $status = $node->getStatus();
 
-        $transitions = $status->getFromRoles();
-
-        $possibleStatuses = array();
-
-        foreach ($transitions as $transition) {
-            $possibleStatuses[] = $transition->getToStatus();
-        }
-
-        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
+        return $this->listStatuses($node->getStatus());
     }
 
     /**
@@ -85,8 +77,17 @@ class StatusController extends Controller
     public function listStatusesForContentAction($contentId)
     {
         $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
-        $status = $content->getStatus();
 
+        return $this->listStatuses($content->getStatus());
+    }
+
+    /**
+     * @param StatusInterface $status
+     *
+     * @return Response
+     */
+    protected function listStatuses(StatusInterface $status)
+    {
         $transitions = $status->getFromRoles();
 
         $possibleStatuses = array();
