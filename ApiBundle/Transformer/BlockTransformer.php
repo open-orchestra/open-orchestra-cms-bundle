@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager;
+use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 use PHPOrchestra\ModelBundle\Document\Block;
 use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
@@ -17,16 +17,16 @@ use PHPOrchestra\ModelBundle\Model\NodeInterface;
 class BlockTransformer extends AbstractTransformer
 {
     protected $displayBlockManager;
-    protected $displayIconManager;
+    protected $displayManager;
 
     /**
      * @param DisplayBlockManager $displayBlockManager
-     * @param DisplayIconManager $displayIconManager
+     * @param DisplayManager $displayManager
      */
-    public function __construct(DisplayBlockManager $displayBlockManager, DisplayIconManager $displayIconManager)
+    public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager)
     {
         $this->displayBlockManager = $displayBlockManager;
-        $this->displayIconManager = $displayIconManager;
+        $this->displayIconManager = $displayManager;
     }
 
     /**

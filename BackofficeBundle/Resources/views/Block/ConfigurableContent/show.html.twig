@@ -1,5 +1,7 @@
 {{ display_icon('configurable_content') }}
-<br />
-{% for attribute in contentAttributes %}
-    {{ attribute.name }} : <i>{{ attribute.value }}</i><br />
-{% endfor %}
+
+<p>
+    {% for attribute in contentAttributes %}
+        {{ attribute.name }} : <i>{{ attribute.value }}</i><br />
+    {% endfor %}
+</p>

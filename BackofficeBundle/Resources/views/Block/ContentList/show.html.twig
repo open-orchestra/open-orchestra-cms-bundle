@@ -1,15 +1,20 @@
 {% if contentType is defined %}
     {{ display_icon('content_list_by_type') }}
-    <br />
-    Content Type: <i>{{ contentType }}</i>
+
+    <p>
+        Content Type: <i>{{ contentType }}</i>
+    </p>
 {% elseif contentKeyword is defined %}
     {{ display_icon('content_list_by_keyword') }}
-    <br />
-    Content Keyword: <i>{{ contentKeyword }}</i>
-{% endif %}
-<br />
 
-id : <i>{{ id }}</i><br />
-class : <i>{{ class }}</i><br />
-url: <i>{{ url }}</i>
-Number of charactere before truncate: <i>{{ characterNumber }}</i>
+    <p>
+        Content Keyword: <i>{{ contentKeyword }}</i>
+    </p>
+{% endif %}
+
+<p>
+    id : <i>{{ id }}</i><br />
+    class : <i>{{ class }}</i><br />
+    url: <i>{{ url }}</i>
+    Number of charactere before truncate: <i>{{ characterNumber }}</i>
+</p>

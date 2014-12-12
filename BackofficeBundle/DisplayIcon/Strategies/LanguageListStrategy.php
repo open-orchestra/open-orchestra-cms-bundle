@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CarrouselIconStrategy
+ * Class LanguageListIconStrategy
  */
-class CarrouselIconStrategy extends AbstractStrategy
+class LanguageListStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +19,7 @@ class CarrouselIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CARROUSEL == $block;
+        return DisplayBlockInterface::LANGUAGE_LIST == $block;
     }
 
     /**
@@ -29,7 +29,7 @@ class CarrouselIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Carrousel:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/LanguageList:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +39,6 @@ class CarrouselIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'carrousel';
+        return 'language_list';
     }
 }

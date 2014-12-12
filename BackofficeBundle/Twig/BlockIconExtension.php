@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Twig;
 
-use PHPOrchestra\BackOfficeBundle\DisplayIcons\DisplayIconManager;
+use PHPOrchestra\BackOfficeBundle\DisplayIcon\DisplayManager;
 
 /**
  * Class BlockIconExtension
@@ -12,9 +12,9 @@ class BlockIconExtension extends \Twig_Extension
     protected $displayIconManager;
 
     /**
-     * @param DisplayIconManager $displayIconManager
+     * @param DisplayManager $displayIconManager
      */
-    public function __construct(DisplayIconManager $displayIconManager)
+    public function __construct(DisplayManager $displayIconManager)
     {
         $this->displayIconManager = $displayIconManager;
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class TinyMCEWysiwygIconStrategy
  */
-class TinyMCEWysiwygIconStrategy extends AbstractStrategy
+class TinyMCEWysiwygStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block

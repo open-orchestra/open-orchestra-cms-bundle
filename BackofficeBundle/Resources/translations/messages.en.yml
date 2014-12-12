@@ -183,39 +183,55 @@ php_orchestra_backoffice:
             title: Configurable content block
             contentTypeId: Choose a content type
             contentId: Choose a content
+            description: Display selected content.
         carrousel:
             title: Carousel block
+            description: Block to scroll images.
         contact:
             title: Contact block
+            description: Display a contact form.
         footer:
             title: Footer block
+            description: Display a node name list that have a footer attribute.
         header:
             title: Header block
+            description: Display image.
         media_list_by_keyword:
             title: Media list by keyword
+            description: Display a medias list.
         menu:
             title: Menu block
+            description: Display a node name list that have the attribute menu.
         search:
             title: Search block
+            description: Display a search field.
         search_result:
             title: Search result block
+            description: Display result of the research.
         tiny_mce_wysiwyg:
             title: Rich text block
+            description: Display a rich text area.
         news:
             title: News block
+            description: Display dropdown list with all the languages of the site.
         sub_menu:
             title: SubMenu Block
+            description: Display a menu.
         content_list:
             title: Content List Block
+            description: Display a list of contents.
         content_list_by_keyword:
             title: Content list by keyword block
+            description: Display a list of contents by key word.
         content:
             title: Content Block
+            description: Display a content.
         language_list:
             title: Language choice Block
             description: Display dropdown list with all the languages of the site.
         login:
             title: Login Block
+            description: Display a log form.
     node:
         version:
             create: New version

@@ -24,7 +24,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
-        $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager');
+        $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
 

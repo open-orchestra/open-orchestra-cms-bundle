@@ -18,7 +18,7 @@ class BlockIconExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->iconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager');
+        $this->iconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
 
         $this->twig = new BlockIconExtension($this->iconManager);
     }

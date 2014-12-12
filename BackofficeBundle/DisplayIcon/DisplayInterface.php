@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon;
 
 /**
  * Interface DisplayIconInterface
  */
-interface DisplayIconInterface
+interface DisplayInterface
 {
     /**
      * Check if the strategy support this block
@@ -33,7 +33,7 @@ interface DisplayIconInterface
     /**
      * Set the manager
      *
-     * @param DisplayIconManager $manager
+     * @param DisplayManager $manager
      */
-    public function setManager(DisplayIconManager $manager);
+    public function setManager(DisplayManager $manager);
 }
