@@ -15,6 +15,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $contentTransformer;
 
+    protected $transformerAttribute;
     protected $transformerManager;
     protected $statusRepository;
     protected $transformer;
@@ -29,7 +30,6 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->content = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
-        Phake::when($this->content)->getAttributes()->thenReturn(array());
         $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
@@ -37,12 +37,14 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
+        $this->transformerAttribute = Phake::mock('PHPOrchestra\ApiBundle\Transformer\ContentAttributeTransformer');
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\StatusTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
 
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
-        Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
+        Phake::when($this->transformerManager)->get('status')->thenReturn($this->transformer);
+        Phake::when($this->transformerManager)->get('content_attribute')->thenReturn($this->transformerAttribute);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
         $this->contentTransformer = new ContentTransformer($this->statusRepository);
@@ -56,7 +58,12 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $facade = Phake::mock('PHPOrchestra\ApiBundle\Facade\FacadeInterface');
         $facade->label = 'draft';
+
+        $attribute = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentAttributeInterface');
+        Phake::when($this->content)->getAttributes()->thenReturn(array($attribute, $attribute));
+
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
+        Phake::when($this->transformerAttribute)->transform(Phake::anyParameters())->thenReturn($facade);
 
         $facade = $this->contentTransformer->transform($this->content);
 
@@ -98,8 +105,13 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array($facade1, null, 0, 0),
-            array($facade2, $content, 1, 1),
-            array($facade1, $content, 0, 0)
+            array($facade1, $content, 0, 0),
+            array($facade2, $content, 1, 1)
         );
+    }
+
+    public function testGetName()
+    {
+        $this->assertSame('content', $this->contentTransformer->getName());
     }
 }
