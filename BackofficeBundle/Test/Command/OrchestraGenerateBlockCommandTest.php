@@ -49,11 +49,15 @@ class OrchestraGenerateBlockCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($definition->hasOption('block-name'));
         $this->assertTrue($definition->hasOption('form-generator-dir'));
         $this->assertTrue($definition->hasOption('form-generator-conf'));
+        $this->assertTrue($definition->hasOption('form-generator-namespace'));
         $this->assertTrue($definition->hasOption('front-display-dir'));
         $this->assertTrue($definition->hasOption('front-display-conf'));
+        $this->assertTrue($definition->hasOption('front-display-namespace'));
         $this->assertTrue($definition->hasOption('backoffice-icon-dir'));
         $this->assertTrue($definition->hasOption('backoffice-icon-conf'));
+        $this->assertTrue($definition->hasOption('backoffice-icon-namespace'));
         $this->assertTrue($definition->hasOption('backoffice-display-dir'));
         $this->assertTrue($definition->hasOption('backoffice-display-conf'));
+        $this->assertTrue($definition->hasOption('backoffice-display-namespace'));
     }
 }
