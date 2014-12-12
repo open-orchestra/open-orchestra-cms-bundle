@@ -17,11 +17,9 @@
 <span class="delete-confirm-txt-<%= template.cid %>" style="display: none">{{ 'php_orchestra_backoffice.templates.delete'|trans }}</span>
 <div role="container">
     <div class="ui-model">
-        <span class="title"></span>
-        <span class="preview"></span>
-            <span class="action">
-                <i class="fa fa-cog <%= template.cid %>"></i>
-            </span>
+        <div class="toolbar">
+            <i class="fa fa-eye-slash hide-areas"></i><i class="fa fa-eye show-areas"></i><i class="fa fa-cog <%= template.cid %>"></i>
+        </div>
         <ul class="ui-model-areas">
         </ul>
     </div>

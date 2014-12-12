@@ -6,8 +6,9 @@ TemplateView = OrchestraView.extend(
 
   initialize: (options) ->
     @template = options.template
-    key = "click i." + @template.cid
-    @events[key] = "clickButton"
+    @events['click i.' + @template.cid] = 'clickButton'
+    @events['click i.show-areas'] = 'showAreas'
+    @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @loadTemplates [
       "templateView"
@@ -43,4 +44,14 @@ TemplateView = OrchestraView.extend(
     $("ul.ui-model-areas", @$el).each ->
       refreshUl $(this)
     return
+
+  showAreas: ->
+    $('.show-areas').hide()
+    $('.hide-areas').show()
+    $('div.toolbar-layer.area-toolbar').addClass('shown')
+
+  hideAreas: ->
+    $('.hide-areas').hide()
+    $('.show-areas').show()
+    $('div.toolbar-layer.area-toolbar').removeClass('shown')
 )

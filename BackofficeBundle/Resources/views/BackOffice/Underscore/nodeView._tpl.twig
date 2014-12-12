@@ -40,7 +40,9 @@
 <span class="delete-confirm-txt-<%= node.cid %>" style="display: none">{{ 'php_orchestra_backoffice.node.delete'|trans }}</span>
 <div role="container">
     <div class="ui-model">
-        <i class="fa fa-cog <%= node.cid %>"></i>
+        <div class="toolbar">
+            <i class="fa fa-eye-slash hide-areas"></i><i class="fa fa-eye show-areas"></i><i class="fa fa-cog <%= node.cid %>"></i>
+        </div>
         <ul class="ui-model-areas">
         </ul>
     </div>
