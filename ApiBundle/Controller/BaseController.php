@@ -45,14 +45,15 @@ class BaseController extends Controller
     protected function reverseTransform(Request $request, $id, $type)
     {
         $facadeName = Inflector::classify($type) . 'Facade';
+        $typeName = Inflector::tableize($type);
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'PHPOrchestra\ApiBundle\Facade\\' . $facadeName,
             $request->get('_format', 'json')
         );
 
-        $mixed = $this->get('php_orchestra_model.repository.' . $type)->find($id);
-        $mixed = $this->get('php_orchestra_api.transformer_manager')->get($type)->reverseTransform($facade, $mixed);
+        $mixed = $this->get('php_orchestra_model.repository.' . $typeName)->find($id);
+        $mixed = $this->get('php_orchestra_api.transformer_manager')->get($typeName)->reverseTransform($facade, $mixed);
 
         if ($this->isValid($mixed)) {
             $em = $this->get('doctrine.odm.mongodb.document_manager');
