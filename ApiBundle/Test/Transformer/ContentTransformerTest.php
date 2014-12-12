@@ -71,7 +71,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * test reverseTransform
      *
-     * @dataProvider getChangeStatus
+     * @dataProvider changeStatusProvider
      */
     public function testReverseTransform($facade, $source, $searchCount, $setCount)
     {
@@ -87,19 +87,19 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getChangeStatus()
+    public function changeStatusProvider()
     {
-        $facadeA = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
+        $facade1 = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
 
-        $facadeB = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
-        $facadeB->statusId = 'fakeId';
+        $facade2 = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
+        $facade2->statusId = 'statusId';
 
         $content = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
 
         return array(
-            array($facadeA, null, 0, 0),
-            array($facadeA, $content, 0, 0),
-            array($facadeB, $content, 1, 1)
+            array($facade1, null, 0, 0),
+            array($facade2, $content, 1, 1),
+            array($facade1, $content, 0, 0)
         );
     }
 }
