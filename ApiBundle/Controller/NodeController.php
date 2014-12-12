@@ -121,26 +121,6 @@ class NodeController extends BaseController
      */
     public function changeStatusAction(Request $request, $nodeMongoId)
     {
-        $facade = $this->get('jms_serializer')->deserialize(
-            $request->getContent(),
-            'PHPOrchestra\ApiBundle\Facade\NodeFacade',
-            $request->get('_format', 'json')
-        );
-
-        $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
-        $node = $this->get('php_orchestra_api.transformer_manager')->get('node')->reverseTransform($facade, $node);
-
-        if ($this->isValid($node)) {
-            $em = $this->get('doctrine.odm.mongodb.document_manager');
-            $em->persist($node);
-            $em->flush();
-
-            return new Response('', 200);
-        }
-
-        return new response(
-            $this->get('jms_serializer')->serialize($this->getViolations(), $request->get('_format', 'json')),
-            400
-        );
+        return $this->reverseTransform($request, $nodeMongoId, 'node');
     }
 }

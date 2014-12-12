@@ -13,14 +13,21 @@ FullPageFormView = OrchestraView.extend(
     @loadTemplates [
       'fullPageFormView'
     ]
+    @element = options.element
+    if @element
+      @loadTemplates [
+        "widgetStatus"
+      ]
     return
 
   render: ->
     $(@el).html(@renderTemplate('fullPageFormView',
       html: @html
       listUrl: @listUrl
+      element: @element if @element
     ))
     $('.js-widget-title', @$el).text @title
+    @renderWidgetStatus() if @element
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
@@ -62,4 +69,18 @@ FullPageFormView = OrchestraView.extend(
             displayedElements: displayedElements
           )
       return
+
+  renderWidgetStatus: ->
+    viewContext = this
+    $.ajax
+      type: "GET"
+      url: @element.links._status_list
+      success: (response) ->
+        widgetStatus = viewContext.renderTemplate('widgetStatus',
+          current_status: viewContext.element.status
+          statuses: response.statuses
+          status_change_link: viewContext.element.links._self_status_change
+        )
+        addCustomJarvisWidget(widgetStatus)
+        return
 )

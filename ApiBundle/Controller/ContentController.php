@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("content")
  */
-class ContentController extends Controller
+class ContentController extends BaseController
 {
     /**
      * @param string $contentId
@@ -73,5 +73,20 @@ class ContentController extends Controller
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $contentId
+     *
+     * @Config\Route("/update/{contentId}", name="php_orchestra_api_content_update")
+     * @Config\Method({"POST"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function changeStatusAction(Request $request, $contentId)
+    {
+        return $this->reverseTransform($request, $contentId, 'content');
     }
 }

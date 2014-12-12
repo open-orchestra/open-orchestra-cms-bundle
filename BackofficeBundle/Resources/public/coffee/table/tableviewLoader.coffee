@@ -27,6 +27,7 @@ tableViewLoad = (link, entityType, entityId) ->
                     html: response
                     title: title
                     listUrl: listUrl
+                    element: values
                   )
               founded = true
         unless founded

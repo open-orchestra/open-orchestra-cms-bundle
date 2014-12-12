@@ -62,6 +62,7 @@ TableviewCollectionView = OrchestraView.extend(
             html: response
             title: title
             listUrl: listUrl
+            element: @elements
             triggers: [
               {
                 event: "focusout input.content_type_source"
