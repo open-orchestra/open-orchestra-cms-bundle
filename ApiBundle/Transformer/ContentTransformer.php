@@ -52,7 +52,7 @@ class ContentTransformer extends AbstractTransformer
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'php_orchestra_backoffice_content_form',
-            array('contentId' => $mixed->getId())
+            array('contentId' => $mixed->getContentId())
         ));
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
             'contentId' => $mixed->getId()

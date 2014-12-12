@@ -22,10 +22,14 @@ tableViewLoad = (link, entityType, entityId, language) ->
             elementModel = new TableviewModel
             elementModel.set values
             if entityId is elementModel.get('id')
+              url = elementModel.get('links')._self_form
+              url = url + '?language=' + language if (typeof language != 'undefined')
               $.ajax
-                url: elementModel.get('links')._self_form
+              $.ajax
+                url: url
                 method: "GET"
                 success: (response) ->
+                  language = values.language if (typeof language == 'undefined')
                   options =
                     html: response
                     title: title
@@ -34,7 +38,7 @@ tableViewLoad = (link, entityType, entityId, language) ->
                   )
                   options = $.extend(options, multiLanguage:
                     language_list : values.links._language_list
-                    language : values.language
+                    language : language
                     path: 'showEntityWithLanguage'
                   ) if values.links._language_list and values.language
                   view = new FullPageFormView(options)
