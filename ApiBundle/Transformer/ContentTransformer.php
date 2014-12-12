@@ -5,12 +5,20 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\ContentFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelBundle\Model\ContentInterface;
+use PHPOrchestra\ModelBundle\Repository\StatusRepository;
 
 /**
  * Class ContentTransformer
  */
 class ContentTransformer extends AbstractTransformer
 {
+    protected $statusRepository;
+
+    public function __construct(StatusRepository $statusRepository)
+    {
+        $this->statusRepository = $statusRepository;
+    }
+
     /**
      * @param ContentInterface $mixed
      *
@@ -46,8 +54,34 @@ class ContentTransformer extends AbstractTransformer
             'php_orchestra_backoffice_content_form',
             array('contentId' => $mixed->getId())
         ));
+        $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
+            'contentId' => $mixed->getId()
+        )));
+        $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_content_update', array(
+            'contentId' => $mixed->getId()
+        )));
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     * @param mixed|null      $source
+     *
+     * @return mixed
+     */
+    public function reverseTransform(FacadeInterface $facade, $source = null)
+    {
+        if ($source) {
+            if ($facade->statusId) {
+                $newStatus = $this->statusRepository->find($facade->statusId);
+                if ($newStatus) {
+                    $source->setStatus($newStatus);
+                }
+            }
+        }
+
+        return $source;
     }
 
     /**

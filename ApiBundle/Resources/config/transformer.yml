@@ -75,6 +75,8 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.content:
         class: %php_orchestra_api.transformer.content.class%
+        arguments:
+            - @php_orchestra_model.repository.status
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.content_attribute:

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("content")
  */
-class ContentController extends Controller
+class ContentController extends BaseController
 {
     /**
      * @param string $contentId
@@ -73,5 +73,40 @@ class ContentController extends Controller
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $contentId
+     *
+     * @Config\Route("/update/{contentId}", name="php_orchestra_api_content_update")
+     * @Config\Method({"POST"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function changeStatusAction(Request $request, $contentId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'PHPOrchestra\ApiBundle\Facade\ContentFacade',
+            $request->get('_format', 'json')
+        );
+
+        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
+        $content = $this->get('php_orchestra_api.transformer_manager')->get('content')->reverseTransform($facade, $content);
+
+        if ($this->isValid($content)) {
+            $em = $this->get('doctrine.odm.mongodb.document_manager');
+            $em->persist($content);
+            $em->flush();
+
+            return new Response('', 200);
+        }
+
+        return new response(
+            $this->get('jms_serializer')->serialize($this->getViolations(), $request->get('_format', 'json')),
+            400
+        );
     }
 }
