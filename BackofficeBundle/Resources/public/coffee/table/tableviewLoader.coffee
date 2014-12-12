@@ -18,7 +18,6 @@ tableViewLoad = (link, entityType, entityId, language) ->
         if entityId
           collection_name = elements.get("collection_name")
           collection = elements.get(collection_name)
-          view = null
           $.each collection, (rank, values) ->
             elementModel = new TableviewModel
             elementModel.set values
@@ -39,6 +38,7 @@ tableViewLoad = (link, entityType, entityId, language) ->
                     path: 'showEntityWithLanguage'
                   ) if values.links._language_list and values.language
                   view = new FullPageFormView(options)
+                  appRouter.setCurrentMainView view
               founded = true
         unless founded
           view = new TableviewCollectionView(
@@ -48,4 +48,4 @@ tableViewLoad = (link, entityType, entityId, language) ->
             listUrl: listUrl
             el: target
           )
-        appRouter.setCurrentMainView view
+          appRouter.setCurrentMainView view
