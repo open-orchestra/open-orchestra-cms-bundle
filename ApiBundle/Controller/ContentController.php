@@ -87,6 +87,6 @@ class ContentController extends BaseController
      */
     public function changeStatusAction(Request $request, $contentId)
     {
-        return $this->reverseTransform($request, $contentId, 'content', 'ContentFacade');
+        return $this->reverseTransform($request, $contentId, 'content');
     }
 }

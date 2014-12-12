@@ -110,6 +110,9 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Test getName
+     */
     public function testGetName()
     {
         $this->assertSame('content', $this->contentTransformer->getName());

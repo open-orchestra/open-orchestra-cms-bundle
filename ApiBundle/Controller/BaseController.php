@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use Doctrine\Common\Inflector\Inflector;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,8 +42,9 @@ class BaseController extends Controller
      *
      * @return Response
      */
-    protected function reverseTransform(Request $request, $id, $type, $facadeName)
+    protected function reverseTransform(Request $request, $id, $type)
     {
+        $facadeName = Inflector::classify($type) . 'Facade';
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'PHPOrchestra\ApiBundle\Facade\\' . $facadeName,

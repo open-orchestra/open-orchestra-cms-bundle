@@ -121,6 +121,6 @@ class NodeController extends BaseController
      */
     public function changeStatusAction(Request $request, $nodeMongoId)
     {
-        return $this->reverseTransform($request, $nodeMongoId, 'node', 'NodeFacade');
+        return $this->reverseTransform($request, $nodeMongoId, 'node');
     }
 }
