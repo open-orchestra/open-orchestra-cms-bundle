@@ -57,7 +57,8 @@ OrchestraView = Backbone.View.extend(
     )
 
   changeLanguage: (event) ->
-    appRouter.addParametersToRoute(
-      ':language': $(event.currentTarget).data('language')
-    )
+    redirectUrl = appRouter.generateUrl(@multiLanguage.path, appRouter.addParametersToRoute(
+      'language': $(event.currentTarget).data('language')
+    ))
+    Backbone.history.navigate(redirectUrl, {trigger: true})
 )

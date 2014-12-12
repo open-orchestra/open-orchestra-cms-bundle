@@ -7,7 +7,6 @@ var OrchestraBORouter = Backbone.Router.extend({
   // Routes in this.routes will be automatically added to routePatterns at init time
   // cf this.generateRoutePatterns()
   routePatterns: {},
-  keysPrint: {},
 
 //========[ROUTES LIST]===============================//
 
@@ -26,7 +25,6 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   initialize: function() {
     this.generateRoutePatterns();
-    this.generateKeysPrint();
   },
 
 //========[ACTIONS LIST]==============================//
@@ -118,19 +116,6 @@ var OrchestraBORouter = Backbone.Router.extend({
     );
   },
 
-  generateKeysPrint: function()
-  {
-    var Router = this,
-        routes = _.pairs(Router.routes),
-        keys = null;
-    $.each(routes, function(key, value) {
-      keys = Router._extractParameters(Router._routeToRegExp(value[0]), value[0]);
-      keys = _.compact(keys);
-      keys = keys.sort();
-      Router.keysPrint[value[1]] = keys;
-    });
-  },
-
   initDisplayRouteChanges: function(selector)
   {
     $('nav li.active').removeClass("active");
@@ -202,31 +187,22 @@ var OrchestraBORouter = Backbone.Router.extend({
     var Router = this,
         fragment = Backbone.history.fragment,
         routes = _.pairs(Router.routes),
-        keysPrint = _.pairs(Router.keysPrint),
-        route = null, newroute = null, matched, paramsObject = null, paramsKeys = null;
+        route = null, matched, paramsObject = null, paramsKeys = null;
     matched = _.find(routes, function(handler) {
       route = _.isRegExp(handler[0]) ? handler[0] : Router._routeToRegExp(handler[0]);
       return route.test(fragment);
     });
     
     if(matched) {
-      paramsObject = _.object(_.compact(Router._extractParameters(route, matched[0])), _.compact(Router._extractParameters(route, fragment)))
-      paramsObject = _.extend(paramsObject, options);
-      paramsKeys = _.keys(paramsObject).sort();
-      matched = _.find(keysPrint, function(handler) {
-        newroute = Router.routePatterns[handler[0]]
-        return _.isEqual(paramsKeys, handler[1]);
-      });
-      if(matched) {
-        $.each(paramsObject, function(paramName, paramValue) {
-          newroute = newroute.replace(paramName, paramValue);
-        });
-        Backbone.history.navigate(newroute, {trigger: true})
+      paramsKeys = _.compact(Router._extractParameters(route, matched[0]));
+      for(var i in paramsKeys){
+        paramsKeys[i] = paramsKeys[i].substring(1);
       }
+      paramsObject = _.object(paramsKeys, _.compact(Router._extractParameters(route, fragment)))
+      paramsObject = _.extend(paramsObject, options);
+      return paramsObject;
     }
-    if(!matched){
-      Backbone.history.navigate('', {trigger: true})
-    }
+    return {};
   }
 });
 

@@ -36,6 +36,7 @@ tableViewLoad = (link, entityType, entityId, language) ->
                   options = $.extend(options, multiLanguage:
                     language_list : values.links._language_list
                     language : values.language
+                    path: 'showEntityWithLanguage'
                   ) if values.links._language_list and values.language
                   view = new FullPageFormView(options)
               founded = true
