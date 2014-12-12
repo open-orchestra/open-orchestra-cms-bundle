@@ -2,11 +2,8 @@ FullPageFormView = OrchestraView.extend(
   el: '#content'
 
   initialize: (options) ->
-    @html = options.html
-    @title = options.title
-    @listUrl = options.listUrl
-    @multiLanguage = options.multiLanguage if options.multiLanguage
     @options = options
+    @multiLanguage = options.multiLanguage if options.multiLanguage
     @events = {}
     if options.triggers
       for i of options.triggers
@@ -23,11 +20,7 @@ FullPageFormView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).html(@renderTemplate('fullPageFormView',
-      html: @html
-      listUrl: @listUrl
-      element: @element if @element
-    ))
+    $(@el).html(@renderTemplate('fullPageFormView', @options))
     $('.js-widget-title', @$el).text @title
     if @element && @element.get('links')._self_status
       @renderWidgetStatus()
@@ -46,19 +39,12 @@ FullPageFormView = OrchestraView.extend(
       activateSelect2($(".select2", @$el))
 
   addEventOnForm: ->
-    title = @title
-    listUrl = @listUrl
-    displayedElements = @displayedElements
+    options = @options
     $("form", @$el).on "submit", (e) ->
-      e.preventDefault() # prevent native submit
+      e.preventDefault()
       $(this).ajaxSubmit
         success: (response) ->
-          view = new FullPageFormView(
-            html: response
-            title: title
-            listUrl: listUrl
-            displayedElements: displayedElements
-          )
+          view = new FullPageFormView(options)
       return
 
   renderWidgetStatus: ->

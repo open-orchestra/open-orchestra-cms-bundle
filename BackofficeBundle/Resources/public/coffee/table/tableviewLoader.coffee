@@ -13,9 +13,9 @@ tableViewLoad = (link, entityType, entityId, language) ->
         redirectToLogin()
       else
         founded = false
+        elements = new TableviewElement()
+        elements.set response
         if entityId
-          elements = new TableviewElement()
-          elements.set response
           collection_name = elements.get("collection_name")
           collection = elements.get(collection_name)
           view = null
@@ -27,22 +27,24 @@ tableViewLoad = (link, entityType, entityId, language) ->
                 url: elementModel.get('links')._self_form
                 method: "GET"
                 success: (response) ->
-                  view = new FullPageFormView(
+                  options =
                     html: response
                     title: title
                     listUrl: listUrl
                     element: elementModel
                   )
+                  options = $.extend(options, multiLanguage:
+                    language_list : values.links._language_list
+                    language : values.language
+                  ) if values.links._language_list and values.language
+                  view = new FullPageFormView(options)
               founded = true
         unless founded
-          elements = new TableviewElement()
-          elements.set response
           view = new TableviewCollectionView(
             elements: elements
             displayedElements: displayedElements
             title: title
             listUrl: listUrl
             el: target
-            entityType: entityType
           )
         appRouter.setCurrentMainView view

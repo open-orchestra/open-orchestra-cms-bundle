@@ -10,7 +10,7 @@ NodeView = OrchestraView.extend(
     @node = options.node
     @version = @node.get('version')
     @language = @node.get('language')
-    @multiLanguage = 
+    @options.multiLanguage = 
       language: @node.get('language')
       language_list: @node.get('links')._language_list
       path: 'showNodeWithLanguage'

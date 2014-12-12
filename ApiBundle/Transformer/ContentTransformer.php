@@ -28,7 +28,7 @@ class ContentTransformer extends AbstractTransformer
     {
         $facade = new ContentFacade();
 
-        $facade->id = $mixed->getId();
+        $facade->id = $mixed->getContentId();
         $facade->contentType = $mixed->getContentType();
         $facade->siteId = $mixed->getSiteId();
         $facade->name = $mixed->getName();

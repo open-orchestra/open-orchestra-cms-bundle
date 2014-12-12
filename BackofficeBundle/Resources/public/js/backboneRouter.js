@@ -7,6 +7,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   // Routes in this.routes will be automatically added to routePatterns at init time
   // cf this.generateRoutePatterns()
   routePatterns: {},
+  keysPrint: {},
 
 //========[ROUTES LIST]===============================//
 
@@ -25,6 +26,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   initialize: function() {
     this.generateRoutePatterns();
+    this.generateKeysPrint();
   },
 
 //========[ACTIONS LIST]==============================//
@@ -68,20 +70,25 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   listEntities: function(entityType)
   {
-    this.showEntity(entityType);
+    this.manageEntity(entityType);
   },
 
   showEntity: function(entityType, entityId)
   {
-    this.showEntityWithLanguage(entityType, entityId);
+    this.manageEntity(entityType, entityId);
   },
 
   showEntityWithLanguage: function(entityType, entityId, language)
   {
+    this.manageEntity(entityType, entityId, language);
+  },
+  
+  manageEntity: function(entityType, entityId, language)
+  {
     this.initDisplayRouteChanges("#nav-" + entityType);
     tableViewLoad($("#nav-" + entityType), entityType, entityId, language);
   },
-  
+
   listTranslations: function()
   {
     drawBreadCrumb();
@@ -109,6 +116,19 @@ var OrchestraBORouter = Backbone.Router.extend({
       'loadUnderscoreTemplate',
       $('#contextual-informations').data('templateUrlPattern')
     );
+  },
+
+  generateKeysPrint: function()
+  {
+    var Router = this,
+        routes = _.pairs(Router.routes),
+        keys = null;
+    $.each(routes, function(key, value) {
+      keys = Router._extractParameters(Router._routeToRegExp(value[0]), value[0]);
+      keys = _.compact(keys);
+      keys = keys.sort();
+      Router.keysPrint[value[1]] = keys;
+    });
   },
 
   initDisplayRouteChanges: function(selector)
@@ -175,6 +195,38 @@ var OrchestraBORouter = Backbone.Router.extend({
     }
 
     return route;
+  },
+  
+  addParametersToRoute: function(options)
+  {
+    var Router = this,
+        fragment = Backbone.history.fragment,
+        routes = _.pairs(Router.routes),
+        keysPrint = _.pairs(Router.keysPrint),
+        route = null, newroute = null, matched, paramsObject = null, paramsKeys = null;
+    matched = _.find(routes, function(handler) {
+      route = _.isRegExp(handler[0]) ? handler[0] : Router._routeToRegExp(handler[0]);
+      return route.test(fragment);
+    });
+    
+    if(matched) {
+      paramsObject = _.object(_.compact(Router._extractParameters(route, matched[0])), _.compact(Router._extractParameters(route, fragment)))
+      paramsObject = _.extend(paramsObject, options);
+      paramsKeys = _.keys(paramsObject).sort();
+      matched = _.find(keysPrint, function(handler) {
+        newroute = Router.routePatterns[handler[0]]
+        return _.isEqual(paramsKeys, handler[1]);
+      });
+      if(matched) {
+        $.each(paramsObject, function(paramName, paramValue) {
+          newroute = newroute.replace(paramName, paramValue);
+        });
+        Backbone.history.navigate(newroute, {trigger: true})
+      }
+    }
+    if(!matched){
+      Backbone.history.navigate('', {trigger: true})
+    }
   }
 });
 
