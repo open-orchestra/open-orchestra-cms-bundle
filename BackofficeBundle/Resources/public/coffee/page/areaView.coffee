@@ -16,8 +16,7 @@ AreaView = OrchestraView.extend(
     @events = {}
     @events["click i#none"] = "clickButton"
     @events["click i.block-remove-" + @area.cid] = "confirmRemoveBlock"
-    paramkey = "click i.area-param-" + @area.cid
-    @events[paramkey] = "paramArea"
+    @events["click span.area-param-" + @area.cid] = "paramArea"
     sortUpdateKey = "sortupdate ul.blocks-" + @cid
     @events[sortUpdateKey] = "sendBlockData"
     return
@@ -37,6 +36,7 @@ AreaView = OrchestraView.extend(
     $(@el).append @renderTemplate('areaView',
       area: @area
       cid: @cid
+      node_published: @node_published
       displayClass: @displayClass
     )
     this.drawContent()
