@@ -11,8 +11,9 @@ NodeView = OrchestraView.extend(
     @node = options.node
     @version = @node.get('version')
     @language = @node.get('language')
-    key = "click i." + @node.cid
-    @events[key] = "clickButton"
+    @events['click i.' + @node.cid] = 'clickButton'
+    @events['click i.show-areas'] = 'showAreas'
+    @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @loadTemplates [
       "nodeView"
@@ -197,4 +198,14 @@ NodeView = OrchestraView.extend(
       url: @node.get('links')._existing_block
       success: (response) ->
         $('.rigth-panel-blocks', viewContext.$el).append(response)
+
+  showAreas: ->
+    $('.show-areas').hide()
+    $('.hide-areas').show()
+    $('div.toolbar-layer.area-toolbar').addClass('shown')
+
+  hideAreas: ->
+    $('.hide-areas').hide()
+    $('.show-areas').show()
+    $('div.toolbar-layer.area-toolbar').removeClass('shown')
 )
