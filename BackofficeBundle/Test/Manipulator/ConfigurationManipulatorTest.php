@@ -17,6 +17,8 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
 
     protected $file;
     protected $baseDir;
+    protected $blockName = 'test';
+    protected $blockNamespace = 'PHPOrchestra\BackofficeBundle';
 
     /**
      * Set up the test
@@ -43,10 +45,8 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
     public function testAddResourceForBackoffice()
     {
         $this->assertFileDoesNotExist($this->file);
-        $blockName = 'test';
-        $blockNamespace = 'PHPOrchestra\BackofficeBundle';
 
-        $this->manipulator->addResource($blockName, $blockNamespace);
+        $this->manipulator->addResource($this->blockName, $this->blockNamespace);
 
         $this->assertFileEquals(__DIR__ . '/files/references/backoffice.yml', $this->file);
     }
@@ -76,7 +76,7 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
 
         $manipulator = new $class($this->baseDir . '/' . $file);
 
-        $manipulator->addResource('test', $namespace);
+        $manipulator->addResource($this->blockName, $namespace);
 
         $this->assertFileEquals(__DIR__ . '/files/references/' . $file, $this->baseDir . '/' . $file);
     }
@@ -100,10 +100,7 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoNotAddIfExisting()
     {
-        $blockName = 'test';
-        $blockNamespace = 'PHPOrchestra\BackofficeBundle';
-
-        $this->manipulator->addResource($blockName, $blockNamespace);
+        $this->manipulator->addResource($this->blockName, $this->blockNamespace);
 
         $this->assertFileEquals(__DIR__ . '/files/references/backoffice.yml', $this->file);
     }
