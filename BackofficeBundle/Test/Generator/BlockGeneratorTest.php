@@ -15,15 +15,17 @@ class BlockGeneratorTest extends \PHPUnit_Framework_TestCase
     protected $generator;
 
     protected $skeletonDir = array();
+    protected $rootDir;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->rootDir = __DIR__ . '/files/generated';
         $this->skeletonDir[] = __DIR__ . '/files/skeleton/';
 
-        $this->generator = new BlockGenerator();
+        $this->generator = new BlockGenerator($this->rootDir);
         $this->generator->setSkeletonDirs($this->skeletonDir);
     }
 
@@ -40,14 +42,13 @@ class BlockGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGenerate()
     {
-        $dir = __DIR__ . '/files/generated';
         $referenceDir = __DIR__ . '/files/reference';
-        $this->assertDirectoryEmpty($dir);
+        $this->assertDirectoryEmpty($this->rootDir);
 
-        $backofficeDisplayDir = $dir . '/backofficeDisplayBlock';
-        $frontDisplayDir = $dir . '/frontDisplayBlock';
-        $displayIconDir = $dir . '/displayIcon';
-        $generateFormDir = $dir . '/generateForm';
+        $backofficeDisplayDir = 'backofficeDisplayBlock';
+        $frontDisplayDir = 'frontDisplayBlock';
+        $displayIconDir = 'displayIcon';
+        $generateFormDir = 'generateForm';
 
         $this->generator->generate(
             'test',
@@ -60,12 +61,12 @@ class BlockGeneratorTest extends \PHPUnit_Framework_TestCase
             $backofficeDisplayDir,
             'PHPOrchestra\BackofficeBundle');
 
-        $this->assertFileEquals($referenceDir . '/backofficeDisplayBlock/TestStrategy.php', $backofficeDisplayDir . '/TestStrategy.php');
-        $this->assertFileEquals($referenceDir . '/frontDisplayBlock/TestStrategy.php', $frontDisplayDir . '/TestStrategy.php');
-        $this->assertFileEquals($referenceDir . '/displayIcon/TestStrategy.php', $displayIconDir . '/TestStrategy.php');
-        $this->assertFileEquals($referenceDir . '/generateForm/TestStrategy.php', $generateFormDir . '/TestStrategy.php');
-        $this->assertFileEquals($referenceDir . '/Resources/views/Block/Test/show.html.twig', $dir . '/../Resources/views/Block/Test/show.html.twig');
-        $this->assertFileEquals($referenceDir . '/Resources/views/Block/Test/showIcon.html.twig', $dir . '/../Resources/views/Block/Test/showIcon.html.twig');
+        $this->assertFileEquals($referenceDir . '/backofficeDisplayBlock/TestStrategy.php', $this->rootDir . '/' . $backofficeDisplayDir . '/TestStrategy.php');
+        $this->assertFileEquals($referenceDir . '/frontDisplayBlock/TestStrategy.php', $this->rootDir . '/' . $frontDisplayDir . '/TestStrategy.php');
+        $this->assertFileEquals($referenceDir . '/displayIcon/TestStrategy.php', $this->rootDir . '/' . $displayIconDir . '/TestStrategy.php');
+        $this->assertFileEquals($referenceDir . '/generateForm/TestStrategy.php', $this->rootDir . '/' . $generateFormDir . '/TestStrategy.php');
+        $this->assertFileEquals($referenceDir . '/Resources/views/Block/Test/show.html.twig', $this->rootDir . '/../Resources/views/Block/Test/show.html.twig');
+        $this->assertFileEquals($referenceDir . '/Resources/views/Block/Test/showIcon.html.twig', $this->rootDir . '/../Resources/views/Block/Test/showIcon.html.twig');
     }
 
     /**
