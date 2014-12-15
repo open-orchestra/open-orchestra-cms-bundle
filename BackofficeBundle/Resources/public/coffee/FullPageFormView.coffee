@@ -27,7 +27,11 @@ FullPageFormView = OrchestraView.extend(
       element: @element if @element
     ))
     $('.js-widget-title', @$el).text @title
-    @renderWidgetStatus() if @element
+    if @element
+      @renderWidgetStatus()
+      if @element.status_label == 'published'
+        $("#orchestra_content_submit").addClass('disabled')
+
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
