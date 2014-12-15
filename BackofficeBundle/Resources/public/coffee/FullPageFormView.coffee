@@ -12,12 +12,9 @@ FullPageFormView = OrchestraView.extend(
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
     @loadTemplates [
       'fullPageFormView'
+      'widgetStatus' if options.element
     ]
     @element = options.element
-    if @element
-      @loadTemplates [
-        "widgetStatus"
-      ]
     return
 
   render: ->
