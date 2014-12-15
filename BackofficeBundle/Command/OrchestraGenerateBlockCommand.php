@@ -46,8 +46,11 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $generator = new BlockGenerator($this->getContainer()->getParameter('kernel.root_dir'));
-        $generator->setSkeletonDirs(array(__DIR__ . '/../Test/Generator/files/skeleton'));
+        $generator = new BlockGenerator($this->getContainer()->getParameter('kernel.root_dir') . '/..');
+        $generator->setSkeletonDirs(array(
+            __DIR__ . '/../Resources/skeleton',
+            __DIR__ . '/../../../../phporchestra-display-bundle/PHPOrchestra/DisplayBundle/Resources/skeleton',
+        ));
 
         $generator->generate(
             $input->getOption('block-name'),
