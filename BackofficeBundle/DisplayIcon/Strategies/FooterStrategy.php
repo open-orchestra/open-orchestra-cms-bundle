@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ConfigurableContentIconStrategy
+ * Class FooterIconStrategy
  */
-class ConfigurableContentIconStrategy extends AbstractStrategy
+class FooterStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +19,7 @@ class ConfigurableContentIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CONFIGURABLE_CONTENT == $block;
+        return DisplayBlockInterface::FOOTER == $block;
     }
 
     /**
@@ -29,7 +29,7 @@ class ConfigurableContentIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/ConfigurableContent:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/Footer:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +39,6 @@ class ConfigurableContentIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'configurable_content';
+        return 'footer';
     }
 }

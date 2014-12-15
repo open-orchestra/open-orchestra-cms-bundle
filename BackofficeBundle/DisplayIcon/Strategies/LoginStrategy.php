@@ -1,14 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
-
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use Symfony\Component\HttpFoundation\Response;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 /**
- * Class SampleIconStrategy
+ * Class LoginIconStrategy
  */
-class SampleIconStrategy extends AbstractStrategy
+class LoginStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +16,7 @@ class SampleIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::SAMPLE == $block;
+        return $this->getName() == $block;
     }
 
     /**
@@ -29,7 +26,7 @@ class SampleIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Sample:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/Login:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +36,6 @@ class SampleIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'sample';
+        return 'login';
     }
 }

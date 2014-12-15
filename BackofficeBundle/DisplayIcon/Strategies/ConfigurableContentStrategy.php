@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class MenuIconStrategy
+ * Class ConfigurableContentIconStrategy
  */
-class MenuIconStrategy extends AbstractStrategy
+class ConfigurableContentStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +19,7 @@ class MenuIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::MENU == $block;
+        return DisplayBlockInterface::CONFIGURABLE_CONTENT == $block;
     }
 
     /**
@@ -29,7 +29,7 @@ class MenuIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Menu:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/ConfigurableContent:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +39,6 @@ class MenuIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'menu';
+        return 'configurable_content';
     }
 }

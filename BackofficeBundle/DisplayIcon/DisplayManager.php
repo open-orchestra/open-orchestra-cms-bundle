@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon;
 
 use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Class DisplayIconManager
  */
-class DisplayIconManager
+class DisplayManager
 {
     protected $strategies = array();
     protected $container;
@@ -21,9 +21,9 @@ class DisplayIconManager
     }
 
     /**
-     * @param DisplayIconInterface $strategy
+     * @param DisplayInterface $strategy
      */
-    public function addStrategy(DisplayIconInterface $strategy)
+    public function addStrategy(DisplayInterface $strategy)
     {
         $this->strategies[$strategy->getName()] = $strategy;
         $strategy->setManager($this);
@@ -38,7 +38,7 @@ class DisplayIconManager
      */
     public function show($block)
     {
-        /** @var DisplayIconInterface $strategy */
+        /** @var DisplayInterface $strategy */
         foreach ($this->strategies as $strategy) {
             if ($strategy->support($block)) {
                 return $strategy->show();

@@ -183,39 +183,55 @@ php_orchestra_backoffice:
             title: Bloc contenu paramétrable
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
+            description: Affiche un contenu sélectionné.
         carrousel:
             title: Bloc carrousel
+            description: Fait défiler des images.
         contact:
             title: Bloc contact
+            description: Affiche un formulaire de contact.
         footer:
             title: Bloc pied de page
+            description: Affiche une liste de nom de noeud qui ont l'attribut footer.
         header:
             title: Bloc entête
+            description: Affiche une image.
         media_list_by_keyword:
             title: Block liste de média par mot clé
+            description: Affiche une liste de média par mot clé.
         menu:
             title: Bloc menu
+            description: Affiche une liste de nom de noeud qui ont l'attribut menu.
         search:
             title: Bloc recherche
+            description: Affiche un champ de recherche.
         search_result:
             title: Bloc résultat de recherche
+            description: Affiche les résultats de la recherche.
         tiny_mce_wysiwyg:
             title: Bloc texte riche
+            description: Affiche un block de text riche.
         news:
-            title: Bloc actualités
+            title: Bloc actualité
+            description: Affiche une actualité.
         sub_menu:
             title: Bloc sous-menu
+            description: Affiche un menu à partir d'un noeud racine.
         content_list:
             title: Bloc liste de contenus
+            description: Affiche une liste de contenu.
         content_list_by_keyword:
             title: Bloc liste de contenu par mot-clé
+            description: Affiche une liste de contenu par mot clé.
         content:
             title: Bloc contenu
+            description: Affiche un contenu.
         language_list:
             title: Bloc séléction de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
         login: 
             title: Bloc connexion
+            description: Affiche un formulaire pour ce logger.
     node:
         version:
             create: Nouvelle version

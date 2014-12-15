@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class FooterIconStrategy
+ * Class SearchResultIconStrategy
  */
-class FooterIconStrategy extends AbstractStrategy
+class SearchResultStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +19,7 @@ class FooterIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::FOOTER == $block;
+        return DisplayBlockInterface::SEARCH_RESULT == $block;
     }
 
     /**
@@ -29,7 +29,7 @@ class FooterIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Footer:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/SearchResult:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +39,6 @@ class FooterIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'search_result';
     }
 }

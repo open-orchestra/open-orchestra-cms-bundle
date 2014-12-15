@@ -1,13 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ContentListIconStrategy
+ * Class MediaListIconStrategy
  */
-class ContentListIconStrategy extends AbstractStrategy
+class MediaListStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,17 +19,17 @@ class ContentListIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CONTENT_LIST_BY_KEYWORD == $block | DisplayBlockInterface::CONTENT_LIST_BY_TYPE == $block;
+        return DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD == $block;
     }
 
     /**
-     * Perform the show action for a block
+     * Display an icon for a block
      *
      * @return string
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/MediaList:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +39,6 @@ class ContentListIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'content_list';
+        return 'media_list';
     }
 }

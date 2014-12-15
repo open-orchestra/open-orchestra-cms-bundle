@@ -1,11 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+
+use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class LoginIconStrategy
+ * Class SearchIconStrategy
  */
-class LoginIconStrategy extends AbstractStrategy
+class SearchStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -16,7 +19,7 @@ class LoginIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return $this->getName() == $block;
+        return DisplayBlockInterface::SEARCH == $block;
     }
 
     /**
@@ -26,7 +29,7 @@ class LoginIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Login:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/Search:showIcon.html.twig');
     }
 
     /**
@@ -36,6 +39,6 @@ class LoginIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'login';
+        return 'search';
     }
 }

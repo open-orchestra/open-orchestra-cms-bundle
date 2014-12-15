@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ContentIconStrategy
+ * Class ContactIconStrategy
  */
-class ContentIconStrategy extends AbstractStrategy
+class ContactStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +19,7 @@ class ContentIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CONTENT == $block;
+        return DisplayBlockInterface::CONTACT == $block;
     }
 
     /**
@@ -29,7 +29,7 @@ class ContentIconStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Content:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/Contact:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +39,6 @@ class ContentIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'content';
+        return 'contact';
     }
 }

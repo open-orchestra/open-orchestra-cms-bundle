@@ -1,14 +1,13 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SubMenuIconStrategy
+ * Class ContentListIconStrategy
  */
-class SubMenuIconStrategy extends AbstractStrategy
+class ContentListStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,17 +18,17 @@ class SubMenuIconStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::SUBMENU == $block;
+        return DisplayBlockInterface::CONTENT_LIST_BY_KEYWORD == $block | DisplayBlockInterface::CONTENT_LIST_BY_TYPE == $block;
     }
 
     /**
-     * Display an icon for a block
+     * Perform the show action for a block
      *
      * @return string
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/SubMenu:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +38,6 @@ class SubMenuIconStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'sub_menu';
+        return 'content_list';
     }
 }

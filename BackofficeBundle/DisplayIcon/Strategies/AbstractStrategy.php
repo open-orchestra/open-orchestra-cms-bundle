@@ -1,24 +1,24 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconInterface;
-use PHPOrchestra\BackofficeBundle\DisplayIcons\DisplayIconManager;
+use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayInterface;
+use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 
 /**
  * Class AbstractStrategy
  */
-abstract class AbstractStrategy implements DisplayIconInterface
+abstract class AbstractStrategy implements DisplayInterface
 {
     /**
-     * @var DisplayIconManager
+     * @var DisplayManager
      */
     protected $manager;
 
     /**
-     * @param DisplayIconManager $manager
+     * @param DisplayManager $manager
      */
-    public function setManager(DisplayIconManager $manager)
+    public function setManager(DisplayManager $manager)
     {
         $this->manager = $manager;
     }
