@@ -94,19 +94,13 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
-        $answer = '';
-        while('' == $answer) {
-            $question = new Question('Block name :');
-            $answer = $helper->ask($input, $output, $question);
-            $input->setOption('block-name', $answer);
-        }
+        $question = new Question('Block name :');
+        $answer = $helper->ask($input, $output, $question);
+        $input->setOption('block-name', $answer);
 
-        $answer = '';
-        while('' == $answer) {
-            $question = new Question('Generator dir :');
-            $answer = $helper->ask($input, $output, $question);
-            $input->setOption('form-generator-dir', $answer);
-        }
+        $question = new Question('Generator dir :');
+        $answer = $helper->ask($input, $output, $question);
+        $input->setOption('form-generator-dir', $answer);
         $question = new Question('Generator conf :', $input->getOption('form-generator-conf'));
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('form-generator-conf', $answer);
@@ -114,12 +108,9 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('form-generator-namespace', $answer);
 
-        $answer = '';
-        while('' == $answer) {
-            $question = new Question('Front display dir :');
-            $answer = $helper->ask($input, $output, $question);
-            $input->setOption('front-display-dir', $answer);
-        }
+        $question = new Question('Front display dir :');
+        $answer = $helper->ask($input, $output, $question);
+        $input->setOption('front-display-dir', $answer);
         $question = new Question('Front display conf :', $input->getOption('front-display-conf'));
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('front-display-conf', $answer);
@@ -127,12 +118,9 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('front-display-namespace', $answer);
 
-        $answer = '';
-        while('' == $answer) {
-            $question = new Question('Backoffice icon dir :');
-            $answer = $helper->ask($input, $output, $question);
-            $input->setOption('backoffice-icon-dir', $answer);
-        }
+        $question = new Question('Backoffice icon dir :');
+        $answer = $helper->ask($input, $output, $question);
+        $input->setOption('backoffice-icon-dir', $answer);
         $question = new Question('Backoffice icon conf :', $input->getOption('backoffice-icon-conf'));
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('backoffice-icon-conf', $answer);
@@ -140,12 +128,9 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('backoffice-icon-namespace', $answer);
 
-        $answer = '';
-        while('' == $answer) {
-            $question = new Question('Backoffice display dir :');
-            $answer = $helper->ask($input, $output, $question);
-            $input->setOption('backoffice-display-dir', $answer);
-        }
+        $question = new Question('Backoffice display dir :');
+        $answer = $helper->ask($input, $output, $question);
+        $input->setOption('backoffice-display-dir', $answer);
         $question = new Question('Backoffice display conf :', $input->getOption('backoffice-display-conf'));
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('backoffice-display-conf', $answer);
