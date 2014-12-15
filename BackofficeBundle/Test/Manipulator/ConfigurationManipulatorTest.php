@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Manipulator;
 
+use PHPOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException;
 use PHPOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
 
 /**
@@ -90,5 +91,20 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
             array('PHPOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator', 'PHPOrchestra\BackofficeBundle', 'icon.yml'),
             array('PHPOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator', 'PHPOrchestra\Backoffice', 'generator.yml'),
         );
+    }
+
+    /**
+     * Test add resources
+     *
+     * @expectedException PHPOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException
+     */
+    public function testDoNotAddIfExisting()
+    {
+        $blockName = 'test';
+        $blockNamespace = 'PHPOrchestra\BackofficeBundle';
+
+        $this->manipulator->addResource($blockName, $blockNamespace);
+
+        $this->assertFileEquals(__DIR__ . '/files/references/backoffice.yml', $this->file);
     }
 }

@@ -3,6 +3,7 @@
 namespace PHPOrchestra\Backoffice\Manipulator;
 
 use Doctrine\Common\Inflector\Inflector;
+use PHPOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException;
 use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
 
 /**
@@ -20,6 +21,13 @@ abstract class ConfigurationManiplulator extends Manipulator
         $this->file = $file;
     }
 
+    /**
+     * @param string $blockName
+     * @param string $blockNamespace
+     *
+     * @return bool
+     * @throws StrategyAlreadyCreatedException
+     */
     public function addResource($blockName, $blockNamespace)
     {
         if (file_exists($this->file)) {
@@ -30,6 +38,10 @@ abstract class ConfigurationManiplulator extends Manipulator
 
         $className = Inflector::classify($blockName);
         $strategyName = Inflector::tableize($blockName);
+
+        if (false !== strpos($code, $strategyName)) {
+            throw new StrategyAlreadyCreatedException();
+        }
 
         $code .= sprintf("    %s:\n",  $this->getServicePrefix() . '.' . $strategyName);
         $code .= sprintf("        class: %s\\%s\\Strategies\\%sStrategy\n", $blockNamespace, $this->getFolder(), $className);

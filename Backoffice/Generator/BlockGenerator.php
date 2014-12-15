@@ -52,18 +52,30 @@ class BlockGenerator extends Generator
         );
 
         $parameters['namespace'] = $backofficeDisplayNamespace;
-        $this->renderFile('backofficeDisplayBlock/Strategy.php.twig', $this->rootDir .'/'. $backofficeDisplayDir . '/' . $className . 'Strategy.php', $parameters);
-        $this->renderFile('backofficeDisplayBlock/show.html.twig.twig', $this->rootDir .'/'. $backofficeDisplayDir . '/../../Resources/views/Block' . '/' . $className . '/show.html.twig', $parameters);
+        $target = $this->rootDir . '/' . $backofficeDisplayDir . '/' . $className . 'Strategy.php';
+        if (!file_exists($target)) {
+            $this->renderFile('backofficeDisplayBlock/Strategy.php.twig', $target, $parameters);
+            $this->renderFile('backofficeDisplayBlock/show.html.twig.twig', $this->rootDir .'/'. $backofficeDisplayDir . '/../../Resources/views/Block' . '/' . $className . '/show.html.twig', $parameters);
+        }
 
         $parameters['namespace'] = $backofficeIconNamespace;
-        $this->renderFile('displayIcon/Strategy.php.twig', $this->rootDir .'/'. $backofficeIconDir . '/' . $className . 'Strategy.php', $parameters);
-        $this->renderFile('displayIcon/showIcon.html.twig.twig', $this->rootDir .'/'. $backofficeIconDir . '/../../Resources/views/Block' . '/' . $className . '/showIcon.html.twig', $parameters);
+        $target = $this->rootDir . '/' . $backofficeIconDir . '/' . $className . 'Strategy.php';
+        if (!file_exists($target)) {
+            $this->renderFile('displayIcon/Strategy.php.twig', $target, $parameters);
+            $this->renderFile('displayIcon/showIcon.html.twig.twig', $this->rootDir .'/'. $backofficeIconDir . '/../../Resources/views/Block' . '/' . $className . '/showIcon.html.twig', $parameters);
+        }
 
         $parameters['namespace'] = $generatorFormNamespace;
-        $this->renderFile('generateForm/Strategy.php.twig', $this->rootDir .'/'. $generatorFormDir . '/' . $className . 'Strategy.php', $parameters);
+        $target = $this->rootDir . '/' . $generatorFormDir . '/' . $className . 'Strategy.php';
+        if (!file_exists($target)) {
+            $this->renderFile('generateForm/Strategy.php.twig', $target, $parameters);
+        }
 
         $parameters['namespace'] = $frontDisplayNamespace;
-        $this->renderFile('frontDisplayBlock/Strategy.php.twig', $this->rootDir .'/'. $frontDisplayDir . '/' . $className . 'Strategy.php', $parameters);
-        $this->renderFile('displayIcon/showIcon.html.twig.twig', $this->rootDir .'/'. $frontDisplayDir . '/../../Resources/views/Block' . '/' . $className . '/show.html.twig', $parameters);
+        $target = $this->rootDir . '/' . $frontDisplayDir . '/' . $className . 'Strategy.php';
+        if (!file_exists($target)) {
+            $this->renderFile('frontDisplayBlock/Strategy.php.twig', $target, $parameters);
+            $this->renderFile('displayIcon/showIcon.html.twig.twig', $this->rootDir . '/' . $frontDisplayDir . '/../../Resources/views/Block' . '/' . $className . '/show.html.twig', $parameters);
+        }
     }
 }
