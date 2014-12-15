@@ -1,0 +1,5 @@
+services:
+    php_orchestra_backoffice.icon.test:
+        class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\TestStrategy
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }

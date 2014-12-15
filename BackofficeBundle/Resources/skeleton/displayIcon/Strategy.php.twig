@@ -1,0 +1,44 @@
+<?php
+
+namespace {{ namespace }}\DisplayIcons\Strategies;
+
+use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\AbstractStrategy;
+
+/**
+ * Class {{ className }}Strategy
+ */
+class {{ className }}Strategy extends AbstractStrategy
+{
+    /**
+     * Check if the strategy support this block
+     *
+     * @param string $block
+     *
+     * @return boolean
+     */
+    public function support($block)
+    {
+        return false;
+    }
+
+    /**
+     * Display an icon for a block
+     *
+     * @return string
+     */
+    public function show()
+    {
+        return $this->render('PHPOrchestraBackofficeBundle:Block/{{ className }}:showIcon.html.twig');
+    }
+
+    /**
+     * Get the name of the strategy
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return '{{ strategyName }}';
+    }
+}

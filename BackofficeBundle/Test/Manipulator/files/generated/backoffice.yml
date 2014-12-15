@@ -1,0 +1,5 @@
+services:
+    php_orchestra_backoffice.display.test:
+        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\TestStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }

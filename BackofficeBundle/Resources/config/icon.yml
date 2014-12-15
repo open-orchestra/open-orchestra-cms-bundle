@@ -1,6 +1,5 @@
 parameters:
     php_orchestra_backoffice.display_icon_manager.class: PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager
-
     php_orchestra_backoffice.display_icon.carrousel.class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\CarrouselStrategy
     php_orchestra_backoffice.display_icon.contact.class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\ContactStrategy
     php_orchestra_backoffice.display_icon.header.class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\HeaderStrategy

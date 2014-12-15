@@ -42,5 +42,5 @@ abstract class AbstractContentListStrategy extends AbstractStrategy
      *
      * @return array
      */
-    protected abstract function generateParameters($attributes);
+    abstract protected function generateParameters($attributes);
 }
