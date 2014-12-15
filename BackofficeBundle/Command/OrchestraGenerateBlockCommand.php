@@ -3,6 +3,10 @@
 namespace PHPOrchestra\BackofficeBundle\Command;
 
 use PHPOrchestra\Backoffice\Generator\BlockGenerator;
+use PHPOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
+use PHPOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator;
+use PHPOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator;
+use PHPOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -63,6 +67,22 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
             $input->getOption('backoffice-display-dir'),
             $input->getOption('backoffice-display-namespace')
         );
+
+        $configFile = $input->getOption('backoffice-display-dir') . '/../../Resources/config/' . $input->getOption('backoffice-display-conf');
+        $manipulator = new BackofficeDisplayConfigurationManipulator($configFile);
+        $manipulator->addResource($input->getOption('block-name'), $input->getOption('backoffice-display-namespace'));
+
+        $configFile = $input->getOption('backoffice-icon-dir') . '/../../Resources/config/' . $input->getOption('backoffice-icon-conf');
+        $manipulator = new BackofficeIconConfigurationManipulator($configFile);
+        $manipulator->addResource($input->getOption('block-name'), $input->getOption('backoffice-icon-namespace'));
+
+        $configFile = $input->getOption('front-display-dir') . '/../../Resources/config/' . $input->getOption('front-display-conf');
+        $manipulator = new FrontDisplayConfigurationManipulator($configFile);
+        $manipulator->addResource($input->getOption('block-name'), $input->getOption('front-display-namespace'));
+
+        $configFile = $input->getOption('backoffice-display-dir') . '/../../Resources/config/' . $input->getOption('form-generator-conf');
+        $manipulator = new GenerateFormConfigurationManipulator($configFile);
+        $manipulator->addResource($input->getOption('block-name'), $input->getOption('form-generator-namespace'));
     }
 
     /**
@@ -133,6 +153,4 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
         $answer = $helper->ask($input, $output, $question);
         $input->setOption('backoffice-display-namespace', $answer);
     }
-
-
 }

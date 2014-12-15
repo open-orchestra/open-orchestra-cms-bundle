@@ -11,7 +11,11 @@ use Symfony\Component\Console\Application;
  */
 class OrchestraGenerateBlockCommandTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var OrchestraGenerateBlockCommand
+     */
     protected $command;
+
     protected $container;
     protected $application;
 

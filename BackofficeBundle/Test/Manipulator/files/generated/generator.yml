@@ -1,0 +1,5 @@
+services:
+    php_orchestra_backoffice.generate_form.test:
+        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\TestStrategy
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }

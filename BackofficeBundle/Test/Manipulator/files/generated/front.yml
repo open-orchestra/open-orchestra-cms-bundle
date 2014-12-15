@@ -1,0 +1,5 @@
+services:
+    php_orchestra_display.display.test:
+        class: PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\TestStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
