@@ -47,9 +47,20 @@ TableviewView = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
+    currentView = @
     redirectRoute = appRouter.generateUrl('showEntity',
       entityType: @entityType,
       entityId: @element.get('id'),
     )
-    Backbone.history.navigate(redirectRoute , {trigger: true})
+    Backbone.history.navigate(redirectRoute)
+    $.ajax
+      url: @element.get('links')._self_form
+      method: "GET"
+      success: (response) ->
+        view = new FullPageFormView(
+          html: response
+          title: currentView.title
+          listUrl: currentView.listUrl
+          element: currentView.element
+        )
 )

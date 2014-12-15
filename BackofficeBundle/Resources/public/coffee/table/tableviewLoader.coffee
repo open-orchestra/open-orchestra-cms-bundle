@@ -2,7 +2,9 @@ tableViewLoad = (link, entityType, entityId) ->
   target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
-  listUrl = Backbone.history.fragment
+  listUrl = appRouter.generateUrl('listEntities',
+    entityType: entityType
+  )
   $.ajax
     url: link.data('url')
     method: 'GET'
