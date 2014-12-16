@@ -20,16 +20,18 @@ tableViewLoad = (link, entityType, entityId) ->
           collection = elements.get(collection_name)
           view = null
           $.each collection, (rank, values) ->
-            if entityId is values.id
+            elementModel = new TableviewModel
+            elementModel.set values
+            if entityId is elementModel.get('id')
               $.ajax
-                url: values.links._self_form
+                url: elementModel.get('links')._self_form
                 method: "GET"
                 success: (response) ->
                   view = new FullPageFormView(
                     html: response
                     title: title
                     listUrl: listUrl
-                    element: values
+                    element: elementModel
                   )
               founded = true
         unless founded

@@ -27,16 +27,16 @@ FullPageFormView = OrchestraView.extend(
       element: @element if @element
     ))
     $('.js-widget-title', @$el).text @title
-    if @element
+    if @element && @element.get('links')._self_status
       @renderWidgetStatus()
       if @element.status_label == 'published'
         $("#orchestra_content_submit").addClass('disabled')
 
+    @addEventOnForm()
+    @addSelect2OnForm()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    @addEventOnForm()
-    @addSelect2OnForm()
     return
 
   addSelect2OnForm: ->
@@ -63,7 +63,7 @@ FullPageFormView = OrchestraView.extend(
     viewContext = this
     $.ajax
       type: "GET"
-      url: @element.links._status_list
+      url: @element.get('links')._status_list
       success: (response) ->
         widgetStatus = viewContext.renderTemplate('widgetStatus',
           current_status: viewContext.element.status
