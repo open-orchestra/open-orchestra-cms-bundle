@@ -126,9 +126,11 @@ SuperboxView = OrchestraView.extend(
           200: (response) ->
             $('.media_meta_form', currentView.$el).html response
             currentView.addEventOnMetaForm()
+            currentView.addSelect2OnForm()
           400: (response) ->
             $('.media_meta_form', currentView.$el).html response
             currentView.addEventOnMetaForm()
+            currentView.addSelect2OnForm()
     return
 
   refreshImages: ->
