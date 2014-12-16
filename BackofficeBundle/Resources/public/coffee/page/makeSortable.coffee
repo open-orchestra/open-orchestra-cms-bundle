@@ -1,6 +1,7 @@
 applyClass = (li) ->
   li.attr('class', li.siblings().attr('class'))
   li.css('display', '')
+
 refreshUl = (ul) ->
   if ul isnt null
     childs = ul.children(':visible')
@@ -16,9 +17,11 @@ refreshUl = (ul) ->
       $(this).css (if direction is "height" then "width" else "height"), "100%"
       return
   return
+
 makeSortable = (el, duplicate) ->
   $("ul.ui-model-blocks", el).sortable(
     connectWith: '#content div[role="container"] ul.ui-model-blocks',
+    handle: '.move-tool',
     appendTo: 'body',
     tolerance: 'pointer',
     zIndex: 100000,
