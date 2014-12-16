@@ -158,7 +158,7 @@ AreaView = OrchestraView.extend(
       url: @area.get("links")._self_delete
       method: "POST"
       error: ->
-        $(".modal-title").text "Block removal"
+        $(".modal-title").text $(".delete-error-title-" + @cid).text()
         $(".modal-body").html $(".delete-error-txt-" + @cid).text()
         $("#OrchestraBOModal").modal "show"
     return
