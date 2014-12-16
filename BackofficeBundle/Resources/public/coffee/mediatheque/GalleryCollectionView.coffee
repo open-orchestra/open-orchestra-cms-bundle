@@ -6,6 +6,7 @@ GalleryCollectionView = OrchestraView.extend(
     @medias = options.medias
     @title = options.title
     @listUrl = options.listUrl
+    @target = options.el
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     key = 'click i.ajax-folder-' + @cid
@@ -44,6 +45,7 @@ GalleryCollectionView = OrchestraView.extend(
       title: @title
       listUrl: @listUrl
       el: this.$el.find('.superbox')
+      target: @target
     )
     return
 

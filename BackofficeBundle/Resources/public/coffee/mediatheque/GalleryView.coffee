@@ -3,8 +3,9 @@ GalleryView = OrchestraView.extend(
 
   initialize: (options) ->
     @events = []
-    key = 'click .superbox-img-' + @cid
-    @events[key] = 'superboxOpen'
+    if options.target == '#content'
+      key = 'click .superbox-img-' + @cid
+      @events[key] = 'superboxOpen'
     @media = options.media
     @title = options.title
     @listUrl = options.listUrl
