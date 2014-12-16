@@ -22,8 +22,8 @@ tableViewLoad = (link, entityType, entityId, language) ->
             elementModel = new TableviewModel
             elementModel.set values
             if entityId is elementModel.get('id')
-              url = elementModel.get('links')._self_form
-              url = url + '?language=' + language if (typeof language != 'undefined')
+              language = elementModel.get('language') if (typeof language == 'undefined')
+              url = elementModel.get('links')._self_form + '?language=' + language
               $.ajax
                 url: url
                 method: "GET"
