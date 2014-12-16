@@ -21,7 +21,7 @@ class MediaListByKeywordStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::HEADER == $block->getComponent();
+        return DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD == $block->getComponent();
     }
 
     /**
