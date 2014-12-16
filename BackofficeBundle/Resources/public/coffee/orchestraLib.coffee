@@ -120,3 +120,25 @@ smartConfirm = (params) ->
 
 selectorExist = (selector) ->
   return selector.length
+
+#select2 enabled
+activateSelect2 = (element) ->
+  tags = element.data('tags')
+  element.select2(
+    tags: tags
+    createSearchChoice: (term, data) ->
+      if $(data).filter(->
+        @text.localeCompare(term) is 0
+      ).length is 0
+        id: term
+        text: term
+        isNew: true
+    formatResult: (term) ->
+      if term.isNew
+        "<span class=\"label label-danger\">New</span> " + term.text
+      else
+        term.text
+    formatSelection: (term, container) ->
+      container.parent().addClass('bg-color-red').attr('style', 'border-color:#a90329!important') if term.isNew
+      term.text
+  )
