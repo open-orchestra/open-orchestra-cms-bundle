@@ -17,6 +17,7 @@ AreaView = OrchestraView.extend(
     @events["click i#none"] = "clickButton"
     @events["click i.block-remove-" + @area.cid] = "confirmRemoveBlock"
     @events["click span.area-param-" + @area.cid] = "paramArea"
+    @events["click span.area-remove-" + @area.cid] = "confirmRemoveArea"
     sortUpdateKey = "sortupdate ul.blocks-" + @cid
     @events[sortUpdateKey] = "sendBlockData"
     return
@@ -134,4 +135,23 @@ AreaView = OrchestraView.extend(
     $(event.target).parents("li").first().remove()
     refreshUl ul
     @sendBlockData({target: ul})
+
+  confirmRemoveArea: (event) ->
+    @removeArea event if confirm("Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?")
+
+  removeArea: (event) ->
+    $(event.target).closest('li').remove()
+    refreshUl $(@el)
+    @sendRemoveArea()
+    return
+
+  sendRemoveArea: ->
+    $.ajax
+      url: @area.get("links")._self_delete
+      method: "POST"
+      error: ->
+        $(".modal-title").text "Block removal"
+        $(".modal-body").html "Erreur durant la suppression de la zone, veuillez recharger la page"
+        $("#OrchestraBOModal").modal "show"
+    return
 )
