@@ -28,8 +28,7 @@ OrchestraView = Backbone.View.extend(
     $.each @compiledTemplates, (templateName, templateData) ->
       ready = false if templateData is false
       return
-    
-    console.log(templateName)
+
     if ready
       @render()
       @addLanguagesToView() if @multiLanguage
