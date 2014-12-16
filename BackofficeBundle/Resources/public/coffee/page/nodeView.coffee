@@ -160,7 +160,7 @@ NodeView = OrchestraView.extend(
     view = new NodeVersionView(
       node: nodeVersionElement
       version: @version
-      el: this.$el.find('optgroup#versions')
+      el: this.$el.find('select#selectbox')
     )
 
   changeVersion: (event) ->
