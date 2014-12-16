@@ -44,8 +44,6 @@ makeSortable = (el, duplicate) ->
         $('li', ui.helper).width placeholder.width()
     start: (event, ui)->
       ui.item.show()  if @duplicate
-      $('.widget-trash-block').show()
-      makeDroppable()
       @refreshHelper(ui)
     change: (event, ui) ->
       @refreshHelper(ui)
@@ -54,6 +52,5 @@ makeSortable = (el, duplicate) ->
       if @duplicate and @clone
         $(this).replaceWith(@clone)
         makeSortable el, duplicate
-      $('.widget-trash-block').hide()
   ).disableSelection()
   return
