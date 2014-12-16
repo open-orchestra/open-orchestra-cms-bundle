@@ -251,7 +251,8 @@ php_orchestra_backoffice:
         improve_security: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
         fullscreen: Plein écran
     areas:
-        delete: Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?
+        delete_question: Souhaitez-vous supprimer cette zone ?
+        delete_explanation: Cette opération est non réversible.
     templates:
         delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
     media:

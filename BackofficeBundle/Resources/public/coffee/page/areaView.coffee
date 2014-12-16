@@ -137,7 +137,15 @@ AreaView = OrchestraView.extend(
     @sendBlockData({target: ul})
 
   confirmRemoveArea: (event) ->
-    @removeArea event if confirm("Vous êtes sur le point de supprimer une zone. Souhaitez-vous poursuivre cette action ?")
+    smartConfirm(
+      titleWhite: $(".delete-confirm-question-" + @cid).text()
+      titleColorized: ''
+      text: $(".delete-confirm-explanation-" + @cid).text()
+      yesCallbackParams:
+        areaView: @
+      yesCallback: (params) ->
+        params.areaView.removeArea(event)
+    )
 
   removeArea: (event) ->
     $(event.target).closest('li').remove()
