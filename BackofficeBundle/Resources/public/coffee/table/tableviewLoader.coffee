@@ -33,7 +33,6 @@ tableViewLoad = (link, entityType, entityId, language) ->
                     title: title
                     listUrl: listUrl
                     element: elementModel
-                  )
                   options = $.extend(options, multiLanguage:
                     language_list : values.links._language_list
                     language : language
