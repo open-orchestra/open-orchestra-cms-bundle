@@ -253,6 +253,7 @@ php_orchestra_backoffice:
     areas:
         delete_question: Would you like to delete this area?
         delete_explanation: This operation is not reversible.
+        delete_error: Error while removing area, please reload the page
     templates:
         delete: You are about to delete a template. Would you like to continue?
     media:

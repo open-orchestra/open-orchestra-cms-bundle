@@ -253,6 +253,7 @@ php_orchestra_backoffice:
     areas:
         delete_question: Souhaitez-vous supprimer cette zone ?
         delete_explanation: Cette opération est non réversible.
+        delete_error: Erreur durant la suppression de la zone, veuillez recharger la page
     templates:
         delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
     media:

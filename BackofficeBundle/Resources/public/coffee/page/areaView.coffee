@@ -159,7 +159,7 @@ AreaView = OrchestraView.extend(
       method: "POST"
       error: ->
         $(".modal-title").text "Block removal"
-        $(".modal-body").html "Erreur durant la suppression de la zone, veuillez recharger la page"
+        $(".modal-body").html $(".delete-error-txt-" + @cid).text()
         $("#OrchestraBOModal").modal "show"
     return
 )
