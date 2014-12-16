@@ -11,7 +11,7 @@ NodeView = OrchestraView.extend(
     @node = options.node
     @version = @node.get('version')
     @language = @node.get('language')
-    @events['click i.' + @node.cid] = 'clickButton'
+    @events['click span.' + @node.cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
@@ -111,6 +111,7 @@ NodeView = OrchestraView.extend(
         $('.js-widget-blockpanel', @$el).hide()
         $('span.action', @el).hide()
       else
+        @addConfigurationButton()
         $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
           refreshUl $(this)
     @addLanguagesToView()
@@ -189,6 +190,12 @@ NodeView = OrchestraView.extend(
     previewLink = @node.get('links')._self_preview
     view = new PreviewLinkView(
       previewLink: previewLink
+    )
+
+  addConfigurationButton: ->
+    cid = @node.cid
+    view = new ConfigurationButtonView(
+      cid: cid
     )
 
   addExistingBlockToView: ->
