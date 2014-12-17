@@ -1,12 +1,15 @@
 <li class="ui-model-areas <%= displayClass %>" id="area-<%= cid %>">
     <div class="toolbar-layer area-toolbar">
         <% if (!node_published) { %>
-            <div class="toolbar"><span class="tool"><%= area.get('ui_model').label %></span><span class="tool area-param-<%= area.cid %>"><i class="glyphicon glyphicon-pencil"></i></span></div>
+            <div class="toolbar"><span class="tool"><%= area.get('ui_model').label %></span><span class="tool area-param-<%= area.cid %>"><i class="glyphicon glyphicon-pencil"></i></span><span class="tool area-remove-<%= area.cid %>"><i class="glyphicon glyphicon-trash"></i></span></div>
         <% } %>
     </div>
     <div>
         <ul class="ui-model-areas areas-<%= cid %>"></ul>
         <ul class="ui-model-blocks blocks-<%= cid %> resizable-<%= cid %>"></ul>
-        <span class="delete-confirm-txt-<%= cid %>" style="display: none">{{ 'php_orchestra_backoffice.areas.delete'|trans }}</span>
+        <span class="delete-confirm-question-<%= cid %> hidden-info">{{ 'php_orchestra_backoffice.areas.delete_question'|trans }}</span>
+        <span class="delete-confirm-explanation-<%= cid %> hidden-info">{{ 'php_orchestra_backoffice.areas.delete_explanation'|trans }}</span>
+        <span class="delete-error-title-<%= cid %> hidden-info">{{ 'php_orchestra_backoffice.areas.delete_error_title'|trans }}</span>
+        <span class="delete-error-txt-<%= cid %> hidden-info">{{ 'php_orchestra_backoffice.areas.delete_error_txt'|trans }}</span>
     </div>
 </li>
