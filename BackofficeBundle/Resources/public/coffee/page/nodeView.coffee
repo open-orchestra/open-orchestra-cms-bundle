@@ -136,7 +136,7 @@ NodeView = OrchestraView.extend(
       area: areaElement
       node_id: @node.get('node_id'),
       node_published: @node.attributes.status.published
-      displayClass: (if @node.get("bo_direction") is "v" then "inline" else "block")
+      displayClass: (if @node.get("bo_direction") is "v" then "bo-column" else "bo-row")
       el: @$el.find('ul.ui-model-areas').first()
     )
     return

@@ -11,10 +11,10 @@ refreshUl = (ul) ->
       placeholder.addClass "ui-sortable-placeholder"
       placeholder.html '<div class="preview"></div>'
     nbrChildren = childs.length
-    direction = if childs.filter(".inline").length > 0 then "width" else "height"
+    direction = if ul.filter(".bo-row").length > 0 then "width" else "height"
     childs.each ->
       $(this).css direction, (100 / nbrChildren) + "%"
-      $(this).css (if direction is "height" then "width" else "height"), "100%"
+      $(this).css (if direction is "height" then "width" else "height"), "auto"
       return
   return
 

@@ -4,7 +4,7 @@ AreaView = OrchestraView.extend(
     @height = options.height
     @node_id = options.node_id
     @node_published = options.node_published
-    @displayClass = options.displayClass
+    $(@el).addClass options.displayClass
     @initEvents()
     _.bindAll this, "render", "addAreaToView", "addBlockToView"
     @loadTemplates [
@@ -38,7 +38,6 @@ AreaView = OrchestraView.extend(
       area: @area
       cid: @cid
       node_published: @node_published
-      displayClass: @displayClass
     )
     this.drawContent()
 
@@ -71,7 +70,7 @@ AreaView = OrchestraView.extend(
       area: areaElement
       node_id: @node_id
       node_published: @node_published
-      displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
+      displayClass: (if @area.get("bo_direction") is "v" then "bo-column" else "bo-row")
       el: $("ul.areas-" + @cid, @el)
     )
 
@@ -80,7 +79,7 @@ AreaView = OrchestraView.extend(
     blockElement.set block
     blockView = new BlockView(
       block: blockElement
-      displayClass: (if @area.get("bo_direction") is "v" then "inline" else "block")
+      displayClass: (if @area.get("bo_direction") is "v" then "bo-column" else "bo-row")
       areaCid: @area.cid
       node_published: @node_published
       el: $("ul.blocks-" + @cid, @el)
