@@ -2,8 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;

@@ -5,9 +5,8 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
 use Phake;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
-use PHPOrchestra\ModelBundle\Model\TemplateInterface;
+use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 use Symfony\Component\Form\FormEvents;
-use PHPOrchestra\ModelBundle\Document\Node;
 
 /**
  * Class TemplateChoiceSubscriberTest
@@ -120,7 +119,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $areas = Phake::mock('Doctrine\Common\Collections\Collection');
         $blocks = Phake::mock('Doctrine\Common\Collections\Collection');
 
-        $template = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
+        $template = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template)->getAreas()->thenReturn($areas);
         Phake::when($template)->getBlocks()->thenReturn($blocks);
 
@@ -163,7 +162,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataOnNewNode($templates, $expectedResult)
     {
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->event)->getData()->thenReturn($node);
         Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);
 
@@ -188,11 +187,11 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $id1 = 'fakeId1';
         $name1 = 'fakeName1';
 
-        $template0 = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
+        $template0 = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template0)->getTemplateId()->thenReturn($id0);
         Phake::when($template0)->getName()->thenReturn($name0);
 
-        $template1 = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
+        $template1 = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template1)->getTemplateId()->thenReturn($id1);
         Phake::when($template1)->getName()->thenReturn($name1);
 
@@ -213,7 +212,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithExistingNode($templates, $expectedResult)
     {
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn('fakeId');
         Phake::when($this->event)->getData()->thenReturn($node);
         Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);

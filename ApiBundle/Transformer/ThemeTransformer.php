@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\ThemeFacade;
-use PHPOrchestra\ModelBundle\Model\ThemeInterface;
+use PHPOrchestra\ModelInterface\Model\ThemeInterface;
 
 /**
  * Class ThemeTransformer

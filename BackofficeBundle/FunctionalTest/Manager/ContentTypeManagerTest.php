@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager;
-use PHPOrchestra\ModelBundle\Model\ContentTypeInterface;
+use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

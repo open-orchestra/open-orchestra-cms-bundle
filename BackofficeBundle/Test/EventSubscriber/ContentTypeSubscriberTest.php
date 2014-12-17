@@ -44,21 +44,21 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->contentTypeId = 'contentTypeId';
         $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->contentAttribute = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentAttributeInterface');
-        $this->content = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
+        $this->contentAttribute = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($this->content)->getContentType()->thenReturn($this->contentTypeId);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->fieldType1 = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        $this->fieldType1 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType1)->getLabels()->thenReturn($this->collection);
-        $this->fieldType2 = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        $this->fieldType2 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType2)->getLabels()->thenReturn($this->collection);
-        $this->fieldType3 = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        $this->fieldType3 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType3)->getLabels()->thenReturn($this->collection);
         $this->fieldCollection = new ArrayCollection();
-        $this->contentType = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentTypeInterface');
+        $this->contentType = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
         Phake::when($this->contentType)->getVersion()->thenReturn($this->contentTypeVersion);
 

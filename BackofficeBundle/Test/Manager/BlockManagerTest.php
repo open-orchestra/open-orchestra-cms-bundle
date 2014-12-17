@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Manager\BlockManager;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class BlockManagerTest

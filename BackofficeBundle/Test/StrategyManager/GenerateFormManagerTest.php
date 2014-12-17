@@ -31,7 +31,7 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
         $this->strategy2 = Phake::mock('PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
         Phake::when($this->strategy2)->getName()->thenReturn('strategy2');
         Phake::when($this->strategy2)->support(Phake::anyParameters())->thenReturn(false);
-        $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         $this->form = Phake::mock('Symfony\Component\Form\Form');
 
         $this->manager = new GenerateFormManager();

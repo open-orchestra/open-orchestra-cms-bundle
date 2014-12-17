@@ -4,7 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\ContentFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelBundle\Model\ContentInterface;
+use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelBundle\Repository\StatusRepository;
 
 /**

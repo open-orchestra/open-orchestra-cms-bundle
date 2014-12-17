@@ -5,8 +5,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\FieldTypeFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelBundle\Document\FieldType;
-use PHPOrchestra\ModelBundle\Model\FieldTypeInterface;
+use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
 
 /**
  * Class FieldTypeTransformer

@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\EventListener;
 
 use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelBundle\Document\TranslatedValue;
-use PHPOrchestra\ModelBundle\Model\TranslatedValueContainerInterface;
+use PHPOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use Symfony\Component\Form\FormEvent;
 
 /**
@@ -49,6 +49,7 @@ class TranslateValueInitializerListener
                 return $defaultLanguage == $element->getLanguage();
             })
             ) {
+                // TODO use a parameter
                 $translatedValue = new TranslatedValue();
                 $translatedValue->setLanguage($defaultLanguage);
                 $properties->add($translatedValue);

@@ -6,8 +6,8 @@ use PHPOrchestra\BackofficeBundle\Form\Type\BlockType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Class BlockController

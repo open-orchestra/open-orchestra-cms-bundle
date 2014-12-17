@@ -2,10 +2,10 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
-use PHPOrchestra\ModelBundle\Model\AreaInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
+use PHPOrchestra\ModelInterface\Model\AreaInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 /**

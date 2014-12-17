@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 

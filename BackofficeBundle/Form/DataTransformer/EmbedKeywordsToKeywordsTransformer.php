@@ -56,6 +56,7 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
             if ('' != $keywords) {
                 $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
                 if (!$keywordEntity) {
+                    // TODO use a parameter
                     $keywordEntity = new Keyword();
                     $keywordEntity->setLabel($keyword);
                     $this->keywordRepository->getDocumentManager()->persist($keywordEntity);

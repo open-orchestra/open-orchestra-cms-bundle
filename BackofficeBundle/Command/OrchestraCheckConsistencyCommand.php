@@ -2,12 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Command;
 
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelBundle\Model\AreaInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Model\SiteInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

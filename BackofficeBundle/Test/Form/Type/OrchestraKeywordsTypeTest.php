@@ -28,8 +28,8 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->keyword1 = Phake::mock('PHPOrchestra\ModelBundle\Model\KeywordInterface');
-        $this->keyword2 = Phake::mock('PHPOrchestra\ModelBundle\Model\KeywordInterface');
+        $this->keyword1 = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
+        $this->keyword2 = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
         $this->keywords = new ArrayCollection();
         $this->keywords->add($this->keyword1);
         $this->keywords->add($this->keyword2);

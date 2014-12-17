@@ -39,18 +39,18 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->language = 'fr';
 
-        $this->area = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        $this->area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($this->area)->getAreaId()->thenReturn($this->areaId);
 
-        $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
 
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getNodeId()->thenReturn($this->currentNodeId);
         Phake::when($this->node)->getId()->thenReturn($this->nodeMongoId);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         Phake::when($this->node)->getLanguage(Phake::anyParameters())->thenReturn($this->language);
 
-        $this->otherNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->otherNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())
@@ -149,7 +149,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformFromTemplate($parentAreaId = null)
     {
-        $template = Phake::mock('PHPOrchestra\ModelBundle\Model\TemplateInterface');
+        $template = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template)->getTemplateId()->thenReturn('templateId');
 
         $area = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');

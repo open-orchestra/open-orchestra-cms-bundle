@@ -25,7 +25,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
         $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
@@ -65,7 +65,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     )
     {
         $html = 'ok';
-        $block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         $response = Phake::mock('Symfony\Component\HttpFoundation\Response');
         $transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerInterface');
         $transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');

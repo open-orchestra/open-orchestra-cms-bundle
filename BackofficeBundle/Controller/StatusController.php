@@ -2,12 +2,11 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelBundle\Document\Status;
+use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PHPOrchestra\ModelBundle\Document\AbstractStatus;
 
 /**
  * Class StatusController
@@ -44,6 +43,7 @@ class StatusController extends Controller
     public function newAction(Request $request)
     {
         $statusClass = $this->container->getParameter('php_orchestra_model.document.status.class');
+        /** @var StatusInterface $status */
         $status = new $statusClass();
 
         $url = $this->generateUrl('php_orchestra_backoffice_status_new');
@@ -53,14 +53,14 @@ class StatusController extends Controller
     }
 
     /**
-     * @param String         $url
-     * @param Request        $request
-     * @param AbstractStatus $status
-     * @param String         $message
+     * @param String          $url
+     * @param Request         $request
+     * @param StatusInterface $status
+     * @param String          $message
      *
      * @return Response
      */
-    protected function formHandler($url, Request $request, AbstractStatus $status, $message)
+    protected function formHandler($url, Request $request, StatusInterface $status, $message)
     {
         $form = $this->createForm(
             'status',
@@ -69,6 +69,7 @@ class StatusController extends Controller
                 'action' => $url,
             )
         );
+
         $form->handleRequest($request);
         if ($form->isValid()) {
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
@@ -85,5 +86,4 @@ class StatusController extends Controller
             'form' => $form->createView()
         ));
     }
-
 }

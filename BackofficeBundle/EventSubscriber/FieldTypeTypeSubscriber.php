@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
 use PHPOrchestra\ModelBundle\Document\FieldOption;
-use PHPOrchestra\ModelBundle\Model\FieldTypeInterface;
+use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
@@ -79,6 +79,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         $keys = array();
         foreach ($this->options[$type]['options'] as $key => $option) {
             if (!$data->hasOption($key)) {
+                // TODO use a parameter
                 $fieldOption = new FieldOption();
                 $fieldOption->setKey($key);
                 $fieldOption->setValue($option['default_value']);

@@ -25,7 +25,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->areaContainer = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaContainerInterface');
+        $this->areaContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaContainerInterface');
 
         $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
@@ -136,7 +136,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithNewNode()
     {
-        $nodeInterface = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $nodeInterface = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($nodeInterface)->getId()->thenReturn(null);
         Phake::when($this->event)->getData()->thenReturn($nodeInterface);
 

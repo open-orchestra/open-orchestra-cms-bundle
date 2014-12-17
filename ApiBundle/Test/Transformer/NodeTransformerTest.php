@@ -33,8 +33,8 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
-        $this->site = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
         $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
@@ -68,7 +68,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = Phake::mock('PHPOrchestra\ApiBundle\Facade\FacadeInterface');
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
-        $area = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        $area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         $areas = new ArrayCollection();
         $areas->add($area);
 
@@ -125,7 +125,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $facadeB = Phake::mock('PHPOrchestra\ApiBundle\Facade\NodeFacade');
         $facadeB->statusId = 'fakeId';
 
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
 
         return array(
             array($facadeA, null, 0, 0),

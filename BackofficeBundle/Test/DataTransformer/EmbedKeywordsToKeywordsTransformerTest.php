@@ -58,7 +58,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformWithTag($tagLabel)
     {
-        $keyword = Phake::mock('PHPOrchestra\ModelBundle\Model\KeywordInterface');
+        $keyword = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
         Phake::when($keyword)->getLabel()->thenReturn($tagLabel);
         $keywords = new ArrayCollection();
         $keywords->add($keyword);

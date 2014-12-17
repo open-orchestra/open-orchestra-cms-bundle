@@ -5,7 +5,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\ContentTypeFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelBundle\Model\ContentTypeInterface;
+use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentTypeTransformer

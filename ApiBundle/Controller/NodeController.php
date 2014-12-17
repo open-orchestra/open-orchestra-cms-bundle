@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;

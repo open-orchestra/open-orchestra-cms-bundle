@@ -5,9 +5,8 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
 use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
-use PHPOrchestra\ModelBundle\Document\Node;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 use PHPOrchestra\ModelBundle\Repository\StatusRepository;
 

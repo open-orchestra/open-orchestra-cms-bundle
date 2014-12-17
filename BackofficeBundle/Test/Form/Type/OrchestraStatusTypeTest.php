@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraStatusType;
-use PHPOrchestra\ModelBundle\Model\StatusableInterface;
+use PHPOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class OrchestraStatusTypeTest

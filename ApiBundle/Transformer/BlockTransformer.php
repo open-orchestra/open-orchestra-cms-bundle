@@ -4,12 +4,11 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 use PHPOrchestra\ModelBundle\Document\Block;
-use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class BlockTransformer
@@ -21,7 +20,7 @@ class BlockTransformer extends AbstractTransformer
 
     /**
      * @param DisplayBlockManager $displayBlockManager
-     * @param DisplayManager $displayManager
+     * @param DisplayManager      $displayManager
      */
     public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager)
     {
@@ -92,6 +91,7 @@ class BlockTransformer extends AbstractTransformer
         $block  = array();
 
         if (!is_null($facade->component)) {
+            // TODO use a parameter
             $newBlock = new Block();
             $newBlock->setComponent($facade->component);
             $node->addBlock($newBlock);

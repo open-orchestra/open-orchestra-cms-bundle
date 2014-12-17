@@ -33,7 +33,7 @@ class NodeChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
         $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
 
         $this->subscriber = new NodeChoiceSubscriber($this->nodeManager);
     }

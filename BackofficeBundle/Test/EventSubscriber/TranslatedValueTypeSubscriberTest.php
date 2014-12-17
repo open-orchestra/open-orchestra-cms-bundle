@@ -26,7 +26,7 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->data = Phake::mock('PHPOrchestra\ModelBundle\Model\TranslatedValueInterface');
+        $this->data = Phake::mock('PHPOrchestra\ModelInterface\Model\TranslatedValueInterface');
 
         $this->form = Phake::mock('Symfony\Component\Form\Form');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);

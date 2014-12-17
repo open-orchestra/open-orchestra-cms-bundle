@@ -4,7 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\ContentAttributeFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelBundle\Model\ContentAttributeInterface;
+use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
 
 /**
  * Class ContentAttributeTransformer

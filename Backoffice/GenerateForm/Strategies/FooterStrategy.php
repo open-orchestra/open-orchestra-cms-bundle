@@ -3,7 +3,7 @@
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\Form\FormInterface;
 

@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 use PHPOrchestra\Backoffice\Context\ContextManager;

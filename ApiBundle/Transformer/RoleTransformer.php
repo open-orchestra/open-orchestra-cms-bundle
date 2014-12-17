@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\RoleFacade;
-use PHPOrchestra\ModelBundle\Document\Role;
+use PHPOrchestra\ModelInterface\Model\RoleInterface;
 
 /**
  * Class RoleTransformer
@@ -11,7 +11,7 @@ use PHPOrchestra\ModelBundle\Document\Role;
 class RoleTransformer extends AbstractTransformer
 {
     /**
-     * @param Role $mixed
+     * @param RoleInterface $mixed
      *
      * @return RoleFacade
      */

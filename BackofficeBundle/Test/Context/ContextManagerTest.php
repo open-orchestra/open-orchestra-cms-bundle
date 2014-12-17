@@ -199,8 +199,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function getAvailableSites()
     {
-        $site1 = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
-        $site2 = Phake::mock('PHPOrchestra\ModelBundle\Model\SiteInterface');
+        $site1 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $site2 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
 
         $siteId1 = 'siteId';
         $domain1 = 'domain';
