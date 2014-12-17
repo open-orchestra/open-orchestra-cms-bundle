@@ -1,13 +1,13 @@
-ConfigurationButtonView = OrchestraView.extend(
+PageConfigurationButtonView = OrchestraView.extend(
   initialize: (options) ->
     @cid = options.cid
     @loadTemplates [
-      "widgetConfiguration"
+      "widgetPageConfigurationButton"
     ]
     return
 
   render: ->
-    widget = @renderTemplate('widgetConfiguration',
+    widget = @renderTemplate('widgetPageConfigurationButton',
       cid: @cid
     )
     addCustomJarvisWidget(widget)

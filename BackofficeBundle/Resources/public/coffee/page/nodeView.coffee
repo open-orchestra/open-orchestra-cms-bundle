@@ -10,7 +10,7 @@ NodeView = OrchestraView.extend(
     @node = options.node
     @version = @node.get('version')
     @language = @node.get('language')
-    @multiLanguage = 
+    @multiLanguage =
       language: @node.get('language')
       language_list: @node.get('links')._language_list
       path: 'showNodeWithLanguage'
@@ -26,7 +26,7 @@ NodeView = OrchestraView.extend(
 
     @version = @node.get('version')
     @language = @node.get('language')
-    @events['click span.' + @node.cid] = 'clickButton'
+    @events['click span.' + @cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
@@ -124,7 +124,7 @@ NodeView = OrchestraView.extend(
       if @node.attributes.status.published
         $('.ui-model *', @el).unbind()
         $('.js-widget-blockpanel', @$el).hide()
-        $('span.' + @node.cid, @el).addClass('disabled')
+        $('span.' + @cid, @el).addClass('disabled')
       else
         $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
           refreshUl $(this)
@@ -179,8 +179,8 @@ NodeView = OrchestraView.extend(
     )
 
   addConfigurationButton: ->
-    cid = @node.cid
-    view = new ConfigurationButtonView(
+    cid = @cid
+    view = new PageConfigurationButtonView(
       cid: cid
     )
 
