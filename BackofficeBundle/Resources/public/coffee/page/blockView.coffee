@@ -5,7 +5,7 @@ BlockView = OrchestraView.extend(
     @block = options.block
     @areaCid = options.areaCid
     @node_published = options.node_published
-    @displayClass = options.displayClass
+    $(@el).addClass options.displayClass
     _.bindAll this, "render"
     @loadTemplates [
         "blockView"
@@ -22,7 +22,6 @@ BlockView = OrchestraView.extend(
       cid: @cid
       areaCid: @areaCid
       node_published: @node_published
-      displayClass: @displayClass
     )
     this
 )

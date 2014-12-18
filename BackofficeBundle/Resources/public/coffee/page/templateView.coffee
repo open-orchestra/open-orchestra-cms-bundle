@@ -38,7 +38,7 @@ TemplateView = OrchestraView.extend(
     areaElement.set area
     areaView = new AreaView(
       area: areaElement,
-      displayClass: (if @template.get("bo_direction") is "v" then "inline" else "block")
+      displayClass: (if @template.get("bo_direction") is "v" then "bo-column" else "bo-row")
       el: this.$el.find('div[role="container"]').children('div').children('ul.ui-model-areas')
     )
     $("ul.ui-model-areas", @$el).each ->
