@@ -1,0 +1,15 @@
+<span rel="tooltip" data-placement="top" data-original-title="
+{{ 'php_orchestra_backoffice.element.last_update.at'| trans({}, 'messages', language) }}
+<%= element.get('updated_at') %>
+{{ 'php_orchestra_backoffice.element.last_update.by'| trans({}, 'messages', language) }}
+<% if (element.get('updated_by') !== undefined ) { %>
+    <%= element.get('updated_by') %>
+<% } else { %>
+    anonymous
+<% } %>
+">
+    <%= element.get('name') %>
+    <% if (element.get('node_type') == 'page') { %>
+        ({{ 'php_orchestra_backoffice.element.version.display' | trans({}, 'messages', language) }} : #<%= element.get('version') %>)
+    <% } %>
+</span>

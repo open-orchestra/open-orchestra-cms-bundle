@@ -26,7 +26,6 @@ NodeView = OrchestraView.extend(
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @loadTemplates [
       "nodeView"
-      "nodeTitle"
       "areaView"
       "blockView"
     ]
@@ -79,8 +78,8 @@ NodeView = OrchestraView.extend(
     return
 
   render: ->
-    title = @renderTemplate('nodeTitle',
-      node: @node
+    title = @renderTemplate('elementTitle',
+      element: @node
     )
     $(@el).html @renderTemplate('nodeView',
       node: @node
@@ -92,8 +91,6 @@ NodeView = OrchestraView.extend(
       @addAreaToView(@node.get('areas')[area])
     @addExistingBlockToView()
     if @node.get('node_type') == 'page'
-      @renderWidgetStatus()
-      @addVersionToView()
       @addPreviewLink()
       @addConfigurationButton()
       if @node.attributes.status.published

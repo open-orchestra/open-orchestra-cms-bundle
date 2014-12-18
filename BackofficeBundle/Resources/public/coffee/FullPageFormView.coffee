@@ -12,7 +12,6 @@ FullPageFormView = OrchestraView.extend(
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
     @loadTemplates [
       'fullPageFormView'
-      'widgetStatus'
     ]
     @element = options.element
     return
@@ -20,9 +19,7 @@ FullPageFormView = OrchestraView.extend(
   render: ->
     $(@el).html(@renderTemplate('fullPageFormView', @options))
     $('.js-widget-title', @$el).text @title
-    if @element && @element.get('links')._status_list
-      @renderWidgetStatus()
-      if @element.get('status_label') == 'published'
+    if @element && @element.get('links')._self_status && @element.status_label == 'published'
         $("#orchestra_content_submit").addClass('disabled')
 
     @addEventOnForm()
@@ -46,6 +43,7 @@ FullPageFormView = OrchestraView.extend(
           view = new FullPageFormView(options)
       return
 
+<<<<<<< HEAD
   renderWidgetStatus: ->
     viewContext = this
     $.ajax
@@ -59,4 +57,6 @@ FullPageFormView = OrchestraView.extend(
         )
         addCustomJarvisWidget(widgetStatus)
         return
+=======
+>>>>>>> extract version, add, select
 )

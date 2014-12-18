@@ -12,7 +12,8 @@ OrchestraView = Backbone.View.extend(
       templates.push "widgetStatus"
     if @multiVersion
       @events['change select#selectbox'] = 'changeVersion'
-      templates.push "choice"
+      templates.push "elementChoice"
+      templates.push "elementTitle"
     
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false
@@ -34,7 +35,6 @@ OrchestraView = Backbone.View.extend(
     $.each @compiledTemplates, (templateName, templateData) ->
       ready = false if templateData is false
       return
-
     if ready
       @render()
       @addLanguagesToView() if @multiLanguage
@@ -92,7 +92,7 @@ OrchestraView = Backbone.View.extend(
     statusId = $(event.currentTarget).data("status")
     displayLoader()
     data =
-      status_id: newStatusId
+      status_id: statusId
     data = JSON.stringify(data)
     $.post(url, data).always (response) ->
       Backbone.history.loadUrl(Backbone.history.fragment)
@@ -126,3 +126,4 @@ OrchestraView = Backbone.View.extend(
       version: event.currentTarget.value
     ))
     Backbone.history.navigate(redirectUrl, {trigger: true})
+)
