@@ -12,7 +12,7 @@ FullPageFormView = OrchestraView.extend(
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
     @loadTemplates [
       'fullPageFormView'
-      'widgetStatus' if options.element
+      'widgetStatus'
     ]
     @element = options.element
     return
@@ -42,6 +42,7 @@ FullPageFormView = OrchestraView.extend(
       e.preventDefault()
       $(this).ajaxSubmit
         success: (response) ->
+          options.html = response
           view = new FullPageFormView(options)
       return
 
