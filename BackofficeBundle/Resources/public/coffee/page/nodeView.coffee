@@ -3,39 +3,31 @@ NodeView = OrchestraView.extend(
 
   events:
     'click i#none' : 'clickButton'
-    'change select#selectbox': 'changeVersion'
     'click a#btn-new-version': 'duplicateNode'
 
   initialize: (options) ->
     @node = options.node
-    @version = @node.get('version')
-    @language = @node.get('language')
-    @multiLanguage =
+    @multiLanguage = 
       language: @node.get('language')
       language_list: @node.get('links')._language_list
       path: 'showNodeWithLanguage'
-      path_option: {nodeId : @node.get('node_id')}
     @multiStatus = 
-      status: @node.get('status')
-      status_list: @node.get('links')._status_list
       language: @node.get('language')
       version: @node.get('version')
-      path: 'showNodeWithLanguageAndVersion'
-      path_option: {nodeId : @node.get('node_id')}
-      status_change_link: @node.get('links')._self_status_change
-
-    @version = @node.get('version')
-    @language = @node.get('language')
-    @events['click span.' + @cid] = 'clickButton'
+      status_list: @node.get('links')._status_list
+      status: @node.get('status')
+      self_status_change: @node.get('links')._self_status_change
+    @multiVersion = 
+        self_version: @node.get('links')._self_version
+        path: 'showEntityWithLanguageAndVersion'
+    @events['click i.' + @node.cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
     @loadTemplates [
       "nodeView"
       "nodeTitle"
-      "widgetStatus"
       "areaView"
-      "nodeChoice"
       "blockView"
     ]
     return
@@ -86,23 +78,6 @@ NodeView = OrchestraView.extend(
         Backbone.history.loadUrl(redirectRoute)
     return
 
-  renderWidgetStatus: ->
-    viewContext = this
-    $.ajax
-      type: "GET"
-      data:
-        language: @node.get('language')
-        version: @node.get('version')
-      url: @node.get('links')._status_list
-      success: (response) ->
-        widgetStatus = viewContext.renderTemplate('widgetStatus',
-          current_status: viewContext.node.get('status')
-          statuses: response.statuses
-          status_change_link: viewContext.node.get('links')._self_status_change
-        )
-        addCustomJarvisWidget(widgetStatus)
-        return
-
   render: ->
     title = @renderTemplate('nodeTitle',
       node: @node
@@ -142,6 +117,7 @@ NodeView = OrchestraView.extend(
     )
     return
 
+<<<<<<< HEAD
   addVersionToView: ->
     viewContext = this
     $.ajax
@@ -172,6 +148,8 @@ NodeView = OrchestraView.extend(
     Backbone.history.navigate(redirectRoute , {trigger: true})
     return
 
+=======
+>>>>>>> extract add functionnality
   addPreviewLink: ->
     previewLink = @node.get('links')._self_preview
     view = new PreviewLinkView(

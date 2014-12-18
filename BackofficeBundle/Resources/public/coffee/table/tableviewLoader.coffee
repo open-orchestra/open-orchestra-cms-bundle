@@ -1,4 +1,4 @@
-tableViewLoad = (link, entityType, entityId, language) ->
+tableViewLoad = (link, entityType, entityId, language, version) ->
   target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
@@ -23,7 +23,8 @@ tableViewLoad = (link, entityType, entityId, language) ->
             elementModel.set values
             if entityId is elementModel.get('id')
               language = elementModel.get('language') if (typeof language == 'undefined')
-              url = elementModel.get('links')._self_form + '?language=' + language
+              version = elementModel.get('version') if (typeof version == 'undefined')
+              url = elementModel.get('links')._self_form + '?language=' + language + '&version=' + version
               $.ajax
                 url: url
                 method: "GET"
@@ -34,10 +35,21 @@ tableViewLoad = (link, entityType, entityId, language) ->
                     listUrl: listUrl
                     element: elementModel
                   options = $.extend(options, multiLanguage:
-                    language_list : values.links._language_list
+                    language_list : elementModel.get('links')._language_list
                     language : language
                     path: 'showEntityWithLanguage'
-                  ) if values.links._language_list and values.language
+                  ) if elementModel.get('links')._language_list
+                  options = $.extend(options, multiStatus:
+                    language: language
+                    version: version
+                    status_list: elementModel.get('links')._status_list
+                    status: elementModel.get('status')
+                    self_status_change: elementModel.get('links')._self_status_change
+                  ) if elementModel.get('links')._status_list
+                  options = $.extend(options, multiVersion:
+                    self_version: elementModel.get('links')._self_version
+                    path: 'showEntityWithLanguageAndVersion'
+                  ) if elementModel.get('links')._self_version
                   view = new FullPageFormView(options)
                   appRouter.setCurrentMainView view
               founded = true
