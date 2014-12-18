@@ -66,6 +66,9 @@ adminFormView = OrchestraView.extend(
             if $('#node_nodeId', viewContext.$el).length > 0
               displayRoute = appRouter.generateUrl "showNode",
                 nodeId: $('#node_nodeId', viewContext.$el).val()
+            else if $('#template_templateId', viewContext.$el).length > 0
+              displayRoute = appRouter.generateUrl "showTemplate",
+                templateId: $('#template_templateId', viewContext.$el).val()
             else
               displayRoute = Backbone.history.fragment
               Backbone.history.loadUrl(displayRoute)
