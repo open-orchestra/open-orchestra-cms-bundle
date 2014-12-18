@@ -70,7 +70,7 @@ AreaView = OrchestraView.extend(
       area: areaElement
       node_id: @node_id
       node_published: @node_published
-      displayClass: (if @area.get("bo_direction") is "v" then "bo-column" else "bo-row")
+      displayClass: (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
       el: $("ul.areas-" + @cid, @el)
     )
 
@@ -79,7 +79,7 @@ AreaView = OrchestraView.extend(
     blockElement.set block
     blockView = new BlockView(
       block: blockElement
-      displayClass: (if @area.get("bo_direction") is "v" then "bo-column" else "bo-row")
+      displayClass: (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
       areaCid: @area.cid
       node_published: @node_published
       el: $("ul.blocks-" + @cid, @el)
