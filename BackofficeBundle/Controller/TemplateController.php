@@ -70,13 +70,23 @@ class TemplateController extends AbstractAdminController
             $template
         );
 
-        if (!is_null($template->getTemplateId())) {
+        if ($form->getErrors()->count() > 0) {
+            $statusCode = 400;
+        } elseif (!is_null($template->getTemplateId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
 
             return $this->redirect($url);
+        } else {
+            $statusCode = 200;
         }
 
-        return $this->renderAdminForm($form);
+        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
+            array('form' => $form->createView()),
+            $response
+        );
     }
 
     /**
