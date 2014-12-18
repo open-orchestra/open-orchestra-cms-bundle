@@ -42,6 +42,7 @@ FullPageFormView = OrchestraView.extend(
       e.preventDefault()
       $(this).ajaxSubmit
         success: (response) ->
+          options.html = response
           view = new FullPageFormView(options)
       return
 
