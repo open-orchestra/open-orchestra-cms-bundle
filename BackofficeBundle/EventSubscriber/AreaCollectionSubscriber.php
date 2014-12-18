@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelBundle\Document\Area;
+use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -14,6 +14,16 @@ use Symfony\Component\Form\FormEvents;
  */
 class AreaCollectionSubscriber implements EventSubscriberInterface
 {
+    protected $areaClass;
+
+    /**
+     * @param string $areaClass
+     */
+    public function __construct($areaClass)
+    {
+        $this->areaClass = $areaClass;
+    }
+
     /**
      * @param FormEvent $event
      */
@@ -25,8 +35,9 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
 
         if (array_key_exists('newAreas', $data)) {
             foreach ($data['newAreas'] as $newAreaData) {
-                // TODO use a parameter
-                $newArea = new Area();
+                $areaClass = $this->areaClass;
+                /** @var AreaInterface $newArea */
+                $newArea = new $areaClass();
                 $newArea->setAreaId($newAreaData);
 
                 $areaContainer->addArea($newArea);

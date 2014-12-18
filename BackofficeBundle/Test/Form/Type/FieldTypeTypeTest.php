@@ -21,6 +21,8 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     protected $translator;
     protected $translateValueInitializer;
     protected $translatedLabel = 'existing option';
+    protected $fieldOptionClass = 'fieldOptionClass';
+    protected $fieldTypeClass = 'fieldTypeClass';
 
     /**
      * Set up the test
@@ -37,7 +39,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
-        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, array());
+        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, array(), $this->fieldOptionClass, $this->fieldTypeClass);
     }
 
     /**
@@ -56,7 +58,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\FieldType',
+            'data_class' => $this->fieldTypeClass,
             'label' => $this->translatedLabel,
         ));
         Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.label');

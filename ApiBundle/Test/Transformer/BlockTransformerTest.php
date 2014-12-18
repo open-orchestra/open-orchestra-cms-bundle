@@ -15,6 +15,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $blockTransformer;
     protected $blockFacade;
+    protected $blockClass;
     protected $router;
     protected $node;
 
@@ -23,6 +24,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->blockClass = 'PHPOrchestra\ModelBundle\Document\Block';
         $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
         $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
@@ -33,7 +35,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 

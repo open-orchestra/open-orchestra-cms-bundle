@@ -21,12 +21,14 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $event;
     protected $options;
     protected $fieldType;
+    protected $fieldOptionClass;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->fieldOptionClass = 'PHPOrchestra\ModelBundle\Document\FieldOption';
         $this->form = Phake::mock('Symfony\Component\Form\Form');
         $this->fieldType = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
@@ -48,7 +50,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->subscriber = new FieldTypeTypeSubscriber($this->options);
+        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass);
     }
 
     /**

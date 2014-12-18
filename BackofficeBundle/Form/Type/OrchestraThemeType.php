@@ -2,23 +2,22 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class OrchestraSiteType
+ * Class OrchestraThemeType
  */
-class OrchestraSiteType extends AbstractType
+class OrchestraThemeType extends AbstractType
 {
-    protected $siteClass;
+    protected $themeClass;
 
     /**
-     * @param string $siteClass
+     * @param string $themeClass
      */
-    public function __construct($siteClass)
+    public function __construct($themeClass)
     {
-        $this->siteClass = $siteClass;
+        $this->themeClass = $themeClass;
     }
 
     /**
@@ -28,11 +27,8 @@ class OrchestraSiteType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'class' => $this->siteClass,
-                'property' => 'domain',
-                'query_builder' => function (DocumentRepository $dr) {
-                    return $dr->createQueryBuilder('s')->field('deleted')->equals(false);
-                }
+                'class' => $this->themeClass,
+                'property' => 'name',
             )
         );
     }
@@ -50,6 +46,6 @@ class OrchestraSiteType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_site';
+        return 'orchestra_theme';
     }
 }

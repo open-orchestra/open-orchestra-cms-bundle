@@ -15,6 +15,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     protected $nodeManager;
     protected $templateRepository;
     protected $nodeClass = 'nodeClass';
+    protected $areaClass = 'areaClass';
 
     /**
      * Set up the test
@@ -24,7 +25,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         $this->templateRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\TemplateRepository');
         $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
 
-        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager);
+        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager, $this->areaClass);
     }
 
     /**

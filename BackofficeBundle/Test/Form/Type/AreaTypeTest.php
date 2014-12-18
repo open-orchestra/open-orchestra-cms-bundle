@@ -11,14 +11,14 @@ use PHPOrchestra\BackofficeBundle\Form\Type\AreaType;
 class AreaTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $areaType;
+    protected $areaClass = 'areaClass';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->areaType = new AreaType();
+        $this->areaType = new AreaType($this->areaClass);
     }
 
     /**
@@ -51,7 +51,7 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
         $this->areaType->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\Area'
+            'data_class' => $this->areaClass,
         ));
     }
 

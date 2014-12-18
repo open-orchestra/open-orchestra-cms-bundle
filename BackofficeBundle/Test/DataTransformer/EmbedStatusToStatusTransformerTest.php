@@ -20,12 +20,14 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
     protected $statusId;
     protected $embedStatus;
     protected $statusRepository;
+    protected $embedStatusClass;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->embedStatusClass = 'PHPOrchestra\ModelBundle\Document\EmbedStatus';
         $this->statusId = 'statusId';
 
         $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
@@ -39,7 +41,7 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
         $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
-        $this->transformer = new EmbedStatusToStatusTransformer($this->statusRepository);
+        $this->transformer = new EmbedStatusToStatusTransformer($this->statusRepository, $this->embedStatusClass);
     }
 
     /**

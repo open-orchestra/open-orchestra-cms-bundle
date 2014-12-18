@@ -17,6 +17,7 @@ use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
  */
 class NodeType extends AbstractType
 {
+    protected $areaClass;
     protected $nodeClass;
     protected $nodeManager;
     protected $templateRepository;
@@ -25,12 +26,14 @@ class NodeType extends AbstractType
      * @param string             $nodeClass
      * @param TemplateRepository $templateRepository
      * @param NodeManager        $nodeManager
+     * @param string             $areaClass
      */
-    public function __construct($nodeClass, TemplateRepository $templateRepository, NodeManager $nodeManager)
+    public function __construct($nodeClass, TemplateRepository $templateRepository, NodeManager $nodeManager, $areaClass)
     {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
+        $this->areaClass = $areaClass;
     }
 
     /**
@@ -73,7 +76,7 @@ class NodeType extends AbstractType
 
         $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
         $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
-        $builder->addEventSubscriber(new AreaCollectionSubscriber());
+        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

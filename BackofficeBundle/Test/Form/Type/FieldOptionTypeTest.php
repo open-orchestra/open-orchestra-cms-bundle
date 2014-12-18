@@ -19,6 +19,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
     protected $resolver;
     protected $translator;
     protected $translatedLabel = 'existing option';
+    protected $fieldOptionClass = 'fieldOptionClass';
 
     /**
      * Set up the test
@@ -33,7 +34,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
 
-        $this->form = new FieldOptionType($this->translator, array());
+        $this->form = new FieldOptionType($this->translator, array(), $this->fieldOptionClass);
     }
 
     /**
@@ -52,7 +53,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\FieldOption',
+            'data_class' => $this->fieldOptionClass,
             'label' => $this->translatedLabel,
         ));
         Phake::verify($this->translator)->trans(Phake::anyParameters());

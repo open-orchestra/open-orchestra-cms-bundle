@@ -13,6 +13,7 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
     protected $formBuilder;
     protected $templateType;
     protected $nodeTypeTransformer;
+    protected $areaClass = 'areaClass';
     protected $templateClass = 'templateClass';
 
     /**
@@ -24,7 +25,7 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->formBuilder)->addModelTransformer(Phake::anyParameters())->thenReturn($this->formBuilder);
         Phake::when($this->formBuilder)->add(Phake::anyParameters())->thenReturn($this->formBuilder);
 
-        $this->templateType = new TemplateType($this->templateClass);
+        $this->templateType = new TemplateType($this->templateClass, $this->areaClass);
     }
 
     /**

@@ -7,9 +7,10 @@ parameters:
     php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
     php_orchestra_backoffice.type.orchestra_content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
     php_orchestra_backoffice.type.content_type.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
-    php_orchestra_backoffice.document.content_attribute.class : PHPOrchestra\ModelBundle\Document\ContentAttribute
     php_orchestra_backoffice.type.orchestra_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
     php_orchestra_backoffice.type.orchestra_status.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraStatusType
+    php_orchestra_backoffice.type.orchestra_theme.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraThemeType
+    php_orchestra_backoffice.type.orchestra_role.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraRoleType
     php_orchestra_backoffice.type.orchestra_site.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraSiteType
     php_orchestra_backoffice.type.status.class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
     php_orchestra_backoffice.type.field_type.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType
@@ -37,6 +38,7 @@ services:
         class: %php_orchestra_backoffice.type.template.class%
         arguments:
             - %php_orchestra_model.document.template.class%
+            - %php_orchestra_model.document.area.class%
         tags:
             - { name: form.type, alias: template }
     # Node form type
@@ -46,11 +48,14 @@ services:
             - %php_orchestra_model.document.node.class%
             - @php_orchestra_model.repository.template
             - @php_orchestra_backoffice.manager.node
+            - %php_orchestra_model.document.area.class%
         tags:
             - { name: form.type, alias: node }
     # Area form type
     php_orchestra_backoffice.type.area:
         class: %php_orchestra_backoffice.type.area.class%
+        arguments:
+            - %php_orchestra_model.document.area.class%
         tags:
             - { name: form.type, alias: area }
     # Block form type
@@ -75,6 +80,8 @@ services:
     # Site Form Builder
     php_orchestra_backoffice.type.orchestra_site:
         class: %php_orchestra_backoffice.type.orchestra_site.class%
+        arguments:
+            - %php_orchestra_model.document.site.class%
         tags:
             - { name: form.type, alias: orchestra_site }
     php_orchestra_backoffice.type.site:
@@ -98,6 +105,8 @@ services:
             - @translator
             - @php_orchestra_backoffice.listener.translate_value_initializer
             - %php_orchestra_backoffice.custom_types%
+            - %php_orchestra_model.document.field_option.class%
+            - %php_orchestra_model.document.field_type.class%
         tags:
             - { name: form.type, alias: field_type }
     php_orchestra_backoffice.type.field_option:
@@ -105,6 +114,7 @@ services:
         arguments:
             - @translator
             - %php_orchestra_backoffice.options%
+            - %php_orchestra_model.document.field_option.class%
         tags:
             - { name: form.type, alias: field_option }
 
@@ -113,6 +123,7 @@ services:
         class: %php_orchestra_backoffice.type.orchestra_status.class%
         arguments:
             - @php_orchestra_backoffice.transformer.embed_status_to_status
+            - %php_orchestra_model.document.status.class%
         tags:
             - { name: form.type, alias: orchestra_status }
     php_orchestra_backoffice.type.status:
@@ -122,6 +133,18 @@ services:
             - @php_orchestra_backoffice.listener.translate_value_initializer
         tags:
             - { name: form.type, alias: status }
+    php_orchestra_backoffice.type.orchestra_theme:
+        class: %php_orchestra_backoffice.type.orchestra_theme.class%
+        arguments:
+            - %php_orchestra_model.document.theme.class%
+        tags:
+            - { name: form.type, alias: orchestra_theme }
+    php_orchestra_backoffice.type.orchestra_role:
+        class: %php_orchestra_backoffice.type.orchestra_role.class%
+        arguments:
+            - %php_orchestra_model.document.role.class%
+        tags:
+            - { name: form.type, alias: orchestra_role }
 
     # Content Form Builder
     php_orchestra_backoffice.type.orchestra_content:
@@ -129,7 +152,7 @@ services:
         arguments:
             - @php_orchestra_model.repository.content_type
             - %php_orchestra_model.document.content.class%
-            - %php_orchestra_backoffice.document.content_attribute.class%
+            - %php_orchestra_model.document.content_attribute.class%
             - @php_orchestra_backoffice.manager.translation_choice
         tags:
             - {name: form.type, alias: orchestra_content}
@@ -154,6 +177,8 @@ services:
 
     php_orchestra_backoffice.type.translated_value:
         class: %php_orchestra_backoffice.type.translated_value.class%
+        arguments:
+            - %php_orchestra_model.document.translated_value.class%
         tags:
             - { name: form.type, alias: translated_value }
     php_orchestra_backoffice.type.translated_value_collection:

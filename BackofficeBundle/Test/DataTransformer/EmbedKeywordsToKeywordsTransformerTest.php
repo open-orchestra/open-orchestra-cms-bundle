@@ -20,19 +20,24 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $transformer;
 
+    protected $keywordClass;
     protected $documentManager;
     protected $keywordRepository;
+    protected $embedKeywordClass;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->embedKeywordClass = 'PHPOrchestra\ModelBundle\Document\EmbedKeyword';
+        $this->keywordClass = 'PHPOrchestra\ModelBundle\Document\Keyword';
+
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->keywordRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\KeywordRepository');
         Phake::when($this->keywordRepository)->getDocumentManager()->thenReturn($this->documentManager);
 
-        $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository);
+        $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository, $this->embedKeywordClass, $this->keywordClass);
     }
 
     /**

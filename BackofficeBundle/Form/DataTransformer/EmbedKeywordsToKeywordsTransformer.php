@@ -2,10 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
 
-use PHPOrchestra\ModelBundle\Document\Keyword;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ModelBundle\Document\EmbedKeyword;
 use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
 
 /**
@@ -14,13 +12,19 @@ use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
 class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
 {
     protected $keywordRepository;
+    protected $embedKeywordClass;
+    protected $keywordClass;
 
     /**
      * @param KeywordRepository $keywordRepository
+     * @param string            $embedKeywordClass
+     * @param string            $keywordClass
      */
-    public function __construct(KeywordRepository $keywordRepository)
+    public function __construct(KeywordRepository $keywordRepository, $embedKeywordClass, $keywordClass)
     {
         $this->keywordRepository = $keywordRepository;
+        $this->embedKeywordClass = $embedKeywordClass;
+        $this->keywordClass = $keywordClass;
     }
 
     /**
@@ -51,18 +55,19 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
     {
         $keywordArray = explode(',', $keywords);
         $embedKeywords = new ArrayCollection();
+        $embedKeywordClass = $this->embedKeywordClass;
+        $keywordClass = $this->keywordClass;
 
         foreach($keywordArray as $keyword) {
             if ('' != $keywords) {
                 $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
                 if (!$keywordEntity) {
-                    // TODO use a parameter
-                    $keywordEntity = new Keyword();
+                    $keywordEntity = new $keywordClass();
                     $keywordEntity->setLabel($keyword);
                     $this->keywordRepository->getDocumentManager()->persist($keywordEntity);
                     $this->keywordRepository->getDocumentManager()->flush($keywordEntity);
                 }
-                $embedKeywords->add(EmbedKeyword::createFromKeyword($keywordEntity));
+                $embedKeywords->add($embedKeywordClass::createFromKeyword($keywordEntity));
             }
         }
 

@@ -2,24 +2,30 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraSiteType;
+use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraRoleType;
 
 /**
- * Class OrchestraSiteTypeTest
+ * Class OrchestraStatusTypeTest
  */
-class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
+class OrchestraRoleTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var OrchestraRoleType
+     */
     protected $form;
-    protected $siteClass = 'SiteClass';
+
+    protected $builder;
+    protected $roleClass = 'roleClass';
 
     /**
      * Set up the text
      */
     public function setUp()
     {
-        $this->form = new OrchestraSiteType($this->siteClass);
+        $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
+
+        $this->form = new OrchestraRoleType($this->roleClass);
     }
 
     /**
@@ -27,7 +33,7 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_site', $this->form->getName());
+        $this->assertSame('orchestra_role', $this->form->getName());
     }
 
     /**
@@ -48,11 +54,7 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'class' => $this->siteClass,
-            'property' => 'domain',
-            'query_builder' => function (DocumentRepository $dr) {
-                return $dr->createQueryBuilder('s')->field('deleted')->equals(false);
-            },
+            'class' => $this->roleClass,
         ));
     }
 }
