@@ -10,7 +10,7 @@ NodeView = OrchestraView.extend(
     @node = options.node
     @version = @node.get('version')
     @language = @node.get('language')
-    @multiLanguage = 
+    @multiLanguage =
       language: @node.get('language')
       language_list: @node.get('links')._language_list
       path: 'showNodeWithLanguage'
@@ -26,7 +26,7 @@ NodeView = OrchestraView.extend(
 
     @version = @node.get('version')
     @language = @node.get('language')
-    @events['click i.' + @node.cid] = 'clickButton'
+    @events['click span.' + @cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
@@ -120,10 +120,11 @@ NodeView = OrchestraView.extend(
       @renderWidgetStatus()
       @addVersionToView()
       @addPreviewLink()
+      @addConfigurationButton()
       if @node.attributes.status.published
         $('.ui-model *', @el).unbind()
         $('.js-widget-blockpanel', @$el).hide()
-        $('span.action', @el).hide()
+        $('span.' + @cid, @el).addClass('disabled')
       else
         $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
           refreshUl $(this)
@@ -159,7 +160,7 @@ NodeView = OrchestraView.extend(
     view = new NodeVersionView(
       node: nodeVersionElement
       version: @version
-      el: this.$el.find('optgroup#versions')
+      el: this.$el.find('select#selectbox')
     )
 
   changeVersion: (event) ->
@@ -175,6 +176,12 @@ NodeView = OrchestraView.extend(
     previewLink = @node.get('links')._self_preview
     view = new PreviewLinkView(
       previewLink: previewLink
+    )
+
+  addConfigurationButton: ->
+    cid = @cid
+    view = new PageConfigurationButtonView(
+      cid: cid
     )
 
   addExistingBlockToView: ->

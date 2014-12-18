@@ -237,6 +237,7 @@ php_orchestra_backoffice:
             create: New version
             display: version
         preview: Preview
+        configuration: Configuration page
         last_update:
             at: Last update
             by: by

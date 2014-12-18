@@ -6,7 +6,7 @@ TemplateView = OrchestraView.extend(
 
   initialize: (options) ->
     @template = options.template
-    @events['click i.' + @template.cid] = 'clickButton'
+    @events['click span.' + @cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
@@ -29,6 +29,7 @@ TemplateView = OrchestraView.extend(
       template: @template
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
+    @addConfigurationButton()
     for area of @template.get('areas')
       @addAreaToView(@template.get('areas')[area])
     return
@@ -54,4 +55,10 @@ TemplateView = OrchestraView.extend(
     $('.hide-areas').hide()
     $('.show-areas').show()
     $('div.toolbar-layer.area-toolbar').removeClass('shown')
+
+  addConfigurationButton: ->
+    cid = @cid
+    view = new PageConfigurationButtonView(
+      cid: cid
+    )
 )
