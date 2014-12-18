@@ -92,7 +92,7 @@ class NodeTransformer extends AbstractTransformer
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_site', $this->generateRoute('php_orchestra_api_site_show', array(
+        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_site_show', array(
             'siteId' => $mixed->getSiteId(),
         )));
 

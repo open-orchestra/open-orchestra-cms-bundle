@@ -1,4 +1,4 @@
-tableViewLoad = (link, entityType, entityId) ->
+tableViewLoad = (link, entityType, entityId, language) ->
   target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   title = link.text()
@@ -13,36 +13,40 @@ tableViewLoad = (link, entityType, entityId) ->
         redirectToLogin()
       else
         founded = false
+        elements = new TableviewElement()
+        elements.set response
         if entityId
-          elements = new TableviewElement()
-          elements.set response
           collection_name = elements.get("collection_name")
           collection = elements.get(collection_name)
-          view = null
           $.each collection, (rank, values) ->
             elementModel = new TableviewModel
             elementModel.set values
             if entityId is elementModel.get('id')
+              language = elementModel.get('language') if (typeof language == 'undefined')
+              url = elementModel.get('links')._self_form + '?language=' + language
               $.ajax
-                url: elementModel.get('links')._self_form
+                url: url
                 method: "GET"
                 success: (response) ->
-                  view = new FullPageFormView(
+                  options =
                     html: response
                     title: title
                     listUrl: listUrl
                     element: elementModel
-                  )
+                  options = $.extend(options, multiLanguage:
+                    language_list : values.links._language_list
+                    language : language
+                    path: 'showEntityWithLanguage'
+                  ) if values.links._language_list and values.language
+                  view = new FullPageFormView(options)
+                  appRouter.setCurrentMainView view
               founded = true
         unless founded
-          elements = new TableviewElement()
-          elements.set response
           view = new TableviewCollectionView(
             elements: elements
             displayedElements: displayedElements
             title: title
             listUrl: listUrl
             el: target
-            entityType: entityType
           )
-        appRouter.setCurrentMainView view
+          appRouter.setCurrentMainView view

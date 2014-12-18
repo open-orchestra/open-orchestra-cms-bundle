@@ -1,5 +1,10 @@
 {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
 
+<% if (typeof multiLanguage != 'undefined') { %>
+    <ul id="entity-languages" class="nav nav-tabs">
+    </ul>
+<% } %>
+
 <div role="container">
     <%= html %>
     {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}

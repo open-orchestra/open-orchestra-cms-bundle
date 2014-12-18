@@ -17,6 +17,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'template/show/:templateId': 'showTemplate',
     ':entityType/list': 'listEntities',
     ':entityType/edit/:entityId': 'showEntity',
+    ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
     'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     '': 'showHome'
@@ -67,13 +68,23 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   listEntities: function(entityType)
   {
-    this.showEntity(entityType);
+    this.manageEntity(entityType);
   },
 
   showEntity: function(entityType, entityId)
   {
+    this.manageEntity(entityType, entityId);
+  },
+
+  showEntityWithLanguage: function(entityType, entityId, language)
+  {
+    this.manageEntity(entityType, entityId, language);
+  },
+  
+  manageEntity: function(entityType, entityId, language)
+  {
     this.initDisplayRouteChanges("#nav-" + entityType);
-    tableViewLoad($("#nav-" + entityType), entityType, entityId);
+    tableViewLoad($("#nav-" + entityType), entityType, entityId, language);
   },
 
   listTranslations: function()
@@ -159,7 +170,6 @@ var OrchestraBORouter = Backbone.Router.extend({
   generateUrl: function(routeName, paramsObject)
   {
     var route = this.routePatterns[routeName];
-    
     if (typeof route !== "undefined") {
       $.each(paramsObject, function(paramName, paramValue) {
         route = route.replace(':' + paramName, paramValue);
@@ -168,8 +178,31 @@ var OrchestraBORouter = Backbone.Router.extend({
       alert('Error, route name is unknown');
       return false;
     }
-    
+
     return route;
+  },
+  
+  addParametersToRoute: function(options)
+  {
+    var Router = this,
+        fragment = Backbone.history.fragment,
+        routes = _.pairs(Router.routes),
+        route = null, matched, paramsObject = null, paramsKeys = null;
+    matched = _.find(routes, function(handler) {
+      route = _.isRegExp(handler[0]) ? handler[0] : Router._routeToRegExp(handler[0]);
+      return route.test(fragment);
+    });
+    
+    if(matched) {
+      paramsKeys = _.compact(Router._extractParameters(route, matched[0]));
+      for(var i in paramsKeys){
+        paramsKeys[i] = paramsKeys[i].substring(1);
+      }
+      paramsObject = _.object(paramsKeys, _.compact(Router._extractParameters(route, fragment)))
+      paramsObject = _.extend(paramsObject, options);
+      return paramsObject;
+    }
+    return {};
   }
 });
 

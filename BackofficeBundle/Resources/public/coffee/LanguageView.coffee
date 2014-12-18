@@ -1,17 +1,16 @@
-NodeLanguageView = OrchestraView.extend(
+LanguageView = OrchestraView.extend(
   tagName: "li"
 
   initialize: (options) ->
     @language = options.language
-    @nodeId = options.nodeId
     @currentLanguage = options.currentLanguage
     @loadTemplates [
-      "nodeLanguage"
+      "language"
     ]
     return
 
   render: ->
-    $(@el).append @renderTemplate('nodeLanguage',
+    $(@el).append @renderTemplate('language',
       language: @language
       currentLanguage: @currentLanguage
     )

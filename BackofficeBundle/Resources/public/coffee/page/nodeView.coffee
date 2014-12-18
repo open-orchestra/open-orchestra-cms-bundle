@@ -4,11 +4,26 @@ NodeView = OrchestraView.extend(
   events:
     'click i#none' : 'clickButton'
     'change select#selectbox': 'changeVersion'
-    'click a.change-language': 'changeLanguage'
     'click a#btn-new-version': 'duplicateNode'
 
   initialize: (options) ->
     @node = options.node
+    @version = @node.get('version')
+    @language = @node.get('language')
+    @multiLanguage = 
+      language: @node.get('language')
+      language_list: @node.get('links')._language_list
+      path: 'showNodeWithLanguage'
+      path_option: {nodeId : @node.get('node_id')}
+    @multiStatus = 
+      status: @node.get('status')
+      status_list: @node.get('links')._status_list
+      language: @node.get('language')
+      version: @node.get('version')
+      path: 'showNodeWithLanguageAndVersion'
+      path_option: {nodeId : @node.get('node_id')}
+      status_change_link: @node.get('links')._self_status_change
+
     @version = @node.get('version')
     @language = @node.get('language')
     @events['click i.' + @node.cid] = 'clickButton'
@@ -20,7 +35,6 @@ NodeView = OrchestraView.extend(
       "nodeTitle"
       "widgetStatus"
       "areaView"
-      "nodeLanguage"
       "nodeChoice"
       "blockView"
     ]
@@ -113,7 +127,6 @@ NodeView = OrchestraView.extend(
       else
         $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
           refreshUl $(this)
-    @addLanguagesToView()
     return
 
   addAreaToView: (area) ->
@@ -157,33 +170,6 @@ NodeView = OrchestraView.extend(
     )
     Backbone.history.navigate(redirectRoute , {trigger: true})
     return
-
-  addLanguagesToView: ->
-    viewContext = @
-    $.ajax
-      type: "GET"
-      url: @node.get('links')._site
-      success: (response) ->
-        site = new Site
-        site.set response
-        for language of site.get('languages')
-          viewContext.addLanguageToPanel(site.get('languages')[language])
-        return
-
-  addLanguageToPanel: (language) ->
-    view = new NodeLanguageView(
-      language: language
-      nodeId: @node.get('node_id')
-      currentLanguage: @language
-      el: this.$el.find('#node-languages')
-    )
-
-  changeLanguage: (event) ->
-    redirectRoute = appRouter.generateUrl('showNodeWithLanguage',
-      nodeId: @node.get('node_id'),
-      language: $(event.currentTarget).data('language')
-    )
-    Backbone.history.navigate(redirectRoute , {trigger: true})
 
   addPreviewLink: ->
     previewLink = @node.get('links')._self_preview

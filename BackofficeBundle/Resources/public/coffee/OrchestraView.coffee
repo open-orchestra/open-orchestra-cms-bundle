@@ -4,6 +4,10 @@ OrchestraView = Backbone.View.extend(
 
   loadTemplates: (templates) ->
     currentView = @
+    if @multiLanguage
+      @events['click a.change-language'] = 'changeLanguage'
+      templates.push "language"
+    
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false
       return
@@ -24,11 +28,37 @@ OrchestraView = Backbone.View.extend(
     $.each @compiledTemplates, (templateName, templateData) ->
       ready = false if templateData is false
       return
-    
-    @render() if ready
+
+    if ready
+      @render()
+      @addLanguagesToView() if @multiLanguage
     return
 
   renderTemplate: (templateName, parameters) ->
     @compiledTemplates[templateName](parameters)
 
+  addLanguagesToView: ->
+    viewContext = @
+    $.ajax
+      type: "GET"
+      url: @multiLanguage.language_list
+      success: (response) ->
+        site = new Site
+        site.set response
+        for language of site.get('languages')
+          viewContext.addLanguageToPanel(site.get('languages')[language])
+        return
+
+  addLanguageToPanel: (language) ->
+    view = new LanguageView(
+      language: language
+      currentLanguage: @multiLanguage.language
+      el: this.$el.find('#entity-languages')
+    )
+
+  changeLanguage: (event) ->
+    redirectUrl = appRouter.generateUrl(@multiLanguage.path, appRouter.addParametersToRoute(
+      'language': $(event.currentTarget).data('language')
+    ))
+    Backbone.history.navigate(redirectUrl, {trigger: true})
 )

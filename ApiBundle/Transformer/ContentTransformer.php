@@ -28,7 +28,7 @@ class ContentTransformer extends AbstractTransformer
     {
         $facade = new ContentFacade();
 
-        $facade->id = $mixed->getId();
+        $facade->id = $mixed->getContentId();
         $facade->contentType = $mixed->getContentType();
         $facade->siteId = $mixed->getSiteId();
         $facade->name = $mixed->getName();
@@ -52,13 +52,17 @@ class ContentTransformer extends AbstractTransformer
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'php_orchestra_backoffice_content_form',
-            array('contentId' => $mixed->getId())
+            array('contentId' => $mixed->getContentId())
         ));
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
             'contentId' => $mixed->getId()
         )));
         $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_content_update', array(
             'contentId' => $mixed->getId()
+        )));
+
+        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_site_show', array(
+            'siteId' => $mixed->getSiteId(),
         )));
 
         return $facade;
