@@ -47,6 +47,8 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
                     self_status_change: elementModel.get('links')._self_status_change
                   ) if elementModel.get('links')._status_list
                   options = $.extend(options, multiVersion:
+                    language: language
+                    version: version
                     self_version: elementModel.get('links')._self_version
                     path: 'showEntityWithLanguageAndVersion'
                   ) if elementModel.get('links')._self_version

@@ -124,6 +124,7 @@ OrchestraView = Backbone.View.extend(
   changeVersion: (event) ->
     redirectUrl = appRouter.generateUrl(@multiVersion.path, appRouter.addParametersToRoute(
       version: event.currentTarget.value
+      language: @multiVersion.language
     ))
     Backbone.history.navigate(redirectUrl, {trigger: true})
 )

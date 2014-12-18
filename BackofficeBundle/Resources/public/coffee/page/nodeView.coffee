@@ -18,8 +18,10 @@ NodeView = OrchestraView.extend(
       status: @node.get('status')
       self_status_change: @node.get('links')._self_status_change
     @multiVersion = 
-        self_version: @node.get('links')._self_version
-        path: 'showEntityWithLanguageAndVersion'
+      language: @node.get('language')
+      version: @node.get('version')
+      self_version: @node.get('links')._self_version
+      path: 'showNodeWithLanguageAndVersion'
     @events['click i.' + @node.cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
