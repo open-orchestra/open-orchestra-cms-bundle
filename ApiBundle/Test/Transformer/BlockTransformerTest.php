@@ -15,6 +15,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $blockTransformer;
     protected $blockFacade;
+    protected $blockClass;
     protected $router;
     protected $node;
 
@@ -23,9 +24,10 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->blockClass = 'PHPOrchestra\ModelBundle\Document\Block';
         $this->displayBlockManager = Phake::mock('PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
         $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
@@ -33,7 +35,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -65,7 +67,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     )
     {
         $html = 'ok';
-        $block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         $response = Phake::mock('Symfony\Component\HttpFoundation\Response');
         $transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerInterface');
         $transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');

@@ -15,13 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TemplateType extends AbstractType
 {
     protected $templateClass;
+    protected $areaClass;
 
     /**
      * @param string $templateClass
+     * @param string $areaClass
      */
-    public function __construct($templateClass)
+    public function __construct($templateClass, $areaClass)
     {
         $this->templateClass = $templateClass;
+        $this->areaClass = $areaClass;
     }
 
     /**
@@ -44,7 +47,7 @@ class TemplateType extends AbstractType
                 'disabled' => true
             ));
 
-        $builder->addEventSubscriber(new AreaCollectionSubscriber());
+        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

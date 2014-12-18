@@ -2,9 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelBundle\Document\Keyword;
-use PHPOrchestra\ModelBundle\Model\KeywordInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use PHPOrchestra\ModelInterface\Model\KeywordInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +50,7 @@ class KeywordController extends AbstractAdminController
     public function newAction(Request $request)
     {
         $keywordClass = $this->container->getParameter('php_orchestra_model.document.keyword.class');
+        /** @var KeywordInterface $keyword */
         $keyword = new $keywordClass();
 
         $form = $this->createForm(

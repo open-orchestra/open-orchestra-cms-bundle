@@ -21,14 +21,16 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $event;
     protected $options;
     protected $fieldType;
+    protected $fieldOptionClass;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->fieldOptionClass = 'PHPOrchestra\ModelBundle\Document\FieldOption';
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        $this->fieldType = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldTypeInterface');
+        $this->fieldType = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->fieldType);
@@ -48,7 +50,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->subscriber = new FieldTypeTypeSubscriber($this->options);
+        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass);
     }
 
     /**
@@ -77,7 +79,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithTypeSet($hasMaxLength, $hasRequired, $timesCalled)
     {
-        $option = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldOptionInterface');
+        $option = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldOptionInterface');
         Phake::when($option)->getKey()->thenReturn('grouping');
         $options = new ArrayCollection();
         $options->add($option);
@@ -108,7 +110,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSubmitWithTypeSet($hasMaxLength, $hasRequired, $timesCalled)
     {
-        $option = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldOptionInterface');
+        $option = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldOptionInterface');
         Phake::when($option)->getKey()->thenReturn('grouping');
         $options = new ArrayCollection();
         $options->add($option);

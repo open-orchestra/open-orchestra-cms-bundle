@@ -2,8 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelBundle\Document\ContentType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -58,7 +57,9 @@ class ContentTypeController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $contentType = new ContentType();
+        $contentTypeClass = $this->container->getParameter('php_orchestra_model.document.content_type.class');
+        /** @var ContentTypeInterface $contentType */
+        $contentType = new $contentTypeClass();
 
         $form = $this->createForm(
             'content_type',

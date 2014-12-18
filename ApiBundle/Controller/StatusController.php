@@ -4,7 +4,7 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelBundle\Model\StatusInterface;
+use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;

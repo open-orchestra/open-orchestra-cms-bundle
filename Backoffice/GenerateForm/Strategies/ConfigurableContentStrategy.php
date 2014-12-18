@@ -7,7 +7,7 @@ use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use PHPOrchestra\ModelBundle\Repository\ContentRepository;
 use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**

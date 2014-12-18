@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraStatusType;
-use PHPOrchestra\ModelBundle\Model\StatusableInterface;
+use PHPOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class OrchestraStatusTypeTest
@@ -18,6 +18,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
 
     protected $builder;
     protected $transformer;
+    protected $statusClass = 'statusClass';
 
     /**
      * Set up the text
@@ -27,7 +28,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
 
-        $this->form = new OrchestraStatusType($this->transformer);
+        $this->form = new OrchestraStatusType($this->transformer, $this->statusClass);
     }
 
     /**
@@ -56,7 +57,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+            'class' => $this->statusClass,
             'property' => 'labels',
         ));
     }

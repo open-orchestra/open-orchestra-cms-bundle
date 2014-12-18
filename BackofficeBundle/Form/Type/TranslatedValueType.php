@@ -12,6 +12,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class TranslatedValueType extends AbstractType
 {
+    protected $translatedValueClass;
+
+    /**
+     * @param string $translatedValueClass
+     */
+    public function __construct($translatedValueClass)
+    {
+        $this->translatedValueClass = $translatedValueClass;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -36,7 +46,7 @@ class TranslatedValueType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\TranslatedValue'
+            'data_class' => $this->translatedValueClass
         ));
     }
 }

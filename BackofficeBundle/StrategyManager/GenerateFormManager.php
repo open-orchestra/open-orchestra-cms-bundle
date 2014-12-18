@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\StrategyManager;
 use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 

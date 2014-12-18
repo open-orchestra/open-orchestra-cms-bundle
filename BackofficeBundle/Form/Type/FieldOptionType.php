@@ -15,15 +15,18 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class FieldOptionType extends AbstractType
 {
+    protected $fieldOptionClass;
     protected $translator;
     protected $options;
 
     /**
      * @param TranslatorInterface $translator
      * @param array               $options
+     * @param string              $fieldOptionClass
      */
-    public function __construct(TranslatorInterface $translator, array $options)
+    public function __construct(TranslatorInterface $translator, array $options, $fieldOptionClass)
     {
+        $this->fieldOptionClass = $fieldOptionClass;
         $this->translator = $translator;
         $this->options = $options;
     }
@@ -54,7 +57,7 @@ class FieldOptionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\FieldOption',
+            'data_class' => $this->fieldOptionClass,
             'label' => $this->translator->trans('php_orchestra_backoffice.form.field_option.label'),
         ));
     }

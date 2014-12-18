@@ -3,7 +3,7 @@
 namespace PHPOrchestra\Backoffice\Context;
 
 use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
 

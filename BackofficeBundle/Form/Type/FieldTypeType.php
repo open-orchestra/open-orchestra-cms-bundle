@@ -17,6 +17,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 class FieldTypeType extends AbstractType
 {
     protected $translateValueInitializer;
+    protected $fieldOptionClass;
+    protected $fieldTypeClass;
     protected $fieldOptions;
     protected $translator;
 
@@ -24,16 +26,22 @@ class FieldTypeType extends AbstractType
      * @param TranslatorInterface               $translator
      * @param TranslateValueInitializerListener $translateValueInitializer
      * @param array                             $fieldOptions
+     * @param string                            $fieldOptionClass
+     * @param string                            $fieldTypeClass
      */
     public function __construct(
         TranslatorInterface $translator,
         TranslateValueInitializerListener $translateValueInitializer,
-        array $fieldOptions
+        array $fieldOptions,
+        $fieldOptionClass,
+        $fieldTypeClass
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->translator = $translator;
         $this->fieldOptions = $fieldOptions;
+        $this->fieldOptionClass = $fieldOptionClass;
+        $this->fieldTypeClass = $fieldTypeClass;
     }
 
     /**
@@ -63,7 +71,7 @@ class FieldTypeType extends AbstractType
                     'class' => 'content_type_change_type'
                 )
             ));
-        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions));
+        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass));
     }
 
     /**
@@ -80,7 +88,7 @@ class FieldTypeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\FieldType',
+            'data_class' => $this->fieldTypeClass,
             'label' => $this->translator->trans('php_orchestra_backoffice.form.field_type.label')
         ));
     }

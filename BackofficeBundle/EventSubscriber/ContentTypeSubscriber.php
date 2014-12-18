@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelBundle\Model\FieldTypeInterface;
+use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
 use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;

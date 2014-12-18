@@ -4,7 +4,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\SiteFacade;
-use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use PHPOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteTransformer

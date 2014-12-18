@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelBundle\Model\AreaInterface;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\AreaInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 /**
@@ -32,7 +31,6 @@ class BlockManager
     {
         foreach ($node->getBlocks() as $block) {
             if (!$this->checkAreaRef($block->getAreas(), $node, $block)) {
-                var_dump('block');
                 return false;
             }
         }
@@ -74,7 +72,7 @@ class BlockManager
      * @param string $areaId
      * @param array  $areas
      *
-     * @return Area|null
+     * @return AreaInterface|null
      */
     protected function findAreaIfExist($areaId, $areas)
     {
@@ -94,7 +92,7 @@ class BlockManager
      * @param string        $areaId
      * @param AreaInterface $area
      *
-     * @return Area|null
+     * @return AreaInterface|null
      */
     protected function checkArea($areaId, $area)
     {

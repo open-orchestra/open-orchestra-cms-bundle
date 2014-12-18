@@ -13,13 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class OrchestraStatusType extends AbstractType
 {
     protected $statusTransformer;
+    protected $statusClass;
 
     /**
      * @param EmbedStatusToStatusTransformer $statusTransformer
+     * @param string                         $statusClass
      */
-    public function __construct(EmbedStatusToStatusTransformer $statusTransformer)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass)
     {
         $this->statusTransformer = $statusTransformer;
+        $this->statusClass = $statusClass;
     }
 
     /**
@@ -38,7 +41,7 @@ class OrchestraStatusType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'class' => 'PHPOrchestra\ModelBundle\Document\Status',
+                'class' => $this->statusClass,
                 'property' => 'labels',
             )
         );

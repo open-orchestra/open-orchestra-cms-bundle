@@ -15,6 +15,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AreaType extends AbstractType
 {
+    protected $areaClass;
+
+    /**
+     * @param string $areaClass
+     */
+    public function __construct($areaClass)
+    {
+        $this->areaClass = $areaClass;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -49,7 +59,7 @@ class AreaType extends AbstractType
             'required' => false,
             'label' => 'php_orchestra_backoffice.form.area.bo_percent'
         ));
-        $builder->addEventSubscriber(new AreaCollectionSubscriber());
+        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
@@ -59,7 +69,7 @@ class AreaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\Area',
+            'data_class' => $this->areaClass,
         ));
     }
 

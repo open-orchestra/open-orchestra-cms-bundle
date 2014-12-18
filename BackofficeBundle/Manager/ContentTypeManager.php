@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Model\ContentTypeInterface;
+use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentTypeManager

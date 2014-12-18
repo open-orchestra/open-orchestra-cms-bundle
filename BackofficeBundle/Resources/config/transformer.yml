@@ -7,7 +7,10 @@ services:
         class: %php_orchestra_backoffice.transformer.embed_status_to_status.class%
         arguments:
             - @php_orchestra_model.repository.status
+            - %php_orchestra_model.document.embed_status.class%
     php_orchestra_backoffice.transformer.embedkeywords_to_keywords:
         class: %php_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%
         arguments:
             - @php_orchestra_model.repository.keyword
+            - %php_orchestra_model.document.embed_keyword.class%
+            - %php_orchestra_model.document.keyword.class%

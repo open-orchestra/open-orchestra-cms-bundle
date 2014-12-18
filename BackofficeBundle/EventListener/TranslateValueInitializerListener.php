@@ -3,8 +3,8 @@
 namespace PHPOrchestra\BackofficeBundle\EventListener;
 
 use Doctrine\Common\Collections\Collection;
-use PHPOrchestra\ModelBundle\Document\TranslatedValue;
-use PHPOrchestra\ModelBundle\Model\TranslatedValueContainerInterface;
+use PHPOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
+use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Symfony\Component\Form\FormEvent;
 
 /**
@@ -13,13 +13,16 @@ use Symfony\Component\Form\FormEvent;
 class TranslateValueInitializerListener
 {
     protected $defaultLanguages;
+    protected $translatedValueClass;
 
     /**
-     * @param array $defaultLanguages
+     * @param array  $defaultLanguages
+     * @param string $translatedValueClass
      */
-    public function __construct(array $defaultLanguages)
+    public function __construct(array $defaultLanguages, $translatedValueClass)
     {
         $this->defaultLanguages = $defaultLanguages;
+        $this->translatedValueClass = $translatedValueClass;
     }
 
     /**
@@ -49,7 +52,9 @@ class TranslateValueInitializerListener
                 return $defaultLanguage == $element->getLanguage();
             })
             ) {
-                $translatedValue = new TranslatedValue();
+                $translatedValueClass = $this->translatedValueClass;
+                /** @var TranslatedValueInterface $translatedValue */
+                $translatedValue = new $translatedValueClass();
                 $translatedValue->setLanguage($defaultLanguage);
                 $properties->add($translatedValue);
             }

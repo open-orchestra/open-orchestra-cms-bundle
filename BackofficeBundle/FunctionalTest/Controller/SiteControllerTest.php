@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 /**

@@ -53,9 +53,7 @@ class SiteType extends AbstractType
                 'multiple' => true,
                 'label' => 'php_orchestra_backoffice.form.website.blocks'
             ))
-            ->add('theme', 'document', array(
-                'class'  => 'PHPOrchestra\ModelBundle\Document\Theme',
-                'property' => 'name',
+            ->add('theme', 'orchestra_theme', array(
                 'label' => 'php_orchestra_backoffice.form.website.theme'
             ));
 

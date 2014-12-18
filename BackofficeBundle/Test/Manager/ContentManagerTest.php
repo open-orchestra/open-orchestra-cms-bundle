@@ -3,11 +3,8 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\ContentManager;
-use PHPOrchestra\ModelBundle\Document\Content;
-use PHPOrchestra\ModelBundle\Model\ContentInterface;
-use PHPOrchestra\ModelBundle\Repository\ContentRepository;
 use Phake;
-use Doctrine\Common\Collections\ArrayCollection;
+use PHPOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
  * Class ContentManagerTest
@@ -59,9 +56,9 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideContent()
     {
-        $content0 = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
+        $content0 = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
 
-        $content1 = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
+        $content1 = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
 
         return array(
             array($content0, null, $content0),

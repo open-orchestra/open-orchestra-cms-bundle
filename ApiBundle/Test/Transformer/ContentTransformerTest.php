@@ -29,7 +29,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->content = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
+        $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
         $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
@@ -59,7 +59,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = Phake::mock('PHPOrchestra\ApiBundle\Facade\FacadeInterface');
         $facade->label = 'draft';
 
-        $attribute = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentAttributeInterface');
+        $attribute = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
         Phake::when($this->content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
@@ -101,7 +101,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $facade2 = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
         $facade2->statusId = 'statusId';
 
-        $content = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentInterface');
+        $content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
 
         return array(
             array($facade1, null, 0, 0),

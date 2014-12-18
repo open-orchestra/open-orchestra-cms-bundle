@@ -16,6 +16,7 @@ class TranslatedValueTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $builder;
+    protected $translatedValueClass = 'translatedValueClass';
 
     /**
      * Set up the test
@@ -24,7 +25,7 @@ class TranslatedValueTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
 
-        $this->form = new TranslatedValueType();
+        $this->form = new TranslatedValueType($this->translatedValueClass);
     }
 
     /**
@@ -46,7 +47,7 @@ class TranslatedValueTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => 'PHPOrchestra\ModelBundle\Document\TranslatedValue'
+            'data_class' => $this->translatedValueClass
         ));
     }
 

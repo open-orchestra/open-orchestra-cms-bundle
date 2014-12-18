@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ModelBundle\Model\SiteInterface;
+use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;

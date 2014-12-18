@@ -26,23 +26,25 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     protected $event;
     protected $object;
     protected $defaultLanguages;
+    protected $translatedValueClass;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->translatedValueClass = 'PHPOrchestra\ModelBundle\Document\TranslatedValue';
         $this->defaultLanguages = array('en', 'fr', 'es', 'de');
         $this->names = new ArrayCollection();
         $this->fields = new ArrayCollection();
-        $this->object = Phake::mock('PHPOrchestra\ModelBundle\Model\ContentTypeInterface');
+        $this->object = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->object)->getNames()->thenReturn($this->names);
         Phake::when($this->object)->getFields()->thenReturn($this->fields);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getData()->thenReturn($this->object);
 
-        $this->listener = new TranslateValueInitializerListener($this->defaultLanguages);
+        $this->listener = new TranslateValueInitializerListener($this->defaultLanguages, $this->translatedValueClass);
     }
 
     /**
@@ -64,13 +66,13 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages);
+        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass);
         $listener->preSetData($this->event);
 
         $this->assertCount(count($defaultLanguages), $this->names);
         foreach ($defaultLanguages as $key => $language) {
             $translatedValue = $this->names->get($key);
-            $this->assertInstanceOf('PHPOrchestra\ModelBundle\Model\TranslatedValueInterface', $translatedValue);
+            $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
             $this->assertSame($language, $translatedValue->getLanguage());
             $this->assertNull($translatedValue->getValue());
         }
@@ -108,13 +110,13 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages);
+        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass);
         $listener->preSetData($this->event);
 
         $this->assertCount(count($defaultLanguages), $this->names);
         foreach ($defaultLanguages as $key => $language) {
             $translatedValue = $this->names->get($key);
-            $this->assertInstanceOf('PHPOrchestra\ModelBundle\Model\TranslatedValueInterface', $translatedValue);
+            $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
             $this->assertSame($language, $translatedValue->getLanguage());
             $this->assertSame($dummyValue, $translatedValue->getValue());
         }
@@ -130,7 +132,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     {
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages);
+        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass);
         $listener->preSetData($this->event);
 
         $this->assertEquals(count($defaultLanguages) * count($translatedProperties), $this->names->count() + $this->fields->count());

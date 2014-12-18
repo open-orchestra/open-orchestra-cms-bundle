@@ -19,6 +19,7 @@ services:
         class: %php_orchestra_backoffice.listener.translate_value_initializer.class%
         arguments:
             - %php_orchestra_base.languages_availables%
+            - %php_orchestra_model.document.translated_value.class%
     php_orchestra_backoffice.manager.translation_choice:
         class: %php_orchestra_backoffice.manager.translation_choice.class%
         arguments:

@@ -5,9 +5,9 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\AreaFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
-use PHPOrchestra\ModelBundle\Model\AreaInterface;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Model\TemplateInterface;
+use PHPOrchestra\ModelInterface\Model\AreaInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 
 /**

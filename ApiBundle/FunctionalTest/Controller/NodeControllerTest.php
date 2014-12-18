@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeControllerTest

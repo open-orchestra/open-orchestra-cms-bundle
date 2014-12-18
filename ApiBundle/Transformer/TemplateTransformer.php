@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\TemplateFacade;
-use PHPOrchestra\ModelBundle\Model\TemplateInterface;
+use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 
 /**
  * Class TemplateTransformer

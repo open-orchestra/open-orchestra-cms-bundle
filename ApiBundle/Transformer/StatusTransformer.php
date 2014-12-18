@@ -5,7 +5,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\StatusFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelBundle\Model\StatusInterface;
+use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Translation\Translator;
 use PHPOrchestra\ModelBundle\Repository\RoleRepository;
 use Symfony\Component\Security\Core\SecurityContextInterface;

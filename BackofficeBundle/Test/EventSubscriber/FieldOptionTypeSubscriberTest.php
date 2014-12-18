@@ -27,7 +27,7 @@ class FieldOptionTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        $this->fieldOption = Phake::mock('PHPOrchestra\ModelBundle\Model\FieldOptionInterface');
+        $this->fieldOption = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldOptionInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->fieldOption);

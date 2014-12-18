@@ -3,7 +3,7 @@
 namespace PHPOrchestra\DisplayBundle\DisplayBlock\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\ModelBundle\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

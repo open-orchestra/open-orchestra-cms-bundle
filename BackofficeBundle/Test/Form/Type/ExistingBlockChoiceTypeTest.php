@@ -74,20 +74,20 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $title = 'blockTitle';
         $otherBlockIndex = $blockIndex + 1;
         $otherNodeId = $nodeId . 'other';
-        $block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block)->getComponent()->thenReturn($component);
 
-        $otherBlock = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $otherBlock = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($otherBlock)->getComponent()->thenReturn($component);
         Phake::when($otherBlock)->getAttributes()->thenReturn(array('title' => $title));
 
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getBlocks()->thenReturn(array(
             $blockIndex => $block,
             $otherBlockIndex => $otherBlock,
         ));
         Phake::when($node)->getNodeId()->thenReturn($nodeId);
-        $otherNode = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $otherNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($otherNode)->getBlocks()->thenReturn(array(
             $blockIndex => $block,
             $otherBlockIndex => $otherBlock,

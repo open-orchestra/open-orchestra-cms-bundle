@@ -2,12 +2,12 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
-use PHPOrchestra\ModelBundle\Model\AreaContainerInterface;
+use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
 use PHPOrchestra\ModelBundle\Document\Area;
 use Phake;
-use PHPOrchestra\ModelBundle\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class AreaManagerTest
@@ -31,10 +31,10 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
 
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Model\NodeInterface');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
 
-        $this->block = Phake::mock('PHPOrchestra\ModelBundle\Model\BlockInterface');
+        $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
 
         $this->manager = new AreaManager($this->nodeRepository);
     }
@@ -80,13 +80,13 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideAreaAndAreaId()
     {
-        $area1 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        $area1 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area1)->getAreaId()->thenReturn('area1');
 
-        $area2 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        $area2 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area2)->getAreaId()->thenReturn('area2');
 
-        $area3 = Phake::mock('PHPOrchestra\ModelBundle\Model\AreaInterface');
+        $area3 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area3)->getAreaId()->thenReturn('area3');
 
         $emptyArea = new Area();

@@ -26,7 +26,7 @@ class OrchestraThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->themeName = 'name';
-        $this->theme = Phake::mock('PHPOrchestra\ModelBundle\Model\ThemeInterface');
+        $this->theme = Phake::mock('PHPOrchestra\ModelInterface\Model\ThemeInterface');
         Phake::when($this->theme)->getName()->thenReturn($this->themeName);
 
         $themeCollection = new ArrayCollection();

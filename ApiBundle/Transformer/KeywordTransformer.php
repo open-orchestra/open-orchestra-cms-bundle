@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\KeywordFacade;
-use PHPOrchestra\ModelBundle\Document\Role;
+use PHPOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class KeywordTransformer
@@ -11,7 +11,7 @@ use PHPOrchestra\ModelBundle\Document\Role;
 class KeywordTransformer extends AbstractTransformer
 {
     /**
-     * @param Keyword $mixed
+     * @param KeywordInterface $mixed
      *
      * @return KeywordFacade
      */
