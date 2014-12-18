@@ -39,6 +39,9 @@ class TemplateType extends AbstractType
             ))
             ->add('boDirection', 'orchestra_direction', array(
                 'label' => 'php_orchestra_backoffice.form.template.boDirection',
+            ))
+            ->add('templateId', 'hidden', array(
+                'disabled' => true
             ));
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber());

@@ -2,8 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,21 +25,11 @@ class TemplateController extends AbstractAdminController
     {
         $templateRepository = $this->container->get('php_orchestra_model.repository.template');
 
-        if (empty($templateId)) {
-            $templateClass = $this->container->getParameter('php_orchestra_model.document.template.class');
-            $template = new $templateClass();
-            $template->setSiteId('1');
-            $template->setLanguage('fr');
-        } else {
-            $template = $templateRepository->findOneByTemplateId($templateId);
-        }
+        $template = $templateRepository->findOneByTemplateId($templateId);
 
-        $form = $this->createForm(
-            'template',
+        $form = $this->generateTemplateForm(
             $template,
-            array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $templateId))
-            )
+            $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $templateId))
         );
 
         $form->handleRequest($request);
@@ -51,5 +41,60 @@ class TemplateController extends AbstractAdminController
         );
 
         return $this->renderAdminForm($form);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/template/new", name="php_orchestra_backoffice_template_new")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function newAction(Request $request)
+    {
+        $templateClass = $this->container->getParameter('php_orchestra_model.document.template.class');
+        $context = $this->get('php_orchestra_backoffice.context_manager');
+
+        $template = new $templateClass();
+        $template->setSiteId($context->getCurrentSiteId());
+        $template->setLanguage($context->getCurrentLocale());
+
+        $form = $this->generateTemplateForm($template, $this->generateUrl('php_orchestra_backoffice_template_new'));
+
+        $form->handleRequest($request);
+
+        $this->handleForm(
+            $form,
+            $this->get('translator')->trans('php_orchestra_backoffice.form.template.success'),
+            $template
+        );
+
+        if (!is_null($template->getTemplateId())) {
+            $url = $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
+
+            return $this->redirect($url);
+        }
+
+        return $this->renderAdminForm($form);
+    }
+
+    /**
+     * @param $template
+     * @param $url
+     *
+     * @return Form
+     */
+    public function generateTemplateForm($template, $url)
+    {
+        $form = $this->createForm(
+            'template',
+            $template,
+            array(
+                'action' => $url
+            )
+        );
+
+        return $form;
     }
 }

@@ -47,7 +47,7 @@ abstract class AbstractAdminController extends Controller
             $statusCode = 400;
         } else {
             $statusCode = 200;
-        };
+        }
 
         if (is_null($response)) {
             $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
