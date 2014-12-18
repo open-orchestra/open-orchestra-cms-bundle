@@ -36,7 +36,14 @@
             <ul class="nav nav-tabs" role="tablist" id="myTab">
                 {% for key, field in form %}
                     <li {% if loop.first %}class="active" {% endif %}>
-                        <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">{{ form_label(field.value) }}</a>
+                        <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
+                            <img
+                                src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
+                                class="flag flag-{{ field.vars.value.language }}"
+                                alt="{{ ('php_orchestra_backoffice.language.' ~ field.vars.value.language)|trans }}"
+                            >
+                            {{ form_label(field.value) }}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
