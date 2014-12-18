@@ -33,20 +33,8 @@ class FormControllersTest extends AbstractControllerTest
             array('/admin/template/area/form/template_full/left_menu'),
             array('/admin/content-type/form/car'),
             array('/admin/content-type/new'),
+            array('/admin/content/form/welcome')
         );
-    }
-
-    /**
-     * Test content form
-     */
-    public function testContentForm()
-    {
-        $contentRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.content');
-        $content = $contentRepository->findOneByName('Welcome');
-
-        $url = '/admin/content/form/' . $content->getId();
-        $this->client->request('GET', $url);
-        $this->assertForm($this->client->getResponse());
     }
 
     /**
