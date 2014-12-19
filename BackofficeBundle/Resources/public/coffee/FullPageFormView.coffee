@@ -27,6 +27,8 @@ FullPageFormView = OrchestraView.extend(
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
+    if @element && @element.get('status').label == 'published'
+      $("#orchestra_content_submit").addClass('disabled')
     return
 
   addSelect2OnForm: ->
@@ -42,18 +44,4 @@ FullPageFormView = OrchestraView.extend(
           options.html = response
           view = new FullPageFormView(options)
       return
-
-#  renderWidgetStatus: ->
-#    viewContext = this
-#    $.ajax
-#      type: "GET"
-#      url: @element.get('links')._status_list
-#      success: (response) ->
-#        widgetStatus = viewContext.renderTemplate('widgetStatus',
-#          current_status: viewContext.element.get('status')
-#          statuses: response.statuses
-#          status_change_link: viewContext.element.get('links')._self_status_change
-#        )
-#        addCustomJarvisWidget(widgetStatus)
-#        return
 )
