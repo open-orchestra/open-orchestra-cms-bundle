@@ -6,7 +6,7 @@ use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListene
 use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
