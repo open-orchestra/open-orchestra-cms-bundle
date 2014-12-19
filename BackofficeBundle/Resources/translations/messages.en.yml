@@ -232,6 +232,14 @@ php_orchestra_backoffice:
         login:
             title: Login Block
             description: Display a log form.
+    element:
+        version:
+            create: New version
+            display: version
+        preview: Preview
+        last_update:
+            at: Last update
+            by: by
     node:
         version:
             create: New version

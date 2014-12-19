@@ -232,6 +232,14 @@ php_orchestra_backoffice:
         login: 
             title: Bloc connexion
             description: Affiche un formulaire pour ce logger.
+    element:
+        version:
+            create: Nouvelle version
+            display: version
+        preview: Prévisualisation
+        last_update:
+            at: Dernière mise à jour
+            by: par
     node:
         version:
             create: Nouvelle version
@@ -239,7 +247,7 @@ php_orchestra_backoffice:
         preview: Prévisualisation
         configuration: Configuration de la page
         last_update:
-            at: Dernière mies à jour
+            at: Dernière mise à jour
             by: par
         delete: Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?
         blocks: Blocs

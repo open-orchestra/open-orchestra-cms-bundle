@@ -54,6 +54,7 @@ class ContentTransformer extends AbstractTransformer
             'php_orchestra_backoffice_content_form',
             array('contentId' => $mixed->getContentId())
         ));
+
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
             'contentId' => $mixed->getId()
         )));

@@ -1,5 +1,0 @@
-<option class="version-select-<%= cid %>" value="<%= node.get('version') %>" <% if (node.get('version') == version) { %>selected="selected"<% } %>>
-    <b class="page_status_title"><%= node.get('status').label %></b>
-    <%= node.get('name') %>
-    ({{ 'php_orchestra_backoffice.node.version.display' | trans({}, 'messages', language) }} : #<%= node.get('version') %>)
-</option>

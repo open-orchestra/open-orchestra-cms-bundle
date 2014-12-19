@@ -11,13 +11,14 @@ var OrchestraBORouter = Backbone.Router.extend({
 //========[ROUTES LIST]===============================//
 
   routes: {
-    'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
-    'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId': 'showNode',
+    'node/show/:nodeId/:language': 'showNodeWithLanguage',
+    'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'template/show/:templateId': 'showTemplate',
     ':entityType/list': 'listEntities',
     ':entityType/edit/:entityId': 'showEntity',
     ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
+    ':entityType/edit/:entityId/:language/:version': 'showEntityWithLanguageAndVersion',
     'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     '': 'showHome'
@@ -81,10 +82,15 @@ var OrchestraBORouter = Backbone.Router.extend({
     this.manageEntity(entityType, entityId, language);
   },
   
-  manageEntity: function(entityType, entityId, language)
+  showEntityWithLanguageAndVersion: function(entityType, entityId, language, version)
+  {
+    this.manageEntity(entityType, entityId, language, version);
+  },
+
+  manageEntity: function(entityType, entityId, language, version)
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
-    tableViewLoad($("#nav-" + entityType), entityType, entityId, language);
+    tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version);
   },
 
   listTranslations: function()
