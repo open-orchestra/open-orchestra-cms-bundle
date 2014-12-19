@@ -97,7 +97,8 @@ orchestraAjaxLoad = (url, method, successCallback) ->
 # SMARTADMIN CONFIRMATION
 smartConfirm = (params) ->
   $.SmartMessageBox
-    title: "<i class='fa fa-sign-out txt-color-orangeDark'></i> " + params.titleWhite + " <span class='txt-color-orangeDark'><strong>" + params.titleColorized + "</strong></span> ?"
+    title: params.title
+#    title: "<i class='fa fa-sign-out txt-color-orangeDark'></i> " + params.titleWhite + " <span class='txt-color-orangeDark'><strong>" + params.titleColorized + "</strong></span> ?"
     content: params.text
     buttons: "[No][Yes]"
   , (ButtonPressed) ->

@@ -5,8 +5,11 @@ $(document).on 'click', "button.ajax-delete", (e) ->
   redirectUrl = $(this).data('redirect-url')
   $("#OrchestraBOModal").modal "hide"
   smartConfirm(
-    titleWhite: 'Delete'
-    titleColorized: 'this element'
+    title: new SmartConfirmTitleView(
+      titleWhite: 'Delete'
+      titleColorized: 'this element'
+      logo: 'fa-sign-out'
+    )
     text: confirm_text
     yesCallbackParams:
       url: url
