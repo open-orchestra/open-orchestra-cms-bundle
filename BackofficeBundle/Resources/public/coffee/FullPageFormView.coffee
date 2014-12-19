@@ -27,8 +27,6 @@ FullPageFormView = OrchestraView.extend(
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    if @element && @element.get('status').label == 'published'
-      $("#orchestra_content_submit").addClass('disabled')
     return
 
   addSelect2OnForm: ->

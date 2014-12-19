@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
-use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
