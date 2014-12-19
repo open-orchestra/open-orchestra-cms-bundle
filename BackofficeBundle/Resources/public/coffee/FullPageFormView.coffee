@@ -42,20 +42,4 @@ FullPageFormView = OrchestraView.extend(
           view = new FullPageFormView(options)
       return
 
-<<<<<<< HEAD
-  renderWidgetStatus: ->
-    viewContext = this
-    $.ajax
-      type: "GET"
-      url: @element.get('links')._status_list
-      success: (response) ->
-        widgetStatus = viewContext.renderTemplate('widgetStatus',
-          current_status: viewContext.element.get('status')
-          statuses: response.statuses
-          status_change_link: viewContext.element.get('links')._self_status_change
-        )
-        addCustomJarvisWidget(widgetStatus)
-        return
-=======
->>>>>>> extract version, add, select
 )

@@ -107,39 +107,6 @@ NodeView = OrchestraView.extend(
     )
     return
 
-<<<<<<< HEAD
-  addVersionToView: ->
-    viewContext = this
-    $.ajax
-      type: "GET"
-      url: @node.get('links')._self_version
-      success: (response) ->
-        nodeCollection = new NodeCollectionElement
-        nodeCollection.set response
-        for nodeVersion of nodeCollection.get('nodes')
-          viewContext.addChoiceToSelectBox(nodeCollection.get('nodes')[nodeVersion])
-        return
-
-  addChoiceToSelectBox: (nodeVersion) ->
-    nodeVersionElement = new Node
-    nodeVersionElement.set nodeVersion
-    view = new NodeVersionView(
-      node: nodeVersionElement
-      version: @version
-      el: this.$el.find('select#version-selectbox')
-    )
-
-  changeVersion: (event) ->
-    redirectRoute = appRouter.generateUrl('showNodeWithLanguageAndVersion',
-      nodeId: @node.get('node_id'),
-      language: @language,
-      version: event.currentTarget.value
-    )
-    Backbone.history.navigate(redirectRoute , {trigger: true})
-    return
-
-=======
->>>>>>> extract add functionnality
   addPreviewLink: ->
     previewLink = @node.get('links')._self_preview
     view = new PreviewLinkView(
