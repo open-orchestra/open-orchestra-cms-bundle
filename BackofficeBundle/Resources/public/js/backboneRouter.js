@@ -33,6 +33,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   showHome: function()
   {
     drawBreadCrumb();
+    $('#content').html('')
   },
 
   showNode: function(nodeId)
