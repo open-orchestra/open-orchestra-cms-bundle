@@ -55,12 +55,13 @@ class AddSubmitButtonSubscriberTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test add a submit button
-     * @param StatusInterface $data
+     *
+     * @param StatusInterface $status
      * @param array           $expectedParameters
      *
      * @dataProvider provideStatus
      */
-    public function testPostSetData(StatusInterface $status, $expectedParameters)
+    public function testPostSetData(StatusInterface $status = null, $expectedParameters)
     {
         $data = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($data)->getStatus()->thenReturn($status);
@@ -85,6 +86,7 @@ class AddSubmitButtonSubscriberTest extends \PHPUnit_Framework_TestCase
         return array(
             array($status0, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'disabled'))),
             array($status1, array('label' => 'php_orchestra_base.form.submit')),
+            array(null, array('label' => 'php_orchestra_base.form.submit')),
         );
     }
 }

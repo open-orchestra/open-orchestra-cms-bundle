@@ -21,7 +21,7 @@ class AddSubmitButtonSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $parameter = array('label' => 'php_orchestra_base.form.submit');
 
-        if ($data instanceof StatusableInterface && $data->getStatus()->isPublished()) {
+        if ($data instanceof StatusableInterface && is_object($data->getStatus()) && $data->getStatus()->isPublished()) {
             $parameter['attr'] = array('class' => 'disabled');
         }
         $form->add('submit', 'submit', $parameter);
