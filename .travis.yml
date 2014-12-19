@@ -9,6 +9,8 @@ cache:
 php:
   - 5.4
 
+sudo: false
+
 before_install:
   - phpenv config-add .travis.php.ini
   - composer self-update
