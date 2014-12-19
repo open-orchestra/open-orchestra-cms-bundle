@@ -21,9 +21,8 @@ FullPageFormView = OrchestraView.extend(
   render: ->
     $(@el).html(@renderTemplate('fullPageFormView', @options))
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    if @element && @element.get('links')._self_status && @element.status_label == 'published'
-        $("#orchestra_content_submit").addClass('disabled')
-
+    if @options.multiStatus && @element.status_label == 'published'
+      $('[type="submit"]', @$el).addClass('disabled')
     @addEventOnForm()
     @addSelect2OnForm()
     $("[data-prototype]").each ->
