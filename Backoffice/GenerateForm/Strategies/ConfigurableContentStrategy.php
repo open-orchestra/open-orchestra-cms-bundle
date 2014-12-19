@@ -2,13 +2,12 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\ApiBundle\Transformer\TransformerManager;
-use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
-use PHPOrchestra\ModelBundle\Repository\ContentRepository;
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class ConfigurableContentStrategy
@@ -20,15 +19,13 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $router;
 
     /**
-     * Constructor
-     *
-     * @param $contentTypeRepository
-     * @param $contentRepository
-     * @param $router
+     * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param ContentRepositoryInterface     $contentRepository
+     * @param UrlGeneratorInterface          $router
      */
     public function __construct(
-        ContentTypeRepository $contentTypeRepository,
-        ContentRepository $contentRepository,
+        ContentTypeRepositoryInterface $contentTypeRepository,
+        ContentRepositoryInterface $contentRepository,
         $router
     ) {
         $this->contentTypeRepository = $contentTypeRepository;

@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -14,9 +14,9 @@ class OrchestraNodeChoiceType extends AbstractType
     protected $nodeRepository;
 
     /**
-     * @param NodeRepository $nodeRepository
+     * @param NodeRepositoryInterface $nodeRepository
      */
-    public function __construct(NodeRepository $nodeRepository)
+    public function __construct(NodeRepositoryInterface $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
     }

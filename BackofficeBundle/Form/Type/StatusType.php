@@ -8,9 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class StatusType

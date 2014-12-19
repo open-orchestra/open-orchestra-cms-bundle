@@ -25,7 +25,7 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentTypeRepository');
+        $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
 
         $this->transaltionChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
 

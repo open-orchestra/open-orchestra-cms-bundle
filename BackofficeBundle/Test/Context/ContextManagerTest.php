@@ -20,7 +20,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
-        $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        $this->siteRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->contextManager = new ContextManager($this->session, $this->siteRepository);
     }
 

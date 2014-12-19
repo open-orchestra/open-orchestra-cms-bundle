@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class NodeControllerTest
@@ -11,7 +11,7 @@ use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 class NodeControllerTest extends AbstractControllerTest
 {
     /**
-     * @var NodeRepository
+     * @var NodeRepositoryInterface
      */
     protected $nodeRepository;
 

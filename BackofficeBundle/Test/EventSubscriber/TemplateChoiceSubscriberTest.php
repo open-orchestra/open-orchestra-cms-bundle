@@ -33,7 +33,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->templateRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\TemplateRepository');
+        $this->templateRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
 
         $this->subscriber = new TemplateChoiceSubscriber($this->templateRepository);
     }
@@ -66,7 +66,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $emptyCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
         Phake::when($emptyCollection)->count()->thenReturn(0);
 
-        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($templateChoiceContainer)->getAreas()->thenReturn($emptyCollection);
         Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($emptyCollection);
 
@@ -93,7 +93,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $fullCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
         Phake::when($fullCollection)->count()->thenReturn(1);
 
-        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($templateChoiceContainer)->getAreas()->thenReturn($fullCollection);
         Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($fullCollection);
 
@@ -137,7 +137,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSubmitWithExistingNode($data, $template)
     {
-        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
 
         Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
         Phake::when($templateChoiceContainer)->getId()->thenReturn('nodeId');

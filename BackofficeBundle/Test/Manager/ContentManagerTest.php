@@ -24,7 +24,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->contentRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentRepository');
+        $this->contentRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
         $this->contextManager = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
@@ -42,7 +42,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     public function testCreateNewLanguageContent($contentFindOneBy, $contentFindOneByContentId, ContentInterface $expectedContent)
     {
 
-        Phake::when($this->contentRepository)->findOneBy(Phake::anyParameters())->thenReturn($contentFindOneBy);
+        Phake::when($this->contentRepository)->findOneByContentIdAndLanguage(Phake::anyParameters())->thenReturn($contentFindOneBy);
         Phake::when($this->contentRepository)->findOneByContentId(Phake::anyParameters())->thenReturn($contentFindOneByContentId);
 
         $content = $this->manager->createNewLanguageContent('fakeId', null);

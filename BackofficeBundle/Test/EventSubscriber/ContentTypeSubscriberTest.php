@@ -62,7 +62,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
         Phake::when($this->contentType)->getVersion()->thenReturn($this->contentTypeVersion);
 
-        $this->repository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ContentTypeRepository');
+        $this->repository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->repository)->findOneByContentTypeIdAndVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 

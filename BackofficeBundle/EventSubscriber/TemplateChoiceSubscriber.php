@@ -2,10 +2,10 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
+use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 
 /**
  * Class TemplateChoiceSubscriber
@@ -15,9 +15,9 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
     protected $templateRepository;
 
     /**
-     * @param TemplateRepository $templateRepository
+     * @param TemplateRepositoryInterface $templateRepository
      */
-    public function __construct(TemplateRepository $templateRepository)
+    public function __construct(TemplateRepositoryInterface $templateRepository)
     {
         $this->templateRepository = $templateRepository;
     }

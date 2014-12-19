@@ -30,11 +30,11 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
-        $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
-        $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        $this->statusRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
         $this->transformerAttribute = Phake::mock('PHPOrchestra\ApiBundle\Transformer\ContentAttributeTransformer');

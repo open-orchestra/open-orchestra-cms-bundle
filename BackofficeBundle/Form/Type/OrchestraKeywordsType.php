@@ -2,12 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
+use PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 
@@ -21,8 +18,9 @@ class OrchestraKeywordsType extends AbstractType
 
     /**
      * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
+     * @param KeywordRepositoryInterface $keywordRepository
      */
-    public function __construct(EmbedKeywordsToKeywordsTransformer $keywordsTransformer, KeywordRepository $keywordRepository)
+    public function __construct(EmbedKeywordsToKeywordsTransformer $keywordsTransformer, KeywordRepositoryInterface $keywordRepository)
     {
         $this->keywordsTransformer = $keywordsTransformer;
         $this->keywordRepository = $keywordRepository;

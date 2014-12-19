@@ -30,7 +30,7 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
         $this->embedStatusClass = 'PHPOrchestra\ModelBundle\Document\EmbedStatus';
         $this->statusId = 'statusId';
 
-        $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->status)->getId()->thenReturn($this->statusId);
         Phake::when($this->status)->getToRoles()->thenReturn(new ArrayCollection());
         Phake::when($this->status)->getFromRoles()->thenReturn(new ArrayCollection());
@@ -38,7 +38,7 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
         $this->embedStatus = Phake::mock('PHPOrchestra\ModelBundle\Document\EmbedStatus');
         Phake::when($this->embedStatus)->getId()->thenReturn($this->statusId);
 
-        $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        $this->statusRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
         $this->transformer = new EmbedStatusToStatusTransformer($this->statusRepository, $this->embedStatusClass);
@@ -69,7 +69,7 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $embedStatus = $this->transformer->reverseTransform($this->status);
 
-        $this->assertInstanceOf('PHPOrchestra\ModelBundle\Document\EmbedStatus', $embedStatus);
+        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\EmbedStatusInterface', $embedStatus);
         $this->assertSame($this->statusId, $embedStatus->getId());
     }
 }

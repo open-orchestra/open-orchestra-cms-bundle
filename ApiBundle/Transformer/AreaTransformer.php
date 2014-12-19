@@ -8,7 +8,7 @@ use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Model\TemplateInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class AreaTransformer
@@ -19,10 +19,10 @@ class AreaTransformer extends AbstractTransformer
     protected $areaManager;
 
     /**
-     * @param NodeRepository $nodeRepository
-     * @param AreaManager    $areaManager
+     * @param NodeRepositoryInterface $nodeRepository
+     * @param AreaManager             $areaManager
      */
-    public function __construct(NodeRepository $nodeRepository, AreaManager $areaManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, AreaManager $areaManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->areaManager = $areaManager;

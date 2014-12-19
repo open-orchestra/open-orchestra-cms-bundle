@@ -52,7 +52,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->otherNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())
             ->thenReturn($this->otherNode);
 
@@ -82,7 +82,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $blockFacade = new BlockFacade();
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($blockFacade);
 
-        $area = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getClasses()->thenReturn(array('area_class'));
@@ -152,7 +152,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $template = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template)->getTemplateId()->thenReturn('templateId');
 
-        $area = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getClasses()->thenReturn(array('area_class'));

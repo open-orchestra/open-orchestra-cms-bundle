@@ -6,9 +6,8 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
 use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
-use PHPOrchestra\ModelBundle\Repository\SiteRepository;
-use PHPOrchestra\ModelBundle\Repository\StatusRepository;
+use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class NodeTransformer
@@ -20,11 +19,11 @@ class NodeTransformer extends AbstractTransformer
     protected $statusRepository;
 
     /**
-     * @param EncryptionManager $encrypter
-     * @param SiteRepository    $siteRepository
-     * @param StatusRepository  $statusRepository
+     * @param EncryptionManager         $encrypter
+     * @param SiteRepositoryInterface   $siteRepository
+     * @param StatusRepositoryInterface $statusRepository
      */
-    public function __construct(EncryptionManager $encrypter, SiteRepository $siteRepository, StatusRepository $statusRepository)
+    public function __construct(EncryptionManager $encrypter, SiteRepositoryInterface $siteRepository, StatusRepositoryInterface $statusRepository)
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;

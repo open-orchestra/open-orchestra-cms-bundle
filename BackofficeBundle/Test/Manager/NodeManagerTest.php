@@ -5,9 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
 use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Block;
-use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -39,9 +37,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getTheme()->thenReturn($theme);
 
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
-        $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->siteRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\AreaManager');
         $this->blockManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\BlockManager');
@@ -280,16 +278,16 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($area2)->getBlocks()
             ->thenReturn(array(array('nodeId' => 'oldNode', 'blockId' => 0), array('nodeId' => 0, 'blockId' => 1)));
 
-        $transverseNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $transverseNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($transverseNode)->getBlock(0)->thenReturn($block1);
 
-        $newNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $newNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($newNode)->getId()->thenReturn($newId);
         Phake::when($newNode)->getBlock(0)->thenReturn($block2);
         Phake::when($newNode)->getBlock(1)->thenReturn($block3);
         Phake::when($newNode)->getAreas()->thenReturn(new ArrayCollection(array($area1, $area2)));
 
-        $oldNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $oldNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($oldNode)->getId()->thenReturn($oldId);
 
         Phake::when($this->nodeRepository)

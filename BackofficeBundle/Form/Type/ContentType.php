@@ -5,7 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
-use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
+use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,13 +21,13 @@ class ContentType extends AbstractType
     protected $translationChoiceManager;
 
     /**
-     * @param ContentTypeRepository    $contentTypeRepository
-     * @param string                   $contentClass
-     * @param string                   $contentAttributClass
-     * @param TranslationChoiceManager $translationChoiceManager
+     * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param string                         $contentClass
+     * @param string                         $contentAttributClass
+     * @param TranslationChoiceManager       $translationChoiceManager
      */
     public function __construct(
-        ContentTypeRepository $contentTypeRepository,
+        ContentTypeRepositoryInterface $contentTypeRepository,
         $contentClass,
         $contentAttributClass,
         TranslationChoiceManager $translationChoiceManager

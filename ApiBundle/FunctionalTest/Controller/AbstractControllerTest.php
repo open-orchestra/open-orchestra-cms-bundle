@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\FunctionalTest\Controller;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -20,7 +20,7 @@ abstract class AbstractControllerTest extends WebTestCase
     protected $currentSiteManager;
 
     /**
-     * @var NodeRepository
+     * @var NodeRepositoryInterface
      */
     protected $nodeRepository;
 

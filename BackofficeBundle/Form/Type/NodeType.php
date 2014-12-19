@@ -7,10 +7,10 @@ use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
 use PHPOrchestra\BaseBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
+use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\ModelBundle\Repository\TemplateRepository;
 
 /**
  * Class NodeType
@@ -23,12 +23,12 @@ class NodeType extends AbstractType
     protected $templateRepository;
 
     /**
-     * @param string             $nodeClass
-     * @param TemplateRepository $templateRepository
-     * @param NodeManager        $nodeManager
-     * @param string             $areaClass
+     * @param string                      $nodeClass
+     * @param TemplateRepositoryInterface $templateRepository
+     * @param NodeManager                 $nodeManager
+     * @param string                      $areaClass
      */
-    public function __construct($nodeClass, TemplateRepository $templateRepository, NodeManager $nodeManager, $areaClass)
+    public function __construct($nodeClass, TemplateRepositoryInterface $templateRepository, NodeManager $nodeManager, $areaClass)
     {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;

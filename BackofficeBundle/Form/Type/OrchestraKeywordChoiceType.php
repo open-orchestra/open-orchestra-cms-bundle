@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
+use PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -14,9 +14,9 @@ class OrchestraKeywordChoiceType extends AbstractType
     protected $tagRepository;
 
     /**
-     * @param KeywordRepository $keywordRepository
+     * @param KeywordRepositoryInterface $keywordRepository
      */
-    public function __construct(KeywordRepository $keywordRepository)
+    public function __construct(KeywordRepositoryInterface $keywordRepository)
     {
         $this->keywordRepository = $keywordRepository;
     }

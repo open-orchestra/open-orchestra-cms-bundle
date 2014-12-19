@@ -5,7 +5,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\ContentFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
-use PHPOrchestra\ModelBundle\Repository\StatusRepository;
+use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class ContentTransformer
@@ -14,7 +14,10 @@ class ContentTransformer extends AbstractTransformer
 {
     protected $statusRepository;
 
-    public function __construct(StatusRepository $statusRepository)
+    /**
+     * @param StatusRepositoryInterface $statusRepository
+     */
+    public function __construct(StatusRepositoryInterface $statusRepository)
     {
         $this->statusRepository = $statusRepository;
     }
