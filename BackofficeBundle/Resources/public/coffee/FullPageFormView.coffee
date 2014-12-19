@@ -3,6 +3,7 @@ FullPageFormView = OrchestraView.extend(
 
   initialize: (options) ->
     @options = options
+    @element = options.element
     @options.currentLanguage = options.multiLanguage.language if options.multiLanguage
     @events = {}
     if options.triggers
@@ -26,6 +27,8 @@ FullPageFormView = OrchestraView.extend(
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
+    if @element && @element.get('status').label == 'published'
+      $("#orchestra_content_submit").addClass('disabled')
     return
 
   addSelect2OnForm: ->
@@ -41,5 +44,4 @@ FullPageFormView = OrchestraView.extend(
           options.html = response
           view = new FullPageFormView(options)
       return
-
 )
