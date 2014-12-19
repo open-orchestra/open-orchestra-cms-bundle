@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Repository\ThemeRepository;
+use PHPOrchestra\ModelInterface\Repository\ThemeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -14,9 +14,9 @@ class OrchestraThemeChoiceType extends AbstractType
     protected $themeRepository;
 
     /**
-     * @param ThemeRepository $themeRepository
+     * @param ThemeRepositoryInterface $themeRepository
      */
-    public function __construct(ThemeRepository $themeRepository)
+    public function __construct(ThemeRepositoryInterface $themeRepository)
     {
         $this->themeRepository = $themeRepository;
     }

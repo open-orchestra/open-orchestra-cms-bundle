@@ -2,13 +2,10 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
 
-use PHPOrchestra\ModelBundle\Document\EmbedKeyword;
-
-use PHPOrchestra\ModelBundle\Document\EmbedStatus;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
+use PHPOrchestra\ModelInterface\Model\EmbedKeywordInterface;
 
 /**
  * Class EmbedKeywordsToKeywordsTransformerTest
@@ -34,7 +31,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
         $this->keywordClass = 'PHPOrchestra\ModelBundle\Document\Keyword';
 
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $this->keywordRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\KeywordRepository');
+        $this->keywordRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
         Phake::when($this->keywordRepository)->getDocumentManager()->thenReturn($this->documentManager);
 
         $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository, $this->embedKeywordClass, $this->keywordClass);
@@ -101,7 +98,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransformWithExistingTag($tagLabel)
     {
-        $keyword = Phake::mock('PHPOrchestra\ModelBundle\Document\Keyword');
+        $keyword = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
         Phake::when($keyword)->getLabel()->thenReturn($tagLabel);
         Phake::when($this->keywordRepository)->findOneByLabel(Phake::anyParameters())->thenReturn($keyword);
 
@@ -134,12 +131,12 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string       $tagLabel
-     * @param EmbedKeyword $embedKeyword
+     * @param string                $tagLabel
+     * @param EmbedKeywordInterface $embedKeyword
      */
     protected function assertSameKeyword($tagLabel, $embedKeyword)
     {
         $this->assertSame($tagLabel, $embedKeyword->getLabel());
-        $this->assertInstanceOf('PHPOrchestra\ModelBundle\Document\EmbedKeyword', $embedKeyword);
+        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\EmbedKeywordInterface', $embedKeyword);
     }
 }

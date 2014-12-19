@@ -29,7 +29,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
@@ -218,39 +218,39 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNodeWithAreaAndBlock()
     {
-        $block1 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block1 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block1)->getAreas()->thenReturn(array(
             array('nodeId' => NodeInterface::ROOT_NODE_ID, 'areaId' => 'menu'),
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
-        $block2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block2 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block2)->getAreas()->thenReturn(array(
             array('nodeId' => NodeInterface::ROOT_NODE_ID, 'areaId' => 'footer'),
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
-        $block3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block3 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block3)->getAreas()->thenReturn(array(
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
-        $areaMenu = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMenu = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMenu)->getAreaId()->thenReturn('menu');
         Phake::when($areaMenu)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0)));
 
-        $areaFooter = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaFooter = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaFooter)->getAreaId()->thenReturn('footer');
         Phake::when($areaFooter)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 1),
         ));
 
-        $areaMain = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMain = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMain)->getAreaId()->thenReturn('main');
         Phake::when($areaMain)->getBlocks()->thenReturn(array());
         Phake::when($areaMain)->getAreas()->thenReturn(array($areaMenu, $areaFooter));
 
-        $areaMain2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMain2 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMain2)->getAreaId()->thenReturn('main');
         Phake::when($areaMain2)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 0),
@@ -258,14 +258,14 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
             array('nodeId' => 0, 'blockId' => 2),
         ));
 
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node)->getAreas()->thenReturn(array($areaMain));
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
 
-        $node2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node2)->getNodeId()->thenReturn('home');
         Phake::when($node2)->getAreas()->thenReturn(array($areaMain2));
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
@@ -273,7 +273,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($node2)->getBlock(1)->thenReturn($block2);
         Phake::when($node2)->getBlock(2)->thenReturn($block3);
 
-        $node3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node3 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node3)->getNodeId()->thenReturn('home');
         Phake::when($node3)->getAreas()->thenReturn(array($areaMain2));
         Phake::when($node3)->getBlocks()->thenReturn(array($block1, $block2, $block3));
@@ -306,50 +306,50 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideFailingNodeWithAreaAndBlock()
     {
-        $block1 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block1 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block1)->getAreas()->thenReturn(array(
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
-        $block2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block2 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block2)->getAreas()->thenReturn(array(
             array('nodeId' => 0, 'areaId' => 'main'),
         ));
 
-        $block3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block3 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block3)->getAreas()->thenReturn(array(
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
-        $block3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Block');
+        $block3 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block3)->getAreas()->thenReturn(array(
             array('nodeId' => 0, 'areaId' => 'main')
         ));
 
-        $areaMenu = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMenu = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMenu)->getAreaId()->thenReturn('menu');
         Phake::when($areaMenu)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0)));
 
-        $areaFooter = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaFooter = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaFooter)->getAreaId()->thenReturn('footer');
         Phake::when($areaFooter)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 1),
             array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0),
         ));
 
-        $areaFooter2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaFooter2 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaFooter2)->getAreaId()->thenReturn('footer');
         Phake::when($areaFooter2)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 1),
             array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0),
         ));
 
-        $areaMain = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMain = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMain)->getAreaId()->thenReturn('main');
         Phake::when($areaMain)->getBlocks()->thenReturn(array());
         Phake::when($areaMain)->getAreas()->thenReturn(array($areaMenu, $areaFooter));
 
-        $areaMain2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMain2 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMain2)->getAreaId()->thenReturn('main');
         Phake::when($areaMain2)->getAreas()->thenReturn(array());
         Phake::when($areaMain2)->getBlocks()->thenReturn(array(
@@ -358,19 +358,19 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
             array('nodeId' => 0, 'blockId' => 2),
         ));
 
-        $areaMain3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Area');
+        $areaMain3 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMain3)->getAreaId()->thenReturn('main');
         Phake::when($areaMain3)->getBlocks()->thenReturn(array());
         Phake::when($areaMain3)->getAreas()->thenReturn(array($areaMenu, $areaFooter2));
 
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node)->getAreas()->thenReturn(array($areaMain));
         Phake::when($node)->getBlocks()->thenReturn(array($block1, $block2));
         Phake::when($node)->getBlock(0)->thenReturn($block1);
         Phake::when($node)->getBlock(1)->thenReturn($block2);
 
-        $node2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node2)->getNodeId()->thenReturn(NodeInterface::TRANSVERSE_NODE_ID);
         Phake::when($node2)->getAreas()->thenReturn(array($areaMain2));
         Phake::when($node2)->getBlocks()->thenReturn(array($block1, $block2, $block3));
@@ -378,7 +378,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($node2)->getBlock(1)->thenReturn($block2);
         Phake::when($node2)->getBlock(2)->thenReturn($block3);
 
-        $node3 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node3 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node3)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         Phake::when($node3)->getAreas()->thenReturn(array($areaMain3));
         Phake::when($node3)->getBlocks()->thenReturn(array($block1, $block2));

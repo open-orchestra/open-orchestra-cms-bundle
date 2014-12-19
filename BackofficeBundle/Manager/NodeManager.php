@@ -3,41 +3,40 @@
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
-use PHPOrchestra\ModelBundle\Repository\SiteRepository;
 use PHPOrchestra\Backoffice\Context\ContextManager;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class NodeManager
  */
 class NodeManager
 {
-    /**
-     * @var NodeRepository $nodeRepository
-     */
     protected $nodeRepository;
-
     protected $siteRepository;
-
     protected $areaManager;
-
     protected $blockManager;
-
     protected $contextManager;
-
     protected $nodeClass;
 
     /**
      * Constructor
      *
-     * @param NodeRepository $nodeRepository
-     * @param SiteRepository $siteRepository
-     * @param AreaManager    $areaManager
-     * @param BlockManager   $blockManager
-     * @param ContextManager $contextManager
-     * @param string         $nodeClass
+     * @param NodeRepositoryInterface $nodeRepository
+     * @param SiteRepositoryInterface $siteRepository
+     * @param AreaManager             $areaManager
+     * @param BlockManager            $blockManager
+     * @param ContextManager          $contextManager
+     * @param string                  $nodeClass
      */
-    public function __construct(NodeRepository $nodeRepository, SiteRepository $siteRepository, AreaManager $areaManager, BlockManager $blockManager, ContextManager $contextManager, $nodeClass)
+    public function __construct(
+        NodeRepositoryInterface $nodeRepository,
+        SiteRepositoryInterface $siteRepository,
+        AreaManager $areaManager,
+        BlockManager $blockManager,
+        ContextManager $contextManager,
+        $nodeClass
+    )
     {
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;

@@ -6,8 +6,8 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\StatusFacade;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use PHPOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use Symfony\Component\Translation\Translator;
-use PHPOrchestra\ModelBundle\Repository\RoleRepository;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -22,13 +22,13 @@ class StatusTransformer extends AbstractTransformer
 
     /**
      * @param SecurityContextInterface $securityContext
-     * @param RoleRepository $roleRepository
+     * @param RoleRepositoryInterface  $roleRepository
      * @param TranslationChoiceManager $translationChoiceManager
      * @param Translator               $translator
      */
     public function __construct(
         SecurityContextInterface $securityContext,
-        RoleRepository $roleRepository,
+        RoleRepositoryInterface $roleRepository,
         TranslationChoiceManager $translationChoiceManager,
         Translator $translator
     ) {

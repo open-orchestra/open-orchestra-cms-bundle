@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
+use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -14,9 +14,9 @@ class OrchestraContentTypeChoiceType extends AbstractType
     protected $contentTypeRepository;
 
     /**
-     * @param ContentTypeRepository $contentTypeRepository
+     * @param ContentTypeRepositoryInterface $contentTypeRepository
      */
-    public function __construct(ContentTypeRepository $contentTypeRepository)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository)
     {
         $this->contentTypeRepository = $contentTypeRepository;
     }

@@ -2,8 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Repository\ContentRepository;
 use PHPOrchestra\Backoffice\Context\ContextManager;
+use PHPOrchestra\ModelInterface\Model\ContentInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
  * Class ContentManager
@@ -11,21 +12,20 @@ use PHPOrchestra\Backoffice\Context\ContextManager;
 class ContentManager
 {
     protected $contentRepository;
-
     protected $contextManager;
 
     /**
-     * Constructor
-     *
-     * @param ContentRepository $contentRepository
+     * @param ContentRepositoryInterface $contentRepository
+     * @param ContextManager             $contextManager
      */
-    public function __construct(ContentRepository $contentRepository, ContextManager $contextManager)
+    public function __construct(ContentRepositoryInterface $contentRepository, ContextManager $contextManager)
     {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
     }
     /**
-     * @param ContentInterface $Content
+     * @param string $contentId
+     * @param string $language
      *
      * @return ContentInterface
      */
@@ -35,7 +35,7 @@ class ContentManager
             $language = $this->contextManager->getCurrentLocale();
         }
 
-        $content = $this->contentRepository->findOneBy(array('contentId' => $contentId, 'language' => $language));
+        $content = $this->contentRepository->findOneByContentIdAndLanguage($contentId, $language);
 
         if($content === null){
             $contentSource = $this->contentRepository->findOneByContentId($contentId);

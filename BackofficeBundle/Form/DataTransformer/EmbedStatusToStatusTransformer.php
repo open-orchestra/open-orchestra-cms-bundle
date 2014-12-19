@@ -2,9 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
 
-use PHPOrchestra\ModelBundle\Repository\StatusRepository;
 use PHPOrchestra\ModelInterface\Model\EmbedStatusInterface;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
@@ -17,10 +17,10 @@ class EmbedStatusToStatusTransformer implements DataTransformerInterface
     protected $embedStatusClass;
 
     /**
-     * @param StatusRepository $statusRepository
-     * @param string           $embedStatusClass
+     * @param StatusRepositoryInterface $statusRepository
+     * @param string                    $embedStatusClass
      */
-    public function __construct(StatusRepository $statusRepository, $embedStatusClass)
+    public function __construct(StatusRepositoryInterface $statusRepository, $embedStatusClass)
     {
         $this->statusRepositoy = $statusRepository;
         $this->embedStatusClass = $embedStatusClass;

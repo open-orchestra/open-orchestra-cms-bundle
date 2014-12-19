@@ -26,7 +26,7 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->form = new ExistingBlockChoiceType($this->nodeRepository);
     }

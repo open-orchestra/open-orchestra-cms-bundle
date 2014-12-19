@@ -33,7 +33,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
         $this->keywords = new ArrayCollection();
         $this->keywords->add($this->keyword1);
         $this->keywords->add($this->keyword2);
-        $this->keywordRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\KeywordRepository');
+        $this->keywordRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
         Phake::when($this->keywordRepository)->findAll()->thenReturn($this->keywords);
 
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');

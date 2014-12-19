@@ -31,7 +31,7 @@ class OrchestraThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
         $themeCollection = new ArrayCollection();
         $themeCollection->add($this->theme);
-        $this->themeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\ThemeRepository');
+        $this->themeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ThemeRepositoryInterface');
         Phake::when($this->themeRepository)->findAll()->thenReturn($themeCollection);
 
         $this->form = new OrchestraThemeChoiceType($this->themeRepository);

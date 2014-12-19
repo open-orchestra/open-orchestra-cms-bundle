@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\Backoffice\Context;
 
-use PHPOrchestra\ModelBundle\Repository\SiteRepository;
+use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class TestContextManager
@@ -15,10 +15,10 @@ class TestContextManager extends ContextManager
     protected $siteDomain = 'www.aphpOrchestra.fr';
 
     /**
-     * @param SiteRepository $siteRepository
-     * @param string         $defaultLocale
+     * @param SiteRepositoryInterface $siteRepository
+     * @param string                  $defaultLocale
      */
-    public function __construct(SiteRepository $siteRepository, $defaultLocale = 'en')
+    public function __construct(SiteRepositoryInterface $siteRepository, $defaultLocale = 'en')
     {
         $this->siteRepository = $siteRepository;
         $this->defaultLocal = $defaultLocale;

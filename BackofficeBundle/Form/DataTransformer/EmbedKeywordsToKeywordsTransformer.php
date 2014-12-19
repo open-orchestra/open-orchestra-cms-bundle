@@ -2,9 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
 
+use PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ModelBundle\Repository\KeywordRepository;
 
 /**
  * Class EmbedKeywordsToKeywordsTransformer
@@ -16,11 +16,11 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
     protected $keywordClass;
 
     /**
-     * @param KeywordRepository $keywordRepository
-     * @param string            $embedKeywordClass
-     * @param string            $keywordClass
+     * @param KeywordRepositoryInterface $keywordRepository
+     * @param string                     $embedKeywordClass
+     * @param string                     $keywordClass
      */
-    public function __construct(KeywordRepository $keywordRepository, $embedKeywordClass, $keywordClass)
+    public function __construct(KeywordRepositoryInterface $keywordRepository, $embedKeywordClass, $keywordClass)
     {
         $this->keywordRepository = $keywordRepository;
         $this->embedKeywordClass = $embedKeywordClass;

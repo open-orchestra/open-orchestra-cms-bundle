@@ -6,7 +6,7 @@ use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class AreaManager
@@ -16,9 +16,9 @@ class AreaManager
     protected $nodeRepository;
 
     /**
-     * @param NodeRepository $nodeRepository
+     * @param NodeRepositoryInterface $nodeRepository
      */
-    public function __construct(NodeRepository $nodeRepository)
+    public function __construct(NodeRepositoryInterface $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
     }

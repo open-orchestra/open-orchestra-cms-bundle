@@ -23,6 +23,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $siteRepository;
     protected $statusRepository;
     protected $transformer;
+    protected $statusId;
     protected $router;
     protected $status;
     protected $node;
@@ -35,16 +36,16 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
-        $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
         $this->encryptionManager = Phake::mock('PHPOrchestra\BaseBundle\Manager\EncryptionManager');
 
-        $this->siteRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\SiteRepository');
+        $this->siteRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
-        $this->statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        $this->statusRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
         $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');

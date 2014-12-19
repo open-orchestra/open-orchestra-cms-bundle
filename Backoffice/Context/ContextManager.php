@@ -3,8 +3,7 @@
 namespace PHPOrchestra\Backoffice\Context;
 
 use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
-use PHPOrchestra\ModelBundle\Repository\SiteRepository;
+use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -21,11 +20,11 @@ class ContextManager implements CurrentSiteIdInterface
     /**
      * Constructor
      *
-     * @param Session        $session
-     * @param SiteRepository $siteRepository
-     * @param string         $defaultLocale
+     * @param Session                 $session
+     * @param SiteRepositoryInterface $siteRepository
+     * @param string                  $defaultLocale
      */
-    public function __construct(Session $session, SiteRepository $siteRepository, $defaultLocale = 'en')
+    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, $defaultLocale = 'en')
     {
         $this->session = $session;
         if ($this->getCurrentLocale() == '') {

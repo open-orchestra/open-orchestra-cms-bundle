@@ -33,7 +33,7 @@ class OrchestraCheckConsistencyCommandTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->trans)->trans('php_orchestra_backoffice.command.node.error')->thenReturn('error');
         Phake::when($this->trans)->trans('php_orchestra_backoffice.command.empty_choices')->thenReturn('empty');
 
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->container = $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($this->container)->get('php_orchestra_model.repository.node')->thenReturn($this->nodeRepository);

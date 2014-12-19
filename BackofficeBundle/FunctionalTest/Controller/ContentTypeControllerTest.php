@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
+use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeControllerTest
@@ -10,7 +10,7 @@ use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 class ContentTypeControllerTest extends AbstractControllerTest
 {
     /**
-     * @var ContentTypeRepository
+     * @var ContentTypeRepositoryInterface
      */
     protected $contentTypeRepository;
 

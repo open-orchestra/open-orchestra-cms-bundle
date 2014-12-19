@@ -22,7 +22,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->templateRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\TemplateRepository');
+        $this->templateRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
 
         $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager, $this->areaClass);

@@ -22,11 +22,11 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->node1 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $this->node1 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node1)->getName()->thenReturn($this->nodeName1);
-        $this->node2 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $this->node2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node2)->getName()->thenReturn($this->nodeName2);
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository);
     }

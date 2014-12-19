@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager;
 use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
-use PHPOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -17,9 +16,6 @@ class ContentTypeManagerTest extends KernelTestCase
      */
     protected $manager;
 
-    /**
-     * @var ContentTypeRepository
-     */
     protected $contentTypeRepository;
 
     /**
