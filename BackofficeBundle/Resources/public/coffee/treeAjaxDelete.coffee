@@ -18,8 +18,9 @@ $(document).on 'click', "button.ajax-delete", (e) ->
           if redirectUrl != undefined
             displayMenu(redirectUrl)
           else
-            Backbone.history.history.back()
-            displayMenu(Backbone.history.fragment)
+            redirectUrl = appRouter.generateUrl 'showHome'
+            Backbone.history.navigate(redirectUrl, {trigger:true})
+            displayMenu(redirectUrl)
           return
         error: (response) ->
           $('.modal-footer', this.el).html response.responseJSON.error.message

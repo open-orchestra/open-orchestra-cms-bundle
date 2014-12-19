@@ -33,6 +33,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   showHome: function()
   {
     drawBreadCrumb();
+    $('#content').html('')
   },
 
   showNode: function(nodeId)
@@ -177,9 +178,11 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     var route = this.routePatterns[routeName];
     if (typeof route !== "undefined") {
-      $.each(paramsObject, function(paramName, paramValue) {
-        route = route.replace(':' + paramName, paramValue);
-      });
+      if (typeof paramsObject !== "undefined") {
+        $.each(paramsObject, function(paramName, paramValue) {
+          route = route.replace(':' + paramName, paramValue);
+        });
+      }
     } else {
       alert('Error, route name is unknown');
       return false;
