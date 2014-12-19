@@ -3,7 +3,7 @@
 <ul id="entity-languages" class="nav nav-tabs">
 </ul>
 <div id="preview"></div>
-<% if (node.get('node_type') == 'page') { %>
+<% if (typeof duplicate != 'undefined') { %>
     <a id="btn-new-version" class="btn btn-info" target="_blank">
         <i class="glyphicon glyphicon-pencil"></i>
         {{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}

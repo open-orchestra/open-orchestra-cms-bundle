@@ -52,6 +52,11 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
                     self_version: elementModel.get('links')._self_version
                     path: 'showEntityWithLanguageAndVersion'
                   ) if elementModel.get('links')._self_version
+                  options = $.extend(options, duplicate:
+                    language: language
+                    self_duplicate: elementModel.get('links')._self_duplicate
+                    path: 'showEntityWithLanguage'
+                  ) if elementModel.get('links')._self_duplicate
                   view = new FullPageFormView(options)
                   appRouter.setCurrentMainView view
               founded = true

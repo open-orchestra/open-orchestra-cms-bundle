@@ -3,25 +3,29 @@ NodeView = OrchestraView.extend(
 
   events:
     'click i#none' : 'clickButton'
-    'click a#btn-new-version': 'duplicateNode'
 
   initialize: (options) ->
     @node = options.node
-    @multiLanguage = 
+    @options = options
+    @options.multiLanguage = 
       language: @node.get('language')
       language_list: @node.get('links')._language_list
       path: 'showNodeWithLanguage'
-    @multiStatus = 
+    @options.multiStatus = 
       language: @node.get('language')
       version: @node.get('version')
       status_list: @node.get('links')._status_list
       status: @node.get('status')
       self_status_change: @node.get('links')._self_status_change
-    @multiVersion = 
+    @options.multiVersion = 
       language: @node.get('language')
       version: @node.get('version')
       self_version: @node.get('links')._self_version
       path: 'showNodeWithLanguageAndVersion'
+    @options.duplicate = 
+      language: @node.get('language')
+      path : 'showNodeWithLanguage'
+      self_duplicate: @node.get('links')._self_duplicate
     @events['click i.' + @node.cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
@@ -65,19 +69,6 @@ NodeView = OrchestraView.extend(
         deleteurl: deleteurl
         confirmtext: confirmText
       )
-
-  duplicateNode: ->
-    viewContext = @
-    redirectRoute = appRouter.generateUrl( "showNodeWithLanguage",
-      nodeId: @node.get('node_id')
-      language: @node.get('language')
-    )
-    $.ajax
-      url: @node.get('links')._self_duplicate
-      method: 'POST'
-      success: (response) ->
-        Backbone.history.loadUrl(redirectRoute)
-    return
 
   render: ->
     title = @renderTemplate('elementTitle',

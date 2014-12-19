@@ -3,7 +3,6 @@ FullPageFormView = OrchestraView.extend(
 
   initialize: (options) ->
     @options = options
-    @multiLanguage = options.multiLanguage if options.multiLanguage
     @options.currentLanguage = options.multiLanguage.language if options.multiLanguage
     @events = {}
     if options.triggers
@@ -13,12 +12,15 @@ FullPageFormView = OrchestraView.extend(
     @loadTemplates [
       'fullPageFormView'
     ]
-    @element = options.element
+    if options.multiVersion
+      @options.title = @renderTemplate('elementTitle',
+        element: options.element
+      )
     return
 
   render: ->
     $(@el).html(@renderTemplate('fullPageFormView', @options))
-    $('.js-widget-title', @$el).text @title
+    $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     if @element && @element.get('links')._self_status && @element.status_label == 'published'
         $("#orchestra_content_submit").addClass('disabled')
 
