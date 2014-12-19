@@ -1,9 +1,7 @@
 SmartConfirmTitleView = OrchestraView.extend(
-  tagName: "span"
 
   initialize: (options) ->
     @logo = options.logo
-    @titleWhite = options.titleWhite
     @titleColorized = options.titleColorized
     @loadTemplates [
       "smartConfirmTitle"
@@ -11,10 +9,8 @@ SmartConfirmTitleView = OrchestraView.extend(
     return
 
   render: ->
-    @renderTemplate('smartConfirmTitle',
-      titleWhite: @titleWhite
+    return @renderTemplate('smartConfirmTitle',
       titleColorized: @titleColorized
       logo: @logo
     )
-    return
 )

@@ -29,9 +29,9 @@ TableviewView = OrchestraView.extend(
   clickDelete: (event) ->
     event.preventDefault()
     smartConfirm(
-      titleWhite: 'Delete'
-      titleColorized: 'this element'
-      text: 'The removal will be final'
+      'fa-sign-out',
+      'Delete this element',
+      'The removal will be final',
       yesCallbackParams: 
         url: @element.get('links')._self_delete
         row: $(event.target).closest('tr')

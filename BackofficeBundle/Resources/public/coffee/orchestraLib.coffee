@@ -95,11 +95,14 @@ orchestraAjaxLoad = (url, method, successCallback) ->
   return
 
 # SMARTADMIN CONFIRMATION
-smartConfirm = (params) ->
+smartConfirm = (logo, titleColorized, text, params) ->
   $.SmartMessageBox
-    title: params.title
+    title: new SmartConfirmTitleView(
+      logo: logo
+      titleColorized: titleColorized
+    ).render()
 #    title: "<i class='fa fa-sign-out txt-color-orangeDark'></i> " + params.titleWhite + " <span class='txt-color-orangeDark'><strong>" + params.titleColorized + "</strong></span> ?"
-    content: params.text
+    content: text
     buttons: "[No][Yes]"
   , (ButtonPressed) ->
     params.yesCallback(params.yesCallbackParams)  if ButtonPressed is "Yes" and typeof params.yesCallback isnt "undefined"
