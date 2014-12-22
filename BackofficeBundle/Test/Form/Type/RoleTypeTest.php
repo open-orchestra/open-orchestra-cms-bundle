@@ -15,7 +15,6 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
-    protected $statusClass = 'statusClass';
     protected $roleClass = 'roleClass';
 
     /**
@@ -23,7 +22,7 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->form = new RoleType($this->roleClass, $this->statusClass);
+        $this->form = new RoleType($this->roleClass);
     }
 
     /**

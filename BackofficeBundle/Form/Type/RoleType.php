@@ -13,16 +13,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class RoleType extends AbstractType
 {
     protected $roleClass;
-    protected $statusClass;
 
     /**
      * @param string $roleClass
-     * @param string $statusClass
      */
-    public function __construct($roleClass, $statusClass)
+    public function __construct($roleClass)
     {
         $this->roleClass = $roleClass;
-        $this->statusClass = $statusClass;
     }
 
     /**
@@ -34,13 +31,11 @@ class RoleType extends AbstractType
         $builder->add('name', null, array(
             'label' => 'php_orchestra_backoffice.form.role.name',
         ));
-        $builder->add('fromStatus', 'document',array(
-            'class' => $this->statusClass,
+        $builder->add('fromStatus', 'orchestra_status',array(
             'label' => 'php_orchestra_backoffice.form.role.from_status',
             'required' => false,
         ));
-        $builder->add('toStatus', 'document',array(
-            'class' => $this->statusClass,
+        $builder->add('toStatus', 'orchestra_status',array(
             'label' => 'php_orchestra_backoffice.form.role.to_status',
             'required' => false,
         ));
