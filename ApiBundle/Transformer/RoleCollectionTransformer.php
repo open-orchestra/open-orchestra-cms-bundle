@@ -30,7 +30,7 @@ class RoleCollectionTransformer extends AbstractTransformer
         ));
 
         $facade->addLink('_self_add', $this->generateRoute(
-            'php_orchestra_user_role_new',
+            'php_orchestra_backoffice_role_new',
             array()
         ));
 

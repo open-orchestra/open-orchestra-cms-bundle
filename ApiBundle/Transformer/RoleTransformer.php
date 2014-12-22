@@ -33,7 +33,7 @@ class RoleTransformer extends AbstractTransformer
             array('roleId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_user_role_form',
+            'php_orchestra_backoffice_role_form',
             array('roleId' => $mixed->getId())
         ));
 
