@@ -31,6 +31,7 @@ parameters:
     php_orchestra_backoffice.type.media_meta.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaMetaType
     php_orchestra_backoffice.type.keyword.class: PHPOrchestra\BackofficeBundle\Form\Type\KeywordType
     php_orchestra_backoffice.type.orchestra_keywords.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
+    php_orchestra_backoffice.type.role.class: PHPOrchestra\BackofficeBundle\Form\Type\RoleType
 
 services:
     # Template form type
@@ -265,3 +266,10 @@ services:
             - @php_orchestra_model.repository.keyword
         tags:
             - { name: form.type, alias: orchestra_keywords}
+    php_orchestra_backoffice.type.role:
+        class: %php_orchestra_backoffice.type.role.class%
+        arguments:
+            - %php_orchestra_model.document.role.class%
+            - %php_orchestra_model.document.status.class%
+        tags:
+            - { name: form.type, alias: role }

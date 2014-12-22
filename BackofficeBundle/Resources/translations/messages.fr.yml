@@ -146,6 +146,14 @@ php_orchestra_backoffice:
             label: Libellé
             creation: Le mot-clé a été créé
             success: Le mot-clé a été mis à jour avec succès
+        role:
+            new:
+                success: Le rôle a été crée
+            edit:
+                success: Le rôle a été mis à jour
+            name: Nom
+            from_status: Statut de provenance
+            to_status: Statut de destination
     left_menu:
         tree:
             new_page: Nouvelle page

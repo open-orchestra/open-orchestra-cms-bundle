@@ -146,6 +146,14 @@ php_orchestra_backoffice:
             label: Label
             creation: Keyword has been created
             success: Keyword has been successfully updated
+        role:
+            new:
+                success: The role has been successfully created
+            edit:
+                success: The role has been updated
+            name: Name
+            from_status: Status from
+            to_status: Status destination
     left_menu:
         tree:
             new_page: New page
