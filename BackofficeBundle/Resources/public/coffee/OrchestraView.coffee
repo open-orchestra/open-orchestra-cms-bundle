@@ -17,6 +17,8 @@ OrchestraView = Backbone.View.extend(
         templates.push "elementTitle"
       if @options.duplicate
         @events['click a#btn-new-version'] = 'duplicateElement'
+    templates.push "smartConfirmButton"
+    templates.push "smartConfirmTitle"
 
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false

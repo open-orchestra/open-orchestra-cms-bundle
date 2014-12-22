@@ -268,7 +268,7 @@ php_orchestra_backoffice:
         improve_security: Vous pouvez améliorer votre sécurité après la déconnexion en fermant votre navigateur
         fullscreen: Plein écran
     areas:
-        delete_question: Souhaitez-vous supprimer cette zone ?
+        delete_question: Souhaitez-vous supprimer cette zone
         delete_explanation: Cette opération est non réversible.
         delete_error_title: Suppression de zone
         delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page
@@ -285,3 +285,7 @@ php_orchestra_backoffice:
         empty_choices: Choisissez un table à vérifier.
     global:
         back_to_list: Retour à la liste
+    smart_confirm:
+        button:
+            yes: Oui
+            no: Non
