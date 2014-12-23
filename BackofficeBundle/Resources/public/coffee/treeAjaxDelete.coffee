@@ -2,11 +2,12 @@ $(document).on 'click', "button.ajax-delete", (e) ->
   e.preventDefault()
   url = $(this).data("delete-url")
   confirm_text = $(this).data("confirm-text")
+  confirm_title = $(this).data("confirm-title")
   redirectUrl = $(this).data('redirect-url')
   $("#OrchestraBOModal").modal "hide"
   smartConfirm(
     'fa-trash-o',
-    'Delete this element',
+    confirm_title,
     confirm_text,
     callBackParams:
       url: url

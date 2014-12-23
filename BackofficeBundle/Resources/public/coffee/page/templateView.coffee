@@ -22,6 +22,7 @@ TemplateView = OrchestraView.extend(
       url: @template.get('links')._self_form
       deleteurl: @template.get('links')._self_delete
       confirmtext: $(".delete-confirm-txt-"+@template.cid).text()
+      confirmtitle: $(".delete-confirm-title-"+@template.cid).text()
     )
 
   render: ->

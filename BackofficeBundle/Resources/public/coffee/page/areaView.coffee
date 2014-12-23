@@ -121,8 +121,8 @@ AreaView = OrchestraView.extend(
     if @area.get("blocks").length > 0
       smartConfirm(
         'fa-trash-o',
-        'Delete this block',
-        'The removal will be final',
+        $(".delete-confirm-question-block-" + @cid).text(),
+        $(".delete-confirm-explanation-block-" + @cid).text(),
         callBackParams:
           blockView: @
         yesCallback: (params) ->
