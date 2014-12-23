@@ -22,6 +22,10 @@
         },
         {
             "type": "vcs",
+            "url": "https://github.com/itkg/phporchestra-model-interface"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/itkg/phporchestra-indexation-bundle"
         },
         {
@@ -45,6 +49,7 @@
         "itkg/phporchestra-display-bundle": "dev-master",
         "itkg/phporchestra-media-bundle": "dev-master",
         "itkg/phporchestra-user-bundle": "dev-master",
+        "itkg/phporchestra-model-interface": "dev-master",
         "braincrafted/bootstrap-bundle": "2.1.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "stfalcon/tinymce-bundle": "0.3.8"
