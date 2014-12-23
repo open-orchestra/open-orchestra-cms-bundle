@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Transformer;
 
+use PHPOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpException;
 use PHPOrchestra\ApiBundle\Facade\AreaFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
@@ -34,16 +35,14 @@ class AreaTransformer extends AbstractTransformer
      * @param string        $parentAreaId
      *
      * @return FacadeInterface
+     * @throws AreaTransformerHttpException
      */
     public function transform($mixed, NodeInterface $node = null, $parentAreaId = null)
     {
         $facade = new AreaFacade();
-        $nodeId = null;
-        $nodeMongoId = null;
 
-        if ($node instanceof NodeInterface) {
-            $nodeId = $node->getNodeId();
-            $nodeMongoId = $node->getId();
+        if (!$node instanceof NodeInterface) {
+            throw new AreaTransformerHttpException();
         }
 
         $facade->label = $mixed->getLabel();
@@ -53,28 +52,21 @@ class AreaTransformer extends AbstractTransformer
             $facade->addArea($this->getTransformer('area')->transform($subArea, $node, $mixed->getAreaId()));
         }
         foreach ($mixed->getBlocks() as $blockPosition => $block) {
-            if (0 === $block['nodeId'] || $node->getNodeId() == $block['nodeId']) {
-                $facade->addBlock($this->getTransformer('block')->transform(
-                    $node->getBlock($block['blockId']),
-                    true,
-                    $node->getNodeId(),
-                    $block['blockId'],
-                    $mixed->getAreaId(),
-                    $blockPosition,
-                    $nodeMongoId
-                ));
-            } else {
+            $otherNode = $node;
+            $isInside = true;
+            if (0 !== $block['nodeId'] && $node->getNodeId() != $block['nodeId']) {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
-                $facade->addBlock($this->getTransformer('block')->transform(
-                    $otherNode->getBlock($block['blockId']),
-                    false,
-                    $otherNode->getNodeId(),
-                    $block['blockId'],
-                    $mixed->getAreaId(),
-                    $blockPosition,
-                    $otherNode->getId()
-                ));
+                $isInside = false;
             }
+            $facade->addBlock($this->getTransformer('block')->transform(
+                $otherNode->getBlock($block['blockId']),
+                $isInside,
+                $otherNode->getNodeId(),
+                $block['blockId'],
+                $mixed->getAreaId(),
+                $blockPosition,
+                $otherNode->getId()
+            ));
         }
         $facade->boDirection = $mixed->getBoDirection();
 
@@ -86,22 +78,22 @@ class AreaTransformer extends AbstractTransformer
             )
         );
         $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_area_form', array(
-            'nodeId' => $nodeMongoId,
+            'nodeId' => $node->getId(),
             'areaId' => $mixed->getAreaId(),
         )));
         $facade->addLink('_self_block', $this->generateRoute('php_orchestra_api_area_update_block', array(
-            'nodeId' => $nodeMongoId,
+            'nodeId' => $node->getId(),
             'areaId' => $mixed->getAreaId()
         )));
         $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_node', array(
-            'nodeId' => $nodeMongoId,
+            'nodeId' => $node->getId(),
             'areaId' => $mixed->getAreaId()
         )));
 
         if ($parentAreaId) {
             $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node_area',
                 array(
-                    'nodeId' => $nodeMongoId,
+                    'nodeId' => $node->getId(),
                     'parentAreaId' => $parentAreaId,
                     'areaId' => $mixed->getAreaId()
                 )
@@ -110,7 +102,7 @@ class AreaTransformer extends AbstractTransformer
         } else {
             $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node',
                 array(
-                    'nodeId' => $nodeMongoId,
+                    'nodeId' => $node->getId(),
                     'areaId' => $mixed->getAreaId(),
                 )
             ));

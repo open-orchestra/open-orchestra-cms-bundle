@@ -45,10 +45,12 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD,
         );
 
-        $config = array_merge(array(
-            'blocks' => $blockType,
-            'front_languages' => array('en' => 'English', 'fr' => 'French')
-        ), $config);
+        if (empty($config['blocks'])) {
+            $config['blocks'] = $blockType;
+        }
+        if (empty($config['front_languages'])) {
+            $config['front_languages'] = array('en' => 'English', 'fr' => 'French');
+        }
         $container->setParameter('php_orchestra.blocks', $config['blocks']);
         $container->setParameter('php_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
         $container->setParameter('php_orchestra_backoffice.orchestra_choice.direction', array('h' => 'Horizontal', 'v' => 'Vertical'));
