@@ -34,7 +34,7 @@ class IsFolderDeletableExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsFolderDeletable()
     {
-        $folder = Phake::mock('PHPOrchestra\MediaBundle\Model\MediaFolderInterface');
+        $folder = Phake::mock('PHPOrchestra\Media\Model\MediaFolderInterface');
 
         Phake::when($this->folderManager)->isDeletable(Phake::anyParameters())->thenReturn(true);
         $this->assertEquals($this->helper->isFolderDeletable($folder), true);

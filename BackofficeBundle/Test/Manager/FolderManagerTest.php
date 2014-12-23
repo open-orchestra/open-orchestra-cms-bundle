@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
 use PHPOrchestra\MediaBundle\Document\Folder;
-use PHPOrchestra\MediaBundle\Model\FolderInterface;
+use PHPOrchestra\Media\Model\FolderInterface;
 use PHPOrchestra\MediaBundle\Document\MediaFolder;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -67,8 +67,8 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($subfolder1)->getSubFolders()->thenReturn(new ArrayCollection());
 
         $medias = new ArrayCollection();
-        $medias->add(Phake::mock('PHPOrchestra\MediaBundle\Model\MediaInterface'));
-        $medias->add(Phake::mock('PHPOrchestra\MediaBundle\Model\MediaInterface'));
+        $medias->add(Phake::mock('PHPOrchestra\Media\Model\MediaInterface'));
+        $medias->add(Phake::mock('PHPOrchestra\Media\Model\MediaInterface'));
 
         $subfolders = new ArrayCollection();
         $subfolders->add($subfolder0);

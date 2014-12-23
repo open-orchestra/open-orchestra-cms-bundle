@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\MediaFacade;
-use PHPOrchestra\MediaBundle\Model\MediaInterface;
+use PHPOrchestra\Media\Model\MediaInterface;
 
 /**
  * Class MediaTransformer
