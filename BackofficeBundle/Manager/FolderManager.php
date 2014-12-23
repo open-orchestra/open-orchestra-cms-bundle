@@ -2,8 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\MediaBundle\Model\MediaFolderInterface;
-use PHPOrchestra\MediaBundle\Repository\MediaRepository;
+use PHPOrchestra\Media\Model\MediaFolderInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**
@@ -11,7 +10,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
  */
 class FolderManager
 {
-    protected $folderRepository;
     protected $documentManager;
 
     /**
