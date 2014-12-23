@@ -131,11 +131,15 @@ class ContextManager implements CurrentSiteIdInterface
         if (!$currentSite) {
             $sites = $this->getAvailableSites();
 
+            $siteId = 0;
+            $siteDomain = 'No site available';
+            $locale = $this->getCurrentLocale();
             if (isset($sites[0])) {
-                $this->setCurrentSite($sites[0]->getSiteId(), $sites[0]->getDomain(), $sites[0]->getDefaultLanguage());
-            } else {
-                $this->setCurrentSite(0, 'No site available', $this->getCurrentLocale());
+                $siteId = $sites[0]->getSiteId();
+                $siteDomain = $sites[0]->getDomain();
+                $locale = $sites[0]->getDefaultLanguage();
             }
+            $this->setCurrentSite($siteId, $siteDomain, $locale);
             $currentSite = $this->session->get(self::KEY_SITE);
         }
 

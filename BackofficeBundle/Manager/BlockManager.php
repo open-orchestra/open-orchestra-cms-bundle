@@ -48,20 +48,15 @@ class BlockManager
     protected function checkAreaRef($refAreas, $nodeRef, $block)
     {
         foreach ($refAreas as $refArea) {
-            if ($refArea['nodeId'] === $nodeRef->getId() || $refArea['nodeId'] === 0) {
-                $node = $nodeRef;
-            } else {
+            $node = $nodeRef;
+            if (!($refArea['nodeId'] === $nodeRef->getId() || $refArea['nodeId'] === 0)) {
                 $otherNode = $this->nodeRepository->find($refArea['nodeId']);
                 $node = $otherNode;
             }
             $result = $this->findAreaIfExist($refArea['areaId'], $node->getAreas());
 
-            if (null === $result) {
+            if (null === $result || !$this->checkBlock($result->getBlocks(), $block, $node)) {
                 return false;
-            } else {
-                if (!$this->checkBlock($result->getBlocks(), $block, $node)) {
-                    return false;
-                }
             }
         }
 
@@ -98,9 +93,9 @@ class BlockManager
     {
         if ($areaId === $area->getAreaId()) {
             return $area;
-        } else {
-            return $this->findAreaIfExist($areaId, $area->getAreas());
         }
+
+        return $this->findAreaIfExist($areaId, $area->getAreas());
     }
 
     /**
@@ -113,13 +108,13 @@ class BlockManager
     protected function checkBlock($refBlocks, BlockInterface $block, NodeInterface $node)
     {
         foreach ($refBlocks as $refBlock) {
-            if ($node->getNodeId() === $refBlock['nodeId'] || 0 === $refBlock['nodeId']) {
-                $blockRef = $node->getBlock($refBlock['blockId']);
-            } else {
+            $blockRef = $node->getBlock($refBlock['blockId']);
+            if (!($node->getNodeId() === $refBlock['nodeId'] || 0 === $refBlock['nodeId'])) {
                 $otherNode = $this->nodeRepository
                     ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($refBlock['nodeId'], $node->getLanguage(), $node->getSiteId());
                 $blockRef = $otherNode->getBlock($refBlock['blockId']);
             }
+
             if ($blockRef->getLabel() === $block->getLabel()) {
                 return true;
             }

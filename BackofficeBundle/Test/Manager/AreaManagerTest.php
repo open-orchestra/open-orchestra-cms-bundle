@@ -170,7 +170,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->nodeRepository, Phake::times(1))
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeTransverseId, $this->language, $siteId);
-        Phake::verify($this->node, Phake::times(1))->getBlock(Phake::anyParameters());
+        Phake::verify($this->node, Phake::times(2))->getBlock(Phake::anyParameters());
         Phake::verify($this->block, Phake::times(1))->removeAreaRef($areaId, $nodeId);
         Phake::verify($this->node, Phake::times(1))->getId();
     }
@@ -237,10 +237,12 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $areaMenu = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMenu)->getAreaId()->thenReturn('menu');
+        Phake::when($areaMenu)->getAreas()->thenReturn(array());
         Phake::when($areaMenu)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0)));
 
         $areaFooter = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaFooter)->getAreaId()->thenReturn('footer');
+        Phake::when($areaFooter)->getAreas()->thenReturn(array());
         Phake::when($areaFooter)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 1),
         ));
@@ -252,6 +254,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $areaMain2 = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMain2)->getAreaId()->thenReturn('main');
+        Phake::when($areaMain2)->getAreas()->thenReturn(array());
         Phake::when($areaMain2)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 0),
             array('nodeId' => 'home', 'blockId' => 1),

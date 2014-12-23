@@ -79,7 +79,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             foreach ($contentType->getFields() as $field) {
                 if ($attribute = $content->getAttributeByName($field->getFieldId())) {
                     $attribute->setValue($data[$field->getFieldId()]);
-                } else {
+                } elseif (is_null($attribute)) {
                     $contentAttributClass = $this->contentAttributClass;
                     $attribute = new $contentAttributClass;
                     $attribute->setName($field->getFieldId());

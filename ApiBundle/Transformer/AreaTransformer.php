@@ -191,9 +191,8 @@ class AreaTransformer extends AbstractTransformer
         foreach ($blocks as $position => $blockFacade) {
             $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
             $blockDocument[$position] = $blockArray;
-            if ($blockArray['nodeId'] === 0) {
-                $block = $node->getBlock($blockArray['blockId']);
-            } else {
+            $block = $node->getBlock($blockArray['blockId']);
+            if ($blockArray['nodeId'] !== 0) {
                 $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockArray['nodeId'], $node->getLanguage());
                 $block = $blockNode->getBlock($blockArray['blockId']);
             }

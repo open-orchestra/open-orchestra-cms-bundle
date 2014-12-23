@@ -53,16 +53,14 @@ class BlockTransformer extends AbstractTransformer
 
         foreach ($mixed->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
-                $facade->addAttribute($key, json_encode($attribute));
-            } else {
-                $facade->addAttribute($key, $attribute);
+                $attribute = json_encode($attribute);
             }
+            $facade->addAttribute($key, $attribute);
         }
 
+        $html = $this->displayIconManager->show($mixed->getComponent());
         if (count($mixed->getAttributes()) > 0) {
             $html = $this->displayBlockManager->show($mixed)->getContent();
-        } else {
-            $html = $this->displayIconManager->show($mixed->getComponent());
         }
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
@@ -103,10 +101,9 @@ class BlockTransformer extends AbstractTransformer
             $block['nodeId'] = 0;
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
+            $block['nodeId'] = $facade->nodeId;
             if (!is_null($node) && ($facade->nodeId == $node->getNodeId())) {
                 $block['nodeId'] = 0;
-            } else {
-                $block['nodeId'] = $facade->nodeId;
             }
         }
 

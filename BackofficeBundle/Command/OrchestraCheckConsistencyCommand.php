@@ -43,14 +43,14 @@ class OrchestraCheckConsistencyCommand extends ContainerAwareCommand
 
         $nodes = $nodeRepository->findAll();
 
+        $message = 'empty_choices';
         if ($input->getOption('nodes')) {
+            $message = 'node.success';
             if ( false === $nodeManager->nodeConsistency($nodes)) {
-                $output->writeln($container->get('translator')->trans('php_orchestra_backoffice.command.node.error'));
-            } else {
-                $output->writeln($container->get('translator')->trans('php_orchestra_backoffice.command.node.success'));
+                $message = 'node.error';
             }
-        } else {
-            $output->writeln($container->get('translator')->trans('php_orchestra_backoffice.command.empty_choices'));
         }
+
+        $output->writeln($container->get('translator')->trans('php_orchestra_backoffice.command.' . $message));
     }
 }
