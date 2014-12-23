@@ -18,7 +18,7 @@ adminFormView = OrchestraView.extend(
     @loadTemplates [
         'deleteButton'
     ]
-    $('.modal-footer', @el).hide()
+    $('.modal-footer', @el).addClass("hidden-info")
     return
 
   render: ->
@@ -49,7 +49,7 @@ adminFormView = OrchestraView.extend(
       $('.ajax-delete', @el).attr('data-confirm-text', @confirmtext)
       $('.ajax-delete', @el).attr('data-confirm-title', @confirmtitle)
       $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
-      $('.modal-footer', @el).show()
+      $('.modal-footer', @el).removeClass("hidden-info")
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
