@@ -95,7 +95,7 @@ orchestraAjaxLoad = (url, method, successCallback) ->
   return
 
 # SMARTADMIN CONFIRMATION
-smartConfirm = (logo, titleColorized, text, callBackParams, yesCallback, noCallback) ->
+smartConfirm = (logo, titleColorized, text, functions) ->
   yesButton = new SmartConfirmButtonView(
     confirm: 'Yes'
   ).render()
@@ -110,9 +110,9 @@ smartConfirm = (logo, titleColorized, text, callBackParams, yesCallback, noCallb
     content: text
     buttons: "[" + noButton + "][" + yesButton + "]"
   , (ButtonPressed) ->
-    yesCallback(callBackParams)  if ButtonPressed is yesButton and typeof yesCallback isnt "undefined"
-    noCallback(callBackParams)  if ButtonPressed is noButton and typeof noCallback isnt "undefined"
-    return
+      functions.yesCallback(functions.callBackParams)  if yesButton.match(ButtonPressed) != null and typeof functions.yesCallback isnt "undefined"
+      functions.noCallback(functions.callBackParams)  if noButton.match(ButtonPressed) != null and typeof functions.noCallback isnt "undefined"
+      return
   return
 
 selectorExist = (selector) ->
