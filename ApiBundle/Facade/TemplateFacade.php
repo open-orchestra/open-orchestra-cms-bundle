@@ -35,11 +35,6 @@ class TemplateFacade extends AbstractFacade
     public $language;
 
     /**
-     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\StatusFacade")
-     */
-    public $status;
-
-    /**
      * @Serializer\Type("string")
      */
     public $boDirection;
