@@ -120,10 +120,10 @@ AreaView = OrchestraView.extend(
   confirmRemoveBlock: (event) ->
     if @area.get("blocks").length > 0
       smartConfirm(
-        titleWhite: 'Delete'
-        titleColorized: 'this block'
-        text: 'The removal will be final'
-        yesCallbackParams:
+        'fa-trash-o',
+        'Delete this block',
+        'The removal will be final',
+        callBackParams:
           blockView: @
         yesCallback: (params) ->
           params.blockView.removeBlock(event)
@@ -137,10 +137,10 @@ AreaView = OrchestraView.extend(
 
   confirmRemoveArea: (event) ->
     smartConfirm(
-      titleWhite: $(".delete-confirm-question-" + @cid).text()
-      titleColorized: ''
-      text: $(".delete-confirm-explanation-" + @cid).text()
-      yesCallbackParams:
+      'fa-trash-o',
+      $(".delete-confirm-question-" + @cid).text(),
+      $(".delete-confirm-explanation-" + @cid).text(),
+      callBackParams:
         areaView: @
       yesCallback: (params) ->
         params.areaView.removeArea(event)
