@@ -240,6 +240,8 @@ php_orchestra_backoffice:
         login: 
             title: Bloc connexion
             description: Affiche un formulaire pour ce logger.
+        delete_question: Voulez vous supprimer ce bloc
+        delete_explanation: La suppression sera définitive.
     element:
         version:
             create: Nouvelle version
@@ -257,7 +259,9 @@ php_orchestra_backoffice:
         last_update:
             at: Dernière mise à jour
             by: par
-        delete: Vous êtes sur le point de supprimer un noeud. Souhaitez-vous poursuivre cette action ?
+        delete:
+            title: Souhaitez-vous supprimer ce noeud
+            text: Cette opération est définitive.
         blocks: Blocs
     status:
         none_available: Pas de statut disponible
@@ -273,7 +277,9 @@ php_orchestra_backoffice:
         delete_error_title: Suppression de zone
         delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page
     templates:
-        delete: Vous êtes sur le point de supprimer un gabarit. Souhaitez-vous poursuivre cette action ?
+        delete:
+            title: Souhaitez-vous supprimer ce gabarit
+            text: Cette opération est définitive.
     media:
         current_preview: Image actuelle
         crop: Crop

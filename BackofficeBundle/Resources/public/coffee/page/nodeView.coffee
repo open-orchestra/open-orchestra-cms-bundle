@@ -26,7 +26,7 @@ NodeView = OrchestraView.extend(
       language: @node.get('language')
       path : 'showNodeWithLanguage'
       self_duplicate: @node.get('links')._self_duplicate
-    @events['click i.' + @node.cid] = 'clickButton'
+    @events['click span.' + @cid] = 'clickButton'
     @events['click i.show-areas'] = 'showAreas'
     @events['click i.hide-areas'] = 'hideAreas'
     _.bindAll this, "render", "addAreaToView", "clickButton"
@@ -44,11 +44,13 @@ NodeView = OrchestraView.extend(
     redirectUrl = appRouter.generateUrl "showNode",
       nodeId: @node.get('parent_id')
     confirmText = $(".delete-confirm-txt-"+@node.cid).text()
+    confirmTitle = $(".delete-confirm-title-"+@node.cid).text()
     if @node.attributes.alias is ''
       view = new adminFormView(
         url: url
         deleteurl: deleteurl
         confirmtext: confirmText
+        confirmtitle: confirmTitle
         redirectUrl: redirectUrl
         triggers: [
           {

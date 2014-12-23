@@ -240,6 +240,8 @@ php_orchestra_backoffice:
         login:
             title: Login Block
             description: Display a log form.
+        delete_question: Delete this block
+        delete_explanation: The removal will be final.
     element:
         version:
             create: New version
@@ -257,7 +259,9 @@ php_orchestra_backoffice:
         last_update:
             at: Last update
             by: by
-        delete: You are about to delete a node. Would you like to continue?
+        delete:
+            text: This operation is not reversible.
+            title: Would you like delete this node
         blocks: Blocks
     status:
         none_available: No status available
@@ -273,7 +277,9 @@ php_orchestra_backoffice:
         delete_errot_title: Area removal
         delete_error_txt: Error while removing area, please reload the page
     templates:
-        delete: You are about to delete a template. Would you like to continue?
+        delete:
+          title: Would you like delete this template
+          text: This operation is not reversible.
     media:
         current_preview: Current image
         crop: Crop

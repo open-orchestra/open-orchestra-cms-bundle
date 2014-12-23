@@ -9,6 +9,7 @@ adminFormView = OrchestraView.extend(
     @deleteurl = options.deleteurl if options.deleteurl
     @redirectUrl = options.redirectUrl if options.redirectUrl
     @confirmtext = options.confirmtext if options.confirmtext
+    @confirmtitle = options.confirmtitle if options.confirmtitle
     @events = {}
     if options.triggers
       for i of options.triggers
@@ -43,9 +44,10 @@ adminFormView = OrchestraView.extend(
     @html = options.html
     $('.modal-body', @el).html @html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
-    if @deleteurl != undefined && @confirmtext != undefined
+    if @deleteurl != undefined && @confirmtext != undefined && @confirmtitle != undefined
       $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
       $('.ajax-delete', @el).attr('data-confirm-text', @confirmtext)
+      $('.ajax-delete', @el).attr('data-confirm-title', @confirmtitle)
       $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
       $('.modal-footer', @el).show()
     $("[data-prototype]").each ->
