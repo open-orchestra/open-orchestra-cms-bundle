@@ -130,10 +130,9 @@ class AreaTransformer extends AbstractTransformer
     {
         $facade = new AreaFacade();
 
+        $templateId = null;
         if ($template instanceof TemplateInterface) {
             $templateId = $template->getTemplateId();
-        } else {
-            $templateId = null;
         }
 
         $facade->label = $mixed->getLabel();

@@ -64,14 +64,13 @@ class KeywordController extends AbstractAdminController
         $form->handleRequest($request);
         $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.creation'), $keyword);
 
+        $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($keyword->getId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_keyword_form', array('siteId' => $keyword->getId()));
 
             return $this->redirect($url);
-        } else {
-            $statusCode = 200;
         };
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));

@@ -48,10 +48,9 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             /** @var FieldTypeInterface $field */
             foreach ($contentType->getFields() as $field) {
                 $attribute = $data->getAttributeByName($field->getFieldId());
+                $defaultValue = $field->getDefaultValue();
                 if ($attribute) {
                     $defaultValue = $attribute->getValue();
-                } else {
-                    $defaultValue = $field->getDefaultValue();
                 }
                 $form->add($field->getFieldId(), $field->getType(), array_merge(
                     array(

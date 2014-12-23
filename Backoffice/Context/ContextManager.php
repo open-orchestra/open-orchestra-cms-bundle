@@ -128,9 +128,7 @@ class ContextManager implements CurrentSiteIdInterface
     {
         $currentSite = $this->session->get(self::KEY_SITE);
 
-        if ($currentSite) {
-            return $currentSite;
-        } else {
+        if (!$currentSite) {
             $sites = $this->getAvailableSites();
 
             if (isset($sites[0])) {
@@ -138,8 +136,9 @@ class ContextManager implements CurrentSiteIdInterface
             } else {
                 $this->setCurrentSite(0, 'No site available', $this->getCurrentLocale());
             }
+            $currentSite = $this->session->get(self::KEY_SITE);
         }
 
-        return $this->session->get(self::KEY_SITE);
+        return $currentSite;
     }
 }

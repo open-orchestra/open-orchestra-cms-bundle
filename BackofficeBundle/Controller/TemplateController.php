@@ -70,14 +70,13 @@ class TemplateController extends AbstractAdminController
             $template
         );
 
+        $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($template->getTemplateId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
 
             return $this->redirect($url);
-        } else {
-            $statusCode = 200;
         }
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));

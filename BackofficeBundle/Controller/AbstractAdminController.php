@@ -43,10 +43,9 @@ abstract class AbstractAdminController extends Controller
      */
     protected function renderAdminForm(FormInterface $form, array $params = array(), $response = null)
     {
+        $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
-        } else {
-            $statusCode = 200;
         }
 
         if (is_null($response)) {
