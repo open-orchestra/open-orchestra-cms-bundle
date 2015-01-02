@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle;
 
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
+use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompilerPass;
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,5 +26,6 @@ class PHPOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new TinymceCompilerPass());
         $container->addCompilerPass(new DisplayIconCompilerPass());
+        $container->addCompilerPass(new LeftPanelCompilerPass());
     }
 }

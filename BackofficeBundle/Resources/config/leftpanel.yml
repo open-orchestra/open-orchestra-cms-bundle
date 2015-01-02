@@ -1,0 +1,86 @@
+parameters:
+    php_orchestra_backoffice.left_panel_manager.class: PHPOrchestra\BackofficeBundle\StrategyManager\LeftPanelManager
+    php_orchestra_backoffice.left_panel.node.class: PHPOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy
+    php_orchestra_backoffice.left_panel.folder.class: PHPOrchestra\Backoffice\LeftPanel\Strategies\TreeFolderPanelStrategy
+    php_orchestra_backoffice.left_panel.template.class: PHPOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy
+    php_orchestra_backoffice.left_panel.content_type.class: PHPOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy
+    php_orchestra_backoffice.left_panel.general_node.class: PHPOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy
+    php_orchestra_backoffice.left_panel.administration.class: PHPOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy
+
+services:
+    php_orchestra_backoffice.left_panel_manager:
+        class: %php_orchestra_backoffice.left_panel_manager.class%
+        arguments:
+            - @service_container
+    php_orchestra_backoffice.left_panel.node:
+        class: %php_orchestra_backoffice.left_panel.node.class%
+        arguments:
+            - @php_orchestra_model.repository.node
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.folder:
+        class: %php_orchestra_backoffice.left_panel.folder.class%
+        arguments:
+            - @php_orchestra_media.repository.media_folder
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.template:
+        class: %php_orchestra_backoffice.left_panel.template.class%
+        arguments:
+            - @php_orchestra_model.repository.template
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.content_type:
+        class: %php_orchestra_backoffice.left_panel.content_type.class%
+        arguments:
+            - @php_orchestra_model.repository.content_type
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.general_node:
+        class: %php_orchestra_backoffice.left_panel.general_node.class%
+        arguments:
+            - @php_orchestra_model.repository.node
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.content_types:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - content_types
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.keywords:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - keywords
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.role:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - role
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.status:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - status
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.themes:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - themes
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.user:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - user
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.websites:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - websites
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }

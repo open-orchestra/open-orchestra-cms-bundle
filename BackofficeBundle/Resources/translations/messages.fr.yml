@@ -164,6 +164,7 @@ php_orchestra_backoffice:
             delete_media_folder: Etes vous sûr de supprimer le répertoire %folderName%?
         editorial:
             title: Editorial
+            icon: fa-edit
             nodes: Pages
             general_nodes: Pages générales
             templates: Gabarits
@@ -171,6 +172,7 @@ php_orchestra_backoffice:
             mediatheque: Médiathèque
         administration:
             translation: Traduction
+            icon: fa-desktop
             title: Administration
             sites:
                 list: Sites
