@@ -48,10 +48,9 @@ class ConfigurableContentStrategy extends AbstractStrategy
 
         $content = $this->contentRepository->findOneByContentId($attributes['contentId']);
 
+        $contentAttributes = array();
         if ($content) {
             $contentAttributes = $content->getAttributes();
-        } else {
-            $contentAttributes = array();
         }
 
         return $this->render(

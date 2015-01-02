@@ -48,15 +48,13 @@ class AreaManager
     {
         foreach ($oldBlocks as $blockReference) {
             if (!in_array($blockReference, $newBlocks)) {
-                if ($blockReference['nodeId'] === 0) {
-                    $block = $node->getBlock($blockReference['blockId']);
-                    $block->removeAreaRef($areaId, $node->getId());
-                } else {
+                $block = $node->getBlock($blockReference['blockId']);
+                if ($blockReference['nodeId'] !== 0) {
                     $blockNode = $this->nodeRepository
                         ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockReference['nodeId'], $node->getLanguage(), $node->getSiteId());
                     $block = $blockNode->getBlock($blockReference['blockId']);
-                    $block->removeAreaRef($areaId, $node->getId());
                 }
+                $block->removeAreaRef($areaId, $node->getId());
             }
         }
     }
@@ -78,12 +76,11 @@ class AreaManager
                 if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
                     return false;
                 }
-            } else {
-                foreach ($container->getAreas() as $area) {
-                    $consistency = $this->areaConsistency($area, $node);
-                    if (false === $consistency) {
-                        return false;
-                    }
+            }
+            foreach ($container->getAreas() as $areaIncluded) {
+                $consistency = $this->areaConsistency($areaIncluded, $node);
+                if (false === $consistency) {
+                    return false;
                 }
             }
         }
@@ -101,15 +98,12 @@ class AreaManager
     protected function checkBlockRef($blocks, NodeInterface $node, AreaInterface $area)
     {
         foreach ($blocks as $block) {
-            if ($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0) {
-                if (!$this->areaIdExistInBlock($node->getBlock($block['blockId']), $area->getAreaId())) {
-                    return false;
-                }
-            } else {
+            $otherNode = $node;
+            if (!($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0)) {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
-                if (!$this->areaIdExistInBlock($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
-                    return false;
-                }
+            }
+            if (!$this->areaIdExistInBlock($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
+                return false;
             }
         }
 

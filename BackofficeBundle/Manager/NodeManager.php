@@ -186,12 +186,12 @@ class NodeManager
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);
                     $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
-                } else {
-                    $block = $node->getBlock($areaBlock['blockId']);
-                    foreach ($block->getAreas() as $blockArea) {
-                        if ($blockArea['nodeId'] === $oldNode->getId()) {
-                            $blockArea['nodeId'] = $node->getId();
-                        }
+                    continue;
+                }
+                $block = $node->getBlock($areaBlock['blockId']);
+                foreach ($block->getAreas() as $blockArea) {
+                    if ($blockArea['nodeId'] === $oldNode->getId()) {
+                        $blockArea['nodeId'] = $node->getId();
                     }
                 }
             }

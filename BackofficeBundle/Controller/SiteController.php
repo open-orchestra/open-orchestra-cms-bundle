@@ -66,14 +66,13 @@ class SiteController extends AbstractAdminController
 
         $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.website.creation'), $site);
 
+        $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($site->getSiteId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_site_form', array('siteId' => $site->getSiteId()));
 
             return $this->redirect($url);
-        } else {
-            $statusCode = 200;
         };
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));

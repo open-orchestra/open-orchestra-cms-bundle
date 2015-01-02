@@ -32,12 +32,11 @@ class FolderController extends Controller
         if ($folder) {
             $folderManager = $this->get('php_orchestra_backoffice.manager.media_folder');
 
-            if ($folderManager->isDeletable($folder)) {
-                $folderManager->deleteTree($folder);
-                $this->get('doctrine.odm.mongodb.document_manager')->flush();
-            } else {
+            if (!$folderManager->isDeletable($folder)) {
                 throw new FolderNotDeletableException();
             }
+            $folderManager->deleteTree($folder);
+            $this->get('doctrine.odm.mongodb.document_manager')->flush();
         }
 
         return new Response('', 200);

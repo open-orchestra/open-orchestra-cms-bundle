@@ -30,10 +30,9 @@ abstract class ConfigurationManiplulator extends Manipulator
      */
     public function addResource($blockName, $blockNamespace)
     {
+        $code = "services:\n";
         if (file_exists($this->file)) {
             $code = file_get_contents($this->file);
-        } else {
-            $code = "services:\n";
         }
 
         $className = Inflector::classify($blockName);

@@ -92,11 +92,10 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($component, $facadeExcepted->component);
         $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\UiModelFacade', $facadeExcepted->uiModel);
         $this->assertArrayHasKey('_self_form', $facadeExcepted->getLinks());
-        if ($expectedAttributes) {
-            $this->assertSame($expectedAttributes, $facadeExcepted->getAttributes());
-        } else {
-            $this->assertSame($attributes, $facadeExcepted->getAttributes());
+        if (is_null($expectedAttributes)) {
+            $expectedAttributes = $attributes;
         }
+        $this->assertSame($expectedAttributes, $facadeExcepted->getAttributes());
         Phake::verify($this->router)->generate(Phake::anyParameters());
     }
 

@@ -62,14 +62,13 @@ class NodeController extends AbstractAdminController
 
         $this->handleForm($form, $message, $node);
 
+        $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($node->getNodeId())) {
-                $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('id' => $node->getId()));
+            $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('id' => $node->getId()));
 
-                return $this->redirect($url);
-        } else {
-            $statusCode = 200;
+            return $this->redirect($url);
         };
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));

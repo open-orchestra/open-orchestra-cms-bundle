@@ -33,10 +33,9 @@ class ExistingBlockChoiceType extends AbstractType
             foreach ($nodes as $node) {
                 foreach ($node->getBlocks() as $blockIndex => $block) {
                     $attributes = $block->getAttributes();
+                    $label = $block->getComponent();
                     if (!empty($attributes) && array_key_exists('title', $attributes)) {
                         $label = $attributes['title'];
-                    } else {
-                        $label = $block->getComponent();
                     }
                     $choices[$node->getNodeId()][$node->getNodeId() . ':' . $blockIndex] = $label;
                 }

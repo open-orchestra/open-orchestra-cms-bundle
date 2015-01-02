@@ -137,7 +137,8 @@ class AreaController extends Controller
             $nodeRepository = $this->get('php_orchestra_model.repository.node');
             $node = $nodeRepository->find($nodeId);
             $areaContainer = $nodeRepository->findAreaFromNodeAndAreaId($node, $parentAreaId);
-        } else {
+        }
+        if ($templateId && is_null($nodeId)) {
             $areaContainer = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
         }
 

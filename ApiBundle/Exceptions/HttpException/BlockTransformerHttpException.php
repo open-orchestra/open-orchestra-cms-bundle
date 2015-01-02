@@ -3,12 +3,12 @@
 namespace PHPOrchestra\ApiBundle\Exceptions\HttpException;
 
 /**
- * Class FolderNotDeletableException
+ * Class BlockTransformerHttpException
  */
-class FolderNotDeletableException extends ApiException
+class BlockTransformerHttpException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'php_orchestra_backoffice.folder.delete.impossible';
-    const HUMAN_MESSAGE      = 'php_orchestra_backoffice.form.folder.delete';
+    const DEVELOPER_MESSAGE  = 'php_orchestra_api.block.transformer';
+    const HUMAN_MESSAGE      = 'php_orchestra_api.block.transformer';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 

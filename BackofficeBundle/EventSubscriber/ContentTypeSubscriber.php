@@ -48,10 +48,9 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             /** @var FieldTypeInterface $field */
             foreach ($contentType->getFields() as $field) {
                 $attribute = $data->getAttributeByName($field->getFieldId());
+                $defaultValue = $field->getDefaultValue();
                 if ($attribute) {
                     $defaultValue = $attribute->getValue();
-                } else {
-                    $defaultValue = $field->getDefaultValue();
                 }
                 $form->add($field->getFieldId(), $field->getType(), array_merge(
                     array(
@@ -80,7 +79,7 @@ class ContentTypeSubscriber implements EventSubscriberInterface
             foreach ($contentType->getFields() as $field) {
                 if ($attribute = $content->getAttributeByName($field->getFieldId())) {
                     $attribute->setValue($data[$field->getFieldId()]);
-                } else {
+                } elseif (is_null($attribute)) {
                     $contentAttributClass = $this->contentAttributClass;
                     $attribute = new $contentAttributClass;
                     $attribute->setName($field->getFieldId());
