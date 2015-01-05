@@ -124,7 +124,7 @@ OrchestraView = Backbone.View.extend(
     view = new VersionView(
       element: versionElement
       version: @options.multiVersion.version
-      el: this.$el.find('optgroup#versions')
+      el: this.$el.find('#version-selectbox')
     )
 
   changeVersion: (event) ->
@@ -135,15 +135,14 @@ OrchestraView = Backbone.View.extend(
     Backbone.history.navigate(redirectUrl, {trigger: true})
 
   duplicateElement: ->
-    viewContext = @
     redirectUrl = appRouter.generateUrl(@options.duplicate.path, appRouter.addParametersToRoute(
       language: @options.duplicate.language
     ))
     $.ajax
-      url: viewContext.options.self_duplicate
+      url: @options.duplicate.self_duplicate
       method: 'POST'
-      success: (response) ->
-        Backbone.history.loadUrl(redirectRoute)
+      success: ->
+        Backbone.history.loadUrl(redirectUrl)
     return
 
 )
