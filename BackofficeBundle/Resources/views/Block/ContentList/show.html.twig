@@ -4,11 +4,11 @@
     <p>
         Content Type: <i>{{ contentType }}</i>
     </p>
-{% elseif contentKeyword is defined %}
+{% elseif keywords is defined %}
     {{ display_icon('content_list_by_keyword') }}
 
     <p>
-        Content Keyword: <i>{{ contentKeyword }}</i>
+        Content Keyword: <i>{{ keywords }}</i>
     </p>
 {% endif %}
 

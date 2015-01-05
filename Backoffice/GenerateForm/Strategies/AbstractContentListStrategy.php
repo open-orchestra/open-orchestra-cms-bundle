@@ -21,7 +21,7 @@ abstract class AbstractContentListStrategy extends AbstractBlockStrategy
 
         $empty = array_merge(
             array(
-                'contentKeyword' => '',
+                'keywords' => null,
                 'class' => '',
                 'id' => '',
                 'url' => '',

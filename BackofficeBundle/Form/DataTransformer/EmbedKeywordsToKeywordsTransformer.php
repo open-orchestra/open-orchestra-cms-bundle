@@ -38,6 +38,10 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
             return '';
         }
 
+        if (is_string($embedKeywords)) {
+            return $embedKeywords;
+        }
+
         $keyworks = array();
         foreach ($embedKeywords as $keyword) {
             $keyworks[] = $keyword->getLabel();

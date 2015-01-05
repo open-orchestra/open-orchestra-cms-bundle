@@ -1,5 +1,3 @@
-vent = _.extend({}, Backbone.Events)
-
 adminFormView = OrchestraView.extend(
   el: '#OrchestraBOModal'
 
@@ -54,6 +52,7 @@ adminFormView = OrchestraView.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnForm()
+    @addSelect2OnForm()
 
   addEventOnForm: ->
     viewContext = this
@@ -80,4 +79,8 @@ adminFormView = OrchestraView.extend(
               html: response.responseText
             )
     return
+
+  addSelect2OnForm: ->
+    if $(".select2", @$el).length > 0
+      activateSelect2($(".select2", @$el))
 )
