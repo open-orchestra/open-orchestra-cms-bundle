@@ -124,7 +124,7 @@ OrchestraView = Backbone.View.extend(
     view = new VersionView(
       element: versionElement
       version: @options.multiVersion.version
-      el: this.$el.find('optgroup#versions')
+      el: this.$el.find('#version-selectbox')
     )
 
   changeVersion: (event) ->
