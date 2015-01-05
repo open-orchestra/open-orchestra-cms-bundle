@@ -7,9 +7,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Class DisplayIconCompilerPass
+ * Class LeftPanelCompilerPass
  */
-class DisplayIconCompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
+class LeftPanelCompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
 {
     /**
      * You can modify the container here before it is dumped to PHP code.
@@ -20,8 +20,8 @@ class DisplayIconCompilerPass extends AbstractTaggedCompiler implements Compiler
      */
     public function process(ContainerBuilder $container)
     {
-        $managerName = 'php_orchestra_backoffice.display_icon_manager';
-        $tagName = 'php_orchestra_backoffice.display_icon.strategy';
+        $managerName = 'php_orchestra_backoffice.left_panel_manager';
+        $tagName = 'php_orchestra_backoffice.left_panel.strategy';
 
         $this->addStrategyToManager($container, $managerName, $tagName);
     }
