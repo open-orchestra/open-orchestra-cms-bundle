@@ -41,6 +41,6 @@ class ContentListByKeywordStrategy extends AbstractContentListStrategy
      */
     protected function generateParameters($attributes)
     {
-        return array('contentTag' => $attributes['contentKeyword']);
+        return array('keywords' => $attributes['keywords']);
     }
 }

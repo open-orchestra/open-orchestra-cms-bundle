@@ -54,6 +54,28 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $string
+     *
+     * @dataProvider providerDifferentString
+     */
+    public function testTransformWithStringData($string)
+    {
+        $this->assertSame($string, $this->transformer->transform($string));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerDifferentString()
+    {
+        return array(
+            array('Dolor'),
+            array('Sit'),
+            array('Sit,Dolor'),
+        );
+    }
+
+    /**
      * @param string $tagLabel
      *
      * @dataProvider provideTagLabel

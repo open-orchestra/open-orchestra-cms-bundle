@@ -33,7 +33,7 @@ class MediaListByKeywordStrategy extends AbstractBlockStrategy
         $attributes = array_merge(array(
             'class' => '',
             'id' => '',
-            'keyword' => '',
+            'keywords' => null,
         ), $attributes);
 
         $form->add('class', 'textarea', array(
@@ -46,9 +46,9 @@ class MediaListByKeywordStrategy extends AbstractBlockStrategy
             'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
             'required' => false,
         ));
-        $form->add('keyword', 'orchestra_keyword_choice', array(
+        $form->add('keywords', 'orchestra_keywords', array(
             'mapped' => false,
-            'data' => $attributes['keyword'],
+            'data' => $attributes['keywords'],
             'label' => 'php_orchestra_backoffice.form.media.list.keyword',
             'required' => false,
         ));

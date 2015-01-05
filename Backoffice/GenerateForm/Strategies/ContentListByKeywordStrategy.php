@@ -34,7 +34,7 @@ class ContentListByKeywordStrategy extends AbstractContentListStrategy
      */
     protected function getEmptyArray()
     {
-        return array('contentKeyword' => '');
+        return array('keywords' => null);
     }
 
     /**
@@ -43,9 +43,9 @@ class ContentListByKeywordStrategy extends AbstractContentListStrategy
      */
     protected function startBuildForm(FormInterface $form, $attributes)
     {
-        $form->add('contentKeyword', 'orchestra_keyword_choice', array(
+        $form->add('keywords', 'orchestra_keywords', array(
             'mapped' => false,
-            'data' => $attributes['contentType'],
+            'data' => $attributes['keywords'],
             'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
         ));
     }
