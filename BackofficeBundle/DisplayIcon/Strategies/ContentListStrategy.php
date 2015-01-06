@@ -18,7 +18,7 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CONTENT_LIST_BY_KEYWORD == $block | DisplayBlockInterface::CONTENT_LIST_BY_TYPE == $block;
+        return DisplayBlockInterface::CONTENT_LIST === $block;
     }
 
     /**
