@@ -23,7 +23,7 @@ class ContentController extends BaseController
      *
      * @return Response
      */
-    public function getAllLanguages()
+    public function getAllLanguagesAction()
     {
         return array('languages' => array_keys($this->container->getParameter('php_orchestra_backoffice.orchestra_choice.front_language')));
     }
@@ -102,7 +102,11 @@ class ContentController extends BaseController
         /** @var ContentInterface $content */
         $content = $this->get('php_orchestra_model.repository.content')
         ->findOneByContentIdAndLanguageAndVersion($contentId, $language);
-        $this->get('php_orchestra_backoffice.manager.content')->duplicateContent($content);
+        $newContent = $this->get('php_orchestra_backoffice.manager.content')->duplicateContent($content);
+
+        $em = $this->get('doctrine.odm.mongodb.document_manager');
+        $em->persist($newNode);
+        $em->flush();
 
         return new Response('', 200);
     }

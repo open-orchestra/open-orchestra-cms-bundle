@@ -69,7 +69,7 @@ class ContentTransformer extends AbstractTransformer
             array('contentId' => $mixed->getId())
         ));
 
-        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_content_languages_show'));
+        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_parameter_languages_show'));
 
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
             'contentId' => $mixed->getId()

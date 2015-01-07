@@ -58,15 +58,15 @@ class ContentManager
      *
      * @param ContentInterface $content
      *
+     * @return ContentInterface
      */
-    public function duplicateNode(ContentInterface $content)
+    public function duplicateContent(ContentInterface $content)
     {
         $newContent = clone $content;
         $newContent->setVersion($content->getVersion() + 1);
         $newContent->setStatus(null);
 
-        $this->documentManager->persist($newContent);
-        $this->documentManager->flush();
+        return $newContent;
     }
 
 
