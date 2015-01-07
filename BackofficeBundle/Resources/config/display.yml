@@ -69,3 +69,7 @@ services:
         class: %php_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.youtube:
+        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\YoutubeStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }

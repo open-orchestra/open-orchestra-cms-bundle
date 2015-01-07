@@ -244,6 +244,10 @@ php_orchestra_backoffice:
             description: Affiche un formulaire pour ce logger.
         delete_question: Voulez vous supprimer ce bloc
         delete_explanation: La suppression sera définitive.
+        youtube:
+            title: Bloc youtube
+            description: Affiche une vidéo de youtube
+            video_id: Id de la video
     element:
         version:
             create: Nouvelle version

@@ -89,3 +89,7 @@ services:
         class: %php_orchestra_backoffice.language_list.generate_form.class%
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.generate_form.youtube:
+        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\YoutubeStrategy
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
