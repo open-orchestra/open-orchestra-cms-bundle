@@ -33,7 +33,6 @@ class ContentTransformer extends AbstractTransformer
 
         $facade->id = $mixed->getContentId();
         $facade->contentType = $mixed->getContentType();
-        $facade->siteId = $mixed->getSiteId();
         $facade->name = $mixed->getName();
         $facade->version = $mixed->getVersion();
         $facade->contentTypeVersion = $mixed->getContentTypeVersion();
@@ -45,28 +44,38 @@ class ContentTransformer extends AbstractTransformer
             $facade->addAttribute($this->getTransformer('content_attribute')->transform($attribute));
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_content_show',
-            array('contentId' => $mixed->getId())
-        ));
-        $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_content_delete',
-            array('contentId' => $mixed->getId())
-        ));
         $facade->addLink('_self_form', $this->generateRoute(
             'php_orchestra_backoffice_content_form',
             array('contentId' => $mixed->getContentId())
         ));
+
+        $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_content_duplicate', array(
+            'contentId' => $mixed->getContentId(),
+            'language' => $mixed->getLanguage(),
+        )));
+
+        $facade->addLink('_self_version', $this->generateRoute('php_orchestra_api_content_list_version', array(
+            'contentId' => $mixed->getContentId(),
+            'language' => $mixed->getLanguage(),
+        )));
+
+        $facade->addLink('_self_delete', $this->generateRoute(
+            'php_orchestra_api_content_delete',
+            array('contentId' => $mixed->getId())
+        ));
+
+        $facade->addLink('_self', $this->generateRoute(
+            'php_orchestra_api_content_show',
+            array('contentId' => $mixed->getId())
+        ));
+
+        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_content_languages_show'));
 
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
             'contentId' => $mixed->getId()
         )));
         $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_content_update', array(
             'contentId' => $mixed->getId()
-        )));
-
-        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_site_show', array(
-            'siteId' => $mixed->getSiteId(),
         )));
 
         return $facade;

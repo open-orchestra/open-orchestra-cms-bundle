@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Manager;
 use PHPOrchestra\Backoffice\Context\ContextManager;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**
  * Class ContentManager
@@ -13,15 +14,17 @@ class ContentManager
 {
     protected $contentRepository;
     protected $contextManager;
+    protected $documentManager;
 
     /**
      * @param ContentRepositoryInterface $contentRepository
      * @param ContextManager             $contextManager
      */
-    public function __construct(ContentRepositoryInterface $contentRepository, ContextManager $contextManager)
+    public function __construct(ContentRepositoryInterface $contentRepository, ContextManager $contextManager, DocumentManager $documentManager)
     {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
+        $this->documentManager = $documentManager;
     }
     /**
      * @param string $contentId
@@ -49,4 +52,22 @@ class ContentManager
 
         return $content;
     }
+
+    /**
+     * Duplicate a content
+     *
+     * @param ContentInterface $content
+     *
+     */
+    public function duplicateNode(ContentInterface $content)
+    {
+        $newContent = clone $content;
+        $newContent->setVersion($content->getVersion() + 1);
+        $newContent->setStatus(null);
+
+        $this->documentManager->persist($newContent);
+        $this->documentManager->flush();
+    }
+
+
 }

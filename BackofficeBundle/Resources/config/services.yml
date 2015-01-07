@@ -47,6 +47,7 @@ services:
         arguments:
             - @php_orchestra_model.repository.content
             - @php_orchestra_backoffice.context_manager
+            - @doctrine.odm.mongodb.document_manager
     php_orchestra_backoffice.manager.block:
         class: %php_orchestra_backoffice.manager.block.class%
         arguments: [@php_orchestra_model.repository.node]
