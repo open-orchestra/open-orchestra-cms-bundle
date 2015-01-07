@@ -32,6 +32,7 @@ class ApiControllersTest extends AbstractControllerTest
             array('/api/node/fixture_full'),
             array('/api/node/fixture_full?language=en'),
             array('/api/content'),
+            array('/api/content?content_type=news'),
             array('/api/content-type'),
             array('/api/site'),
             array('/api/theme'),

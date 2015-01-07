@@ -7,10 +7,20 @@ use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class AbstractContentListStrategy
+ * Class ContentListStrategy
  */
-abstract class AbstractContentListStrategy extends AbstractBlockStrategy
+class ContentListStrategy extends AbstractBlockStrategy
 {
+    /**
+     * @param BlockInterface $block
+     *
+     * @return bool
+     */
+    public function support(BlockInterface $block)
+    {
+        return DisplayBlockInterface::CONTENT_LIST === $block->getComponent();
+    }
+
     /**
      * @param FormInterface  $form
      * @param BlockInterface $block
@@ -19,20 +29,17 @@ abstract class AbstractContentListStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $empty = array_merge(
-            array(
-                'keywords' => null,
-                'class' => '',
-                'id' => '',
-                'url' => '',
-                'characterNumber' => 50,
-            ),
-            $this->getEmptyArray()
+        $empty = array(
+            'keywords' => null,
+            'class' => '',
+            'id' => '',
+            'url' => '',
+            'characterNumber' => 50,
+            'contentType' => ''
         );
 
         $attributes = array_merge($empty, $attributes);
 
-        $this->startBuildForm($form, $attributes);
         $form->add('class', 'textarea', array(
             'mapped' => false,
             'data' => $attributes['class'],
@@ -54,16 +61,24 @@ abstract class AbstractContentListStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
         ));
+        $form->add('contentType', 'orchestra_content_type_choice', array(
+            'mapped' => false,
+            'data' => $attributes['contentType'],
+            'label' => 'php_orchestra_backoffice.form.content_list.content_type',
+            'required' => false
+        ));
+        $form->add('keywords', 'orchestra_keywords', array(
+            'mapped' => false,
+            'data' => $attributes['keywords'],
+            'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
+        ));
     }
 
     /**
-     * @return array
+     * @return string
      */
-    abstract protected function getEmptyArray();
-
-    /**
-     * @param FormInterface $form
-     * @param array         $attributes
-     */
-    abstract protected function startBuildForm(FormInterface $form, $attributes);
+    public function getName()
+    {
+        return 'content_list';
+    }
 }
