@@ -42,6 +42,7 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::SEARCH,
             DisplayBlockInterface::SEARCH_RESULT,
             DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD,
+            DisplayBlockInterface::YOUTUBE,
         );
 
         if (empty($config['blocks'])) {

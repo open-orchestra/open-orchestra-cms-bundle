@@ -81,3 +81,7 @@ services:
         class: %php_orchestra_backoffice.display_icon.configurable_content.class%
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.icon.youtube:
+        class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\YoutubeStrategy
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }

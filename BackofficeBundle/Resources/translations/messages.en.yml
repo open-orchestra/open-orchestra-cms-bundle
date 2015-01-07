@@ -244,6 +244,10 @@ php_orchestra_backoffice:
             description: Display a log form.
         delete_question: Delete this block
         delete_explanation: The removal will be final.
+        youtube:
+            title: Youtube block
+            description: Display a youtube video
+            video_id: Video id
     element:
         version:
             create: New version

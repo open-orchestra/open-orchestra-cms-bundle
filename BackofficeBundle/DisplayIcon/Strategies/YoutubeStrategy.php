@@ -3,12 +3,11 @@
 namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
- * Class TestStrategy
+ * Class YoutubeStrategy
  */
-class TestStrategy extends AbstractStrategy
+class YoutubeStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +18,7 @@ class TestStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return false;
+        return DisplayBlockInterface::YOUTUBE === $block;
     }
 
     /**
@@ -29,7 +28,7 @@ class TestStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Test:showIcon.html.twig');
+        return $this->render('PHPOrchestraBackofficeBundle:Block/Youtube:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +38,6 @@ class TestStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'test';
+        return 'youtube';
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies;
+namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\BackofficeBundle\DisplayIcons\Strategies\AbstractStrategy;
+use PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
  * Class TestStrategy
