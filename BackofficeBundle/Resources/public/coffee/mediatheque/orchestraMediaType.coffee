@@ -3,7 +3,7 @@
 $(document).on "click", ".media-select", (event) ->
   event.preventDefault()
   mediaModalContainer = $(event.target).parents(".mediaModalContainer")
-  media = $(event.target).parents(".superbox-list").children(".superbox-img")
+  media = $('.superbox-img', $(event.target).parents(".superbox-list"))
   mediaSrc = media.attr('src')
   mediaId = media.data('id')
   inputId = '#' + mediaModalContainer.data('input')

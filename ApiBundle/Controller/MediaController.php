@@ -61,8 +61,9 @@ class MediaController extends Controller
     public function deleteAction($mediaId)
     {
         $media = $this->get('php_orchestra_media.repository.media')->find($mediaId);
-        $this->get('doctrine.odm.mongodb.document_manager')->remove($media);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+        $documentManager->remove($media);
+        $documentManager->flush();
 
         return new Response('', 200);
     }
