@@ -1,10 +1,11 @@
 #--[ MEDIA SELECTED ]--#
 
-$(document).on "dblclick", ".mediaModalContainer img.selectable", (event) ->
+$(document).on "click", ".media-select", (event) ->
   event.preventDefault()
   mediaModalContainer = $(event.target).parents(".mediaModalContainer")
-  mediaSrc = $(event.target).attr('src')
-  mediaId = $(event.target).data('id')
+  media = $(event.target).parents(".superbox-list").children(".superbox-img")
+  mediaSrc = media.attr('src')
+  mediaId = media.data('id')
   inputId = '#' + mediaModalContainer.data('input')
   previewId = '#previewImage_' + mediaModalContainer.data('input')
   $(inputId).val(mediaId)

@@ -290,6 +290,8 @@ php_orchestra_backoffice:
         current_preview: Current image
         crop: Crop
         meta: Meta
+        delete_question: Would you like to delete this media
+        delete_explanation: This operation is not reversible.
     command:
         node:
             success: Nodes references are consistent.
