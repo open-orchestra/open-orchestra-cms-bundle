@@ -309,4 +309,43 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array('vieux', 'jeune')
         );
     }
+
+    /**
+     * @param int    $position
+     * @param string $nodeId
+     *
+     * @dataProvider providePositionAndNodeId
+     */
+    public function testOrderNodeChildren($position, $nodeId)
+    {
+        $sonNodeId = 'son';
+        $position = 0;
+        $nodeId = 'parent';
+        $orderedNode = array($position => $sonNodeId);
+
+        $sons = new ArrayCollection();
+        $sons->add($this->node);
+        $sons->add($this->node);
+        $sons->add($this->node);
+        $sons->add($this->node);
+
+        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId('son')->thenReturn($sons);
+
+        $this->manager->orderNodeChildren($orderedNode, $nodeId);
+
+        Phake::verify($this->node, Phake::times(4))->setParentId($nodeId);
+        Phake::verify($this->node, Phake::times(4))->setOrder($position);
+    }
+
+    /**
+     * @return array
+     */
+    public function providePositionAndNodeId()
+    {
+        return array(
+            array(0, 'root'),
+            array(3, 'test'),
+            array(4, 'fixture'),
+        );
+    }
 }

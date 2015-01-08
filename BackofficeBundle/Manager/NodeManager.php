@@ -197,4 +197,20 @@ class NodeManager
             }
         }
     }
+
+    /**
+     * @param array  $orderedNode
+     * @param string $nodeId
+     */
+    public function orderNodeChildren($orderedNode, $nodeId)
+    {
+        foreach ($orderedNode as $position => $childNodeId) {
+            $childs = $this->nodeRepository->findByNodeIdAndSiteId($childNodeId);
+            /** @var NodeInterface $child */
+            foreach ($childs as $child) {
+                $child->setOrder($position);
+                $child->setParentId($nodeId);
+            }
+        }
+    }
 }

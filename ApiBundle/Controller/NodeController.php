@@ -123,4 +123,31 @@ class NodeController extends BaseController
     {
         return $this->reverseTransform($request, $nodeMongoId, 'node');
     }
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     *
+     * @Config\Route("/update/children/order/{nodeId}", name="php_orchestra_api_node_update_children_order")
+     * @Config\Method({"POST"})
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function updateChildrenOrderAction(Request $request, $nodeId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'PHPOrchestra\ApiBundle\Facade\NodeCollectionFacade',
+            $request->get('_format', 'json')
+        );
+
+        $orderedNode = $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->reverseTransformOrder($facade);
+
+        $this->get('php_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $nodeId);
+
+        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return new Response('', 200);
+    }
 }

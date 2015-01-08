@@ -26,4 +26,12 @@ class NodeCollectionFacade extends AbstractFacade
     {
         $this->nodes[] = $facade;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
 }
