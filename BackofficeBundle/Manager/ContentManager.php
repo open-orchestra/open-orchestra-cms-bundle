@@ -34,15 +34,15 @@ class ContentManager
      */
     public function createNewLanguageContent($contentId, $language = null)
     {
-        if ($language === null) {
+        if (is_null($language)) {
             $language = $this->contextManager->getCurrentLocale();
         }
 
         $content = $this->contentRepository->findOneByContentIdAndLanguage($contentId, $language);
 
-        if($content === null){
+        if (is_null($content)) {
             $contentSource = $this->contentRepository->findOneByContentId($contentId);
-            if($contentSource !== null){
+            if (!is_null($contentSource)) {
                 $content = clone $contentSource;
                 $content->setVersion(1);
                 $content->setStatus(null);

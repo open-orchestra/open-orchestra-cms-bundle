@@ -17,18 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 class ContentController extends BaseController
 {
     /**
-     * @Config\Route("/languages", name="php_orchestra_api_content_languages_show")
-     * @Config\Method({"GET"})
-     * @Api\Serialize()
-     *
-     * @return Response
-     */
-    public function getAllLanguagesAction()
-    {
-        return array('languages' => array_keys($this->container->getParameter('php_orchestra_backoffice.orchestra_choice.front_language')));
-    }
-
-    /**
      * @param string $contentId
      *
      * @Config\Route("/{contentId}", name="php_orchestra_api_content_show")
@@ -113,7 +101,7 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $contentId
+     * @param string  $contentMongoId
      *
      * @Config\Route("/{contentId}/list-version", name="php_orchestra_api_content_list_version")
      * @Config\Method({"GET"})
@@ -131,16 +119,16 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $contentId
+     * @param string $contentMongoId
      *
-     * @Config\Route("/update/{contentId}", name="php_orchestra_api_content_update")
+     * @Config\Route("/update/{contentMongoId}", name="php_orchestra_api_content_update")
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
      * @return Response
      */
-    public function changeStatusAction(Request $request, $contentId)
+    public function changeStatusAction(Request $request, $contentMongoId)
     {
-        return $this->reverseTransform($request, $contentId, 'content');
+        return $this->reverseTransform($request, $contentMongoId, 'content');
     }
 }

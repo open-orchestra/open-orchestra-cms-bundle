@@ -46,8 +46,14 @@ TableviewView = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
-    redirectUrl = appRouter.generateUrl('showEntity', appRouter.addParametersToRoute(
-      'entityId': @element.get('id')
-    ))
+    if @element.get('language')
+      redirectUrl = appRouter.generateUrl('showEntityWithLanguage', appRouter.addParametersToRoute(
+        'entityId': @element.get('id')
+        'language': @element.get('language')
+      ))
+    else
+      redirectUrl = appRouter.generateUrl('showEntity', appRouter.addParametersToRoute(
+        'entityId': @element.get('id')
+      ))
     Backbone.history.navigate(redirectUrl, {trigger: true})
 )

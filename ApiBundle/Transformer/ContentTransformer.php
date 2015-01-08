@@ -72,10 +72,10 @@ class ContentTransformer extends AbstractTransformer
         $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_parameter_languages_show'));
 
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
-            'contentId' => $mixed->getId()
+            'contentMongoId' => $mixed->getId()
         )));
         $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_content_update', array(
-            'contentId' => $mixed->getId()
+            'contentMongoId' => $mixed->getId()
         )));
 
         return $facade;
