@@ -43,9 +43,8 @@ class ContentManager
         if (is_null($content)) {
             $contentSource = $this->contentRepository->findOneByContentId($contentId);
             if (!is_null($contentSource)) {
-                $content = clone $contentSource;
+                $content = $this->duplicateContent($contentSource);
                 $content->setVersion(1);
-                $content->setStatus(null);
                 $content->setLanguage($language);
             }
         }
