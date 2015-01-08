@@ -10,16 +10,13 @@ use PHPOrchestra\Media\Model\MediaInterface;
  */
 class MediaTransformer extends AbstractTransformer
 {
-    protected $mediathequeUrl;
     protected $thumbnailConfig;
 
     /**
-     * @param string $mediathequeUrl
      * @param array  $thumbnailConfig
      */
-    public function __construct($mediathequeUrl, array $thumbnailConfig)
+    public function __construct(array $thumbnailConfig)
     {
-        $this->mediathequeUrl = $mediathequeUrl;
         $this->thumbnailConfig = $thumbnailConfig;
     }
 

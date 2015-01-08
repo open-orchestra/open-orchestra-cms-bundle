@@ -101,7 +101,6 @@ services:
     php_orchestra_api.transformer.media:
         class: %php_orchestra_api.transformer.media.class%
         arguments:
-            - %php_orchestra_media.mediatheque.url%
             - %php_orchestra_media.thumbnail.configuration%
         tags:
             - { name: php_orchestra_api.transformer.strategy}
