@@ -16,7 +16,8 @@ class VideoUrlToIdTransformer implements DataTransformerInterface
      */
     public function transform($url)
     {
-        $videoId = array_pop(preg_split('#/|=#', $url));
+        $explode = preg_split('#/|=#', $url);
+        $videoId = array_pop($explode);
 
         return $videoId;
     }
