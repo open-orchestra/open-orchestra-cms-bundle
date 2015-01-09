@@ -27,6 +27,7 @@ parameters:
     php_orchestra_backoffice.type.keyword.class: PHPOrchestra\BackofficeBundle\Form\Type\KeywordType
     php_orchestra_backoffice.type.orchestra_keywords.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
     php_orchestra_backoffice.type.role.class: PHPOrchestra\BackofficeBundle\Form\Type\RoleType
+    php_orchestra_backoffice.type.orchestra_video.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
 
 services:
     # Template form type
@@ -236,3 +237,9 @@ services:
             - %php_orchestra_model.document.role.class%
         tags:
             - { name: form.type, alias: role }
+    php_orchestra_backoffice.type.orchestra_video:
+        class: %php_orchestra_backoffice.type.orchestra_video.class%
+        arguments:
+            - @php_orchestra_backoffice.transformer.video_url_to_id
+        tags:
+            - { name: form.type, alias: orchestra_video }

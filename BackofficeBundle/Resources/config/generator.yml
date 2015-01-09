@@ -93,3 +93,7 @@ services:
         class: PHPOrchestra\Backoffice\GenerateForm\Strategies\YoutubeStrategy
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.generate_form.dailymotion:
+        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\DailymotionStrategy
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }

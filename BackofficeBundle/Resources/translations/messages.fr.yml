@@ -248,6 +248,10 @@ php_orchestra_backoffice:
             title: Bloc youtube
             description: Affiche une vidéo de youtube
             video_id: Id de la video
+        dailymotion:
+            title: Block dailymotion
+            description: Affiche un lecteur vidéo de dailymotion
+            video_id: Id de la video
     element:
         version:
             create: Nouvelle version
