@@ -17,11 +17,6 @@ class ContentFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $siteId;
-
-    /**
-     * @Serializer\Type("string")
-     */
     public $name;
 
     /**

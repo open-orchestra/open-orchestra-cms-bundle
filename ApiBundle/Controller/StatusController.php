@@ -68,15 +68,15 @@ class StatusController extends Controller
     /**
      * @param string $contentId
      *
-     * @Config\Route("/list-statuses/content/{contentId}", name="php_orchestra_api_list_status_content")
+     * @Config\Route("/list-statuses/content/{contentMongoId}", name="php_orchestra_api_list_status_content")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
      * @return Response
      */
-    public function listStatusesForContentAction($contentId)
+    public function listStatusesForContentAction($contentMongoId)
     {
-        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
+        $content = $this->get('php_orchestra_model.repository.content')->find($contentMongoId);
 
         return $this->listStatuses($content->getStatus());
     }

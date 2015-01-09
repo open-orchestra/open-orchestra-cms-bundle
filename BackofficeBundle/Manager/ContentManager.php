@@ -31,22 +31,39 @@ class ContentManager
      */
     public function createNewLanguageContent($contentId, $language = null)
     {
-        if ($language === null) {
+        if (is_null($language)) {
             $language = $this->contextManager->getCurrentLocale();
         }
 
         $content = $this->contentRepository->findOneByContentIdAndLanguage($contentId, $language);
 
-        if($content === null){
+        if (is_null($content)) {
             $contentSource = $this->contentRepository->findOneByContentId($contentId);
-            if($contentSource !== null){
-                $content = clone $contentSource;
+            if (!is_null($contentSource)) {
+                $content = $this->duplicateContent($contentSource);
                 $content->setVersion(1);
-                $content->setStatus(null);
                 $content->setLanguage($language);
             }
         }
 
         return $content;
     }
+
+    /**
+     * Duplicate a content
+     *
+     * @param ContentInterface $content
+     *
+     * @return ContentInterface
+     */
+    public function duplicateContent(ContentInterface $content)
+    {
+        $newContent = clone $content;
+        $newContent->setVersion($content->getVersion() + 1);
+        $newContent->setStatus(null);
+
+        return $newContent;
+    }
+
+
 }
