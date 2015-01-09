@@ -18,7 +18,6 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
 
     protected $contentRepository;
     protected $contextManager;
-    protected $documentManager;
 
     /**
      * Set up the test
@@ -30,9 +29,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
         $this->contextManager = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
 
-        $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-
-        $this->manager = new ContentManager($this->contentRepository, $this->contextManager, $this->documentManager);
+        $this->manager = new ContentManager($this->contentRepository, $this->contextManager);
     }
 
     /**
