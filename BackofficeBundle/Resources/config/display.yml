@@ -73,3 +73,7 @@ services:
         class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\YoutubeStrategy
         tags:
             - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.dailymotion:
+        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\DailymotionStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }

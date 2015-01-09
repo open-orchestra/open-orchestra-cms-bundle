@@ -85,3 +85,7 @@ services:
         class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\YoutubeStrategy
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.icon.dailymotion:
+        class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\DailymotionStrategy
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }
