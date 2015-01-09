@@ -13,6 +13,9 @@ class OrchestraVideoType extends AbstractType
 {
     protected $videoUrlTransformer;
 
+    /**
+     * @param VideoUrlToIdTransformer $videoUrlTransformer
+     */
     public function __construct(VideoUrlToIdTransformer $videoUrlTransformer)
     {
         $this->videoUrlTransformer = $videoUrlTransformer;
@@ -20,7 +23,7 @@ class OrchestraVideoType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -52,18 +52,14 @@ class OrchestraVideoTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test builder
+     * Test buildForm
      */
-    public function testBuilder()
+    public function testBuildForm()
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
-        Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::never())->add(Phake::anyParameters());
-        Phake::verify($builder, Phake::never())->addEventSubscriber(Phake::anyParameters());
-        Phake::verify($builder, Phake::never())->addEventListener(Phake::anyParameters());
+        Phake::verify($builder)->addModelTransformer($this->videoUrltoId);
     }
 }
