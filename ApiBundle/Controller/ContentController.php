@@ -93,7 +93,7 @@ class ContentController extends BaseController
         $newContent = $this->get('php_orchestra_backoffice.manager.content')->duplicateContent($content);
 
         $em = $this->get('doctrine.odm.mongodb.document_manager');
-        $em->persist($newNode);
+        $em->persist($newContent);
         $em->flush();
 
         return new Response('', 200);
