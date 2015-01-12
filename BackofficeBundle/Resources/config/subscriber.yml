@@ -1,0 +1,11 @@
+parameters:
+    php_orchestra_backoffice.subscriber.update_child_node_path.class: PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber
+
+services:
+    php_orchestra_backoffice.subscriber.update_child_node_path:
+        class: %php_orchestra_backoffice.subscriber.update_child_node_path.class%
+        arguments:
+            - @php_orchestra_model.repository.node
+            - @service_container
+        tags:
+            - { name: kernel.event_subscriber }

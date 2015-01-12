@@ -3,6 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
+use PHPOrchestra\BackofficeBundle\NodeEvents;
 use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
@@ -19,13 +20,14 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
-    protected $nodeRepository;
-    protected $siteRepository;
+    protected $node;
+    protected $nodeClass;
     protected $areaManager;
     protected $blockManager;
     protected $contextManager;
-    protected $nodeClass;
-    protected $node;
+    protected $nodeRepository;
+    protected $siteRepository;
+    protected $eventDispatcher;
 
     /**
      * Set up the test
@@ -48,7 +50,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn('fakeLanguage');
         $this->nodeClass = 'PHPOrchestra\ModelBundle\Document\Node';
 
-        $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass);
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
+        $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass, $this->eventDispatcher);
     }
 
     /**
@@ -313,15 +317,19 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param int    $position
      * @param string $nodeId
+     * @param string $parentPath
      *
-     * @dataProvider providePositionAndNodeId
+     * @dataProvider providePositionAndNodeIdAndParentPath
      */
-    public function testOrderNodeChildren($position, $nodeId)
+    public function testOrderNodeChildren($position, $nodeId, $parentPath)
     {
         $sonNodeId = 'son';
-        $position = 0;
-        $nodeId = 'parent';
         $orderedNode = array($position => $sonNodeId);
+
+        $parentNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($parentNode)->getNodeId()->thenReturn($nodeId);
+        Phake::when($parentNode)->getPath()->thenReturn($parentPath);
+
 
         $sons = new ArrayCollection();
         $sons->add($this->node);
@@ -331,21 +339,23 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->nodeRepository)->findByNodeIdAndSiteId('son')->thenReturn($sons);
 
-        $this->manager->orderNodeChildren($orderedNode, $nodeId);
+        $this->manager->orderNodeChildren($orderedNode, $parentNode);
 
         Phake::verify($this->node, Phake::times(4))->setParentId($nodeId);
         Phake::verify($this->node, Phake::times(4))->setOrder($position);
+        Phake::verify($this->node, Phake::times(4))->setPath($parentPath . '/' . $sonNodeId);
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
     /**
      * @return array
      */
-    public function providePositionAndNodeId()
+    public function providePositionAndNodeIdAndParentPath()
     {
         return array(
-            array(0, 'root'),
-            array(3, 'test'),
-            array(4, 'fixture'),
+            array(0, 'root', ''),
+            array(3, 'test', '/test'),
+            array(4, 'fixture', '/test/fixture'),
         );
     }
 }

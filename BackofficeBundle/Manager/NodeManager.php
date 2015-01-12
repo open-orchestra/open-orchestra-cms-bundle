@@ -2,32 +2,37 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
+use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
+use PHPOrchestra\BackofficeBundle\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\Backoffice\Context\ContextManager;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class NodeManager
  */
 class NodeManager
 {
+    protected $eventDispatcher;
     protected $nodeRepository;
     protected $siteRepository;
-    protected $areaManager;
-    protected $blockManager;
     protected $contextManager;
+    protected $blockManager;
+    protected $areaManager;
     protected $nodeClass;
 
     /**
      * Constructor
      *
-     * @param NodeRepositoryInterface $nodeRepository
-     * @param SiteRepositoryInterface $siteRepository
-     * @param AreaManager             $areaManager
-     * @param BlockManager            $blockManager
-     * @param ContextManager          $contextManager
-     * @param string                  $nodeClass
+     * @param NodeRepositoryInterface  $nodeRepository
+     * @param SiteRepositoryInterface  $siteRepository
+     * @param AreaManager              $areaManager
+     * @param BlockManager             $blockManager
+     * @param ContextManager           $contextManager
+     * @param string                   $nodeClass
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
@@ -35,7 +40,8 @@ class NodeManager
         AreaManager $areaManager,
         BlockManager $blockManager,
         ContextManager $contextManager,
-        $nodeClass
+        $nodeClass,
+        $eventDispatcher
     )
     {
         $this->nodeRepository = $nodeRepository;
@@ -44,6 +50,7 @@ class NodeManager
         $this->blockManager = $blockManager;
         $this->contextManager = $contextManager;
         $this->nodeClass = $nodeClass;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -199,18 +206,23 @@ class NodeManager
     }
 
     /**
-     * @param array  $orderedNode
-     * @param string $nodeId
+     * @param array         $orderedNode
+     * @param NodeInterface $node
      */
-    public function orderNodeChildren($orderedNode, $nodeId)
+    public function orderNodeChildren($orderedNode, NodeInterface $node)
     {
+        $nodeId = $node->getNodeId();
         foreach ($orderedNode as $position => $childNodeId) {
             $childs = $this->nodeRepository->findByNodeIdAndSiteId($childNodeId);
+            $path = $node->getPath() . '/' . $childNodeId;
             /** @var NodeInterface $child */
             foreach ($childs as $child) {
                 $child->setOrder($position);
                 $child->setParentId($nodeId);
+                $child->setPath($path);
             }
+            $event = new NodeEvent($child);
+            $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
     }
 }

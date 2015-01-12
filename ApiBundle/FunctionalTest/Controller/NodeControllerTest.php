@@ -9,6 +9,9 @@ use PHPOrchestra\ModelInterface\Model\NodeInterface;
  */
 class NodeControllerTest extends AbstractControllerTest
 {
+    /**
+     * Test delete action
+     */
     public function testDeleteAction()
     {
         $this->prepareDatabase();

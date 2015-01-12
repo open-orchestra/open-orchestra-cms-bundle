@@ -66,6 +66,7 @@ class PHPOrchestraBackofficeExtension extends Extension
         $loader->load('transformer.yml');
         $loader->load('icon.yml');
         $loader->load('leftpanel.yml');
+        $loader->load('subscriber.yml');
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }

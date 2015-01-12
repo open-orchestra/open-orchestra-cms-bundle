@@ -37,6 +37,7 @@ services:
             - @php_orchestra_backoffice.manager.block
             - @php_orchestra_backoffice.context_manager
             - %php_orchestra_model.document.node.class%
+            - @event_dispatcher
     php_orchestra_backoffice.manager.media_folder:
         class: %php_orchestra_backoffice.manager.media_folder.class%
         arguments: [@doctrine.odm.mongodb.document_manager]
