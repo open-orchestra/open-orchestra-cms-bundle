@@ -24,8 +24,8 @@ class DeletedController extends BaseController
     public function listAction()
     {
         /** @var Collection $nodes */
-        $nodes = $this->get('php_orchestra_model.repository.node')->findByDeleted(true);
-        $contents = $this->get('php_orchestra_model.repository.content')->findByDeleted(true);
+        $nodes = $this->get('php_orchestra_model.repository.node')->findLastVersionByDeletedAndSiteId();
+        $contents = $this->get('php_orchestra_model.repository.content')->findAllDeleted();
 
         $deleted = array_merge($nodes, $contents);
 
