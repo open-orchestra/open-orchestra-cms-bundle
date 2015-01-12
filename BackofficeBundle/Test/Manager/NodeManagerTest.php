@@ -344,7 +344,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->node, Phake::times(4))->setParentId($nodeId);
         Phake::verify($this->node, Phake::times(4))->setOrder($position);
         Phake::verify($this->node, Phake::times(4))->setPath($parentPath . '/' . $sonNodeId);
-        Phake::verify($this->eventDispatcher)->dispatch(NodeEvents::PATH_UPDATED, Phake::anyParameters());
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
     /**

@@ -81,6 +81,6 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($son2)->setPath($parentPath . '/' . $son2NodeId);
         Phake::verify($son3)->setPath($parentPath . '/' . $son2NodeId);
 
-        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(NodeEvents::PATH_UPDATED, Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
     }
 }
