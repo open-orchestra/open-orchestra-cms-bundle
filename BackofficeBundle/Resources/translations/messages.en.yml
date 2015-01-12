@@ -188,6 +188,8 @@ php_orchestra_backoffice:
                 list: Roles
             keyword:
                 list: Keywords
+            deleted:
+                list: Basket
     block:
         configurable_content:
             title: Configurable content block
