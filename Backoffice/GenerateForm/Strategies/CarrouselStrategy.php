@@ -30,9 +30,12 @@ class CarrouselStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $form->add('pictures', 'textarea', array(
+        $form->add('pictures', 'collection', array(
             'mapped' => false,
-            'data' => array_key_exists('pictures', $attributes)? json_encode($attributes['pictures']):'',
+            'type' => 'orchestra_media',
+            'allow_add' => true,
+            'allow_delete' => true
+           // 'data' => array_key_exists('pictures', $attributes)? json_encode($attributes['pictures']):'',
         ));
         $form->add('width', 'text', array(
             'mapped' => false,
