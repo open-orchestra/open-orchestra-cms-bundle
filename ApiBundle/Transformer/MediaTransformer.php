@@ -10,16 +10,13 @@ use PHPOrchestra\Media\Model\MediaInterface;
  */
 class MediaTransformer extends AbstractTransformer
 {
-    protected $mediathequeUrl;
     protected $thumbnailConfig;
 
     /**
-     * @param string $mediathequeUrl
      * @param array  $thumbnailConfig
      */
-    public function __construct($mediathequeUrl, array $thumbnailConfig)
+    public function __construct(array $thumbnailConfig)
     {
-        $this->mediathequeUrl = $mediathequeUrl;
         $this->thumbnailConfig = $thumbnailConfig;
     }
 
@@ -35,11 +32,17 @@ class MediaTransformer extends AbstractTransformer
         $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->mimeType = $mixed->getMimeType();
-        $facade->displayedImage = $this->mediathequeUrl .'/' . $mixed->getThumbnail();
+        $facade->displayedImage = $this->generateRoute('php_orchestra_media_get', array(
+            'key' => $mixed->getThumbnail()
+        ));
 
-        foreach ($this->thumbnailConfig as $key => $thumbnail) {
-            // TODO use the url generator for the images with is not done yet
-            $facade->addThumbnail($key, $this->mediathequeUrl . '/' . $key . '-' . $mixed->getFilesystemName());
+        foreach ($this->thumbnailConfig as $format => $thumbnail) {
+            $facade->addThumbnail(
+                $format,
+                $this->generateRoute('php_orchestra_media_get', array(
+                    'key' => $format . '-' . $mixed->getFilesystemName()
+                ))
+            );
         }
 
         $facade->addLink('_self_select', $mixed->getId());

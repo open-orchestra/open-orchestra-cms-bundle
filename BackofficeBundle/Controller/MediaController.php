@@ -86,6 +86,13 @@ class MediaController extends AbstractAdminController
             $mediaRepository = $this->get('php_orchestra_media.repository.media');
             $media = $mediaRepository->find($mediaId);
 
+            $gaufretteManager = $this->get('php_orchestra_media.manager.gaufrette');
+            $filename = $media->getFilesystemName();
+            file_put_contents(
+                $this->container->getParameter('php_orchestra_media.tmp_dir') . '/' . $filename,
+                $gaufretteManager->getFileContent($filename)
+            );
+
             $this->get('php_orchestra_media.manager.image_resizer')->crop(
                 $media,
                 $data['x'],
