@@ -39,6 +39,11 @@ parameters:
                     default_value: 50
                 required:
                     default_value: false
+        orchestra_media:
+            label: Media
+            options:
+                required:
+                    default_value: false
 
     php_orchestra_backoffice.options:
         max_length:
