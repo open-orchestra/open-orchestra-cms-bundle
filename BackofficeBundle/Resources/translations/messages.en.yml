@@ -252,6 +252,10 @@ php_orchestra_backoffice:
             title: Dailymotion Block
             description: Display a dailymotion player
             video_id: Video id
+        vimeo:
+            title: Vimeo Block
+            description: Display a viemo player
+            video_id: Video Id
     element:
         version:
             create: New version
