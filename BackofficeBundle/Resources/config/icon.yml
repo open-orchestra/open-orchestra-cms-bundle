@@ -93,3 +93,7 @@ services:
         class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\VimeoStrategy
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.icon.gmap:
+        class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\GmapStrategy
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }

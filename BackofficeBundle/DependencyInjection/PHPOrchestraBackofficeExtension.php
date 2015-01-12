@@ -45,6 +45,7 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::YOUTUBE,
             DisplayBlockInterface::DAILYMOTION,
             DisplayBlockInterface::VIMEO,
+            DisplayBlockInterface::GMAP,
         );
 
         if (empty($config['blocks'])) {

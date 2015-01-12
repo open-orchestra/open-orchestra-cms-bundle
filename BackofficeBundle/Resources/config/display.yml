@@ -81,3 +81,7 @@ services:
         class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\VimeoStrategy
         tags:
             - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.gmap:
+        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
