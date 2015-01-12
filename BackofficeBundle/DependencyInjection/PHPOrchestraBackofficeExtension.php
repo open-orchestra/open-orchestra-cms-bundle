@@ -44,6 +44,7 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD,
             DisplayBlockInterface::YOUTUBE,
             DisplayBlockInterface::DAILYMOTION,
+            DisplayBlockInterface::VIMEO,
         );
 
         if (empty($config['blocks'])) {
