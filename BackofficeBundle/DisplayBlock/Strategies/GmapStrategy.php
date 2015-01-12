@@ -38,6 +38,7 @@ class GmapStrategy extends AbstractStrategy
         $parameters = array(
             'latitude' => $attributes['latitude'],
             'longitude' => $attributes['longitude'],
+            'zoom' => $attributes['zoom'],
         );
 
         return $this->render('PHPOrchestraBackofficeBundle:Block/Gmap:show.html.twig', $parameters);

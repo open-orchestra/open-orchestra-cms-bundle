@@ -51,12 +51,14 @@ class GmapStrategy extends AbstractBlockStrategy
         $form->add('latitude', 'text', array(
             'mapped' => false,
             'data' => $attributes['id'],
-            'required' => false,
         ));
         $form->add('longitude', 'text', array(
             'mapped' => false,
             'data' => $attributes['id'],
-            'required' => false,
+        ));
+        $form->add('zoom', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['id'],
         ));
     }
 
