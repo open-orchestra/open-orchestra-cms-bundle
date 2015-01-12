@@ -142,9 +142,11 @@ class NodeController extends BaseController
             $request->get('_format', 'json')
         );
 
+        $node = $this->get('php_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+
         $orderedNode = $this->get('php_orchestra_api.transformer_manager')->get('node_collection')->reverseTransformOrder($facade);
 
-        $this->get('php_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $nodeId);
+        $this->get('php_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $node);
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
