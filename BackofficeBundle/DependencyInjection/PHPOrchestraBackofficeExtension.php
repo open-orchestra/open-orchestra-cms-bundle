@@ -46,6 +46,7 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::DAILYMOTION,
             DisplayBlockInterface::VIMEO,
             DisplayBlockInterface::GMAP,
+            DisplayBlockInterface::ADDTHIS,
         );
 
         if (empty($config['blocks'])) {

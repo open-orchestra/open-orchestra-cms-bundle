@@ -105,3 +105,7 @@ services:
         class: PHPOrchestra\Backoffice\GenerateForm\Strategies\GmapStrategy
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.generate_form.add_this:
+        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\AddThisStrategy
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }

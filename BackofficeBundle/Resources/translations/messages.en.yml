@@ -261,6 +261,9 @@ php_orchestra_backoffice:
         gmap:
             title: Gmap Block
             description: Display a map
+        addthis:
+            title: Add this block
+            description: Display button to share content
     element:
         version:
             create: New version
