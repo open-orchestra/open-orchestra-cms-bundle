@@ -256,6 +256,9 @@ php_orchestra_backoffice:
             title: Bloc Vimeo
             description: Affiche un lecteur vidéo vimeo
             video_id: Id de la vidéo
+        gmap:
+            title: Bloc Gmap
+            description: Affiche une carte
     element:
         version:
             create: Nouvelle version
