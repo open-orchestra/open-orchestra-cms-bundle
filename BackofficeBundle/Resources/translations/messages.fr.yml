@@ -199,6 +199,11 @@ php_orchestra_backoffice:
         carrousel:
             title: Bloc carrousel
             description: Fait défiler des images.
+            form:
+                media:
+                    add: Ajouter un média
+                    new: Nouveau média
+                    delete: Retirer le média
         contact:
             title: Bloc contact
             description: Affiche un formulaire de contact.

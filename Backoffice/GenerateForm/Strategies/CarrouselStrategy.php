@@ -6,12 +6,23 @@ use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class CarrouselStrategy
  */
 class CarrouselStrategy extends AbstractBlockStrategy
 {
+    protected $translator;
+
+    /**
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * @param BlockInterface $block
      *
@@ -34,8 +45,12 @@ class CarrouselStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'type' => 'orchestra_media',
             'allow_add' => true,
-            'allow_delete' => true
-           // 'data' => array_key_exists('pictures', $attributes)? json_encode($attributes['pictures']):'',
+            'attr' => array(
+                'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.block.carrousel.form.media.add'),
+                'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.block.carrousel.form.media.new'),
+                'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.block.carrousel.form.media.delete'),
+            ),
+            'data' => array_key_exists('pictures', $attributes)? $attributes['pictures'] : array()
         ));
         $form->add('width', 'text', array(
             'mapped' => false,
