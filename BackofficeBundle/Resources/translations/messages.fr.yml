@@ -188,6 +188,8 @@ php_orchestra_backoffice:
                 list: Rôles
             keyword:
                 list: Mots-clés
+            deleted:
+                list: Corbeille
     block:
         configurable_content:
             title: Bloc contenu paramétrable

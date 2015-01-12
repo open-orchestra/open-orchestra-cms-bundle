@@ -84,3 +84,10 @@ services:
             - websites
         tags:
             - { name: php_orchestra_backoffice.left_panel.strategy }
+
+    php_orchestra_backoffice.left_panel.deleted:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - deleted
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }

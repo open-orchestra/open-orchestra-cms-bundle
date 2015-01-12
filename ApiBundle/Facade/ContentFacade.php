@@ -7,17 +7,12 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Class ContentFacade
  */
-class ContentFacade extends AbstractFacade
+class ContentFacade extends DeletedFacade
 {
     /**
      * @Serializer\Type("string")
      */
     public $contentType;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $name;
 
     /**
      * @Serializer\Type("integer")
