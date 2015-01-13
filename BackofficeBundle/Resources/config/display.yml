@@ -85,3 +85,7 @@ services:
         class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
         tags:
             - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.add_this:
+        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\AddThisStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }

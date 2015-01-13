@@ -8,9 +8,9 @@ use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class GmapStrategy
+ * Class AddThisStrategy
  */
-class GmapStrategy extends AbstractBlockStrategy
+class AddThisStrategy extends AbstractBlockStrategy
 {
     /**
      * @param BlockInterface $block
@@ -19,7 +19,7 @@ class GmapStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::GMAP === $block->getComponent();
+        return DisplayBlockInterface::ADDTHIS === $block->getComponent();
     }
 
     /**
@@ -33,9 +33,8 @@ class GmapStrategy extends AbstractBlockStrategy
         $empty = array(
             'class' => '',
             'id' => '',
-            'latitude' => '',
-            'longitude' => '',
-            'zoom' => '',
+            'pubid' => '',
+            'addThisClass' => '',
         );
 
         $attributes = array_merge($empty, $attributes);
@@ -50,17 +49,13 @@ class GmapStrategy extends AbstractBlockStrategy
             'data' => $attributes['id'],
             'required' => false,
         ));
-        $form->add('latitude', 'text', array(
+        $form->add('pubid', 'text', array(
             'mapped' => false,
-            'data' => $attributes['id'],
+            'data' => $attributes['pubid'],
         ));
-        $form->add('longitude', 'text', array(
+        $form->add('addThisClass', 'textarea', array(
             'mapped' => false,
-            'data' => $attributes['id'],
-        ));
-        $form->add('zoom', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['id'],
+            'data' => $attributes['addThisClass'],
         ));
     }
 
@@ -69,6 +64,6 @@ class GmapStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'gmap';
+        return 'add_this';
     }
 }

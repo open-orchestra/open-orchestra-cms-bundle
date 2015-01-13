@@ -97,3 +97,7 @@ services:
         class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\GmapStrategy
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.icon.add_this:
+        class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\AddThisStrategy
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }
