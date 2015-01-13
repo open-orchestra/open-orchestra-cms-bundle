@@ -58,6 +58,7 @@
         "itkg/phporchestra-model-bundle": "dev-master",
         "phpunit/phpunit" : "4.0.14",
         "scrutinizer/ocular": "1.1.1",
+        "codeclimate/php-test-reporter": "dev-master",
         "phake/phake": "2.0.0-beta2"
     },
     "config" : {
