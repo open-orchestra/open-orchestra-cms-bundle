@@ -34,6 +34,7 @@ class AddThisStrategy extends AbstractBlockStrategy
             'class' => '',
             'id' => '',
             'pubid' => '',
+            'addThisClass' => '',
         );
 
         $attributes = array_merge($empty, $attributes);
@@ -51,6 +52,10 @@ class AddThisStrategy extends AbstractBlockStrategy
         $form->add('pubid', 'text', array(
             'mapped' => false,
             'data' => $attributes['pubid'],
+        ));
+        $form->add('addThisClass', 'textarea', array(
+            'mapped' => false,
+            'data' => $attributes['addThisClass'],
         ));
     }
 
