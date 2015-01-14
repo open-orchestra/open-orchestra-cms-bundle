@@ -10,15 +10,18 @@ class AdministrationPanelStrategy extends AbstractLeftPaneStrategy
 {
     protected $name;
     protected $weight;
+    protected $parent;
 
     /**
      * @param string $name
      * @param int    $weight
+     * @param string $parent
      */
-    public function __construct($name, $weight = 0)
+    public function __construct($name, $weight = 0, $parent = self::ADMINISTRATION)
     {
         $this->name = $name;
         $this->weight = $weight;
+        $this->parent = $parent;
     }
 
     /**
@@ -42,7 +45,7 @@ class AdministrationPanelStrategy extends AbstractLeftPaneStrategy
      */
     public function getParent()
     {
-        return self::ADMINISTRATION;
+        return $this->parent;
     }
 
     /**
