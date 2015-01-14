@@ -22,6 +22,7 @@ TableviewView = OrchestraView.extend(
         value: @element.get(displayedElement)
       )
     row.append @renderTemplate('tableviewActions',
+      deleted: @element.get('deleted')
       links: @element.get('links')
       cid: @cid
     )

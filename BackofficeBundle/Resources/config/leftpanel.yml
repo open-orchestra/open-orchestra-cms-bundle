@@ -89,5 +89,7 @@ services:
         class: %php_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - deleted
+            - 0
+            - editorial
         tags:
             - { name: php_orchestra_backoffice.left_panel.strategy }
