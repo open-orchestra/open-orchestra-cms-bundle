@@ -30,6 +30,10 @@ class Configuration implements ConfigurationInterface
                 ->info('Add the block activated for the project')
                 ->prototype('scalar')->end()
             ->end()
+            ->arrayNode('fixed_attributes')
+                ->info('Add the global block attributes')
+                ->prototype('scalar')->end()
+            ->end()
         ->end();
 
         return $treeBuilder;

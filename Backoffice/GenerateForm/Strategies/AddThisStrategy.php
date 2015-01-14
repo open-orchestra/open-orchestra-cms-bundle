@@ -31,24 +31,12 @@ class AddThisStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'class' => '',
-            'id' => '',
             'pubid' => '',
             'addThisClass' => '',
         );
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => $attributes['class'],
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['id'],
-            'required' => false,
-        ));
         $form->add('pubid', 'text', array(
             'mapped' => false,
             'data' => $attributes['pubid'],

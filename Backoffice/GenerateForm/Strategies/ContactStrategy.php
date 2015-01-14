@@ -30,16 +30,6 @@ class ContactStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
-            'required' => false,
-        ));
-        $form->add('class', 'text', array(
-            'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? $attributes['class']:'',
-            'required' => false,
-        ));
         $form->add('form', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('form', $attributes)? $attributes['form']:'',
