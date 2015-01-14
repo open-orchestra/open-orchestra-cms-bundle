@@ -3,6 +3,7 @@ parameters:
     php_orchestra_backoffice.sample.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\SampleStrategy
     php_orchestra_backoffice.contact.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\ContactStrategy
     php_orchestra_backoffice.carrousel.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\CarrouselStrategy
+    php_orchestra_backoffice.gallery.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\GalleryStrategy
     php_orchestra_backoffice.footer.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\FooterStrategy
     php_orchestra_backoffice.header.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\HeaderStrategy
     php_orchestra_backoffice.menu.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\MenuStrategy
@@ -31,6 +32,12 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.carrousel.generate_form:
         class: %php_orchestra_backoffice.carrousel.generate_form.class%
+        arguments:
+            - @translator
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.gallery.generate_form:
+        class: %php_orchestra_backoffice.gallery.generate_form.class%
         arguments:
             - @translator
         tags:

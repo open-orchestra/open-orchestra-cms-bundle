@@ -213,6 +213,14 @@ php_orchestra_backoffice:
                     add: Add media
                     new: New media
                     delete: Remove media
+        gallery:
+            title: Gallery block
+            description: Block to display images.
+            form:
+                media:
+                    add: Add media
+                    new: New media
+                    delete: Remove media
         contact:
             title: Contact block
             description: Display a contact form.

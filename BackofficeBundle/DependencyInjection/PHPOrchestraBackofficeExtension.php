@@ -33,6 +33,7 @@ class PHPOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::SUBMENU,
             DisplayBlockInterface::CONTENT_LIST,
             DisplayBlockInterface::CARROUSEL,
+            DisplayBlockInterface::GALLERY,
             DisplayBlockInterface::CONTENT,
             DisplayBlockInterface::CONFIGURABLE_CONTENT,
 //            DisplayBlockInterface::NEWS,
