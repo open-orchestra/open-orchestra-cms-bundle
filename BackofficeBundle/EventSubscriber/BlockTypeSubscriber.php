@@ -13,15 +13,18 @@ use Symfony\Component\Form\FormEvents;
 class BlockTypeSubscriber implements EventSubscriberInterface
 {
     protected $generateFormManager;
+    protected $fixedParams;
     protected $blockPosition;
 
     /**
      * @param GenerateFormManager $generateFormManager
+     * @param array               $fixedParams
      * @param int                 $blockPosition
      */
-    public function __construct(GenerateFormManager $generateFormManager, $blockPosition = 0)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParams, $blockPosition = 0)
     {
         $this->generateFormManager = $generateFormManager;
+        $this->fixedParams = $fixedParams;
         $this->blockPosition = $blockPosition;
     }
 
@@ -39,6 +42,8 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         }
 
         $form->add('label', 'text', array('data' => $label));
+        $form->add('class', 'text', array('data' => $data->getClass()));
+        $form->add('id', 'text', array('data' => $data->getId()));
 
         $this->generateFormManager->buildForm($form, $data);
     }
@@ -54,7 +59,7 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         foreach ($data as $key => $value) {
-            if ('component' == $key || 'submit' == $key || 'label' == $key) {
+            if (in_array($key, $this->fixedParams)) {
                 continue;
             }
 

@@ -30,23 +30,11 @@ class YoutubeStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'class' => '',
-            'id' => '',
             'videoId' => '',
         );
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => $attributes['class'],
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['id'],
-            'required' => false,
-        ));
         $form->add('videoId', 'orchestra_video', array(
             'mapped' => false,
             'data' => $attributes['videoId'],

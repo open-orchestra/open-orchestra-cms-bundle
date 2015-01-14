@@ -31,21 +31,9 @@ class MediaListByKeywordStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $attributes = array_merge(array(
-            'class' => '',
-            'id' => '',
             'keywords' => null,
         ), $attributes);
 
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? $attributes['class']:'',
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
-            'required' => false,
-        ));
         $form->add('keywords', 'orchestra_keywords', array(
             'mapped' => false,
             'data' => $attributes['keywords'],

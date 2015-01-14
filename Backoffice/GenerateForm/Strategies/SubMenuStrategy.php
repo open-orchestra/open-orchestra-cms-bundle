@@ -29,24 +29,21 @@ class SubMenuStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? $attributes['class']:'',
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => array_key_exists('id', $attributes)? $attributes['id']:'',
-            'required' => false,
-        ));
+        $empty = array(
+            'nbLevel' => 2,
+            'nodeName' => ''
+        );
+
+        $attributes = array_merge($empty, $attributes);
+
         $form->add('nbLevel', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('nbLevel', $attributes)? $attributes['nbLevel']:2,
+            'data' => $attributes['nbLevel'],
             'label' => 'php_orchestra_backoffice.form.sub_menu.level'
         ));
         $form->add('nodeName', 'orchestra_node_choice', array(
             'mapped' => false,
-            'data' => array_key_exists('node', $attributes)? $attributes['node']:'',
+            'data' => $attributes['nodeName'],
             'label' => 'php_orchestra_backoffice.form.sub_menu.node',
         ));
     }

@@ -31,8 +31,6 @@ class GmapStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'class' => '',
-            'id' => '',
             'latitude' => '',
             'longitude' => '',
             'zoom' => '',
@@ -40,27 +38,17 @@ class GmapStrategy extends AbstractBlockStrategy
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => $attributes['class'],
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['id'],
-            'required' => false,
-        ));
         $form->add('latitude', 'text', array(
             'mapped' => false,
-            'data' => $attributes['id'],
+            'data' => $attributes['latitude'],
         ));
         $form->add('longitude', 'text', array(
             'mapped' => false,
-            'data' => $attributes['id'],
+            'data' => $attributes['longitude'],
         ));
         $form->add('zoom', 'text', array(
             'mapped' => false,
-            'data' => $attributes['id'],
+            'data' => $attributes['zoom'],
         ));
     }
 

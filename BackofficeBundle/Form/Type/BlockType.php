@@ -16,13 +16,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class BlockType extends AbstractType
 {
     protected $generateFormManager;
+    protected $fixedParams;
 
     /**
      * @param GenerateFormManager $generateFormManager
+     * @param array               $fixedParams
      */
-    public function __construct(GenerateFormManager $generateFormManager)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParams)
     {
         $this->generateFormManager = $generateFormManager;
+        $this->fixedParams = $fixedParams;
     }
 
     /**
@@ -31,7 +34,7 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $options['blockPosition']));
+        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $options['blockPosition']));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

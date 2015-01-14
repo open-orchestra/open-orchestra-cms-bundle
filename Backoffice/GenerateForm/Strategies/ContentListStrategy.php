@@ -31,8 +31,6 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $empty = array(
             'keywords' => null,
-            'class' => '',
-            'id' => '',
             'url' => '',
             'characterNumber' => 50,
             'contentType' => ''
@@ -40,16 +38,6 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('class', 'textarea', array(
-            'mapped' => false,
-            'data' => $attributes['class'],
-            'required' => false,
-        ));
-        $form->add('id', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['id'],
-            'required' => false,
-        ));
         $form->add('url', 'orchestra_node_choice', array(
             'mapped' => false,
             'data' => $attributes['url'],

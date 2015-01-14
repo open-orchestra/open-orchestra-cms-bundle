@@ -53,8 +53,11 @@ class PHPOrchestraBackofficeExtension extends Extension
             $config['blocks'] = $blockType;
         }
         if (empty($config['front_languages'])) {
-            $config['front_languages'] = array('en' => 'English', 'fr' => 'French');
+            $config['front_languages'] = array('en' => 'English', 'fr' => 'Français');
         }
+        $fixedAttributes = array_merge($config['fixed_attributes'], array('component', 'submit', 'label', 'class', 'id'));
+        $container->setParameter('php_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
+
         $container->setParameter('php_orchestra.blocks', $config['blocks']);
         $container->setParameter('php_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
         $container->setParameter('php_orchestra_backoffice.orchestra_choice.direction', array('h' => 'Horizontal', 'v' => 'Vertical'));

@@ -30,22 +30,25 @@ class SearchStrategy extends AbstractBlockStrategy
     {
         $attributes = $block->getAttributes();
 
+        $empty = array(
+            'value' => '',
+            'nodeId' => '',
+            'limit' => null,
+        );
+
+        $attributes = array_merge($empty, $attributes);
+
         $form->add('value', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('value', $attributes)? $attributes['value']: '',
-        ));
-        $form->add('class', 'text', array(
-            'mapped' => false,
-            'data' => array_key_exists('class', $attributes)? $attributes['class']: '',
-            'required' => false,
+            'data' => $attributes['value'],
         ));
         $form->add('nodeId', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('nodeId', $attributes)? $attributes['nodeId']: '',
+            'data' => $attributes['nodeId'],
         ));
         $form->add('limit', 'integer', array(
             'mapped' => false,
-            'data' => array_key_exists('limit', $attributes)? $attributes['limit']: null,
+            'data' => $attributes['limit'],
         ));
     }
 
