@@ -10,8 +10,8 @@ use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPa
  */
 class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
-    protected $compiler;
     protected $tinymce;
+    protected $compiler;
     protected $container;
 
     /**

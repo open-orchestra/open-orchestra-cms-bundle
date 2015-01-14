@@ -18,8 +18,8 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     protected $subscriber;
 
-    protected $event;
     protected $form;
+    protected $event;
     protected $templateRepository;
 
     /**

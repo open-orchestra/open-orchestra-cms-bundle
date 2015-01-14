@@ -17,8 +17,8 @@ class TranslationChoiceManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
-    protected $object;
     protected $names;
+    protected $object;
     protected $enName;
     protected $frName;
     protected $contextManager;

@@ -137,6 +137,9 @@ php_orchestra_backoffice:
             content_type: Content type to display
             content_keyword: Keyword to display
             nb_characters: Number of characters to display before truncate the text.
+            choice_type: Type of choice
+            choice_type_and: AND
+            choice_type_or: OR
         orchestra_fields:
             max_length: Max length
             required_field: Field required

@@ -20,8 +20,8 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
     protected $transformerManager;
     protected $encryptionManager;
-    protected $siteRepository;
     protected $statusRepository;
+    protected $siteRepository;
     protected $transformer;
     protected $statusId;
     protected $router;
