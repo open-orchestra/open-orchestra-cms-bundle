@@ -162,6 +162,9 @@ php_orchestra_backoffice:
             delete_node: Are you sure to delete the node %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
             delete_media_folder: Are you sure to delete the folder %folderName% ?
+            confirm_move:
+                title: Reorder the node
+                text: By accepting, the node will be moved as child of "%nodeName%"
         editorial:
             title: Editorial
             nodes: Pages

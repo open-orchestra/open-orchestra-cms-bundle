@@ -16,12 +16,14 @@
                 <ul
                     class="node-connectedSortable"
                     data-update-order="{{ path('php_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
+                    data-confirm-title="{{ 'php_orchestra_backoffice.left_menu.tree.confirm_move.title'|trans }}"
+                    data-confirm-text="{{ 'php_orchestra_backoffice.left_menu.tree.confirm_move.text'|trans({'%nodeName%': node.name}) }}"
                 >
                     {% if element.child is not empty %}
                         {{ _self.menu_nodes(element.child, name) }}
                     {% endif %}
-                    <li>
-                        <div class="ui-state-unsortable">
+                    <li class="node-unsortable">
+                        <div>
                             <a
                                 class="ajax-new"
                                 href="#"

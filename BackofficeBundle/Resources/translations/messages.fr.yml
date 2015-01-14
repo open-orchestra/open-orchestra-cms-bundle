@@ -162,6 +162,9 @@ php_orchestra_backoffice:
             delete_node: Etes vous sûr de supprimer le noeud %nodeId% ?
             delete_template: Etes vous sûr de supprimer le gabarit %templateName% ?
             delete_media_folder: Etes vous sûr de supprimer le répertoire %folderName%?
+            confirm_move:
+                title: Déplacement de la page
+                text: En acceptant, la page sera déplacé pour être fils de "%nodeName%"
         editorial:
             title: Editorial
             icon: fa-edit
