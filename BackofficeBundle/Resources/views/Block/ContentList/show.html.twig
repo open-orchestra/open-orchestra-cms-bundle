@@ -1,19 +1,13 @@
 {{ display_icon('content_list') }}
 
 {% if contentType is defined %}
-    <p>
-        Content Type: <i>{{ contentType }}</i>
-    </p>
+    <p>Content Type: <i>{{ contentType }}</i></p>
 {% endif %}
+<p>ChoiceType: <i>{{ choiceType }}</i></p>
 {% if keywords is defined %}
-    <p>
-        Content Keyword: <i>{{ keywords }}</i>
-    </p>
+    <p>Content Keyword: <i>{{ keywords }}</i></p>
 {% endif %}
-
-<p>
-    id : <i>{{ id }}</i><br />
-    class : <i>{{ class }}</i><br />
-    url: <i>{{ url }}</i>
-    Number of charactere before truncate: <i>{{ characterNumber }}</i>
-</p>
+<p>id : <i>{{ id }}</i></p>
+<p>class : <i>{{ class }}</i></p>
+<p>url: <i>{{ url }}</i></p>
+<p>Number of charactere before truncate: <i>{{ characterNumber }}</i></p>

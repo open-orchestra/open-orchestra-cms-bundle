@@ -77,6 +77,8 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.content_lis.generate_form:
         class: %php_orchestra_backoffice.content_list.generate_form.class%
+        arguments:
+            - @translator
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.media_list_by_keyword.generate_form:

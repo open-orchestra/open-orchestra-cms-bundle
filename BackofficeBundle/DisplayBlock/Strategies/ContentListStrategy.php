@@ -29,6 +29,7 @@ class ContentListStrategy extends AbstractStrategy
             'url' => $attributes['url'],
             'characterNumber' => $attributes['characterNumber'],
             'keywords' => $attributes['keywords'],
+            'choiceType' => $attributes['choiceType'],
             'contentType' => $attributes['contentType']
         );
 

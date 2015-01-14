@@ -15,11 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
  */
 class OrchestraCheckConsistencyCommandTest extends \PHPUnit_Framework_TestCase
 {
+    protected $trans;
     protected $kernel;
     protected $container;
-    protected $nodeRepository;
-    protected $trans;
     protected $nodeManager;
+    protected $nodeRepository;
 
     /**
      * Set up the test

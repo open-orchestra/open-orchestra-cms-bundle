@@ -22,9 +22,9 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
      */
     protected $names;
 
-    protected $fields;
     protected $event;
     protected $object;
+    protected $fields;
     protected $defaultLanguages;
     protected $translatedValueClass;
 

@@ -5,12 +5,24 @@ namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class ContentListStrategy
  */
 class ContentListStrategy extends AbstractBlockStrategy
 {
+    protected $translator;
+
+    /**
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * @param BlockInterface $block
      *
@@ -33,6 +45,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'keywords' => null,
             'url' => '',
             'characterNumber' => 50,
+            'choiceType' => ContentRepositoryInterface::CHOICE_AND,
             'contentType' => ''
         );
 
@@ -54,6 +67,16 @@ class ContentListStrategy extends AbstractBlockStrategy
             'data' => $attributes['contentType'],
             'label' => 'php_orchestra_backoffice.form.content_list.content_type',
             'required' => false
+        ));
+        $form->add('choiceType', 'choice', array(
+            'mapped' => false,
+            'data' => $attributes['choiceType'],
+            'label' => 'php_orchestra_backoffice.form.content_list.choice_type',
+            'required' => true,
+            'choices' => array(
+                ContentRepositoryInterface::CHOICE_AND => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_and'),
+                ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_or'),
+            ),
         ));
         $form->add('keywords', 'orchestra_keywords', array(
             'mapped' => false,

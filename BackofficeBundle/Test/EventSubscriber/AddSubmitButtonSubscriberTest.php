@@ -18,10 +18,10 @@ class AddSubmitButtonSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     protected $subscriber;
 
-    protected $data;
     protected $status;
     protected $event;
     protected $form;
+    protected $data;
 
     /**
      * Set up the test
