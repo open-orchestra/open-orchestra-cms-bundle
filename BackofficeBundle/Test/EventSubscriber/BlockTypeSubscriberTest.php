@@ -19,6 +19,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $form;
     protected $event;
     protected $block;
+    protected $fixedParams;
     protected $generateFormManager;
 
     /**
@@ -36,7 +37,9 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->generateFormManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
 
-        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager);
+        $this->fixedParams = array('component', 'submit', 'label', 'class', 'id');
+
+        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams);
     }
 
     /**
@@ -66,7 +69,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form)->add(Phake::anyParameters());
+        Phake::verify($this->form, Phake::times(3))->add(Phake::anyParameters());
         Phake::verify($this->generateFormManager)->buildForm($this->form, $this->block);
     }
 
