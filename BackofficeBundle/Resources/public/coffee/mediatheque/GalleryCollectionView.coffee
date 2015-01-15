@@ -10,7 +10,9 @@ GalleryCollectionView = OrchestraView.extend(
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     key = 'click i.ajax-folder-' + @cid
-    @events[key] = 'clickRedirect'
+    @events[key] = 'clickEditFolder'
+    key = 'click i.ajax-folder-delete-' + @cid
+    @events[key] = 'clickDeleteFolder'
     _.bindAll this, "render"
     @loadTemplates [
       "galleryCollectionView",
@@ -24,7 +26,8 @@ GalleryCollectionView = OrchestraView.extend(
       cid: @cid
     )
     $('.js-widget-title', @$el).text @title
-    $('.js-widget-edit', @$el).html($('#generated-edit', @$el).html()).show()
+    @addConfigurationButton()
+    @addDeleteButton()
     for mediaKey of @medias.get(@medias.get('collection_name'))
       @addElementToView (@medias.get(@medias.get('collection_name'))[mediaKey])
     $(".figure").width $(this).find("img").width()
@@ -67,11 +70,50 @@ GalleryCollectionView = OrchestraView.extend(
               listUrl: listUrl
             )
 
-  clickRedirect: (event) ->
+  clickEditFolder: (event) ->
     event.preventDefault()
     $('.modal-title').text $(event.target).html()
     view = new adminFormView(
       url: @medias.get('links')._self_folder
       deleteurl: @medias.get('links')._self_delete
     )
+
+  clickDeleteFolder: (event) ->
+    event.preventDefault()
+    smartConfirm(
+      'fa-trash-o',
+      'delete',
+      'folder',
+      callBackParams:
+        galleryCollectionView: @
+      yesCallback: (params) ->
+        params.galleryCollectionView.deleteFolder()
+    )
+
+  deleteFolder: ->
+    redirectUrl = appRouter.generateUrl('listFolder', appRouter.addParametersToRoute(
+      'folderId': @medias.get('parent_id')
+    ))
+    $.ajax
+      url: @medias.get('links')._self_delete
+      method: 'DELETE'
+      success: ->
+        Backbone.history.loadUrl(redirectUrl)
+        displayMenu(redirectUrl)
+
+
+  addConfigurationButton: ->
+    cid = @cid
+    if @medias.get('links')._self_folder != undefined
+      view = new FolderConfigurationButtonView(
+        cid: cid
+      )
+
+  addDeleteButton: ->
+    if @medias.get('is_folder_deletable')
+      cid = @cid
+      if @medias.get('links')._self_delete != undefined
+        view = new FolderDeleteButtonView(
+          cid: cid
+        )
 )

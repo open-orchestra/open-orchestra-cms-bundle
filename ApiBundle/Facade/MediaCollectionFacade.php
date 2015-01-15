@@ -15,6 +15,16 @@ class MediaCollectionFacade extends AbstractFacade
     public $collectionName = 'medias';
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $parentId;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
+    public $isFolderDeletable;
+
+    /**
      * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\MediaFacade>")
      */
     protected $medias = array();

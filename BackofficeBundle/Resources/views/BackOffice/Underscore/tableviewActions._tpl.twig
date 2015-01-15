@@ -1,5 +1,5 @@
 <td>
-    <% if (deleted == false) { %>
+    <% if (deleted != true) { %>
         <% if (typeof links._self_form !== 'undefined') { %>
             <a href="#" class="ajax-edit-<%= cid %>">{{ 'php_orchestra_backoffice.form.edit'|trans({}, 'messages', language) }}</a>
         <% } %>

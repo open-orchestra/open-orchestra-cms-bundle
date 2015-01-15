@@ -14,12 +14,17 @@ class MediaCollectionTransformer extends AbstractTransformer
     /**
      * @param ArrayCollection $mixed
      * @param string|null     $folderId
+     * @param bool            $folderDeletable
+     * @param string|null     $parentId
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $folderId = null)
+    public function transform($mixed, $folderId = null, $folderDeletable = false, $parentId = null)
     {
         $facade = new MediaCollectionFacade();
+
+        $facade->isFolderDeletable = $folderDeletable;
+        $facade->parentId = $parentId;
 
         foreach ($mixed as $media) {
             $facade->addMedia($this->getTransformer('media')->transform($media));

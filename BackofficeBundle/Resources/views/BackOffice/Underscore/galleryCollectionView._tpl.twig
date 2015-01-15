@@ -11,10 +11,5 @@
         <a href="<%= links._self_add %>" data-url="<%= links._self_add %>" class="ajax-add-<%= cid %>">{{ 'php_orchestra_backoffice.form.add'|trans({}, 'messages', language) }}</a>
     </div>
 <% } %>
-<% if (typeof links._self_folder !== 'undefined' ) { %>
-    <div id="generated-edit" style="display: none">
-        <i class="fa fa-edit ajax-folder-<%= cid %>"></i>
-    </div>
-<% } %>
 
 {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
