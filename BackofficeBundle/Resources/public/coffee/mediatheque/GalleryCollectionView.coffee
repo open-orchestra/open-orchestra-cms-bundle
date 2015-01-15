@@ -58,11 +58,14 @@ GalleryCollectionView = OrchestraView.extend(
         url: @medias.get('links')._self_add
         method: 'GET'
         success: (response) ->
-          view = new FullPageFormView(
-            html: response
-            title: title
-            listUrl: listUrl
-          )
+          if isLoginForm(response)
+            redirectToLogin()
+          else
+            view = new FullPageFormView(
+              html: response
+              title: title
+              listUrl: listUrl
+            )
 
   clickRedirect: (event) ->
     event.preventDefault()

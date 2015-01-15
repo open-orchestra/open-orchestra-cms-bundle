@@ -71,8 +71,11 @@ SuperboxView = OrchestraView.extend(
       url: @media.get('links')._self_crop
       method: 'GET'
       success: (response) ->
-        $('.media_crop_form', currentView.$el).html response
-        currentView.addEventOnCropForm()
+        if isLoginForm(response)
+          redirectToLogin()
+        else
+          $('.media_crop_form', currentView.$el).html response
+          currentView.addEventOnCropForm()
 
   setupMetaForm: ->
     currentView = this
@@ -81,9 +84,12 @@ SuperboxView = OrchestraView.extend(
       url: @media.get('links')._self_meta
       method: 'GET'
       success: (response) ->
-        $('.media_meta_form', currentView.$el).html response
-        currentView.addEventOnMetaForm()
-        currentView.addSelect2OnForm()
+        if isLoginForm(response)
+          redirectToLogin()
+        else
+          $('.media_meta_form', currentView.$el).html response
+          currentView.addEventOnMetaForm()
+          currentView.addSelect2OnForm()
 
   changeView: (e) ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
