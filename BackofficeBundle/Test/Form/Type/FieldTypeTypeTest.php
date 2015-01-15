@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType;
 use Symfony\Component\Form\FormEvents;
+use PHPOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class FieldTypeTypeTest
@@ -60,6 +61,12 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->resolver)->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
             'label' => $this->translatedLabel,
+            'prototype_data' => function(){
+                $fieldType = new FieldType();
+                $fieldType->setType('text');
+
+                return $fieldType;
+            }
         ));
         Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.label');
     }
@@ -76,6 +83,24 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
         );
+        Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
+    }
+
+    /**
+     * Test form builder for prototype
+     */
+    public function testFormBuilderPrototype()
+    {
+        $closure = function() {return false;};
+
+        $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
+
+        Phake::verify($this->builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($this->builder)->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            array($this->translateValueInitializer, 'preSetData')
+        );
+        Phake::verify($this->builder)->setData($closure());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 }
