@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType;
 use Symfony\Component\Form\FormEvents;
+use PHPOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class FieldTypeTypeTest
@@ -60,6 +61,12 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->resolver)->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
             'label' => $this->translatedLabel,
+            'prototype_data' => function(){
+                $fieldType = new FieldType();
+                $fieldType->setType('text');
+
+                return $fieldType;
+            }
         ));
         Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.label');
     }
