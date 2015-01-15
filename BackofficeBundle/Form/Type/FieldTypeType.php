@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-
+use PHPOrchestra\ModelBundle\Document\FieldType;
 /**
  * Class FieldTypeType
  */
@@ -51,6 +51,9 @@ class FieldTypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
+        if(is_null($options['property_path'])){
+            $builder->setData($options['prototype_data']());
+        }
         $builder
             ->add('fieldId', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.field_type.field_id'
@@ -91,7 +94,12 @@ class FieldTypeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
-            'label' => $this->translator->trans('php_orchestra_backoffice.form.field_type.label')
+            'label' => $this->translator->trans('php_orchestra_backoffice.form.field_type.label'),
+            'prototype_data' => function(){
+                $fieldType = new FieldType();
+                $fieldType->setType('text');
+                return $fieldType;
+            }
         ));
     }
 
