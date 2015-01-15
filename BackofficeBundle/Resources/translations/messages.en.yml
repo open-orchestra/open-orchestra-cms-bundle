@@ -217,6 +217,8 @@ php_orchestra_backoffice:
             title: Gallery block
             description: Block to display images.
             form:
+                pictures: Pictures
+                nb_columns: Number of columns
                 media:
                     add: Add media
                     new: New media

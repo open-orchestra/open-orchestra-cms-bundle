@@ -50,11 +50,13 @@ class GalleryStrategy extends AbstractBlockStrategy
                 'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.media.new'),
                 'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.media.delete'),
             ),
-            'data' => array_key_exists('pictures', $attributes)? $attributes['pictures'] : array()
+            'data' => array_key_exists('pictures', $attributes)? $attributes['pictures'] : array(),
+            'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.pictures')
         ));
         $form->add('nb_columns', 'text', array(
             'mapped' => false,
             'data' => array_key_exists('nb_columns', $attributes)? $attributes['nb_columns']:1,
+            'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.nb_columns')
         ));
     }
 
