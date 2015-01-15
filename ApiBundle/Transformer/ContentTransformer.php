@@ -41,6 +41,7 @@ class ContentTransformer extends AbstractTransformer
         $facade->statusLabel = $facade->status->label;
         $facade->createdAt = $mixed->getCreatedAt();
         $facade->updatedAt = $mixed->getUpdatedAt();
+        $facade->deleted = $mixed->getDeleted();
 
         foreach ($mixed->getAttributes() as $attribute) {
             $facade->addAttribute($this->getTransformer('content_attribute')->transform($attribute));
