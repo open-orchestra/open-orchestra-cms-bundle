@@ -52,9 +52,9 @@ class GalleryStrategy extends AbstractBlockStrategy
             ),
             'data' => array_key_exists('pictures', $attributes)? $attributes['pictures'] : array()
         ));
-        $form->add('pictures_per_page', 'text', array(
+        $form->add('nb_columns', 'text', array(
             'mapped' => false,
-            'data' => array_key_exists('pictures_per_page', $attributes)? $attributes['pictures_per_page']:1,
+            'data' => array_key_exists('nb_columns', $attributes)? $attributes['nb_columns']:1,
         ));
     }
 
