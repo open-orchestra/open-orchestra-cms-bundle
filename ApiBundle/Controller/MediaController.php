@@ -3,6 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\Media\Model\FolderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -45,9 +46,21 @@ class MediaController extends Controller
     public function listAction(Request $request)
     {
         $folderId = $request->get('folderId');
+        /** @var FolderInterface $folder */
+        $folder = $this->get('php_orchestra_media.repository.media_folder')->find($folderId);
+        $folderDeletable = $this->get('php_orchestra_backoffice.manager.media_folder')->isDeletable($folder);
+        $parentId = null;
+        if ($folder->getParent() instanceof FolderInterface) {
+            $parentId = $folder->getParent()->getId();
+        }
         $mediaCollection = $this->get('php_orchestra_media.repository.media')->findByFolderId($folderId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('media_collection')->transform($mediaCollection, $folderId);
+        return $this->get('php_orchestra_api.transformer_manager')->get('media_collection')->transform(
+            $mediaCollection,
+            $folderId,
+            $folderDeletable,
+            $parentId
+        );
     }
 
     /**

@@ -21,6 +21,7 @@ OrchestraView = Backbone.View.extend(
     templates.push "smartConfirmTitle"
     templates.push "widgetPreviewLink" if templates.indexOf("widgetPageConfigurationButton") == -1
     templates.push "widgetPageConfigurationButton" if templates.indexOf("widgetPageConfigurationButton") == -1
+    templates.push "widgetFolderConfigurationButton" if templates.indexOf("widgetFolderConfigurationButton") == -1
 
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false
