@@ -96,8 +96,9 @@ class FieldTypeType extends AbstractType
             'data_class' => $this->fieldTypeClass,
             'label' => $this->translator->trans('php_orchestra_backoffice.form.field_type.label'),
             'prototype_data' => function(){
+                $default = each($this->fieldOptions);
                 $fieldType = new FieldType();
-                $fieldType->setType('text');
+                $fieldType->setType($default['key']);
 
                 return $fieldType;
             }
