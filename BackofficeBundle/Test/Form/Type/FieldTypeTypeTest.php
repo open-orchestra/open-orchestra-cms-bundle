@@ -63,7 +63,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             'label' => $this->translatedLabel,
             'prototype_data' => function(){
                 $fieldType = new FieldType();
-                $fieldType->setType('text');
+                $fieldType->setType('integer');
 
                 return $fieldType;
             }

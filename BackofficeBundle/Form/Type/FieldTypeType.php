@@ -98,6 +98,7 @@ class FieldTypeType extends AbstractType
             'prototype_data' => function(){
                 $fieldType = new FieldType();
                 $fieldType->setType('text');
+
                 return $fieldType;
             }
         ));
