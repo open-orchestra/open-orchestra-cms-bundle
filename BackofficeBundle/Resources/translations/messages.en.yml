@@ -98,6 +98,9 @@ php_orchestra_backoffice:
         folder:
             success: The folder has been saved
             delete: This folder contains media, you can't delete it.
+            confirm_delete:
+                title: Are you sure to delete this folder
+                text: Deleting this folder will delete all of his subfolder.
             name: Name
             site: Select sites for this folder
             edit: Edit folder
