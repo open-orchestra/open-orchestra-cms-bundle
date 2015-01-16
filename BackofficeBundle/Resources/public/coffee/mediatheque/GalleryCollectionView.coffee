@@ -82,8 +82,8 @@ GalleryCollectionView = OrchestraView.extend(
     event.preventDefault()
     smartConfirm(
       'fa-trash-o',
-      'delete',
-      'folder',
+      $('.folder-delete').data('title'),
+      $('.folder-delete').data('text'),
       callBackParams:
         galleryCollectionView: @
       yesCallback: (params) ->
