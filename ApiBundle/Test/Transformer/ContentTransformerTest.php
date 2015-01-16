@@ -18,6 +18,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerAttribute;
     protected $transformerManager;
     protected $statusRepository;
+    protected $eventDispatcher;
     protected $transformer;
     protected $statusId;
     protected $content;
@@ -29,6 +30,8 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
         $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
         $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
@@ -47,7 +50,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get('content_attribute')->thenReturn($this->transformerAttribute);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->contentTransformer = new ContentTransformer($this->statusRepository);
+        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher);
         $this->contentTransformer->setContext($this->transformerManager);
     }
 
@@ -85,6 +88,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->contentTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
 
         if ($source) {
             Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());

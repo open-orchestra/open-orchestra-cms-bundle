@@ -39,6 +39,7 @@ services:
             - @php_orchestra_base.manager.encryption
             - @php_orchestra_model.repository.site
             - @php_orchestra_model.repository.status
+            - @event_dispatcher
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.node_collection:
@@ -80,6 +81,7 @@ services:
         class: %php_orchestra_api.transformer.content.class%
         arguments:
             - @php_orchestra_model.repository.status
+            - @event_dispatcher
         tags:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.content_attribute:
