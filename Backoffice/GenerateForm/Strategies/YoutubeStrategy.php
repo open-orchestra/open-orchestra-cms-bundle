@@ -30,16 +30,19 @@ class YoutubeStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'videoId' => '',
-            'autoplay' => false,
-            'fs' => false,
-            'loop' => false,
-            'showinfo' => false,
-            'rel' => false,
             'disablekb' => false,
+            'autoplay' => false,
+            'showinfo' => false,
+            'controls' => false,
+            'height' => '269',
+            'color' => false,
+            'theme' => false,
+            'width' => '480',
+            'videoId' => '',
+            'loop' => false,
+            'rel' => false,
+            'fs' => false,
             'hl' => '',
-            'width' => '25',
-            'height' => '14'
         );
 
         $attributes = array_merge($empty, $attributes);
@@ -48,6 +51,18 @@ class YoutubeStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => $attributes['videoId'],
             'label' => 'php_orchestra_backoffice.block.youtube.video_id',
+        ));
+        $form->add('width', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['width'],
+            'label' => 'php_orchestra_backoffice.block.youtube.width',
+            'required'  => false,
+        ));
+        $form->add('height', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['height'],
+            'label' => 'php_orchestra_backoffice.block.youtube.height',
+            'required'  => false,
         ));
         $form->add('autoplay', 'orchestra_block_checkbox', array(
             'mapped' => false,
@@ -91,16 +106,22 @@ class YoutubeStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.youtube.loop',
             'required'  => false,
         ));
-        $form->add('width', 'text', array(
+        $form->add('controls', 'orchestra_block_checkbox', array(
             'mapped' => false,
-            'data' => $attributes['width'],
-            'label' => 'php_orchestra_backoffice.block.youtube.width',
+            'data' => $attributes['controls'],
+            'label' => 'php_orchestra_backoffice.block.youtube.controls',
             'required'  => false,
         ));
-        $form->add('height', 'text', array(
+        $form->add('theme', 'orchestra_block_checkbox', array(
             'mapped' => false,
-            'data' => $attributes['height'],
-            'label' => 'php_orchestra_backoffice.block.youtube.height',
+            'data' => $attributes['theme'],
+            'label' => 'php_orchestra_backoffice.block.youtube.theme',
+            'required'  => false,
+        ));
+        $form->add('color', 'orchestra_block_checkbox', array(
+            'mapped' => false,
+            'data' => $attributes['color'],
+            'label' => 'php_orchestra_backoffice.block.youtube.color',
             'required'  => false,
         ));
     }

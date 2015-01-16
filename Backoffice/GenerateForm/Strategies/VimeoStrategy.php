@@ -31,16 +31,17 @@ class VimeoStrategy extends AbstractBlockStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'videoId' => '',
-            'autoplay' => false,
             'fullscreen' => false,
-            'color' => '',
-            'title' => false,
-            'byline' => false,
             'portrait' => false,
+            'autoplay' => false,
+            'byline' => false,
+            'height' => '269',
+            'title' => false,
+            'width' => '480',
+            'badge' => false,
+            'videoId' => '',
             'loop' => false,
-            'width' => '25',
-            'height' => '14'
+            'color' => '',
         );
 
         $attributes = array_merge($empty, $attributes);
@@ -49,6 +50,24 @@ class VimeoStrategy extends AbstractBlockStrategy
             'mapped' => false,
             'data' => $attributes['videoId'],
             'label' => 'php_orchestra_backoffice.block.vimeo.video_id',
+        ));
+        $form->add('width', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['width'],
+            'label' => 'php_orchestra_backoffice.block.vimeo.width',
+            'required'  => false,
+        ));
+        $form->add('height', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['height'],
+            'label' => 'php_orchestra_backoffice.block.vimeo.height',
+            'required'  => false,
+        ));
+        $form->add('color', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['color'],
+            'label' => 'php_orchestra_backoffice.block.vimeo.color',
+            'required'  => false,
         ));
         $form->add('autoplay', 'orchestra_block_checkbox', array(
             'mapped' => false,
@@ -62,16 +81,10 @@ class VimeoStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.vimeo.fullscreen',
             'required'  => false,
         ));
-        $form->add('color', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['color'],
-            'label' => 'php_orchestra_backoffice.block.vimeo.color',
-            'required'  => false,
-        ));
         $form->add('title', 'orchestra_block_checkbox', array(
             'mapped' => false,
             'data' => $attributes['title'],
-            'label' => 'php_orchestra_backoffice.block.vimeo.title',
+            'label' => 'php_orchestra_backoffice.block.vimeo.title_video',
             'required'  => false,
         ));
         $form->add('byline', 'orchestra_block_checkbox', array(
@@ -92,16 +105,10 @@ class VimeoStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.vimeo.loop',
             'required'  => false,
         ));
-        $form->add('width', 'text', array(
+        $form->add('badge', 'orchestra_block_checkbox', array(
             'mapped' => false,
-            'data' => $attributes['width'],
-            'label' => 'php_orchestra_backoffice.block.vimeo.width',
-            'required'  => false,
-        ));
-        $form->add('height', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['height'],
-            'label' => 'php_orchestra_backoffice.block.vimeo.height',
+            'data' => $attributes['badge'],
+            'label' => 'php_orchestra_backoffice.block.vimeo.badge',
             'required'  => false,
         ));
     }
