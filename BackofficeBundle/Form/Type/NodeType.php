@@ -61,8 +61,10 @@ class NodeType extends AbstractType
                     'never' => 'php_orchestra_backoffice.form.node.changefreq.never'
                 )
             ))
-            ->add('sitemap_priority', 'text', array(
+            ->add('sitemap_priority', 'percent', array(
                 'label' => 'php_orchestra_backoffice.form.node.priority',
+                'type' => 'fractional',
+                'precision' => 2
             ))
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
