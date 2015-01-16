@@ -9,6 +9,6 @@ $(".page-title").DOMNodeAppear ->
   renderPageTitle()
   return
 
-$("#OrchestraBOModal .modal-dialog").on "resize", (e) ->
+$(".modal-dialog").on "resize", (e) ->
   $(this).prev().height($(this).parent().height())
   return
