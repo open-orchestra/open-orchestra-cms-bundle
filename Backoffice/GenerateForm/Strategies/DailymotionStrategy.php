@@ -32,6 +32,13 @@ class DailymotionStrategy extends AbstractBlockStrategy
 
         $empty = array(
             'videoId' => '',
+            'autoplay' => false,
+            'info' => false,
+            'background' => '',
+            'foreground' => '',
+            'highlight' => '',
+            'width' => '25',
+            'height' => '14'
         );
 
         $attributes = array_merge($empty, $attributes);
@@ -41,6 +48,49 @@ class DailymotionStrategy extends AbstractBlockStrategy
             'data' => $attributes['videoId'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.video_id',
         ));
+        $form->add('autoplay', 'orchestra_block_checkbox', array(
+            'mapped' => false,
+            'data' => $attributes['autoplay'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.autoplay',
+            'required'  => false,
+        ));
+        $form->add('info', 'orchestra_block_checkbox', array(
+            'mapped' => false,
+            'data' => $attributes['info'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.info',
+            'required'  => false,
+        ));
+        $form->add('background', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['background'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.background',
+            'required'  => false,
+        ));
+        $form->add('foreground', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['foreground'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.foreground',
+            'required'  => false,
+        ));
+        $form->add('highlight', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['highlight'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.highlight',
+            'required'  => false,
+        ));
+        $form->add('width', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['width'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.width',
+            'required'  => false,
+        ));
+        $form->add('height', 'text', array(
+            'mapped' => false,
+            'data' => $attributes['height'],
+            'label' => 'php_orchestra_backoffice.block.dailymotion.height',
+            'required'  => false,
+        ));
+
     }
 
     /**

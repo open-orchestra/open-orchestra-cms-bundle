@@ -94,7 +94,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->getData()->thenReturn($this->block);
         Phake::when($this->block)->getAttributes()->thenReturn(array());
 
-        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample'), $sentData);
+        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample', 'class' => 'class', 'id' => 'htmlId'), $sentData);
         Phake::when($this->event)->getData()->thenReturn($sentDataFull);
 
         $this->subscriber->preSubmit($this->event);
@@ -112,25 +112,6 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             array(array('test' => 'test', 'tentative' => 'tentative')),
             array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5)),
         );
-    }
-
-    /**
-     * @param array $sentData
-     *
-     * @dataProvider provideStringData
-     */
-    public function testPreSubmitWithPreviousDataAndStringDatas($sentData)
-    {
-        $startData = array('test' => 'oldTest');
-        Phake::when($this->form)->getData()->thenReturn($this->block);
-        Phake::when($this->block)->getAttributes()->thenReturn($startData);
-
-        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample'), $sentData);
-        Phake::when($this->event)->getData()->thenReturn($sentDataFull);
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->block)->setAttributes($sentData);
     }
 
     /**
@@ -160,6 +141,40 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             array(array('tentative' => 'tentative')),
             array(array('tentative', 'test', 'autre' => 5)),
             array(array('tentative', 'test', 'autre' => array('test' => 'test'))),
+        );
+    }
+
+    /**
+     * @param $sentData
+     *
+     * @dataProvider provideStringDataWithCheckBox
+     */
+    public function testPreSubmitWithPreviousDataAndKeyNotInDataAndString($sentData)
+    {
+        $startData = array('test' => 'oldTest', 'checkbox2' => true);
+        Phake::when($this->form)->getData()->thenReturn($this->block);
+        Phake::when($this->form)->has('checkbox2')->thenReturn(true);
+        Phake::when($this->block)->getAttributes()->thenReturn($startData);
+
+        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample', 'class' => 'class', 'id' => 'htmlId'), $sentData);
+        Phake::when($this->event)->getData()->thenReturn($sentDataFull);
+
+        $this->subscriber->preSubmit($this->event);
+
+        Phake::verify($this->block)->setAttributes(array_merge(array('checkbox2' => false), $sentData));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideStringDataWithCheckBox()
+    {
+        return array(
+            array(array('test' => 'test')),
+            array(array('test' => 'test', 'tentative' => 'tentative')),
+            array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5)),
+            array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5, 'checkbox' => true)),
+            array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5, 'checkbox2' => true)),
         );
     }
 }
