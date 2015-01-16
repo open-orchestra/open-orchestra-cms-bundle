@@ -42,11 +42,27 @@ class NodeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
-            'label' => 'php_orchestra_backoffice.form.node.name',
-            'attr' => array(
-                'class' => 'alias-source',
-            )
+        $builder
+            ->add('name', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.node.name',
+                'attr' => array(
+                    'class' => 'alias-source',
+                )
+            ))
+            ->add('sitemap_changefreq', 'choice', array(
+                'label' => 'php_orchestra_backoffice.form.node.changefreq.title',
+                'choices' => array(
+                    'always' => 'php_orchestra_backoffice.form.node.changefreq.always',
+                    'hourly' => 'php_orchestra_backoffice.form.node.changefreq.hourly',
+                    'daily' => 'php_orchestra_backoffice.form.node.changefreq.daily',
+                    'weekly' => 'php_orchestra_backoffice.form.node.changefreq.weekly',
+                    'monthly' => 'php_orchestra_backoffice.form.node.changefreq.monthly',
+                    'yearly' => 'php_orchestra_backoffice.form.node.changefreq.yearly',
+                    'never' => 'php_orchestra_backoffice.form.node.changefreq.never'
+                )
+            ))
+            ->add('sitemap_priority', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.node.priority',
             ))
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
