@@ -263,40 +263,48 @@ php_orchestra_backoffice:
         youtube:
             title: Youtube block
             description: Display a youtube video
-            video_id: Video id
-            autoplay: Lance automatiquement la vidéo
-            fs: Affiche le bouton du mode plein écran
-            disablekb: Permet les raccourcis clavier
-            hl: Définit la langue du lecteur
-            loop: Lit la vidéo indéfiniment
-            rel: Affiche des vidéo similaire à la fin
-            showinfo: Affiche des information sur la vidéo
-            width: Largeur du lecteur
-            height: Hauteur du lecteur
+            video_id: Video id or url of the video
+            autoplay: Play the video automatically on load
+            fs: Allow the player to go into fullscreen
+            disablekb: Allows shortcuts
+            hl: Sets the language of the player
+            loop: Play the video again when it reaches the end
+            rel: Shows related videos at the end of the video
+            showinfo: Shows videos information
+            width: Width of the player
+            height: Height of the player
+            controls: Display player's controls
+            theme: Display player's controls in light
+            color: Display progress bar in white
         dailymotion:
             title: Dailymotion Block
             description: Display a dailymotion player
-            video_id: Video id
-            autoplay: Lance automatiquement la vidéo
-            info: Affiche des informations de la vidéo
-            background: Change la couleur d'arrière plan du lecteur
-            foreground: Change la couleur
-            highlight: Change la couleur des boutons au survole
-            width: Largeur du lecteur
-            height: Hauteur du lecteur
+            video_id: Video id or url of the video
+            autoplay: Play the video automatically on load
+            info: Shows videos information
+            background: Change the color of the background of controls elements
+            foreground: Change the color of the forground of controls elements
+            highlight: Change the color of the controls elements’ highlights
+            width:  Width of the player
+            height: Height of the player
+            chromeless: Disable player's controls
+            related: Shows related videos at the end of the video
+            quality: Determines the quality that must be played by default if available
+            logo: Allows to show the Dailymotion logo
         vimeo:
             title: Vimeo Block
             description: Display a viemo player
-            video_id: Video Id
-            autoplay: Lance automatiquement la vidéo
-            fullscreen: Affiche le bouton du mode plein écran
-            color: Change les couleurs des boutons de la vidéo
-            title: Affiche le titre de la vidéo
-            byline: Affiche les sous-titres
-            loop: Lit la vidéo indéfiniment
-            portrait: Affiche le portrait de l'utilisateur
-            width: Largeur du lecteur
-            height: Hauteur du lecteur
+            video_id: Video Id or url of the video
+            autoplay: Play the video automatically on load
+            fullscreen: Allow the player to go into fullscreen
+            color: Specify the color of the video controls
+            title_video: Show the title on the video
+            byline: Show the user’s byline on the video
+            loop: Play the video again when it reaches the end
+            portrait: Show the user’s portrait on the video
+            width: Width of the player
+            height: Height of the player
+            badge: Disables the badge on the video
         gmap:
             title: Gmap Block
             description: Display a map
