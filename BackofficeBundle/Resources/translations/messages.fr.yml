@@ -98,6 +98,9 @@ php_orchestra_backoffice:
         folder:
             success: Le répertoire a été sauvegardé
             delete: Ce répertoire contient des média, vous ne pouvez pas le supprimer.
+            confirm_delete:
+                title: Etes-vous sur de supprimer le dossier
+                text: La suppression entrainera la suppression des sous-dossier
             name: Nom
             site: Sélectionner des sites pour ce répertoire
             edit: Editer le dossier
