@@ -1,5 +1,6 @@
 parameters:
     php_orchestra_backoffice.subscriber.update_child_node_path.class: PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber
+    php_orchestra_backoffice.subscriber.update_media_reference.class: PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber
 
 services:
     php_orchestra_backoffice.subscriber.update_child_node_path:
@@ -7,5 +8,12 @@ services:
         arguments:
             - @php_orchestra_model.repository.node
             - @service_container
+        tags:
+            - { name: kernel.event_subscriber }
+    php_orchestra_backoffice.subscriber.update_media_reference:
+        class: %php_orchestra_backoffice.subscriber.update_media_reference.class%
+        arguments:
+            - @php_orchestra_backoffice.extract_reference_manager
+            - @php_orchestra_media.repository.media
         tags:
             - { name: kernel.event_subscriber }
