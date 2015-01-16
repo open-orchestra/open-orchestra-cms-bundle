@@ -261,14 +261,39 @@ php_orchestra_backoffice:
             title: Bloc youtube
             description: Affiche une vidéo de youtube
             video_id: Id de la video
+            autoplay: Lance automatiquement la vidéo
+            fs: Affiche le bouton du mode plein écran
+            disablekb: Permet les raccourcis clavier
+            hl: Définit la langue du lecteur
+            loop: Lit la vidéo indéfiniment
+            rel: Affiche des vidéo similaire à la fin
+            showinfo: Affiche des information sur la vidéo
+            width: Largeur du lecteur
+            height: Hauteur du lecteur
         dailymotion:
             title: Bloc dailymotion
             description: Affiche un lecteur vidéo de dailymotion
             video_id: Id de la video
+            autoplay: Lance automatiquement la vidéo
+            info: Affiche des informations de la vidéo
+            background: Change la couleur d'arrière plan du lecteur
+            foreground: Change la couleur
+            highlight: Change la couleur des boutons au survole
+            width: Largeur du lecteur
+            height: Hauteur du lecteur
         vimeo:
             title: Bloc Vimeo
             description: Affiche un lecteur vidéo vimeo
             video_id: Id de la vidéo
+            autoplay: Lance automatiquement la vidéo
+            fullscreen: Affiche le bouton du mode plein écran
+            color: Change les couleurs des boutons de la vidéo
+            title: Affiche le titre de la vidéo
+            byline: Affiche les sous-titres
+            loop: Lit la vidéo indéfiniment
+            portrait: Affiche le portrait de l'utilisateur
+            width: Largeur du lecteur
+            height: Hauteur du lecteur
         gmap:
             title: Bloc Gmap
             description: Affiche une carte

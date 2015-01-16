@@ -42,8 +42,8 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         }
 
         $form->add('label', 'text', array('data' => $label));
-        $form->add('class', 'text', array('data' => $data->getClass()));
-        $form->add('id', 'text', array('data' => $data->getId()));
+        $form->add('class', 'text', array('data' => $data->getClass(), 'required'  => false));
+        $form->add('id', 'text', array('data' => $data->getId(), 'required'  => false));
 
         $this->generateFormManager->buildForm($form, $data);
     }
@@ -67,6 +67,12 @@ class BlockTypeSubscriber implements EventSubscriberInterface
 
             if (is_string($value) && is_array(json_decode($value, true))) {
                 $blockAttributes[$key] = json_decode($value, true);
+            }
+        }
+
+        foreach ($blockAttributes as $key => $blockAttribute) {
+            if ($form->has($key) && !array_key_exists($key, $data)) {
+                $blockAttributes[$key] = false;
             }
         }
 
