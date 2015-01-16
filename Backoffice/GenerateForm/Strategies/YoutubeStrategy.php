@@ -38,7 +38,6 @@ class YoutubeStrategy extends AbstractBlockStrategy
             'rel' => false,
             'disablekb' => false,
             'hl' => '',
-//            'autohide' => '',
             'width' => '25',
             'height' => '14'
         );
