@@ -16,10 +16,7 @@ class VideoUrlToIdTransformer implements DataTransformerInterface
      */
     public function transform($url)
     {
-        $explode = preg_split('#/|=#', $url);
-        $videoId = array_pop($explode);
-
-        return $videoId;
+        return $url;
     }
 
     /**
@@ -29,6 +26,9 @@ class VideoUrlToIdTransformer implements DataTransformerInterface
      */
     public function reverseTransform($videoId)
     {
+        $explode = preg_split('#/|=#', $videoId);
+        $videoId = array_pop($explode);
+
         return $videoId;
     }
 }

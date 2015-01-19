@@ -296,9 +296,9 @@ php_orchestra_backoffice:
             video_id: Id ou url de la vidéo
             autoplay: Lance automatiquement la vidéo
             info: Cache les informations de la vidéo
-            background: Change la couleur d'arrière plan du lecteur
-            foreground: Change la couleur
-            highlight: Change la couleur des boutons au survole
+            background: Couleur d'arrière plan du lecteur en hexadécimal
+            foreground: Change la couleur du lecteur en hexadécimal
+            highlight: Change la couleur des boutons au survole en hexadécimal
             width: Largeur du lecteur
             height: Hauteur du lecteur
             chromeless: Cache les commandes du lecteur
@@ -311,7 +311,7 @@ php_orchestra_backoffice:
             video_id: Id ou url de la vidéo
             autoplay: Lance automatiquement la vidéo
             fullscreen: Affiche le bouton du mode plein écran
-            color: Change les couleurs des boutons de la vidéo
+            color: Couleur des boutons en hexadécimal. Assurez-vous de ne pas inclure le "#".
             title_video: Affiche le titre de la vidéo
             byline: Affiche les sous-titres
             loop: Lit la vidéo indéfiniment
