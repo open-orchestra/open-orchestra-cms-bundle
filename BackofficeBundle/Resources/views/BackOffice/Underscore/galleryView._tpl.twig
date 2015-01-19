@@ -20,6 +20,8 @@
 <% } %>
     <div class="caption" style="display: none">
         <span class='title'> <%= media.get('name') %> </span>
-        <span class="tool <%= mediaClass %>"><i class='fa <%= mediaLogo %>'></i></span>
+        <% if (mediaClass != 'undefined' && mediaLogo != undefined) { %>
+            <span class="tool <%= mediaClass %>"><i class='fa <%= mediaLogo %>'></i></span>
+        <% } %>
     </div>
 </div>

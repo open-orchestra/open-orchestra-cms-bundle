@@ -9,10 +9,11 @@ GalleryView = OrchestraView.extend(
     if options.target == '#content'
       key = 'click .superbox-img-' + @cid
       @events[key] = 'superboxOpen'
-      @mediaClass = "media-remove-" + @cid
-      @mediaLogo = "fa-trash-o"
-      media = "click span.media-remove-" + @cid
-      @events[media] = 'confirmRemoveMedia'
+      if @media.get('is_deletable')
+        @mediaClass = "media-remove-" + @cid
+        @mediaLogo = "fa-trash-o"
+        media = "click span.media-remove-" + @cid
+        @events[media] = 'confirmRemoveMedia'
     else
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
