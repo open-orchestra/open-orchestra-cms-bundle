@@ -50,31 +50,31 @@ class YoutubeStrategy extends AbstractStrategy
         $attributes = array_merge($initialize, $attributes);
 
         $urlParams = array();
-        if ($attributes['autoplay'] == true) {
+        if ($attributes['autoplay'] === true) {
             $urlParams['autoplay'] = 1;
         }
-        if ($attributes['showinfo'] == true) {
+        if ($attributes['showinfo'] === true) {
             $urlParams['showinfo'] = 1;
         }
-        if ($attributes['fs'] == true) {
+        if ($attributes['fs'] === true) {
             $urlParams['fs'] = 1;
         }
-        if ($attributes['rel'] == true) {
+        if ($attributes['rel'] === true) {
             $urlParams['rel'] = 1;
         }
-        if ($attributes['disablekb'] == true) {
+        if ($attributes['disablekb'] === true) {
             $urlParams['disablekb'] = 1;
         }
-        if ($attributes['loop'] == true) {
+        if ($attributes['loop'] === true) {
             $urlParams['loop'] = 1;
         }
-        if ($attributes['controls'] == false) {
+        if ($attributes['controls'] === false) {
             $urlParams['controls'] = 0;
         }
-        if ($attributes['theme'] == true) {
+        if ($attributes['theme'] === true) {
             $urlParams['theme'] = 'light';
         }
-        if ($attributes['color'] == true) {
+        if ($attributes['color'] === true) {
             $urlParams['color'] = 'white';
         }
         if ($attributes['hl'] !== '') {
