@@ -55,7 +55,24 @@ class SiteType extends AbstractType
             ))
             ->add('theme', 'orchestra_theme', array(
                 'label' => 'php_orchestra_backoffice.form.website.theme'
-            ));
+            ))
+            ->add('metaKeywords', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_keywords',
+                'required' => false,
+            ))
+            ->add('metaDescription', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_description',
+                'required' => false,
+            ))
+            ->add('metaIndex', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_index',
+                'required' => false,
+            ))
+            ->add('metaFollow', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_follow',
+                'required' => false,
+            ))
+            ;
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
