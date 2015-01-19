@@ -14,7 +14,6 @@ class SuppressSpecialCharacterTransformer
      */
     public function transform($mixed)
     {
-//        $chaine = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $mixed);
         $caracteres = array(
             'À' => 'a', 'Á' => 'a', 'Â' => 'a', 'Ä' => 'a', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ä' => 'a', 'È' => 'e',
             'É' => 'e', 'Ê' => 'e', 'Ë' => 'e', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'Ì' => 'i', 'Í' => 'i',
