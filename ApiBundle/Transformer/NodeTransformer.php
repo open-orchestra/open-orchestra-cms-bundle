@@ -65,6 +65,10 @@ class NodeTransformer extends AbstractTransformer
         $facade->path = $mixed->getPath();
         $facade->alias = $mixed->getAlias();
         $facade->language = $mixed->getLanguage();
+        $facade->metaKeywords = $mixed->getMetaKeywords();
+        $facade->metaDescription = $mixed->getMetaDescription();
+        $facade->metaIndex = $mixed->getMetaIndex();
+        $facade->metaFollow = $mixed->getMetaFollow();
         $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
         $facade->theme = $mixed->getTheme();
         $facade->version = $mixed->getVersion();

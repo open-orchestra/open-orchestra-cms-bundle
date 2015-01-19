@@ -53,6 +53,26 @@ class NodeFacade extends DeletedFacade
     public $language;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $metaKeywords;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $metaDescription;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
+    public $metaIndex = false;
+
+    /**
+     * @Serializer\Type("boolean")
+     */
+    public $metaFollow = false;
+
+    /**
      * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\StatusFacade")
      */
     public $status;

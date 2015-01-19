@@ -66,6 +66,22 @@ class NodeType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.node.in_footer',
                 'required' => false
             ))
+            ->add('metaKeywords', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_keywords',
+                'required' => false,
+            ))
+            ->add('metaDescription', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_description',
+                'required' => false,
+            ))
+            ->add('metaIndex', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_index',
+                'required' => false,
+            ))
+            ->add('metaFollow', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.website.meta_follow',
+                'required' => false,
+            ))
             ->add('nodeId', 'hidden', array(
                 'disabled' => true
             ))
