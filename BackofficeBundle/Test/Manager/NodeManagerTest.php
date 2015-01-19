@@ -38,6 +38,10 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($theme)->getName()->thenReturn('fakeNameTheme');
         $site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getTheme()->thenReturn($theme);
+        Phake::when($site)->getMetaKeywords()->thenReturn('fake keyword');
+        Phake::when($site)->getMetaDescription()->thenReturn('fake description');
+        Phake::when($site)->getMetaIndex()->thenReturn(true);
+        Phake::when($site)->getMetaFollow()->thenReturn(true);
 
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
@@ -226,6 +230,10 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('fakeSiteId', $node->getSiteId());
         $this->assertEquals('fakeLanguage', $node->getLanguage());
         $this->assertEquals('fakeNameTheme', $node->getTheme());
+        $this->assertEquals('fake keyword', $node->getMetaKeywords());
+        $this->assertEquals('fake description', $node->getMetaDescription());
+        $this->assertEquals(true, $node->getMetaIndex());
+        $this->assertEquals(true, $node->getMetaFollow());
     }
 
     /**

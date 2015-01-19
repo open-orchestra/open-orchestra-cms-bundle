@@ -174,7 +174,7 @@ class NodeManager
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
         if ($site) {
             $node->setMetaKeywords($site->getMetaKeywords());
-            $node->setMetaDescription($site->getDescription());
+            $node->setMetaDescription($site->getMetaDescription());
             $node->setMetaIndex($site->getMetaIndex());
             $node->setMetaFollow($site->getMetaFollow());
             if ($theme = $site->getTheme()) {
