@@ -1,5 +1,6 @@
 parameters:
     php_orchestra_backoffice.display.carrousel.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\CarrouselStrategy
+    php_orchestra_backoffice.display.gallery.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\GalleryStrategy
     php_orchestra_backoffice.display.contact.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContactStrategy
     php_orchestra_backoffice.display.header.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\HeaderStrategy
     php_orchestra_backoffice.display.footer.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
@@ -63,6 +64,10 @@ services:
             - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_backoffice.display.carrousel:
         class: %php_orchestra_backoffice.display.carrousel.class%
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.gallery:
+        class: %php_orchestra_backoffice.display.gallery.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_backoffice.display.tiny_mce_wysiwyg:

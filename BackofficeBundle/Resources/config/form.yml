@@ -28,6 +28,7 @@ parameters:
     php_orchestra_backoffice.type.orchestra_keywords.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
     php_orchestra_backoffice.type.role.class: PHPOrchestra\BackofficeBundle\Form\Type\RoleType
     php_orchestra_backoffice.type.orchestra_video.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
+    php_orchestra_backoffice.type.orchestra_block_checkbox.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraBlockCheckBoxType
 
 services:
     # Template form type
@@ -244,3 +245,9 @@ services:
             - @php_orchestra_backoffice.transformer.video_url_to_id
         tags:
             - { name: form.type, alias: orchestra_video }
+    php_orchestra_backoffice.type.orchestra_block_checkbox:
+        class: %php_orchestra_backoffice.type.orchestra_block_checkbox.class%
+        arguments:
+            - @php_orchestra_backoffice.transformer.string_to_boolean
+        tags:
+            - { name: form.type, alias: orchestra_block_checkbox }

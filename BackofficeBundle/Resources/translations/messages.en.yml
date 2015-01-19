@@ -98,6 +98,9 @@ php_orchestra_backoffice:
         folder:
             success: The folder has been saved
             delete: This folder contains media, you can't delete it.
+            confirm_delete:
+                title: Are you sure to delete this folder
+                text: Deleting this folder will delete all of his subfolder.
             name: Name
             site: Select sites for this folder
             edit: Edit folder
@@ -210,6 +213,16 @@ php_orchestra_backoffice:
                     add: Add media
                     new: New media
                     delete: Remove media
+        gallery:
+            title: Gallery block
+            description: Block to display images.
+            form:
+                pictures: Pictures
+                nb_columns: Number of columns
+                media:
+                    add: Add media
+                    new: New media
+                    delete: Remove media
         contact:
             title: Contact block
             description: Display a contact form.
@@ -260,15 +273,48 @@ php_orchestra_backoffice:
         youtube:
             title: Youtube block
             description: Display a youtube video
-            video_id: Video id
+            video_id: Video id or url of the video
+            autoplay: Play the video automatically on load
+            fs: Allow the player to go into fullscreen
+            disablekb: Allows shortcuts
+            hl: Sets the language of the player
+            loop: Play the video again when it reaches the end
+            rel: Shows related videos at the end of the video
+            showinfo: Shows videos information
+            width: Width of the player
+            height: Height of the player
+            controls: Display player's controls
+            theme: Display player's controls in light
+            color: Display progress bar in white
         dailymotion:
             title: Dailymotion Block
             description: Display a dailymotion player
-            video_id: Video id
+            video_id: Video id or url of the video
+            autoplay: Play the video automatically on load
+            info: Shows videos information
+            background: Change the color of the background of controls elements
+            foreground: Change the color of the forground of controls elements
+            highlight: Change the color of the controls elements’ highlights
+            width:  Width of the player
+            height: Height of the player
+            chromeless: Disable player's controls
+            related: Shows related videos at the end of the video
+            quality: Determines the quality that must be played by default if available
+            logo: Allows to show the Dailymotion logo
         vimeo:
             title: Vimeo Block
             description: Display a viemo player
-            video_id: Video Id
+            video_id: Video Id or url of the video
+            autoplay: Play the video automatically on load
+            fullscreen: Allow the player to go into fullscreen
+            color: Specify the color of the video controls
+            title_video: Show the title on the video
+            byline: Show the user’s byline on the video
+            loop: Play the video again when it reaches the end
+            portrait: Show the user’s portrait on the video
+            width: Width of the player
+            height: Height of the player
+            badge: Disables the badge on the video
         gmap:
             title: Gmap Block
             description: Display a map
