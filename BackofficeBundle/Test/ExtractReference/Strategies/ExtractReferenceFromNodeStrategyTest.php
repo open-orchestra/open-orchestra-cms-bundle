@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\ExtractReference\Strategies;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use PHPOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy;
+use PHPOrchestra\Media\Model\MediaInterface;
 
 /**
  * Class ExtractReferenceFromNodeStrategyTest
@@ -75,13 +76,13 @@ class ExtractReferenceFromNodeStrategyTest extends \PHPUnit_Framework_TestCase
         Phake::when($block1)->getAttributes()->thenReturn(array(
             'id' => 'id',
             'class' => 'class',
-            'media' => 'media-foo',
+            'media' => MediaInterface::MEDIA_PREFIX . 'foo',
         ));
         Phake::when($block2)->getAttributes()->thenReturn(array(
             'id' => 'id2',
             'class' => 'class2',
-            'media1' => 'media-foo',
-            'media2' => 'media-bar',
+            'media1' => MediaInterface::MEDIA_PREFIX . 'foo',
+            'media2' => MediaInterface::MEDIA_PREFIX . 'bar',
         ));
 
         $expected = array(

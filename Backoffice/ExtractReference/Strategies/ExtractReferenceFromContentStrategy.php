@@ -3,6 +3,7 @@
 namespace PHPOrchestra\Backoffice\ExtractReference\Strategies;
 
 use PHPOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use PHPOrchestra\Media\Model\MediaInterface;
 use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Model\StatusableInterface;
@@ -33,8 +34,8 @@ class ExtractReferenceFromContentStrategy implements ExtractReferenceInterface
 
         /** @var ContentAttributeInterface $attribute */
         foreach ($statusableElement->getAttributes() as $attribute) {
-            if (strpos($attribute->getValue(), 'media-') === 0) {
-                $references[substr($attribute->getValue(), 6)][] = 'content-' . $statusableElement->getId();
+            if (strpos($attribute->getValue(), MediaInterface::MEDIA_PREFIX) === 0) {
+                $references[substr($attribute->getValue(), strlen(MediaInterface::MEDIA_PREFIX))][] = 'content-' . $statusableElement->getId();
             }
         }
 

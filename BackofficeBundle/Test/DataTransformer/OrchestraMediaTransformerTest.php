@@ -4,6 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\DataTransformer\OrchestraMediaTransformer;
+use PHPOrchestra\Media\Model\MediaInterface;
 
 /**
  * Class OrchestraMediaTransformerTest
@@ -49,7 +50,7 @@ class OrchestraMediaTransformerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('', ''),
-            array('media-id', 'id'),
+            array(MediaInterface::MEDIA_PREFIX  . 'id', 'id'),
             array('id', 'id'),
         );
     }
@@ -72,8 +73,8 @@ class OrchestraMediaTransformerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('', ''),
-            array('id', 'media-id'),
-            array('media-id', 'media-id'),
+            array('id', MediaInterface::MEDIA_PREFIX . 'id'),
+            array(MediaInterface::MEDIA_PREFIX . 'id', MediaInterface::MEDIA_PREFIX . 'id'),
         );
     }
 }

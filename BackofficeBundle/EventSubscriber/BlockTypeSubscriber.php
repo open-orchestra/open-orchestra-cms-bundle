@@ -3,14 +3,12 @@
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
 use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class BlockTypeSubscriber
  */
-class BlockTypeSubscriber implements EventSubscriberInterface
+class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
 {
     protected $generateFormManager;
     protected $fixedParams;
@@ -63,6 +61,8 @@ class BlockTypeSubscriber implements EventSubscriberInterface
                 continue;
             }
 
+            $value = $this->transformData($value, $form->get($key));
+
             $blockAttributes[$key] = $value;
 
             if (is_string($value) && is_array(json_decode($value, true))) {
@@ -79,16 +79,5 @@ class BlockTypeSubscriber implements EventSubscriberInterface
         $block->setAttributes($blockAttributes);
 
         $this->generateFormManager->alterFormAfterSubmit($form, $block);
-    }
-
-    /**
-     * @return array The event names to listen to
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_SUBMIT => 'preSubmit'
-        );
     }
 }
