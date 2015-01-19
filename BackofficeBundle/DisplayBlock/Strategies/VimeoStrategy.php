@@ -35,26 +35,39 @@ class VimeoStrategy extends AbstractStrategy
     {
         $attributes = $block->getAttributes();
 
+        $initialize = array(
+            'autoplay' => false,
+            'title' => false,
+            'fullscreen' => false,
+            'byline' => false,
+            'portrait' => false,
+            'loop' => false,
+            'badge' => false,
+            'color' => false,
+        );
+
+        $attributes = array_merge($initialize, $attributes);
+
         $urlParams = array();
-        if (array_key_exists('autoplay', $attributes) && $attributes['autoplay'] == true) {
+        if ($attributes['autoplay'] == true) {
             $urlParams['autoplay'] = 1;
         }
-        if (!array_key_exists('title', $attributes) || $attributes['title'] == false) {
+        if ($attributes['title'] == false) {
             $urlParams['title'] = 0;
         }
-        if (array_key_exists('fullscreen', $attributes) && $attributes['fullscreen'] == true) {
+        if ($attributes['fullscreen'] == true) {
             $urlParams['fullscreen'] = 1;
         }
-        if (!array_key_exists('byline', $attributes) || $attributes['byline'] == false) {
+        if ($attributes['byline'] == false) {
             $urlParams['byline'] = 0;
         }
-        if (!array_key_exists('portrait', $attributes) || $attributes['portrait'] == false) {
+        if ($attributes['portrait'] == false) {
             $urlParams['portrait'] = 0;
         }
-        if (array_key_exists('loop', $attributes) && $attributes['loop'] == true) {
+        if ($attributes['loop'] == true) {
             $urlParams['loop'] = 1;
         }
-        if (!array_key_exists('badge', $attributes) || $attributes['badge'] == false) {
+        if ($attributes['badge'] == false) {
             $urlParams['badge'] = 0;
         }
         if ($attributes['color'] !== '') {

@@ -1,7 +1,6 @@
 parameters:
     php_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
     php_orchestra_backoffice.transformer.video_url_to_id.class: PHPOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer
-    php_orchestra_backoffice.transformer.string_to_boolean.class: PHPOrchestra\BackofficeBundle\Form\DataTransformer\StringToBooleanTransformer
 
 services:
     php_orchestra_backoffice.transformer.embedkeywords_to_keywords:
@@ -12,5 +11,3 @@ services:
             - %php_orchestra_model.document.keyword.class%
     php_orchestra_backoffice.transformer.video_url_to_id:
         class: %php_orchestra_backoffice.transformer.video_url_to_id.class%
-    php_orchestra_backoffice.transformer.string_to_boolean:
-        class: %php_orchestra_backoffice.transformer.string_to_boolean.class%

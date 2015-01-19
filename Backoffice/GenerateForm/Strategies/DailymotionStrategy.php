@@ -71,31 +71,31 @@ class DailymotionStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.dailymotion.quality',
             'required'  => false,
         ));
-        $form->add('autoplay', 'orchestra_block_checkbox', array(
+        $form->add('autoplay', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['autoplay'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.autoplay',
             'required'  => false,
         ));
-        $form->add('info', 'orchestra_block_checkbox', array(
+        $form->add('info', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['info'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.info',
             'required'  => false,
         ));
-        $form->add('related', 'orchestra_block_checkbox', array(
+        $form->add('related', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['related'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.related',
             'required'  => false,
         ));
-        $form->add('chromeless', 'orchestra_block_checkbox', array(
+        $form->add('chromeless', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['chromeless'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.chromeless',
             'required'  => false,
         ));
-        $form->add('logo', 'orchestra_block_checkbox', array(
+        $form->add('logo', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['logo'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.logo',

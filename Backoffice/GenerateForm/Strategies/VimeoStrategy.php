@@ -69,43 +69,43 @@ class VimeoStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.vimeo.color',
             'required'  => false,
         ));
-        $form->add('autoplay', 'orchestra_block_checkbox', array(
+        $form->add('autoplay', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['autoplay'],
             'label' => 'php_orchestra_backoffice.block.vimeo.autoplay',
             'required'  => false,
         ));
-        $form->add('fullscreen', 'orchestra_block_checkbox', array(
+        $form->add('fullscreen', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['fullscreen'],
             'label' => 'php_orchestra_backoffice.block.vimeo.fullscreen',
             'required'  => false,
         ));
-        $form->add('title', 'orchestra_block_checkbox', array(
+        $form->add('title', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['title'],
             'label' => 'php_orchestra_backoffice.block.vimeo.title_video',
             'required'  => false,
         ));
-        $form->add('byline', 'orchestra_block_checkbox', array(
+        $form->add('byline', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['byline'],
             'label' => 'php_orchestra_backoffice.block.vimeo.byline',
             'required'  => false,
         ));
-        $form->add('portrait', 'orchestra_block_checkbox', array(
+        $form->add('portrait', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['portrait'],
             'label' => 'php_orchestra_backoffice.block.vimeo.portrait',
             'required'  => false,
         ));
-        $form->add('loop', 'orchestra_block_checkbox', array(
+        $form->add('loop', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['loop'],
             'label' => 'php_orchestra_backoffice.block.vimeo.loop',
             'required'  => false,
         ));
-        $form->add('badge', 'orchestra_block_checkbox', array(
+        $form->add('badge', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['badge'],
             'label' => 'php_orchestra_backoffice.block.vimeo.badge',

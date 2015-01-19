@@ -35,32 +35,46 @@ class YoutubeStrategy extends AbstractStrategy
     {
         $attributes = $block->getAttributes();
 
+        $initialize = array(
+            'autoplay' => false,
+            'showinfo' => false,
+            'fs' => false,
+            'rel' => false,
+            'disablekb' => false,
+            'loop' => false,
+            'controls' => false,
+            'theme' => false,
+            'color' => false,
+        );
+
+        $attributes = array_merge($initialize, $attributes);
+
         $urlParams = array();
-        if (array_key_exists('autoplay', $attributes) && $attributes['autoplay'] == true) {
+        if ($attributes['autoplay'] == true) {
             $urlParams['autoplay'] = 1;
         }
-        if (array_key_exists('showinfo', $attributes) && $attributes['showinfo'] == true) {
+        if ($attributes['showinfo'] == true) {
             $urlParams['showinfo'] = 1;
         }
-        if (array_key_exists('fs', $attributes) && $attributes['fs'] == true) {
+        if ($attributes['fs'] == true) {
             $urlParams['fs'] = 1;
         }
-        if (array_key_exists('rel', $attributes) && $attributes['rel'] == true) {
+        if ($attributes['rel'] == true) {
             $urlParams['rel'] = 1;
         }
-        if (array_key_exists('disablekb', $attributes) && $attributes['disablekb'] == true) {
+        if ($attributes['disablekb'] == true) {
             $urlParams['disablekb'] = 1;
         }
-        if (array_key_exists('loop', $attributes) && $attributes['loop'] == true) {
+        if ($attributes['loop'] == true) {
             $urlParams['loop'] = 1;
         }
-        if (!array_key_exists('controls', $attributes) || $attributes['controls'] == false) {
+        if ($attributes['controls'] == false) {
             $urlParams['controls'] = 0;
         }
-        if (array_key_exists('theme', $attributes) && $attributes['theme'] == true) {
+        if ($attributes['theme'] == true) {
             $urlParams['theme'] = 'light';
         }
-        if (array_key_exists('color', $attributes) && $attributes['color'] == true) {
+        if ($attributes['color'] == true) {
             $urlParams['color'] = 'white';
         }
         if ($attributes['hl'] !== '') {
