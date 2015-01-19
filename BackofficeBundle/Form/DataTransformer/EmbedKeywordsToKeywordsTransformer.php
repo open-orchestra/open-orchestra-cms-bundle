@@ -11,19 +11,23 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
 {
+    protected $suppressSpecialCharacterClass;
     protected $keywordRepository;
     protected $embedKeywordClass;
     protected $keywordClass;
 
     /**
-     * @param KeywordRepositoryInterface $keywordRepository
-     * @param string                     $embedKeywordClass
-     * @param string                     $keywordClass
+     * @param KeywordRepositoryInterface          $keywordRepository
+     * @param SuppressSpecialCharacterTransformer $suppressSpecialCharacterClass
+     * @param string                              $embedKeywordClass
+     * @param string                              $keywordClass
      */
-    public function __construct(KeywordRepositoryInterface $keywordRepository, $embedKeywordClass, $keywordClass)
+    public function __construct(KeywordRepositoryInterface $keywordRepository, SuppressSpecialCharacterTransformer $suppressSpecialCharacterClass, $embedKeywordClass, $keywordClass)
     {
+        $this->suppressSpecialCharacterClass = $suppressSpecialCharacterClass;
         $this->keywordRepository = $keywordRepository;
         $this->embedKeywordClass = $embedKeywordClass;
+        $this->keywordClass = $keywordClass;
         $this->keywordClass = $keywordClass;
     }
 
@@ -63,6 +67,7 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
         $keywordClass = $this->keywordClass;
 
         foreach($keywordArray as $keyword) {
+            $keyword = $this->suppressSpecialCharacterClass->transform($keyword);
             if ('' != $keywords) {
                 $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
                 if (!$keywordEntity) {
