@@ -55,6 +55,10 @@ php_orchestra_backoffice:
             languages: Languages
             blocks: Blocks available
             theme: Default Theme
+            meta_keywords: Meta keywords
+            meta_description: Meta description
+            meta_index: Meta index
+            meta_follow: Meta follow
         theme:
             success: The theme has been modified
             creation: The theme has been created
