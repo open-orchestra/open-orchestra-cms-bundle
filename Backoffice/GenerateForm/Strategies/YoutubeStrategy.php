@@ -64,13 +64,13 @@ class YoutubeStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.youtube.height',
             'required'  => false,
         ));
-        $form->add('autoplay', 'orchestra_block_checkbox', array(
+        $form->add('autoplay', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['autoplay'],
             'label' => 'php_orchestra_backoffice.block.youtube.autoplay',
             'required'  => false,
         ));
-        $form->add('fs', 'orchestra_block_checkbox', array(
+        $form->add('fs', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['fs'],
             'label' => 'php_orchestra_backoffice.block.youtube.fs',
@@ -82,43 +82,43 @@ class YoutubeStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.youtube.hl',
             'required'  => false,
         ));
-        $form->add('showinfo', 'orchestra_block_checkbox', array(
+        $form->add('showinfo', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['showinfo'],
             'label' => 'php_orchestra_backoffice.block.youtube.showinfo',
             'required'  => false,
         ));
-        $form->add('rel', 'orchestra_block_checkbox', array(
+        $form->add('rel', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['rel'],
             'label' => 'php_orchestra_backoffice.block.youtube.rel',
             'required'  => false,
         ));
-        $form->add('disablekb', 'orchestra_block_checkbox', array(
+        $form->add('disablekb', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['disablekb'],
             'label' => 'php_orchestra_backoffice.block.youtube.disablekb',
             'required'  => false,
         ));
-        $form->add('loop', 'orchestra_block_checkbox', array(
+        $form->add('loop', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['loop'],
             'label' => 'php_orchestra_backoffice.block.youtube.loop',
             'required'  => false,
         ));
-        $form->add('controls', 'orchestra_block_checkbox', array(
+        $form->add('controls', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['controls'],
             'label' => 'php_orchestra_backoffice.block.youtube.controls',
             'required'  => false,
         ));
-        $form->add('theme', 'orchestra_block_checkbox', array(
+        $form->add('theme', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['theme'],
             'label' => 'php_orchestra_backoffice.block.youtube.theme',
             'required'  => false,
         ));
-        $form->add('color', 'orchestra_block_checkbox', array(
+        $form->add('color', 'checkbox', array(
             'mapped' => false,
             'data' => $attributes['color'],
             'label' => 'php_orchestra_backoffice.block.youtube.color',
