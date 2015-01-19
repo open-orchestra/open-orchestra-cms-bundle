@@ -172,8 +172,14 @@ class NodeManager
         $node->setLanguage($this->contextManager->getCurrentSiteDefaultLanguage());
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
-        if ($site && ($theme = $site->getTheme())) {
-            $node->setTheme($theme->getName());
+        if ($site) {
+            $node->setMetaKeywords($site->getMetaKeywords());
+            $node->setMetaDescription($site->getDescription());
+            $node->setMetaIndex($site->getMetaIndex());
+            $node->setMetaFollow($site->getMetaFollow());
+            if ($theme = $site->getTheme()) {
+                $node->setTheme($theme->getName());
+            }
         }
 
         return $node;
