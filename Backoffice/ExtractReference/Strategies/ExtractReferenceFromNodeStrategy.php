@@ -3,6 +3,7 @@
 namespace PHPOrchestra\Backoffice\ExtractReference\Strategies;
 
 use PHPOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use PHPOrchestra\Media\Model\MediaInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Model\StatusableInterface;
@@ -34,8 +35,8 @@ class ExtractReferenceFromNodeStrategy implements ExtractReferenceInterface
         /** @var BlockInterface $block */
         foreach ($statusableElement->getBlocks() as $key => $block) {
             foreach ($block->getAttributes() as $attribut) {
-                if (strpos($attribut, 'media-') === 0) {
-                    $references[substr($attribut, 6)][] = 'node-' . $statusableElement->getId() . '-' . $key;
+                if (strpos($attribut, MediaInterface::MEDIA_PREFIX) === 0) {
+                    $references[substr($attribut, strlen(MediaInterface::MEDIA_PREFIX))][] = 'node-' . $statusableElement->getId() . '-' . $key;
                 }
             }
         }

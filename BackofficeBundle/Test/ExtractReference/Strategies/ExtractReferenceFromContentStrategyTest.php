@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\ExtractReference\Strategies;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use PHPOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromContentStrategy;
+use PHPOrchestra\Media\Model\MediaInterface;
 
 /**
  * Test ExtractReferenceFromContentStrategyTest
@@ -80,7 +81,7 @@ class ExtractReferenceFromContentStrategyTest extends \PHPUnit_Framework_TestCas
         Phake::when($content)->getId()->thenReturn($contentId);
         Phake::when($content)->getAttributes()->thenReturn($contentAttributes);
 
-        Phake::when($contentAttribute1)->getValue()->thenReturn('media-foo');
+        Phake::when($contentAttribute1)->getValue()->thenReturn(MediaInterface::MEDIA_PREFIX . 'foo');
         Phake::when($contentAttribute2)->getValue()->thenReturn('class2');
 
         $expected = array(
