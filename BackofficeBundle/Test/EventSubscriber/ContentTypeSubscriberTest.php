@@ -25,6 +25,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $fieldType1;
     protected $fieldType2;
     protected $fieldType3;
+    protected $formConfig;
     protected $contentType;
     protected $contentTypeId;
     protected $fieldCollection;
@@ -42,8 +43,14 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->contentAttributClass = 'PHPOrchestra\ModelBundle\Document\ContentAttribute';
 
+        $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($this->formConfig)->getModelTransformers()->thenReturn(array());
+        Phake::when($this->formConfig)->getViewTransformers()->thenReturn(array());
+        $this->form = Phake::mock('Symfony\Component\Form\Form');
+        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
+        Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
+
         $this->contentTypeId = 'contentTypeId';
-        $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->contentAttribute = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($this->content)->getContentType()->thenReturn($this->contentTypeId);

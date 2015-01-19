@@ -5,14 +5,12 @@ namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class ContentTypeSubscriber
  */
-class ContentTypeSubscriber implements EventSubscriberInterface
+class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
 {
     protected $translationChoiceManager;
     protected $contentTypeRepository;
@@ -77,27 +75,17 @@ class ContentTypeSubscriber implements EventSubscriberInterface
         if (is_object($contentType)) {
             $content->setContentTypeVersion($contentType->getVersion());
             foreach ($contentType->getFields() as $field) {
-                if ($attribute = $content->getAttributeByName($field->getFieldId())) {
-                    $attribute->setValue($data[$field->getFieldId()]);
+                $fieldId = $field->getFieldId();
+                if ($attribute = $content->getAttributeByName($fieldId)) {
+                    $attribute->setValue($this->transformData($data[$fieldId], $form->get($fieldId)));
                 } elseif (is_null($attribute)) {
                     $contentAttributClass = $this->contentAttributClass;
                     $attribute = new $contentAttributClass;
-                    $attribute->setName($field->getFieldId());
-                    $attribute->setValue($data[$field->getFieldId()]);
+                    $attribute->setName($fieldId);
+                    $attribute->setValue($this->transformData($data[$fieldId], $form->get($fieldId)));
                     $content->addAttribute($attribute);
                 }
             }
         }
-    }
-
-    /**
-     * @return array The event names to listen to
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_SUBMIT => 'preSubmit'
-        );
     }
 }

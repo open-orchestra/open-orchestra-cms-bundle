@@ -19,6 +19,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $form;
     protected $event;
     protected $block;
+    protected $formConfig;
     protected $fixedParams;
     protected $generateFormManager;
 
@@ -29,8 +30,13 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
 
+        $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($this->formConfig)->getModelTransformers()->thenReturn(array());
+        Phake::when($this->formConfig)->getViewTransformers()->thenReturn(array());
         $this->form = Phake::mock('Symfony\Component\Form\Form');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
+        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
+        Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
