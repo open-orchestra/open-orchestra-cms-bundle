@@ -4,10 +4,13 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
+use PHPOrchestra\BackofficeBundle\Event\StatusableEvent;
+use PHPOrchestra\BackofficeBundle\StatusEvents;
 use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class NodeTransformer
@@ -16,17 +19,25 @@ class NodeTransformer extends AbstractTransformer
 {
     protected $encrypter;
     protected $siteRepository;
+    protected $eventDispatcher;
     protected $statusRepository;
 
     /**
      * @param EncryptionManager         $encrypter
      * @param SiteRepositoryInterface   $siteRepository
      * @param StatusRepositoryInterface $statusRepository
+     * @param EventDispatcherInterface  $eventDispatcher
      */
-    public function __construct(EncryptionManager $encrypter, SiteRepositoryInterface $siteRepository, StatusRepositoryInterface $statusRepository)
+    public function __construct(
+        EncryptionManager $encrypter,
+        SiteRepositoryInterface $siteRepository,
+        StatusRepositoryInterface $statusRepository,
+        $eventDispatcher
+    )
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
+        $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
     }
 
@@ -142,8 +153,8 @@ class NodeTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface $facade
-     * @param mixed|null      $source
+     * @param NodeFacade|FacadeInterface $facade
+     * @param NodeInterface              $source
      *
      * @return mixed
      */
@@ -154,6 +165,8 @@ class NodeTransformer extends AbstractTransformer
                 $newStatus = $this->statusRepository->find($facade->statusId);
                 if ($newStatus) {
                     $source->setStatus($newStatus);
+                    $event = new StatusableEvent($source);
+                    $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
                 }
             }
         }

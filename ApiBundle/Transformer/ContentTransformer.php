@@ -4,8 +4,11 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\ContentFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\BackofficeBundle\Event\StatusableEvent;
+use PHPOrchestra\BackofficeBundle\StatusEvents;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class ContentTransformer
@@ -13,13 +16,16 @@ use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 class ContentTransformer extends AbstractTransformer
 {
     protected $statusRepository;
+    protected $eventDispatcher;
 
     /**
      * @param StatusRepositoryInterface $statusRepository
+     * @param EventDispatcherInterface  $eventDispatcher
      */
-    public function __construct(StatusRepositoryInterface $statusRepository)
+    public function __construct(StatusRepositoryInterface $statusRepository, $eventDispatcher)
     {
         $this->statusRepository = $statusRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -85,8 +91,8 @@ class ContentTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface $facade
-     * @param mixed|null      $source
+     * @param ContentFacade|FacadeInterface $facade
+     * @param ContentInterface|null         $source
      *
      * @return mixed
      */
@@ -97,6 +103,8 @@ class ContentTransformer extends AbstractTransformer
                 $newStatus = $this->statusRepository->find($facade->statusId);
                 if ($newStatus) {
                     $source->setStatus($newStatus);
+                    $event = new StatusableEvent($source);
+                    $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
                 }
             }
         }

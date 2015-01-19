@@ -21,6 +21,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
+    protected $eventDispatcher;
     protected $siteRepository;
     protected $transformer;
     protected $statusId;
@@ -34,6 +35,8 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
         $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
@@ -56,7 +59,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository, $this->statusRepository);
+        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository, $this->statusRepository, $this->eventDispatcher);
 
         $this->nodeTransformer->setContext($this->transformerManager);
     }
@@ -103,6 +106,11 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $facade
+     * @param mixed $source
+     * @param int   $searchCount
+     * @param int   $setCount
+     *
      * @dataProvider getChangeStatus
      */
     public function testReverseTransform($facade, $source, $searchCount, $setCount)
@@ -110,6 +118,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->nodeTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
 
         if ($source) {
             Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());
