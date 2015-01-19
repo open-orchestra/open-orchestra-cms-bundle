@@ -32,6 +32,7 @@ class MediaTransformer extends AbstractTransformer
         $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
         $facade->mimeType = $mixed->getMimeType();
+        $facade->isDeletable = $mixed->isDeletable();
         $facade->displayedImage = $this->generateRoute('php_orchestra_media_get', array(
             'key' => $mixed->getThumbnail()
         ));

@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\ApiBundle\Controller;
 
+use PHPOrchestra\ApiBundle\Exceptions\HttpException\MediaNotDeletableException;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\Media\Model\FolderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,10 +71,16 @@ class MediaController extends Controller
      * @Config\Method({"DELETE"})
      *
      * @return Response
+     *
+     * @throws MediaNotDeletableException
      */
     public function deleteAction($mediaId)
     {
         $media = $this->get('php_orchestra_media.repository.media')->find($mediaId);
+        if (!$media->isDeletable()) {
+            throw new MediaNotDeletableException();
+        }
+
         $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
         $documentManager->remove($media);
         $documentManager->flush();

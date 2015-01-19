@@ -35,6 +35,11 @@ class MediaFacade extends AbstractFacade
     public $displayedImage;
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $isDeletable;
+
+    /**
      * @Serializer\Type("array<string, string>")
      */
     protected $thumbnails = array();
