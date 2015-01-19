@@ -32,14 +32,24 @@ class VideoUrlToIdTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test transform
+     */
+    public function testTransform()
+    {
+        $url = 'apjcdsqp';
+        $this->assertSame($url, $this->transformer->transform($url));
+    }
+
+    /**
      * @param string $url
      * @param string $id
      *
      * @dataProvider provideVideoUrl
      */
-    public function testTransform($url, $id)
+    public function testResverseTransform($url, $id)
     {
-        $this->assertSame($id, $this->transformer->transform($url));
+        $videoId = '116044343';
+        $this->assertSame($videoId, $this->transformer->reverseTransform($videoId));
     }
 
     /**
@@ -56,14 +66,5 @@ class VideoUrlToIdTransformerTest extends \PHPUnit_Framework_TestCase
             array('116044343', '116044343'),
             array('', ''),
         );
-    }
-
-    /**
-     * Test reverseTransform
-     */
-    public function testResverseTransform()
-    {
-        $videoId = '116044343';
-        $this->assertSame($videoId, $this->transformer->reverseTransform($videoId));
     }
 }

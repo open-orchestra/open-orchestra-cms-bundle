@@ -27,7 +27,7 @@ class OrchestraVideoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->videoUrlTransformer);
+        $builder->addViewTransformer($this->videoUrlTransformer);
     }
 
     /**

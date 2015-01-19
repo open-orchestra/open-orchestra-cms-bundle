@@ -296,9 +296,9 @@ php_orchestra_backoffice:
             video_id: Video id or url of the video
             autoplay: Play the video automatically on load
             info: Shows videos information
-            background: Change the color of the background of controls elements
-            foreground: Change the color of the forground of controls elements
-            highlight: Change the color of the controls elements’ highlights
+            background: Hexadecimal background color of the controls elements
+            foreground: Hexadecimal forground color of the controls elements
+            highlight: Hexadecimal color of the controls elements’ highlights
             width:  Width of the player
             height: Height of the player
             chromeless: Disable player's controls
@@ -311,7 +311,7 @@ php_orchestra_backoffice:
             video_id: Video Id or url of the video
             autoplay: Play the video automatically on load
             fullscreen: Allow the player to go into fullscreen
-            color: Specify the color of the video controls
+            color: Specify the hexadecimal color of the video controls. Make sure that you don’t include the "#".
             title_video: Show the title on the video
             byline: Show the user’s byline on the video
             loop: Play the video again when it reaches the end
