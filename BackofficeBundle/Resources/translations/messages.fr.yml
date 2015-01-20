@@ -90,6 +90,16 @@ php_orchestra_backoffice:
             success: Le noeud a été sauvé
             name: Page
             node_type: Type de noeud
+            changefreq:
+                title: Fréquence de modification indicative (pour le sitemap)
+                always: Toujours
+                hourly: Toutes les heures
+                daily: Quotidien
+                weekly: Hebdomadaire
+                monthly: Mensuel
+                yearly: Annuel
+                never: Jamais
+            priority: Importance relative par rapport aux autres pages du site (pour le sitemap)
             theme: Le thème
             template_id: Id du gabarit
             alias: Alias

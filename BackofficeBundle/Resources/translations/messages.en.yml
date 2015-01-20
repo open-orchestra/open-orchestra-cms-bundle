@@ -90,6 +90,16 @@ php_orchestra_backoffice:
             success: The node has been saved
             name: Page
             node_type: Type of Node
+            changefreq:
+                title: Indicative periodicity of change (for the sitemap)
+                always: Always
+                hourly: Hourly
+                daily: Daily
+                weekly: Weekly
+                monthly: Monthly
+                yearly: Yearly
+                never: Never
+            priority: Relative importance compared to the other pages of the site (for the sitemap)
             theme: The theme
             template_id: Template id
             alias: Alias
