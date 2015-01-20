@@ -59,6 +59,7 @@ php_orchestra_backoffice:
             description: Meta description
             index: Meta index
             follow: Meta follow
+            robots_txt: Informations contenues dans le fichier robots.txt
         theme:
             success: Le thème a été modifié
             creation: Le thème a été crée
