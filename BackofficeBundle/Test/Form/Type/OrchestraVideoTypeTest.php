@@ -60,6 +60,6 @@ class OrchestraVideoTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder)->addModelTransformer($this->videoUrltoId);
+        Phake::verify($builder)->addViewTransformer($this->videoUrltoId);
     }
 }
