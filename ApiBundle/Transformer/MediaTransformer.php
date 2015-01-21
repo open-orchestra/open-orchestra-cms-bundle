@@ -38,12 +38,12 @@ class MediaTransformer extends AbstractTransformer
         ));
 
         foreach ($this->thumbnailConfig as $format => $thumbnail) {
-            $facade->addThumbnail(
-                $format,
-                $this->generateRoute('php_orchestra_media_get', array(
-                    'key' => $format . '-' . $mixed->getFilesystemName()
-                ))
-            );
+            $facade->addThumbnail($format, $this->generateRoute('php_orchestra_media_get', array(
+                'key' => $format . '-' . $mixed->getFilesystemName()
+            )));
+            $facade->addLink('_self_format_' . $format, $this->generateRoute('php_orchestra_backoffice_media_override',
+                array('format' => $format, 'mediaId' => $mixed->getId())
+            ));
         }
 
         $facade->addLink('_self_select', $mixed->getId());
@@ -56,6 +56,7 @@ class MediaTransformer extends AbstractTransformer
         $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_media_delete', array(
             'mediaId' => $mixed->getId()
         )));
+
 
         return $facade;
     }

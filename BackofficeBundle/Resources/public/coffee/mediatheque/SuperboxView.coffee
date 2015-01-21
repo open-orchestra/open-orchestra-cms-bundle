@@ -94,6 +94,7 @@ SuperboxView = OrchestraView.extend(
   changeView: (e) ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
     $('.media_crop_preview img', @$el).hide()
+    $(".media-override-format-form").hide()
     format = e.currentTarget.value
     $('.superbox-current-img', @$el).append('<div id="preview-pane">
           <div class="preview-container">
@@ -102,9 +103,12 @@ SuperboxView = OrchestraView.extend(
       </div>')
     $('#preview-pane .preview-container', @$el).height($('.media_crop_' + format, @$el).height())
     $('#preview-pane .preview-container', @$el).width($('.media_crop_' + format, @$el).width())
-    $('.media_crop_' + format, @$el).show()
-    $('#preview-pane .preview-container img', @$el).attr 'src', $('.superbox-current-img', @$el).attr('src')
-    @setUpCrop()
+    if format != ''
+      $('.media_crop_' + format, @$el).show()
+      $(".media-override-format-form").show()
+      $('#preview-pane .preview-container img', @$el).attr 'src', $('.superbox-current-img', @$el).attr('src')
+      @setUpCrop()
+      @setupOverrideForm(format)
 
   addPreview: ->
     for thumbnail of @media.get('thumbnails')
@@ -146,4 +150,31 @@ SuperboxView = OrchestraView.extend(
   addSelect2OnForm: ->
     if $(".select2", @$el).length > 0
       activateSelect2($(".select2", @$el))
+
+  setupOverrideForm: (format) ->
+    currentView = this
+    displayLoader('.media-override-format-form')
+    linkFormat = '_self_format_' + format
+    $.ajax
+      url: @media.get('links')[linkFormat]
+      method: 'GET'
+      success: (response) ->
+        if isLoginForm(response)
+          redirectToLogin()
+        else
+          $('.media-override-format-form').html response
+          currentView.addEventOnOverrideForm()
+
+  addEventOnOverrideForm: ->
+    currentView = this
+    $(".media-override-format-form form", @$el).on "submit", (e) ->
+      displayLoader('.media_override_format_form')
+      e.preventDefault() # prevent native submit
+      $(this).ajaxSubmit
+        statusCode:
+          200: (response) ->
+            $('.media-override-format-form').html response
+            currentView.refreshImages()
+            currentView.addEventOnOverrideForm()
+    return
 )
