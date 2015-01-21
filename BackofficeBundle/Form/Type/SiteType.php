@@ -72,6 +72,10 @@ class SiteType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
             ))
+            ->add('robotsTxt', 'textarea', array(
+                'label' => 'php_orchestra_backoffice.form.website.robots_txt',
+                'required' => true
+            ))
             ;
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
