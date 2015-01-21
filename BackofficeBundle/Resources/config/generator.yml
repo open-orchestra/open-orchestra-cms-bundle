@@ -40,6 +40,7 @@ services:
         class: %php_orchestra_backoffice.gallery.generate_form.class%
         arguments:
             - @translator
+            - %php_orchestra_media.thumbnail.configuration%
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.footer.generate_form:

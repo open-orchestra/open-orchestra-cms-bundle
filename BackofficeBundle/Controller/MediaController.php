@@ -88,7 +88,7 @@ class MediaController extends AbstractAdminController
 
             $gaufretteManager = $this->get('php_orchestra_media.manager.gaufrette');
             $filename = $media->getFilesystemName();
-            file_put_contents(
+            $this->get('filesystem')->dumpFile(
                 $this->container->getParameter('php_orchestra_media.tmp_dir') . '/' . $filename,
                 $gaufretteManager->getFileContent($filename)
             );

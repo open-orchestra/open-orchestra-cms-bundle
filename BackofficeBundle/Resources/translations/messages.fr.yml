@@ -239,6 +239,9 @@ php_orchestra_backoffice:
                     add: Ajouter un média
                     new: Nouveau média
                     delete: Retirer le média
+                nb_items: Nombre d'éléments par page (0 pour tous)
+                thumbnail_format: Format des vignettes
+                image_format : Format de l'image (vue complète)
         contact:
             title: Bloc contact
             description: Affiche un formulaire de contact.
