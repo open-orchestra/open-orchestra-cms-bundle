@@ -61,7 +61,16 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
                 continue;
             }
 
-            $value = $this->transformData($value, $form->get($key));
+            if (is_string($value)) {
+                $value = $this->transformData($value, $form->get($key));
+
+            } elseif (is_array($value)) {
+                $transformedElements = array();
+                foreach ($value as $element) {
+                    $transformedElements[] = $this->transformData($element, $form->get($key));
+                }
+                $value = $transformedElements;
+            }
 
             $blockAttributes[$key] = $value;
 

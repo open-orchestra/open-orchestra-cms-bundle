@@ -35,8 +35,15 @@ class ExtractReferenceFromNodeStrategy implements ExtractReferenceInterface
         /** @var BlockInterface $block */
         foreach ($statusableElement->getBlocks() as $key => $block) {
             foreach ($block->getAttributes() as $attribut) {
-                if (strpos($attribut, MediaInterface::MEDIA_PREFIX) === 0) {
+                if (is_string($attribut) && strpos($attribut, MediaInterface::MEDIA_PREFIX) === 0) {
                     $references[substr($attribut, strlen(MediaInterface::MEDIA_PREFIX))][] = 'node-' . $statusableElement->getId() . '-' . $key;
+
+                } elseif (is_array($attribut)) {
+                    foreach ($attribut as $element) {
+                        if (strpos($element, MediaInterface::MEDIA_PREFIX) === 0) {
+                            $references[substr($element, strlen(MediaInterface::MEDIA_PREFIX))][] = 'node-' . $statusableElement->getId() . '-' . $key;
+                        }
+                    }
                 }
             }
         }
