@@ -137,6 +137,7 @@ php_orchestra_backoffice:
             file: File
             success: The media has been saved
             format: The crop format
+            original_image: Original image
             rectangle: Rectangle
             max_width: Max width image
             max_height: Max height image

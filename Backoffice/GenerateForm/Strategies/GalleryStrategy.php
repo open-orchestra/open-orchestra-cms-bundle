@@ -7,6 +7,7 @@ use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use PHPOrchestra\Media\Model\MediaInterface;
 
 /**
  * Class GalleryStrategy
@@ -14,7 +15,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class GalleryStrategy extends AbstractBlockStrategy
 {
     protected $translator;
-    protected $thumbnailConfig;
+    protected $formats = array();
 
     /**
      * @param TranslatorInterface $translator
@@ -23,7 +24,11 @@ class GalleryStrategy extends AbstractBlockStrategy
     public function __construct(TranslatorInterface $translator, array $thumbnailConfig)
     {
         $this->translator = $translator;
-        $this->thumbnailConfig = $thumbnailConfig;
+
+        $this->formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('php_orchestra_backoffice.form.media.original_image');
+        foreach ($thumbnailConfig as $key => $thumbnail) {
+            $this->formats[$key] = $this->translator->trans('php_orchestra_backoffice.form.media.' . $key);
+        }
     }
 
     /**
@@ -57,13 +62,13 @@ class GalleryStrategy extends AbstractBlockStrategy
             ))
             ->add('thumbnail_format', 'choice', array(
                 'mapped' => false,
-                'choices' => $this->thumbnailConfig,
+                'choices' => $this->formats,
                 'data' => array_key_exists('thumbnail_format', $attributes)? $attributes['thumbnail_format']:1,
                 'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.thumbnail_format')
             ))
             ->add('image_format', 'choice', array(
                 'mapped' => false,
-                'choices' => $this->thumbnailConfig,
+                'choices' => $this->formats,
                 'data' => array_key_exists('image_format', $attributes)? $attributes['image_format']:1,
                 'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.image_format')
             ))
@@ -78,7 +83,8 @@ class GalleryStrategy extends AbstractBlockStrategy
                 ),
                 'data' => array_key_exists('pictures', $attributes)? $attributes['pictures'] : array(),
                 'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.pictures')
-            ));
+            ))
+            ;
     }
 
     /**
