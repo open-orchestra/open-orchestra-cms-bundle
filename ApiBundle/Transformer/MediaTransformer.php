@@ -57,7 +57,6 @@ class MediaTransformer extends AbstractTransformer
             'mediaId' => $mixed->getId()
         )));
 
-
         return $facade;
     }
 
