@@ -44,18 +44,18 @@
     "minimum-stability": "dev",
     "require": {
         "jms/serializer-bundle" : "0.13.0",
-        "itkg/phporchestra-base-bundle": "dev-master",
-        "itkg/phporchestra-translation-bundle": "dev-master",
-        "itkg/phporchestra-display-bundle": "dev-master",
+        "itkg/phporchestra-base-bundle": "*",
+        "itkg/phporchestra-translation-bundle": "*",
+        "itkg/phporchestra-display-bundle": "*",
         "itkg/phporchestra-media-bundle": "*",
-        "itkg/phporchestra-user-bundle": "dev-master",
-        "itkg/phporchestra-model-interface": "dev-master",
+        "itkg/phporchestra-user-bundle": "*",
+        "itkg/phporchestra-model-interface": "*",
         "braincrafted/bootstrap-bundle": "2.1.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "stfalcon/tinymce-bundle": "0.3.8"
     },
     "require-dev": {
-        "itkg/phporchestra-model-bundle": "dev-master",
+        "itkg/phporchestra-model-bundle": "*",
         "phpunit/phpunit" : "4.0.14",
         "scrutinizer/ocular": "1.1.1",
         "phake/phake": "2.0.0-beta2"
