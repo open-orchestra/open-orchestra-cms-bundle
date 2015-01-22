@@ -1,5 +1,5 @@
 <li <% if (currentLanguage == language) { %>class="active"<% } %>>
-    <a class="change-language" data-language="<%= language %>">
+    <a class="change-language-<%= parentCid %>" data-language="<%= language %>">
         <img
             src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
             class="flag flag-<%= language %>"

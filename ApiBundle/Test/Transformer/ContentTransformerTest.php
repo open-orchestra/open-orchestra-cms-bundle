@@ -73,6 +73,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self', $facade->getLinks());
+        $this->assertArrayHasKey('_self_without_parameters', $facade->getLinks());
         $this->assertArrayHasKey('_self_delete', $facade->getLinks());
         $this->assertArrayHasKey('_status_list', $facade->getLinks());
         $this->assertArrayHasKey('_self_status_change', $facade->getLinks());

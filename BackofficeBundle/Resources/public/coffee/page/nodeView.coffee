@@ -43,8 +43,8 @@ NodeView = OrchestraView.extend(
     deleteurl = @node.get('links')._self_delete
     redirectUrl = appRouter.generateUrl "showNode",
       nodeId: @node.get('parent_id')
-    confirmText = $(".delete-confirm-txt-"+@node.cid).text()
-    confirmTitle = $(".delete-confirm-title-"+@node.cid).text()
+    confirmText = $(".delete-confirm-txt-" + @cid).text()
+    confirmTitle = $(".delete-confirm-title-" + @cid).text()
     if @node.attributes.alias is ''
       view = new adminFormView(
         url: url
@@ -79,6 +79,7 @@ NodeView = OrchestraView.extend(
     $(@el).html @renderTemplate('nodeView',
       node: @node
       title: title
+      cid: @cid
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()

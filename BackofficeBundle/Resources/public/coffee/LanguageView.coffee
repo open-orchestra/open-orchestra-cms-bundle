@@ -4,6 +4,7 @@ LanguageView = OrchestraView.extend(
   initialize: (options) ->
     @language = options.language
     @currentLanguage = options.currentLanguage
+    @parentCid = options.cid
     @loadTemplates [
       "language"
     ]
@@ -13,6 +14,7 @@ LanguageView = OrchestraView.extend(
     $(@el).append @renderTemplate('language',
       language: @language
       currentLanguage: @currentLanguage
+      parentCid: @parentCid
     )
     return
 )

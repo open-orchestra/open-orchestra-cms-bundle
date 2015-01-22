@@ -6,17 +6,20 @@ OrchestraView = Backbone.View.extend(
     currentView = @
     if @options
       if @options.multiLanguage
-        @events['click a.change-language'] = 'changeLanguage'
+        key = 'click a.change-language-' + @cid
+        @events[key] = 'changeLanguage'
         templates.push "language"
       if @options.multiStatus
         @events['click a.change-status'] = 'changeStatus'
         templates.push "widgetStatus"
       if @options.multiVersion
-        @events['change select#selectbox'] = 'changeVersion'
+        key = 'change .version-selectbox-' + @cid
+        @events[key] = 'changeVersion'
         templates.push "elementChoice"
         templates.push "elementTitle"
       if @options.duplicate
-        @events['click a#btn-new-version'] = 'duplicateElement'
+        key = 'click .btn-new-version-' + @cid
+        @events[key] = 'duplicateElement'
     templates.push "smartConfirmButton"
     templates.push "smartConfirmTitle"
     templates.push "widgetPreviewLink" if templates.indexOf("widgetPageConfigurationButton") == -1
@@ -69,8 +72,9 @@ OrchestraView = Backbone.View.extend(
   addLanguageToPanel: (language) ->
     view = new LanguageView(
       language: language
-      currentLanguage: @options.multiLanguage.language
+      currentLanguage: @options.currentLanguage
       el: this.$el.find('#entity-languages')
+      cid: @cid
     )
 
   changeLanguage: (event) ->
@@ -145,7 +149,7 @@ OrchestraView = Backbone.View.extend(
       url: @options.duplicate.self_duplicate
       method: 'POST'
       success: ->
-        Backbone.history.loadUrl(redirectUrl)
+        Backbone.history.navigate(redirectUrl, {trigger: true})
     return
 
 )

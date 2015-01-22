@@ -92,7 +92,7 @@
                 id="nav-contents_{{contentType.contentTypeId}}"
                 href="#contents_{{contentType.contentTypeId}}/list"
                 data-url="{{ path('php_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
-                data-displayed-elements="name, status_label"
+                data-displayed-elements="name, status_label, version, language"
             >
                 {{ contentType.names| trans_choose }}
             </a>

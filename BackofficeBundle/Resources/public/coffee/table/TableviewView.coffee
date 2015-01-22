@@ -40,14 +40,18 @@ TableviewView = OrchestraView.extend(
         $.ajax
           url: params.url
           method: 'DELETE'
-          success: (response) ->
-            return
         params.row.hide()
     )
 
   clickEdit: (event) ->
     event.preventDefault()
-    if @element.get('language')
+    if @element.get('language') && @element.get('version')
+      redirectUrl = appRouter.generateUrl('showEntityWithLanguageAndVersion', appRouter.addParametersToRoute(
+        'entityId': @element.get('id')
+        'language': @element.get('language')
+        'version' : @element.get('version')
+      ))
+    else if @element.get('language')
       redirectUrl = appRouter.generateUrl('showEntityWithLanguage', appRouter.addParametersToRoute(
         'entityId': @element.get('id')
         'language': @element.get('language')
@@ -56,5 +60,20 @@ TableviewView = OrchestraView.extend(
       redirectUrl = appRouter.generateUrl('showEntity', appRouter.addParametersToRoute(
         'entityId': @element.get('id')
       ))
-    Backbone.history.navigate(redirectUrl, {trigger: true})
+    Backbone.history.navigate(redirectUrl)
+    element = @element
+    title = @title
+    listUrl = @listUrl
+    $.ajax
+      url: element.get('links')._self_form
+      method: "GET"
+      success: (response) ->
+        options =
+          html: response
+          title: title
+          listUrl: listUrl
+          element: element
+
+        view = new FullPageFormView(options)
+        appRouter.setCurrentMainView view
 )
