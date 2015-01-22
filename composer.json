@@ -47,7 +47,7 @@
         "itkg/phporchestra-base-bundle": "dev-master",
         "itkg/phporchestra-translation-bundle": "dev-master",
         "itkg/phporchestra-display-bundle": "dev-master",
-        "itkg/phporchestra-media-bundle": "dev-master",
+        "itkg/phporchestra-media-bundle": "*",
         "itkg/phporchestra-user-bundle": "dev-master",
         "itkg/phporchestra-model-interface": "dev-master",
         "braincrafted/bootstrap-bundle": "2.1.0",
