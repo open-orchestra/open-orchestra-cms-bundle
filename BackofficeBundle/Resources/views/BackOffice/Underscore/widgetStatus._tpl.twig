@@ -10,7 +10,7 @@
                 <% _.each(statuses, function(status) { %>
                     <% if (status.allowed) { %>
                         <li>
-                            <a class="change-status"
+                            <a class="change-status-<%= cid %>"
                                 data-url="<%= status_change_link %>"
                                 data-status="<%= status.id %>"
                             >

@@ -10,7 +10,8 @@ OrchestraView = Backbone.View.extend(
         @events[key] = 'changeLanguage'
         templates.push "language"
       if @options.multiStatus
-        @events['click a.change-status'] = 'changeStatus'
+        key = 'click .change-status-' + @cid
+        @events[key] = 'changeStatus'
         templates.push "widgetStatus"
       if @options.multiVersion
         key = 'change .version-selectbox-' + @cid
@@ -96,6 +97,7 @@ OrchestraView = Backbone.View.extend(
           current_status: viewContext.options.multiStatus.status
           statuses: response.statuses
           status_change_link: viewContext.options.multiStatus.self_status_change
+          cid: viewContext.cid
         )
         addCustomJarvisWidget(widgetStatus)
         return
