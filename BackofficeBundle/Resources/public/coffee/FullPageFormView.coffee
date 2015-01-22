@@ -7,7 +7,7 @@ FullPageFormView = OrchestraView.extend(
     @element = options.element
     @title = options.title
     @listUrl = options.listUrl
-    @completeOptions(@element);
+    @completeOptions(@element) if @element != undefined
     @options.currentLanguage = options.multiLanguage.language if options.multiLanguage
     @events = {}
     if options.triggers
@@ -58,6 +58,11 @@ FullPageFormView = OrchestraView.extend(
     version = event.currentTarget.value
     link = @element.get('links')._self_without_parameters + '?language=' + @element.get('language') + '&version=' + version
     tableViewLoadSpecificElement(link, @title, @listUrl)
+
+  redirectAfterStatusChange: ->
+    link = @element.get('links')._self_without_parameters + '?language=' + @element.get('language') + '&version=' + @element.get('version')
+    tableViewLoadSpecificElement(link, @title, @listUrl)
+    return
 
   completeOptions: (element) ->
     @options = $.extend(@options, multiLanguage:
