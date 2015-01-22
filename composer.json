@@ -55,7 +55,7 @@
         "stfalcon/tinymce-bundle": "0.3.8"
     },
     "require-dev": {
-        "itkg/phporchestra-model-bundle": "*",
+        "itkg/phporchestra-model-bundle": "dev-master",
         "phpunit/phpunit" : "4.0.14",
         "scrutinizer/ocular": "1.1.1",
         "phake/phake": "2.0.0-beta2"
