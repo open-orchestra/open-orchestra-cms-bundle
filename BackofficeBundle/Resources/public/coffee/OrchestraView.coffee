@@ -109,9 +109,14 @@ OrchestraView = Backbone.View.extend(
     data =
       status_id: statusId
     data = JSON.stringify(data)
+    currentView = @
     $.post(url, data).always (response) ->
-      Backbone.history.loadUrl(Backbone.history.fragment)
+      currentView.redirectAfterStatusChange()
       return
+    return
+
+  redirectAfterStatusChange: ->
+    Backbone.history.loadUrl(Backbone.history.fragment)
     return
 
   addVersionToView: ->

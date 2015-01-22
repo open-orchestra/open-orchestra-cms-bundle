@@ -59,6 +59,11 @@ FullPageFormView = OrchestraView.extend(
     link = @element.get('links')._self_without_parameters + '?language=' + @element.get('language') + '&version=' + version
     tableViewLoadSpecificElement(link, @title, @listUrl)
 
+  redirectAfterStatusChange: ->
+    link = @element.get('links')._self_without_parameters + '?language=' + @element.get('language') + '&version=' + @element.get('version')
+    tableViewLoadSpecificElement(link, @title, @listUrl)
+    return
+
   completeOptions: (element) ->
     @options = $.extend(@options, multiLanguage:
       language_list : element.get('links')._language_list
