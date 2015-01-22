@@ -108,6 +108,42 @@ class MediaController extends AbstractAdminController
 
     /**
      * @param Request $request
+     * @param string  $format
+     * @param string  $mediaId
+     *
+     * @Config\Route("/media/override/{mediaId}/{format}", name="php_orchestra_backoffice_media_override")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ODM\MongoDB\LockException
+     */
+    public function overrideAction(Request $request, $format, $mediaId)
+    {
+        $mediaRepository = $this->get('php_orchestra_media.repository.media');
+        $media = $mediaRepository->find($mediaId);
+
+        $form = $this->createForm('media', null, array(
+            'action' => $this->generateUrl('php_orchestra_backoffice_media_override', array(
+                'mediaId' => $mediaId,
+                'format' => $format
+            ))
+        ));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $file = $form->getData()->getFile();
+            $tmpDir = $this->container->getParameter('php_orchestra_media.tmp_dir');
+            $file->move($tmpDir, $format . '-' . $media->getFilesystemName());
+            $this->get('php_orchestra_media.manager.image_override')->override($media, $format);
+        }
+
+        return $this->renderAdminForm($form);
+    }
+
+    /**
+     * @param Request $request
      * @param string  $mediaId
      *
      * @Config\Route("/media/{mediaId}/meta", name="php_orchestra_backoffice_media_meta")
