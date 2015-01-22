@@ -22,10 +22,15 @@ class ContentController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentId)
     {
-        $content = $this->get('php_orchestra_backoffice.manager.content')->createNewLanguageContent($contentId, $request->get('language'));
+        $language = $request->get('language');
+        $version = $request->get('version');
+
+        $content = $this->get('php_orchestra_model.repository.content')->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
         $form = $this->createForm('orchestra_content', $content, array(
             'action' => $this->generateUrl('php_orchestra_backoffice_content_form', array(
-                'contentId' => $contentId,
+                'contentId' => $content->getContentId(),
+                'language' => $content->getLanguage(),
+                'version' => $content->getVersion(),
             ))
         ));
 
@@ -76,7 +81,7 @@ class ContentController extends AbstractAdminController
 
             return $this->redirect(
                 $this->generateUrl('php_orchestra_backoffice_content_form', array(
-                    'contentId' => $content->getId()
+                    'contentId' => $content->getContentId()
                 ))
             );
         }

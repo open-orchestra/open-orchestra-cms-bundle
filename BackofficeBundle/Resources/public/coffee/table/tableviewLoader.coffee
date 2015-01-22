@@ -32,11 +32,12 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
             element = new TableviewModel
             element.set values
             if entityId is element.get('id')
-              links = element.get('links')
-              links['_self_form'] = links['_self_form'] + "?"
-              element.set('links', links);
-              element = addParameter(element, 'language', language)
-              element = addParameter(element, 'version', version)
+              if language != undefined
+                link = element.get('links')._self_without_parameters + '?language=' + language
+                link = link + '&version=' + version if version != undefined
+                tableViewLoadSpecificElement(link, title, listUrl)
+                founded = true
+                return false
               $.ajax
                 url: element.get('links')._self_form
                 method: "GET"
@@ -46,29 +47,6 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
                     title: title
                     listUrl: listUrl
                     element: element
-                  options = $.extend(options, multiLanguage:
-                    language_list : element.get('links')._language_list
-                    language : language
-                    path: 'showEntityWithLanguage'
-                  ) if element.get('links')._language_list
-                  options = $.extend(options, multiStatus:
-                    language: language
-                    version: version
-                    status_list: element.get('links')._status_list
-                    status: element.get('status')
-                    self_status_change: element.get('links')._self_status_change
-                  ) if element.get('links')._status_list
-                  options = $.extend(options, multiVersion:
-                    language: language
-                    version: version
-                    self_version: element.get('links')._self_version
-                    path: 'showEntityWithLanguageAndVersion'
-                  ) if element.get('links')._self_version
-                  options = $.extend(options, duplicate:
-                    language: language
-                    self_duplicate: element.get('links')._self_duplicate
-                    path: 'showEntityWithLanguage'
-                  ) if element.get('links')._self_duplicate
                   view = new FullPageFormView(options)
                   appRouter.setCurrentMainView view
               founded = true
@@ -81,4 +59,29 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
             listUrl: listUrl
             el: target
           )
+          appRouter.setCurrentMainView view
+
+tableViewLoadSpecificElement = (link, title, listUrl) ->
+  $.ajax
+    url: link
+    method: 'GET'
+    success: (response) ->
+      element = new TableviewElement()
+      element.set response
+      redirectUrl = appRouter.generateUrl('showEntityWithLanguageAndVersion', appRouter.addParametersToRoute(
+        'entityId': element.get('id')
+        'language': element.get('language')
+        'version' : element.get('version')
+      ))
+      Backbone.history.navigate(redirectUrl)
+      $.ajax
+        url: element.get('links')._self_form
+        method: 'GET'
+        success: (response) ->
+          options =
+            html: response
+            title: title
+            listUrl: listUrl
+            element: element
+          view = new FullPageFormView(options)
           appRouter.setCurrentMainView view

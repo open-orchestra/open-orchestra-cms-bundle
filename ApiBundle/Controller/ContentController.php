@@ -3,6 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -17,7 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 class ContentController extends BaseController
 {
     /**
-     * @param string $contentId
+     * @param Request $request
+     * @param string  $contentId
      *
      * @Config\Route("/{contentId}", name="php_orchestra_api_content_show")
      * @Config\Method({"GET"})
@@ -26,9 +28,20 @@ class ContentController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function showAction($contentId)
+    public function showAction(Request $request, $contentId)
     {
-        $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
+        $language = $request->get('language');
+        $version = $request->get('version');
+        $contentRepository = $this->get('php_orchestra_model.repository.content');
+        $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
+
+        if (!$content) {
+            $oldContent = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId);
+            $content = $this->get('php_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
+            $dm = $this->get('doctrine.odm.mongodb.document_manager');
+            $dm->persist($content);
+            $dm->flush($content);
+        }
 
         return $this->get('php_orchestra_api.transformer_manager')->get('content')->transform($content);
     }
@@ -45,14 +58,9 @@ class ContentController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $criteria = array('deleted' => false);
         $contentType = $request->get('content_type');
 
-        if ($contentType) {
-            $criteria['contentType'] = $contentType;
-        }
-
-        $contentCollection = $this->get('php_orchestra_model.repository.content')->findBy($criteria);
+        $contentCollection = $this->get('php_orchestra_model.repository.content')->findByContentTypeInLastVersion($contentType);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
     }
@@ -88,8 +96,7 @@ class ContentController extends BaseController
     {
         $language = $request->get('language');
         /** @var ContentInterface $content */
-        $content = $this->get('php_orchestra_model.repository.content')
-        ->findOneByContentIdAndLanguageAndVersion($contentId, $language);
+        $content = $this->get('php_orchestra_model.repository.content')->findOneByContentIdAndLanguageAndVersion($contentId, $language);
         $newContent = $this->get('php_orchestra_backoffice.manager.content')->duplicateContent($content);
 
         $em = $this->get('doctrine.odm.mongodb.document_manager');
@@ -101,7 +108,7 @@ class ContentController extends BaseController
 
     /**
      * @param Request $request
-     * @param string  $contentMongoId
+     * @param string  $contentId
      *
      * @Config\Route("/{contentId}/list-version", name="php_orchestra_api_content_list_version")
      * @Config\Method({"GET"})
@@ -127,7 +134,7 @@ class ContentController extends BaseController
      *
      * @return Response
      */
-    public function changeStatusAction(Request $request, $contentMongoId)
+    public function updateAction(Request $request, $contentMongoId)
     {
         return $this->reverseTransform($request, $contentMongoId, 'content');
     }
