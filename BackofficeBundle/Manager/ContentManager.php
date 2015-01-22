@@ -51,6 +51,11 @@ class ContentManager
             $newKeyword = clone $keyword;
             $newContent->addKeyword($newKeyword);
         }
+        foreach ($content->getAttributes() as $attribute) {
+            $newAttribute = clone $attribute;
+            $newContent->addAttribute($newAttribute);
+        }
+
 
         return $newContent;
     }

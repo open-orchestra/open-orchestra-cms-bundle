@@ -7,7 +7,7 @@ FullPageFormView = OrchestraView.extend(
     @element = options.element
     @title = options.title
     @listUrl = options.listUrl
-    @completeOptions(@element);
+    @completeOptions(@element) if @element != undefined
     @options.currentLanguage = options.multiLanguage.language if options.multiLanguage
     @events = {}
     if options.triggers
