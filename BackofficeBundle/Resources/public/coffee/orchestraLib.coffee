@@ -139,3 +139,8 @@ activateSelect2 = (element) ->
       container.parent().addClass('bg-color-red').attr('style', 'border-color:#a90329!important') if term.isNew
       term.text
   )
+
+#colorpicker enabled
+activateColorPicker = () ->
+  $(".colorpicker").each ->
+    $(this).minicolors()

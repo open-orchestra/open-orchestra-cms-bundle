@@ -53,6 +53,7 @@ adminFormView = OrchestraView.extend(
       return
     @addEventOnForm()
     @addSelect2OnForm()
+    @addColorPickerOnForm()
 
   addEventOnForm: ->
     viewContext = this
@@ -83,4 +84,8 @@ adminFormView = OrchestraView.extend(
   addSelect2OnForm: ->
     if $(".select2", @$el).length > 0
       activateSelect2($(".select2", @$el))
+
+  addColorPickerOnForm: ->
+    if $(".colorpicker", @$el).length > 0
+      activateColorPicker()
 )
