@@ -46,7 +46,7 @@ class ContentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'orchestra_color_picker', array(
+            ->add('name', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.content.name'
             ))
             ->add('keywords', 'orchestra_keywords', array(
