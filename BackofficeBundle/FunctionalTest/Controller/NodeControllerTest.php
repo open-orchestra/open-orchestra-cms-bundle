@@ -102,6 +102,7 @@ class NodeControllerTest extends AbstractControllerTest
         $formUser['node[name]'] = 'fixturetest' . time();
         $formUser['node[alias]'] = 'page-test';
         $formUser['node[nodeSource]'] = 'root';
+        $formUser['node[routePattern]'] = '/page-test';
 
         $crawler = $this->client->submit($formUser);
         $crawler = $this->client->request('GET', '/admin/');

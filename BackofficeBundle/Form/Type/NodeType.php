@@ -76,6 +76,9 @@ class NodeType extends AbstractType
                     'class' => 'alias-dest',
                 )
             ))
+            ->add('routePattern', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.node.route_pattern',
+            ))
             ->add('inMenu', 'checkbox', array(
                 'label' => 'php_orchestra_backoffice.form.node.in_menu',
                 'required' => false

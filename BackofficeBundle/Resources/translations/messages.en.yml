@@ -104,6 +104,7 @@ php_orchestra_backoffice:
             theme: The theme
             template_id: Template id
             alias: Alias
+            route_pattern: Url pattern
             language: Language
             status: Status
             in_menu: Shown in menus
@@ -322,7 +323,7 @@ php_orchestra_backoffice:
             video_id: Video Id or url of the video
             autoplay: Play the video automatically on load
             fullscreen: Allow the player to go into fullscreen
-            color: Specify the hexadecimal color of the video controls
+            color: Specify the hexadecimal color of the video controls. Make sure that you don’t include the "#".
             title_video: Show the title on the video
             byline: Show the user’s byline on the video
             loop: Play the video again when it reaches the end
