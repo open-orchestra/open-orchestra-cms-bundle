@@ -63,7 +63,7 @@ class VimeoStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.vimeo.height',
             'required'  => false,
         ));
-        $form->add('color', 'text', array(
+        $form->add('color', 'orchestra_color_picker', array(
             'mapped' => false,
             'data' => $attributes['color'],
             'label' => 'php_orchestra_backoffice.block.vimeo.color',

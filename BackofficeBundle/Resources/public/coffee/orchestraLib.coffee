@@ -139,3 +139,12 @@ activateSelect2 = (element) ->
       container.parent().addClass('bg-color-red').attr('style', 'border-color:#a90329!important') if term.isNew
       term.text
   )
+
+#colorpicker enabled
+activateColorPicker = () ->
+#  if ($('#OrchestraBOModal', el).length > 0)
+#  $(".colorpicker").colorpicker().on('showPicker', (el) ->
+#    $(".colorpicker").css("z-index", "100009")
+#  )
+  $(".colorpicker").each ->
+    $(this).minicolors()

@@ -101,19 +101,19 @@ class DailymotionStrategy extends AbstractBlockStrategy
             'label' => 'php_orchestra_backoffice.block.dailymotion.logo',
             'required'  => false,
         ));
-        $form->add('background', 'text', array(
+        $form->add('background', 'orchestra_color_picker', array(
             'mapped' => false,
             'data' => $attributes['background'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.background',
             'required'  => false,
         ));
-        $form->add('foreground', 'text', array(
+        $form->add('foreground', 'orchestra_color_picker', array(
             'mapped' => false,
             'data' => $attributes['foreground'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.foreground',
             'required'  => false,
         ));
-        $form->add('highlight', 'text', array(
+        $form->add('highlight', 'orchestra_color_picker', array(
             'mapped' => false,
             'data' => $attributes['highlight'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.highlight',

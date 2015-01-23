@@ -28,6 +28,7 @@ FullPageFormView = OrchestraView.extend(
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addEventOnForm()
     @addSelect2OnForm()
+    @addColorPickerOnForm()
     $("[data-prototype]").each ->
       PO.formPrototypes.addPrototype $(this)
       return
@@ -36,6 +37,10 @@ FullPageFormView = OrchestraView.extend(
   addSelect2OnForm: ->
     if $(".select2", @$el).length > 0
       activateSelect2($(".select2", @$el))
+
+  addColorPickerOnForm: ->
+    if $(".colorpicker", @$el).length > 0
+      activateColorPicker()
 
   addEventOnForm: ->
     options = @options
