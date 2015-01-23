@@ -322,7 +322,7 @@ php_orchestra_backoffice:
             video_id: Id ou url de la vidéo
             autoplay: Lance automatiquement la vidéo
             fullscreen: Affiche le bouton du mode plein écran
-            color: Couleur des boutons en hexadécimal. Assurez-vous de ne pas inclure le "#".
+            color: Couleur des boutons en hexadécimal
             title_video: Affiche le titre de la vidéo
             byline: Affiche les sous-titres
             loop: Lit la vidéo indéfiniment
