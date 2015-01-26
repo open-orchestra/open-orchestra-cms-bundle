@@ -6,6 +6,8 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -15,6 +17,25 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class KeywordController extends Controller
 {
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/check", name="php_orchestra_api_check_keyword")
+     * @Config\Method({"GET"})
+     *
+     * @return Response
+     */
+    public function checkAction(Request $request)
+    {
+        $keyword = $request->get('term');
+
+        $suppressSpecialCharacter = $this->get('php_orchestra_backoffice.transformer.suppress_special_character');
+
+        $keyword = $suppressSpecialCharacter->transform($keyword);
+
+        return new JsonResponse(array('term' => $keyword), 200);
+    }
+
     /**
      * @param int $keywordId
      *

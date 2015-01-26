@@ -68,7 +68,7 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
 
         foreach($keywordArray as $keyword) {
             $keyword = $this->suppressSpecialCharacterClass->transform($keyword);
-            if ('' != $keywords) {
+            if ('' != $keywords && '' != $keyword) {
                 $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
                 if (!$keywordEntity) {
                     $keywordEntity = new $keywordClass();

@@ -121,6 +121,7 @@ selectorExist = (selector) ->
 #select2 enabled
 activateSelect2 = (element) ->
   tags = element.data('tags')
+  url = element.data('check')
   element.select2(
     tags: tags
     createSearchChoice: (term, data) ->
@@ -132,6 +133,12 @@ activateSelect2 = (element) ->
         isNew: true
     formatResult: (term) ->
       if term.isNew
+        $.ajax
+          type: 'GET'
+          url: url
+          data: 'term=' + encodeURIComponent(term.text)
+          success: (response) ->
+            term.text = response.term
         "<span class=\"label label-danger\">New</span> " + term.text
       else
         term.text

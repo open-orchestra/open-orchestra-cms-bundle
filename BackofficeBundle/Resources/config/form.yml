@@ -231,6 +231,7 @@ services:
         arguments:
             - @php_orchestra_backoffice.transformer.embedkeywords_to_keywords
             - @php_orchestra_model.repository.keyword
+            - @router
         tags:
             - { name: form.type, alias: orchestra_keywords}
     php_orchestra_backoffice.type.role:
