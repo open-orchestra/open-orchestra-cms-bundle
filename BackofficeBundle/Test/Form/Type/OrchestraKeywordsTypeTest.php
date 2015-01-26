@@ -16,6 +16,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
+    protected $router;
     protected $builder;
     protected $keyword1;
     protected $keyword2;
@@ -39,7 +40,9 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer');
 
-        $this->form = new OrchestraKeywordsType($this->transformer, $this->keywordRepository);
+        $this->router = Phake::mock('Symfony\Component\Routing\Router');
+
+        $this->form = new OrchestraKeywordsType($this->transformer, $this->keywordRepository, $this->router);
     }
 
     /**
@@ -65,6 +68,8 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetDefaultOptions($tagLabel)
     {
+        $route = 'path';
+        Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn($route);
         Phake::when($this->keyword1)->getLabel()->thenReturn($tagLabel);
         Phake::when($this->keyword2)->getLabel()->thenReturn($tagLabel);
 
@@ -74,7 +79,8 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($resolverMock)->setDefaults(array( 'attr' => array(
             'class' => 'select2',
-            'data-tags' => json_encode(array($tagLabel, $tagLabel))
+            'data-tags' => json_encode(array($tagLabel, $tagLabel)),
+            'data-check' => $route
         )));
     }
 
