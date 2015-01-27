@@ -9,10 +9,11 @@ GalleryCollectionView = OrchestraView.extend(
     @target = options.el
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
-    key = 'click i.ajax-folder-' + @cid
-    @events[key] = 'clickEditFolder'
-    key = 'click i.ajax-folder-delete-' + @cid
-    @events[key] = 'clickDeleteFolder'
+    if @target == '#content'
+      key = 'click i.ajax-folder-' + @cid
+      @events[key] = 'clickEditFolder'
+      key = 'click i.ajax-folder-delete-' + @cid
+      @events[key] = 'clickDeleteFolder'
     _.bindAll this, "render"
     @loadTemplates [
       "galleryCollectionView",
@@ -26,8 +27,9 @@ GalleryCollectionView = OrchestraView.extend(
       cid: @cid
     )
     $('.js-widget-title', @$el).text @title
-    @addConfigurationButton()
-    @addDeleteButton()
+    if @target == '#content'
+      @addConfigurationButton()
+      @addDeleteButton()
     for mediaKey of @medias.get(@medias.get('collection_name'))
       @addElementToView (@medias.get(@medias.get('collection_name'))[mediaKey])
     $(".figure").width $(this).find("img").width()

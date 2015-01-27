@@ -48,7 +48,7 @@ adminFormView = OrchestraView.extend(
       $('.ajax-delete', @el).attr('data-confirm-title', @confirmtitle)
       $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
       $('.modal-footer', @el).removeClass("hidden-info")
-    $("[data-prototype]").each ->
+    $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnForm()
