@@ -91,9 +91,12 @@ GalleryCollectionView = OrchestraView.extend(
     )
 
   deleteFolder: ->
-    redirectUrl = appRouter.generateUrl('listFolder', appRouter.addParametersToRoute(
-      'folderId': @medias.get('parent_id')
-    ))
+    if @medias.get('parent_id') == undefined
+      redirectUrl = appRouter.generateUrl('showHome')
+    else
+      redirectUrl = appRouter.generateUrl('listFolder', appRouter.addParametersToRoute(
+        'folderId': @medias.get('parent_id')
+      ))
     $.ajax
       url: @medias.get('links')._self_delete
       method: 'DELETE'
