@@ -26,7 +26,7 @@ class MediaCropTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->translatedString = 'translated';
-        $this->translator = Phake::mock('Symfony\Component\Translation\Translator');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedString);
 
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');

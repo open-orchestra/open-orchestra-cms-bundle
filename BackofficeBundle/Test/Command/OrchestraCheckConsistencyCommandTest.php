@@ -28,7 +28,7 @@ class OrchestraCheckConsistencyCommandTest extends \PHPUnit_Framework_TestCase
     {
         $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
 
-        $this->trans = Phake::mock('Symfony\Component\Translation\Translator');
+        $this->trans = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->trans)->trans('php_orchestra_backoffice.command.node.success')->thenReturn('success');
         Phake::when($this->trans)->trans('php_orchestra_backoffice.command.node.error')->thenReturn('error');
         Phake::when($this->trans)->trans('php_orchestra_backoffice.command.empty_choices')->thenReturn('empty');
