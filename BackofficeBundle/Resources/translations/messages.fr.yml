@@ -104,6 +104,7 @@ php_orchestra_backoffice:
             theme: Le thème
             template_id: Id du gabarit
             alias: Alias
+            route_pattern: Pattern de l'url
             language: Langue
             status: Statut
             in_menu: Affiché dans les menus
