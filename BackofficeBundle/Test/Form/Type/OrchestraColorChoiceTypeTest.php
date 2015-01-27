@@ -23,7 +23,7 @@ class OrchestraColorChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\Translator');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translation);
 
         $this->orchestraColorChoiceType = new OrchestraColorChoiceType($this->translator);

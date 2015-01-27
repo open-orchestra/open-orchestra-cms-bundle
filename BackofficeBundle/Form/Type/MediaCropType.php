@@ -5,7 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class MediaCropType
@@ -16,10 +16,10 @@ class MediaCropType extends AbstractType
     protected $translator;
 
     /**
-     * @param array      $thumbnailConfig
-     * @param Translator $translator
+     * @param array               $thumbnailConfig
+     * @param TranslatorInterface $translator
      */
-    public function __construct(array $thumbnailConfig, Translator $translator)
+    public function __construct(array $thumbnailConfig, TranslatorInterface $translator)
     {
         $this->thumbnailConfig = $thumbnailConfig;
         $this->translator = $translator;
