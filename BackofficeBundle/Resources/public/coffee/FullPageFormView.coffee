@@ -29,7 +29,7 @@ FullPageFormView = OrchestraView.extend(
     @addEventOnForm()
     @addSelect2OnForm()
     @addColorPickerOnForm()
-    $("[data-prototype]").each ->
+    $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
     return
