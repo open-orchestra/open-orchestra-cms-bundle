@@ -46,32 +46,21 @@ class DailymotionStrategy extends AbstractStrategy
         $attributes = array_merge($initialize, $attributes);
 
         $urlParams = array();
-        if ($attributes['autoplay'] === true) {
-            $urlParams['autoplay'] = 1;
+
+        foreach (array('autoplay', 'chromeless') as $key) {
+            if ($attributes[$key] === true) {
+                $urlParams[$key] = 1;
+            }
         }
-        if ($attributes['info'] === false) {
-            $urlParams['info'] = 0;
+        foreach (array('logo', 'info', 'related') as $key) {
+            if ($attributes[$key] === false) {
+                $urlParams[$key] = 0;
+            }
         }
-        if ($attributes['logo'] === false) {
-            $urlParams['logo'] = 0;
-        }
-        if ($attributes['related'] === false) {
-            $urlParams['related'] = 0;
-        }
-        if ($attributes['chromeless'] === true) {
-            $urlParams['chromeless'] = 1;
-        }
-        if ($attributes['background'] !== '') {
-            $urlParams['background'] = $attributes['background'];
-        }
-        if ($attributes['foreground'] !== '') {
-            $urlParams['foreground'] = $attributes['foreground'];
-        }
-        if ($attributes['highlight'] !== '') {
-            $urlParams['highlight'] = $attributes['highlight'];
-        }
-        if ($attributes['quality'] !== '') {
-            $urlParams['quality'] = $attributes['quality'];
+        foreach (array('background', 'foreground', 'highlight', 'quality') as $key) {
+            if ($attributes[$key] !== '') {
+                $urlParams[$key] = $attributes[$key];
+            }
         }
 
         $url = "//www.dailymotion.com/embed/video/" . $attributes['videoId'] . "?" . http_build_query($urlParams, '', '&amp;');

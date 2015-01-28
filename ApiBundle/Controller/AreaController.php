@@ -32,7 +32,7 @@ class AreaController extends Controller
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
-        $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
+        $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
         return $this->get('php_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
     }
@@ -71,7 +71,7 @@ class AreaController extends Controller
     {
         $nodeRepository = $this->get('php_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
-        $area = $nodeRepository->findAreaFromNodeAndAreaId($node, $areaId);
+        $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
         $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
 
@@ -136,7 +136,7 @@ class AreaController extends Controller
         if ($nodeId) {
             $nodeRepository = $this->get('php_orchestra_model.repository.node');
             $node = $nodeRepository->find($nodeId);
-            $areaContainer = $nodeRepository->findAreaFromNodeAndAreaId($node, $parentAreaId);
+            $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
         }
         if ($templateId && is_null($nodeId)) {
             $areaContainer = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
