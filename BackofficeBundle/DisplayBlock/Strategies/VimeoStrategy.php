@@ -49,26 +49,16 @@ class VimeoStrategy extends AbstractStrategy
         $attributes = array_merge($initialize, $attributes);
 
         $urlParams = array();
-        if ($attributes['autoplay'] === true) {
-            $urlParams['autoplay'] = 1;
+
+        foreach (array('autoplay', 'fullscreen', 'loop') as $key) {
+            if ($attributes[$key] === true) {
+                $urlParams[$key] = 1;
+            }
         }
-        if ($attributes['title'] === false) {
-            $urlParams['title'] = 0;
-        }
-        if ($attributes['fullscreen'] === true) {
-            $urlParams['fullscreen'] = 1;
-        }
-        if ($attributes['byline'] === false) {
-            $urlParams['byline'] = 0;
-        }
-        if ($attributes['portrait'] === false) {
-            $urlParams['portrait'] = 0;
-        }
-        if ($attributes['loop'] === true) {
-            $urlParams['loop'] = 1;
-        }
-        if ($attributes['badge'] === false) {
-            $urlParams['badge'] = 0;
+        foreach (array('title', 'byline', 'portrait', 'badge') as $key) {
+            if ($attributes[$key] === false) {
+                $urlParams[$key] = 0;
+            }
         }
         if ($attributes['color'] !== '') {
             $urlParams['color'] = $attributes['color'];

@@ -50,24 +50,12 @@ class YoutubeStrategy extends AbstractStrategy
         $attributes = array_merge($initialize, $attributes);
 
         $urlParams = array();
-        if ($attributes['autoplay'] === true) {
-            $urlParams['autoplay'] = 1;
+        foreach (array('autoplay', 'showinfo', 'fs', 'rel', 'disablekb', 'loop') as $key) {
+            if ($attributes[$key] === true) {
+                $urlParams[$key] = 1;
+            }
         }
-        if ($attributes['showinfo'] === true) {
-            $urlParams['showinfo'] = 1;
-        }
-        if ($attributes['fs'] === true) {
-            $urlParams['fs'] = 1;
-        }
-        if ($attributes['rel'] === true) {
-            $urlParams['rel'] = 1;
-        }
-        if ($attributes['disablekb'] === true) {
-            $urlParams['disablekb'] = 1;
-        }
-        if ($attributes['loop'] === true) {
-            $urlParams['loop'] = 1;
-        }
+
         if ($attributes['controls'] === false) {
             $urlParams['controls'] = 0;
         }
