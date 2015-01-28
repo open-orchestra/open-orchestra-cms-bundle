@@ -100,7 +100,7 @@
     {% endfor %}
 {% endmacro %}
 
-{% macro menu_folder(folders, parent_id) %}
+{% macro menu_folder(folders, first) %}
     {% for folder in folders %}
         <li>
             <a
@@ -112,7 +112,7 @@
             </a>
             <ul >
                 {% if folder.subFolders is not empty %}
-                    {{ _self.menu_folder(folder.subFoldersBySiteId(context.currentSiteId), folder.id) }}
+                    {{ _self.menu_folder(folder.subFoldersBySiteId(context.currentSiteId), 'child') }}
                 {% endif %}
                 <li>
                     <div class="ui-state-unsortable">
@@ -128,6 +128,20 @@
             </ul>
         </li>
     {% endfor %}
+
+    {% if first == 'first' %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                        class="ajax-new"
+                        href="#"
+                        data-url="{{ path('php_orchestra_backoffice_folder_new', {'parentId': '-'}) }}">
+                    <i class="fa fa-file"></i>
+                    {{ 'php_orchestra_backoffice.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
+    {% endif %}
 {% endmacro %}
 
 {% macro menu_modal_folder(folders, parent_id) %}
