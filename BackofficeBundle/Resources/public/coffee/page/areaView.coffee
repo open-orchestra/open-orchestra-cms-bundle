@@ -53,9 +53,10 @@ AreaView = OrchestraView.extend(
     
     if $("ul.areas-" + @cid, @el).children().length is 0
       $("ul.areas-" + @cid, @el).remove()
+      $("ul.blocks-" + @cid, @el).addClass('bo-column') if $("ul.blocks-" + @cid, @el).children().length is 0
       makeSortable @el
     else
-      $("ul.blocks-" + @cid, @el).remove() if $("ul.blocks-" + @cid, @el).children().length is 0
+      $("ul.blocks-" + @cid, @el).remove()
     
     this
 
