@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
+use PHPOrchestra\BackofficeBundle\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -57,8 +59,7 @@ class NodeController extends BaseController
      */
     public function deleteAction($nodeId)
     {
-        $nodes = $this->get('php_orchestra_model.repository.node')
-            ->findByNodeIdAndSiteId($nodeId);
+        $nodes = $this->get('php_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId);
         $this->get('php_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 

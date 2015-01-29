@@ -1,0 +1,4 @@
+services:
+#    php_orchestra_log.example:
+#        class: PHPOrchestra\LogBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -68,6 +68,8 @@ class NodeManager
         $newNode->setStatus(null);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_DUPLICATE, new NodeEvent($node));
+
         return $newNode;
     }
 
@@ -86,6 +88,8 @@ class NodeManager
         $newNode->setLanguage($language);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_ADD_LANGUAGE, new NodeEvent($node));
+
         return $newNode;
     }
 
@@ -95,6 +99,7 @@ class NodeManager
     public function deleteTree($nodes)
     {
         $parentId = null;
+        $node = null;
         foreach ($nodes as $node) {
             $node->setDeleted(true);
             $parentId = $node->getNodeId();
@@ -103,6 +108,10 @@ class NodeManager
         if ($parentId) {
             $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId);
             $this->deleteTree($sons);
+        }
+
+        if ($node) {
+            $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
         }
     }
 

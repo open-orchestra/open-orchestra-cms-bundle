@@ -65,6 +65,7 @@
     },
     "autoload": {
         "psr-0": {
+            "PHPOrchestra\\LogBundle": "",
             "PHPOrchestra\\BackofficeBundle": "",
             "PHPOrchestra\\Backoffice": "",
             "PHPOrchestra\\ApiBundle": ""

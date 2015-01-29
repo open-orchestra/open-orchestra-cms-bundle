@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
+use PHPOrchestra\BackofficeBundle\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +38,8 @@ class NodeController extends AbstractAdminController
 
         $this->handleForm($form, $message, $node);
 
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
+
         return $this->renderAdminForm($form);
     }
 
@@ -67,6 +71,8 @@ class NodeController extends AbstractAdminController
             $statusCode = 400;
         } elseif (!is_null($node->getNodeId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_node_form', array('id' => $node->getId()));
+
+            $this->dispatchEvent(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
             return $this->redirect($url);
         };

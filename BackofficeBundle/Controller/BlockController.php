@@ -2,7 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
 use PHPOrchestra\BackofficeBundle\Form\Type\BlockType;
+use PHPOrchestra\BackofficeBundle\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +47,8 @@ class BlockController extends AbstractAdminController
 
         $this->handleForm($form, $this->get('translator')
             ->trans('php_orchestra_backoffice.form.block.success'), $node);
+
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
 
         return $this->renderAdminForm($form, array('blockType' => $block->getComponent()));
     }
