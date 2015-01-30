@@ -56,6 +56,23 @@ class SiteType extends AbstractType
             ->add('theme', 'orchestra_theme', array(
                 'label' => 'php_orchestra_backoffice.form.website.theme'
             ))
+            ->add('sitemap_changefreq', 'choice', array(
+                'label' => 'php_orchestra_backoffice.form.node.changefreq.title',
+                'choices' => array(
+                    'always' => 'php_orchestra_backoffice.form.node.changefreq.always',
+                    'hourly' => 'php_orchestra_backoffice.form.node.changefreq.hourly',
+                    'daily' => 'php_orchestra_backoffice.form.node.changefreq.daily',
+                    'weekly' => 'php_orchestra_backoffice.form.node.changefreq.weekly',
+                    'monthly' => 'php_orchestra_backoffice.form.node.changefreq.monthly',
+                    'yearly' => 'php_orchestra_backoffice.form.node.changefreq.yearly',
+                    'never' => 'php_orchestra_backoffice.form.node.changefreq.never'
+                )
+            ))
+            ->add('sitemap_priority', 'percent', array(
+                'label' => 'php_orchestra_backoffice.form.node.priority',
+                'type' => 'fractional',
+                'precision' => 2
+            ))
             ->add('metaKeywords', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
