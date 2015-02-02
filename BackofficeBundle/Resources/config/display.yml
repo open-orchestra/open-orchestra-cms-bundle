@@ -16,6 +16,7 @@ parameters:
     php_orchestra_backoffice.display.media_list_by_keyword.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy
     php_orchestra_backoffice.display.content.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentStrategy
     php_orchestra_backoffice.display.language_list.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LanguageListStrategy
+    php_orchestra_backoffice.display.audience_analysis.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy
 
 services:
     php_orchestra_backoffice.display.contact:
@@ -92,5 +93,9 @@ services:
             - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_backoffice.display.add_this:
         class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\AddThisStrategy
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.audience_analysis:
+        class: %php_orchestra_backoffice.display.audience_analysis.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }

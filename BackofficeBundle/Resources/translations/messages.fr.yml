@@ -341,6 +341,15 @@ php_orchestra_backoffice:
         addthis:
             title: Bloc Add this
             description: Affiche des boutons pour partager des contenus
+        audience_analysis:
+            title: Bloc d'analyse d'audience
+            description: Intègre un tag Google Analytics ou Xiti
+            tag_type: Type de tag
+            google_analytics:
+                label: Google Analytics
+            xiti_free:
+                label: Xiti Free 7.5
+                site_id: Id de site (paramètre 's')
     element:
         version:
             create: Nouvelle version

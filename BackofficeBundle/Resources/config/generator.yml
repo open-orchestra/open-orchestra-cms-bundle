@@ -17,6 +17,7 @@ parameters:
     php_orchestra_backoffice.media_list_by_keyword.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\MediaListByKeywordStrategy
     php_orchestra_backoffice.content.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\ContentStrategy
     php_orchestra_backoffice.language_list.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\LanguageListStrategy
+    php_orchestra_backoffice.audience_analysis.generate_form.class: PHPOrchestra\Backoffice\GenerateForm\Strategies\AudienceAnalysisStrategy
 
 services:
     php_orchestra_backoffice.generate_form_manager:
@@ -119,5 +120,11 @@ services:
             - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.generate_form.add_this:
         class: PHPOrchestra\Backoffice\GenerateForm\Strategies\AddThisStrategy
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.generate_form.audience_analysis:
+        class: %php_orchestra_backoffice.audience_analysis.generate_form.class%
+        arguments:
+            - @translator
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
