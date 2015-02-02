@@ -21,8 +21,8 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
     public function __construct(TranslatorInterface $translator)
     {
         $this->choices = array(
-            'google_analytics' => $translator->trans('php_orchestra_backoffice.block.audience_analysis.google_analytics.label'),
-            'xiti_free' => $translator->trans('php_orchestra_backoffice.block.audience_analysis.xiti_free.label')
+            'google_analytics' => $translator->trans('php_orchestra_backoffice.block.audience_analysis.google_analytics'),
+            'xiti_free' => $translator->trans('php_orchestra_backoffice.block.audience_analysis.xiti_free')
         );
     }
 
@@ -52,10 +52,10 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
                 'data' => array_key_exists('tag_type', $attributes) ? $attributes['tag_type'] : '',
                 'label' => 'php_orchestra_backoffice.block.audience_analysis.tag_type'
             ))
-            ->add('xiti_site', 'text', array(
+            ->add('site_id', 'text', array(
                 'mapped' => false,
-                'data' => array_key_exists('xiti_site', $attributes) ? $attributes['xiti_site'] : '',
-                'label' => 'php_orchestra_backoffice.block.audience_analysis.xiti_free.site_id'
+                'data' => array_key_exists('site_id', $attributes) ? $attributes['site_id'] : '',
+                'label' => 'php_orchestra_backoffice.block.audience_analysis.site_id'
             ))
         ;
     }

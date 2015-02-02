@@ -345,11 +345,9 @@ php_orchestra_backoffice:
             title: Audience analysis block
             description: Integrate a Google Analytics or Xiti tag
             tag_type: Tag type
-            google_analytics:
-                label: Google Analytics
-            xiti_free:
-                label: Xiti Free 7.5
-                site_id: Site Id ('s' parameter)
+            google_analytics: Google Analytics
+            xiti_free: Xiti Free 7.5
+            site_id: Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)
     element:
         version:
             create: New version
