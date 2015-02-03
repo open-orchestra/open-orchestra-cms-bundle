@@ -22,8 +22,39 @@ class LogStatusSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
+    /**
+     * @param StatusableEvent $event
+     */
     public function statusChange(StatusableEvent $event)
     {
+        $status = $event->getStatusableElement();
+        $this->logger->info('', array());
+    }
+
+    /**
+     * @param StatusableEvent $event
+     */
+    public function statusCreate(StatusableEvent $event)
+    {
+        $status = $event->getStatusableElement();
+        $this->logger->info('', array());
+    }
+
+    /**
+     * @param StatusableEvent $event
+     */
+    public function statusDelete(StatusableEvent $event)
+    {
+        $status = $event->getStatusableElement();
+        $this->logger->info('', array());
+    }
+
+    /**
+     * @param StatusableEvent $event
+     */
+    public function statusUpdate(StatusableEvent $event)
+    {
+        $status = $event->getStatusableElement();
         $this->logger->info('', array());
     }
 
@@ -33,7 +64,10 @@ class LogStatusSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            StatusEvents::STATUS_CHANGE => 'statusEvent',
+            StatusEvents::STATUS_CHANGE => 'statusChange',
+            StatusEvents::STATUS_CREATE => 'statusCreate',
+            StatusEvents::STATUS_DELETE => 'statusDelete',
+            StatusEvents::STATUS_UPDATE => 'statusUpdate',
         );
     }
 }

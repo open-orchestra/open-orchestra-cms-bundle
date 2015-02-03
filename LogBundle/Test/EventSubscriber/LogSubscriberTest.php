@@ -3,29 +3,27 @@
 namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-<<<<<<< Updated upstream
-use PHPOrchestra\BackofficeBundle\NodeEvents;
-=======
 use PHPOrchestra\ModelInterface\NodeEvents;
->>>>>>> Stashed changes
-use PHPOrchestra\LogBundle\EventSubscriber\LogSubscriber;
+use PHPOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber;
 
 /**
- * Test LogSubscriberTest
+ * Test LogNodeSubscriberTest
  */
-class LogSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var LogSubscriber
+     * @var LogNodeSubscriber
      */
     protected $subscriber;
+    protected $logger;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->subscriber = new LogSubscriber();
+        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+        $this->subscriber = new LogNodeSubscriber($this->logger);
     }
 
     /**

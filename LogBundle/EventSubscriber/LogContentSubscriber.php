@@ -68,10 +68,10 @@ class LogContentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ContentEvents::CONTENT_CREATION => 'contentEvent',
-            ContentEvents::CONTENT_DELETE => 'contentEvent',
-            ContentEvents::CONTENT_UPDATE => 'contentEvent',
-            ContentEvents::CONTENT_DUPLICATE => 'contentEvent',
+            ContentEvents::CONTENT_DUPLICATE => 'contentDuplicate',
+            ContentEvents::CONTENT_CREATION => 'contentCreation',
+            ContentEvents::CONTENT_DELETE => 'contentDelete',
+            ContentEvents::CONTENT_UPDATE => 'contentUpdate',
         );
     }
 }

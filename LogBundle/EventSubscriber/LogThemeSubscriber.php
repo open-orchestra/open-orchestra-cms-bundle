@@ -55,9 +55,9 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ThemeEvents::THEME_CREATE => 'themeEvent',
-            ThemeEvents::THEME_DELETE => 'themeEvent',
-            ThemeEvents::THEME_UPDATE => 'themeEvent',
+            ThemeEvents::THEME_CREATE => 'themeCreate',
+            ThemeEvents::THEME_DELETE => 'themeDelete',
+            ThemeEvents::THEME_UPDATE => 'themeUpdate',
         );
     }
 }

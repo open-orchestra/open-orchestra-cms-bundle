@@ -2,12 +2,12 @@
 
 namespace PHPOrchestra\LogBundle\EventSubscriber;
 
-use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use PHPOrchestra\Media\Event\MediaEvent;
 use PHPOrchestra\Media\MediaEvents;
 use PHPOrchestra\Media\Event\FolderEvent;
 use PHPOrchestra\Media\FolderEvents;
 use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogMediaSubscriber
@@ -84,12 +84,12 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            MediaEvents::ADD_IMAGE => 'MediaEvent',
-            MediaEvents::RESIZE_IMAGE => 'MediaEvent',
-            MediaEvents::MEDIA_DELETE => 'MediaEvent',
-            MediaEvents::OVERRIDE_IMAGE => 'MediaEvent',
-            FolderEvents::FOLDER_CREATE => 'folderEvent',
-            FolderEvents::FOLDER_DELETE => 'folderEvent',
+            MediaEvents::ADD_IMAGE => 'mediaAddImage',
+            MediaEvents::RESIZE_IMAGE => 'mediaResize',
+            MediaEvents::MEDIA_DELETE => 'mediaDelete',
+            FolderEvents::FOLDER_CREATE => 'folderCreate',
+            FolderEvents::FOLDER_DELETE => 'folderDelete',
+            MediaEvents::OVERRIDE_IMAGE => 'mediaOverride',
         );
     }
 }

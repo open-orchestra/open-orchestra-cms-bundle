@@ -55,9 +55,9 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            TemplateEvents::TEMPLATE_CREATE => 'templateEvents',
-            TemplateEvents::TEMPLATE_DELETE => 'templateEvents',
-            TemplateEvents::TEMPLATE_UPDATE => 'templateEvents',
+            TemplateEvents::TEMPLATE_CREATE => 'templateCreate',
+            TemplateEvents::TEMPLATE_DELETE => 'templateDelete',
+            TemplateEvents::TEMPLATE_UPDATE => 'templateUpdate',
         );
     }
 

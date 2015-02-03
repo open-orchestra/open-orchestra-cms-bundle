@@ -8,9 +8,9 @@ use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class LogSubscriber
+ * Class LogNodeSubscriber
  */
-class LogSubscriber implements EventSubscriberInterface
+class LogNodeSubscriber implements EventSubscriberInterface
 {
     protected $logger;
 

@@ -55,9 +55,9 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            RoleEvents::ROLE_CREATE => 'roleEvent',
-            RoleEvents::ROLE_DELETE => 'roleEvent',
-            RoleEvents::ROLE_UPDATE => 'roleEvent',
+            RoleEvents::ROLE_CREATE => 'roleCreate',
+            RoleEvents::ROLE_DELETE => 'roleDelete',
+            RoleEvents::ROLE_UPDATE => 'roleUpdate',
         );
     }
 }

@@ -46,8 +46,8 @@ class LogKeywordSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KeywordEvents::KEYWORD_CREATE => 'keywordEvent',
-            KeywordEvents::KEYWORD_DELETE => 'keywordEvent',
+            KeywordEvents::KEYWORD_CREATE => 'keywordCreate',
+            KeywordEvents::KEYWORD_DELETE => 'keywordDelete',
         );
     }
 }

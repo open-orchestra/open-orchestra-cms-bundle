@@ -55,9 +55,9 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            SiteEvents::SITE_CREATE => 'siteEvent',
-            SiteEvents::SITE_DELETE => 'siteEvent',
-            SiteEvents::SITE_UPDATE => 'siteEvent',
+            SiteEvents::SITE_CREATE => 'siteCreate',
+            SiteEvents::SITE_DELETE => 'siteDelete',
+            SiteEvents::SITE_UPDATE => 'siteUpdate',
         );
     }
 }
