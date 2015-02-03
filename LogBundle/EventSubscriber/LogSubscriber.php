@@ -2,14 +2,9 @@
 
 namespace PHPOrchestra\LogBundle\EventSubscriber;
 
-<<<<<<< Updated upstream
-use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
-=======
 use PHPOrchestra\ModelInterface\Event\NodeEvent;
 use PHPOrchestra\ModelInterface\NodeEvents;
 use Symfony\Bridge\Monolog\Logger;
->>>>>>> Stashed changes
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -17,8 +12,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class LogSubscriber implements EventSubscriberInterface
 {
-<<<<<<< Updated upstream
-=======
     protected $logger;
 
     /**
@@ -29,15 +22,11 @@ class LogSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
->>>>>>> Stashed changes
     /**
      * @param NodeEvent $event
      */
     public function nodeCreation(NodeEvent $event)
     {
-<<<<<<< Updated upstream
-
-=======
         $node = $event->getNode();
         $this->logger->info('Create a new node', array('node_name' => $node->getName()));
     }
@@ -109,7 +98,6 @@ class LogSubscriber implements EventSubscriberInterface
         $node = $event->getNode();
         $area = $event->getArea();
         $this->logger->info('Delete area', array('nodeId' => $node->getNodeId(), 'node_name' => $node->getName(), $area->getAreaId()));
->>>>>>> Stashed changes
     }
 
     /**
@@ -118,12 +106,6 @@ class LogSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-<<<<<<< Updated upstream
-            NodeEvents::NODE_CREATION => 'nodeEvent',
-        );
-    }
-
-=======
             NodeEvents::NODE_DELETE => 'nodeDelete',
             NodeEvents::NODE_UPDATE => 'nodeUpdate',
             NodeEvents::NODE_CREATION => 'nodeCreation',
@@ -135,5 +117,4 @@ class LogSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'nodeEvent',
         );
     }
->>>>>>> Stashed changes
 }

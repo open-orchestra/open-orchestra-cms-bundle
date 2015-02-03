@@ -2,12 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-<<<<<<< Updated upstream
-use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
-use PHPOrchestra\BackofficeBundle\Form\Type\BlockType;
 use PHPOrchestra\BackofficeBundle\NodeEvents;
-=======
->>>>>>> Stashed changes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
