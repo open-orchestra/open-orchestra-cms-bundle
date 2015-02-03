@@ -34,18 +34,34 @@ class ExtractReferenceFromNodeStrategy implements ExtractReferenceInterface
 
         /** @var BlockInterface $block */
         foreach ($statusableElement->getBlocks() as $key => $block) {
-            foreach ($block->getAttributes() as $attribut) {
-                if (is_string($attribut) && strpos($attribut, MediaInterface::MEDIA_PREFIX) === 0) {
-                    $references[substr($attribut, strlen(MediaInterface::MEDIA_PREFIX))][] = 'node-' . $statusableElement->getId() . '-' . $key;
+            $references = array_merge(
+                $references,
+                $this->extractMedia($block->getAttributes(), $key, $statusableElement->getId() , $references)
+            );
+        }
 
-                } elseif (is_array($attribut)) {
-                    foreach ($attribut as $element) {
-                        if (strpos($element, MediaInterface::MEDIA_PREFIX) === 0) {
-                            $references[substr($element, strlen(MediaInterface::MEDIA_PREFIX))][] = 'node-' . $statusableElement->getId() . '-' . $key;
-                        }
-                    }
-                }
+        return $references;
+    }
+
+    /**
+     * Recursively extract media references from elements (bloc, attribute, collection attribute, etc ...)
+     * 
+     * @param array  $element
+     * @param string $blockIndex
+     * @param string $statusableElementId
+     * @param array  $references
+     */
+    protected function extractMedia($element, $blockIndex, $statusableElementId, $references = array())
+    {
+        if (is_array($element)) {
+            foreach ($element as $item) {
+                $references = array_merge(
+                    $references,
+                    $this->extractMedia($item, $blockIndex, $statusableElementId , $references)
+                );
             }
+        } elseif (is_string($element) && strpos($element, MediaInterface::MEDIA_PREFIX) === 0) {
+            $references[substr($element, strlen(MediaInterface::MEDIA_PREFIX))][] = 'node-' . $statusableElementId . '-' . $blockIndex;
         }
 
         return $references;

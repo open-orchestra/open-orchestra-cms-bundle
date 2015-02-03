@@ -341,6 +341,13 @@ php_orchestra_backoffice:
         addthis:
             title: Add this block
             description: Display button to share content
+        audience_analysis:
+            title: Audience analysis block
+            description: Integrate a Google Analytics or Xiti tag
+            tag_type: Tag type
+            google_analytics: Google Analytics
+            xiti_free: Xiti Free 7.5
+            site_id: Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)
     element:
         version:
             create: New version
