@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\KeywordEvent;
+use PHPOrchestra\ModelInterface\KeywordEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("keyword")
  */
-class KeywordController extends Controller
+class KeywordController extends BaseController
 {
     /**
      * @param Request $request
@@ -79,6 +81,7 @@ class KeywordController extends Controller
     {
         $keyword = $this->get('php_orchestra_model.repository.keyword')->find($keywordId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
         $dm->remove($keyword);
         $dm->flush();
 

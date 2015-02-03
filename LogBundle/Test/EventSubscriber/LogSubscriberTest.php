@@ -3,7 +3,11 @@
 namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
+<<<<<<< Updated upstream
 use PHPOrchestra\BackofficeBundle\NodeEvents;
+=======
+use PHPOrchestra\ModelInterface\NodeEvents;
+>>>>>>> Stashed changes
 use PHPOrchestra\LogBundle\EventSubscriber\LogSubscriber;
 
 /**

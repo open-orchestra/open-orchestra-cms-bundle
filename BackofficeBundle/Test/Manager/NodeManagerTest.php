@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;

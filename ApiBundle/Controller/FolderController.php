@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Exceptions\HttpException\FolderNotDeletableException;
+use PHPOrchestra\Media\Event\FolderEvent;
+use PHPOrchestra\Media\FolderEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("folder")
  */
-class FolderController extends Controller
+class FolderController extends BaseController
 {
     /**
      * @param string $folderId
@@ -35,6 +37,7 @@ class FolderController extends Controller
             if (!$folderManager->isDeletable($folder)) {
                 throw new FolderNotDeletableException();
             }
+            $this->dispatchEvent(FolderEvents::FOLDER_DELETE, new FolderEvent($folder));
             $folderManager->deleteTree($folder);
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
         }

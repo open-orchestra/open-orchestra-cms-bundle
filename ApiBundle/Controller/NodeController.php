@@ -3,8 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -60,6 +60,8 @@ class NodeController extends BaseController
     public function deleteAction($nodeId)
     {
         $nodes = $this->get('php_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId);
+        $this->dispatchEvent(NodeEvents::NODE_DELETE, new NodeEvent($nodes));
+
         $this->get('php_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
@@ -82,6 +84,9 @@ class NodeController extends BaseController
         $node = $this->get('php_orchestra_model.repository.node')
             ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language);
         $newNode = $this->get('php_orchestra_backoffice.manager.node')->duplicateNode($node);
+
+        $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
+
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newNode);
 

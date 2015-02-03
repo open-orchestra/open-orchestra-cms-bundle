@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\SiteEvent;
+use PHPOrchestra\ModelInterface\SiteEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("site")
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
      * @param string $siteId
@@ -58,6 +60,7 @@ class SiteController extends Controller
     {
         $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $site->setDeleted(true);
+        $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

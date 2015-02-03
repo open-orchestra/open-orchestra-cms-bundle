@@ -2,14 +2,16 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+<<<<<<< Updated upstream
 use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
 use PHPOrchestra\BackofficeBundle\Form\Type\BlockType;
 use PHPOrchestra\BackofficeBundle\NodeEvents;
+=======
+>>>>>>> Stashed changes
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Class BlockController

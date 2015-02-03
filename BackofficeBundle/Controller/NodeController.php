@@ -2,8 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

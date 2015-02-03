@@ -5,7 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\NodeEvents;
 
 /**
  * Class UpdateChildNodePathSubscriberTest
@@ -72,7 +72,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $sons->add($son3);
         Phake::when($this->nodeRepository)->findByParentIdAndSiteId($parentNodeId)->thenReturn($sons);
 
-        $event = Phake::mock('PHPOrchestra\BackofficeBundle\Event\NodeEvent');
+        $event = Phake::mock('PHPOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($parent);
 
         $this->subscriber->updatePath($event);

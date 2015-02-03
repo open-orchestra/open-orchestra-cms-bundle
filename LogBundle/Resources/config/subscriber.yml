@@ -1,4 +1,17 @@
+<<<<<<< Updated upstream
 services:
 #    php_orchestra_log.example:
 #        class: PHPOrchestra\LogBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+=======
+parameters:
+    php_orchestra_log.subscriber.node.class: PHPOrchestra\LogBundle\EventSubscriber\LogSubscriber
+
+services:
+    php_orchestra_log.subscriber.node:
+        class: %php_orchestra_log.subscriber.node.class%
+        arguments: [@logger]
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: phporchestra }
+>>>>>>> Stashed changes

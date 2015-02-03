@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\ThemeEvent;
+use PHPOrchestra\ModelInterface\ThemeEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -58,6 +60,7 @@ class ThemeController extends Controller
     {
         $theme = $this->get('php_orchestra_model.repository.theme')->find($themeId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $this->dispatchEvent(ThemeEvents::THEME_DELETE, new ThemeEvent($theme));
         $dm->remove($theme);
         $dm->flush();
 

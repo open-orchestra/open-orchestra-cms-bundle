@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\ContentEvents;
+use PHPOrchestra\ModelInterface\Event\ContentEvent;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
@@ -77,7 +79,7 @@ class ContentController extends BaseController
     {
         $content = $this->get('php_orchestra_model.repository.content')->find($contentId);
         $content->setDeleted(true);
-
+        $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
@@ -98,6 +100,8 @@ class ContentController extends BaseController
         /** @var ContentInterface $content */
         $content = $this->get('php_orchestra_model.repository.content')->findOneByContentIdAndLanguageAndVersion($contentId, $language);
         $newContent = $this->get('php_orchestra_backoffice.manager.content')->duplicateContent($content);
+
+        $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
 
         $em = $this->get('doctrine.odm.mongodb.document_manager');
         $em->persist($newContent);

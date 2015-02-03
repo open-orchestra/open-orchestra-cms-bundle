@@ -2,8 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\Backoffice\Context\ContextManager;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;

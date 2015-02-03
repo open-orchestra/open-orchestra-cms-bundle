@@ -2,8 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\BackofficeBundle\Event\NodeEvent;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
