@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Manager;
 
+use PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
@@ -14,13 +15,16 @@ use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 class AreaManager
 {
     protected $nodeRepository;
+    protected $blockParameterManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
+     * @param BlockParameterManager   $blockParameterManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository)
+    public function __construct(NodeRepositoryInterface $nodeRepository, BlockParameterManager $blockParameterManager)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->blockParameterManager = $blockParameterManager;
     }
 
     /**
@@ -102,7 +106,11 @@ class AreaManager
             if (!($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0)) {
                 $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
             }
-            if (!$this->areaIdExistInBlock($otherNode->getBlock($block['blockId']), $area->getAreaId())) {
+            $consideredBlock = $otherNode->getBlock($block['blockId']);
+            if (!$this->areaIdExistInBlock($consideredBlock, $area->getAreaId())) {
+                return false;
+            }
+            if (!$this->blockParamExistInArea($consideredBlock, $block)) {
                 return false;
             }
         }
@@ -127,5 +135,16 @@ class AreaManager
         }
 
         return false;
+    }
+
+    /**
+     * @param BlockInterface $blockElement
+     * @param array          $block
+     *
+     * @return bool
+     */
+    protected function blockParamExistInArea(BlockInterface $blockElement, array $block)
+    {
+        return $this->blockParameterManager->getBlockParameter($blockElement) == $block['blockParameter'];
     }
 }
