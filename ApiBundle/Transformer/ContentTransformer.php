@@ -4,8 +4,8 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 
 use PHPOrchestra\ApiBundle\Facade\ContentFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\BackofficeBundle\Event\StatusableEvent;
-use PHPOrchestra\BackofficeBundle\StatusEvents;
+use PHPOrchestra\ModelInterface\Event\StatusableEvent;
+use PHPOrchestra\ModelInterface\StatusEvents;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\ContentTypeEvents;
+use PHPOrchestra\ModelInterface\Event\ContentTypeEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("content-type")
  */
-class ContentTypeController extends Controller
+class ContentTypeController extends BaseController
 {
     /**
      * @param string $contentTypeId
@@ -59,6 +61,7 @@ class ContentTypeController extends Controller
     {
         $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneBy(array('contentTypeId' => $contentTypeId));
         $contentType->setDeleted(true);
+        $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

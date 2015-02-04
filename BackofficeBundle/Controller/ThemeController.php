@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\ThemeEvent;
+use PHPOrchestra\ModelInterface\ThemeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +44,8 @@ class ThemeController extends AbstractAdminController
             $theme
         );
 
+        $this->dispatchEvent(ThemeEvents::THEME_UPDATE, new ThemeEvent($theme));
+
         return $this->renderAdminForm($form);
     }
 
@@ -77,6 +81,8 @@ class ThemeController extends AbstractAdminController
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.theme.creation')
             );
+
+            $this->dispatchEvent(ThemeEvents::THEME_CREATE, new ThemeEvent($theme));
 
             return $this->redirect(
                 $this->generateUrl('php_orchestra_backoffice_theme_form', array(

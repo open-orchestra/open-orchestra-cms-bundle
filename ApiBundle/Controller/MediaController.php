@@ -4,6 +4,8 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Exceptions\HttpException\MediaNotDeletableException;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\Media\Event\MediaEvent;
+use PHPOrchestra\Media\MediaEvents;
 use PHPOrchestra\Media\Model\FolderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
@@ -16,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("media")
  */
-class MediaController extends Controller
+class MediaController extends BaseController
 {
     /**
      * @param int $mediaId
@@ -81,6 +83,7 @@ class MediaController extends Controller
             throw new MediaNotDeletableException();
         }
 
+        $this->dispatchEvent(MediaEvents::MEDIA_DELETE, new MediaEvent($media));
         $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
         $documentManager->remove($media);
         $documentManager->flush();

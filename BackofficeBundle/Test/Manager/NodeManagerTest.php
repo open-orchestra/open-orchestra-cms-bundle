@@ -3,7 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
@@ -71,6 +71,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($alteredNode)->setVersion($expectedVersion);
         Phake::verify($alteredNode)->setStatus(null);
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
     /**
@@ -113,6 +114,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($alteredNode)->setVersion(1);
         Phake::verify($alteredNode)->setStatus(null);
         Phake::verify($alteredNode)->setLanguage($language);
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
     /**
@@ -164,6 +166,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($son, Phake::times(2))->setDeleted(true);
         Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($nodeId);
         Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($sonId);
+        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
     }
 
     /**

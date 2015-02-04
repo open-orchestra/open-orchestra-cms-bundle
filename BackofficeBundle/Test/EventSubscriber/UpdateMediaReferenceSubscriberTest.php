@@ -4,7 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber;
-use PHPOrchestra\BackofficeBundle\StatusEvents;
+use PHPOrchestra\ModelInterface\StatusEvents;
 
 /**
  * Test UpdateMediaReferenceSubscriberTest
@@ -33,7 +33,7 @@ class UpdateMediaReferenceSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusableElement = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($this->statusableElement)->getStatus()->thenReturn($this->status);
-        $this->event = Phake::mock('PHPOrchestra\BackofficeBundle\Event\StatusableEvent');
+        $this->event = Phake::mock('PHPOrchestra\ModelInterface\Event\StatusableEvent');
         Phake::when($this->event)->getStatusableElement()->thenReturn($this->statusableElement);
 
         $this->media = Phake::mock('PHPOrchestra\Media\Model\MediaInterface');

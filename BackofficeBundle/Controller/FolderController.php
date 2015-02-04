@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\Media\Event\FolderEvent;
+use PHPOrchestra\Media\FolderEvents;
 use PHPOrchestra\Media\Model\FolderInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

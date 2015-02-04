@@ -1,0 +1,58 @@
+php_orchestra_log:
+    node:
+        create: Crée un nouveau noeud avec l'id du noeud node_id
+        delete: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name
+        update: Mise à jour d'un noeud avec l'id du noeud node_id et le nom du noeud node_name
+        duplicate: Duplique un noeud avec l'id du noeud node_id, le nom du noeud node_name et la version node_version
+        add_language: Ajoute une langue à un noeud
+        block:
+            create: Ajoute un nouveau block
+            delete: Supprime un block
+            update: Mise à jour d'un block
+            update_position: Change la position d'un block
+        area:
+            create: Crée une zone
+            delete: Supprime une zone
+            update: Mis à jour d'un zone
+    content:
+        create: Crée un contenu
+        delete: Supprime un contenu
+        update: Mis à jour d'un contenu
+        add_language: Ajoute une langue à un contenu
+        duplicate: Duplique un contenu
+    content_type:
+        create: Crée un type de contenu
+        delete: Supprime un type de contenu
+        update: Mis à jour d'un type de contenu
+    keyword:
+        create: Crée un tag
+        delete: Supprime un tag
+    media:
+        add_image: Ajoute un média
+        delete: Supprime un média
+        resize: Change la taille d'un média
+        override: Override le format d'un média
+    folder:
+        create: Crée un nouveau dossier
+        delete: Supprime un dossier
+    role:
+        create: Crée un nouveau rôle
+        delete: Supprime un rôle
+        update: Mis à jour d'un rôle
+    site:
+        create: Crée un nouveau site
+        delete: Supprime un site
+        update: Mis à jour d'un site
+    status:
+        change: Change un status
+        create: Crée un nouveau status
+        delete: Supprime un status
+        update: Mis à jour d'un status
+    template:
+        create: Crée un nouveau gabarit
+        delete: Supprime un gabarit
+        update: Mis à jour d'un gabarit
+    theme:
+        create: Crée un nouveau thème
+        delete: Supprime un thème
+        update: Mis à jour d'un thème

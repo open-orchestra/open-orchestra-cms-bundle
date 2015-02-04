@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\TemplateEvent;
+use PHPOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -40,6 +42,8 @@ class TemplateController extends AbstractAdminController
             $template
         );
 
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_UPDATE, new TemplateEvent($template));
+
         return $this->renderAdminForm($form);
     }
 
@@ -75,6 +79,8 @@ class TemplateController extends AbstractAdminController
             $statusCode = 400;
         } elseif (!is_null($template->getTemplateId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
+
+            $this->dispatchEvent(TemplateEvents::TEMPLATE_CREATE, new TemplateEvent($template));
 
             return $this->redirect($url);
         }

@@ -2,8 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\BackofficeBundle\Event\StatusableEvent;
-use PHPOrchestra\BackofficeBundle\StatusEvents;
+use PHPOrchestra\ModelInterface\Event\StatusableEvent;
+use PHPOrchestra\ModelInterface\StatusEvents;
 use PHPOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager;
 use PHPOrchestra\Media\Model\MediaInterface;
 use PHPOrchestra\Media\Repository\MediaRepositoryInterface;

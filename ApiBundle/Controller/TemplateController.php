@@ -3,7 +3,9 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\TemplateEvent;
 use PHPOrchestra\ModelInterface\Model\TemplateInterface;
+use PHPOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -14,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("template")
  */
-class TemplateController extends Controller
+class TemplateController extends BaseController
 {
     /**
      * @param string $templateId
@@ -45,6 +47,7 @@ class TemplateController extends Controller
         /** @var TemplateInterface $template */
         $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $template->setDeleted(true);
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_DELETE, new TemplateEvent($template));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

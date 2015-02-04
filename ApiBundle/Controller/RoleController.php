@@ -3,6 +3,8 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\RoleEvent;
+use PHPOrchestra\ModelInterface\RoleEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("role")
  */
-class RoleController extends Controller
+class RoleController extends BaseController
 {
     /**
      * @param int $roleId
@@ -58,6 +60,7 @@ class RoleController extends Controller
     {
         $role = $this->get('php_orchestra_model.repository.role')->find($roleId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $this->dispatchEvent(RoleEvents::ROLE_DELETE, new RoleEvent($role));
         $dm->remove($role);
         $dm->flush();
 

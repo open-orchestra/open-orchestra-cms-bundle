@@ -3,6 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormInterface;
 
@@ -62,5 +63,14 @@ abstract class AbstractAdminController extends Controller
             $params,
             $response
         );
+    }
+
+    /**
+     * @param string $eventName
+     * @param Event  $event
+     */
+    protected function dispatchEvent($eventName, $event)
+    {
+        $this->get('event_dispatcher')->dispatch($eventName, $event);
     }
 }

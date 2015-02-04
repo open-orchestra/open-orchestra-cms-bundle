@@ -3,8 +3,9 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("area")
  */
-class AreaController extends Controller
+class AreaController extends BaseController
 {
     /**
      * @param string $areaId
@@ -79,6 +80,8 @@ class AreaController extends Controller
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
+
         return new Response();
     }
 
@@ -93,10 +96,9 @@ class AreaController extends Controller
      */
     public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
-        $areaContainer = $this->get('php_orchestra_model.repository.node')
-            ->find($nodeId);
+        $node = $this->get('php_orchestra_model.repository.node')->find($nodeId);
 
-        $this->deleteAreaFromContainer($areaId, $areaContainer);
+        $this->deleteAreaFromContainer($areaId, $node);
 
         return new Response();
     }

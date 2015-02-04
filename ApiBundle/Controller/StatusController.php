@@ -4,7 +4,9 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\ModelInterface\Event\StatusableEvent;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use PHPOrchestra\ModelInterface\StatusEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -43,6 +45,7 @@ class StatusController extends Controller
     public function deleteAction($statusId)
     {
         $status = $this->get('php_orchestra_model.repository.status')->find($statusId);
+        $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusableEvent($status));
         $this->get('doctrine.odm.mongodb.document_manager')->remove($status);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
@@ -66,7 +69,7 @@ class StatusController extends Controller
     }
 
     /**
-     * @param string $contentId
+     * @param string $contentMongoId
      *
      * @Config\Route("/list-statuses/content/{contentMongoId}", name="php_orchestra_api_list_status_content")
      * @Config\Method({"GET"})

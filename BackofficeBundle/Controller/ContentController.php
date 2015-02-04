@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\ContentEvents;
+use PHPOrchestra\ModelInterface\Event\ContentEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +44,8 @@ class ContentController extends AbstractAdminController
             $content
         );
 
+        $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+
         return $this->renderAdminForm($form);
     }
 
@@ -73,6 +77,8 @@ class ContentController extends AbstractAdminController
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($content);
             $documentManager->flush();
+
+            $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
 
             $this->get('session')->getFlashBag()->add(
                 'success',

@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -67,5 +68,14 @@ class BaseController extends Controller
             $this->get('jms_serializer')->serialize($this->getViolations(), $request->get('_format', 'json')),
             400
         );
+    }
+
+    /**
+     * @param string $eventName
+     * @param Event  $event
+     */
+    protected function dispatchEvent($eventName, $event)
+    {
+        $this->get('event_dispatcher')->dispatch($eventName, $event);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\Media\Event\MediaEvent;
+use PHPOrchestra\Media\MediaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,6 +44,8 @@ class MediaController extends AbstractAdminController
             $this->get('translator')->trans('php_orchestra_backoffice.form.media.success'),
             $media
         );
+
+        $this->dispatchEvent(MediaEvents::ADD_IMAGE, new MediaEvent($media));
 
         return $this->renderAdminForm($form);
     }
@@ -101,6 +105,8 @@ class MediaController extends AbstractAdminController
                 $data['w'],
                 $data['format']
             );
+
+            $this->dispatchEvent(MediaEvents::RESIZE_IMAGE, new MediaEvent($media));
         }
 
         return $this->renderAdminForm($form);
@@ -137,6 +143,7 @@ class MediaController extends AbstractAdminController
             $tmpDir = $this->container->getParameter('php_orchestra_media.tmp_dir');
             $file->move($tmpDir, $format . '-' . $media->getFilesystemName());
             $this->get('php_orchestra_media.manager.image_override')->override($media, $format);
+            $this->dispatchEvent(MediaEvents::OVERRIDE_IMAGE, new MediaEvent($media));
         }
 
         return $this->renderAdminForm($form);

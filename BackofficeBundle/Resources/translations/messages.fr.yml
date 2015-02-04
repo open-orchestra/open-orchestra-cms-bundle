@@ -219,6 +219,8 @@ php_orchestra_backoffice:
                 list: Mots-clés
             deleted:
                 list: Corbeille
+            logs:
+                list: Logs
     block:
         configurable_content:
             title: Bloc contenu paramétrable

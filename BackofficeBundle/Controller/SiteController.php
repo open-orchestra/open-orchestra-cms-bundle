@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\SiteEvent;
+use PHPOrchestra\ModelInterface\SiteEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +40,8 @@ class SiteController extends AbstractAdminController
 
         $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.website.success'));
 
+        $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site));
+
         return $this->renderAdminForm($form);
     }
 
@@ -71,6 +75,8 @@ class SiteController extends AbstractAdminController
             $statusCode = 400;
         } elseif (!is_null($site->getSiteId())) {
             $url = $this->generateUrl('php_orchestra_backoffice_site_form', array('siteId' => $site->getSiteId()));
+
+            $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site));
 
             return $this->redirect($url);
         };
