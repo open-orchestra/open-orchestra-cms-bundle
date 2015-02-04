@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle;
 
+use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\ExtractReferenceCompilerPass;
 use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
@@ -29,5 +30,6 @@ class PHPOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new DisplayIconCompilerPass());
         $container->addCompilerPass(new LeftPanelCompilerPass());
         $container->addCompilerPass(new ExtractReferenceCompilerPass());
+        $container->addCompilerPass(new BlockParameterCompilerPass());
     }
 }

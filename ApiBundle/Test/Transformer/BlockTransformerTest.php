@@ -10,6 +10,7 @@ use PHPOrchestra\ApiBundle\Transformer\BlockTransformer;
  */
 class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 {
+    protected $blockParameterManager;
     protected $displayBlockManager;
     protected $displayIconManager;
     protected $transformerManager;
@@ -29,13 +30,14 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->displayIconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
+        $this->blockParameterManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager');
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -119,15 +121,19 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
      * @param array  $result
      * @param string $facadeNodeId
      * @param int    $blockId
+     * @param array  $blockParameter
      *
      * @dataProvider blockReverseTransformProvider
      */
-    public function testReverseTransformToArray($nodeId, $result, $facadeNodeId, $blockId)
+    public function testReverseTransformToArray($nodeId, $result, $facadeNodeId, $blockId, array $blockParameter = array())
     {
         $this->blockFacade->nodeId = $facadeNodeId;
         $this->blockFacade->blockId = $blockId;
 
         Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
+        $block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($block);
+        Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 
@@ -140,24 +146,10 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function blockReverseTransformProvider()
     {
         return array(
-            array(
-                'fixture_full',
-                array('blockId' => 5, 'nodeId' => 0),
-                'fixture_full',
-                5
-            ),
-            array(
-                'fixture_full',
-                array('blockId' => 0, 'nodeId' => 0),
-                'fixture_full',
-                0
-            ),
-            array(
-                'fixture_about_us',
-                array('blockId' => 3, 'nodeId' => 'fixture_full'),
-                'fixture_full',
-                3
-            ),
+            array('fixture_full', array('blockParameter' => array(), 'blockId' => 5, 'nodeId' => 0), 'fixture_full', 5),
+            array('fixture_full', array('blockParameter' => array(), 'blockId' => 0, 'nodeId' => 0), 'fixture_full', 0),
+            array('fixture_about_us', array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 'fixture_full'), 'fixture_full', 3),
+            array('fixture_about_us', array('blockParameter' => array('newsId'), 'blockId' => 3, 'nodeId' => 'fixture_full'), 'fixture_full', 3, array('newsId')),
         );
     }
 
@@ -165,13 +157,15 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
      * @param array  $result
      * @param string $component
      * @param int    $blockId
+     * @param array  $blockParameter
      *
      * @dataProvider blockReverseTransformProvider2
      */
-    public function testReverseTransformToArrayComponent($result, $component, $blockId)
+    public function testReverseTransformToArrayComponent($result, $component, $blockId, array $blockParameter = array())
     {
         $this->blockFacade->component = $component;
         Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockId);
+        Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 
@@ -185,16 +179,9 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function blockReverseTransformProvider2()
     {
         return array(
-            array(
-                array('blockId' => 2, 'nodeId' => 0),
-                'sample',
-                2
-            ),
-            array(
-                array('blockId' => 3, 'nodeId' => 0),
-                'menu',
-                3
-            ),
+            array(array('blockParameter' => array(), 'blockId' => 2, 'nodeId' => 0), 'sample', 2),
+            array(array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 0), 'menu', 3),
+            array(array('blockParameter' => array('newsId'), 'blockId' => 3, 'nodeId' => 0), 'news', 3, array('newsId')),
         );
     }
 
@@ -221,33 +208,27 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function blockReverseTransformProviderWithoutNode()
     {
         return array(
-            array(
-                array('blockId' => 0, 'nodeId' => 'fixture_full'),
-                'fixture_full',
-                0
-            ),
-            array(
-                array('blockId' => 3, 'nodeId' => 'fixture_full'),
-                'fixture_full',
-                3
-            ),
+            array(array('blockParameter' => array(), 'blockId' => 0, 'nodeId' => 'fixture_full'), 'fixture_full', 0),
+            array(array('blockParameter' => array(), 'blockId' => 3, 'nodeId' => 'fixture_full'), 'fixture_full', 3),
         );
     }
 
     /**
      * @param string $component
      * @param int    $blockIndex
+     * @param array  $blockParameter
      *
      * @dataProvider provideComponentAndBlockIndex
      */
-    public function testReverseTransformWithComponent($component, $blockIndex)
+    public function testReverseTransformWithComponent($component, $blockIndex, array $blockParameter = array())
     {
         $this->blockFacade->component = $component;
         Phake::when($this->node)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
+        Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
 
         $result = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 
-        $this->assertSame(array('blockId' => $blockIndex, 'nodeId' => 0), $result);
+        $this->assertSame(array('blockParameter' => $blockParameter, 'blockId' => $blockIndex, 'nodeId' => 0), $result);
         Phake::verify($this->node)->addBlock(Phake::anyParameters());
         Phake::verify($this->node)->getBlockIndex(Phake::anyParameters());
     }
@@ -261,7 +242,9 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
             array('Sample', 1),
             array('TinyMCE', 2),
             array('Carrossel', 0),
+            array('Carrossel', 0, array('page', 'width')),
             array('News', 1),
+            array('News', 1, array('newsId')),
         );
     }
 }

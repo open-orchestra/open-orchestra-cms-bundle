@@ -19,6 +19,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
+    protected $blockParameterManager;
     protected $language = 'fr';
     protected $nodeRepository;
     protected $block;
@@ -29,6 +30,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->blockParameterManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager');
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
@@ -36,7 +38,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
 
-        $this->manager = new AreaManager($this->nodeRepository);
+        $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager);
     }
 
     /**
@@ -209,6 +211,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
     public function testAreaConsistency($node, $nodeTransverse)
     {
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
+        Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn(array());
 
         $this->assertTrue($this->manager->areaConsistency($node));
     }
@@ -238,13 +241,13 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         $areaMenu = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaMenu)->getAreaId()->thenReturn('menu');
         Phake::when($areaMenu)->getAreas()->thenReturn(array());
-        Phake::when($areaMenu)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0)));
+        Phake::when($areaMenu)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0, 'blockParameter' => array())));
 
         $areaFooter = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($areaFooter)->getAreaId()->thenReturn('footer');
         Phake::when($areaFooter)->getAreas()->thenReturn(array());
         Phake::when($areaFooter)->getBlocks()->thenReturn(array(
-            array('nodeId' => 0, 'blockId' => 1),
+            array('nodeId' => 0, 'blockId' => 1, 'blockParameter' => array()),
         ));
 
         $areaMain = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
@@ -256,9 +259,9 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($areaMain2)->getAreaId()->thenReturn('main');
         Phake::when($areaMain2)->getAreas()->thenReturn(array());
         Phake::when($areaMain2)->getBlocks()->thenReturn(array(
-            array('nodeId' => 0, 'blockId' => 0),
-            array('nodeId' => 'home', 'blockId' => 1),
-            array('nodeId' => 0, 'blockId' => 2),
+            array('nodeId' => 0, 'blockId' => 0, 'blockParameter' => array()),
+            array('nodeId' => 'home', 'blockId' => 1, 'blockParameter' => array()),
+            array('nodeId' => 0, 'blockId' => 2, 'blockParameter' => array()),
         ));
 
         $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
@@ -295,9 +298,23 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      * @param NodeInterface $node
      * @param NodeInterface $nodeTransverse
      *
+     * @dataProvider provideNodeWithAreaAndBlock
+     */
+    public function testFailingAreaConsistencyOnBlockParameter($node, $nodeTransverse)
+    {
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
+        Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn(array('newsId'));
+
+        $this->assertFalse($this->manager->areaConsistency($node));
+    }
+
+    /**
+     * @param NodeInterface $node
+     * @param NodeInterface $nodeTransverse
+     *
      * @dataProvider provideFailingNodeWithAreaAndBlock
      */
-    public function testFailingAreaConsistency($node, $nodeTransverse)
+    public function testFailingAreaConsistencyOnBlockReference($node, $nodeTransverse)
     {
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
 

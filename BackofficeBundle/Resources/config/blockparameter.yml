@@ -1,0 +1,11 @@
+parameters:
+    php_orchestra_backoffice.block_parameter_manager.class: PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager
+    php_orchestra_backoffice.block_parameter.content.class: PHPOrchestra\Backoffice\BlockParameter\Strategies\ContentStrategy
+
+services:
+    php_orchestra_backoffice.block_parameter_manager:
+        class: %php_orchestra_backoffice.block_parameter_manager.class%
+    php_orchestra_backoffice.block_parameter.content:
+        class: %php_orchestra_backoffice.block_parameter.content.class%
+        tags:
+            - { name: php_orchestra_backoffice.block_parameter.strategy }
