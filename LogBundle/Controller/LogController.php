@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace PHPOrchestra\LogBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
