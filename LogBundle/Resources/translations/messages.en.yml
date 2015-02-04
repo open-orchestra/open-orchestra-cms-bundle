@@ -1,9 +1,9 @@
 php_orchestra_log:
     node:
-        create: Create a new node
-        delete: Delete a node
-        update: Update a node
-        duplicate: Duplicate a node
+        create: Create a new node with node id node_id
+        delete: Delete a node with node id node_id and node name node_name
+        update: Update a node with node id node_id and node name node_name
+        duplicate: Duplicate a node with node id node_id, node name node_name and node version node_version
         add_language: Add a language to a node
         block:
             create: Add a new block

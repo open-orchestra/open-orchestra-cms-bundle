@@ -1,9 +1,9 @@
 php_orchestra_log:
     node:
-        create: Crée un nouveau noeud
-        delete: Supprime un noeud
-        update: Mise à jour d'un noeud
-        duplicate: Duplique un noeud
+        create: Crée un nouveau noeud avec l'id du noeud node_id
+        delete: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name
+        update: Mise à jour d'un noeud avec l'id du noeud node_id et le nom du noeud node_name
+        duplicate: Duplique un noeud avec l'id du noeud node_id, le nom du noeud node_name et la version node_version
         add_language: Ajoute une langue à un noeud
         block:
             create: Ajoute un nouveau block

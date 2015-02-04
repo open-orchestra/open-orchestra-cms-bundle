@@ -97,8 +97,6 @@ class MediaController extends AbstractAdminController
                 $gaufretteManager->getFileContent($filename)
             );
 
-            $this->dispatchEvent(MediaEvents::RESIZE_IMAGE, new MediaEvent($media));
-
             $this->get('php_orchestra_media.manager.image_resizer')->crop(
                 $media,
                 $data['x'],
@@ -107,6 +105,8 @@ class MediaController extends AbstractAdminController
                 $data['w'],
                 $data['format']
             );
+
+            $this->dispatchEvent(MediaEvents::RESIZE_IMAGE, new MediaEvent($media));
         }
 
         return $this->renderAdminForm($form);

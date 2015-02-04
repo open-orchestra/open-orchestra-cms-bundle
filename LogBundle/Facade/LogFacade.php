@@ -16,11 +16,6 @@ class LogFacade extends AbstractFacade
     public $id;
 
     /**
-     * @Serializer\Type("array<string>")
-     */
-    public $context;
-
-    /**
      * @Serializer\Type("integer")
      */
     public $level;

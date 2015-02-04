@@ -55,7 +55,11 @@ class LogNodeSubscriber implements EventSubscriberInterface
     public function nodeDuplicate(NodeEvent $event)
     {
         $node = $event->getNode();
-        $this->logger->info('php_orchestra_log.node.duplicate', array('node_id' => $node->getNodeId(), 'node_name' => $node->getName(), $node->getVersion()));
+        $this->logger->info('php_orchestra_log.node.duplicate', array(
+            'node_id' => $node->getNodeId(),
+            'node_name' => $node->getName(),
+            'node_version' => $node->getVersion()
+        ));
     }
 
     /**
