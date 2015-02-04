@@ -5,6 +5,7 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
@@ -14,17 +15,20 @@ use PHPOrchestra\ModelInterface\Model\NodeInterface;
  */
 class BlockTransformer extends AbstractTransformer
 {
+    protected $blockParameterManager;
     protected $displayBlockManager;
     protected $displayManager;
     protected $blockClass;
 
     /**
-     * @param DisplayBlockManager $displayBlockManager
-     * @param DisplayManager      $displayManager
-     * @param string              $blockClass
+     * @param DisplayBlockManager   $displayBlockManager
+     * @param DisplayManager        $displayManager
+     * @param string                $blockClass
+     * @param BlockParameterManager $blockParameterManager
      */
-    public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager, $blockClass)
+    public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager, $blockClass, BlockParameterManager $blockParameterManager)
     {
+        $this->blockParameterManager = $blockParameterManager;
         $this->displayBlockManager = $displayBlockManager;
         $this->displayIconManager = $displayManager;
         $this->blockClass = $blockClass;
@@ -88,22 +92,28 @@ class BlockTransformer extends AbstractTransformer
      */
     public function reverseTransformToArray(FacadeInterface $facade, NodeInterface $node = null)
     {
-        $block  = array();
+        $block  = array(
+            'blockParameter' => array()
+        );
 
         if (!is_null($facade->component)) {
             /** @var BlockInterface $newBlock */
             $blockClass = $this->blockClass;
-            $newBlock = new $blockClass();
-            $newBlock->setComponent($facade->component);
-            $node->addBlock($newBlock);
-            $blockIndex = $node->getBlockIndex($newBlock);
+            $blockElement = new $blockClass();
+            $blockElement->setComponent($facade->component);
+            $node->addBlock($blockElement);
+            $blockIndex = $node->getBlockIndex($blockElement);
             $block['blockId'] = $blockIndex;
             $block['nodeId'] = 0;
+            $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             $block['nodeId'] = $facade->nodeId;
-            if (!is_null($node) && ($facade->nodeId == $node->getNodeId())) {
-                $block['nodeId'] = 0;
+            if (!is_null($node)) {
+                if ($facade->nodeId == $node->getNodeId()) {
+                    $block['nodeId'] = 0;
+                }
+                $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($node->getBlock($facade->blockId));
             }
         }
 
