@@ -60,6 +60,8 @@ php_orchestra_backoffice:
             meta_index: Meta index
             meta_follow: Meta follow
             robots_txt: Informations contained in the robots.txt file
+            changefreq:
+                title: Indicative periodicity of change (for the sitemap)
         theme:
             success: The theme has been modified
             creation: The theme has been created
@@ -91,15 +93,6 @@ php_orchestra_backoffice:
             success: The node has been saved
             name: Page
             node_type: Type of Node
-            changefreq:
-                title: Indicative periodicity of change (for the sitemap)
-                always: Always
-                hourly: Hourly
-                daily: Daily
-                weekly: Weekly
-                monthly: Monthly
-                yearly: Yearly
-                never: Never
             priority: Relative importance compared to the other pages of the site (for the sitemap)
             theme: The theme
             template_id: Template id
@@ -111,6 +104,16 @@ php_orchestra_backoffice:
             in_footer: Shown in footer
             role: Role needed to display the page
             node_source: The source page (in case of copy)
+            changefreq:
+                title: Indicative periodicity of change (for the sitemap)
+        changefreq:
+            always: Always
+            hourly: Hourly
+            daily: Daily
+            weekly: Weekly
+            monthly: Monthly
+            yearly: Yearly
+            never: Never
         folder:
             success: The folder has been saved
             delete: This folder contains media, you can't delete it.

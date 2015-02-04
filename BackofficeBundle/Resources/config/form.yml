@@ -21,6 +21,7 @@ parameters:
     php_orchestra_backoffice.type.orchestra_node_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
     php_orchestra_backoffice.type.orchestra_content_type_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
     php_orchestra_backoffice.type.orchestra_color_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
+    php_orchestra_backoffice.type.orchestra_frequence_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType
     php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
     php_orchestra_backoffice.type.media_crop.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaCropType
     php_orchestra_backoffice.type.media_meta.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaMetaType
@@ -205,6 +206,10 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: orchestra_color_choice}
+    php_orchestra_backoffice.type.orchestra_frequence_choice:
+        class: %php_orchestra_backoffice.type.orchestra_frequence_choice.class%
+        tags:
+            - { name: form.type, alias: orchestra_frequence_choice}
     php_orchestra_backoffice.type.tinymce:
         class: %php_orchestra_backoffice.type.tinymce.class%
         tags:

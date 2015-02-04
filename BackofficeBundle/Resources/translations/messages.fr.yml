@@ -60,6 +60,8 @@ php_orchestra_backoffice:
             index: Meta index
             follow: Meta follow
             robots_txt: Informations contenues dans le fichier robots.txt
+            changefreq:
+                title: Fréquence de modification indicative (pour le sitemap)
         theme:
             success: Le thème a été modifié
             creation: Le thème a été crée
@@ -91,15 +93,6 @@ php_orchestra_backoffice:
             success: Le noeud a été sauvé
             name: Page
             node_type: Type de noeud
-            changefreq:
-                title: Fréquence de modification indicative (pour le sitemap)
-                always: Toujours
-                hourly: Toutes les heures
-                daily: Quotidien
-                weekly: Hebdomadaire
-                monthly: Mensuel
-                yearly: Annuel
-                never: Jamais
             priority: Importance relative par rapport aux autres pages du site (pour le sitemap)
             theme: Le thème
             template_id: Id du gabarit
@@ -111,6 +104,16 @@ php_orchestra_backoffice:
             in_footer: Affiché dans le pied de page
             role: Rôle nécessaire pour afficher la page
             node_source: La page source (en cas de copie)
+            changefreq:
+                title: Fréquence de modification indicative (pour le sitemap)
+        changefreq:
+            always: Toujours
+            hourly: Toutes les heures
+            daily: Quotidien
+            weekly: Hebdomadaire
+            monthly: Mensuel
+            yearly: Annuel
+            never: Jamais
         folder:
             success: Le répertoire a été sauvegardé
             delete: Ce répertoire contient des média, vous ne pouvez pas le supprimer.
