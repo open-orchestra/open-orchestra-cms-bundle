@@ -2,7 +2,10 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\SiteEvent;
+use PHPOrchestra\ModelInterface\Event\StatusableEvent;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use PHPOrchestra\ModelInterface\StatusEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class StatusController
  */
-class StatusController extends Controller
+class StatusController extends AbstractAdminController
 {
     /**
      * @param Request $request
@@ -29,7 +32,7 @@ class StatusController extends Controller
         $url = $this->generateUrl('php_orchestra_backoffice_status_form', array('statusId' => $statusId));
         $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.success');
 
-        return $this->formHandler($url, $request, $status, $message);
+        return $this->formHandler($url, $request, $status, $message, StatusEvents::STATUS_UPDATE);
     }
 
     /**
@@ -49,7 +52,7 @@ class StatusController extends Controller
         $url = $this->generateUrl('php_orchestra_backoffice_status_new');
         $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.creation');
 
-        return $this->formHandler($url, $request, $status, $message);
+        return $this->formHandler($url, $request, $status, $message, StatusEvents::STATUS_CREATE);
     }
 
     /**
@@ -57,10 +60,11 @@ class StatusController extends Controller
      * @param Request         $request
      * @param StatusInterface $status
      * @param String          $message
+     * @param String          $events
      *
      * @return Response
      */
-    protected function formHandler($url, Request $request, StatusInterface $status, $message)
+    protected function formHandler($url, Request $request, StatusInterface $status, $message, $events)
     {
         $form = $this->createForm(
             'status',
@@ -75,6 +79,8 @@ class StatusController extends Controller
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($status);
             $documentManager->flush();
+
+            $this->dispatchEvent($events, new StatusableEvent($status));
 
             $this->get('session')->getFlashBag()->add(
                 'success',

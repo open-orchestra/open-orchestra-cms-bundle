@@ -2,7 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\BackofficeBundle\NodeEvents;
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

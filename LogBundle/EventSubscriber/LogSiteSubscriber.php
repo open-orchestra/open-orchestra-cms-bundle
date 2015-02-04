@@ -28,7 +28,10 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public function siteCreate(SiteEvent $event)
     {
         $site = $event->getSite();
-        $this->logger->info('Create a new site', array('site_domain' => $site->getDomain()));
+        $this->logger->info('php_orchestra_log.site.create', array(
+            'site_id' => $site->getSiteId(),
+            'site_domain' => $site->getDomain()
+        ));
     }
 
     /**
@@ -37,7 +40,10 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public function siteDelete(SiteEvent $event)
     {
         $site = $event->getSite();
-        $this->logger->info('Delete site', array('site_domain' => $site->getDomain()));
+        $this->logger->info('php_orchestra_log.site.delete', array(
+            'site_id' => $site->getSiteId(),
+            'site_domain' => $site->getDomain()
+        ));
     }
 
     /**
@@ -46,7 +52,10 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public function siteUpdate(SiteEvent $event)
     {
         $site = $event->getSite();
-        $this->logger->info('Update site', array('site_domain' => $site->getDomain()));
+        $this->logger->info('php_orchestra_log.site.update', array(
+            'site_id' => $site->getSiteId(),
+            'site_domain' => $site->getDomain()
+        ));
     }
 
     /**

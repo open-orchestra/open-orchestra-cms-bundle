@@ -28,9 +28,9 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
     public function contentTypeCreation(ContentTypeEvent $event)
     {
         $contentType = $event->getContentType();
-        $this->logger->info('Create a new content', array(
-            'content_contentId' => $contentType->getContentTypeId(),
-            'content_name' => $contentType->getName()
+        $this->logger->info('php_orchestra_log.content_type.create', array(
+            'content_type_id' => $contentType->getContentTypeId(),
+            'content_type_name' => $contentType->getName()
         ));
     }
 
@@ -40,9 +40,9 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
     public function contentTypeDelete(ContentTypeEvent $event)
     {
         $contentType = $event->getContentType();
-        $this->logger->info('Delete a content', array(
-            'content_contentId' => $contentType->getContentTypeId(),
-            'content_name' => $contentType->getName()
+        $this->logger->info('php_orchestra_log.content_type.delete', array(
+            'content_type_id' => $contentType->getContentTypeId(),
+            'content__type_name' => $contentType->getName()
         ));
     }
 
@@ -52,9 +52,9 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
     public function contentTypeUpdate(ContentTypeEvent $event)
     {
         $contentType = $event->getContentType();
-        $this->logger->info('Update a content', array(
-            'content_contentId' => $contentType->getContentTypeId(),
-            'content_name' => $contentType->getName()
+        $this->logger->info('php_orchestra_log.content_type.update', array(
+            'content_type_id' => $contentType->getContentTypeId(),
+            'content_type_name' => $contentType->getName()
         ));
     }
 

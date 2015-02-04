@@ -22,8 +22,20 @@ class PHPOrchestraLogExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        foreach ($config['document'] as $class => $content) {
+            if (is_array($content)) {
+                $container->setParameter('php_orchestra_log.document.' . $class . '.class', $content['class']);
+
+                $container->register('php_orchestra_log.repository.' . $class, $content['repository'])
+                    ->setFactoryService('doctrine.odm.mongodb.document_manager')
+                    ->setFactoryMethod('getRepository')
+                    ->addArgument($content['class']);
+            }
+        }
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('subscriber.yml');
         $loader->load('processor.yml');
+        $loader->load('transformer.yml');
     }
 }

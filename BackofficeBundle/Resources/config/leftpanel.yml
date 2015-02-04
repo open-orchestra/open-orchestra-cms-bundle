@@ -93,3 +93,9 @@ services:
             - editorial
         tags:
             - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.log:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - logs
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }

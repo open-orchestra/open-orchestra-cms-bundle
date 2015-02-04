@@ -219,6 +219,8 @@ php_orchestra_backoffice:
                 list: Keywords
             deleted:
                 list: Basket
+            logs:
+                list: Logs
     block:
         configurable_content:
             title: Configurable content block

@@ -3,18 +3,19 @@
 namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber;
+use PHPOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber;
+use PHPOrchestra\ModelInterface\ThemeEvents;
 
 /**
- * Test LogNodeSubscriberTest
+ * Class LogThemeSubscriberTest
  */
-class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogThemeSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var LogNodeSubscriber
+     * @var LogThemeSubscriber
      */
     protected $subscriber;
+
     protected $logger;
 
     /**
@@ -23,7 +24,7 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
-        $this->subscriber = new LogNodeSubscriber($this->logger);
+        $this->subscriber = new LogThemeSubscriber($this->logger);
     }
 
     /**
@@ -50,14 +51,9 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function provideSubscribedEvent()
     {
         return array(
-            array(NodeEvents::NODE_CREATION),
-//            array(NodeEvents::NODE_ADD_LANGUAGE),
-//            array(NodeEvents::NODE_DELETE),
-//            array(NodeEvents::NODE_DUPLICATE),
-//            array(NodeEvents::NODE_UPDATE),
-//            array(NodeEvents::NODE_UPDATE_BLOCK),
-//            array(NodeEvents::NODE_UPDATE_BLOCK_POSITION),
-//            array(NodeEvents::NODE_DELETE_BLOCK),
+            array(ThemeEvents::THEME_CREATE),
+            array(ThemeEvents::THEME_DELETE),
+            array(ThemeEvents::THEME_UPDATE),
         );
     }
 }

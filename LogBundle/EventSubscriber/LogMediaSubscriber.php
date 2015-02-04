@@ -30,7 +30,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function mediaAddImage(MediaEvent $event)
     {
         $media = $event->getMedia();
-        $this->logger->info('Create a new media', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
+        $this->logger->info('php_orchestra_log.media.add_image', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
     }
 
     /**
@@ -39,7 +39,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function mediaDelete(MediaEvent $event)
     {
         $media = $event->getMedia();
-        $this->logger->info('Delete a media', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
+        $this->logger->info('php_orchestra_log.media.delete', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
     }
 
     /**
@@ -48,7 +48,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function mediaResize(MediaEvent $event)
     {
         $media = $event->getMedia();
-        $this->logger->info('Resize a media', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
+        $this->logger->info('php_orchestra_log.media.resize', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
     }
 
     /**
@@ -57,7 +57,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function mediaOverride(MediaEvent $event)
     {
         $media = $event->getMedia();
-        $this->logger->info('Override a media', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
+        $this->logger->info('php_orchestra_log.media.override', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
     }
 
     /**
@@ -66,7 +66,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function folderCreate(FolderEvent $event)
     {
         $folder = $event->getFolder();
-        $this->logger->info('Create a new folder', array('folder_name' => $folder->getName()));
+        $this->logger->info('php_orchestra_log.folder.create', array('folder_name' => $folder->getName()));
     }
 
     /**
@@ -75,7 +75,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function folderDelete(FolderEvent $event)
     {
         $folder = $event->getFolder();
-        $this->logger->info('Delete a folder', array('folder_name' => $folder->getName()));
+        $this->logger->info('php_orchestra_log.folder.delete', array('folder_name' => $folder->getName()));
     }
 
     /**

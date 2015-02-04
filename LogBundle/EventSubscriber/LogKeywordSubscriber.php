@@ -28,7 +28,7 @@ class LogKeywordSubscriber implements EventSubscriberInterface
     public function keywordCreate(KeywordEvent $event)
     {
         $keyword = $event->getKeyword();
-        $this->logger->info('Create a new keyword', array('keyword_label' => $keyword->getLabel()));
+        $this->logger->info('php_orchestra_log.keyword.create', array('keyword_label' => $keyword->getLabel()));
     }
 
     /**
@@ -37,7 +37,7 @@ class LogKeywordSubscriber implements EventSubscriberInterface
     public function keywordDelete(KeywordEvent $event)
     {
         $keyword = $event->getKeyword();
-        $this->logger->info('Delete a keyword', array('keyword_label' => $keyword->getLabel()));
+        $this->logger->info('php_orchestra_log.keyword.delete', array('keyword_label' => $keyword->getLabel()));
     }
 
     /**

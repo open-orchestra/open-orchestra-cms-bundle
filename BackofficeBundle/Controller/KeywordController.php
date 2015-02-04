@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\KeywordEvent;
+use PHPOrchestra\ModelInterface\KeywordEvents;
 use PHPOrchestra\ModelInterface\Model\KeywordInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,6 +76,8 @@ class KeywordController extends AbstractAdminController
         };
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+
+        $this->dispatchEvent(KeywordEvents::KEYWORD_CREATE, new KeywordEvent($keyword));
 
         return $this->renderAdminForm($form, array(), $response);
     }

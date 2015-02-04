@@ -4,6 +4,7 @@ namespace PHPOrchestra\LogBundle\Processor;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class LogUserProcessor
@@ -11,15 +12,15 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class LogUserProcessor
 {
     protected $requestStack;
-    protected $session;
+    protected $securityContext;
 
     /**
-     * @param Session      $session
-     * @param RequestStack $requestStack
+     * @param SecurityContextInterface $securityContext
+     * @param RequestStack             $requestStack
      */
-    public function __construct(Session $session, RequestStack $requestStack)
+    public function __construct(SecurityContextInterface $securityContext, RequestStack $requestStack)
     {
-        $this->session = $session;
+        $this->securityContext = $securityContext;
         $this->requestStack = $requestStack;
     }
 
@@ -35,6 +36,7 @@ class LogUserProcessor
         $record['extra']['user_ip'] = '0.0.0.0';
         if (null !== $request) {
             $record['extra']['user_ip'] = $request->getClientIp();
+            $record['extra']['user_name'] = $this->securityContext->getToken()->getUsername();
         }
 
         return $record;

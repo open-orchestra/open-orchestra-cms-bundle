@@ -1,0 +1,58 @@
+php_orchestra_log:
+    node:
+        create: Create a new node
+        delete: Delete a node
+        update: Update a node
+        duplicate: Duplicate a node
+        add_language: Add a language to a node
+        block:
+            create: Add a new block
+            delete: Delete a block
+            update: Update a block
+            update_position: Change block position
+        area:
+            create: Add a new area
+            delete: Delete an area
+            update: Update an area
+    content:
+        create: Create a new content
+        delete: Delete a content
+        update: Update a content
+        add_language: Add a language to a content
+        duplicate: Duplicate a content
+    content_type:
+        create: Create a new contentType
+        delete: Delete a contentType
+        update: Update a contentType
+    keyword:
+        create: Create a keyword
+        delete: Delete a keyword
+    media:
+        add_image: Add a new media
+        delete: Delete a media
+        resize: Resize a media
+        override: Override a media format
+    folder:
+        create: Create a new folder
+        delete: Delete a folder
+    role:
+        create: Create a new role
+        delete: Delete a role
+        update: Update a role
+    site:
+        create: Create a new site
+        delete: delete a site
+        update: update a site
+    status:
+        change: Change the status
+        create: Create a new status
+        delete: Delete a status
+        update: Update a status
+    template:
+        create: Create a new Template
+        delete: Delete a template
+        update: update a template
+    theme:
+        create: Create a new theme
+        delete: Delete a theme
+        update: Update a theme

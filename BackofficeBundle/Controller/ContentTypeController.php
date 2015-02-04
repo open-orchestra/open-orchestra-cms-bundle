@@ -2,6 +2,8 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\ContentTypeEvents;
+use PHPOrchestra\ModelInterface\Event\ContentTypeEvent;
 use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +41,7 @@ class ContentTypeController extends AbstractAdminController
 
         $form->handleRequest($request);
         if (!$request->get('no_save')) {
+            $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_UPDATE, new ContentTypeEvent($newContentType));
             $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success'), $newContentType);
         }
 
@@ -75,6 +78,8 @@ class ContentTypeController extends AbstractAdminController
             $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
             $documentManager->persist($contentType);
             $documentManager->flush();
+
+            $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
 
             return $this->redirect(
                 $this->generateUrl('homepage')

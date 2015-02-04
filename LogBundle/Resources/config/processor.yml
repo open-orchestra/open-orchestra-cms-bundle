@@ -5,7 +5,7 @@ services:
     php_orchestra_log.processor.log_user:
         class: %php_orchestra_log.processor.log_user.class%
         arguments:
-            - @session
+            - @security.context
             - @request_stack
         tags:
             - { name: monolog.processor, method: processRecord, channel: phporchestra }

@@ -28,7 +28,10 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateCreate(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('Create a new template', array($template->getTemplateId(), $template->getName()));
+        $this->logger->info('php_orchestra_log.template.create', array(
+            'template_id' => $template->getTemplateId(),
+            'template_name' => $template->getName()
+        ));
     }
 
     /**
@@ -37,7 +40,10 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateDelete(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('Delete a template', array($template->getTemplateId(), $template->getName()));
+        $this->logger->info('php_orchestra_log.template.delete', array(
+            'template_id' => $template->getTemplateId(),
+            'template_name' => $template->getName()
+        ));
     }
 
     /**
@@ -46,7 +52,10 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateUpdate(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('Update a template', array($template->getTemplateId(), $template->getName()));
+        $this->logger->info('php_orchestra_log.template.update', array(
+            'template_id' => $template->getTemplateId(),
+            'template_name' => $template->getName()
+        ));
     }
 
     /**

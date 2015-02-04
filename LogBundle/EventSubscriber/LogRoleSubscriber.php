@@ -28,7 +28,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public function roleCreate(RoleEvent $event)
     {
         $role = $event->getRole();
-        $this->logger->info('Create a new role', array('role_name' => $role->getName()));
+        $this->logger->info('php_orchestra_log.role.create', array('role_name' => $role->getName()));
     }
 
     /**
@@ -37,7 +37,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public function roleDelete(RoleEvent $event)
     {
         $role = $event->getRole();
-        $this->logger->info('Delete a role', array('role_name' => $role->getName()));
+        $this->logger->info('php_orchestra_log.role.delete', array('role_name' => $role->getName()));
     }
 
     /**
@@ -46,7 +46,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public function roleUpdate(RoleEvent $event)
     {
         $role = $event->getRole();
-        $this->logger->info('Update a role', array('role_name' => $role->getName()));
+        $this->logger->info('php_orchestra_log.role.update', array('role_name' => $role->getName()));
     }
 
     /**

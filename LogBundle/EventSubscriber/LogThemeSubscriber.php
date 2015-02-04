@@ -28,7 +28,9 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public function themeCreate(ThemeEvent $event)
     {
         $theme = $event->getTheme();
-        $this->logger->info('Create a new theme', array($theme->getName()));
+        $this->logger->info('php_orchestra_log.theme.create', array(
+            'them_name' => $theme->getName()
+        ));
     }
 
     /**
@@ -37,7 +39,9 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public function themeDelete(ThemeEvent $event)
     {
         $theme = $event->getTheme();
-        $this->logger->info('Delete a theme', array($theme->getName()));
+        $this->logger->info('php_orchestra_log.theme.delete', array(
+            'them_name' => $theme->getName()
+        ));
     }
 
     /**
@@ -46,7 +50,9 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public function themeUpdate(ThemeEvent $event)
     {
         $theme = $event->getTheme();
-        $this->logger->info('Update a theme', array($theme->getName()));
+        $this->logger->info('php_orchestra_log.theme.update', array(
+            'them_name' => $theme->getName()
+        ));
     }
 
     /**

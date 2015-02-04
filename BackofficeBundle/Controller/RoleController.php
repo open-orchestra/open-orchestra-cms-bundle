@@ -2,7 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\RoleEvent;
 use PHPOrchestra\ModelInterface\Model\RoleInterface;
+use PHPOrchestra\ModelInterface\RoleEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +45,8 @@ class RoleController extends AbstractAdminController
                 $this->get('translator')->trans('php_orchestra_backoffice.form.role.new.success')
             );
 
+            $this->dispatchEvent(RoleEvents::ROLE_CREATE, new RoleEvent($role));
+
             return $this->redirect($this->generateUrl('php_orchestra_backoffice_role_form', array(
                 'roleId' => $role->getId()
             )));
@@ -72,6 +76,8 @@ class RoleController extends AbstractAdminController
 
         $form->handleRequest($request);
         $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.role.edit.success'), $role);
+
+        $this->dispatchEvent(RoleEvents::ROLE_UPDATE, new RoleEvent($role));
 
         return $this->renderAdminForm($form);
     }
