@@ -34,13 +34,13 @@ class OrchestraFrequenceChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($resolverMock)->setDefaults(
             array('choices' => array(
-            'always' => 'php_orchestra_backoffice.form.node.changefreq.always',
-            'hourly' => 'php_orchestra_backoffice.form.node.changefreq.hourly',
-            'daily' => 'php_orchestra_backoffice.form.node.changefreq.daily',
-            'weekly' => 'php_orchestra_backoffice.form.node.changefreq.weekly',
-            'monthly' => 'php_orchestra_backoffice.form.node.changefreq.monthly',
-            'yearly' => 'php_orchestra_backoffice.form.node.changefreq.yearly',
-            'never' => 'php_orchestra_backoffice.form.node.changefreq.never'
+            'always' => 'php_orchestra_backoffice.form.changefreq.always',
+            'hourly' => 'php_orchestra_backoffice.form.changefreq.hourly',
+            'daily' => 'php_orchestra_backoffice.form.changefreq.daily',
+            'weekly' => 'php_orchestra_backoffice.form.changefreq.weekly',
+            'monthly' => 'php_orchestra_backoffice.form.changefreq.monthly',
+            'yearly' => 'php_orchestra_backoffice.form.changefreq.yearly',
+            'never' => 'php_orchestra_backoffice.form.changefreq.never'
         ))
         );
     }

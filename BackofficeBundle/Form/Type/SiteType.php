@@ -57,7 +57,7 @@ class SiteType extends AbstractType
                 'label' => 'php_orchestra_backoffice.form.website.theme'
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
-                'label' => 'php_orchestra_backoffice.form.node.changefreq.title'
+                'label' => 'php_orchestra_backoffice.form.website.changefreq.title'
             ))
             ->add('sitemap_priority', 'percent', array(
                 'label' => 'php_orchestra_backoffice.form.node.priority',
