@@ -45,8 +45,6 @@ class MediaController extends AbstractAdminController
             $media
         );
 
-        $this->dispatchEvent(MediaEvents::ADD_IMAGE, new MediaEvent($media));
-
         return $this->renderAdminForm($form);
     }
 

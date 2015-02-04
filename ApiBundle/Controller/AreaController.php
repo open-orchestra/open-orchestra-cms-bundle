@@ -80,8 +80,6 @@ class AreaController extends BaseController
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
-
         return new Response();
     }
 
