@@ -18,6 +18,8 @@ abstract class AbstractAdminController extends Controller
      * @param FormInterface $form
      * @param string        $successMessage
      * @param mixed|null    $itemToPersist
+     *
+     * @return bool
      */
     protected function handleForm(FormInterface $form, $successMessage, $itemToPersist = null)
     {
@@ -31,7 +33,11 @@ abstract class AbstractAdminController extends Controller
             $documentManager->flush();
 
             $this->get('session')->getFlashBag()->add('success', $successMessage);
+
+            return true;
         }
+
+        return false;
     }
 
     /**

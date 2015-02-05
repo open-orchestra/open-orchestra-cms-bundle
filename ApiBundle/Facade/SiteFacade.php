@@ -17,17 +17,7 @@ class SiteFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $domain;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $alias;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $defaultLanguage;
+    public $name;
 
     /**
      * @Serializer\Type("string")

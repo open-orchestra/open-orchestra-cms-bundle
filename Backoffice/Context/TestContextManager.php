@@ -12,7 +12,7 @@ class TestContextManager extends ContextManager
     protected $defaultLocale;
     protected $siteId = '1';
     protected $defaultLanguage = 'fr';
-    protected $siteDomain = 'www.aphpOrchestra.fr';
+    protected $siteName = 'First site';
 
     /**
      * @param SiteRepositoryInterface $siteRepository
@@ -63,9 +63,9 @@ class TestContextManager extends ContextManager
     /**
      * @return string
      */
-    public function getCurrentSiteDomain()
+    public function getCurrentSiteName()
     {
-        return $this->siteDomain;
+        return $this->siteName;
     }
 
     /**

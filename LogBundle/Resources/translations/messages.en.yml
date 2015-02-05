@@ -40,9 +40,9 @@ php_orchestra_log:
         delete: Delete a role with role name role_name
         update: Update a role with role name role_name
     site:
-        create: Create a new site with site id site_id and domain site_domain
-        delete: delete a site with site id site_id and domain site_domain
-        update: update a site with site id site_id and domain site_domain
+        create: Create a new site with site id site_id and name site_name
+        delete: delete a site with site id site_id and name site_name
+        update: update a site with site id site_id and name site_name
     status:
         change: Change the status
         create: Create a new status

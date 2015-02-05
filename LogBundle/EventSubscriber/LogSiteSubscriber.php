@@ -30,7 +30,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
         $site = $event->getSite();
         $this->logger->info('php_orchestra_log.site.create', array(
             'site_id' => $site->getSiteId(),
-            'site_domain' => $site->getDomain()
+            'site_name' => $site->getName()
         ));
     }
 
@@ -42,7 +42,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
         $site = $event->getSite();
         $this->logger->info('php_orchestra_log.site.delete', array(
             'site_id' => $site->getSiteId(),
-            'site_domain' => $site->getDomain()
+            'site_name' => $site->getName()
         ));
     }
 
@@ -54,7 +54,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
         $site = $event->getSite();
         $this->logger->info('php_orchestra_log.site.update', array(
             'site_id' => $site->getSiteId(),
-            'site_domain' => $site->getDomain()
+            'site_name' => $site->getName()
         ));
     }
 
