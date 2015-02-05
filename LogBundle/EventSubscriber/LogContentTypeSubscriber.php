@@ -30,7 +30,6 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
         $contentType = $event->getContentType();
         $this->logger->info('php_orchestra_log.content_type.create', array(
             'content_type_id' => $contentType->getContentTypeId(),
-            'content_type_name' => $contentType->getName()
         ));
     }
 

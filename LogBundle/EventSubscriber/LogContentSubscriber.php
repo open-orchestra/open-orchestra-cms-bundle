@@ -28,7 +28,9 @@ class LogContentSubscriber implements EventSubscriberInterface
     public function contentCreation(ContentEvent $event)
     {
         $content = $event->getContent();
-        $this->logger->info('php_orchestra_log.content.create', array('content_id' => $content->getContentId(), 'content_name' => $content->getName()));
+        $this->logger->info('php_orchestra_log.content.create', array(
+            'content_id' => $content->getContentId(),
+        ));
     }
 
     /**
@@ -37,7 +39,10 @@ class LogContentSubscriber implements EventSubscriberInterface
     public function contentDelete(ContentEvent $event)
     {
         $content = $event->getContent();
-        $this->logger->info('php_orchestra_log.content.delete', array('content_id' => $content->getContentId(), 'content_name' => $content->getName()));
+        $this->logger->info('php_orchestra_log.content.delete', array(
+            'content_id' => $content->getContentId(),
+            'content_name' => $content->getName(),
+        ));
     }
 
     /**
@@ -46,7 +51,11 @@ class LogContentSubscriber implements EventSubscriberInterface
     public function contentUpdate(ContentEvent $event)
     {
         $content = $event->getContent();
-        $this->logger->info('php_orchestra_log.content.update', array('content_id' => $content->getContentId(), 'content_name' => $content->getName()));
+        $this->logger->info('php_orchestra_log.content.update', array(
+            'content_id' => $content->getContentId(),
+            'content_version' => $content->getVersion(),
+            'content_language' => $content->getLanguage()
+        ));
     }
 
     /**
@@ -57,8 +66,8 @@ class LogContentSubscriber implements EventSubscriberInterface
         $content = $event->getContent();
         $this->logger->info('php_orchestra_log.content.duplicate', array(
             'content_id' => $content->getContentId(),
-            'content_name' => $content->getName(),
-            'content_version' => $content->getVersion()
+            'content_version' => $content->getVersion(),
+            'content_language' => $content->getLanguage()
         ));
     }
 

@@ -2,57 +2,57 @@ php_orchestra_log:
     node:
         create: Crée un nouveau noeud avec l'id du noeud node_id
         delete: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name
-        update: Mise à jour d'un noeud avec l'id du noeud node_id et le nom du noeud node_name
-        duplicate: Duplique un noeud avec l'id du noeud node_id, le nom du noeud node_name et la version node_version
-        add_language: Ajoute une langue à un noeud
+        update: Mise à jour d'un noeud avec l'id du noeud node_id, la version node_version et  la langue node_language
+        duplicate: Duplique un noeud avec l'id du noeud node_id, la version node_version et  la langue node_language
+        add_language: Ajoute une langue à un noeud avec l'id du noeud node_id, sont nom node_name et la langue node_language
         block:
-            create: Ajoute un nouveau block
-            delete: Supprime un block
-            update: Mise à jour d'un block
-            update_position: Change la position d'un block
+            create: Ajoute un nouveau block avec l'id du noeud node_id, la langue node_language et la version node_version
+            delete: Supprime un block avec l'id du noeud node_id, la langue node_language et la version node_version
+            update: Mise à jour d'un block avec l'id du noeud node_id, la langue node_language et la version node_version
+            update_position: Change la position d'un block avec l'id du noeud node_id, la langue node_language et la version node_version
         area:
-            create: Crée une zone
-            delete: Supprime une zone
-            update: Mis à jour d'un zone
+            create: Crée une zone avec l'id du noeud node_id, la langue node_language et la version node_version
+            delete: Supprime une zone avec l'id du noeud node_id, la langue node_language et la version node_version
+            update: Mis à jour d'un zone avec l'id du noeud node_id, la langue node_language et la version node_version
     content:
-        create: Crée un contenu
-        delete: Supprime un contenu
-        update: Mis à jour d'un contenu
-        add_language: Ajoute une langue à un contenu
-        duplicate: Duplique un contenu
+        create: Crée un contenu avec l'id du contenu content_id
+        delete: Supprime un contenu avec l'id du contenu content_id et sont nom content_name
+        update: Mis à jour d'un contenu avec l'id du contenu content_id, la langue content_language et la version content_version
+        add_language: Ajoute une langue à un contenu avec l'id du contenu content_id et la langue content_language
+        duplicate: Duplique un contenu avec l'id du contenu content_id, la langue content_language et la version content_version
     content_type:
-        create: Crée un type de contenu
-        delete: Supprime un type de contenu
-        update: Mis à jour d'un type de contenu
+        create: Crée un type de contenu avec l'id content_type_id
+        delete: Supprime un type de contenu avec l'id content_type_id et sont nom content_type_name
+        update: Mis à jour d'un type de contenu avec l'id content_type_id et sont nom content_type_name
     keyword:
-        create: Crée un tag
-        delete: Supprime un tag
+        create: Crée un tag avec le label keyword_label
+        delete: Supprime un tag avec le label keyword_label
     media:
-        add_image: Ajoute un média
-        delete: Supprime un média
-        resize: Change la taille d'un média
-        override: Override le format d'un média
+        add_image: Ajoute un média nommé media_name dans le dossier media_folder
+        delete: Supprime un média nommé media_name dans le dossier media_folder
+        resize: Change la taille d'un média nommé media_name
+        override: Override le format d'un média nommé media_name
     folder:
-        create: Crée un nouveau dossier
-        delete: Supprime un dossier
+        create: Crée un nouveau dossier nommé folder_name
+        delete: Supprime un dossier nommé folder_name
     role:
-        create: Crée un nouveau rôle
-        delete: Supprime un rôle
-        update: Mis à jour d'un rôle
+        create: Crée un nouveau rôle nommé role_name
+        delete: Supprime un rôle nommé role_name
+        update: Mis à jour d'un rôle nommé role_name
     site:
-        create: Crée un nouveau site
-        delete: Supprime un site
-        update: Mis à jour d'un site
+        create: Crée un nouveau site avec l'id site_id et le domain site_domain
+        delete: Supprime un site avec l'id site_id et le domain site_domain
+        update: Mis à jour d'un site avec l'id site_id et le domain site_domain
     status:
         change: Change un status
         create: Crée un nouveau status
         delete: Supprime un status
         update: Mis à jour d'un status
     template:
-        create: Crée un nouveau gabarit
-        delete: Supprime un gabarit
-        update: Mis à jour d'un gabarit
+        create: Crée un nouveau gabarit avec l'id template_id et nommé template_name
+        delete: Supprime un gabarit avec l'id template_id et nommé template_name
+        update: Mis à jour d'un gabarit avec l'id template_id et nommé template_name
     theme:
-        create: Crée un nouveau thème
-        delete: Supprime un thème
-        update: Mis à jour d'un thème
+        create: Crée un nouveau thème nommé theme_name
+        delete: Supprime un thème nommé theme_name
+        update: Mis à jour d'un thème nommé theme_name
