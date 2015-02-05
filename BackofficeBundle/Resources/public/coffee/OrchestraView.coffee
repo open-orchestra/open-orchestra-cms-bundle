@@ -71,7 +71,6 @@ OrchestraView = Backbone.View.extend(
         return
 
   addLanguageToPanel: (language) ->
-    console.log(@options.multiLanguage.language)
     view = new LanguageView(
       language: language
       currentLanguage: @options.multiLanguage.language
