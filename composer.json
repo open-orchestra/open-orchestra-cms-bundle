@@ -10,10 +10,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/itkg/phporchestra-translation-bundle"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/itkg/phporchestra-media-bundle"
         },
         {
@@ -45,7 +41,6 @@
     "require": {
         "jms/serializer-bundle" : "0.13.0",
         "itkg/phporchestra-base-bundle": "*",
-        "itkg/phporchestra-translation-bundle": "*",
         "itkg/phporchestra-display-bundle": "*",
         "itkg/phporchestra-media-bundle": "*",
         "itkg/phporchestra-user-bundle": "*",
