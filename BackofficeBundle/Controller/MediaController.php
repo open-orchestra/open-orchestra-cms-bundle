@@ -103,8 +103,6 @@ class MediaController extends AbstractAdminController
                 $data['w'],
                 $data['format']
             );
-
-            $this->dispatchEvent(MediaEvents::RESIZE_IMAGE, new MediaEvent($media));
         }
 
         return $this->renderAdminForm($form);
@@ -141,7 +139,6 @@ class MediaController extends AbstractAdminController
             $tmpDir = $this->container->getParameter('php_orchestra_media.tmp_dir');
             $file->move($tmpDir, $format . '-' . $media->getFilesystemName());
             $this->get('php_orchestra_media.manager.image_override')->override($media, $format);
-            $this->dispatchEvent(MediaEvents::OVERRIDE_IMAGE, new MediaEvent($media));
         }
 
         return $this->renderAdminForm($form);

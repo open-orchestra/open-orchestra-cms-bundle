@@ -29,7 +29,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
     {
         $theme = $event->getTheme();
         $this->logger->info('php_orchestra_log.theme.create', array(
-            'them_name' => $theme->getName()
+            'theme_name' => $theme->getName()
         ));
     }
 
@@ -40,7 +40,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
     {
         $theme = $event->getTheme();
         $this->logger->info('php_orchestra_log.theme.delete', array(
-            'them_name' => $theme->getName()
+            'theme_name' => $theme->getName()
         ));
     }
 
@@ -51,7 +51,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
     {
         $theme = $event->getTheme();
         $this->logger->info('php_orchestra_log.theme.update', array(
-            'them_name' => $theme->getName()
+            'theme_name' => $theme->getName()
         ));
     }
 

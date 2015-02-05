@@ -2,57 +2,57 @@ php_orchestra_log:
     node:
         create: Create a new node with node id node_id
         delete: Delete a node with node id node_id and node name node_name
-        update: Update a node with node id node_id and node name node_name
-        duplicate: Duplicate a node with node id node_id, node name node_name and node version node_version
-        add_language: Add a language to a node
+        update: Update a node with node id node_id, node version node_version and node language node_language
+        duplicate: Duplicate a node with node id node_id,node version node_version and node language node_language
+        add_language: Add a language to a node with node id node_id, node name node_name and node language node_language
         block:
-            create: Add a new block
-            delete: Delete a block
-            update: Update a block
-            update_position: Change block position
+            create: Add a new block in a node with node id node_id, node language node_language and node version node_version
+            delete: Delete a block in a node with node id node_id, node language node_language and node version node_version
+            update: Update a block in a node with node id node_id, node language node_language and node version node_version
+            update_position: Change block position in a node with node id node_id, node language node_language and node version node_version
         area:
-            create: Add a new area
-            delete: Delete an area
-            update: Update an area
+            create: Add a new area with node id node_id, node language node_language and node version node_version
+            delete: Delete an area with node id node_id, node language node_language and node version node_version
+            update: Update an area with node id node_id, node language node_language and node version node_version
     content:
-        create: Create a new content
-        delete: Delete a content
-        update: Update a content
-        add_language: Add a language to a content
-        duplicate: Duplicate a content
+        create: Create a new content with content id content_id
+        delete: Delete a content with content id content_id and content name content_name
+        update: Update a content with content id content_id, content language content_language and content version content_version
+        add_language: Add a language to a content with content id content_id and content language content_language
+        duplicate: Duplicate a content with content id content_id, content language content_language and content version content_version
     content_type:
-        create: Create a new contentType
-        delete: Delete a contentType
-        update: Update a contentType
+        create: Create a new contentType with content type id content_type_id
+        delete: Delete a contentType with content type id content_type_id and content type name content_type_name
+        update: Update a contentType with content type id content_type_id and content type name content_type_name
     keyword:
-        create: Create a keyword
-        delete: Delete a keyword
+        create: Create a keyword with label keyword_label
+        delete: Delete a keyword with label keyword_label
     media:
-        add_image: Add a new media
-        delete: Delete a media
-        resize: Resize a media
-        override: Override a media format
+        add_image: Add a new media with media name media_name in folder media_folder
+        delete: Delete a media with media name media_name in folder media_folder
+        resize: Resize a media with media name media_name
+        override: Override a media format with media name media_name
     folder:
-        create: Create a new folder
-        delete: Delete a folder
+        create: Create a new folder with folder name folder_name
+        delete: Delete a folder with folder name folder_name
     role:
-        create: Create a new role
-        delete: Delete a role
-        update: Update a role
+        create: Create a new role with role name role_name
+        delete: Delete a role with role name role_name
+        update: Update a role with role name role_name
     site:
-        create: Create a new site
-        delete: delete a site
-        update: update a site
+        create: Create a new site with site id site_id and domain site_domain
+        delete: delete a site with site id site_id and domain site_domain
+        update: update a site with site id site_id and domain site_domain
     status:
         change: Change the status
         create: Create a new status
         delete: Delete a status
         update: Update a status
     template:
-        create: Create a new Template
-        delete: Delete a template
-        update: update a template
+        create: Create a new Template with template id template_id and template name template_name
+        delete: Delete a template with template id template_id and template name template_name
+        update: update a template with template id template_id and template name template_name
     theme:
-        create: Create a new theme
-        delete: Delete a theme
-        update: Update a theme
+        create: Create a new theme with theme name theme_name
+        delete: Delete a theme with theme name theme_name
+        update: Update a theme with theme name theme_name
