@@ -73,7 +73,7 @@ OrchestraView = Backbone.View.extend(
   addLanguageToPanel: (language) ->
     view = new LanguageView(
       language: language
-      currentLanguage: @options.currentLanguage
+      currentLanguage: @options.multiLanguage.language
       el: this.$el.find('#entity-languages')
       cid: @cid
     )
