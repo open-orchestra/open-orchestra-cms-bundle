@@ -7,7 +7,9 @@
                 <% _.each(displayedElements, function(displayedElement) { %>
                     <td><%= displayedElement %></td>
                 <% }); %>
-                <td>Actions</td>
+                <% if ( typeof links !== 'undefined' ) { %>
+                    <td>Actions</td>
+                <% } %>
             </tr>
         </thead>
         <tbody>

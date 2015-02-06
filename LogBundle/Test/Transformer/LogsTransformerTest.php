@@ -41,11 +41,24 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransform()
     {
-        Phake::when($this->log)->getContext()->thenReturn(array());
+        Phake::when($this->log)->getContext()->thenReturn(array('node_name' => 'root'));
         Phake::when($this->log)->getExtra()->thenReturn(array());
         $facade = $this->transformer->transform($this->log);
 
         Phake::verify($this->translator)->trans(Phake::anyParameters());
+        $this->assertInstanceOf('PHPOrchestra\LogBundle\Facade\LogFacade', $facade);
+    }
+
+    /**
+     * Test transform
+     */
+    public function testTransformEmptyContext()
+    {
+        Phake::when($this->log)->getContext()->thenReturn(array());
+        Phake::when($this->log)->getExtra()->thenReturn(array());
+        $facade = $this->transformer->transform($this->log);
+
+        Phake::verify($this->translator, Phake::never())->trans(Phake::anyParameters());
         $this->assertInstanceOf('PHPOrchestra\LogBundle\Facade\LogFacade', $facade);
     }
 }
