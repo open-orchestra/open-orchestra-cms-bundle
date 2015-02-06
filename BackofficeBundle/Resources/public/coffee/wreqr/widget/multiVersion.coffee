@@ -14,11 +14,11 @@ versionChannel.commands.setHandler 'ready', (view) ->
     type: "GET"
     url: view.options.multiVersion.self_version
     success: (response) ->
-      collection = new TableviewElement
+      collection = new VersionviewElement
       collection.set response
       collectionName = collection.get('collection_name')
       for version of collection.get(collectionName)
-        versionElement = new TableviewModel
+        versionElement = new VersionviewModel
         versionElement.set collection.get(collectionName)[version]
         new VersionView(
           element: versionElement
