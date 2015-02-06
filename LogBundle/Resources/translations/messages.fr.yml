@@ -7,19 +7,20 @@ php_orchestra_log:
         add_language: Ajoute une langue à un noeud avec l'id du noeud node_id, sont nom node_name et la langue node_language
         block:
             create: Ajoute un nouveau block avec l'id du noeud node_id, la langue node_language et la version node_version
-            delete: Supprime un block avec l'id du noeud node_id, la langue node_language et la version node_version
             update: Mise à jour d'un block avec l'id du noeud node_id, la langue node_language et la version node_version
-            update_position: Change la position d'un block avec l'id du noeud node_id, la langue node_language et la version node_version
+            update_position: Change la position d'un block dans une aire avec l'id du noeud node_id, la langue node_language et la version node_version
         area:
             create: Crée une zone avec l'id du noeud node_id, la langue node_language et la version node_version
             delete: Supprime une zone avec l'id du noeud node_id, la langue node_language et la version node_version
             update: Mis à jour d'un zone avec l'id du noeud node_id, la langue node_language et la version node_version
+        status: Change le status du noeud avec l'id node_id, la langue node_language et la version node_version
     content:
         create: Crée un contenu avec l'id du contenu content_id
         delete: Supprime un contenu avec l'id du contenu content_id et sont nom content_name
         update: Mis à jour d'un contenu avec l'id du contenu content_id, la langue content_language et la version content_version
         add_language: Ajoute une langue à un contenu avec l'id du contenu content_id et la langue content_language
         duplicate: Duplique un contenu avec l'id du contenu content_id, la langue content_language et la version content_version
+        status: Change le status du contenu avec l'id content_id, la langue content_language et la version content_version
     content_type:
         create: Crée un type de contenu avec l'id content_type_id
         delete: Supprime un type de contenu avec l'id content_type_id et sont nom content_type_name
@@ -35,6 +36,7 @@ php_orchestra_log:
     folder:
         create: Crée un nouveau dossier nommé folder_name
         delete: Supprime un dossier nommé folder_name
+        update: Mis à jour un dossier nommé folder_name
     role:
         create: Crée un nouveau rôle nommé role_name
         delete: Supprime un rôle nommé role_name
@@ -44,15 +46,22 @@ php_orchestra_log:
         delete: Supprime un site avec l'id site_id et le nom site_name
         update: Mis à jour d'un site avec l'id site_id et le nom site_name
     status:
-        change: Change un status
-        create: Crée un nouveau status
-        delete: Supprime un status
-        update: Mis à jour d'un status
+        change: Change un status nommé status_name
+        create: Crée un nouveau status nommé status_name
+        delete: Supprime un status nommé status_name
+        update: Mis à jour d'un status nommé status_name
     template:
         create: Crée un nouveau gabarit avec l'id template_id et nommé template_name
         delete: Supprime un gabarit avec l'id template_id et nommé template_name
         update: Mis à jour d'un gabarit avec l'id template_id et nommé template_name
+        area:
+            delete: Supprime une zone d'un template avec l'id template_id et nommé template_name
+            update: Mis à jour d'une zone d'un template avec l'id template_id et nommé template_name
     theme:
         create: Crée un nouveau thème nommé theme_name
         delete: Supprime un thème nommé theme_name
         update: Mis à jour d'un thème nommé theme_name
+    user:
+        create: Crée un nouvel utilisateur user_name
+        delete: Supprime un utilisateur user_name
+        update: Mis à jour d'un utilisateur user_name

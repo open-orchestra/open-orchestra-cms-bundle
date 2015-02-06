@@ -80,6 +80,15 @@ class LogMediaSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param FolderEvent $event
+     */
+    public function folderUpdate(FolderEvent $event)
+    {
+        $folder = $event->getFolder();
+        $this->logger->info('php_orchestra_log.folder.update', array('folder_name' => $folder->getName()));
+    }
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents()
@@ -90,6 +99,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
             MediaEvents::MEDIA_DELETE => 'mediaDelete',
             FolderEvents::FOLDER_CREATE => 'folderCreate',
             FolderEvents::FOLDER_DELETE => 'folderDelete',
+            FolderEvents::FOLDER_UPDATE => 'folderUpdate',
             MediaEvents::OVERRIDE_IMAGE => 'mediaOverride',
         );
     }

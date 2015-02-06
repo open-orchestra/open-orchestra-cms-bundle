@@ -72,11 +72,25 @@ class LogContentSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param ContentEvent $event
+     */
+    public function contentChangeStatus(ContentEvent $event)
+    {
+        $content = $event->getContent();
+        $this->logger->info('php_orchestra_log.content.status', array(
+            'content_id' => $content->getContentId(),
+            'content_version' => $content->getVersion(),
+            'content_language' => $content->getLanguage()
+        ));
+    }
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents()
     {
         return array(
+            ContentEvents::CONTENT_CHANGE_STATUS => 'contentChangeStatus',
             ContentEvents::CONTENT_DUPLICATE => 'contentDuplicate',
             ContentEvents::CONTENT_CREATION => 'contentCreation',
             ContentEvents::CONTENT_DELETE => 'contentDelete',

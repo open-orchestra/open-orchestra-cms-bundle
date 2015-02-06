@@ -25,19 +25,10 @@ class LogStatusSubscriber implements EventSubscriberInterface
     /**
      * @param StatusableEvent $event
      */
-    public function statusChange(StatusableEvent $event)
-    {
-        $status = $event->getStatusableElement();
-        $this->logger->info('php_orchestra_log.status.change', array());
-    }
-
-    /**
-     * @param StatusableEvent $event
-     */
     public function statusCreate(StatusableEvent $event)
     {
         $status = $event->getStatusableElement();
-        $this->logger->info('php_orchestra_log.status.create', array());
+        $this->logger->info('php_orchestra_log.status.create', array('status_name' => $status->getStatus()->getName()));
     }
 
     /**
@@ -46,7 +37,7 @@ class LogStatusSubscriber implements EventSubscriberInterface
     public function statusDelete(StatusableEvent $event)
     {
         $status = $event->getStatusableElement();
-        $this->logger->info('php_orchestra_log.status.delete', array());
+        $this->logger->info('php_orchestra_log.status.delete', array('status_name' => $status->getStatus()->getName()));
     }
 
     /**
@@ -55,7 +46,7 @@ class LogStatusSubscriber implements EventSubscriberInterface
     public function statusUpdate(StatusableEvent $event)
     {
         $status = $event->getStatusableElement();
-        $this->logger->info('php_orchestra_log.status.update', array());
+        $this->logger->info('php_orchestra_log.status.update', array('status_name' => $status->getStatus()->getName()));
     }
 
     /**

@@ -127,7 +127,12 @@ class NodeController extends BaseController
      */
     public function changeStatusAction(Request $request, $nodeMongoId)
     {
-        return $this->reverseTransform($request, $nodeMongoId, 'node');
+        return $this->reverseTransform(
+            $request, $nodeMongoId,
+            'node',
+            NodeEvents::NODE_CHANGE_STATUS,
+            'PHPOrchestra\ModelInterface\Event\NodeEvent'
+        );
     }
 
     /**

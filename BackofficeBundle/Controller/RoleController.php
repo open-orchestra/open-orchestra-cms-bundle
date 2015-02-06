@@ -40,12 +40,13 @@ class RoleController extends AbstractAdminController
             $documentManager->persist($role);
             $documentManager->flush();
 
+            $this->dispatchEvent(RoleEvents::ROLE_CREATE, new RoleEvent($role));
+
             $this->get('session')->getFlashBag()->add(
                 'success',
                 $this->get('translator')->trans('php_orchestra_backoffice.form.role.new.success')
             );
 
-            $this->dispatchEvent(RoleEvents::ROLE_CREATE, new RoleEvent($role));
 
             return $this->redirect($this->generateUrl('php_orchestra_backoffice_role_form', array(
                 'roleId' => $role->getId()

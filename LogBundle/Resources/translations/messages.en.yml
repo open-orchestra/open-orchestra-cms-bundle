@@ -3,23 +3,24 @@ php_orchestra_log:
         create: Create a new node with node id node_id
         delete: Delete a node with node id node_id and node name node_name
         update: Update a node with node id node_id, node version node_version and node language node_language
-        duplicate: Duplicate a node with node id node_id,node version node_version and node language node_language
+        duplicate: Duplicate a node with node id node_id, node version node_version and node language node_language
         add_language: Add a language to a node with node id node_id, node name node_name and node language node_language
         block:
             create: Add a new block in a node with node id node_id, node language node_language and node version node_version
-            delete: Delete a block in a node with node id node_id, node language node_language and node version node_version
             update: Update a block in a node with node id node_id, node language node_language and node version node_version
-            update_position: Change block position in a node with node id node_id, node language node_language and node version node_version
+            update_position: Change block position in an area with node id node_id, node language node_language and node version node_version
         area:
             create: Add a new area with node id node_id, node language node_language and node version node_version
             delete: Delete an area with node id node_id, node language node_language and node version node_version
             update: Update an area with node id node_id, node language node_language and node version node_version
+        status: Change status with node id node_id, node language node_language and node version node_version
     content:
         create: Create a new content with content id content_id
         delete: Delete a content with content id content_id and content name content_name
         update: Update a content with content id content_id, content language content_language and content version content_version
         add_language: Add a language to a content with content id content_id and content language content_language
         duplicate: Duplicate a content with content id content_id, content language content_language and content version content_version
+        status: Change status with content id content_id, content language content_language and content version content_version
     content_type:
         create: Create a new contentType with content type id content_type_id
         delete: Delete a contentType with content type id content_type_id and content type name content_type_name
@@ -35,6 +36,7 @@ php_orchestra_log:
     folder:
         create: Create a new folder with folder name folder_name
         delete: Delete a folder with folder name folder_name
+        update: Update a folder with folder name folder_name
     role:
         create: Create a new role with role name role_name
         delete: Delete a role with role name role_name
@@ -44,15 +46,22 @@ php_orchestra_log:
         delete: delete a site with site id site_id and name site_name
         update: update a site with site id site_id and name site_name
     status:
-        change: Change the status
-        create: Create a new status
-        delete: Delete a status
-        update: Update a status
+        change: Change the status with status name status_name
+        create: Create a new status with status name status_name
+        delete: Delete a status with status name status_name
+        update: Update a status with status name status_name
     template:
         create: Create a new Template with template id template_id and template name template_name
         delete: Delete a template with template id template_id and template name template_name
         update: update a template with template id template_id and template name template_name
+        area:
+            delete: Delete an area from a template with template id template_id and template name template_name
+            update: update an area from a template with template id template_id and template name template_name
     theme:
         create: Create a new theme with theme name theme_name
         delete: Delete a theme with theme name theme_name
         update: Update a theme with theme name theme_name
+    user:
+        create: Create a new user user_name
+        delete: Delete a user user_name
+        update: Update a user user_name

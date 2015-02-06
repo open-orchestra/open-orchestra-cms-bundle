@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Config\Route("theme")
  */
-class ThemeController extends Controller
+class ThemeController extends BaseController
 {
     /**
      * @param int $themeId

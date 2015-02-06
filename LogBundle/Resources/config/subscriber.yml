@@ -9,6 +9,7 @@ parameters:
     php_orchestra_log.subscriber.status.class: PHPOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber
     php_orchestra_log.subscriber.template.class: PHPOrchestra\LogBundle\EventSubscriber\LogTemplateSubscriber
     php_orchestra_log.subscriber.theme.class: PHPOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber
+    php_orchestra_log.subscriber.user.class: PHPOrchestra\LogBundle\EventSubscriber\LogUserSubscriber
 
 services:
     php_orchestra_log.subscriber.node:
@@ -67,6 +68,12 @@ services:
             - { name: monolog.logger, channel: phporchestra }
     php_orchestra_log.subscriber.theme:
         class: %php_orchestra_log.subscriber.theme.class%
+        arguments: [@logger]
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: phporchestra }
+    php_orchestra_log.subscriber.user:
+        class: %php_orchestra_log.subscriber.user.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }

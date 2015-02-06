@@ -31,7 +31,7 @@ class FolderController extends AbstractAdminController
 
         $url = $this->generateUrl('php_orchestra_backoffice_folder_form', array('folderId' => $folderId));
 
-        return $this->generateForm($request, $folder, $url);
+        return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_UPDATE);
     }
 
     /**
@@ -54,17 +54,18 @@ class FolderController extends AbstractAdminController
 
         $url = $this->generateUrl('php_orchestra_backoffice_folder_new', array('parentId' => $parentId));
 
-        return $this->generateForm($request, $folder, $url);
+        return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_CREATE);
     }
 
     /**
      * @param Request         $request
      * @param FolderInterface $folder
      * @param string          $url
+     * @param string          $folderEvents
      *
      * @return Response
      */
-    protected function generateForm(Request $request, FolderInterface $folder, $url)
+    protected function generateForm(Request $request, FolderInterface $folder, $url, $folderEvents)
     {
         $form = $this->createForm('folder', $folder, array('action' => $url));
         $form->handleRequest($request);
@@ -73,6 +74,8 @@ class FolderController extends AbstractAdminController
             $this->get('translator')->trans('php_orchestra_backoffice.form.folder.success'),
             $folder
         );
+
+        $this->dispatchEvent($folderEvents, new FolderEvent($folder));
 
         return $this->renderAdminForm($form);
     }

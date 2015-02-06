@@ -70,14 +70,14 @@ class KeywordController extends AbstractAdminController
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($keyword->getId())) {
-            $url = $this->generateUrl('php_orchestra_backoffice_keyword_form', array('siteId' => $keyword->getId()));
+            $url = $this->generateUrl('php_orchestra_backoffice_keyword_form', array('keywordId' => $keyword->getId()));
 
+            $this->dispatchEvent(KeywordEvents::KEYWORD_CREATE, new KeywordEvent($keyword));
             return $this->redirect($url);
         };
 
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
-        $this->dispatchEvent(KeywordEvents::KEYWORD_CREATE, new KeywordEvent($keyword));
 
         return $this->renderAdminForm($form, array(), $response);
     }

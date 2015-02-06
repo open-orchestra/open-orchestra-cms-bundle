@@ -4,9 +4,11 @@ namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\Event\TemplateEvent;
 use PHPOrchestra\ModelInterface\NodeEvents;
 use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use PHPOrchestra\ModelInterface\TemplateEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,6 +82,8 @@ class AreaController extends BaseController
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
+
         return new Response();
     }
 
@@ -98,6 +102,8 @@ class AreaController extends BaseController
 
         $this->deleteAreaFromContainer($areaId, $node);
 
+        $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
+
         return new Response();
     }
 
@@ -115,6 +121,8 @@ class AreaController extends BaseController
         $areaContainer = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
+
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($areaContainer));
 
         return new Response();
     }

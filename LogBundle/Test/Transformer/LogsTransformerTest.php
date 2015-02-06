@@ -42,6 +42,7 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
     public function testTransform()
     {
         Phake::when($this->log)->getContext()->thenReturn(array());
+        Phake::when($this->log)->getExtra()->thenReturn(array());
         $facade = $this->transformer->transform($this->log);
 
         Phake::verify($this->translator)->trans(Phake::anyParameters());

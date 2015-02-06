@@ -78,7 +78,7 @@ class ContentController extends AbstractAdminController
             $documentManager->persist($content);
             $documentManager->flush();
 
-            $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+            $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
 
             $this->get('session')->getFlashBag()->add(
                 'success',
