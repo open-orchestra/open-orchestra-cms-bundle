@@ -6,7 +6,6 @@ FullPageFormView = OrchestraView.extend(
     @options.cid = @cid
     @element = options.element
     @title = options.title
-    console.log(options.title)
     @listUrl = options.listUrl
     @completeOptions(@element) if @element != undefined
     @events = {}
