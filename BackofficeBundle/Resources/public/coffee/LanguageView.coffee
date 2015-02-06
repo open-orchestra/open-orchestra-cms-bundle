@@ -3,6 +3,9 @@ LanguageView = OrchestraView.extend(
 
   initialize: (options) ->
     @options = options
+    @loadTemplates [
+      "language"
+    ]
     return
 
   render: ->

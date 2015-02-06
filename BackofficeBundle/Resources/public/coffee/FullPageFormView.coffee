@@ -6,6 +6,7 @@ FullPageFormView = OrchestraView.extend(
     @options.cid = @cid
     @element = options.element
     @title = options.title
+    console.log(options.title)
     @listUrl = options.listUrl
     @completeOptions(@element) if @element != undefined
     @events = {}
@@ -14,7 +15,8 @@ FullPageFormView = OrchestraView.extend(
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
     @loadTemplates [
-      'fullPageFormView'
+      'fullPageFormView',
+      'elementTitle'
     ]
     if options.multiVersion
       @options.title = @renderTemplate('elementTitle',

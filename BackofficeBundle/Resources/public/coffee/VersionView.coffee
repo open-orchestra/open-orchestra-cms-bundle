@@ -2,8 +2,7 @@ VersionView = OrchestraView.extend(
   tagName: "option"
 
   initialize: (options) ->
-    @element = options.element
-    @version = options.version
+    @options = options
     @loadTemplates [
       "elementTitle"
       "elementChoice"
@@ -12,12 +11,12 @@ VersionView = OrchestraView.extend(
 
   render: ->
     title = @renderTemplate('elementTitle',
-      element: @element
+      element: @options.element
     )
     $(@el).prepend @renderTemplate('elementChoice',
       title: title
-      element: @element
-      version: @version
+      element: @options.element
+      version: @options.version
       cid: @cid
     )
     return
