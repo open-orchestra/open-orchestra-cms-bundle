@@ -29,8 +29,8 @@ php_orchestra_log:
         create: Crée un tag avec le label keyword_label
         delete: Supprime un tag avec le label keyword_label
     media:
-        add_image: Ajoute un média nommé media_name dans le dossier media_folder
-        delete: Supprime un média nommé media_name dans le dossier media_folder
+        add_image: Ajoute un média nommé media_name
+        delete: Supprime un média nommé media_name
         resize: Change la taille d'un média nommé media_name
         override: Override le format d'un média nommé media_name
     folder:

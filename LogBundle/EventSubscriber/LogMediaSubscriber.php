@@ -31,7 +31,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function mediaAddImage(MediaEvent $event)
     {
         $media = $event->getMedia();
-        $this->logger->info('php_orchestra_log.media.add_image', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
+        $this->logger->info('php_orchestra_log.media.add_image', array('media_name' => $media->getName()));
     }
 
     /**
@@ -40,7 +40,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public function mediaDelete(MediaEvent $event)
     {
         $media = $event->getMedia();
-        $this->logger->info('php_orchestra_log.media.delete', array('media_folder' => $media->getMediaFolder(), 'media_name' => $media->getName()));
+        $this->logger->info('php_orchestra_log.media.delete', array('media_name' => $media->getName()));
     }
 
     /**
