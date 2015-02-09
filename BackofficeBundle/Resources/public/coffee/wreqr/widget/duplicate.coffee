@@ -10,5 +10,8 @@ duplicateChannel.commands.setHandler 'init', (view) ->
       url: view.options.duplicate.self_duplicate
       method: 'POST'
       success: ->
-        Backbone.history.loadUrl()
+        if (redirectUrl != Backbone.history.fragment)
+          Backbone.history.navigate(redirectUrl, {trigger: true})
+        else
+          Backbone.history.loadUrl()
     return
