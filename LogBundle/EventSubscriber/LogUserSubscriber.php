@@ -6,7 +6,6 @@ use FOS\UserBundle\Event\UserEvent;
 use PHPOrchestra\UserBundle\UserEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
  * Class LogUserSubscriber

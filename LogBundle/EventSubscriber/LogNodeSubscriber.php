@@ -85,19 +85,6 @@ class LogNodeSubscriber implements EventSubscriberInterface
     /**
      * @param NodeEvent $event
      */
-    public function nodeDeleteBlock(NodeEvent $event)
-    {
-        $node = $event->getNode();
-        $this->logger->info('php_orchestra_log.node.block.delete', array(
-            'node_id' => $node->getNodeId(),
-            'node_language' => $node->getLanguage(),
-            'node_version' => $node->getVersion()
-        ));
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
     public function nodeUpdateBlock(NodeEvent $event)
     {
         $node = $event->getNode();

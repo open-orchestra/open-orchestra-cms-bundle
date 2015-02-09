@@ -27,7 +27,7 @@ class LogKeywordSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $this->keyword = Phake::mock('PHPOrchestra\ModelBundle\Document\Keyword');
         $this->keywordEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\KeywordEvent');
-        Phake::verify($this->keywordEvent)->getKeyword()->thenReturn($this->keyword);
+        Phake::when($this->keywordEvent)->getKeyword()->thenReturn($this->keyword);
         $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
         $this->subscriber = new LogKeywordSubscriber($this->logger);
     }
@@ -80,7 +80,7 @@ class LogKeywordSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the contentEvent
+     * Test the keywordEvent
      */
     public function eventTest()
     {

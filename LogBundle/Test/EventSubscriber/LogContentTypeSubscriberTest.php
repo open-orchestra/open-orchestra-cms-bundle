@@ -90,7 +90,7 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the contentEvent
+     * Test the contentTypeEvent
      */
     public function eventTest()
     {

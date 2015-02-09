@@ -55,7 +55,6 @@ class LogStatusSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            StatusEvents::STATUS_CHANGE => 'statusChange',
             StatusEvents::STATUS_CREATE => 'statusCreate',
             StatusEvents::STATUS_DELETE => 'statusDelete',
             StatusEvents::STATUS_UPDATE => 'statusUpdate',
