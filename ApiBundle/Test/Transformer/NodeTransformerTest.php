@@ -4,7 +4,6 @@ namespace PHPOrchestra\ApiBundle\Test\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\ApiBundle\Facade\AreaFacade;
 use PHPOrchestra\ApiBundle\Transformer\NodeTransformer;
 
 

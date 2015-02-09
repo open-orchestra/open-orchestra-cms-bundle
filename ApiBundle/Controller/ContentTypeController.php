@@ -5,7 +5,6 @@ namespace PHPOrchestra\ApiBundle\Controller;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelInterface\ContentTypeEvents;
 use PHPOrchestra\ModelInterface\Event\ContentTypeEvent;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;

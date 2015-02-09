@@ -57,6 +57,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
+        Phake::when($this->event)->getData()->thenReturn($this->content);
 
         $this->fieldType1 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType1)->getLabels()->thenReturn($this->collection);
@@ -104,7 +105,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithNoDatas()
     {
-        Phake::when($this->event)->getData()->thenReturn($this->content);
         $this->fieldCollection->add($this->fieldType1);
         $this->fieldCollection->add($this->fieldType1);
 
@@ -143,7 +143,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testPreSetDataWithNoContentTypeFound()
     {
         Phake::when($this->repository)->findOneByContentTypeIdAndVersion(Phake::anyParameters())->thenReturn(null);
-        Phake::when($this->event)->getData()->thenReturn($this->content);
 
         $this->subscriber->preSetData($this->event);
 
@@ -156,7 +155,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithExistingDatas()
     {
-        Phake::when($this->event)->getData()->thenReturn($this->content);
         $this->fieldCollection->add($this->fieldType1);
         $this->fieldCollection->add($this->fieldType1);
 

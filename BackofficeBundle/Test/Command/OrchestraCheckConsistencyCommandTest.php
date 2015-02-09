@@ -4,9 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\Command;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Command\OrchestraCheckConsistencyCommand;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 

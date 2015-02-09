@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Manipulator;
 
-use PHPOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException;
 use PHPOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
 
 /**

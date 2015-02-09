@@ -3,7 +3,6 @@
 namespace PHPOrchestra\ApiBundle\Controller;
 
 use PHPOrchestra\ModelInterface\Model\SiteInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;

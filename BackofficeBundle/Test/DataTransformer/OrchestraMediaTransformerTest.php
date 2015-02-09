@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
 
-use Phake;
 use PHPOrchestra\BackofficeBundle\Form\DataTransformer\OrchestraMediaTransformer;
 use PHPOrchestra\Media\Model\MediaInterface;
 

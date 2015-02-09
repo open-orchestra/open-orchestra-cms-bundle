@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -39,7 +40,7 @@ class OrchestraNodeChoiceType extends AbstractType
     protected function getChoices()
     {
         $nodes = $this->nodeRepository->findLastVersionBySiteId();
-        $choices = array_map(function ($element) {
+        $choices = array_map(function (NodeInterface $element) {
             return $element->getName();
         }, $nodes);
 

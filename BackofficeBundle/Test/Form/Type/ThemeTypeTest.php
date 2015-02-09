@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\ThemeType;
-use Symfony\Component\Form\FormEvents;
 
 /**
  * Class ThemeTypeTest

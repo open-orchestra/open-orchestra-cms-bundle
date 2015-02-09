@@ -3,9 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
-use PHPOrchestra\MediaBundle\Document\Folder;
-use PHPOrchestra\Media\Model\FolderInterface;
-use PHPOrchestra\MediaBundle\Document\MediaFolder;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Phake;

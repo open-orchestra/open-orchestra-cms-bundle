@@ -2,11 +2,9 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\SiteEvent;
 use PHPOrchestra\ModelInterface\Event\StatusableEvent;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use PHPOrchestra\ModelInterface\StatusEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
