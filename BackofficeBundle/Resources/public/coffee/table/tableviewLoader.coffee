@@ -11,6 +11,7 @@ addParameter = (element, label, value) ->
 tableViewLoad = (link, entityType, entityId, language, version) ->
   target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
+  order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
   listUrl = appRouter.generateUrl('listEntities',
     entityType: entityType
@@ -55,6 +56,7 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
           view = new TableviewCollectionView(
             elements: elements
             displayedElements: displayedElements
+            order: order
             title: title
             listUrl: listUrl
             el: target
