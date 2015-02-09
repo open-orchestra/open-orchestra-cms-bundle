@@ -14,10 +14,10 @@ sudo: false
 before_install:
   - printf "\n" |pecl install imagick
   - phpenv config-add .travis.php.ini
-  - composer self-update
+  - wget https://getcomposer.org/composer.phar
 
 install:
-  - php -d memory_limit=-1 composer install --no-progress --prefer-dist
+  - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
 
 script: ./bin/phpunit
 
