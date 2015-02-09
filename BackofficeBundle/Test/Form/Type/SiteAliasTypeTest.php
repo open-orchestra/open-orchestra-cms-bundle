@@ -3,30 +3,26 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\SiteType;
+use PHPOrchestra\BackofficeBundle\Form\Type\SiteAliasType;
 
 /**
- * Class SiteTypeTest
+ * Class SiteAliasTypeTest
  */
-class SiteTypeTest extends \PHPUnit_Framework_TestCase
+class SiteAliasTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SiteType
+     * @var SiteAliasType
      */
     protected $form;
 
-    protected $siteClass = 'site';
-    protected $translator;
+    protected $siteAliasClass = 'site_alias';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
-
-        $this->form = new SiteType($this->siteClass, $this->translator);
+        $this->form = new SiteAliasType($this->siteAliasClass);
     }
 
     /**
@@ -42,7 +38,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('site', $this->form->getName());
+        $this->assertSame('site_alias', $this->form->getName());
     }
 
     /**
@@ -52,13 +48,10 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
-        Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(12))->add(Phake::anyParameters());
-        Phake::verify($this->translator, Phake::times(3))->trans(Phake::anyParameters());
-        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
     }
 
     /**
@@ -71,7 +64,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'data_class' => $this->siteClass
+            'data_class' => $this->siteAliasClass
         ));
     }
 }

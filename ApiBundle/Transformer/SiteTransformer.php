@@ -22,9 +22,7 @@ class SiteTransformer extends AbstractTransformer
 
         $facade->id = $mixed->getId();
         $facade->siteId = $mixed->getSiteId();
-        $facade->domain = $mixed->getDomain();
-        $facade->alias = $mixed->getAlias();
-        $facade->defaultLanguage = $mixed->getDefaultLanguage();
+        $facade->name = $mixed->getName();
         $facade->metaKeywords = $mixed->getMetaKeywords();
         $facade->metaDescription = $mixed->getMetaDescription();
         $facade->metaIndex = $mixed->getMetaIndex();

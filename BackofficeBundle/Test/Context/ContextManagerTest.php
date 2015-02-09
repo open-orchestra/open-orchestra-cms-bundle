@@ -71,11 +71,11 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetCurrentSite($site)
     {
-        $this->contextManager->setCurrentSite($site['siteId'], $site['domain'], $site['defaultLanguage']);
+        $this->contextManager->setCurrentSite($site['siteId'], $site['name'], $site['defaultLanguage']);
 
         Phake::verify($this->session)->set(ContextManager::KEY_SITE, array(
             'siteId' => $site['siteId'],
-            'domain' => $site['domain'],
+            'name' => $site['name'],
             'defaultLanguage' => $site['defaultLanguage'],
         ));
     }
@@ -99,13 +99,13 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      * @param array  $site
      * @param string $domain
      *
-     * @dataProvider getSiteDomain
+     * @dataProvider getSiteName
      */
-    public function testGetCurrentDomain($site, $domain)
+    public function testGetCurrentName($site, $domain)
     {
         Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
 
-        $this->assertEquals($domain, $this->contextManager->getCurrentSiteDomain());
+        $this->assertEquals($domain, $this->contextManager->getCurrentSiteName());
 
         Phake::verify($this->session)->get(ContextManager::KEY_SITE);
     }
@@ -148,8 +148,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSite()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain', 'defaultLanguage' => 'en')),
-            array(array('siteId' => 'id', 'domain' => 'domain', 'defaultLanguage' => 'en')),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en')),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en')),
         );
     }
 
@@ -161,8 +161,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSiteId()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain', 'defaultLanguage' => 'en'), 'fakeId'),
-            array(array('siteId' => 'id', 'domain' => 'domain', 'defaultLanguage' => 'en'), 'id'),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'fakeId'),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en'), 'id'),
         );
     }
 
@@ -171,11 +171,11 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function getSiteDomain()
+    public function getSiteName()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain'), 'fakeDomain'),
-            array(array('siteId' => 'id', 'domain' => 'domain'), 'domain'),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName'), 'fakeName'),
+            array(array('siteId' => 'id', 'name' => 'name'), 'name'),
         );
     }
 
@@ -187,8 +187,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSiteDefaultLanguage()
     {
         return array(
-            array(array('siteId' => 'fakeId', 'domain' => 'fakeDomain', 'defaultLanguage' => 'en'), 'en'),
-            array(array('siteId' => 'id', 'domain' => 'domain', 'defaultLanguage' => 'fr'), 'fr'),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'en'),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'fr'), 'fr'),
         );
     }
 
@@ -203,20 +203,17 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         $site2 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
 
         $siteId1 = 'siteId';
-        $domain1 = 'domain';
+        $name1 = 'name';
 
         Phake::when($site1)->getSiteId()->thenReturn($siteId1);
-        Phake::when($site1)->getDomain()->thenReturn($domain1);
+        Phake::when($site1)->getName()->thenReturn($name1);
         Phake::when($site2)->getSiteId()->thenReturn('siteId2');
-        Phake::when($site2)->getDomain()->thenReturn('domain2');
+        Phake::when($site2)->getName()->thenReturn('name2');
 
         return array(
             array(
                 array($site1, $site2),
-                array(
-                    $site1,
-                    $site2
-                )
+                array($site1,$site2)
             )
         );
     }

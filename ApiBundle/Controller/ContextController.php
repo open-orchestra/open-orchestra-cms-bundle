@@ -38,20 +38,20 @@ class ContextController extends Controller
      * Switch context current site
      *
      * @param string $siteId
-     * @param string $siteDomain
+     * @param string $siteName
      *
-     * @Config\Route("/site/{siteId}/{siteDomain}", name="php_orchestra_api_context_site")
+     * @Config\Route("/site/{siteId}/{siteName}", name="php_orchestra_api_context_site")
      * @Api\Serialize()
      *
      * @return array
      */
-    public function siteAction($siteId, $siteDomain)
+    public function siteAction($siteId, $siteName)
     {
         $contextManager = $this->get('php_orchestra_backoffice.context_manager');
 
         /** @var SiteInterface $site */
         $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $contextManager->setCurrentsite($site->getSiteId(), $site->getDomain(), $site->getDefaultLanguage());
+        $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage());
 
         return array('success' => true);
     }

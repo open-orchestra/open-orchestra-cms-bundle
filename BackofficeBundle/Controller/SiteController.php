@@ -56,7 +56,11 @@ class SiteController extends AbstractAdminController
     public function newAction(Request $request)
     {
         $siteClass = $this->container->getParameter('php_orchestra_model.document.site.class');
+        $siteAliasClass = $this->container->getParameter('php_orchestra_model.document.site_alias.class');
         $site = new $siteClass();
+        $siteAlias = new $siteAliasClass();
+
+        $site->addAlias($siteAlias);
         $form = $this->createForm(
             'site',
             $site,

@@ -82,8 +82,15 @@ services:
         class: PHPOrchestra\BackofficeBundle\Form\Type\SiteType
         arguments:
             - %php_orchestra_model.document.site.class%
+            - @translator
         tags:
             - { name: form.type, alias: site }
+    php_orchestra_backoffice.type.site_alias:
+        class: PHPOrchestra\BackofficeBundle\Form\Type\SiteAliasType
+        arguments:
+            - %php_orchestra_model.document.site_alias.class%
+        tags:
+            - { name: form.type, alias: site_alias }
     # Content Type Form Builder
     php_orchestra_backoffice.type.content_type:
         class: %php_orchestra_backoffice.type.content_type.class%

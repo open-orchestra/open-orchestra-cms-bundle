@@ -50,6 +50,8 @@ php_orchestra_backoffice:
             creation: Le site a été créé
             site_id: L'id du site
             domain: Domaine
+            name: Nom
+            aliases: Alias
             alias: Alias
             default_language: Langue par défaut
             languages: Langues

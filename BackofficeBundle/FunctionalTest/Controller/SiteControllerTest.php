@@ -40,8 +40,17 @@ class SiteControllerTest extends AbstractControllerTest
 
         $form = $crawler->selectButton('Save')->form();
         $form['site[siteId]'] = $this->siteId;
-        $form['site[domain]'] = $this->siteId . 'domain';
-        $form['site[languages]'] = array('fr');
+        $form['site[name]'] = $this->siteId . 'domain';
+        $form['site[aliases][0][domain]'] = $this->siteId . 'name';
+        $form['site[aliases][0][defaultLanguage]'] = 'fr';
+        $this->client->submit($form);
+
+        $this->assertNodeCount(0, 'fr');
+        $this->assertNodeCount(0, 'en');
+
+        $crawler = $this->client->request('GET', '/admin/site/form/' . $this->siteId);
+        $form = $crawler->selectButton('Save')->form();
+        $form['site[aliases][0][languages]'] = array('fr');
         $this->client->submit($form);
 
         $this->assertNodeCount(1, 'fr');
@@ -49,7 +58,7 @@ class SiteControllerTest extends AbstractControllerTest
 
         $crawler = $this->client->request('GET', '/admin/site/form/' . $this->siteId);
         $form = $crawler->selectButton('Save')->form();
-        $form['site[languages]'] = array('fr', 'en');
+        $form['site[aliases][0][languages]'] = array('fr', 'en');
         $this->client->submit($form);
 
         $this->assertNodeCount(1, 'fr');

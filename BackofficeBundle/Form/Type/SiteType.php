@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\Router;
 use PHPOrchestra\CMSBundle\Form\DataTransformer\SiteTypeTransformer;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class SiteType
@@ -17,13 +18,16 @@ use PHPOrchestra\CMSBundle\Form\DataTransformer\SiteTypeTransformer;
 class SiteType extends AbstractType
 {
     protected $siteClass;
+    protected $translator;
 
     /**
-     * @param string $siteClass
+     * @param string              $siteClass
+     * @param TranslatorInterface $translator
      */
-    public function __construct($siteClass)
+    public function __construct($siteClass, TranslatorInterface $translator)
     {
         $this->siteClass = $siteClass;
+        $this->translator = $translator;
     }
 
     /**
@@ -36,18 +40,19 @@ class SiteType extends AbstractType
             ->add('siteId', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.website.site_id'
             ))
-            ->add('domain', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.domain'
+            ->add('name', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.name'
             ))
-            ->add('alias', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.alias'
-            ))
-            ->add('defaultLanguage', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.website.default_language'
-            ))
-            ->add('languages', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.website.languages',
-                'multiple' => true
+            ->add('aliases', 'collection', array(
+                'type' => 'site_alias',
+                'label' => 'php_orchestra_backoffice.form.website.aliases',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'attr' => array(
+                    'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
+                    'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_option.new'),
+                    'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_option.delete'),
+                )
             ))
             ->add('blocks', 'orchestra_block', array(
                 'multiple' => true,

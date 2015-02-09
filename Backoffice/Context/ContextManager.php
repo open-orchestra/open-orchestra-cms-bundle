@@ -68,16 +68,16 @@ class ContextManager implements CurrentSiteIdInterface
      * Set current site
      *
      * @param string $siteId
-     * @param string $siteDomain
+     * @param string $siteName
      * @param string $siteDefaultLanguage
      */
-    public function setCurrentSite($siteId, $siteDomain, $siteDefaultLanguage)
+    public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage)
     {
         $this->session->set(
             self::KEY_SITE,
             array(
                 'siteId' => $siteId,
-                'domain' => $siteDomain,
+                'name' => $siteName,
                 'defaultLanguage' => $siteDefaultLanguage,
             )
         );
@@ -100,11 +100,11 @@ class ContextManager implements CurrentSiteIdInterface
      *
      * @return string
      */
-    public function getCurrentSiteDomain()
+    public function getCurrentSiteName()
     {
         $site = $this->getCurrentSite();
 
-        return $site['domain'];
+        return $site['name'];
     }
 
     /**
@@ -132,14 +132,14 @@ class ContextManager implements CurrentSiteIdInterface
             $sites = $this->getAvailableSites();
 
             $siteId = 0;
-            $siteDomain = 'No site available';
+            $siteName = 'No site available';
             $locale = $this->getCurrentLocale();
             if (isset($sites[0])) {
                 $siteId = $sites[0]->getSiteId();
-                $siteDomain = $sites[0]->getDomain();
+                $siteName = $sites[0]->getName();
                 $locale = $sites[0]->getDefaultLanguage();
             }
-            $this->setCurrentSite($siteId, $siteDomain, $locale);
+            $this->setCurrentSite($siteId, $siteName, $locale);
             $currentSite = $this->session->get(self::KEY_SITE);
         }
 
