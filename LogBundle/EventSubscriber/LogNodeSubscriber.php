@@ -28,8 +28,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeCreation(NodeEvent $event)
     {
-        $node = $event->getNode();
-        $this->logger->info('php_orchestra_log.node.create', array('node_id' => $node->getNodeId()));
+        $this->info('php_orchestra_log.node.create', $event->getNode());
     }
 
     /**
