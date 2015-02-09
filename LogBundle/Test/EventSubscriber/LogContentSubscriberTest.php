@@ -9,14 +9,8 @@ use PHPOrchestra\ModelInterface\ContentEvents;
 /**
  * Class LogContentSubscriberTest
  */
-class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogContentSubscriberTest extends LogAbstractSubscriberTest
 {
-    /**
-     * @var LogContentSubscriber
-     */
-    protected $subscriber;
-
-    protected $logger;
     protected $content;
     protected $contentEvent;
 
@@ -25,29 +19,12 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->content = Phake::mock('PHPOrchestra\ModelBundle\Document\Content');
         $this->contentEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ContentEvent');
         Phake::when($this->contentEvent)->getContent()->thenReturn($this->content);
-        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+
         $this->subscriber = new LogContentSubscriber($this->logger);
-    }
-
-    /**
-     * Test instance
-     */
-    public function testInstance()
-    {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @dataProvider provideSubscribedEvent
-     */
-    public function testEventSubscribed($eventName)
-    {
-        $this->assertArrayHasKey($eventName, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -69,7 +46,9 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentCreation()
     {
         $this->subscriber->contentCreation($this->contentEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.content.create', array(
+            'content_id' => $this->content->getContentId(),
+        ));
     }
 
     /**
@@ -78,7 +57,10 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentDelete()
     {
         $this->subscriber->contentDelete($this->contentEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.content.delete', array(
+            'content_id' => $this->content->getContentId(),
+            'content_name' => $this->content->getName(),
+        ));
     }
 
     /**
@@ -87,7 +69,11 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentUpdate()
     {
         $this->subscriber->contentUpdate($this->contentEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.content.update', array(
+            'content_id' => $this->content->getContentId(),
+            'content_version' => $this->content->getVersion(),
+            'content_language' => $this->content->getLanguage()
+        ));
     }
 
     /**
@@ -96,7 +82,11 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentDuplicate()
     {
         $this->subscriber->contentDuplicate($this->contentEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.content.duplicate', array(
+            'content_id' => $this->content->getContentId(),
+            'content_version' => $this->content->getVersion(),
+            'content_language' => $this->content->getLanguage()
+        ));
     }
 
     /**
@@ -105,16 +95,10 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentChangeStatus()
     {
         $this->subscriber->contentChangeStatus($this->contentEvent);
-        $this->eventTest();
-    }
-
-    /**
-     * Test the contentEvent
-     */
-    public function eventTest()
-    {
-        Phake::verify($this->contentEvent)->getContent();
-        Phake::verify($this->logger)->info(Phake::anyParameters());
-        Phake::verify($this->content)->getContentId();
+        $this->assertEventLogged('php_orchestra_log.content.status', array(
+            'content_id' => $this->content->getContentId(),
+            'content_version' => $this->content->getVersion(),
+            'content_language' => $this->content->getLanguage()
+        ));
     }
 }

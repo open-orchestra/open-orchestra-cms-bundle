@@ -9,14 +9,8 @@ use PHPOrchestra\ModelInterface\ContentTypeEvents;
 /**
  * Class LogContentTypeSubscriberTest
  */
-class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
 {
-    /**
-     * @var LogContentTypeSubscriber
-     */
-    protected $subscriber;
-
-    protected $logger;
     protected $contentType;
     protected $contentTypeEvent;
 
@@ -25,29 +19,12 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->contentType = Phake::mock('PHPOrchestra\ModelBundle\Document\ContentType');
         $this->contentTypeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ContentTypeEvent');
         Phake::when($this->contentTypeEvent)->getContentType()->thenReturn($this->contentType);
-        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+
         $this->subscriber = new LogContentTypeSubscriber($this->logger);
-    }
-
-    /**
-     * Test instance
-     */
-    public function testInstance()
-    {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @dataProvider provideSubscribedEvent
-     */
-    public function testEventSubscribed($eventName)
-    {
-        $this->assertArrayHasKey($eventName, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -68,7 +45,9 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentTypeCreation()
     {
         $this->subscriber->contentTypeCreation($this->contentTypeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.content_type.create', array(
+            'content_type_id' => $this->contentType->getContentTypeId(),
+        ));
     }
 
     /**
@@ -77,7 +56,10 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentTypeDelete()
     {
         $this->subscriber->contentTypeDelete($this->contentTypeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.content_type.delete', array(
+            'content_type_id' => $this->contentType->getContentTypeId(),
+            'content_type_name' => $this->contentType->getName()
+        ));
     }
 
     /**
@@ -86,16 +68,9 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testContentTypeUpdate()
     {
         $this->subscriber->contentTypeUpdate($this->contentTypeEvent);
-        $this->eventTest();
-    }
-
-    /**
-     * Test the contentTypeEvent
-     */
-    public function eventTest()
-    {
-        Phake::verify($this->contentTypeEvent)->getContentType();
-        Phake::verify($this->logger)->info(Phake::anyParameters());
-        Phake::verify($this->contentType)->getContentTypeId();
+        $this->assertEventLogged('php_orchestra_log.content_type.update', array(
+            'content_type_id' => $this->contentType->getContentTypeId(),
+            'content_type_name' => $this->contentType->getName()
+        ));
     }
 }

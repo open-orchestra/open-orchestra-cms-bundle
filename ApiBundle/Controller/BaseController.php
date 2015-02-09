@@ -40,12 +40,12 @@ class BaseController extends Controller
      * @param Request $request
      * @param string $id
      * @param string $type
-     * @param string $events
+     * @param string $event
      * @param string $eventClass
      *
      * @return Response
      */
-    protected function reverseTransform(Request $request, $id, $type, $events, $eventClass)
+    protected function reverseTransform(Request $request, $id, $type, $event, $eventClass)
     {
         $facadeName = Inflector::classify($type) . 'Facade';
         $typeName = Inflector::tableize($type);
@@ -63,7 +63,7 @@ class BaseController extends Controller
             $em->persist($mixed);
             $em->flush();
 
-            $this->dispatchEvent($events, new $eventClass($mixed));
+            $this->dispatchEvent($event, new $eventClass($mixed));
 
             return new Response('', 200);
         }

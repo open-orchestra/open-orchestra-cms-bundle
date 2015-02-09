@@ -41,7 +41,7 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
         $contentType = $event->getContentType();
         $this->logger->info('php_orchestra_log.content_type.delete', array(
             'content_type_id' => $contentType->getContentTypeId(),
-            'content__type_name' => $contentType->getName()
+            'content_type_name' => $contentType->getName()
         ));
     }
 

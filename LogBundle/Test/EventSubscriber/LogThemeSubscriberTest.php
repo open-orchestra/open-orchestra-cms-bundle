@@ -9,15 +9,9 @@ use PHPOrchestra\ModelInterface\ThemeEvents;
 /**
  * Class LogThemeSubscriberTest
  */
-class LogThemeSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogThemeSubscriberTest extends LogAbstractSubscriberTest
 {
-    /**
-     * @var LogThemeSubscriber
-     */
-    protected $subscriber;
-
     protected $themeEvent;
-    protected $logger;
     protected $theme;
 
     /**
@@ -25,29 +19,12 @@ class LogThemeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->theme = Phake::mock('PHPOrchestra\ModelBundle\Document\Theme');
         $this->themeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ThemeEvent');
         Phake::when($this->themeEvent)->getTheme()->thenReturn($this->theme);
-        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+
         $this->subscriber = new LogThemeSubscriber($this->logger);
-    }
-
-    /**
-     * Test instance
-     */
-    public function testInstance()
-    {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @dataProvider provideSubscribedEvent
-     */
-    public function testEventSubscribed($eventName)
-    {
-        $this->assertArrayHasKey($eventName, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -68,7 +45,9 @@ class LogThemeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testThemeCreate()
     {
         $this->subscriber->themeCreate($this->themeEvent);
-        $this->eventTest('php_orchestra_log.theme.create');
+        $this->assertEventLogged('php_orchestra_log.theme.create', array(
+            'theme_name' => $this->theme->getName()
+        ));
     }
 
     /**
@@ -77,7 +56,9 @@ class LogThemeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testThemeDelete()
     {
         $this->subscriber->themeDelete($this->themeEvent);
-        $this->eventTest('php_orchestra_log.theme.delete');
+        $this->assertEventLogged('php_orchestra_log.theme.delete', array(
+            'theme_name' => $this->theme->getName()
+        ));
     }
 
     /**
@@ -86,17 +67,8 @@ class LogThemeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testThemeUpdate()
     {
         $this->subscriber->themeUpdate($this->themeEvent);
-        $this->eventTest('php_orchestra_log.theme.update');
-    }
-
-    /**
-     * Test the themeEvent
-     *
-     * @param string $message
-     */
-    public function eventTest($message)
-    {
-        Phake::verify($this->themeEvent)->getTheme();
-        Phake::verify($this->logger)->info($message, array('theme_name' => $this->theme->getName()));
+        $this->assertEventLogged('php_orchestra_log.theme.update', array(
+            'theme_name' => $this->theme->getName()
+        ));
     }
 }

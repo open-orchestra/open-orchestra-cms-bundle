@@ -9,15 +9,9 @@ use PHPOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber;
 /**
  * Test LogNodeSubscriberTest
  */
-class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogNodeSubscriberTest extends LogAbstractSubscriberTest
 {
-    /**
-     * @var LogNodeSubscriber
-     */
-    protected $subscriber;
-
     protected $nodeEvent;
-    protected $logger;
     protected $node;
 
     /**
@@ -25,29 +19,12 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
         $this->nodeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
-        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+
         $this->subscriber = new LogNodeSubscriber($this->logger);
-    }
-
-    /**
-     * Test instance
-     */
-    public function testInstance()
-    {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @dataProvider provideSubscribedEvent
-     */
-    public function testEventSubscribed($eventName)
-    {
-        $this->assertArrayHasKey($eventName, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -72,7 +49,7 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeCreation()
     {
         $this->subscriber->nodeCreation($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.create', array('node_id' => $this->node->getNodeId()));
     }
 
     /**
@@ -81,7 +58,10 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeDelete()
     {
         $this->subscriber->nodeDelete($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.delete', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_name' => $this->node->getName()
+        ));
     }
 
     /**
@@ -90,7 +70,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeUpdate()
     {
         $this->subscriber->nodeUpdate($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.update', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_version' => $this->node->getVersion(),
+            'node_language' => $this->node->getLanguage()
+        ));
     }
 
     /**
@@ -99,7 +83,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeDuplicate()
     {
         $this->subscriber->nodeDuplicate($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.duplicate', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_version' => $this->node->getVersion(),
+            'node_language' => $this->node->getLanguage()
+        ));
     }
 
     /**
@@ -108,7 +96,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeAddLanguage()
     {
         $this->subscriber->nodeAddLanguage($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.add_language', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_name' => $this->node->getName(),
+            'node_language' => $this->node->getLanguage()
+        ));
     }
 
     /**
@@ -117,7 +109,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeUpdateBlock()
     {
         $this->subscriber->nodeUpdateBlock($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.block.update', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_language' => $this->node->getLanguage(),
+            'node_version' => $this->node->getVersion()
+        ));
     }
 
     /**
@@ -126,7 +122,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeUpdateBlockPosition()
     {
         $this->subscriber->nodeUpdateBlockPosition($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.block.update_position', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_language' => $this->node->getLanguage(),
+            'node_version' => $this->node->getVersion()
+        ));
     }
 
     /**
@@ -135,7 +135,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeDeleteArea()
     {
         $this->subscriber->nodeDeleteArea($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.area.delete', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_language' => $this->node->getLanguage(),
+            'node_version' => $this->node->getVersion()
+        ));
     }
 
     /**
@@ -144,7 +148,11 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeUpdateArea()
     {
         $this->subscriber->nodeUpdateArea($this->nodeEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.node.area.update', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_language' => $this->node->getLanguage(),
+            'node_version' => $this->node->getVersion()
+        ));
     }
 
     /**
@@ -153,16 +161,10 @@ class LogNodeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testNodeChangeStatus()
     {
         $this->subscriber->nodeChangeStatus($this->nodeEvent);
-        $this->eventTest();
-    }
-
-    /**
-     * Test the nodeEvent
-     */
-    public function eventTest()
-    {
-        Phake::verify($this->nodeEvent)->getNode();
-        Phake::verify($this->logger)->info(Phake::anyParameters());
-        Phake::verify($this->node)->getNodeId();
+        $this->assertEventLogged('php_orchestra_log.node.status', array(
+            'node_id' => $this->node->getNodeId(),
+            'node_language' => $this->node->getLanguage(),
+            'node_version' => $this->node->getVersion()
+        ));
     }
 }

@@ -9,15 +9,9 @@ use PHPOrchestra\ModelInterface\SiteEvents;
 /**
  * Class LogSiteSubscriberTest
  */
-class LogSiteSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogSiteSubscriberTest extends LogAbstractSubscriberTest
 {
-    /**
-     * @var LogSiteSubscriber
-     */
-    protected $subscriber;
-
     protected $site;
-    protected $logger;
     protected $siteEvent;
 
     /**
@@ -25,29 +19,12 @@ class LogSiteSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        parent::setUp();
         $this->site = Phake::mock('PHPOrchestra\ModelBundle\Document\Site');
         $this->siteEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\SiteEvent');
         Phake::when($this->siteEvent)->getSite()->thenReturn($this->site);
-        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+
         $this->subscriber = new LogSiteSubscriber($this->logger);
-    }
-
-    /**
-     * Test instance
-     */
-    public function testInstance()
-    {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @dataProvider provideSubscribedEvent
-     */
-    public function testEventSubscribed($eventName)
-    {
-        $this->assertArrayHasKey($eventName, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -68,7 +45,10 @@ class LogSiteSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testSiteCreate()
     {
         $this->subscriber->siteCreate($this->siteEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.site.create', array(
+            'site_id' => $this->site->getSiteId(),
+            'site_name' => $this->site->getName()
+        ));
     }
 
     /**
@@ -77,7 +57,10 @@ class LogSiteSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testSiteDelete()
     {
         $this->subscriber->siteDelete($this->siteEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.site.delete', array(
+            'site_id' => $this->site->getSiteId(),
+            'site_name' => $this->site->getName()
+        ));
     }
 
     /**
@@ -86,7 +69,10 @@ class LogSiteSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testSiteUpdate()
     {
         $this->subscriber->siteUpdate($this->siteEvent);
-        $this->eventTest();
+        $this->assertEventLogged('php_orchestra_log.site.update', array(
+            'site_id' => $this->site->getSiteId(),
+            'site_name' => $this->site->getName()
+        ));
     }
 
     /**
