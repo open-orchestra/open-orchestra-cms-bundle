@@ -7,6 +7,7 @@ use PHPOrchestra\Media\Event\MediaEvent;
 use PHPOrchestra\Media\MediaEvents;
 use PHPOrchestra\Media\Event\FolderEvent;
 use PHPOrchestra\Media\FolderEvents;
+use PHPOrchestra\Media\Model\FolderInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -30,8 +31,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function mediaAddImage(MediaEvent $event)
     {
-        $media = $event->getMedia();
-        $this->logger->info('php_orchestra_log.media.add_image', array('media_name' => $media->getName()));
+        $this->mediaInfo('php_orchestra_log.media.add_image', $event->getMedia()->getName());
     }
 
     /**
@@ -39,8 +39,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function mediaDelete(MediaEvent $event)
     {
-        $media = $event->getMedia();
-        $this->logger->info('php_orchestra_log.media.delete', array('media_name' => $media->getName()));
+        $this->mediaInfo('php_orchestra_log.media.delete', $event->getMedia()->getName());
     }
 
     /**
@@ -48,17 +47,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function mediaResize(ImagickEvent $event)
     {
-        $media = $event->getFileName();
-        $this->logger->info('php_orchestra_log.media.resize', array('media_name' => $media));
-    }
-
-    /**
-     * @param ImagickEvent $event
-     */
-    public function mediaOverride(ImagickEvent $event)
-    {
-        $media = $event->getFileName();
-        $this->logger->info('php_orchestra_log.media.override', array('media_name' => $media));
+        $this->mediaInfo('php_orchestra_log.media.resize', $event->getFileName());
     }
 
     /**
@@ -66,8 +55,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function folderCreate(FolderEvent $event)
     {
-        $folder = $event->getFolder();
-        $this->logger->info('php_orchestra_log.folder.create', array('folder_name' => $folder->getName()));
+        $this->folderInfo('php_orchestra_log.folder.create', $event->getFolder());
     }
 
     /**
@@ -75,8 +63,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function folderDelete(FolderEvent $event)
     {
-        $folder = $event->getFolder();
-        $this->logger->info('php_orchestra_log.folder.delete', array('folder_name' => $folder->getName()));
+        $this->folderInfo('php_orchestra_log.folder.delete', $event->getFolder());
     }
 
     /**
@@ -84,8 +71,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function folderUpdate(FolderEvent $event)
     {
-        $folder = $event->getFolder();
-        $this->logger->info('php_orchestra_log.folder.update', array('folder_name' => $folder->getName()));
+        $this->folderInfo('php_orchestra_log.folder.update', $event->getFolder());
     }
 
     /**
@@ -100,7 +86,24 @@ class LogMediaSubscriber implements EventSubscriberInterface
             FolderEvents::FOLDER_CREATE => 'folderCreate',
             FolderEvents::FOLDER_DELETE => 'folderDelete',
             FolderEvents::FOLDER_UPDATE => 'folderUpdate',
-            MediaEvents::OVERRIDE_IMAGE => 'mediaOverride',
         );
+    }
+
+    /**
+     * @param string $message
+     * @param string $mediaName
+     */
+    protected function mediaInfo($message, $mediaName)
+    {
+        $this->logger->info($message, array('media_name' => $mediaName));
+    }
+
+    /**
+     * @param string          $message
+     * @param FolderInterface $folder
+     */
+    protected function folderInfo($message, FolderInterface $folder)
+    {
+        $this->logger->info($message, array('folder_name' => $folder->getName()));
     }
 }
