@@ -17,12 +17,17 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $subscriber;
 
     protected $logger;
+    protected $contentType;
+    protected $contentTypeEvent;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->contentType = Phake::mock('PHPOrchestra\ModelBundle\Document\ContentType');
+        $this->contentTypeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ContentTypeEvent');
+        Phake::when($this->contentTypeEvent)->getContentType()->thenReturn($this->contentType);
         $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
         $this->subscriber = new LogContentTypeSubscriber($this->logger);
     }
@@ -55,5 +60,42 @@ class LogContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             array(ContentTypeEvents::CONTENT_TYPE_DELETE),
             array(ContentTypeEvents::CONTENT_TYPE_UPDATE),
         );
+    }
+
+    /**
+     * test contentTypeCreation
+     */
+    public function testContentTypeCreation()
+    {
+        $this->subscriber->contentTypeCreation($this->contentTypeEvent);
+        $this->eventTest();
+    }
+
+    /**
+     * test contentTypeDelete
+     */
+    public function testContentTypeDelete()
+    {
+        $this->subscriber->contentTypeDelete($this->contentTypeEvent);
+        $this->eventTest();
+    }
+
+    /**
+     * test contentTypeUpdate
+     */
+    public function testContentTypeUpdate()
+    {
+        $this->subscriber->contentTypeUpdate($this->contentTypeEvent);
+        $this->eventTest();
+    }
+
+    /**
+     * Test the contentEvent
+     */
+    public function eventTest()
+    {
+        Phake::verify($this->contentTypeEvent)->getContentType();
+        Phake::verify($this->logger)->info(Phake::anyParameters());
+        Phake::verify($this->contentType)->getContentTypeId();
     }
 }

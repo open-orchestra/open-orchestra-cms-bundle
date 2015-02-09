@@ -17,12 +17,17 @@ class LogMediaSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $subscriber;
 
     protected $logger;
+    protected $media;
+    protected $mediaEvent;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->media = Phake::mock('PHPOrchestra\MediaBundle\Document\Media');
+        $this->mediaEvent = Phake::mock('PHPOrchestra\Media\Event\MediaEvent');
+        Phake::when($this->mediaEvent)->getMedia();
         $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
         $this->subscriber = new LogMediaSubscriber($this->logger);
     }
@@ -56,5 +61,15 @@ class LogMediaSubscriberTest extends \PHPUnit_Framework_TestCase
             array(MediaEvents::OVERRIDE_IMAGE),
             array(MediaEvents::RESIZE_IMAGE),
         );
+    }
+
+    /**
+     * Test the contentEvent
+     */
+    public function eventTest()
+    {
+        Phake::verify($this->mediaEvent)->getContent();
+        Phake::verify($this->logger)->info(Phake::anyParameters());
+        Phake::verify($this->media)->getContentId();
     }
 }
