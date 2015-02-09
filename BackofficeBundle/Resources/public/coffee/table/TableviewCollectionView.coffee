@@ -24,11 +24,17 @@ TableviewCollectionView = OrchestraView.extend(
       cid: @cid
     )
     $('.js-widget-title', @$el).text @title
+    ordering = true
+    if 'logs' == @elements.get('collection_name')
+      ordering = false
+      logs = @elements.get(@elements.get('collection_name'))
+      logs.sort (a, b) ->
+        return new Date(b['date_time']) - new Date(a['date_time'])
     for element of @elements.get(@elements.get('collection_name'))
       @addElementToView (@elements.get(@elements.get('collection_name'))[element])
     $('#tableviewCollectionTable').dataTable(
       searching: false
-      ordering: true
+      ordering: ordering
       lengthChange: false
     )
     return
