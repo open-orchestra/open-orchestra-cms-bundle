@@ -59,6 +59,30 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param TemplateEvent $event
+     */
+    public function templateAreaDelete(TemplateEvent $event)
+    {
+        $template = $event->getTemplate();
+        $this->logger->info('php_orchestra_log.template.area.delete', array(
+            'template_id' => $template->getTemplateId(),
+            'template_name' => $template->getName()
+        ));
+    }
+
+    /**
+     * @param TemplateEvent $event
+     */
+    public function templateAreaUpdate(TemplateEvent $event)
+    {
+        $template = $event->getTemplate();
+        $this->logger->info('php_orchestra_log.template.area.update', array(
+            'template_id' => $template->getTemplateId(),
+            'template_name' => $template->getName()
+        ));
+    }
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents()
@@ -67,6 +91,8 @@ class LogTemplateSubscriber implements EventSubscriberInterface
             TemplateEvents::TEMPLATE_CREATE => 'templateCreate',
             TemplateEvents::TEMPLATE_DELETE => 'templateDelete',
             TemplateEvents::TEMPLATE_UPDATE => 'templateUpdate',
+            TemplateEvents::TEMPLATE_AREA_DELETE => 'templateAreaDelete',
+            TemplateEvents::TEMPLATE_AREA_UPDATE => 'templateAreaUpdate',
         );
     }
 

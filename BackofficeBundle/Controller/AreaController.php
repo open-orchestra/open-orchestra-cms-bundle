@@ -2,7 +2,11 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
+use PHPOrchestra\ModelInterface\Event\NodeEvent;
+use PHPOrchestra\ModelInterface\Event\TemplateEvent;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
+use PHPOrchestra\ModelInterface\NodeEvents;
+use PHPOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +36,8 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_AREA, new NodeEvent($node));
+
         return $this->handleAreaForm($request, $actionUrl, $area);
     }
 
@@ -47,11 +53,14 @@ class AreaController extends AbstractAdminController
      */
     public function templateFormAction(Request $request, $templateId, $areaId)
     {
-        $area = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $areaId);
+        $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $area = $this->get('php_orchestra_model.repository.template')->findAreaByAreaId($template, $areaId);
         $actionUrl = $this->generateUrl('php_orchestra_backoffice_template_area_form', array(
             'templateId' => $templateId,
             'areaId' => $areaId
         ));
+
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($template));
 
         return $this->handleAreaForm($request, $actionUrl, $area);
     }

@@ -40,10 +40,12 @@ class BaseController extends Controller
      * @param Request $request
      * @param string $id
      * @param string $type
+     * @param string $event
+     * @param string $eventClass
      *
      * @return Response
      */
-    protected function reverseTransform(Request $request, $id, $type)
+    protected function reverseTransform(Request $request, $id, $type, $event, $eventClass)
     {
         $facadeName = Inflector::classify($type) . 'Facade';
         $typeName = Inflector::tableize($type);
@@ -60,6 +62,8 @@ class BaseController extends Controller
             $em = $this->get('doctrine.odm.mongodb.document_manager');
             $em->persist($mixed);
             $em->flush();
+
+            $this->dispatchEvent($event, new $eventClass($mixed));
 
             return new Response('', 200);
         }

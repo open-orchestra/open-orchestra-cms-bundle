@@ -32,14 +32,24 @@ class LogTransformer extends AbstractTransformer
     {
         $facade = new LogFacade();
 
+        $extra = array(
+            'user_ip' => '0.0.0.0',
+            'user_name' => 'Unknown',
+        );
+        $extra = array_merge($extra, $mixed->getExtra());
+
         $facade->id = $mixed->getId();
-        $facade->message = $this->translator->trans($mixed->getMessage(), $mixed->getContext());
+        $facade->message = $mixed->getMessage();
+        $context = $mixed->getContext();
+        if (!empty($context)) {
+            $facade->message = $this->translator->trans($mixed->getMessage(), $mixed->getContext());
+        }
         $facade->channel = $mixed->getChannel();
         $facade->level = $mixed->getLevel();
         $facade->dateTime = $mixed->getDateTime();
         $facade->levelName = $mixed->getLevelName();
-        $facade->userIp = $mixed->getExtra()['user_ip'];
-        $facade->userName = $mixed->getExtra()['user_name'];
+        $facade->userIp = $extra['user_ip'];
+        $facade->userName = $extra['user_name'];
 
         return $facade;
     }

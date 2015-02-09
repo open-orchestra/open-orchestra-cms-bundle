@@ -9,40 +9,22 @@ use PHPOrchestra\ModelInterface\ContentEvents;
 /**
  * Class LogContentSubscriberTest
  */
-class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
+class LogContentSubscriberTest extends LogAbstractSubscriberTest
 {
-    /**
-     * @var LogContentSubscriber
-     */
-    protected $subscriber;
-
-    protected $logger;
+    protected $content;
+    protected $contentEvent;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->logger = Phake::mock('Symfony\Bridge\Monolog\Logger');
+        parent::setUp();
+        $this->content = Phake::mock('PHPOrchestra\ModelBundle\Document\Content');
+        $this->contentEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ContentEvent');
+        Phake::when($this->contentEvent)->getContent()->thenReturn($this->content);
+
         $this->subscriber = new LogContentSubscriber($this->logger);
-    }
-
-    /**
-     * Test instance
-     */
-    public function testInstance()
-    {
-        $this->assertInstanceOf('Symfony\Component\EventDispatcher\EventSubscriberInterface', $this->subscriber);
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @dataProvider provideSubscribedEvent
-     */
-    public function testEventSubscribed($eventName)
-    {
-        $this->assertArrayHasKey($eventName, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -56,5 +38,67 @@ class LogContentSubscriberTest extends \PHPUnit_Framework_TestCase
             array(ContentEvents::CONTENT_DUPLICATE),
             array(ContentEvents::CONTENT_UPDATE),
         );
+    }
+
+    /**
+     * Test contentCreation
+     */
+    public function testContentCreation()
+    {
+        $this->subscriber->contentCreation($this->contentEvent);
+        $this->assertEventLogged('php_orchestra_log.content.create', array(
+            'content_id' => $this->content->getContentId(),
+        ));
+    }
+
+    /**
+     * Test contentDelete
+     */
+    public function testContentDelete()
+    {
+        $this->subscriber->contentDelete($this->contentEvent);
+        $this->assertEventLogged('php_orchestra_log.content.delete', array(
+            'content_id' => $this->content->getContentId(),
+            'content_name' => $this->content->getName(),
+        ));
+    }
+
+    /**
+     * Test contentUpdate
+     */
+    public function testContentUpdate()
+    {
+        $this->subscriber->contentUpdate($this->contentEvent);
+        $this->assertEventLogged('php_orchestra_log.content.update', array(
+            'content_id' => $this->content->getContentId(),
+            'content_version' => $this->content->getVersion(),
+            'content_language' => $this->content->getLanguage()
+        ));
+    }
+
+    /**
+     * Test contentDuplicate
+     */
+    public function testContentDuplicate()
+    {
+        $this->subscriber->contentDuplicate($this->contentEvent);
+        $this->assertEventLogged('php_orchestra_log.content.duplicate', array(
+            'content_id' => $this->content->getContentId(),
+            'content_version' => $this->content->getVersion(),
+            'content_language' => $this->content->getLanguage()
+        ));
+    }
+
+    /**
+     * Test contentChangeStatus
+     */
+    public function testContentChangeStatus()
+    {
+        $this->subscriber->contentChangeStatus($this->contentEvent);
+        $this->assertEventLogged('php_orchestra_log.content.status', array(
+            'content_id' => $this->content->getContentId(),
+            'content_version' => $this->content->getVersion(),
+            'content_language' => $this->content->getLanguage()
+        ));
     }
 }

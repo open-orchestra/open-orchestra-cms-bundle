@@ -21,11 +21,12 @@ TableviewView = OrchestraView.extend(
       row.append @renderTemplate('tableviewView'
         value: @element.get(displayedElement)
       )
-    row.append @renderTemplate('tableviewActions',
-      deleted: @element.get('deleted')
-      links: @element.get('links')
-      cid: @cid
-    )
+    if Object.keys(@element.get('links')).length > 0
+      row.append @renderTemplate('tableviewActions',
+        deleted: @element.get('deleted')
+        links: @element.get('links')
+        cid: @cid
+      )
 
   clickDelete: (event) ->
     event.preventDefault()

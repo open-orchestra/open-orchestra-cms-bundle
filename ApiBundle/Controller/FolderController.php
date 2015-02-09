@@ -37,8 +37,8 @@ class FolderController extends BaseController
             if (!$folderManager->isDeletable($folder)) {
                 throw new FolderNotDeletableException();
             }
-            $this->dispatchEvent(FolderEvents::FOLDER_DELETE, new FolderEvent($folder));
             $folderManager->deleteTree($folder);
+            $this->dispatchEvent(FolderEvents::FOLDER_DELETE, new FolderEvent($folder));
             $this->get('doctrine.odm.mongodb.document_manager')->flush();
         }
 

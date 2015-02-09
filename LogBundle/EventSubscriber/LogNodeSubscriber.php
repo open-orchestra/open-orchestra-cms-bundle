@@ -85,19 +85,6 @@ class LogNodeSubscriber implements EventSubscriberInterface
     /**
      * @param NodeEvent $event
      */
-    public function nodeDeleteBlock(NodeEvent $event)
-    {
-        $node = $event->getNode();
-        $this->logger->info('php_orchestra_log.node.block.delete', array(
-            'node_id' => $node->getNodeId(),
-            'node_language' => $node->getLanguage(),
-            'node_version' => $node->getVersion()
-        ));
-    }
-
-    /**
-     * @param NodeEvent $event
-     */
     public function nodeUpdateBlock(NodeEvent $event)
     {
         $node = $event->getNode();
@@ -135,6 +122,32 @@ class LogNodeSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param NodeEvent $event
+     */
+    public function nodeUpdateArea(NodeEvent $event)
+    {
+        $node = $event->getNode();
+        $this->logger->info('php_orchestra_log.node.area.update', array(
+            'node_id' => $node->getNodeId(),
+            'node_language' => $node->getLanguage(),
+            'node_version' => $node->getVersion()
+        ));
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    public function nodeChangeStatus(NodeEvent $event)
+    {
+        $node = $event->getNode();
+        $this->logger->info('php_orchestra_log.node.status', array(
+            'node_id' => $node->getNodeId(),
+            'node_language' => $node->getLanguage(),
+            'node_version' => $node->getVersion()
+        ));
+    }
+
+    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
@@ -145,10 +158,11 @@ class LogNodeSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_CREATION => 'nodeCreation',
             NodeEvents::NODE_DUPLICATE => 'nodeDuplicate',
             NodeEvents::NODE_DELETE_AREA => 'nodeDeleteArea',
+            NodeEvents::NODE_UPDATE_AREA => 'nodeUpdateArea',
             NodeEvents::NODE_ADD_LANGUAGE => 'nodeAddLanguage',
-            NodeEvents::NODE_DELETE_BLOCK => 'nodeDeleteBlock',
             NodeEvents::NODE_UPDATE_BLOCK => 'nodeUpdateBlock',
-            NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'nodeEvent',
+            NodeEvents::NODE_CHANGE_STATUS => 'nodeChangeStatus',
+            NodeEvents::NODE_UPDATE_BLOCK_POSITION => 'nodeUpdateBlockPosition',
         );
     }
 }
