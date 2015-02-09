@@ -5,6 +5,8 @@ TableviewCollectionView = OrchestraView.extend(
   initialize: (options) ->
     @elements = options.elements
     @displayedElements = options.displayedElements
+    @order = [ 0, 'asc' ]
+    @order = options.order if options.order != undefined
     @title = options.title
     @listUrl = options.listUrl
     key = 'click a.ajax-add-' + @cid
@@ -29,6 +31,7 @@ TableviewCollectionView = OrchestraView.extend(
     $('#tableviewCollectionTable').dataTable(
       searching: false
       ordering: true
+      order: [@order]
       lengthChange: false
     )
     return
