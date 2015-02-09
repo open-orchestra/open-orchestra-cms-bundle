@@ -19,9 +19,9 @@ Template = Backbone.Model.extend(
 )
 TableviewModel = Backbone.Model.extend({})
 TableviewCollection = Backbone.Collection.extend(model: TableviewModel)
-TableviewElement = Backbone.Model.extend(
-  sites: TableviewCollection
-)
+TableviewElement = Backbone.Model.extend({})
+VersionviewModel = Backbone.Model.extend({})
+VersionviewElement = Backbone.Model.extend({})
 GalleryModel = Backbone.Model.extend({})
 GalleryCollection = Backbone.Collection.extend(model: GalleryModel)
 GalleryElement = Backbone.Model.extend(
