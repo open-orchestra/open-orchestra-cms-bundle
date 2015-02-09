@@ -60,15 +60,11 @@ class NodeType extends AbstractType
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
             ))
-            ->add('alias', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.node.alias',
-                'required' => false,
+            ->add('routePattern', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.node.route_pattern',
                 'attr' => array(
                     'class' => 'alias-dest',
                 )
-            ))
-            ->add('routePattern', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.node.route_pattern',
             ))
             ->add('inMenu', 'checkbox', array(
                 'label' => 'php_orchestra_backoffice.form.node.in_menu',
