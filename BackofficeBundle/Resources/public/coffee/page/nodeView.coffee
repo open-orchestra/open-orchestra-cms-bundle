@@ -34,6 +34,7 @@ NodeView = OrchestraView.extend(
       "nodeView"
       "areaView"
       "blockView"
+      "elementTitle"
     ]
     return
 
