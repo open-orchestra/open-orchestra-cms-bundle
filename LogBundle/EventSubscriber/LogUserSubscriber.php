@@ -6,6 +6,8 @@ use FOS\UserBundle\Event\UserEvent;
 use PHPOrchestra\UserBundle\UserEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
  * Class LogUserSubscriber
@@ -28,9 +30,7 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userCreate(UserEvent $event)
     {
         $user = $event->getUser();
-        $this->logger->info('php_orchestra_log.user.create', array(
-            'user_name' => $user->getUsername(),
-        ));
+        $this->info('php_orchestra_log.user.create', $user->getUsername());
     }
 
     /**
@@ -39,9 +39,7 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userDelete(UserEvent $event)
     {
         $user = $event->getUser();
-        $this->logger->info('php_orchestra_log.user.delete', array(
-            'user_name' => $user->getUsername(),
-        ));
+        $this->info('php_orchestra_log.user.delete', $user->getUsername());
     }
 
     /**
@@ -50,9 +48,16 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userUpdate(UserEvent $event)
     {
         $user = $event->getUser();
-        $this->logger->info('php_orchestra_log.user.update', array(
-            'user_name' => $user->getUsername(),
-        ));
+        $this->info('php_orchestra_log.user.update', $user->getUsername());
+    }
+
+    /**
+     * @param InteractiveLoginEvent $event
+     */
+    public function userLogin(InteractiveLoginEvent $event)
+    {
+        $user = $event->getAuthenticationToken()->getUser();
+        $this->info('php_orchestra_log.user.login', $user->getUserName());
     }
 
     /**
@@ -64,6 +69,18 @@ class LogUserSubscriber implements EventSubscriberInterface
             UserEvents::USER_CREATE => 'userCreate',
             UserEvents::USER_DELETE => 'userDelete',
             UserEvents::USER_UPDATE => 'userUpdate',
+            SecurityEvents::INTERACTIVE_LOGIN => 'userLogin'
         );
+    }
+
+    /**
+     * @param string $message
+     * @param string $userName
+     */
+    protected function info($message, $userName)
+    {
+        $this->logger->info($message, array(
+            'user_name' => $userName
+        ));
     }
 }

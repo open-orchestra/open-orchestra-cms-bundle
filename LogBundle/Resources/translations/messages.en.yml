@@ -65,3 +65,4 @@ php_orchestra_log:
         create: Create a new user user_name
         delete: Delete a user user_name
         update: Update a user user_name
+        login: User user_name has been authenticated successfully
