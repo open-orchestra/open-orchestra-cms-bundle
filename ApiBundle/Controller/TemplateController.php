@@ -6,7 +6,6 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ModelInterface\Event\TemplateEvent;
 use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 use PHPOrchestra\ModelInterface\TemplateEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;

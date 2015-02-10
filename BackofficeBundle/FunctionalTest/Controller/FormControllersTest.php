@@ -14,7 +14,7 @@ class FormControllersTest extends AbstractControllerTest
      */
     public function testForm($url)
     {
-        $crawler = $this->client->request('GET', $url);
+        $this->client->request('GET', $url);
 
         $this->assertForm($this->client->getResponse());
     }

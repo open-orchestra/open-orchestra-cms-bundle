@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
+use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -40,7 +41,7 @@ class OrchestraContentTypeChoiceType extends AbstractType
     {
         $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
 
-        $choices = array_map(function ($element) {
+        $choices = array_map(function (ContentTypeInterface $element) {
             return $element->getName();
         }, $contentTypes);
 

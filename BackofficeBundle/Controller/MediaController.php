@@ -2,8 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\Media\Event\MediaEvent;
-use PHPOrchestra\Media\MediaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +52,7 @@ class MediaController extends AbstractAdminController
      *
      * @return Response
      */
-    public function showFolders()
+    protected function showFolders()
     {
         $rootFolders = $this->get('php_orchestra_media.repository.media_folder')->findAllRootFolderBySiteId();
 

@@ -21,7 +21,7 @@ class BaseController extends Controller
      *
      * @return bool
      */
-    public function isValid($mixed, array $validationGroups = array())
+    protected function isValid($mixed, array $validationGroups = array())
     {
         $this->violations = $this->get('validator')->validate($mixed, $validationGroups);
 
@@ -31,7 +31,7 @@ class BaseController extends Controller
     /**
      * @return mixed
      */
-    public function getViolations()
+    protected function getViolations()
     {
         return $this->violations;
     }

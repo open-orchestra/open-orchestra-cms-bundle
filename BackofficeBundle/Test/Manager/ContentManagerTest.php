@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\BackofficeBundle\Manager\ContentManager;
 use Phake;
 

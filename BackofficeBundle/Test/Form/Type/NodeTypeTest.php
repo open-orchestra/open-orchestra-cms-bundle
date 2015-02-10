@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\NodeType;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 
 /**
  * Description of NodeTypeTest

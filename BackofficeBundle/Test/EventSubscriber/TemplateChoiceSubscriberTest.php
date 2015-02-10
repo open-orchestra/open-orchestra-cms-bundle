@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 use Symfony\Component\Form\FormEvents;
 

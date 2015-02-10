@@ -5,8 +5,6 @@ namespace PHPOrchestra\ApiBundle\Controller;
 use PHPOrchestra\ApiBundle\Exceptions\HttpException\FolderNotDeletableException;
 use PHPOrchestra\Media\Event\FolderEvent;
 use PHPOrchestra\Media\FolderEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 

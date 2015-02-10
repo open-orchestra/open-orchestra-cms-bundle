@@ -12,11 +12,11 @@ class AreaControllerTest extends AbstractControllerTest
      */
     public function testAreaReverseTransform()
     {
-        $crawler = $this->client->request('GET', '/admin/');
-        $crawler = $this->client->request('GET', '/api/context/site/1/front-phporchestra.dev');
+        $this->client->request('GET', '/admin/');
+        $this->client->request('GET', '/api/context/site/1/front-phporchestra.dev');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $this->client->request('GET', '/api/node/root');
+        $this->client->request('GET', '/api/node/root');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $json = json_decode($this->client->getResponse()->getContent(), true);
@@ -33,7 +33,7 @@ class AreaControllerTest extends AbstractControllerTest
             array('node_id' => 'root', 'block_id' => 2),
         )));
 
-        $crawler = $this->client->request('POST', $update, array(), array(), array(), $formData);
+        $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['node_id']);
@@ -47,7 +47,7 @@ class AreaControllerTest extends AbstractControllerTest
             array('node_id' => 'root', 'block_id' => 3),
         )));
 
-        $crawler = $this->client->request('POST', $update, array(), array(), array(), $formData);
+        $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }

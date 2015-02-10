@@ -5,7 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 use Phake;
 use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
 use Symfony\Component\Form\FormEvents;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class StatusTypeTest

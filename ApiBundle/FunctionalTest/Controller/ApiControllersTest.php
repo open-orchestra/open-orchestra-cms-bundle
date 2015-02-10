@@ -14,7 +14,7 @@ class ApiControllersTest extends AbstractControllerTest
      */
     public function testApi($url)
     {
-        $crawler = $this->client->request('GET', $url);
+        $this->client->request('GET', $url);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));

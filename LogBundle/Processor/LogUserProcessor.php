@@ -3,7 +3,6 @@
 namespace PHPOrchestra\LogBundle\Processor;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**

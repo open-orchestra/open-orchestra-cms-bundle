@@ -3,7 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType;
-use PHPOrchestra\CMSBundle\Test\Mock;
 use Phake;
 
 /**

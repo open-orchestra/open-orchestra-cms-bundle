@@ -4,13 +4,13 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use PHPOrchestra\ModelBundle\Document\FieldType;
+
 /**
  * Class FieldTypeType
  */

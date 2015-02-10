@@ -1,5 +1,6 @@
 {
     "name": "itkg/phporchestra-cms-bundle",
+    "description": "This bundle provide the backoffice part of phporchestra",
     "license": "MIT",
     "authors": [
         {

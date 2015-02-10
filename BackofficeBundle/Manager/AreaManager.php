@@ -69,7 +69,7 @@ class AreaManager
      *
      * @return bool
      */
-    public function areaConsistency(AreaContainerInterface $container, $node = null)
+    public function areaConsistency(AreaContainerInterface $container,NodeInterface $node = null)
     {
         if (is_null($node)) {
             $node = $container;
@@ -124,7 +124,7 @@ class AreaManager
      *
      * @return bool
      */
-    protected function areaIdExistInBlock($block, $areaId)
+    protected function areaIdExistInBlock(BlockInterface $block, $areaId)
     {
         $areas = $block->getAreas();
 

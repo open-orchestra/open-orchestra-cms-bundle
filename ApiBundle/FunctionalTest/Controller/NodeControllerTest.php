@@ -18,7 +18,7 @@ class NodeControllerTest extends AbstractControllerTest
         $crawler = $this->client->request('GET', '/admin/');
         $nbLink = $crawler->filter('a')->count();
 
-        $crawler = $this->client->request('DELETE', '/api/node/fixture_deleted/delete');
+        $this->client->request('DELETE', '/api/node/fixture_deleted/delete');
 
         $crawler = $this->client->request('GET', '/admin/');
 
@@ -58,7 +58,7 @@ class NodeControllerTest extends AbstractControllerTest
         $nodeTransverse = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
 
-        $crawler = $this->client->request('POST', '/api/node/fixture_full/duplicate?language=fr');
+        $this->client->request('POST', '/api/node/fixture_full/duplicate?language=fr');
 
         $nodeLastVersion = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
@@ -89,7 +89,7 @@ class NodeControllerTest extends AbstractControllerTest
         $this->assertSame(null, $node);
         $this->assertSame(1, $countAreaRef);
 
-        $crawler = $this->client->request('GET', '/api/node/fixture_full', array('language' => 'es'));
+        $this->client->request('GET', '/api/node/fixture_full', array('language' => 'es'));
 
 
         $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');

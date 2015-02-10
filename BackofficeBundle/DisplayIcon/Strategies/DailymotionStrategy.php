@@ -3,7 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
  * Class DailymotionStrategy

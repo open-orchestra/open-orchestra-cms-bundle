@@ -3,6 +3,7 @@
 namespace PHPOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPOrchestra\ApiBundle\Facade\DeletedFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
 
@@ -29,7 +30,7 @@ class DeletedCollectionTransformer extends AbstractTransformer
 
         $deletedFacade = $facade->getDeleteds();
 
-        usort($deletedFacade, function($a, $b) {
+        usort($deletedFacade, function(DeletedFacade $a,DeletedFacade $b) {
             return ($b->updatedAt < $a->updatedAt)? -1 : 1;
         });
 

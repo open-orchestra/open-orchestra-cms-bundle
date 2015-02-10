@@ -48,7 +48,7 @@ class TranslateValueInitializerListener
     protected function generateDefaultValues(Collection $properties)
     {
         foreach ($this->defaultLanguages as $defaultLanguage) {
-            if (!$properties->exists(function ($key, $element) use ($defaultLanguage) {
+            if (!$properties->exists(function ($key,TranslatedValueInterface $element) use ($defaultLanguage) {
                 return $defaultLanguage == $element->getLanguage();
             })
             ) {

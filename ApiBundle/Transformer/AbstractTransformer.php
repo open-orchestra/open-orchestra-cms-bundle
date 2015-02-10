@@ -57,7 +57,6 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function transform($mixed)
     {
-        // TODO: Implement transform() method.
     }
 
     /**
@@ -68,6 +67,5 @@ abstract class AbstractTransformer implements TransformerInterface
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
-        // TODO: Implement reverseTransform() method.
     }
 }

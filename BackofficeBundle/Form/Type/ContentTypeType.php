@@ -3,7 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;

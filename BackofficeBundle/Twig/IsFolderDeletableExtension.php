@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Twig;
 
-use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
 use PHPOrchestra\Media\Model\MediaFolderInterface;
 

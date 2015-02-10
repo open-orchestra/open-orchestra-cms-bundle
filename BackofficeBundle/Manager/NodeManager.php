@@ -200,7 +200,7 @@ class NodeManager
      * @param NodeInterface $oldNode
      * @param NodeInterface $node
      */
-    public function updateBlockReferences($oldNode, $node)
+    public function updateBlockReferences(NodeInterface $oldNode, NodeInterface $node)
     {
         $nodeTransverse = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());

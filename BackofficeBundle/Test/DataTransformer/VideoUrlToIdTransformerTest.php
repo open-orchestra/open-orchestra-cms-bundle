@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
 
-use Phake;
 use PHPOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer;
 
 /**

@@ -6,7 +6,6 @@ use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class MenuStrategy
