@@ -138,7 +138,7 @@ class MediaController extends AbstractAdminController
             $file = $form->getData()->getFile();
             $tmpDir = $this->container->getParameter('php_orchestra_media.tmp_dir');
             $file->move($tmpDir, $format . '-' . $media->getFilesystemName());
-            $this->get('php_orchestra_media.manager.image_override')->override($media, $format);
+            $this->get('php_orchestra_media.manager.image_resizer')->override($media, $format);
         }
 
         return $this->renderAdminForm($form);
