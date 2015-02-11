@@ -39,6 +39,7 @@ class LogUserProcessorTest extends \PHPUnit_Framework_TestCase
         $this->requestStack = Phake::mock('Symfony\Component\HttpFoundation\RequestStack');
 
         $this->context = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
+        Phake::when($this->context)->getCurrentSiteName()->thenReturn($this->siteName);
 
         $this->processor = new LogUserProcessor($this->security, $this->requestStack, $this->context);
     }
@@ -49,7 +50,6 @@ class LogUserProcessorTest extends \PHPUnit_Framework_TestCase
     public function testProcessRecord()
     {
         Phake::when($this->requestStack)->getCurrentRequest()->thenReturn($this->request);
-        Phake::when($this->context)->getCurrentSiteName()->thenReturn($this->siteName);
         $result = $this->processor->processRecord(array());
 
         $this->assertSame($result, array('extra' => array(
@@ -65,26 +65,12 @@ class LogUserProcessorTest extends \PHPUnit_Framework_TestCase
     public function testProcessRecordWithEmptyRequest()
     {
         $this->ip = '0.0.0.0';
-        Phake::when($this->context)->getCurrentSiteName()->thenReturn($this->siteName);
+
         $result = $this->processor->processRecord(array());
 
         $this->assertSame($result, array('extra' => array(
             'user_ip' => $this->ip,
             'site_name' => $this->siteName
-        )));
-    }
-
-    /**
-     * Test processRecord with empty context
-     */
-    public function testProcessRecordWithEmptyContext()
-    {
-        Phake::when($this->requestStack)->getCurrentRequest()->thenReturn($this->request);
-        $result = $this->processor->processRecord(array());
-
-        $this->assertSame($result, array('extra' => array(
-            'user_ip' => $this->ip,
-            'user_name' => $this->userName,
         )));
     }
 }

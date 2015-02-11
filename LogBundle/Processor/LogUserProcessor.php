@@ -42,10 +42,7 @@ class LogUserProcessor
             $record['extra']['user_name'] = $this->securityContext->getToken()->getUsername();
         }
 
-        $siteName = $this->context->getCurrentSiteName();
-        if (null != $siteName) {
-            $record['extra']['site_name'] = $siteName;
-        }
+        $record['extra']['site_name'] = $this->context->getCurrentSiteName();
 
         return $record;
     }
