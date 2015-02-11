@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use PHPOrchestra\ApiBundle\Transformer\NodeTransformer;
 
-
 /**
  * Class NodeTransformerTest
  */
@@ -38,10 +37,8 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $siteAlias = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteAliasInterface');
-        $siteAliases = new ArrayCollection();
-        $siteAliases->add($siteAlias);
         $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($this->site)->getAliases()->thenReturn($siteAliases);
+        Phake::when($this->site)->getMainAlias()->thenReturn($siteAlias);
         $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);

@@ -54,7 +54,9 @@ php_orchestra_backoffice:
             aliases: Alias
             alias: Alias
             default_language: Langue par défaut
-            languages: Langues
+            language: Langue
+            prefix: Préfix pour la langue
+            main: Alias principal
             blocks: Blocs disponibles
             theme: Thème par défaut
             keywords: Meta keywords

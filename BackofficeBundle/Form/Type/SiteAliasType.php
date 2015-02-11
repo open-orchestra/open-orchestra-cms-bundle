@@ -31,12 +31,16 @@ class SiteAliasType extends AbstractType
             ->add('domain', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.website.domain'
             ))
-            ->add('defaultLanguage', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.website.default_language'
+            ->add('language', 'orchestra_language', array(
+                'label' => 'php_orchestra_backoffice.form.website.language'
             ))
-            ->add('languages', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.website.languages',
-                'multiple' => true
+            ->add('prefix', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.website.prefix',
+                'required' => false,
+            ))
+            ->add('main', 'checkbox', array(
+                'label' => 'php_orchestra_backoffice.form.website.main',
+                'required' => false
             ));
     }
 
