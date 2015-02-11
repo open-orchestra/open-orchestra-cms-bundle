@@ -96,23 +96,23 @@ orchestraAjaxLoad = (url, method, successCallback) ->
 
 # SMARTADMIN CONFIRMATION
 smartConfirm = (logo, titleColorized, text, functions) ->
-  yesButton = new SmartConfirmButtonView(
-    confirm: 'Yes'
-  ).render()
-  noButton = new SmartConfirmButtonView(
-    confirm: 'No'
-  ).render()
-  $.SmartMessageBox
-    title: new SmartConfirmTitleView(
-      logo: logo
-      titleColorized: titleColorized
-    ).render()
-    content: text
-    buttons: "[" + noButton + "][" + yesButton + "]"
-  , (ButtonPressed) ->
-      functions.yesCallback(functions.callBackParams)  if yesButton.match(ButtonPressed) != null and typeof functions.yesCallback isnt "undefined"
-      functions.noCallback(functions.callBackParams)  if noButton.match(ButtonPressed) != null and typeof functions.noCallback isnt "undefined"
-      return
+  new SmartConfirmView(
+    titleColorized: titleColorized
+    logo: logo
+    text: text
+    buttons: [
+      {
+        text: 'Yes'
+        callBack: if typeof functions.yesCallback != 'undefined' then functions.yesCallback else (->
+        )
+      }
+      {
+        text: 'No'
+        callBack: if typeof functions.noCallback != 'undefined' then functions.noCallback else (->
+        )
+      }
+    ]
+    callBackParams: functions.callBackParams)
   return
 
 selectorExist = (selector) ->
