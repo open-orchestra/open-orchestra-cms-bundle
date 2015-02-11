@@ -72,7 +72,6 @@ class LogMediaSubscriber implements EventSubscriberInterface
     {
         return array(
             MediaEvents::ADD_IMAGE => 'mediaAddImage',
-//            MediaEvents::RESIZE_IMAGE => 'mediaResize',
             MediaEvents::MEDIA_DELETE => 'mediaDelete',
             FolderEvents::FOLDER_CREATE => 'folderCreate',
             FolderEvents::FOLDER_DELETE => 'folderDelete',
