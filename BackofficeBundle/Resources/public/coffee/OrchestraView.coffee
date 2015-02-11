@@ -4,11 +4,6 @@ OrchestraView = Backbone.View.extend(
     @compiledTemplates = {}
     currentView = @
     Backbone.Wreqr.radio.commands.execute 'widget', 'init', @
-    templates.push "smartConfirmButton"
-    templates.push "smartConfirmTitle"
-    templates.push "widgetPreviewLink" if templates.indexOf("widgetPageConfigurationButton") == -1
-    templates.push "widgetPageConfigurationButton" if templates.indexOf("widgetPageConfigurationButton") == -1
-    templates.push "widgetFolderConfigurationButton" if templates.indexOf("widgetFolderConfigurationButton") == -1
 
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false
@@ -31,8 +26,8 @@ OrchestraView = Backbone.View.extend(
       ready = false if templateData is false
       return
     if ready
-      @render()
       Backbone.Wreqr.radio.commands.execute 'widget', 'ready', @
+      return @render()
     return
 
   renderTemplate: (templateName, parameters) ->
