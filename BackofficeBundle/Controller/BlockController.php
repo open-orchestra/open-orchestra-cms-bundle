@@ -59,11 +59,18 @@ class BlockController extends AbstractAdminController
      */
     public function listPossibleBlocksAction()
     {
+        $blocks = array();
+
         $currentSiteId = $this->container->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $currentSite = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
+        if ($currentSiteId) {
+            $currentSite = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
+            if ($currentSite) {
+                $blocks = $currentSite->getBlocks();
+            }
+        }
 
         return $this->render('PHPOrchestraBackofficeBundle:Block:possibleBlocksList.html.twig', array(
-            'blocks' => $currentSite->getBlocks()
+            'blocks' => $blocks
         ));
     }
 
