@@ -94,9 +94,9 @@ SuperboxView = OrchestraView.extend(
   changeView: (e) ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
     $('.media_crop_preview img', @$el).hide()
-    $(".media-override-format-form").hide()
+    $(".media-override-format-form", @$el).hide()
     format = e.currentTarget.value
-    $('.superbox-current-img', @$el).append('<div id="preview-pane">
+    $('.superbox-current-img', @$el).append('<div id="preview-pane" style="display: none">
           <div class="preview-container">
               <img  class="jcrop-preview" alt="Preview" />
           </div>

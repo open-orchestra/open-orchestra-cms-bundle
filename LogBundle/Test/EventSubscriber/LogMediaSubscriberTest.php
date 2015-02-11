@@ -41,7 +41,6 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
         return array(
             array(MediaEvents::ADD_IMAGE),
             array(MediaEvents::MEDIA_DELETE),
-            array(MediaEvents::RESIZE_IMAGE),
             array(FolderEvents::FOLDER_CREATE),
             array(FolderEvents::FOLDER_DELETE),
             array(FolderEvents::FOLDER_UPDATE),

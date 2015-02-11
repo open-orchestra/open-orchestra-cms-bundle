@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\Media\Event\ImagickEvent;
 use PHPOrchestra\Media\Event\MediaEvent;
 use PHPOrchestra\Media\MediaEvents;
 use PHPOrchestra\Media\Event\FolderEvent;
@@ -43,14 +42,6 @@ class LogMediaSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ImagickEvent $event
-     */
-    public function mediaResize(ImagickEvent $event)
-    {
-        $this->mediaInfo('php_orchestra_log.media.resize', $event->getFileName());
-    }
-
-    /**
      * @param FolderEvent $event
      */
     public function folderCreate(FolderEvent $event)
@@ -81,7 +72,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     {
         return array(
             MediaEvents::ADD_IMAGE => 'mediaAddImage',
-            MediaEvents::RESIZE_IMAGE => 'mediaResize',
+//            MediaEvents::RESIZE_IMAGE => 'mediaResize',
             MediaEvents::MEDIA_DELETE => 'mediaDelete',
             FolderEvents::FOLDER_CREATE => 'folderCreate',
             FolderEvents::FOLDER_DELETE => 'folderDelete',
