@@ -31,8 +31,7 @@ php_orchestra_log:
     media:
         add_image: Ajoute un média nommé media_name
         delete: Supprime un média nommé media_name
-        resize: Change la taille d'un média nommé media_name
-        override: Override le format d'un média nommé media_name
+        resize: Redimensionne un média nommé media_name
     folder:
         create: Crée un nouveau dossier nommé folder_name
         delete: Supprime un dossier nommé folder_name

@@ -27,6 +27,7 @@ class ContextManager implements CurrentSiteIdInterface
     public function __construct(Session $session, SiteRepositoryInterface $siteRepository, $defaultLocale = 'en')
     {
         $this->session = $session;
+
         if ($this->getCurrentLocale() == '') {
             $this->setCurrentLocale($defaultLocale);
         }
