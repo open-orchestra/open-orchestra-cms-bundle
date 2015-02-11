@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\LogBundle\Processor;
 
+use PHPOrchestra\Backoffice\Context\ContextManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -10,17 +11,20 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class LogUserProcessor
 {
+    protected $context;
     protected $requestStack;
     protected $securityContext;
 
     /**
      * @param SecurityContextInterface $securityContext
      * @param RequestStack             $requestStack
+     * @param ContextManager           $context
      */
-    public function __construct(SecurityContextInterface $securityContext, RequestStack $requestStack)
+    public function __construct(SecurityContextInterface $securityContext, RequestStack $requestStack, ContextManager $context)
     {
         $this->securityContext = $securityContext;
         $this->requestStack = $requestStack;
+        $this->context = $context;
     }
 
     /**
@@ -37,6 +41,8 @@ class LogUserProcessor
             $record['extra']['user_ip'] = $request->getClientIp();
             $record['extra']['user_name'] = $this->securityContext->getToken()->getUsername();
         }
+
+        $record['extra']['site_name'] = $this->context->getCurrentSiteName();
 
         return $record;
     }

@@ -7,5 +7,6 @@ services:
         arguments:
             - @security.context
             - @request_stack
+            - @php_orchestra_backoffice.context_manager
         tags:
             - { name: monolog.processor, method: processRecord, channel: phporchestra }
