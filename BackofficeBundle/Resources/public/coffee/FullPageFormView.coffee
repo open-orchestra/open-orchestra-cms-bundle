@@ -50,6 +50,9 @@ FullPageFormView = OrchestraView.extend(
         success: (response) ->
           options.html = response
           view = new FullPageFormView(options)
+        error: (response) ->
+          options.html = response.responseText
+          view = new FullPageFormView(options)
       return
 
   changeLanguage: (event) ->
