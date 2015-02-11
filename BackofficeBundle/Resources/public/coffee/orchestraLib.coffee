@@ -54,8 +54,8 @@ displayMenu = (route) ->
       opts =
         accordion: true
         speed: $.menu_speed
-        closedSign: "<em class=\"fa fa-expand-o\"></em>"
-        openedSign: "<em class=\"fa fa-collapse-o\"></em>"
+        closedSign: "<em class=\"fa fa-plus-square-o\"></em>"
+        openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
 
       $("nav ul").jarvismenu opts
       
