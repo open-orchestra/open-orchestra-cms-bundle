@@ -12,6 +12,7 @@ use PHPOrchestra\UserBundle\UserEvents;
 class LogUserSubscriberTest extends LogAbstractSubscriberTest
 {
     protected $userEvent;
+    protected $context;
     protected $user;
 
     /**
@@ -23,6 +24,7 @@ class LogUserSubscriberTest extends LogAbstractSubscriberTest
         $this->user = Phake::mock('PHPOrchestra\UserBundle\Document\User');
         $this->userEvent = Phake::mock('FOS\UserBundle\Event\UserEvent');
         Phake::when($this->userEvent)->getUser()->thenReturn($this->user);
+        $this->context = array('user_name' => $this->user->getUsername());
 
         $this->subscriber = new LogUserSubscriber($this->logger);
     }
@@ -45,9 +47,7 @@ class LogUserSubscriberTest extends LogAbstractSubscriberTest
     public function testUserCreate()
     {
         $this->subscriber->userCreate($this->userEvent);
-        $this->assertEventLogged('php_orchestra_log.user.create', array(
-            'user_name' => $this->user->getUsername(),
-        ));
+        $this->assertEventLogged('php_orchestra_log.user.create', $this->context);
     }
 
     /**
@@ -56,9 +56,7 @@ class LogUserSubscriberTest extends LogAbstractSubscriberTest
     public function testUserDelete()
     {
         $this->subscriber->userDelete($this->userEvent);
-        $this->assertEventLogged('php_orchestra_log.user.delete', array(
-            'user_name' => $this->user->getUsername(),
-        ));
+        $this->assertEventLogged('php_orchestra_log.user.delete', $this->context);
     }
 
     /**
@@ -67,8 +65,22 @@ class LogUserSubscriberTest extends LogAbstractSubscriberTest
     public function testUserUpdate()
     {
         $this->subscriber->userUpdate($this->userEvent);
-        $this->assertEventLogged('php_orchestra_log.user.update', array(
-            'user_name' => $this->user->getUsername(),
+        $this->assertEventLogged('php_orchestra_log.user.update', $this->context);
+    }
+
+    /**
+     * Test userUpdate
+     */
+    public function testUserLogin()
+    {
+        $userInterface = Phake::mock('Symfony\Component\Security\Core\User\UserInterface');
+        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        Phake::when($token)->getUser()->thenReturn($userInterface);
+        $interactiveEvent = Phake::mock('Symfony\Component\Security\Http\Event\InteractiveLoginEvent');
+        Phake::when($interactiveEvent)->getAuthenticationToken()->thenReturn($token);
+        $this->subscriber->userLogin($interactiveEvent);
+        $this->assertEventLogged('php_orchestra_log.user.login', array(
+            'user_name' => $userInterface->getUsername(),
         ));
     }
 }
