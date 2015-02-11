@@ -49,4 +49,9 @@ class LogFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $levelName;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $siteName;
 }
