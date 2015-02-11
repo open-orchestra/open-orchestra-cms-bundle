@@ -83,11 +83,9 @@
 
 {% block form_row %}
     {% spaceless %}
-        {% if widget_name is not defined %}
-            {% set widget_name = 'form_input_group' %}
-        {% endif %}
         {% set style = style|default(bootstrap_get_style()) %}
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
+        {% set widget_name = widget_col|default('form_input_group') %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
             {% set label_col = attr.label_col %}
