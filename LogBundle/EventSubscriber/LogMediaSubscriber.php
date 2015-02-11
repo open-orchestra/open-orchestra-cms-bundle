@@ -7,6 +7,7 @@ use PHPOrchestra\Media\MediaEvents;
 use PHPOrchestra\Media\Event\FolderEvent;
 use PHPOrchestra\Media\FolderEvents;
 use PHPOrchestra\Media\Model\FolderInterface;
+use PHPOrchestra\Media\Model\MediaInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -30,7 +31,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function mediaAddImage(MediaEvent $event)
     {
-        $this->mediaInfo('php_orchestra_log.media.add_image', $event->getMedia()->getName());
+        $this->mediaInfo('php_orchestra_log.media.add_image', $event->getMedia());
     }
 
     /**
@@ -38,7 +39,15 @@ class LogMediaSubscriber implements EventSubscriberInterface
      */
     public function mediaDelete(MediaEvent $event)
     {
-        $this->mediaInfo('php_orchestra_log.media.delete', $event->getMedia()->getName());
+        $this->mediaInfo('php_orchestra_log.media.delete', $event->getMedia());
+    }
+
+    /**
+     * @param MediaEvent $event
+     */
+    public function mediaResize(MediaEvent $event)
+    {
+        $this->mediaInfo('php_orchestra_log.media.resize', $event->getMedia());
     }
 
     /**
@@ -71,6 +80,7 @@ class LogMediaSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
+            MediaEvents::MEDIA_CROP => 'mediaResize',
             MediaEvents::ADD_IMAGE => 'mediaAddImage',
             MediaEvents::MEDIA_DELETE => 'mediaDelete',
             FolderEvents::FOLDER_CREATE => 'folderCreate',
@@ -80,12 +90,12 @@ class LogMediaSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string $message
-     * @param string $mediaName
+     * @param string         $message
+     * @param MediaInterface $media
      */
-    protected function mediaInfo($message, $mediaName)
+    protected function mediaInfo($message, MediaInterface $media)
     {
-        $this->logger->info($message, array('media_name' => $mediaName));
+        $this->logger->info($message, array('media_name' => $media->getName()));
     }
 
     /**

@@ -31,6 +31,7 @@ php_orchestra_log:
     media:
         add_image: Add a new media with media name media_name
         delete: Delete a media with media name media_name
+        resize: Resize a media with media name media_name
     folder:
         create: Create a new folder with folder name folder_name
         delete: Delete a folder with folder name folder_name
