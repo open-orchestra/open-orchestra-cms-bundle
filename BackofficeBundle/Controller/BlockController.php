@@ -54,7 +54,6 @@ class BlockController extends AbstractAdminController
     /**
      * List all possible blocks
      *
-     * @Config\Route("/block/list")
      * @return Response
      */
     public function listPossibleBlocksAction()
