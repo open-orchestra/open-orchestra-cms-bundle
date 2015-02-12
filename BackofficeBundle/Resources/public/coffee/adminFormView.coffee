@@ -23,7 +23,6 @@ adminFormView = OrchestraView.extend(
     viewContext = this
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
-    $('.modal-footer', @el).html @renderTemplate('deleteButton')
     $.ajax
       url: @url
       method: @method
@@ -48,20 +47,22 @@ adminFormView = OrchestraView.extend(
       $('.ajax-delete', @el).attr('data-confirm-title', @confirmtitle)
       $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
       $('.modal-footer', @el).removeClass("hidden-info")
+      $('.modal-footer', @el).html @renderTemplate('deleteButton')
+      $('.modal-footer', @el).prepend($('.submit_form', @$el))
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    @addEventOnForm()
+    @addEventOnSave()
     @addSelect2OnForm()
     @addColorPickerOnForm()
 
-  addEventOnForm: ->
+  addEventOnSave: ->
     viewContext = this
-    $("form", @$el).on "submit", (e) ->
+    $(".submit_form", @$el).on "click", (e) ->
       e.preventDefault() # prevent native submit
       $('.submit_form', viewContext.$el).hide()
       displayLoader($('.submit_form', viewContext.$el).parent())
-      $(this).ajaxSubmit
+      $('form', viewContext.$el).ajaxSubmit
         statusCode:
           200: (response) ->
             view = viewContext.renderContent(
