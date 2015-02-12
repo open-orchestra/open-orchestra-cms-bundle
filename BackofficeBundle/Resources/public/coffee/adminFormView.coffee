@@ -59,6 +59,8 @@ adminFormView = OrchestraView.extend(
     viewContext = this
     $("form", @$el).on "submit", (e) ->
       e.preventDefault() # prevent native submit
+      $('.submit_form', viewContext.$el).hide()
+      displayLoader($('.submit_form', viewContext.$el).parent())
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
