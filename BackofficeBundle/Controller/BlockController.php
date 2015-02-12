@@ -65,6 +65,9 @@ class BlockController extends AbstractAdminController
             $currentSite = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
             if ($currentSite) {
                 $blocks = $currentSite->getBlocks();
+                if (count($blocks) == 0) {
+                    $blocks = $this->container->getParameter('php_orchestra.blocks');
+                }
             }
         }
 
