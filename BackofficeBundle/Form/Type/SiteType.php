@@ -52,7 +52,8 @@ class SiteType extends AbstractType
             ))
             ->add('blocks', 'orchestra_block', array(
                 'multiple' => true,
-                'label' => 'php_orchestra_backoffice.form.website.blocks'
+                'label' => 'php_orchestra_backoffice.form.website.blocks',
+                'required' => false
             ))
             ->add('theme', 'orchestra_theme', array(
                 'label' => 'php_orchestra_backoffice.form.website.theme'
