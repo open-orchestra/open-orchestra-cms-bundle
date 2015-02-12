@@ -85,8 +85,8 @@ class AddSubmitButtonSubscriberTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array($status0, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'disabled'))),
-            array($status1, array('label' => 'php_orchestra_base.form.submit')),
-            array(null, array('label' => 'php_orchestra_base.form.submit')),
+            array($status1, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'))),
+            array(null, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'))),
         );
     }
 }
