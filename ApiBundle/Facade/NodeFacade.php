@@ -45,7 +45,7 @@ class NodeFacade extends DeletedFacade
     /**
      * @Serializer\Type("string")
      */
-    public $alias;
+    public $routePattern;
 
     /**
      * @Serializer\Type("string")

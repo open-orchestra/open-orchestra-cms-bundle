@@ -38,6 +38,7 @@ class ApiControllersTest extends AbstractControllerTest
             array('/api/theme'),
             array('/api/user'),
             array('/api/role'),
+            array('/api/redirection'),
             array('/api/status'),
             array('/api/template/template_full'),
             array('/api/context/site/2/www.bphpOrchestra.fr'),
