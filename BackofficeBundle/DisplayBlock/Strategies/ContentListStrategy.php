@@ -5,7 +5,9 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class ContentListStrategy
@@ -23,16 +25,17 @@ class ContentListStrategy extends AbstractStrategy
     {
         $attributes = $block->getAttributes();
 
-        $parameters = array(
-            'id' => $block->getId(),
-            'class' => $block->getClass(),
-            'url' => $attributes['url'],
-            'characterNumber' => $attributes['characterNumber'],
-            'keywords' => $attributes['keywords'],
-            'choiceType' => $attributes['choiceType'],
-            'contentType' => $attributes['contentType']
+        $empty = array(
+            'contentNodeId' => NodeInterface::ROOT_NODE_ID,
+            'characterNumber' => '50',
+            'keywords' => '',
+            'choiceType' => ContentRepositoryInterface::CHOICE_AND,
+            'contentType' => 'news',
         );
-        return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $parameters);
+
+        $attributes = array_merge($empty, $attributes);
+
+        return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $attributes);
     }
 
     /**
