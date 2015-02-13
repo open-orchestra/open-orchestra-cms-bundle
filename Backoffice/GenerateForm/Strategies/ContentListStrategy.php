@@ -6,6 +6,7 @@ use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -43,7 +44,7 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $empty = array(
             'keywords' => null,
-            'contentNodeId' => '',
+            'contentNodeId' => NodeInterface::ROOT_NODE_ID,
             'characterNumber' => 50,
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
             'contentType' => 'news',

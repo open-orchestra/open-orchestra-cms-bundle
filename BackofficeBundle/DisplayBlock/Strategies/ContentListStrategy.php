@@ -7,6 +7,7 @@ use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class ContentListStrategy
@@ -25,7 +26,7 @@ class ContentListStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
-            'contentNodeId' => 'news',
+            'contentNodeId' => NodeInterface::ROOT_NODE_ID,
             'characterNumber' => '50',
             'keywords' => '',
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
