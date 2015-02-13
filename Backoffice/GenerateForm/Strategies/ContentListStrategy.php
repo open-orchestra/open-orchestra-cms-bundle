@@ -43,15 +43,16 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $empty = array(
             'keywords' => null,
-            'url' => '',
+            'contentNodeId' => '',
             'characterNumber' => 50,
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
-            'contentType' => ''
+            'contentType' => '',
+            'contentTemplate' => '',
         );
 
         $attributes = array_merge($empty, $attributes);
 
-        $form->add('url', 'orchestra_node_choice', array(
+        $form->add('contentNodeId', 'orchestra_node_choice', array(
             'mapped' => false,
             'data' => $attributes['url'],
             'label' => 'php_orchestra_backoffice.form.content_list.node',

@@ -26,11 +26,11 @@ class ContentListStrategy extends AbstractStrategy
         $parameters = array(
             'id' => $block->getId(),
             'class' => $block->getClass(),
-            'url' => $attributes['url'],
-            'characterNumber' => $attributes['characterNumber'],
+            'contentNodeId' => array_key_exists('contentNodeId', $attributes) ? $attributes['contentNodeId'] : '',
+            'characterNumber' => array_key_exists('characterNumber', $attributes) ? $attributes['characterNumber'] : '',
             'keywords' => $attributes['keywords'],
-            'choiceType' => $attributes['choiceType'],
-            'contentType' => $attributes['contentType']
+            'choiceType' => array_key_exists('choiceType', $attributes) ? $attributes['choiceType'] : '',
+            'contentType' => array_key_exists('contentType', $attributes) ? $attributes['contentType'] : '',
         );
         return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $parameters);
     }
