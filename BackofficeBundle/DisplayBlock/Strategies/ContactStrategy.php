@@ -38,8 +38,8 @@ class ContactStrategy extends AbstractStrategy
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Contact:show.html.twig',
             array(
-                'id' => array_key_exists('id', $attributes)? $attributes['id']: '',
-                'class' => array_key_exists('class', $attributes)? $attributes['class']: ''
+                'id' => $block->getId(),
+                'class' => array_key_exists('class', $attributes)? $block->getClass(): ''
             )
         );
     }

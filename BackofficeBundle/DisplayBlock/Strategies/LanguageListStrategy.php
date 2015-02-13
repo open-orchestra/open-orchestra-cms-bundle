@@ -38,8 +38,8 @@ class LanguageListStrategy extends AbstractStrategy
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/LanguageList:show.html.twig',
             array(
-                'class' => array_key_exists('class', $attributes)? $attributes['class']:'',
-                'id' => array_key_exists('id', $attributes)? $attributes['id']: ''
+                'class' => $block->getClass(),
+                'id' => $block->getId()
             )
         );
     }

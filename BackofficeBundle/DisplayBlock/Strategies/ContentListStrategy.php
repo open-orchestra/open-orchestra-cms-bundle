@@ -24,15 +24,14 @@ class ContentListStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         $parameters = array(
-            'id' => $attributes['id'],
-            'class' => $attributes['class'],
+            'id' => $block->getId(),
+            'class' => $block->getClass(),
             'url' => $attributes['url'],
             'characterNumber' => $attributes['characterNumber'],
             'keywords' => $attributes['keywords'],
             'choiceType' => $attributes['choiceType'],
             'contentType' => $attributes['contentType']
         );
-
         return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $parameters);
     }
 
