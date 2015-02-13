@@ -145,9 +145,9 @@ php_orchestra_backoffice:
             success: The media has been saved
             format: The crop format
             original_image: Original image
-            rectangle: Rectangle
-            max_width: Max width image
-            max_height: Max height image
+            rectangle: Rectangle (100p x 70p)
+            max_width: Fixed width (100p)
+            max_height: Fixed height (100p)
             list:
                 keyword: Mot-clé
             meta:
