@@ -28,7 +28,7 @@ class ContentListStrategy extends AbstractStrategy
             'class' => $block->getClass(),
             'contentNodeId' => array_key_exists('contentNodeId', $attributes) ? $attributes['contentNodeId'] : '',
             'characterNumber' => array_key_exists('characterNumber', $attributes) ? $attributes['characterNumber'] : '',
-            'keywords' => $attributes['keywords'],
+            'keywords' => array_key_exists('keywords', $attributes) ? $attributes['keywords'] : '',
             'choiceType' => array_key_exists('choiceType', $attributes) ? $attributes['choiceType'] : '',
             'contentType' => array_key_exists('contentType', $attributes) ? $attributes['contentType'] : '',
         );
