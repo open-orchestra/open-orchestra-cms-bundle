@@ -141,9 +141,9 @@ php_orchestra_backoffice:
         block:
             success: Le bloc a été modifié
         media:
-            file: Fichier
+            file: Uploader une image alternative pour ce format
             success: Le média a été sauvegardé
-            format: Format de la preview
+            format: Choisissez un format de découpage
             original_image: Image d'origine
             rectangle: Rectangle (100p x 70p)
             max_width: Largeur fixe (100p)
@@ -409,7 +409,7 @@ php_orchestra_backoffice:
             title: Souhaitez-vous supprimer ce gabarit
             text: Cette opération est définitive.
     media:
-        current_preview: Image actuelle
+        current_preview: Image actuellement utilisée
         crop: Crop
         meta: Méta
         delete_question: Souhaitez-vous supprimer ce média
