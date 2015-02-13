@@ -34,7 +34,8 @@ class FormControllersTest extends AbstractControllerTest
             array('/admin/content-type/form/car'),
             array('/admin/content-type/new'),
             array('/admin/content/form/welcome'),
-            array('/admin/role/new')
+            array('/admin/role/new'),
+            array('/admin/redirection/new'),
         );
     }
 

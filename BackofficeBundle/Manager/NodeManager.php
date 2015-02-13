@@ -64,7 +64,6 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
-        $newNode->setAlias('');
         $newNode->setStatus(null);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
@@ -83,7 +82,6 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion(1);
-        $newNode->setAlias('');
         $newNode->setStatus(null);
         $newNode->setLanguage($language);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);

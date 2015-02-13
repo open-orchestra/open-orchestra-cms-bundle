@@ -184,6 +184,17 @@ php_orchestra_backoffice:
             name: Name
             from_status: Status from
             to_status: Status destination
+        redirection:
+            new:
+                success: The redirection has been successfully created
+            edit:
+                success: The redirection has been updated
+            site_name: Site name
+            locale: Site language
+            route_pattern: Pattern to redirect
+            node_id: Node where the redirection is headed
+            url: Url to redirect to
+            permanent: Permanent redirection
     left_menu:
         tree:
             new_page: New page
@@ -219,6 +230,8 @@ php_orchestra_backoffice:
                 list: Users
             role:
                 list: Roles
+            redirection:
+                list: Redirections
             keyword:
                 list: Keywords
             deleted:

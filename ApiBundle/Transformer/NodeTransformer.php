@@ -63,7 +63,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->nodeType = $mixed->getNodeType();
         $facade->parentId = $mixed->getParentId();
         $facade->path = $mixed->getPath();
-        $facade->alias = $mixed->getAlias();
+        $facade->routePattern = $mixed->getRoutePattern();
         $facade->language = $mixed->getLanguage();
         $facade->metaKeywords = $mixed->getMetaKeywords();
         $facade->metaDescription = $mixed->getMetaDescription();

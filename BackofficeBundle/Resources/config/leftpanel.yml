@@ -60,6 +60,12 @@ services:
             - role
         tags:
             - { name: php_orchestra_backoffice.left_panel.strategy }
+    php_orchestra_backoffice.left_panel.redirection:
+        class: %php_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - redirection
+        tags:
+            - { name: php_orchestra_backoffice.left_panel.strategy }
     php_orchestra_backoffice.left_panel.status:
         class: %php_orchestra_backoffice.left_panel.administration.class%
         arguments:
