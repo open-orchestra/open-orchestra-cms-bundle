@@ -32,7 +32,6 @@ SuperboxView = OrchestraView.extend(
     $('.superbox-current-img').Jcrop({
       onChange: @updatePreview
       onSelect: @updateCoords
-      aspectRatio: superboxViewParam['xsize'] / superboxViewParam['ysize']
     }, ->
       bounds = @getBounds()
       superboxViewParam['boundx'] = bounds[0]
