@@ -3,7 +3,6 @@
 namespace PHPOrchestra\BackofficeBundle\EventListener;
 
 use Doctrine\Common\Collections\Collection;
-use PHPOrchestra\ModelBundle\Document\FieldType;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Symfony\Component\Form\FormEvent;
