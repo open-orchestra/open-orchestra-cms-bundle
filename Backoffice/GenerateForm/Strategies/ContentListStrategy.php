@@ -46,7 +46,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'contentNodeId' => '',
             'characterNumber' => 50,
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
-            'contentType' => '',
+            'contentType' => 'news',
             'contentTemplate' => '',
         );
 
@@ -54,7 +54,7 @@ class ContentListStrategy extends AbstractBlockStrategy
 
         $form->add('contentNodeId', 'orchestra_node_choice', array(
             'mapped' => false,
-            'data' => $attributes['url'],
+            'data' => $attributes['contentNodeId'],
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
         $form->add('characterNumber', 'text', array(
