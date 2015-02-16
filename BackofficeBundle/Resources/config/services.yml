@@ -4,6 +4,7 @@ parameters:
     php_orchestra_backoffice.manager.translation_choice.class: PHPOrchestra\Backoffice\Manager\TranslationChoiceManager
     php_orchestra_backoffice.manager.area.class: PHPOrchestra\BackofficeBundle\Manager\AreaManager
     php_orchestra_backoffice.manager.node.class: PHPOrchestra\BackofficeBundle\Manager\NodeManager
+    php_orchestra_backoffice.manager.site.class: PHPOrchestra\BackofficeBundle\Manager\SiteManager
     php_orchestra_backoffice.manager.media_folder.class: PHPOrchestra\BackofficeBundle\Manager\FolderManager
     php_orchestra_backoffice.manager.content.class: PHPOrchestra\BackofficeBundle\Manager\ContentManager
     php_orchestra_backoffice.manager.content_type.class: PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager
@@ -39,6 +40,10 @@ services:
             - @php_orchestra_backoffice.context_manager
             - %php_orchestra_model.document.node.class%
             - @event_dispatcher
+    php_orchestra_backoffice.manager.site:
+        class: %php_orchestra_backoffice.manager.site.class%
+        arguments:
+            - %php_orchestra_model.document.site.class%
     php_orchestra_backoffice.manager.media_folder:
         class: %php_orchestra_backoffice.manager.media_folder.class%
         arguments: [@doctrine.odm.mongodb.document_manager]
