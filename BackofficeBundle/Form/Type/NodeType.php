@@ -50,12 +50,14 @@ class NodeType extends AbstractType
                 )
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
-                'label' => 'php_orchestra_backoffice.form.node.changefreq.title'
+                'label' => 'php_orchestra_backoffice.form.node.changefreq.title',
+                'required' => false
             ))
             ->add('sitemap_priority', 'percent', array(
                 'label' => 'php_orchestra_backoffice.form.node.priority',
                 'type' => 'fractional',
-                'precision' => 2
+                'precision' => 2,
+                'required' => false
             ))
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
