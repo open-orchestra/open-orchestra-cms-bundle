@@ -17,6 +17,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $subscriber;
 
     protected $node;
+    protected $status;
     protected $id = 'id';
     protected $nodeEvent;
     protected $nodeRepository;
@@ -30,8 +31,11 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->status)->isPublished()->thenReturn(false);
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getId()->thenReturn($this->id);
+        Phake::when($this->node)->getStatus()->thenReturn($this->status);
         Phake::when($this->node)->getNodeId()->thenReturn($this->nodeId);
         Phake::when($this->node)->getParentId()->thenReturn($this->nodeId);
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
@@ -95,6 +99,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateRedirectionWithPerviousNodeAndDifferentPattern()
     {
+        Phake::when($this->status)->isPublished()->thenReturn(true);
         $oldPattern = 'oldPattern';
         $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn('other');
