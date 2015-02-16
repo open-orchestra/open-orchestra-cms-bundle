@@ -12,12 +12,23 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="tab-crop">
-            <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
-            <div class="media_crop_preview">
-                <h3>{{ 'php_orchestra_backoffice.media.current_preview'|trans }}</h3>
+
+            <!-- ORIGINAL IMAGE -->
+            <div id="original-image">
+                <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
             </div>
-            <div class="media-override-format-form"></div>
+
+            <!-- CROP SLECTOR  -->
             <div class="media_crop_form"></div>
+
+            <!-- CROPPED VERSION IN USAGE -->
+            <div class="media_crop_preview form-group">
+                <label class="control-label col-lg-3">{{ 'php_orchestra_backoffice.media.current_preview'|trans }}</label/>
+            </div>
+
+            <!-- UPLOAD ALTERNATIVE CROPPED VERSION -->
+            <div class="media-override-format-form"></div>
+
         </div>
         <div class="tab-pane" id="tab-meta">
             <div class="media_meta_form"></div>

@@ -54,7 +54,7 @@ class MediaController extends AbstractAdminController
      *
      * @return Response
      */
-    protected function showFolders()
+    public function showFoldersAction()
     {
         $rootFolders = $this->get('php_orchestra_media.repository.media_folder')->findAllRootFolderBySiteId();
 
