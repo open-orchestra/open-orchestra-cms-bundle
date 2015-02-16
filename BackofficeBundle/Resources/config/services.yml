@@ -9,6 +9,7 @@ parameters:
     php_orchestra_backoffice.manager.content.class: PHPOrchestra\BackofficeBundle\Manager\ContentManager
     php_orchestra_backoffice.manager.content_type.class: PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager
     php_orchestra_backoffice.manager.block.class: PHPOrchestra\BackofficeBundle\Manager\BlockManager
+    php_orchestra_backoffice.manager.redirection.class: PHPOrchestra\BackofficeBundle\Manager\RedirectionManager
 
 services:
     php_orchestra_backoffice.context_manager:
@@ -56,3 +57,11 @@ services:
     php_orchestra_backoffice.manager.block:
         class: %php_orchestra_backoffice.manager.block.class%
         arguments: [@php_orchestra_model.repository.node]
+    php_orchestra_backoffice.manager.redirection:
+        class: %php_orchestra_backoffice.manager.redirection.class%
+        arguments:
+            - %php_orchestra_model.document.redirection.class%
+            - @php_orchestra_backoffice.context_manager
+            - @doctrine.odm.mongodb.document_manager
+            - @event_dispatcher
+            - @php_orchestra_model.repository.site

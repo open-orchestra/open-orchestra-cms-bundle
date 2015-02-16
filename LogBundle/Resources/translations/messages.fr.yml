@@ -40,6 +40,10 @@ php_orchestra_log:
         create: Crée un nouveau rôle nommé role_name
         delete: Supprime un rôle nommé role_name
         update: Met à jour un rôle nommé role_name
+    redirection:
+        create: Crée une nouvelle redirection pour redirection_pattern du site redirection_site_name
+        delete: Supprime la redirection redirection_pattern du site redirection_site_name
+        update: Met à jour la redirection redirection_pattern du site redirection_site_name
     site:
         create: Crée un nouveau site avec l'id site_id et le nom site_name
         delete: Supprime un site avec l'id site_id et le nom site_name

@@ -5,6 +5,7 @@ parameters:
     php_orchestra_log.subscriber.keyword.class: PHPOrchestra\LogBundle\EventSubscriber\LogKeywordSubscriber
     php_orchestra_log.subscriber.media.class: PHPOrchestra\LogBundle\EventSubscriber\LogMediaSubscriber
     php_orchestra_log.subscriber.role.class: PHPOrchestra\LogBundle\EventSubscriber\LogRoleSubscriber
+    php_orchestra_log.subscriber.redirection.class: PHPOrchestra\LogBundle\EventSubscriber\LogRedirectionSubscriber
     php_orchestra_log.subscriber.site.class: PHPOrchestra\LogBundle\EventSubscriber\LogSiteSubscriber
     php_orchestra_log.subscriber.status.class: PHPOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber
     php_orchestra_log.subscriber.template.class: PHPOrchestra\LogBundle\EventSubscriber\LogTemplateSubscriber
@@ -44,6 +45,12 @@ services:
             - { name: monolog.logger, channel: phporchestra }
     php_orchestra_log.subscriber.role:
         class: %php_orchestra_log.subscriber.role.class%
+        arguments: [@logger]
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: phporchestra }
+    php_orchestra_log.subscriber.redirection:
+        class: %php_orchestra_log.subscriber.redirection.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
