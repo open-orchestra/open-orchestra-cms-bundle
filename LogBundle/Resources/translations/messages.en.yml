@@ -40,6 +40,10 @@ php_orchestra_log:
         create: Create a new role with role name role_name
         delete: Delete a role with role name role_name
         update: Update a role with role name role_name
+    redirection:
+        create: Create a new redirection for redirection_pattern of the redirection_site_name site
+        delete: Delete a redirection for redirection_pattern of the redirection_site_name site
+        update: Update a redirection for redirection_pattern of the redirection_site_name site
     site:
         create: Create a new site with site id site_id and name site_name
         delete: delete a site with site id site_id and name site_name
