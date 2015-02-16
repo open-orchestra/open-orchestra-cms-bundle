@@ -26,6 +26,8 @@ class ContentListStrategy extends AbstractStrategy
         $attributes = $block->getAttributes();
 
         $empty = array(
+            'id' => $block->getId(),
+            'class' => $block->getClass(),
             'contentNodeId' => NodeInterface::ROOT_NODE_ID,
             'characterNumber' => '50',
             'keywords' => '',
