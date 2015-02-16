@@ -18,6 +18,8 @@ use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
  */
 class NodeType extends AbstractType
 {
+    const SCHEME_DEFAULT = 'default';
+
     protected $areaClass;
     protected $nodeClass;
     protected $nodeManager;
@@ -37,7 +39,7 @@ class NodeType extends AbstractType
         $this->templateRepository = $templateRepository;
         $this->areaClass = $areaClass;
         $this->schemeChoices = array(
-            'default' => 'php_orchestra_backoffice.form.node.default_scheme',
+            self::SCHEME_DEFAULT => 'php_orchestra_backoffice.form.node.default_scheme',
             SchemeAbilityInterface::SCHEME_HTTP => SchemeAbilityInterface::SCHEME_HTTP,
             SchemeAbilityInterface::SCHEME_HTTPS => SchemeAbilityInterface::SCHEME_HTTPS,
             SchemeAbilityInterface::SCHEME_FILE => SchemeAbilityInterface::SCHEME_FILE,
