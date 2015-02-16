@@ -49,6 +49,7 @@ php_orchestra_backoffice:
             success: Le site a été modifié
             creation: Le site a été créé
             site_id: L'id du site
+            scheme: Protocole par défaut
             domain: Domaine
             name: Nom
             aliases: Alias
@@ -96,6 +97,8 @@ php_orchestra_backoffice:
         node:
             success: Le noeud a été sauvé
             name: Page
+            scheme: Protocol
+            default_scheme: Par défaut (Configuration de l'alias)
             node_type: Type de noeud
             priority: Importance relative par rapport aux autres pages du site (pour le sitemap)
             theme: Le thème
