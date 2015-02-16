@@ -184,8 +184,6 @@ class NodeManager
             $node->setMetaDescription($site->getMetaDescription());
             $node->setMetaIndex($site->getMetaIndex());
             $node->setMetaFollow($site->getMetaFollow());
-            $node->setSitemapPriority(null);
-            $node->setSitemapChangefreq(null);
             if ($theme = $site->getTheme()) {
                 $node->setTheme($theme->getName());
             }
