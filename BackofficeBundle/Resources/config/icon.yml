@@ -111,3 +111,7 @@ services:
         class: %php_orchestra_backoffice.display_icon.audience_analysis.class%
         tags:
             - { name: php_orchestra_backoffice.display_icon.strategy }
+    php_orchestra_backoffice.icon.video:
+        class: PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\VideoStrategy
+        tags:
+            - { name: php_orchestra_backoffice.display_icon.strategy }

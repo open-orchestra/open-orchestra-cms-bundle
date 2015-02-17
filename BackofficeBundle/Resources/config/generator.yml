@@ -128,3 +128,7 @@ services:
             - @translator
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.generate_form.video:
+        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\VideoStrategy
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
