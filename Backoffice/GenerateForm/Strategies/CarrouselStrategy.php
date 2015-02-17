@@ -39,7 +39,6 @@ class CarrouselStrategy extends AbstractBlockStrategy
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('pictures', 'collection', array(
-            'mapped' => false,
             'type' => 'orchestra_media',
             'allow_add' => true,
             'attr' => array(

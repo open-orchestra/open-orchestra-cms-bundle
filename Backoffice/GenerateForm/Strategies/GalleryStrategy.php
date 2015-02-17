@@ -57,12 +57,10 @@ class GalleryStrategy extends AbstractBlockStrategy
             ))
             ->add('thumbnail_format', 'choice', array(
                 'choices' => $this->formats,
-                'empty_data' => 1,
                 'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.thumbnail_format')
             ))
             ->add('image_format', 'choice', array(
                 'choices' => $this->formats,
-                'empty_data' => 1,
                 'label' => $this->translator->trans('php_orchestra_backoffice.block.gallery.form.image_format')
             ))
             ->add('pictures', 'collection', array(
