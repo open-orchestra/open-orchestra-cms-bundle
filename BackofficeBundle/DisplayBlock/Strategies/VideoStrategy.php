@@ -2,6 +2,7 @@
 
 namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
+use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class VideoStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return false;
+        return DisplayBlockInterface::VIDEO === $block->getComponent();
     }
 
     /**
@@ -32,7 +33,10 @@ class VideoStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Video:show.html.twig');
+        return $this->render(
+            'PHPOrchestraBackofficeBundle:Block/Video:show.html.twig',
+            array('attributes' => $block->getAttributes())
+        );
     }
 
     /**

@@ -319,6 +319,7 @@ php_orchestra_backoffice:
         video:
             title: Bloc vidéo
             description: Insère une vidéo Youtube, Dailymotion ou Vimeo
+            type: Type de vidéo
             youtube:
                 title: Bloc youtube
                 description: Affiche une vidéo de youtube
