@@ -72,7 +72,6 @@ class ContentTypeType extends AbstractType
             )
         ));
 
-        $builder->addEventSubscriber(new ContentTypeTypeSubscriber($this->fieldClass));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 

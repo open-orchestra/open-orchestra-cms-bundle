@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Symfony\Component\Form\FormEvent;
+use PHPOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class TranslateValueInitializerListener
@@ -34,6 +35,24 @@ class TranslateValueInitializerListener
         $data = $event->getData();
 
         if ($data) {
+            $translatedProperties = $data->getTranslatedProperties();
+            foreach ($translatedProperties as $property) {
+                $properties = $data->$property();
+                $this->generateDefaultValues($properties);
+            }
+        }
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function preSubmit(FormEvent $event)
+    {
+        /** @var TranslatedValueContainerInterface $data */
+        $data = $event->getForm()->getData();
+
+        if (is_null($data)) {
+            $data = new FieldType();
             $translatedProperties = $data->getTranslatedProperties();
             foreach ($translatedProperties as $property) {
                 $properties = $data->$property();
