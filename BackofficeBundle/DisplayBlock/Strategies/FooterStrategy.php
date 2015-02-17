@@ -32,8 +32,6 @@ class FooterStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
             array(

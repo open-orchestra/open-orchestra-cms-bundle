@@ -33,8 +33,6 @@ class ContentStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Content:show.html.twig',
             array(

@@ -33,8 +33,6 @@ class LanguageListStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/LanguageList:show.html.twig',
             array(

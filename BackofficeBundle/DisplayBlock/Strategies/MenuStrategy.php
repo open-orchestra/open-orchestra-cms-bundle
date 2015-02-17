@@ -33,8 +33,6 @@ class MenuStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Menu:show.html.twig',
             array(
