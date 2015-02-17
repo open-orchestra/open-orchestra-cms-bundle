@@ -4,7 +4,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\Manager;
 
 use PHPOrchestra\BackofficeBundle\Manager\SiteManager;
 use PHPOrchestra\ModelInterface\Model\SiteInterface;
-use Phake;
 
 /**
  * Class SiteManagerTest
@@ -12,7 +11,7 @@ use Phake;
 class SiteManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var NodeManager
+     * @var SiteManager
      */
     protected $manager;
 
