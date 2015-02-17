@@ -6,21 +6,25 @@ use Doctrine\Common\Collections\Collection;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Symfony\Component\Form\FormEvent;
+use PHPOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class TranslateValueInitializerListener
  */
 class TranslateValueInitializerListener
 {
+    protected $fieldTypeClass;
     protected $defaultLanguages;
     protected $translatedValueClass;
 
     /**
      * @param array  $defaultLanguages
      * @param string $translatedValueClass
+     * @param string $fieldTypeClass
      */
-    public function __construct(array $defaultLanguages, $translatedValueClass)
+    public function __construct(array $defaultLanguages, $translatedValueClass, $fieldTypeClass)
     {
+        $this->fieldTypeClass = $fieldTypeClass;
         $this->defaultLanguages = $defaultLanguages;
         $this->translatedValueClass = $translatedValueClass;
     }
@@ -39,6 +43,25 @@ class TranslateValueInitializerListener
                 $properties = $data->$property();
                 $this->generateDefaultValues($properties);
             }
+        }
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function preSubmitFieldType(FormEvent $event)
+    {
+        /** @var TranslatedValueContainerInterface $data */
+        $data = $event->getForm()->getData();
+        if (is_null($data)) {
+            $fieldTypeClass = $this->fieldTypeClass;
+            $data = new $fieldTypeClass();
+            $translatedProperties = $data->getTranslatedProperties();
+            foreach ($translatedProperties as $property) {
+                $properties = $data->$property();
+                $this->generateDefaultValues($properties);
+            }
+            $event->getForm()->setData($data);
         }
     }
 

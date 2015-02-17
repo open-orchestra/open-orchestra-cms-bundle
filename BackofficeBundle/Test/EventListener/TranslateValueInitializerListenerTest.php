@@ -22,9 +22,11 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
      */
     protected $names;
 
+    protected $form;
     protected $event;
     protected $object;
     protected $fields;
+    protected $fieldTypeClass;
     protected $defaultLanguages;
     protected $translatedValueClass;
 
@@ -33,6 +35,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->fieldTypeClass = 'PHPOrchestra\ModelBundle\Document\FieldType';
         $this->translatedValueClass = 'PHPOrchestra\ModelBundle\Document\TranslatedValue';
         $this->defaultLanguages = array('en', 'fr', 'es', 'de');
         $this->names = new ArrayCollection();
@@ -41,10 +44,12 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->object)->getNames()->thenReturn($this->names);
         Phake::when($this->object)->getFields()->thenReturn($this->fields);
 
+        $this->form = Phake::mock('Symfony\Component\Form\Form');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getData()->thenReturn($this->object);
+        Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->listener = new TranslateValueInitializerListener($this->defaultLanguages, $this->translatedValueClass);
+        $this->listener = new TranslateValueInitializerListener($this->defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
     }
 
     /**
@@ -53,6 +58,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     public function testCallable()
     {
         $this->assertTrue(is_callable(array($this->listener, 'preSetData')));
+        $this->assertTrue(is_callable(array($this->listener, 'preSubmitFieldType')));
     }
 
     /**
@@ -66,7 +72,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass);
+        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
         $listener->preSetData($this->event);
 
         $this->assertCount(count($defaultLanguages), $this->names);
@@ -110,7 +116,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass);
+        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
         $listener->preSetData($this->event);
 
         $this->assertCount(count($defaultLanguages), $this->names);
@@ -132,7 +138,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     {
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass);
+        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
         $listener->preSetData($this->event);
 
         $this->assertEquals(count($defaultLanguages) * count($translatedProperties), $this->names->count() + $this->fields->count());
@@ -148,6 +154,43 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
             array(array('en', 'fr'), array('getFields')),
             array(array('en'), array('getNames', 'getFields')),
             array(array('en', 'fr'), array('getFields', 'getNames')),
+        );
+    }
+
+    /**
+     * Test pre submit with no data
+     */
+    public function testPreSubmitWithNoData()
+    {
+        Phake::when($this->form)->getData()->thenReturn(null);
+
+        $this->listener->preSubmitFieldType($this->event);
+
+        Phake::verify($this->form)->setData(Phake::anyParameters());
+    }
+
+    /**
+     * Test pre submit with data
+     *
+     * @dataProvider provideClass
+     */
+    public function testPreSubmitWithData($class)
+    {
+        Phake::when($this->form)->getData()->thenReturn(Phake::mock($class));
+
+        $this->listener->preSubmitFieldType($this->event);
+
+        Phake::verify($this->form, Phake::never())->setData(Phake::anyParameters());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideClass()
+    {
+        return array(
+            array('stdClass'),
+            array('PHPOrchestra\ModelInterface\Model\FieldTypeInterface'),
         );
     }
 }

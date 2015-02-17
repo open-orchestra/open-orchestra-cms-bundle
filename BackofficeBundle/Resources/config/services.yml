@@ -22,6 +22,7 @@ services:
         arguments:
             - %php_orchestra_base.languages_availables%
             - %php_orchestra_model.document.translated_value.class%
+            - %php_orchestra_model.document.field_type.class%
     php_orchestra_backoffice.manager.translation_choice:
         class: %php_orchestra_backoffice.manager.translation_choice.class%
         arguments:
