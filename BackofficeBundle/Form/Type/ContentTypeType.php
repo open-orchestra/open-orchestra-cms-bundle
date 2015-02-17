@@ -27,7 +27,7 @@ class ContentTypeType extends AbstractType
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
-        TranslateValueInitializerListener $translateValueInitializer,
+        TranslateValueInitializerListener $translateValueInitializer
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
