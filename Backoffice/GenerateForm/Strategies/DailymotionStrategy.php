@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class DailymotionStrategy
@@ -23,99 +22,58 @@ class DailymotionStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
-            'chromeless' => false,
-            'autoplay' => false,
-            'related' => false,
-            'background' => '',
-            'foreground' => '',
-            'quality' => '',
-            'highlight' => '',
-            'height' => '269',
-            'width' => '480',
-            'info' => false,
-            'logo' => false,
-            'videoId' => '',
-        );
-
-        $attributes = array_merge($empty, $attributes);
-
-        $form->add('videoId', 'orchestra_video', array(
-            'mapped' => false,
-            'data' => $attributes['videoId'],
+        $builder->add('videoId', 'orchestra_video', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.video_id',
         ));
-        $form->add('width', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['width'],
+        $builder->add('width', 'text', array(
+            'empty_data' => '480',
             'label' => 'php_orchestra_backoffice.block.dailymotion.width',
             'required'  => false,
         ));
-        $form->add('height', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['height'],
+        $builder->add('height', 'text', array(
+            'empty_data' => '269',
             'label' => 'php_orchestra_backoffice.block.dailymotion.height',
             'required'  => false,
         ));
-        $form->add('quality', 'choice', array(
-            'mapped' => false,
+        $builder->add('quality', 'choice', array(
             'choices' => array('240' => '240', '380' => '380', '480' => '480', '720' => '720', '1080' => '1080'),
-            'data' => $attributes['quality'],
             'label' => 'php_orchestra_backoffice.block.dailymotion.quality',
             'required'  => false,
         ));
-        $form->add('autoplay', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['autoplay'],
+        $builder->add('autoplay', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.autoplay',
             'required'  => false,
         ));
-        $form->add('info', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['info'],
+        $builder->add('info', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.info',
             'required'  => false,
         ));
-        $form->add('related', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['related'],
+        $builder->add('related', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.related',
             'required'  => false,
         ));
-        $form->add('chromeless', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['chromeless'],
+        $builder->add('chromeless', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.chromeless',
             'required'  => false,
         ));
-        $form->add('logo', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['logo'],
+        $builder->add('logo', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.logo',
             'required'  => false,
         ));
-        $form->add('background', 'orchestra_color_picker', array(
-            'mapped' => false,
-            'data' => $attributes['background'],
+        $builder->add('background', 'orchestra_color_picker', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.background',
             'required'  => false,
         ));
-        $form->add('foreground', 'orchestra_color_picker', array(
-            'mapped' => false,
-            'data' => $attributes['foreground'],
+        $builder->add('foreground', 'orchestra_color_picker', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.foreground',
             'required'  => false,
         ));
-        $form->add('highlight', 'orchestra_color_picker', array(
-            'mapped' => false,
-            'data' => $attributes['highlight'],
+        $builder->add('highlight', 'orchestra_color_picker', array(
             'label' => 'php_orchestra_backoffice.block.dailymotion.highlight',
             'required'  => false,
         ));

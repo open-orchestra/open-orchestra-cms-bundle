@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class MediaListByKeywordStrategy
@@ -23,20 +22,12 @@ class MediaListByKeywordStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $attributes = array_merge(array(
-            'keywords' => null,
-        ), $attributes);
-
-        $form->add('keywords', 'orchestra_keywords', array(
-            'mapped' => false,
-            'data' => $attributes['keywords'],
+        $builder->add('keywords', 'orchestra_keywords', array(
             'label' => 'php_orchestra_backoffice.form.media.list.keyword',
             'required' => false,
         ));

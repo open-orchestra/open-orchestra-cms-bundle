@@ -4,9 +4,11 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
+use PHPOrchestra\BackofficeBundle\Form\DataTransformer\BlockToArrayTransformer;
 use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -16,15 +18,18 @@ class BlockType extends AbstractType
 {
     protected $generateFormManager;
     protected $fixedParams;
+    protected $formFactory;
 
     /**
      * @param GenerateFormManager $generateFormManager
      * @param array               $fixedParams
+     * @param FormFactory         $formFactory
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParams)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParams, FormFactory $formFactory)
     {
         $this->generateFormManager = $generateFormManager;
         $this->fixedParams = $fixedParams;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -33,7 +38,15 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $options['blockPosition']));
+        $builder->add('label');
+        $builder->add('class', 'text', array(
+            'required' => false
+        ));
+        $builder->add('id', 'text', array(
+            'required' => false
+        ));
+        $builder->addViewTransformer(new BlockToArrayTransformer());
+        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $this->formFactory, $options['blockPosition']));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
@@ -44,7 +57,8 @@ class BlockType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'blockPosition' => 0
+                'blockPosition' => 0,
+                'data_class' => null,
             )
         );
     }

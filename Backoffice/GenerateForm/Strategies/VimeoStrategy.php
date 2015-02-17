@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class VimeoStrategy
@@ -23,91 +22,53 @@ class VimeoStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
-            'fullscreen' => false,
-            'portrait' => false,
-            'autoplay' => false,
-            'byline' => false,
-            'height' => '269',
-            'title' => false,
-            'width' => '480',
-            'badge' => false,
-            'videoId' => '',
-            'loop' => false,
-            'color' => '',
-        );
-
-        $attributes = array_merge($empty, $attributes);
-
-        $form->add('videoId', 'orchestra_video', array(
-            'mapped' => false,
-            'data' => $attributes['videoId'],
+        $builder->add('videoId', 'orchestra_video', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.video_id',
         ));
-        $form->add('width', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['width'],
+        $builder->add('width', 'text', array(
+            'empty_data' => '480',
             'label' => 'php_orchestra_backoffice.block.vimeo.width',
             'required'  => false,
         ));
-        $form->add('height', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['height'],
+        $builder->add('height', 'text', array(
+            'empty_data' => '269',
             'label' => 'php_orchestra_backoffice.block.vimeo.height',
             'required'  => false,
         ));
-        $form->add('color', 'orchestra_color_picker', array(
-            'mapped' => false,
-            'data' => $attributes['color'],
+        $builder->add('color', 'orchestra_color_picker', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.color',
             'required'  => false,
         ));
-        $form->add('autoplay', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['autoplay'],
+        $builder->add('autoplay', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.autoplay',
             'required'  => false,
         ));
-        $form->add('fullscreen', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['fullscreen'],
+        $builder->add('fullscreen', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.fullscreen',
             'required'  => false,
         ));
-        $form->add('title', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['title'],
+        $builder->add('title', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.title_video',
             'required'  => false,
         ));
-        $form->add('byline', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['byline'],
+        $builder->add('byline', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.byline',
             'required'  => false,
         ));
-        $form->add('portrait', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['portrait'],
+        $builder->add('portrait', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.portrait',
             'required'  => false,
         ));
-        $form->add('loop', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['loop'],
+        $builder->add('loop', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.loop',
             'required'  => false,
         ));
-        $form->add('badge', 'checkbox', array(
-            'mapped' => false,
-            'data' => $attributes['badge'],
+        $builder->add('badge', 'checkbox', array(
             'label' => 'php_orchestra_backoffice.block.vimeo.badge',
             'required'  => false,
         ));

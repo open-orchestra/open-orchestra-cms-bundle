@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class AddThisStrategy
@@ -23,28 +22,13 @@ class AddThisStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
-            'pubid' => '',
-            'addThisClass' => '',
-        );
-
-        $attributes = array_merge($empty, $attributes);
-
-        $form->add('pubid', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['pubid'],
-        ));
-        $form->add('addThisClass', 'textarea', array(
-            'mapped' => false,
-            'data' => $attributes['addThisClass'],
-        ));
+        $builder->add('pubid');
+        $builder->add('addThisClass', 'textarea');
     }
 
     /**

@@ -41,7 +41,7 @@ class SubMenuStrategy extends AbstractStrategy
                 'id' => $block->getId(),
                 'class' => $block->getClass(),
                 'nbLevel' => $attributes['nbLevel'],
-                'node' => $attributes['node']
+                'node' => $attributes['nodeName']
             )
         );
     }

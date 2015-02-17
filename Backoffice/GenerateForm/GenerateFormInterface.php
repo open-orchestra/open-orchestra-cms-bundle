@@ -3,6 +3,7 @@
 namespace PHPOrchestra\Backoffice\GenerateForm;
 
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -18,16 +19,10 @@ interface GenerateFormInterface
     public function support(BlockInterface $block);
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block);
-
-    /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
-     */
-    public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block);
+    public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
      * @return string

@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class HeaderStrategy
@@ -23,17 +22,12 @@ class HeaderStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $form->add('mediaId', 'orchestra_media', array(
-            'mapped' => false,
-            'data' => array_key_exists('mediaId', $attributes)? $attributes['mediaId']:'',
-        ));
+        $builder->add('mediaId', 'orchestra_media');
     }
 
     /**

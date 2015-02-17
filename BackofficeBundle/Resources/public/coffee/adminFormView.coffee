@@ -13,6 +13,8 @@ adminFormView = OrchestraView.extend(
       for i of options.triggers
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
+    @formEvent = 'submit'
+    @formClass = 'form'
     @loadTemplates [
         'deleteButton'
     ]
@@ -49,6 +51,8 @@ adminFormView = OrchestraView.extend(
       $('.modal-footer', @el).removeClass("hidden-info")
       $('.modal-footer', @el).html @renderTemplate('deleteButton')
       $('.modal-footer', @el).prepend($('.submit_form', @$el))
+      @formEvent = 'click'
+      @formClass = '.submit_form'
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
@@ -58,10 +62,10 @@ adminFormView = OrchestraView.extend(
 
   addEventOnSave: ->
     viewContext = this
-    $(".submit_form", @$el).on "click", (e) ->
+    $(@formClass, @$el).on @formEvent, (e) ->
       e.preventDefault() # prevent native submit
       displayLoader($('.submit_form', viewContext.$el).parent())
-      $('form', viewContext.$el).ajaxSubmit
+      $("form", viewContext.$el).ajaxSubmit
         statusCode:
           200: (response) ->
             view = viewContext.renderContent(

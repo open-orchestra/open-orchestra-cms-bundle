@@ -9,7 +9,7 @@ $("#OrchestraBOModal").on "change", ".contentTypeSelector", (e) ->
     success: (response) ->
       $("#block_contentId").find("option").remove()
       $.each response.contents, (index, item) ->
-        $("#block_contentId").append new Option(item["name"], item["content_id"])
+        $("#block_contentId").append new Option(item["name"], item["id"])
         return
       return
   return
