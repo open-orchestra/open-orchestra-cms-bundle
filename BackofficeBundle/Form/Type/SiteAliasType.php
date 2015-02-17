@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 
 /**
  * Class SiteAliasType
@@ -12,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class SiteAliasType extends AbstractType
 {
     protected $siteAliasClass;
+    protected $schemeChoices;
 
     /**
      * @param string $siteAliasClass
@@ -19,6 +21,12 @@ class SiteAliasType extends AbstractType
     public function __construct($siteAliasClass)
     {
         $this->siteAliasClass = $siteAliasClass;
+        $this->schemeChoices = array(
+            SchemeAbilityInterface::SCHEME_HTTP => SchemeAbilityInterface::SCHEME_HTTP,
+            SchemeAbilityInterface::SCHEME_HTTPS => SchemeAbilityInterface::SCHEME_HTTPS,
+            SchemeAbilityInterface::SCHEME_FILE => SchemeAbilityInterface::SCHEME_FILE,
+            SchemeAbilityInterface::SCHEME_FTP => SchemeAbilityInterface::SCHEME_FTP
+        );
     }
 
     /**
@@ -28,6 +36,10 @@ class SiteAliasType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('scheme', 'choice', array(
+                'choices' => $this->schemeChoices,
+                'label' => 'php_orchestra_backoffice.form.website.scheme'
+            ))
             ->add('domain', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.website.domain'
             ))

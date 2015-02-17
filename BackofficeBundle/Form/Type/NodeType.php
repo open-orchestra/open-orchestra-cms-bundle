@@ -11,16 +11,20 @@ use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 
 /**
  * Class NodeType
  */
 class NodeType extends AbstractType
 {
+    const SCHEME_DEFAULT = 'default';
+
     protected $areaClass;
     protected $nodeClass;
     protected $nodeManager;
     protected $templateRepository;
+    protected $schemeChoices;
 
     /**
      * @param string                      $nodeClass
@@ -34,6 +38,13 @@ class NodeType extends AbstractType
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
         $this->areaClass = $areaClass;
+        $this->schemeChoices = array(
+            self::SCHEME_DEFAULT => 'php_orchestra_backoffice.form.node.default_scheme',
+            SchemeAbilityInterface::SCHEME_HTTP => SchemeAbilityInterface::SCHEME_HTTP,
+            SchemeAbilityInterface::SCHEME_HTTPS => SchemeAbilityInterface::SCHEME_HTTPS,
+            SchemeAbilityInterface::SCHEME_FILE => SchemeAbilityInterface::SCHEME_FILE,
+            SchemeAbilityInterface::SCHEME_FTP => SchemeAbilityInterface::SCHEME_FTP
+        );
     }
 
     /**
@@ -49,6 +60,16 @@ class NodeType extends AbstractType
                     'class' => 'alias-source',
                 )
             ))
+            ->add('routePattern', 'text', array(
+                'label' => 'php_orchestra_backoffice.form.node.route_pattern',
+                'attr' => array(
+                    'class' => 'alias-dest',
+                )
+            ))
+            ->add('scheme', 'choice', array(
+                'choices' => $this->schemeChoices,
+                'label' => 'php_orchestra_backoffice.form.node.scheme'
+            ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.changefreq.title',
                 'required' => false
@@ -61,12 +82,6 @@ class NodeType extends AbstractType
             ))
             ->add('theme', 'orchestra_theme_choice', array(
                 'label' => 'php_orchestra_backoffice.form.node.theme'
-            ))
-            ->add('routePattern', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.node.route_pattern',
-                'attr' => array(
-                    'class' => 'alias-dest',
-                )
             ))
             ->add('inMenu', 'checkbox', array(
                 'label' => 'php_orchestra_backoffice.form.node.in_menu',

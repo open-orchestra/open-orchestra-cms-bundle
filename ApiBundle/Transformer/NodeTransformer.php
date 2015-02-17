@@ -11,6 +11,7 @@ use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use PHPOrchestra\BackofficeBundle\Form\Type\NodeType;
 
 /**
  * Class NodeTransformer
@@ -110,7 +111,11 @@ class NodeTransformer extends AbstractTransformer
         )));
 
         if ($site = $this->siteRepository->findOneBySiteId($mixed->getSiteId())) {
-            $facade->addLink('_self_preview', 'http://' . $site->getMainAlias()->getDomain() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
+            $scheme = $mixed->getScheme();
+            if (is_null($scheme) || NodeType::SCHEME_DEFAULT == $scheme) {
+                $scheme = $site->getMainAlias()->getScheme();
+            }
+            $facade->addLink('_self_preview', $scheme . '://' . $site->getMainAlias()->getDomain() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
         }
 
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_node', array(

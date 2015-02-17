@@ -49,6 +49,7 @@ php_orchestra_backoffice:
             success: The website has been modified
             creation: The website has been created
             site_id: The website id
+            scheme: Default scheme
             domain: Domain
             name: Name
             aliases: Aliases
@@ -96,6 +97,8 @@ php_orchestra_backoffice:
         node:
             success: The node has been saved
             name: Page
+            scheme: Scheme
+            default_scheme: Default (Alias configuration)
             node_type: Type of Node
             priority: Relative importance compared to the other pages of the site (for the sitemap)
             theme: The theme
