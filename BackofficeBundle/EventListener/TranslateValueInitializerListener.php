@@ -50,7 +50,6 @@ class TranslateValueInitializerListener
     {
         /** @var TranslatedValueContainerInterface $data */
         $data = $event->getForm()->getData();
-
         if (is_null($data)) {
             $data = new FieldType();
             $translatedProperties = $data->getTranslatedProperties();
@@ -58,6 +57,7 @@ class TranslateValueInitializerListener
                 $properties = $data->$property();
                 $this->generateDefaultValues($properties);
             }
+var_dump($properties);
         }
     }
 

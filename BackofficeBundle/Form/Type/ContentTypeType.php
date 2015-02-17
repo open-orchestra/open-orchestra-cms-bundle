@@ -5,7 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\Form\Type;
 use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeTypeSubscriber;
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -19,25 +18,21 @@ class ContentTypeType extends AbstractType
     protected $translateValueInitializer;
     protected $contentTypeClass;
     protected $translator;
-    protected $fieldClass;
 
     /**
      * @param string                            $contentTypeClass
      * @param TranslatorInterface               $translator
      * @param TranslateValueInitializerListener $translateValueInitializer
-     * @param string                         $fieldClass
      */
     public function __construct(
         $contentTypeClass,
         TranslatorInterface $translator,
         TranslateValueInitializerListener $translateValueInitializer,
-        $fieldClass
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->contentTypeClass = $contentTypeClass;
         $this->translator = $translator;
-        $this->fieldClass = $fieldClass;
     }
 
     /**
