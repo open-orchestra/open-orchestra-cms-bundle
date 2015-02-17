@@ -4,9 +4,9 @@ namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
-use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -35,44 +35,26 @@ class ContentListStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
-            'keywords' => null,
-            'contentNodeId' => NodeInterface::ROOT_NODE_ID,
-            'characterNumber' => 50,
-            'choiceType' => ContentRepositoryInterface::CHOICE_AND,
-            'contentType' => 'news',
-            'contentTemplate' => '',
-        );
-
-        $attributes = array_merge($empty, $attributes);
-
-        $form->add('contentNodeId', 'orchestra_node_choice', array(
-            'mapped' => false,
-            'data' => $attributes['contentNodeId'],
+        $builder->add('url', 'orchestra_node_choice', array(
+            'empty_data' => NodeInterface::ROOT_NODE_ID,
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
-        $form->add('characterNumber', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['characterNumber'],
+        $builder->add('characterNumber', 'text', array(
+            'empty_data' => 50,
             'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
         ));
-        $form->add('contentType', 'orchestra_content_type_choice', array(
-            'mapped' => false,
-            'data' => $attributes['contentType'],
+        $builder->add('contentType', 'orchestra_content_type_choice', array(
             'label' => 'php_orchestra_backoffice.form.content_list.content_type',
             'required' => false
         ));
-        $form->add('choiceType', 'choice', array(
-            'mapped' => false,
-            'data' => $attributes['choiceType'],
+        $builder->add('choiceType', 'choice', array(
+            'empty_data' => ContentRepositoryInterface::CHOICE_AND,
             'label' => 'php_orchestra_backoffice.form.content_list.choice_type',
             'required' => true,
             'choices' => array(
@@ -80,9 +62,7 @@ class ContentListStrategy extends AbstractBlockStrategy
                 ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_or'),
             ),
         ));
-        $form->add('keywords', 'orchestra_keywords', array(
-            'mapped' => false,
-            'data' => $attributes['keywords'],
+        $builder->add('keywords', 'orchestra_keywords', array(
             'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
         ));
     }

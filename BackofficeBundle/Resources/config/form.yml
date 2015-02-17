@@ -65,6 +65,7 @@ services:
         arguments:
             - @php_orchestra_backoffice.generate_form_manager
             - %php_orchestra_backoffice.block.fixed_attributes%
+            - @form.factory
         tags:
             - { name: form.type, alias: block }
     php_orchestra_backoffice.type.existing_block_choice:

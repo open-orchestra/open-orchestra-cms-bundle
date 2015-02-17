@@ -2,8 +2,10 @@
 
 namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
 
+use Doctrine\Common\Util\Inflector;
 use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormFactory;
 
 /**
  * Class BlockTypeSubscriber
@@ -13,17 +15,20 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
     protected $generateFormManager;
     protected $fixedParams;
     protected $blockPosition;
+    protected $formFactory;
 
     /**
      * @param GenerateFormManager $generateFormManager
      * @param array               $fixedParams
+     * @param FormFactory         $formFactory
      * @param int                 $blockPosition
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParams, $blockPosition = 0)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParams,FormFactory $formFactory, $blockPosition = 0)
     {
         $this->generateFormManager = $generateFormManager;
         $this->fixedParams = $fixedParams;
         $this->blockPosition = $blockPosition;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -36,14 +41,15 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
 
         $label = $data->getLabel();
         if ('' == $label) {
-            $label = $data->getComponent() . ' #' . ($this->blockPosition + 1);
+            $data->setLabel($data->getComponent() . ' #' . ($this->blockPosition + 1));
         }
 
-        $form->add('label', 'text', array('data' => $label));
-        $form->add('class', 'text', array('data' => $data->getClass(), 'required'  => false));
-        $form->add('id', 'text', array('data' => $data->getId(), 'required'  => false));
+        $newForm = $this->formFactory->create($this->generateFormManager->createForm($data));
 
-        $this->generateFormManager->buildForm($form, $data);
+        foreach ($newForm->all() as $newFormChildren) {
+            $form->add($newFormChildren);
+        }
+
     }
 
     /**
@@ -58,6 +64,8 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
 
         foreach ($data as $key => $value) {
             if (in_array($key, $this->fixedParams)) {
+                $setter = 'set' . Inflector::classify($key);
+                $block->$setter($value);
                 continue;
             }
 
@@ -79,14 +87,6 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
             }
         }
 
-        foreach ($blockAttributes as $key => $blockAttribute) {
-            if ($form->has($key) && !array_key_exists($key, $data)) {
-                $blockAttributes[$key] = false;
-            }
-        }
-
         $block->setAttributes($blockAttributes);
-
-        $this->generateFormManager->alterFormAfterSubmit($form, $block);
     }
 }

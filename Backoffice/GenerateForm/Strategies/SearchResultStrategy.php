@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class SearchResultStrategy
@@ -23,62 +22,20 @@ class SearchResultStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
-            'nodeId' => '',
-            'nbdoc' => null,
-            'nbspellcheck' => null,
-            'limitField' => null,
-            'fielddisplayed' => '',
-            'facets' => '',
-            'filter' => '',
-            'optionsearch' => '',
-            'optionsdismax' => '',
-        );
-        $attributes = array_merge($empty, $attributes);
-
-        $form->add('nodeId', 'text', array(
-            'mapped' => false,
-            'data' => $attributes['nodeId'],
-        ));
-        $form->add('nbdoc', 'integer', array(
-            'mapped' => false,
-            'data' => $attributes['nbdoc'],
-        ));
-        $form->add('nbspellcheck', 'integer', array(
-            'mapped' => false,
-            'data' => $attributes['nbspellcheck'],
-        ));
-        $form->add('limitField', 'integer', array(
-            'mapped' => false,
-            'data' => $attributes['limitField'],
-        ));
-        $form->add('fielddisplayed', 'text', array(
-            'mapped' => false,
-            'data' => json_encode($attributes['fielddisplayed']),
-        ));
-        $form->add('facets', 'text', array(
-            'mapped' => false,
-            'data' => json_encode($attributes['facets']),
-        ));
-        $form->add('filter', 'text', array(
-            'mapped' => false,
-            'data' => json_encode($attributes['filter']),
-        ));
-        $form->add('optionsearch', 'text', array(
-            'mapped' => false,
-            'data' => json_encode($attributes['optionsearch']),
-        ));
-        $form->add('optionsdismax', 'text', array(
-            'mapped' => false,
-            'data' => json_encode($attributes['optionsdismax']),
-        ));
+        $builder->add('nodeId');
+        $builder->add('nbdoc', 'integer');
+        $builder->add('nbspellcheck', 'integer');
+        $builder->add('limitField', 'integer');
+        $builder->add('fielddisplayed');
+        $builder->add('facets');
+        $builder->add('filter');
+        $builder->add('optionsearch');
+        $builder->add('optionsdismax');
     }
 
     /**

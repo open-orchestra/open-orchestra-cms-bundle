@@ -32,7 +32,7 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->strategy2)->getName()->thenReturn('strategy2');
         Phake::when($this->strategy2)->support(Phake::anyParameters())->thenReturn(false);
         $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
-        $this->form = Phake::mock('Symfony\Component\Form\Form');
+        $this->form = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
 
         $this->manager = new GenerateFormManager();
         $this->manager->addStrategy($this->strategy1);
@@ -44,20 +44,18 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildForm()
     {
-        $this->manager->buildForm($this->form, $this->block);
+        $this->manager->buildForm($this->form, array(), $this->block);
 
-        Phake::verify($this->strategy1)->buildForm($this->form, $this->block);
-        Phake::verify($this->strategy2, Phake::never())->buildForm($this->form, $this->block);
+        Phake::verify($this->strategy1)->buildForm($this->form, array());
+        Phake::verify($this->strategy2, Phake::never())->buildForm($this->form, array());
     }
 
     /**
-     * Test alter form
+     * Test Create form
      */
-    public function testAlterFormAfterSubmit()
+    public function testCreateForm()
     {
-        $this->manager->alterFormAfterSubmit($this->form, $this->block);
-
-        Phake::verify($this->strategy1)->alterFormAfterSubmit($this->form, $this->block);
-        Phake::verify($this->strategy2, Phake::never())->alterFormAfterSubmit($this->form, $this->block);
+        $strategy = $this->manager->createForm($this->block);
+        $this->assertSame($this->strategy1, $strategy);
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
 namespace PHPOrchestra\BackofficeBundle\StrategyManager;
+
 use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 
 /**
@@ -22,29 +23,31 @@ class GenerateFormManager
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface  $form
+     * @param array                 $options
+     * @param BlockInterface        $block
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $form, array $options, BlockInterface $block)
     {
         /** @var GenerateFormInterface $strategy */
         foreach ($this->strategies as $strategy) {
             if ($strategy->support($block)) {
-                $strategy->buildForm($form, $block);
+                $strategy->buildForm($form, $options);
             }
         }
     }
 
     /**
-     * @param FormInterface  $form
      * @param BlockInterface $block
+     *
+     * @return GenerateFormInterface
      */
-    public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block)
+    public function createForm(BlockInterface $block)
     {
         /** @var GenerateFormInterface $strategy */
         foreach ($this->strategies as $strategy) {
             if ($strategy->support($block)) {
-                $strategy->alterFormAfterSubmit($form, $block);
+                return $strategy;
             }
         }
     }

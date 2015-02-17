@@ -4,18 +4,12 @@ namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
 use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * Class AbstractBlockStrategy
  */
-abstract class AbstractBlockStrategy implements GenerateFormInterface
+abstract class AbstractBlockStrategy extends AbstractType implements GenerateFormInterface
 {
-    /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
-     */
-    public function alterFormAfterSubmit(FormInterface $form, BlockInterface $block)
-    {
-    }
 }

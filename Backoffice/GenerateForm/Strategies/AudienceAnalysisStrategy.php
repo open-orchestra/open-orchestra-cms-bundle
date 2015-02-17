@@ -2,10 +2,9 @@
 
 namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -37,24 +36,17 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
-    public function buildForm(FormInterface $form, BlockInterface $block)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $attributes = $block->getAttributes();
-
-        $form
+        $builder
             ->add('tag_type', 'choice', array(
-                'mapped' => false,
                 'choices' => $this->choices,
-//                'expanded' => true,
-                'data' => array_key_exists('tag_type', $attributes) ? $attributes['tag_type'] : '',
                 'label' => 'php_orchestra_backoffice.block.audience_analysis.tag_type'
             ))
             ->add('site_id', 'text', array(
-                'mapped' => false,
-                'data' => array_key_exists('site_id', $attributes) ? $attributes['site_id'] : '',
                 'label' => 'php_orchestra_backoffice.block.audience_analysis.site_id'
             ))
         ;

@@ -20,8 +20,10 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $event;
     protected $block;
     protected $formConfig;
+    protected $formFactory;
     protected $fixedParams;
     protected $generateFormManager;
+    protected $generateFormInterface;
 
     /**
      * Set up the test
@@ -37,15 +39,22 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
         Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
         Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
+        Phake::when($this->form)->all()->thenReturn(array($this->form));
+
+
+        $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactory');
+        Phake::when($this->formFactory)->create(Phake::anyParameters())->thenReturn($this->form);
+        $this->generateFormInterface = Phake::mock('PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
         $this->generateFormManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
+        Phake::when($this->generateFormManager)->createForm(Phake::anyParameters())->thenReturn($this->generateFormInterface);
 
-        $this->fixedParams = array('component', 'submit', 'label', 'class', 'id');
+        $this->fixedParams = array('component', 'label', 'class', 'id');
 
-        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams);
+        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $this->formFactory);
     }
 
     /**
@@ -75,8 +84,8 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form, Phake::times(3))->add(Phake::anyParameters());
-        Phake::verify($this->generateFormManager)->buildForm($this->form, $this->block);
+        Phake::verify($this->generateFormManager)->createForm($this->block);
+        Phake::verify($this->form)->add(Phake::anyParameters());
     }
 
     /**
@@ -100,7 +109,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->getData()->thenReturn($this->block);
         Phake::when($this->block)->getAttributes()->thenReturn(array());
 
-        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample', 'class' => 'class', 'id' => 'htmlId'), $sentData);
+        $sentDataFull = array_merge(array('component' => 'sample', 'class' => 'class', 'id' => 'htmlId'), $sentData);
         Phake::when($this->event)->getData()->thenReturn($sentDataFull);
 
         $this->subscriber->preSubmit($this->event);
@@ -147,40 +156,6 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             array(array('tentative' => 'tentative')),
             array(array('tentative', 'test', 'autre' => 5)),
             array(array('tentative', 'test', 'autre' => array('test' => 'test'))),
-        );
-    }
-
-    /**
-     * @param $sentData
-     *
-     * @dataProvider provideStringDataWithCheckBox
-     */
-    public function testPreSubmitWithPreviousDataAndKeyNotInDataAndString($sentData)
-    {
-        $startData = array('test' => 'oldTest', 'checkbox2' => true);
-        Phake::when($this->form)->getData()->thenReturn($this->block);
-        Phake::when($this->form)->has('checkbox2')->thenReturn(true);
-        Phake::when($this->block)->getAttributes()->thenReturn($startData);
-
-        $sentDataFull = array_merge(array('submit' => 'submit', 'component' => 'sample', 'class' => 'class', 'id' => 'htmlId'), $sentData);
-        Phake::when($this->event)->getData()->thenReturn($sentDataFull);
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->block)->setAttributes(array_merge(array('checkbox2' => false), $sentData));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideStringDataWithCheckBox()
-    {
-        return array(
-            array(array('test' => 'test')),
-            array(array('test' => 'test', 'tentative' => 'tentative')),
-            array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5)),
-            array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5, 'checkbox' => true)),
-            array(array('test' => 'test', 'tentative' => 'tentative', 'number' => 5, 'checkbox2' => true)),
         );
     }
 }
