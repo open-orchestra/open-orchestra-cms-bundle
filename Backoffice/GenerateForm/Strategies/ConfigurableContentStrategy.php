@@ -20,6 +20,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $contentTypeRepository;
     protected $contentRepository;
     protected $router;
+    protected $block;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
@@ -43,6 +44,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
+        $this->block = $block;
         return DisplayBlockInterface::CONFIGURABLE_CONTENT === $block->getComponent();
     }
 

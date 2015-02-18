@@ -44,9 +44,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'empty_data' => NodeInterface::ROOT_NODE_ID,
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
-        $builder->add('contentNodeId', 'orchestra_node_choice', array(
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
-        ));
+
         $builder->add('characterNumber', 'text', array(
             'empty_data' => 50,
             'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
