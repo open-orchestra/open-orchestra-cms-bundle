@@ -170,6 +170,7 @@ php_orchestra_backoffice:
             choice_type: Type de choix
             choice_type_and: ET
             choice_type_or: OU
+            content_template: Gabarit à utiliser pour afficher un contenu
         orchestra_fields:
             max_length: Longueur max
             required_field: Champ requis

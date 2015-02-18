@@ -170,6 +170,7 @@ php_orchestra_backoffice:
             choice_type: Type of choice
             choice_type_and: AND
             choice_type_or: OR
+            content_template: Template to use to display the content
         orchestra_fields:
             max_length: Max length
             required_field: Field required
