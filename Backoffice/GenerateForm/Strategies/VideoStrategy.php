@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class VideoStrategy extends AbstractBlockStrategy
 {
+    const TEMPLATE = 'PHPOrchestraBackofficeBundle:Block/Video:form.html.twig';
+
     /**
      * @param BlockInterface $block
      *
@@ -38,6 +40,16 @@ class VideoStrategy extends AbstractBlockStrategy
     }
 
     /**
+     * Get block form template
+     * 
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return self::TEMPLATE;
+    }
+
+/**
      * @return string
      */
     public function getName()

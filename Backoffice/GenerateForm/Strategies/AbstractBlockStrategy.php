@@ -12,4 +12,13 @@ use Symfony\Component\Form\FormInterface;
  */
 abstract class AbstractBlockStrategy extends AbstractType implements GenerateFormInterface
 {
+    /**
+     * Get block form template
+     * 
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return 'PHPOrchestraBackofficeBundle:Editorial:template.html.twig';
+    }
 }

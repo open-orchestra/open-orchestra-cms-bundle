@@ -6,7 +6,6 @@ use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-
 /**
  * Class GenerateFormManager
  */
@@ -48,6 +47,21 @@ class GenerateFormManager
         foreach ($this->strategies as $strategy) {
             if ($strategy->support($block)) {
                 return $strategy;
+            }
+        }
+    }
+
+    /**
+     * @param BlockInterface $block
+     *
+     * @return string
+     */
+    public function getTemplate(BlockInterface $block)
+    {
+        /** @var GenerateFormInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                return $strategy->getTemplate();
             }
         }
     }
