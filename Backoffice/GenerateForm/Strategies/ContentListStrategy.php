@@ -42,6 +42,9 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         $builder->add('url', 'orchestra_node_choice', array(
             'empty_data' => NodeInterface::ROOT_NODE_ID,
+            'label' => 'php_orchestra_backoffice.form.content_list.url',
+        ));
+        $builder->add('contentNodeId', 'orchestra_node_choice', array(
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
         $builder->add('characterNumber', 'text', array(
@@ -62,8 +65,13 @@ class ContentListStrategy extends AbstractBlockStrategy
                 ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_or'),
             ),
         ));
-        $builder->add('keywords', 'orchestra_keywords', array(
+        /*$builder->add('keywords', 'orchestra_keywords', array(
+            'required' => false,
             'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
+        ));*/
+        $builder->add('contentTemplate', 'tinymce', array(
+            'required' => false,
+            'label' => 'php_orchestra_backoffice.form.content_list.content_template',
         ));
     }
 
