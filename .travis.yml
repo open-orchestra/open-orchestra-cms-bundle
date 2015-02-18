@@ -5,6 +5,7 @@ source_key: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUlJRW93SUJBQUtDQVFFQXV
 cache:
   directories:
     - ~/.composer/cache
+    - ~/composer
 
 php:
   - 5.4
@@ -14,7 +15,7 @@ sudo: false
 before_install:
   - printf "\n" |pecl install imagick
   - phpenv config-add .travis.php.ini
-  - wget https://getcomposer.org/composer.phar
+  - if [ -f ~/composer/composer.phar ]; then mv ~/composer/composer.phar ./; else wget https://getcomposer.org/composer.phar; endif
 
 install:
   - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
@@ -23,3 +24,5 @@ script: ./bin/phpunit
 
 after_script:
   - ./bin/ocular code-coverage:upload --access-token="0ab85d09ea536dc6a7f03316b495cc078d8bee02c7c74974bbfd1fe280425a16" --format=php-clover build/logs/clover.xml
+  - mkdir ~/composer
+  - mv composer.phar ~/composer/composer.phar
