@@ -16,7 +16,7 @@ before_install:
   - printf "\n" |pecl install imagick
   - phpenv config-add .travis.php.ini
   - if [ -f ~/composer/composer.phar ]; then mv ~/composer/composer.phar ./; else wget https://getcomposer.org/composer.phar; fi
-  - mkdir ~/composer
+  - mkdir -p ~/composer
   - cp composer.phar ~/composer/composer.phar
 
 install:
