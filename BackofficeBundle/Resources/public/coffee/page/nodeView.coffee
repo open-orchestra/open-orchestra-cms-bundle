@@ -84,7 +84,18 @@ NodeView = OrchestraView.extend(
       cid: @cid
     )
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
+    blockpanel = $('.js-widget-blockpanel', @$el)
+    topBlockPanel = $('#ribbon').offset().top + $('#ribbon').height()
+    blockpanel.html($('#generated-panel', @$el).html()).show()
+    blockpanel.height($(window).height() - topBlockPanel)
+    $(document).on 'scroll', ->
+      if $(window).scrollTop() > topBlockPanel
+        blockpanel.css 'position', 'fixed'
+        blockpanel.css 'top', topBlockPanel
+      else
+        blockpanel.css 'position', 'absolute'
+        blockpanel.css 'top', '0px'
+      return
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addExistingBlockToView()
