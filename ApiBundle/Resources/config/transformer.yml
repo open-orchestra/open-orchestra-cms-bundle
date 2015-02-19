@@ -30,6 +30,7 @@ parameters:
     php_orchestra_api.transformer.keyword_collection.class: PHPOrchestra\ApiBundle\Transformer\KeywordCollectionTransformer
     php_orchestra_api.transformer.deleted.class: PHPOrchestra\ApiBundle\Transformer\DeletedTransformer
     php_orchestra_api.transformer.deleted_collection.class: PHPOrchestra\ApiBundle\Transformer\DeletedCollectionTransformer
+    php_orchestra_api.transformer.link.class: PHPOrchestra\ApiBundle\Transformer\LinkTransformer
 
 services:
     php_orchestra_api.transformer_manager:
@@ -178,5 +179,9 @@ services:
             - { name: php_orchestra_api.transformer.strategy}
     php_orchestra_api.transformer.deleted_collection:
         class: %php_orchestra_api.transformer.deleted_collection.class%
+        tags:
+            - { name: php_orchestra_api.transformer.strategy}
+    php_orchestra_api.transformer.link:
+        class: %php_orchestra_api.transformer.link.class%
         tags:
             - { name: php_orchestra_api.transformer.strategy}

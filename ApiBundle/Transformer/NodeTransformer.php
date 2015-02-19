@@ -6,6 +6,7 @@ use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
 use PHPOrchestra\ModelInterface\Event\StatusableEvent;
 use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
 use PHPOrchestra\ModelInterface\StatusEvents;
 use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
@@ -111,11 +112,18 @@ class NodeTransformer extends AbstractTransformer
         )));
 
         if ($site = $this->siteRepository->findOneBySiteId($mixed->getSiteId())) {
-            $scheme = $mixed->getScheme();
-            if (is_null($scheme) || SchemeAbilityInterface::SCHEME_DEFAULT == $scheme) {
-                $scheme = $site->getMainAlias()->getScheme();
+            /** @var SiteAliasInterface $alias */
+            $encryptedId = $this->encrypter->encrypt($mixed->getId());
+            foreach ($site->getAliases() as $alias) {
+                if ($alias->getLanguage() == $mixed->getLanguage()) {
+                    $scheme = $mixed->getScheme();
+                    if (is_null($scheme) || SchemeAbilityInterface::SCHEME_DEFAULT == $scheme) {
+                        $scheme = $alias->getScheme();
+                    }
+                    $previewLink = $scheme . '://' . $alias->getDomain() . '/preview?token=' . $encryptedId;
+                    $facade->addPreviewLink($this->getTransformer('link')->transform(array('name' => $alias->getDomain(), 'link' => $previewLink)));
+                }
             }
-            $facade->addLink('_self_preview', $scheme . '://' . $site->getMainAlias()->getDomain() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
         }
 
         $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_node', array(

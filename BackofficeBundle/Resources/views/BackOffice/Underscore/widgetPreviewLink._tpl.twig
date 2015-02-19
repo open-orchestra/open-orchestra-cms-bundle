@@ -1,6 +1,20 @@
 <div class="widget-toolbar">
-    <a href="<%= previewLink %>" target="_blank" class="btn btn-info">
-        <i class="fa fa-eye"></i>
-        {{ 'php_orchestra_backoffice.node.preview'|trans({}, 'messages', language) }}
-    </a>
+    <div class="btn-group">
+        <button class="btn dropdown-toggle btn-xs txt-color-white bg-color-blue" data-toggle="dropdown">
+            <i class="fa fa-eye"></i> {{ 'php_orchestra_backoffice.node.preview'|trans({}, 'messages', language) }} <i class="fa fa-caret-down"></i>
+        </button>
+        <ul class="dropdown-menu pull-right">
+            <% if (previewLinks.length > 0 ) { %>
+                <% _.each(previewLinks, function(previewLink) { %>
+                    <li>
+                        <a href="<%= previewLink.link %>" target="_blank">
+                            <%= previewLink.name %>
+                        </a>
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <li>test failed</li>
+            <% } %>
+        </ul>
+    </div>
 </div>
