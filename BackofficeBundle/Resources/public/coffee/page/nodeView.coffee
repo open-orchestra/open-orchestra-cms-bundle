@@ -71,6 +71,7 @@ NodeView = OrchestraView.extend(
         url: url
         deleteurl: deleteurl
         confirmtext: confirmText
+        confirmtitle: confirmTitle
       )
 
   render: ->
