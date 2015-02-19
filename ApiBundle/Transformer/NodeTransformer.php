@@ -5,13 +5,13 @@ namespace PHPOrchestra\ApiBundle\Transformer;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\ApiBundle\Facade\NodeFacade;
 use PHPOrchestra\ModelInterface\Event\StatusableEvent;
+use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 use PHPOrchestra\ModelInterface\StatusEvents;
 use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use PHPOrchestra\BackofficeBundle\Form\Type\NodeType;
 
 /**
  * Class NodeTransformer
@@ -112,7 +112,7 @@ class NodeTransformer extends AbstractTransformer
 
         if ($site = $this->siteRepository->findOneBySiteId($mixed->getSiteId())) {
             $scheme = $mixed->getScheme();
-            if (is_null($scheme) || NodeType::SCHEME_DEFAULT == $scheme) {
+            if (is_null($scheme) || SchemeAbilityInterface::SCHEME_DEFAULT == $scheme) {
                 $scheme = $site->getMainAlias()->getScheme();
             }
             $facade->addLink('_self_preview', $scheme . '://' . $site->getMainAlias()->getDomain() . '/preview?token=' . $this->encrypter->encrypt($mixed->getId()));
