@@ -1,6 +1,8 @@
 $("ul.node-connectedSortable").sortable
   connectWith: "ul.node-connectedSortable"
   cancel: ".node-unsortable"
+  delay: 150
+  distance: 5
   beforeStop: (event, ui)->
     smartConfirm(
       'fa-sort-amount-asc',
