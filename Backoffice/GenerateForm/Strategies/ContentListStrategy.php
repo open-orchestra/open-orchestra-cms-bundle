@@ -65,10 +65,11 @@ class ContentListStrategy extends AbstractBlockStrategy
                 ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_or'),
             ),
         ));
-        /*$builder->add('keywords', 'orchestra_keywords', array(
+        $builder->add('keywords', 'orchestra_keywords', array(
+            'embedded' => false,
             'required' => false,
             'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
-        ));*/
+        ));
         $builder->add('contentTemplate', 'tinymce', array(
             'required' => false,
             'label' => 'php_orchestra_backoffice.form.content_list.content_template',

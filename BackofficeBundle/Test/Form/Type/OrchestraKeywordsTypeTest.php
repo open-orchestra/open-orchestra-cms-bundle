@@ -77,10 +77,12 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->setDefaultOptions($resolverMock);
 
-        Phake::verify($resolverMock)->setDefaults(array( 'attr' => array(
-            'class' => 'select2',
-            'data-tags' => json_encode(array($tagLabel, $tagLabel)),
-            'data-check' => $route
+        Phake::verify($resolverMock)->setDefaults(array(
+            'embedded' => true,
+            'attr' => array(
+                'class' => 'select2',
+                'data-tags' => json_encode(array($tagLabel, $tagLabel)),
+                'data-check' => $route
         )));
     }
 
@@ -100,7 +102,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildForm()
     {
-        $this->form->buildForm($this->builder, array());
+        $this->form->buildForm($this->builder, array('embedded' => true));
 
         Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
