@@ -40,7 +40,9 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->keywordsTransformer);
+        if($options['embedded']){
+            $builder->addModelTransformer($this->keywordsTransformer);
+        }
     }
 
     /**
@@ -48,10 +50,12 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array('attr' => array(
-            'class' => 'select2',
-            'data-tags' => $this->getTags(),
-            'data-check' => $this->router->generate('php_orchestra_api_check_keyword', array()),
+        $resolver->setDefaults(array(
+            'embedded' => true,
+            'attr' => array(
+                'class' => 'select2',
+                'data-tags' => $this->getTags(),
+                'data-check' => $this->router->generate('php_orchestra_api_check_keyword', array()),
         )));
     }
 

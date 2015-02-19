@@ -30,7 +30,7 @@ class ContentListStrategy extends AbstractStrategy
             'class' => $block->getClass(),
             'contentNodeId' => NodeInterface::ROOT_NODE_ID,
             'characterNumber' => '50',
-            /*'keywords' => '',*/
+            'keywords' => '',
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
             'contentType' => 'news',
             'contentTemplate' => '',
