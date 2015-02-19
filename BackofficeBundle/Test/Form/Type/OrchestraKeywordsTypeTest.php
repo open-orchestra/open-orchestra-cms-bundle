@@ -102,7 +102,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildForm()
     {
-        $this->form->buildForm($this->builder, array());
+        $this->form->buildForm($this->builder, array('embedded' => true));
 
         Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
