@@ -24,8 +24,8 @@ class VideoStrategy extends AbstractBlockStrategy
     }
 
     /**
-     * @param FormInterface  $form
-     * @param BlockInterface $block
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -227,6 +227,37 @@ class VideoStrategy extends AbstractBlockStrategy
                 'required'  => false,
             ))
         ;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array(
+            'youtubeAutoplay' => false,
+            'youtubeShowinfo' => false,
+            'youtubeFs' => false,
+            'youtubeRel' => false,
+            'youtubeDisablekb' => false,
+            'youtubeLoop' => false,
+            'youtubeControls' => false,
+            'youtubeTheme' => false,
+            'youtubeColor' => false,
+            'dailymotionAutoplay' => false,
+            'dailymotionInfo' => false,
+            'dailymotionLogo' => false,
+            'dailymotionRelated' => false,
+            'dailymotionChromeless' => false,
+            'vimeoAutoplay' => false,
+            'vimeoTitle' => false,
+            'vimeoFullscreen' => false,
+            'vimeoByline' => false,
+            'vimeoPortrait' => false,
+            'vimeoLoop' => false,
+            'vimeoBadge' => false,
+            'vimeoColor' => false,
+        );
     }
 
     /**

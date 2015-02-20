@@ -6,6 +6,7 @@ use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 use PHPOrchestra\ApiBundle\Facade\BlockFacade;
 use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
 use PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
+use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
@@ -16,6 +17,7 @@ use PHPOrchestra\ModelInterface\Model\NodeInterface;
 class BlockTransformer extends AbstractTransformer
 {
     protected $blockParameterManager;
+    protected $generateFormManager;
     protected $displayBlockManager;
     protected $displayManager;
     protected $blockClass;
@@ -25,10 +27,12 @@ class BlockTransformer extends AbstractTransformer
      * @param DisplayManager        $displayManager
      * @param string                $blockClass
      * @param BlockParameterManager $blockParameterManager
+     * @param GenerateFormManager   $generateFormManager
      */
-    public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager, $blockClass, BlockParameterManager $blockParameterManager)
+    public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager, $blockClass, BlockParameterManager $blockParameterManager, GenerateFormManager $generateFormManager)
     {
         $this->blockParameterManager = $blockParameterManager;
+        $this->generateFormManager = $generateFormManager;
         $this->displayBlockManager = $displayBlockManager;
         $this->displayIconManager = $displayManager;
         $this->blockClass = $blockClass;
@@ -99,10 +103,11 @@ class BlockTransformer extends AbstractTransformer
         );
 
         if (!is_null($facade->component)) {
-            /** @var BlockInterface $newBlock */
             $blockClass = $this->blockClass;
+            /** @var BlockInterface $blockElement */
             $blockElement = new $blockClass();
             $blockElement->setComponent($facade->component);
+            $blockElement->setAttributes($this->generateFormManager->getDefaultConfiguration($blockElement));
             $node->addBlock($blockElement);
             $blockIndex = $node->getBlockIndex($blockElement);
             $block['blockId'] = $blockIndex;

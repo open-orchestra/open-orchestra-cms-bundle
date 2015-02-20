@@ -44,9 +44,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
-        $content = $this->contentRepository->findOneByContentId($attributes['contentId']);
+        $content = $this->contentRepository->findOneByContentId($block->getAttribute('contentId'));
 
         $contentAttributes = array();
         if ($content) {

@@ -33,12 +33,10 @@ class GmapStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         $parameters = array(
-            'latitude' => $attributes['latitude'],
-            'longitude' => $attributes['longitude'],
-            'zoom' => $attributes['zoom'],
+            'latitude' => $block->getAttribute('latitude'),
+            'longitude' => $block->getAttribute('longitude'),
+            'zoom' => $block->getAttribute('zoom'),
         );
 
         return $this->render('PHPOrchestraBackofficeBundle:Block/Gmap:show.html.twig', $parameters);

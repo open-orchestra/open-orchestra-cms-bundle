@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SearchResultStrategy
@@ -32,16 +33,14 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/SearchResult:show.html.twig',
             array(
-                'nodeId' => $attributes['nodeId'],
-                'nbdoc' => $attributes['nbdoc'],
-                'fielddisplayed' => implode(', ', $attributes['fielddisplayed']),
-                'nbfacet' => count($attributes['facets']),
-                'nbfilter' => count($attributes['filter'])
+                'nodeId' => $block->getAttribute('nodeId'),
+                'nbdoc' => $block->getAttribute('nbdoc'),
+                'fielddisplayed' => implode(', ', $block->getAttribute('fielddisplayed')),
+                'nbfacet' => count($block->getAttribute('facets')),
+                'nbfilter' => count($block->getAttribute('filter'))
             )
         );
     }

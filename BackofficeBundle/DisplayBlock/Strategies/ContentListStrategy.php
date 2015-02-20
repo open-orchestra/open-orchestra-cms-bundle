@@ -23,20 +23,16 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
-        $empty = array(
+        $attributes = array(
             'id' => $block->getId(),
             'class' => $block->getClass(),
-            'contentNodeId' => NodeInterface::ROOT_NODE_ID,
-            'characterNumber' => '50',
-            'keywords' => '',
-            'choiceType' => ContentRepositoryInterface::CHOICE_AND,
-            'contentType' => 'news',
-            'contentTemplate' => '',
+            'contentNodeId' => $block->getAttribute('contentNodeId'),
+            'characterNumber' => $block->getAttribute('characterNumber'),
+            'keywords' => $block->getAttribute('keywords'),
+            'choiceType' => $block->getAttribute('choiceType'),
+            'contentType' => $block->getAttribute('contentType'),
+            'contentTemplate' => $block->getAttribute('contentTemplate'),
         );
-
-        $attributes = array_merge($empty, $attributes);
 
         return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $attributes);
     }

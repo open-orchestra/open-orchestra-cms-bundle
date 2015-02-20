@@ -11,6 +11,7 @@ use PHPOrchestra\ApiBundle\Transformer\BlockTransformer;
 class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 {
     protected $blockParameterManager;
+    protected $generateFormManager;
     protected $displayBlockManager;
     protected $displayIconManager;
     protected $transformerManager;
@@ -31,13 +32,15 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $this->blockFacade = Phake::mock('PHPOrchestra\ApiBundle\Facade\BlockFacade');
         $this->blockParameterManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager');
+        $this->generateFormManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
+        Phake::when($this->generateFormManager)->getDefaultConfiguration(Phake::anyParameters())->thenReturn(array());
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -171,6 +174,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($result, $expected);
         Phake::verify($this->node)->addBlock(Phake::anyParameters());
+        Phake::verify($this->generateFormManager)->getDefaultConfiguration(Phake::anyParameters());
     }
 
     /**
@@ -231,6 +235,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array('blockParameter' => $blockParameter, 'blockId' => $blockIndex, 'nodeId' => 0), $result);
         Phake::verify($this->node)->addBlock(Phake::anyParameters());
         Phake::verify($this->node)->getBlockIndex(Phake::anyParameters());
+        Phake::verify($this->generateFormManager)->getDefaultConfiguration(Phake::anyParameters());
     }
 
     /**

@@ -33,13 +33,11 @@ class ContactStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Contact:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => array_key_exists('class', $attributes)? $block->getClass(): ''
+                'class' => $block->getClass(),
             )
         );
     }
