@@ -10,6 +10,7 @@ use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class BlockTransformer
@@ -19,22 +20,32 @@ class BlockTransformer extends AbstractTransformer
     protected $blockParameterManager;
     protected $generateFormManager;
     protected $displayBlockManager;
+    protected $nodeRepository;
     protected $displayManager;
     protected $blockClass;
 
     /**
-     * @param DisplayBlockManager   $displayBlockManager
-     * @param DisplayManager        $displayManager
-     * @param string                $blockClass
-     * @param BlockParameterManager $blockParameterManager
+     * @param DisplayBlockManager     $displayBlockManager
+     * @param DisplayManager          $displayManager
+     * @param string                  $blockClass
+     * @param BlockParameterManager   $blockParameterManager
      * @param GenerateFormManager   $generateFormManager
+     * @param NodeRepositoryInterface $nodeRepository
      */
-    public function __construct(DisplayBlockManager $displayBlockManager, DisplayManager $displayManager, $blockClass, BlockParameterManager $blockParameterManager, GenerateFormManager $generateFormManager)
+    public function __construct(
+        DisplayBlockManager $displayBlockManager,
+        DisplayManager $displayManager,
+        $blockClass,
+        BlockParameterManager $blockParameterManager,
+        GenerateFormManager   $generateFormManager,
+        NodeRepositoryInterface $nodeRepository
+    )
     {
         $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
         $this->displayBlockManager = $displayBlockManager;
         $this->displayIconManager = $displayManager;
+        $this->nodeRepository = $nodeRepository;
         $this->blockClass = $blockClass;
     }
 
@@ -119,8 +130,12 @@ class BlockTransformer extends AbstractTransformer
             if (!is_null($node)) {
                 if ($facade->nodeId == $node->getNodeId()) {
                     $block['nodeId'] = 0;
+                    $blockElement = $node->getBlock($facade->blockId);
+                } elseif ($facade->nodeId != $node->getNodeId()) {
+                    $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
+                    $blockElement = $blockNode->getBlock($facade->blockId);
                 }
-                $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($node->getBlock($facade->blockId));
+                $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
             }
         }
 
