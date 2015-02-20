@@ -12,10 +12,13 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $orchestraNodeChoiceType;
     protected $nodeRepository;
+    protected $treeManager;
     protected $node1;
     protected $node2;
-    protected $nodeName1 = 'node1';
-    protected $nodeName2 = 'node2';
+    protected $nodeName1 = 'nodeName1';
+    protected $nodeName2 = 'nodeName2';
+    protected $nodeNodeId1 = 'nodeId1';
+    protected $nodeNodeId2 = 'nodeId2';
 
     /**
      * Set up the test
@@ -24,11 +27,14 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->node1 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node1)->getName()->thenReturn($this->nodeName1);
+        Phake::when($this->node1)->getNodeId()->thenReturn($this->nodeNodeId1);
         $this->node2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node2)->getName()->thenReturn($this->nodeName2);
+        Phake::when($this->node2)->getNodeId()->thenReturn($this->nodeNodeId2);
         $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->treeManager = Phake::mock('PHPOrchestra\DisplayBundle\Manager\TreeManager');
 
-        $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository);
+        $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository, $this->treeManager);
     }
 
     /**
@@ -69,13 +75,20 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
             )
         );
 
+        Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn(
+            array(
+                array('node' => $this->node1),
+                array('node' => $this->node2)
+            )
+        );
+
         $this->orchestraNodeChoiceType->setDefaultOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(
             array(
                 'choices' => array(
-                    $this->nodeName1,
-                    $this->nodeName2,
+                    $this->nodeNodeId1 => $this->nodeName1,
+                    $this->nodeNodeId2 => $this->nodeName2,
                 )
             )
         );

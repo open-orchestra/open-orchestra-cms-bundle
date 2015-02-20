@@ -45,19 +45,19 @@ class OrchestraNodeChoiceType extends AbstractType
         $nodes = $this->nodeRepository->findLastVersionBySiteId();
         $orderedNodes = $this->treeManager->generateTree($nodes);
 
-        return $this->getRecChoices($orderedNodes);
+        return $this->getHierarchicalChoices($orderedNodes);
     }
 
     /**
      * @return array
      */
-    protected function getRecChoices($nodes, $depth = 0)
+    protected function getHierarchicalChoices($nodes, $depth = 0)
     {
         $choices = array();
         foreach ($nodes as $node) {
             $choices[$node['node']->getNodeId()] = str_repeat('--', $depth).' '.$node['node']->getName();
             if (array_key_exists('child', $node)) {
-                $choices = array_merge($choices, $this->getRecChoices($node['child'], $depth++));
+                $choices = array_merge($choices, $this->getHierarchicalChoices($node['child'], $depth++));
             }
         }
 
