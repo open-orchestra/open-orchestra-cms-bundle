@@ -83,14 +83,12 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->orchestraNodeChoiceType->setDefaultOptions($resolver);
-
         Phake::verify($resolver)->setDefaults(
             array(
                 'choices' => array(
-                    $this->nodeNodeId1 => $this->nodeName1,
-                    $this->nodeNodeId2 => $this->nodeName2,
+                    $this->nodeNodeId1 => ' '.$this->nodeName1,
+                    $this->nodeNodeId2 => ' '.$this->nodeName2,
                 )
-            )
-        );
+        ));
     }
 }
