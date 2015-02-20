@@ -75,6 +75,16 @@ TableviewCollectionView = OrchestraView.extend(
                 name: "stopGenerateContentTypeId"
                 fct: stopGenerateContentTypeId
               }
+              {
+                event: "focusout input.site-id-source"
+                name: "generateSiteId"
+                fct: generateSiteId
+              }
+              {
+                event: "blur input.site-id-dest"
+                name: "stopGenerateSiteId"
+                fct: stopGenerateSiteId
+              }
             ]
           )
 )
