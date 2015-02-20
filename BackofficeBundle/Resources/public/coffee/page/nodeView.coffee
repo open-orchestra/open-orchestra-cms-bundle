@@ -55,14 +55,14 @@ NodeView = OrchestraView.extend(
         redirectUrl: redirectUrl
         triggers: [
           {
-            event: "keyup input.alias-source"
-            name: "refreshAlias"
-            fct: refreshAlias
+            event: "focusout input.generate-id-source"
+            name: "generateId"
+            fct: generateId
           }
           {
-            event: "blur input.alias-dest"
-            name: "stopRefreshAlias"
-            fct: stopRefreshAlias
+            event: "blur input.generate-id-dest"
+            name: "stopGenerateId"
+            fct: stopGenerateId
           }
         ]
       )

@@ -3,6 +3,7 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -37,9 +38,9 @@ class SiteType extends AbstractType
         $builder
             ->add('name', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.website.name',
-                'attr' => array('class' => 'site-id-source')
+                'attr' => array('class' => 'generate-id-source')
             ));
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+        $builder->addEventSubscriber(new WebSiteSubscriber());
         $builder
             ->add('aliases', 'collection', array(
                 'type' => 'site_alias',
@@ -91,23 +92,6 @@ class SiteType extends AbstractType
             ;
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
-    }
-
-    /**
-     * @param FormEvent $event
-     */
-    public function onPreSetData(FormEvent $event)
-    {
-        $form = $event->getForm();
-        $data = $event->getData();
-        $options = array(
-            'label' => 'php_orchestra_backoffice.form.website.site_id',
-            'attr' => array('class' => 'site-id-dest')
-        );
-        if (null !== $data->getSiteId()) {
-            $options['disabled'] = true;
-        }
-        $form->add('siteId', 'text', $options);
     }
 
     /**

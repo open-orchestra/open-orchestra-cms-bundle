@@ -7,24 +7,25 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 /**
- * Class TranslatedValueTypeSubscriber
+ * Class WebSiteSubscriber
  */
-class TranslatedValueTypeSubscriber implements EventSubscriberInterface
+class WebSiteSubscriber implements EventSubscriberInterface
 {
     /**
      * @param FormEvent $event
      */
-    public function preSetData(FormEvent $event)
+    public function onPreSetData(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData();
-
-        $form->add('value', 'text', array(
-            'label' => $data->getLanguage(),
-            'attr' => array(
-                'class' => 'generate-id-source',
-            ),
-        ));
+        $options = array(
+            'label' => 'php_orchestra_backoffice.form.website.site_id',
+            'attr' => array('class' => 'generate-id-dest')
+        );
+        if (null !== $data->getSiteId()) {
+            $options['disabled'] = true;
+        }
+        $form->add('siteId', 'text', $options);
     }
 
     /**
@@ -33,8 +34,7 @@ class TranslatedValueTypeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SET_DATA => 'preSetData'
+            FormEvents::PRE_SET_DATA => 'onPreSetData',
         );
     }
-
 }
