@@ -4,6 +4,7 @@ namespace PHPOrchestra\ApiBundle\Test\Transformer;
 
 use Phake;
 use PHPOrchestra\ApiBundle\Transformer\BlockTransformer;
+use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class BlockTransformerTest
@@ -16,6 +17,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     protected $displayIconManager;
     protected $transformerManager;
     protected $blockTransformer;
+    protected $nodeRepository;
     protected $blockFacade;
     protected $blockClass;
     protected $router;
@@ -35,12 +37,14 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->generateFormManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
         Phake::when($this->generateFormManager)->getDefaultConfiguration(Phake::anyParameters())->thenReturn(array());
 
+        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
         $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager);
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager, $this->nodeRepository);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -133,10 +137,14 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->blockFacade->nodeId = $facadeNodeId;
         $this->blockFacade->blockId = $blockId;
 
+        $nodeTransverse = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+
         Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
         $block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($block);
+        Phake::when($nodeTransverse)->getBlock(Phake::anyParameters())->thenReturn($block);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($facadeNodeId, null)->thenReturn($nodeTransverse);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 
