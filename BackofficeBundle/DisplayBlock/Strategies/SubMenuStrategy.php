@@ -33,15 +33,13 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/SubMenu:show.html.twig',
             array(
                 'id' => $block->getId(),
                 'class' => $block->getClass(),
-                'nbLevel' => $attributes['nbLevel'],
-                'node' => $attributes['nodeName']
+                'nbLevel' => $block->getAttribute('nbLevel'),
+                'node' => $block->getAttribute('nodeName')
             )
         );
     }

@@ -73,6 +73,18 @@ class ContentListStrategy extends AbstractBlockStrategy
     }
 
     /**
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array(
+            'contentNodeId' => NodeInterface::ROOT_NODE_ID,
+            'characterNumber' => '50',
+            'contentTemplate' => '',
+        );
+    }
+
+    /**
      * @return string
      */
     public function getName()

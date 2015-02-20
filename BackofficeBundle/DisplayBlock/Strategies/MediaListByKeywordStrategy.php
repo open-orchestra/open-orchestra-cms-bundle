@@ -33,14 +33,12 @@ class MediaListByKeywordStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/MediaList:show.html.twig',
             array(
                 'id' => $block->getId(),
                 'class' => $block->getClass(),
-                'keywords' => $attributes['keywords']
+                'keywords' => $block->getAttribute('keywords')
             )
         );
     }

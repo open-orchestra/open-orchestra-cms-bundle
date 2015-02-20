@@ -33,11 +33,9 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         $parameters = array(
-            'pubid' => $attributes['pubid'],
-            'addThisClass' => $attributes['addThisClass']
+            'pubid' => $block->getAttribute('pubid'),
+            'addThisClass' => $block->getAttribute('addThisClass')
         );
 
         return $this->render('PHPOrchestraBackofficeBundle:Block/AddThis:show.html.twig', $parameters);

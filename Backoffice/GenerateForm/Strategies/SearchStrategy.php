@@ -33,6 +33,16 @@ class SearchStrategy extends AbstractBlockStrategy
     }
 
     /**
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array(
+            'limit' => 7,
+        );
+    }
+
+    /**
      * @return string
      */
     public function getName()

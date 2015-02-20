@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SearchStrategy
@@ -32,9 +33,8 @@ class SearchStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-        $value = $attributes['value'];
-        $limit = (array_key_exists('limit', $attributes)?$attributes['limit']:7);
+        $value = $block->getAttribute('value');
+        $limit = $block->getAttribute('limit');
 
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Search:show.html.twig',

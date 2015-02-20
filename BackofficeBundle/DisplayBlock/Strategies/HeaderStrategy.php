@@ -33,14 +33,12 @@ class HeaderStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Header:show.html.twig',
             array(
                 'id' => $block->getId(),
                 'class' => $block->getClass(),
-                'mediaId' => $attributes['mediaId']
+                'mediaId' => $block->getAttribute('mediaId')
             )
         );
     }

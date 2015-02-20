@@ -5,6 +5,7 @@ namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SampleStrategy
@@ -32,13 +33,11 @@ class SampleStrategy extends AbstractStrategy
      */
     public function show(BlockInterface $block)
     {
-        $attributes = $block->getAttributes();
-
         return $this->render(
             'PHPOrchestraBackofficeBundle:Block/Sample:show.html.twig',
             array(
-                'title' => $attributes['title'],
-                'author' => $attributes['author']
+                'title' => $block->getAttribute('title'),
+                'author' => $block->getAttribute('author')
             )
         );
     }
