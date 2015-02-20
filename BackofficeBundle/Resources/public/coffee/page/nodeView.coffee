@@ -83,8 +83,15 @@ NodeView = OrchestraView.extend(
       title: title
       cid: @cid
     )
+    blockpanel = $('.js-widget-blockpanel', @$el)
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    $('.js-widget-blockpanel', @$el).html($('#generated-panel', @$el).html()).show()
+    blockpanel.html($('#generated-panel', @$el).html()).show()
+    $(window).resize ->
+      Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
+      return
+    $(document).scroll ->
+      Backbone.Wreqr.radio.commands.execute 'viewport', 'change', blockpanel
+      return
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
     @addExistingBlockToView()
