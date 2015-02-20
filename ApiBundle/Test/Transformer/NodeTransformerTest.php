@@ -38,7 +38,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
         $siteAlias = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteAliasInterface');
         $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($this->site)->getMainAlias()->thenReturn($siteAlias);
+        Phake::when($this->site)->getAliases()->thenReturn(array($siteAlias));
         $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
@@ -84,7 +84,6 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
-        $this->assertArrayHasKey('_self_preview', $facade->getLinks());
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
         $this->assertArrayHasKey('_existing_block', $facade->getLinks());

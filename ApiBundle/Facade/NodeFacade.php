@@ -103,6 +103,11 @@ class NodeFacade extends DeletedFacade
     protected $blocks = array();
 
     /**
+     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\LinkFacade>")
+     */
+    protected $previewLinks = array();
+
+    /**
      * @param FacadeInterface $facade
      */
     public function addArea(FacadeInterface $facade)
@@ -131,5 +136,21 @@ class NodeFacade extends DeletedFacade
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    /**
+     * @param FacadeInterface $previewLink
+     */
+    public function addPreviewLink(FacadeInterface $previewLink)
+    {
+        $this->previewLinks[] = $previewLink;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPreviewLinks()
+    {
+        return $this->previewLinks;
     }
 }

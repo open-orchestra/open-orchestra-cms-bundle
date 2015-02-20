@@ -1,6 +1,6 @@
 PreviewLinkView = OrchestraView.extend(
   initialize: (options) ->
-    @previewLink = options.previewLink
+    @previewLinks = options.previewLinks
     @loadTemplates [
       "widgetPreviewLink"
     ]
@@ -8,7 +8,7 @@ PreviewLinkView = OrchestraView.extend(
 
   render: ->
     widget = @renderTemplate('widgetPreviewLink',
-      previewLink: @previewLink
+      previewLinks: @previewLinks
     )
     addCustomJarvisWidget(widget)
     return

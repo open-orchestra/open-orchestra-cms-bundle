@@ -121,10 +121,8 @@ NodeView = OrchestraView.extend(
     return
 
   addPreviewLink: ->
-    previewLink = @node.get('links')._self_preview
-    view = new PreviewLinkView(
-      previewLink: previewLink
-    )
+    previewLinks = @node.get('preview_links')
+    Backbone.Wreqr.radio.commands.execute 'preview_link', 'render', previewLinks
 
   addConfigurationButton: ->
     cid = @cid
