@@ -65,6 +65,7 @@ services:
             - @php_orchestra_backoffice.display_icon_manager
             - %php_orchestra_model.document.block.class%
             - @php_orchestra_backoffice.block_parameter_manager
+            - @php_orchestra_backoffice.generate_form_manager
             - @php_orchestra_model.repository.node
         tags:
             - { name: php_orchestra_api.transformer.strategy}

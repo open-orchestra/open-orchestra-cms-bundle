@@ -29,7 +29,7 @@ class BlockTransformer extends AbstractTransformer
      * @param DisplayManager          $displayManager
      * @param string                  $blockClass
      * @param BlockParameterManager   $blockParameterManager
-     * @param GenerateFormManager   $generateFormManager
+     * @param GenerateFormManager     $generateFormManager
      * @param NodeRepositoryInterface $nodeRepository
      */
     public function __construct(
@@ -123,10 +123,10 @@ class BlockTransformer extends AbstractTransformer
             $blockIndex = $node->getBlockIndex($blockElement);
             $block['blockId'] = $blockIndex;
             $block['nodeId'] = 0;
-            $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             $block['nodeId'] = $facade->nodeId;
+            $blockElement = null;
             if (!is_null($node)) {
                 if ($facade->nodeId == $node->getNodeId()) {
                     $block['nodeId'] = 0;
@@ -135,8 +135,11 @@ class BlockTransformer extends AbstractTransformer
                     $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
                     $blockElement = $blockNode->getBlock($facade->blockId);
                 }
-                $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
             }
+        }
+
+        if ($blockElement) {
+            $block['blockParameter'] = $this->blockParameterManager->getBlockParameter($blockElement);
         }
 
         return $block;
