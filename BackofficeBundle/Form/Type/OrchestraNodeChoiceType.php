@@ -6,6 +6,7 @@ use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use PHPOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
  * Class OrchestraNodeType
@@ -13,13 +14,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class OrchestraNodeChoiceType extends AbstractType
 {
     protected $nodeRepository;
+    protected $treeManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository)
+    public function __construct(NodeRepositoryInterface $nodeRepository, TreeManager $treeManager)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->treeManager = $treeManager;
     }
 
     /**
@@ -40,13 +43,27 @@ class OrchestraNodeChoiceType extends AbstractType
     protected function getChoices()
     {
         $nodes = $this->nodeRepository->findLastVersionBySiteId();
-        $choices = array_map(function (NodeInterface $element) {
-            return $element->getName();
-        }, $nodes);
+        $orderedNodes = $this->treeManager->generateTree($nodes);
 
-        return $choices;
+        return $this->getHierarchicalChoices($orderedNodes);
     }
 
+    /**
+     * @return array
+     */
+    protected function getHierarchicalChoices($nodes, $depth = 0)
+    {
+        $choices = array();
+        foreach ($nodes as $node) {
+            $choices[$node['node']->getNodeId()] = str_repeat('--', $depth).' '.$node['node']->getName();
+            if (array_key_exists('child', $node)) {
+                $choices = array_merge($choices, $this->getHierarchicalChoices($node['child'], $depth + 1));
+            }
+        }
+
+        return $choices;
+
+    }
     /**
      * Returns the name of this type.
      *

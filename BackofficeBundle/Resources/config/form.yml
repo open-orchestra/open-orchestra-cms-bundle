@@ -202,6 +202,7 @@ services:
         class: %php_orchestra_backoffice.type.orchestra_node_choice.class%
         arguments:
             - @php_orchestra_model.repository.node
+            - @php_orchestra_display.manager.tree
         tags:
             - { name: form.type, alias: orchestra_node_choice}
     php_orchestra_backoffice.type.orchestra_site_choice:
