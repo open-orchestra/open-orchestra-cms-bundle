@@ -37,6 +37,25 @@ class GenerateFormManager
     }
 
     /**
+     * Get the default configuration for the block
+     *
+     * @param BlockInterface $block
+     *
+     * @return array
+     */
+    public function getDefaultConfiguration(BlockInterface $block)
+    {
+        /** @var GenerateFormInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                return $strategy->getDefaultConfiguration();
+            }
+        }
+
+        return array();
+    }
+
+    /**
      * @param BlockInterface $block
      *
      * @return GenerateFormInterface

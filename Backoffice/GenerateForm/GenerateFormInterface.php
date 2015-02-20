@@ -25,6 +25,13 @@ interface GenerateFormInterface
     public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
+     * Get the default configuration for the block
+     *
+     * @return array
+     */
+    public function getDefaultConfiguration();
+
+    /**
      * @return string
      */
     public function getTemplate();

@@ -21,4 +21,14 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
     {
         return 'PHPOrchestraBackofficeBundle:Editorial:template.html.twig';
     }
+
+    /**
+     * Get the default configuration for the block
+     *
+     * @return array
+     */
+    public function getDefaultConfiguration()
+    {
+        return array();
+    }
 }
