@@ -47,8 +47,12 @@ class BlockController extends AbstractAdminController
             ->trans('php_orchestra_backoffice.form.block.success'), $node);
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
-
-        return $this->renderAdminForm($form, array('blockType' => $block->getComponent()));
+        return $this->renderAdminForm(
+            $form,
+            array('blockType' => $block->getComponent()),
+            null,
+            $form->getConfig()->getAttribute('template')
+        );
     }
 
     /**

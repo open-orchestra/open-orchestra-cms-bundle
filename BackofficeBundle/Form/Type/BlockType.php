@@ -45,6 +45,9 @@ class BlockType extends AbstractType
         $builder->add('id', 'text', array(
             'required' => false
         ));
+
+        $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
+
         $builder->addViewTransformer(new BlockToArrayTransformer());
         $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $this->formFactory, $options['blockPosition']));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

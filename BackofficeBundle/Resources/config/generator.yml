@@ -102,18 +102,6 @@ services:
         class: %php_orchestra_backoffice.language_list.generate_form.class%
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }
-    php_orchestra_backoffice.generate_form.youtube:
-        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\YoutubeStrategy
-        tags:
-            - { name: php_orchestra_backoffice.generate_form.strategy }
-    php_orchestra_backoffice.generate_form.dailymotion:
-        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\DailymotionStrategy
-        tags:
-            - { name: php_orchestra_backoffice.generate_form.strategy }
-    php_orchestra_backoffice.generate_form.vimeo:
-        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\VimeoStrategy
-        tags:
-            - { name: php_orchestra_backoffice.generate_form.strategy }
     php_orchestra_backoffice.generate_form.gmap:
         class: PHPOrchestra\Backoffice\GenerateForm\Strategies\GmapStrategy
         tags:
@@ -126,5 +114,9 @@ services:
         class: %php_orchestra_backoffice.audience_analysis.generate_form.class%
         arguments:
             - @translator
+        tags:
+            - { name: php_orchestra_backoffice.generate_form.strategy }
+    php_orchestra_backoffice.generate_form.video:
+        class: PHPOrchestra\Backoffice\GenerateForm\Strategies\VideoStrategy
         tags:
             - { name: php_orchestra_backoffice.generate_form.strategy }

@@ -1,0 +1,89 @@
+<div id="video-block">
+
+    {{ form_start(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9}) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.label) }}
+    {{ form_row(form.class) }}
+    {{ form_row(form.id) }}
+    {{ form_row(form.videoType) }}
+
+    {% set formYoutube %}
+        <div id="form-youtube">
+            {{ form_row(form.youtubeVideoId) }}
+            {{ form_row(form.youtubeWidth) }}
+            {{ form_row(form.youtubeHeight) }}
+            {{ form_row(form.youtubeAutoplay) }}
+            {{ form_row(form.youtubeFs) }}
+            {{ form_row(form.youtubeHl) }}
+            {{ form_row(form.youtubeShowinfo) }}
+            {{ form_row(form.youtubeRel) }}
+            {{ form_row(form.youtubeDisablekb) }}
+            {{ form_row(form.youtubeLoop) }}
+            {{ form_row(form.youtubeControls) }}
+            {{ form_row(form.youtubeTheme) }}
+            {{ form_row(form.youtubeColor) }}
+        </div>
+    {% endset %}
+
+    {% set formDailymotion %}
+        <div id="form-dailymotion">
+            {{ form_row(form.dailymotionVideoId) }}
+            {{ form_row(form.dailymotionWidth) }}
+            {{ form_row(form.dailymotionHeight) }}
+            {{ form_row(form.dailymotionQuality) }}
+            {{ form_row(form.dailymotionAutoplay) }}
+            {{ form_row(form.dailymotionInfo) }}
+            {{ form_row(form.dailymotionRelated) }}
+            {{ form_row(form.dailymotionChromeless) }}
+            {{ form_row(form.dailymotionLogo) }}
+            {{ form_row(form.dailymotionBackground) }}
+            {{ form_row(form.dailymotionForeground) }}
+            {{ form_row(form.dailymotionHighlight) }}
+        </div>
+    {% endset %}
+
+    {% set formVimeo %}
+        <div id="form-vimeo">
+            {{ form_row(form.vimeoVideoId) }}
+            {{ form_row(form.vimeoWidth) }}
+            {{ form_row(form.vimeoHeight) }}
+            {{ form_row(form.vimeoColor) }}
+            {{ form_row(form.vimeoAutoplay) }}
+            {{ form_row(form.vimeoFullscreen) }}
+            {{ form_row(form.vimeoTitle) }}
+            {{ form_row(form.vimeoByline) }}
+            {{ form_row(form.vimeoPortrait) }}
+            {{ form_row(form.vimeoLoop) }}
+            {{ form_row(form.vimeoBadge) }}
+        </div>
+    {% endset %}
+
+    <div id="active-form-part" >
+        {% if ('dailymotion' == form.videoType.vars.value) %}
+            {{ formDailymotion }}
+        {% elseif ('vimeo' == form.videoType.vars.value) %}
+            {{ formVimeo }}
+        {% else %}
+            {{ formYoutube }}
+        {% endif %}
+    </div> 
+
+    {{ form_end(form) }}
+
+    <div id="inactive-form-part" style="display:none">
+        {% if ('dailymotion' == form.videoType.vars.value) %}
+            {{ formYoutube }}
+            {{ formVimeo }}
+        {% elseif ('vimeo' == form.videoType.vars.value) %}
+            {{ formYoutube }}
+            {{ formDailymotion }}
+        {% else %}
+            {{ formDailymotion }}
+            {{ formVimeo }}
+        {% endif %}
+    </div>
+
+</div>
+
+<span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('php_orchestra_backoffice.block.video.title') | trans }}</span>

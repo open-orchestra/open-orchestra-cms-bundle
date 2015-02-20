@@ -27,5 +27,10 @@ interface GenerateFormInterface
     /**
      * @return string
      */
+    public function getTemplate();
+
+    /**
+     * @return string
+     */
     public function getName();
 }

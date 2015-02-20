@@ -75,18 +75,6 @@ services:
         class: %php_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
         tags:
             - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.youtube:
-        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\YoutubeStrategy
-        tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.dailymotion:
-        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\DailymotionStrategy
-        tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.vimeo:
-        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\VimeoStrategy
-        tags:
-            - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_backoffice.display.gmap:
         class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
         tags:
@@ -97,5 +85,9 @@ services:
             - { name: php_orchestra_display.display_block.strategy }
     php_orchestra_backoffice.display.audience_analysis:
         class: %php_orchestra_backoffice.display.audience_analysis.class%
+        tags:
+            - { name: php_orchestra_display.display_block.strategy }
+    php_orchestra_backoffice.display.video:
+        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\VideoStrategy
         tags:
             - { name: php_orchestra_display.display_block.strategy }
