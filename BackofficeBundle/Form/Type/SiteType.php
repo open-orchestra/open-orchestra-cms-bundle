@@ -3,8 +3,11 @@
 namespace PHPOrchestra\BackofficeBundle\Form\Type;
 
 use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use PHPOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -33,12 +36,12 @@ class SiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('siteId', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.site_id'
-            ))
             ->add('name', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.name'
-            ))
+                'label' => 'php_orchestra_backoffice.form.website.name',
+                'attr' => array('class' => 'generate-id-source')
+            ));
+        $builder->addEventSubscriber(new WebSiteSubscriber());
+        $builder
             ->add('aliases', 'collection', array(
                 'type' => 'site_alias',
                 'label' => 'php_orchestra_backoffice.form.website.aliases',

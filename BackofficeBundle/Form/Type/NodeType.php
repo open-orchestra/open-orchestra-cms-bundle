@@ -55,13 +55,13 @@ class NodeType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.node.name',
                 'attr' => array(
-                    'class' => 'alias-source',
+                    'class' => 'generate-id-source',
                 )
             ))
             ->add('routePattern', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.node.route_pattern',
                 'attr' => array(
-                    'class' => 'alias-dest',
+                    'class' => 'generate-id-dest',
                 )
             ))
             ->add('scheme', 'choice', array(

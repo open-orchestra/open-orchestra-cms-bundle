@@ -66,14 +66,14 @@ TableviewCollectionView = OrchestraView.extend(
             element: @elements
             triggers: [
               {
-                event: "focusout input.content_type_source"
-                name: "generateContentTypeId"
-                fct: generateContentTypeId
+                event: "focusout input.generate-id-source"
+                name: "generateId"
+                fct: generateId
               }
               {
-                event: "blur input.content_type_dest"
-                name: "stopGenerateContentTypeId"
-                fct: stopGenerateContentTypeId
+                event: "blur input.generate-id-dest"
+                name: "stopGenerateId"
+                fct: stopGenerateId
               }
             ]
           )

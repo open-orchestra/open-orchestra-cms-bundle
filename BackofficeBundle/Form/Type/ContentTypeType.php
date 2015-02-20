@@ -46,7 +46,7 @@ class ContentTypeType extends AbstractType
             ->add('contentTypeId', 'text', array(
                 'label' => 'php_orchestra_backoffice.form.content_type.content_type_id',
                 'attr' => array(
-                    'class' => 'content_type_dest',
+                    'class' => 'generate-id-dest',
                 )
             ))
             ->add('names', 'translated_value_collection', array(
