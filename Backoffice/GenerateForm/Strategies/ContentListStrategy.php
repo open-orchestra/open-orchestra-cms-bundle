@@ -40,10 +40,6 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('url', 'orchestra_node_choice', array(
-            'empty_data' => NodeInterface::ROOT_NODE_ID,
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
-        ));
         $builder->add('contentNodeId', 'orchestra_node_choice', array(
             'label' => 'php_orchestra_backoffice.form.content_list.node',
         ));
