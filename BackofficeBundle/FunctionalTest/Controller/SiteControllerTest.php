@@ -4,6 +4,8 @@ namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Class SiteControllerTest
@@ -14,6 +16,11 @@ class SiteControllerTest extends AbstractControllerTest
      * @var NodeRepositoryInterface
      */
     protected $nodeRepository;
+
+    /**
+     * @var SiteRepositoryInterface
+     */
+    protected $siteRepository;
 
     protected $siteId;
 
@@ -26,6 +33,7 @@ class SiteControllerTest extends AbstractControllerTest
 
         $this->siteId = (string) microtime(true);
         $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
+        $this->siteRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.site');
     }
 
     /**
@@ -36,15 +44,7 @@ class SiteControllerTest extends AbstractControllerTest
         $this->assertNodeCount(0, 'fr');
         $this->assertNodeCount(0, 'en');
 
-        $crawler = $this->client->request('GET', '/admin/site/new');
-
-        $form = $crawler->selectButton('Save')->form();
-        $form['site[siteId]'] = $this->siteId;
-        $form['site[name]'] = $this->siteId . 'domain';
-        $form['site[aliases][0][domain]'] = $this->siteId . 'name';
-        $form['site[aliases][0][language]'] = 'fr';
-        $form['site[aliases][0][main]'] = true;
-        $this->client->submit($form);
+        $this->createSite();
 
         $this->assertNodeCount(1, 'fr');
         $this->assertNodeCount(0, 'en');
@@ -59,6 +59,39 @@ class SiteControllerTest extends AbstractControllerTest
     }
 
     /**
+     * Test create 2 site with the same siteId only one is save
+     */
+    public function testUniqueSiteId()
+    {
+        $this->assertSiteCount(0, $this->siteId);
+
+        $this->createSite();
+
+        $this->assertSiteCount(1, $this->siteId);
+
+        $this->createSite();
+
+        $this->assertSiteCount(1, $this->siteId);
+    }
+
+    /**
+     * Create a site
+     */
+    protected function createSite()
+    {
+       $crawler =  $this->client->request('GET', '/admin/site/new');
+
+        $form = $crawler->selectButton('Save')->form();
+        $form['site[siteId]'] = $this->siteId;
+        $form['site[name]'] = $this->siteId . 'domain';
+        $form['site[aliases][0][domain]'] = $this->siteId . 'name';
+        $form['site[aliases][0][language]'] = 'fr';
+        $form['site[aliases][0][main]'] = true;
+
+        $this->client->submit($form);
+    }
+
+    /**
      * @param int    $count
      * @param string $language
      */
@@ -67,5 +100,16 @@ class SiteControllerTest extends AbstractControllerTest
         $nodes = $this->nodeRepository->findByNodeIdAndLanguageAndSiteId(NodeInterface::TRANSVERSE_NODE_ID, $language, $this->siteId);
 
         $this->assertCount($count, $nodes);
+    }
+
+    /**
+     * @param int    $count
+     * @param string $siteId
+     */
+    protected function assertSiteCount($count, $siteId)
+    {
+        $sites = $this->siteRepository->findBy(array('siteId' => $siteId));
+
+        $this->assertCount($count, $sites);
     }
 }
