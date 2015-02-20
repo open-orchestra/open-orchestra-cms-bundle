@@ -4,6 +4,9 @@
 
 {% if blockType is defined %}
     <span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('php_orchestra_backoffice.block.' ~ blockType ~ '.title') | trans }}</span>
+
+    {% if blockType in ['tiny_mce_wysiwyg'] %}
+        {{ tinymce_init() }}
+    {% endif %}
 {% endif %}
 
-{{ tinymce_init() }}
