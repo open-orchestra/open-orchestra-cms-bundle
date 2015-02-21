@@ -41,11 +41,11 @@
     "minimum-stability": "dev",
     "require": {
         "jms/serializer-bundle" : "0.13.0",
-        "itkg/phporchestra-base-bundle": "*",
-        "itkg/phporchestra-display-bundle": "*",
-        "itkg/phporchestra-media-bundle": "*",
-        "itkg/phporchestra-user-bundle": "*",
-        "itkg/phporchestra-model-interface": "*",
+        "itkg/open-orchestra-base-bundle": "*",
+        "itkg/open-orchestra-display-bundle": "*",
+        "itkg/open-orchestra-media-bundle": "*",
+        "itkg/open-orchestra-user-bundle": "*",
+        "itkg/open-orchestra-model-interface": "*",
         "braincrafted/bootstrap-bundle": "2.1.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "stfalcon/tinymce-bundle": "0.3.8"
