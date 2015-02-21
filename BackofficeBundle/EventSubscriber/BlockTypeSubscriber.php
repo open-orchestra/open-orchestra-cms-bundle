@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use Doctrine\Common\Util\Inflector;
-use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
+use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormFactory;
 

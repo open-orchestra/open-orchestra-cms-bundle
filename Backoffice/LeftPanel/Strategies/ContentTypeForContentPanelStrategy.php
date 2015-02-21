@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
-use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeForContentPanel
@@ -30,7 +30,7 @@ class ContentTypeForContentPanelStrategy extends AbstractLeftPaneStrategy
         $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
+            'OpenOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
             array(
                 'contentTypes' => $contentTypes,
             )

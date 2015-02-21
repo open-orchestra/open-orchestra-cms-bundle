@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\NodeType;
+use OpenOrchestra\BackofficeBundle\Form\Type\NodeType;
 
 /**
  * Description of NodeTypeTest
@@ -21,8 +21,8 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->templateRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
-        $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
+        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
 
         $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager, $this->areaClass);
     }

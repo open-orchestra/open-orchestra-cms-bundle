@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\StatusFacade;
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\StatusFacade;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -51,7 +51,7 @@ class StatusTransformer extends AbstractTransformer
         $facade->published = $mixed->isPublished();
         $facade->initial = $mixed->isInitial();
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
-        $facade->displayColor = $this->translator->trans('php_orchestra_backoffice.form.status.color.' . $mixed->getDisplayColor());
+        $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $mixed->getDisplayColor());
         $facade->codeColor = $mixed->getDisplayColor();
         $facade->id = $mixed->getId();
         $facade->allowed = false;
@@ -74,11 +74,11 @@ class StatusTransformer extends AbstractTransformer
         $facade->fromRole = implode(',', $fromRoles);
 
         $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_status_delete',
+            'open_orchestra_api_status_delete',
             array('statusId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_backoffice_status_form',
+            'open_orchestra_backoffice_status_form',
             array('statusId' => $mixed->getId())
         ));
 

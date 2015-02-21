@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Twig;
+namespace OpenOrchestra\BackofficeBundle\Twig;
 
 use Doctrine\Common\Collections\Collection;
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class TranslationChoiceExtension

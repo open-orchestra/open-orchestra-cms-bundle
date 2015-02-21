@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\RoleEvent;
-use PHPOrchestra\ModelInterface\Model\RoleInterface;
-use PHPOrchestra\ModelInterface\RoleEvents;
+use OpenOrchestra\ModelInterface\Event\RoleEvent;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
+use OpenOrchestra\ModelInterface\RoleEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,19 +19,19 @@ class RoleController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/new", name="php_orchestra_backoffice_role_new")
+     * @Config\Route("/new", name="open_orchestra_backoffice_role_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $roleClass = $this->container->getParameter('php_orchestra_model.document.role.class');
+        $roleClass = $this->container->getParameter('open_orchestra_model.document.role.class');
         /** @var RoleInterface $role */
         $role = new $roleClass();
 
         $form = $this->createForm('role', $role, array(
-            'action' => $this->generateUrl('php_orchestra_backoffice_role_new')
+            'action' => $this->generateUrl('open_orchestra_backoffice_role_new')
         ));
 
         $form->handleRequest($request);
@@ -44,11 +44,11 @@ class RoleController extends AbstractAdminController
 
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.role.new.success')
+                $this->get('translator')->trans('open_orchestra_backoffice.form.role.new.success')
             );
 
 
-            return $this->redirect($this->generateUrl('php_orchestra_backoffice_role_form', array(
+            return $this->redirect($this->generateUrl('open_orchestra_backoffice_role_form', array(
                 'roleId' => $role->getId()
             )));
         }
@@ -60,23 +60,23 @@ class RoleController extends AbstractAdminController
      * @param Request $request
      * @param string  $roleId
      *
-     * @Config\Route("/form/{roleId}", name="php_orchestra_backoffice_role_form")
+     * @Config\Route("/form/{roleId}", name="open_orchestra_backoffice_role_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $roleId)
     {
-        $role = $this->get('php_orchestra_model.repository.role')->find($roleId);
+        $role = $this->get('open_orchestra_model.repository.role')->find($roleId);
 
         $form = $this->createForm('role', $role, array(
-            'action' => $this->generateUrl('php_orchestra_backoffice_role_form', array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_role_form', array(
                 'roleId' => $roleId,
             )))
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.role.edit.success'), $role);
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.role.edit.success'), $role);
 
         $this->dispatchEvent(RoleEvents::ROLE_UPDATE, new RoleEvent($role));
 

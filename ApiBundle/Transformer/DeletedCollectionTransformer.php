@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\DeletedFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\DeletedFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
 
 /**
  * Class DeletedCollectionTransformer

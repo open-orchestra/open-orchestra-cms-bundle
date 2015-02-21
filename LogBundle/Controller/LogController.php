@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Controller;
+namespace OpenOrchestra\LogBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 
 /**
  * Class LogController
@@ -15,7 +15,7 @@ use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
 class LogController extends Controller
 {
     /**
-     * @Config\Route("", name="php_orchestra_api_log_list")
+     * @Config\Route("", name="open_orchestra_api_log_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -23,8 +23,8 @@ class LogController extends Controller
      */
     public function listAction()
     {
-        $logCollection = $this->get('php_orchestra_log.repository.log')->findAll();
+        $logCollection = $this->get('open_orchestra_log.repository.log')->findAll();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('log_collection')->transform($logCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('log_collection')->transform($logCollection);
     }
 }

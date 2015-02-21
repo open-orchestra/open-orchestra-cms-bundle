@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 /**
  * Class HomepageControllerTest

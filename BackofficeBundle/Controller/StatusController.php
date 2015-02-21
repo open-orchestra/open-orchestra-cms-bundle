@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\StatusableEvent;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\StatusEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,17 +18,17 @@ class StatusController extends AbstractAdminController
      * @param Request $request
      * @param int     $statusId
      *
-     * @Config\Route("/status/form/{statusId}", name="php_orchestra_backoffice_status_form")
+     * @Config\Route("/status/form/{statusId}", name="open_orchestra_backoffice_status_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $statusId)
     {
-        $status = $this->get('php_orchestra_model.repository.status')->find($statusId);
+        $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
 
-        $url = $this->generateUrl('php_orchestra_backoffice_status_form', array('statusId' => $statusId));
-        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.success');
+        $url = $this->generateUrl('open_orchestra_backoffice_status_form', array('statusId' => $statusId));
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.success');
 
         return $this->formHandler($url, $request, $status, $message, StatusEvents::STATUS_UPDATE);
     }
@@ -36,19 +36,19 @@ class StatusController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/status/new", name="php_orchestra_backoffice_status_new")
+     * @Config\Route("/status/new", name="open_orchestra_backoffice_status_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $statusClass = $this->container->getParameter('php_orchestra_model.document.status.class');
+        $statusClass = $this->container->getParameter('open_orchestra_model.document.status.class');
         /** @var StatusInterface $status */
         $status = new $statusClass();
 
-        $url = $this->generateUrl('php_orchestra_backoffice_status_new');
-        $message = $this->get('translator')->trans('php_orchestra_backoffice.form.status.creation');
+        $url = $this->generateUrl('open_orchestra_backoffice_status_new');
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.creation');
 
         return $this->formHandler($url, $request, $status, $message, StatusEvents::STATUS_CREATE);
     }
@@ -86,7 +86,7 @@ class StatusController extends AbstractAdminController
             );
         }
 
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView()
         ));
     }

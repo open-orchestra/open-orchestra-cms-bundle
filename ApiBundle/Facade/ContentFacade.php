@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -30,7 +30,7 @@ class ContentFacade extends DeletedFacade
     public $language;
 
     /**
-     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\StatusFacade")
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\StatusFacade")
      */
     public $status;
 
@@ -45,7 +45,7 @@ class ContentFacade extends DeletedFacade
     public $statusId;
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\ContentAttributeFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade>")
      */
     protected $attributes = array();
 

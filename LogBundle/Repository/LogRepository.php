@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Repository;
+namespace OpenOrchestra\LogBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 

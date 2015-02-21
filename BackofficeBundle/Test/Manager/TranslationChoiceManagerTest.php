@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Manager;
+namespace OpenOrchestra\BackofficeBundle\Test\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\ModelBundle\Document\TranslatedValue;
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class TranslationChoiceManagerTest
@@ -38,7 +38,7 @@ class TranslationChoiceManagerTest extends \PHPUnit_Framework_TestCase
         $this->names->add($this->enName);
         $this->names->add($this->frName);
 
-        $this->contextManager = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
     }
 
     /**

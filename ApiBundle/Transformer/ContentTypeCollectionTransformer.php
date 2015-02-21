@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\ContentTypeCollectionFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\ContentTypeCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 
 /**
  * Class ContentTypeCollectionTransformer
@@ -25,7 +25,7 @@ class ContentTypeCollectionTransformer extends AbstractTransformer
         }
 
         $facade->addLink('_self_add', $this->generateRoute(
-            'php_orchestra_backoffice_content_type_new',
+            'open_orchestra_backoffice_content_type_new',
             array()
         ));
 

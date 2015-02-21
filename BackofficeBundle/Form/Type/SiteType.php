@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -37,56 +37,56 @@ class SiteType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.name',
+                'label' => 'open_orchestra_backoffice.form.website.name',
                 'attr' => array('class' => 'generate-id-source')
             ));
         $builder->addEventSubscriber(new WebSiteSubscriber());
         $builder
             ->add('aliases', 'collection', array(
                 'type' => 'site_alias',
-                'label' => 'php_orchestra_backoffice.form.website.aliases',
+                'label' => 'open_orchestra_backoffice.form.website.aliases',
                 'allow_add' => true,
                 'allow_delete' => true,
                 'attr' => array(
-                    'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.form.field_option.add'),
-                    'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.form.field_option.new'),
-                    'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.form.field_option.delete'),
+                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_option.add'),
+                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_option.new'),
+                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
                 )
             ))
             ->add('blocks', 'orchestra_block', array(
                 'multiple' => true,
-                'label' => 'php_orchestra_backoffice.form.website.blocks',
+                'label' => 'open_orchestra_backoffice.form.website.blocks',
                 'required' => false
             ))
             ->add('theme', 'orchestra_theme', array(
-                'label' => 'php_orchestra_backoffice.form.website.theme'
+                'label' => 'open_orchestra_backoffice.form.website.theme'
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
-                'label' => 'php_orchestra_backoffice.form.website.changefreq.title'
+                'label' => 'open_orchestra_backoffice.form.website.changefreq.title'
             ))
             ->add('sitemap_priority', 'percent', array(
-                'label' => 'php_orchestra_backoffice.form.node.priority',
+                'label' => 'open_orchestra_backoffice.form.node.priority',
                 'type' => 'fractional',
                 'precision' => 2
             ))
             ->add('metaKeywords', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_keywords',
+                'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
             ))
             ->add('metaDescription', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_description',
+                'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
             ))
             ->add('metaIndex', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_index',
+                'label' => 'open_orchestra_backoffice.form.website.meta_index',
                 'required' => false,
             ))
             ->add('metaFollow', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_follow',
+                'label' => 'open_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
             ))
             ->add('robotsTxt', 'textarea', array(
-                'label' => 'php_orchestra_backoffice.form.website.robots_txt',
+                'label' => 'open_orchestra_backoffice.form.website.robots_txt',
                 'required' => true
             ))
             ;

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Context;
+namespace OpenOrchestra\Backoffice\Context;
 
-use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**

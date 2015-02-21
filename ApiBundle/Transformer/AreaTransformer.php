@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpException;
-use PHPOrchestra\ApiBundle\Facade\AreaFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\BackofficeBundle\Manager\AreaManager;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpException;
+use OpenOrchestra\ApiBundle\Facade\AreaFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class AreaTransformer
@@ -77,21 +77,21 @@ class AreaTransformer extends AbstractTransformer
                 'id' => $mixed->getAreaId()
             )
         );
-        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_area_form', array(
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_area_form', array(
             'nodeId' => $node->getId(),
             'areaId' => $mixed->getAreaId(),
         )));
-        $facade->addLink('_self_block', $this->generateRoute('php_orchestra_api_area_update_block', array(
+        $facade->addLink('_self_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
             'nodeId' => $node->getId(),
             'areaId' => $mixed->getAreaId()
         )));
-        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_node', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
             'nodeId' => $node->getId(),
             'areaId' => $mixed->getAreaId()
         )));
 
         if ($parentAreaId) {
-            $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node_area',
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node_area',
                 array(
                     'nodeId' => $node->getId(),
                     'parentAreaId' => $parentAreaId,
@@ -100,7 +100,7 @@ class AreaTransformer extends AbstractTransformer
             ));
 
         } else {
-            $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_node',
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node',
                 array(
                     'nodeId' => $node->getId(),
                     'areaId' => $mixed->getAreaId(),
@@ -143,20 +143,20 @@ class AreaTransformer extends AbstractTransformer
                 'id' => $mixed->getAreaId()
             )
         );
-        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_template_area_form',
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_area_form',
             array(
                 'templateId' => $templateId,
                 'areaId' => $mixed->getAreaId(),
             )
         ));
 
-        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_area_show_in_template', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_template', array(
             'templateId' => $templateId,
             'areaId' => $mixed->getAreaId()
         )));
 
         if ($parentAreaId) {
-            $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_template_area',
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template_area',
                 array(
                     'templateId' => $templateId,
                     'parentAreaId' => $parentAreaId,
@@ -165,7 +165,7 @@ class AreaTransformer extends AbstractTransformer
             ));
 
         } else {
-            $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_area_delete_in_template',
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template',
                 array(
                     'templateId' => $templateId,
                     'areaId' => $mixed->getAreaId(),

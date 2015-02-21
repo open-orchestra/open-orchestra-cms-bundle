@@ -1,27 +1,27 @@
 parameters:
-    php_orchestra_backoffice.subscriber.update_child_node_path.class: PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber
-    php_orchestra_backoffice.subscriber.update_media_reference.class: PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber
-    php_orchestra_backoffice.subscriber.update_node_redirection.class: PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber
+    open_orchestra_backoffice.subscriber.update_child_node_path.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber
+    open_orchestra_backoffice.subscriber.update_media_reference.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber
+    open_orchestra_backoffice.subscriber.update_node_redirection.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber
 
 services:
-    php_orchestra_backoffice.subscriber.update_child_node_path:
-        class: %php_orchestra_backoffice.subscriber.update_child_node_path.class%
+    open_orchestra_backoffice.subscriber.update_child_node_path:
+        class: %open_orchestra_backoffice.subscriber.update_child_node_path.class%
         arguments:
-            - @php_orchestra_model.repository.node
+            - @open_orchestra_model.repository.node
             - @service_container
         tags:
             - { name: kernel.event_subscriber }
-    php_orchestra_backoffice.subscriber.update_media_reference:
-        class: %php_orchestra_backoffice.subscriber.update_media_reference.class%
+    open_orchestra_backoffice.subscriber.update_media_reference:
+        class: %open_orchestra_backoffice.subscriber.update_media_reference.class%
         arguments:
-            - @php_orchestra_backoffice.extract_reference_manager
-            - @php_orchestra_media.repository.media
+            - @open_orchestra_backoffice.extract_reference_manager
+            - @open_orchestra_media.repository.media
         tags:
             - { name: kernel.event_subscriber }
-    php_orchestra_backoffice.subscriber.update_node_redirection:
-        class: %php_orchestra_backoffice.subscriber.update_node_redirection.class%
+    open_orchestra_backoffice.subscriber.update_node_redirection:
+        class: %open_orchestra_backoffice.subscriber.update_node_redirection.class%
         arguments:
-            - @php_orchestra_model.repository.node
-            - @php_orchestra_backoffice.manager.redirection
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_backoffice.manager.redirection
         tags:
             - { name: kernel.event_subscriber }

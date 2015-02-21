@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class AddSubmitButtonSubscriberTest
@@ -63,7 +63,7 @@ class AddSubmitButtonSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPostSetData(StatusInterface $status = null, $expectedParameters)
     {
-        $data = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusableInterface');
+        $data = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($data)->getStatus()->thenReturn($status);
         Phake::when($this->event)->getData()->thenReturn($data);
 
@@ -77,16 +77,16 @@ class AddSubmitButtonSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function provideStatus()
     {
-        $status0 = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $status0 = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status0)->isPublished()->thenReturn(true);
 
-        $status1 = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $status1 = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status1)->isPublished()->thenReturn(false);
 
         return array(
-            array($status0, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'disabled'))),
-            array($status1, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'))),
-            array(null, array('label' => 'php_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'))),
+            array($status0, array('label' => 'open_orchestra_base.form.submit', 'attr' => array('class' => 'disabled'))),
+            array($status1, array('label' => 'open_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'))),
+            array(null, array('label' => 'open_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'))),
         );
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogKeywordSubscriber;
-use PHPOrchestra\ModelInterface\KeywordEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogKeywordSubscriber;
+use OpenOrchestra\ModelInterface\KeywordEvents;
 
 /**
  * Class LogKeywordSubscriberTest
@@ -20,8 +20,8 @@ class LogKeywordSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->keyword = Phake::mock('PHPOrchestra\ModelBundle\Document\Keyword');
-        $this->keywordEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\KeywordEvent');
+        $this->keyword = Phake::mock('OpenOrchestra\ModelBundle\Document\Keyword');
+        $this->keywordEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\KeywordEvent');
         Phake::when($this->keywordEvent)->getKeyword()->thenReturn($this->keyword);
 
         $this->subscriber = new LogKeywordSubscriber($this->logger);
@@ -44,7 +44,7 @@ class LogKeywordSubscriberTest extends LogAbstractSubscriberTest
     public function testKeywordCreate()
     {
         $this->subscriber->keywordCreate($this->keywordEvent);
-        $this->assertEventLogged('php_orchestra_log.keyword.create', array(
+        $this->assertEventLogged('open_orchestra_log.keyword.create', array(
             'keyword_label' => $this->keyword->getLabel()
         ));
     }
@@ -55,7 +55,7 @@ class LogKeywordSubscriberTest extends LogAbstractSubscriberTest
     public function testKeywordDelete()
     {
         $this->subscriber->keywordDelete($this->keywordEvent);
-        $this->assertEventLogged('php_orchestra_log.keyword.delete', array(
+        $this->assertEventLogged('open_orchestra_log.keyword.delete', array(
             'keyword_label' => $this->keyword->getLabel()
         ));
     }

@@ -1,17 +1,17 @@
 parameters:
-    php_orchestra_backoffice.extract_reference_manager.class: PHPOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager
-    php_orchestra_backoffice.extract_reference.node.class: PHPOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy
-    php_orchestra_backoffice.extract_reference.content.class: PHPOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromContentStrategy
+    open_orchestra_backoffice.extract_reference_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager
+    open_orchestra_backoffice.extract_reference.node.class: OpenOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy
+    open_orchestra_backoffice.extract_reference.content.class: OpenOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromContentStrategy
 
 services:
-    php_orchestra_backoffice.extract_reference_manager:
-        class: %php_orchestra_backoffice.extract_reference_manager.class%
-    php_orchestra_backoffice.extract_reference.node:
-        class: %php_orchestra_backoffice.extract_reference.node.class%
+    open_orchestra_backoffice.extract_reference_manager:
+        class: %open_orchestra_backoffice.extract_reference_manager.class%
+    open_orchestra_backoffice.extract_reference.node:
+        class: %open_orchestra_backoffice.extract_reference.node.class%
         tags:
-            - { name: php_orchestra_backoffice.extract_reference.strategy }
-    php_orchestra_backoffice.extract_reference.content:
-        class: %php_orchestra_backoffice.extract_reference.content.class%
+            - { name: open_orchestra_backoffice.extract_reference.strategy }
+    open_orchestra_backoffice.extract_reference.content:
+        class: %open_orchestra_backoffice.extract_reference.content.class%
         tags:
-            - { name: php_orchestra_backoffice.extract_reference.strategy }
+            - { name: open_orchestra_backoffice.extract_reference.strategy }
 

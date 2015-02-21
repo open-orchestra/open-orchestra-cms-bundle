@@ -2,14 +2,14 @@
 <div class="project-context hidden-xs">
 
     {% set availableSites = context.getAvailableSites() %}
-    <span class="label">{{ 'php_orchestra_backoffice.top_menu.site'|trans }}</span>
+    <span class="label">{{ 'open_orchestra_backoffice.top_menu.site'|trans }}</span>
     <span class="project-selector dropdown-toggle" data-toggle="dropdown">{{ context.getCurrentSiteName() }} <i class="fa fa-angle-down"></i></span>
 
     <!-- Suggestion: populate this list with fetch and push technique -->
     <ul class="dropdown-menu">
         {% for site in availableSites %}
             <li{% if context.getCurrentSiteId() is same as(site.siteId) %} class="active"{% endif %}>
-                <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_site', {'siteId':site.siteId, 'siteName':site.name}) }}');">{{ site.name }}</a>
+                <a href="javascript:callAndReload('{{ path('open_orchestra_api_context_site', {'siteId':site.siteId, 'siteName':site.name}) }}');">{{ site.name }}</a>
             </li>
         {% endfor %}
     </ul>

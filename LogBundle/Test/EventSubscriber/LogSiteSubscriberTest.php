@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogSiteSubscriber;
-use PHPOrchestra\ModelInterface\SiteEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogSiteSubscriber;
+use OpenOrchestra\ModelInterface\SiteEvents;
 
 /**
  * Class LogSiteSubscriberTest
@@ -20,8 +20,8 @@ class LogSiteSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->site = Phake::mock('PHPOrchestra\ModelBundle\Document\Site');
-        $this->siteEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\SiteEvent');
+        $this->site = Phake::mock('OpenOrchestra\ModelBundle\Document\Site');
+        $this->siteEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteEvent');
         Phake::when($this->siteEvent)->getSite()->thenReturn($this->site);
 
         $this->subscriber = new LogSiteSubscriber($this->logger);
@@ -45,7 +45,7 @@ class LogSiteSubscriberTest extends LogAbstractSubscriberTest
     public function testSiteCreate()
     {
         $this->subscriber->siteCreate($this->siteEvent);
-        $this->assertEventLogged('php_orchestra_log.site.create', array(
+        $this->assertEventLogged('open_orchestra_log.site.create', array(
             'site_id' => $this->site->getSiteId(),
             'site_name' => $this->site->getName()
         ));
@@ -57,7 +57,7 @@ class LogSiteSubscriberTest extends LogAbstractSubscriberTest
     public function testSiteDelete()
     {
         $this->subscriber->siteDelete($this->siteEvent);
-        $this->assertEventLogged('php_orchestra_log.site.delete', array(
+        $this->assertEventLogged('open_orchestra_log.site.delete', array(
             'site_id' => $this->site->getSiteId(),
             'site_name' => $this->site->getName()
         ));
@@ -69,7 +69,7 @@ class LogSiteSubscriberTest extends LogAbstractSubscriberTest
     public function testSiteUpdate()
     {
         $this->subscriber->siteUpdate($this->siteEvent);
-        $this->assertEventLogged('php_orchestra_log.site.update', array(
+        $this->assertEventLogged('open_orchestra_log.site.update', array(
             'site_id' => $this->site->getSiteId(),
             'site_name' => $this->site->getName()
         ));

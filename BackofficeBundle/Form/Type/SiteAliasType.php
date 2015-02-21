@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 
 /**
  * Class SiteAliasType
@@ -38,20 +38,20 @@ class SiteAliasType extends AbstractType
         $builder
             ->add('scheme', 'choice', array(
                 'choices' => $this->schemeChoices,
-                'label' => 'php_orchestra_backoffice.form.website.scheme'
+                'label' => 'open_orchestra_backoffice.form.website.scheme'
             ))
             ->add('domain', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.domain'
+                'label' => 'open_orchestra_backoffice.form.website.domain'
             ))
             ->add('language', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.website.language'
+                'label' => 'open_orchestra_backoffice.form.website.language'
             ))
             ->add('prefix', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.prefix',
+                'label' => 'open_orchestra_backoffice.form.website.prefix',
                 'required' => false,
             ))
             ->add('main', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.website.main',
+                'label' => 'open_orchestra_backoffice.form.website.main',
                 'required' => false
             ));
     }

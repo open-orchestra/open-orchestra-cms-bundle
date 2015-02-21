@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\ContentFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\StatusableEvent;
-use PHPOrchestra\ModelInterface\StatusEvents;
-use PHPOrchestra\ModelInterface\Model\ContentInterface;
-use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\ApiBundle\Facade\ContentFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -53,42 +53,42 @@ class ContentTransformer extends AbstractTransformer
             $facade->addAttribute($this->getTransformer('content_attribute')->transform($attribute));
         }
 
-        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_content_form', array(
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
             'contentId' => $mixed->getContentId(),
             'language' => $mixed->getLanguage(),
             'version' => $mixed->getVersion(),
         )));
 
-        $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_content_duplicate', array(
+        $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
             'contentId' => $mixed->getContentId(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_self_version', $this->generateRoute('php_orchestra_api_content_list_version', array(
+        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
             'contentId' => $mixed->getContentId(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_content_delete', array(
+        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
             'contentId' => $mixed->getId()
         )));
 
-        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_content_show', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show', array(
             'contentId' => $mixed->getContentId(),
             'version' => $mixed->getVersion(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_self_without_parameters', $this->generateRoute('php_orchestra_api_content_show', array(
+        $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show', array(
             'contentId' => $mixed->getContentId(),
         )));
 
-        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_parameter_languages_show'));
+        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_parameter_languages_show'));
 
-        $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_content', array(
+        $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_list_status_content', array(
             'contentMongoId' => $mixed->getId()
         )));
-        $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_content_update', array(
+        $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_content_update', array(
             'contentMongoId' => $mixed->getId()
         )));
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
-use PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 

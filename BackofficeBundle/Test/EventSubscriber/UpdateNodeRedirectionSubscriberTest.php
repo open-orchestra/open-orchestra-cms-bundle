@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber;
-use PHPOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber;
+use OpenOrchestra\ModelInterface\NodeEvents;
 
 /**
  * Test UpdateNodeRedirectionSubscriberTest
@@ -31,19 +31,19 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->status)->isPublished()->thenReturn(false);
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getId()->thenReturn($this->id);
         Phake::when($this->node)->getStatus()->thenReturn($this->status);
         Phake::when($this->node)->getNodeId()->thenReturn($this->nodeId);
         Phake::when($this->node)->getParentId()->thenReturn($this->nodeId);
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
         Phake::when($this->node)->getRoutePattern()->thenReturn($this->routePattern);
-        $this->nodeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\NodeEvent');
+        $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->redirectionManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\RedirectionManager');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->redirectionManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\RedirectionManager');
 
         $this->subscriber = new UpdateNodeRedirectionSubscriber($this->nodeRepository, $this->redirectionManager);
     }
@@ -82,7 +82,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateRedirectionWithPerviousNodeAndSamePattern()
     {
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn('other');
         Phake::when($node)->getRoutePattern()->thenReturn($this->routePattern);
 
@@ -101,10 +101,10 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         Phake::when($this->status)->isPublished()->thenReturn(true);
         $oldPattern = 'oldPattern';
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn('other');
         Phake::when($node)->getRoutePattern()->thenReturn($oldPattern);
-        $parent = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn($oldPattern);
 
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId(Phake::anyParameters())

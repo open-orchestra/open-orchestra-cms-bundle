@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\ContentTypeEvents;
-use PHPOrchestra\ModelInterface\Event\ContentTypeEvent;
-use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\ContentTypeEvents;
+use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -18,21 +18,21 @@ class ContentTypeController extends AbstractAdminController
      * @param Request $request
      * @param string  $contentTypeId
      *
-     * @Config\Route("/content-type/form/{contentTypeId}", name="php_orchestra_backoffice_content_type_form")
+     * @Config\Route("/content-type/form/{contentTypeId}", name="open_orchestra_backoffice_content_type_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $contentTypeId)
     {
-        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($contentTypeId);
-        $newContentType = $this->get('php_orchestra_backoffice.manager.content_type')->duplicate($contentType);
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($contentTypeId);
+        $newContentType = $this->get('open_orchestra_backoffice.manager.content_type')->duplicate($contentType);
 
         $form = $this->createForm(
             'content_type',
             $newContentType,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_content_type_form', array(
+                'action' => $this->generateUrl('open_orchestra_backoffice_content_type_form', array(
                         'contentTypeId' => $contentTypeId,
                     )),
                 'method' => 'POST'
@@ -41,11 +41,11 @@ class ContentTypeController extends AbstractAdminController
 
         $form->handleRequest($request);
         if (!$request->get('no_save')) {
-            $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.content_type.success'), $newContentType);
+            $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.success'), $newContentType);
             $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_UPDATE, new ContentTypeEvent($newContentType));
         }
 
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -53,14 +53,14 @@ class ContentTypeController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/content-type/new", name="php_orchestra_backoffice_content_type_new")
+     * @Config\Route("/content-type/new", name="open_orchestra_backoffice_content_type_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $contentTypeClass = $this->container->getParameter('php_orchestra_model.document.content_type.class');
+        $contentTypeClass = $this->container->getParameter('open_orchestra_model.document.content_type.class');
         /** @var ContentTypeInterface $contentType */
         $contentType = new $contentTypeClass();
 
@@ -68,7 +68,7 @@ class ContentTypeController extends AbstractAdminController
             'content_type',
             $contentType,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_content_type_new', array())
+                'action' => $this->generateUrl('open_orchestra_backoffice_content_type_new', array())
             )
         );
 
@@ -86,7 +86,7 @@ class ContentTypeController extends AbstractAdminController
             );
         }
 
-        return $this->render('PHPOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle:Editorial:template.html.twig', array(
             'form' => $form->createView()
         ));
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Document;
+namespace OpenOrchestra\LogBundle\Document;
 
-use PHPOrchestra\LogBundle\Model\LogInterface;
+use OpenOrchestra\LogBundle\Model\LogInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @ODM\Document(
  *   collection="log",
- *   repositoryClass="PHPOrchestra\LogBundle\Repository\LogRepository"
+ *   repositoryClass="OpenOrchestra\LogBundle\Repository\LogRepository"
  * )
  */
 class Log implements LogInterface

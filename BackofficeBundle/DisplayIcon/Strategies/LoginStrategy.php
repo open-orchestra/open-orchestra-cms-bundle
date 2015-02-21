@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 /**
  * Class LoginIconStrategy
@@ -26,7 +26,7 @@ class LoginStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Login:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Login:showIcon.html.twig');
     }
 
     /**

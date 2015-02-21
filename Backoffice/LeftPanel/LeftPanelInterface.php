@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel;
+namespace OpenOrchestra\Backoffice\LeftPanel;
 
 use Symfony\Bundle\TwigBundle\TwigEngine;
 

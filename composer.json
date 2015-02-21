@@ -1,6 +1,6 @@
 {
-    "name": "itkg/phporchestra-cms-bundle",
-    "description": "This bundle provide the backoffice part of phporchestra",
+    "name": "itkg/open-orchestra-cms-bundle",
+    "description": "This bundle provide the backoffice part of OpenOrchestra",
     "license": "MIT",
     "authors": [
         {
@@ -61,11 +61,11 @@
     },
     "autoload": {
         "psr-0": {
-            "PHPOrchestra\\LogBundle": "",
-            "PHPOrchestra\\BackofficeBundle": "",
-            "PHPOrchestra\\Backoffice": "",
-            "PHPOrchestra\\ApiBundle": ""
+            "OpenOrchestra\\LogBundle": "",
+            "OpenOrchestra\\BackofficeBundle": "",
+            "OpenOrchestra\\Backoffice": "",
+            "OpenOrchestra\\ApiBundle": ""
         }
     },
-    "target-dir": "PHPOrchestra"
+    "target-dir": "OpenOrchestra"
 }

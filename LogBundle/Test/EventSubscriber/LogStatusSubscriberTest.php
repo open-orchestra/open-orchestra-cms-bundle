@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber;
-use PHPOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber;
+use OpenOrchestra\ModelInterface\StatusEvents;
 
 /**
  * Class LogStatusSubscriberTest
@@ -21,10 +21,10 @@ class LogStatusSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
-        $this->statusElement = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusableInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
+        $this->statusElement = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($this->statusElement)->getStatus()->thenReturn($this->status);
-        $this->statusableEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\StatusableEvent');
+        $this->statusableEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\StatusableEvent');
         Phake::when($this->statusableEvent)->getStatusableElement()->thenReturn($this->statusElement);
 
         $this->subscriber = new LogStatusSubscriber($this->logger);
@@ -48,7 +48,7 @@ class LogStatusSubscriberTest extends LogAbstractSubscriberTest
     public function testStatusCreate()
     {
         $this->subscriber->statusCreate($this->statusableEvent);
-        $this->assertEventLogged('php_orchestra_log.status.create', array(
+        $this->assertEventLogged('open_orchestra_log.status.create', array(
             'status_name' => $this->status->getName()
         ));
     }
@@ -59,7 +59,7 @@ class LogStatusSubscriberTest extends LogAbstractSubscriberTest
     public function testStatusDelete()
     {
         $this->subscriber->statusDelete($this->statusableEvent);
-        $this->assertEventLogged('php_orchestra_log.status.delete', array(
+        $this->assertEventLogged('open_orchestra_log.status.delete', array(
             'status_name' => $this->status->getName()
         ));
     }
@@ -70,7 +70,7 @@ class LogStatusSubscriberTest extends LogAbstractSubscriberTest
     public function testStatusUpdate()
     {
         $this->subscriber->statusUpdate($this->statusableEvent);
-        $this->assertEventLogged('php_orchestra_log.status.update', array(
+        $this->assertEventLogged('open_orchestra_log.status.update', array(
             'status_name' => $this->status->getName()
         ));
     }

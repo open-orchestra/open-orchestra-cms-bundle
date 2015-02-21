@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\ThemeEvent;
-use PHPOrchestra\ModelInterface\ThemeEvents;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\ThemeEvent;
+use OpenOrchestra\ModelInterface\ThemeEvents;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,7 @@ class ThemeController extends BaseController
     /**
      * @param int $themeId
      *
-     * @Config\Route("/{themeId}", name="php_orchestra_api_theme_show")
+     * @Config\Route("/{themeId}", name="open_orchestra_api_theme_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -28,13 +28,13 @@ class ThemeController extends BaseController
      */
     public function showAction($themeId)
     {
-        $theme = $this->get('php_orchestra_model.repository.theme')->find($themeId);
+        $theme = $this->get('open_orchestra_model.repository.theme')->find($themeId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('theme')->transform($theme);
+        return $this->get('open_orchestra_api.transformer_manager')->get('theme')->transform($theme);
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_api_theme_list")
+     * @Config\Route("", name="open_orchestra_api_theme_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -42,22 +42,22 @@ class ThemeController extends BaseController
      */
     public function listAction()
     {
-        $themeCollection = $this->get('php_orchestra_model.repository.theme')->findAll();
+        $themeCollection = $this->get('open_orchestra_model.repository.theme')->findAll();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('theme_collection')->transform($themeCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('theme_collection')->transform($themeCollection);
     }
 
     /**
      * @param int $themeId
      *
-     * @Config\Route("/{themeId}/delete", name="php_orchestra_api_theme_delete")
+     * @Config\Route("/{themeId}/delete", name="open_orchestra_api_theme_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
     public function deleteAction($themeId)
     {
-        $theme = $this->get('php_orchestra_model.repository.theme')->find($themeId);
+        $theme = $this->get('open_orchestra_model.repository.theme')->find($themeId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
         $this->dispatchEvent(ThemeEvents::THEME_DELETE, new ThemeEvent($theme));
         $dm->remove($theme);

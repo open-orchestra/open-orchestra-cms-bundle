@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\Event\TemplateEvent;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\ModelInterface\TemplateEvents;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,17 +21,17 @@ class AreaController extends AbstractAdminController
      * @param string  $nodeId
      * @param string  $areaId
      *
-     * @Config\Route("/area/form/{nodeId}/{areaId}", name="php_orchestra_backoffice_area_form")
+     * @Config\Route("/area/form/{nodeId}/{areaId}", name="open_orchestra_backoffice_area_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $nodeId, $areaId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->find($nodeId);
-        $area = $this->get('php_orchestra_model.repository.node')->findAreaByAreaId($node, $areaId);
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $areaId);
 
-        $actionUrl = $this->generateUrl('php_orchestra_backoffice_area_form', array(
+        $actionUrl = $this->generateUrl('open_orchestra_backoffice_area_form', array(
             'nodeId' => $nodeId,
             'areaId' => $areaId
         ));
@@ -46,16 +46,16 @@ class AreaController extends AbstractAdminController
      * @param string  $templateId
      * @param string  $areaId
      *
-     * @config\Route("/template/area/form/{templateId}/{areaId}", name="php_orchestra_backoffice_template_area_form")
+     * @config\Route("/template/area/form/{templateId}/{areaId}", name="open_orchestra_backoffice_template_area_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function templateFormAction(Request $request, $templateId, $areaId)
     {
-        $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
-        $area = $this->get('php_orchestra_model.repository.template')->findAreaByAreaId($template, $areaId);
-        $actionUrl = $this->generateUrl('php_orchestra_backoffice_template_area_form', array(
+        $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $area = $this->get('open_orchestra_model.repository.template')->findAreaByAreaId($template, $areaId);
+        $actionUrl = $this->generateUrl('open_orchestra_backoffice_template_area_form', array(
             'templateId' => $templateId,
             'areaId' => $areaId
         ));
@@ -82,7 +82,7 @@ class AreaController extends AbstractAdminController
 
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.area.success')
+            $this->get('translator')->trans('open_orchestra_backoffice.form.area.success')
         );
 
         return $this->renderAdminForm($form);

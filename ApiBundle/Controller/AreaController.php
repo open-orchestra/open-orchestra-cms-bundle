@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\Event\TemplateEvent;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
-use PHPOrchestra\ModelInterface\TemplateEvents;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\TemplateEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,7 @@ class AreaController extends BaseController
      * @param string $areaId
      * @param string $nodeId
      *
-     * @Config\Route("/{areaId}/show-in-node/{nodeId}", name="php_orchestra_api_area_show_in_node")
+     * @Config\Route("/{areaId}/show-in-node/{nodeId}", name="open_orchestra_api_area_show_in_node")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -33,18 +33,18 @@ class AreaController extends BaseController
      */
     public function showInNodeAction($areaId, $nodeId)
     {
-        $nodeRepository = $this->get('php_orchestra_model.repository.node');
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
         $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
+        return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
     }
 
     /**
      * @param string $areaId
      * @param string $templateId
      *
-     * @Config\Route("/{areaId}/show-in-template/{templateId}", name="php_orchestra_api_area_show_in_template")
+     * @Config\Route("/{areaId}/show-in-template/{templateId}", name="open_orchestra_api_area_show_in_template")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -53,11 +53,11 @@ class AreaController extends BaseController
      */
     public function showInTemplateAction($areaId, $templateId)
     {
-        $templateRepository = $this->get('php_orchestra_model.repository.template');
+        $templateRepository = $this->get('open_orchestra_model.repository.template');
         $template = $templateRepository->findOneByTemplateId($templateId);
         $area = $templateRepository->findAreaByTemplateIdAndAreaId($templateId, $areaId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('area')->transformFromTemplate($area, $template);
+        return $this->get('open_orchestra_api.transformer_manager')->get('area')->transformFromTemplate($area, $template);
     }
 
     /**
@@ -65,20 +65,20 @@ class AreaController extends BaseController
      * @param string  $nodeId
      * @param int     $areaId
      *
-     * @Config\Route("/{nodeId}/{areaId}/update-block", name="php_orchestra_api_area_update_block")
+     * @Config\Route("/{nodeId}/{areaId}/update-block", name="open_orchestra_api_area_update_block")
      * @Config\Method({"POST"})
      *
      * @return Response
      */
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
-        $nodeRepository = $this->get('php_orchestra_model.repository.node');
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
         $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
-        $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'PHPOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
+        $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'OpenOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
 
-        $area = $this->get('php_orchestra_api.transformer_manager')->get('area')->reverseTransform($facade, $area, $node);
+        $area = $this->get('open_orchestra_api.transformer_manager')->get('area')->reverseTransform($facade, $area, $node);
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
@@ -91,14 +91,14 @@ class AreaController extends BaseController
      * @param string $areaId
      * @param string $nodeId
      *
-     * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="php_orchestra_api_area_delete_in_node")
+     * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="open_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
      *
      * @return Response
      */
     public function deleteAreaFromNodeAction($areaId, $nodeId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->find($nodeId);
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
 
         $this->deleteAreaFromContainer($areaId, $node);
 
@@ -111,14 +111,14 @@ class AreaController extends BaseController
      * @param string $areaId
      * @param string $templateId
      *
-     * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="php_orchestra_api_area_delete_in_template")
+     * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
      *
      * @return Response
      */
     public function deleteAreaFromTemplateAction($areaId, $templateId)
     {
-        $areaContainer = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
@@ -133,8 +133,8 @@ class AreaController extends BaseController
      * @param string $nodeId
      * @param string $templateId
      *
-     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="php_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
-     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="php_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
      * @Config\Method({"POST", "DELETE"})
      *
      * @return Response
@@ -142,12 +142,12 @@ class AreaController extends BaseController
     public function deleteAreaFromAreaAction($areaId, $parentAreaId, $nodeId = null, $templateId = null)
     {
         if ($nodeId) {
-            $nodeRepository = $this->get('php_orchestra_model.repository.node');
+            $nodeRepository = $this->get('open_orchestra_model.repository.node');
             $node = $nodeRepository->find($nodeId);
             $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
         }
         if ($templateId && is_null($nodeId)) {
-            $areaContainer = $this->get('php_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
+            $areaContainer = $this->get('open_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
         }
 
         $this->deleteAreaFromContainer($areaId, $areaContainer);
@@ -163,7 +163,7 @@ class AreaController extends BaseController
      */
     protected function deleteAreaFromContainer($areaId, AreaContainerInterface $areaContainer)
     {
-        $this->get('php_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areaContainer, $areaId);
+        $this->get('open_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areaContainer, $areaId);
 
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
     }

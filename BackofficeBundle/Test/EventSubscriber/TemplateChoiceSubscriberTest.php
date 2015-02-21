@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -32,7 +32,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->templateRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
+        $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
 
         $this->subscriber = new TemplateChoiceSubscriber($this->templateRepository);
     }
@@ -65,7 +65,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $emptyCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
         Phake::when($emptyCollection)->count()->thenReturn(0);
 
-        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $templateChoiceContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($templateChoiceContainer)->getAreas()->thenReturn($emptyCollection);
         Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($emptyCollection);
 
@@ -92,7 +92,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $fullCollection = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
         Phake::when($fullCollection)->count()->thenReturn(1);
 
-        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $templateChoiceContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($templateChoiceContainer)->getAreas()->thenReturn($fullCollection);
         Phake::when($templateChoiceContainer)->getBlocks()->thenReturn($fullCollection);
 
@@ -118,7 +118,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $areas = Phake::mock('Doctrine\Common\Collections\Collection');
         $blocks = Phake::mock('Doctrine\Common\Collections\Collection');
 
-        $template = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
+        $template = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template)->getAreas()->thenReturn($areas);
         Phake::when($template)->getBlocks()->thenReturn($blocks);
 
@@ -136,7 +136,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSubmitWithExistingNode($data, $template)
     {
-        $templateChoiceContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $templateChoiceContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         Phake::when($templateChoiceContainer)->getData()->thenReturn($data);
         Phake::when($templateChoiceContainer)->getId()->thenReturn('nodeId');
@@ -161,7 +161,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataOnNewNode($templates, $expectedResult)
     {
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->event)->getData()->thenReturn($node);
         Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);
 
@@ -170,7 +170,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->form)->add('templateId', 'choice', array(
             'choices' => $expectedResult,
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.node.template_id'
+            'label' => 'open_orchestra_backoffice.form.node.template_id'
         ));
     }
 
@@ -186,11 +186,11 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $id1 = 'fakeId1';
         $name1 = 'fakeName1';
 
-        $template0 = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
+        $template0 = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template0)->getTemplateId()->thenReturn($id0);
         Phake::when($template0)->getName()->thenReturn($name0);
 
-        $template1 = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
+        $template1 = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template1)->getTemplateId()->thenReturn($id1);
         Phake::when($template1)->getName()->thenReturn($name1);
 
@@ -211,7 +211,7 @@ class TemplateChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithExistingNode($templates, $expectedResult)
     {
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn('fakeId');
         Phake::when($this->event)->getData()->thenReturn($node);
         Phake::when($this->templateRepository)->findByDeleted(Phake::anyParameters())->thenReturn($templates);

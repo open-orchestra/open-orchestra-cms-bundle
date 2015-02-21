@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\ExtractReference;
+namespace OpenOrchestra\Backoffice\ExtractReference;
 
-use PHPOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Interface ExtractReferenceInterface

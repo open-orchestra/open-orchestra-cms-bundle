@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 
@@ -19,7 +19,7 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
      */
     public function getTemplate()
     {
-        return 'PHPOrchestraBackofficeBundle:Editorial:template.html.twig';
+        return 'OpenOrchestraBackofficeBundle:Editorial:template.html.twig';
     }
 
     /**

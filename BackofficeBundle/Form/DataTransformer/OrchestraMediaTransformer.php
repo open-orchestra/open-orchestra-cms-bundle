@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
-use PHPOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\Media\Model\MediaInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 

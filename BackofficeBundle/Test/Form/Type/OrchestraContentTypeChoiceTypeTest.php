@@ -1,10 +1,10 @@
 <?php
 
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType;
 
 /**
  * Class OrchestraContentTypeChoiceTypeTest
@@ -23,10 +23,10 @@ class OrchestraContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        $this->contentType1 = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        $this->contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType1)->getName()->thenReturn($this->contentTypeName1);
-        $this->contentType2 = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $this->contentType2 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType2)->getName()->thenReturn($this->contentTypeName2);
 
         $this->form = new OrchestraContentTypeChoiceType($this->contentTypeRepository);

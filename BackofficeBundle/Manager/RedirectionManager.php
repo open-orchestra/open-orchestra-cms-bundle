@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use PHPOrchestra\ModelInterface\Event\RedirectionEvent;
-use PHPOrchestra\ModelInterface\Model\RedirectionInterface;
-use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
-use PHPOrchestra\ModelInterface\RedirectionEvents;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
+use OpenOrchestra\ModelInterface\RedirectionEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class RedirectionManager

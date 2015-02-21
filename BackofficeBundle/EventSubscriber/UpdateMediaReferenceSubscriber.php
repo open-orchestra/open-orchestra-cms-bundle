@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\StatusableEvent;
-use PHPOrchestra\ModelInterface\StatusEvents;
-use PHPOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager;
-use PHPOrchestra\Media\Model\MediaInterface;
-use PHPOrchestra\Media\Repository\MediaRepositoryInterface;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager;
+use OpenOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\Media\Repository\MediaRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

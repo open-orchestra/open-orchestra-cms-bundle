@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\KeywordEvent;
-use PHPOrchestra\ModelInterface\KeywordEvents;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\KeywordEvent;
+use OpenOrchestra\ModelInterface\KeywordEvents;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ class KeywordController extends BaseController
     /**
      * @param Request $request
      *
-     * @Config\Route("/check", name="php_orchestra_api_check_keyword")
+     * @Config\Route("/check", name="open_orchestra_api_check_keyword")
      * @Config\Method({"GET"})
      *
      * @return Response
@@ -30,7 +30,7 @@ class KeywordController extends BaseController
     {
         $keyword = $request->get('term');
 
-        $suppressSpecialCharacter = $this->get('php_orchestra_backoffice.transformer.suppress_special_character');
+        $suppressSpecialCharacter = $this->get('open_orchestra_backoffice.transformer.suppress_special_character');
 
         $keyword = $suppressSpecialCharacter->transform($keyword);
 
@@ -40,7 +40,7 @@ class KeywordController extends BaseController
     /**
      * @param int $keywordId
      *
-     * @Config\Route("/{keywordId}", name="php_orchestra_api_keyword_show")
+     * @Config\Route("/{keywordId}", name="open_orchestra_api_keyword_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -49,13 +49,13 @@ class KeywordController extends BaseController
      */
     public function showAction($keywordId)
     {
-        $keyword = $this->get('php_orchestra_model.repository.keyword')->find($keywordId);
+        $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('keyword')->transform($keyword);
+        return $this->get('open_orchestra_api.transformer_manager')->get('keyword')->transform($keyword);
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_api_keyword_list")
+     * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -63,22 +63,22 @@ class KeywordController extends BaseController
      */
     public function listAction()
     {
-        $keywordCollection = $this->get('php_orchestra_model.repository.keyword')->findAll();
+        $keywordCollection = $this->get('open_orchestra_model.repository.keyword')->findAll();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('keyword_collection')->transform($keywordCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection')->transform($keywordCollection);
     }
 
     /**
      * @param int $keywordId
      *
-     * @Config\Route("/{keywordId}/delete", name="php_orchestra_api_keyword_delete")
+     * @Config\Route("/{keywordId}/delete", name="open_orchestra_api_keyword_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
     public function deleteAction($keywordId)
     {
-        $keyword = $this->get('php_orchestra_model.repository.keyword')->find($keywordId);
+        $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
         $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
         $dm->remove($keyword);

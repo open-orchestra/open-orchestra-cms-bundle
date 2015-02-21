@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\Media\Model\MediaFolderInterface;
+use OpenOrchestra\Media\Model\MediaFolderInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**

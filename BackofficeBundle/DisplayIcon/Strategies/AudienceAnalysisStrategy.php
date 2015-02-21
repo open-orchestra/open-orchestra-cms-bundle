@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
  * Class AudienceAnalysisStrategy
@@ -29,7 +29,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/AudienceAnalysis:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/AudienceAnalysis:showIcon.html.twig');
     }
 
     /**

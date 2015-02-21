@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Test\DataTransformer;
 
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\OrchestraMediaTransformer;
-use PHPOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\OrchestraMediaTransformer;
+use OpenOrchestra\Media\Model\MediaInterface;
 
 /**
  * Class OrchestraMediaTransformerTest

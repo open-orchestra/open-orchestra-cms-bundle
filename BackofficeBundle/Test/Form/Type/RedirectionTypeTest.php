@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\UserBundle\Test\Form\Type;
+namespace OpenOrchestra\UserBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\RedirectionType;
+use OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType;
 
 /**
  * Class RedirectionTypeTest

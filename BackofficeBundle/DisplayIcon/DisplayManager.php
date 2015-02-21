@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon;
 
 use Symfony\Component\DependencyInjection\Container;
 

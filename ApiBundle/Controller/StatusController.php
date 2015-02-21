@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\StatusableEvent;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\StatusEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class StatusController extends Controller
 {
     /**
-     * @Config\Route("", name="php_orchestra_api_status_list")
+     * @Config\Route("", name="open_orchestra_api_status_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -27,22 +27,22 @@ class StatusController extends Controller
      */
     public function listAction()
     {
-        $statusCollection = $this->get('php_orchestra_model.repository.status')->findAll();
+        $statusCollection = $this->get('open_orchestra_model.repository.status')->findAll();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
     }
 
     /**
      * @param int $statusId
      *
-     * @Config\Route("/{statusId}/delete", name="php_orchestra_api_status_delete")
+     * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
     public function deleteAction($statusId)
     {
-        $status = $this->get('php_orchestra_model.repository.status')->find($statusId);
+        $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusableEvent($status));
         $this->get('doctrine.odm.mongodb.document_manager')->remove($status);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
@@ -53,7 +53,7 @@ class StatusController extends Controller
     /**
      * @param string $nodeMongoId
      *
-     * @Config\Route("/list-statuses/node/{nodeMongoId}", name="php_orchestra_api_list_status_node")
+     * @Config\Route("/list-statuses/node/{nodeMongoId}", name="open_orchestra_api_list_status_node")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -61,7 +61,7 @@ class StatusController extends Controller
      */
     public function listStatusesForNodeAction($nodeMongoId)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->find($nodeMongoId);
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
 
         return $this->listStatuses($node->getStatus());
     }
@@ -69,7 +69,7 @@ class StatusController extends Controller
     /**
      * @param string $contentMongoId
      *
-     * @Config\Route("/list-statuses/content/{contentMongoId}", name="php_orchestra_api_list_status_content")
+     * @Config\Route("/list-statuses/content/{contentMongoId}", name="open_orchestra_api_list_status_content")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -77,7 +77,7 @@ class StatusController extends Controller
      */
     public function listStatusesForContentAction($contentMongoId)
     {
-        $content = $this->get('php_orchestra_model.repository.content')->find($contentMongoId);
+        $content = $this->get('open_orchestra_model.repository.content')->find($contentMongoId);
 
         return $this->listStatuses($content->getStatus());
     }
@@ -97,6 +97,6 @@ class StatusController extends Controller
             $possibleStatuses[] = $transition->getToStatus();
         }
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
+        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
     }
 }

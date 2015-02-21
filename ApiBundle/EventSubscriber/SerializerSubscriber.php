@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\EventSubscriber;
+namespace OpenOrchestra\ApiBundle\EventSubscriber;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use JMS\Serializer\Serializer;
@@ -51,7 +51,7 @@ class SerializerSubscriber implements EventSubscriberInterface
 
         $controller = $this->resolver->getController($event->getRequest());
         $reflectionClass = new \ReflectionClass($controller[0]);
-        $annot = $this->annotationReader->getMethodAnnotation($reflectionClass->getMethod($controller[1]), 'PHPOrchestra\ApiBundle\Controller\Annotation\Serialize');
+        $annot = $this->annotationReader->getMethodAnnotation($reflectionClass->getMethod($controller[1]), 'OpenOrchestra\ApiBundle\Controller\Annotation\Serialize');
 
         if (!$annot) {
             return;
@@ -73,7 +73,7 @@ class SerializerSubscriber implements EventSubscriberInterface
      */
     protected function isApiRequest(Request $request)
     {
-        return 0 === strpos($request->get('_route'), 'php_orchestra_api');
+        return 0 === strpos($request->get('_route'), 'open_orchestra_api');
     }
 
     /**

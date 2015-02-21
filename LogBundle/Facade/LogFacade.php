@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Facade;
+namespace OpenOrchestra\LogBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use PHPOrchestra\ApiBundle\Facade\AbstractFacade;
+use OpenOrchestra\ApiBundle\Facade\AbstractFacade;
 
 /**
  * Class LogFacade

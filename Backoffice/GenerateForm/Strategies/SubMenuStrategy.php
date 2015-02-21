@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -28,10 +28,10 @@ class SubMenuStrategy extends AbstractBlockStrategy
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nbLevel', 'text', array(
-            'label' => 'php_orchestra_backoffice.form.sub_menu.level'
+            'label' => 'open_orchestra_backoffice.form.sub_menu.level'
         ));
         $builder->add('nodeName', 'orchestra_node_choice', array(
-            'label' => 'php_orchestra_backoffice.form.sub_menu.node',
+            'label' => 'open_orchestra_backoffice.form.sub_menu.node',
         ));
     }
 

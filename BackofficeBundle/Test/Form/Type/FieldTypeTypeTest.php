@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType;
+use OpenOrchestra\BackofficeBundle\Form\Type\FieldTypeType;
 use Symfony\Component\Form\FormEvents;
-use PHPOrchestra\ModelBundle\Document\FieldType;
+use OpenOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class FieldTypeTypeTest
@@ -38,7 +38,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
 
-        $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
         $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, array(), $this->fieldOptionClass, $this->fieldTypeClass);
     }
@@ -68,7 +68,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
                 return $fieldType;
             }
         ));
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.label');
+        Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.label');
     }
 
     /**

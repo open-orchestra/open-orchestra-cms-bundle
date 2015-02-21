@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\StrategyManager;
+namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
-use PHPOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
+use OpenOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -35,7 +35,7 @@ class LeftPanelManager
      */
     public function show()
     {
-        return $this->container->get('templating')->render('PHPOrchestraBackofficeBundle:BackOffice/Include/LeftPanel:show.html.twig', array(
+        return $this->container->get('templating')->render('OpenOrchestraBackofficeBundle:BackOffice/Include/LeftPanel:show.html.twig', array(
             'strategies' => $this->strategies
         ));
     }

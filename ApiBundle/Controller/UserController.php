@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
 /**
@@ -17,7 +17,7 @@ class UserController extends Controller
     /**
      * @param string $userId
      *
-     * @Config\Route("/{userId}", name="php_orchestra_api_user_show")
+     * @Config\Route("/{userId}", name="open_orchestra_api_user_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -26,13 +26,13 @@ class UserController extends Controller
      */
     public function showAction($userId)
     {
-        $user = $this->get('php_orchestra_user.repository.user')->find($userId);
+        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('user')->transform($user);
+        return $this->get('open_orchestra_api.transformer_manager')->get('user')->transform($user);
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_api_user_list")
+     * @Config\Route("", name="open_orchestra_api_user_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -40,8 +40,8 @@ class UserController extends Controller
      */
     public function listAction()
     {
-        $userCollection = $this->get('php_orchestra_user.repository.user')->findAll();
+        $userCollection = $this->get('open_orchestra_user.repository.user')->findAll();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
     }
 }

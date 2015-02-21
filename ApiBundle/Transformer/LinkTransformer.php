@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\LinkFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\LinkFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 
 /**
  * Class LinkTransformer

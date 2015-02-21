@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Manager;
+namespace OpenOrchestra\BackofficeBundle\Test\Manager;
 
-use PHPOrchestra\BackofficeBundle\Manager\SiteManager;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\BackofficeBundle\Manager\SiteManager;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteManagerTest
@@ -22,7 +22,7 @@ class SiteManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->siteClass = 'PHPOrchestra\ModelBundle\Document\Site';
+        $this->siteClass = 'OpenOrchestra\ModelBundle\Document\Site';
         $this->manager = new SiteManager($this->siteClass);
     }
 

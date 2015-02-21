@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class ConfigurableContentIconStrategy
@@ -28,7 +28,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/ConfigurableContent:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/ConfigurableContent:showIcon.html.twig');
     }
 
     /**

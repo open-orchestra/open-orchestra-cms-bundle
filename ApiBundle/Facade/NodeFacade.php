@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use PHPOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
+use OpenOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
 
 /**
  * Class NodeFacade
@@ -73,7 +73,7 @@ class NodeFacade extends DeletedFacade
     public $metaFollow = false;
 
     /**
-     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\StatusFacade")
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\StatusFacade")
      */
     public $status;
 
@@ -93,17 +93,17 @@ class NodeFacade extends DeletedFacade
     public $version;
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\AreaFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      */
     protected $areas = array();
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\BlockFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
     protected $blocks = array();
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\LinkFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\LinkFacade>")
      */
     protected $previewLinks = array();
 

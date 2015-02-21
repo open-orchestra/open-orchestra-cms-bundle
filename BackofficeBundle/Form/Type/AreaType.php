@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\Transformer\HtmlIdTransformer;
-use PHPOrchestra\BackofficeBundle\Transformer\HtmlClassTransformer;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use OpenOrchestra\BackofficeBundle\Transformer\HtmlIdTransformer;
+use OpenOrchestra\BackofficeBundle\Transformer\HtmlClassTransformer;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -35,29 +35,29 @@ class AreaType extends AbstractType
         $htmlIdTransformer = new HtmlIdTransformer($options['data']);
 
         $builder->add('label', 'text', array(
-            'label' => 'php_orchestra_backoffice.form.area.label',
+            'label' => 'open_orchestra_backoffice.form.area.label',
             'required' => false,
         ));
 
         $builder->add(
-            $builder->create('areaId', 'text', array('label' => 'php_orchestra_backoffice.form.area.area_id'))
+            $builder->create('areaId', 'text', array('label' => 'open_orchestra_backoffice.form.area.area_id'))
                 ->addViewTransformer($htmlIdTransformer)
         );
         $builder->add(
             $builder->create('htmlClass', 'text', array(
                 'required' => false,
-                'label' => 'php_orchestra_backoffice.form.area.html_class'
+                'label' => 'open_orchestra_backoffice.form.area.html_class'
             ))
                 ->addViewTransformer($htmlClassTransformer)
         );
         $builder->add('boDirection', 'choice', array(
             'choices' => array('v' => 'vertical', 'h' => 'horizontal'),
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.area.bo_direction'
+            'label' => 'open_orchestra_backoffice.form.area.bo_direction'
         ));
         $builder->add('boPercent', 'text', array(
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.area.bo_percent'
+            'label' => 'open_orchestra_backoffice.form.area.bo_percent'
         ));
         $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

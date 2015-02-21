@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use FOS\UserBundle\Event\UserEvent;
-use PHPOrchestra\UserBundle\UserEvents;
+use OpenOrchestra\UserBundle\UserEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -30,7 +30,7 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userCreate(UserEvent $event)
     {
         $user = $event->getUser();
-        $this->info('php_orchestra_log.user.create', $user->getUsername());
+        $this->info('open_orchestra_log.user.create', $user->getUsername());
     }
 
     /**
@@ -39,7 +39,7 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userDelete(UserEvent $event)
     {
         $user = $event->getUser();
-        $this->info('php_orchestra_log.user.delete', $user->getUsername());
+        $this->info('open_orchestra_log.user.delete', $user->getUsername());
     }
 
     /**
@@ -48,7 +48,7 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userUpdate(UserEvent $event)
     {
         $user = $event->getUser();
-        $this->info('php_orchestra_log.user.update', $user->getUsername());
+        $this->info('open_orchestra_log.user.update', $user->getUsername());
     }
 
     /**
@@ -57,7 +57,7 @@ class LogUserSubscriber implements EventSubscriberInterface
     public function userLogin(InteractiveLoginEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
-        $this->info('php_orchestra_log.user.login', $user->getUserName());
+        $this->info('open_orchestra_log.user.login', $user->getUserName());
     }
 
     /**

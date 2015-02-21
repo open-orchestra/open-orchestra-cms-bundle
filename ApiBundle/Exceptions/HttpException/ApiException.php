@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Exceptions\HttpException;
+namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 
-use PHPOrchestra\ApiBundle\Exceptions\ApiException as BaseApiAxception;
+use OpenOrchestra\ApiBundle\Exceptions\ApiException as BaseApiAxception;
 
 /**
  * Class ApiException

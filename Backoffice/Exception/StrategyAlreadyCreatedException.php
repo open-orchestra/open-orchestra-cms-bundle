@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Exception;
+namespace OpenOrchestra\Backoffice\Exception;
 
 /**
  * Class StrategyAlreadyCreatedException

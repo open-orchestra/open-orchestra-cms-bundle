@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Transformer;
+namespace OpenOrchestra\LogBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Transformer\AbstractTransformer;
-use PHPOrchestra\LogBundle\Facade\LogCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\LogBundle\Facade\LogCollectionFacade;
 
 /**
  * Class LogCollectionTransformer

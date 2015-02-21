@@ -1,5 +1,5 @@
 <option class="version-select-<%= cid %>" value="<%= element.get('version') %>" <% if (element.get('version') == version) { %>selected="selected"<% } %>>
     <b class="page_status_title"><%= element.get('status').label %></b>
     <%= element.get('name') %>
-    ({{ 'php_orchestra_backoffice.element.version.display' | trans({}, 'messages', language) }} : #<%= element.get('version') %>)
+    ({{ 'open_orchestra_backoffice.element.version.display' | trans({}, 'messages', language) }} : #<%= element.get('version') %>)
 </option>

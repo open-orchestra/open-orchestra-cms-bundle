@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\ThemeEvent;
-use PHPOrchestra\ModelInterface\ThemeEvents;
+use OpenOrchestra\ModelInterface\Event\ThemeEvent;
+use OpenOrchestra\ModelInterface\ThemeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,20 +17,20 @@ class ThemeController extends AbstractAdminController
      * @param Request $request
      * @param int     $themeId
      *
-     * @Config\Route("/theme/form/{themeId}", name="php_orchestra_backoffice_theme_form")
+     * @Config\Route("/theme/form/{themeId}", name="open_orchestra_backoffice_theme_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $themeId)
     {
-        $theme = $this->get('php_orchestra_model.repository.theme')->find($themeId);
+        $theme = $this->get('open_orchestra_model.repository.theme')->find($themeId);
 
         $form = $this->createForm(
             'theme',
             $theme,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_theme_form', array(
+                'action' => $this->generateUrl('open_orchestra_backoffice_theme_form', array(
                     'themeId' => $themeId,
                 ))
             )
@@ -40,7 +40,7 @@ class ThemeController extends AbstractAdminController
 
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.theme.success'),
+            $this->get('translator')->trans('open_orchestra_backoffice.form.theme.success'),
             $theme
         );
 
@@ -52,20 +52,20 @@ class ThemeController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/theme/new", name="php_orchestra_backoffice_theme_new")
+     * @Config\Route("/theme/new", name="open_orchestra_backoffice_theme_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $themeClass = $this->container->getParameter('php_orchestra_model.document.theme.class');
+        $themeClass = $this->container->getParameter('open_orchestra_model.document.theme.class');
         $theme = new $themeClass();
         $form = $this->createForm(
             'theme',
             $theme,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_theme_new'),
+                'action' => $this->generateUrl('open_orchestra_backoffice_theme_new'),
                 'method' => 'POST',
             )
         );
@@ -79,13 +79,13 @@ class ThemeController extends AbstractAdminController
 
             $this->get('session')->getFlashBag()->add(
                 'success',
-                $this->get('translator')->trans('php_orchestra_backoffice.form.theme.creation')
+                $this->get('translator')->trans('open_orchestra_backoffice.form.theme.creation')
             );
 
             $this->dispatchEvent(ThemeEvents::THEME_CREATE, new ThemeEvent($theme));
 
             return $this->redirect(
-                $this->generateUrl('php_orchestra_backoffice_theme_form', array(
+                $this->generateUrl('open_orchestra_backoffice_theme_form', array(
                     'themeId' => $theme->getId(),
                 ))
             );

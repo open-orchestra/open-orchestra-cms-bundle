@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
 /**
@@ -19,14 +19,14 @@ class ContextController extends Controller
      *
      * @param string $language
      *
-     * @Config\Route("/language/{language}", name="php_orchestra_api_context_language")
+     * @Config\Route("/language/{language}", name="open_orchestra_api_context_language")
      * @Api\Serialize()
      *
      * @return array
      */
     public function languageAction($language)
     {
-        $contextManager = $this->get('php_orchestra_backoffice.context_manager');
+        $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
         $contextManager->setCurrentLocale($language);
 
@@ -39,17 +39,17 @@ class ContextController extends Controller
      * @param string $siteId
      * @param string $siteName
      *
-     * @Config\Route("/site/{siteId}/{siteName}", name="php_orchestra_api_context_site")
+     * @Config\Route("/site/{siteId}/{siteName}", name="open_orchestra_api_context_site")
      * @Api\Serialize()
      *
      * @return array
      */
     public function siteAction($siteId, $siteName)
     {
-        $contextManager = $this->get('php_orchestra_backoffice.context_manager');
+        $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
         /** @var SiteInterface $site */
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $contextManager->setCurrentsite($site->getSiteId(), $site->getName(), $site->getDefaultLanguage());
 
         return array('success' => true);

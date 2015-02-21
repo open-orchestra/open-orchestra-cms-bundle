@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Generator;
+namespace OpenOrchestra\BackofficeBundle\Test\Generator;
 
-use PHPOrchestra\Backoffice\Generator\BlockGenerator;
+use OpenOrchestra\Backoffice\Generator\BlockGenerator;
 
 /**
  * Class BlockGeneratorTest
@@ -53,13 +53,13 @@ class BlockGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->generator->generate(
             'test',
             $generateFormDir,
-            'PHPOrchestra\Backoffice',
+            'OpenOrchestra\Backoffice',
             $frontDisplayDir,
-            'PHPOrchestra\DisplayBundle',
+            'OpenOrchestra\DisplayBundle',
             $displayIconDir,
-            'PHPOrchestra\BackofficeBundle',
+            'OpenOrchestra\BackofficeBundle',
             $backofficeDisplayDir,
-            'PHPOrchestra\BackofficeBundle');
+            'OpenOrchestra\BackofficeBundle');
 
         $this->assertFileEquals($referenceDir . '/backofficeDisplayBlock/TestStrategy.php', $this->rootDir . '/' . $backofficeDisplayDir . '/TestStrategy.php');
         $this->assertFileEquals($referenceDir . '/frontDisplayBlock/TestStrategy.php', $this->rootDir . '/' . $frontDisplayDir . '/TestStrategy.php');

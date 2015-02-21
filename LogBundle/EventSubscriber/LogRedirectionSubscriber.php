@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\RedirectionEvent;
-use PHPOrchestra\ModelInterface\RedirectionEvents;
+use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
+use OpenOrchestra\ModelInterface\RedirectionEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogRedirectionSubscriber implements EventSubscriberInterface
     public function redirectionCreate(RedirectionEvent $event)
     {
         $redirection = $event->getRedirection();
-        $this->logger->info('php_orchestra_log.redirection.create', array(
+        $this->logger->info('open_orchestra_log.redirection.create', array(
             'redirection_pattern' => $redirection->getRoutePattern(),
             'redirection_site_name' => $redirection->getSiteName()
         ));
@@ -40,7 +40,7 @@ class LogRedirectionSubscriber implements EventSubscriberInterface
     public function redirectionDelete(RedirectionEvent $event)
     {
         $redirection = $event->getRedirection();
-        $this->logger->info('php_orchestra_log.redirection.delete', array(
+        $this->logger->info('open_orchestra_log.redirection.delete', array(
             'redirection_pattern' => $redirection->getRoutePattern(),
             'redirection_site_name' => $redirection->getSiteName()
         ));
@@ -52,7 +52,7 @@ class LogRedirectionSubscriber implements EventSubscriberInterface
     public function redirectionUpdate(RedirectionEvent $event)
     {
         $redirection = $event->getRedirection();
-        $this->logger->info('php_orchestra_log.redirection.update', array(
+        $this->logger->info('open_orchestra_log.redirection.update', array(
             'redirection_pattern' => $redirection->getRoutePattern(),
             'redirection_site_name' => $redirection->getSiteName()
         ));

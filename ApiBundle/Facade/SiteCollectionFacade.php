@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -15,7 +15,7 @@ class SiteCollectionFacade extends AbstractFacade
     public $collectionName = 'sites';
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\SiteFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\SiteFacade>")
      */
     protected $sites = array();
 

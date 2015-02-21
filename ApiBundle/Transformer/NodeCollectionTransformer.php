@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\NodeCollectionFacade;
-use PHPOrchestra\ApiBundle\Facade\NodeFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 
 /**
  * Class NodeCollectionTransformer

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\RedirectionEvent;
-use PHPOrchestra\ModelInterface\RedirectionEvents;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
+use OpenOrchestra\ModelInterface\RedirectionEvents;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,7 @@ class RedirectionController extends BaseController
     /**
      * @param int $redirectionId
      *
-     * @Config\Route("/{redirectionId}", name="php_orchestra_api_redirection_show")
+     * @Config\Route("/{redirectionId}", name="open_orchestra_api_redirection_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -28,13 +28,13 @@ class RedirectionController extends BaseController
      */
     public function showAction($redirectionId)
     {
-        $redirection = $this->get('php_orchestra_model.repository.redirection')->find($redirectionId);
+        $redirection = $this->get('open_orchestra_model.repository.redirection')->find($redirectionId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('redirection')->transform($redirection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('redirection')->transform($redirection);
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_api_redirection_list")
+     * @Config\Route("", name="open_orchestra_api_redirection_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -42,22 +42,22 @@ class RedirectionController extends BaseController
      */
     public function listAction()
     {
-        $redirectionCollection = $this->get('php_orchestra_model.repository.redirection')->findAll();
+        $redirectionCollection = $this->get('open_orchestra_model.repository.redirection')->findAll();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('redirection_collection')->transform($redirectionCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->transform($redirectionCollection);
     }
 
     /**
      * @param int $redirectionId
      *
-     * @Config\Route("/{redirectionId}/delete", name="php_orchestra_api_redirection_delete")
+     * @Config\Route("/{redirectionId}/delete", name="open_orchestra_api_redirection_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
     public function deleteAction($redirectionId)
     {
-        $redirection = $this->get('php_orchestra_model.repository.redirection')->find($redirectionId);
+        $redirection = $this->get('open_orchestra_model.repository.redirection')->find($redirectionId);
         $dm = $this->get('doctrine.odm.mongodb.document_manager');
         $this->dispatchEvent(RedirectionEvents::REDIRECTION_DELETE, new RedirectionEvent($redirection));
         $dm->remove($redirection);

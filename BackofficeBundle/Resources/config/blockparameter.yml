@@ -1,11 +1,11 @@
 parameters:
-    php_orchestra_backoffice.block_parameter_manager.class: PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager
-    php_orchestra_backoffice.block_parameter.content.class: PHPOrchestra\Backoffice\BlockParameter\Strategies\ContentStrategy
+    open_orchestra_backoffice.block_parameter_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager
+    open_orchestra_backoffice.block_parameter.content.class: OpenOrchestra\Backoffice\BlockParameter\Strategies\ContentStrategy
 
 services:
-    php_orchestra_backoffice.block_parameter_manager:
-        class: %php_orchestra_backoffice.block_parameter_manager.class%
-    php_orchestra_backoffice.block_parameter.content:
-        class: %php_orchestra_backoffice.block_parameter.content.class%
+    open_orchestra_backoffice.block_parameter_manager:
+        class: %open_orchestra_backoffice.block_parameter_manager.class%
+    open_orchestra_backoffice.block_parameter.content:
+        class: %open_orchestra_backoffice.block_parameter.content.class%
         tags:
-            - { name: php_orchestra_backoffice.block_parameter.strategy }
+            - { name: open_orchestra_backoffice.block_parameter.strategy }

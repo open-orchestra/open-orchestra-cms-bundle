@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\DependencyInjection\Compiler;
+namespace OpenOrchestra\ApiBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,12 +20,12 @@ class TransformerCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('php_orchestra_api.transformer_manager')) {
+        if (!$container->hasDefinition('open_orchestra_api.transformer_manager')) {
             return;
         }
 
-        $manager = $container->getDefinition('php_orchestra_api.transformer_manager');
-        $strategies = $container->findTaggedServiceIds('php_orchestra_api.transformer.strategy');
+        $manager = $container->getDefinition('open_orchestra_api.transformer_manager');
+        $strategies = $container->findTaggedServiceIds('open_orchestra_api.transformer.strategy');
         foreach ($strategies as $id => $attributes) {
             $manager->addMethodCall('addTransformer', array(new Reference($id)));
         }

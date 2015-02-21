@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
 
 /**
@@ -29,7 +29,7 @@ class AdministrationPanelStrategy extends AbstractLeftPaneStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:AdministrationPanel:' . $this->name . '.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:AdministrationPanel:' . $this->name . '.html.twig');
     }
 
     /**

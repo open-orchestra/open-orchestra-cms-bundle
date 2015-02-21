@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 use Symfony\Component\Routing\Router;
 
 /**
@@ -55,7 +55,7 @@ class OrchestraKeywordsType extends AbstractType
             'attr' => array(
                 'class' => 'select2',
                 'data-tags' => $this->getTags(),
-                'data-check' => $this->router->generate('php_orchestra_api_check_keyword', array()),
+                'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
         )));
     }
 

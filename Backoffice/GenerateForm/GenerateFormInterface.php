@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm;
+namespace OpenOrchestra\Backoffice\GenerateForm;
 
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 

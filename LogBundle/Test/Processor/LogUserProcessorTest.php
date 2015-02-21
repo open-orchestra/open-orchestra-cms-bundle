@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\Processor;
+namespace OpenOrchestra\LogBundle\Test\Processor;
 
 use Phake;
-use PHPOrchestra\LogBundle\Processor\LogUserProcessor;
+use OpenOrchestra\LogBundle\Processor\LogUserProcessor;
 
 /**
  * Class LogUserProcessorTest
@@ -38,7 +38,7 @@ class LogUserProcessorTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->request)->getClientIp()->thenReturn($this->ip);
         $this->requestStack = Phake::mock('Symfony\Component\HttpFoundation\RequestStack');
 
-        $this->context = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->context)->getCurrentSiteName()->thenReturn($this->siteName);
 
         $this->processor = new LogUserProcessor($this->security, $this->requestStack, $this->context);

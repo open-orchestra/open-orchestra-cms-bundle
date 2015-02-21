@@ -1,4 +1,4 @@
-{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
 
 <ul id="entity-languages" class="nav nav-tabs">
 </ul>
@@ -6,7 +6,7 @@
 <% if (node.get('node_type') == 'page') { %>
     <a class="btn btn-info btn-new-version btn-new-version-<%= cid %>" target="_blank">
         <i class="glyphicon glyphicon-pencil"></i>
-        {{ ('php_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}
+        {{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}
     </a>
 <% } %>
 <div id="additionalContent" class="smart-form">
@@ -23,16 +23,16 @@
 <div class="hidden-info" id="generated-panel">
     <div class="header">
         <i class="fa fa-arrow-circle-left"></i>
-        <h2>{{ ('php_orchestra_backoffice.node.blocks') | trans({}, 'messages', language) }}</h2>
+        <h2>{{ ('open_orchestra_backoffice.node.blocks') | trans({}, 'messages', language) }}</h2>
     </div>
     <div class="ui-model scroll panel-shadow">
         <ul class="ui-model-blocks rigth-panel-blocks">
-            {{ render(controller('PHPOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
+            {{ render(controller('OpenOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
         </ul>
     </div>
 </div>
-<span class="delete-confirm-txt-<%= cid %> hidden-info">{{ 'php_orchestra_backoffice.node.delete.text'|trans }}</span>
-<span class="delete-confirm-title-<%= cid %> hidden-info">{{ 'php_orchestra_backoffice.node.delete.title'|trans }}</span>
+<span class="delete-confirm-txt-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.node.delete.text'|trans }}</span>
+<span class="delete-confirm-title-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.node.delete.title'|trans }}</span>
 <div role="container">
     <div class="ui-model">
         <div class="toolbar">
@@ -43,4 +43,4 @@
     </div>
 </div>
 
-{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}

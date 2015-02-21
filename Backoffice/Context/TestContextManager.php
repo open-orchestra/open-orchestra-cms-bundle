@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Context;
+namespace OpenOrchestra\Backoffice\Context;
 
-use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class TestContextManager

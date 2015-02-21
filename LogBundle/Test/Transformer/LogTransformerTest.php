@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\Transformer;
+namespace OpenOrchestra\LogBundle\Test\Transformer;
 
 use Phake;
-use PHPOrchestra\LogBundle\Transformer\LogTransformer;
+use OpenOrchestra\LogBundle\Transformer\LogTransformer;
 
 /**
  * Class LogTransformerTest
@@ -24,7 +24,7 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->log = Phake::mock('PHPOrchestra\LogBundle\Model\LogInterface');
+        $this->log = Phake::mock('OpenOrchestra\LogBundle\Model\LogInterface');
         $this->transformer = new LogTransformer($this->translator);
     }
 
@@ -46,7 +46,7 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = $this->transformer->transform($this->log);
 
         Phake::verify($this->translator)->trans(Phake::anyParameters());
-        $this->assertInstanceOf('PHPOrchestra\LogBundle\Facade\LogFacade', $facade);
+        $this->assertInstanceOf('OpenOrchestra\LogBundle\Facade\LogFacade', $facade);
     }
 
     /**
@@ -59,6 +59,6 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = $this->transformer->transform($this->log);
 
         Phake::verify($this->translator, Phake::never())->trans(Phake::anyParameters());
-        $this->assertInstanceOf('PHPOrchestra\LogBundle\Facade\LogFacade', $facade);
+        $this->assertInstanceOf('OpenOrchestra\LogBundle\Facade\LogFacade', $facade);
     }
 }

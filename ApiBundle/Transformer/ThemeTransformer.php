@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\ThemeFacade;
-use PHPOrchestra\ModelInterface\Model\ThemeInterface;
+use OpenOrchestra\ApiBundle\Facade\ThemeFacade;
+use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 
 /**
  * Class ThemeTransformer
@@ -23,15 +23,15 @@ class ThemeTransformer extends AbstractTransformer
         $facade->name = $mixed->getName();
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_theme_show',
+            'open_orchestra_api_theme_show',
             array('themeId' => $mixed->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_theme_delete',
+            'open_orchestra_api_theme_delete',
             array('themeId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_backoffice_theme_form',
+            'open_orchestra_backoffice_theme_form',
             array('themeId' => $mixed->getId())
         ));
 

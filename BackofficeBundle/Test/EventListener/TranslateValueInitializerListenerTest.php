@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventListener;
+namespace OpenOrchestra\BackofficeBundle\Test\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
-use PHPOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Class TranslateValueInitializerListenerTest
@@ -35,12 +35,12 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->fieldTypeClass = 'PHPOrchestra\ModelBundle\Document\FieldType';
-        $this->translatedValueClass = 'PHPOrchestra\ModelBundle\Document\TranslatedValue';
+        $this->fieldTypeClass = 'OpenOrchestra\ModelBundle\Document\FieldType';
+        $this->translatedValueClass = 'OpenOrchestra\ModelBundle\Document\TranslatedValue';
         $this->defaultLanguages = array('en', 'fr', 'es', 'de');
         $this->names = new ArrayCollection();
         $this->fields = new ArrayCollection();
-        $this->object = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $this->object = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->object)->getNames()->thenReturn($this->names);
         Phake::when($this->object)->getFields()->thenReturn($this->fields);
 
@@ -78,7 +78,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(count($defaultLanguages), $this->names);
         foreach ($defaultLanguages as $key => $language) {
             $translatedValue = $this->names->get($key);
-            $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
+            $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
             $this->assertSame($language, $translatedValue->getLanguage());
             $this->assertNull($translatedValue->getValue());
         }
@@ -122,7 +122,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(count($defaultLanguages), $this->names);
         foreach ($defaultLanguages as $key => $language) {
             $translatedValue = $this->names->get($key);
-            $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
+            $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
             $this->assertSame($language, $translatedValue->getLanguage());
             $this->assertSame($dummyValue, $translatedValue->getValue());
         }
@@ -190,7 +190,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('stdClass'),
-            array('PHPOrchestra\ModelInterface\Model\FieldTypeInterface'),
+            array('OpenOrchestra\ModelInterface\Model\FieldTypeInterface'),
         );
     }
 }

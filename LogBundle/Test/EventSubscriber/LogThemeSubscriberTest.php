@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber;
-use PHPOrchestra\ModelInterface\ThemeEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber;
+use OpenOrchestra\ModelInterface\ThemeEvents;
 
 /**
  * Class LogThemeSubscriberTest
@@ -20,8 +20,8 @@ class LogThemeSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->theme = Phake::mock('PHPOrchestra\ModelBundle\Document\Theme');
-        $this->themeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ThemeEvent');
+        $this->theme = Phake::mock('OpenOrchestra\ModelBundle\Document\Theme');
+        $this->themeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ThemeEvent');
         Phake::when($this->themeEvent)->getTheme()->thenReturn($this->theme);
 
         $this->subscriber = new LogThemeSubscriber($this->logger);
@@ -45,7 +45,7 @@ class LogThemeSubscriberTest extends LogAbstractSubscriberTest
     public function testThemeCreate()
     {
         $this->subscriber->themeCreate($this->themeEvent);
-        $this->assertEventLogged('php_orchestra_log.theme.create', array(
+        $this->assertEventLogged('open_orchestra_log.theme.create', array(
             'theme_name' => $this->theme->getName()
         ));
     }
@@ -56,7 +56,7 @@ class LogThemeSubscriberTest extends LogAbstractSubscriberTest
     public function testThemeDelete()
     {
         $this->subscriber->themeDelete($this->themeEvent);
-        $this->assertEventLogged('php_orchestra_log.theme.delete', array(
+        $this->assertEventLogged('open_orchestra_log.theme.delete', array(
             'theme_name' => $this->theme->getName()
         ));
     }
@@ -67,7 +67,7 @@ class LogThemeSubscriberTest extends LogAbstractSubscriberTest
     public function testThemeUpdate()
     {
         $this->subscriber->themeUpdate($this->themeEvent);
-        $this->assertEventLogged('php_orchestra_log.theme.update', array(
+        $this->assertEventLogged('open_orchestra_log.theme.update', array(
             'theme_name' => $this->theme->getName()
         ));
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\ExtractReference\Strategies;
+namespace OpenOrchestra\BackofficeBundle\Test\ExtractReference\Strategies;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy;
-use PHPOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy;
+use OpenOrchestra\Media\Model\MediaInterface;
 
 /**
  * Class ExtractReferenceFromNodeStrategyTest
@@ -30,7 +30,7 @@ class ExtractReferenceFromNodeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $this->assertInstanceOf('PHPOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface', $this->strategy);
+        $this->assertInstanceOf('OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface', $this->strategy);
     }
 
     /**
@@ -50,10 +50,10 @@ class ExtractReferenceFromNodeStrategyTest extends \PHPUnit_Framework_TestCase
     public function provideClassAndSupport()
     {
         return array(
-            array('PHPOrchestra\ModelInterface\Model\NodeInterface', true),
-            array('PHPOrchestra\ModelInterface\Model\ContentInterface', false),
-            array('PHPOrchestra\ModelInterface\Model\ContentTypeInterface', false),
-            array('PHPOrchestra\ModelInterface\Model\StatusableInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\NodeInterface', true),
+            array('OpenOrchestra\ModelInterface\Model\ContentInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\ContentTypeInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\StatusableInterface', false),
         );
     }
 
@@ -62,16 +62,16 @@ class ExtractReferenceFromNodeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testExtractReference()
     {
-        $block1 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
-        $block2 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
-        $block3 = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        $block1 = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $block2 = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $block3 = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $blocks = new ArrayCollection();
         $blocks->add($block1);
         $blocks->add($block2);
         $blocks->add($block3);
 
         $nodeId = 'nodeId';
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn($nodeId);
         Phake::when($node)->getBlocks()->thenReturn($blocks);
 

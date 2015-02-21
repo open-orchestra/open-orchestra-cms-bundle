@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\ContentType;
+use OpenOrchestra\BackofficeBundle\Form\Type\ContentType;
 
 /**
  * Class ContentTypeTest
@@ -25,9 +25,9 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->contentTypeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
 
-        $this->transaltionChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->transaltionChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
 
         $this->form = new ContentType(
             $this->contentTypeRepository,

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Test\Transformer;
+namespace OpenOrchestra\ApiBundle\Test\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\ApiBundle\Transformer\NodeTransformer;
+use OpenOrchestra\ApiBundle\Transformer\NodeTransformer;
 
 /**
  * Class NodeTransformerTest
@@ -35,27 +35,27 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
-        $siteAlias = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteAliasInterface');
-        $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
+        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn(array($siteAlias));
-        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
-        $this->encryptionManager = Phake::mock('PHPOrchestra\BaseBundle\Manager\EncryptionManager');
+        $this->encryptionManager = Phake::mock('OpenOrchestra\BaseBundle\Manager\EncryptionManager');
 
-        $this->siteRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
-        $this->statusRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
-        $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
+        $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
 
-        $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
+        $this->transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
@@ -69,10 +69,10 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransform()
     {
-        $facade = Phake::mock('PHPOrchestra\ApiBundle\Facade\FacadeInterface');
+        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\FacadeInterface');
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
-        $area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $areas = new ArrayCollection();
         $areas->add($area);
 
@@ -80,7 +80,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facade = $this->nodeTransformer->transform($this->node);
 
-        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\NodeFacade', $facade);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
         $this->assertArrayHasKey('_self_version', $facade->getLinks());
@@ -99,7 +99,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $facade = $this->nodeTransformer->transformVersion($this->node);
 
-        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\NodeFacade', $facade);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeFacade', $facade);
         $this->assertArrayHasKey('_self', $facade->getLinks());
         Phake::verify($this->router)->generate(Phake::anyParameters());
     }
@@ -129,12 +129,12 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function getChangeStatus()
     {
-        $facadeA = Phake::mock('PHPOrchestra\ApiBundle\Facade\NodeFacade');
+        $facadeA = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeFacade');
 
-        $facadeB = Phake::mock('PHPOrchestra\ApiBundle\Facade\NodeFacade');
+        $facadeB = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeFacade');
         $facadeB->statusId = 'fakeId';
 
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         return array(
             array($facadeA, null, 0, 0),

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\SiteEvent;
-use PHPOrchestra\ModelInterface\SiteEvents;
+use OpenOrchestra\ModelInterface\Event\SiteEvent;
+use OpenOrchestra\ModelInterface\SiteEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public function siteCreate(SiteEvent $event)
     {
         $site = $event->getSite();
-        $this->logger->info('php_orchestra_log.site.create', array(
+        $this->logger->info('open_orchestra_log.site.create', array(
             'site_id' => $site->getSiteId(),
             'site_name' => $site->getName()
         ));
@@ -40,7 +40,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public function siteDelete(SiteEvent $event)
     {
         $site = $event->getSite();
-        $this->logger->info('php_orchestra_log.site.delete', array(
+        $this->logger->info('open_orchestra_log.site.delete', array(
             'site_id' => $site->getSiteId(),
             'site_name' => $site->getName()
         ));
@@ -52,7 +52,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
     public function siteUpdate(SiteEvent $event)
     {
         $site = $event->getSite();
-        $this->logger->info('php_orchestra_log.site.update', array(
+        $this->logger->info('open_orchestra_log.site.update', array(
             'site_id' => $site->getSiteId(),
             'site_name' => $site->getName()
         ));

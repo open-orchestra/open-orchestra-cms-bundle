@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -52,7 +52,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
         }
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/ConfigurableContent:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/ConfigurableContent:show.html.twig',
             array('contentAttributes' => $contentAttributes)
         );
     }

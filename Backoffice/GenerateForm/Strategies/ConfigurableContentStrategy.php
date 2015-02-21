@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -63,9 +63,9 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
             'choices' => $choices,
             'attr' => array(
                 'class' => 'contentTypeSelector',
-                'data-url' => $this->router->generate('php_orchestra_api_content_list')
+                'data-url' => $this->router->generate('open_orchestra_api_content_list')
             ),
-            'label' => 'php_orchestra_backoffice.block.configurable_content.contentTypeId'
+            'label' => 'open_orchestra_backoffice.block.configurable_content.contentTypeId'
         ));
 
 
@@ -77,7 +77,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
 
         $options = array(
             'choices' => $contents,
-            'label' => 'php_orchestra_backoffice.block.configurable_content.contentId'
+            'label' => 'open_orchestra_backoffice.block.configurable_content.contentId'
         );
 
         $builder->add('contentId', 'choice', $options);

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
-use PHPOrchestra\Media\Repository\FolderRepositoryInterface;
+use OpenOrchestra\Media\Repository\FolderRepositoryInterface;
 
 /**
  * Class TreeFolderPanel
@@ -29,7 +29,7 @@ class TreeFolderPanelStrategy extends AbstractLeftPaneStrategy
     {
         $rootFolders = $this->folderRepository->findAllRootFolderBySiteId();
 
-        return $this->render( 'PHPOrchestraBackofficeBundle:Tree:showFolderTree.html.twig', array(
+        return $this->render( 'OpenOrchestraBackofficeBundle:Tree:showFolderTree.html.twig', array(
             'folders' => $rootFolders,
         ));
     }

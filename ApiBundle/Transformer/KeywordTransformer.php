@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\KeywordFacade;
-use PHPOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\ApiBundle\Facade\KeywordFacade;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class KeywordTransformer
@@ -23,15 +23,15 @@ class KeywordTransformer extends AbstractTransformer
         $facade->label = $mixed->getLabel();
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_keyword_show',
+            'open_orchestra_api_keyword_show',
             array('keywordId' => $mixed->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_keyword_delete',
+            'open_orchestra_api_keyword_delete',
             array('keywordId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_backoffice_keyword_form',
+            'open_orchestra_backoffice_keyword_form',
             array('keywordId' => $mixed->getId())
         ));
 

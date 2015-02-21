@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\TemplateFacade;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ApiBundle\Facade\TemplateFacade;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 
 /**
  * Class TemplateTransformer
@@ -31,11 +31,11 @@ class TemplateTransformer extends AbstractTransformer
         $facade->deleted = $mixed->getDeleted();
         $facade->boDirection = $mixed->getBoDirection();
 
-        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_template_form',
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_form',
             array('templateId' => $mixed->getTemplateId())
         ));
 
-        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_template_delete',
+        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
             array('templateId' => $mixed->getTemplateId())
         ));
 

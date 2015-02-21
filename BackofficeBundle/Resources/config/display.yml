@@ -1,93 +1,93 @@
 parameters:
-    php_orchestra_backoffice.display.carrousel.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\CarrouselStrategy
-    php_orchestra_backoffice.display.gallery.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\GalleryStrategy
-    php_orchestra_backoffice.display.contact.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContactStrategy
-    php_orchestra_backoffice.display.header.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\HeaderStrategy
-    php_orchestra_backoffice.display.footer.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
-    php_orchestra_backoffice.display.menu.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\MenuStrategy
-    php_orchestra_backoffice.display.sample.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SampleStrategy
-    php_orchestra_backoffice.display.tiny_mce_wysiwyg.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
-    php_orchestra_backoffice.display.configurable_content.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ConfigurableContentStrategy
-    php_orchestra_backoffice.display.search.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchStrategy
-    php_orchestra_backoffice.display.search_result.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchResultStrategy
-    php_orchestra_backoffice.display.login.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy
-    php_orchestra_backoffice.display.sub_menu.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\SubMenuStrategy
-    php_orchestra_backoffice.display.content_list.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentListStrategy
-    php_orchestra_backoffice.display.media_list_by_keyword.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy
-    php_orchestra_backoffice.display.content.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentStrategy
-    php_orchestra_backoffice.display.language_list.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LanguageListStrategy
-    php_orchestra_backoffice.display.audience_analysis.class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy
+    open_orchestra_backoffice.display.carrousel.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\CarrouselStrategy
+    open_orchestra_backoffice.display.gallery.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\GalleryStrategy
+    open_orchestra_backoffice.display.contact.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContactStrategy
+    open_orchestra_backoffice.display.header.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\HeaderStrategy
+    open_orchestra_backoffice.display.footer.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
+    open_orchestra_backoffice.display.menu.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\MenuStrategy
+    open_orchestra_backoffice.display.sample.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SampleStrategy
+    open_orchestra_backoffice.display.tiny_mce_wysiwyg.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
+    open_orchestra_backoffice.display.configurable_content.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ConfigurableContentStrategy
+    open_orchestra_backoffice.display.search.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchStrategy
+    open_orchestra_backoffice.display.search_result.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchResultStrategy
+    open_orchestra_backoffice.display.login.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy
+    open_orchestra_backoffice.display.sub_menu.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SubMenuStrategy
+    open_orchestra_backoffice.display.content_list.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentListStrategy
+    open_orchestra_backoffice.display.media_list_by_keyword.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy
+    open_orchestra_backoffice.display.content.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentStrategy
+    open_orchestra_backoffice.display.language_list.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\LanguageListStrategy
+    open_orchestra_backoffice.display.audience_analysis.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy
 
 services:
-    php_orchestra_backoffice.display.contact:
-        class: %php_orchestra_backoffice.display.contact.class%
+    open_orchestra_backoffice.display.contact:
+        class: %open_orchestra_backoffice.display.contact.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.footer:
-        class: %php_orchestra_backoffice.display.footer.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.footer:
+        class: %open_orchestra_backoffice.display.footer.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.menu:
-        class: %php_orchestra_backoffice.display.menu.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.menu:
+        class: %open_orchestra_backoffice.display.menu.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.search_result:
-        class: %php_orchestra_backoffice.display.search_result.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.search_result:
+        class: %open_orchestra_backoffice.display.search_result.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.search:
-        class: %php_orchestra_backoffice.display.search.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.search:
+        class: %open_orchestra_backoffice.display.search.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.login:
-        class: %php_orchestra_backoffice.display.login.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.login:
+        class: %open_orchestra_backoffice.display.login.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.sub_menu:
-        class: %php_orchestra_backoffice.display.sub_menu.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.sub_menu:
+        class: %open_orchestra_backoffice.display.sub_menu.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.content_list:
-        class: %php_orchestra_backoffice.display.content_list.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.content_list:
+        class: %open_orchestra_backoffice.display.content_list.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.media_list_by_keyword:
-        class: %php_orchestra_backoffice.display.media_list_by_keyword.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.media_list_by_keyword:
+        class: %open_orchestra_backoffice.display.media_list_by_keyword.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.content:
-        class: %php_orchestra_backoffice.display.content.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.content:
+        class: %open_orchestra_backoffice.display.content.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.language_list:
-        class: %php_orchestra_backoffice.display.language_list.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.language_list:
+        class: %open_orchestra_backoffice.display.language_list.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.carrousel:
-        class: %php_orchestra_backoffice.display.carrousel.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.carrousel:
+        class: %open_orchestra_backoffice.display.carrousel.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.gallery:
-        class: %php_orchestra_backoffice.display.gallery.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.gallery:
+        class: %open_orchestra_backoffice.display.gallery.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.tiny_mce_wysiwyg:
-        class: %php_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.tiny_mce_wysiwyg:
+        class: %open_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.gmap:
-        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.gmap:
+        class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.add_this:
-        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\AddThisStrategy
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.add_this:
+        class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\AddThisStrategy
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.audience_analysis:
-        class: %php_orchestra_backoffice.display.audience_analysis.class%
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.audience_analysis:
+        class: %open_orchestra_backoffice.display.audience_analysis.class%
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
-    php_orchestra_backoffice.display.video:
-        class: PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\VideoStrategy
+            - { name: open_orchestra_display.display_block.strategy }
+    open_orchestra_backoffice.display.video:
+        class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\VideoStrategy
         tags:
-            - { name: php_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_display.display_block.strategy }

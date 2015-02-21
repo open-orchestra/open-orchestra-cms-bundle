@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\Event;
@@ -52,7 +52,7 @@ abstract class AbstractAdminController extends Controller
         FormInterface $form,
         array $params = array(),
         $response = null,
-        $template = 'PHPOrchestraBackofficeBundle:Editorial:template.html.twig'
+        $template = 'OpenOrchestraBackofficeBundle:Editorial:template.html.twig'
     ){
         $statusCode = 200;
         if ($form->getErrors()->count() > 0) {

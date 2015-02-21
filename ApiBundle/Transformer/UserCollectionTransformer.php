@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\Collection;
-use PHPOrchestra\ApiBundle\Facade\UserCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\UserCollectionFacade;
 
 
 /**
@@ -13,7 +13,7 @@ class UserCollectionTransformer extends AbstractTransformer
     /**
      * @param Collection $mixed
      *
-     * @return \PHPOrchestra\ApiBundle\Facade\FacadeInterface
+     * @return \OpenOrchestra\ApiBundle\Facade\FacadeInterface
      */
     public function transform($mixed)
     {
@@ -23,7 +23,7 @@ class UserCollectionTransformer extends AbstractTransformer
             $facade->addUser($this->getTransformer('user')->transform($user));
         }
 
-        $facade->addLink('_self_add', $this->generateRoute('php_orchestra_user_new'));
+        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_user_new'));
 
         return $facade;
     }

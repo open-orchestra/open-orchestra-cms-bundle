@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -15,7 +15,7 @@ class RedirectionCollectionFacade extends AbstractFacade
     public $collectionName = 'redirections';
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\RedirectionFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\RedirectionFacade>")
      */
     protected $redirections = array();
 

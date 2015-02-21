@@ -3,7 +3,7 @@
 {{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9}) }}
 
 {% if blockType is defined %}
-    <span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('php_orchestra_backoffice.block.' ~ blockType ~ '.title') | trans }}</span>
+    <span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('open_orchestra_backoffice.block.' ~ blockType ~ '.title') | trans }}</span>
 {% endif %}
 
 {{ tinymce_init() }}

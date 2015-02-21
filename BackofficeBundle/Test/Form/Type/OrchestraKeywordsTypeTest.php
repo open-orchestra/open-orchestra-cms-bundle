@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType;
+use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType;
 
 /**
  * Class OrchestraKeywordsTypeTest
@@ -29,16 +29,16 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->keyword1 = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
-        $this->keyword2 = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
+        $this->keyword1 = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
+        $this->keyword2 = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
         $this->keywords = new ArrayCollection();
         $this->keywords->add($this->keyword1);
         $this->keywords->add($this->keyword2);
-        $this->keywordRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
+        $this->keywordRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
         Phake::when($this->keywordRepository)->findAll()->thenReturn($this->keywords);
 
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformer = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer');
+        $this->transformer = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer');
 
         $this->router = Phake::mock('Symfony\Component\Routing\Router');
 

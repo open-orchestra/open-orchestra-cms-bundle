@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
 
 /**
  * Class WebSiteSubscriberTest
@@ -25,7 +25,7 @@ class WebSiteSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        $this->data = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $this->data = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->data);
@@ -55,11 +55,11 @@ class WebSiteSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(null, array(
-                'label' => 'php_orchestra_backoffice.form.website.site_id',
+                'label' => 'open_orchestra_backoffice.form.website.site_id',
                 'attr' => array('class' => 'generate-id-dest')
             )),
             array('siteId', array(
-                'label' => 'php_orchestra_backoffice.form.website.site_id',
+                'label' => 'open_orchestra_backoffice.form.website.site_id',
                 'attr' => array('class' => 'generate-id-dest'),
                 'disabled' => true
             ))

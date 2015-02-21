@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -34,13 +34,13 @@ class TemplateType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.template.name',
+                'label' => 'open_orchestra_backoffice.form.template.name',
             ))
             ->add('language', 'orchestra_language', array(
-                'label' => 'php_orchestra_backoffice.form.template.language',
+                'label' => 'open_orchestra_backoffice.form.template.language',
             ))
             ->add('boDirection', 'orchestra_direction', array(
-                'label' => 'php_orchestra_backoffice.form.template.boDirection',
+                'label' => 'open_orchestra_backoffice.form.template.boDirection',
             ))
             ->add('templateId', 'hidden', array(
                 'disabled' => true

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Twig;
+namespace OpenOrchestra\BackofficeBundle\Twig;
 
-use PHPOrchestra\BackOfficeBundle\DisplayIcon\DisplayManager;
+use OpenOrchestra\BackOfficeBundle\DisplayIcon\DisplayManager;
 
 /**
  * Class BlockIconExtension

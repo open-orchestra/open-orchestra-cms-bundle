@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\StrategyManager;
+namespace OpenOrchestra\BackofficeBundle\Test\StrategyManager;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
+use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 
 /**
  * Class GenerateFormManagerTest
@@ -25,13 +25,13 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->strategy1 = Phake::mock('PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
+        $this->strategy1 = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
         Phake::when($this->strategy1)->getName()->thenReturn('strategy1');
         Phake::when($this->strategy1)->support(Phake::anyParameters())->thenReturn(true);
-        $this->strategy2 = Phake::mock('PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
+        $this->strategy2 = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
         Phake::when($this->strategy2)->getName()->thenReturn('strategy2');
         Phake::when($this->strategy2)->support(Phake::anyParameters())->thenReturn(false);
-        $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $this->form = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
 
         $this->manager = new GenerateFormManager();

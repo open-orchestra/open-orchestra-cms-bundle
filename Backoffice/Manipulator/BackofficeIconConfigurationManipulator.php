@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Manipulator;
+namespace OpenOrchestra\Backoffice\Manipulator;
 
 
 /**
@@ -21,7 +21,7 @@ class BackofficeIconConfigurationManipulator extends ConfigurationManiplulator
      */
     protected function getTag()
     {
-        return 'php_orchestra_backoffice.display_icon.strategy';
+        return 'open_orchestra_backoffice.display_icon.strategy';
     }
 
     /**
@@ -29,6 +29,6 @@ class BackofficeIconConfigurationManipulator extends ConfigurationManiplulator
      */
     protected function getServicePrefix()
     {
-        return 'php_orchestra_backoffice.icon';
+        return 'open_orchestra_backoffice.icon';
     }
 }

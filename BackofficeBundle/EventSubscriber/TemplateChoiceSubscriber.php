@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -57,7 +57,7 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
             $form->add('templateId', 'choice', array(
                 'choices' => $this->getChoices(),
                 'required' => false,
-                'label' => 'php_orchestra_backoffice.form.node.template_id'
+                'label' => 'open_orchestra_backoffice.form.node.template_id'
             ));
         }
     }

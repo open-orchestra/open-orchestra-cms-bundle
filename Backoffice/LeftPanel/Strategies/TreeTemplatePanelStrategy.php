@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
-use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 
 /**
  * Class TreeTemplatePanel
@@ -30,7 +30,7 @@ class TreeTemplatePanelStrategy extends AbstractLeftPaneStrategy
         $templates = $this->templateRepository->findByDeleted(false);
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Tree:showTreeTemplates.html.twig',
+            'OpenOrchestraBackofficeBundle:Tree:showTreeTemplates.html.twig',
             array(
                 'templates' => $templates
             )

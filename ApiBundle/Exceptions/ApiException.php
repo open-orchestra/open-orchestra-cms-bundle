@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Exceptions;
+namespace OpenOrchestra\ApiBundle\Exceptions;
 
 use Exception;
 

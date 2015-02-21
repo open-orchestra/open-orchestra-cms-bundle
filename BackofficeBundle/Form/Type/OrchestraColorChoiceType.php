@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -42,7 +42,7 @@ class OrchestraColorChoiceType extends AbstractType
 
         $choices = array();
         foreach ($colors as $color) {
-            $choices[$color] = $this->translator->trans('php_orchestra_backoffice.form.status.color.'.$color);
+            $choices[$color] = $this->translator->trans('open_orchestra_backoffice.form.status.color.'.$color);
         }
 
         return $choices;

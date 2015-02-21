@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -19,7 +19,7 @@ class WebSiteSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
         $options = array(
-            'label' => 'php_orchestra_backoffice.form.website.site_id',
+            'label' => 'open_orchestra_backoffice.form.website.site_id',
             'attr' => array('class' => 'generate-id-dest')
         );
         if (null !== $data->getSiteId()) {

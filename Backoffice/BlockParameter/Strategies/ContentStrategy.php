@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\BlockParameter\Strategies;
+namespace OpenOrchestra\Backoffice\BlockParameter\Strategies;
 
-use PHPOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Class ContentStrategy

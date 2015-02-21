@@ -1,280 +1,280 @@
 parameters:
-    php_orchestra_backoffice.type.template.class: PHPOrchestra\BackofficeBundle\Form\Type\TemplateType
-    php_orchestra_backoffice.type.node.class: PHPOrchestra\BackofficeBundle\Form\Type\NodeType
-    php_orchestra_backoffice.type.area.class: PHPOrchestra\BackofficeBundle\Form\Type\AreaType
-    php_orchestra_backoffice.type.block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockType
-    php_orchestra_backoffice.type.existing_block_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
-    php_orchestra_backoffice.type.orchestra_block.class: PHPOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
-    php_orchestra_backoffice.type.orchestra_content.class : PHPOrchestra\BackofficeBundle\Form\Type\ContentType
-    php_orchestra_backoffice.type.content_type.class: PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType
-    php_orchestra_backoffice.type.orchestra_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
-    php_orchestra_backoffice.type.status.class: PHPOrchestra\BackofficeBundle\Form\Type\StatusType
-    php_orchestra_backoffice.type.field_type.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldTypeType
-    php_orchestra_backoffice.type.field_option.class: PHPOrchestra\BackofficeBundle\Form\Type\FieldOptionType
-    php_orchestra_backoffice.type.translated_value.class: PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueType
-    php_orchestra_backoffice.type.translated_value_collection.class: PHPOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
-    php_orchestra_backoffice.type.orchestra_theme_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraThemeChoiceType
-    php_orchestra_backoffice.type.theme.class: PHPOrchestra\BackofficeBundle\Form\Type\ThemeType
-    php_orchestra_backoffice.type.media.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaType
-    php_orchestra_backoffice.type.orchestra_media.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraMediaType
-    php_orchestra_backoffice.type.folder.class: PHPOrchestra\BackofficeBundle\Form\Type\FolderType
-    php_orchestra_backoffice.type.orchestra_node_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
-    php_orchestra_backoffice.type.orchestra_site_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraSiteChoiceType
-    php_orchestra_backoffice.type.orchestra_content_type_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
-    php_orchestra_backoffice.type.orchestra_color_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
-    php_orchestra_backoffice.type.orchestra_frequence_choice.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType
-    php_orchestra_backoffice.type.tinymce.class: PHPOrchestra\BackofficeBundle\Form\Type\TinymceType
-    php_orchestra_backoffice.type.media_crop.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaCropType
-    php_orchestra_backoffice.type.media_meta.class: PHPOrchestra\BackofficeBundle\Form\Type\MediaMetaType
-    php_orchestra_backoffice.type.keyword.class: PHPOrchestra\BackofficeBundle\Form\Type\KeywordType
-    php_orchestra_backoffice.type.orchestra_keywords.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
-    php_orchestra_backoffice.type.role.class: PHPOrchestra\BackofficeBundle\Form\Type\RoleType
-    php_orchestra_backoffice.type.redirection.class: PHPOrchestra\BackofficeBundle\Form\Type\RedirectionType
-    php_orchestra_backoffice.type.orchestra_video.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
-    php_orchestra_backoffice.type.orchestra_color_picker.class: PHPOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
+    open_orchestra_backoffice.type.template.class: OpenOrchestra\BackofficeBundle\Form\Type\TemplateType
+    open_orchestra_backoffice.type.node.class: OpenOrchestra\BackofficeBundle\Form\Type\NodeType
+    open_orchestra_backoffice.type.area.class: OpenOrchestra\BackofficeBundle\Form\Type\AreaType
+    open_orchestra_backoffice.type.block.class: OpenOrchestra\BackofficeBundle\Form\Type\BlockType
+    open_orchestra_backoffice.type.existing_block_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
+    open_orchestra_backoffice.type.orchestra_block.class: OpenOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
+    open_orchestra_backoffice.type.orchestra_content.class : OpenOrchestra\BackofficeBundle\Form\Type\ContentType
+    open_orchestra_backoffice.type.content_type.class: OpenOrchestra\BackofficeBundle\Form\Type\ContentTypeType
+    open_orchestra_backoffice.type.orchestra_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
+    open_orchestra_backoffice.type.status.class: OpenOrchestra\BackofficeBundle\Form\Type\StatusType
+    open_orchestra_backoffice.type.field_type.class: OpenOrchestra\BackofficeBundle\Form\Type\FieldTypeType
+    open_orchestra_backoffice.type.field_option.class: OpenOrchestra\BackofficeBundle\Form\Type\FieldOptionType
+    open_orchestra_backoffice.type.translated_value.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueType
+    open_orchestra_backoffice.type.translated_value_collection.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
+    open_orchestra_backoffice.type.orchestra_theme_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraThemeChoiceType
+    open_orchestra_backoffice.type.theme.class: OpenOrchestra\BackofficeBundle\Form\Type\ThemeType
+    open_orchestra_backoffice.type.media.class: OpenOrchestra\BackofficeBundle\Form\Type\MediaType
+    open_orchestra_backoffice.type.orchestra_media.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraMediaType
+    open_orchestra_backoffice.type.folder.class: OpenOrchestra\BackofficeBundle\Form\Type\FolderType
+    open_orchestra_backoffice.type.orchestra_node_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
+    open_orchestra_backoffice.type.orchestra_site_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraSiteChoiceType
+    open_orchestra_backoffice.type.orchestra_content_type_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
+    open_orchestra_backoffice.type.orchestra_color_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
+    open_orchestra_backoffice.type.orchestra_frequence_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType
+    open_orchestra_backoffice.type.tinymce.class: OpenOrchestra\BackofficeBundle\Form\Type\TinymceType
+    open_orchestra_backoffice.type.media_crop.class: OpenOrchestra\BackofficeBundle\Form\Type\MediaCropType
+    open_orchestra_backoffice.type.media_meta.class: OpenOrchestra\BackofficeBundle\Form\Type\MediaMetaType
+    open_orchestra_backoffice.type.keyword.class: OpenOrchestra\BackofficeBundle\Form\Type\KeywordType
+    open_orchestra_backoffice.type.orchestra_keywords.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
+    open_orchestra_backoffice.type.role.class: OpenOrchestra\BackofficeBundle\Form\Type\RoleType
+    open_orchestra_backoffice.type.redirection.class: OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType
+    open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
+    open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
 
 services:
     # Template form type
-    php_orchestra_backoffice.type.template:
-        class: %php_orchestra_backoffice.type.template.class%
+    open_orchestra_backoffice.type.template:
+        class: %open_orchestra_backoffice.type.template.class%
         arguments:
-            - %php_orchestra_model.document.template.class%
-            - %php_orchestra_model.document.area.class%
+            - %open_orchestra_model.document.template.class%
+            - %open_orchestra_model.document.area.class%
         tags:
             - { name: form.type, alias: template }
     # Node form type
-    php_orchestra_backoffice.type.node:
-        class: %php_orchestra_backoffice.type.node.class%
+    open_orchestra_backoffice.type.node:
+        class: %open_orchestra_backoffice.type.node.class%
         arguments:
-            - %php_orchestra_model.document.node.class%
-            - @php_orchestra_model.repository.template
-            - @php_orchestra_backoffice.manager.node
-            - %php_orchestra_model.document.area.class%
+            - %open_orchestra_model.document.node.class%
+            - @open_orchestra_model.repository.template
+            - @open_orchestra_backoffice.manager.node
+            - %open_orchestra_model.document.area.class%
         tags:
             - { name: form.type, alias: node }
     # Area form type
-    php_orchestra_backoffice.type.area:
-        class: %php_orchestra_backoffice.type.area.class%
+    open_orchestra_backoffice.type.area:
+        class: %open_orchestra_backoffice.type.area.class%
         arguments:
-            - %php_orchestra_model.document.area.class%
+            - %open_orchestra_model.document.area.class%
         tags:
             - { name: form.type, alias: area }
     # Block form type
-    php_orchestra_backoffice.type.block:
-        class: %php_orchestra_backoffice.type.block.class%
+    open_orchestra_backoffice.type.block:
+        class: %open_orchestra_backoffice.type.block.class%
         arguments:
-            - @php_orchestra_backoffice.generate_form_manager
-            - %php_orchestra_backoffice.block.fixed_attributes%
+            - @open_orchestra_backoffice.generate_form_manager
+            - %open_orchestra_backoffice.block.fixed_attributes%
             - @form.factory
         tags:
             - { name: form.type, alias: block }
-    php_orchestra_backoffice.type.existing_block_choice:
-        class: %php_orchestra_backoffice.type.existing_block_choice.class%
+    open_orchestra_backoffice.type.existing_block_choice:
+        class: %open_orchestra_backoffice.type.existing_block_choice.class%
         arguments:
-            - @php_orchestra_model.repository.node
+            - @open_orchestra_model.repository.node
         tags:
             - { name: form.type, alias: existing_block }
 
-    php_orchestra_backoffice.type.orchestra_block:
-        class: %php_orchestra_backoffice.type.orchestra_block.class%
-        arguments: [%php_orchestra.blocks%, @translator]
+    open_orchestra_backoffice.type.orchestra_block:
+        class: %open_orchestra_backoffice.type.orchestra_block.class%
+        arguments: [%open_orchestra.blocks%, @translator]
         tags:
             - { name: form.type, alias: orchestra_block }
     # Site Form Builder
-    php_orchestra_backoffice.type.site:
-        class: PHPOrchestra\BackofficeBundle\Form\Type\SiteType
+    open_orchestra_backoffice.type.site:
+        class: OpenOrchestra\BackofficeBundle\Form\Type\SiteType
         arguments:
-            - %php_orchestra_model.document.site.class%
+            - %open_orchestra_model.document.site.class%
             - @translator
         tags:
             - { name: form.type, alias: site }
-    php_orchestra_backoffice.type.site_alias:
-        class: PHPOrchestra\BackofficeBundle\Form\Type\SiteAliasType
+    open_orchestra_backoffice.type.site_alias:
+        class: OpenOrchestra\BackofficeBundle\Form\Type\SiteAliasType
         arguments:
-            - %php_orchestra_model.document.site_alias.class%
+            - %open_orchestra_model.document.site_alias.class%
         tags:
             - { name: form.type, alias: site_alias }
     # Content Type Form Builder
-    php_orchestra_backoffice.type.content_type:
-        class: %php_orchestra_backoffice.type.content_type.class%
+    open_orchestra_backoffice.type.content_type:
+        class: %open_orchestra_backoffice.type.content_type.class%
         arguments:
-            - %php_orchestra_model.document.content_type.class%
+            - %open_orchestra_model.document.content_type.class%
             - @translator
-            - @php_orchestra_backoffice.listener.translate_value_initializer
+            - @open_orchestra_backoffice.listener.translate_value_initializer
         tags:
             - { name: form.type, alias: content_type }
-    php_orchestra_backoffice.type.field_type:
-        class: %php_orchestra_backoffice.type.field_type.class%
+    open_orchestra_backoffice.type.field_type:
+        class: %open_orchestra_backoffice.type.field_type.class%
         arguments:
             - @translator
-            - @php_orchestra_backoffice.listener.translate_value_initializer
-            - %php_orchestra_backoffice.custom_types%
-            - %php_orchestra_model.document.field_option.class%
-            - %php_orchestra_model.document.field_type.class%
+            - @open_orchestra_backoffice.listener.translate_value_initializer
+            - %open_orchestra_backoffice.custom_types%
+            - %open_orchestra_model.document.field_option.class%
+            - %open_orchestra_model.document.field_type.class%
         tags:
             - { name: form.type, alias: field_type }
-    php_orchestra_backoffice.type.field_option:
-        class: %php_orchestra_backoffice.type.field_option.class%
+    open_orchestra_backoffice.type.field_option:
+        class: %open_orchestra_backoffice.type.field_option.class%
         arguments:
             - @translator
-            - %php_orchestra_backoffice.options%
-            - %php_orchestra_model.document.field_option.class%
+            - %open_orchestra_backoffice.options%
+            - %open_orchestra_model.document.field_option.class%
         tags:
             - { name: form.type, alias: field_option }
 
     # Status Type
-    php_orchestra_backoffice.type.status:
-        class: %php_orchestra_backoffice.type.status.class%
+    open_orchestra_backoffice.type.status:
+        class: %open_orchestra_backoffice.type.status.class%
         arguments:
-            - %php_orchestra_model.document.status.class%
-            - @php_orchestra_backoffice.listener.translate_value_initializer
+            - %open_orchestra_model.document.status.class%
+            - @open_orchestra_backoffice.listener.translate_value_initializer
         tags:
             - { name: form.type, alias: status }
 
     # Content Form Builder
-    php_orchestra_backoffice.type.orchestra_content:
-        class: %php_orchestra_backoffice.type.orchestra_content.class%
+    open_orchestra_backoffice.type.orchestra_content:
+        class: %open_orchestra_backoffice.type.orchestra_content.class%
         arguments:
-            - @php_orchestra_model.repository.content_type
-            - %php_orchestra_model.document.content.class%
-            - %php_orchestra_model.document.content_attribute.class%
-            - @php_orchestra_backoffice.manager.translation_choice
+            - @open_orchestra_model.repository.content_type
+            - %open_orchestra_model.document.content.class%
+            - %open_orchestra_model.document.content_attribute.class%
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - {name: form.type, alias: orchestra_content}
 
     # Language form field type
-    php_orchestra_backoffice.type.language:
-        class: %php_orchestra_backoffice.type.orchestra_choice.class%
+    open_orchestra_backoffice.type.language:
+        class: %open_orchestra_backoffice.type.orchestra_choice.class%
         arguments:
-            - %php_orchestra_backoffice.orchestra_choice.front_language%
+            - %open_orchestra_backoffice.orchestra_choice.front_language%
             - "orchestra_language"
         tags:
             - { name: form.type, alias: orchestra_language }
 
     # Direction form field type
-    php_orchestra_backoffice.type.direction:
-        class: %php_orchestra_backoffice.type.orchestra_choice.class%
+    open_orchestra_backoffice.type.direction:
+        class: %open_orchestra_backoffice.type.orchestra_choice.class%
         arguments:
-            - %php_orchestra_backoffice.orchestra_choice.direction%
+            - %open_orchestra_backoffice.orchestra_choice.direction%
             - "orchestra_direction"
         tags:
             - { name: form.type, alias: orchestra_direction }
 
-    php_orchestra_backoffice.type.translated_value:
-        class: %php_orchestra_backoffice.type.translated_value.class%
+    open_orchestra_backoffice.type.translated_value:
+        class: %open_orchestra_backoffice.type.translated_value.class%
         arguments:
-            - %php_orchestra_model.document.translated_value.class%
+            - %open_orchestra_model.document.translated_value.class%
         tags:
             - { name: form.type, alias: translated_value }
-    php_orchestra_backoffice.type.translated_value_collection:
-        class: %php_orchestra_backoffice.type.translated_value_collection.class%
+    open_orchestra_backoffice.type.translated_value_collection:
+        class: %open_orchestra_backoffice.type.translated_value_collection.class%
         tags:
             - { name: form.type, alias: translated_value_collection }
-    php_orchestra_backoffice.type.orchestra_theme_choice:
-        class: %php_orchestra_backoffice.type.orchestra_theme_choice.class%
+    open_orchestra_backoffice.type.orchestra_theme_choice:
+        class: %open_orchestra_backoffice.type.orchestra_theme_choice.class%
         arguments:
-            - @php_orchestra_model.repository.theme
+            - @open_orchestra_model.repository.theme
         tags:
             - { name: form.type, alias: orchestra_theme_choice}
-    php_orchestra_backoffice.type.theme:
-        class: %php_orchestra_backoffice.type.theme.class%
+    open_orchestra_backoffice.type.theme:
+        class: %open_orchestra_backoffice.type.theme.class%
         arguments:
-            - %php_orchestra_model.document.theme.class%
+            - %open_orchestra_model.document.theme.class%
         tags:
             - { name: form.type, alias: theme}
-    php_orchestra_backoffice.type.media:
-        class: %php_orchestra_backoffice.type.media.class%
+    open_orchestra_backoffice.type.media:
+        class: %open_orchestra_backoffice.type.media.class%
         arguments:
-            - %php_orchestra_media.document.media.class%
+            - %open_orchestra_media.document.media.class%
         tags:
             - { name: form.type, alias: media}
-    php_orchestra_backoffice.type.orchestra_media:
-        class: %php_orchestra_backoffice.type.orchestra_media.class%
+    open_orchestra_backoffice.type.orchestra_media:
+        class: %open_orchestra_backoffice.type.orchestra_media.class%
         tags:
             - { name: form.type, alias: orchestra_media}
-    php_orchestra_backoffice.type.folder:
-        class: %php_orchestra_backoffice.type.folder.class%
+    open_orchestra_backoffice.type.folder:
+        class: %open_orchestra_backoffice.type.folder.class%
         arguments:
-            - %php_orchestra_media.document.media_folder.class%
+            - %open_orchestra_media.document.media_folder.class%
         tags:
             - { name: form.type, alias: folder}
-    php_orchestra_backoffice.type.orchestra_node_choice:
-        class: %php_orchestra_backoffice.type.orchestra_node_choice.class%
+    open_orchestra_backoffice.type.orchestra_node_choice:
+        class: %open_orchestra_backoffice.type.orchestra_node_choice.class%
         arguments:
-            - @php_orchestra_model.repository.node
-            - @php_orchestra_display.manager.tree
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_display.manager.tree
         tags:
             - { name: form.type, alias: orchestra_node_choice}
-    php_orchestra_backoffice.type.orchestra_site_choice:
-        class: %php_orchestra_backoffice.type.orchestra_site_choice.class%
+    open_orchestra_backoffice.type.orchestra_site_choice:
+        class: %open_orchestra_backoffice.type.orchestra_site_choice.class%
         arguments:
-            - @php_orchestra_model.repository.site
+            - @open_orchestra_model.repository.site
         tags:
             - { name: form.type, alias: orchestra_site_choice}
-    php_orchestra_backoffice.type.orchestra_content_type_choice:
-        class: %php_orchestra_backoffice.type.orchestra_content_type_choice.class%
+    open_orchestra_backoffice.type.orchestra_content_type_choice:
+        class: %open_orchestra_backoffice.type.orchestra_content_type_choice.class%
         arguments:
-            - @php_orchestra_model.repository.content_type
+            - @open_orchestra_model.repository.content_type
         tags:
             - { name: form.type, alias: orchestra_content_type_choice}
-    php_orchestra_backoffice.type.orchestra_color_choice:
-        class: %php_orchestra_backoffice.type.orchestra_color_choice.class%
+    open_orchestra_backoffice.type.orchestra_color_choice:
+        class: %open_orchestra_backoffice.type.orchestra_color_choice.class%
         arguments:
             - @translator
         tags:
             - { name: form.type, alias: orchestra_color_choice}
-    php_orchestra_backoffice.type.orchestra_frequence_choice:
-        class: %php_orchestra_backoffice.type.orchestra_frequence_choice.class%
+    open_orchestra_backoffice.type.orchestra_frequence_choice:
+        class: %open_orchestra_backoffice.type.orchestra_frequence_choice.class%
         tags:
             - { name: form.type, alias: orchestra_frequence_choice}
-    php_orchestra_backoffice.type.tinymce:
-        class: %php_orchestra_backoffice.type.tinymce.class%
+    open_orchestra_backoffice.type.tinymce:
+        class: %open_orchestra_backoffice.type.tinymce.class%
         tags:
             - { name: form.type, alias: tinymce}
-    php_orchestra_backoffice.type.media_crop:
-        class: %php_orchestra_backoffice.type.media_crop.class%
+    open_orchestra_backoffice.type.media_crop:
+        class: %open_orchestra_backoffice.type.media_crop.class%
         arguments:
-            - %php_orchestra_media.thumbnail.configuration%
+            - %open_orchestra_media.thumbnail.configuration%
             - @translator
         tags:
             - { name: form.type, alias: media_crop}
-    php_orchestra_backoffice.type.media_meta:
-        class: %php_orchestra_backoffice.type.media_meta.class%
+    open_orchestra_backoffice.type.media_meta:
+        class: %open_orchestra_backoffice.type.media_meta.class%
         arguments:
-            - %php_orchestra_media.document.media.class%
+            - %open_orchestra_media.document.media.class%
         tags:
             - { name: form.type, alias: media_meta}
-    php_orchestra_backoffice.type.keyword:
-        class: %php_orchestra_backoffice.type.keyword.class%
+    open_orchestra_backoffice.type.keyword:
+        class: %open_orchestra_backoffice.type.keyword.class%
         tags:
             - { name: form.type, alias: keyword}
-    php_orchestra_backoffice.type.orchestra_keywords:
-        class: %php_orchestra_backoffice.type.orchestra_keywords.class%
+    open_orchestra_backoffice.type.orchestra_keywords:
+        class: %open_orchestra_backoffice.type.orchestra_keywords.class%
         arguments:
-            - @php_orchestra_backoffice.transformer.embedkeywords_to_keywords
-            - @php_orchestra_model.repository.keyword
+            - @open_orchestra_backoffice.transformer.embedkeywords_to_keywords
+            - @open_orchestra_model.repository.keyword
             - @router
         tags:
             - { name: form.type, alias: orchestra_keywords}
-    php_orchestra_backoffice.type.role:
-        class: %php_orchestra_backoffice.type.role.class%
+    open_orchestra_backoffice.type.role:
+        class: %open_orchestra_backoffice.type.role.class%
         arguments:
-            - %php_orchestra_model.document.role.class%
+            - %open_orchestra_model.document.role.class%
         tags:
             - { name: form.type, alias: role }
-    php_orchestra_backoffice.type.redirection:
-        class: %php_orchestra_backoffice.type.redirection.class%
+    open_orchestra_backoffice.type.redirection:
+        class: %open_orchestra_backoffice.type.redirection.class%
         arguments:
-            - %php_orchestra_model.document.redirection.class%
+            - %open_orchestra_model.document.redirection.class%
         tags:
             - { name: form.type, alias: redirection }
-    php_orchestra_backoffice.type.orchestra_video:
-        class: %php_orchestra_backoffice.type.orchestra_video.class%
+    open_orchestra_backoffice.type.orchestra_video:
+        class: %open_orchestra_backoffice.type.orchestra_video.class%
         arguments:
-            - @php_orchestra_backoffice.transformer.video_url_to_id
+            - @open_orchestra_backoffice.transformer.video_url_to_id
         tags:
             - { name: form.type, alias: orchestra_video }
-    php_orchestra_backoffice.type.orchestra_color_picker:
-        class: %php_orchestra_backoffice.type.orchestra_color_picker.class%
+    open_orchestra_backoffice.type.orchestra_color_picker:
+        class: %open_orchestra_backoffice.type.orchestra_color_picker.class%
         tags:
             - { name: form.type, alias: orchestra_color_picker }

@@ -40,7 +40,7 @@
                             <img
                                 src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
                                 class="flag flag-{{ field.vars.value.language }}"
-                                alt="{{ ('php_orchestra_backoffice.language.' ~ field.vars.value.language)|trans }}"
+                                alt="{{ ('open_orchestra_backoffice.language.' ~ field.vars.value.language)|trans }}"
                             >
                             {{ form_label(field.value) }}
                         </a>
@@ -68,7 +68,7 @@
         {{ block('form_widget') }}&nbsp;
         <div class="btn">
             <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
-                <i class="fa fa-folder-open-o"></i> {{ 'php_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
+                <i class="fa fa-folder-open-o"></i> {{ 'open_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
             </a><br />
             <button class="btn btn-warning clear-media" data-input="{{ id }}">
                 Delete
@@ -77,7 +77,7 @@
         &nbsp;
         {% set src= media_preview(value) %}
         <img height="100px" {% if src != '' %}src="{{ src }}"{% endif %} id="previewImage_{{ id }}" class="previewImage" />
-        {% include 'PHPOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
+        {% include 'OpenOrchestraBackofficeBundle:Mediatheque:media_modal.html.twig' %}
     {% endspaceless %}
 {% endblock %}
 

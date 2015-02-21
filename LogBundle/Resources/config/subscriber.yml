@@ -1,86 +1,86 @@
 parameters:
-    php_orchestra_log.subscriber.node.class: PHPOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber
-    php_orchestra_log.subscriber.content.class: PHPOrchestra\LogBundle\EventSubscriber\LogContentSubscriber
-    php_orchestra_log.subscriber.content_type.class: PHPOrchestra\LogBundle\EventSubscriber\LogContentTypeSubscriber
-    php_orchestra_log.subscriber.keyword.class: PHPOrchestra\LogBundle\EventSubscriber\LogKeywordSubscriber
-    php_orchestra_log.subscriber.media.class: PHPOrchestra\LogBundle\EventSubscriber\LogMediaSubscriber
-    php_orchestra_log.subscriber.role.class: PHPOrchestra\LogBundle\EventSubscriber\LogRoleSubscriber
-    php_orchestra_log.subscriber.redirection.class: PHPOrchestra\LogBundle\EventSubscriber\LogRedirectionSubscriber
-    php_orchestra_log.subscriber.site.class: PHPOrchestra\LogBundle\EventSubscriber\LogSiteSubscriber
-    php_orchestra_log.subscriber.status.class: PHPOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber
-    php_orchestra_log.subscriber.template.class: PHPOrchestra\LogBundle\EventSubscriber\LogTemplateSubscriber
-    php_orchestra_log.subscriber.theme.class: PHPOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber
-    php_orchestra_log.subscriber.user.class: PHPOrchestra\LogBundle\EventSubscriber\LogUserSubscriber
+    open_orchestra_log.subscriber.node.class: OpenOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber
+    open_orchestra_log.subscriber.content.class: OpenOrchestra\LogBundle\EventSubscriber\LogContentSubscriber
+    open_orchestra_log.subscriber.content_type.class: OpenOrchestra\LogBundle\EventSubscriber\LogContentTypeSubscriber
+    open_orchestra_log.subscriber.keyword.class: OpenOrchestra\LogBundle\EventSubscriber\LogKeywordSubscriber
+    open_orchestra_log.subscriber.media.class: OpenOrchestra\LogBundle\EventSubscriber\LogMediaSubscriber
+    open_orchestra_log.subscriber.role.class: OpenOrchestra\LogBundle\EventSubscriber\LogRoleSubscriber
+    open_orchestra_log.subscriber.redirection.class: OpenOrchestra\LogBundle\EventSubscriber\LogRedirectionSubscriber
+    open_orchestra_log.subscriber.site.class: OpenOrchestra\LogBundle\EventSubscriber\LogSiteSubscriber
+    open_orchestra_log.subscriber.status.class: OpenOrchestra\LogBundle\EventSubscriber\LogStatusSubscriber
+    open_orchestra_log.subscriber.template.class: OpenOrchestra\LogBundle\EventSubscriber\LogTemplateSubscriber
+    open_orchestra_log.subscriber.theme.class: OpenOrchestra\LogBundle\EventSubscriber\LogThemeSubscriber
+    open_orchestra_log.subscriber.user.class: OpenOrchestra\LogBundle\EventSubscriber\LogUserSubscriber
 
 services:
-    php_orchestra_log.subscriber.node:
-        class: %php_orchestra_log.subscriber.node.class%
+    open_orchestra_log.subscriber.node:
+        class: %open_orchestra_log.subscriber.node.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.content:
-        class: %php_orchestra_log.subscriber.content.class%
+    open_orchestra_log.subscriber.content:
+        class: %open_orchestra_log.subscriber.content.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.content_type:
-        class: %php_orchestra_log.subscriber.content_type.class%
+    open_orchestra_log.subscriber.content_type:
+        class: %open_orchestra_log.subscriber.content_type.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.keyword:
-        class: %php_orchestra_log.subscriber.keyword.class%
+    open_orchestra_log.subscriber.keyword:
+        class: %open_orchestra_log.subscriber.keyword.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.media:
-        class: %php_orchestra_log.subscriber.media.class%
+    open_orchestra_log.subscriber.media:
+        class: %open_orchestra_log.subscriber.media.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.role:
-        class: %php_orchestra_log.subscriber.role.class%
+    open_orchestra_log.subscriber.role:
+        class: %open_orchestra_log.subscriber.role.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.redirection:
-        class: %php_orchestra_log.subscriber.redirection.class%
+    open_orchestra_log.subscriber.redirection:
+        class: %open_orchestra_log.subscriber.redirection.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.site:
-        class: %php_orchestra_log.subscriber.site.class%
+    open_orchestra_log.subscriber.site:
+        class: %open_orchestra_log.subscriber.site.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.status:
-        class: %php_orchestra_log.subscriber.status.class%
+    open_orchestra_log.subscriber.status:
+        class: %open_orchestra_log.subscriber.status.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.template:
-        class: %php_orchestra_log.subscriber.template.class%
+    open_orchestra_log.subscriber.template:
+        class: %open_orchestra_log.subscriber.template.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.theme:
-        class: %php_orchestra_log.subscriber.theme.class%
+    open_orchestra_log.subscriber.theme:
+        class: %open_orchestra_log.subscriber.theme.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: phporchestra }
-    php_orchestra_log.subscriber.user:
-        class: %php_orchestra_log.subscriber.user.class%
+    open_orchestra_log.subscriber.user:
+        class: %open_orchestra_log.subscriber.user.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }

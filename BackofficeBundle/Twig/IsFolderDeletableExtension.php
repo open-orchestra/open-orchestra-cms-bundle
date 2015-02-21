@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Twig;
+namespace OpenOrchestra\BackofficeBundle\Twig;
 
-use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
-use PHPOrchestra\Media\Model\MediaFolderInterface;
+use OpenOrchestra\BackofficeBundle\Manager\FolderManager;
+use OpenOrchestra\Media\Model\MediaFolderInterface;
 
 /**
  * Class IsFolderDeletableExtension

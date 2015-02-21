@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ParameterController extends BaseController
 {
     /**
-     * @Config\Route("/languages", name="php_orchestra_api_parameter_languages_show")
+     * @Config\Route("/languages", name="open_orchestra_api_parameter_languages_show")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -22,6 +22,6 @@ class ParameterController extends BaseController
      */
     public function getAllLanguagesAction()
     {
-        return array('languages' => array_keys($this->container->getParameter('php_orchestra_backoffice.orchestra_choice.front_language')));
+        return array('languages' => array_keys($this->container->getParameter('open_orchestra_backoffice.orchestra_choice.front_language')));
     }
 }

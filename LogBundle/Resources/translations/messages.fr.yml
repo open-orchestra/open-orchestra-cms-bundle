@@ -1,4 +1,4 @@
-php_orchestra_log:
+open_orchestra_log:
     node:
         create: Crée un nouveau noeud avec l'id du noeud node_id
         delete: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name

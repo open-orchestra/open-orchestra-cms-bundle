@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Test\EventSubscriber;
+namespace OpenOrchestra\ApiBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\ApiBundle\EventSubscriber\HttpExceptionSubscriber;
+use OpenOrchestra\ApiBundle\EventSubscriber\HttpExceptionSubscriber;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -69,7 +69,7 @@ class HttpExceptionSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->onKernelException($this->event);
 
         Phake::verify($this->request, Phake::times($expectedTime))->duplicate(null, null, array(
-            '_controller' => 'PHPOrchestra\ApiBundle\Controller\ExceptionController::showAction',
+            '_controller' => 'OpenOrchestra\ApiBundle\Controller\ExceptionController::showAction',
             'exception' => $exception,
             'format' => $this->requestFormat,
         ));
@@ -85,8 +85,8 @@ class HttpExceptionSubscriberTest extends \PHPUnit_Framework_TestCase
     public function provideExceptionClassAndExpectedTime()
     {
         return array(
-            array('PHPOrchestra\ApiBundle\Exceptions\HttpException\ApiException', 1),
-            array('PHPOrchestra\ApiBundle\Exceptions\ApiException', 0),
+            array('OpenOrchestra\ApiBundle\Exceptions\HttpException\ApiException', 1),
+            array('OpenOrchestra\ApiBundle\Exceptions\ApiException', 0),
         );
     }
 }

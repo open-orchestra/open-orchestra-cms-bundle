@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -48,7 +48,7 @@ class NodeChoiceSubscriber implements EventSubscriberInterface
             $form->add('nodeSource', 'orchestra_node_choice', array(
                 'required' => false,
                 'mapped' => false,
-                'label' => 'php_orchestra_backoffice.form.node.node_source'
+                'label' => 'open_orchestra_backoffice.form.node.node_source'
             ));
         }
     }

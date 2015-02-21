@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\DependencyInjection\Compiler;
+namespace OpenOrchestra\BackofficeBundle\Test\DependencyInjection\Compiler;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 
 /**
  * Class TinymceCompilerPassTest

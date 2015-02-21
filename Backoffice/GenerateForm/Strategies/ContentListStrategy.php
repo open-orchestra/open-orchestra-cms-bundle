@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -41,34 +41,34 @@ class ContentListStrategy extends AbstractBlockStrategy
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('contentNodeId', 'orchestra_node_choice', array(
-            'label' => 'php_orchestra_backoffice.form.content_list.node',
+            'label' => 'open_orchestra_backoffice.form.content_list.node',
         ));
         $builder->add('characterNumber', 'text', array(
             'empty_data' => 50,
-            'label' => 'php_orchestra_backoffice.form.content_list.nb_characters',
+            'label' => 'open_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
         ));
         $builder->add('contentType', 'orchestra_content_type_choice', array(
-            'label' => 'php_orchestra_backoffice.form.content_list.content_type',
+            'label' => 'open_orchestra_backoffice.form.content_list.content_type',
             'required' => false
         ));
         $builder->add('choiceType', 'choice', array(
             'empty_data' => ContentRepositoryInterface::CHOICE_AND,
-            'label' => 'php_orchestra_backoffice.form.content_list.choice_type',
+            'label' => 'open_orchestra_backoffice.form.content_list.choice_type',
             'required' => true,
             'choices' => array(
-                ContentRepositoryInterface::CHOICE_AND => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_and'),
-                ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('php_orchestra_backoffice.form.content_list.choice_type_or'),
+                ContentRepositoryInterface::CHOICE_AND => $this->translator->trans('open_orchestra_backoffice.form.content_list.choice_type_and'),
+                ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('open_orchestra_backoffice.form.content_list.choice_type_or'),
             ),
         ));
         $builder->add('keywords', 'orchestra_keywords', array(
             'embedded' => false,
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.content_list.content_keyword',
+            'label' => 'open_orchestra_backoffice.form.content_list.content_keyword',
         ));
         $builder->add('contentTemplate', 'tinymce', array(
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.content_list.content_template',
+            'label' => 'open_orchestra_backoffice.form.content_list.content_template',
         ));
     }
 

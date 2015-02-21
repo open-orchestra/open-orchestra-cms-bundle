@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -25,7 +25,7 @@ class MediaCollectionFacade extends AbstractFacade
     public $isFolderDeletable;
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\MediaFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\MediaFacade>")
      */
     protected $medias = array();
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Event\TemplateEvent;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
-use PHPOrchestra\ModelInterface\TemplateEvents;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ModelInterface\TemplateEvents;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,7 @@ class TemplateController extends BaseController
     /**
      * @param string $templateId
      *
-     * @Config\Route("/{templateId}", name="php_orchestra_api_template_show")
+     * @Config\Route("/{templateId}", name="open_orchestra_api_template_show")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -28,15 +28,15 @@ class TemplateController extends BaseController
      */
     public function showAction($templateId)
     {
-        $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('template')->transform($template);
+        return $this->get('open_orchestra_api.transformer_manager')->get('template')->transform($template);
     }
 
     /**
      * @param string $templateId
      *
-     * @Config\Route("/{templateId}/delete", name="php_orchestra_api_template_delete")
+     * @Config\Route("/{templateId}/delete", name="open_orchestra_api_template_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
@@ -44,7 +44,7 @@ class TemplateController extends BaseController
     public function deleteAction($templateId)
     {
         /** @var TemplateInterface $template */
-        $template = $this->get('php_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $template->setDeleted(true);
         $this->dispatchEvent(TemplateEvents::TEMPLATE_DELETE, new TemplateEvent($template));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -26,9 +26,9 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->areaClass = 'PHPOrchestra\ModelBundle\Document\Area';
+        $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
 
-        $this->areaContainer = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaContainerInterface');
+        $this->areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
 
         $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
@@ -114,7 +114,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             'type' => 'text',
             'allow_add' => true,
             'mapped' => false,
-            'label' => 'php_orchestra_backoffice.form.area.new_areas',
+            'label' => 'open_orchestra_backoffice.form.area.new_areas',
             'attr' => array(
                 'data-prototype-label-add' => 'Ajout',
                 'data-prototype-label-new' => 'Nouveau',
@@ -139,7 +139,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithNewNode()
     {
-        $nodeInterface = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($nodeInterface)->getId()->thenReturn(null);
         Phake::when($this->event)->getData()->thenReturn($nodeInterface);
 

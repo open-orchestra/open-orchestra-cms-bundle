@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,7 +19,7 @@ class KeywordType extends AbstractType
     {
         $builder
             ->add('label', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.keyword.label'
+                'label' => 'open_orchestra_backoffice.form.keyword.label'
             )
         );
 

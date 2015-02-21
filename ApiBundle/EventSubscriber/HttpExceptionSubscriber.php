@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\EventSubscriber;
+namespace OpenOrchestra\ApiBundle\EventSubscriber;
 
-use PHPOrchestra\ApiBundle\Exceptions\HttpException\ApiException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ApiException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -25,7 +25,7 @@ class HttpExceptionSubscriber extends ContainerAware implements EventSubscriberI
 
         $request = $event->getRequest();
         $attributes = array(
-            '_controller' => 'PHPOrchestra\ApiBundle\Controller\ExceptionController::showAction',
+            '_controller' => 'OpenOrchestra\ApiBundle\Controller\ExceptionController::showAction',
             'exception' => $exception,
             'format' => $request->getRequestFormat('json'),
         );

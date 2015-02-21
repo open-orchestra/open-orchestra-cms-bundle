@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -28,13 +28,13 @@ class OrchestraFrequenceChoiceType extends AbstractType
     protected function getChoices()
     {
         return array(
-            'always' => 'php_orchestra_backoffice.form.changefreq.always',
-            'hourly' => 'php_orchestra_backoffice.form.changefreq.hourly',
-            'daily' => 'php_orchestra_backoffice.form.changefreq.daily',
-            'weekly' => 'php_orchestra_backoffice.form.changefreq.weekly',
-            'monthly' => 'php_orchestra_backoffice.form.changefreq.monthly',
-            'yearly' => 'php_orchestra_backoffice.form.changefreq.yearly',
-            'never' => 'php_orchestra_backoffice.form.changefreq.never'
+            'always' => 'open_orchestra_backoffice.form.changefreq.always',
+            'hourly' => 'open_orchestra_backoffice.form.changefreq.hourly',
+            'daily' => 'open_orchestra_backoffice.form.changefreq.daily',
+            'weekly' => 'open_orchestra_backoffice.form.changefreq.weekly',
+            'monthly' => 'open_orchestra_backoffice.form.changefreq.monthly',
+            'yearly' => 'open_orchestra_backoffice.form.changefreq.yearly',
+            'never' => 'open_orchestra_backoffice.form.changefreq.never'
         );
     }
 

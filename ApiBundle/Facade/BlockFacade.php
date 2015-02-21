@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -38,7 +38,7 @@ class BlockFacade extends AbstractFacade
     public $id;
 
     /**
-     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\UiModelFacade")
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;
 

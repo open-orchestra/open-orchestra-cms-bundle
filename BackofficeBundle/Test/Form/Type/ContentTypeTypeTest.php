@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\ContentTypeType;
+use OpenOrchestra\BackofficeBundle\Form\Type\ContentTypeType;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -22,7 +22,7 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
@@ -51,9 +51,9 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.add');
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.new');
-        Phake::verify($this->translator)->trans('php_orchestra_backoffice.form.field_type.delete');
+        Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.add');
+        Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.new');
+        Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.delete');
         Phake::verify($builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')

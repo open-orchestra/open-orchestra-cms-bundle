@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogContentSubscriber;
-use PHPOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogContentSubscriber;
+use OpenOrchestra\ModelInterface\ContentEvents;
 
 /**
  * Class LogContentSubscriberTest
@@ -20,8 +20,8 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->content = Phake::mock('PHPOrchestra\ModelBundle\Document\Content');
-        $this->contentEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ContentEvent');
+        $this->content = Phake::mock('OpenOrchestra\ModelBundle\Document\Content');
+        $this->contentEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentEvent');
         Phake::when($this->contentEvent)->getContent()->thenReturn($this->content);
 
         $this->subscriber = new LogContentSubscriber($this->logger);
@@ -46,7 +46,7 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     public function testContentCreation()
     {
         $this->subscriber->contentCreation($this->contentEvent);
-        $this->assertEventLogged('php_orchestra_log.content.create', array(
+        $this->assertEventLogged('open_orchestra_log.content.create', array(
             'content_id' => $this->content->getContentId(),
         ));
     }
@@ -57,7 +57,7 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     public function testContentDelete()
     {
         $this->subscriber->contentDelete($this->contentEvent);
-        $this->assertEventLogged('php_orchestra_log.content.delete', array(
+        $this->assertEventLogged('open_orchestra_log.content.delete', array(
             'content_id' => $this->content->getContentId(),
             'content_name' => $this->content->getName(),
         ));
@@ -69,7 +69,7 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     public function testContentUpdate()
     {
         $this->subscriber->contentUpdate($this->contentEvent);
-        $this->assertEventLogged('php_orchestra_log.content.update', array(
+        $this->assertEventLogged('open_orchestra_log.content.update', array(
             'content_id' => $this->content->getContentId(),
             'content_version' => $this->content->getVersion(),
             'content_language' => $this->content->getLanguage()
@@ -82,7 +82,7 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     public function testContentDuplicate()
     {
         $this->subscriber->contentDuplicate($this->contentEvent);
-        $this->assertEventLogged('php_orchestra_log.content.duplicate', array(
+        $this->assertEventLogged('open_orchestra_log.content.duplicate', array(
             'content_id' => $this->content->getContentId(),
             'content_version' => $this->content->getVersion(),
             'content_language' => $this->content->getLanguage()
@@ -95,7 +95,7 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     public function testContentChangeStatus()
     {
         $this->subscriber->contentChangeStatus($this->contentEvent);
-        $this->assertEventLogged('php_orchestra_log.content.status', array(
+        $this->assertEventLogged('open_orchestra_log.content.status', array(
             'content_id' => $this->content->getContentId(),
             'content_version' => $this->content->getVersion(),
             'content_language' => $this->content->getLanguage()

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class SubMenuIconStrategy
@@ -28,7 +28,7 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/SubMenu:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/SubMenu:showIcon.html.twig');
     }
 
     /**

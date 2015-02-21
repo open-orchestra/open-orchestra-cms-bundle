@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -34,7 +34,7 @@ class FooterStrategy extends AbstractStrategy
     public function show(BlockInterface $block)
     {
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Footer:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/Footer:show.html.twig',
             array(
                 'id' => $block->getId(),
                 'class' => $block->getClass()

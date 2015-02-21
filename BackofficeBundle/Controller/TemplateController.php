@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\TemplateEvent;
-use PHPOrchestra\ModelInterface\TemplateEvents;
+use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -18,27 +18,27 @@ class TemplateController extends AbstractAdminController
      * @param Request $request
      * @param int     $templateId
      *
-     * @Config\Route("/template/form/{templateId}", name="php_orchestra_backoffice_template_form", defaults={"templateId" = 0})
+     * @Config\Route("/template/form/{templateId}", name="open_orchestra_backoffice_template_form", defaults={"templateId" = 0})
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $templateId)
     {
-        $templateRepository = $this->container->get('php_orchestra_model.repository.template');
+        $templateRepository = $this->container->get('open_orchestra_model.repository.template');
 
         $template = $templateRepository->findOneByTemplateId($templateId);
 
         $form = $this->generateTemplateForm(
             $template,
-            $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $templateId))
+            $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $templateId))
         );
 
         $form->handleRequest($request);
 
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.template.success'),
+            $this->get('translator')->trans('open_orchestra_backoffice.form.template.success'),
             $template
         );
 
@@ -50,27 +50,27 @@ class TemplateController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/template/new", name="php_orchestra_backoffice_template_new")
+     * @Config\Route("/template/new", name="open_orchestra_backoffice_template_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $templateClass = $this->container->getParameter('php_orchestra_model.document.template.class');
-        $context = $this->get('php_orchestra_backoffice.context_manager');
+        $templateClass = $this->container->getParameter('open_orchestra_model.document.template.class');
+        $context = $this->get('open_orchestra_backoffice.context_manager');
 
         $template = new $templateClass();
         $template->setSiteId($context->getCurrentSiteId());
         $template->setLanguage($context->getCurrentLocale());
 
-        $form = $this->generateTemplateForm($template, $this->generateUrl('php_orchestra_backoffice_template_new'));
+        $form = $this->generateTemplateForm($template, $this->generateUrl('open_orchestra_backoffice_template_new'));
 
         $form->handleRequest($request);
 
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.template.success'),
+            $this->get('translator')->trans('open_orchestra_backoffice.form.template.success'),
             $template
         );
 
@@ -78,7 +78,7 @@ class TemplateController extends AbstractAdminController
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($template->getTemplateId())) {
-            $url = $this->generateUrl('php_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
+            $url = $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
 
             $this->dispatchEvent(TemplateEvents::TEMPLATE_CREATE, new TemplateEvent($template));
 
@@ -88,7 +88,7 @@ class TemplateController extends AbstractAdminController
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Editorial:template.html.twig',
+            'OpenOrchestraBackofficeBundle:Editorial:template.html.twig',
             array('form' => $form->createView()),
             $response
         );

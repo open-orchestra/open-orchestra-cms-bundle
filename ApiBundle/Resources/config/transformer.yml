@@ -1,189 +1,189 @@
 parameters:
-    php_orchestra_api.transformer_manager.class: PHPOrchestra\ApiBundle\Transformer\TransformerManager
-    php_orchestra_api.transformer.node.class: PHPOrchestra\ApiBundle\Transformer\NodeTransformer
-    php_orchestra_api.transformer.node_collection.class: PHPOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
-    php_orchestra_api.transformer.template.class: PHPOrchestra\ApiBundle\Transformer\TemplateTransformer
-    php_orchestra_api.transformer.area.class: PHPOrchestra\ApiBundle\Transformer\AreaTransformer
-    php_orchestra_api.transformer.block.class: PHPOrchestra\ApiBundle\Transformer\BlockTransformer
-    php_orchestra_api.transformer.ui_model.class: PHPOrchestra\ApiBundle\Transformer\UiModelTransformer
-    php_orchestra_api.transformer.content_type.class: PHPOrchestra\ApiBundle\Transformer\ContentTypeTransformer
-    php_orchestra_api.transformer.content_type_collection.class: PHPOrchestra\ApiBundle\Transformer\ContentTypeCollectionTransformer
-    php_orchestra_api.transformer.content.class: PHPOrchestra\ApiBundle\Transformer\ContentTransformer
-    php_orchestra_api.transformer.content_attribute.class: PHPOrchestra\ApiBundle\Transformer\ContentAttributeTransformer
-    php_orchestra_api.transformer.content_collection.class: PHPOrchestra\ApiBundle\Transformer\ContentCollectionTransformer
-    php_orchestra_api.transformer.status_collection.class: PHPOrchestra\ApiBundle\Transformer\StatusCollectionTransformer
-    php_orchestra_api.transformer.site.class: PHPOrchestra\ApiBundle\Transformer\SiteTransformer
-    php_orchestra_api.transformer.site_collection.class: PHPOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
-    php_orchestra_api.transformer.media.class: PHPOrchestra\ApiBundle\Transformer\MediaTransformer
-    php_orchestra_api.transformer.media_collection.class: PHPOrchestra\ApiBundle\Transformer\MediaCollectionTransformer
-    php_orchestra_api.transformer.theme.class: PHPOrchestra\ApiBundle\Transformer\ThemeTransformer
-    php_orchestra_api.transformer.theme_collection.class: PHPOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
-    php_orchestra_api.transformer.role.class: PHPOrchestra\ApiBundle\Transformer\RoleTransformer
-    php_orchestra_api.transformer.role_collection.class: PHPOrchestra\ApiBundle\Transformer\RoleCollectionTransformer
-    php_orchestra_api.transformer.redirection.class: PHPOrchestra\ApiBundle\Transformer\RedirectionTransformer
-    php_orchestra_api.transformer.redirection_collection.class: PHPOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
-    php_orchestra_api.transformer.field_type.class: PHPOrchestra\ApiBundle\Transformer\FieldTypeTransformer
-    php_orchestra_api.transformer.status.class: PHPOrchestra\ApiBundle\Transformer\StatusTransformer
-    php_orchestra_api.transformer.user.class: PHPOrchestra\ApiBundle\Transformer\UserTransformer
-    php_orchestra_api.transformer.user_collection.class: PHPOrchestra\ApiBundle\Transformer\UserCollectionTransformer
-    php_orchestra_api.transformer.keyword.class: PHPOrchestra\ApiBundle\Transformer\KeywordTransformer
-    php_orchestra_api.transformer.keyword_collection.class: PHPOrchestra\ApiBundle\Transformer\KeywordCollectionTransformer
-    php_orchestra_api.transformer.deleted.class: PHPOrchestra\ApiBundle\Transformer\DeletedTransformer
-    php_orchestra_api.transformer.deleted_collection.class: PHPOrchestra\ApiBundle\Transformer\DeletedCollectionTransformer
-    php_orchestra_api.transformer.link.class: PHPOrchestra\ApiBundle\Transformer\LinkTransformer
+    open_orchestra_api.transformer_manager.class: OpenOrchestra\ApiBundle\Transformer\TransformerManager
+    open_orchestra_api.transformer.node.class: OpenOrchestra\ApiBundle\Transformer\NodeTransformer
+    open_orchestra_api.transformer.node_collection.class: OpenOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
+    open_orchestra_api.transformer.template.class: OpenOrchestra\ApiBundle\Transformer\TemplateTransformer
+    open_orchestra_api.transformer.area.class: OpenOrchestra\ApiBundle\Transformer\AreaTransformer
+    open_orchestra_api.transformer.block.class: OpenOrchestra\ApiBundle\Transformer\BlockTransformer
+    open_orchestra_api.transformer.ui_model.class: OpenOrchestra\ApiBundle\Transformer\UiModelTransformer
+    open_orchestra_api.transformer.content_type.class: OpenOrchestra\ApiBundle\Transformer\ContentTypeTransformer
+    open_orchestra_api.transformer.content_type_collection.class: OpenOrchestra\ApiBundle\Transformer\ContentTypeCollectionTransformer
+    open_orchestra_api.transformer.content.class: OpenOrchestra\ApiBundle\Transformer\ContentTransformer
+    open_orchestra_api.transformer.content_attribute.class: OpenOrchestra\ApiBundle\Transformer\ContentAttributeTransformer
+    open_orchestra_api.transformer.content_collection.class: OpenOrchestra\ApiBundle\Transformer\ContentCollectionTransformer
+    open_orchestra_api.transformer.status_collection.class: OpenOrchestra\ApiBundle\Transformer\StatusCollectionTransformer
+    open_orchestra_api.transformer.site.class: OpenOrchestra\ApiBundle\Transformer\SiteTransformer
+    open_orchestra_api.transformer.site_collection.class: OpenOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
+    open_orchestra_api.transformer.media.class: OpenOrchestra\ApiBundle\Transformer\MediaTransformer
+    open_orchestra_api.transformer.media_collection.class: OpenOrchestra\ApiBundle\Transformer\MediaCollectionTransformer
+    open_orchestra_api.transformer.theme.class: OpenOrchestra\ApiBundle\Transformer\ThemeTransformer
+    open_orchestra_api.transformer.theme_collection.class: OpenOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
+    open_orchestra_api.transformer.role.class: OpenOrchestra\ApiBundle\Transformer\RoleTransformer
+    open_orchestra_api.transformer.role_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleCollectionTransformer
+    open_orchestra_api.transformer.redirection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
+    open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
+    open_orchestra_api.transformer.field_type.class: OpenOrchestra\ApiBundle\Transformer\FieldTypeTransformer
+    open_orchestra_api.transformer.status.class: OpenOrchestra\ApiBundle\Transformer\StatusTransformer
+    open_orchestra_api.transformer.user.class: OpenOrchestra\ApiBundle\Transformer\UserTransformer
+    open_orchestra_api.transformer.user_collection.class: OpenOrchestra\ApiBundle\Transformer\UserCollectionTransformer
+    open_orchestra_api.transformer.keyword.class: OpenOrchestra\ApiBundle\Transformer\KeywordTransformer
+    open_orchestra_api.transformer.keyword_collection.class: OpenOrchestra\ApiBundle\Transformer\KeywordCollectionTransformer
+    open_orchestra_api.transformer.deleted.class: OpenOrchestra\ApiBundle\Transformer\DeletedTransformer
+    open_orchestra_api.transformer.deleted_collection.class: OpenOrchestra\ApiBundle\Transformer\DeletedCollectionTransformer
+    open_orchestra_api.transformer.link.class: OpenOrchestra\ApiBundle\Transformer\LinkTransformer
 
 services:
-    php_orchestra_api.transformer_manager:
-        class: %php_orchestra_api.transformer_manager.class%
+    open_orchestra_api.transformer_manager:
+        class: %open_orchestra_api.transformer_manager.class%
         arguments: [@router]
-    php_orchestra_api.transformer.node:
-        class: %php_orchestra_api.transformer.node.class%
+    open_orchestra_api.transformer.node:
+        class: %open_orchestra_api.transformer.node.class%
         arguments:
-            - @php_orchestra_base.manager.encryption
-            - @php_orchestra_model.repository.site
-            - @php_orchestra_model.repository.status
+            - @open_orchestra_base.manager.encryption
+            - @open_orchestra_model.repository.site
+            - @open_orchestra_model.repository.status
             - @event_dispatcher
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.node_collection:
-        class: %php_orchestra_api.transformer.node_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.node_collection:
+        class: %open_orchestra_api.transformer.node_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.template:
-        class: %php_orchestra_api.transformer.template.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.template:
+        class: %open_orchestra_api.transformer.template.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.area:
-        class: %php_orchestra_api.transformer.area.class%
-        arguments: [@php_orchestra_model.repository.node, @php_orchestra_backoffice.manager.area]
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.area:
+        class: %open_orchestra_api.transformer.area.class%
+        arguments: [@open_orchestra_model.repository.node, @open_orchestra_backoffice.manager.area]
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.block:
-        class: %php_orchestra_api.transformer.block.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.block:
+        class: %open_orchestra_api.transformer.block.class%
         arguments: 
-            - @php_orchestra_display.display_block_manager
-            - @php_orchestra_backoffice.display_icon_manager
-            - %php_orchestra_model.document.block.class%
-            - @php_orchestra_backoffice.block_parameter_manager
-            - @php_orchestra_backoffice.generate_form_manager
-            - @php_orchestra_model.repository.node
+            - @open_orchestra_display.display_block_manager
+            - @open_orchestra_backoffice.display_icon_manager
+            - %open_orchestra_model.document.block.class%
+            - @open_orchestra_backoffice.block_parameter_manager
+            - @open_orchestra_backoffice.generate_form_manager
+            - @open_orchestra_model.repository.node
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.ui_model:
-        class: %php_orchestra_api.transformer.ui_model.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.ui_model:
+        class: %open_orchestra_api.transformer.ui_model.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.content_type:
-        class: %php_orchestra_api.transformer.content_type.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.content_type:
+        class: %open_orchestra_api.transformer.content_type.class%
         arguments:
-            - @php_orchestra_backoffice.manager.translation_choice
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.content_type_collection:
-        class: %php_orchestra_api.transformer.content_type_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.content_type_collection:
+        class: %open_orchestra_api.transformer.content_type_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.content:
-        class: %php_orchestra_api.transformer.content.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.content:
+        class: %open_orchestra_api.transformer.content.class%
         arguments:
-            - @php_orchestra_model.repository.status
+            - @open_orchestra_model.repository.status
             - @event_dispatcher
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.content_attribute:
-        class: %php_orchestra_api.transformer.content_attribute.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.content_attribute:
+        class: %open_orchestra_api.transformer.content_attribute.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.content_collection:
-        class: %php_orchestra_api.transformer.content_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.content_collection:
+        class: %open_orchestra_api.transformer.content_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.site:
-        class: %php_orchestra_api.transformer.site.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.site:
+        class: %open_orchestra_api.transformer.site.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.site_collection:
-        class: %php_orchestra_api.transformer.site_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.site_collection:
+        class: %open_orchestra_api.transformer.site_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.media:
-        class: %php_orchestra_api.transformer.media.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.media:
+        class: %open_orchestra_api.transformer.media.class%
         arguments:
-            - %php_orchestra_media.thumbnail.configuration%
+            - %open_orchestra_media.thumbnail.configuration%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.media_collection:
-        class: %php_orchestra_api.transformer.media_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.media_collection:
+        class: %open_orchestra_api.transformer.media_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.theme:
-        class: %php_orchestra_api.transformer.theme.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.theme:
+        class: %open_orchestra_api.transformer.theme.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.theme_collection:
-        class: %php_orchestra_api.transformer.theme_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.theme_collection:
+        class: %open_orchestra_api.transformer.theme_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.role:
-        class: %php_orchestra_api.transformer.role.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.role:
+        class: %open_orchestra_api.transformer.role.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.role_collection:
-        class: %php_orchestra_api.transformer.role_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.role_collection:
+        class: %open_orchestra_api.transformer.role_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.redirection:
-        class: %php_orchestra_api.transformer.redirection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.redirection:
+        class: %open_orchestra_api.transformer.redirection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.redirection_collection:
-        class: %php_orchestra_api.transformer.redirection_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.redirection_collection:
+        class: %open_orchestra_api.transformer.redirection_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.status_collection:
-        class: %php_orchestra_api.transformer.status_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.status_collection:
+        class: %open_orchestra_api.transformer.status_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.field_type:
-        class: %php_orchestra_api.transformer.field_type.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.field_type:
+        class: %open_orchestra_api.transformer.field_type.class%
         arguments:
-            - @php_orchestra_backoffice.manager.translation_choice
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
-            - { name: php_orchestra_api.transformer.strategy }
-    php_orchestra_api.transformer.status:
-        class: %php_orchestra_api.transformer.status.class%
+            - { name: open_orchestra_api.transformer.strategy }
+    open_orchestra_api.transformer.status:
+        class: %open_orchestra_api.transformer.status.class%
         arguments:
             - @security.context
-            - @php_orchestra_model.repository.role
-            - @php_orchestra_backoffice.manager.translation_choice
+            - @open_orchestra_model.repository.role
+            - @open_orchestra_backoffice.manager.translation_choice
             - @translator
         tags:
-            - { name: php_orchestra_api.transformer.strategy }
-    php_orchestra_api.transformer.user:
-        class: %php_orchestra_api.transformer.user.class%
+            - { name: open_orchestra_api.transformer.strategy }
+    open_orchestra_api.transformer.user:
+        class: %open_orchestra_api.transformer.user.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.user_collection:
-        class: %php_orchestra_api.transformer.user_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.user_collection:
+        class: %open_orchestra_api.transformer.user_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.keyword:
-        class: %php_orchestra_api.transformer.keyword.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.keyword:
+        class: %open_orchestra_api.transformer.keyword.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.keyword_collection:
-        class: %php_orchestra_api.transformer.keyword_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.keyword_collection:
+        class: %open_orchestra_api.transformer.keyword_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.deleted:
-        class: %php_orchestra_api.transformer.deleted.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.deleted:
+        class: %open_orchestra_api.transformer.deleted.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.deleted_collection:
-        class: %php_orchestra_api.transformer.deleted_collection.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.deleted_collection:
+        class: %open_orchestra_api.transformer.deleted_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_api.transformer.link:
-        class: %php_orchestra_api.transformer.link.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.link:
+        class: %open_orchestra_api.transformer.link.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
+            - { name: open_orchestra_api.transformer.strategy}

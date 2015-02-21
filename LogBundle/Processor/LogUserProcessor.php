@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Processor;
+namespace OpenOrchestra\LogBundle\Processor;
 
-use PHPOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextManager;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 

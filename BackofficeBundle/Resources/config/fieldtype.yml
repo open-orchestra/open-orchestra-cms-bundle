@@ -1,7 +1,7 @@
 parameters:
 
 #--[CUSTOM FIELDS]--------------#
-    php_orchestra_backoffice.custom_types:
+    open_orchestra_backoffice.custom_types:
         text:
             label: text
             options:
@@ -45,20 +45,20 @@ parameters:
                 required:
                     default_value: false
 
-    php_orchestra_backoffice.options:
+    open_orchestra_backoffice.options:
         max_length:
             type: integer
-            label: php_orchestra_backoffice.form.orchestra_fields.max_length
+            label: open_orchestra_backoffice.form.orchestra_fields.max_length
             required: true
         required:
             type: checkbox
-            label: php_orchestra_backoffice.form.orchestra_fields.required_field
+            label: open_orchestra_backoffice.form.orchestra_fields.required_field
             required: false
         grouping:
             type: integer
-            label: php_orchestra_backoffice.form.orchestra_fields.format
+            label: open_orchestra_backoffice.form.orchestra_fields.format
             required: true
         rounding_mode:
             type: integer
-            label: php_orchestra_backoffice.form.orchestra_fields.rounding_mode
+            label: open_orchestra_backoffice.form.orchestra_fields.rounding_mode
             required: true

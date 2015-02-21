@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\SiteFacade;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\SiteFacade;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteTransformer
@@ -38,15 +38,15 @@ class SiteTransformer extends AbstractTransformer
         }
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_site_show',
+            'open_orchestra_api_site_show',
             array('siteId' => $mixed->getSiteId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_site_delete',
+            'open_orchestra_api_site_delete',
             array('siteId' => $mixed->getSiteId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_backoffice_site_form',
+            'open_orchestra_backoffice_site_form',
             array('siteId' => $mixed->getSiteId())
         ));
 

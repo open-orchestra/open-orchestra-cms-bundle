@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Test\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
-use PHPOrchestra\ModelInterface\Model\EmbedKeywordInterface;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
+use OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface;
 
 /**
  * Class EmbedKeywordsToKeywordsTransformerTest
@@ -28,14 +28,14 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->embedKeywordClass = 'PHPOrchestra\ModelBundle\Document\EmbedKeyword';
-        $this->keywordClass = 'PHPOrchestra\ModelBundle\Document\Keyword';
+        $this->embedKeywordClass = 'OpenOrchestra\ModelBundle\Document\EmbedKeyword';
+        $this->keywordClass = 'OpenOrchestra\ModelBundle\Document\Keyword';
 
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $this->keywordRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
+        $this->keywordRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
         Phake::when($this->keywordRepository)->getDocumentManager()->thenReturn($this->documentManager);
 
-        $this->suppressSpecialCharacter = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer');
+        $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer');
 
         $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository, $this->suppressSpecialCharacter, $this->embedKeywordClass, $this->keywordClass);
     }
@@ -85,7 +85,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformWithTag($tagLabel)
     {
-        $keyword = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
+        $keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
         Phake::when($keyword)->getLabel()->thenReturn($tagLabel);
         $keywords = new ArrayCollection();
         $keywords->add($keyword);
@@ -130,7 +130,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
     {
         Phake::when($this->suppressSpecialCharacter)->transform($tag)->thenReturn($tagLabel);
 
-        $keyword = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
+        $keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
         Phake::when($keyword)->getLabel()->thenReturn($tagLabel);
         Phake::when($this->keywordRepository)->findOneByLabel(Phake::anyParameters())->thenReturn($keyword);
 
@@ -174,6 +174,6 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
     protected function assertSameKeyword($tagLabel, $embedKeyword)
     {
         $this->assertSame($tagLabel, $embedKeyword->getLabel());
-        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\EmbedKeywordInterface', $embedKeyword);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface', $embedKeyword);
     }
 }

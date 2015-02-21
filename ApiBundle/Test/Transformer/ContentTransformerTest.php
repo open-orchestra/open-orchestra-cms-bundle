@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Test\Transformer;
+namespace OpenOrchestra\ApiBundle\Test\Transformer;
 
 use Phake;
-use PHPOrchestra\ApiBundle\Transformer\ContentTransformer;
+use OpenOrchestra\ApiBundle\Transformer\ContentTransformer;
 
 /**
  * Class ContentTransformerTest
@@ -32,20 +32,20 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
-        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
-        $this->statusRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
-        $this->transformerAttribute = Phake::mock('PHPOrchestra\ApiBundle\Transformer\ContentAttributeTransformer');
-        $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\StatusTransformer');
+        $this->transformerAttribute = Phake::mock('OpenOrchestra\ApiBundle\Transformer\ContentAttributeTransformer');
+        $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\StatusTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
 
-        $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
+        $this->transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get('status')->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->get('content_attribute')->thenReturn($this->transformerAttribute);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
@@ -59,10 +59,10 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransform()
     {
-        $facade = Phake::mock('PHPOrchestra\ApiBundle\Facade\FacadeInterface');
+        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\FacadeInterface');
         $facade->label = 'draft';
 
-        $attribute = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         Phake::when($this->content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
@@ -70,7 +70,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facade = $this->contentTransformer->transform($this->content);
 
-        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\ContentFacade', $facade);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
         $this->assertArrayHasKey('_self', $facade->getLinks());
         $this->assertArrayHasKey('_self_without_parameters', $facade->getLinks());
@@ -101,12 +101,12 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function changeStatusProvider()
     {
-        $facade1 = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
+        $facade1 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
 
-        $facade2 = Phake::mock('PHPOrchestra\ApiBundle\Facade\ContentFacade');
+        $facade2 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
         $facade2->statusId = 'statusId';
 
-        $content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
 
         return array(
             array($facade1, null, 0, 0),

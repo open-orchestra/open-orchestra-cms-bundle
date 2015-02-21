@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 
 /**
@@ -17,7 +17,7 @@ class MediaControllerTest extends AbstractControllerTest
     {
         parent::setUp();
 
-        $mediaRepository = static::$kernel->getContainer()->get('php_orchestra_media.repository.media');
+        $mediaRepository = static::$kernel->getContainer()->get('open_orchestra_media.repository.media');
         $this->media = $mediaRepository->findOneByName('logo Phporchestra');
     }
 
@@ -26,7 +26,7 @@ class MediaControllerTest extends AbstractControllerTest
      */
     public function testMediaForm()
     {
-        $mediaFolderRepository = static::$kernel->getContainer()->get('php_orchestra_media.repository.media_folder');
+        $mediaFolderRepository = static::$kernel->getContainer()->get('open_orchestra_media.repository.media_folder');
         $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
 
         $url = '/admin/media/new/' . $mediaFolder->getId();

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Manager;
+namespace OpenOrchestra\BackofficeBundle\Test\Manager;
 
-use PHPOrchestra\BackofficeBundle\Manager\ContentManager;
+use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
 use Phake;
 
 /**
@@ -26,14 +26,14 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->keyword = Phake::mock('PHPOrchestra\ModelInterface\Model\KeywordInterface');
-        $this->contentAttribute = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $this->keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
+        $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
 
-        $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
+        $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($this->content)->getKeywords()->thenReturn(array($this->keyword));
         Phake::when($this->content)->getAttributes()->thenReturn(array($this->contentAttribute));
 
-        $this->contextManager = Phake::mock('PHPOrchestra\Backoffice\Context\ContextManager');
+        $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
 
         $this->manager = new ContentManager($this->contextManager);
