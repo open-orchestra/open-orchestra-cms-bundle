@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle;
+namespace OpenOrchestra\ApiBundle;
 
-use PHPOrchestra\ApiBundle\DependencyInjection\Compiler\TransformerCompilerPass;
+use OpenOrchestra\ApiBundle\DependencyInjection\Compiler\TransformerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class PHPOrchestraApiBundle
+ * Class OpenOrchestraApiBundle
  */
-class PHPOrchestraApiBundle extends Bundle
+class OpenOrchestraApiBundle extends Bundle
 {
     /**
      * @param ContainerBuilder $container

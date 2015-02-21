@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

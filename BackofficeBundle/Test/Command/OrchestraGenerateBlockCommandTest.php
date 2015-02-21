@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Command;
+namespace OpenOrchestra\BackofficeBundle\Test\Command;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Command\OrchestraGenerateBlockCommand;
+use OpenOrchestra\BackofficeBundle\Command\OrchestraGenerateBlockCommand;
 use Symfony\Component\Console\Application;
 
 /**

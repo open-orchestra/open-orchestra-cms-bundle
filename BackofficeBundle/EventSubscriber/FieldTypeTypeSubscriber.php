@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Model\FieldOptionInterface;
-use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
+use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
@@ -103,7 +103,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             'type' => 'field_option',
             'allow_add' => false,
             'allow_delete' => false,
-            'label' => 'php_orchestra_backoffice.form.field_type.options',
+            'label' => 'open_orchestra_backoffice.form.field_type.options',
         ));
     }
 }

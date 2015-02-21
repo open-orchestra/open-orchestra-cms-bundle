@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -20,8 +20,8 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
     public function __construct(TranslatorInterface $translator)
     {
         $this->choices = array(
-            'google_analytics' => $translator->trans('php_orchestra_backoffice.block.audience_analysis.google_analytics'),
-            'xiti_free' => $translator->trans('php_orchestra_backoffice.block.audience_analysis.xiti_free')
+            'google_analytics' => $translator->trans('open_orchestra_backoffice.block.audience_analysis.google_analytics'),
+            'xiti_free' => $translator->trans('open_orchestra_backoffice.block.audience_analysis.xiti_free')
         );
     }
 
@@ -44,10 +44,10 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
         $builder
             ->add('tag_type', 'choice', array(
                 'choices' => $this->choices,
-                'label' => 'php_orchestra_backoffice.block.audience_analysis.tag_type'
+                'label' => 'open_orchestra_backoffice.block.audience_analysis.tag_type'
             ))
             ->add('site_id', 'text', array(
-                'label' => 'php_orchestra_backoffice.block.audience_analysis.site_id'
+                'label' => 'open_orchestra_backoffice.block.audience_analysis.site_id'
             ))
         ;
     }

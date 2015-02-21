@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\UserFacade;
-use PHPOrchestra\UserBundle\Document\User;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\UserFacade;
+use OpenOrchestra\UserBundle\Document\User;
 
 /**
  * Class UserTransformer
@@ -25,11 +25,11 @@ class UserTransformer extends AbstractTransformer
         $facade->roles = implode(',', $mixed->getRoles());
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_user_show',
+            'open_orchestra_api_user_show',
             array('userId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_user_user_form',
+            'open_orchestra_user_user_form',
             array('userId' => $mixed->getId())
         ));
 

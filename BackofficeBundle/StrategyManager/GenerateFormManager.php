@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\StrategyManager;
+namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
-use PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

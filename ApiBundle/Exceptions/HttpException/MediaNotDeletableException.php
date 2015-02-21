@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Exceptions\HttpException;
+namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 
 /**
  * Class MediaNotDeletableException
  */
 class MediaNotDeletableException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'php_orchestra_backoffice.media.delete.impossible';
-    const HUMAN_MESSAGE      = 'php_orchestra_backoffice.form.media.delete';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_backoffice.media.delete.impossible';
+    const HUMAN_MESSAGE      = 'open_orchestra_backoffice.form.media.delete';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\ApiBundle\FunctionalTest\Controller;
 
 /**
  * Class ApiControllersTest

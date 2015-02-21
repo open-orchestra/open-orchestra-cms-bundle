@@ -1,20 +1,20 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DependencyInjection;
+namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
-use PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy;
+use OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class PHPOrchestraBackofficeExtension extends Extension
+class OpenOrchestraBackofficeExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -56,11 +56,11 @@ class PHPOrchestraBackofficeExtension extends Extension
             $config['front_languages'] = array('en' => 'English', 'fr' => 'Français');
         }
         $fixedAttributes = array_merge($config['fixed_attributes'], array('component', 'submit', 'label', 'class', 'id'));
-        $container->setParameter('php_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
+        $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
 
-        $container->setParameter('php_orchestra.blocks', $config['blocks']);
-        $container->setParameter('php_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
-        $container->setParameter('php_orchestra_backoffice.orchestra_choice.direction', array('h' => 'Horizontal', 'v' => 'Vertical'));
+        $container->setParameter('open_orchestra.blocks', $config['blocks']);
+        $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
+        $container->setParameter('open_orchestra_backoffice.orchestra_choice.direction', array('h' => 'Horizontal', 'v' => 'Vertical'));
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

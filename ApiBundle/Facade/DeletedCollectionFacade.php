@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -15,7 +15,7 @@ class DeletedCollectionFacade extends AbstractFacade
     public $collectionName = 'deleteds';
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\DeletedFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\DeletedFacade>")
      */
     protected $deleteds = array();
 

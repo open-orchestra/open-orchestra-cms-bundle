@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
-use PHPOrchestra\ApiBundle\Facade\BlockFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
-use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
+use OpenOrchestra\ApiBundle\Facade\BlockFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
+use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class BlockTransformer
@@ -90,7 +90,7 @@ class BlockTransformer extends AbstractTransformer
         ));
 
         if (!is_null($nodeId) && !is_null($blockNumber)) {
-            $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_block_form',
+            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_block_form',
                 array(
                     'nodeId' => $nodeMongoId,
                     'blockNumber' => $blockNumber

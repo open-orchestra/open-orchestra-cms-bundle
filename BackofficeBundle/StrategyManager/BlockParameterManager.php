@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\StrategyManager;
+namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
-use PHPOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 
 /**

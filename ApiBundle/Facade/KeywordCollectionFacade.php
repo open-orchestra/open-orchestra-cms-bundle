@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -15,7 +15,7 @@ class KeywordCollectionFacade extends AbstractFacade
     public $collectionName = 'keywords';
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\KeywordFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\KeywordFacade>")
      */
     protected $keywords = array();
 

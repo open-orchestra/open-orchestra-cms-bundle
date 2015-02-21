@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -28,9 +28,9 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->fieldOptionClass = 'PHPOrchestra\ModelBundle\Document\FieldOption';
+        $this->fieldOptionClass = 'OpenOrchestra\ModelBundle\Document\FieldOption';
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        $this->fieldType = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
+        $this->fieldType = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->fieldType);
@@ -79,7 +79,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithTypeSet($hasMaxLength, $hasRequired, $timesCalled)
     {
-        $option = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldOptionInterface');
+        $option = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
         Phake::when($option)->getKey()->thenReturn('grouping');
         $options = new ArrayCollection();
         $options->add($option);
@@ -96,7 +96,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'type' => 'field_option',
             'allow_add' => false,
             'allow_delete' => false,
-            'label' => 'php_orchestra_backoffice.form.field_type.options',
+            'label' => 'open_orchestra_backoffice.form.field_type.options',
         ));
         Phake::verify($this->fieldType)->removeOption($option);
     }
@@ -110,7 +110,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSubmitWithTypeSet($hasMaxLength, $hasRequired, $timesCalled)
     {
-        $option = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldOptionInterface');
+        $option = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
         Phake::when($option)->getKey()->thenReturn('grouping');
         $options = new ArrayCollection();
         $options->add($option);
@@ -129,7 +129,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'type' => 'field_option',
             'allow_add' => false,
             'allow_delete' => false,
-            'label' => 'php_orchestra_backoffice.form.field_type.options',
+            'label' => 'open_orchestra_backoffice.form.field_type.options',
         ));
         Phake::verify($this->fieldType)->removeOption($option);
     }

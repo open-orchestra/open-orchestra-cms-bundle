@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\StrategyManager;
+namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
-use PHPOrchestra\Backoffice\Exception\ExtractReferenceStrategyNotFound;
-use PHPOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
-use PHPOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\Backoffice\Exception\ExtractReferenceStrategyNotFound;
+use OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class ExtractReferenceManager

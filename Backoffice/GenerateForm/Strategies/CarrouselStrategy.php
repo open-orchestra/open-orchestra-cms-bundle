@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -42,9 +42,9 @@ class CarrouselStrategy extends AbstractBlockStrategy
             'type' => 'orchestra_media',
             'allow_add' => true,
             'attr' => array(
-                'data-prototype-label-add' => $this->translator->trans('php_orchestra_backoffice.block.carrousel.form.media.add'),
-                'data-prototype-label-new' => $this->translator->trans('php_orchestra_backoffice.block.carrousel.form.media.new'),
-                'data-prototype-label-remove' => $this->translator->trans('php_orchestra_backoffice.block.carrousel.form.media.delete'),
+                'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.block.carrousel.form.media.add'),
+                'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.block.carrousel.form.media.new'),
+                'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.block.carrousel.form.media.delete'),
             ),
         ));
         $builder->add('width');

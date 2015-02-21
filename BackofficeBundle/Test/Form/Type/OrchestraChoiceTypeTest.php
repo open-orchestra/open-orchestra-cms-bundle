@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType;
 use Phake;
 
 /**

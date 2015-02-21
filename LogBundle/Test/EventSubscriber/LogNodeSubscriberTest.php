@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogNodeSubscriber;
 
 /**
  * Test LogNodeSubscriberTest
@@ -21,8 +21,8 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
-        $this->nodeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\NodeEvent');
+        $this->node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
+        $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
 
         $this->context =  array(
@@ -58,7 +58,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     {
         $this->subscriber->nodeCreation($this->nodeEvent);
 
-        $this->assertEventLogged('php_orchestra_log.node.create', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.create', $this->context);
     }
 
     /**
@@ -68,7 +68,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     {
         $this->subscriber->nodeDelete($this->nodeEvent);
 
-        $this->assertEventLogged('php_orchestra_log.node.delete', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.delete', $this->context);
     }
 
     /**
@@ -77,7 +77,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeUpdate()
     {
         $this->subscriber->nodeUpdate($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.update', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.update', $this->context);
     }
 
     /**
@@ -86,7 +86,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeDuplicate()
     {
         $this->subscriber->nodeDuplicate($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.duplicate', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.duplicate', $this->context);
     }
 
     /**
@@ -95,7 +95,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeAddLanguage()
     {
         $this->subscriber->nodeAddLanguage($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.add_language', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.add_language', $this->context);
     }
 
     /**
@@ -104,7 +104,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeUpdateBlock()
     {
         $this->subscriber->nodeUpdateBlock($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.block.update', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.block.update', $this->context);
     }
 
     /**
@@ -113,7 +113,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeUpdateBlockPosition()
     {
         $this->subscriber->nodeUpdateBlockPosition($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.block.update_position', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.block.update_position', $this->context);
     }
 
     /**
@@ -122,7 +122,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeDeleteArea()
     {
         $this->subscriber->nodeDeleteArea($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.area.delete', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.area.delete', $this->context);
     }
 
     /**
@@ -131,7 +131,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeUpdateArea()
     {
         $this->subscriber->nodeUpdateArea($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.area.update', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.area.update', $this->context);
     }
 
     /**
@@ -140,6 +140,6 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
     public function testNodeChangeStatus()
     {
         $this->subscriber->nodeChangeStatus($this->nodeEvent);
-        $this->assertEventLogged('php_orchestra_log.node.status', $this->context);
+        $this->assertEventLogged('open_orchestra_log.node.status', $this->context);
     }
 }

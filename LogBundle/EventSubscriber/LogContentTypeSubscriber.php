@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\ContentTypeEvents;
-use PHPOrchestra\ModelInterface\Event\ContentTypeEvent;
+use OpenOrchestra\ModelInterface\ContentTypeEvents;
+use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
     public function contentTypeCreation(ContentTypeEvent $event)
     {
         $contentType = $event->getContentType();
-        $this->logger->info('php_orchestra_log.content_type.create', array(
+        $this->logger->info('open_orchestra_log.content_type.create', array(
             'content_type_id' => $contentType->getContentTypeId(),
         ));
     }
@@ -39,7 +39,7 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
     public function contentTypeDelete(ContentTypeEvent $event)
     {
         $contentType = $event->getContentType();
-        $this->logger->info('php_orchestra_log.content_type.delete', array(
+        $this->logger->info('open_orchestra_log.content_type.delete', array(
             'content_type_id' => $contentType->getContentTypeId(),
             'content_type_name' => $contentType->getName()
         ));
@@ -51,7 +51,7 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
     public function contentTypeUpdate(ContentTypeEvent $event)
     {
         $contentType = $event->getContentType();
-        $this->logger->info('php_orchestra_log.content_type.update', array(
+        $this->logger->info('open_orchestra_log.content_type.update', array(
             'content_type_id' => $contentType->getContentTypeId(),
             'content_type_name' => $contentType->getName()
         ));

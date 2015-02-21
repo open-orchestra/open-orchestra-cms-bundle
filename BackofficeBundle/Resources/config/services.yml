@@ -1,68 +1,68 @@
 parameters:
-    php_orchestra_backoffice.manager.context.class: PHPOrchestra\Backoffice\Context\ContextManager
-    php_orchestra_backoffice.listener.translate_value_initializer.class: PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
-    php_orchestra_backoffice.manager.translation_choice.class: PHPOrchestra\Backoffice\Manager\TranslationChoiceManager
-    php_orchestra_backoffice.manager.area.class: PHPOrchestra\BackofficeBundle\Manager\AreaManager
-    php_orchestra_backoffice.manager.node.class: PHPOrchestra\BackofficeBundle\Manager\NodeManager
-    php_orchestra_backoffice.manager.site.class: PHPOrchestra\BackofficeBundle\Manager\SiteManager
-    php_orchestra_backoffice.manager.media_folder.class: PHPOrchestra\BackofficeBundle\Manager\FolderManager
-    php_orchestra_backoffice.manager.content.class: PHPOrchestra\BackofficeBundle\Manager\ContentManager
-    php_orchestra_backoffice.manager.content_type.class: PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager
-    php_orchestra_backoffice.manager.block.class: PHPOrchestra\BackofficeBundle\Manager\BlockManager
-    php_orchestra_backoffice.manager.redirection.class: PHPOrchestra\BackofficeBundle\Manager\RedirectionManager
+    open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\ContextManager
+    open_orchestra_backoffice.listener.translate_value_initializer.class: OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
+    open_orchestra_backoffice.manager.translation_choice.class: OpenOrchestra\Backoffice\Manager\TranslationChoiceManager
+    open_orchestra_backoffice.manager.area.class: OpenOrchestra\BackofficeBundle\Manager\AreaManager
+    open_orchestra_backoffice.manager.node.class: OpenOrchestra\BackofficeBundle\Manager\NodeManager
+    open_orchestra_backoffice.manager.site.class: OpenOrchestra\BackofficeBundle\Manager\SiteManager
+    open_orchestra_backoffice.manager.media_folder.class: OpenOrchestra\BackofficeBundle\Manager\FolderManager
+    open_orchestra_backoffice.manager.content.class: OpenOrchestra\BackofficeBundle\Manager\ContentManager
+    open_orchestra_backoffice.manager.content_type.class: OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager
+    open_orchestra_backoffice.manager.block.class: OpenOrchestra\BackofficeBundle\Manager\BlockManager
+    open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\BackofficeBundle\Manager\RedirectionManager
 
 services:
-    php_orchestra_backoffice.context_manager:
-        class: "%php_orchestra_backoffice.manager.context.class%"
-        arguments: [@session, @php_orchestra_model.repository.site, "%kernel.default_locale%"]
-    php_orchestra.manager.current_site:
-        alias: php_orchestra_backoffice.context_manager
-    php_orchestra_backoffice.listener.translate_value_initializer:
-        class: %php_orchestra_backoffice.listener.translate_value_initializer.class%
+    open_orchestra_backoffice.context_manager:
+        class: "%open_orchestra_backoffice.manager.context.class%"
+        arguments: [@session, @open_orchestra_model.repository.site, "%kernel.default_locale%"]
+    open_orchestra.manager.current_site:
+        alias: open_orchestra_backoffice.context_manager
+    open_orchestra_backoffice.listener.translate_value_initializer:
+        class: %open_orchestra_backoffice.listener.translate_value_initializer.class%
         arguments:
-            - %php_orchestra_base.languages_availables%
-            - %php_orchestra_model.document.translated_value.class%
-            - %php_orchestra_model.document.field_type.class%
-    php_orchestra_backoffice.manager.translation_choice:
-        class: %php_orchestra_backoffice.manager.translation_choice.class%
+            - %open_orchestra_base.languages_availables%
+            - %open_orchestra_model.document.translated_value.class%
+            - %open_orchestra_model.document.field_type.class%
+    open_orchestra_backoffice.manager.translation_choice:
+        class: %open_orchestra_backoffice.manager.translation_choice.class%
         arguments:
-            - @php_orchestra_backoffice.context_manager
-    php_orchestra_backoffice.manager.area:
-        class: %php_orchestra_backoffice.manager.area.class%
+            - @open_orchestra_backoffice.context_manager
+    open_orchestra_backoffice.manager.area:
+        class: %open_orchestra_backoffice.manager.area.class%
         arguments:
-            - @php_orchestra_model.repository.node
-            - @php_orchestra_backoffice.block_parameter_manager
-    php_orchestra_backoffice.manager.node:
-        class: %php_orchestra_backoffice.manager.node.class%
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_backoffice.block_parameter_manager
+    open_orchestra_backoffice.manager.node:
+        class: %open_orchestra_backoffice.manager.node.class%
         arguments:
-            - @php_orchestra_model.repository.node
-            - @php_orchestra_model.repository.site
-            - @php_orchestra_backoffice.manager.area
-            - @php_orchestra_backoffice.manager.block
-            - @php_orchestra_backoffice.context_manager
-            - %php_orchestra_model.document.node.class%
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_model.repository.site
+            - @open_orchestra_backoffice.manager.area
+            - @open_orchestra_backoffice.manager.block
+            - @open_orchestra_backoffice.context_manager
+            - %open_orchestra_model.document.node.class%
             - @event_dispatcher
-    php_orchestra_backoffice.manager.site:
-        class: %php_orchestra_backoffice.manager.site.class%
+    open_orchestra_backoffice.manager.site:
+        class: %open_orchestra_backoffice.manager.site.class%
         arguments:
-            - %php_orchestra_model.document.site.class%
-    php_orchestra_backoffice.manager.media_folder:
-        class: %php_orchestra_backoffice.manager.media_folder.class%
+            - %open_orchestra_model.document.site.class%
+    open_orchestra_backoffice.manager.media_folder:
+        class: %open_orchestra_backoffice.manager.media_folder.class%
         arguments: [@doctrine.odm.mongodb.document_manager]
-    php_orchestra_backoffice.manager.content_type:
-        class: %php_orchestra_backoffice.manager.content_type.class%
-    php_orchestra_backoffice.manager.content:
-        class: %php_orchestra_backoffice.manager.content.class%
+    open_orchestra_backoffice.manager.content_type:
+        class: %open_orchestra_backoffice.manager.content_type.class%
+    open_orchestra_backoffice.manager.content:
+        class: %open_orchestra_backoffice.manager.content.class%
         arguments:
-            - @php_orchestra_backoffice.context_manager
-    php_orchestra_backoffice.manager.block:
-        class: %php_orchestra_backoffice.manager.block.class%
-        arguments: [@php_orchestra_model.repository.node]
-    php_orchestra_backoffice.manager.redirection:
-        class: %php_orchestra_backoffice.manager.redirection.class%
+            - @open_orchestra_backoffice.context_manager
+    open_orchestra_backoffice.manager.block:
+        class: %open_orchestra_backoffice.manager.block.class%
+        arguments: [@open_orchestra_model.repository.node]
+    open_orchestra_backoffice.manager.redirection:
+        class: %open_orchestra_backoffice.manager.redirection.class%
         arguments:
-            - %php_orchestra_model.document.redirection.class%
-            - @php_orchestra_backoffice.context_manager
+            - %open_orchestra_model.document.redirection.class%
+            - @open_orchestra_backoffice.context_manager
             - @doctrine.odm.mongodb.document_manager
             - @event_dispatcher
-            - @php_orchestra_model.repository.site
+            - @open_orchestra_model.repository.site

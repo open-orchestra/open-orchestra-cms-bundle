@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -44,7 +44,7 @@ class ExistingBlockChoiceType extends AbstractType
             $builder->add('existingBlock', 'choice', array(
                 'required' => false,
                 'choices' => $choices,
-                'label' => 'php_orchestra_backoffice.form.area.existing_block'
+                'label' => 'open_orchestra_backoffice.form.area.existing_block'
             ));
         }
     }

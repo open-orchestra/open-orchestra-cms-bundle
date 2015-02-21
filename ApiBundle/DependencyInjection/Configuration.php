@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\DependencyInjection;
+namespace OpenOrchestra\ApiBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('php_orchestra_api');
+        $rootNode = $treeBuilder->root('open_orchestra_api');
 
         return $treeBuilder;
     }

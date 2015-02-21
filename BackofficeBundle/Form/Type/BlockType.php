@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\BlockToArrayTransformer;
-use PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\BlockToArrayTransformer;
+use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory;

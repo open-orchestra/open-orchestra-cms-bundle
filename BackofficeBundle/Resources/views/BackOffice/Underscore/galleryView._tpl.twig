@@ -10,11 +10,11 @@
         height="117px"
         />
 <% } else if (media.get('mime_type') == 'application/pdf') { %>
-    {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-pdf.png' %}
+    {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-pdf.png' %}
         <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
     {% endimage %}
 <% } else { %>
-    {% image '@PHPOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-content.png' %}
+    {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-content.png' %}
         <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
     {% endimage %}
 <% } %>

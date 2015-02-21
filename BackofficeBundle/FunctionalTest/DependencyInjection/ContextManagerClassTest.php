@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\DependencyInjection;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\DependencyInjection;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -22,7 +22,7 @@ class ContextManagerClassTest extends KernelTestCase
         $kernel->boot();
         $this->assertInstanceOf(
             $classExpected,
-            $kernel->getContainer()->get('php_orchestra_backoffice.context_manager')
+            $kernel->getContainer()->get('open_orchestra_backoffice.context_manager')
         );
     }
 
@@ -32,7 +32,7 @@ class ContextManagerClassTest extends KernelTestCase
     public function provideClassAndOptions()
     {
         return array(
-            array('PHPOrchestra\Backoffice\Context\TestContextManager', 'test', true),
+            array('OpenOrchestra\Backoffice\Context\TestContextManager', 'test', true),
         );
     }
 }

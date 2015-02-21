@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogRoleSubscriber;
-use PHPOrchestra\ModelInterface\RoleEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogRoleSubscriber;
+use OpenOrchestra\ModelInterface\RoleEvents;
 
 /**
  * Class LogRoleSubscriberTest
@@ -20,8 +20,8 @@ class LogRoleSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->role = Phake::mock('PHPOrchestra\ModelBundle\Document\Role');
-        $this->roleEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\RoleEvent');
+        $this->role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
+        $this->roleEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\RoleEvent');
         Phake::when($this->roleEvent)->getRole()->thenReturn($this->role);
 
         $this->subscriber = new LogRoleSubscriber($this->logger);
@@ -45,7 +45,7 @@ class LogRoleSubscriberTest extends LogAbstractSubscriberTest
     public function testRoleCreate()
     {
         $this->subscriber->roleCreate($this->roleEvent);
-        $this->assertEventLogged('php_orchestra_log.role.create', array('role_name' => $this->role->getName()));
+        $this->assertEventLogged('open_orchestra_log.role.create', array('role_name' => $this->role->getName()));
     }
 
     /**
@@ -54,7 +54,7 @@ class LogRoleSubscriberTest extends LogAbstractSubscriberTest
     public function testRoleDelete()
     {
         $this->subscriber->roleDelete($this->roleEvent);
-        $this->assertEventLogged('php_orchestra_log.role.delete', array('role_name' => $this->role->getName()));
+        $this->assertEventLogged('open_orchestra_log.role.delete', array('role_name' => $this->role->getName()));
     }
 
     /**
@@ -63,6 +63,6 @@ class LogRoleSubscriberTest extends LogAbstractSubscriberTest
     public function testRoleUpdate()
     {
         $this->subscriber->roleUpdate($this->roleEvent);
-        $this->assertEventLogged('php_orchestra_log.role.update', array('role_name' => $this->role->getName()));
+        $this->assertEventLogged('open_orchestra_log.role.update', array('role_name' => $this->role->getName()));
     }
 }

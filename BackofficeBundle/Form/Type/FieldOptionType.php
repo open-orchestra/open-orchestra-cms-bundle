@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -35,7 +35,7 @@ class FieldOptionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('key', 'hidden', array('label' => 'php_orchestra_backoffice.form.field_option.key'));
+        $builder->add('key', 'hidden', array('label' => 'open_orchestra_backoffice.form.field_option.key'));
         $builder->addEventSubscriber(new FieldOptionTypeSubscriber($this->options));
     }
 
@@ -56,7 +56,7 @@ class FieldOptionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldOptionClass,
-            'label' => $this->translator->trans('php_orchestra_backoffice.form.field_option.label'),
+            'label' => $this->translator->trans('open_orchestra_backoffice.form.field_option.label'),
         ));
     }
 }

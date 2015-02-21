@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -36,7 +36,7 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
         $htmlContent = $block->getAttribute('htmlContent');
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
             array('htmlContent' => strip_tags($htmlContent))
         );
     }

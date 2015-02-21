@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -32,8 +32,8 @@ class NodeChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         $this->subscriber = new NodeChoiceSubscriber($this->nodeManager);
     }
@@ -70,7 +70,7 @@ class NodeChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->form)->add('nodeSource', 'orchestra_node_choice', array(
             'required' => false,
             'mapped' => false,
-            'label' => 'php_orchestra_backoffice.form.node.node_source'
+            'label' => 'open_orchestra_backoffice.form.node.node_source'
         ));
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -41,7 +41,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $this->collection = Phake::mock('Doctrine\Common\Collections\Collection');
 
-        $this->contentAttributClass = 'PHPOrchestra\ModelBundle\Document\ContentAttribute';
+        $this->contentAttributClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';
 
         $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
         Phake::when($this->formConfig)->getModelTransformers()->thenReturn(array());
@@ -51,30 +51,30 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
 
         $this->contentTypeId = 'contentTypeId';
-        $this->contentAttribute = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        $this->content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
+        $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($this->content)->getContentType()->thenReturn($this->contentTypeId);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->content);
 
-        $this->fieldType1 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
+        $this->fieldType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType1)->getLabels()->thenReturn($this->collection);
-        $this->fieldType2 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
+        $this->fieldType2 = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType2)->getLabels()->thenReturn($this->collection);
-        $this->fieldType3 = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldTypeInterface');
+        $this->fieldType3 = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
         Phake::when($this->fieldType3)->getLabels()->thenReturn($this->collection);
         $this->fieldCollection = new ArrayCollection();
-        $this->contentType = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType)->getFields()->thenReturn($this->fieldCollection);
         Phake::when($this->contentType)->getVersion()->thenReturn($this->contentTypeVersion);
 
-        $this->repository = Phake::mock('PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         Phake::when($this->repository)->findOneByContentTypeIdAndVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
-        $this->transaltionChoiceManager = Phake::mock('PHPOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->transaltionChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
 
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,

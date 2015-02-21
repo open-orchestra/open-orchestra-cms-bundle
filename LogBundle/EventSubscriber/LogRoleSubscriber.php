@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\RoleEvent;
-use PHPOrchestra\ModelInterface\RoleEvents;
+use OpenOrchestra\ModelInterface\Event\RoleEvent;
+use OpenOrchestra\ModelInterface\RoleEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public function roleCreate(RoleEvent $event)
     {
         $role = $event->getRole();
-        $this->logger->info('php_orchestra_log.role.create', array('role_name' => $role->getName()));
+        $this->logger->info('open_orchestra_log.role.create', array('role_name' => $role->getName()));
     }
 
     /**
@@ -37,7 +37,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public function roleDelete(RoleEvent $event)
     {
         $role = $event->getRole();
-        $this->logger->info('php_orchestra_log.role.delete', array('role_name' => $role->getName()));
+        $this->logger->info('open_orchestra_log.role.delete', array('role_name' => $role->getName()));
     }
 
     /**
@@ -46,7 +46,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
     public function roleUpdate(RoleEvent $event)
     {
         $role = $event->getRole();
-        $this->logger->info('php_orchestra_log.role.update', array('role_name' => $role->getName()));
+        $this->logger->info('open_orchestra_log.role.update', array('role_name' => $role->getName()));
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventListener;
+namespace OpenOrchestra\BackofficeBundle\EventListener;
 
 use Doctrine\Common\Collections\Collection;
-use PHPOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
-use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Symfony\Component\Form\FormEvent;
 
 /**

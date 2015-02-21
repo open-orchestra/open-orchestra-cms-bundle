@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Manager;
+namespace OpenOrchestra\Backoffice\Manager;
 
 use Doctrine\Common\Collections\Collection;
-use PHPOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextManager;
 
 /**
  * Class TranslationChoiceManager

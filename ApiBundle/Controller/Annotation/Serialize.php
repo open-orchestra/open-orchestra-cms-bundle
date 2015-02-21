@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller\Annotation;
+namespace OpenOrchestra\ApiBundle\Controller\Annotation;
 
 /**
  * Class Serialize

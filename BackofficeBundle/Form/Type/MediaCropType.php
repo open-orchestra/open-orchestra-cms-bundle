@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -37,7 +37,7 @@ class MediaCropType extends AbstractType
         $builder->add('w', 'hidden');
         $builder->add('format', 'choice', array(
             'choices' => $this->getChoices(),
-            'label' => 'php_orchestra_backoffice.form.media.format',
+            'label' => 'open_orchestra_backoffice.form.media.format',
             'required' => false,
         ));
 
@@ -49,7 +49,7 @@ class MediaCropType extends AbstractType
         $choices = array();
 
         foreach ($this->thumbnailConfig as $key => $thumbnail) {
-            $choices[$key] = $this->translator->trans('php_orchestra_backoffice.form.media.' . $key);
+            $choices[$key] = $this->translator->trans('open_orchestra_backoffice.form.media.' . $key);
         }
 
         return $choices;

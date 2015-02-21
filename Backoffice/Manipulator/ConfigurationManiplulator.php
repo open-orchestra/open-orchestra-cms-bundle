@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Manipulator;
+namespace OpenOrchestra\Backoffice\Manipulator;
 
 use Doctrine\Common\Inflector\Inflector;
-use PHPOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException;
+use OpenOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException;
 use Sensio\Bundle\GeneratorBundle\Manipulator\Manipulator;
 
 /**

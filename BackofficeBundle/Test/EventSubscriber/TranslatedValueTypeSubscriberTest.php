@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\TranslatedValueTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\TranslatedValueTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -26,7 +26,7 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->data = Phake::mock('PHPOrchestra\ModelInterface\Model\TranslatedValueInterface');
+        $this->data = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
 
         $this->form = Phake::mock('Symfony\Component\Form\Form');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);

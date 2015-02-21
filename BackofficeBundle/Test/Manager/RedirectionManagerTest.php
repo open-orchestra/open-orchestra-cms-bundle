@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Manager;
+namespace OpenOrchestra\BackofficeBundle\Test\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\Manager\RedirectionManager;
+use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
 
 /**
  * Test RedirectionManagerTest
@@ -34,22 +34,22 @@ class RedirectionManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->redirectionClass = 'PHPOrchestra\ModelBundle\Document\Redirection';
+        $this->redirectionClass = 'OpenOrchestra\ModelBundle\Document\Redirection';
 
-        $this->contextManager = Phake::mock('PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
 
-        $this->siteAlias1 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteAliasInterface');
+        $this->siteAlias1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($this->siteAlias1)->getLanguage()->thenReturn($this->localeFr);
-        $this->siteAlias2 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteAliasInterface');
+        $this->siteAlias2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($this->siteAlias2)->getLanguage()->thenReturn($this->localeFr);
         Phake::when($this->siteAlias2)->getPrefix()->thenReturn($this->localeFr);
-        $this->siteAlias3 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteAliasInterface');
+        $this->siteAlias3 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($this->siteAlias3)->getLanguage()->thenReturn($this->localeEn);
         $siteAliases = new ArrayCollection(array($this->siteAlias1, $this->siteAlias2, $this->siteAlias3));
-        $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn($siteAliases);
-        $this->siteRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');

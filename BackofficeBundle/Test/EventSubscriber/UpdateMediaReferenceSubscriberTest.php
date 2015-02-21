@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber;
-use PHPOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber;
+use OpenOrchestra\ModelInterface\StatusEvents;
 
 /**
  * Test UpdateMediaReferenceSubscriberTest
@@ -28,16 +28,16 @@ class UpdateMediaReferenceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->extractReferenceManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager');
+        $this->extractReferenceManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager');
 
-        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
-        $this->statusableElement = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusableInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        $this->statusableElement = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($this->statusableElement)->getStatus()->thenReturn($this->status);
-        $this->event = Phake::mock('PHPOrchestra\ModelInterface\Event\StatusableEvent');
+        $this->event = Phake::mock('OpenOrchestra\ModelInterface\Event\StatusableEvent');
         Phake::when($this->event)->getStatusableElement()->thenReturn($this->statusableElement);
 
-        $this->media = Phake::mock('PHPOrchestra\Media\Model\MediaInterface');
-        $this->mediaRepository = Phake::mock('PHPOrchestra\Media\Repository\MediaRepositoryInterface');
+        $this->media = Phake::mock('OpenOrchestra\Media\Model\MediaInterface');
+        $this->mediaRepository = Phake::mock('OpenOrchestra\Media\Repository\MediaRepositoryInterface');
         Phake::when($this->mediaRepository)->find(Phake::anyParameters())->thenReturn($this->media);
 
         $this->subscriber = new UpdateMediaReferenceSubscriber($this->extractReferenceManager, $this->mediaRepository);

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -32,8 +32,8 @@ class SiteControllerTest extends AbstractControllerTest
         parent::setUp();
 
         $this->siteId = (string) microtime(true);
-        $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
-        $this->siteRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.site');
+        $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
+        $this->siteRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.site');
     }
 
     /**

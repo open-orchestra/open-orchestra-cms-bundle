@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\DisplayBundle\Manager\TreeManager;
+use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
  * Class OrchestraNodeType

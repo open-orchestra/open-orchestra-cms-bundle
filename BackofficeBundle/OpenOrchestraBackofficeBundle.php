@@ -1,21 +1,21 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle;
+namespace OpenOrchestra\BackofficeBundle;
 
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\ExtractReferenceCompilerPass;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompilerPass;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
-use PHPOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ExtractReferenceCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class PHPOrchestraBackofficeBundle
+ * Class OpenOrchestraBackofficeBundle
  */
-class PHPOrchestraBackofficeBundle extends Bundle
+class OpenOrchestraBackofficeBundle extends Bundle
 {
     /**
      * @param ContainerBuilder $container

@@ -1,10 +1,10 @@
-<nav data-url="{{ path('php_orchestra_backoffice_menu') }}">
+<nav data-url="{{ path('open_orchestra_backoffice_menu') }}">
     <ul>
         {% for sectionName, section in strategies %}
             <li>
-                <a href="#" title="{{ ('php_orchestra_backoffice.left_menu.' ~ sectionName ~ '.title')|trans }}">
-                    <i class="fa fa-lg fa-fw {{ ('php_orchestra_backoffice.left_menu.' ~ sectionName ~ '.icon')|trans }}"></i>
-                    <span class="menu-item-parent">{{ ('php_orchestra_backoffice.left_menu.' ~ sectionName ~ '.title')|trans }}</span>
+                <a href="#" title="{{ ('open_orchestra_backoffice.left_menu.' ~ sectionName ~ '.title')|trans }}">
+                    <i class="fa fa-lg fa-fw {{ ('open_orchestra_backoffice.left_menu.' ~ sectionName ~ '.icon')|trans }}"></i>
+                    <span class="menu-item-parent">{{ ('open_orchestra_backoffice.left_menu.' ~ sectionName ~ '.title')|trans }}</span>
                 </a>
                 <ul>
                     {% for weight in section %}

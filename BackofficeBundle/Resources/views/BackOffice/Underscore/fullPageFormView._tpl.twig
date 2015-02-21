@@ -1,4 +1,4 @@
-{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
 
 <% if (typeof multiLanguage != 'undefined') { %>
     <ul id="entity-languages" class="nav nav-tabs">
@@ -14,7 +14,7 @@
 <% if (typeof duplicate != 'undefined') { %>
     <a class="btn btn-info btn-new-version btn-new-version-<%= cid %>" target="_blank">
         <i class="glyphicon glyphicon-pencil"></i>
-        {{ ('php_orchestra_backoffice.element.version.create') | trans({}, 'messages', language) }}
+        {{ ('open_orchestra_backoffice.element.version.create') | trans({}, 'messages', language) }}
     </a>
 <% } %>
 
@@ -29,7 +29,7 @@
 
 <div role="container">
     <%= html %>
-    {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
+    {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
 </div>
 
-{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}

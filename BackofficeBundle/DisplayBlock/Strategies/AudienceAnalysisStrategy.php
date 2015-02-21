@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -34,7 +34,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
     public function show(BlockInterface $block)
     {
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/AudienceAnalysis:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/AudienceAnalysis:show.html.twig',
             array('attributes' => $block->getAttributes())
         );
     }

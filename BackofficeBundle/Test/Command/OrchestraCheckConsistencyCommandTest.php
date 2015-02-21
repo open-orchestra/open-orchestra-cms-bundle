@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Command;
+namespace OpenOrchestra\BackofficeBundle\Test\Command;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Command\OrchestraCheckConsistencyCommand;
+use OpenOrchestra\BackofficeBundle\Command\OrchestraCheckConsistencyCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 
@@ -23,19 +23,19 @@ class OrchestraCheckConsistencyCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nodeManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
 
         $this->trans = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->trans)->trans('php_orchestra_backoffice.command.node.success')->thenReturn('success');
-        Phake::when($this->trans)->trans('php_orchestra_backoffice.command.node.error')->thenReturn('error');
-        Phake::when($this->trans)->trans('php_orchestra_backoffice.command.empty_choices')->thenReturn('empty');
+        Phake::when($this->trans)->trans('open_orchestra_backoffice.command.node.success')->thenReturn('success');
+        Phake::when($this->trans)->trans('open_orchestra_backoffice.command.node.error')->thenReturn('error');
+        Phake::when($this->trans)->trans('open_orchestra_backoffice.command.empty_choices')->thenReturn('empty');
 
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->container = $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        Phake::when($this->container)->get('php_orchestra_model.repository.node')->thenReturn($this->nodeRepository);
+        Phake::when($this->container)->get('open_orchestra_model.repository.node')->thenReturn($this->nodeRepository);
         Phake::when($this->container)->get('translator')->thenReturn($this->trans);
-        Phake::when($this->container)->get('php_orchestra_backoffice.manager.node')->thenReturn($this->nodeManager);
+        Phake::when($this->container)->get('open_orchestra_backoffice.manager.node')->thenReturn($this->nodeManager);
 
         $this->kernel = Phake::mock('Symfony\Component\HttpKernel\Kernel');
         Phake::when($this->kernel)->getContainer()->thenReturn($this->container);

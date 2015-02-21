@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Manipulator;
+namespace OpenOrchestra\BackofficeBundle\Test\Manipulator;
 
-use PHPOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
+use OpenOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
 
 /**
  * Class ConfigurationManipulatorTest
@@ -17,7 +17,7 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
     protected $file;
     protected $baseDir;
     protected $blockName = 'test';
-    protected $blockNamespace = 'PHPOrchestra\BackofficeBundle';
+    protected $blockNamespace = 'OpenOrchestra\BackofficeBundle';
 
     /**
      * Set up the test
@@ -86,16 +86,16 @@ class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
     public function provideOtherType()
     {
         return array(
-            array('PHPOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator', 'PHPOrchestra\DisplayBundle', 'front.yml'),
-            array('PHPOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator', 'PHPOrchestra\BackofficeBundle', 'icon.yml'),
-            array('PHPOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator', 'PHPOrchestra\Backoffice', 'generator.yml'),
+            array('OpenOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator', 'OpenOrchestra\DisplayBundle', 'front.yml'),
+            array('OpenOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator', 'OpenOrchestra\BackofficeBundle', 'icon.yml'),
+            array('OpenOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator', 'OpenOrchestra\Backoffice', 'generator.yml'),
         );
     }
 
     /**
      * Test add resources
      *
-     * @expectedException PHPOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException
+     * @expectedException OpenOrchestra\Backoffice\Exception\StrategyAlreadyCreatedException
      */
     public function testDoNotAddIfExisting()
     {

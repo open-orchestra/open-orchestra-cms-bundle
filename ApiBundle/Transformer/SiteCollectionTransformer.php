@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\SiteCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\SiteCollectionFacade;
 
 /**
  * Class SiteCollectionTransformer
@@ -25,12 +25,12 @@ class SiteCollectionTransformer extends AbstractTransformer
         }
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_site_list',
+            'open_orchestra_api_site_list',
             array()
         ));
 
         $facade->addLink('_self_add', $this->generateRoute(
-            'php_orchestra_backoffice_site_new',
+            'open_orchestra_backoffice_site_new',
             array()
         ));
 

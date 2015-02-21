@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -50,7 +50,7 @@ class SiteFacade extends AbstractFacade
     protected $blocks = array();
 
     /**
-     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\ThemeFacade")
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\ThemeFacade")
      */
     public $theme;
 

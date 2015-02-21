@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class MediaListIconStrategy
@@ -28,7 +28,7 @@ class MediaListStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/MediaList:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/MediaList:showIcon.html.twig');
     }
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\MediaType;
+use OpenOrchestra\BackofficeBundle\Form\Type\MediaType;
 
 /**
  * Class MediaTypeTest
@@ -52,7 +52,7 @@ class MediaTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder)->add('file', 'file', array('label' => 'php_orchestra_backoffice.form.media.file'));
+        Phake::verify($builder)->add('file', 'file', array('label' => 'open_orchestra_backoffice.form.media.file'));
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 

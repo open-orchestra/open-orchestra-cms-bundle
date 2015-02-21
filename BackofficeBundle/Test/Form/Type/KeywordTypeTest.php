@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\KeywordType;
+use OpenOrchestra\BackofficeBundle\Form\Type\KeywordType;
 
 /**
  * Class KeywordTypeTest

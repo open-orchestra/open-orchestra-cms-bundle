@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackOfficeBundle\Test\Context;
+namespace OpenOrchestra\BackOfficeBundle\Test\Context;
 
 use Phake;
-use PHPOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Context\ContextManager;
 
 /**
  * Unit tests of contextManager
@@ -20,7 +20,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
-        $this->siteRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->contextManager = new ContextManager($this->session, $this->siteRepository);
     }
 
@@ -199,8 +199,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function getAvailableSites()
     {
-        $site1 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
-        $site2 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
 
         $siteId1 = 'siteId';
         $name1 = 'name';

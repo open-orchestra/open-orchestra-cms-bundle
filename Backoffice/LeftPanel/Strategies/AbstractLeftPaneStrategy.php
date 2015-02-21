@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
-use PHPOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
+use OpenOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**

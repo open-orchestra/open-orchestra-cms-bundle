@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType;
 
 /**
  * Class OrchestraFrequenceChoiceTypeTest
@@ -34,13 +34,13 @@ class OrchestraFrequenceChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($resolverMock)->setDefaults(
             array('choices' => array(
-            'always' => 'php_orchestra_backoffice.form.changefreq.always',
-            'hourly' => 'php_orchestra_backoffice.form.changefreq.hourly',
-            'daily' => 'php_orchestra_backoffice.form.changefreq.daily',
-            'weekly' => 'php_orchestra_backoffice.form.changefreq.weekly',
-            'monthly' => 'php_orchestra_backoffice.form.changefreq.monthly',
-            'yearly' => 'php_orchestra_backoffice.form.changefreq.yearly',
-            'never' => 'php_orchestra_backoffice.form.changefreq.never'
+            'always' => 'open_orchestra_backoffice.form.changefreq.always',
+            'hourly' => 'open_orchestra_backoffice.form.changefreq.hourly',
+            'daily' => 'open_orchestra_backoffice.form.changefreq.daily',
+            'weekly' => 'open_orchestra_backoffice.form.changefreq.weekly',
+            'monthly' => 'open_orchestra_backoffice.form.changefreq.monthly',
+            'yearly' => 'open_orchestra_backoffice.form.changefreq.yearly',
+            'never' => 'open_orchestra_backoffice.form.changefreq.never'
         ))
         );
     }

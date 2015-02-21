@@ -1,12 +1,12 @@
-{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
 
 <div>
     <ul class="nav nav-tabs" role="tablist" id="superboxTab">
         <li class="active">
-            <a href="#tab-crop" role="tab" data-toggle="tab">{{ 'php_orchestra_backoffice.media.crop'|trans }}</a>
+            <a href="#tab-crop" role="tab" data-toggle="tab">{{ 'open_orchestra_backoffice.media.crop'|trans }}</a>
         </li>
         <li>
-            <a href="#tab-meta" role="tab" data-toggle="tab">{{ 'php_orchestra_backoffice.media.meta'|trans }}</a>
+            <a href="#tab-meta" role="tab" data-toggle="tab">{{ 'open_orchestra_backoffice.media.meta'|trans }}</a>
         </li>
     </ul>
 
@@ -23,7 +23,7 @@
 
             <!-- CROPPED VERSION IN USAGE -->
             <div class="media_crop_preview form-group">
-                <label class="control-label col-lg-3">{{ 'php_orchestra_backoffice.media.current_preview'|trans }}</label/>
+                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label/>
             </div>
 
             <!-- UPLOAD ALTERNATIVE CROPPED VERSION -->
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    {% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
+    {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
 </div>
 
-{% include 'PHPOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}

@@ -1,20 +1,20 @@
 parameters:
-    php_orchestra_api.subscriber.serializer.class: PHPOrchestra\ApiBundle\EventSubscriber\SerializerSubscriber
-    php_orchestra_api.annotation_reader.class: Doctrine\Common\Annotations\AnnotationReader
-    php_orchestra_api.subscriber.http_exception.class: PHPOrchestra\ApiBundle\EventSubscriber\HttpExceptionSubscriber
+    open_orchestra_api.subscriber.serializer.class: OpenOrchestra\ApiBundle\EventSubscriber\SerializerSubscriber
+    open_orchestra_api.annotation_reader.class: Doctrine\Common\Annotations\AnnotationReader
+    open_orchestra_api.subscriber.http_exception.class: OpenOrchestra\ApiBundle\EventSubscriber\HttpExceptionSubscriber
 
 services:
-    php_orchestra_api.annotation_reader:
-        class: %php_orchestra_api.annotation_reader.class%
-    php_orchestra_api.subscriber.serializer:
-        class: %php_orchestra_api.subscriber.serializer.class%
+    open_orchestra_api.annotation_reader:
+        class: %open_orchestra_api.annotation_reader.class%
+    open_orchestra_api.subscriber.serializer:
+        class: %open_orchestra_api.subscriber.serializer.class%
         arguments:
             - @serializer
-            - @php_orchestra_api.annotation_reader
+            - @open_orchestra_api.annotation_reader
             - @controller_resolver
         tags:
             - { name: kernel.event_subscriber}
-    php_orchestra_api.subscriber.http_exception:
-        class: %php_orchestra_api.subscriber.http_exception.class%
+    open_orchestra_api.subscriber.http_exception:
+        class: %open_orchestra_api.subscriber.http_exception.class%
         tags:
             - { name: kernel.event_subscriber}

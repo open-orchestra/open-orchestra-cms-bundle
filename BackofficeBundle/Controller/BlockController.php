@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class BlockController
@@ -19,21 +19,21 @@ class BlockController extends AbstractAdminController
      * @param string  $nodeId
      * @param int     $blockNumber
      *
-     * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="php_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
+     * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="open_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $nodeId, $blockNumber = 0)
     {
-        $node = $this->get('php_orchestra_model.repository.node')->find($nodeId);
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
         $block = $node->getBlocks()->get($blockNumber);
 
         $form = $this->createForm(
             'block',
             $block,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_block_form', array(
+                'action' => $this->generateUrl('open_orchestra_backoffice_block_form', array(
                     'nodeId' => $nodeId,
                     'blockNumber' => $blockNumber
                 )),
@@ -44,7 +44,7 @@ class BlockController extends AbstractAdminController
         $form->handleRequest($request);
 
         $this->handleForm($form, $this->get('translator')
-            ->trans('php_orchestra_backoffice.form.block.success'), $node);
+            ->trans('open_orchestra_backoffice.form.block.success'), $node);
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
         return $this->renderAdminForm(
@@ -64,18 +64,18 @@ class BlockController extends AbstractAdminController
     {
         $blocks = array();
 
-        $currentSiteId = $this->container->get('php_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $currentSiteId = $this->container->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         if ($currentSiteId) {
-            $currentSite = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
+            $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
             if ($currentSite) {
                 $blocks = $currentSite->getBlocks();
                 if (count($blocks) == 0) {
-                    $blocks = $this->container->getParameter('php_orchestra.blocks');
+                    $blocks = $this->container->getParameter('open_orchestra.blocks');
                 }
             }
         }
 
-        return $this->render('PHPOrchestraBackofficeBundle:Block:possibleBlocksList.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle:Block:possibleBlocksList.html.twig', array(
             'blocks' => $blocks
         ));
     }
@@ -83,24 +83,24 @@ class BlockController extends AbstractAdminController
     /**
      * @param string $language
      *
-     * @Config\Route("/block/existing/{language}", name="php_orchestra_backoffice_block_exsting")
+     * @Config\Route("/block/existing/{language}", name="open_orchestra_backoffice_block_exsting")
      * @Config\Method({"GET"})
      *
      * @return Response
      */
     public function listExistingBlocksAction($language)
     {
-        $node = $this->get('php_orchestra_model.repository.node')
+        $node = $this->get('open_orchestra_model.repository.node')
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language);
         if ($node) {
             $blocksFacade = array();
-            $transformer = $this->get('php_orchestra_api.transformer_manager')->get('block');
+            $transformer = $this->get('open_orchestra_api.transformer_manager')->get('block');
             $blocks = $node->getBlocks();
             foreach ($blocks as $key => $block) {
                 $blocksFacade[$key] = $transformer->transform($block, false);
             }
 
-            return $this->render('PHPOrchestraBackofficeBundle:Block:existingBlocksList.html.twig', array(
+            return $this->render('OpenOrchestraBackofficeBundle:Block:existingBlocksList.html.twig', array(
                 'blocks' => $blocksFacade,
                 'nodeId' => $node->getNodeId()
             ));

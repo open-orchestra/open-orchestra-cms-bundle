@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use PHPOrchestra\ModelBundle\Document\FieldType;
+use OpenOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class FieldTypeType
@@ -57,22 +57,22 @@ class FieldTypeType extends AbstractType
         }
         $builder
             ->add('fieldId', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.field_type.field_id'
+                'label' => 'open_orchestra_backoffice.form.field_type.field_id'
             ))
             ->add('labels', 'translated_value_collection', array(
-                'label' => 'php_orchestra_backoffice.form.field_type.labels'
+                'label' => 'open_orchestra_backoffice.form.field_type.labels'
             ))
             ->add('defaultValue', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.field_type.default_value',
+                'label' => 'open_orchestra_backoffice.form.field_type.default_value',
                 'required' => false,
             ))
             ->add('searchable', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.field_type.searchable',
+                'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
             ))
             ->add('type', 'choice', array(
                 'choices' => $this->getChoices(),
-                'label' => 'php_orchestra_backoffice.form.field_type.type',
+                'label' => 'open_orchestra_backoffice.form.field_type.type',
                 'attr' => array(
                     'class' => 'content_type_change_type'
                 )
@@ -95,7 +95,7 @@ class FieldTypeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
-            'label' => $this->translator->trans('php_orchestra_backoffice.form.field_type.label'),
+            'label' => $this->translator->trans('open_orchestra_backoffice.form.field_type.label'),
             'prototype_data' => function(){
                 $default = each($this->fieldOptions);
                 $fieldType = new FieldType();

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
-use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -47,10 +47,10 @@ class ContentType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.content.name'
+                'label' => 'open_orchestra_backoffice.form.content.name'
             ))
             ->add('keywords', 'orchestra_keywords', array(
-                'label' => 'php_orchestra_backoffice.form.content_type.keywords',
+                'label' => 'open_orchestra_backoffice.form.content_type.keywords',
                 'required' => false
             ));
 

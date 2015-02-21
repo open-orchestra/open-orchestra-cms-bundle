@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class ContentListStrategy
@@ -34,7 +34,7 @@ class ContentListStrategy extends AbstractStrategy
             'contentTemplate' => $block->getAttribute('contentTemplate'),
         );
 
-        return $this->render('PHPOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $attributes);
+        return $this->render('OpenOrchestraBackofficeBundle:Block/ContentList:show.html.twig', $attributes);
     }
 
     /**

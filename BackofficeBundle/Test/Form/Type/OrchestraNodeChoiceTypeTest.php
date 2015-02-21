@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType;
 
 /**
  * Class OrchestraNodeChoiceType
@@ -25,14 +25,14 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->node1 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node1)->getName()->thenReturn($this->nodeName1);
         Phake::when($this->node1)->getNodeId()->thenReturn($this->nodeNodeId1);
-        $this->node2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node2)->getName()->thenReturn($this->nodeName2);
         Phake::when($this->node2)->getNodeId()->thenReturn($this->nodeNodeId2);
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->treeManager = Phake::mock('PHPOrchestra\DisplayBundle\Manager\TreeManager');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
 
         $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository, $this->treeManager);
     }

@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\ExtractReference\Strategies;
+namespace OpenOrchestra\Backoffice\ExtractReference\Strategies;
 
-use PHPOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
-use PHPOrchestra\Media\Model\MediaInterface;
-use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
-use PHPOrchestra\ModelInterface\Model\ContentInterface;
-use PHPOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use OpenOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class ExtractReferenceFromContentStrategy

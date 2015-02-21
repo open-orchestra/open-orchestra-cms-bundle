@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogMediaSubscriber;
-use PHPOrchestra\Media\FolderEvents;
-use PHPOrchestra\Media\MediaEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogMediaSubscriber;
+use OpenOrchestra\Media\FolderEvents;
+use OpenOrchestra\Media\MediaEvents;
 
 /**
  * Class LogMediaSubscriberTest
@@ -25,11 +25,11 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->media = Phake::mock('PHPOrchestra\MediaBundle\Document\Media');
-        $this->mediaEvent = Phake::mock('PHPOrchestra\Media\Event\MediaEvent');
+        $this->media = Phake::mock('OpenOrchestra\MediaBundle\Document\Media');
+        $this->mediaEvent = Phake::mock('OpenOrchestra\Media\Event\MediaEvent');
         Phake::when($this->mediaEvent)->getMedia()->thenReturn($this->media);
-        $this->folder = Phake::mock('PHPOrchestra\MediaBundle\Document\Folder');
-        $this->folderEvent = Phake::mock('PHPOrchestra\Media\Event\FolderEvent');
+        $this->folder = Phake::mock('OpenOrchestra\MediaBundle\Document\Folder');
+        $this->folderEvent = Phake::mock('OpenOrchestra\Media\Event\FolderEvent');
         Phake::when($this->folderEvent)->getFolder()->thenReturn($this->folder);
 
         $this->mediaContext = array('media_name' => $this->media->getName());
@@ -59,7 +59,7 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function testAddImage()
     {
         $this->subscriber->mediaAddImage($this->mediaEvent);
-        $this->assertEventLogged('php_orchestra_log.media.add_image', $this->mediaContext);
+        $this->assertEventLogged('open_orchestra_log.media.add_image', $this->mediaContext);
     }
 
     /**
@@ -68,7 +68,7 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function testDelete()
     {
         $this->subscriber->mediaDelete($this->mediaEvent);
-        $this->assertEventLogged('php_orchestra_log.media.delete', $this->mediaContext);
+        $this->assertEventLogged('open_orchestra_log.media.delete', $this->mediaContext);
     }
 
     /**
@@ -77,7 +77,7 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function testResize()
     {
         $this->subscriber->mediaResize($this->mediaEvent);
-        $this->assertEventLogged('php_orchestra_log.media.resize', $this->mediaContext);
+        $this->assertEventLogged('open_orchestra_log.media.resize', $this->mediaContext);
     }
 
     /**
@@ -86,7 +86,7 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function testFolderCreate()
     {
         $this->subscriber->folderCreate($this->folderEvent);
-        $this->assertEventLogged('php_orchestra_log.folder.create', $this->folderContext);
+        $this->assertEventLogged('open_orchestra_log.folder.create', $this->folderContext);
     }
 
     /**
@@ -95,7 +95,7 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function testFolderDelete()
     {
         $this->subscriber->folderDelete($this->folderEvent);
-        $this->assertEventLogged('php_orchestra_log.folder.delete', $this->folderContext);
+        $this->assertEventLogged('open_orchestra_log.folder.delete', $this->folderContext);
     }
 
     /**
@@ -104,6 +104,6 @@ class LogMediaSubscriberTest extends LogAbstractSubscriberTest
     public function testFolderUpdate()
     {
         $this->subscriber->folderUpdate($this->folderEvent);
-        $this->assertEventLogged('php_orchestra_log.folder.update', $this->folderContext);
+        $this->assertEventLogged('open_orchestra_log.folder.update', $this->folderContext);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\ApiBundle\FunctionalTest\Controller;
 
 use Phake;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -39,10 +39,10 @@ abstract class AbstractControllerTest extends WebTestCase
 
         $crawler = $this->client->submit($form);
 
-        $this->currentSiteManager = Phake::mock('PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
-        $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
+        $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\NodeEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeCreation(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.create', $event->getNode());
+        $this->info('open_orchestra_log.node.create', $event->getNode());
     }
 
     /**
@@ -36,7 +36,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeUpdate(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.update', $event->getNode());
+        $this->info('open_orchestra_log.node.update', $event->getNode());
     }
 
     /**
@@ -44,7 +44,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeDelete(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.delete', $event->getNode());
+        $this->info('open_orchestra_log.node.delete', $event->getNode());
     }
 
     /**
@@ -52,7 +52,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeDuplicate(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.duplicate', $event->getNode());
+        $this->info('open_orchestra_log.node.duplicate', $event->getNode());
     }
 
     /**
@@ -60,7 +60,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeAddLanguage(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.add_language', $event->getNode());
+        $this->info('open_orchestra_log.node.add_language', $event->getNode());
     }
 
     /**
@@ -68,7 +68,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeUpdateBlock(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.block.update', $event->getNode());
+        $this->info('open_orchestra_log.node.block.update', $event->getNode());
     }
 
     /**
@@ -76,7 +76,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeUpdateBlockPosition(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.block.update_position', $event->getNode());
+        $this->info('open_orchestra_log.node.block.update_position', $event->getNode());
     }
 
     /**
@@ -84,7 +84,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeDeleteArea(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.area.delete', $event->getNode());
+        $this->info('open_orchestra_log.node.area.delete', $event->getNode());
     }
 
     /**
@@ -92,7 +92,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeUpdateArea(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.area.update', $event->getNode());
+        $this->info('open_orchestra_log.node.area.update', $event->getNode());
     }
 
     /**
@@ -100,7 +100,7 @@ class LogNodeSubscriber implements EventSubscriberInterface
      */
     public function nodeChangeStatus(NodeEvent $event)
     {
-        $this->info('php_orchestra_log.node.status', $event->getNode());
+        $this->info('open_orchestra_log.node.status', $event->getNode());
     }
 
     /**

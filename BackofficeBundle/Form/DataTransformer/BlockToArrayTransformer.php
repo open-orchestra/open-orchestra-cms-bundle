@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 

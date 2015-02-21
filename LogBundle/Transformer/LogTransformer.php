@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Transformer;
+namespace OpenOrchestra\LogBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Transformer\AbstractTransformer;
-use PHPOrchestra\LogBundle\Facade\LogFacade;
-use PHPOrchestra\LogBundle\Model\LogInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\LogBundle\Facade\LogFacade;
+use OpenOrchestra\LogBundle\Model\LogInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**

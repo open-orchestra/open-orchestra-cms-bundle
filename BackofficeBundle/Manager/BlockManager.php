@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class BlockManager

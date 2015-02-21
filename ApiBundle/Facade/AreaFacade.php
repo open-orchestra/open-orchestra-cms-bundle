@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -25,12 +25,12 @@ class AreaFacade extends AbstractFacade
     public $classes;
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\BlockFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
     protected $blocks = array();
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\AreaFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFacade>")
      */
     protected $areas = array();
 
@@ -40,7 +40,7 @@ class AreaFacade extends AbstractFacade
     public $boDirection;
 
     /**
-     * @Serializer\Type("PHPOrchestra\ApiBundle\Facade\UiModelFacade")
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;
 

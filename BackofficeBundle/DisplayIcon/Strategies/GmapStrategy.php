@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class GmapStrategy
@@ -28,7 +28,7 @@ class GmapStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Gmap:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Gmap:showIcon.html.twig');
     }
 
     /**

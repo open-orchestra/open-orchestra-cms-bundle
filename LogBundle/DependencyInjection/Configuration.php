@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\DependencyInjection;
+namespace OpenOrchestra\LogBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('php_orchestra_log');
+        $rootNode = $treeBuilder->root('open_orchestra_log');
 
         $rootNode->children()
             ->arrayNode('document')
@@ -27,8 +27,8 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('log')
                         ->addDefaultsIfNotSet()
                         ->children()
-                            ->scalarNode('class')->defaultValue('PHPOrchestra\LogBundle\Document\Log')->end()
-                            ->scalarNode('repository')->defaultValue('PHPOrchestra\LogBundle\Repository\LogRepository')->end()
+                            ->scalarNode('class')->defaultValue('OpenOrchestra\LogBundle\Document\Log')->end()
+                            ->scalarNode('repository')->defaultValue('OpenOrchestra\LogBundle\Repository\LogRepository')->end()
                         ->end()
                     ->end()
                 ->end()

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade\Traits;
+namespace OpenOrchestra\ApiBundle\Facade\Traits;
 
 /**
  * Class BaseFacade

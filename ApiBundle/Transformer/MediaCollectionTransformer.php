@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\MediaCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\MediaCollectionFacade;
 
 /**
  * Class MediaCollectionTransformer
@@ -30,15 +30,15 @@ class MediaCollectionTransformer extends AbstractTransformer
             $facade->addMedia($this->getTransformer('media')->transform($media));
         }
 
-        $facade->addLink('_self_add', $this->generateRoute('php_orchestra_backoffice_media_new', array(
+        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_backoffice_media_new', array(
             'folderId' => $folderId
         )));
 
-        $facade->addLink('_self_folder', $this->generateRoute('php_orchestra_backoffice_folder_form', array(
+        $facade->addLink('_self_folder', $this->generateRoute('open_orchestra_backoffice_folder_form', array(
             'folderId' => $folderId
         )));
 
-        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_folder_delete', array(
+        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_folder_delete', array(
             'folderId' => $folderId
         )));
 

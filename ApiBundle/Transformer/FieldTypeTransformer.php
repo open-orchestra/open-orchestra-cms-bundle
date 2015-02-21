@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\FieldTypeFacade;
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\FieldTypeFacade;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 
 /**
  * Class FieldTypeTransformer

@@ -1,12 +1,12 @@
 parameters:
-    php_orchestra_log.processor.log_user.class: PHPOrchestra\LogBundle\Processor\LogUserProcessor
+    open_orchestra_log.processor.log_user.class: OpenOrchestra\LogBundle\Processor\LogUserProcessor
 
 services:
-    php_orchestra_log.processor.log_user:
-        class: %php_orchestra_log.processor.log_user.class%
+    open_orchestra_log.processor.log_user:
+        class: %open_orchestra_log.processor.log_user.class%
         arguments:
             - @security.context
             - @request_stack
-            - @php_orchestra_backoffice.context_manager
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: monolog.processor, method: processRecord, channel: phporchestra }

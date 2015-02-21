@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -37,7 +37,7 @@ class SearchStrategy extends AbstractStrategy
         $limit = $block->getAttribute('limit');
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Block/Search:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/Search:show.html.twig',
             array(
                 'value' => $value,
                 'limit' => $limit

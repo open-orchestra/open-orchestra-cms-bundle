@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\ApiBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeControllerTest
@@ -63,7 +63,7 @@ class NodeControllerTest extends AbstractControllerTest
         $nodeLastVersion = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
 
-        $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
+        $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
 
@@ -92,7 +92,7 @@ class NodeControllerTest extends AbstractControllerTest
         $this->client->request('GET', '/api/node/fixture_full', array('language' => 'es'));
 
 
-        $nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
+        $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
 

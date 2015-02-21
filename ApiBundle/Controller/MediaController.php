@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Exceptions\HttpException\MediaNotDeletableException;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\Media\Event\MediaEvent;
-use PHPOrchestra\Media\MediaEvents;
-use PHPOrchestra\Media\Model\FolderInterface;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\MediaNotDeletableException;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\Media\Event\MediaEvent;
+use OpenOrchestra\Media\MediaEvents;
+use OpenOrchestra\Media\Model\FolderInterface;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class MediaController extends BaseController
     /**
      * @param int $mediaId
      *
-     * @Config\Route("/{mediaId}", name="php_orchestra_api_media_show")
+     * @Config\Route("/{mediaId}", name="open_orchestra_api_media_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -31,15 +31,15 @@ class MediaController extends BaseController
      */
     public function showAction($mediaId)
     {
-        $media = $this->get('php_orchestra_media.repository.media')->find($mediaId);
+        $media = $this->get('open_orchestra_media.repository.media')->find($mediaId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('media')->transform($media);
+        return $this->get('open_orchestra_api.transformer_manager')->get('media')->transform($media);
     }
 
     /**
      * @param Request $request
      *
-     * @Config\Route("", name="php_orchestra_api_media_list")
+     * @Config\Route("", name="open_orchestra_api_media_list")
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -49,15 +49,15 @@ class MediaController extends BaseController
     {
         $folderId = $request->get('folderId');
         /** @var FolderInterface $folder */
-        $folder = $this->get('php_orchestra_media.repository.media_folder')->find($folderId);
-        $folderDeletable = $this->get('php_orchestra_backoffice.manager.media_folder')->isDeletable($folder);
+        $folder = $this->get('open_orchestra_media.repository.media_folder')->find($folderId);
+        $folderDeletable = $this->get('open_orchestra_backoffice.manager.media_folder')->isDeletable($folder);
         $parentId = null;
         if ($folder->getParent() instanceof FolderInterface) {
             $parentId = $folder->getParent()->getId();
         }
-        $mediaCollection = $this->get('php_orchestra_media.repository.media')->findByFolderId($folderId);
+        $mediaCollection = $this->get('open_orchestra_media.repository.media')->findByFolderId($folderId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('media_collection')->transform(
+        return $this->get('open_orchestra_api.transformer_manager')->get('media_collection')->transform(
             $mediaCollection,
             $folderId,
             $folderDeletable,
@@ -68,7 +68,7 @@ class MediaController extends BaseController
     /**
      * @param $mediaId
      *
-     * @Config\Route("/{mediaId}/delete", name="php_orchestra_api_media_delete")
+     * @Config\Route("/{mediaId}/delete", name="open_orchestra_api_media_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
@@ -77,7 +77,7 @@ class MediaController extends BaseController
      */
     public function deleteAction($mediaId)
     {
-        $media = $this->get('php_orchestra_media.repository.media')->find($mediaId);
+        $media = $this->get('open_orchestra_media.repository.media')->find($mediaId);
         if (!$media->isDeletable()) {
             throw new MediaNotDeletableException();
         }

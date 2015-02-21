@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Exceptions\HttpException;
+namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 
 /**
  * Class BlockTransformerHttpException
  */
 class BlockTransformerHttpException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'php_orchestra_api.block.transformer';
-    const HUMAN_MESSAGE      = 'php_orchestra_api.block.transformer';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_api.block.transformer';
+    const HUMAN_MESSAGE      = 'open_orchestra_api.block.transformer';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 

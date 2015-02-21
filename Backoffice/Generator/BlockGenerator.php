@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Generator;
+namespace OpenOrchestra\Backoffice\Generator;
 
 use Doctrine\Common\Util\Inflector;
 use Sensio\Bundle\GeneratorBundle\Generator\Generator;

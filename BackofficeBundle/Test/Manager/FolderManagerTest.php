@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Manager;
+namespace OpenOrchestra\BackofficeBundle\Test\Manager;
 
-use PHPOrchestra\BackofficeBundle\Manager\FolderManager;
+use OpenOrchestra\BackofficeBundle\Manager\FolderManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Phake;
@@ -55,27 +55,27 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideFolder()
     {
-        $subfolder0 = Phake::mock('PHPOrchestra\MediaBundle\Document\MediaFolder');
+        $subfolder0 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
         Phake::when($subfolder0)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($subfolder0)->getSubFolders()->thenReturn(new ArrayCollection());
 
-        $subfolder1 = Phake::mock('PHPOrchestra\MediaBundle\Document\MediaFolder');
+        $subfolder1 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
         Phake::when($subfolder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($subfolder1)->getSubFolders()->thenReturn(new ArrayCollection());
 
         $medias = new ArrayCollection();
-        $medias->add(Phake::mock('PHPOrchestra\Media\Model\MediaInterface'));
-        $medias->add(Phake::mock('PHPOrchestra\Media\Model\MediaInterface'));
+        $medias->add(Phake::mock('OpenOrchestra\Media\Model\MediaInterface'));
+        $medias->add(Phake::mock('OpenOrchestra\Media\Model\MediaInterface'));
 
         $subfolders = new ArrayCollection();
         $subfolders->add($subfolder0);
         $subfolders->add($subfolder1);
 
-        $folder0 = Phake::mock('PHPOrchestra\MediaBundle\Document\MediaFolder');
+        $folder0 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
         Phake::when($folder0)->getMedias()->thenReturn($medias);
         Phake::when($folder0)->getSubFolders()->thenReturn($subfolders);
 
-        $folder1 = Phake::mock('PHPOrchestra\MediaBundle\Document\MediaFolder');
+        $folder1 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
         Phake::when($folder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($folder1)->getSubFolders()->thenReturn(new ArrayCollection());
 

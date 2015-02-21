@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\TemplateEvent;
-use PHPOrchestra\ModelInterface\TemplateEvents;
+use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateCreate(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('php_orchestra_log.template.create', array(
+        $this->logger->info('open_orchestra_log.template.create', array(
             'template_id' => $template->getTemplateId(),
             'template_name' => $template->getName()
         ));
@@ -40,7 +40,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateDelete(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('php_orchestra_log.template.delete', array(
+        $this->logger->info('open_orchestra_log.template.delete', array(
             'template_id' => $template->getTemplateId(),
             'template_name' => $template->getName()
         ));
@@ -52,7 +52,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateUpdate(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('php_orchestra_log.template.update', array(
+        $this->logger->info('open_orchestra_log.template.update', array(
             'template_id' => $template->getTemplateId(),
             'template_name' => $template->getName()
         ));
@@ -64,7 +64,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateAreaDelete(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('php_orchestra_log.template.area.delete', array(
+        $this->logger->info('open_orchestra_log.template.area.delete', array(
             'template_id' => $template->getTemplateId(),
             'template_name' => $template->getName()
         ));
@@ -76,7 +76,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
     public function templateAreaUpdate(TemplateEvent $event)
     {
         $template = $event->getTemplate();
-        $this->logger->info('php_orchestra_log.template.area.update', array(
+        $this->logger->info('open_orchestra_log.template.area.update', array(
             'template_id' => $template->getTemplateId(),
             'template_name' => $template->getName()
         ));

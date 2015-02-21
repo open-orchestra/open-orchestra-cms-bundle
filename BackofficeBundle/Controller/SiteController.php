@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\SiteEvent;
-use PHPOrchestra\ModelInterface\SiteEvents;
+use OpenOrchestra\ModelInterface\Event\SiteEvent;
+use OpenOrchestra\ModelInterface\SiteEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,20 +17,20 @@ class SiteController extends AbstractAdminController
      * @param Request $request
      * @param string  $siteId
      *
-     * @Config\Route("/site/form/{siteId}", name="php_orchestra_backoffice_site_form")
+     * @Config\Route("/site/form/{siteId}", name="open_orchestra_backoffice_site_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $siteId)
     {
-        $site = $this->get('php_orchestra_model.repository.site')->findOneBySiteId($siteId);
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $form = $this->createForm(
             'site',
             $site,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_site_form', array(
+                'action' => $this->generateUrl('open_orchestra_backoffice_site_form', array(
                     'siteId' => $siteId,
                 ))
             )
@@ -38,7 +38,7 @@ class SiteController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.website.success'));
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.website.success'));
 
         $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site));
 
@@ -48,15 +48,15 @@ class SiteController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/site/new", name="php_orchestra_backoffice_site_new")
+     * @Config\Route("/site/new", name="open_orchestra_backoffice_site_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $site = $this->get('php_orchestra_backoffice.manager.site')->initializeNewSite();
-        $siteAliasClass = $this->container->getParameter('php_orchestra_model.document.site_alias.class');
+        $site = $this->get('open_orchestra_backoffice.manager.site')->initializeNewSite();
+        $siteAliasClass = $this->container->getParameter('open_orchestra_model.document.site_alias.class');
         $siteAlias = new $siteAliasClass();
 
         $site->addAlias($siteAlias);
@@ -64,20 +64,20 @@ class SiteController extends AbstractAdminController
             'site',
             $site,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_site_new'),
+                'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
                 'method' => 'POST',
             )
         );
 
         $form->handleRequest($request);
 
-        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.website.creation'), $site);
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation'), $site);
 
         $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($site->getId())) {
-            $url = $this->generateUrl('php_orchestra_backoffice_site_form', array('siteId' => $site->getSiteId()));
+            $url = $this->generateUrl('open_orchestra_backoffice_site_form', array('siteId' => $site->getSiteId()));
 
             $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site));
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use PHPOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

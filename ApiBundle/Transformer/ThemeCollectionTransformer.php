@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\ThemeCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\ThemeCollectionFacade;
 
 /**
  * Class ThemeCollectionTransformer
@@ -25,12 +25,12 @@ class ThemeCollectionTransformer extends AbstractTransformer
         }
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_theme_list',
+            'open_orchestra_api_theme_list',
             array()
         ));
 
         $facade->addLink('_self_add', $this->generateRoute(
-            'php_orchestra_backoffice_theme_new',
+            'open_orchestra_backoffice_theme_new',
             array()
         ));
 

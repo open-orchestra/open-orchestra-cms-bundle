@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class GalleryIconStrategy
@@ -28,7 +28,7 @@ class GalleryStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:Block/Gallery:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Gallery:showIcon.html.twig');
     }
 
     /**

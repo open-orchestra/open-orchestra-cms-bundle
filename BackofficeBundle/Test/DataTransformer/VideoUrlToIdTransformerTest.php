@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Test\DataTransformer;
 
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer;
 
 /**
  * Class VideoUrlToIdTransformerTest

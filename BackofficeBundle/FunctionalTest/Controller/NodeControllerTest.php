@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class NodeControllerTest
@@ -22,7 +22,7 @@ class NodeControllerTest extends AbstractControllerTest
     {
         parent::setUp();
 
-        $this->nodeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
+        $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
     }
 
     /**

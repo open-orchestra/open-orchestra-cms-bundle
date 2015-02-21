@@ -1,17 +1,17 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use PHPOrchestra\ApiBundle\Facade\Traits\BaseFacade;
-use PHPOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
+use OpenOrchestra\ApiBundle\Facade\Traits\BaseFacade;
+use OpenOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
 
 /**
  * Class DeletedFacade
  *
  * @Serializer\Discriminator(field = "type", map = {
- *      "node": "PHPOrchestra\ApiBundle\Facade\NodeFacade",
- *      "content": "PHPOrchestra\ApiBundle\Facade\ContentFacade"
+ *      "node": "OpenOrchestra\ApiBundle\Facade\NodeFacade",
+ *      "content": "OpenOrchestra\ApiBundle\Facade\ContentFacade"
  * })
  */
 class DeletedFacade implements FacadeInterface

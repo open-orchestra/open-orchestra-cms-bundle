@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
@@ -36,21 +36,21 @@ class StatusType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
 
         $builder->add('name', null, array(
-            'label' => 'php_orchestra_backoffice.form.status.name'
+            'label' => 'open_orchestra_backoffice.form.status.name'
         ));
         $builder->add('published', null, array(
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.status.published'
+            'label' => 'open_orchestra_backoffice.form.status.published'
         ));
         $builder->add('initial', null, array(
             'required' => false,
-            'label' => 'php_orchestra_backoffice.form.status.initial'
+            'label' => 'open_orchestra_backoffice.form.status.initial'
         ));
         $builder->add('labels', 'translated_value_collection', array(
-            'label' => 'php_orchestra_backoffice.form.status.labels'
+            'label' => 'open_orchestra_backoffice.form.status.labels'
         ));
         $builder->add('displayColor', 'orchestra_color_choice', array(
-            'label' => 'php_orchestra_backoffice.form.status.display_color'
+            'label' => 'open_orchestra_backoffice.form.status.display_color'
         ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

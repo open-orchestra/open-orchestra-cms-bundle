@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
-use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeControllerTest
@@ -21,7 +21,7 @@ class ContentTypeControllerTest extends AbstractControllerTest
     {
         parent::setUp();
 
-        $this->contentTypeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.content_type');
+        $this->contentTypeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content_type');
     }
 
     /**

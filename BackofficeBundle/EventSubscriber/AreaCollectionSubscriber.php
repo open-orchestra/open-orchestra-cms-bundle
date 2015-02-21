@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -72,7 +72,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                 'type' => 'text',
                 'allow_add' => true,
                 'mapped' => false,
-                'label' => 'php_orchestra_backoffice.form.area.new_areas',
+                'label' => 'open_orchestra_backoffice.form.area.new_areas',
                 'attr' => array(
                     'data-prototype-label-add' => 'Ajout',
                     'data-prototype-label-new' => 'Nouveau',

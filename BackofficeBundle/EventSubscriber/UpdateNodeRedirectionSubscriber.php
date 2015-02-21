@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use PHPOrchestra\BackofficeBundle\Manager\RedirectionManager;
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

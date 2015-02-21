@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -27,7 +27,7 @@ class FieldOptionTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        $this->fieldOption = Phake::mock('PHPOrchestra\ModelInterface\Model\FieldOptionInterface');
+        $this->fieldOption = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldOptionInterface');
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->fieldOption);

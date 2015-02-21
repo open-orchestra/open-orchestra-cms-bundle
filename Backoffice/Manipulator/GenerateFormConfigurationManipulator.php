@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\Manipulator;
+namespace OpenOrchestra\Backoffice\Manipulator;
 
 /**
  * Class GenerateFormConfigurationManipulator
@@ -20,7 +20,7 @@ class GenerateFormConfigurationManipulator extends ConfigurationManiplulator
      */
     protected function getTag()
     {
-        return 'php_orchestra_backoffice.generate_form.strategy';
+        return 'open_orchestra_backoffice.generate_form.strategy';
     }
 
     /**
@@ -28,6 +28,6 @@ class GenerateFormConfigurationManipulator extends ConfigurationManiplulator
      */
     protected function getServicePrefix()
     {
-        return 'php_orchestra_backoffice.generate_form';
+        return 'open_orchestra_backoffice.generate_form';
     }
 }

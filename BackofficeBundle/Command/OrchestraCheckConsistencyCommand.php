@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Command;
+namespace OpenOrchestra\BackofficeBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,8 +38,8 @@ class OrchestraCheckConsistencyCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $nodeRepository = $container->get('php_orchestra_model.repository.node');
-        $nodeManager = $container->get('php_orchestra_backoffice.manager.node');
+        $nodeRepository = $container->get('open_orchestra_model.repository.node');
+        $nodeManager = $container->get('open_orchestra_backoffice.manager.node');
 
         $nodes = $nodeRepository->findAll();
 
@@ -51,6 +51,6 @@ class OrchestraCheckConsistencyCommand extends ContainerAwareCommand
             }
         }
 
-        $output->writeln($container->get('translator')->trans('php_orchestra_backoffice.command.' . $message));
+        $output->writeln($container->get('translator')->trans('open_orchestra_backoffice.command.' . $message));
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class GeneralNodesPanel
@@ -31,7 +31,7 @@ class GeneralNodesPanelStrategy extends AbstractLeftPaneStrategy
         $nodes = $this->nodeRepository->findLastVersionBySiteId(NodeInterface::TYPE_GENERAL);
 
         return $this->render(
-            'PHPOrchestraBackofficeBundle:Tree:showGeneralTreeNodes.html.twig',
+            'OpenOrchestraBackofficeBundle:Tree:showGeneralTreeNodes.html.twig',
             array(
                 'nodes' => $nodes
             )

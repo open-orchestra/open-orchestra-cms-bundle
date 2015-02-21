@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -29,23 +29,23 @@ class MediaMetaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', null, array(
-            'label' => 'php_orchestra_backoffice.form.media.meta.title',
+            'label' => 'open_orchestra_backoffice.form.media.meta.title',
             'required' => false,
         ));
         $builder->add('alt', null, array(
-            'label' => 'php_orchestra_backoffice.form.media.meta.alt',
+            'label' => 'open_orchestra_backoffice.form.media.meta.alt',
             'required' => false,
         ));
         $builder->add('copyright', null, array(
-            'label' => 'php_orchestra_backoffice.form.media.meta.copyright',
+            'label' => 'open_orchestra_backoffice.form.media.meta.copyright',
             'required' => false,
         ));
         $builder->add('comment', 'textarea', array(
-            'label' => 'php_orchestra_backoffice.form.media.meta.comment',
+            'label' => 'open_orchestra_backoffice.form.media.meta.comment',
             'required' => false,
         ));
         $builder->add('keywords', 'orchestra_keywords', array(
-            'label' => 'php_orchestra_backoffice.form.media.meta.keywords',
+            'label' => 'open_orchestra_backoffice.form.media.meta.keywords',
             'required' => false
         ));
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\Backoffice\BlockParameter;
+namespace OpenOrchestra\Backoffice\BlockParameter;
 
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Interface BlockParameterInterface

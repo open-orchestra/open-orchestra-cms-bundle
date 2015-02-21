@@ -1,15 +1,15 @@
 parameters:
-    php_orchestra_log.transformer.log_collection.class: PHPOrchestra\LogBundle\Transformer\LogCollectionTransformer
-    php_orchestra_log.transformer.log.class: PHPOrchestra\LogBundle\Transformer\LogTransformer
+    open_orchestra_log.transformer.log_collection.class: OpenOrchestra\LogBundle\Transformer\LogCollectionTransformer
+    open_orchestra_log.transformer.log.class: OpenOrchestra\LogBundle\Transformer\LogTransformer
 
 services:
-    php_orchestra_log.transformer.log_collection:
-        class: %php_orchestra_log.transformer.log_collection.class%
+    open_orchestra_log.transformer.log_collection:
+        class: %open_orchestra_log.transformer.log_collection.class%
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
-    php_orchestra_log.transformer.log:
-        class: %php_orchestra_log.transformer.log.class%
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_log.transformer.log:
+        class: %open_orchestra_log.transformer.log.class%
         arguments:
             - @translator
         tags:
-            - { name: php_orchestra_api.transformer.strategy}
+            - { name: open_orchestra_api.transformer.strategy}

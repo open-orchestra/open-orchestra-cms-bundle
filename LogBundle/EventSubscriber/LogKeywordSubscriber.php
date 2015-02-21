@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use PHPOrchestra\ModelInterface\Event\KeywordEvent;
-use PHPOrchestra\ModelInterface\KeywordEvents;
+use OpenOrchestra\ModelInterface\Event\KeywordEvent;
+use OpenOrchestra\ModelInterface\KeywordEvents;
 use Symfony\Bridge\Monolog\Logger;
 
 /**
@@ -28,7 +28,7 @@ class LogKeywordSubscriber implements EventSubscriberInterface
     public function keywordCreate(KeywordEvent $event)
     {
         $keyword = $event->getKeyword();
-        $this->logger->info('php_orchestra_log.keyword.create', array('keyword_label' => $keyword->getLabel()));
+        $this->logger->info('open_orchestra_log.keyword.create', array('keyword_label' => $keyword->getLabel()));
     }
 
     /**
@@ -37,7 +37,7 @@ class LogKeywordSubscriber implements EventSubscriberInterface
     public function keywordDelete(KeywordEvent $event)
     {
         $keyword = $event->getKeyword();
-        $this->logger->info('php_orchestra_log.keyword.delete', array('keyword_label' => $keyword->getLabel()));
+        $this->logger->info('open_orchestra_log.keyword.delete', array('keyword_label' => $keyword->getLabel()));
     }
 
     /**

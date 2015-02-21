@@ -1,17 +1,17 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ApiBundle\Facade\NodeFacade;
-use PHPOrchestra\ModelInterface\Event\StatusableEvent;
-use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
-use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
-use PHPOrchestra\ModelInterface\StatusEvents;
-use PHPOrchestra\BaseBundle\Manager\EncryptionManager;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\NodeFacade;
+use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
+use OpenOrchestra\ModelInterface\StatusEvents;
+use OpenOrchestra\BaseBundle\Manager\EncryptionManager;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -79,35 +79,35 @@ class NodeTransformer extends AbstractTransformer
         $facade->createdAt = $mixed->getCreatedAt();
         $facade->updatedAt = $mixed->getUpdatedAt();
 
-        $facade->addLink('_self_form', $this->generateRoute('php_orchestra_backoffice_node_form', array(
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
             'id' => $mixed->getId(),
         )));
 
-        $facade->addLink('_self_duplicate', $this->generateRoute('php_orchestra_api_node_duplicate', array(
+        $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
             'nodeId' => $mixed->getNodeId(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_self_version', $this->generateRoute('php_orchestra_api_node_list_version', array(
+        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
             'nodeId' => $mixed->getNodeId(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_self_delete', $this->generateRoute('php_orchestra_api_node_delete', array(
+        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
             'nodeId' => $mixed->getNodeId()
         )));
 
-        $facade->addLink('_self_without_language', $this->generateRoute('php_orchestra_api_node_show', array(
+        $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show', array(
             'nodeId' => $mixed->getNodeId()
         )));
 
-        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_node_show', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show', array(
             'nodeId' => $mixed->getNodeId(),
             'version' => $mixed->getVersion(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_language_list', $this->generateRoute('php_orchestra_api_site_show', array(
+        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_show', array(
             'siteId' => $mixed->getSiteId(),
         )));
 
@@ -126,15 +126,15 @@ class NodeTransformer extends AbstractTransformer
             }
         }
 
-        $facade->addLink('_status_list', $this->generateRoute('php_orchestra_api_list_status_node', array(
+        $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_list_status_node', array(
             'nodeMongoId' => $mixed->getId()
         )));
 
-        $facade->addLink('_self_status_change', $this->generateRoute('php_orchestra_api_node_update', array(
+        $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
             'nodeMongoId' => $mixed->getId()
         )));
 
-        $facade->addLink('_existing_block', $this->generateRoute('php_orchestra_backoffice_block_exsting', array(
+        $facade->addLink('_existing_block', $this->generateRoute('open_orchestra_backoffice_block_exsting', array(
             'language' => $mixed->getLanguage(),
         )));
 
@@ -160,7 +160,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->updatedAt = $mixed->getUpdatedAt();
         $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
 
-        $facade->addLink('_self', $this->generateRoute('php_orchestra_api_node_show', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show', array(
             'nodeId' => $mixed->getNodeId(),
             'version' => $mixed->getVersion(),
             'language' => $mixed->getLanguage(),

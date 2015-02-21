@@ -1,17 +1,17 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
-use PHPOrchestra\BackofficeBundle\Manager\NodeManager;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
-use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
+use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
+use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 
 /**
  * Class NodeType
@@ -37,7 +37,7 @@ class NodeType extends AbstractType
         $this->templateRepository = $templateRepository;
         $this->areaClass = $areaClass;
         $this->schemeChoices = array(
-            SchemeAbilityInterface::SCHEME_DEFAULT => 'php_orchestra_backoffice.form.node.default_scheme',
+            SchemeAbilityInterface::SCHEME_DEFAULT => 'open_orchestra_backoffice.form.node.default_scheme',
             SchemeAbilityInterface::SCHEME_HTTP => SchemeAbilityInterface::SCHEME_HTTP,
             SchemeAbilityInterface::SCHEME_HTTPS => SchemeAbilityInterface::SCHEME_HTTPS,
             SchemeAbilityInterface::SCHEME_FILE => SchemeAbilityInterface::SCHEME_FILE,
@@ -53,63 +53,63 @@ class NodeType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.node.name',
+                'label' => 'open_orchestra_backoffice.form.node.name',
                 'attr' => array(
                     'class' => 'generate-id-source',
                 )
             ))
             ->add('routePattern', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.node.route_pattern',
+                'label' => 'open_orchestra_backoffice.form.node.route_pattern',
                 'attr' => array(
                     'class' => 'generate-id-dest',
                 )
             ))
             ->add('scheme', 'choice', array(
                 'choices' => $this->schemeChoices,
-                'label' => 'php_orchestra_backoffice.form.node.scheme'
+                'label' => 'open_orchestra_backoffice.form.node.scheme'
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
-                'label' => 'php_orchestra_backoffice.form.node.changefreq.title',
+                'label' => 'open_orchestra_backoffice.form.node.changefreq.title',
                 'required' => false
             ))
             ->add('sitemap_priority', 'percent', array(
-                'label' => 'php_orchestra_backoffice.form.node.priority',
+                'label' => 'open_orchestra_backoffice.form.node.priority',
                 'type' => 'fractional',
                 'precision' => 2,
                 'required' => false
             ))
             ->add('theme', 'orchestra_theme_choice', array(
-                'label' => 'php_orchestra_backoffice.form.node.theme'
+                'label' => 'open_orchestra_backoffice.form.node.theme'
             ))
             ->add('inMenu', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.node.in_menu',
+                'label' => 'open_orchestra_backoffice.form.node.in_menu',
                 'required' => false
             ))
             ->add('inFooter', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.node.in_footer',
+                'label' => 'open_orchestra_backoffice.form.node.in_footer',
                 'required' => false
             ))
             ->add('metaKeywords', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_keywords',
+                'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
             ))
             ->add('metaDescription', 'text', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_description',
+                'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
             ))
             ->add('metaIndex', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_index',
+                'label' => 'open_orchestra_backoffice.form.website.meta_index',
                 'required' => false,
             ))
             ->add('metaFollow', 'checkbox', array(
-                'label' => 'php_orchestra_backoffice.form.website.meta_follow',
+                'label' => 'open_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
             ))
             ->add('nodeId', 'hidden', array(
                 'disabled' => true
             ))
             ->add('role', 'orchestra_role_choice', array(
-                'label' => 'php_orchestra_backoffice.form.node.role',
+                'label' => 'open_orchestra_backoffice.form.node.role',
                 'required' => false,
             ));
 

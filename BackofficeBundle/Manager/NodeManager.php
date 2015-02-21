@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelInterface\Event\NodeEvent;
-use PHPOrchestra\ModelInterface\NodeEvents;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\Backoffice\Context\ContextManager;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

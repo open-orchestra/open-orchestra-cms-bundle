@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\DeletedFacade;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ApiBundle\Facade\DeletedFacade;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
  * Class DeletedTransformer

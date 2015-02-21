@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\ContentAttributeFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
+use OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 
 /**
  * Class ContentAttributeTransformer

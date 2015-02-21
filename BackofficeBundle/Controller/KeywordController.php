@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\ModelInterface\Event\KeywordEvent;
-use PHPOrchestra\ModelInterface\KeywordEvents;
-use PHPOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\ModelInterface\Event\KeywordEvent;
+use OpenOrchestra\ModelInterface\KeywordEvents;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,25 +18,25 @@ class KeywordController extends AbstractAdminController
      * @param Request $request
      * @param int     $keywordId
      *
-     * @Config\Route("/keyword/form/{keywordId}", name="php_orchestra_backoffice_keyword_form")
+     * @Config\Route("/keyword/form/{keywordId}", name="open_orchestra_backoffice_keyword_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $keywordId)
     {
-        $keyword = $this->get('php_orchestra_model.repository.keyword')->find($keywordId);
+        $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
 
         $form = $this->createForm(
             'keyword',
             $keyword,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId)),
+                'action' => $this->generateUrl('open_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId)),
             )
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.success'), $keyword);
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.success'), $keyword);
 
         return $this->renderAdminForm($form);
     }
@@ -44,14 +44,14 @@ class KeywordController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/keyword/new", name="php_orchestra_backoffice_keyword_new")
+     * @Config\Route("/keyword/new", name="open_orchestra_backoffice_keyword_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request)
     {
-        $keywordClass = $this->container->getParameter('php_orchestra_model.document.keyword.class');
+        $keywordClass = $this->container->getParameter('open_orchestra_model.document.keyword.class');
         /** @var KeywordInterface $keyword */
         $keyword = new $keywordClass();
 
@@ -59,18 +59,18 @@ class KeywordController extends AbstractAdminController
             'keyword',
             $keyword,
             array(
-                'action' => $this->generateUrl('php_orchestra_backoffice_keyword_new'),
+                'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
             )
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('php_orchestra_backoffice.form.keyword.creation'), $keyword);
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.creation'), $keyword);
 
         $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
         } elseif (!is_null($keyword->getId())) {
-            $url = $this->generateUrl('php_orchestra_backoffice_keyword_form', array('keywordId' => $keyword->getId()));
+            $url = $this->generateUrl('open_orchestra_backoffice_keyword_form', array('keywordId' => $keyword->getId()));
 
             $this->dispatchEvent(KeywordEvents::KEYWORD_CREATE, new KeywordEvent($keyword));
             return $this->redirect($url);

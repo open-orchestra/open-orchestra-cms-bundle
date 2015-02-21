@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Model;
+namespace OpenOrchestra\LogBundle\Model;
 
 /**
  * Class LogInterface

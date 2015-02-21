@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use PHPOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
-use PHPOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
+use OpenOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
+use OpenOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
 
 /**
  * Class MediaFacade

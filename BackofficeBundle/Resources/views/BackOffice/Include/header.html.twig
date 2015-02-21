@@ -10,39 +10,39 @@
         Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
         {#<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> *21* </b> </span>#}
 
-    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:ajaxDropdown.html.twig' %}
+    {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/Header:ajaxDropdown.html.twig' %}
     </div>
 
-    {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:projectDropdown.html.twig' %}
+    {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/Header:projectDropdown.html.twig' %}
 
     <!-- pulled right: nav area -->
     <div class="pull-right">
 
         <!-- collapse menu button -->
         <div id="hide-menu" class="btn-header pull-right">
-            <span> <a href="javascript:void(0);" data-action="toggleMenu" title="{{ 'php_orchestra_backoffice.top_menu.collapse_menu'|trans }}"><i class="fa fa-reorder"></i></a> </span>
+            <span> <a href="javascript:void(0);" data-action="toggleMenu" title="{{ 'open_orchestra_backoffice.top_menu.collapse_menu'|trans }}"><i class="fa fa-reorder"></i></a> </span>
         </div>
         <!-- end collapse menu -->
 
-        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:mobileProfile.html.twig' %}
+        {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/Header:mobileProfile.html.twig' %}
 
         <!-- logout button -->
         <div id="logout" class="btn-header transparent pull-right">
-            <span> <a href="{{ url('fos_user_security_logout') }}" title="{{ 'php_orchestra_backoffice.top_menu.sign_out'|trans }}" data-action="userLogout" data-logout-msg="{{ 'php_orchestra_backoffice.top_menu.improve_security'|trans }}"><i class="fa fa-sign-out"></i></a> </span>
+            <span> <a href="{{ url('fos_user_security_logout') }}" title="{{ 'open_orchestra_backoffice.top_menu.sign_out'|trans }}" data-action="userLogout" data-logout-msg="{{ 'open_orchestra_backoffice.top_menu.improve_security'|trans }}"><i class="fa fa-sign-out"></i></a> </span>
         </div>
         <!-- end logout button -->
 
-        {#% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:searchFunctionnality.html.twig' %#}
+        {#% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/Header:searchFunctionnality.html.twig' %#}
 
         <!-- fullscreen button -->
         <div id="fullscreen" class="btn-header transparent pull-right">
-            <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="{{ 'php_orchestra_backoffice.top_menu.fullscreen'|trans }}"><i class="fa fa-arrows-alt"></i></a> </span>
+            <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="{{ 'open_orchestra_backoffice.top_menu.fullscreen'|trans }}"><i class="fa fa-arrows-alt"></i></a> </span>
         </div>
         <!-- end fullscreen button -->
 
-        {#% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:voiceCommand.html.twig' %#}
+        {#% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/Header:voiceCommand.html.twig' %#}
 
-        {% include 'PHPOrchestraBackofficeBundle:BackOffice/Include/Header:languageDropdown.html.twig' %}
+        {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/Header:languageDropdown.html.twig' %}
 
     </div>
     <!-- end pulled right: nav area -->

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Test;
+namespace OpenOrchestra\ApiBundle\Test;
 
 /**
  * Class DummyTest

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType;
 
 /**
  * Class ExistingBlockChoiceTypeTest
@@ -26,7 +26,7 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->form = new ExistingBlockChoiceType($this->nodeRepository);
     }
@@ -74,20 +74,20 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $title = 'blockTitle';
         $otherBlockIndex = $blockIndex + 1;
         $otherNodeId = $nodeId . 'other';
-        $block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block)->getComponent()->thenReturn($component);
 
-        $otherBlock = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        $otherBlock = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($otherBlock)->getComponent()->thenReturn($component);
         Phake::when($otherBlock)->getAttributes()->thenReturn(array('title' => $title));
 
-        $node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getBlocks()->thenReturn(array(
             $blockIndex => $block,
             $otherBlockIndex => $otherBlock,
         ));
         Phake::when($node)->getNodeId()->thenReturn($nodeId);
-        $otherNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($otherNode)->getBlocks()->thenReturn(array(
             $blockIndex => $block,
             $otherBlockIndex => $otherBlock,
@@ -110,7 +110,7 @@ class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
                     $otherNodeId . ':' . $otherBlockIndex => $title,
                 ),
             ),
-            'label' => 'php_orchestra_backoffice.form.area.existing_block'
+            'label' => 'open_orchestra_backoffice.form.area.existing_block'
         ));
         Phake::verify($this->nodeRepository)->findAll();
     }

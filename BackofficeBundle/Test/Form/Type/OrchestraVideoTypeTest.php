@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType;
+use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType;
 
 /**
  * Class OrchestraVideoTypeTest
@@ -22,7 +22,7 @@ class OrchestraVideoTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->videoUrltoId = Phake::mock('PHPOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer');
+        $this->videoUrltoId = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer');
 
         $this->form = new OrchestraVideoType($this->videoUrltoId);
     }

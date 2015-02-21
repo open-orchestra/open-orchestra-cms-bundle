@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\EventSubscriber;
+namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use PHPOrchestra\ModelInterface\Event\ThemeEvent;
-use PHPOrchestra\ModelInterface\ThemeEvents;
+use OpenOrchestra\ModelInterface\Event\ThemeEvent;
+use OpenOrchestra\ModelInterface\ThemeEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,7 +28,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public function themeCreate(ThemeEvent $event)
     {
         $theme = $event->getTheme();
-        $this->logger->info('php_orchestra_log.theme.create', array(
+        $this->logger->info('open_orchestra_log.theme.create', array(
             'theme_name' => $theme->getName()
         ));
     }
@@ -39,7 +39,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public function themeDelete(ThemeEvent $event)
     {
         $theme = $event->getTheme();
-        $this->logger->info('php_orchestra_log.theme.delete', array(
+        $this->logger->info('open_orchestra_log.theme.delete', array(
             'theme_name' => $theme->getName()
         ));
     }
@@ -50,7 +50,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
     public function themeUpdate(ThemeEvent $event)
     {
         $theme = $event->getTheme();
-        $this->logger->info('php_orchestra_log.theme.update', array(
+        $this->logger->info('open_orchestra_log.theme.update', array(
             'theme_name' => $theme->getName()
         ));
     }

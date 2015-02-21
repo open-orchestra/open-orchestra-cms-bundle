@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Form\Type\StatusType;
+use OpenOrchestra\BackofficeBundle\Form\Type\StatusType;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -24,7 +24,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('PHPOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
         $this->form = new StatusType($this->statusClass, $this->translateValueInitializer);
     }
 

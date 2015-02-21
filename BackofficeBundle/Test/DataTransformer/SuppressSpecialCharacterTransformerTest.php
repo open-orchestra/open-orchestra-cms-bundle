@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Test\DataTransformer;
 
-use PHPOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer;
 
 /**
  * Class SuppressSpecialCharacterTransformerTest

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\ApiBundle\Transformer;
 
-use PHPOrchestra\ApiBundle\Facade\ContentTypeFacade;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ApiBundle\Facade\ContentTypeFacade;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentTypeTransformer
@@ -43,15 +43,15 @@ class ContentTypeTransformer extends AbstractTransformer
         }
 
         $facade->addLink('_self', $this->generateRoute(
-            'php_orchestra_api_content_type_show',
+            'open_orchestra_api_content_type_show',
             array('contentTypeId' => $mixed->getContentTypeId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
-            'php_orchestra_api_content_type_delete',
+            'open_orchestra_api_content_type_delete',
             array('contentTypeId' => $mixed->getContentTypeId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'php_orchestra_backoffice_content_type_form',
+            'open_orchestra_backoffice_content_type_form',
             array('contentTypeId' => $mixed->getContentTypeId())
         ));
 

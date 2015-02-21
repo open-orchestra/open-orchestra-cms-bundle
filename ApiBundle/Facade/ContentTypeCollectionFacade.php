@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 
@@ -15,7 +15,7 @@ class ContentTypeCollectionFacade extends AbstractFacade
     public $collectionName = 'content_types';
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\ApiBundle\Facade\ContentTypeFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\ContentTypeFacade>")
      */
     protected $contentTypes = array();
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\Backoffice\Context\ContextManager;
-use PHPOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
  * Class ContentManager

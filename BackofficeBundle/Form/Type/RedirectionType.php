@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\RedirectionTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\RedirectionTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -30,24 +30,24 @@ class RedirectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('siteId', 'orchestra_site_choice', array(
-            'label' => 'php_orchestra_backoffice.form.redirection.site_name',
+            'label' => 'open_orchestra_backoffice.form.redirection.site_name',
         ));
         $builder->add('locale', 'orchestra_language',array(
-            'label' => 'php_orchestra_backoffice.form.redirection.locale',
+            'label' => 'open_orchestra_backoffice.form.redirection.locale',
         ));
         $builder->add('routePattern', 'text',array(
-            'label' => 'php_orchestra_backoffice.form.redirection.route_pattern',
+            'label' => 'open_orchestra_backoffice.form.redirection.route_pattern',
         ));
         $builder->add('nodeId', 'orchestra_node_choice', array(
-            'label' => 'php_orchestra_backoffice.form.redirection.node_id',
+            'label' => 'open_orchestra_backoffice.form.redirection.node_id',
             'required' => false,
         ));
         $builder->add('url', 'text', array(
-            'label' => 'php_orchestra_backoffice.form.redirection.url',
+            'label' => 'open_orchestra_backoffice.form.redirection.url',
             'required' => false,
         ));
         $builder->add('permanent', 'checkbox', array(
-            'label' => 'php_orchestra_backoffice.form.redirection.permanent',
+            'label' => 'open_orchestra_backoffice.form.redirection.permanent',
             'required' => false,
         ));
 

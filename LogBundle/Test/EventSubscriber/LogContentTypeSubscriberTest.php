@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\LogBundle\EventSubscriber\LogContentTypeSubscriber;
-use PHPOrchestra\ModelInterface\ContentTypeEvents;
+use OpenOrchestra\LogBundle\EventSubscriber\LogContentTypeSubscriber;
+use OpenOrchestra\ModelInterface\ContentTypeEvents;
 
 /**
  * Class LogContentTypeSubscriberTest
@@ -20,8 +20,8 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->contentType = Phake::mock('PHPOrchestra\ModelBundle\Document\ContentType');
-        $this->contentTypeEvent = Phake::mock('PHPOrchestra\ModelInterface\Event\ContentTypeEvent');
+        $this->contentType = Phake::mock('OpenOrchestra\ModelBundle\Document\ContentType');
+        $this->contentTypeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentTypeEvent');
         Phake::when($this->contentTypeEvent)->getContentType()->thenReturn($this->contentType);
 
         $this->subscriber = new LogContentTypeSubscriber($this->logger);
@@ -45,7 +45,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
     public function testContentTypeCreation()
     {
         $this->subscriber->contentTypeCreation($this->contentTypeEvent);
-        $this->assertEventLogged('php_orchestra_log.content_type.create', array(
+        $this->assertEventLogged('open_orchestra_log.content_type.create', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
         ));
     }
@@ -56,7 +56,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
     public function testContentTypeDelete()
     {
         $this->subscriber->contentTypeDelete($this->contentTypeEvent);
-        $this->assertEventLogged('php_orchestra_log.content_type.delete', array(
+        $this->assertEventLogged('open_orchestra_log.content_type.delete', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
             'content_type_name' => $this->contentType->getName()
         ));
@@ -68,7 +68,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
     public function testContentTypeUpdate()
     {
         $this->subscriber->contentTypeUpdate($this->contentTypeEvent);
-        $this->assertEventLogged('php_orchestra_log.content_type.update', array(
+        $this->assertEventLogged('open_orchestra_log.content_type.update', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
             'content_type_name' => $this->contentType->getName()
         ));

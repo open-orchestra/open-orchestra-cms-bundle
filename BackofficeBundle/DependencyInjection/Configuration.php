@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\DependencyInjection;
+namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('php_orchestra_backoffice');
+        $rootNode = $treeBuilder->root('open_orchestra_backoffice');
 
         $rootNode->children()
             ->arrayNode('front_languages')

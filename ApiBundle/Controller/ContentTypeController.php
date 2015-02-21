@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
-use PHPOrchestra\ModelInterface\ContentTypeEvents;
-use PHPOrchestra\ModelInterface\Event\ContentTypeEvent;
-use PHPOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ModelInterface\ContentTypeEvents;
+use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
+use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,7 @@ class ContentTypeController extends BaseController
     /**
      * @param string $contentTypeId
      *
-     * @Config\Route("/{contentTypeId}", name="php_orchestra_api_content_type_show")
+     * @Config\Route("/{contentTypeId}", name="open_orchestra_api_content_type_show")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -28,13 +28,13 @@ class ContentTypeController extends BaseController
      */
     public function showAction($contentTypeId)
     {
-        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneByContentTypeId($contentTypeId);
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeId($contentTypeId);
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('content_type')->transform($contentType);
+        return $this->get('open_orchestra_api.transformer_manager')->get('content_type')->transform($contentType);
     }
 
     /**
-     * @Config\Route("", name="php_orchestra_api_content_type_list")
+     * @Config\Route("", name="open_orchestra_api_content_type_list")
      * @Config\Method({"GET"})
      *
      * @Api\Serialize()
@@ -43,22 +43,22 @@ class ContentTypeController extends BaseController
      */
     public function listAction()
     {
-        $contentTypeCollection = $this->get('php_orchestra_model.repository.content_type')->findAllByDeletedInLastVersion();
+        $contentTypeCollection = $this->get('open_orchestra_model.repository.content_type')->findAllByDeletedInLastVersion();
 
-        return $this->get('php_orchestra_api.transformer_manager')->get('content_type_collection')->transform($contentTypeCollection);
+        return $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection')->transform($contentTypeCollection);
     }
 
     /**
      * @param string $contentTypeId
      *
-     * @Config\Route("/{contentTypeId}/delete", name="php_orchestra_api_content_type_delete")
+     * @Config\Route("/{contentTypeId}/delete", name="open_orchestra_api_content_type_delete")
      * @Config\Method({"DELETE"})
      *
      * @return Response
      */
     public function deleteAction($contentTypeId)
     {
-        $contentType = $this->get('php_orchestra_model.repository.content_type')->findOneBy(array('contentTypeId' => $contentTypeId));
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneBy(array('contentTypeId' => $contentTypeId));
         $contentType->setDeleted(true);
         $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();

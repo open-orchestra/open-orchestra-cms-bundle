@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\ApiBundle\Controller;
 
-use PHPOrchestra\ApiBundle\Exceptions\HttpException\ApiException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ApiException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -22,7 +22,7 @@ class ExceptionController extends Controller
     {
         $this->container->get('request')->setRequestFormat($format);
 
-        return $this->render('PHPOrchestraApiBundle:Exception:show.'.$format.'.twig', array('exception' => $exception));
+        return $this->render('OpenOrchestraApiBundle:Exception:show.'.$format.'.twig', array('exception' => $exception));
     }
 
 }

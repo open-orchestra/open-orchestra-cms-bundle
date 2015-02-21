@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Controller;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 
 /**
  * Class FormControllersTest
@@ -44,7 +44,7 @@ class FormControllersTest extends AbstractControllerTest
      */
     public function testMediaFolderForm()
     {
-        $mediaFolderRepository = static::$kernel->getContainer()->get('php_orchestra_media.repository.media_folder');
+        $mediaFolderRepository = static::$kernel->getContainer()->get('open_orchestra_media.repository.media_folder');
         $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
 
         $url = '/admin/folder/form/' . $mediaFolder->getId();

@@ -5,20 +5,20 @@
             <img
                 src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
                 class="flag flag-{{ context.currentLocale }}"
-                alt="{{ ('php_orchestra_backoffice.language.' ~ context.currentLocale)|trans }}"
+                alt="{{ ('open_orchestra_backoffice.language.' ~ context.currentLocale)|trans }}"
             >
-            <span> {{ ('php_orchestra_backoffice.language.' ~ context.currentLocale)|trans }} ({{ context.currentLocale|capitalize }})</span> <i class="fa fa-angle-down"></i>
+            <span> {{ ('open_orchestra_backoffice.language.' ~ context.currentLocale)|trans }} ({{ context.currentLocale|capitalize }})</span> <i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu pull-right">
             {% for language in available_languages %}
             <li{% if context.currentLocale == language %} class="active"{% endif %}>
-                <a href="javascript:callAndReload('{{ path('php_orchestra_api_context_language', {'language':language}) }}');">
+                <a href="javascript:callAndReload('{{ path('open_orchestra_api_context_language', {'language':language}) }}');">
                     <img
                         src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
                         class="flag flag-{{ language }}"
-                        alt="{{ ('php_orchestra_backoffice.language.' ~ language)|trans }}"
+                        alt="{{ ('open_orchestra_backoffice.language.' ~ language)|trans }}"
                     >
-                    {{ ('php_orchestra_backoffice.language.' ~ language)|trans }} ({{ language|capitalize }})
+                    {{ ('open_orchestra_backoffice.language.' ~ language)|trans }} ({{ language|capitalize }})
                 </a>
             </li>
             {% endfor %}

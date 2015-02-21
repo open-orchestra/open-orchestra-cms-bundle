@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Command;
+namespace OpenOrchestra\BackofficeBundle\Command;
 
-use PHPOrchestra\Backoffice\Generator\BlockGenerator;
-use PHPOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
-use PHPOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator;
-use PHPOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator;
-use PHPOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator;
+use OpenOrchestra\Backoffice\Generator\BlockGenerator;
+use OpenOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
+use OpenOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator;
+use OpenOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator;
+use OpenOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,16 +29,16 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
             new InputOption('block-name', '', InputOption::VALUE_REQUIRED, 'The name of the block to create'),
             new InputOption('form-generator-dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the generator strategy'),
             new InputOption('form-generator-conf', '', InputOption::VALUE_OPTIONAL, 'The file where to store the generator configuration', 'generator.yml'),
-            new InputOption('form-generator-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespaces for the form generator', 'PHPOrchestra\Backoffice'),
+            new InputOption('form-generator-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespaces for the form generator', 'OpenOrchestra\Backoffice'),
             new InputOption('front-display-dir', '', InputOption::VALUE_REQUIRED, 'The directory where to create the front display strategy'),
             new InputOption('front-display-conf', '', InputOption::VALUE_OPTIONAL, 'The file where to store the front display configuration', 'display.yml'),
-            new InputOption('front-display-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespaces for the front display', 'PHPOrchestra\DisplayBundle'),
+            new InputOption('front-display-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespaces for the front display', 'OpenOrchestra\DisplayBundle'),
             new InputOption('backoffice-icon-dir', '', InputOption::VALUE_REQUIRED, 'The directory where to store the backoffice icon strategy'),
             new InputOption('backoffice-icon-conf', '', InputOption::VALUE_OPTIONAL, 'The file where to store the backoffice icon configuration', 'icon.yml'),
-            new InputOption('backoffice-icon-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace for the backoffice icon', 'PHPOrchestra\BackofficeBundle'),
+            new InputOption('backoffice-icon-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace for the backoffice icon', 'OpenOrchestra\BackofficeBundle'),
             new InputOption('backoffice-display-dir', '', InputOption::VALUE_REQUIRED, 'The directory where to store the backoffice display strategy'),
             new InputOption('backoffice-display-conf', '', InputOption::VALUE_OPTIONAL, 'The file where to store the backoffice display configuration', 'display.yml'),
-            new InputOption('backoffice-display-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace for the backoffice display', 'PHPOrchestra\BackofficeBundle'),
+            new InputOption('backoffice-display-namespace', '', InputOption::VALUE_OPTIONAL, 'The namespace for the backoffice display', 'OpenOrchestra\BackofficeBundle'),
         ));
     }
 
@@ -53,7 +53,7 @@ class OrchestraGenerateBlockCommand extends ContainerAwareCommand
         $generator = new BlockGenerator($this->getContainer()->getParameter('kernel.root_dir') . '/..');
         $generator->setSkeletonDirs(array(
             __DIR__ . '/../Resources/skeleton',
-            __DIR__ . '/../../../../phporchestra-display-bundle/PHPOrchestra/DisplayBundle/Resources/skeleton',
+            __DIR__ . '/../../../../phporchestra-display-bundle/OpenOrchestra/DisplayBundle/Resources/skeleton',
         ));
 
         $generator->generate(

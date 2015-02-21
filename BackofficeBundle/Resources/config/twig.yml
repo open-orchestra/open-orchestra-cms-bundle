@@ -1,30 +1,30 @@
 parameters:
-    php_orchestra_backoffice.twig_extension.translation_choice.class: PHPOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
-    php_orchestra_backoffice.twig_extension.is_folder_deletable.class: PHPOrchestra\BackofficeBundle\Twig\IsFolderDeletableExtension
-    php_orchestra_backoffice.twig_extension.block_icon.class: PHPOrchestra\BackofficeBundle\Twig\BlockIconExtension
-    php_orchestra_backoffice.twig_extension.left_panel.class: PHPOrchestra\BackofficeBundle\Twig\LeftPanelExtension
+    open_orchestra_backoffice.twig_extension.translation_choice.class: OpenOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
+    open_orchestra_backoffice.twig_extension.is_folder_deletable.class: OpenOrchestra\BackofficeBundle\Twig\IsFolderDeletableExtension
+    open_orchestra_backoffice.twig_extension.block_icon.class: OpenOrchestra\BackofficeBundle\Twig\BlockIconExtension
+    open_orchestra_backoffice.twig_extension.left_panel.class: OpenOrchestra\BackofficeBundle\Twig\LeftPanelExtension
 
 services:
-    php_orchestra_backoffice.twig_extension.translation_choice:
-        class: %php_orchestra_backoffice.twig_extension.translation_choice.class%
+    open_orchestra_backoffice.twig_extension.translation_choice:
+        class: %open_orchestra_backoffice.twig_extension.translation_choice.class%
         arguments:
-            - @php_orchestra_backoffice.manager.translation_choice
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: twig.extension}
-    php_orchestra_backoffice.twig_extension.is_folder_deletable:
-        class: %php_orchestra_backoffice.twig_extension.is_folder_deletable.class%
+    open_orchestra_backoffice.twig_extension.is_folder_deletable:
+        class: %open_orchestra_backoffice.twig_extension.is_folder_deletable.class%
         arguments:
-            - @php_orchestra_backoffice.manager.media_folder
+            - @open_orchestra_backoffice.manager.media_folder
         tags:
             - { name: twig.extension}
-    php_orchestra_backoffice.twig_extension.block_icon:
-        class: %php_orchestra_backoffice.twig_extension.block_icon.class%
+    open_orchestra_backoffice.twig_extension.block_icon:
+        class: %open_orchestra_backoffice.twig_extension.block_icon.class%
         arguments:
-            - @php_orchestra_backoffice.display_icon_manager
+            - @open_orchestra_backoffice.display_icon_manager
         tags:
             - { name: twig.extension}
-    php_orchestra_backoffice.twig_extension.left_panel:
-        class: %php_orchestra_backoffice.twig_extension.left_panel.class%
+    open_orchestra_backoffice.twig_extension.left_panel:
+        class: %open_orchestra_backoffice.twig_extension.left_panel.class%
         arguments:
             - @service_container
         tags:

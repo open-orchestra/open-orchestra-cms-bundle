@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\BackofficeBundle\Manager;
 
-use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class ContentTypeManager

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Twig;
+namespace OpenOrchestra\BackofficeBundle\Twig;
 
 use Symfony\Component\DependencyInjection\Container;
 
@@ -34,7 +34,7 @@ class LeftPanelExtension extends \Twig_Extension
      */
     public function displayLeftPanel()
     {
-        return $this->container->get('php_orchestra_backoffice.left_panel_manager')->show();
+        return $this->container->get('open_orchestra_backoffice.left_panel_manager')->show();
     }
 
     /**

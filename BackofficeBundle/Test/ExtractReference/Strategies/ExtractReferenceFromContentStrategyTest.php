@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\ExtractReference\Strategies;
+namespace OpenOrchestra\BackofficeBundle\Test\ExtractReference\Strategies;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromContentStrategy;
-use PHPOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromContentStrategy;
+use OpenOrchestra\Media\Model\MediaInterface;
 
 /**
  * Test ExtractReferenceFromContentStrategyTest
@@ -30,7 +30,7 @@ class ExtractReferenceFromContentStrategyTest extends \PHPUnit_Framework_TestCas
      */
     public function testInstance()
     {
-        $this->assertInstanceOf('PHPOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface', $this->strategy);
+        $this->assertInstanceOf('OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface', $this->strategy);
     }
 
     /**
@@ -58,10 +58,10 @@ class ExtractReferenceFromContentStrategyTest extends \PHPUnit_Framework_TestCas
     public function provideClassAndSupport()
     {
         return array(
-            array('PHPOrchestra\ModelInterface\Model\NodeInterface', false),
-            array('PHPOrchestra\ModelInterface\Model\ContentInterface', true),
-            array('PHPOrchestra\ModelInterface\Model\ContentTypeInterface', false),
-            array('PHPOrchestra\ModelInterface\Model\StatusableInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\NodeInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\ContentInterface', true),
+            array('OpenOrchestra\ModelInterface\Model\ContentTypeInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\StatusableInterface', false),
         );
     }
 
@@ -70,14 +70,14 @@ class ExtractReferenceFromContentStrategyTest extends \PHPUnit_Framework_TestCas
      */
     public function testExtractReference()
     {
-        $contentAttribute1 = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        $contentAttribute2 = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $contentAttribute1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $contentAttribute2 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $contentAttributes = new ArrayCollection();
         $contentAttributes->add($contentAttribute1);
         $contentAttributes->add($contentAttribute2);
 
         $contentId = 'contentId';
-        $content = Phake::mock('PHPOrchestra\ModelInterface\Model\ContentInterface');
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getId()->thenReturn($contentId);
         Phake::when($content)->getAttributes()->thenReturn($contentAttributes);
 

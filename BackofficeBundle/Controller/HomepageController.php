@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +20,6 @@ class HomepageController extends Controller
      */
     public function homeAction()
     {
-        return $this->render('PHPOrchestraBackofficeBundle:BackOffice:home.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:BackOffice:home.html.twig');
     }
 }

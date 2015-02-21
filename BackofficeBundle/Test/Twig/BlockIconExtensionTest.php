@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\Twig;
+namespace OpenOrchestra\BackofficeBundle\Test\Twig;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\Twig\BlockIconExtension;
+use OpenOrchestra\BackofficeBundle\Twig\BlockIconExtension;
 
 /**
  * Class BlockIconExtensionTest
@@ -18,7 +18,7 @@ class BlockIconExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->iconManager = Phake::mock('PHPOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
+        $this->iconManager = Phake::mock('OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
 
         $this->twig = new BlockIconExtension($this->iconManager);
     }

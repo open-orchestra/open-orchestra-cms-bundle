@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber;
-use PHPOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber;
+use OpenOrchestra\ModelInterface\NodeEvents;
 
 /**
  * Class UpdateChildNodePathSubscriberTest
@@ -25,7 +25,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $container = Phake::mock('Symfony\Component\DependencyInjection\Container');
@@ -57,14 +57,14 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $son1NodeId = 'son1NodeId';
         $son2NodeId = 'son2NodeId';
 
-        $parent = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getNodeId()->thenReturn($parentNodeId);
         Phake::when($parent)->getPath()->thenReturn($parentPath);
-        $son1 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $son1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($son1)->getNodeId()->thenReturn($son1NodeId);
-        $son2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $son2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($son2)->getNodeId()->thenReturn($son2NodeId);
-        $son3 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $son3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($son3)->getNodeId()->thenReturn($son2NodeId);
         $sons = new ArrayCollection();
         $sons->add($son1);
@@ -72,7 +72,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $sons->add($son3);
         Phake::when($this->nodeRepository)->findByParentIdAndSiteId($parentNodeId)->thenReturn($sons);
 
-        $event = Phake::mock('PHPOrchestra\ModelInterface\Event\NodeEvent');
+        $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($parent);
 
         $this->subscriber->updatePath($event);

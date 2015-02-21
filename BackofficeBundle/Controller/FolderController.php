@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use PHPOrchestra\Media\Event\FolderEvent;
-use PHPOrchestra\Media\FolderEvents;
-use PHPOrchestra\Media\Model\FolderInterface;
+use OpenOrchestra\Media\Event\FolderEvent;
+use OpenOrchestra\Media\FolderEvents;
+use OpenOrchestra\Media\Model\FolderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,17 +18,17 @@ class FolderController extends AbstractAdminController
      * @param Request $request
      * @param string  $folderId
      *
-     * @Config\Route("/folder/form/{folderId}", name="php_orchestra_backoffice_folder_form")
+     * @Config\Route("/folder/form/{folderId}", name="open_orchestra_backoffice_folder_form")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function formAction(Request $request, $folderId)
     {
-        $folderRepository = $this->container->get('php_orchestra_media.repository.media_folder');
+        $folderRepository = $this->container->get('open_orchestra_media.repository.media_folder');
         $folder = $folderRepository->find($folderId);
 
-        $url = $this->generateUrl('php_orchestra_backoffice_folder_form', array('folderId' => $folderId));
+        $url = $this->generateUrl('open_orchestra_backoffice_folder_form', array('folderId' => $folderId));
 
         return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_UPDATE);
     }
@@ -37,21 +37,21 @@ class FolderController extends AbstractAdminController
      * @param Request $request
      * @param string  $parentId
      *
-     * @Config\Route("/folder/new/{parentId}", name="php_orchestra_backoffice_folder_new")
+     * @Config\Route("/folder/new/{parentId}", name="open_orchestra_backoffice_folder_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
      */
     public function newAction(Request $request, $parentId)
     {
-        $parentFolder = $this->container->get('php_orchestra_media.repository.media_folder')->find($parentId);
-        $folderClass = $this->container->getParameter('php_orchestra_media.document.media_folder.class');
+        $parentFolder = $this->container->get('open_orchestra_media.repository.media_folder')->find($parentId);
+        $folderClass = $this->container->getParameter('open_orchestra_media.document.media_folder.class');
         $folder = new $folderClass();
         if ($parentFolder) {
             $folder->setParent($parentFolder);
         }
 
-        $url = $this->generateUrl('php_orchestra_backoffice_folder_new', array('parentId' => $parentId));
+        $url = $this->generateUrl('open_orchestra_backoffice_folder_new', array('parentId' => $parentId));
 
         return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_CREATE);
     }
@@ -70,7 +70,7 @@ class FolderController extends AbstractAdminController
         $form->handleRequest($request);
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('php_orchestra_backoffice.form.folder.success'),
+            $this->get('translator')->trans('open_orchestra_backoffice.form.folder.success'),
             $folder
         );
 

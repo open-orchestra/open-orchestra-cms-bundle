@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\FunctionalTest\Manager;
+namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Manager;
 
-use PHPOrchestra\BackofficeBundle\Manager\ContentTypeManager;
-use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -24,7 +24,7 @@ class ContentTypeManagerTest extends KernelTestCase
     public function setUp()
     {
         static::bootKernel();
-        $this->contentTypeRepository = static::$kernel->getContainer()->get('php_orchestra_model.repository.content_type');
+        $this->contentTypeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content_type');
 
         $this->manager = new ContentTypeManager();
     }

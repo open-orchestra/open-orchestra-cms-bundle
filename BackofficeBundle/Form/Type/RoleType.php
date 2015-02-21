@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use PHPOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -29,14 +29,14 @@ class RoleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', null, array(
-            'label' => 'php_orchestra_backoffice.form.role.name',
+            'label' => 'open_orchestra_backoffice.form.role.name',
         ));
         $builder->add('fromStatus', 'orchestra_status',array(
-            'label' => 'php_orchestra_backoffice.form.role.from_status',
+            'label' => 'open_orchestra_backoffice.form.role.from_status',
             'required' => false,
         ));
         $builder->add('toStatus', 'orchestra_status',array(
-            'label' => 'php_orchestra_backoffice.form.role.to_status',
+            'label' => 'open_orchestra_backoffice.form.role.to_status',
             'required' => false,
         ));
 

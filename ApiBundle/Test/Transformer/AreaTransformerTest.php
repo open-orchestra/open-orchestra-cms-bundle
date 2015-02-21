@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\ApiBundle\Test\Transformer;
+namespace OpenOrchestra\ApiBundle\Test\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\ApiBundle\Facade\AreaFacade;
-use PHPOrchestra\ApiBundle\Facade\BlockFacade;
-use PHPOrchestra\ApiBundle\Transformer\AreaTransformer;
+use OpenOrchestra\ApiBundle\Facade\AreaFacade;
+use OpenOrchestra\ApiBundle\Facade\BlockFacade;
+use OpenOrchestra\ApiBundle\Transformer\AreaTransformer;
 
 /**
  * Class AreaTransformerTest
@@ -39,31 +39,31 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->language = 'fr';
 
-        $this->area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
+        $this->area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($this->area)->getAreaId()->thenReturn($this->areaId);
 
-        $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
 
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getNodeId()->thenReturn($this->currentNodeId);
         Phake::when($this->node)->getId()->thenReturn($this->nodeMongoId);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         Phake::when($this->node)->getLanguage(Phake::anyParameters())->thenReturn($this->language);
 
-        $this->otherNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())
             ->thenReturn($this->otherNode);
 
-        $this->transformer = Phake::mock('PHPOrchestra\ApiBundle\Transformer\BlockTransformer');
+        $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
-        $this->transformerManager = Phake::mock('PHPOrchestra\ApiBundle\Transformer\TransformerManager');
+        $this->transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->areaManager = Phake::mock('PHPOrchestra\BackofficeBundle\Manager\AreaManager');
+        $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
 
         $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager);
 
@@ -82,7 +82,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $blockFacade = new BlockFacade();
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($blockFacade);
 
-        $area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getClasses()->thenReturn(array('area_class'));
@@ -96,7 +96,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $areaFacade = $this->areaTransformer->transform($area, $this->node, $parentAreaId);
 
-        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
         $this->assertArrayHasKey('_self_form', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self_block', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self', $areaFacade->getLinks());
@@ -149,10 +149,10 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformFromTemplate($parentAreaId = null)
     {
-        $template = Phake::mock('PHPOrchestra\ModelInterface\Model\TemplateInterface');
+        $template = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template)->getTemplateId()->thenReturn('templateId');
 
-        $area = Phake::mock('PHPOrchestra\ModelInterface\Model\AreaInterface');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getClasses()->thenReturn(array('area_class'));
@@ -161,7 +161,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $areaFacade = $this->areaTransformer->transformFromTemplate($area, $template, $parentAreaId);
 
-        $this->assertInstanceOf('PHPOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
         $this->assertArrayHasKey('_self_form', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self_delete', $areaFacade->getLinks());

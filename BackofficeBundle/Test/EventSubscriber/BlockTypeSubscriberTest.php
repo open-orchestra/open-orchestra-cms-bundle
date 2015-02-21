@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventSubscriber;
+namespace OpenOrchestra\BackofficeBundle\Test\EventSubscriber;
 
 use Phake;
-use PHPOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
 
 /**
@@ -30,7 +30,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->block = Phake::mock('PHPOrchestra\ModelInterface\Model\BlockInterface');
+        $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
 
         $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
         Phake::when($this->formConfig)->getModelTransformers()->thenReturn(array());
@@ -44,12 +44,12 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactory');
         Phake::when($this->formFactory)->create(Phake::anyParameters())->thenReturn($this->form);
-        $this->generateFormInterface = Phake::mock('PHPOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
+        $this->generateFormInterface = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->generateFormManager = Phake::mock('PHPOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
+        $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
         Phake::when($this->generateFormManager)->createForm(Phake::anyParameters())->thenReturn($this->generateFormInterface);
 
         $this->fixedParams = array('component', 'label', 'class', 'id');

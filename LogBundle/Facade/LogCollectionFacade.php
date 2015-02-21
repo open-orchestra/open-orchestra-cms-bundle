@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\LogBundle\Facade;
+namespace OpenOrchestra\LogBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use PHPOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 
 /**
  * Class LogCollectionFacade
@@ -16,7 +16,7 @@ class LogCollectionFacade implements FacadeInterface
     public $collectionName = 'logs';
 
     /**
-     * @Serializer\Type("array<PHPOrchestra\LogBundle\Facade\LogFacade>")
+     * @Serializer\Type("array<OpenOrchestra\LogBundle\Facade\LogFacade>")
      */
     public $logs = array();
 
