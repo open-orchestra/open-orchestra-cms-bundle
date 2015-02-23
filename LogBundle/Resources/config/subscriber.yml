@@ -18,70 +18,70 @@ services:
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.content:
         class: %open_orchestra_log.subscriber.content.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.content_type:
         class: %open_orchestra_log.subscriber.content_type.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.keyword:
         class: %open_orchestra_log.subscriber.keyword.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.media:
         class: %open_orchestra_log.subscriber.media.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.role:
         class: %open_orchestra_log.subscriber.role.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.redirection:
         class: %open_orchestra_log.subscriber.redirection.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.site:
         class: %open_orchestra_log.subscriber.site.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.status:
         class: %open_orchestra_log.subscriber.status.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.template:
         class: %open_orchestra_log.subscriber.template.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.theme:
         class: %open_orchestra_log.subscriber.theme.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.user:
         class: %open_orchestra_log.subscriber.user.class%
         arguments: [@logger]
         tags:
             - { name: kernel.event_subscriber }
-            - { name: monolog.logger, channel: phporchestra }
+            - { name: monolog.logger, channel: openorchestra }
