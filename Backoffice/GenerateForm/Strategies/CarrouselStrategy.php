@@ -49,7 +49,7 @@ class CarrouselStrategy extends AbstractBlockStrategy
         ));
         $builder->add('width');
         $builder->add('height');
-        $builder->add('carousel_id');
+        $builder->add('carrousel_id');
     }
 
     /**
