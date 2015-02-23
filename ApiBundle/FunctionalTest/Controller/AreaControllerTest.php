@@ -13,7 +13,7 @@ class AreaControllerTest extends AbstractControllerTest
     public function testAreaReverseTransform()
     {
         $this->client->request('GET', '/admin/');
-        $this->client->request('GET', '/api/context/site/1/front-phporchestra.dev');
+        $this->client->request('GET', '/api/context/site/1/front.openorchestra.dev');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $this->client->request('GET', '/api/node/root');
