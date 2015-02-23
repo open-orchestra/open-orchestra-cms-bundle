@@ -9,4 +9,4 @@ services:
             - @request_stack
             - @open_orchestra_backoffice.context_manager
         tags:
-            - { name: monolog.processor, method: processRecord, channel: phporchestra }
+            - { name: monolog.processor, method: processRecord, channel: openorchestra }
