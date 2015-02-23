@@ -9,7 +9,7 @@
 <% } %>
 ">
     <%= element.get('name') %>
-    <% if (element.get('node_type') == 'page') { %>
+    <% if (element.get('version')) { %>
         ({{ 'open_orchestra_backoffice.element.version.display' | trans({}, 'messages', language) }} : #<%= element.get('version') %>)
     <% } %>
 </span>

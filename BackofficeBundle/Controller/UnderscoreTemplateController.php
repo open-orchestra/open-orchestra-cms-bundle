@@ -21,8 +21,12 @@ class UnderscoreTemplateController extends Controller
      */
     public function showAction($language, $templateId)
     {
+        $path = 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/' . $templateId . '._tpl.twig';
+        if (false !== strpos($templateId, ':')) {
+            $path = 'OpenOrchestraBackofficeBundle:BackOffice/Underscore/' . $templateId . '._tpl.twig';
+        }
         return $this->render(
-            'OpenOrchestraBackofficeBundle:BackOffice:Underscore/' . $templateId . '._tpl.twig',
+            $path,
             array('language' => $language)
         );
     }

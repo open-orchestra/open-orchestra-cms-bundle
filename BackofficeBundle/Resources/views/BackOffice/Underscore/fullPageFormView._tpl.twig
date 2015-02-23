@@ -5,12 +5,6 @@
     </ul>
 <% } %>
 
-<% if (typeof title != 'undefined') { %>
-<div class="hidden-info" id="generated-title">
-    <%= title %>
-</div>
-<% } %>
-
 <% if (typeof duplicate != 'undefined') { %>
     <a class="btn btn-info btn-new-version btn-new-version-<%= cid %>" target="_blank">
         <i class="glyphicon glyphicon-pencil"></i>
