@@ -17,20 +17,6 @@
         </label>
     <% } %>
 </div>
-<div class="hidden-info" id="generated-title">
-    <%= title %>
-</div>
-<div class="hidden-info" id="generated-panel">
-    <div class="header">
-        <i class="fa fa-arrow-circle-left"></i>
-        <h2>{{ ('open_orchestra_backoffice.node.blocks') | trans({}, 'messages', language) }}</h2>
-    </div>
-    <div class="ui-model scroll panel-shadow">
-        <ul class="ui-model-blocks rigth-panel-blocks">
-            {{ render(controller('OpenOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
-        </ul>
-    </div>
-</div>
 <span class="delete-confirm-txt-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.node.delete.text'|trans }}</span>
 <span class="delete-confirm-title-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.node.delete.title'|trans }}</span>
 <div role="container">

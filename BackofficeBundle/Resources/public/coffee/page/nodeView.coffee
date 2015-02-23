@@ -35,6 +35,7 @@ NodeView = OrchestraView.extend(
       "areaView"
       "blockView"
       "elementTitle"
+      "refresh:rightPanel"
     ]
     return
 
@@ -75,17 +76,15 @@ NodeView = OrchestraView.extend(
       )
 
   render: ->
-    title = @renderTemplate('elementTitle',
-      element: @node
-    )
     $(@el).html @renderTemplate('nodeView',
       node: @node
-      title: title
       cid: @cid
     )
     blockpanel = $('.js-widget-blockpanel', @$el)
-    $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    blockpanel.html($('#generated-panel', @$el).html()).show()
+    blockpanel.html @renderTemplate('refresh:rightPanel')
+    $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
+      element: @node
+    )
     $(window).resize ->
       Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
       return
@@ -136,7 +135,7 @@ NodeView = OrchestraView.extend(
       type: "GET"
       url: @node.get('links')._existing_block
       success: (response) ->
-        $('.rigth-panel-blocks', viewContext.$el).append(response)
+        $('.right-panel-blocks', viewContext.$el).append(response)
 
   showAreas: ->
     $('.show-areas').hide()

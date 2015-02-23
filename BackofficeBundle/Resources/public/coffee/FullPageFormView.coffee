@@ -4,10 +4,7 @@ FullPageFormView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @options.cid = @cid
-    @element = options.element
-    @title = options.title
-    @listUrl = options.listUrl
-    @completeOptions(@element) if @element != undefined
+    @completeOptions(@options.element) if @options.element != undefined
     @events = {}
     if options.triggers
       for i of options.triggers
@@ -17,15 +14,15 @@ FullPageFormView = OrchestraView.extend(
       'fullPageFormView',
       'elementTitle'
     ]
-    if options.multiVersion
-      @options.title = @renderTemplate('elementTitle',
-        element: options.element
-      )
     return
 
   render: ->
+    if @options.multiVersion
+      @options.title = @renderTemplate('elementTitle',
+        element: @options.element
+      )
     $(@el).html(@renderTemplate('fullPageFormView', @options))
-    $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
+    $('.js-widget-title', @$el).html @options.title
     @addEventOnForm()
     @addSelect2OnForm()
     @addColorPickerOnForm()
@@ -59,18 +56,18 @@ FullPageFormView = OrchestraView.extend(
   changeLanguage: (event) ->
     event.preventDefault()
     language = $(event.currentTarget).data('language')
-    link = @element.get('links')._self_without_parameters + '?language=' + language
-    tableViewLoadSpecificElement(link, @title, @listUrl)
+    link = @options.element.get('links')._self_without_parameters + '?language=' + language
+    tableViewLoadSpecificElement(link, @options.title, @options.listUrl)
 
   changeVersion: (event) ->
     event.preventDefault()
     version = event.currentTarget.value
-    link = @element.get('links')._self_without_parameters + '?language=' + @element.get('language') + '&version=' + version
-    tableViewLoadSpecificElement(link, @title, @listUrl)
+    link = @options.element.get('links')._self_without_parameters + '?language=' + @options.element.get('language') + '&version=' + version
+    tableViewLoadSpecificElement(link, @options.title, @options.listUrl)
 
   redirectAfterStatusChange: ->
-    link = @element.get('links')._self_without_parameters + '?language=' + @element.get('language') + '&version=' + @element.get('version')
-    tableViewLoadSpecificElement(link, @title, @listUrl)
+    link = @options.element.get('links')._self_without_parameters + '?language=' + @options.element.get('language') + '&version=' + @options.element.get('version')
+    tableViewLoadSpecificElement(link, @options.title, @options.listUrl)
     return
 
   completeOptions: (element) ->
