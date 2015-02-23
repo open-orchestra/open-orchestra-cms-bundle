@@ -3,7 +3,7 @@
     <li>
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img
-                src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
+                src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
                 class="flag flag-{{ context.currentLocale }}"
                 alt="{{ ('open_orchestra_backoffice.language.' ~ context.currentLocale)|trans }}"
             >
@@ -14,7 +14,7 @@
             <li{% if context.currentLocale == language %} class="active"{% endif %}>
                 <a href="javascript:callAndReload('{{ path('open_orchestra_api_context_language', {'language':language}) }}');">
                     <img
-                        src="{{ asset('bundles/phporchestrabackoffice/smartadmin/img/blank.gif') }}"
+                        src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
                         class="flag flag-{{ language }}"
                         alt="{{ ('open_orchestra_backoffice.language.' ~ language)|trans }}"
                     >
