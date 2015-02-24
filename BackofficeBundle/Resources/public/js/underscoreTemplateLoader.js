@@ -1,11 +1,5 @@
 // Orchestra adaptation of the jQuery templateLoader plugin found at
 // https://github.com/Gazler/Underscore-Template-Loader
-function getParameterByName(name, location) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
 
 (function() {
   var templateLoader = {
@@ -80,8 +74,6 @@ function getParameterByName(name, location) {
       }
     }
   };
-  
-  templateVersion = getParameterByName('version', $('#logo img').attr('src'));
-  templateLoader.loadLocalTemplates({templateVersion: templateVersion});
+  templateLoader.loadLocalTemplates({templateVersion: $('#assets-version').html()});
   window.templateLoader = templateLoader;
 })();
