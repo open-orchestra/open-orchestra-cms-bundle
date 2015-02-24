@@ -85,11 +85,12 @@ NodeView = OrchestraView.extend(
     $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
       element: @node
     )
+    Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
     $(window).resize ->
-      Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
+      Backbone.Wreqr.radio.commands.execute 'viewport', 'resize'
       return
-    $(document).scroll ->
-      Backbone.Wreqr.radio.commands.execute 'viewport', 'change', blockpanel
+    $(window).add('div[role="content"]').scroll ->
+      Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
       return
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
