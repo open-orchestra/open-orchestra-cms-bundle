@@ -3,7 +3,6 @@
 
 (function() {
   var templateLoader = {
-    templateVersion: "0.0.1",
     templates: {},
     loadRemoteTemplate: function(templateName, language, view) {
       if (!this.templates[language]) {
@@ -49,7 +48,8 @@
       }
     },
     
-    loadLocalTemplates: function() {
+    loadLocalTemplates: function(options) {
+      this.templateVersion = options.templateVersion;
       if (this.localStorageAvailable) {
         var templateVersion = localStorage.getItem("templateVersion");
         if (templateVersion && templateVersion == this.templateVersion) {
@@ -74,7 +74,6 @@
       }
     }
   };
-  
-  templateLoader.loadLocalTemplates();
+  templateLoader.loadLocalTemplates({templateVersion: $('#assets-version').html()});
   window.templateLoader = templateLoader;
 })();
