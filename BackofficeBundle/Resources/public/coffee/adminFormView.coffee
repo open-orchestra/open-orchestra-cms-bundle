@@ -44,12 +44,12 @@ adminFormView = OrchestraView.extend(
     $('.modal-body', @el).html @html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
     if @deleteurl != undefined && @confirmtext != undefined && @confirmtitle != undefined
+      $('.modal-footer', @el).html @renderTemplate('deleteButton')
       $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
       $('.ajax-delete', @el).attr('data-confirm-text', @confirmtext)
       $('.ajax-delete', @el).attr('data-confirm-title', @confirmtitle)
       $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
       $('.modal-footer', @el).removeClass("hidden-info")
-      $('.modal-footer', @el).html @renderTemplate('deleteButton')
       $('.modal-footer', @el).prepend($('.submit_form', @$el))
       @formEvent = 'click'
       @formClass = '.submit_form'
