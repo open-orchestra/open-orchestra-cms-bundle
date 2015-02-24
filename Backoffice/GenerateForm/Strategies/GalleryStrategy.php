@@ -47,19 +47,19 @@ class GalleryStrategy extends AbstractBlockStrategy
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nb_columns', 'text', array(
+            ->add('columnNumber', 'text', array(
                 'empty_data' => 1,
-                'label' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.nb_columns')
+                'label' => 'open_orchestra_backoffice.block.gallery.form.column_number'
             ))
-            ->add('nb_items', 'text', array(
+            ->add('itemNumber', 'text', array(
                 'empty_data' => 0,
-                'label' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.nb_items')
+                'label' => 'open_orchestra_backoffice.block.gallery.form.item_number'
             ))
-            ->add('thumbnail_format', 'choice', array(
+            ->add('thumbnailFormat', 'choice', array(
                 'choices' => $this->formats,
-                'label' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.thumbnail_format')
+                'label' => 'open_orchestra_backoffice.block.gallery.form.thumbnail_format'
             ))
-            ->add('image_format', 'choice', array(
+            ->add('imageFormat', 'choice', array(
                 'choices' => $this->formats,
                 'label' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.image_format')
             ))

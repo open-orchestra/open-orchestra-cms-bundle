@@ -171,6 +171,7 @@ open_orchestra_backoffice:
             choice_type_and: ET
             choice_type_or: OU
             content_template: Gabarit à utiliser pour afficher un contenu
+            content_template_enabled: Usage du gabarit
         orchestra_fields:
             max_length: Longueur max
             required_field: Champ requis
@@ -263,12 +264,12 @@ open_orchestra_backoffice:
             description: Affiche des images.
             form:
                 pictures: Images
-                nb_columns: Nombre de colonnes
+                column_number: Nombre de colonnes
                 media:
                     add: Ajouter un média
                     new: Nouveau média
                     delete: Retirer le média
-                nb_items: Nombre d'éléments par page (0 pour tous)
+                item_number: Nombre d'éléments par page (0 pour tous)
                 thumbnail_format: Format des vignettes
                 image_format : Format de l'image (vue complète)
         contact:

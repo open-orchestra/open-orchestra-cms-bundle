@@ -171,6 +171,7 @@ open_orchestra_backoffice:
             choice_type_and: AND
             choice_type_or: OR
             content_template: Template to use to display the content
+            content_template_enabled: Template usage
         orchestra_fields:
             max_length: Max length
             required_field: Field required
@@ -263,12 +264,12 @@ open_orchestra_backoffice:
             description: Block to display images.
             form:
                 pictures: Pictures
-                nb_columns: Number of columns
+                column_number: Number of columns
                 media:
                     add: Add media
                     new: New media
                     delete: Remove media
-                nb_items: Number of items per page (0 for all)
+                item_number: Number of items per page (0 for all)
                 thumbnail_format: Thumbnail format
                 image_format : Image format (full view)
         contact:

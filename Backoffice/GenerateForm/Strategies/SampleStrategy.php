@@ -30,6 +30,10 @@ class SampleStrategy extends AbstractBlockStrategy
         $builder->add('title');
         $builder->add('news', 'textarea');
         $builder->add('author');
+        $builder->add('multipleChoice', 'choice', array(
+            'choices' => array('foo' => 'foo', 'bar' => 'bar', 'none' => 'none'),
+            'multiple' => true,
+        ));
     }
 
     /**

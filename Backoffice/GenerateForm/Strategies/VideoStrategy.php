@@ -37,19 +37,17 @@ class VideoStrategy extends AbstractBlockStrategy
                 'vimeo' => 'vimeo'
             )
         ));
-        $this->addYoutubeForm($builder, $options);
-        $this->addDailyMotionForm($builder, $options);
-        $this->addVimeoForm($builder, $options);
+        $this->addYoutubeForm($builder);
+        $this->addDailyMotionForm($builder);
+        $this->addVimeoForm($builder);
     }
 
     /**
      * Add to the video form the youtube part
      * 
      * @param FormBuilderInterface $builder
-     * 
-     * @param array $options
      */
-    protected function addYoutubeForm(FormBuilderInterface $builder, array $options)
+    protected function addYoutubeForm(FormBuilderInterface $builder)
     {
         $builder
             ->add('youtubeVideoId', 'orchestra_video', array(
@@ -112,10 +110,8 @@ class VideoStrategy extends AbstractBlockStrategy
      * Add to the video form the dailymotion part
      * 
      * @param FormBuilderInterface $builder
-     * 
-     * @param array $options
      */
-    protected function addDailyMotionForm($builder, $options)
+    protected function addDailyMotionForm($builder)
     {
         $builder
             ->add('dailymotionVideoId', 'orchestra_video', array(
@@ -175,10 +171,8 @@ class VideoStrategy extends AbstractBlockStrategy
      * Add to the video form the vimeo part
      * 
      * @param FormBuilderInterface $builder
-     * 
-     * @param array $options
      */
-    protected function addVimeoForm($builder, $options)
+    protected function addVimeoForm($builder)
     {
         $builder
             ->add('vimeoVideoId', 'orchestra_video', array(
