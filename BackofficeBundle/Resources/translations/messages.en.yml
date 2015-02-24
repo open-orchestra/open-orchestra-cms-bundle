@@ -210,8 +210,6 @@ open_orchestra_backoffice:
             confirm_move:
                 title: Reorder the node
                 text: By accepting, the node will be moved as child of "%nodeName%"
-        dashboard:
-            title: Dashboard
         editorial:
             title: Editorial
             nodes: Pages

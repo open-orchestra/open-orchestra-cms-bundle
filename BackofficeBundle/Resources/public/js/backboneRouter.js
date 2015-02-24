@@ -21,7 +21,6 @@ var OrchestraBORouter = Backbone.Router.extend({
     ':entityType/edit/:entityId/:language/:version': 'showEntityWithLanguageAndVersion',
     'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
-    'dashboard': 'showDashboard',
     '': 'showHome'
   },
 
@@ -33,13 +32,8 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showHome: function()
   {
-    this.navigate('dashboard', true);
-  },
-
-  showDashboard: function()
-  {
-    this.initDisplayRouteChanges();
-    return new DashboardView();
+    drawBreadCrumb();
+    $('#content').html('')
   },
 
   showNode: function(nodeId)

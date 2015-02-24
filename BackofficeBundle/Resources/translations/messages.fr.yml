@@ -210,8 +210,6 @@ open_orchestra_backoffice:
             confirm_move:
                 title: Déplacement de la page
                 text: En acceptant, la page sera déplacé pour être fils de "%nodeName%"
-        dashboard:
-            title: Tableau de bord
         editorial:
             title: Editorial
             icon: fa-edit
