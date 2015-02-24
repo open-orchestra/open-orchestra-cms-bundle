@@ -10,5 +10,4 @@ DashboardView = OrchestraView.extend(
   render: ->
     $(@el).html @renderTemplate('dashboardView')
     return
-
 )
