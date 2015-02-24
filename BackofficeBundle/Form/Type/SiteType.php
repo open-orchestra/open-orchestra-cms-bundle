@@ -40,7 +40,10 @@ class SiteType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.website.name',
                 'attr' => array('class' => 'generate-id-source')
             ));
-        $builder->addEventSubscriber(new WebSiteSubscriber());
+        $builder->add('siteId', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.website.site_id',
+            'attr' => array('class' => 'generate-id-dest')
+        ));
         $builder
             ->add('aliases', 'collection', array(
                 'type' => 'site_alias',
@@ -90,7 +93,7 @@ class SiteType extends AbstractType
                 'required' => true
             ))
             ;
-
+        $builder->addEventSubscriber(new WebSiteSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
