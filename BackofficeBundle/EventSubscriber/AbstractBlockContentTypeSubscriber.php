@@ -30,6 +30,19 @@ abstract class AbstractBlockContentTypeSubscriber implements EventSubscriberInte
      */
     protected function transformData($value, FormInterface $form)
     {
+        if (is_array($value) && !is_null($form->getConfig()->getOption('type'))) {
+            $tmpValue = null;
+            foreach ($value as $key => $element) {
+                if ($form->has($key)) {
+                    $tmpValue[] = $this->transformData($element, $form->get($key));
+                } else {
+                    $tmpValue[] = $element;
+                }
+            }
+
+            return $tmpValue;
+
+        }
         $viewTransformers = $form->getConfig()->getViewTransformers();
         $modelTransformers = $form->getConfig()->getModelTransformers();
         foreach ($viewTransformers as $viewTransformer) {

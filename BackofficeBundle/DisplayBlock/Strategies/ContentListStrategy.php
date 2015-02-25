@@ -31,6 +31,7 @@ class ContentListStrategy extends AbstractStrategy
             'keywords' => $block->getAttribute('keywords'),
             'choiceType' => $block->getAttribute('choiceType'),
             'contentType' => $block->getAttribute('contentType'),
+            'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
             'contentTemplate' => $block->getAttribute('contentTemplate'),
         );
 
