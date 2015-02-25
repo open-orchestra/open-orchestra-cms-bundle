@@ -62,7 +62,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
      *
      * @dataProvider provideComponentAndData
      */
-    public function testGallery($component, $value)
+    public function testMultipleBlock($component, $value)
     {
         $block = new Block();
         $block->setComponent($component);
