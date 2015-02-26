@@ -57,8 +57,7 @@ adminFormView = OrchestraView.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnSave()
-    @addSelect2OnForm()
-    @addColorPickerOnForm()
+    Backbone.Wreqr.radio.commands.execute 'widget', 'loaded', @$el
 
   addEventOnSave: ->
     viewContext = this
@@ -86,12 +85,4 @@ adminFormView = OrchestraView.extend(
               html: response.responseText
             )
     return
-
-  addSelect2OnForm: ->
-    if $(".select2", @$el).length > 0
-      activateSelect2($(".select2", @$el))
-
-  addColorPickerOnForm: ->
-    if $(".colorpicker", @$el).length > 0
-      activateColorPicker()
 )

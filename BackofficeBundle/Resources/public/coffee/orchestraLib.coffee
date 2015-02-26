@@ -147,6 +147,13 @@ activateSelect2 = (element) ->
       term.text
   )
 
+#nodeChoice enabled
+activateOrchestraNodeChoice = (element) ->
+  regExp = new RegExp('--', 'g')
+  $('option', element).each ->
+    $(this).html $(this).html().replace(regExp, '&nbsp;&nbsp;')
+  element.select2()
+
 #colorpicker enabled
 activateColorPicker = () ->
   $(".colorpicker").each ->

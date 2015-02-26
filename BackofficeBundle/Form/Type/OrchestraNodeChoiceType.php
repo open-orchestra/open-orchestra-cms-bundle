@@ -32,7 +32,10 @@ class OrchestraNodeChoiceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'choices' => $this->getChoices()
+                'choices' => $this->getChoices(),
+                'attr' => array(
+                    'class' => 'orchestra-node-choice'
+                )
             )
         );
     }
