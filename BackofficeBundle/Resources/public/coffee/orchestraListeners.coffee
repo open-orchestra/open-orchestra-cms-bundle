@@ -14,6 +14,6 @@ $(".modal-dialog").on "resize", (e) ->
   return
 
 # CLOSE MODALS
-$('.close').click ->
+$(".close", ".modal-header").click ->
   $("#select2-drop-mask").click();
   return
