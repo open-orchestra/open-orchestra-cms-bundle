@@ -12,3 +12,8 @@ $(".page-title").DOMNodeAppear ->
 $(".modal-dialog").on "resize", (e) ->
   $(this).prev().height($(this).parent().height())
   return
+
+# CLOSE MODALS
+$('.close').click ->
+  $("#select2-drop-mask").click();
+  return
