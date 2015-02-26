@@ -24,20 +24,11 @@ FullPageFormView = OrchestraView.extend(
     $(@el).html(@renderTemplate('fullPageFormView', @options))
     $('.js-widget-title', @$el).html @options.title
     @addEventOnForm()
-    @addSelect2OnForm()
-    @addColorPickerOnForm()
+    Backbone.Wreqr.radio.commands.execute 'widget', 'loaded', @$el
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
     return
-
-  addSelect2OnForm: ->
-    if $(".select2", @$el).length > 0
-      activateSelect2($(".select2", @$el))
-
-  addColorPickerOnForm: ->
-    if $(".colorpicker", @$el).length > 0
-      activateColorPicker()
 
   addEventOnForm: ->
     options = @options
