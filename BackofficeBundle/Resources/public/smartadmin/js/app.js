@@ -198,7 +198,7 @@ var calc_navbar_height = function() {
 					
 					$.SmartMessageBox({
 						title : "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
-						content : $this.data('reset-msg') || "Would you like to RESET all your saved widgets and clear LocalStorage?1",
+						content : $this.data('reset-msg') || "Would you like to RESET all your saved widgets and clear LocalStorage?",
 						buttons : '[No][Yes]'
 					}, function(ButtonPressed) {
 						if (ButtonPressed == "Yes" && localStorage) {
