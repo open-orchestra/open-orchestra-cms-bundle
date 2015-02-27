@@ -77,9 +77,11 @@
         width:100%;
         text-align:center;
         div.toolbar {
+            font-size:0px;
             position:relative;
             margin-top:-15px;
             span.tool {
+                font-size: 15px;
                 color:#666666;
                 cursor:pointer;
                 padding:0 3px;
@@ -101,7 +103,6 @@
             div.toolbar {
                 margin-top:15px;
                 span.tool {
-                    font-size: 15px;
                     color:#FFFFFF;
                     padding: 8px 8px 5px 8px;
                     background-color:#676564;
@@ -109,17 +110,19 @@
                 span.tool:hover {
                     background-color:#605F5D;
                 }
-                span.tool:first-child {
+                span.tool:first-child  {
                     border-top-left-radius: 3px;
                     border-bottom-left-radius: 3px;
-                    cursor:move;
-                }
-                span.tool:nth-child(2) {
-                    cursor:auto;
                 }
                 span.tool:last-child {
                     border-top-right-radius: 3px;
                     border-bottom-right-radius: 3px;
+                }
+                span.move-tool {
+                    cursor:move;
+                }
+                span.block-param, span.move-trash {
+                    cursor:pointer;
                 }
             }
         }

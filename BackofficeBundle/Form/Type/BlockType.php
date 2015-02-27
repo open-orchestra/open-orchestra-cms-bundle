@@ -40,7 +40,7 @@ class BlockType extends AbstractType
     {
         $builder->add('label');
         $builder->add('class', 'text', array(
-            'required' => false
+            'required' => false,
         ));
         $builder->add('id', 'text', array(
             'required' => false
