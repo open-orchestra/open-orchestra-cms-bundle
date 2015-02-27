@@ -2,7 +2,7 @@
     <div class="toolbar-layer">
         <div class="toolbar">
         <% if (node_published) { %>
-            <span class="tool"><%= block.get('ui_model').label %></span>
+            <span class="tool block-title"><%= block.get('ui_model').label %></span>
             <% if ('generate' == block.get('method')) { %>
             <span class="tool block-param block-param-<%= cid %>">
                 <i class="glyphicon glyphicon-eye-open"></i>
@@ -12,7 +12,7 @@
             <span class="tool move-tool">
                 <i class="glyphicon glyphicon-move"></i>
             </span>
-            <span class="tool"><%= block.get('ui_model').label %></span>
+            <span class="tool block-title"><%= block.get('ui_model').label %></span>
             <% if ('generate' == block.get('method')) { %>
             <span class="tool block-param block-param-<%= cid %>">
                 <i class="glyphicon glyphicon-pencil"></i>
