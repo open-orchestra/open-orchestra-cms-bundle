@@ -32,6 +32,7 @@ SuperboxView = OrchestraView.extend(
     $('.superbox-current-img').Jcrop({
       onChange: @updatePreview
       onSelect: @updateCoords
+      boxWidth: 800
     }, ->
       bounds = @getBounds()
       superboxViewParam['boundx'] = bounds[0]
@@ -58,6 +59,7 @@ SuperboxView = OrchestraView.extend(
       })
 
   updateCoords: (c) ->
+    alert(c.x)
     $('#media_crop_x', @$el).val(c.x);
     $('#media_crop_y', @$el).val(c.y);
     $('#media_crop_w', @$el).val(c.w);
