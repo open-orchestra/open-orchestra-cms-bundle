@@ -99,11 +99,13 @@ SuperboxView = OrchestraView.extend(
     format = e.currentTarget.value
     if format != ''
       $('.media_crop_' + format, @$el).show()
+      $('.media_format_actions').show()
 #      $(".media-override-format-form").show()
 #      @setUpCrop()
 #      @setupOverrideForm(format)
     else
       $('.media_crop_original', @$el).show()
+      $('.media_format_actions').hide()
 
   addPreview: ->
     $('.media_crop_preview', @$el).append('<img class="media_crop_original" src="' + @media.get('displayed_image') + '" style="max-width:600px;">')
