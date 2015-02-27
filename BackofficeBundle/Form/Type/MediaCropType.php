@@ -41,8 +41,6 @@ class MediaCropType extends AbstractType
             'empty_value' => 'open_orchestra_backoffice.form.media.original_image',
             'required' => false,
         ));
-
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
     protected function getChoices()

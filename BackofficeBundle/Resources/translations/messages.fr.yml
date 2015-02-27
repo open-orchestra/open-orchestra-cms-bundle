@@ -147,6 +147,7 @@ open_orchestra_backoffice:
             file: Uploader un fichier
             manual_crop: Crop manuel
             alternative_file: Uploader une image alternative
+            crop: Crop !
             success: Le média a été sauvegardé
             format: Choisissez un format
             original_image: Originel

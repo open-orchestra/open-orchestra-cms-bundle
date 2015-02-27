@@ -1,11 +1,14 @@
 superboxViewParam = []
+
 SuperboxView = OrchestraView.extend(
   className: 'superbox-show'
   el: '#content'
+
   events:
     'change select#media_crop_format': 'changeView'
     'click a#crop_action_button': 'setUpCrop'
     'click a#upload_action_button': 'setupOverrideForm'
+    'click a#crop_button': 'cropImage'
 
   initialize: (options) ->
     @media = options.media
@@ -28,6 +31,10 @@ SuperboxView = OrchestraView.extend(
   setUpCrop: ->
     $(".media-override-format-form").hide()
     $('#original-image').show()
+
+    superboxViewParam['$preview'] = $('#preview-pane', @$el)
+    superboxViewParam['$pimg'] = $('#preview-pane .preview-container img', @$el)
+    superboxViewParam['$pcnt'] = $('#preview-pane .preview-container', @$el)
     superboxViewParam['xsize'] = superboxViewParam['$pcnt'].width()
     superboxViewParam['ysize'] = superboxViewParam['$pcnt'].height()
     $('.superbox-current-img').Jcrop({
@@ -99,13 +106,18 @@ SuperboxView = OrchestraView.extend(
   changeView: (e) ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
     $('.media_crop_preview img', @$el).hide()
-#    $(".media-override-format-form", @$el).hide()
+    $(".media-override-format-form", @$el).hide()
     format = e.currentTarget.value
+    $('.superbox-current-img', @$el).append('<div id="preview-pane" style="display: none">
+          <div class="preview-container">
+              <img  class="jcrop-preview" alt="Preview" />
+          </div>
+      </div>')
+    $('#preview-pane .preview-container', @$el).height($('.media_crop_' + format, @$el).height())
+    $('#preview-pane .preview-container', @$el).width($('.media_crop_' + format, @$el).width())
     if format != ''
       $('.media_crop_' + format, @$el).show()
       $('.media_format_actions').show()
-#      $(".media-override-format-form").show()
-#      @setUpCrop()
     else
       $('.media_crop_original', @$el).show()
       $('.media_format_actions').hide()
@@ -181,4 +193,7 @@ SuperboxView = OrchestraView.extend(
             currentView.refreshImages()
             currentView.addEventOnOverrideForm()
     return
+
+  cropImage: ->
+    $("#media_crop").submit()
 )
