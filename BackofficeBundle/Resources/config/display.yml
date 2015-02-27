@@ -2,7 +2,6 @@ parameters:
     open_orchestra_backoffice.display.carrousel.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\CarrouselStrategy
     open_orchestra_backoffice.display.gallery.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\GalleryStrategy
     open_orchestra_backoffice.display.contact.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContactStrategy
-    open_orchestra_backoffice.display.header.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\HeaderStrategy
     open_orchestra_backoffice.display.footer.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
     open_orchestra_backoffice.display.menu.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\MenuStrategy
     open_orchestra_backoffice.display.sample.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SampleStrategy

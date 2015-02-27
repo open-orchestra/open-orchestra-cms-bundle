@@ -5,9 +5,7 @@ parameters:
     open_orchestra_backoffice.carrousel.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\CarrouselStrategy
     open_orchestra_backoffice.gallery.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\GalleryStrategy
     open_orchestra_backoffice.footer.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\FooterStrategy
-    open_orchestra_backoffice.header.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\HeaderStrategy
     open_orchestra_backoffice.menu.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\MenuStrategy
-    open_orchestra_backoffice.news.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\NewsStrategy
     open_orchestra_backoffice.tinymcewysiwyg.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\TinyMCEWysiwygStrategy
     open_orchestra_backoffice.search.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\SearchStrategy
     open_orchestra_backoffice.search_result.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\SearchResultStrategy
@@ -48,16 +46,8 @@ services:
         class: %open_orchestra_backoffice.footer.generate_form.class%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.header.generate_form:
-        class: %open_orchestra_backoffice.header.generate_form.class%
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.menu.generate_form:
         class: %open_orchestra_backoffice.menu.generate_form.class%
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.news.generate_form:
-        class: %open_orchestra_backoffice.news.generate_form.class%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.tinymcewysiwyg.generate_form:

@@ -1,8 +1,0 @@
-{{ display_icon('header') }}
-
-<p>
-    Id : <i>{{ id }}</i><br />
-    Class : <i>{{ class }}</i><br />
-    {% set src= media_preview(mediaId) %}
-    media : <img height="100px" {% if src != '' %}src="{{ src }}"{% endif %} />
-</p>

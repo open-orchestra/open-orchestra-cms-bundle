@@ -25,7 +25,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $blockType = array(
-            DisplayBlockInterface::HEADER,
             DisplayBlockInterface::FOOTER,
             LoginStrategy::LOGIN,
             DisplayBlockInterface::LANGUAGE_LIST,
@@ -36,7 +35,6 @@ class OpenOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::GALLERY,
             DisplayBlockInterface::CONTENT,
             DisplayBlockInterface::CONFIGURABLE_CONTENT,
-//            DisplayBlockInterface::NEWS,
 //            DisplayBlockInterface::SAMPLE,
             DisplayBlockInterface::TINYMCEWYSIWYG,
 //            DisplayBlockInterface::CONTACT,

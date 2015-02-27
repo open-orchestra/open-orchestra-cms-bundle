@@ -278,9 +278,6 @@ open_orchestra_backoffice:
         footer:
             title: Bloc pied de page
             description: Affiche une liste de nom de noeud qui ont l'attribut footer.
-        header:
-            title: Bloc entête
-            description: Affiche une image.
         media_list_by_keyword:
             title: Block liste de média par mot clé
             description: Affiche une liste de média par mot clé.
@@ -296,9 +293,6 @@ open_orchestra_backoffice:
         tiny_mce_wysiwyg:
             title: Bloc texte riche
             description: Affiche un block de text riche.
-        news:
-            title: Bloc actualité
-            description: Affiche une actualité.
         sub_menu:
             title: Bloc sous-menu
             description: Affiche un menu à partir d'un noeud racine.
