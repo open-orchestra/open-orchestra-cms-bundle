@@ -17,11 +17,17 @@
             <div class="media_crop_form"></div>
 
             <!-- CROPPED VERSION IN USAGE -->
-            <div class="media_crop_preview form-group">
-                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label/>
+            <div class="form-group form-horizontal">
+                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label>
+                <div class="col-lg-9 media_crop_preview" />
+                <label class="control-label col-lg-3" />
+                <div class="col-lg-9 media_format_actions" >
+                    <a href="javascript:void(0);" class="btn btn-success"><i class="fa fa-gear"></i> Manual crop <i class="fa fa-gear"></i></a>
+                    <a href="javascript:void(0);" class="btn btn-success"><i class="fa fa-gear"></i> Upload an alternative <i class="fa fa-gear"></i></a>
+                </div>
             </div>
 
-            <!-- ORIGINAL IMAGE / CROP TOOL -->
+            <!-- CROP TOOL -->
             <div id="original-image" style="display:none">
                 <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
             </div>

@@ -24,9 +24,6 @@ SuperboxView = OrchestraView.extend(
     @setupMetaForm()
 
   setUpCrop: ->
-    superboxViewParam['$preview'] = $('#preview-pane', @$el)
-    superboxViewParam['$pimg'] = $('#preview-pane .preview-container img', @$el)
-    superboxViewParam['$pcnt'] = $('#preview-pane .preview-container', @$el)
     superboxViewParam['xsize'] = superboxViewParam['$pcnt'].width()
     superboxViewParam['ysize'] = superboxViewParam['$pcnt'].height()
     $('.superbox-current-img').Jcrop({
@@ -98,26 +95,17 @@ SuperboxView = OrchestraView.extend(
   changeView: (e) ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
     $('.media_crop_preview img', @$el).hide()
-    $(".media-override-format-form", @$el).hide()
+#    $(".media-override-format-form", @$el).hide()
     format = e.currentTarget.value
-    $('.superbox-current-img', @$el).append('<div id="preview-pane" style="display: none">
-          <div class="preview-container">
-              <img  class="jcrop-preview" alt="Preview" />
-          </div>
-      </div>')
-    $('#preview-pane .preview-container', @$el).height($('.media_crop_' + format, @$el).height())
-    $('#preview-pane .preview-container', @$el).width($('.media_crop_' + format, @$el).width())
     if format != ''
       $('.media_crop_' + format, @$el).show()
-      $(".media-override-format-form").show()
-      $('#preview-pane .preview-container img', @$el).attr 'src', $('.superbox-current-img', @$el).attr('src')
-      @setUpCrop()
-      @setupOverrideForm(format)
+#      $(".media-override-format-form").show()
+#      @setUpCrop()
+#      @setupOverrideForm(format)
     else
       $('.media_crop_original', @$el).show()
 
   addPreview: ->
-    console.log(@media)
     $('.media_crop_preview', @$el).append('<img class="media_crop_original" src="' + @media.get('displayed_image') + '" style="max-width:600px;">')
     for thumbnail of @media.get('thumbnails')
       $('.media_crop_preview', @$el).append('<img class="media_crop_' + thumbnail + '" src="' + @media.get('thumbnails')[thumbnail] + '" style="display: none;">')
