@@ -278,9 +278,6 @@ open_orchestra_backoffice:
         footer:
             title: Footer block
             description: Display a node name list that have a footer attribute.
-        header:
-            title: Header block
-            description: Display image.
         media_list_by_keyword:
             title: Media list by keyword
             description: Display a medias list.
@@ -296,9 +293,6 @@ open_orchestra_backoffice:
         tiny_mce_wysiwyg:
             title: Rich text block
             description: Display a rich text area.
-        news:
-            title: News block
-            description: Display dropdown list with all the languages of the site.
         sub_menu:
             title: SubMenu Block
             description: Display a menu.
