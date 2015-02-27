@@ -27,6 +27,13 @@ class ContentStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('contentTemplateEnabled', 'on_off', array(
+            'label' => 'open_orchestra_backoffice.form.content_list.content_template_enabled',
+        ));
+        $builder->add('contentTemplate', 'tinymce', array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.form.content_list.content_template',
+        ));
     }
 
     /**
