@@ -58,10 +58,15 @@ SuperboxView = OrchestraView.extend(
       })
 
   updateCoords: (c) ->
-    $('#media_crop_x', @$el).val(c.x);
-    $('#media_crop_y', @$el).val(c.y);
-    $('#media_crop_w', @$el).val(c.w);
-    $('#media_crop_h', @$el).val(c.h);
+    image = new Image
+    image.src = $('.superbox-current-img').attr('src')
+    rx = image.naturalWidth / $('.superbox-current-img').width();
+    ry = image.naturalHeight / $('.superbox-current-img').height();
+
+    $('#media_crop_x', @$el).val(Math.round(rx * c.x));
+    $('#media_crop_y', @$el).val(Math.round(ry * c.y));
+    $('#media_crop_w', @$el).val(Math.round(rx * c.w));
+    $('#media_crop_h', @$el).val(Math.round(ry * c.h));
 
   setupCropForm: ->
     currentView = this
