@@ -4,7 +4,7 @@
         <% if (node_published) { %>
             <span class="tool"><%= block.get('ui_model').label %></span>
             <% if ('generate' == block.get('method')) { %>
-            <span class="tool block-param block-param-view-<%= cid %>">
+            <span class="tool block-param block-param-<%= cid %>">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </span>
             <% } %>
@@ -14,7 +14,7 @@
             </span>
             <span class="tool"><%= block.get('ui_model').label %></span>
             <% if ('generate' == block.get('method')) { %>
-            <span class="tool block-param block-param-edit-<%= cid %>">
+            <span class="tool block-param block-param-<%= cid %>">
                 <i class="glyphicon glyphicon-pencil"></i>
             </span>
             <% } %>
