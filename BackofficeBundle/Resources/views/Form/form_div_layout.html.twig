@@ -1,5 +1,16 @@
 {% extends 'BraincraftedBootstrapBundle:Form:bootstrap.html.twig' %}
 
+{% block on_off_widget %}
+    {% spaceless %}
+        <div class="smart-form">
+            <label class="toggle pull-left">
+                {{ block('checkbox_widget') }}
+                <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
+            </label>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
 {% block orchestra_status_widget %}
     {% spaceless %}
         {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
