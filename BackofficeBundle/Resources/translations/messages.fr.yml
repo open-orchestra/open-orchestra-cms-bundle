@@ -144,7 +144,9 @@ open_orchestra_backoffice:
         block:
             success: Le bloc a été modifié
         media:
-            file: Uploader une image alternative pour ce format
+            file: Uploader un fichier
+            manual_crop: Crop manuel
+            alternative_file: Uploader une image alternative
             success: Le média a été sauvegardé
             format: Choisissez un format
             original_image: Originel

@@ -4,6 +4,8 @@ SuperboxView = OrchestraView.extend(
   el: '#content'
   events:
     'change select#media_crop_format': 'changeView'
+    'click a#crop_action_button': 'setUpCrop'
+    'click a#upload_action_button': 'setupOverrideForm'
 
   initialize: (options) ->
     @media = options.media
@@ -24,6 +26,8 @@ SuperboxView = OrchestraView.extend(
     @setupMetaForm()
 
   setUpCrop: ->
+    $(".media-override-format-form").hide()
+    $('#original-image').show()
     superboxViewParam['xsize'] = superboxViewParam['$pcnt'].width()
     superboxViewParam['ysize'] = superboxViewParam['$pcnt'].height()
     $('.superbox-current-img').Jcrop({
@@ -102,7 +106,6 @@ SuperboxView = OrchestraView.extend(
       $('.media_format_actions').show()
 #      $(".media-override-format-form").show()
 #      @setUpCrop()
-#      @setupOverrideForm(format)
     else
       $('.media_crop_original', @$el).show()
       $('.media_format_actions').hide()
@@ -149,7 +152,10 @@ SuperboxView = OrchestraView.extend(
     if $(".select2", @$el).length > 0
       activateSelect2($(".select2", @$el))
 
-  setupOverrideForm: (format) ->
+  setupOverrideForm: () ->
+    $('#original-image').hide()
+    $(".media-override-format-form").show()
+    format = $('#media_crop_format').val()
     currentView = this
     displayLoader('.media-override-format-form')
     linkFormat = '_self_format_' + format
