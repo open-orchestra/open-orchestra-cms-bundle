@@ -159,6 +159,7 @@ SuperboxView = OrchestraView.extend(
   refreshImages: ->
     $('.media_crop_preview img').each ->
       $(this).attr 'src', $(this).attr('src') + '?' + Math.random()
+    $(".media-override-format-form").hide()
 
   addSelect2OnForm: ->
     if $(".select2", @$el).length > 0
@@ -184,12 +185,11 @@ SuperboxView = OrchestraView.extend(
   addEventOnOverrideForm: ->
     currentView = this
     $(".media-override-format-form form", @$el).on "submit", (e) ->
-      displayLoader('.media_override_format_form')
+      displayLoader('.media-override-format-form')
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
-            $('.media-override-format-form').html response
             currentView.refreshImages()
             currentView.addEventOnOverrideForm()
     return
