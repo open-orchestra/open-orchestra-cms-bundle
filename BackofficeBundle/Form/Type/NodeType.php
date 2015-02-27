@@ -11,7 +11,7 @@ use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 
 /**
  * Class NodeType
@@ -37,11 +37,11 @@ class NodeType extends AbstractType
         $this->templateRepository = $templateRepository;
         $this->areaClass = $areaClass;
         $this->schemeChoices = array(
-            SchemeAbilityInterface::SCHEME_DEFAULT => 'open_orchestra_backoffice.form.node.default_scheme',
-            SchemeAbilityInterface::SCHEME_HTTP => SchemeAbilityInterface::SCHEME_HTTP,
-            SchemeAbilityInterface::SCHEME_HTTPS => SchemeAbilityInterface::SCHEME_HTTPS,
-            SchemeAbilityInterface::SCHEME_FILE => SchemeAbilityInterface::SCHEME_FILE,
-            SchemeAbilityInterface::SCHEME_FTP => SchemeAbilityInterface::SCHEME_FTP
+            SchemeableInterface::SCHEME_DEFAULT => 'open_orchestra_backoffice.form.node.default_scheme',
+            SchemeableInterface::SCHEME_HTTP => SchemeableInterface::SCHEME_HTTP,
+            SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS,
+            SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
+            SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
     }
 

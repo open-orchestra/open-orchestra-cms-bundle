@@ -5,7 +5,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
-use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BaseBundle\Manager\EncryptionManager;
@@ -117,7 +117,7 @@ class NodeTransformer extends AbstractTransformer
             foreach ($site->getAliases() as $alias) {
                 if ($alias->getLanguage() == $mixed->getLanguage()) {
                     $scheme = $mixed->getScheme();
-                    if (is_null($scheme) || SchemeAbilityInterface::SCHEME_DEFAULT == $scheme) {
+                    if (is_null($scheme) || SchemeableInterface::SCHEME_DEFAULT == $scheme) {
                         $scheme = $alias->getScheme();
                     }
                     $previewLink = $scheme . '://' . $alias->getDomain() . '/preview?token=' . $encryptedId;
