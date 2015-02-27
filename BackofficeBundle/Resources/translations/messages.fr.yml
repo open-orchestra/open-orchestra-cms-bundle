@@ -146,7 +146,7 @@ open_orchestra_backoffice:
         media:
             file: Uploader une image alternative pour ce format
             success: Le média a été sauvegardé
-            format: Choisissez un format de découpage
+            format: Choisissez un format
             original_image: Image d'origine
             rectangle: Rectangle (100p x 70p)
             max_width: Largeur fixe (100p)

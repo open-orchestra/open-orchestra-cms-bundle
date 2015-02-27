@@ -38,6 +38,7 @@ class MediaCropType extends AbstractType
         $builder->add('format', 'choice', array(
             'choices' => $this->getChoices(),
             'label' => 'open_orchestra_backoffice.form.media.format',
+            'empty_value' => 'open_orchestra_backoffice.form.media.original_image',
             'required' => false,
         ));
 
