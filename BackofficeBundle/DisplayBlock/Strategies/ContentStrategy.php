@@ -37,7 +37,8 @@ class ContentStrategy extends AbstractStrategy
             'OpenOrchestraBackofficeBundle:Block/Content:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => $block->getClass()
+                'class' => $block->getClass(),
+                'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
             )
         );
     }

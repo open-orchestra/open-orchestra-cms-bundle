@@ -32,6 +32,7 @@ parameters:
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType
     open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
+    open_orchestra_backoffice.type.on_off.class: OpenOrchestra\BackofficeBundle\Form\Type\OnOffType
 
 services:
     # Template form type
@@ -278,3 +279,7 @@ services:
         class: %open_orchestra_backoffice.type.orchestra_color_picker.class%
         tags:
             - { name: form.type, alias: orchestra_color_picker }
+    open_orchestra_backoffice.type.on_off:
+        class: %open_orchestra_backoffice.type.on_off.class%
+        tags:
+            - { name: form.type, alias: on_off }

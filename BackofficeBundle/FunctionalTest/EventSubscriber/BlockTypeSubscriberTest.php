@@ -103,7 +103,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
             )),
             array(DisplayBlockInterface::CONTENT_LIST, array(
                 'contentNodeId' => 'news',
-                'contentTemplateEnabled' => '1',
+                'contentTemplateEnabled' => true,
             ))
         );
     }
