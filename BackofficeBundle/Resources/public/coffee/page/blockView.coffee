@@ -1,6 +1,7 @@
 BlockView = OrchestraView.extend(
   initialize: (options) ->
     @events = {}
+    console.log('click span.block-param-' + @cid)
     @events['click span.block-param-' + @cid] = 'paramBlock'
     @block = options.block
     @areaCid = options.areaCid
@@ -14,7 +15,9 @@ BlockView = OrchestraView.extend(
 
   paramBlock: (event) ->
     $('.modal-title').text 'Please wait ...'
-    view = new adminFormView(url: @block.get('links')._self_form)
+    view = new adminFormView(
+      url: @block.get('links')._self_form
+    )
 
   render: ->
     $(@el).append @renderTemplate('blockView',

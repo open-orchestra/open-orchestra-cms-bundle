@@ -3,6 +3,7 @@ adminFormView = OrchestraView.extend(
 
   initialize: (options) ->
     @url = options.url
+    @disabled = if options.disabled then options.disabled else false
     @method = if options.method then options.method else 'GET'
     @deleteurl = options.deleteurl if options.deleteurl
     @redirectUrl = options.redirectUrl if options.redirectUrl
@@ -28,6 +29,8 @@ adminFormView = OrchestraView.extend(
     $.ajax
       url: @url
       method: @method
+      data:
+        disabled: @disabled
       success: (response) ->
         if isLoginForm(response)
           redirectToLogin()

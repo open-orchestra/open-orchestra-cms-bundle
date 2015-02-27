@@ -28,7 +28,6 @@ class BlockController extends AbstractAdminController
     {
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
         $block = $node->getBlocks()->get($blockNumber);
-
         $form = $this->createForm(
             'block',
             $block,
@@ -37,7 +36,8 @@ class BlockController extends AbstractAdminController
                     'nodeId' => $nodeId,
                     'blockNumber' => $blockNumber
                 )),
-                'blockPosition' => $blockNumber
+                'blockPosition' => $blockNumber,
+                'disabled' => $node->getStatus()->isPublished()
             )
         );
 

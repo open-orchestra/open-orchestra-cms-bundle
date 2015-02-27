@@ -1,10 +1,28 @@
 <li id="draggable" class="ui-model-blocks">
     <div class="toolbar-layer">
+        <div class="toolbar">
         <% if (node_published) { %>
-            <div class="toolbar"><span class="tool"><%= block.get('ui_model').label %></span></div>
+            <span class="tool block-title"><%= block.get('ui_model').label %></span>
+            <% if ('generate' == block.get('method')) { %>
+            <span class="tool block-param block-param-<%= cid %>">
+                <i class="glyphicon glyphicon-eye-open"></i>
+            </span>
+            <% } %>
         <% } else { %>
-            <div class="toolbar"><span class="tool move-tool"><i class="glyphicon glyphicon-move"></i></span><span class="tool"><%= block.get('ui_model').label %></span><% if ('generate' == block.get('method')) { %><span class="tool block-param-<%= cid %>"><i class="glyphicon glyphicon-pencil"></i></span><% } %><span class="tool"><i class="block-remove-<%= areaCid %> glyphicon glyphicon-trash"></i></span></div>
+            <span class="tool move-tool">
+                <i class="glyphicon glyphicon-move"></i>
+            </span>
+            <span class="tool block-title"><%= block.get('ui_model').label %></span>
+            <% if ('generate' == block.get('method')) { %>
+            <span class="tool block-param block-param-<%= cid %>">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </span>
+            <% } %>
+            <span class="tool move-trash">
+                <i class="block-remove-<%= areaCid %> glyphicon glyphicon-trash"></i>
+            </span>
         <% } %>
+        </div>
     </div>
     <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <div class="preview">
