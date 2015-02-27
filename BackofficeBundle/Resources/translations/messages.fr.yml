@@ -147,7 +147,7 @@ open_orchestra_backoffice:
             file: Uploader une image alternative pour ce format
             success: Le média a été sauvegardé
             format: Choisissez un format
-            original_image: Image d'origine
+            original_image: Originel
             rectangle: Rectangle (100p x 70p)
             max_width: Largeur fixe (100p)
             max_height: Hauteur fixe (100p)
@@ -414,7 +414,7 @@ open_orchestra_backoffice:
             title: Souhaitez-vous supprimer ce gabarit
             text: Cette opération est définitive.
     media:
-        current_preview: Image actuellement utilisée
+        current_preview: Image
         crop: Crop
         meta: Méta
         delete_question: Souhaitez-vous supprimer ce média

@@ -13,12 +13,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tab-crop">
 
-            <!-- ORIGINAL IMAGE -->
-            <div id="original-image">
-                <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
-            </div>
-
-            <!-- CROP SLECTOR  -->
+            <!-- FORMAT SELECTOR  -->
             <div class="media_crop_form"></div>
 
             <!-- CROPPED VERSION IN USAGE -->
@@ -26,8 +21,13 @@
                 <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label/>
             </div>
 
+            <!-- ORIGINAL IMAGE / CROP TOOL -->
+            <div id="original-image" style="display:none">
+                <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
+            </div>
+
             <!-- UPLOAD ALTERNATIVE CROPPED VERSION -->
-            <div class="media-override-format-form"></div>
+            <div class="media-override-format-form" style="display:none"></div>
 
         </div>
         <div class="tab-pane" id="tab-meta">

@@ -113,8 +113,12 @@ SuperboxView = OrchestraView.extend(
       $('#preview-pane .preview-container img', @$el).attr 'src', $('.superbox-current-img', @$el).attr('src')
       @setUpCrop()
       @setupOverrideForm(format)
+    else
+      $('.media_crop_original', @$el).show()
 
   addPreview: ->
+    console.log(@media)
+    $('.media_crop_preview', @$el).append('<img class="media_crop_original" src="' + @media.get('displayed_image') + '" style="max-width:600px;">')
     for thumbnail of @media.get('thumbnails')
       $('.media_crop_preview', @$el).append('<img class="media_crop_' + thumbnail + '" src="' + @media.get('thumbnails')[thumbnail] + '" style="display: none;">')
 

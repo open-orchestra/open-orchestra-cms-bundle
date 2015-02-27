@@ -147,7 +147,7 @@ open_orchestra_backoffice:
             file: Upload an alternative image for this format
             success: The media has been saved
             format: Choose a format
-            original_image: Original image
+            original_image: Original
             rectangle: Rectangle (100p x 70p)
             max_width: Fixed width (100p)
             max_height: Fixed height (100p)
@@ -414,7 +414,7 @@ open_orchestra_backoffice:
           title: Would you like delete this template
           text: This operation is not reversible.
     media:
-        current_preview: Image currently used
+        current_preview: Image
         crop: Crop
         meta: Meta
         delete_question: Would you like to delete this media
