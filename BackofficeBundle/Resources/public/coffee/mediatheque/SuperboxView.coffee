@@ -179,11 +179,11 @@ SuperboxView = OrchestraView.extend(
     return
 
   refreshImages: ->
-    $('.media_crop_preview img').each ->
-      $(this).attr 'src', $(this).attr('src') + '?' + Math.random()
+    format = $('#media_crop_format').val()
+    $('.media_crop_' + format).attr 'src', $('.media_crop_' + format).attr('src') + '?' + Math.random()
     $(".media-override-format-form").hide()
     $('#image-loader').hide()
-    @showPreview($('#media_crop_format').val())
+    @showPreview(format)
 
   addSelect2OnForm: ->
     if $(".select2", @$el).length > 0
