@@ -70,7 +70,6 @@ class MediaCropTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->builder)->add('y', 'hidden');
         Phake::verify($this->builder)->add('h', 'hidden');
         Phake::verify($this->builder)->add('w', 'hidden');
-        Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.media.rectangle');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.media.max_width');
         Phake::verify($this->builder)->add('format', 'choice', array(
@@ -79,6 +78,7 @@ class MediaCropTypeTest extends \PHPUnit_Framework_TestCase
                 'max_width' => $this->translatedString,
             ),
             'label' => 'open_orchestra_backoffice.form.media.format',
+            'empty_value' => 'open_orchestra_backoffice.form.media.original_image',
             'required' => false,
         ));
     }
