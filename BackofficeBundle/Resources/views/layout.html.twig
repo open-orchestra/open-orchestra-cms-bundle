@@ -85,6 +85,9 @@
         $(document).ready(function() {
 
             // DO NOT REMOVE : GLOBAL FUNCTIONS!
+        {%  if app.request.attributes.get('_route') == 'fos_user_security_login'%}
+            $('form').attr('action', $('form').attr('action') + window.location.hash)
+        {% endif %}
             pageSetUp();
         });
     </script>
