@@ -98,7 +98,8 @@ class NodeController extends AbstractAdminController
             'node',
             $node,
             array(
-                'action' => $url
+                'action' => $url,
+                'disabled' => $node->getStatus()->isPublished()
             )
         );
 

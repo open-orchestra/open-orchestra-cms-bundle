@@ -38,7 +38,7 @@ class AreaController extends AbstractAdminController
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_AREA, new NodeEvent($node));
 
-        return $this->handleAreaForm($request, $actionUrl, $area);
+        return $this->handleAreaForm($request, $actionUrl, $area, $node);
     }
 
     /**
@@ -72,10 +72,11 @@ class AreaController extends AbstractAdminController
      *
      * @return Response
      */
-    protected function handleAreaForm(Request $request, $actionUrl, $area)
+    protected function handleAreaForm(Request $request, $actionUrl, $area, $node = null)
     {
         $form = $this->createForm('area', $area, array(
             'action' => $actionUrl,
+            'disabled' => ($node !== null && $node->getStatus()->isPublished())
         ));
 
         $form->handleRequest($request);
