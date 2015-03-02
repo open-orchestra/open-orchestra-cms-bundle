@@ -81,7 +81,7 @@ SuperboxView = OrchestraView.extend(
   setupCropForm: ->
     currentView = this
     $(".media-override-format-form", @$el).hide()
-    displayLoader('.media_crop_form')
+    displayLoader('#selector-loader')
     $.ajax
       url: @media.get('links')._self_crop
       method: 'GET'
@@ -89,6 +89,7 @@ SuperboxView = OrchestraView.extend(
         if isLoginForm(response)
           redirectToLogin()
         else
+          $('#selector-loader-container').hide()
           $('.media_crop_form', currentView.$el).html response
           currentView.addEventOnCropForm()
 
