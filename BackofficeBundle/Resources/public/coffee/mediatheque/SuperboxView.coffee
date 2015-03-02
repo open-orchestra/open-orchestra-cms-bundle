@@ -143,6 +143,7 @@ SuperboxView = OrchestraView.extend(
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
+            superboxViewParam['jcrop_api'].destroy()
             currentView.refreshImages()
             currentView.addEventOnCropForm()
     return
