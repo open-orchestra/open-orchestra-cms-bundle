@@ -30,7 +30,7 @@ SuperboxView = OrchestraView.extend(
 
   setUpCrop: ->
     $(".media-override-format-form").hide()
-    $('#original-image').show()
+    $('#crop-group').show()
 
     superboxViewParam['$preview'] = $('#preview-pane', @$el)
     superboxViewParam['$pimg'] = $('#preview-pane .preview-container img', @$el)
@@ -40,6 +40,7 @@ SuperboxView = OrchestraView.extend(
     $('.superbox-current-img').Jcrop({
       onChange: @updatePreview
       onSelect: @updateCoords
+      boxWidth: 600
     }, ->
       bounds = @getBounds()
       superboxViewParam['boundx'] = bounds[0]
@@ -78,6 +79,7 @@ SuperboxView = OrchestraView.extend(
 
   setupCropForm: ->
     currentView = this
+    $(".media-override-format-form", @$el).hide()
     displayLoader('.media_crop_form')
     $.ajax
       url: @media.get('links')._self_crop
@@ -115,6 +117,9 @@ SuperboxView = OrchestraView.extend(
       </div>')
     $('#preview-pane .preview-container', @$el).height($('.media_crop_' + format, @$el).height())
     $('#preview-pane .preview-container', @$el).width($('.media_crop_' + format, @$el).width())
+    @showPreview(format)
+
+  showPreview: (format) ->
     if format != ''
       $('.media_crop_' + format, @$el).show()
       $('.media_format_actions').show()
@@ -126,16 +131,18 @@ SuperboxView = OrchestraView.extend(
     $('.media_crop_preview', @$el).append('<img class="media_crop_original" src="' + @media.get('displayed_image') + '" style="max-width:600px;">')
     for thumbnail of @media.get('thumbnails')
       $('.media_crop_preview', @$el).append('<img class="media_crop_' + thumbnail + '" src="' + @media.get('thumbnails')[thumbnail] + '" style="display: none;">')
+    displayLoader('#image-loader')
 
   addEventOnCropForm: ->
     currentView = this
     $(".media_crop_form form", @$el).on "submit", (e) ->
-      displayLoader('.media_crop_form')
+      $('#crop-group').hide()
+      $('.media_crop_preview img', @$el).hide()
+      $('#image-loader').show()
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
         statusCode:
           200: (response) ->
-            $('.media_crop_form', currentView.$el).html response
             currentView.refreshImages()
             currentView.addEventOnCropForm()
     return
@@ -160,13 +167,15 @@ SuperboxView = OrchestraView.extend(
     $('.media_crop_preview img').each ->
       $(this).attr 'src', $(this).attr('src') + '?' + Math.random()
     $(".media-override-format-form").hide()
+    $('#image-loader').hide()
+    @showPreview($('#media_crop_format').val())
 
   addSelect2OnForm: ->
     if $(".select2", @$el).length > 0
       activateSelect2($(".select2", @$el))
 
   setupOverrideForm: () ->
-    $('#original-image').hide()
+    $('#crop-group').hide()
     $(".media-override-format-form").show()
     format = $('#media_crop_format').val()
     currentView = this
