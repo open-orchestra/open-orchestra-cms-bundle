@@ -27,6 +27,7 @@ SuperboxView = OrchestraView.extend(
     @addPreview()
     @setupCropForm()
     @setupMetaForm()
+    displayLoader('#alternative-loader')
 
   setUpCrop: ->
     $(".media-override-format-form").hide()
@@ -192,10 +193,10 @@ SuperboxView = OrchestraView.extend(
 
   setupOverrideForm: () ->
     $('#crop-group').hide()
-    $(".media-override-format-form").show()
+    $(".media-override-format-form").hide()
+    $('#alternative-loader-container').show()
     format = $('#media_crop_format').val()
     currentView = this
-    displayLoader('.media-override-format-form')
     linkFormat = '_self_format_' + format
     $.ajax
       url: @media.get('links')[linkFormat]
@@ -205,6 +206,8 @@ SuperboxView = OrchestraView.extend(
           redirectToLogin()
         else
           $('.media-override-format-form').html response
+          $('#alternative-loader-container').hide()
+          $(".media-override-format-form").show()
           currentView.addEventOnOverrideForm()
 
   cropImage: ->
