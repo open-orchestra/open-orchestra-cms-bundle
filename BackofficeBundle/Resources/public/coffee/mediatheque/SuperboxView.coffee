@@ -30,6 +30,8 @@ SuperboxView = OrchestraView.extend(
     displayLoader('#alternative-loader')
 
   setUpCrop: ->
+    superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
+
     $(".media-override-format-form").hide()
     $('#crop-group').show()
 
