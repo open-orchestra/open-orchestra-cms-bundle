@@ -2,7 +2,6 @@ adminFormView = OrchestraView.extend(
   el: '#OrchestraBOModal'
 
   initialize: (options) ->
-    console.log options
     @url = options.url
     @options = options
     @deleteButton = @options.deleteurl && @options.confirmtext && @options.confirmtitle
