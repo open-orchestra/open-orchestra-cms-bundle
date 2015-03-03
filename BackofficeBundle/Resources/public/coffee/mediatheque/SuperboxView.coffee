@@ -6,7 +6,7 @@ SuperboxView = OrchestraView.extend(
 
   events:
     'change select#media_crop_format': 'changeView'
-    'click a#crop_action_button': 'setUpCrop'
+    'click a#crop_action_button': 'setupCrop'
     'click a#upload_action_button': 'setupOverrideForm'
     'click a#crop_button': 'cropImage'
 
@@ -29,7 +29,7 @@ SuperboxView = OrchestraView.extend(
     @setupMetaForm()
     displayLoader('#alternative-loader')
 
-  setUpCrop: ->
+  setupCrop: ->
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
 
     $(".media-override-format-form").hide()
