@@ -145,39 +145,21 @@
     {{ form_row(form, { 'widget_name': 'radio_widget' }) }}
 {% endblock radio_row %}
 
-{% block orchestra_node_choice_widget %}
-    {% spaceless %}
-        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
-
-        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
-            {% if empty_value is not none %}
-                <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %} value="">{{ empty_value|trans({}, translation_domain) }}</option>
-            {% endif %}
-            {% if preferred_choices|length > 0 %}
-                {% set options = preferred_choices %}
-                {{ block('choice_widget_options') }}
-                {% if choices|length > 0 and separator is not none %}
-                    <option disabled="disabled">{{ separator }}</option>
+{% block choice_widget_options %}
+    {% if form.vars.attr.class is defined and form.vars.attr.class == 'orchestra-node-choice' %}
+        {% spaceless %}
+            {% for group_label, choice in options %}
+                {% if choice is iterable %}
+                    <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                        {% set options = choice %}
+                        {{ block('choice_widget_options') }}
+                    </optgroup>
+                {% else %}
+                    <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain)|raw }}</option>
                 {% endif %}
-            {% endif %}
-            {% set options = choices %}
-            {{ block('orchestra_node_choice_widget_options') }}
-        </select>
-    {% endspaceless %}
-{% endblock orchestra_node_choice_widget %}
-
-{% block orchestra_node_choice_widget_options %}
-    {% spaceless %}
-        {% for group_label, choice in options %}
-            {% if choice is iterable %}
-                <optgroup label="{{ group_label|trans({}, translation_domain) }}">
-                    {% set options = choice %}
-                    {{ block('choice_widget_options') }}
-                </optgroup>
-            {% else %}
-                <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain)|raw }}</option>
-            {% endif %}
-        {% endfor %}
-    {% endspaceless %}
-{% endblock orchestra_node_choice_widget_options %}
-
+            {% endfor %}
+        {% endspaceless %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock choice_widget_options %}
