@@ -144,3 +144,22 @@
 {% block radio_row %}
     {{ form_row(form, { 'widget_name': 'radio_widget' }) }}
 {% endblock radio_row %}
+
+{% block choice_widget_options %}
+    {% if form.vars.attr.class is defined and form.vars.attr.class == 'orchestra-node-choice' %}
+        {% spaceless %}
+            {% for group_label, choice in options %}
+                {% if choice is iterable %}
+                    <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                        {% set options = choice %}
+                        {{ block('choice_widget_options') }}
+                    </optgroup>
+                {% else %}
+                    <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain)|raw }}</option>
+                {% endif %}
+            {% endfor %}
+        {% endspaceless %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock choice_widget_options %}

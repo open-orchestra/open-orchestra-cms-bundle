@@ -58,10 +58,22 @@ class OrchestraNodeChoiceType extends AbstractType
     {
         $choices = array();
         foreach ($nodes as $node) {
-            $choices[$node['node']->getNodeId()] = str_repeat('--', $depth).' '.$node['node']->getName();
+            $pre = '';
+            if ($depth > 0) {
+                $pre = str_repeat('&#x2502;', $depth - 1).'&#x251C;';
+            }
+            $choices[$node['node']->getNodeId()] = $pre.$node['node']->getName();
+
             if (array_key_exists('child', $node)) {
                 $choices = array_merge($choices, $this->getHierarchicalChoices($node['child'], $depth + 1));
             }
+        }
+        if (isset($node)) {
+            $pre = '';
+            if ($depth > 0) {
+                $pre = str_repeat('&#x2502;', $depth - 1).'&#x2514;';
+            }
+            $choices[$node['node']->getNodeId()] = $pre.$node['node']->getName();
         }
 
         return $choices;
