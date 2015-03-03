@@ -1,4 +1,10 @@
-<button class="ajax-delete btn btn-labeled btn-danger">
+<button class="ajax-delete btn btn-labeled btn-danger"
+    data-delete-url="<%= deleteurl%>"
+    data-confirm-text="<%= confirmtext%>"
+    data-confirm-title="<%= confirmtitle%>"
+    <% if (typeof redirectUrl != 'undefined') { %>
+    data-redirect-url="<%= redirectUrl%>"
+    <% } %>>
     <span class="btn-label">
         <i class="glyphicon glyphicon-trash"></i>
     </span>
