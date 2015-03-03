@@ -144,10 +144,13 @@ open_orchestra_backoffice:
         block:
             success: Le bloc a été modifié
         media:
-            file: Uploader une image alternative pour ce format
+            file: Uploader un fichier
+            manual_crop: Crop manuel
+            alternative_file: Uploader une image alternative
+            crop: Crop !
             success: Le média a été sauvegardé
-            format: Choisissez un format de découpage
-            original_image: Image d'origine
+            format: Choisissez un format
+            original_image: Originel
             rectangle: Rectangle (100p x 70p)
             max_width: Largeur fixe (100p)
             max_height: Hauteur fixe (100p)
@@ -414,7 +417,7 @@ open_orchestra_backoffice:
             title: Souhaitez-vous supprimer ce gabarit
             text: Cette opération est définitive.
     media:
-        current_preview: Image actuellement utilisée
+        current_preview: Image
         crop: Crop
         meta: Méta
         delete_question: Souhaitez-vous supprimer ce média

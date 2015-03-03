@@ -13,21 +13,38 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tab-crop">
 
-            <!-- ORIGINAL IMAGE -->
-            <div id="original-image">
-                <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
+            <!-- FORMAT SELECTOR  -->
+            <div id ="selector-loader-container" class="form-group form-horizontal">
+                <label class="control-label col-lg-3" /><div id="selector-loader" />
             </div>
-
-            <!-- CROP SLECTOR  -->
             <div class="media_crop_form"></div>
 
             <!-- CROPPED VERSION IN USAGE -->
-            <div class="media_crop_preview form-group">
-                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label/>
+            <div class="form-group form-horizontal">
+                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label>
+                <div class="col-lg-9 media_crop_preview" /><div id="image-loader" style="display:none;"/>
+            </div>
+            <div class="form-group form-horizontal">
+                <label class="control-label col-lg-3" />
+                <div class="col-lg-9 media_format_actions" style="display:none;">
+                    <a href="javascript:void(0);" class="btn btn-success" id="crop_action_button"><i class="fa fa-crop"></i> {{ 'open_orchestra_backoffice.form.media.manual_crop'|trans }}</a>
+                    <a href="javascript:void(0);" class="btn btn-success" id="upload_action_button"><i class="fa fa-upload"></i> {{ 'open_orchestra_backoffice.form.media.alternative_file'|trans }}</a>
+                </div>
+            </div>
+
+            <!-- CROP TOOL -->
+            <div class="form-group form-horizontal" id="crop-group" style="display:none">
+                <label class="control-label col-lg-3"><a href="javascript:void(0);" class="btn btn-primary" id="crop_button"> {{ 'open_orchestra_backoffice.form.media.crop'|trans }}</a></label>
+                <div id="original-image">
+                    <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
+                </div>
             </div>
 
             <!-- UPLOAD ALTERNATIVE CROPPED VERSION -->
-            <div class="media-override-format-form"></div>
+            <div id ="alternative-loader-container" class="form-group form-horizontal" style="display:none;">
+                <label class="control-label col-lg-3" /><div id="alternative-loader" />
+            </div>
+            <div class="media-override-format-form" style="display:none"></div>
 
         </div>
         <div class="tab-pane" id="tab-meta">
