@@ -1,6 +1,11 @@
 {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
 
-{{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9}) }}
+{% set class = form.vars.attr.class|default('') %}
+{% if form.vars.disabled is defined and form.vars.disabled %}
+    {% set class = class ~ ' form-disabled' %}
+{% endif %}
+
+{{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9, 'attr' : {'class': class}}) }}
 
 {% if blockType is defined %}
     <span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('open_orchestra_backoffice.block.' ~ blockType ~ '.title') | trans }}</span>

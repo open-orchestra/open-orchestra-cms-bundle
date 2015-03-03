@@ -1,8 +1,20 @@
 <li class="ui-model-areas" id="area-<%= cid %>">
     <div class="toolbar-layer area-toolbar">
-        <% if (!node_published) { %>
-            <div class="toolbar"><span class="tool"><%= area.get('ui_model').label %></span><span class="tool area-param-<%= area.cid %>"><i class="glyphicon glyphicon-pencil"></i></span><span class="tool area-remove-<%= area.cid %>"><i class="glyphicon glyphicon-trash"></i></span></div>
+        <div class="toolbar">
+            <span class="tool"><%= area.get('ui_model').label %></span>
+        <% if (node_published) { %>
+            <span class="tool area-param-<%= area.cid %>">
+                <i class="glyphicon glyphicon-eye-open"></i>
+            </span>
+        <% } else { %>
+            <span class="tool area-param-<%= area.cid %>">
+                <i class="glyphicon glyphicon-pencil"></i>
+            </span>
+            <span class="tool area-remove-<%= area.cid %>">
+                <i class="glyphicon glyphicon-trash"></i>
+            </span>
         <% } %>
+        </div>
     </div>
     <div>
         <ul class="ui-model-areas areas-<%= cid %>"></ul>

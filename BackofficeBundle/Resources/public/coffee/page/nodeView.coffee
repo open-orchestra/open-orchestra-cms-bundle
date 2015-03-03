@@ -100,7 +100,6 @@ NodeView = OrchestraView.extend(
       @addConfigurationButton()
       if @node.attributes.status.published
         $('.js-widget-blockpanel', @$el).hide()
-        $('span.' + @cid, @el).addClass('disabled')
       else
         $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
           refreshUl $(this)

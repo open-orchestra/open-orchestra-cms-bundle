@@ -3,12 +3,9 @@ adminFormView = OrchestraView.extend(
 
   initialize: (options) ->
     @url = options.url
-    @disabled = if options.disabled then options.disabled else false
+    @options = options
+    @deleteButton = @options.deleteurl && @options.confirmtext && @options.confirmtitle
     @method = if options.method then options.method else 'GET'
-    @deleteurl = options.deleteurl if options.deleteurl
-    @redirectUrl = options.redirectUrl if options.redirectUrl
-    @confirmtext = options.confirmtext if options.confirmtext
-    @confirmtitle = options.confirmtitle if options.confirmtitle
     @events = {}
     if options.triggers
       for i of options.triggers
@@ -29,8 +26,6 @@ adminFormView = OrchestraView.extend(
     $.ajax
       url: @url
       method: @method
-      data:
-        disabled: @disabled
       success: (response) ->
         if isLoginForm(response)
           redirectToLogin()
@@ -43,15 +38,10 @@ adminFormView = OrchestraView.extend(
     return
 
   renderContent: (options) ->
-    @html = options.html
-    $('.modal-body', @el).html @html
+    $('.modal-body', @el).html options.html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
-    if @deleteurl != undefined && @confirmtext != undefined && @confirmtitle != undefined
-      $('.modal-footer', @el).html @renderTemplate('deleteButton')
-      $('.ajax-delete', @el).attr('data-delete-url', @deleteurl)
-      $('.ajax-delete', @el).attr('data-confirm-text', @confirmtext)
-      $('.ajax-delete', @el).attr('data-confirm-title', @confirmtitle)
-      $('.ajax-delete', @el).attr('data-redirect-url', @redirectUrl) if @redirectUrl != undefined
+    if @deleteButton && $('form.form-disabled', @el).length == 0
+      $('.modal-footer', @el).html @renderTemplate('deleteButton', @options)
       $('.modal-footer', @el).removeClass("hidden-info")
       $('.modal-footer', @el).prepend($('.submit_form', @$el))
       @formEvent = 'click'
