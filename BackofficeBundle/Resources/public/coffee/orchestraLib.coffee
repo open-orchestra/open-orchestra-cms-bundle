@@ -149,10 +149,15 @@ activateSelect2 = (element) ->
 
 #nodeChoice enabled
 activateOrchestraNodeChoice = (element) ->
-  regExp = new RegExp('--', 'g')
+  regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g')
   $('option', element).each ->
-    $(this).html $(this).html().replace(regExp, '&nbsp;&nbsp;')
-  element.select2()
+    $(this).addClass 'orchestra-node-choice'
+  element.select2(
+    formatResult: (term) ->
+      term.text.replace regExp, '<span class="hierarchical">$1</span>'
+    formatSelection: (term) ->
+      term.text.replace regExp, ''
+  )
 
 #colorpicker enabled
 activateColorPicker = () ->
