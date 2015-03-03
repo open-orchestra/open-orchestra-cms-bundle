@@ -5,7 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 
 /**
  * Class SiteAliasType
@@ -22,8 +22,8 @@ class SiteAliasType extends AbstractType
     {
         $this->siteAliasClass = $siteAliasClass;
         $this->schemeChoices = array(
-            SchemeAbilityInterface::SCHEME_HTTP => SchemeAbilityInterface::SCHEME_HTTP,
-            SchemeAbilityInterface::SCHEME_HTTPS => SchemeAbilityInterface::SCHEME_HTTPS
+            SchemeableInterface::SCHEME_HTTP => SchemeableInterface::SCHEME_HTTP,
+            SchemeableInterface::SCHEME_HTTPS => SchemeableInterface::SCHEME_HTTPS
         );
     }
 
