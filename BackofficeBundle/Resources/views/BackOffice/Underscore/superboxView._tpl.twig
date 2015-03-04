@@ -34,9 +34,10 @@
 
             <!-- CROP TOOL -->
             <div class="form-group form-horizontal" id="crop-group" style="display:none">
-                <label class="control-label col-lg-3"><a href="javascript:void(0);" class="btn btn-primary" id="crop_button"> {{ 'open_orchestra_backoffice.form.media.crop'|trans }}</a></label>
-                <div id="original-image">
-                    <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/>
+                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.form.media.manual_crop'|trans }}</label>
+                <div class="col-lg-9" id="original-image">
+                    <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/><br />
+                    <a href="javascript:void(0);" class="btn btn-primary" id="crop_button"> {{ 'open_orchestra_backoffice.form.media.crop'|trans }}</a>
                 </div>
             </div>
 
