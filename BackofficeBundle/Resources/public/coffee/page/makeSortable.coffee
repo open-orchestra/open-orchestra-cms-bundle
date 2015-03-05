@@ -57,5 +57,5 @@ makeSortable = (el, duplicate) ->
       if @duplicate and @clone
         $(this).replaceWith(@clone)
         makeSortable el, duplicate
-  ).disableSelection()
+  )
   return
