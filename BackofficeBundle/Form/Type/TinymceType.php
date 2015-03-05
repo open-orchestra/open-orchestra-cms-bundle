@@ -25,6 +25,7 @@ class TinymceType extends AbstractType
     {
         $resolver->setDefaults(array(
             'attr' => array('class' => 'tinymce'),
+            'empty_data' => '&nbsp;'
         ));
     }
 
