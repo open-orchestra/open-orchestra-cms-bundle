@@ -34,6 +34,24 @@ parameters:
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
     open_orchestra_backoffice.type.on_off.class: OpenOrchestra\BackofficeBundle\Form\Type\OnOffType
 
+    open_orchestra_backoffice.tinymce:
+        tinymce_jquery: false
+        include_jquery: false
+        selector: .tinymce
+        theme:
+            simple:
+                theme: modern
+                content_css: /built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css
+                plugins:
+                    - advlist autolink lists link image charmap print preview hr anchor pagebreak
+                    - searchreplace wordcount visualblocks visualchars code fullscreen
+                    - insertdatetime media nonbreaking save table contextmenu directionality
+                    - emoticons template paste textcolor
+                toolbar1: undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link
+                toolbar2: print preview | forecolor backcolor
+                menubar: false
+
+
 services:
     # Template form type
     open_orchestra_backoffice.type.template:
