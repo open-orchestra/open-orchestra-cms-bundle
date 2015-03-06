@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,18 +67,20 @@ class AreaController extends AbstractAdminController
     }
 
     /**
-     * @param Request       $request
-     * @param string        $actionUrl
-     * @param AreaInterface $area
+     * @param Request            $request
+     * @param string             $actionUrl
+     * @param AreaInterface      $area
+     * @param NodeInterface|null $node
      *
      * @return Response
      */
-    protected function handleAreaForm(Request $request, $actionUrl, $area, $node = null)
+    protected function handleAreaForm(Request $request, $actionUrl, $area, NodeInterface $node = null)
     {
-        $form = $this->createForm('area', $area, array(
-            'action' => $actionUrl,
-            'disabled' => ($node !== null && $node->getStatus()->isPublished())
-        ));
+        $formParameters = array('action' => $actionUrl);
+        if ($node && !$node->isEditable()) {
+            $formParameters['disabled'] = true;
+        }
+        $form = $this->createForm('area', $area, $formParameters);
 
         $form->handleRequest($request);
 

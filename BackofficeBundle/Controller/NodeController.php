@@ -99,7 +99,7 @@ class NodeController extends AbstractAdminController
             $node,
             array(
                 'action' => $url,
-                'disabled' => $node->isEditable()
+                'disabled' => !$node->isEditable()
             )
         );
 
