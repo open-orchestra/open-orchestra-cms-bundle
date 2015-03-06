@@ -103,10 +103,11 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   mediaEdit: function(folderId, mediaId)
   {
-    this.initDisplayRouteChanges('#' + folderId);
+    this.initDisplayRouteChanges("#" + folderId);
+    this.addRoutePattern("apiMediaEdit", $("#" + folderId).data("media-edit-url"));
 
     $.ajax({
-      url: 'http://openorchestra.dev/app_dev.php/api/media/' + mediaId,
+      url: appRouter.generateUrl("apiMediaEdit", {mediaId: mediaId}),
       method: 'GET',
       success: function (response) {
         if (isLoginForm(response)) {
@@ -116,7 +117,7 @@ var OrchestraBORouter = Backbone.Router.extend({
           mediaModel.set(response);
           var view = new SuperboxView({
               media: mediaModel,
-              listUrl: appRouter.generateUrl('listFolder', {folderId: folderId})
+              listUrl: appRouter.generateUrl("listFolder", {folderId: folderId})
           });
           appRouter.setCurrentMainView(view);
           return view;
