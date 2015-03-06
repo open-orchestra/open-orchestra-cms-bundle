@@ -92,14 +92,14 @@ class NodeController extends AbstractAdminController
      *
      * @return Form
      */
-    protected function generateForm($node, $url)
+    protected function generateForm(NodeInterface $node, $url)
     {
         $form = $this->createForm(
             'node',
             $node,
             array(
                 'action' => $url,
-                'disabled' => $node->getStatus()->isPublished()
+                'disabled' => $node->isEditable()
             )
         );
 
