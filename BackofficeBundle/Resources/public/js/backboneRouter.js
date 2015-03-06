@@ -105,25 +105,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.initDisplayRouteChanges("#" + folderId);
     this.addRoutePattern("apiMediaEdit", $("#" + folderId).data("media-edit-url"));
-
-    $.ajax({
-      url: appRouter.generateUrl("apiMediaEdit", {mediaId: mediaId}),
-      method: 'GET',
-      success: function (response) {
-        if (isLoginForm(response)) {
-          redirectToLogin()
-        } else {
-          mediaModel = new GalleryModel();
-          mediaModel.set(response);
-          var view = new SuperboxView({
-              media: mediaModel,
-              listUrl: appRouter.generateUrl("listFolder", {folderId: folderId})
-          });
-          appRouter.setCurrentMainView(view);
-          return view;
-        }
-      }
-    });
+    SuperboxLoad(folderId, mediaId);
   },
 
   listTranslations: function()
