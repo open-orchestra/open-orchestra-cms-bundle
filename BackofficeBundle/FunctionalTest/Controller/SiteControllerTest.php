@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\FunctionalTest\Controller;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Class SiteControllerTest

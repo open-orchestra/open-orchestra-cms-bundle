@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

@@ -9,6 +9,7 @@ use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

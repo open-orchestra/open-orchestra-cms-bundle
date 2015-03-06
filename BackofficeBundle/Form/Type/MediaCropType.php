@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;

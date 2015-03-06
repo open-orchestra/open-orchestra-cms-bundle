@@ -7,6 +7,7 @@ use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * Class BlockTypeSubscriber

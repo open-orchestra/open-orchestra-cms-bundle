@@ -3,9 +3,7 @@
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
 use OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * Class AbstractBlockStrategy
