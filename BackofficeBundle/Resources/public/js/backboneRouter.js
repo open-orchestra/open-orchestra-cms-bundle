@@ -103,7 +103,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   mediaEdit: function(folderId, mediaId)
   {
-    this.initDisplayRouteChanges();
+    this.initDisplayRouteChanges('#' + folderId);
 
     $.ajax({
       url: 'http://openorchestra.dev/app_dev.php/api/media/' + mediaId,
@@ -221,7 +221,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
     return route;
   },
-  
+
   addParametersToRoute: function(options)
   {
     var Router = this,
