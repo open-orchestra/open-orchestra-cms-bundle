@@ -19,6 +19,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     ':entityType/edit/:entityId': 'showEntity',
     ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
     ':entityType/edit/:entityId/:language/:version': 'showEntityWithLanguageAndVersion',
+    'folder/:folderId/list/media/:mediaId/edit': 'mediaEdit',
     'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     'dashboard': 'showDashboard',
@@ -98,6 +99,30 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
     tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version);
+  },
+
+  mediaEdit: function(folderId, mediaId)
+  {
+    this.initDisplayRouteChanges();
+
+    $.ajax({
+      url: 'http://openorchestra.dev/app_dev.php/api/media/' + mediaId,
+      method: 'GET',
+      success: function (response) {
+        if (isLoginForm(response)) {
+          redirectToLogin()
+        } else {
+          mediaModel = new GalleryModel();
+          mediaModel.set(response);
+          var view = new SuperboxView({
+              media: mediaModel,
+              listUrl: Backbone.history.fragment
+          });
+          appRouter.setCurrentMainView(view);
+          return view;
+        }
+      }
+    });
   },
 
   listTranslations: function()
