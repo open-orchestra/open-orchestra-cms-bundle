@@ -37,7 +37,7 @@ class BlockController extends AbstractAdminController
                     'blockNumber' => $blockNumber
                 )),
                 'blockPosition' => $blockNumber,
-                'disabled' => $node->getStatus()->isPublished()
+                'disabled' => !$node->isEditable()
             )
         );
 
