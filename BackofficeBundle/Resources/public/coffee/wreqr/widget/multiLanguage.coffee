@@ -3,6 +3,7 @@ languageChannel = Backbone.Wreqr.radio.channel('language')
 languageChannel.commands.setHandler 'init', (view) ->
   view.events['click a.change-language-' + view.cid] = 'changeLanguage'
   view.changeLanguage = (event) ->
+    event.preventDefault()
     redirectUrl = appRouter.generateUrl(view.options.multiLanguage.path, appRouter.addParametersToRoute(
       language: $(event.currentTarget).data('language')
     ))
