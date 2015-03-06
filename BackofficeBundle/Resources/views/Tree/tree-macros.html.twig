@@ -107,6 +107,7 @@
                 href="#folder/{{ folder.id }}/list"
                 id="{{ folder.id }}"
                 data-url="{{ path('open_orchestra_api_media_list', {'folderId': folder.id}) }}"
+                data-media-edit-url="{{ path('open_orchestra_api_media_show', {'mediaId': ':mediaId'}) }}"
                 data-displayed-elements="name">
                 <span>{{ folder.name }}</span>
             </a>

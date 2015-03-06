@@ -34,7 +34,7 @@ GalleryView = OrchestraView.extend(
 
   superboxOpen: ->
     listUrl = Backbone.history.fragment
-    Backbone.history.navigate(listUrl + '/media/edit')
+    Backbone.history.navigate(listUrl + '/media/' + @media.id + '/edit')
     superboxView = new SuperboxView (
       media: @media
       listUrl: listUrl
