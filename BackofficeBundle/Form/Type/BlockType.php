@@ -18,18 +18,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class BlockType extends AbstractType
 {
     protected $generateFormManager;
-    protected $fixedParams;
+    protected $fixedParameters;
     protected $formFactory;
 
     /**
-     * @param GenerateFormManager $generateFormManager
-     * @param array               $fixedParams
-     * @param FormFactory         $formFactory
+     * @param GenerateFormManager  $generateFormManager
+     * @param array                $fixedParameters
+     * @param FormFactoryInterface $formFactory
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParams, FormFactory $formFactory)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParameters, FormFactoryInterface $formFactory)
     {
         $this->generateFormManager = $generateFormManager;
-        $this->fixedParams = $fixedParams;
+        $this->fixedParameters = $fixedParameters;
         $this->formFactory = $formFactory;
     }
 
@@ -39,18 +39,26 @@ class BlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('label');
+        $builder->add('label', null, array(
+            'label' => 'open_orchestra_backoffice.form.block.label'
+        ));
         $builder->add('class', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.block.class',
             'required' => false,
         ));
         $builder->add('id', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.block.id',
             'required' => false
+        ));
+        $builder->add('max_age', 'integer', array(
+            'label' => 'open_orchestra_backoffice.form.block.max_age',
+            'empty_data' => 0
         ));
 
         $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
 
         $builder->addViewTransformer(new BlockToArrayTransformer());
-        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $this->formFactory, $options['blockPosition']));
+        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParameters, $this->formFactory, $options['blockPosition']));
         if(!array_key_exists('disabled', $options) || $options['disabled'] == false){
             $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
         }

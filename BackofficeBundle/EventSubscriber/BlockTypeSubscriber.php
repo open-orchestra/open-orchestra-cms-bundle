@@ -15,20 +15,20 @@ use Symfony\Component\Form\FormFactoryInterface;
 class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
 {
     protected $generateFormManager;
-    protected $fixedParams;
+    protected $fixedParameters;
     protected $blockPosition;
     protected $formFactory;
 
     /**
-     * @param GenerateFormManager $generateFormManager
-     * @param array               $fixedParams
-     * @param FormFactory         $formFactory
-     * @param int                 $blockPosition
+     * @param GenerateFormManager  $generateFormManager
+     * @param array                $fixedParameters
+     * @param FormFactoryInterface $formFactory
+     * @param int                  $blockPosition
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParams,FormFactory $formFactory, $blockPosition = 0)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParameters,FormFactoryInterface $formFactory, $blockPosition = 0)
     {
         $this->generateFormManager = $generateFormManager;
-        $this->fixedParams = $fixedParams;
+        $this->fixedParameters = $fixedParameters;
         $this->blockPosition = $blockPosition;
         $this->formFactory = $formFactory;
     }
@@ -68,7 +68,7 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
             if ($key == 'submit') {
                 continue;
             }
-            if (in_array($key, $this->fixedParams)) {
+            if (in_array($key, $this->fixedParameters)) {
                 $setter = 'set' . Inflector::classify($key);
                 $block->$setter($value);
                 continue;

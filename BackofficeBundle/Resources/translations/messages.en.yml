@@ -143,6 +143,10 @@ open_orchestra_backoffice:
             existing_blocks: Add an existing block
         block:
             success: The block has been modified
+            label: Block label
+            max_age: Max age of the response for this block
+            id: Html id for the block
+            class: Html class for the block
         media:
             file: Upload a file
             manual_crop: Manual crop
