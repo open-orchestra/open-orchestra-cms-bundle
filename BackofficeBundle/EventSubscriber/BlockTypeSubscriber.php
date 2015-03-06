@@ -25,7 +25,7 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
      * @param FormFactoryInterface $formFactory
      * @param int                  $blockPosition
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParameters,FormFactoryInterface $formFactory, $blockPosition = 0)
+    public function __construct(GenerateFormManager $generateFormManager, $fixedParameters, FormFactoryInterface $formFactory, $blockPosition = 0)
     {
         $this->generateFormManager = $generateFormManager;
         $this->fixedParameters = $fixedParameters;
