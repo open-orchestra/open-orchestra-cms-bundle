@@ -116,7 +116,7 @@ var OrchestraBORouter = Backbone.Router.extend({
           mediaModel.set(response);
           var view = new SuperboxView({
               media: mediaModel,
-              listUrl: Backbone.history.fragment
+              listUrl: appRouter.generateUrl('listFolder', {folderId: folderId})
           });
           appRouter.setCurrentMainView(view);
           return view;
