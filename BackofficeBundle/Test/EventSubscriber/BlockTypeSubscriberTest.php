@@ -21,7 +21,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $block;
     protected $formConfig;
     protected $formFactory;
-    protected $fixedParams;
+    protected $fixedParameters;
     protected $generateFormManager;
     protected $generateFormInterface;
 
@@ -42,7 +42,7 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->form)->all()->thenReturn(array($this->form));
 
 
-        $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactory');
+        $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactoryInterface');
         Phake::when($this->formFactory)->create(Phake::anyParameters())->thenReturn($this->form);
         $this->generateFormInterface = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
 
@@ -52,9 +52,9 @@ class BlockTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
         Phake::when($this->generateFormManager)->createForm(Phake::anyParameters())->thenReturn($this->generateFormInterface);
 
-        $this->fixedParams = array('component', 'label', 'class', 'id');
+        $this->fixedParameters = array('component', 'label', 'class', 'id', 'max_age');
 
-        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager, $this->fixedParams, $this->formFactory);
+        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager, $this->fixedParameters, $this->formFactory);
     }
 
     /**

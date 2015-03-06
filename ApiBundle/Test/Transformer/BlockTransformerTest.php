@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Test\Transformer;
 
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\BlockTransformer;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class BlockTransformerTest

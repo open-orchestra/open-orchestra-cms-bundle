@@ -5,9 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class ContentListStrategy
