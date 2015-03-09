@@ -50,10 +50,9 @@ class BlockType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.block.id',
             'required' => false
         ));
-        $builder->add('max_age', 'integer', array(
+        $builder->add('maxAge', 'integer', array(
             'label' => 'open_orchestra_backoffice.form.block.max_age',
             'required' => false,
-            'empty_data' => 0
         ));
 
         $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
