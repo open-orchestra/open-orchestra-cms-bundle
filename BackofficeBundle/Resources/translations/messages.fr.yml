@@ -110,6 +110,7 @@ open_orchestra_backoffice:
             in_menu: Affiché dans les menus
             in_footer: Affiché dans le pied de page
             role: Rôle nécessaire pour afficher la page
+            max_age: Max age pour le cache de la réponse de la page
             node_source: La page source (en cas de copie)
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
