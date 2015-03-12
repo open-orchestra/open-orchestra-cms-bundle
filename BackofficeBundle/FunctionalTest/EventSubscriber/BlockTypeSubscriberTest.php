@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\FunctionalTest;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -93,7 +94,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
                 'author' => 'author',
                 'multipleChoice' => array('foo', 'none'),
             )),
-            array(DisplayBlockInterface::GALLERY, array(
+            array(GalleryStrategy::GALLERY, array(
                 'columnNumber' => 1,
                 'itemNumber' => 0,
                 'pictures' => array(
