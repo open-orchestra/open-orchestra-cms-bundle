@@ -61,7 +61,6 @@ class OpenOrchestraBackofficeExtension extends Extension
     {
         $blockType = array(
             DisplayBlockInterface::FOOTER,
-            LoginStrategy::LOGIN,
             DisplayBlockInterface::LANGUAGE_LIST,
             DisplayBlockInterface::MENU,
             DisplayBlockInterface::SUBMENU,
@@ -78,7 +77,8 @@ class OpenOrchestraBackofficeExtension extends Extension
             DisplayBlockInterface::AUDIENCE_ANALYSIS,
         );
 
-        if (empty($config['blocks'])) {
+        $blocks = $config['blocks'];
+        if (empty($blocks)) {
             $blocks = $blockType;
         }
         $blocksAlreadySet = array();
