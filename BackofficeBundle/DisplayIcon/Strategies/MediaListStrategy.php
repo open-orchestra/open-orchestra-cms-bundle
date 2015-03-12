@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy as BaseMediaListByKeywordStrategy;
 
 /**
  * Class MediaListIconStrategy
@@ -18,7 +18,7 @@ class MediaListStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD == $block;
+        return BaseMediaListByKeywordStrategy::MEDIA_LIST_BY_KEYWORD == $block;
     }
 
     /**
