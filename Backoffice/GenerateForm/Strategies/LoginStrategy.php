@@ -18,7 +18,7 @@ class LoginStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseLoginStrategy::LANGUAGE_LIST === $block->getComponent();
+        return BaseLoginStrategy::LOGIN === $block->getComponent();
     }
 
     /**
