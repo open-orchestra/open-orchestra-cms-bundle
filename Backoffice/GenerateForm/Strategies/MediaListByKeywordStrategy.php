@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy as BaseMediaListByKeywordStrategy;
 
 /**
  * Class MediaListByKeywordStrategy
@@ -18,7 +18,7 @@ class MediaListByKeywordStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::MEDIA_LIST_BY_KEYWORD === $block->getComponent();
+        return BaseMediaListByKeywordStrategy::MEDIA_LIST_BY_KEYWORD === $block->getComponent();
     }
 
     /**

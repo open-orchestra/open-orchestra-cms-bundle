@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
 
 /**
  * Class GalleryIconStrategy
@@ -18,7 +18,7 @@ class GalleryStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::GALLERY == $block;
+        return BaseGalleryStrategy::GALLERY == $block;
     }
 
     /**

@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
 
 /**
  * Class GalleryStrategy
@@ -37,7 +37,7 @@ class GalleryStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::GALLERY === $block->getComponent();
+        return BaseGalleryStrategy::GALLERY === $block->getComponent();
     }
 
     /**
