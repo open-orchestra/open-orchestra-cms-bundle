@@ -50,7 +50,6 @@ TableviewCollectionView = OrchestraView.extend(
 
   clickAdd: (event) ->
     event.preventDefault()
-#    if $('#main .' + $(event.target).attr('class')).length
     displayLoader('div[role="container"]')
     Backbone.history.navigate('/add')
     title = @title
