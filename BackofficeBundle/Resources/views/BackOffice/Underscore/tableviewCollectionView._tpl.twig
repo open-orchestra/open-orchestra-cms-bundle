@@ -17,7 +17,7 @@
     </table>
     <% if (typeof links !== 'undefined' && typeof links._self_add !== 'undefined' ) { %>
         <div>
-            <a href="<%= links._self_add %>" data-url="<%= links._self_add %>" class="ajax-add-<%= cid %>">{{ 'open_orchestra_backoffice.form.add'|trans({}, 'messages', language) }}</a>
+            <a href="<%= links._self_add %>" data-url="<%= links._self_add %>" class="btn btn-success ajax-add-<%= cid %>">{{ 'open_orchestra_backoffice.form.add'|trans({}, 'messages', language) }}</a>
         </div>
     <% } %>
 </div>

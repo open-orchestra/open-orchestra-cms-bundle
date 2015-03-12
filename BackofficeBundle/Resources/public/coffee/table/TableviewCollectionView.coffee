@@ -50,31 +50,31 @@ TableviewCollectionView = OrchestraView.extend(
 
   clickAdd: (event) ->
     event.preventDefault()
-    if $('#main .' + $(event.target).attr('class')).length
-      displayLoader('div[role="container"]')
-      Backbone.history.navigate('/add')
-      title = @title
-      listUrl = @listUrl
-      $.ajax
-        url: @elements.get('links')._self_add
-        method: 'GET'
-        success: (response) ->
-          view = new FullPageFormView(
-            html: response
-            title: title
-            listUrl: listUrl
-            element: @elements
-            triggers: [
-              {
-                event: "focusout input.generate-id-source"
-                name: "generateId"
-                fct: generateId
-              }
-              {
-                event: "blur input.generate-id-dest"
-                name: "stopGenerateId"
-                fct: stopGenerateId
-              }
-            ]
-          )
+#    if $('#main .' + $(event.target).attr('class')).length
+    displayLoader('div[role="container"]')
+    Backbone.history.navigate('/add')
+    title = @title
+    listUrl = @listUrl
+    $.ajax
+      url: @elements.get('links')._self_add
+      method: 'GET'
+      success: (response) ->
+        view = new FullPageFormView(
+          html: response
+          title: title
+          listUrl: listUrl
+          element: @elements
+          triggers: [
+            {
+              event: "focusout input.generate-id-source"
+              name: "generateId"
+              fct: generateId
+            }
+            {
+              event: "blur input.generate-id-dest"
+              name: "stopGenerateId"
+              fct: stopGenerateId
+            }
+          ]
+        )
 )
