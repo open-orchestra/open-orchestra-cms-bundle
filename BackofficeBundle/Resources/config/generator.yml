@@ -15,6 +15,7 @@ parameters:
     open_orchestra_backoffice.media_list_by_keyword.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\MediaListByKeywordStrategy
     open_orchestra_backoffice.content.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContentStrategy
     open_orchestra_backoffice.language_list.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LanguageListStrategy
+    open_orchestra_backoffice.login.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LoginStrategy
     open_orchestra_backoffice.audience_analysis.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AudienceAnalysisStrategy
 
 services:
@@ -90,6 +91,10 @@ services:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.language_list.generate_form:
         class: %open_orchestra_backoffice.language_list.generate_form.class%
+        tags:
+            - { name: open_orchestra_backoffice.generate_form.strategy }
+    open_orchestra_backoffice.login.generate_form:
+        class: %open_orchestra_backoffice.login.generate_form.class%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.gmap:
