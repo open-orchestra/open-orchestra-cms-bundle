@@ -33,6 +33,7 @@ parameters:
     open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
     open_orchestra_backoffice.type.on_off.class: OpenOrchestra\BackofficeBundle\Form\Type\OnOffType
+    open_orchestra_backoffice.type.orchestra_role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraRoleChoiceType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -301,3 +302,9 @@ services:
         class: %open_orchestra_backoffice.type.on_off.class%
         tags:
             - { name: form.type, alias: on_off }
+    open_orchestra_backoffice.type.orchestra_role_choice:
+        class: %open_orchestra_backoffice.type.orchestra_role_choice.class%
+        arguments:
+            - @open_orchestra_model.repository.role
+        tags:
+            - { name: form.type, alias: orchestra_role_choice }
