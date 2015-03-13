@@ -67,6 +67,7 @@ open_orchestra_backoffice:
             robots_txt: Informations contenues dans le fichier robots.txt
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
+                helper: Indicative periodicity of change (for the sitemap)
         theme:
             success: Le thème a été modifié
             creation: Le thème a été crée
@@ -100,7 +101,9 @@ open_orchestra_backoffice:
             scheme: Protocol
             default_scheme: Par défaut (Configuration de l'alias)
             node_type: Type de noeud
-            priority: Importance relative par rapport aux autres pages du site (pour le sitemap)
+            priority:
+                label: Importance relative par rapport aux autres pages du site (pour le sitemap)
+                helper: Importance relative par rapport aux autres pages du site (pour le sitemap)
             theme: Le thème
             template_id: Id du gabarit
             alias: Alias
@@ -277,9 +280,13 @@ open_orchestra_backoffice:
                     add: Ajouter un média
                     new: Nouveau média
                     delete: Retirer le média
-                item_number: Nombre d'éléments par page (0 pour tous)
+                item_number:
+                    label: Nombre d'éléments par page (0 pour tous)
+                    helper: Nombre d'éléments par page (0 pour tous)
                 thumbnail_format: Format des vignettes
-                image_format : Format de l'image (vue complète)
+                image_format :
+                    label: Format de l'image (vue complète)
+                    helper: Format de l'image (vue complète)
         contact:
             title: Bloc contact
             description: Affiche un formulaire de contact.

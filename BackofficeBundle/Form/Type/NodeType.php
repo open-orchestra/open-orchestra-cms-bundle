@@ -73,7 +73,7 @@ class NodeType extends AbstractType
                 'required' => false
             ))
             ->add('sitemap_priority', 'percent', array(
-                'label' => 'open_orchestra_backoffice.form.node.priority',
+                'label' => 'open_orchestra_backoffice.form.node.priority.label',
                 'type' => 'fractional',
                 'precision' => 2,
                 'required' => false

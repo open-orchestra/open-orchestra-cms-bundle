@@ -67,6 +67,7 @@ open_orchestra_backoffice:
             robots_txt: Informations contained in the robots.txt file
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
+                helper: Indicative periodicity of change (for the sitemap)
         theme:
             success: The theme has been modified
             creation: The theme has been created
@@ -100,7 +101,9 @@ open_orchestra_backoffice:
             scheme: Scheme
             default_scheme: Default (Alias configuration)
             node_type: Type of Node
-            priority: Relative importance compared to the other pages of the site (for the sitemap)
+            priority:
+                label: Relative importance compared to the other pages of the site (for the sitemap)
+                helper: Relative importance compared to the other pages of the site (for the sitemap)
             theme: The theme
             template_id: Template id
             alias: Alias
@@ -277,9 +280,13 @@ open_orchestra_backoffice:
                     add: Add media
                     new: New media
                     delete: Remove media
-                item_number: Number of items per page (0 for all)
+                item_number:
+                    label: Number of items per page (0 for all)
+                    helper: Number of items per page (0 for all)
                 thumbnail_format: Thumbnail format
-                image_format : Image format (full view)
+                image_format :
+                    label: Image format (full view)
+                    helper: Image format (full view)
         contact:
             title: Contact block
             description: Display a contact form.
