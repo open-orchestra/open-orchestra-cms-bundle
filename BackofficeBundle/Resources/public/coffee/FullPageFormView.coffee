@@ -4,6 +4,7 @@ FullPageFormView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @options.cid = @cid
+    @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     @completeOptions(@options.element) if @options.element != undefined
     @events = {}
     if options.triggers
@@ -48,17 +49,17 @@ FullPageFormView = OrchestraView.extend(
     event.preventDefault()
     language = $(event.currentTarget).data('language')
     link = @options.element.get('links')._self_without_parameters + '?language=' + language
-    tableViewLoadSpecificElement(link, @options.title, @options.listUrl)
+    tableViewLoadSpecificElement(link, @options.title, @options.entityType)
 
   changeVersion: (event) ->
     event.preventDefault()
     version = event.currentTarget.value
     link = @options.element.get('links')._self_without_parameters + '?language=' + @options.element.get('language') + '&version=' + version
-    tableViewLoadSpecificElement(link, @options.title, @options.listUrl)
+    tableViewLoadSpecificElement(link, @options.title, @options.entityType)
 
   redirectAfterStatusChange: ->
     link = @options.element.get('links')._self_without_parameters + '?language=' + @options.element.get('language') + '&version=' + @options.element.get('version')
-    tableViewLoadSpecificElement(link, @options.title, @options.listUrl)
+    tableViewLoadSpecificElement(link, @options.title, @options.entityType)
     return
 
   completeOptions: (element) ->
