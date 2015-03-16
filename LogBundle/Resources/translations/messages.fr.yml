@@ -40,6 +40,10 @@ open_orchestra_log:
         create: Crée un nouveau rôle nommé role_name
         delete: Supprime un rôle nommé role_name
         update: Met à jour un rôle nommé role_name
+    group:
+        create: Crée un nouveau group nommé group_name
+        delete: Supprime un group nommé group_name
+        update: Met à jour un group nommé group_name
     redirection:
         create: Crée une nouvelle redirection pour redirection_pattern du site redirection_site_name
         delete: Supprime la redirection redirection_pattern du site redirection_site_name
