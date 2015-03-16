@@ -5,14 +5,16 @@ namespace OpenOrchestra\BackofficeBundle\Document;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * Class Group
+ * @ODM\Document(collection="group")
  */
 class Group extends BaseGroup implements GroupInterface
 {
     /**
-     * @MongoDB\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\SiteInterface")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\SiteInterface")
      */
     protected $site;
 
