@@ -28,6 +28,6 @@ widgetChannel.commands.setHandler 'loaded', (el) ->
   if $(".orchestra-node-choice", el).length > 0
     activateOrchestraNodeChoice($(".orchestra-node-choice", el))
   if $(".colorpicker", el).length > 0
-    activateColorPicker()
+    activateColorPicker($(".colorpicker", el))
   if $(".helper-block", el).length > 0
-    activateHelper()
+    activateHelper($(".helper-block", el))

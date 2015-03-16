@@ -160,10 +160,8 @@ activateOrchestraNodeChoice = (element) ->
   )
 
 #colorpicker enabled
-activateColorPicker = () ->
-  $(".colorpicker").each ->
-    $(this).minicolors()
+activateColorPicker = (element) ->
+  element.minicolors()
 
-activateHelper = () ->
-  $(".helper-block").each ->
-    $(this).tooltip()
+activateHelper = (element) ->
+  element.tooltip()
