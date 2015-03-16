@@ -202,6 +202,14 @@ open_orchestra_backoffice:
             name: Name
             from_status: Status from
             to_status: Status destination
+        group:
+            new:
+                success: The group has been successfully created
+            edit:
+                success: The group has been updated
+            name: Name
+            roles: Roles
+            site: Website
         redirection:
             new:
                 success: The redirection has been successfully created

@@ -282,6 +282,12 @@ services:
             - %open_orchestra_model.document.role.class%
         tags:
             - { name: form.type, alias: role }
+    open_orchestra_backoffice.type.group:
+        class: %open_orchestra_backoffice.type.group.class%
+        arguments:
+            - %open_orchestra_user.document.group.class%
+        tags:
+            - { name: form.type, alias: group }
     open_orchestra_backoffice.type.redirection:
         class: %open_orchestra_backoffice.type.redirection.class%
         arguments:
