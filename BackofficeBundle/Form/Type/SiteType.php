@@ -36,11 +36,11 @@ class SiteType extends AbstractType
         $builder
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.name',
-                'attr' => array('class' => 'generate-id-source')
+                'attr' => array('class' => 'generate-id-source'),
             ));
         $builder->add('siteId', 'text', array(
             'label' => 'open_orchestra_backoffice.form.website.site_id',
-            'attr' => array('class' => 'generate-id-dest')
+            'attr' => array('class' => 'generate-id-dest'),
         ));
         $builder
             ->add('aliases', 'collection', array(
@@ -52,7 +52,7 @@ class SiteType extends AbstractType
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_option.add'),
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_option.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_option.delete'),
-                )
+                ),
             ))
             ->add('blocks', 'orchestra_block', array(
                 'multiple' => true,
@@ -63,12 +63,14 @@ class SiteType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.website.theme'
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
-                'label' => 'open_orchestra_backoffice.form.website.changefreq.title'
+                'label' => 'open_orchestra_backoffice.form.website.changefreq.title',
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.website.changefreq.helper'),
             ))
             ->add('sitemap_priority', 'percent', array(
-                'label' => 'open_orchestra_backoffice.form.node.priority',
+                'label' => 'open_orchestra_backoffice.form.node.priority.label',
                 'type' => 'fractional',
-                'precision' => 2
+                'precision' => 2,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
             ))
             ->add('metaKeywords', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
@@ -88,7 +90,7 @@ class SiteType extends AbstractType
             ))
             ->add('robotsTxt', 'textarea', array(
                 'label' => 'open_orchestra_backoffice.form.website.robots_txt',
-                'required' => true
+                'required' => true,
             ))
             ;
         $builder->addEventSubscriber(new WebSiteSubscriber());

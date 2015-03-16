@@ -121,14 +121,14 @@
             {% if style == 'horizontal' %}
                 {{ form_label(form) }}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
-                    {{ block(widget_name) }}
                     {{ block('form_help') }}
+                    {{ block(widget_name) }}
                     {{ form_errors(form) }}
                 </div>
             {% else %}
                 {{ form_label(form) }}
-                {{ block(widget_name) }}
                 {{ block('form_help') }}
+                {{ block(widget_name) }}
                 {{ form_errors(form) }}
             {% endif %}
         </div>
@@ -163,3 +163,15 @@
         {{ parent() }}
     {% endif %}
 {% endblock choice_widget_options %}
+
+{% block form_help %}
+    {% spaceless %}
+        {% if attr.help_text is defined and attr.help_text is not empty %}
+            {% set help_text = attr.help_text %}
+        {% endif %}
+        {% set help_text = help_text|default('') %}
+        {% if help_text is not empty %}
+            <i class='icon-prepend fa fa-question-circle helper-block' rel="tooltip" data-placement="top" data-original-title="{{ help_text|trans({}, translation_domain) }}"></i>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_help %}

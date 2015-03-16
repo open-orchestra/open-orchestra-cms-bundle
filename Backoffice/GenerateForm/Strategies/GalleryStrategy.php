@@ -49,19 +49,21 @@ class GalleryStrategy extends AbstractBlockStrategy
         $builder
             ->add('columnNumber', 'text', array(
                 'empty_data' => 1,
-                'label' => 'open_orchestra_backoffice.block.gallery.form.column_number'
+                'label' => 'open_orchestra_backoffice.block.gallery.form.column_number',
             ))
             ->add('itemNumber', 'text', array(
                 'empty_data' => 0,
-                'label' => 'open_orchestra_backoffice.block.gallery.form.item_number'
+                'label' => 'open_orchestra_backoffice.block.gallery.form.item_number.label',
+                'attr' => array('help_text' => 'open_orchestra_backoffice.block.gallery.form.item_number.helper'),
             ))
             ->add('thumbnailFormat', 'choice', array(
                 'choices' => $this->formats,
-                'label' => 'open_orchestra_backoffice.block.gallery.form.thumbnail_format'
+                'label' => 'open_orchestra_backoffice.block.gallery.form.thumbnail_format',
             ))
             ->add('imageFormat', 'choice', array(
                 'choices' => $this->formats,
-                'label' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.image_format')
+                'label' => 'open_orchestra_backoffice.block.gallery.form.image_format.label',
+                'attr' => array('help_text' => 'open_orchestra_backoffice.block.gallery.form.image_format.helper'),
             ))
             ->add('pictures', 'collection', array(
                 'type' => 'orchestra_media',
@@ -71,7 +73,7 @@ class GalleryStrategy extends AbstractBlockStrategy
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.media.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.media.delete'),
                 ),
-                'label' => $this->translator->trans('open_orchestra_backoffice.block.gallery.form.pictures')
+                'label' => 'open_orchestra_backoffice.block.gallery.form.pictures',
             ))
             ;
     }
