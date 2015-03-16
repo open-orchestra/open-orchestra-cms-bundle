@@ -8,7 +8,6 @@ use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * Class Group
  * @ODM\Document(collection="group")
  */
 class Group extends BaseGroup implements GroupInterface
@@ -33,5 +32,4 @@ class Group extends BaseGroup implements GroupInterface
     {
         return $this->site;
     }
-
 }
