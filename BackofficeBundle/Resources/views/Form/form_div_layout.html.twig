@@ -1,10 +1,10 @@
 {% extends 'BraincraftedBootstrapBundle:Form:bootstrap.html.twig' %}
 
-{% block on_off_widget %}
+{% block checkbox_widget %}
     {% spaceless %}
         <div class="smart-form">
             <label class="toggle pull-left">
-                {{ block('checkbox_widget') }}
+                {{ parent() }}
                 <i data-swchon-text="ON" data-swchoff-text="OFF"></i>
             </label>
         </div>

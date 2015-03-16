@@ -29,10 +29,10 @@ parameters:
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\BackofficeBundle\Form\Type\KeywordType
     open_orchestra_backoffice.type.orchestra_keywords.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
     open_orchestra_backoffice.type.role.class: OpenOrchestra\BackofficeBundle\Form\Type\RoleType
+    open_orchestra_backoffice.type.group.class: OpenOrchestra\BackofficeBundle\Form\Type\GroupType
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType
     open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
-    open_orchestra_backoffice.type.on_off.class: OpenOrchestra\BackofficeBundle\Form\Type\OnOffType
     open_orchestra_backoffice.type.orchestra_role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraRoleChoiceType
 
     open_orchestra_backoffice.tinymce:
@@ -298,10 +298,6 @@ services:
         class: %open_orchestra_backoffice.type.orchestra_color_picker.class%
         tags:
             - { name: form.type, alias: orchestra_color_picker }
-    open_orchestra_backoffice.type.on_off:
-        class: %open_orchestra_backoffice.type.on_off.class%
-        tags:
-            - { name: form.type, alias: on_off }
     open_orchestra_backoffice.type.orchestra_role_choice:
         class: %open_orchestra_backoffice.type.orchestra_role_choice.class%
         arguments:
