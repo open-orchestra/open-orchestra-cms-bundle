@@ -182,7 +182,9 @@ open_orchestra_backoffice:
             choice_type_and: ET
             choice_type_or: OU
             content_template: Gabarit à utiliser pour afficher un contenu
-            content_template_enabled: Usage du gabarit
+            content_template_enabled:
+                title: Usage du gabarit
+                helper: Usage du gabarit
         orchestra_fields:
             max_length: Longueur max
             required_field: Champ requis
@@ -341,7 +343,9 @@ open_orchestra_backoffice:
                 disablekb: Permet les raccourcis clavier
                 hl: Définit la langue du lecteur
                 loop: Lit la vidéo indéfiniment
-                rel: Affiche des vidéo similaire à la fin
+                rel:
+                    title: Affiche des vidéo similaire à la fin
+                    helper: Affiche des vidéo similaire à la fin
                 showinfo: Affiche des information sur la vidéo
                 width: Largeur du lecteur
                 height: Hauteur du lecteur

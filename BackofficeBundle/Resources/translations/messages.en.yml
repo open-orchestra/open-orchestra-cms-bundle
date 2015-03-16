@@ -182,7 +182,9 @@ open_orchestra_backoffice:
             choice_type_and: AND
             choice_type_or: OR
             content_template: Template to use to display the content
-            content_template_enabled: Template usage
+            content_template_enabled:
+                title: Template usage
+                helper: Template usage
         orchestra_fields:
             max_length: Max length
             required_field: Field required
@@ -341,7 +343,9 @@ open_orchestra_backoffice:
                 disablekb: Allows shortcuts
                 hl: Sets the language of the player
                 loop: Play the video again when it reaches the end
-                rel: Shows related videos at the end of the video
+                rel:
+                    title: Shows related videos at the end of the video
+                    helper: Shows related videos at the end of the video
                 showinfo: Shows videos information
                 width: Width of the player
                 height: Height of the player

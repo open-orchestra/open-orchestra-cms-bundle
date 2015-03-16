@@ -80,8 +80,9 @@ class VideoStrategy extends AbstractBlockStrategy
                 'required'  => false,
             ))
             ->add('youtubeRel', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.block.video.youtube.rel',
+                'label' => 'open_orchestra_backoffice.block.video.youtube.rel.title',
                 'required'  => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.block.video.youtube.rel.helper'),
             ))
             ->add('youtubeDisablekb', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.disablekb',
