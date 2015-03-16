@@ -8,7 +8,7 @@ use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(collection="group")
+ * @ODM\Document(collection="group_document")
  */
 class Group extends BaseGroup implements GroupInterface
 {
