@@ -250,6 +250,8 @@ open_orchestra_backoffice:
                 list: Users
             role:
                 list: Roles
+            group:
+                list: Groups
             redirection:
                 list: Redirections
             keyword:
