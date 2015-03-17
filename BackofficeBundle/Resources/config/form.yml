@@ -30,6 +30,7 @@ parameters:
     open_orchestra_backoffice.type.orchestra_keywords.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
     open_orchestra_backoffice.type.role.class: OpenOrchestra\BackofficeBundle\Form\Type\RoleType
     open_orchestra_backoffice.type.group.class: OpenOrchestra\BackofficeBundle\Form\Type\GroupType
+    open_orchestra_backoffice.type.user.class: OpenOrchestra\BackofficeBundle\Form\Type\UserType
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType
     open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
@@ -288,6 +289,14 @@ services:
             - %open_orchestra_user.document.group.class%
         tags:
             - { name: form.type, alias: group }
+    open_orchestra_backoffice.type.user:
+        class: %open_orchestra_backoffice.type.user.class%
+        arguments:
+            - %open_orchestra_user.document.user.class%
+            - @translator
+            - %open_orchestra_user.document.group.class%
+        tags:
+            - { name: form.type, alias: user }
     open_orchestra_backoffice.type.redirection:
         class: %open_orchestra_backoffice.type.redirection.class%
         arguments:
