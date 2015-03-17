@@ -23,7 +23,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
         founded = false
         elements = new TableviewElement()
         elements.set response
-        if add
+        if add != undefined
           $.ajax
             url: elements.get('links')._self_add
             method: "GET"
@@ -47,8 +47,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
                 ]
               )
           founded = true
-          return false
-        if entityId
+        if entityId != undefined
           collection_name = elements.get("collection_name")
           collection = elements.get(collection_name)
           $.each collection, (rank, values) ->
@@ -73,7 +72,6 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
                   view = new FullPageFormView(options)
                   appRouter.setCurrentMainView view
               founded = true
-              return false
         unless founded
           view = new TableviewCollectionView(
             elements: elements
