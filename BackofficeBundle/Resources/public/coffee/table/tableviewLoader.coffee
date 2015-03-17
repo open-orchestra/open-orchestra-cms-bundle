@@ -8,14 +8,11 @@ addParameter = (element, label, value) ->
     element.set('links', links);
   return element
 
-tableViewLoad = (link, entityType, entityId, language, version) ->
+tableViewLoad = (link, entityType, entityId, language, version, add) ->
   target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
-  listUrl = appRouter.generateUrl('listEntities',
-    entityType: entityType
-  )
   $.ajax
     url: link.data('url')
     method: 'GET'
@@ -26,7 +23,31 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
         founded = false
         elements = new TableviewElement()
         elements.set response
-        if entityId
+        if add != undefined
+          $.ajax
+            url: elements.get('links')._self_add
+            method: "GET"
+            success: (response) ->
+              view = new FullPageFormView(
+                html: response
+                title: title
+                entityType: entityType
+                element: elements
+                triggers: [
+                  {
+                    event: "focusout input.generate-id-source"
+                    name: "generateId"
+                    fct: generateId
+                  }
+                  {
+                    event: "blur input.generate-id-dest"
+                    name: "stopGenerateId"
+                    fct: stopGenerateId
+                  }
+                ]
+              )
+          founded = true
+        if entityId != undefined
           collection_name = elements.get("collection_name")
           collection = elements.get(collection_name)
           $.each collection, (rank, values) ->
@@ -36,7 +57,7 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
               if language != undefined
                 link = element.get('links')._self_without_parameters + '?language=' + language
                 link = link + '&version=' + version if version != undefined
-                tableViewLoadSpecificElement(link, title, listUrl)
+                tableViewLoadSpecificElement(link, title, entityType)
                 founded = true
                 return false
               $.ajax
@@ -46,24 +67,23 @@ tableViewLoad = (link, entityType, entityId, language, version) ->
                   options =
                     html: response
                     title: title
-                    listUrl: listUrl
+                    entityType: entityType
                     element: element
                   view = new FullPageFormView(options)
                   appRouter.setCurrentMainView view
               founded = true
-              return false
         unless founded
           view = new TableviewCollectionView(
             elements: elements
             displayedElements: displayedElements
             order: order
             title: title
-            listUrl: listUrl
+            entityType: entityType
             el: target
           )
           appRouter.setCurrentMainView view
 
-tableViewLoadSpecificElement = (link, title, listUrl) ->
+tableViewLoadSpecificElement = (link, title, entityType) ->
   $.ajax
     url: link
     method: 'GET'
@@ -83,7 +103,7 @@ tableViewLoadSpecificElement = (link, title, listUrl) ->
           options =
             html: response
             title: title
-            listUrl: listUrl
+            entityType: entityType
             element: element
           view = new FullPageFormView(options)
           appRouter.setCurrentMainView view

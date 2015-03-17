@@ -6,7 +6,7 @@ TableviewView = OrchestraView.extend(
     @element = options.element
     @displayedElements = options.displayedElements
     @title = options.title
-    @listUrl = options.listUrl
+    @entityType = options.entityType
     _.bindAll this, "render"
     @loadTemplates [
       'tableviewView',
@@ -64,7 +64,7 @@ TableviewView = OrchestraView.extend(
     Backbone.history.navigate(redirectUrl)
     element = @element
     title = @title
-    listUrl = @listUrl
+    entityType = @entityType
     $.ajax
       url: element.get('links')._self_form
       method: "GET"
@@ -72,7 +72,7 @@ TableviewView = OrchestraView.extend(
         options =
           html: response
           title: title
-          listUrl: listUrl
+          entityType: entityType
           element: element
 
         view = new FullPageFormView(options)

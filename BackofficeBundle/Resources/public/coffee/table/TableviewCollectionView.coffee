@@ -8,7 +8,8 @@ TableviewCollectionView = OrchestraView.extend(
     @order = [ 0, 'asc' ]
     @order = options.order if options.order != undefined
     @title = options.title
-    @listUrl = options.listUrl
+    @entityType = options.entityType
+    @addUrl = appRouter.generateUrl('addEntity', entityType: @entityType)
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     _.bindAll this, "render"
@@ -43,7 +44,7 @@ TableviewCollectionView = OrchestraView.extend(
       element: elementModel
       displayedElements: @displayedElements
       title: @title
-      listUrl: @listUrl
+      entityType: @entityType
       el : this.$el.find('tbody')
     )
     return
@@ -51,9 +52,8 @@ TableviewCollectionView = OrchestraView.extend(
   clickAdd: (event) ->
     event.preventDefault()
     displayLoader('div[role="container"]')
-    Backbone.history.navigate('/add')
+    Backbone.history.navigate(@addUrl)
     title = @title
-    listUrl = @listUrl
     $.ajax
       url: @elements.get('links')._self_add
       method: 'GET'
@@ -61,7 +61,7 @@ TableviewCollectionView = OrchestraView.extend(
         view = new FullPageFormView(
           html: response
           title: title
-          listUrl: listUrl
+          entityType: @entityType
           element: @elements
           triggers: [
             {

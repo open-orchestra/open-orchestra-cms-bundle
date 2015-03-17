@@ -16,6 +16,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'template/show/:templateId': 'showTemplate',
     ':entityType/list': 'listEntities',
+    ':entityType/add': 'addEntity',
     ':entityType/edit/:entityId': 'showEntity',
     ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
     ':entityType/edit/:entityId/:language/:version': 'showEntityWithLanguageAndVersion',
@@ -80,6 +81,11 @@ var OrchestraBORouter = Backbone.Router.extend({
     this.manageEntity(entityType);
   },
 
+  addEntity: function(entityType)
+  {
+      this.manageEntity(entityType, null, null, null, true)
+  },
+
   showEntity: function(entityType, entityId)
   {
     this.manageEntity(entityType, entityId);
@@ -95,10 +101,10 @@ var OrchestraBORouter = Backbone.Router.extend({
     this.manageEntity(entityType, entityId, language, version);
   },
 
-  manageEntity: function(entityType, entityId, language, version)
+  manageEntity: function(entityType, entityId, language, version, add)
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
-    tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version);
+    tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version, add);
   },
 
   mediaEdit: function(folderId, mediaId)
