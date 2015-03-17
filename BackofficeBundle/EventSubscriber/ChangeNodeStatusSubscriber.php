@@ -8,9 +8,9 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
 
 /**
- * Class PublishNodeSubscriber
+ * Class ChangeNodeStatusSubscriber
  */
-class PublishNodeSubscriber implements EventSubscriberInterface
+class ChangeNodeStatusSubscriber implements EventSubscriberInterface
 {
     protected $cacheableManager;
 
