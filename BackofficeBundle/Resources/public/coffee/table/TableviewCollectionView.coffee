@@ -3,13 +3,10 @@ TableviewCollectionView = OrchestraView.extend(
     'click #none': 'clickAdd'
 
   initialize: (options) ->
-    @elements = options.elements
-    @displayedElements = options.displayedElements
-    @order = [ 0, 'asc' ]
-    @order = options.order if options.order != undefined
-    @title = options.title
-    @entityType = options.entityType
-    @addUrl = appRouter.generateUrl('addEntity', entityType: @entityType)
+    @options = options
+    @options.order = [ 0, 'asc' ]
+    @options.order = options.order if options.order != undefined
+    @options.addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     _.bindAll this, "render"
@@ -22,29 +19,30 @@ TableviewCollectionView = OrchestraView.extend(
 
   render: ->
     $(@el).html @renderTemplate('tableviewCollectionView',
-      displayedElements: @displayedElements
-      links: @elements.get('links')
+      displayedElements: @options.displayedElements
+      links: @options.elements.get('links')
       cid: @cid
     )
-    $('.js-widget-title', @$el).text @title
-    for element of @elements.get(@elements.get('collection_name'))
-      @addElementToView (@elements.get(@elements.get('collection_name'))[element])
+    $('.js-widget-title', @$el).text @options.title
+    for element of @options.elements.get(@options.elements.get('collection_name'))
+      @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])
     $('#tableviewCollectionTable').dataTable(
       searching: false
       ordering: true
-      order: [@order]
+      order: [@options.order]
       lengthChange: false
     )
     return
 
   addElementToView: (elementData) ->
+    options = @options
     elementModel = new TableviewModel
     elementModel.set elementData
     view = new TableviewView(
       element: elementModel
-      displayedElements: @displayedElements
-      title: @title
-      entityType: @entityType
+      displayedElements: options.displayedElements
+      title: options.title
+      entityType: options.entityType
       el : this.$el.find('tbody')
     )
     return
@@ -53,18 +51,16 @@ TableviewCollectionView = OrchestraView.extend(
     event.preventDefault()
     displayLoader('div[role="container"]')
     Backbone.history.navigate(@addUrl)
-    title = @title
-    entityType = @entityType
-    element = @elements
+    options = @options
     $.ajax
-      url: @elements.get('links')._self_add
+      url: options.elements.get('links')._self_add
       method: 'GET'
       success: (response) ->
         view = new FullPageFormView(
           html: response
-          title: title
-          entityType: entityType
-          element: element
+          title: options.title
+          entityType: options.entityType
+          element: options.element
           triggers: [
             {
               event: "focusout input.generate-id-source"
