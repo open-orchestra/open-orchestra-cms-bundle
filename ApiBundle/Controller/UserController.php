@@ -44,4 +44,22 @@ class UserController extends Controller
 
         return $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
     }
+
+    /**
+     * @param int $userId
+     *
+     * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
+     * @Config\Method({"DELETE"})
+     *
+     * @return Response
+     */
+    public function deleteAction($userId)
+    {
+        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm->remove($user);
+        $dm->flush();
+
+        return new Response('', 200);
+    }
 }
