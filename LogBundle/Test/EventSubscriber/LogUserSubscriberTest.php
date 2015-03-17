@@ -22,7 +22,7 @@ class LogUserSubscriberTest extends LogAbstractSubscriberTest
     {
         parent::setUp();
         $this->user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
-        $this->userEvent = Phake::mock('FOS\UserBundle\Event\UserEvent');
+        $this->userEvent = Phake::mock('OpenOrchestra\UserBundle\Event\UserEvent');
         Phake::when($this->userEvent)->getUser()->thenReturn($this->user);
         $this->context = array('user_name' => $this->user->getUsername());
 
