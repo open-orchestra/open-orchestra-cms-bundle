@@ -52,6 +52,7 @@ class UserController extends BaseController
      * @param int $userId
      *
      * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
+     * @Config\Method({"DELETE"})
      *
      * @return Response
      */
