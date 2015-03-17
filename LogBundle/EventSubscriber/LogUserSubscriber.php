@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use FOS\UserBundle\Event\UserEvent;
+use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

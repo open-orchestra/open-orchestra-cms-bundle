@@ -28,6 +28,10 @@ class UserTransformer extends AbstractTransformer
             'open_orchestra_api_user_show',
             array('userId' => $mixed->getId())
         ));
+        $facade->addLink('_self_delete', $this->generateRoute(
+            'open_orchestra_api_user_delete',
+            array('userId' => $mixed->getId())
+        ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_user_user_form',
             array('userId' => $mixed->getId())
