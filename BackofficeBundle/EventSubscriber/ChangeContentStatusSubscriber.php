@@ -6,6 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
+use OpenOrchestra\DisplayBundle\Manager\TagManager;
 
 /**
  * Class ChangeContentStatusSubscriber
@@ -13,19 +14,26 @@ use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
 class ChangeContentStatusSubscriber implements EventSubscriberInterface
 {
     protected $cacheableManager;
+    protected $tagManager;
 
     /**
      * @param CacheableManager $cacheableManager
      */
-    public function __construct(CacheableManager $cacheableManager)
+    public function __construct(CacheableManager $cacheableManager, TagManager $tagManager)
     {
         $this->cacheableManager = $cacheableManager;
+        $this->tagManager = $tagManager;
     }
 
     public function contentChangeStatus(ContentEvent $event)
     {
         $content = $event->getContent();
-        $this->cacheableManager->invalidateTags(array('contentId-' . $content->getContentId()));
+
+        $this->cacheableManager->invalidateTags(
+            array(
+                $this->tagManager->formatContentIdTag($content->getContentId())
+            )
+        );
     }
 
     /**

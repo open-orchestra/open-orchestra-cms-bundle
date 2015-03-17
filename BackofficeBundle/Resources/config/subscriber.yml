@@ -37,6 +37,6 @@ services:
         class: %open_orchestra_backoffice.subscriber.change_content_status.class%
         arguments:
             - @open_orchestra_display.manager.cacheable
+            - @open_orchestra_display.manager.tag
         tags:
             - { name: kernel.event_subscriber }
-            
