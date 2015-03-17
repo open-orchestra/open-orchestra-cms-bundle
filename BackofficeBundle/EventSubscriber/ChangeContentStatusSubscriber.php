@@ -18,6 +18,7 @@ class ChangeContentStatusSubscriber implements EventSubscriberInterface
 
     /**
      * @param CacheableManager $cacheableManager
+     * @param TagManager       $tagManager
      */
     public function __construct(CacheableManager $cacheableManager, TagManager $tagManager)
     {
@@ -25,6 +26,11 @@ class ChangeContentStatusSubscriber implements EventSubscriberInterface
         $this->tagManager = $tagManager;
     }
 
+    /**
+     * Triggered when a content status changes
+     * 
+     * @param ContentEvent $event
+     */
     public function contentChangeStatus(ContentEvent $event)
     {
         $content = $event->getContent();
