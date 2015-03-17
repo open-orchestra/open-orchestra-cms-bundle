@@ -83,6 +83,7 @@ open_orchestra_backoffice:
             content_id: Id du contenu
         content_type:
             success: Le type de contenu a été modifié
+            creation: Le type de contenu a été créé
             content_type_id: Id du type de contenu
             names: Nom dans toutes les langues
             version: Version

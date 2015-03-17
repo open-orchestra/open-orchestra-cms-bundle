@@ -58,9 +58,9 @@ class ContentTypeController extends BaseController
      */
     public function deleteAction($contentTypeId)
     {
-        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneBy(array('contentTypeId' => $contentTypeId));
-        $contentType->setDeleted(true);
-        $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent($contentType));
+        $contentTypes = $this->get('open_orchestra_model.repository.content_type')->findBy(array('contentTypeId' => $contentTypeId));
+        $this->get('open_orchestra_backoffice.manager.content_type')->delete($contentTypes);
+        $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent(current($contentTypes)));
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);

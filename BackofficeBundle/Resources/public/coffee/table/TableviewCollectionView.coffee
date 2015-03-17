@@ -54,6 +54,8 @@ TableviewCollectionView = OrchestraView.extend(
     displayLoader('div[role="container"]')
     Backbone.history.navigate(@addUrl)
     title = @title
+    entityType = @entityType
+    element = @elements
     $.ajax
       url: @elements.get('links')._self_add
       method: 'GET'
@@ -61,8 +63,8 @@ TableviewCollectionView = OrchestraView.extend(
         view = new FullPageFormView(
           html: response
           title: title
-          entityType: @entityType
-          element: @elements
+          entityType: entityType
+          element: element
           triggers: [
             {
               event: "focusout input.generate-id-source"
