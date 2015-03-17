@@ -60,6 +60,12 @@ services:
             - role
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
+    open_orchestra_backoffice.left_panel.group:
+        class: %open_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - group
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.redirection:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:

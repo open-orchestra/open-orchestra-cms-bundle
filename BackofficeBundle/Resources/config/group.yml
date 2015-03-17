@@ -1,0 +1,11 @@
+parameters:
+    open_orchestra_user.repository.group.class: OpenOrchestra\UserBundle\Repository\GroupRepository
+    open_orchestra_user.document.group.class: OpenOrchestra\BackofficeBundle\Document\Group
+
+services:
+    open_orchestra_user.repository.group:
+        class: %open_orchestra_user.repository.group.class%
+        factory_service: doctrine.odm.mongodb.document_manager
+        factory_method: getRepository
+        arguments:
+            - %open_orchestra_user.document.group.class%
