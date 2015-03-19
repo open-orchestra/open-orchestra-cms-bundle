@@ -39,5 +39,8 @@ class UserType extends BaseUserType
             'expanded' => true,
             'required' => false,
         ));
+        $builder->add('language', 'orchestra_language', array(
+            'label' => 'open_orchestra_user.form.user.language'
+        ));
     }
 }
