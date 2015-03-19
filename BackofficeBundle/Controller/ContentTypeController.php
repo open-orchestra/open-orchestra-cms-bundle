@@ -79,10 +79,15 @@ class ContentTypeController extends AbstractAdminController
             $documentManager->persist($contentType);
             $documentManager->flush();
 
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.creation')
+            );
+
             $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
 
             return $this->redirect(
-                $this->generateUrl('homepage')
+                $this->generateUrl('open_orchestra_backoffice_content_type_form', array('contentTypeId' => $contentType->getContentTypeId()))
             );
         }
 

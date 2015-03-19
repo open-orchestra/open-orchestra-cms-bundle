@@ -34,4 +34,17 @@ class ContentTypeManager
 
         return $newContentType;
     }
+
+    /**
+     * @param array $contentTypes
+     */
+    public function delete($contentTypes)
+    {
+        if (!empty($contentTypes)) {
+            foreach ($contentTypes as $contentType)
+            {
+                $contentType->setDeleted(true);
+            }
+        }
+    }
 }
