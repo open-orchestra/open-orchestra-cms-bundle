@@ -24,7 +24,7 @@ class ChangeNodeStatusSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->cacheableManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\CacheableManager');
-        $this->tagManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TagManager');
+        $this->tagManager = Phake::mock('OpenOrchestra\BaseBundle\Manager\TagManager');
         Phake::when($this->tagManager)->formatNodeIdTag(Phake::anyParameters())->thenReturn($this->nodeIdTag);
 
         $this->node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');

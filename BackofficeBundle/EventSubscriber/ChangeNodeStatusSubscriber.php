@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
-use OpenOrchestra\DisplayBundle\Manager\TagManager;
+use OpenOrchestra\BaseBundle\Manager\TagManager;
 
 /**
  * Class ChangeNodeStatusSubscriber

@@ -24,7 +24,7 @@ class ChangeContentStatusSubscriberTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->cacheableManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\CacheableManager');
-        $this->tagManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TagManager');
+        $this->tagManager = Phake::mock('OpenOrchestra\BaseBundle\Manager\TagManager');
         Phake::when($this->tagManager)->formatContentIdTag(Phake::anyParameters())->thenReturn($this->contentIdTag);
 
         $this->content = Phake::mock('OpenOrchestra\ModelBundle\Document\Content');

@@ -31,13 +31,13 @@ services:
         class: %open_orchestra_backoffice.subscriber.change_node_status.class%
         arguments:
             - @open_orchestra_display.manager.cacheable
-            - @open_orchestra_display.manager.tag
+            - @open_orchestra_base.manager.tag
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.change_content_status:
         class: %open_orchestra_backoffice.subscriber.change_content_status.class%
         arguments:
             - @open_orchestra_display.manager.cacheable
-            - @open_orchestra_display.manager.tag
+            - @open_orchestra_base.manager.tag
         tags:
             - { name: kernel.event_subscriber }

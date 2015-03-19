@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
-use OpenOrchestra\DisplayBundle\Manager\TagManager;
+use OpenOrchestra\BaseBundle\Manager\TagManager;
 
 /**
  * Class ChangeContentStatusSubscriber
