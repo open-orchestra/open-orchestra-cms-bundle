@@ -6,7 +6,7 @@ TableviewCollectionView = OrchestraView.extend(
     @options = options
     @options.order = [ 0, 'asc' ]
     @options.order = options.order if options.order != undefined
-    @options.addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
+    @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
     key = 'click a.ajax-add-' + @cid
     @events[key] = 'clickAdd'
     _.bindAll this, "render"
