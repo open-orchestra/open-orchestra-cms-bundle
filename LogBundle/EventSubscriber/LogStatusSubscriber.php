@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,30 +23,30 @@ class LogStatusSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StatusableEvent $event
+     * @param StatusEvent $event
      */
-    public function statusCreate(StatusableEvent $event)
+    public function statusCreate(StatusEvent $event)
     {
-        $status = $event->getStatusableElement();
-        $this->logger->info('open_orchestra_log.status.create', array('status_name' => $status->getStatus()->getName()));
+        $status = $event->getStatus();
+        $this->logger->info('open_orchestra_log.status.create', array('status_name' => $status->getName()));
     }
 
     /**
-     * @param StatusableEvent $event
+     * @param StatusEvent $event
      */
-    public function statusDelete(StatusableEvent $event)
+    public function statusDelete(StatusEvent $event)
     {
-        $status = $event->getStatusableElement();
-        $this->logger->info('open_orchestra_log.status.delete', array('status_name' => $status->getStatus()->getName()));
+        $status = $event->getStatus();
+        $this->logger->info('open_orchestra_log.status.delete', array('status_name' => $status->getName()));
     }
 
     /**
-     * @param StatusableEvent $event
+     * @param StatusEvent $event
      */
-    public function statusUpdate(StatusableEvent $event)
+    public function statusUpdate(StatusEvent $event)
     {
-        $status = $event->getStatusableElement();
-        $this->logger->info('open_orchestra_log.status.update', array('status_name' => $status->getStatus()->getName()));
+        $status = $event->getStatus();
+        $this->logger->info('open_orchestra_log.status.update', array('status_name' => $status->getName()));
     }
 
     /**

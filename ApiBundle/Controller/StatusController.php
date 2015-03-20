@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,7 +43,7 @@ class StatusController extends Controller
     public function deleteAction($statusId)
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
-        $this->dispatchEvent(StatusEvents::STATUS_DELETE, new StatusableEvent($status));
+        $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));
         $this->get('doctrine.odm.mongodb.document_manager')->remove($status);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 

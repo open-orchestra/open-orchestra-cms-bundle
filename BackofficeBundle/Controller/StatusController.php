@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -78,7 +78,7 @@ class StatusController extends AbstractAdminController
             $documentManager->persist($status);
             $documentManager->flush();
 
-            $this->dispatchEvent($events, new StatusableEvent($status));
+            $this->dispatchEvent($events, new StatusEvent($status));
 
             $this->get('session')->getFlashBag()->add(
                 'success',
