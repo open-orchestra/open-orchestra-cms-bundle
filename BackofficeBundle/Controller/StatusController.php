@@ -21,6 +21,8 @@ class StatusController extends AbstractAdminController
      * @Config\Route("/status/form/{statusId}", name="open_orchestra_backoffice_status_form")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_STATUS')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $statusId)
@@ -38,6 +40,8 @@ class StatusController extends AbstractAdminController
      *
      * @Config\Route("/status/new", name="open_orchestra_backoffice_status_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_STATUS')")
      *
      * @return Response
      */

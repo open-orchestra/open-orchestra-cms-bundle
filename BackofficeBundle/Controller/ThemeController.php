@@ -20,6 +20,8 @@ class ThemeController extends AbstractAdminController
      * @Config\Route("/theme/form/{themeId}", name="open_orchestra_backoffice_theme_form")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_THEME')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $themeId)
@@ -54,6 +56,8 @@ class ThemeController extends AbstractAdminController
      *
      * @Config\Route("/theme/new", name="open_orchestra_backoffice_theme_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_THEME')")
      *
      * @return Response
      */

@@ -22,6 +22,8 @@ class NodeController extends AbstractAdminController
      * @Config\Route("/node/form/{id}", name="open_orchestra_backoffice_node_form")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $id)
@@ -49,6 +51,8 @@ class NodeController extends AbstractAdminController
      *
      * @Config\Route("/node/new/{parentId}", name="open_orchestra_backoffice_node_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */

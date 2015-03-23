@@ -27,6 +27,8 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/show-in-node/{nodeId}", name="open_orchestra_api_area_show_in_node")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -46,6 +48,8 @@ class AreaController extends BaseController
      *
      * @Config\Route("/{areaId}/show-in-template/{templateId}", name="open_orchestra_api_area_show_in_template")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @Api\Serialize()
      *
@@ -67,6 +71,8 @@ class AreaController extends BaseController
      *
      * @Config\Route("/{nodeId}/{areaId}/update-block", name="open_orchestra_api_area_update_block")
      * @Config\Method({"POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */
@@ -94,6 +100,8 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="open_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     *
      * @return Response
      */
     public function deleteAreaFromNodeAction($areaId, $nodeId)
@@ -113,6 +121,8 @@ class AreaController extends BaseController
      *
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */
@@ -136,6 +146,8 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
      * @Config\Method({"POST", "DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */

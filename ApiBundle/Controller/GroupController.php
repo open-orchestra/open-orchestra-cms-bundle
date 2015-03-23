@@ -22,6 +22,8 @@ class GroupController extends BaseController
      * @Config\Route("/{groupId}", name="open_orchestra_api_group_show")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_GROUP')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -36,6 +38,9 @@ class GroupController extends BaseController
     /**
      * @Config\Route("", name="open_orchestra_api_group_list")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_GROUP')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -52,6 +57,8 @@ class GroupController extends BaseController
      *
      * @Config\Route("/{groupId}/delete", name="open_orchestra_api_group_delete")
      * @Config\Method({"DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_GROUP')")
      *
      * @return Response
      */

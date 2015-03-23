@@ -21,6 +21,9 @@ class StatusController extends Controller
     /**
      * @Config\Route("", name="open_orchestra_api_status_list")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_STATUS')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -37,6 +40,8 @@ class StatusController extends Controller
      *
      * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
      * @Config\Method({"DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_STATUS')")
      *
      * @return Response
      */
@@ -55,6 +60,9 @@ class StatusController extends Controller
      *
      * @Config\Route("/list-statuses/node/{nodeMongoId}", name="open_orchestra_api_list_status_node")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_STATUS')")
+     *
      * @Api\Serialize()
      *
      * @return Response
@@ -71,6 +79,9 @@ class StatusController extends Controller
      *
      * @Config\Route("/list-statuses/content/{contentMongoId}", name="open_orchestra_api_list_status_content")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_STATUS')")
+     *
      * @Api\Serialize()
      *
      * @return Response

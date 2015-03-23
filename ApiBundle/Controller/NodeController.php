@@ -26,6 +26,8 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     *
      * @return FacadeInterface
      */
     public function showAction(Request $request, $nodeId)
@@ -55,6 +57,8 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
      * @Config\Method({"DELETE"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     *
      * @return Response
      */
     public function deleteAction($nodeId)
@@ -74,6 +78,8 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeId}/duplicate", name="open_orchestra_api_node_duplicate")
      * @Config\Method({"POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */
@@ -105,6 +111,8 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     *
      * @return Response
      */
     public function listVersionAction(Request $request, $nodeId)
@@ -122,6 +130,8 @@ class NodeController extends BaseController
      * @Config\Route("/update/{nodeMongoId}", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
      * @Api\Serialize()
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */
@@ -142,6 +152,8 @@ class NodeController extends BaseController
      * @Config\Route("/update/children/order/{nodeId}", name="open_orchestra_api_node_update_children_order")
      * @Config\Method({"POST"})
      * @Api\Serialize()
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
      *
      * @return Response
      */
