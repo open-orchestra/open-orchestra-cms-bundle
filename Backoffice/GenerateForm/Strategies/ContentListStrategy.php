@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
+use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -74,6 +75,7 @@ class ContentListStrategy extends AbstractBlockStrategy
         $builder->add('contentTemplate', 'tinymce', array(
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.content_list.content_template',
+            'constraints' => new ContentTemplate(),
         ));
     }
 
