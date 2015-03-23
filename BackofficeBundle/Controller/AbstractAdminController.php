@@ -52,7 +52,7 @@ abstract class AbstractAdminController extends Controller
         FormInterface $form,
         array $params = array(),
         $response = null,
-        $template = 'OpenOrchestraBackofficeBundle:Editorial:template.html.twig'
+        $template = 'OpenOrchestraBackofficeBundle::form.html.twig'
     ){
         $statusCode = 200;
         if ($form->getErrors()->count() > 0) {

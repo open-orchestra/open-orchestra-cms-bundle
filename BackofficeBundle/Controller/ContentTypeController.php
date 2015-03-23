@@ -47,7 +47,7 @@ class ContentTypeController extends AbstractAdminController
             $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_UPDATE, new ContentTypeEvent($newContentType));
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -95,7 +95,7 @@ class ContentTypeController extends AbstractAdminController
             );
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
             'form' => $form->createView()
         ));
     }

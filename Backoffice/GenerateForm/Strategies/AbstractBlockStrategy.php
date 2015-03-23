@@ -17,7 +17,7 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
      */
     public function getTemplate()
     {
-        return 'OpenOrchestraBackofficeBundle:Editorial:template.html.twig';
+        return 'OpenOrchestraBackofficeBundle::form.html.twig';
     }
 
     /**
