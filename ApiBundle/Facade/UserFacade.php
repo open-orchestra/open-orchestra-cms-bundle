@@ -18,4 +18,9 @@ class UserFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $roles;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $groups;
 }
