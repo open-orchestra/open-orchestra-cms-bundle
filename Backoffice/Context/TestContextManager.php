@@ -75,4 +75,12 @@ class TestContextManager extends ContextManager
     {
         return $this->defaultLanguage;
     }
+
+    /**
+     * @return array
+     */
+    public function getAvailableSites()
+    {
+        return $this->siteRepository->findByDeleted(false);
+    }
 }

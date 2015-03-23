@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Context;
 
+use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Centralize app contextual datas
@@ -16,17 +18,20 @@ class ContextManager implements CurrentSiteIdInterface
 
     protected $session;
     protected $siteRepository;
+    protected $tokenStorage;
 
     /**
      * Constructor
      *
      * @param Session                 $session
      * @param SiteRepositoryInterface $siteRepository
+     * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
      */
-    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, $defaultLocale = 'en')
+    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, $defaultLocale = 'en')
     {
         $this->session = $session;
+        $this->tokenStorage = $tokenStorage;
 
         if ($this->getCurrentLocale() == '') {
             $this->setCurrentLocale($defaultLocale);
@@ -58,11 +63,20 @@ class ContextManager implements CurrentSiteIdInterface
     /**
      * Get availables sites on platform
      *
-     * @return array
+     * @return array<SiteInterface>
      */
     public function getAvailableSites()
     {
-        return $this->siteRepository->findByDeleted(false);
+        $token = $this->tokenStorage->getToken();
+        $sites = array();
+
+        if (($user = $token->getUser()) instanceof GroupableInterface) {
+            foreach ($user->getGroups() as $group) {
+                $sites[] = $group->getSite();
+            }
+        }
+
+        return $sites;
     }
 
     /**

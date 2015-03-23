@@ -10,7 +10,9 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
  */
 class ContextManagerTest extends \PHPUnit_Framework_TestCase
 {
+    protected $token;
     protected $session;
+    protected $tokenStorage;
     protected $contextManager;
     protected $siteRepository;
 
@@ -19,9 +21,14 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $this->tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        Phake::when($this->tokenStorage)->getToken()->thenReturn($this->token);
+
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
-        $this->contextManager = new ContextManager($this->session, $this->siteRepository);
+
+        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage);
     }
 
     /**
@@ -52,16 +59,33 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $siteList
-     * @param array $expectedArray
-     *
-     * @dataProvider getAvailableSites
+     * Test getAvailableSites
      */
-    public function testGetAvailableSites($siteList, $expectedArray)
+    public function testGetAvailableSites()
     {
-        Phake::when($this->siteRepository)->findByDeleted(Phake::anyParameters())->thenReturn($siteList);
+        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        Phake::when($group1)->getSite()->thenReturn($site1);
+        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        Phake::when($group2)->getSite()->thenReturn($site2);
+        $groups = array($group1, $group2);
+        $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
+        Phake::when($user)->getGroups()->thenReturn($groups);
 
-        $this->assertEquals($expectedArray, $this->contextManager->getAvailableSites());
+        Phake::when($this->token)->getUser()->thenReturn($user);
+
+        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
+    }
+
+    /**
+     * Test with no user
+     */
+    public function testGetAvailableSitesIfNoUser()
+    {
+        Phake::when($this->token)->getUser()->thenReturn(null);
+
+        $this->assertEmpty($this->contextManager->getAvailableSites());
     }
 
     /**
@@ -189,32 +213,6 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'en'),
             array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'fr'), 'fr'),
-        );
-    }
-
-    /**
-     * Available sites provider
-     *
-     * @return array
-     */
-    public function getAvailableSites()
-    {
-        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-
-        $siteId1 = 'siteId';
-        $name1 = 'name';
-
-        Phake::when($site1)->getSiteId()->thenReturn($siteId1);
-        Phake::when($site1)->getName()->thenReturn($name1);
-        Phake::when($site2)->getSiteId()->thenReturn('siteId2');
-        Phake::when($site2)->getName()->thenReturn('name2');
-
-        return array(
-            array(
-                array($site1, $site2),
-                array($site1,$site2)
-            )
         );
     }
 }
