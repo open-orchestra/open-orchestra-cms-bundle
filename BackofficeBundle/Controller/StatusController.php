@@ -90,7 +90,7 @@ class StatusController extends AbstractAdminController
             );
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle:Editorial:template.html.twig', array(
+        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
             'form' => $form->createView()
         ));
     }

@@ -84,7 +84,7 @@ class NodeController extends AbstractAdminController
         $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Editorial:template.html.twig',
+            'OpenOrchestraBackofficeBundle::form.html.twig',
             array('form' => $form->createView()),
             $response
         );
