@@ -22,6 +22,8 @@ class RoleController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_backoffice_role_new")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_ROLE')")
+     *
      * @return Response
      */
     public function newAction(Request $request)
@@ -62,6 +64,8 @@ class RoleController extends AbstractAdminController
      *
      * @Config\Route("/form/{roleId}", name="open_orchestra_backoffice_role_form")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_ROLE')")
      *
      * @return Response
      */

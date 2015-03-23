@@ -46,54 +46,63 @@ services:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - content_types
+            - ROLE_PANEL_CONTENT_TYPE
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.keywords:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - keywords
+            - ROLE_PANEL_KEYWORD
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.role:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - role
+            - ROLE_PANEL_ROLE
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.group:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - group
+            - ROLE_PANEL_GROUP
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.redirection:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - redirection
+            - ROLE_PANEL_REDIRECTION
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.status:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - status
+            - ROLE_PANEL_STATUS
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.themes:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - themes
+            - ROLE_PANEL_THEME
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.user:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - user
+            - ROLE_PANEL_USER
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.websites:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - websites
+            - ROLE_PANEL_SITE
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
 
@@ -101,6 +110,7 @@ services:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - deleted
+            - ROLE_PANEL_DELETED
             - 0
             - editorial
         tags:
@@ -109,5 +119,6 @@ services:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
             - logs
+            - ROLE_PANEL_LOG
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }

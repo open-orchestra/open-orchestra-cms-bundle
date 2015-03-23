@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_backoffice.voter.group_site.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\GroupSiteVoter
+
+services:
+    open_orchestra_backoffice.voter.group_site:
+        class: %open_orchestra_backoffice.voter.group_site.class%
+        arguments:
+            - @open_orchestra_backoffice.context_manager
+        tags:
+            - { name: security.voter }

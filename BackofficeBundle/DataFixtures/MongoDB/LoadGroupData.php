@@ -5,6 +5,12 @@ namespace OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy;
+use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeFolderPanelStrategy;
+use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\BackofficeBundle\Document\Group;
 
 /**
@@ -15,10 +21,17 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * @param ObjectManager $manager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
-        $manager->persist($this->generateGroup('Demo group', 'site2', 'group2'));
-        $manager->persist($this->generateGroup('Echonext group', 'site3', 'group3'));
+        $group1 = $this->generateGroup('First group', 'site1', 'group1');
+        $group1->addRole(AdministrationPanelStrategy::ROLE_PANEL_REDIRECTION);
+        $manager->persist($group1);
+        $group2 = $this->generateGroup('Demo group', 'site2', 'group2');
+        $group2->addRole(AdministrationPanelStrategy::ROLE_PANEL_REDIRECTION);
+        $manager->persist($group2);
+        $group3 = $this->generateGroup('Echonext group', 'site3', 'group3');
+        $group3->addRole(AdministrationPanelStrategy::ROLE_PANEL_THEME);
+        $manager->persist($group3);
 
         $manager->flush();
 
@@ -29,7 +42,7 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return integer
      */
-    function getOrder()
+    public function getOrder()
     {
         return 600;
     }
@@ -49,6 +62,20 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
         $group->addRole('ROLE_FROM_DRAFT_TO_PENDING');
         $group->addRole('ROLE_FROM_PENDING_TO_PUBLISHED');
         $group->addRole('ROLE_FROM_PUBLISHED_TO_DRAFT');
+        $group->addRole(GeneralNodesPanelStrategy::ROLE_PANEL_GENERAL_NODE);
+        $group->addRole(TreeNodesPanelStrategy::ROLE_PANEL_TREE_NODE);
+        $group->addRole(TreeFolderPanelStrategy::ROLE_PANEL_TREE_FOLDER);
+        $group->addRole(TreeTemplatePanelStrategy::ROLE_PANEL_TREE_TEMPLATE);
+        $group->addRole(ContentTypeForContentPanelStrategy::ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_CONTENT_TYPE);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_DELETED);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_KEYWORD);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_STATUS);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_GROUP);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_USER);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_SITE);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_ROLE);
+        $group->addRole(AdministrationPanelStrategy::ROLE_PANEL_LOG);
         $group->setSite($this->getReference($siteNumber));
         $this->setReference($referenceName, $group);
 

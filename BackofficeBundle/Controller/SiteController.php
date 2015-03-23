@@ -20,6 +20,8 @@ class SiteController extends AbstractAdminController
      * @Config\Route("/site/form/{siteId}", name="open_orchestra_backoffice_site_form")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_SITE')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $siteId)
@@ -50,6 +52,8 @@ class SiteController extends AbstractAdminController
      *
      * @Config\Route("/site/new", name="open_orchestra_backoffice_site_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_SITE')")
      *
      * @return Response
      */

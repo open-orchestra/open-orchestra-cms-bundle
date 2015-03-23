@@ -21,6 +21,8 @@ class FolderController extends AbstractAdminController
      * @Config\Route("/folder/form/{folderId}", name="open_orchestra_backoffice_folder_form")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_FOLDER')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $folderId)
@@ -39,6 +41,8 @@ class FolderController extends AbstractAdminController
      *
      * @Config\Route("/folder/new/{parentId}", name="open_orchestra_backoffice_folder_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_FOLDER')")
      *
      * @return Response
      */

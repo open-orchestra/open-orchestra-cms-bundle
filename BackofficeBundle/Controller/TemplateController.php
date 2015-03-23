@@ -21,6 +21,8 @@ class TemplateController extends AbstractAdminController
      * @Config\Route("/template/form/{templateId}", name="open_orchestra_backoffice_template_form", defaults={"templateId" = 0})
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_TEMPLATE')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $templateId)
@@ -52,6 +54,8 @@ class TemplateController extends AbstractAdminController
      *
      * @Config\Route("/template/new", name="open_orchestra_backoffice_template_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_TREE_TEMPLATE')")
      *
      * @return Response
      */

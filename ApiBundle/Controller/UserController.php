@@ -23,6 +23,8 @@ class UserController extends BaseController
      * @Config\Route("/{userId}", name="open_orchestra_api_user_show")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_USER')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -37,6 +39,9 @@ class UserController extends BaseController
     /**
      * @Config\Route("", name="open_orchestra_api_user_list")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_USER')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -53,6 +58,8 @@ class UserController extends BaseController
      *
      * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
      * @Config\Method({"DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_USER')")
      *
      * @return Response
      */

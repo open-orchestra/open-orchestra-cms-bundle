@@ -23,6 +23,7 @@ class UserTransformer extends AbstractTransformer
         $facade->id = $mixed->getId();
         $facade->username = $mixed->getUsername();
         $facade->roles = implode(',', $mixed->getRoles());
+        $facade->groups = implode(',', $mixed->getGroupNames());
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_user_show',

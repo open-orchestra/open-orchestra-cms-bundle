@@ -20,6 +20,8 @@ class ContentController extends AbstractAdminController
      * @Config\Route("/content/form/{contentId}", name="open_orchestra_backoffice_content_form")
      * @Config\Method({"GET", "POST"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     *
      * @return Response
      */
     public function formAction(Request $request, $contentId)
@@ -54,6 +56,8 @@ class ContentController extends AbstractAdminController
      *
      * @Config\Route("/content/new/{contentType}", name="open_orchestra_backoffice_content_new")
      * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */

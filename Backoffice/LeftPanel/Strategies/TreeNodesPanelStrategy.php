@@ -9,6 +9,8 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
  */
 class TreeNodesPanelStrategy extends AbstractLeftPaneStrategy
 {
+    const ROLE_PANEL_TREE_NODE = 'ROLE_PANEL_TREE_NODE';
+
     /**
      * @var NodeRepositoryInterface
      */
@@ -51,5 +53,13 @@ class TreeNodesPanelStrategy extends AbstractLeftPaneStrategy
     public function getName()
     {
         return 'nodes';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return self::ROLE_PANEL_TREE_NODE;
     }
 }

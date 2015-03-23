@@ -9,6 +9,8 @@ use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
  */
 class TreeTemplatePanelStrategy extends AbstractLeftPaneStrategy
 {
+    const ROLE_PANEL_TREE_TEMPLATE = 'ROLE_PANEL_TREE_TEMPLATE';
+
     /**
      * @var TemplateRepositoryInterface
      */
@@ -51,5 +53,13 @@ class TreeTemplatePanelStrategy extends AbstractLeftPaneStrategy
     public function getName()
     {
         return 'templates';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return self::ROLE_PANEL_TREE_TEMPLATE;
     }
 }

@@ -22,6 +22,8 @@ class ContentTypeController extends BaseController
      * @Config\Route("/{contentTypeId}", name="open_orchestra_api_content_type_show")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -36,6 +38,8 @@ class ContentTypeController extends BaseController
     /**
      * @Config\Route("", name="open_orchestra_api_content_type_list")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE')")
      *
      * @Api\Serialize()
      *
@@ -53,6 +57,8 @@ class ContentTypeController extends BaseController
      *
      * @Config\Route("/{contentTypeId}/delete", name="open_orchestra_api_content_type_delete")
      * @Config\Method({"DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE')")
      *
      * @return Response
      */

@@ -49,6 +49,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('extractreference.yml');
         $loader->load('blockparameter.yml');
         $loader->load('group.yml');
+        $loader->load('voter.yml');
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }

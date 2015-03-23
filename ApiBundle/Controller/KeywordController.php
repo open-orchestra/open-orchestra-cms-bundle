@@ -24,6 +24,8 @@ class KeywordController extends BaseController
      * @Config\Route("/check", name="open_orchestra_api_check_keyword")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_KEYWORD')")
+     *
      * @return Response
      */
     public function checkAction(Request $request)
@@ -43,6 +45,8 @@ class KeywordController extends BaseController
      * @Config\Route("/{keywordId}", name="open_orchestra_api_keyword_show")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_KEYWORD')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -57,6 +61,9 @@ class KeywordController extends BaseController
     /**
      * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_KEYWORD')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -73,6 +80,8 @@ class KeywordController extends BaseController
      *
      * @Config\Route("/{keywordId}/delete", name="open_orchestra_api_keyword_delete")
      * @Config\Method({"DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_KEYWORD')")
      *
      * @return Response
      */

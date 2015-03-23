@@ -36,4 +36,9 @@ interface LeftPanelInterface
      * @return int
      */
     public function getWeight();
+
+    /**
+     * @return string
+     */
+    public function getRole();
 }

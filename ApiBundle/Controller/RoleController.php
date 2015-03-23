@@ -22,6 +22,8 @@ class RoleController extends BaseController
      * @Config\Route("/{roleId}", name="open_orchestra_api_role_show")
      * @Config\Method({"GET"})
      *
+     * @Config\Security("has_role('ROLE_PANEL_ROLE')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -36,6 +38,9 @@ class RoleController extends BaseController
     /**
      * @Config\Route("", name="open_orchestra_api_role_list")
      * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_ROLE')")
+     *
      * @Api\Serialize()
      *
      * @return FacadeInterface
@@ -52,6 +57,8 @@ class RoleController extends BaseController
      *
      * @Config\Route("/{roleId}/delete", name="open_orchestra_api_role_delete")
      * @Config\Method({"DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_PANEL_ROLE')")
      *
      * @return Response
      */
