@@ -73,8 +73,8 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
                 if (!$keywordEntity) {
                     $keywordEntity = new $keywordClass();
                     $keywordEntity->setLabel($keyword);
-                    $this->keywordRepository->getDocumentManager()->persist($keywordEntity);
-                    $this->keywordRepository->getDocumentManager()->flush($keywordEntity);
+                    $this->keywordRepository->getManager()->persist($keywordEntity);
+                    $this->keywordRepository->getManager()->flush($keywordEntity);
                 }
                 $embedKeywords->add($embedKeywordClass::createFromKeyword($keywordEntity));
             }

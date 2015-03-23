@@ -40,7 +40,7 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['embedded']){
+        if ($options['embedded']) {
             $builder->addModelTransformer($this->keywordsTransformer);
         }
     }

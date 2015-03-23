@@ -31,11 +31,13 @@ class RoleType extends AbstractType
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.role.name',
         ));
-        $builder->add('fromStatus', 'orchestra_status',array(
+        $builder->add('fromStatus', 'orchestra_status', array(
+            'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.role.from_status',
             'required' => false,
         ));
-        $builder->add('toStatus', 'orchestra_status',array(
+        $builder->add('toStatus', 'orchestra_status', array(
+            'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.role.to_status',
             'required' => false,
         ));
