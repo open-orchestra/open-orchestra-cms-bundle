@@ -70,7 +70,7 @@ class ContextManager implements CurrentSiteIdInterface
         $token = $this->tokenStorage->getToken();
         $sites = array();
 
-        if (($user = $token->getUser()) instanceof GroupableInterface) {
+        if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
             foreach ($user->getGroups() as $group) {
                 $sites[] = $group->getSite();
             }
