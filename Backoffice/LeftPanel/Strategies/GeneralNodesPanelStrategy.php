@@ -10,6 +10,8 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
  */
 class GeneralNodesPanelStrategy extends AbstractLeftPaneStrategy
 {
+    const ROLE_PANEL_GENERAL_NODE = 'ROLE_PANEL_GENERAL_NODE';
+
     /**
      * @var NodeRepositoryInterface
      */
@@ -52,5 +54,13 @@ class GeneralNodesPanelStrategy extends AbstractLeftPaneStrategy
     public function getName()
     {
         return 'generale_node';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return self::ROLE_PANEL_GENERAL_NODE;
     }
 }

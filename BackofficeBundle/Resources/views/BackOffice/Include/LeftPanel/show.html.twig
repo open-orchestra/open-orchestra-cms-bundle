@@ -15,9 +15,11 @@
                 <ul>
                     {% for weight in section %}
                         {% for element in weight %}
-                            <li>
-                                {{ element.show|raw }}
-                            </li>
+                            {% if is_granted(element.getRole) %}
+                                <li>
+                                    {{ element.show|raw }}
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                 </ul>

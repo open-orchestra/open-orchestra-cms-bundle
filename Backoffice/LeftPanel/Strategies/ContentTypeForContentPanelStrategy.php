@@ -9,6 +9,8 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
  */
 class ContentTypeForContentPanelStrategy extends AbstractLeftPaneStrategy
 {
+    const ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT = 'ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT';
+
     /**
      * @var ContentTypeRepositoryInterface
      */
@@ -51,5 +53,13 @@ class ContentTypeForContentPanelStrategy extends AbstractLeftPaneStrategy
     public function getName()
     {
         return 'content_type_for_content';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return self::ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT;
     }
 }
