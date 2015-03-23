@@ -59,6 +59,21 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Locale provider
+     *
+     * @return array
+     */
+    public function getLocale()
+    {
+        return array(
+            array(''),
+            array('fr'),
+            array(3),
+            array('fakeKey' => 'fakeValue')
+        );
+    }
+
+    /**
      * Test getAvailableSites
      */
     public function testGetAvailableSites()
@@ -105,6 +120,19 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * SiteId provider
+     *
+     * @return array
+     */
+    public function getSite()
+    {
+        return array(
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en')),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en')),
+        );
+    }
+
+    /**
      * @param array  $site
      * @param string $siteId
      *
@@ -116,65 +144,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($siteId, $this->contextManager->getCurrentSiteId());
 
-        Phake::verify($this->session)->get(ContextManager::KEY_SITE);
-    }
-
-    /**
-     * @param array  $site
-     * @param string $domain
-     *
-     * @dataProvider getSiteName
-     */
-    public function testGetCurrentName($site, $domain)
-    {
-        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
-
-        $this->assertEquals($domain, $this->contextManager->getCurrentSiteName());
-
-        Phake::verify($this->session)->get(ContextManager::KEY_SITE);
-    }
-
-    /**
-     * @param array  $site
-     * @param string $domain
-     *
-     * @dataProvider getSiteDefaultLanguage
-     */
-    public function testGetCurrentSiteDefaultLanguage($site, $domain)
-    {
-        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
-
-        $this->assertEquals($domain, $this->contextManager->getCurrentSiteDefaultLanguage());
-
-        Phake::verify($this->session)->get(ContextManager::KEY_SITE);
-    }
-
-    /**
-     * Locale provider
-     *
-     * @return array
-     */
-    public function getLocale()
-    {
-        return array(
-            array(''),
-            array('fr'),
-            array(3),
-            array('fakeKey' => 'fakeValue')
-        );
-    }
-
-    /**
-     * SiteId provider
-     *
-     * @return array
-     */
-    public function getSite()
-    {
-        return array(
-            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en')),
-            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en')),
-        );
+        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_SITE);
     }
 
     /**
@@ -191,6 +161,21 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array  $site
+     * @param string $domain
+     *
+     * @dataProvider getSiteName
+     */
+    public function testGetCurrentName($site, $domain)
+    {
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
+
+        $this->assertEquals($domain, $this->contextManager->getCurrentSiteName());
+
+        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_SITE);
+    }
+
+    /**
      * SiteId provider
      *
      * @return array
@@ -201,6 +186,21 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
             array(array('siteId' => 'fakeId', 'name' => 'fakeName'), 'fakeName'),
             array(array('siteId' => 'id', 'name' => 'name'), 'name'),
         );
+    }
+
+    /**
+     * @param array  $site
+     * @param string $domain
+     *
+     * @dataProvider getSiteDefaultLanguage
+     */
+    public function testGetCurrentSiteDefaultLanguage($site, $domain)
+    {
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
+
+        $this->assertEquals($domain, $this->contextManager->getCurrentSiteDefaultLanguage());
+
+        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_SITE);
     }
 
     /**

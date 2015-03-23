@@ -143,7 +143,7 @@ class ContextManager implements CurrentSiteIdInterface
     {
         $currentSite = $this->session->get(self::KEY_SITE);
 
-        if (!$currentSite) {
+        if (!$currentSite || $currentSite['siteId'] == 0) {
             $sites = $this->getAvailableSites();
 
             $siteId = 0;
