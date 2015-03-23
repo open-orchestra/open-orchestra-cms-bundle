@@ -1,0 +1,4 @@
+OpenOrchestra\BackofficeBundle\Form\Type\TinymceType:
+    properties:
+        contentTemplate:
+            - OpenOrchestra\BackOfficeBundle\Validator\Constraints\ContentTemplate: ~

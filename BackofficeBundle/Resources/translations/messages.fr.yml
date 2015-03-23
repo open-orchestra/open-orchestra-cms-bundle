@@ -333,6 +333,7 @@ open_orchestra_backoffice:
         content:
             title: Bloc contenu
             description: Affiche un contenu.
+            content_template: Erreur de syntax twig.
         language_list:
             title: Bloc séléction de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
