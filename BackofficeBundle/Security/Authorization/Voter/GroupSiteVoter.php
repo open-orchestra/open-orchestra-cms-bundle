@@ -62,10 +62,10 @@ class GroupSiteVoter implements VoterInterface
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         $result = VoterInterface::ACCESS_ABSTAIN;
-        $currentSiteId = $this->contextManager->getCurrentSiteId();
 
         if (($user = $token->getUser()) instanceof GroupableInterface) {
             $roles = $this->extractRoles($user->getGroups());
+            $currentSiteId = $this->contextManager->getCurrentSiteId();
             foreach ($attributes as $attribute) {
                 if (!$this->supportsAttribute($attribute) ) {
                     continue;
@@ -77,6 +77,7 @@ class GroupSiteVoter implements VoterInterface
             }
 
         }
+
         return $result;
     }
 

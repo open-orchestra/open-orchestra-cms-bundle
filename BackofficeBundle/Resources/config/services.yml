@@ -14,7 +14,11 @@ parameters:
 services:
     open_orchestra_backoffice.context_manager:
         class: "%open_orchestra_backoffice.manager.context.class%"
-        arguments: [@session, @open_orchestra_model.repository.site, "%kernel.default_locale%"]
+        arguments:
+            - @session
+            - @open_orchestra_model.repository.site
+            - @security.token_storage
+            - "%kernel.default_locale%"
     open_orchestra.manager.current_site:
         alias: open_orchestra_backoffice.context_manager
     open_orchestra_backoffice.listener.translate_value_initializer:
