@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\MediaFacade;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Media\Model\MediaInterface;
 
 /**
@@ -11,13 +12,16 @@ use OpenOrchestra\Media\Model\MediaInterface;
 class MediaTransformer extends AbstractTransformer
 {
     protected $thumbnailConfig;
+    protected $translationChoiceManager;
 
     /**
-     * @param array  $thumbnailConfig
+     * @param array                    $thumbnailConfig
+     * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(array $thumbnailConfig)
+    public function __construct(array $thumbnailConfig, TranslationChoiceManager $translationChoiceManager)
     {
         $this->thumbnailConfig = $thumbnailConfig;
+        $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
@@ -33,6 +37,8 @@ class MediaTransformer extends AbstractTransformer
         $facade->name = $mixed->getName();
         $facade->mimeType = $mixed->getMimeType();
         $facade->isDeletable = $mixed->isDeletable();
+        $facade->alt = $this->translationChoiceManager->choose($mixed->getAlts());
+        $facade->title = $this->translationChoiceManager->choose($mixed->getTitles());
         $facade->displayedImage = $this->generateRoute('open_orchestra_media_get', array(
             'key' => $mixed->getThumbnail()
         ));
