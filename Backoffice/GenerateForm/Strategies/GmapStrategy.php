@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy as BaseGmapStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,7 +18,7 @@ class GmapStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::GMAP === $block->getComponent();
+        return BaseGmapStrategy::GMAP === $block->getComponent();
     }
 
     /**

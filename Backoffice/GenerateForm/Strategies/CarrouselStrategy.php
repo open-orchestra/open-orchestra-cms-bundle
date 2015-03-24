@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -29,7 +29,7 @@ class CarrouselStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CARROUSEL === $block->getComponent();
+        return BaseCarrouselStrategy::CARROUSEL === $block->getComponent();
     }
 
     /**

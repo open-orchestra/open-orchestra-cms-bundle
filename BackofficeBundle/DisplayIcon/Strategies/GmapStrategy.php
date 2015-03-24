@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy as BaseGmapStrategy;
 
 /**
  * Class GmapStrategy
@@ -18,7 +18,7 @@ class GmapStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::GMAP === $block;
+        return BaseGmapStrategy::GMAP === $block;
     }
 
     /**

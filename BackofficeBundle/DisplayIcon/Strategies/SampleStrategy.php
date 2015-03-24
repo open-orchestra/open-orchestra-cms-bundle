@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy as BaseSampleStrategy;
 
 /**
  * Class SampleIconStrategy
@@ -18,7 +18,7 @@ class SampleStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::SAMPLE == $block;
+        return BaseSampleStrategy::SAMPLE == $block;
     }
 
     /**

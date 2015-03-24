@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\FunctionalTest;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
 use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -34,7 +34,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
     public function testVideoBlock()
     {
         $block = new Block();
-        $block->setComponent(DisplayBlockInterface::VIDEO);
+        $block->setComponent(VideoStrategy::VIDEO);
         $block->addAttribute('videoType', 'youtube');
         $block->addAttribute('youtubeFs', true);
 

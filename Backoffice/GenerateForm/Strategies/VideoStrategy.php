@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BaseVideoStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -20,7 +20,7 @@ class VideoStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::VIDEO === $block->getComponent();
+        return BaseVideoStrategy::VIDEO === $block->getComponent();
     }
 
     /**

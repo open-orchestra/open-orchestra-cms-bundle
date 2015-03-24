@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::FOOTER == $block->getComponent();
+        return BaseFooterStrategy::FOOTER == $block->getComponent();
     }
 
     /**

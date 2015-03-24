@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy as BaseLanguageListStrategy;
 
 /**
  * Class LanguageListIconStrategy
@@ -18,7 +18,7 @@ class LanguageListStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::LANGUAGE_LIST == $block;
+        return BaseLanguageListStrategy::LANGUAGE_LIST == $block;
     }
 
     /**

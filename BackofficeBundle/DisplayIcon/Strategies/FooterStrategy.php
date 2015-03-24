@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
 
 /**
  * Class FooterIconStrategy
@@ -18,7 +18,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::FOOTER == $block;
+        return BaseFooterStrategy::FOOTER == $block;
     }
 
     /**

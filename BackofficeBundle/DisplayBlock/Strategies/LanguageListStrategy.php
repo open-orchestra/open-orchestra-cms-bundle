@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy as BaseLanguageListStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,7 @@ class LanguageListStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::LANGUAGE_LIST == $block->getComponent();
+        return BaseLanguageListStrategy::LANGUAGE_LIST == $block->getComponent();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy as BaseContentListStrategy;
 
 /**
  * Class ContentListIconStrategy
@@ -18,7 +18,7 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CONTENT_LIST === $block;
+        return BaseContentListStrategy::CONTENT_LIST === $block;
     }
 
     /**

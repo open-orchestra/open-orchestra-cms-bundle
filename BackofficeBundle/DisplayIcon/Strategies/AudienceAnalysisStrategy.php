@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy as BaseAudienceAnalysisStrategy;
 
 /**
  * Class AudienceAnalysisStrategy
@@ -19,7 +19,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::AUDIENCE_ANALYSIS == $block;
+        return BaseAudienceAnalysisStrategy::AUDIENCE_ANALYSIS == $block;
     }
 
     /**
