@@ -201,6 +201,7 @@ open_orchestra_backoffice:
             edit:
                 success: Le rôle a été mis à jour
             name: Nom
+            descriptions: Descriptions
             from_status: Statut de provenance
             to_status: Statut de destination
         group:

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
@@ -12,13 +13,16 @@ use Symfony\Component\Form\AbstractType;
 class OrchestraRoleChoiceType extends AbstractType
 {
     protected $roleRepository;
+    protected $translationChoiceManager;
 
     /**
-     * @param RoleRepositoryInterface $roleRepository
+     * @param RoleRepositoryInterface  $roleRepository
+     * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(RoleRepositoryInterface $roleRepository)
+    public function __construct(RoleRepositoryInterface $roleRepository, TranslationChoiceManager $translationChoiceManager)
     {
         $this->roleRepository = $roleRepository;
+        $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
@@ -39,7 +43,7 @@ class OrchestraRoleChoiceType extends AbstractType
         $choices = array();
 
         foreach ($this->roleRepository->findAll() as $role) {
-            $choices[$role->getName()] = $role->getName();
+            $choices[$role->getName()] = $this->translationChoiceManager->choose($role->getDescriptions());
         }
 
         return $choices;

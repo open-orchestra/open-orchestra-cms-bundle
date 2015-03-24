@@ -11,6 +11,7 @@ use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeFolderPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\ModelBundle\Document\Role;
+use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Class LoadRoleData
@@ -51,7 +52,28 @@ class LoadRoleData implements FixtureInterface
     {
         $role = new Role();
         $role->setName($roleName);
+        $role->addDescription($this->generateTranslatedValue('en', $roleName));
+        $role->addDescription($this->generateTranslatedValue('fr', $roleName));
+        $role->addDescription($this->generateTranslatedValue('de', $roleName));
+        $role->addDescription($this->generateTranslatedValue('es', $roleName));
 
         return $role;
+    }
+
+    /**
+     * Generate a translatedValue
+     *
+     * @param string $language
+     * @param string $value
+     *
+     * @return TranslatedValue
+     */
+    protected function generateTranslatedValue($language, $value)
+    {
+        $label = new TranslatedValue();
+        $label->setLanguage($language);
+        $label->setValue($value);
+
+        return $label;
     }
 }

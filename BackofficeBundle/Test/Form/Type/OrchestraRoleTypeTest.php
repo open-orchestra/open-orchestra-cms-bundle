@@ -16,19 +16,30 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
-    protected $roleRepository;
     protected $roles;
     protected $role1;
-    protected $role1Name = 'role1Name';
     protected $role2;
+    protected $descriptions;
+    protected $roleRepository;
+    protected $role1Name = 'role1Name';
     protected $role2Name = 'role2Name';
+    protected $translationChoiceManager;
+    protected $description = 'description';
 
     public function setUp()
     {
+        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($this->description);
+
+        $description = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
+        $this->descriptions = new ArrayCollection(array($description));
+
         $this->role1 = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
         Phake::when($this->role1)->getName()->thenReturn($this->role1Name);
+        Phake::when($this->role1)->getDescriptions()->thenReturn($this->descriptions);
         $this->role2 = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
         Phake::when($this->role2)->getName()->thenReturn($this->role2Name);
+        Phake::when($this->role2)->getDescriptions()->thenReturn($this->descriptions);
 
         $this->roles = new ArrayCollection();
         $this->roles->add($this->role1);
@@ -37,7 +48,7 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         Phake::when($this->roleRepository)->findAll()->thenReturn($this->roles);
 
-        $this->form = new OrchestraRoleChoiceType($this->roleRepository);
+        $this->form = new OrchestraRoleChoiceType($this->roleRepository, $this->translationChoiceManager);
     }
 
     /**
@@ -91,8 +102,8 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($resolver)->setDefaults(array(
             'choices' => array(
-                $this->role1Name => $this->role1Name,
-                $this->role2Name => $this->role2Name,
+                $this->role1Name => $this->description,
+                $this->role2Name => $this->description,
             )
         ));
     }
