@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy as BaseAudienceAnalysisStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::AUDIENCE_ANALYSIS == $block->getComponent();
+        return BaseAudienceAnalysisStrategy::AUDIENCE_ANALYSIS == $block->getComponent();
     }
 
     /**

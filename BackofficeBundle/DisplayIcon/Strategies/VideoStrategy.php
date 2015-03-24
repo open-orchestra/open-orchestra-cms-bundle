@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BasevideoStrategy;
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
@@ -19,7 +19,7 @@ class VideoStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::VIDEO === $block;
+        return BasevideoStrategy::VIDEO === $block;
     }
 
     /**

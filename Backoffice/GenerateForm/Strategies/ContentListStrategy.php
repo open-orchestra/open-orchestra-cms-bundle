@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy as BaseContentListStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,7 +32,7 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENT_LIST === $block->getComponent();
+        return BaseContentListStrategy::CONTENT_LIST === $block->getComponent();
     }
 
     /**

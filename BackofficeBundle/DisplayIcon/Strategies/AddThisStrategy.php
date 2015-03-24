@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy as BaseAddThisStrategy;
 
 /**
  * Class AddThisStrategy
@@ -19,7 +19,7 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::ADDTHIS === $block;
+        return BaseAddThisStrategy::ADDTHIS === $block;
     }
 
     /**

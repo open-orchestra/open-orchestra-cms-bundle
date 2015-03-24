@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,7 +17,7 @@ class SearchResultStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::SEARCH_RESULT === $block->getComponent();
+        return $this->getName() === $block->getComponent();
     }
 
     /**
@@ -43,7 +42,7 @@ class SearchResultStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'SearchResult';
+        return 'Search_result';
     }
 
 }

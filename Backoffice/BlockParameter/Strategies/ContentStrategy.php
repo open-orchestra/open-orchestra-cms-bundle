@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\BlockParameter\Strategies;
 
 use OpenOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
@@ -18,7 +18,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::CONTENT == $block->getComponent();
+        return BaseContentStrategy::CONTENT == $block->getComponent();
     }
 
     /**

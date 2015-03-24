@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy as BaseMenuStrategy;
 
 /**
  * Class MenuIconStrategy
@@ -18,7 +18,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::MENU == $block;
+        return BaseMenuStrategy::MENU == $block;
     }
 
     /**

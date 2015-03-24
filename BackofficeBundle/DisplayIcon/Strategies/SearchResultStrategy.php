@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 
 /**
  * Class SearchResultIconStrategy
@@ -18,7 +17,7 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::SEARCH_RESULT == $block;
+        return $this->getName() == $block;
     }
 
     /**

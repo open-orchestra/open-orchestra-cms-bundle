@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 
 /**
  * Class CarrouselIconStrategy
@@ -18,7 +18,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return DisplayBlockInterface::CARROUSEL == $block;
+        return BaseCarrouselStrategy::CARROUSEL == $block;
     }
 
     /**

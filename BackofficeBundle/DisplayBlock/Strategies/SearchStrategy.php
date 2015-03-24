@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SearchStrategy extends AbstractStrategy
 {
+    const SEARCH = 'search';
     /**
      * Check if the strategy support this block
      *
@@ -21,7 +21,7 @@ class SearchStrategy extends AbstractStrategy
      */
     public function support(BlockInterface $block)
     {
-        return DisplayBlockInterface::SEARCH == $block->getComponent();
+        return self::SEARCH == $block->getComponent();
     }
 
     /**
