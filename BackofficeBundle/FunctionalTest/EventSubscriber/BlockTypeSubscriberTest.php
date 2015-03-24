@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\FunctionalTest;
 
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
 use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
@@ -88,7 +90,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
     public function provideComponentAndData()
     {
         return array(
-            array(DisplayBlockInterface::SAMPLE, array(
+            array(SampleStrategy::SAMPLE, array(
                 'title' => 'title',
                 'news' => 'news',
                 'author' => 'author',
@@ -102,7 +104,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
                     'media2'
                 )
             )),
-            array(DisplayBlockInterface::CONTENT_LIST, array(
+            array(ContentListStrategy::CONTENT_LIST, array(
                 'contentNodeId' => 'news',
                 'contentTemplateEnabled' => true,
             ))
