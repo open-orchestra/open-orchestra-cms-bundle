@@ -4,6 +4,7 @@ namespace OpenOrchestra\UserBundle\Test\Form\Type;
 
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\RoleType;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class RoleTypeTest
@@ -16,13 +17,16 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $roleClass = 'roleClass';
+    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new RoleType($this->roleClass);
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+
+        $this->form = new RoleType($this->translateValueInitializer, $this->roleClass);
     }
 
     /**
@@ -52,8 +56,12 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder)->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            array($this->translateValueInitializer, 'preSetData')
+        );
     }
 
     /**

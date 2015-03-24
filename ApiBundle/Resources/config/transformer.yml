@@ -128,6 +128,8 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role:
         class: %open_orchestra_api.transformer.role.class%
+        arguments:
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role_collection:

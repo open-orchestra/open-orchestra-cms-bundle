@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -12,13 +14,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class RoleType extends AbstractType
 {
+    protected $translateValueInitializer;
     protected $roleClass;
 
     /**
-     * @param string $roleClass
+     * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param string                            $roleClass
      */
-    public function __construct($roleClass)
+    public function __construct(TranslateValueInitializerListener $translateValueInitializer, $roleClass)
     {
+        $this->translateValueInitializer = $translateValueInitializer;
         $this->roleClass = $roleClass;
     }
 
@@ -28,8 +33,13 @@ class RoleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
+
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.role.name',
+        ));
+        $builder->add('descriptions', 'translated_value_collection', array(
+            'label' => 'open_orchestra_backoffice.form.role.descriptions'
         ));
         $builder->add('fromStatus', 'orchestra_status', array(
             'embedded' => false,

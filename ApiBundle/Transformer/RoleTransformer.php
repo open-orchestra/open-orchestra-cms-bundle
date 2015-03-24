@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\RoleFacade;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 
 /**
@@ -10,6 +11,16 @@ use OpenOrchestra\ModelInterface\Model\RoleInterface;
  */
 class RoleTransformer extends AbstractTransformer
 {
+    protected $translationChoiceManager;
+
+    /**
+     * @param TranslationChoiceManager $translationChoiceManager
+     */
+    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    {
+        $this->translationChoiceManager = $translationChoiceManager;
+    }
+
     /**
      * @param RoleInterface $mixed
      *
@@ -21,6 +32,7 @@ class RoleTransformer extends AbstractTransformer
 
         $facade->id = $mixed->getId();
         $facade->name = $mixed->getName();
+        $facade->description = $this->translationChoiceManager->choose($mixed->getDescriptions());
         $facade->fromStatus = $mixed->getFromStatus();
         $facade->toStatus = $mixed->getToStatus();
 

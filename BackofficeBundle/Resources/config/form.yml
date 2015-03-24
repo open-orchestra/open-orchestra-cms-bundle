@@ -280,6 +280,7 @@ services:
     open_orchestra_backoffice.type.role:
         class: %open_orchestra_backoffice.type.role.class%
         arguments:
+            - @open_orchestra_backoffice.listener.translate_value_initializer
             - %open_orchestra_model.document.role.class%
         tags:
             - { name: form.type, alias: role }
@@ -317,5 +318,6 @@ services:
         class: %open_orchestra_backoffice.type.orchestra_role_choice.class%
         arguments:
             - @open_orchestra_model.repository.role
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: form.type, alias: orchestra_role_choice }
