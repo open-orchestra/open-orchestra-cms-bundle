@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -12,14 +14,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class MediaMetaType extends AbstractType
 {
+    protected $translateValueInitializer;
     protected $mediaClass;
 
     /**
-     * @param string $mediaClass
+     * @param TranslateValueInitializerListener $translateValueInitializer
+     * @param string                            $mediaClass
      */
-    public function __construct($mediaClass)
+    public function __construct(TranslateValueInitializerListener $translateValueInitializer, $mediaClass)
     {
         $this->mediaClass = $mediaClass;
+        $this->translateValueInitializer = $translateValueInitializer;
     }
 
     /**
@@ -28,11 +33,13 @@ class MediaMetaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', null, array(
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
+
+        $builder->add('titles', 'translated_value_collection', array(
             'label' => 'open_orchestra_backoffice.form.media.meta.title',
             'required' => false,
         ));
-        $builder->add('alt', null, array(
+        $builder->add('alts', 'translated_value_collection', array(
             'label' => 'open_orchestra_backoffice.form.media.meta.alt',
             'required' => false,
         ));
