@@ -51,7 +51,6 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
         foreach ($newForm->all() as $newFormChildren) {
             $form->add($newFormChildren);
         }
-
     }
 
     /**
