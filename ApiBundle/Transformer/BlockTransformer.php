@@ -79,9 +79,10 @@ class BlockTransformer extends AbstractTransformer
             $facade->addAttribute($key, $attribute);
         }
 
-        $html = $this->displayIconManager->show($mixed->getComponent());
         if (count($mixed->getAttributes()) > 0) {
             $html = $this->displayBlockManager->show($mixed)->getContent();
+        } else {
+            $html = $this->displayIconManager->show($mixed->getComponent());
         }
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
