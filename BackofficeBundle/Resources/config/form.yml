@@ -50,7 +50,7 @@ parameters:
                     - insertdatetime media nonbreaking save table contextmenu directionality
                     - emoticons template paste textcolor
                 toolbar1: undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link
-                toolbar2: print preview code | forecolor backcolor
+                toolbar2: print preview | forecolor backcolor
                 menubar: false
 
 
