@@ -16,13 +16,15 @@ class MediaMetaTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $mediaClass = 'site';
+    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new MediaMetaType($this->mediaClass);
+        $this->translateValueInitializer =  Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->form = new MediaMetaType($this->translateValueInitializer, $this->mediaClass);
     }
 
     /**
