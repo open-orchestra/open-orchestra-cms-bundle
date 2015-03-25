@@ -41,6 +41,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
     {
         $user = new User();
 
+        $user->setFirstName($name);
+        $user->setLastName($name);
+        $user->setEmail($name.'@fixtures.com');
         $user->setUsername($name);
         $user->setPlainPassword($name);
         $user->addGroup($this->getReference($group));
