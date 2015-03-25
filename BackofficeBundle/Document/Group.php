@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Document;
 
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -13,7 +14,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class Group extends BaseGroup implements GroupInterface
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\SiteInterface")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ReadSiteInterface")
      */
     protected $site;
 
@@ -26,7 +27,7 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @return SiteInterface
+     * @return ReadSiteInterface
      */
     public function getSite()
     {
