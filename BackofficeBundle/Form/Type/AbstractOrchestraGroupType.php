@@ -16,3 +16,4 @@ abstract class AbstractOrchestraGroupType extends AbstractType
         return 'orchestra_group';
     }
 }
+
