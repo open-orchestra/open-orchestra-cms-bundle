@@ -7,15 +7,12 @@ GalleryLoad = (link, target) ->
     url: link.data('url')
     method: 'GET'
     success: (response) ->
-      if isLoginForm(response)
-        redirectToLogin()
-      else
-        medias = new GalleryElement
-        medias.set response
-        view = new GalleryCollectionView(
-          medias: medias
-          title: title
-          listUrl: listUrl
-          el: target
-        )
-        appRouter.setCurrentMainView(view)
+      medias = new GalleryElement
+      medias.set response
+      view = new GalleryCollectionView(
+        medias: medias
+        title: title
+        listUrl: listUrl
+        el: target
+      )
+      appRouter.setCurrentMainView(view)

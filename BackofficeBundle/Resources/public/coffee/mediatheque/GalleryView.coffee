@@ -57,8 +57,5 @@ GalleryView = OrchestraView.extend(
       url: @media.get("links")._self_delete
       method: 'Delete'
       success: (response) ->
-        if isLoginForm(response)
-          redirectToLogin()
-        else
-          target.parents(".superbox-list").remove()
+        target.parents(".superbox-list").remove()
 )

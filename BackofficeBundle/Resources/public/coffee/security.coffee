@@ -8,5 +8,4 @@ isLoginForm = (html) ->
     false
 
 redirectToLogin = ->
-  Backbone.history.navigate('#', true);
   window.location.reload()

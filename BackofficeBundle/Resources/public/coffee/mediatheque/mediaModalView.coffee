@@ -12,12 +12,9 @@ mediaModalView = Backbone.View.extend(
       url: @menuUrl
       method: @method
       success: (response) ->
-        if isLoginForm(response)
-          redirectToLogin()
-        else
-          viewContext.render(
-            html: response
-          )
+        viewContext.render(
+          html: response
+        )
       error: ->
         $(@el + ' .modal-body').html 'Erreur durant le chargement'
     return

@@ -34,7 +34,6 @@ callAndReload = (action) ->
     return
   return
 
-
 # REFRESH NAV MENU
 displayMenu = (route) ->
   selectedPath = undefined
