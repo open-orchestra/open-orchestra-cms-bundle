@@ -56,7 +56,7 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
             array('class'),
             array('string'),
             array('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface'),
-            array('OpenOrchestra\BackofficeBundle\Document\Group'),
+            array('OpenOrchestra\BackofficeBundle\Model\GroupInterface'),
         );
     }
 
@@ -103,10 +103,10 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site2)->getSiteId()->thenReturn($siteId2);
 
-        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Document\Group');
+        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
         Phake::when($group1)->getSite()->thenReturn($site1);
         Phake::when($group1)->getRoles()->thenReturn(array($role1));
-        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Document\Group');
+        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
         Phake::when($group2)->getSite()->thenReturn($site2);
         Phake::when($group2)->getRoles()->thenReturn(array($role2));
 

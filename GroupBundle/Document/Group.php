@@ -1,10 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Document;
+namespace OpenOrchestra\GroupBundle\Document;
 
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -19,9 +18,9 @@ class Group extends BaseGroup implements GroupInterface
     protected $site;
 
     /**
-     * @param SiteInterface $site
+     * @param ReadSiteInterface $site
      */
-    public function setSite(SiteInterface $site)
+    public function setSite(ReadSiteInterface $site)
     {
         $this->site = $site;
     }
