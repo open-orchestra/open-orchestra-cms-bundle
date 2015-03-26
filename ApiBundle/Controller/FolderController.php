@@ -21,7 +21,7 @@ class FolderController extends BaseController
      * @Config\Route("/{folderId}/delete", name="open_orchestra_api_folder_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_FOLDER')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_FOLDER')")
      *
      * @throws FolderNotDeletableException
      *

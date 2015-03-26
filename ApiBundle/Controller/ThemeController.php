@@ -22,7 +22,7 @@ class ThemeController extends BaseController
      * @Config\Route("/{themeId}", name="open_orchestra_api_theme_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_THEME')")
+     * @Config\Security("has_role('ROLE_ACCESS_THEME')")
      *
      * @Api\Serialize()
      *
@@ -39,7 +39,7 @@ class ThemeController extends BaseController
      * @Config\Route("", name="open_orchestra_api_theme_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_THEME')")
+     * @Config\Security("has_role('ROLE_ACCESS_THEME')")
      *
      * @Api\Serialize()
      *
@@ -58,7 +58,7 @@ class ThemeController extends BaseController
      * @Config\Route("/{themeId}/delete", name="open_orchestra_api_theme_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_THEME')")
+     * @Config\Security("has_role('ROLE_ACCESS_THEME')")
      *
      * @return Response
      */

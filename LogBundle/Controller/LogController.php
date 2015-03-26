@@ -18,7 +18,7 @@ class LogController extends Controller
      * @Config\Route("", name="open_orchestra_api_log_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_LOG')")
+     * @Config\Security("has_role('ROLE_ACCESS_LOG')")
      *
      * @Api\Serialize()
      *

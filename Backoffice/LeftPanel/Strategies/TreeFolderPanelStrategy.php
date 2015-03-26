@@ -9,7 +9,7 @@ use OpenOrchestra\Media\Repository\FolderRepositoryInterface;
  */
 class TreeFolderPanelStrategy extends AbstractLeftPaneStrategy
 {
-    const ROLE_PANEL_TREE_FOLDER = 'ROLE_PANEL_TREE_FOLDER';
+    const ROLE_ACCESS_TREE_FOLDER = 'ROLE_ACCESS_TREE_FOLDER';
 
     /**
      * @var FolderRepositoryInterface
@@ -57,6 +57,6 @@ class TreeFolderPanelStrategy extends AbstractLeftPaneStrategy
      */
     public function getRole()
     {
-        return self::ROLE_PANEL_TREE_FOLDER;
+        return self::ROLE_ACCESS_TREE_FOLDER;
     }
 }

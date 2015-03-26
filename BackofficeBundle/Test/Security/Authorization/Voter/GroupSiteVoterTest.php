@@ -77,9 +77,9 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     public function provideAttributeAndSupport()
     {
         return array(
-            array('ROLE_PANEL_GENERAL_NODE', true),
-            array('ROLE_PANEL_REDIRECTION', true),
-            array('ROLE_PANEL_TREE_NODE', true),
+            array('ROLE_ACCESS_GENERAL_NODE', true),
+            array('ROLE_ACCESS_REDIRECTION', true),
+            array('ROLE_ACCESS_TREE_NODE', true),
             array('ROLE_ADMIN', false),
             array('ROLE_USER', false),
             array('ROLE_FROM_PUBLISHED_TO_DRAFT', false),
@@ -96,8 +96,8 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     {
         $siteId1 = '1';
         $siteId2 = '2';
-        $role1 = 'ROLE_PANEL_1';
-        $role2 = 'ROLE_PANEL_2';
+        $role1 = 'ROLE_ACCESS_1';
+        $role2 = 'ROLE_ACCESS_2';
         $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site1)->getSiteId()->thenReturn($siteId1);
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
@@ -127,16 +127,16 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     public function provideRoleAndAccess()
     {
         return array(
-            array(array('ROLE_PANEL_1'), VoterInterface::ACCESS_GRANTED),
-            array(array('ROLE_PANEL_2'), VoterInterface::ACCESS_DENIED),
-            array(array('ROLE_PANEL_3'), VoterInterface::ACCESS_DENIED),
+            array(array('ROLE_ACCESS_1'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_ACCESS_2'), VoterInterface::ACCESS_DENIED),
+            array(array('ROLE_ACCESS_3'), VoterInterface::ACCESS_DENIED),
             array(array('ROLE_USER'), VoterInterface::ACCESS_ABSTAIN),
-            array(array('ROLE_USER', 'ROLE_PANEL_1'), VoterInterface::ACCESS_GRANTED),
-            array(array('ROLE_PANEL_1', 'ROLE_USER'), VoterInterface::ACCESS_GRANTED),
-            array(array('ROLE_PANEL_2', 'ROLE_USER'), VoterInterface::ACCESS_DENIED),
-            array(array('ROLE_USER', 'ROLE_PANEL_2'), VoterInterface::ACCESS_DENIED),
-            array(array('ROLE_PANEL_1', 'ROLE_PANEL_2'), VoterInterface::ACCESS_GRANTED),
-            array(array('ROLE_PANEL_2', 'ROLE_PANEL_1'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_USER', 'ROLE_ACCESS_1'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_ACCESS_1', 'ROLE_USER'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_ACCESS_2', 'ROLE_USER'), VoterInterface::ACCESS_DENIED),
+            array(array('ROLE_USER', 'ROLE_ACCESS_2'), VoterInterface::ACCESS_DENIED),
+            array(array('ROLE_ACCESS_1', 'ROLE_ACCESS_2'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_ACCESS_2', 'ROLE_ACCESS_1'), VoterInterface::ACCESS_GRANTED),
         );
     }
 }

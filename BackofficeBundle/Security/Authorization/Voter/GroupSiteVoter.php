@@ -32,7 +32,7 @@ class GroupSiteVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return 0 === strpos($attribute, 'ROLE_PANEL');
+        return 0 === strpos($attribute, 'ROLE_ACCESS');
     }
 
     /**
