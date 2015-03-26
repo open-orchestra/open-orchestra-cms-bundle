@@ -111,11 +111,11 @@ class NodeType extends AbstractType
             ->add('role', 'orchestra_role_choice', array(
                 'label' => 'open_orchestra_backoffice.form.node.role',
                 'required' => false,
+            ))
+            ->add('maxAge', 'integer', array(
+                'label' => 'open_orchestra_backoffice.form.node.max_age',
+                'required' => false,
             ));
-        $builder->add('maxAge', 'integer', array(
-            'label' => 'open_orchestra_backoffice.form.node.max_age',
-            'required' => false,
-        ));
         if(!array_key_exists('disabled', $options) || $options['disabled'] == false){
             $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
             $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));

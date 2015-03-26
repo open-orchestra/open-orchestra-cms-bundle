@@ -177,6 +177,7 @@ class NodeManager
         $node = new $this->nodeClass();
         $node->setSiteId($this->contextManager->getCurrentSiteId());
         $node->setLanguage($this->contextManager->getCurrentSiteDefaultLanguage());
+        $node->setMaxAge(NodeInterface::MAX_AGE);
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
         if ($site) {
