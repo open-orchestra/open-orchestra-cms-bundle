@@ -150,7 +150,6 @@ SuperboxView = OrchestraView.extend(
           200: (response) ->
             superboxViewParam['jcrop_api'].destroy()
             currentView.refreshImages()
-            currentView.addEventOnCropForm()
     return
 
   addEventOnOverrideForm: ->
@@ -164,7 +163,6 @@ SuperboxView = OrchestraView.extend(
         statusCode:
           200: (response) ->
             currentView.refreshImages()
-            currentView.addEventOnOverrideForm()
     return
 
   addEventOnMetaForm: ->
@@ -185,7 +183,8 @@ SuperboxView = OrchestraView.extend(
 
   refreshImages: ->
     format = $('#media_crop_format').val()
-    $('.media_crop_' + format).attr 'src', $('.media_crop_' + format).attr('src') + '?' + Math.random()
+    newSrc = $('.media_crop_' + format).attr('src').split('?')[0] + '?' + Math.random()
+    $('.media_crop_' + format).attr 'src', newSrc
     $(".media-override-format-form").hide()
     $('#image-loader').hide()
     @showPreview(format)
