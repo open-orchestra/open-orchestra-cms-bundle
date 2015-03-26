@@ -17,7 +17,8 @@ class BlockToArrayTransformer implements DataTransformerInterface
             return array_merge(array(
                 'label' => $data->getLabel(),
                 'class' => $data->getClass(),
-                'id' => $data->getId()
+                'id' => $data->getId(),
+                'maxAge' => $data->getMaxAge(),
             ), $data->getAttributes());
         }
 
