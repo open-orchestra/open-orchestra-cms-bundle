@@ -1,0 +1,11 @@
+parameters:
+    open_orchestra_user.document.group.class: OpenOrchestra\GroupBundle\Document\Group
+    open_orchestra_group.type.orchestra_group.class: OpenOrchestra\GroupBundle\Form\Type\OrchestraGroupType
+
+services:
+    open_orchestra_group.type.orchestra_group:
+        class: %open_orchestra_group.type.orchestra_group.class%
+        arguments:
+            - %open_orchestra_user.document.group.class%
+        tags:
+            - { name: form.type, alias: orchestra_group }

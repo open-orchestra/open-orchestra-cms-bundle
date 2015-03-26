@@ -11,17 +11,13 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class UserType extends BaseUserType
 {
-    protected $groupClass;
-
     /**
      * @param string              $class
      * @param TranslatorInterface $translator
-     * @param string              $groupClass
      */
-    public function __construct($class, TranslatorInterface $translator, $groupClass)
+    public function __construct($class, TranslatorInterface $translator)
     {
         parent::__construct($class, $translator);
-        $this->groupClass = $groupClass;
     }
 
     /**
@@ -32,9 +28,7 @@ class UserType extends BaseUserType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('groups', 'document', array(
-            'class' => 'OpenOrchestra\BackofficeBundle\Document\Group',
-            'property' => 'name',
+        $builder->add('groups', 'orchestra_group', array(
             'multiple' => true,
             'expanded' => true,
             'required' => false,

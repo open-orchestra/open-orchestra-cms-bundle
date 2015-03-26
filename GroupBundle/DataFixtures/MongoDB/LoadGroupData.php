@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\GroupBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -11,7 +11,7 @@ use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeFolderPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\BackofficeBundle\Document\Group;
+use OpenOrchestra\GroupBundle\Document\Group;
 
 /**
  * Class LoadGroupData

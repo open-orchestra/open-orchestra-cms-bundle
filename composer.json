@@ -63,6 +63,7 @@
             "OpenOrchestra\\LogBundle": "",
             "OpenOrchestra\\BackofficeBundle": "",
             "OpenOrchestra\\Backoffice": "",
+            "OpenOrchestra\\GroupBundle": "",
             "OpenOrchestra\\ApiBundle": ""
         }
     },

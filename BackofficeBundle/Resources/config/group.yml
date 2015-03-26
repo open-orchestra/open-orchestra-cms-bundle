@@ -1,6 +1,5 @@
 parameters:
     open_orchestra_user.repository.group.class: OpenOrchestra\UserBundle\Repository\GroupRepository
-    open_orchestra_user.document.group.class: OpenOrchestra\BackofficeBundle\Document\Group
 
 services:
     open_orchestra_user.repository.group:

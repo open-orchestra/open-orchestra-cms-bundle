@@ -16,7 +16,6 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $class = 'OpenOrchestra\UserBundle\Document\User';
-    protected $groupClass = 'OpenOrchestra\BackofficeBundle\Document\Group';
 
     protected $builder;
     protected $resolver;
@@ -37,7 +36,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
 
-        $this->form = new UserType($this->class, $this->translator, $this->groupClass);
+        $this->form = new UserType($this->class, $this->translator);
     }
 
     /**

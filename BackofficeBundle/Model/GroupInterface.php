@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\Model;
 
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Interface GroupInterface
@@ -12,9 +11,9 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 interface GroupInterface extends BaseGroupInterface
 {
     /**
-     * @param SiteInterface $site
+     * @param ReadSiteInterface $site
      */
-    public function setSite(SiteInterface $site);
+    public function setSite(ReadSiteInterface $site);
 
     /**
      * @return ReadSiteInterface
