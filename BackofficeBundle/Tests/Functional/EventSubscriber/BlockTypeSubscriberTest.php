@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\FunctionalTest;
+namespace OpenOrchestra\BackofficeBundle\Tests\Functional\EventSubscriber;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy;
