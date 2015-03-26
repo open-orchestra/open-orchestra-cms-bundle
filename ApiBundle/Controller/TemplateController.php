@@ -23,7 +23,7 @@ class TemplateController extends BaseController
      * @Config\Route("/{templateId}", name="open_orchestra_api_template_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_TEMPLATE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
      *
      * @Api\Serialize()
      *
@@ -42,7 +42,7 @@ class TemplateController extends BaseController
      * @Config\Route("/{templateId}/delete", name="open_orchestra_api_template_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_TEMPLATE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
      *
      * @return Response
      */

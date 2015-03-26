@@ -23,7 +23,7 @@ class UserController extends BaseController
      * @Config\Route("/{userId}", name="open_orchestra_api_user_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_USER')")
+     * @Config\Security("has_role('ROLE_ACCESS_USER')")
      *
      * @Api\Serialize()
      *
@@ -40,7 +40,7 @@ class UserController extends BaseController
      * @Config\Route("", name="open_orchestra_api_user_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_USER')")
+     * @Config\Security("has_role('ROLE_ACCESS_USER')")
      *
      * @Api\Serialize()
      *
@@ -59,7 +59,7 @@ class UserController extends BaseController
      * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_USER')")
+     * @Config\Security("has_role('ROLE_ACCESS_USER')")
      *
      * @return Response
      */

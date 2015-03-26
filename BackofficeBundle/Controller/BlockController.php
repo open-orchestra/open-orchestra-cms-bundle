@@ -22,7 +22,7 @@ class BlockController extends AbstractAdminController
      * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="open_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -88,7 +88,7 @@ class BlockController extends AbstractAdminController
      * @Config\Route("/block/existing/{language}", name="open_orchestra_backoffice_block_exsting")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */

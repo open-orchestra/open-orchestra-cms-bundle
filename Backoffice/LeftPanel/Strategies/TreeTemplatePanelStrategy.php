@@ -9,7 +9,7 @@ use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
  */
 class TreeTemplatePanelStrategy extends AbstractLeftPaneStrategy
 {
-    const ROLE_PANEL_TREE_TEMPLATE = 'ROLE_PANEL_TREE_TEMPLATE';
+    const ROLE_ACCESS_TREE_TEMPLATE = 'ROLE_ACCESS_TREE_TEMPLATE';
 
     /**
      * @var TemplateRepositoryInterface
@@ -60,6 +60,6 @@ class TreeTemplatePanelStrategy extends AbstractLeftPaneStrategy
      */
     public function getRole()
     {
-        return self::ROLE_PANEL_TREE_TEMPLATE;
+        return self::ROLE_ACCESS_TREE_TEMPLATE;
     }
 }

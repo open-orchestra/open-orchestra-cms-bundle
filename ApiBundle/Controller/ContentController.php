@@ -25,7 +25,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}", name="open_orchestra_api_content_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @Api\Serialize()
      *
@@ -55,7 +55,7 @@ class ContentController extends BaseController
      * @Config\Route("", name="open_orchestra_api_content_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @Api\Serialize()
      *
@@ -76,7 +76,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -97,7 +97,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -125,7 +125,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/list-version", name="open_orchestra_api_content_list_version")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @Api\Serialize()
      *
@@ -146,7 +146,7 @@ class ContentController extends BaseController
      * @Config\Route("/update/{contentMongoId}", name="open_orchestra_api_content_update")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @Api\Serialize()
      *

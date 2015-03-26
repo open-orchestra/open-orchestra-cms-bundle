@@ -26,7 +26,7 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
@@ -57,7 +57,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -79,7 +79,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/duplicate", name="open_orchestra_api_node_duplicate")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -111,7 +111,7 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -131,7 +131,7 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -153,7 +153,7 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_PANEL_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */

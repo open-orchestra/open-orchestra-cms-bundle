@@ -22,7 +22,7 @@ class RedirectionController extends BaseController
      * @Config\Route("/{redirectionId}", name="open_orchestra_api_redirection_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_REDIRECTION')")
+     * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
      *
      * @Api\Serialize()
      *
@@ -39,7 +39,7 @@ class RedirectionController extends BaseController
      * @Config\Route("", name="open_orchestra_api_redirection_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_REDIRECTION')")
+     * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
      *
      * @Api\Serialize()
      *
@@ -58,7 +58,7 @@ class RedirectionController extends BaseController
      * @Config\Route("/{redirectionId}/delete", name="open_orchestra_api_redirection_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_REDIRECTION')")
+     * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
      *
      * @return Response
      */

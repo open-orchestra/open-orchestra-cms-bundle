@@ -18,7 +18,7 @@ class DeletedController extends BaseController
      * @Config\Route("/list", name="open_orchestra_api_deleted_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_PANEL_DELETED')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETED')")
      *
      * @Api\Serialize()
      *
