@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\LogBundle\Test\EventSubscriber;
+namespace OpenOrchestra\LogBundle\Tests\EventSubscriber;
 
 use Phake;
 use OpenOrchestra\ModelInterface\NodeEvents;

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\LogBundle\Test\Processor;
+namespace OpenOrchestra\LogBundle\Tests\Processor;
 
 use Phake;
 use OpenOrchestra\LogBundle\Processor\LogUserProcessor;

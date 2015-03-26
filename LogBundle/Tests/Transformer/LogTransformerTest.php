@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\LogBundle\Test\Transformer;
+namespace OpenOrchestra\LogBundle\Tests\Transformer;
 
 use Phake;
 use OpenOrchestra\LogBundle\Transformer\LogTransformer;
