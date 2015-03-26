@@ -62,11 +62,8 @@ $(document).on "click", ".modal-body-content a[class^='ajax-add-'], .media-modal
     url: $(event.target).attr('data-url')
     method: 'GET'
     success: (response) ->
-      if isLoginForm(response)
-        redirectToLogin()
-      else
-        view = new mediaFormView(
-          html: response
-          el: ("#" + modalId + " .modal-body-content")
-          title: $.trim(folderName)
-        )
+      view = new mediaFormView(
+        html: response
+        el: ("#" + modalId + " .modal-body-content")
+        title: $.trim(folderName)
+      )

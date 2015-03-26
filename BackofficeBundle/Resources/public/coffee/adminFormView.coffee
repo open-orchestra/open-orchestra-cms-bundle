@@ -27,12 +27,9 @@ adminFormView = OrchestraView.extend(
       url: @url
       method: @method
       success: (response) ->
-        if isLoginForm(response)
-          redirectToLogin()
-        else
-          viewContext.renderContent(
-            html: response
-          )
+        viewContext.renderContent(
+          html: response
+        )
       error: ->
         $('.modal-body', viewContext.el).html 'Erreur durant le chargement'
     return
@@ -56,7 +53,6 @@ adminFormView = OrchestraView.extend(
     viewContext = this
     $(@formClass, @$el).on @formEvent, (e) ->
       e.preventDefault() # prevent native submit
-      displayLoader($('.submit_form', viewContext.$el).parent())
       $("form", viewContext.$el).ajaxSubmit
         statusCode:
           200: (response) ->
