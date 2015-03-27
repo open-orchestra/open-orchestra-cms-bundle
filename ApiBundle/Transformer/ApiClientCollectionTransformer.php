@@ -24,6 +24,8 @@ class ApiClientCollectionTransformer extends AbstractTransformer
             $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));
         }
 
+        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_backoffice_api_client_new'));
+
         return $facade;
     }
 

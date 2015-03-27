@@ -18,4 +18,14 @@ class ApiClientFacade extends AbstractFacade
      * @Serializer\Type("boolean")
      */
     public $trusted;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $key;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $secret;
 }

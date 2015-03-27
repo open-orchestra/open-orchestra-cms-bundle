@@ -6,7 +6,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Class ApiClientCollectionFacade
  */
-class ApiClientCollectionFacade
+class ApiClientCollectionFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("string")
