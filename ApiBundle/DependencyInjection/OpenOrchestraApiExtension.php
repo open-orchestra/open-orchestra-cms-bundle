@@ -23,5 +23,6 @@ class OpenOrchestraApiExtension extends Extension
         $loader->load('services.yml');
         $loader->load('transformer.yml');
         $loader->load('oauth2.yml');
+        $loader->load('security.yml');
     }
 }

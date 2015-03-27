@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_api.oauth2.authorization_server.class: OpenOrchestra\ApiBundle\OAuth2\AuthorizationServer
     open_orchestra_api.oauth2.strategy.client_credentials_grant.class: OpenOrchestra\ApiBundle\OAuth2\Strategy\ClientCredentialsGrantStrategy
+    open_orchestra_api.oauth2.strategy.resource_owner_password_grant.class: OpenOrchestra\ApiBundle\OAuth2\Strategy\ResourceOwnerPasswordGrantStrategy
 
 services:
     open_orchestra_api.oauth2.authorization_server:
@@ -10,6 +11,18 @@ services:
         arguments:
             - @open_orchestra_user.repository.api_client
             - @open_orchestra_user.repository.access_token
+            - @serializer
+            - @validator
+            - '+1month'
+        tags:
+            - { name: open_orchestra_api.oauth2.strategy }
+    open_orchestra_api.oauth2.strategy.resource_owner_password_grant:
+        class: %open_orchestra_api.oauth2.strategy.resource_owner_password_grant.class%
+        arguments:
+            - @open_orchestra_user.repository.api_client
+            - @open_orchestra_user.repository.access_token
+            - @open_orchestra_user.repository.user
+            - @security.encoder_factory
             - @serializer
             - @validator
             - '+1month'
