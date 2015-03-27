@@ -1,0 +1,17 @@
+parameters:
+    open_orchestra_api.oauth2.authorization_server.class: OpenOrchestra\ApiBundle\OAuth2\AuthorizationServer
+    open_orchestra_api.oauth2.strategy.client_credentials_grant.class: OpenOrchestra\ApiBundle\OAuth2\Strategy\ClientCredentialsGrantStrategy
+
+services:
+    open_orchestra_api.oauth2.authorization_server:
+        class: %open_orchestra_api.oauth2.authorization_server.class%
+    open_orchestra_api.oauth2.strategy.client_credentials_grant:
+        class: %open_orchestra_api.oauth2.strategy.client_credentials_grant.class%
+        arguments:
+            - @open_orchestra_user.repository.api_client
+            - @open_orchestra_user.repository.access_token
+            - @serializer
+            - @validator
+            - '+1month'
+        tags:
+            - { name: open_orchestra_api.oauth2.strategy }

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle;
 
+use OpenOrchestra\ApiBundle\DependencyInjection\Compiler\Oauth2CompilerPass;
 use OpenOrchestra\ApiBundle\DependencyInjection\Compiler\TransformerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -19,6 +20,6 @@ class OpenOrchestraApiBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new TransformerCompilerPass());
+        $container->addCompilerPass(new Oauth2CompilerPass());
     }
-
 }
