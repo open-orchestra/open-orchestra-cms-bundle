@@ -14,7 +14,7 @@ class LoadApiClientData implements FixtureInterface
     /**
      * Load data fixtures with the passed EntityManager
      */
-    function load(ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $testClient = new ApiClient();
         $testClient->setName('Test client');

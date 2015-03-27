@@ -28,4 +28,4 @@ interface StrategyInterface
      * @return string
      */
     public function getName();
-} 
+}
