@@ -98,6 +98,13 @@ services:
             - ROLE_ACCESS_USER
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
+    open_orchestra_backoffice.left_panel.api_client:
+        class: %open_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - api_client
+            - ROLE_ACCESS_API_CLIENT
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.websites:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:

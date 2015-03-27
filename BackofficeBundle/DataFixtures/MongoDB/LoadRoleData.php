@@ -30,6 +30,7 @@ class LoadRoleData implements FixtureInterface
         $manager->persist($this->generateRole(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT));
         $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE));
         $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION));
+        $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_API_CLIENT));
         $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD));
         $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETED));
         $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_STATUS));

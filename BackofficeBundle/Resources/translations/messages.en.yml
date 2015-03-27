@@ -258,6 +258,8 @@ open_orchestra_backoffice:
                 list: Status
             user:
                 list: Users
+            api_client:
+                list: Api Clients
             role:
                 list: Roles
             group:
