@@ -37,7 +37,7 @@ class OAuth2AuthenticationProvider implements AuthenticationProviderInterface
     {
         $accessToken = $token->getAccessToken();
         $accessTokenEntity = $this->accessTokenRepository->findOneByCode($accessToken);
-        if ($accessTokenEntity->isBlocked()) {
+        if (is_null($accessTokenEntity) || $accessTokenEntity->isBlocked()) {
             throw new TokenBlockedHttpException();
         }
 
