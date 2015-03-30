@@ -1,7 +1,7 @@
 {
     "name": "itkg/open-orchestra-cms-bundle",
     "description": "This bundle provide the backoffice part of OpenOrchestra",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Nicolas Thal",
