@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Class ChangeNodeStatusSubscriber
+ * Class FlushNodeCacheSubscriber
  */
 class FlushNodeCacheSubscriber implements EventSubscriberInterface
 {
