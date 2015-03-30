@@ -3,13 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\ChangeNodeStatusSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\FlushNodeCacheSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
 
 /**
- * Class ChangeNodeStatusSubscriberTest
+ * Class FlushNodeCacheSubscriberTest
  */
-class ChangeNodeStatusSubscriberTest extends \PHPUnit_Framework_TestCase
+class FlushNodeCacheSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     protected $cacheableManager;
     protected $tagManager;
@@ -17,6 +17,7 @@ class ChangeNodeStatusSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $node;
     protected $nodeId = 'nodeId';
     protected $nodeIdTag = 'nodeIdTag';
+    protected $subscriber;
 
     /**
      * Set up the test
@@ -33,7 +34,7 @@ class ChangeNodeStatusSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
 
-        $this->subscriber = new ChangeNodeStatusSubscriber($this->cacheableManager, $this->tagManager);
+        $this->subscriber = new FlushNodeCacheSubscriber($this->cacheableManager, $this->tagManager);
     }
 
     /**
@@ -69,7 +70,7 @@ class ChangeNodeStatusSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testNodeChangeStatus()
     {
-        $this->subscriber->nodeChangeStatus($this->nodeEvent);
+        $this->subscriber->invalidateNodeTag($this->nodeEvent);
 
         Phake::verify($this->cacheableManager)->invalidateTags(array($this->nodeIdTag));
     }
