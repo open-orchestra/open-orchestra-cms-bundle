@@ -29,7 +29,7 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
         $group2 = $this->generateGroup('Demo group', 'site2', 'group2');
         $group2->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
         $manager->persist($group2);
-        $group3 = $this->generateGroup('Echonext group', 'site3', 'group3');
+        $group3 = $this->generateGroup('Empty group', 'site3', 'group3');
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
         $manager->persist($group3);
 
