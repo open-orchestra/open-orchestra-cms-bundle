@@ -7,11 +7,13 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
 use OpenOrchestra\BaseBundle\Manager\TagManager;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Class ChangeNodeStatusSubscriber
  */
-class ChangeNodeStatusSubscriber implements EventSubscriberInterface
+class FlushNodeCacheSubscriber implements EventSubscriberInterface
 {
     protected $cacheableManager;
     protected $tagManager;
@@ -28,10 +30,10 @@ class ChangeNodeStatusSubscriber implements EventSubscriberInterface
 
     /**
      * Triggered when a node status changes
-     * 
+     *
      * @param NodeEvent $event
      */
-    public function nodeChangeStatus(NodeEvent $event)
+    public function invalidateNodeTag(NodeEvent $event)
     {
         $node = $event->getNode();
 
@@ -48,7 +50,7 @@ class ChangeNodeStatusSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            NodeEvents::NODE_CHANGE_STATUS => 'nodeChangeStatus'
+            NodeEvents::NODE_CHANGE_STATUS => 'invalidateNodeTag'
         );
     }
 }
