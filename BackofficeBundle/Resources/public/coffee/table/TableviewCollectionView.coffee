@@ -32,7 +32,7 @@ TableviewCollectionView = OrchestraView.extend(
     for element of @options.elements.get(@options.elements.get('collection_name'))
       @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])
       
-    table = $('#tableviewCollectionTable').dataTable(
+    $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
       order: [@options.order]
