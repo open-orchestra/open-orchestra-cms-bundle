@@ -1,6 +1,6 @@
 $(document).ready ->
   $.ajaxSetup
-    beforeSend: ->
+    beforeSend: (event) ->
       if event != undefined && event.type != undefined
         if event.type == "submit"
           displayLoader($('.submit_form', event.currentTarget).parent())
