@@ -33,6 +33,8 @@ parameters:
     open_orchestra_api.transformer.deleted.class: OpenOrchestra\ApiBundle\Transformer\DeletedTransformer
     open_orchestra_api.transformer.deleted_collection.class: OpenOrchestra\ApiBundle\Transformer\DeletedCollectionTransformer
     open_orchestra_api.transformer.link.class: OpenOrchestra\ApiBundle\Transformer\LinkTransformer
+    open_orchestra_api.transformer.api_client.class: OpenOrchestra\ApiBundle\Transformer\ApiClientTransformer
+    open_orchestra_api.transformer.api_client_collection.class: OpenOrchestra\ApiBundle\Transformer\ApiClientCollectionTransformer
 
 services:
     open_orchestra_api.transformer_manager:
@@ -198,5 +200,13 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.link:
         class: %open_orchestra_api.transformer.link.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.api_client:
+        class: %open_orchestra_api.transformer.api_client.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.api_client_collection:
+        class: %open_orchestra_api.transformer.api_client_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}

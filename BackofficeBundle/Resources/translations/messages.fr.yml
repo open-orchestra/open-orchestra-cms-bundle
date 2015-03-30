@@ -223,6 +223,11 @@ open_orchestra_backoffice:
             node_id: Node sur lequel faire la redirection
             url: Rediriger sur l'url
             permanent: Redirection permanente
+        api_client:
+            new:
+                success: Le client d'API a été créé
+            edit:
+                success: Le client d'API a été mis à jour
     left_menu:
         tree:
             new_page: Nouvelle page
@@ -258,6 +263,8 @@ open_orchestra_backoffice:
                 list: Statut
             user:
                 list: Utilisateurs
+            api_client:
+                list: Clients d'API
             role:
                 list: Rôles
             group:
