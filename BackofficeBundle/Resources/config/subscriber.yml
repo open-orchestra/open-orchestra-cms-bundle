@@ -4,6 +4,7 @@ parameters:
     open_orchestra_backoffice.subscriber.update_node_redirection.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber
     open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\BackofficeBundle\EventSubscriber\FlushNodeCacheSubscriber
     open_orchestra_backoffice.subscriber.change_content_status.class: OpenOrchestra\BackofficeBundle\EventSubscriber\ChangeContentStatusSubscriber
+    open_orchestra_media.subscriber.media_cache__invalidate.class: OpenOrchestra\BackofficeBundle\EventSubscriber\MediaChacheInvalidateSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -36,6 +37,13 @@ services:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.change_content_status:
         class: %open_orchestra_backoffice.subscriber.change_content_status.class%
+        arguments:
+            - @open_orchestra_display.manager.cacheable
+            - @open_orchestra_base.manager.tag
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_media.subscriber.media_cache_invalidate:
+        class: %open_orchestra_media.subscriber.media_cache__invalidate.class%
         arguments:
             - @open_orchestra_display.manager.cacheable
             - @open_orchestra_base.manager.tag
