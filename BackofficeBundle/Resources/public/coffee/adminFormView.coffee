@@ -18,7 +18,6 @@ adminFormView = OrchestraView.extend(
       @formEvent = 'submit'
       @formClass = 'form'
     @events[@formEvent + ' ' + @formClass] = 'addEventOnSave'
-    console.log(@formEvent + ' ' + @formClass)
     @loadTemplates [
         'deleteButton'
     ]
