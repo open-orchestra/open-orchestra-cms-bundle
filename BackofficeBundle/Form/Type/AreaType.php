@@ -59,7 +59,7 @@ class AreaType extends AbstractType
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.area.bo_percent'
         ));
-        if(!array_key_exists('disabled', $options) || $options['disabled'] == false){
+        if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
             $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
         }
