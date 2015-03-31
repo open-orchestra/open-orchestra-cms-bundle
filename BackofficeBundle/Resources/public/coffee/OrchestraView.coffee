@@ -1,5 +1,10 @@
 OrchestraView = Backbone.View.extend(
 
+  constructor: (attributes, options) ->
+    Backbone.View.apply @, arguments
+    @.setElement(@el)
+    return
+
   loadTemplates: (templates) ->
     @compiledTemplates = {}
     currentView = @

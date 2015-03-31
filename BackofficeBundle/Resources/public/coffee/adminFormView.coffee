@@ -11,8 +11,14 @@ adminFormView = OrchestraView.extend(
       for i of options.triggers
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
-    @formEvent = 'submit'
-    @formClass = 'form'
+    if @deleteButton 
+      @formEvent = 'click'
+      @formClass = '.submit_form'
+    else
+      @formEvent = 'submit'
+      @formClass = 'form'
+    @events[@formEvent + ' ' + @formClass] = 'addEventOnSave'
+    console.log(@formEvent + ' ' + @formClass)
     @loadTemplates [
         'deleteButton'
     ]
@@ -41,37 +47,33 @@ adminFormView = OrchestraView.extend(
       $('.modal-footer', @el).html @renderTemplate('deleteButton', @options)
       $('.modal-footer', @el).removeClass("hidden-info")
       $('.modal-footer', @el).prepend($('.submit_form', @$el))
-      @formEvent = 'click'
-      @formClass = '.submit_form'
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    @addEventOnSave()
     Backbone.Wreqr.radio.commands.execute 'widget', 'loaded', @$el
 
-  addEventOnSave: ->
+  addEventOnSave: (e) ->
     viewContext = this
-    $(@formClass, @$el).on @formEvent, (e) ->
-      e.preventDefault() # prevent native submit
-      $("form", viewContext.$el).ajaxSubmit
-        statusCode:
-          200: (response) ->
-            view = viewContext.renderContent(
-              html: response
-            )
-            if $('#node_nodeId', viewContext.$el).length > 0
-              displayRoute = appRouter.generateUrl "showNode",
-                nodeId: $('#node_nodeId', viewContext.$el).val()
-            else if $('#template_templateId', viewContext.$el).length > 0
-              displayRoute = appRouter.generateUrl "showTemplate",
-                templateId: $('#template_templateId', viewContext.$el).val()
-            else
-              displayRoute = Backbone.history.fragment
-              Backbone.history.loadUrl(displayRoute)
-            displayMenu(displayRoute)
-          400: (response) ->
-            view = viewContext.renderContent(
-              html: response.responseText
-            )
+    e.preventDefault() # prevent native submit
+    $("form", viewContext.$el).ajaxSubmit
+      statusCode:
+        200: (response) ->
+          view = viewContext.renderContent(
+            html: response
+          )
+          if $('#node_nodeId', viewContext.$el).length > 0
+            displayRoute = appRouter.generateUrl "showNode",
+              nodeId: $('#node_nodeId', viewContext.$el).val()
+          else if $('#template_templateId', viewContext.$el).length > 0
+            displayRoute = appRouter.generateUrl "showTemplate",
+              templateId: $('#template_templateId', viewContext.$el).val()
+          else
+            displayRoute = Backbone.history.fragment
+            Backbone.history.loadUrl(displayRoute)
+          displayMenu(displayRoute)
+        400: (response) ->
+          view = viewContext.renderContent(
+            html: response.responseText
+          )
     return
 )
