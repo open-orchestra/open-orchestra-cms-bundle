@@ -1,3 +1,8 @@
+search = (api, rank) ->
+  return ->
+    api.column(rank).search($(this).val()).draw()
+    return
+
 TableviewCollectionView = OrchestraView.extend(
   events:
     'click #none': 'clickAdd'
@@ -26,12 +31,30 @@ TableviewCollectionView = OrchestraView.extend(
     $('.js-widget-title', @$el).text @options.title
     for element of @options.elements.get(@options.elements.get('collection_name'))
       @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])
+      
     $('#tableviewCollectionTable').dataTable(
-      searching: false
+      searching: true
       ordering: true
       order: [@options.order]
       lengthChange: false
+      initComplete: ->
+        api = @.api()
+        tr = $('<tr>')
+        headers = api.columns().header().toArray()
+        for i of headers
+          input = $('<input>')
+          td = $('<td>')
+          text = $(api.column(i).header()).text()
+          if text != ''
+            input.attr 'type', 'text'
+            input.attr 'placeholder', 'Search ' + $(api.column(i).header()).text()
+            input.on 'keyup change', search(api, i)
+            td.append input
+          tr.append td
+        $(api.table().header()).append tr
+        return
     )
+    
     return
 
   addElementToView: (elementData) ->
