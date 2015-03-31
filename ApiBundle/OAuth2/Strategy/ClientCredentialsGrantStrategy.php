@@ -38,7 +38,7 @@ class ClientCredentialsGrantStrategy extends AbstractStrategy
         /** @var TokenInterface $accessToken */
         $accessToken = $this->accessTokenRepository->findOneByClientWithoutUser($client);
 
-        if (null == $accessToken || $accessToken->isBlocked() || $accessToken->isExpired()) {
+        if (is_null($accessToken) || $accessToken->isBlocked() || $accessToken->isExpired()) {
             // Create/Validate AccessToken
             $accessToken = AccessToken::create(null, $client);
             if (!$accessToken->isValid($this->validator)) {
