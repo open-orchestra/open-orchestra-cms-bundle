@@ -7,8 +7,6 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
 use OpenOrchestra\BaseBundle\Manager\TagManager;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Class FlushNodeCacheSubscriber

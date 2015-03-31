@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
