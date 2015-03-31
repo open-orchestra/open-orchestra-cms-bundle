@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Phake;
-use OpenOrchestra\MediaBundle\EventSubscriber\MediaChacheInvalidateSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\MediaChacheInvalidateSubscriber;
 use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\Media\MediaEvents;
 
