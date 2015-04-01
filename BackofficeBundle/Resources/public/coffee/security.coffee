@@ -1,8 +1,7 @@
-isLoginForm = (html) ->
-  return false if typeof html == 'object'
-  nbUserName = html.indexOf "_username"
-  nbPassword = html.indexOf "_password"
-  if nbUserName > 0 and nbPassword > 0
+isAccessDenied = (text) ->
+  return false if typeof text == 'object'
+  accessDenied = text.indexOf "client.access_denied"
+  if accessDenied > 0
     true
   else
     false
