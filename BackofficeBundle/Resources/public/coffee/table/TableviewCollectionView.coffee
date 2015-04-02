@@ -4,20 +4,15 @@ search = (api, rank) ->
     return
 
 TableviewCollectionView = OrchestraView.extend(
-  events:
-    'click #none': 'clickAdd'
-
   initialize: (options) ->
+    @events = []
+    @events['click a.ajax-add'] = 'clickAdd'
     @options = options
     @options.order = [ 0, 'asc' ] if @options.order == undefined
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
-    key = 'click a.ajax-add-' + @cid
-    @events[key] = 'clickAdd'
     _.bindAll this, "render"
     @loadTemplates [
       'tableviewCollectionView',
-      'tableviewView',
-      'tableviewActions'
     ]
     return
 
@@ -25,11 +20,11 @@ TableviewCollectionView = OrchestraView.extend(
     $(@el).html @renderTemplate('tableviewCollectionView',
       displayedElements: @options.displayedElements
       links: @options.elements.get('links')
-      cid: @cid
     )
     $('.js-widget-title', @$el).text @options.title
-    for element of @options.elements.get(@options.elements.get('collection_name'))
-      @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])
+    name = @options.elements.get('collection_name')
+    for element of @options.elements.get(name)
+      @addElementToView (@options.elements.get(name)[element])
       
     $('#tableviewCollectionTable').dataTable(
       searching: true
@@ -41,13 +36,13 @@ TableviewCollectionView = OrchestraView.extend(
         tr = $('<tr>')
         headers = api.columns().header().toArray()
         for i of headers
-          input = $('<input>')
           td = $('<td>')
           text = $(api.column(i).header()).text()
           if text != ''
-            input.attr 'type', 'text'
-            input.attr 'placeholder', 'Search ' + $(api.column(i).header()).text()
-            input.on 'keyup change', search(api, i)
+            input = $('<input>')
+            .attr('type', 'text')
+            .attr('placeholder', 'Search ' + text)
+            .on('keyup change', search(api, i))
             td.append input
           tr.append td
         $(api.table().header()).append tr
@@ -60,12 +55,12 @@ TableviewCollectionView = OrchestraView.extend(
     options = @options
     elementModel = new TableviewModel
     elementModel.set elementData
-    view = new TableviewView(
+    new TableviewView(
       element: elementModel
       displayedElements: options.displayedElements
       title: options.title
       entityType: options.entityType
-      el : this.$el.find('tbody')
+      target : @$el.find('tbody')
     )
     return
 
