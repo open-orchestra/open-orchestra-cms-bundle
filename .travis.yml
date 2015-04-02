@@ -5,10 +5,17 @@ php:
 
 sudo: false
 
+cache:
+  directories:
+    - ~/.composer/cache
+    - ~/composer
+
 before_install:
   - printf "\n" |pecl install imagick
   - phpenv config-add .travis.php.ini
-  - wget https://getcomposer.org/composer.phar
+  - if [ -f ~/composer/composer.phar ]; then mv ~/composer/composer.phar ./; else wget https://getcomposer.org/composer.phar; fi
+  - mkdir -p ~/composer
+  - cp composer.phar ~/composer/composer.phar
 
 install:
   - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
