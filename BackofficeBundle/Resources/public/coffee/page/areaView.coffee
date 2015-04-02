@@ -4,7 +4,7 @@ AreaView = OrchestraView.extend(
     @height = options.height
     @node_id = options.node_id
     @node_published = options.node_published
-    $(@el).addClass options.displayClass
+    @domContainer = options.domContainer
     @initEvents()
     _.bindAll this, "render", "addAreaToView", "addBlockToView"
     @loadTemplates [
@@ -34,16 +34,19 @@ AreaView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).append @renderTemplate('areaView',
+    html =  @renderTemplate('areaView',
       area: @area
       cid: @cid
       node_published: @node_published
     )
+    content = $(html)
+    @setElement content.get(0)
+    @domContainer.append content
     this.drawContent()
 
   drawContent: ->
     if @area.get("areas").length == 0
-      $(@el).find('#area-' + @cid).addClass('area-leaf')
+      @$el.addClass('area-leaf')
     else
       for area of @area.get("areas")
         @addAreaToView @area.get("areas")[area]
@@ -65,26 +68,28 @@ AreaView = OrchestraView.extend(
     $("ul.blocks-" + @cid, @el).empty()
 
   addAreaToView: (area) ->
+    domContainer = $("ul.areas-" + @cid, @el)
     areaElement = new Area()
     areaElement.set area
     areaView = new AreaView(
       area: areaElement
       node_id: @node_id
       node_published: @node_published
-      displayClass: (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
-      el: $("ul.areas-" + @cid, @el)
+      domContainer: domContainer
     )
+    domContainer.addClass (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   addBlockToView: (block) ->
+    domContainer = $("ul.blocks-" + @cid, @el)
     blockElement = new Block()
     blockElement.set block
     blockView = new BlockView(
       block: blockElement
-      displayClass: (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
       area: @area
+      domContainer: domContainer
       node_published: @node_published
-      el: $("ul.blocks-" + @cid, @el)
     )
+    domContainer.addClass (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   sendBlockData: (event)->
     ul = $(event.target)
