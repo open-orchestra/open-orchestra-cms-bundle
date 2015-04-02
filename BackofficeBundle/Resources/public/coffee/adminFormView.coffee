@@ -11,12 +11,10 @@ adminFormView = OrchestraView.extend(
       for i of options.triggers
         @events[options.triggers[i].event] = options.triggers[i].name
         eval "this." + options.triggers[i].name + " = options.triggers[i].fct"
-    @formEvent = 'submit'
-    @formClass = 'form'
+    formEvent = 'submit form'
     if @deleteButton 
-      @formEvent = 'click'
-      @formClass = '.submit_form'
-    @events[@formEvent + ' ' + @formClass] = 'addEventOnSave'
+      formEvent = 'click .submit_form'
+    @events[formEvent] = 'addEventOnSave'
     @loadTemplates [
         'deleteButton'
     ]
