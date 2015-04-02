@@ -1,5 +1,5 @@
 {
-    "name": "itkg/open-orchestra-cms-bundle",
+    "name": "open-orchestra/open-orchestra-cms-bundle",
     "description": "This bundle provide the backoffice part of OpenOrchestra",
     "license": "Apache-2.0",
     "authors": [
@@ -8,49 +8,19 @@
             "email": "nico.th4l@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-media-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-model-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-model-interface"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-indexation-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-base-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-user-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-display-bundle"
-        }
-    ],
     "minimum-stability": "dev",
     "require": {
         "jms/serializer-bundle" : "0.13.0",
-        "itkg/open-orchestra-base-bundle": "*",
-        "itkg/open-orchestra-display-bundle": "*",
-        "itkg/open-orchestra-media-bundle": "*",
-        "itkg/open-orchestra-user-bundle": "*",
-        "itkg/open-orchestra-model-interface": "*",
+        "open-orchestra/open-orchestra-base-bundle": "*",
+        "open-orchestra/open-orchestra-display-bundle": "*",
+        "open-orchestra/open-orchestra-media-bundle": "*",
+        "open-orchestra/open-orchestra-user-bundle": "*",
+        "open-orchestra/open-orchestra-model-interface": "*",
         "braincrafted/bootstrap-bundle": "2.1.0",
         "stfalcon/tinymce-bundle": "0.3.8"
     },
     "require-dev": {
-        "itkg/open-orchestra-model-bundle": "dev-master",
+        "open-orchestra/open-orchestra-model-bundle": "dev-master",
         "phpunit/phpunit" : "4.0.14",
         "scrutinizer/ocular": "1.1.1",
         "phake/phake": "2.0.0-beta2"
