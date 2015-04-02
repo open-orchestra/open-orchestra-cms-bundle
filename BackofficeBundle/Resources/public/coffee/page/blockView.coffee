@@ -3,7 +3,7 @@ BlockView = OrchestraView.extend(
     @events = {}
     @events['click span.block-param-' + @cid] = 'paramBlock'
     @block = options.block
-    @areaCid = options.areaCid
+    @area = options.area
     @node_published = options.node_published
     $(@el).addClass options.displayClass
     _.bindAll this, "render"
@@ -19,11 +19,14 @@ BlockView = OrchestraView.extend(
     )
 
   render: ->
-    $(@el).append @renderTemplate('blockView',
+    html = @renderTemplate('blockView',
       block: @block
       cid: @cid
-      areaCid: @areaCid
+      areaCid: @area.cid
       node_published: @node_published
     )
+    content = $(html)
+    $(@el).append content
+    @setElement content.first()[0]
     this
 )
