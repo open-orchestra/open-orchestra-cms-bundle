@@ -21,8 +21,8 @@ refreshUl = (ul) ->
 makeSortable = (el, duplicate) ->
   handler = '.move-tool'
   handler = false if $(el).parent().hasClass('js-widget-blockpanel')
-  $("ul.ui-model-blocks", el).sortable(
-    connectWith: '#content div[role="container"] ul.ui-model-blocks',
+  $(".ui-model-blocks", el).sortable(
+    connectWith: '#content div[role="container"] .ui-model-blocks',
     handle: handler,
     appendTo: 'body',
     tolerance: 'pointer',
