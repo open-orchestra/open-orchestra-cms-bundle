@@ -2,7 +2,6 @@
     width:100%;
     height:auto;
     position: relative;
-    background-color:#A8A8A8;
     ul {
         padding:0;
         margin:0;
@@ -56,7 +55,8 @@
         overflow:hidden;
     }
     .block-content, .area-content {
-        color:#4e4e4e;
+        color:#ffffff;
+        font-weight:700;
         border-radius:8px;
         min-width: 80px;
         min-height: 80px;
@@ -100,16 +100,17 @@
                 display:inline-block;
             }
             .tool {
-                color:#FFFFFF;
+                color:#ffffff;
                 font-size: 15px;
                 padding: 8px 8px 5px 8px;
                 background-color:#676564;
                 display: block;
                 float: left;
                 height: 32px;
+                opacity:0.8;
             }
             .tool:hover {
-                background-color:#605F5D;
+                opacity:1;
             }
             .tool:first-child {
                 border-top-left-radius: 3px;
@@ -129,12 +130,7 @@
                 cursor:pointer;
             }
         }
-        .generate {
-            background-color:#F0EBE7;
-            padding:5px;
-        }
-        .load {
-            background-color:#E0DBD7;
+        .generate, .load{
             padding:5px;
         }
         .preview {
@@ -166,7 +162,7 @@
 
 
 li.area-leaf > .area-content {
-    background-color:#FFFFFF;
+    background-color:#ffffff;
     ul {
         border-spacing:6px;
     }
