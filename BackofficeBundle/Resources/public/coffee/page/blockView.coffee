@@ -19,14 +19,12 @@ BlockView = OrchestraView.extend(
     )
 
   render: ->
-    html = @renderTemplate('blockView',
+    @setElement @renderTemplate('blockView',
       block: @block
       cid: @cid
       areaCid: @area.cid
       node_published: @node_published
     )
-    content = $(html)
-    @setElement content.get(0)
-    @domContainer.append content
+    @domContainer.append @$el
     this
 )
