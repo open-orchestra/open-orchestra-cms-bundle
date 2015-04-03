@@ -14,7 +14,7 @@ use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy as BaseGal
 class GalleryStrategy extends AbstractBlockStrategy
 {
     protected $translator;
-    protected $formats = array();
+    protected $thumbnailConfig = array();
 
     /**
      * @param TranslatorInterface $translator
@@ -23,11 +23,7 @@ class GalleryStrategy extends AbstractBlockStrategy
     public function __construct(TranslatorInterface $translator, array $thumbnailConfig)
     {
         $this->translator = $translator;
-
-        $this->formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('open_orchestra_backoffice.form.media.original_image');
-        foreach ($thumbnailConfig as $key => $thumbnail) {
-            $this->formats[$key] = $this->translator->trans('open_orchestra_backoffice.form.media.' . $key);
-        }
+        $this->thumbnailConfig = $thumbnailConfig;
     }
 
     /**
@@ -46,6 +42,7 @@ class GalleryStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $formats = $this->getFormats();
         $builder
             ->add('columnNumber', 'text', array(
                 'empty_data' => 1,
@@ -57,11 +54,11 @@ class GalleryStrategy extends AbstractBlockStrategy
                 'attr' => array('help_text' => 'open_orchestra_backoffice.block.gallery.form.item_number.helper'),
             ))
             ->add('thumbnailFormat', 'choice', array(
-                'choices' => $this->formats,
+                'choices' => $formats,
                 'label' => 'open_orchestra_backoffice.block.gallery.form.thumbnail_format',
             ))
             ->add('imageFormat', 'choice', array(
-                'choices' => $this->formats,
+                'choices' => $formats,
                 'label' => 'open_orchestra_backoffice.block.gallery.form.image_format.label',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.block.gallery.form.image_format.helper'),
             ))
@@ -78,6 +75,20 @@ class GalleryStrategy extends AbstractBlockStrategy
             ;
     }
 
+    /**
+     * @return array
+     */
+    protected function getFormats()
+    {
+        $formats = array();
+        $formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('open_orchestra_backoffice.form.media.original_image');
+        foreach ($this->thumbnailConfig as $key => $thumbnail) {
+            $formats[$key] = $this->translator->trans('open_orchestra_backoffice.form.media.' . $key);
+        }
+
+        return $formats;
+    }
+    
     /**
      * @return string
      */
