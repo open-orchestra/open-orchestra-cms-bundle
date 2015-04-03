@@ -9,3 +9,6 @@ $(document).ready ->
   $(document).ajaxError (event, jqXHR, settings) ->
     if isAccessDenied(jqXHR.responseText)
       redirectToLogin()
+  $(document).ajaxSuccess (event, xhr, settings) ->
+    if isLoginForm(xhr.responseText)
+      redirectToLogin()
