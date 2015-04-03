@@ -414,6 +414,9 @@ open_orchestra_backoffice:
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
             site_id: Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)
+        display_media:
+            title: Media block
+            description: Display a picture
     element:
         version:
             create: New version

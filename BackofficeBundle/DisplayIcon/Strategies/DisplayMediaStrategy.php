@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy as BaseAddThisStrategy;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
 
 /**
- * Class AddThisStrategy
+ * Class DisplayMediaStrategy
  */
-class AddThisStrategy extends AbstractStrategy
+class DisplayMediaStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,18 +18,19 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseAddThisStrategy::ADDTHIS === $block;
+        return BaseMediaStrategy::DISPLAY_MEDIA == $block;
     }
 
     /**
-     * Display an icon for a block
+     * Perform the show action for a block
      *
      * @return string
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/AddThis:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/DisplayMedia:showIcon.html.twig');
     }
+
 
     /**
      * Get the name of the strategy
@@ -38,6 +39,7 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'add_this';
+        return 'display_media';
     }
+
 }
