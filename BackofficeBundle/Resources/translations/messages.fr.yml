@@ -414,6 +414,11 @@ open_orchestra_backoffice:
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
             site_id: Id de site (Google Analytics : Id de suivi / Xiti : paramètre 's')
+        display_media:
+            title: Bloc média
+            description: Affiche une image
+            form:
+
     element:
         version:
             create: Nouvelle version
