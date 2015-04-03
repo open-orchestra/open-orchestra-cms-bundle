@@ -34,14 +34,12 @@ AreaView = OrchestraView.extend(
     return
 
   render: ->
-    html =  @renderTemplate('areaView',
+    @setElement @renderTemplate('areaView',
       area: @area
       cid: @cid
       node_published: @node_published
     )
-    content = $(html)
-    @setElement content.get(0)
-    @domContainer.append content
+    @domContainer.append @$el
     this.drawContent()
 
   drawContent: ->
