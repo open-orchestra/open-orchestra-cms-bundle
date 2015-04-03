@@ -51,9 +51,9 @@ class ContentTypeType extends AbstractType
             ))
             ->add('names', 'translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.names'
-            ))
-            ->add('status', 'orchestra_status', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.status'
+            ));
+        $builder->add('status', 'orchestra_status', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.status',
             ));
         $builder->add('fields', 'collection', array(
             'type' => 'field_type',
