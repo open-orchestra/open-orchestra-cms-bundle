@@ -14,15 +14,12 @@ use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\DisplayMediaStrategy as Ba
 class DisplayMediaStrategy extends AbstractBlockStrategy
 {
     protected $translator;
-    protected $formats = array();
+    protected $thumbnail = array();
 
     public function __construct(TranslatorInterface $translatorInterface, array $thumbnailConfig)
     {
         $this->translator = $translatorInterface;
-        $this->formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('open_orchestra_backoffice.form.media.original_image');
-        foreach ($thumbnailConfig as $key => $thumbnail) {
-            $this->formats[$key] = $this->translator->trans('open_orchestra_backoffice.form.media.' . $key);
-        }
+        $this->thumbnail = $thumbnailConfig;
     }
 
     /**
@@ -43,7 +40,7 @@ class DisplayMediaStrategy extends AbstractBlockStrategy
     {
         $builder
             ->add('imageFormat', 'choice', array(
-                'choices' => $this->formats,
+                'choices' => $this->getFormats(),
                 'label' => 'open_orchestra_backoffice.block.gallery.form.image_format.label',
                 'attr' => array('help_text' => 'open_orchestra_backoffice.block.gallery.form.image_format.helper'),
             ))
@@ -60,5 +57,19 @@ class DisplayMediaStrategy extends AbstractBlockStrategy
     public function getName()
     {
         return 'display_media';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFormats()
+    {
+        $formats = array();
+        $formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('open_orchestra_backoffice.form.media.original_image');
+        foreach ($this->thumbnail as $key => $thumbnail) {
+            $formats[$key] = $this->translator->trans('open_orchestra_backoffice.form.media.' . $key);
+        }
+
+        return $formats;
     }
 }
