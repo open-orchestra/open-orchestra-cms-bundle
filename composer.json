@@ -4,8 +4,8 @@
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "Nicolas Thal",
-            "email": "nico.th4l@gmail.com"
+            "name": "OpenOrchestra community",
+            "homepage": "https://github.com/open-orchestra/open-orchestra-cms-bundle/graphs/contributors"
         }
     ],
     "minimum-stability": "dev",
