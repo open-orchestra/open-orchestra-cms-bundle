@@ -101,20 +101,21 @@ NodeView = OrchestraView.extend(
       if @node.attributes.status.published
         $('.js-widget-blockpanel', @$el).hide()
       else
-        $("ul.ui-model-areas, ul.ui-model-blocks", @$el).each ->
+        $(".ui-model-areas, .ui-model-blocks", @$el).each ->
           refreshUl $(this)
     return
 
   addAreaToView: (area) ->
+    areaContainer = @$el.find('.ui-model-areas').first()
     areaElement = new Area
     areaElement.set area
     areaView = new AreaView(
       area: areaElement
       node_id: @node.get('node_id'),
       node_published: @node.attributes.status.published
-      displayClass: (if @node.get("bo_direction") is "h" then "bo-row" else "bo-column")
-      el: @$el.find('ul.ui-model-areas').first()
+      domContainer: areaContainer
     )
+    areaContainer.addClass (if @node.get("bo_direction") is "h" then "bo-row" else "bo-column")
     return
 
   addPreviewLink: ->
