@@ -1,5 +1,5 @@
 <li class="ui-model-block">
-    <div class="toolbar-layer">
+    <div class="toolbar-container">
         <div class="toolbar">
         <% if (node_published) { %>
             <span class="tool block-title"><%= block.get('ui_model').label %></span>
@@ -24,7 +24,7 @@
         <% } %>
         </div>
     </div>
-    <div class="<%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
+    <div class="block-content <%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <div class="preview">
             <%= block.get('ui_model').html %>
         </div>

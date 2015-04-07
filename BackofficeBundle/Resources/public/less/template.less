@@ -4,7 +4,6 @@
     position: relative;
     background-color:#A8A8A8;
     ul {
-        position:relative;
         padding:0;
         margin:0;
         display:flex;
@@ -56,21 +55,16 @@
         top: 2px;
         overflow:hidden;
     }
-    div:not(.toolbar) {
-        border-radius:8px;
+    .block-content, .area-content {
         color:#4e4e4e;
+        border-radius:8px;
+        min-width: 80px;
+        min-height: 80px;
         font:10px arial,sans-serif;
         height: 100%;
         position:relative;
     }
-    .ui-model-areas {
-        div:not(.toolbar){
-            color:#4e4e4e;
-            min-width: 80px;
-            min-height: 80px;
-        }
-    }
-    div.toolbar-layer {
+    .toolbar-layer {
         position:absolute;
         z-index:500;
         background-color:transparent;
@@ -78,7 +72,6 @@
         text-align:center;
         .toolbar {
             font-size:0;
-            position:relative;
             margin-top:-15px;
             .tool {
                 font-size: 10px;
@@ -98,40 +91,48 @@
         visibility:visible;
     }
     .ui-model-block {
-        .toolbar-layer {
-            opacity:0;
+        .toolbar-container {
+            opacity: 0;
+            position:absolute;
+            padding-top:10px;
+            text-align: center;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            z-index:1;
             .toolbar {
-                margin-top:15px;
-                .tool {
-                    color:#FFFFFF;
-                    font-size: 15px;
-                    padding: 8px 8px 5px 8px;
-                    background-color:#676564;
-                }
-                .tool:hover {
-                    background-color:#605F5D;
-                }
-                .tool:first-child {
-                    border-top-left-radius: 3px;
-                    border-bottom-left-radius: 3px;
-                }
-                .tool:last-child {
-                    border-top-right-radius: 3px;
-                    border-bottom-right-radius: 3px;
-                }
-                .move-tool {
-                    cursor:move;
-                }
-                .block-title {
-                    cursor:auto;
-                }
-                .block-param, .move-trash {
-                    cursor:pointer;
-                }
+                display:inline-block;
             }
-        }
-        .toolbar-layer:hover {
-            opacity:1;
+            .tool {
+                color:#FFFFFF;
+                font-size: 15px;
+                padding: 8px 8px 5px 8px;
+                background-color:#676564;
+                display: block;
+                float: left;
+                height: 32px;
+            }
+            .tool:hover {
+                background-color:#605F5D;
+            }
+            .tool:first-child {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+            }
+            .tool:last-child {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+            .move-tool {
+                cursor:move;
+            }
+            .block-title {
+                cursor:auto;
+            }
+            .block-param, .move-trash {
+                cursor:pointer;
+            }
         }
         .generate {
             background-color:#F0EBE7;
@@ -150,8 +151,8 @@
             min-height: 80px;
         }
     }
-    div.over {
-        color:#9a381e;
+    .ui-model-block:hover > .toolbar-container {
+        opacity:1;
     }
 }
 .ui-model.drag-helper {
