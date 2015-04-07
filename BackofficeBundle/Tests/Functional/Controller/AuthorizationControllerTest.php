@@ -24,8 +24,8 @@ class AuthorizationControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('Login')->form();
-        $form['_username'] = 'benjamin';
-        $form['_password'] = 'benjamin';
+        $form['_username'] = 'userLog';
+        $form['_password'] = 'userLog';
 
         $this->client->submit($form);
     }

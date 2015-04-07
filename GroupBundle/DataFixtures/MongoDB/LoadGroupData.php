@@ -33,6 +33,12 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
         $manager->persist($group3);
 
+        $groupContentType = $this->generateGroup('Content type group', 'site2', 'groupContentType', AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
+        $manager->persist($groupContentType);
+
+        $groupLog = $this->generateGroup('Log group', 'site2', 'groupLog', AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+        $manager->persist($groupLog);
+
         $manager->flush();
 
     }
@@ -51,36 +57,42 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
      * @param string $name
      * @param string $siteNumber
      * @param string $referenceName
+     * @param string $role
      *
      * @return Group
      */
-    protected function generateGroup($name, $siteNumber, $referenceName)
+    protected function generateGroup($name, $siteNumber, $referenceName, $role = null)
     {
         $group = new Group();
         $group->setName($name);
-        $group->addRole('ROLE_ADMIN');
-        $group->addRole('ROLE_FROM_DRAFT_TO_PENDING');
-        $group->addRole('ROLE_FROM_PENDING_TO_PUBLISHED');
-        $group->addRole('ROLE_FROM_PUBLISHED_TO_DRAFT');
-        $group->addRole(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE);
-        $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE);
-        $group->addRole(TreeFolderPanelStrategy::ROLE_ACCESS_TREE_FOLDER);
-        $group->addRole(TreeTemplatePanelStrategy::ROLE_ACCESS_TREE_TEMPLATE);
-        $group->addRole(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_API_CLIENT);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETED);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_STATUS);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_GROUP);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_USER);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_SITE);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_ROLE);
-        $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+
+        if (is_null($role)) {
+            $group->addRole('ROLE_ADMIN');
+            $group->addRole('ROLE_FROM_DRAFT_TO_PENDING');
+            $group->addRole('ROLE_FROM_PENDING_TO_PUBLISHED');
+            $group->addRole('ROLE_FROM_PUBLISHED_TO_DRAFT');
+            $group->addRole(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE);
+            $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE);
+            $group->addRole(TreeFolderPanelStrategy::ROLE_ACCESS_TREE_FOLDER);
+            $group->addRole(TreeTemplatePanelStrategy::ROLE_ACCESS_TREE_TEMPLATE);
+            $group->addRole(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_API_CLIENT);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETED);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_STATUS);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_GROUP);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_USER);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_SITE);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_ROLE);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+        } else {
+            $group->addRole($role);
+        }
+
         $group->setSite($this->getReference($siteNumber));
         $this->setReference($referenceName, $group);
 
         return $group;
     }
-
 }
