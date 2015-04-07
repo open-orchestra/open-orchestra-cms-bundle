@@ -22,6 +22,13 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $admin->addGroup($this->getReference('group1'));
         $manager->persist($admin);
 
+        $user1 = $this->generate('user1', 'group1');
+        $manager->persist($user1);
+        $userContentType = $this->generate('userContentType', 'groupContentType');
+        $manager->persist($userContentType);
+        $userLog = $this->generate('userLog', 'groupLog');
+        $manager->persist($userLog);
+
         $manager->flush();
     }
 

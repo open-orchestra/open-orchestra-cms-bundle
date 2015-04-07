@@ -33,6 +33,12 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
         $manager->persist($group3);
 
+        $groupContentType = $this->generateGroupWithOneRole('Content type group', 'site2', 'groupContentType', AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
+        $manager->persist($groupContentType);
+
+        $groupLog = $this->generateGroupWithOneRole('Log group', 'site2', 'groupLog', AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+        $manager->persist($groupLog);
+
         $manager->flush();
 
     }
@@ -77,6 +83,26 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
         $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_SITE);
         $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_ROLE);
         $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+        $group->setSite($this->getReference($siteNumber));
+        $this->setReference($referenceName, $group);
+
+        return $group;
+    }
+
+    /**
+     * @param string $name
+     * @param string $siteNumber
+     * @param string $referenceName
+     * @param string $role
+     *
+     * @return Group
+     */
+    protected function generateGroupWithOneRole($name, $siteNumber, $referenceName, $role)
+    {
+        $group = new Group();
+
+        $group->setName($name);
+        $group->addRole($role);
         $group->setSite($this->getReference($siteNumber));
         $this->setReference($referenceName, $group);
 
