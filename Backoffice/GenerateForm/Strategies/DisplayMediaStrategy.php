@@ -46,6 +46,10 @@ class DisplayMediaStrategy extends AbstractBlockStrategy
             ))
             ->add('picture', 'orchestra_media', array(
                 'label' => 'open_orchestra_backoffice.block.gallery.form.pictures',
+            ))
+            ->add('linkUrl', 'orchestra_node_choice', array(
+                'label' => 'open_orchestra_backoffice.block.display_media.form.link_url',
+                'required' => false
             ));
     }
 

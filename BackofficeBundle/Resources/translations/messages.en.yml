@@ -417,6 +417,8 @@ open_orchestra_backoffice:
         display_media:
             title: Media block
             description: Display a picture
+            form:
+                link_url: Add a link to the media
     element:
         version:
             create: New version
