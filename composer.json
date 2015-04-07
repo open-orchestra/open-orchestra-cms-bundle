@@ -16,14 +16,14 @@
         "open-orchestra/open-orchestra-media-bundle": "*",
         "open-orchestra/open-orchestra-user-bundle": "*",
         "open-orchestra/open-orchestra-model-interface": "*",
-        "braincrafted/bootstrap-bundle": "2.1.0",
+        "braincrafted/bootstrap-bundle": "2.1.2",
         "stfalcon/tinymce-bundle": "0.3.8"
     },
     "require-dev": {
         "open-orchestra/open-orchestra-model-bundle": "dev-master",
-        "phpunit/phpunit" : "4.0.14",
+        "phpunit/phpunit" : "4.6.1",
         "scrutinizer/ocular": "1.1.1",
-        "phake/phake": "2.0.0-beta2"
+        "phake/phake": "2.0.2"
     },
     "config" : {
         "bin-dir" : "bin"
