@@ -418,7 +418,7 @@ open_orchestra_backoffice:
             title: Bloc média
             description: Affiche une image
             form:
-                link_url: Ajoute un lien au média
+                node_link: Ajoute un lien au média
     element:
         version:
             create: Nouvelle version

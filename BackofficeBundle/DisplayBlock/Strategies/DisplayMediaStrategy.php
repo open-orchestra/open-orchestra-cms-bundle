@@ -35,7 +35,7 @@ class DisplayMediaStrategy extends AbstractStrategy
     {
         $parameters = array(
             'imageFormat' => $block->getAttribute('imageFormat'),
-            'linkUrl' => $block->getAttribute('linkUrl'),
+            'nodeToLink' => $block->getAttribute('nodeToLink'),
         );
 
         return $this->render('OpenOrchestraBackofficeBundle:Block/DisplayMedia:show.html.twig', $parameters);
