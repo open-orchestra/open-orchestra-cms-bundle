@@ -51,12 +51,12 @@ TemplateView = OrchestraView.extend(
   showAreas: ->
     $('.show-areas').hide()
     $('.hide-areas').show()
-    $('div.toolbar-layer.area-toolbar').addClass('shown')
+    $('.area-toolbar').addClass('shown')
 
   hideAreas: ->
     $('.hide-areas').hide()
     $('.show-areas').show()
-    $('div.toolbar-layer.area-toolbar').removeClass('shown')
+    $('.area-toolbar').removeClass('shown')
 
   addConfigurationButton: ->
     cid = @cid
