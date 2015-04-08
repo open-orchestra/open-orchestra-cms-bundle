@@ -1,6 +1,6 @@
 {% for key, block in blocks %}
     <li class="block newly-inserted">
-        <div class="panel-block {{ block.method }}" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
+        <div class="panel-block {{ block.method }} bg-orchestra-blue" data-node-id="{{ nodeId }}" data-block-id="{{ key }}">
             <span class="title">{{ block.uiModel.label }}</span>
             <div class="preview">
                 {{ block.uiModel.html|raw }}

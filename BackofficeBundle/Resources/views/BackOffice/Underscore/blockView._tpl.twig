@@ -2,29 +2,29 @@
     <div class="toolbar-container">
         <div class="toolbar">
         <% if (node_published) { %>
-            <span class="tool block-title"><%= block.get('ui_model').label %></span>
+            <span class="tool block-title bg-color-blueDark"><%= block.get('ui_model').label %></span>
             <% if ('generate' == block.get('method')) { %>
-            <span class="tool block-param block-param-<%= cid %>">
+            <span class="tool block-param block-param-<%= cid %> bg-color-blueDark">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </span>
             <% } %>
         <% } else { %>
-            <span class="tool move-tool">
+            <span class="tool move-tool bg-color-blueDark">
                 <i class="glyphicon glyphicon-move"></i>
             </span>
-            <span class="tool block-title"><%= block.get('ui_model').label %></span>
+            <span class="tool block-title bg-color-blueDark"><%= block.get('ui_model').label %></span>
             <% if ('generate' == block.get('method')) { %>
-            <span class="tool block-param block-param-<%= cid %>">
+            <span class="tool block-param block-param-<%= cid %> bg-color-blueDark">
                 <i class="glyphicon glyphicon-pencil"></i>
             </span>
             <% } %>
-            <span class="tool move-trash">
+            <span class="tool move-trash bg-color-blueDark">
                 <i class="block-remove-<%= areaCid %> glyphicon glyphicon-trash"></i>
             </span>
         <% } %>
         </div>
     </div>
-    <div class="block-content <%= block.get('method') %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
+    <div class="block-content <%= block.get('method') %> <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
         <div class="preview">
             <%= block.get('ui_model').html %>
         </div>
