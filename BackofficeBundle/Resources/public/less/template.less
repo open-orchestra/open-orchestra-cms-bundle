@@ -4,7 +4,6 @@
     position: relative;
     background-color:#A8A8A8;
     ul {
-        position:relative;
         padding:0;
         margin:0;
         display:flex;
@@ -56,29 +55,25 @@
         top: 2px;
         overflow:hidden;
     }
-    div:not(.toolbar) {
-        border-radius:8px;
+    .block-content, .area-content {
         color:#4e4e4e;
+        border-radius:8px;
+        min-width: 80px;
+        min-height: 80px;
         font:10px arial,sans-serif;
         height: 100%;
         position:relative;
     }
-    .ui-model-areas {
-        div:not(.toolbar){
-            color:#4e4e4e;
-            min-width: 80px;
-            min-height: 80px;
-        }
-    }
-    div.toolbar-layer {
+    .toolbar-container {
         position:absolute;
-        z-index:500;
-        background-color:transparent;
-        width:100%;
+        opacity: 0;
         text-align:center;
+        z-index:1;
+    }
+    .area-toolbar {
+        width:100%;
         .toolbar {
             font-size:0;
-            position:relative;
             margin-top:-15px;
             .tool {
                 font-size: 10px;
@@ -91,47 +86,48 @@
             }
         }
     }
-    .toolbar-layer.area-toolbar {
-        visibility:hidden;
-    }
-    .toolbar-layer.area-toolbar.shown {
-        visibility:visible;
+    .area-toolbar.shown {
+        opacity: 1;
     }
     .ui-model-block {
-        .toolbar-layer {
-            opacity:0;
+        .toolbar-container {
+            padding-top:10px;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
             .toolbar {
-                margin-top:15px;
-                .tool {
-                    color:#FFFFFF;
-                    font-size: 15px;
-                    padding: 8px 8px 5px 8px;
-                    background-color:#676564;
-                }
-                .tool:hover {
-                    background-color:#605F5D;
-                }
-                .tool:first-child {
-                    border-top-left-radius: 3px;
-                    border-bottom-left-radius: 3px;
-                }
-                .tool:last-child {
-                    border-top-right-radius: 3px;
-                    border-bottom-right-radius: 3px;
-                }
-                .move-tool {
-                    cursor:move;
-                }
-                .block-title {
-                    cursor:auto;
-                }
-                .block-param, .move-trash {
-                    cursor:pointer;
-                }
+                display:inline-block;
             }
-        }
-        .toolbar-layer:hover {
-            opacity:1;
+            .tool {
+                color:#FFFFFF;
+                font-size: 15px;
+                padding: 8px 8px 5px 8px;
+                background-color:#676564;
+                display: block;
+                float: left;
+                height: 32px;
+            }
+            .tool:hover {
+                background-color:#605F5D;
+            }
+            .tool:first-child {
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+            }
+            .tool:last-child {
+                border-top-right-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+            .move-tool {
+                cursor:move;
+            }
+            .block-title {
+                cursor:auto;
+            }
+            .block-param, .move-trash {
+                cursor:pointer;
+            }
         }
         .generate {
             background-color:#F0EBE7;
@@ -150,14 +146,14 @@
             min-height: 80px;
         }
     }
-    div.over {
-        color:#9a381e;
+    .ui-model-block:hover > .toolbar-container {
+        opacity:1;
     }
 }
 .ui-model.drag-helper {
     background-color:transparent !important;
 }
-.ui-model > div.toolbar {
+.ui-model > .toolbar {
     width:100%;
     text-align:right;
     color:#666666;
@@ -169,7 +165,7 @@
 }
 
 
-li.area-leaf > div {
+li.area-leaf > .area-content {
     background-color:#FFFFFF;
     ul {
         border-spacing:6px;
