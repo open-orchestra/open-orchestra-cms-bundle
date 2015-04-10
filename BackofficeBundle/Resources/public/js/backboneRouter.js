@@ -159,8 +159,6 @@ var OrchestraBORouter = Backbone.Router.extend({
 
     drawBreadCrumb();
 
-    this.removeCurrentMainView();
-
     displayLoader();
   },
 
@@ -182,16 +180,13 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   setCurrentMainView: function(view)
   {
-    this.currentMainView = view;
-  },
-
-  removeCurrentMainView: function()
-  {
     if (this.currentMainView) {
-      this.currentMainView.remove();
-      this.setCurrentMainView(null);
-      $('#main').append('<div id="content" />');
-    }
+        this.currentMainView.remove();
+        this.currentMainView.unbind();
+        this.currentMainView.undelegateEvents();
+        $('#main').append('<div id="content" />');
+      }
+    this.currentMainView = view;
   },
 
   generateUrl: function(routeName, paramsObject)

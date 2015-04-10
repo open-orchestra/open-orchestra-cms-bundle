@@ -1,4 +1,4 @@
-mediaModalView = Backbone.View.extend(
+mediaModalView = OrchestraView.extend(
   initialize: (options) ->
     @el = options.el
     @menuUrl = options.menuUrl
