@@ -17,26 +17,13 @@ class BlockCollectionFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
-    protected $loadBlocks = array();
-
-    /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
-     */
-    protected $generateBlocks = array();
+    protected $blocks = array();
 
     /**
      * @param FacadeInterface $facade
      */
-    public function addLoadBlock(FacadeInterface $facade)
+    public function addBlock(FacadeInterface $facade)
     {
-        $this->loadBlocks[] = $facade;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     */
-    public function addGenerateBlock(FacadeInterface $facade)
-    {
-        $this->generateBlocks[] = $facade;
+        $this->blocks[] = $facade;
     }
 }

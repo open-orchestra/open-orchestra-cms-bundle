@@ -24,7 +24,7 @@
         <% } %>
         </div>
     </div>
-    <div class="block-content <%= block.get('method') %> <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>">
+    <div class="block-content <%= block.get('method') %> <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>" data-block-type="<%= block.get('component') %>">
         <div class="preview">
             <%= block.get('ui_model').html %>
         </div>

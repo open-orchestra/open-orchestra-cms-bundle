@@ -126,6 +126,11 @@ NodeView = OrchestraView.extend(
       url: @node.get('links')._block_list
       success: (response) ->
         blockpanel = $('.js-widget-blockpanel', viewContext.$el)
+        for i of response.blocks
+          response.blocks[i] = viewContext.renderTemplate('blockView', 
+            block : response.blocks[i]
+            node_published : false
+          )
         blockpanel.html viewContext.renderTemplate('rightPanel', response)
         Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
         $(window).resize ->
