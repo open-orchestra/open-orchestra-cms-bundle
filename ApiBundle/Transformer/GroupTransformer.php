@@ -24,7 +24,9 @@ class GroupTransformer extends AbstractTransformer
         foreach ($mixed->getRoles() as $role) {
             $facade->addRole($role);
         }
-        $facade->site = $this->getTransformer('site')->transform($mixed->getSite());
+        if ($site = $mixed->getSite()) {
+            $facade->site = $this->getTransformer('site')->transform($site);
+        }
 
 
         $facade->addLink('_self', $this->generateRoute(
