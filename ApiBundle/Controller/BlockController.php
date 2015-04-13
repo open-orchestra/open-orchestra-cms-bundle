@@ -16,7 +16,6 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
  */
 class BlockController extends BaseController
 {
-
     /**
      * @param Request $request
      * @param string $nodeId
