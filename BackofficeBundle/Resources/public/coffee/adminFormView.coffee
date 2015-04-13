@@ -54,6 +54,9 @@ adminFormView = OrchestraView.extend(
     $(@formClass, @$el).on @formEvent, (e) ->
       e.preventDefault() # prevent native submit
       $("form", viewContext.$el).ajaxSubmit
+        context:
+          button: $(".submit_form", e.target.parentNode).parent()
+          isSave: true
         statusCode:
           200: (response) ->
             view = viewContext.renderContent(

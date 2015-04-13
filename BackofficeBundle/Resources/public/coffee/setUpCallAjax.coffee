@@ -1,11 +1,11 @@
 $(document).ready ->
   $.ajaxSetup
-    beforeSend: (event) ->
-      if event != undefined && event.type != undefined
-        if event.type == "submit"
-          displayLoader($('.submit_form', event.currentTarget).parent())
-        else
-          displayLoader($('.submit_form').parent()) if event.target.type == "submit"
+    beforeSend: (xhr, settings) ->
+      context = settings.context
+      if context != undefined && context.isSave == true
+        if context.button != undefined
+          displayLoader(context.button)
+          console.log context.button
   $(document).ajaxError (event, jqXHR, settings) ->
     if isAccessDenied(jqXHR.responseText)
       redirectToLogin()

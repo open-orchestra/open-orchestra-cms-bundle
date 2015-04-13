@@ -56,8 +56,6 @@ $(document).on "click", ".modal-body-content a[class^='ajax-add-'], .media-modal
   
   folderName = $("#" + modalId + " .js-widget-title").text()
   
-  displayLoader("#" + modalId + " .modal-body-content")
-
   $.ajax
     url: $(event.target).attr('data-url')
     method: 'GET'
