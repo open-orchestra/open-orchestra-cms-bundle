@@ -10,11 +10,6 @@ use JMS\Serializer\Annotation as Serializer;
 class BlockCollectionFacade extends AbstractFacade
 {
     /**
-     * @Serializer\Type("string")
-     */
-    public $collectionName = 'blocks';
-
-    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
     protected $loadBlocks = array();
