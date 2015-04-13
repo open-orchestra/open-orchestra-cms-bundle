@@ -123,7 +123,7 @@ NodeView = OrchestraView.extend(
     viewContext = @
     $.ajax
       type: "GET"
-      url: @node.get('links')._list_block
+      url: @node.get('links')._block_list
       success: (response) ->
         blockpanel = $('.js-widget-blockpanel', viewContext.$el)
         blockpanel.html viewContext.renderTemplate('rightPanel', response)
