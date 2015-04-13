@@ -4,8 +4,6 @@ $(document).ready ->
       context = settings.context
       displayLoader(context.button) if context != undefined && context.button != undefined
   $(document).ajaxError (event, jqXHR, settings) ->
-    if isAccessDenied(jqXHR.responseText)
-      redirectToLogin()
+    redirectToLogin() if isAccessDenied(jqXHR.responseText)
   $(document).ajaxSuccess (event, xhr, settings) ->
-    if isLoginForm(xhr.responseText)
-      redirectToLogin()
+    redirectToLogin() if isLoginForm(xhr.responseText)
