@@ -35,7 +35,7 @@ NodeView = OrchestraView.extend(
       "areaView"
       "blockView"
       "elementTitle"
-      "refresh:rightPanel"
+      "rightPanel"
     ]
     return
 
@@ -80,21 +80,12 @@ NodeView = OrchestraView.extend(
       node: @node
       cid: @cid
     )
-    blockpanel = $('.js-widget-blockpanel', @$el)
-    blockpanel.html @renderTemplate('refresh:rightPanel')
     $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
       element: @node
     )
-    Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
-    $(window).resize ->
-      Backbone.Wreqr.radio.commands.execute 'viewport', 'resize'
-      return
-    $(window).add('div[role="content"]').scroll ->
-      Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
-      return
     for area of @node.get('areas')
       @addAreaToView(@node.get('areas')[area])
-    @addExistingBlockToView()
+    @addListBlockToView()
     if @node.get('node_type') == 'page'
       @addPreviewLink()
       @addConfigurationButton()
@@ -128,13 +119,21 @@ NodeView = OrchestraView.extend(
       cid: cid
     )
 
-  addExistingBlockToView: ->
+  addListBlockToView: ->
     viewContext = @
     $.ajax
       type: "GET"
-      url: @node.get('links')._existing_block
+      url: @node.get('links')._list_block
       success: (response) ->
-        $('.right-panel-blocks', viewContext.$el).append(response)
+        blockpanel = $('.js-widget-blockpanel', viewContext.$el)
+        blockpanel.html viewContext.renderTemplate('rightPanel', response)
+        Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
+        $(window).resize ->
+          Backbone.Wreqr.radio.commands.execute 'viewport', 'resize'
+          return
+        $(window).add('div[role="content"]').scroll ->
+          Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
+          return
 
   showAreas: ->
     $('.show-areas').hide()

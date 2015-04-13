@@ -1,0 +1,28 @@
+<div class="header">
+    <i class="fa fa-arrow-circle-left"></i>
+    <h2>{{ ('open_orchestra_backoffice.node.blocks') | trans({}, 'messages', language) }}</h2>
+</div>
+<div class="ui-model scroll panel-shadow">
+    <ul class="ui-model-blocks right-panel-blocks">
+    <% _.each(generateBlocks, function(block) { %>
+        <li class="block newly-inserted">
+            <div class="panel-block generate bg-orchestra-orange" data-block-type="<%= block.name %>">
+                <span class="title"></span>
+                <div class="preview">
+                    <%= block.icon %>
+                </div>
+            </div>
+        </li>
+    <% }); %>
+    <% _.each(loadBlocks, function(block) { %>
+        <li class="block newly-inserted">
+            <div class="panel-block load bg-orchestra-blue" data-node-id="<%= block.node_id %>" data-block-id="<%= block.block_id %>">
+                <span class="title"><%= block.ui_model.label %></span>
+                <div class="preview">
+                    <%= block.ui_model.html %>
+                </div>
+            </div>
+        </li>
+    <% }); %>
+    </ul>
+</div>
