@@ -25,6 +25,9 @@ mediaFormView = OrchestraView.extend(
     $("form", @$el).on "submit", (e) ->
       e.preventDefault() # prevent native submit
       $(this).ajaxSubmit
+        context:
+          button: $(".submit_form",e.target).parent()
+          isSave: true
         success: (response) ->
           viewContext.html = response
           viewContext.render()
