@@ -94,7 +94,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         Phake::when($transformerManager)->getRouter()->thenReturn($this->router);
 
-        $facadeExcepted = $this->blockTransformer->transform($block, true, 'root', 0);
+        $facadeExcepted = $this->blockTransformer->transform($block, true, 'root', 0, 0, 0, 'fakeId');
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\BlockFacade', $facadeExcepted);
         $this->assertSame($component, $facadeExcepted->component);
