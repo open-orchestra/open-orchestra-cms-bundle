@@ -314,6 +314,8 @@ open_orchestra_backoffice:
         contact:
             title: Bloc contact
             description: Affiche un formulaire de contact.
+            recipient: Email du destinataire
+            signature: Signature de l'email de notitication
         footer:
             title: Bloc pied de page
             description: Affiche une liste de nom de noeud qui ont l'attribut footer.
