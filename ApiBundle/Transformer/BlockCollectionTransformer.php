@@ -16,7 +16,7 @@ class BlockCollectionTransformer extends AbstractTransformer
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $nodeId = null, $currentSite = null)
+    public function transform($mixed, $generateMixed = null, $nodeId = null)
     {
         $facade = new BlockCollectionFacade();
 
@@ -24,15 +24,8 @@ class BlockCollectionTransformer extends AbstractTransformer
             $facade->addLoadBlock($this->getTransformer('block')->transform($block, false, $nodeId));
         }
 
-        $blocks = array();
-        if ($currentSite) {
-            $blocks = $currentSite->getBlocks();
-            if (count($blocks) == 0) {
-                $blocks = $this->getParameter('open_orchestra.blocks');
-            }
-        }
-        foreach($blocks as $block){
-            $facade->addGenerateBlock($this->getTransformer('generate_block')->transform($block));
+        foreach($generateMixed as $block) {
+            $facade->addGenerateBlock($this->getTransformer('block')->transform($block, true));
         }
 
         return $facade;

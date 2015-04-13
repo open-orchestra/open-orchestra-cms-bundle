@@ -5,7 +5,6 @@ parameters:
     open_orchestra_api.transformer.template.class: OpenOrchestra\ApiBundle\Transformer\TemplateTransformer
     open_orchestra_api.transformer.area.class: OpenOrchestra\ApiBundle\Transformer\AreaTransformer
     open_orchestra_api.transformer.block.class: OpenOrchestra\ApiBundle\Transformer\BlockTransformer
-    open_orchestra_api.transformer.generate_block.class: OpenOrchestra\ApiBundle\Transformer\GenerateBlockTransformer
     open_orchestra_api.transformer.block_collection.class: OpenOrchestra\ApiBundle\Transformer\BlockCollectionTransformer
     open_orchestra_api.transformer.ui_model.class: OpenOrchestra\ApiBundle\Transformer\UiModelTransformer
     open_orchestra_api.transformer.content_type.class: OpenOrchestra\ApiBundle\Transformer\ContentTypeTransformer
@@ -73,12 +72,6 @@ services:
             - @open_orchestra_backoffice.block_parameter_manager
             - @open_orchestra_backoffice.generate_form_manager
             - @open_orchestra_model.repository.node
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.generate_block:
-        class: %open_orchestra_api.transformer.generate_block.class%
-        arguments: 
-            - @open_orchestra_backoffice.display_icon_manager
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block_collection:

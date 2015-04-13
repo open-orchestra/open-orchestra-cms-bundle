@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Block;
 
 /**
  * Class BlockController
@@ -32,10 +33,23 @@ class BlockController extends BaseController
     {
         $currentSiteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
+
+        $blocks = array();
+        if ($currentSite) {
+            $blocks = $currentSite->getBlocks();
+            if (count($blocks) == 0) {
+                $blocks = $this->getParameter('open_orchestra.blocks');
+            }
+        }
+        foreach($blocks as $key => $block){
+            $blocks[$key] = new Block();
+            $blocks[$key]->setComponent($block);
+        }
+
         $node = $this->get('open_orchestra_model.repository.node')
         ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform($node->getBlocks(), $node->getNodeId(), $currentSite);
+        return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform($node->getBlocks(), $blocks, $node->getNodeId());
     }
 
 }
