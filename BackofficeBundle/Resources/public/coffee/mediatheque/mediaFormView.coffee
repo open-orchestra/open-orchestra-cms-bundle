@@ -27,7 +27,6 @@ mediaFormView = OrchestraView.extend(
       $(this).ajaxSubmit
         context:
           button: $(".submit_form",e.target).parent()
-          isSave: true
         success: (response) ->
           viewContext.html = response
           viewContext.render()

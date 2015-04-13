@@ -38,7 +38,6 @@ FullPageFormView = OrchestraView.extend(
       $(this).ajaxSubmit
         context:
           button: $(".submit_form",e.target).parent()
-          isSave: true
         success: (response) ->
           options.html = response
           view = new FullPageFormView(options)
