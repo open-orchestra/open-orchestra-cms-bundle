@@ -1,5 +1,5 @@
+<% if (typeof node_published != 'undefined') { %>
 <li class="ui-model-block">
-    <% if (typeof node_published != 'undefined') { %>
     <div class="toolbar-container">
         <div class="toolbar">
         <% if (node_published) { %>
@@ -25,10 +25,15 @@
         <% } %>
         </div>
     </div>
-    <% } %>
-    <div class="block-content <%= block.get('method') %> <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>" data-block-type="<%= block.get('component') %>">
+    <div class="block-content
+<% } else { %>
+<li class="block newly-inserted">
+    <div class="panel-block
+<% } %>
+    <%= block.get('method') %> <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>" data-node-id="<%= block.get('node_id') %>" data-block-id="<%= block.get('block_id') %>" data-block-type="<%= block.get('component') %>">
         <div class="preview">
             <%= block.get('ui_model').html %>
         </div>
     </div>
+
 </li>

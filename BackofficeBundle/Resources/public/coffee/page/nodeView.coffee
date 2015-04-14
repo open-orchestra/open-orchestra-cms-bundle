@@ -135,7 +135,7 @@ NodeView = OrchestraView.extend(
         blockpanel.html viewContext.renderTemplate('rightPanel', response)
         Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
         $(window).resize ->
-          Backbone.Wreqr.radio.commands.execute 'viewport', 'resize'
+          Backbone.Wreqr.radio.commands.execute 'viewport', 'init'
           return
         $(window).add('div[role="content"]').scroll ->
           Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
