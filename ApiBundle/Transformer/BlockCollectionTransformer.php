@@ -20,12 +20,12 @@ class BlockCollectionTransformer extends AbstractTransformer
     {
         $facade = new BlockCollectionFacade();
 
-        foreach ($mixed as $block) {
-            $facade->addBlock($this->getTransformer('block')->transform($block, false, $nodeId));
-        }
-
         foreach($generateMixed as $block) {
             $facade->addBlock($this->getTransformer('block')->transform($block, true));
+        }
+
+        foreach ($mixed as $key => $block) {
+            $facade->addBlock($this->getTransformer('block')->transform($block, false, $nodeId, $key));
         }
 
         return $facade;

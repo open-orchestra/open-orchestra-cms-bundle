@@ -95,10 +95,12 @@ AreaView = OrchestraView.extend(
     blocks = ul.children()
     blockData = []
     for block in blocks
-      if $('div[data-node-id]', block).length > 0
-        blockData.push({'node_id' : $('div[data-node-id]', block)[0].getAttribute('data-node-id'), 'block_id' : $('div[data-block-id]', block)[0].getAttribute('data-block-id')})
-      else if $('div[data-block-type]', block).length > 0
-        blockData.push({'component' : $('div[data-block-type]', block)[0].getAttribute('data-block-type')})
+      $infos = $('div[data-block-type]', block)[0]
+      if typeof $infos != 'undefined'
+        if $infos.getAttribute('data-node-id') != '' && $infos.getAttribute('data-block-id') != '' 
+          blockData.push({'node_id' : $infos.getAttribute('data-node-id'), 'block_id' : $infos.getAttribute('data-block-id')})
+        else
+          blockData.push({'component' : $infos.getAttribute('data-block-type')})
     areaData = {}
     areaData['blocks'] = blockData
     mustRefresh = !! ul.find(".newly-inserted").length > 0
