@@ -6,9 +6,9 @@ use OpenOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
 /**
- * Class AbstractLeftPaneStrategy
+ * Class AbstractLeftPanelStrategy
  */
-abstract class AbstractLeftPaneStrategy implements LeftPanelInterface
+abstract class AbstractLeftPanelStrategy implements LeftPanelInterface
 {
     /**
      * @var TwigEngine

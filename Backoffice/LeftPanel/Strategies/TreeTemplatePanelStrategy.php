@@ -7,7 +7,7 @@ use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 /**
  * Class TreeTemplatePanel
  */
-class TreeTemplatePanelStrategy extends AbstractLeftPaneStrategy
+class TreeTemplatePanelStrategy extends AbstractLeftPanelStrategy
 {
     const ROLE_ACCESS_TREE_TEMPLATE = 'ROLE_ACCESS_TREE_TEMPLATE';
 

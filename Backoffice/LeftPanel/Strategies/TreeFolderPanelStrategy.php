@@ -7,7 +7,7 @@ use OpenOrchestra\Media\Repository\FolderRepositoryInterface;
 /**
  * Class TreeFolderPanel
  */
-class TreeFolderPanelStrategy extends AbstractLeftPaneStrategy
+class TreeFolderPanelStrategy extends AbstractLeftPanelStrategy
 {
     const ROLE_ACCESS_TREE_FOLDER = 'ROLE_ACCESS_TREE_FOLDER';
 

@@ -8,7 +8,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 /**
  * Class GeneralNodesPanel
  */
-class GeneralNodesPanelStrategy extends AbstractLeftPaneStrategy
+class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
 {
     const ROLE_ACCESS_GENERAL_NODE = 'ROLE_ACCESS_GENERAL_NODE';
 

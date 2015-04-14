@@ -7,7 +7,7 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 /**
  * Class ContentTypeForContentPanel
  */
-class ContentTypeForContentPanelStrategy extends AbstractLeftPaneStrategy
+class ContentTypeForContentPanelStrategy extends AbstractLeftPanelStrategy
 {
     const ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT';
 
