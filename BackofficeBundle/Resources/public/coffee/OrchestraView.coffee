@@ -1,4 +1,13 @@
+domBinded = {}
+
 OrchestraView = Backbone.View.extend(
+
+  constructor: (attributes, options) ->
+    Backbone.View.apply @, arguments
+    if domBinded[@$el]
+      domBinded[@$el].undelegateEvents()
+    domBinded[@$el] = @
+    return
 
   loadTemplates: (templates) ->
     @compiledTemplates = {}
