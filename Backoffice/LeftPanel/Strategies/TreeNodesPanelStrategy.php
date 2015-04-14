@@ -7,7 +7,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 /**
  * Class TreeNodesPanel
  */
-class TreeNodesPanelStrategy extends AbstractLeftPaneStrategy
+class TreeNodesPanelStrategy extends AbstractLeftPanelStrategy
 {
     const ROLE_ACCESS_TREE_NODE = 'ROLE_ACCESS_TREE_NODE';
 

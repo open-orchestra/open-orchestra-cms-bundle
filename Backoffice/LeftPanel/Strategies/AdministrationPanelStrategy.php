@@ -6,7 +6,7 @@ namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 /**
  * Class AdministrationPanelStrategy
  */
-class AdministrationPanelStrategy extends AbstractLeftPaneStrategy
+class AdministrationPanelStrategy extends AbstractLeftPanelStrategy
 {
     const ROLE_ACCESS_CONTENT_TYPE = 'ROLE_ACCESS_CONTENT_TYPE';
     const ROLE_ACCESS_REDIRECTION = 'ROLE_ACCESS_REDIRECTION';
