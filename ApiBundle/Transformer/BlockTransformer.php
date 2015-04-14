@@ -90,7 +90,7 @@ class BlockTransformer extends AbstractTransformer
             'html' => $html
         ));
 
-        if (!is_null($nodeId) && !is_null($blockNumber)) {
+        if (!is_null($nodeId) && !is_null($blockNumber) && !is_null($nodeMongoId)) {
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_block_form',
                 array(
                     'nodeId' => $nodeMongoId,

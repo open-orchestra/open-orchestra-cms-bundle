@@ -134,7 +134,7 @@ class NodeTransformer extends AbstractTransformer
             'nodeMongoId' => $mixed->getId()
         )));
 
-        $facade->addLink('_existing_block', $this->generateRoute('open_orchestra_backoffice_block_exsting', array(
+        $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list', array(
             'language' => $mixed->getLanguage(),
         )));
 

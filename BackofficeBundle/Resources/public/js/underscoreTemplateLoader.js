@@ -8,7 +8,7 @@
       if (!this.templates[language]) {
         this.addLanguage(language);
       }
-      if (!this.templates[language][templateName] || templateName.indexOf('refresh:') == 0) {
+      if (!this.templates[language][templateName]) {
         var self = this;
         filename = appRouter.generateUrl('loadUnderscoreTemplate', {'language': language, 'templateId': templateName})
         jQuery.get(filename, function(tpl) {

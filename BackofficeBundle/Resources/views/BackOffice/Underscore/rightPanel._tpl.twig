@@ -1,9 +1,12 @@
+<div class="panel-fixed" id="ghost-blockpanel"/>
 <div class="header">
     <i class="fa fa-arrow-circle-left"></i>
     <h2>{{ ('open_orchestra_backoffice.node.blocks') | trans({}, 'messages', language) }}</h2>
 </div>
 <div class="ui-model scroll panel-shadow">
     <ul class="ui-model-blocks right-panel-blocks">
-        {{ render(controller('OpenOrchestraBackofficeBundle:Block:listPossibleBlocks')) }}
+    <% _.each(blocks, function(block) { %>
+        <%= block %>
+    <% }); %>
     </ul>
 </div>
