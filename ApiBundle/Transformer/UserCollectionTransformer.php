@@ -25,6 +25,8 @@ class UserCollectionTransformer extends AbstractTransformer
 
         $facade->addLink('_self_add', $this->generateRoute('open_orchestra_user_new'));
 
+        $facade->addLink('_translate', $this->generateRoute('open_orchestra_api_translate'));
+
         return $facade;
     }
 

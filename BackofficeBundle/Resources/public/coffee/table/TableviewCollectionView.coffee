@@ -22,11 +22,24 @@ TableviewCollectionView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).html @renderTemplate('tableviewCollectionView',
-      displayedElements: @options.displayedElements
-      links: @options.elements.get('links')
-      cid: @cid
-    )
+    viewContext = @
+    entityType = @options.entityType
+    parent = $('#nav-'+@options.entityType).parent('[data-type]')
+    if (parent.length)
+      entityType = parent[0].getAttribute('data-type')
+    $.ajax
+      url: @options.elements.get('links')._translate
+      method: 'GET'
+      async: false
+      data: 
+        entityType: entityType
+        displayedElements: @options.displayedElements
+      success: (response) ->
+        $(viewContext.el).html viewContext.renderTemplate('tableviewCollectionView',
+          displayedElements: response
+          links: viewContext.options.elements.get('links')
+          cid: viewContext.cid
+        )
     $('.js-widget-title', @$el).text @options.title
     for element of @options.elements.get(@options.elements.get('collection_name'))
       @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])

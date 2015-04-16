@@ -36,6 +36,8 @@ class ContentCollectionTransformer extends AbstractTransformer
             ));
         }
 
+        $facade->addLink('_translate', $this->generateRoute('open_orchestra_api_translate'));
+
         return $facade;
     }
 

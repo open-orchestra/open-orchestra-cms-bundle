@@ -3,12 +3,12 @@
 namespace OpenOrchestra\LogBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\ApiBundle\Facade\AbstractFacade;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-
 /**
  * Class LogCollectionFacade
  */
-class LogCollectionFacade implements FacadeInterface
+class LogCollectionFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("string")

@@ -30,6 +30,8 @@ class StatusCollectionTransformer extends AbstractTransformer
             array()
         ));
 
+        $facade->addLink('_translate', $this->generateRoute('open_orchestra_api_translate'));
+
         return $facade;
     }
 
