@@ -23,12 +23,16 @@ TableviewCollectionView = OrchestraView.extend(
 
   render: ->
     viewContext = @
+    entityType = @options.entityType
+    parent = $('#nav-'+@options.entityType).parent('[data-type]')
+    if (parent.length)
+      entityType = parent[0].getAttribute('data-type')
     $.ajax
       url: @options.elements.get('links')._translate
       method: 'GET'
       async: false
       data: 
-        entityType: @options.entityType
+        entityType: entityType
         displayedElements: @options.displayedElements
       success: (response) ->
         $(viewContext.el).html viewContext.renderTemplate('tableviewCollectionView',

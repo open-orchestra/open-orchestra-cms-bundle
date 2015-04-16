@@ -475,6 +475,11 @@ open_orchestra_backoffice:
             yes: Oui
             no: Non
     table:
+        content_type:
+            name: Nom
+            status_label: Status
+            version: Version
+            language: Langue
         content_types:
             content_type_id: Clef
             name: Nom

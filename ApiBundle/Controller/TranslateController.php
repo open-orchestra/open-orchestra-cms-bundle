@@ -29,7 +29,7 @@ class TranslateController extends BaseController
         foreach($displayedElements as &$displayedElement){
             $displayedElement = $this->get('translator')->trans(
                 'open_orchestra_backoffice.table.'.
-                $request->get('entityType').
+                $this->container->underscore($request->get('entityType')).
                 '.'.
                 $displayedElement
             );
