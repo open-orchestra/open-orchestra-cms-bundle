@@ -26,9 +26,7 @@ class ApiClientCollectionTransformer extends AbstractTransformer
 
         $facade->addLink('_self_add', $this->generateRoute('open_orchestra_backoffice_api_client_new'));
 
-        $facade->addLink('_translate', $this->generateRoute(
-            'open_orchestra_api_translate'
-        ));
+        $facade->addLink('_translate', $this->generateRoute('open_orchestra_api_translate'));
 
         return $facade;
     }
