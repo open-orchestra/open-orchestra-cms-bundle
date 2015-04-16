@@ -25,6 +25,10 @@ class LogCollectionTransformer extends AbstractTransformer
             $facade->addLog($this->getTransformer('log')->transform($log));
         }
 
+        $facade->addLink('_translate', $this->generateRoute(
+            'open_orchestra_api_translate'
+        ));
+
         return $facade;
     }
     /**

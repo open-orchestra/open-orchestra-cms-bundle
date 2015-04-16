@@ -474,3 +474,43 @@ open_orchestra_backoffice:
         button:
             yes: Oui
             no: Non
+    table:
+        content_types:
+            content_type_id: Clef
+            name: Nom
+            version: Version
+            status_label: Status
+        keywords:
+            label: Etiquette
+        role:
+            description: Description
+            from_status: Depuis le status
+            to_status: Vers le status
+        group:
+            name: Nom
+        redirection:
+            site_name: Nom du site
+            route_pattern: Masque de la route
+            locale: Langue
+            redirection: Redirection
+            permanent: Permanente
+        status:
+            label: Nom
+            published: Publié
+            display_color: Couleur
+            initial: Initial
+        user:
+            username: Nom
+            groups: Groupes
+        api_client:
+            name: Nom
+            trusted: Confiance
+        websites:
+            site_id: Clef
+            name: Nom
+        log:
+          date_time: Horaire
+          user_ip: Ip
+          user_name: Utilisateur
+          site_name: Site
+          message: Message
