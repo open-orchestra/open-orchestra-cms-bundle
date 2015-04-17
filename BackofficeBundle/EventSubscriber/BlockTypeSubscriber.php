@@ -48,8 +48,8 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
 
         $newForm = $this->formFactory->create($this->generateFormManager->createForm($data));
 
-        foreach ($newForm->all() as $newFormChildren) {
-            $form->add($newFormChildren);
+        foreach ($newForm->all() as $newFormChild) {
+            $form->add($newFormChild);
         }
     }
 
