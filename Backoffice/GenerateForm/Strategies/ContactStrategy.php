@@ -27,7 +27,12 @@ class ContactStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('form', 'text');
+        $builder->add('recipient', 'email', array(
+            'label' => 'open_orchestra_backoffice.block.contact.recipient'
+        ));
+        $builder->add('signature', 'text', array(
+            'label' => 'open_orchestra_backoffice.block.contact.signature'
+        ));
     }
 
     /**

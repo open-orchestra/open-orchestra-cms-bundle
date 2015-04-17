@@ -314,6 +314,8 @@ open_orchestra_backoffice:
         contact:
             title: Contact block
             description: Display a contact form.
+            recipient: Recipient's email
+            signature: Signature of the email notification
         footer:
             title: Footer block
             description: Display a node name list that have a footer attribute.

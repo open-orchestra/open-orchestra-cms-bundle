@@ -15,6 +15,7 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -89,6 +90,7 @@ class OpenOrchestraBackofficeExtension extends Extension
             GmapStrategy::GMAP,
             AddThisStrategy::ADDTHIS,
             AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
+            ContactStrategy::CONTACT,
         );
 
         $blocks = $config['blocks'];
