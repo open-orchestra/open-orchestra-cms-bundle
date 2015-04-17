@@ -48,14 +48,34 @@ class ContentController extends AbstractAdminController
 
         $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
 
+        return $this->renderAdminForm(
+            $form,
+            array(),
+            null,
+            $this->getFormTemplate($content->getContentType()
+        ));
+    }
+
+    /**
+     * Get Form Template related to content of $contentTypeId
+     * 
+     * @param string $contentTypeId
+     * 
+     * @return string
+     */
+    protected function getFormTemplate($contentTypeId)
+    {
         $template = AbstractAdminController::TEMPLATE;
-        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($content->getContentType());
+
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($contentTypeId);
+
         $customTemplate = $contentType->getTemplate();
+
         if ($customTemplate != '' && $this->get('templating')->exists($customTemplate)) {
             $template = $customTemplate;
         }
 
-        return $this->renderAdminForm($form, array(), null, $template);
+        return $template;
     }
 
     /**
@@ -103,8 +123,9 @@ class ContentController extends AbstractAdminController
             );
         }
 
-        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->render(
+            $this->getFormTemplate($contentType),
+            array('form' => $form->createView())
+        );
     }
 }
