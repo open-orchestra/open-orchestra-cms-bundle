@@ -90,6 +90,9 @@ open_orchestra_backoffice:
             status: Status
             fields: Fields
             keywords: Keywords
+            template:
+                label: Edit form custom template
+                helper: Optionnal. Alternative template used to render the edit form of the contents of this type. Format : MyBundle::myTemplate.html.twig
         template:
             success: The template has been saved
             name: Name
