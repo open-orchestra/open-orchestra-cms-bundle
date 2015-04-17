@@ -8,13 +8,8 @@ use OpenOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
 
 /**
  * Class DeletedFacade
- *
- * @Serializer\Discriminator(field = "type", map = {
- *      "node": "OpenOrchestra\ApiBundle\Facade\NodeFacade",
- *      "content": "OpenOrchestra\ApiBundle\Facade\ContentFacade"
- * })
  */
-class DeletedFacade implements FacadeInterface
+abstract class DeletedFacade implements FacadeInterface
 {
     use TimestampableFacade;
     use BaseFacade;
