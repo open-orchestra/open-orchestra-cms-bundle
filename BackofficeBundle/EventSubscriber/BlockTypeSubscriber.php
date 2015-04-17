@@ -52,6 +52,7 @@ class BlockTypeSubscriber extends AbstractBlockContentTypeSubscriber
             $form->remove($formChild->getName());
             if($newForm->has($formChild->getName())){
                 $formChild = $newForm->get($formChild->getName());
+                $newForm->remove($formChild->getName());
             }
             $form->add($formChild);
         }
