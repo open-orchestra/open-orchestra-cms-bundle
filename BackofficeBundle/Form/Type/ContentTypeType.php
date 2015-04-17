@@ -51,21 +51,26 @@ class ContentTypeType extends AbstractType
             ))
             ->add('names', 'translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.names'
-            ));
-        $builder->add('status', 'orchestra_status', array(
+            ))
+            ->add('status', 'orchestra_status', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.status',
+            ))
+            ->add('template', 'text', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.template.label',
+                'required' => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.template.helper'),
+            ))
+            ->add('fields', 'collection', array(
+                'type' => 'field_type',
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => 'open_orchestra_backoffice.form.content_type.fields',
+                'attr' => array(
+                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_type.add'),
+                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_type.new'),
+                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_type.delete'),
+                )
             ));
-        $builder->add('fields', 'collection', array(
-            'type' => 'field_type',
-            'allow_add' => true,
-            'allow_delete' => true,
-            'label' => 'open_orchestra_backoffice.form.content_type.fields',
-            'attr' => array(
-                'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_type.add'),
-                'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_type.new'),
-                'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_type.delete'),
-            )
-        ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

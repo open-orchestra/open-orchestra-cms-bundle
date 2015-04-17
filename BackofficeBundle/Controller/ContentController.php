@@ -48,7 +48,14 @@ class ContentController extends AbstractAdminController
 
         $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
 
-        return $this->renderAdminForm($form);
+        $template = AbstractAdminController::TEMPLATE;
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($content->getContentType());
+        $customTemplate = $contentType->getTemplate();
+        if ($customTemplate != '' && $this->get('templating')->exists($customTemplate)) {
+            $template = $customTemplate;
+        }
+
+        return $this->renderAdminForm($form, array(), null, $template);
     }
 
     /**

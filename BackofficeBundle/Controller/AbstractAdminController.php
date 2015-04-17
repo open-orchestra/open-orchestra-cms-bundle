@@ -13,6 +13,11 @@ use Symfony\Component\Form\FormInterface;
 abstract class AbstractAdminController extends Controller
 {
     /**
+     * @var string
+     */
+    const TEMPLATE = 'OpenOrchestraBackofficeBundle::form.html.twig';
+
+    /**
      * Do some stuff if admin form is valid
      *
      * @param FormInterface $form
@@ -52,7 +57,7 @@ abstract class AbstractAdminController extends Controller
         FormInterface $form,
         array $params = array(),
         $response = null,
-        $template = 'OpenOrchestraBackofficeBundle::form.html.twig'
+        $template = self::TEMPLATE
     ){
         $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
