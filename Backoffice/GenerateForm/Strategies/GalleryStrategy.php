@@ -44,6 +44,10 @@ class GalleryStrategy extends AbstractBlockStrategy
     {
         $formats = $this->getFormats();
         $builder
+            ->add('id', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.block.id',
+            'required' => true
+            ))
             ->add('columnNumber', 'text', array(
                 'empty_data' => 1,
                 'label' => 'open_orchestra_backoffice.block.gallery.form.column_number',
@@ -88,7 +92,7 @@ class GalleryStrategy extends AbstractBlockStrategy
 
         return $formats;
     }
-    
+
     /**
      * @return string
      */
