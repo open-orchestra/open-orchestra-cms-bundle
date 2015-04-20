@@ -26,10 +26,14 @@ class TranslateController extends BaseController
     public function translateAction(Request $request)
     {
         $displayedElements = $request->get('displayedElements');
+
+        $entityType = $this->container->camelize($request->get('entityType'));
+        $entityType = $this->container->underscore($entityType);
+
         foreach($displayedElements as &$displayedElement){
             $displayedElement = $this->get('translator')->trans(
                 'open_orchestra_backoffice.table.'.
-                $this->container->underscore($request->get('entityType')).
+                $entityType.
                 '.'.
                 $displayedElement
             );
