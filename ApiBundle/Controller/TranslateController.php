@@ -25,17 +25,7 @@ class TranslateController extends BaseController
      */
     public function translateAction(Request $request)
     {
-        $displayedElements = $request->get('displayedElements');
-        foreach($displayedElements as &$displayedElement){
-            $displayedElement = $this->get('translator')->trans(
-                'open_orchestra_backoffice.table.'.
-                $this->container->underscore($request->get('entityType')).
-                '.'.
-                $displayedElement
-            );
-        }
-
-        return $displayedElements;
+        return $this->get('open_orchestra_api.transformer_manager')->get('api_displayed_element')->transform($request->get('displayedElements'), $request->get('entityType'));
     }
 
 }
