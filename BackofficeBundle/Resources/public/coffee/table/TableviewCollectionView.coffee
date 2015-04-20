@@ -37,7 +37,6 @@ TableviewCollectionView = OrchestraView.extend(
       success: (response) ->
         $(viewContext.el).html viewContext.renderTemplate('tableviewCollectionView',
           displayedElements: response
-          links: viewContext.options.elements.get('links')
           cid: viewContext.cid
         )
     $('.js-widget-title', @$el).text @options.title
