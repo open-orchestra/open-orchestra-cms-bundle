@@ -58,5 +58,4 @@ class DisplayedElementCollectionTransformerTest extends \PHPUnit_Framework_TestC
             array('fake', array('fake_column'), array('open_orchestra_backoffice.table.fake.fake_column')),
         );
     }
-
 }
