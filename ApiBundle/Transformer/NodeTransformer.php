@@ -13,6 +13,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class NodeTransformer
@@ -21,6 +22,7 @@ class NodeTransformer extends AbstractTransformer
 {
     protected $encrypter;
     protected $siteRepository;
+    protected $securityContext;
     protected $eventDispatcher;
     protected $statusRepository;
 
@@ -29,18 +31,21 @@ class NodeTransformer extends AbstractTransformer
      * @param SiteRepositoryInterface   $siteRepository
      * @param StatusRepositoryInterface $statusRepository
      * @param EventDispatcherInterface  $eventDispatcher
+     * @param SecurityContextInterface  $securityContext
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
-        $eventDispatcher
+        $eventDispatcher,
+        SecurityContextInterface $securityContext
     )
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -181,9 +186,16 @@ class NodeTransformer extends AbstractTransformer
             if ($facade->statusId) {
                 $newStatus = $this->statusRepository->find($facade->statusId);
                 if ($newStatus) {
-                    $source->setStatus($newStatus);
-                    $event = new StatusableEvent($source);
-                    $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+                    $roles = array();
+                    foreach ($newStatus->getToRoles() as $roleEntity) {
+                        $roles[] = $roleEntity->getName();
+                    }
+
+                    if ($this->securityContext->isGranted($roles)) {
+                        $source->setStatus($newStatus);
+                        $event = new StatusableEvent($source);
+                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+                    }
                 }
             }
         }
