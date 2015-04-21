@@ -2,8 +2,6 @@ widgetChannel = Backbone.Wreqr.radio.channel('widget')
 
 widgetChannel.commands.setHandler 'init', (view) ->
   if view.options
-    if view.options.multiLanguage
-      Backbone.Wreqr.radio.commands.execute 'language', 'init', view
     if view.options.multiStatus
       Backbone.Wreqr.radio.commands.execute 'status', 'init', view
     if view.options.multiVersion

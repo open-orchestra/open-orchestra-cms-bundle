@@ -2,6 +2,8 @@ LanguageView = OrchestraView.extend(
   tagName: "li"
 
   initialize: (options) ->
+    @events = {}
+    @events['click a.change-language'] = 'changeLanguage'
     @options = options
     @loadTemplates [
       "language"
@@ -9,10 +11,17 @@ LanguageView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).append @renderTemplate('language',
+    @setElement @renderTemplate('language',
       language: @options.language
-      currentLanguage: @options.currentLanguage
-      parentCid: @options.cid
+      currentLanguage: @options.currentLanguage.language
     )
+    @options.domContainer.append @$el
     return
+
+  changeLanguage: (event) ->
+    event.preventDefault()
+    redirectUrl = appRouter.generateUrl(@options.currentLanguage.path, appRouter.addParametersToRoute(
+      language: $(event.currentTarget).data('language')
+    ))
+    Backbone.history.navigate(redirectUrl, {trigger: true})
 )
