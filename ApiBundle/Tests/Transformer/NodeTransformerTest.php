@@ -16,6 +16,8 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $nodeTransformer;
 
+    protected $roleName = 'ROLE_NAME';
+    protected $authorizationChecker;
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
@@ -27,6 +29,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $status;
     protected $node;
     protected $site;
+    protected $role;
 
     /**
      * Set up the test
@@ -39,9 +42,14 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn(array($siteAlias));
+
+        $this->role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
+        Phake::when($this->role)->getName()->thenReturn($this->roleName);
+
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
+        Phake::when($this->status)->getToRoles()->thenReturn(new ArrayCollection(array($this->role)));
 
         $this->encryptionManager = Phake::mock('OpenOrchestra\BaseBundle\Manager\EncryptionManager');
 
@@ -59,7 +67,15 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->nodeTransformer = new NodeTransformer($this->encryptionManager, $this->siteRepository, $this->statusRepository, $this->eventDispatcher);
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+
+        $this->nodeTransformer = new NodeTransformer(
+            $this->encryptionManager,
+            $this->siteRepository,
+            $this->statusRepository,
+            $this->eventDispatcher,
+            $this->authorizationChecker
+        );
 
         $this->nodeTransformer->setContext($this->transformerManager);
     }
@@ -109,14 +125,18 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      * @param mixed $source
      * @param int   $searchCount
      * @param int   $setCount
+     * @param bool  $isGranted
      *
      * @dataProvider getChangeStatus
      */
-    public function testReverseTransform($facade, $source, $searchCount, $setCount)
+    public function testReverseTransform($facade, $source, $searchCount, $setCount, $isGranted = true)
     {
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+
         $this->nodeTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
+        Phake::verify($this->authorizationChecker, Phake::times($searchCount))->isGranted(array($this->roleName));
         Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
 
         if ($source) {
@@ -134,12 +154,15 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $facadeB = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeFacade');
         $facadeB->statusId = 'fakeId';
 
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         return array(
             array($facadeA, null, 0, 0),
-            array($facadeA, $node, 0, 0),
-            array($facadeB, $node, 1, 1)
+            array($facadeA, $node1, 0, 0),
+            array($facadeB, $node2, 1, 1),
+            array($facadeB, $node3, 1, 0, false),
         );
     }
 }

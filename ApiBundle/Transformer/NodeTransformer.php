@@ -13,6 +13,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeTransformer
@@ -21,26 +22,30 @@ class NodeTransformer extends AbstractTransformer
 {
     protected $encrypter;
     protected $siteRepository;
+    protected $authorizationChecker;
     protected $eventDispatcher;
     protected $statusRepository;
 
     /**
-     * @param EncryptionManager         $encrypter
-     * @param SiteRepositoryInterface   $siteRepository
-     * @param StatusRepositoryInterface $statusRepository
-     * @param EventDispatcherInterface  $eventDispatcher
+     * @param EncryptionManager             $encrypter
+     * @param SiteRepositoryInterface       $siteRepository
+     * @param StatusRepositoryInterface     $statusRepository
+     * @param EventDispatcherInterface      $eventDispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
-        $eventDispatcher
+        $eventDispatcher,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -181,9 +186,16 @@ class NodeTransformer extends AbstractTransformer
             if ($facade->statusId) {
                 $newStatus = $this->statusRepository->find($facade->statusId);
                 if ($newStatus) {
-                    $source->setStatus($newStatus);
-                    $event = new StatusableEvent($source);
-                    $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+                    $roles = array();
+                    foreach ($newStatus->getToRoles() as $roleEntity) {
+                        $roles[] = $roleEntity->getName();
+                    }
+
+                    if ($this->authorizationChecker->isGranted($roles)) {
+                        $source->setStatus($newStatus);
+                        $event = new StatusableEvent($source);
+                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+                    }
                 }
             }
         }
