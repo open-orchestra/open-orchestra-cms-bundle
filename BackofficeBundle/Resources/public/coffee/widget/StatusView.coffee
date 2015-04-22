@@ -1,4 +1,4 @@
-WidgetStatusView = OrchestraView.extend(
+StatusView = OrchestraView.extend(
 
   initialize: (options) ->
     @options = options

@@ -22,7 +22,7 @@ statusChannel.commands.setHandler 'ready', (view) ->
       version: view.options.multiStatus.version
     url: view.options.multiStatus.status_list
     success: (response) ->
-      new WidgetStatusView(
+      new StatusView(
         current_status: view.options.multiStatus.status
         statuses: response.statuses
         status_change_link: view.options.multiStatus.self_status_change
