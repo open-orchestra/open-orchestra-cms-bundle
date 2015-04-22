@@ -2,16 +2,16 @@
     <!-- add: non-hidden - to disable auto hide -->
 
     <div class="btn-group">
-        <button class="btn dropdown-toggle btn-xs txt-color-white bg-color-<%= current_status.code_color %>" data-toggle="dropdown">
-            <i class="glyphicon glyphicon-thumbs-up"></i> <%= current_status.label %> <i class="fa fa-caret-down"></i>
+        <button class="btn dropdown-toggle btn-xs txt-color-white bg-color-<%= currentStatus.code_color %>" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-thumbs-up"></i> <%= currentStatus.label %> <i class="fa fa-caret-down"></i>
         </button>
         <ul class="dropdown-menu pull-right js-status-update">
             <% if (statuses.length > 0 ) { %>
                 <% _.each(statuses, function(status) { %>
                     <% if (status.allowed) { %>
                         <li>
-                            <a class="change-status-<%= cid %>"
-                                data-url="<%= status_change_link %>"
+                            <a class="change-status"
+                                data-url="<%= statusChangeLink %>"
                                 data-status="<%= status.id %>"
                             >
                                 <i class="fa fa-circle txt-color-<%= status.code_color %>"></i>

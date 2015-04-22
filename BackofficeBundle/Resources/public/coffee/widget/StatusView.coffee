@@ -1,6 +1,8 @@
 StatusView = OrchestraView.extend(
 
   initialize: (options) ->
+    @events = {}
+    @events['click .change-status'] = 'changeStatus'
     @options = options
     @loadTemplates [
       "widgetStatus"
@@ -8,12 +10,24 @@ StatusView = OrchestraView.extend(
     return
 
   render: ->
-    html = @renderTemplate('widgetStatus',
-      current_status: @options.current_status
+    @setElement @renderTemplate('widgetStatus',
+      currentStatus: @options.currentStatus.status
       statuses: @options.statuses
-      status_change_link: @options.status_change_link
-      cid: @options.cid
+      statusChangeLink: @options.currentStatus.self_status_change
     )
-    addCustomJarvisWidget(html)
+    addCustomJarvisWidget(@$el)
+    return
+
+  changeStatus: (event) ->
+    event.preventDefault()
+    url = $(event.currentTarget).data("url")
+    statusId = $(event.currentTarget).data("status")
+    displayLoader()
+    data =
+      status_id: statusId
+    data = JSON.stringify(data)
+    $.post(url, data).always (response) ->
+      Backbone.history.loadUrl(Backbone.history.fragment)
+      return
     return
 )
