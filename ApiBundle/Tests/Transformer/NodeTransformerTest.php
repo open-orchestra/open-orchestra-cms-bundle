@@ -17,11 +17,11 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $nodeTransformer;
 
     protected $roleName = 'ROLE_NAME';
+    protected $authorizationChecker;
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
     protected $eventDispatcher;
-    protected $securityContext;
     protected $siteRepository;
     protected $transformer;
     protected $statusId;
@@ -67,14 +67,14 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->securityContext = Phake::mock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $this->nodeTransformer = new NodeTransformer(
             $this->encryptionManager,
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->securityContext
+            $this->authorizationChecker
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);
@@ -131,12 +131,12 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransform($facade, $source, $searchCount, $setCount, $isGranted = true)
     {
-        Phake::when($this->securityContext)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
 
         $this->nodeTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
-        Phake::verify($this->securityContext, Phake::times($searchCount))->isGranted(array($this->roleName));
+        Phake::verify($this->authorizationChecker, Phake::times($searchCount))->isGranted(array($this->roleName));
         Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
 
         if ($source) {
