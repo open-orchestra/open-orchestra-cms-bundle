@@ -1,5 +1,4 @@
 LanguageView = OrchestraView.extend(
-  tagName: "li"
 
   initialize: (options) ->
     @events = {}
