@@ -3,8 +3,8 @@
 namespace OpenOrchestra\ApiBundle\EventSubscriber;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use JMS\Serializer\Serializer;
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver;
+use JMS\Serializer\SerializerInterface;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,11 +23,11 @@ class SerializerSubscriber implements EventSubscriberInterface
     protected $annotationReader;
 
     /**
-     * @param Serializer         $serializer
-     * @param AnnotationReader   $annotationReader
-     * @param ControllerResolver $resolver
+     * @param SerializerInterface         $serializer
+     * @param AnnotationReader            $annotationReader
+     * @param ControllerResolverInterface $resolver
      */
-    public function __construct(Serializer $serializer, AnnotationReader $annotationReader, ControllerResolver $resolver)
+    public function __construct(SerializerInterface $serializer, AnnotationReader $annotationReader, ControllerResolverInterface $resolver)
     {
         $this->resolver = $resolver;
         $this->serializer = $serializer;
@@ -57,13 +57,14 @@ class SerializerSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $format = $event->getRequest()->get('_format', 'json');
         $event->setResponse(
             new Response(
                 $this->serializer->serialize(
                     $event->getControllerResult(),
-                    $event->getRequest()->get('_format', 'json')),
+                    $format),
                 200,
-                array('content-type' => 'application/json')));
+                array('content-type' => $this->generateContentType($format))));
     }
 
     /**
@@ -86,5 +87,24 @@ class SerializerSubscriber implements EventSubscriberInterface
         return array(
             KernelEvents::VIEW => 'onKernelViewSerialize',
         );
+    }
+
+    /**
+     * @param string $format
+     *
+     * @return string
+     */
+    protected function generateContentType($format)
+    {
+        switch ($format) {
+            case 'json':
+                return 'application/json';
+            case 'xml' :
+                return 'text/xml';
+            case 'yml':
+                return 'application/yaml';
+            default :
+                return 'text/html';
+        }
     }
 }
