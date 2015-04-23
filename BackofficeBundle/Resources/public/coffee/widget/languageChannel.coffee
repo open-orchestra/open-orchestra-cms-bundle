@@ -8,7 +8,7 @@ languageChannel.commands.setHandler 'ready', (view) ->
       site = new Site
       site.set response
       for language of site.get('languages')
-        languageView = new LanguageView(
+        new LanguageView(
           language: site.get('languages')[language]
           domContainer: view.$el.find('#entity-languages')
           currentLanguage: view.options.multiLanguage

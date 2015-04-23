@@ -4,10 +4,7 @@
 </ul>
 <div id="preview"></div>
 <% if (node.get('node_type') == 'page') { %>
-    <a class="btn btn-info btn-new-version btn-new-version-<%= cid %>" target="_blank">
-        <i class="glyphicon glyphicon-pencil"></i>
-        {{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}
-    </a>
+    <span id="entity-duplicate" data-text="{{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}"></span>
 <% } %>
 <div id="additionalContent" class="smart-form">
     <% if (node.get('node_type') == 'page') { %>

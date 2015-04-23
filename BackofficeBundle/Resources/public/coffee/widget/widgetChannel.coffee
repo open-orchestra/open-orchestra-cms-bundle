@@ -2,12 +2,8 @@ widgetChannel = Backbone.Wreqr.radio.channel('widget')
 
 widgetChannel.commands.setHandler 'init', (view) ->
   if view.options
-    if view.options.multiStatus
-      Backbone.Wreqr.radio.commands.execute 'status', 'init', view
     if view.options.multiVersion
       Backbone.Wreqr.radio.commands.execute 'version', 'init', view
-    if view.options.duplicate
-      Backbone.Wreqr.radio.commands.execute 'duplicate', 'init', view
   return
 
 widgetChannel.commands.setHandler 'ready', (view) ->
@@ -18,6 +14,8 @@ widgetChannel.commands.setHandler 'ready', (view) ->
       Backbone.Wreqr.radio.commands.execute 'status', 'ready', view
     if view.options.multiVersion
       Backbone.Wreqr.radio.commands.execute 'version', 'ready', view
+    if view.options.duplicate
+      Backbone.Wreqr.radio.commands.execute 'duplicate', 'ready', view
   return
   
 widgetChannel.commands.setHandler 'loaded', (el) ->
