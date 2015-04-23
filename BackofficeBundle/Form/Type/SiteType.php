@@ -83,12 +83,10 @@ class SiteType extends AbstractType
             ->add('metaIndex', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_index',
                 'required' => false,
-                'data' => true,
             ))
             ->add('metaFollow', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_follow',
                 'required' => false,
-                'data' => true,
             ))
             ->add('robotsTxt', 'textarea', array(
                 'label' => 'open_orchestra_backoffice.form.website.robots_txt',
