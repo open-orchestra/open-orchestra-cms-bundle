@@ -17,6 +17,8 @@ DuplicateView = OrchestraView.extend(
     return
 
   duplicateElement: (event) ->
+    event.preventDefault()
+    displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentDuplicate.path, appRouter.addParametersToRoute(
       language: @options.currentDuplicate.language
     ))

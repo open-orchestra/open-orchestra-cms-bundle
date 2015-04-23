@@ -20,6 +20,8 @@ VersionView = OrchestraView.extend(
     return
 
   changeVersion: (event) ->
+    event.preventDefault()
+    displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentVersion.path, appRouter.addParametersToRoute(
       version: event.currentTarget.value
       language: @options.currentVersion.language

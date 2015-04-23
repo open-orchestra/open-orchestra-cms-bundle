@@ -20,9 +20,9 @@ StatusView = OrchestraView.extend(
 
   changeStatus: (event) ->
     event.preventDefault()
+    displayLoader()
     url = $(event.currentTarget).data("url")
     statusId = $(event.currentTarget).data("status")
-    displayLoader()
     data =
       status_id: statusId
     data = JSON.stringify(data)

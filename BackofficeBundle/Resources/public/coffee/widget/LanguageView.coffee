@@ -19,6 +19,7 @@ LanguageView = OrchestraView.extend(
 
   changeLanguage: (event) ->
     event.preventDefault()
+    displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentLanguage.path, appRouter.addParametersToRoute(
       language: $(event.currentTarget).data('language')
     ))
