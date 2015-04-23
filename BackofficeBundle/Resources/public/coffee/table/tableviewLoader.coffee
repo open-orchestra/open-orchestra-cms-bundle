@@ -9,7 +9,6 @@ addParameter = (element, label, value) ->
   return element
 
 tableViewLoad = (link, entityType, entityId, language, version, add) ->
-  target = "#content"
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
@@ -76,7 +75,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
           order: order
           title: title
           entityType: entityType
-          el: target
+          domContainer: $("#content")
         )
         appRouter.setCurrentMainView view
 
