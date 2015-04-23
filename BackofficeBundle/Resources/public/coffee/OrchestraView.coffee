@@ -3,7 +3,6 @@ OrchestraView = Backbone.View.extend(
   loadTemplates: (templates) ->
     @compiledTemplates = {}
     currentView = @
-    Backbone.Wreqr.radio.commands.execute 'widget', 'init', @
 
     $.each templates, (index, templateName) ->
       currentView.compiledTemplates[templateName] = false
