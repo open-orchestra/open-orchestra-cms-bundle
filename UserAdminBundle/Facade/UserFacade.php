@@ -1,8 +1,9 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\UserAdminBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\ApiBundle\Facade\AbstractFacade;
 
 /**
  * Class UserFacade

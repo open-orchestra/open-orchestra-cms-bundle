@@ -27,8 +27,6 @@ parameters:
     open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
     open_orchestra_api.transformer.field_type.class: OpenOrchestra\ApiBundle\Transformer\FieldTypeTransformer
     open_orchestra_api.transformer.status.class: OpenOrchestra\ApiBundle\Transformer\StatusTransformer
-    open_orchestra_api.transformer.user.class: OpenOrchestra\ApiBundle\Transformer\UserTransformer
-    open_orchestra_api.transformer.user_collection.class: OpenOrchestra\ApiBundle\Transformer\UserCollectionTransformer
     open_orchestra_api.transformer.keyword.class: OpenOrchestra\ApiBundle\Transformer\KeywordTransformer
     open_orchestra_api.transformer.keyword_collection.class: OpenOrchestra\ApiBundle\Transformer\KeywordCollectionTransformer
     open_orchestra_api.transformer.deleted.class: OpenOrchestra\ApiBundle\Transformer\DeletedTransformer
@@ -181,14 +179,6 @@ services:
             - @translator
         tags:
             - { name: open_orchestra_api.transformer.strategy }
-    open_orchestra_api.transformer.user:
-        class: %open_orchestra_api.transformer.user.class%
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.user_collection:
-        class: %open_orchestra_api.transformer.user_collection.class%
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.keyword:
         class: %open_orchestra_api.transformer.keyword.class%
         tags:

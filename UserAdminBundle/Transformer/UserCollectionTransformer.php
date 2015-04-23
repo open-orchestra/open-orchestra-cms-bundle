@@ -1,9 +1,10 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
-use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ApiBundle\Facade\UserCollectionFacade;
+namespace OpenOrchestra\UserAdminBundle\Transformer;
 
+use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\UserAdminBundle\Facade\UserCollectionFacade;
 
 /**
  * Class UserCollectionTransformer
@@ -23,7 +24,7 @@ class UserCollectionTransformer extends AbstractTransformer
             $facade->addUser($this->getTransformer('user')->transform($user));
         }
 
-        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_user_new'));
+        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_user_admin_new'));
 
         $facade->addLink('_translate', $this->generateRoute('open_orchestra_api_translate'));
 
