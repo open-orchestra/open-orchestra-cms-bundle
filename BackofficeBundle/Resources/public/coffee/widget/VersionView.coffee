@@ -1,9 +1,10 @@
 VersionView = OrchestraView.extend(
   tagName: "option"
 
+  events:
+    'click': 'changeVersion'
+
   initialize: (options) ->
-    @events = {}
-    @events['click'] = 'changeVersion'
     @options = options
     @loadTemplates [
       "widgetVersion"
@@ -19,6 +20,8 @@ VersionView = OrchestraView.extend(
     return
 
   changeVersion: (event) ->
+    event.preventDefault()
+    displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentVersion.path, appRouter.addParametersToRoute(
       version: event.currentTarget.value
       language: @options.currentVersion.language

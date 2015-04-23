@@ -1,8 +1,8 @@
 StatusView = OrchestraView.extend(
+  events:
+    'click .change-status': 'changeStatus'
 
   initialize: (options) ->
-    @events = {}
-    @events['click .change-status'] = 'changeStatus'
     @options = options
     @loadTemplates [
       "widgetStatus"
@@ -20,9 +20,9 @@ StatusView = OrchestraView.extend(
 
   changeStatus: (event) ->
     event.preventDefault()
+    displayLoader()
     url = $(event.currentTarget).data("url")
     statusId = $(event.currentTarget).data("status")
-    displayLoader()
     data =
       status_id: statusId
     data = JSON.stringify(data)

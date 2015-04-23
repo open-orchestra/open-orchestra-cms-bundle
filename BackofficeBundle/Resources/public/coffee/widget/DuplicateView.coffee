@@ -1,8 +1,8 @@
 DuplicateView = OrchestraView.extend(
+  events:
+    'click': 'duplicateElement'
 
   initialize: (options) ->
-    @events = {}
-    @events['click'] = 'duplicateElement'
     @options = options
     @loadTemplates [
       "widgetDuplicate"
@@ -17,6 +17,8 @@ DuplicateView = OrchestraView.extend(
     return
 
   duplicateElement: (event) ->
+    event.preventDefault()
+    displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentDuplicate.path, appRouter.addParametersToRoute(
       language: @options.currentDuplicate.language
     ))

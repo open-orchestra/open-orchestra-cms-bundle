@@ -36,7 +36,7 @@ TableviewCollectionView = OrchestraView.extend(
           links: viewContext.options.elements.get('links')
           cid: viewContext.cid
         )
-        viewContext.options.domContainer.append viewContext.$el
+        viewContext.options.domContainer.html viewContext.$el
     $('.js-widget-title', @options.domContainer).text @options.title
     for element of @options.elements.get(@options.elements.get('collection_name'))
       @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])

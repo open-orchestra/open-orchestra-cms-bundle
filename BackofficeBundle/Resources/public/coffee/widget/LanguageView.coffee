@@ -1,8 +1,8 @@
 LanguageView = OrchestraView.extend(
+  events:
+    'click a.change-language': 'changeLanguage'
 
   initialize: (options) ->
-    @events = {}
-    @events['click a.change-language'] = 'changeLanguage'
     @options = options
     @loadTemplates [
       "widgetLanguage"
@@ -19,6 +19,7 @@ LanguageView = OrchestraView.extend(
 
   changeLanguage: (event) ->
     event.preventDefault()
+    displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentLanguage.path, appRouter.addParametersToRoute(
       language: $(event.currentTarget).data('language')
     ))
