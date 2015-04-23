@@ -1,0 +1,10 @@
+services:
+    open_orchestra_user_admin.left_panel.user:
+        class: %open_orchestra_backoffice.left_panel.administration.class%
+        arguments:
+            - user
+            - ROLE_ACCESS_USER
+        calls:
+            - [ setTemplate, ['OpenOrchestraUserAdminBundle:AdministrationPanel:user.html.twig'] ]
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
