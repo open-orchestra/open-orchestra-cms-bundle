@@ -4,6 +4,8 @@ search = (api, rank) ->
     return
 
 TableviewCollectionView = OrchestraView.extend(
+  events: 
+    'click a.ajax-add': 'clickAdd'
 
   initialize: (options) ->
     @events = {}
