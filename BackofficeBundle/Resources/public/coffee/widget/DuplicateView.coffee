@@ -1,8 +1,8 @@
 DuplicateView = OrchestraView.extend(
+  events:
+    'click': 'duplicateElement'
 
   initialize: (options) ->
-    @events = {}
-    @events['click'] = 'duplicateElement'
     @options = options
     @loadTemplates [
       "widgetDuplicate"

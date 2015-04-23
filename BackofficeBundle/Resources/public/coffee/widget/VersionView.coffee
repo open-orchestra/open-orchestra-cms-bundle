@@ -1,9 +1,10 @@
 VersionView = OrchestraView.extend(
   tagName: "option"
 
+  events:
+    'click': 'changeVersion'
+
   initialize: (options) ->
-    @events = {}
-    @events['click'] = 'changeVersion'
     @options = options
     @loadTemplates [
       "widgetVersion"

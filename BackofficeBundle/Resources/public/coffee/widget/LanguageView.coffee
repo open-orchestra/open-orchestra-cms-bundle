@@ -1,8 +1,8 @@
 LanguageView = OrchestraView.extend(
+  events:
+    'click a.change-language': 'changeLanguage'
 
   initialize: (options) ->
-    @events = {}
-    @events['click a.change-language'] = 'changeLanguage'
     @options = options
     @loadTemplates [
       "widgetLanguage"

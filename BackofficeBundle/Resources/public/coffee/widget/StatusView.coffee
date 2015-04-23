@@ -1,8 +1,8 @@
 StatusView = OrchestraView.extend(
+  events:
+    'click .change-status': 'changeStatus'
 
   initialize: (options) ->
-    @events = {}
-    @events['click .change-status'] = 'changeStatus'
     @options = options
     @loadTemplates [
       "widgetStatus"
