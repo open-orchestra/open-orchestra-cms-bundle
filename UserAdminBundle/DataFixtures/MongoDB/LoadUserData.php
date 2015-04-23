@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -18,15 +18,19 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $admin = $this->generate('admin', 'group2');
+        $this->addReference('user-admin', $admin);
         $admin->addGroup($this->getReference('group3'));
         $admin->addGroup($this->getReference('group1'));
         $manager->persist($admin);
 
         $user1 = $this->generate('user1', 'group1');
+        $this->addReference('user-user1', $user1);
         $manager->persist($user1);
         $userContentType = $this->generate('userContentType', 'groupContentType');
+        $this->addReference('user-userContentType', $userContentType);
         $manager->persist($userContentType);
         $userLog = $this->generate('userLog', 'groupLog');
+        $this->addReference('usre-userLog', $userLog);
         $manager->persist($userLog);
 
         $manager->flush();
