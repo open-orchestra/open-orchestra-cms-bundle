@@ -1,12 +1,10 @@
 TableviewView = OrchestraView.extend(
+  events:
+    'click a.ajax-delete': 'clickDelete'
+    'click a.ajax-edit' : 'clickEdit'
+
   initialize: (options) ->
-    @events = []
-    @events['click a.ajax-delete-' + @cid] = 'clickDelete'
-    @events['click a.ajax-edit-' + @cid] = 'clickEdit'
-    @element = options.element
-    @displayedElements = options.displayedElements
-    @title = options.title
-    @entityType = options.entityType
+    @options = options
     _.bindAll this, "render"
     @loadTemplates [
       'tableviewView',
@@ -15,17 +13,16 @@ TableviewView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).append('<tr></tr>')
-    row = $(@el).find('tr:last-of-type')
-    for displayedElement in @displayedElements
-      row.append @renderTemplate('tableviewView'
-        value: @element.get(displayedElement)
+    @setElement $('<tr />')
+    for displayedElement in @options.displayedElements
+      @$el.append @renderTemplate('tableviewView'
+        value: @options.element.get(displayedElement)
       )
-    row.append @renderTemplate('tableviewActions',
-      deleted: @element.get('deleted')
-      links: @element.get('links')
-      cid: @cid
+    @$el.append @renderTemplate('tableviewActions',
+      deleted: @options.element.get('deleted')
+      links: @options.element.get('links')
     )
+    @options.domContainer.append(@$el)
 
   clickDelete: (event) ->
     event.preventDefault()
@@ -34,7 +31,7 @@ TableviewView = OrchestraView.extend(
       'Delete this element',
       'The removal will be final',
       callBackParams:
-        url: @element.get('links')._self_delete
+        url: @options.element.get('links')._self_delete
         row: $(event.target).closest('tr')
       yesCallback: (params) ->
         $.ajax
@@ -45,35 +42,23 @@ TableviewView = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
-    if @element.get('language') && @element.get('version')
-      redirectUrl = appRouter.generateUrl('showEntityWithLanguageAndVersion', appRouter.addParametersToRoute(
-        'entityId': @element.get('id')
-        'language': @element.get('language')
-        'version' : @element.get('version')
-      ))
-    else if @element.get('language')
-      redirectUrl = appRouter.generateUrl('showEntityWithLanguage', appRouter.addParametersToRoute(
-        'entityId': @element.get('id')
-        'language': @element.get('language')
-      ))
-    else
-      redirectUrl = appRouter.generateUrl('showEntity', appRouter.addParametersToRoute(
-        'entityId': @element.get('id')
-      ))
+    parameter = 
+      'entityId': @options.element.get('id')
+      'language': @options.element.get('language')
+      'version' : @options.element.get('version')
+    redirectUrl = 'showEntity'
+    if @options.element.get('language')
+      redirectUrl = 'showEntityWithLanguage'
+      if @options.element.get('version')
+        redirectUrl = 'showEntityWithLanguageAndVersion'
+    redirectUrl = appRouter.generateUrl(redirectUrl, appRouter.addParametersToRoute(parameter))
     Backbone.history.navigate(redirectUrl)
-    element = @element
-    title = @title
-    entityType = @entityType
+    options = @options
     $.ajax
-      url: element.get('links')._self_form
+      url: options.element.get('links')._self_form
       method: "GET"
       success: (response) ->
-        options =
-          html: response
-          title: title
-          entityType: entityType
-          element: element
-
-        view = new FullPageFormView(options)
+        view = new FullPageFormView($.extend({}, options,
+          html: response))
         appRouter.setCurrentMainView view
 )

@@ -5,19 +5,15 @@ search = (api, rank) ->
 
 TableviewCollectionView = OrchestraView.extend(
   events:
-    'click #none': 'clickAdd'
+    'click a.ajax-add': 'clickAdd'
 
   initialize: (options) ->
     @options = options
     @options.order = [ 0, 'asc' ] if @options.order == undefined
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
-    key = 'click a.ajax-add-' + @cid
-    @events[key] = 'clickAdd'
     _.bindAll this, "render"
     @loadTemplates [
-      'tableviewCollectionView',
-      'tableviewView',
-      'tableviewActions'
+      'tableviewCollectionView'
     ]
     return
 
@@ -35,12 +31,13 @@ TableviewCollectionView = OrchestraView.extend(
         entityType: entityType
         displayedElements: @options.displayedElements
       success: (response) ->
-        $(viewContext.el).html viewContext.renderTemplate('tableviewCollectionView',
+        viewContext.setElement viewContext.renderTemplate('tableviewCollectionView',
           displayedElements: response.displayed_elements
           links: viewContext.options.elements.get('links')
           cid: viewContext.cid
         )
-    $('.js-widget-title', @$el).text @options.title
+        viewContext.options.domContainer.append viewContext.$el
+    $('.js-widget-title', @options.domContainer).text @options.title
     for element of @options.elements.get(@options.elements.get('collection_name'))
       @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])
       
@@ -70,16 +67,11 @@ TableviewCollectionView = OrchestraView.extend(
     return
 
   addElementToView: (elementData) ->
-    options = @options
     elementModel = new TableviewModel
     elementModel.set elementData
-    view = new TableviewView(
+    view = new TableviewView($.extend({}, @options,
       element: elementModel
-      displayedElements: options.displayedElements
-      title: options.title
-      entityType: options.entityType
-      el : this.$el.find('tbody')
-    )
+      domContainer : @$el.find('tbody')))
     return
 
   clickAdd: (event) ->
@@ -91,11 +83,8 @@ TableviewCollectionView = OrchestraView.extend(
       url: options.elements.get('links')._self_add
       method: 'GET'
       success: (response) ->
-        view = new FullPageFormView(
+        view = new FullPageFormView($.extend({}, options,
           html: response
-          title: options.title
-          entityType: options.entityType
-          element: options.element
           triggers: [
             {
               event: "focusout input.generate-id-source"
@@ -108,5 +97,5 @@ TableviewCollectionView = OrchestraView.extend(
               fct: stopGenerateId
             }
           ]
-        )
+        ))
 )
