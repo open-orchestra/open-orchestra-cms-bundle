@@ -25,6 +25,7 @@ class AdministrationPanelStrategy extends AbstractLeftPanelStrategy
     protected $role;
     protected $weight;
     protected $parent;
+    protected $template;
 
     /**
      * @param string $name
@@ -45,7 +46,7 @@ class AdministrationPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:AdministrationPanel:' . $this->name . '.html.twig');
+        return $this->render($this->getTemplate());
     }
 
     /**
@@ -78,5 +79,25 @@ class AdministrationPanelStrategy extends AbstractLeftPanelStrategy
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplate()
+    {
+        if ($this->template) {
+            return $this->template;
+        }
+
+        return 'OpenOrchestraBackofficeBundle:AdministrationPanel:' . $this->name . '.html.twig';
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
     }
 }
