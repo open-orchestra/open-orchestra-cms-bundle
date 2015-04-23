@@ -18,17 +18,6 @@ showNodeForm = (parentNode) ->
   $(".modal-title").text parentNode.text()
   view = new adminFormView(
     url: parentNode.data("url")
-    triggers: [
-      {
-        event: "focusout input.generate-id-source"
-        name: "generateId"
-        fct: generateId
-      }
-      {
-        event: "blur input.generate-id-dest"
-        name: "stopGenerateId"
-        fct: stopGenerateId
-      }
-    ]
+    generateId: true
   )
   return

@@ -54,18 +54,7 @@ NodeView = OrchestraView.extend(
         confirmtext: confirmText
         confirmtitle: confirmTitle
         redirectUrl: redirectUrl
-        triggers: [
-          {
-            event: "focusout input.generate-id-source"
-            name: "generateId"
-            fct: generateId
-          }
-          {
-            event: "blur input.generate-id-dest"
-            name: "stopGenerateId"
-            fct: stopGenerateId
-          }
-        ]
+        generateId: true
       )
     else
       view = new adminFormView(
