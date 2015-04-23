@@ -4,12 +4,10 @@ search = (api, rank) ->
     return
 
 TableviewCollectionView = OrchestraView.extend(
-  events: 
+  events:
     'click a.ajax-add': 'clickAdd'
 
   initialize: (options) ->
-    @events = {}
-    @events['click a.ajax-add'] = 'clickAdd'
     @options = options
     @options.order = [ 0, 'asc' ] if @options.order == undefined
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)

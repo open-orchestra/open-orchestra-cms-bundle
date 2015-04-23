@@ -1,10 +1,9 @@
 TableviewView = OrchestraView.extend(
-  events: 
+  events:
     'click a.ajax-delete': 'clickDelete'
     'click a.ajax-edit' : 'clickEdit'
 
   initialize: (options) ->
-    @events = {}
     @options = options
     _.bindAll this, "render"
     @loadTemplates [
