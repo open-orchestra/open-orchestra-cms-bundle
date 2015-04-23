@@ -1,14 +1,5 @@
 versionChannel = Backbone.Wreqr.radio.channel('version')
 
-versionChannel.commands.setHandler 'init', (view) ->
-  view.events['change .version-selectbox-' + view.cid] = 'changeVersion'
-  view.changeVersion = (event) ->
-    redirectUrl = appRouter.generateUrl(view.options.multiVersion.path, appRouter.addParametersToRoute(
-      version: event.currentTarget.value
-      language: view.options.multiVersion.language
-    ))
-    Backbone.history.navigate(redirectUrl, {trigger: true})
-
 versionChannel.commands.setHandler 'ready', (view) ->
   $.ajax
     type: "GET"
@@ -22,7 +13,7 @@ versionChannel.commands.setHandler 'ready', (view) ->
         versionElement.set collection.get(collectionName)[version]
         new VersionView(
           element: versionElement
-          version: view.options.multiVersion.version
-          el: view.$el.find('#version-selectbox')
+          currentVersion: view.options.multiVersion
+          domContainer: view.$el.find('#version-selectbox')
         )
       return

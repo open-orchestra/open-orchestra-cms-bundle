@@ -2,22 +2,26 @@ VersionView = OrchestraView.extend(
   tagName: "option"
 
   initialize: (options) ->
+    @events = {}
+    @events['click'] = 'changeVersion'
     @options = options
     @loadTemplates [
-      "elementTitle"
-      "elementChoice"
+      "widgetVersion"
     ]
     return
 
   render: ->
-    title = @renderTemplate('elementTitle',
+    @setElement @renderTemplate('widgetVersion',
       element: @options.element
+      version: @options.currentVersion.version
     )
-    $(@el).prepend @renderTemplate('elementChoice',
-      title: title
-      element: @options.element
-      version: @options.version
-      cid: @cid
-    )
+    @options.domContainer.prepend @$el
     return
+
+  changeVersion: (event) ->
+    redirectUrl = appRouter.generateUrl(@options.currentVersion.path, appRouter.addParametersToRoute(
+      version: event.currentTarget.value
+      language: @options.currentVersion.language
+    ))
+    Backbone.history.navigate(redirectUrl, {trigger: true})
 )
