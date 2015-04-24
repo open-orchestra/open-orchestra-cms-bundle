@@ -3,7 +3,9 @@ FolderConfigurationButtonView = OrchestraView.extend(
     'click i.ajax-folder': 'clickEditFolder'
 
   initialize: (options) ->
-    @options = options
+    @options = @reduce(options, [
+      'medias'
+    ])
     @loadTemplates [
       "widgetFolderConfigurationButton"
     ]

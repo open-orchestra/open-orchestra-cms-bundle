@@ -1,7 +1,11 @@
 GalleryView = OrchestraView.extend(
   initialize: (options) ->
     @events = {}
-    @options = options
+    @options = @reduce(options, [
+      'modal'
+      'media'
+      'domContainer'
+    ])
     if !@options.modal
       @events['click .superbox-img'] = 'superboxOpen'
       if @options.media.get('is_deletable')
@@ -27,8 +31,7 @@ GalleryView = OrchestraView.extend(
   superboxOpen: ->
     listUrl = Backbone.history.fragment
     Backbone.history.navigate(listUrl + '/media/' + @options.media.id + '/edit')
-    superboxView = new SuperboxView (
-      media: @options.media
+    superboxView = new SuperboxView ($.extend({}, @options,
       listUrl: listUrl
     )
 
