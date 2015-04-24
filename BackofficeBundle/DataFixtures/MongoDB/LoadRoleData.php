@@ -7,7 +7,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeFolderPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\ModelBundle\Document\Role;
@@ -25,7 +24,6 @@ class LoadRoleData implements FixtureInterface
     {
         $manager->persist($this->generateRole(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE));
         $manager->persist($this->generateRole(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE));
-        $manager->persist($this->generateRole(TreeFolderPanelStrategy::ROLE_ACCESS_TREE_FOLDER));
         $manager->persist($this->generateRole(TreeTemplatePanelStrategy::ROLE_ACCESS_TREE_TEMPLATE));
         $manager->persist($this->generateRole(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT));
         $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE));
