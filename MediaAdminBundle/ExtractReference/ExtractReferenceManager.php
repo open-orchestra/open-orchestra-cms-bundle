@@ -1,9 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\StrategyManager;
+namespace OpenOrchestra\MediaAdminBundle\ExtractReference;
 
-use OpenOrchestra\Backoffice\Exception\ExtractReferenceStrategyNotFound;
-use OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use OpenOrchestra\MediaAdminBundle\Exceptions\ExtractReferenceStrategyNotFound;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Exception;
+namespace OpenOrchestra\MediaAdminBundle\Exceptions;
 
 /**
  * Class ExtractReferenceStrategyNotFound

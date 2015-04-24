@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\ExtractReference;
+namespace OpenOrchestra\MediaAdminBundle\ExtractReference;
 
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\ExtractReference\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\ExtractReference\Strategies;
 
-use OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use OpenOrchestra\MediaAdminBundle\ExtractReference\ExtractReferenceInterface;
 use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;

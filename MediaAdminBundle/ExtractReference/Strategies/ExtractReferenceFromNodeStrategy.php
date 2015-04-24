@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\ExtractReference\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\ExtractReference\Strategies;
 
-use OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface;
+use OpenOrchestra\MediaAdminBundle\ExtractReference\ExtractReferenceInterface;
 use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -50,6 +50,8 @@ class ExtractReferenceFromNodeStrategy implements ExtractReferenceInterface
      * @param string $blockIndex
      * @param string $statusableElementId
      * @param array  $references
+     *
+     * @return array
      */
     protected function extractMedia($element, $blockIndex, $statusableElementId, $references = array())
     {

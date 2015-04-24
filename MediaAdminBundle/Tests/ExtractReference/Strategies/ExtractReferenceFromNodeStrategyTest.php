@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\ExtractReference\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\Tests\ExtractReference\Strategies;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use OpenOrchestra\Backoffice\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy;
+use OpenOrchestra\MediaAdminBundle\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy;
 use OpenOrchestra\Media\Model\MediaInterface;
 
 /**
@@ -30,7 +30,7 @@ class ExtractReferenceFromNodeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $this->assertInstanceOf('OpenOrchestra\Backoffice\ExtractReference\ExtractReferenceInterface', $this->strategy);
+        $this->assertInstanceOf('OpenOrchestra\MediaAdminBundle\ExtractReference\ExtractReferenceInterface', $this->strategy);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler;
+namespace OpenOrchestra\MediaAdminBundle\DependencyInjection\Compiler;
 
 use OpenOrchestra\BaseBundle\DependencyInjection\Compiler\AbstractTaggedCompiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -20,8 +20,8 @@ class ExtractReferenceCompilerPass extends AbstractTaggedCompiler implements Com
      */
     public function process(ContainerBuilder $container)
     {
-        $managerName = 'open_orchestra_backoffice.extract_reference_manager';
-        $tagName = 'open_orchestra_backoffice.extract_reference.strategy';
+        $managerName = 'open_orchestra_media_admin.extract_reference_manager';
+        $tagName = 'open_orchestra_media_admin.extract_reference.strategy';
 
         $this->addStrategyToManager($container, $managerName, $tagName);
     }
