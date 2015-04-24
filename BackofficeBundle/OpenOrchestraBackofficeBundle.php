@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle;
 
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ExtractReferenceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
@@ -29,7 +28,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new TinymceCompilerPass());
         $container->addCompilerPass(new DisplayIconCompilerPass());
         $container->addCompilerPass(new LeftPanelCompilerPass());
-        $container->addCompilerPass(new ExtractReferenceCompilerPass());
         $container->addCompilerPass(new BlockParameterCompilerPass());
     }
 }
