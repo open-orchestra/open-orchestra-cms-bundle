@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies;
 
+use OpenOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;

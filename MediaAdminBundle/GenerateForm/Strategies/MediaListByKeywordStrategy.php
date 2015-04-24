@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies;
 
+use OpenOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy as BaseMediaListByKeywordStrategy;
