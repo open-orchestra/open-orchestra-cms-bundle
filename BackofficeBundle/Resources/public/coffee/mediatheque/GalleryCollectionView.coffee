@@ -48,7 +48,7 @@ GalleryCollectionView = OrchestraView.extend(
         method: 'GET'
         success: (response) ->
           new FullPageFormView($.extend({}, options,
-            html: response)
+            html: response))
 
   addConfigurationButton: ->
     if @options.medias.get('links')._self_folder != undefined
