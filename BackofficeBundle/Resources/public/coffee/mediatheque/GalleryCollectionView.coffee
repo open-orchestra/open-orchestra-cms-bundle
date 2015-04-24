@@ -1,38 +1,26 @@
 GalleryCollectionView = OrchestraView.extend(
   events:
-    'click #none': 'clickAdd'
+    'click a.ajax-add': 'clickAdd'
 
   initialize: (options) ->
-    @medias = options.medias
-    @title = options.title
-    @listUrl = options.listUrl
-    @target = options.el
-    key = 'click a.ajax-add-' + @cid
-    @events[key] = 'clickAdd'
-    if @target == '#content'
-      key = 'click i.ajax-folder-' + @cid
-      @events[key] = 'clickEditFolder'
-      key = 'click i.ajax-folder-delete-' + @cid
-      @events[key] = 'clickDeleteFolder'
-    _.bindAll this, "render"
+    @options = options
     @loadTemplates [
       "galleryCollectionView",
-      "galleryView"
     ]
     return
 
   render: ->
-    $(@el).html @renderTemplate('galleryCollectionView',
-      links: @medias.get('links')
-      cid: @cid
+    @setElement @renderTemplate('galleryCollectionView'
+      links: @options.medias.get('links')
     )
-    $('.js-widget-title', @$el).text @title
-    if @target == '#content'
+    @options.domContainer.html @$el
+    $('.js-widget-title', @options.domContainer).text @options.title
+    if !@options.modal
       @addConfigurationButton()
       @addDeleteButton()
-    for mediaKey of @medias.get(@medias.get('collection_name'))
-      @addElementToView (@medias.get(@medias.get('collection_name'))[mediaKey])
-    $(".figure").width $(this).find("img").width()
+    for mediaKey of @options.medias.get(@options.medias.get('collection_name'))
+      @addElementToView (@options.medias.get(@options.medias.get('collection_name'))[mediaKey])
+    $(".figure").width @options.domContainer.find("img").width()
     $(".figure").mouseenter(->
       $(this).find(".caption").slideToggle(150)
       return
@@ -43,79 +31,31 @@ GalleryCollectionView = OrchestraView.extend(
   addElementToView: (mediaData) ->
     mediaModel = new GalleryModel
     mediaModel.set mediaData
-    view = new GalleryView(
+    new GalleryView($.extend({}, options,
       media: mediaModel
-      title: @title
-      listUrl: @listUrl
-      el: this.$el.find('.superbox')
-      target: @target
+      domContainer: this.$el.find('.superbox'))
     )
     return
 
   clickAdd: (event) ->
     event.preventDefault()
+    options = @options
     if $('#main .' + $(event.target).attr('class')).length
       displayLoader('div[role="container"]')
       Backbone.history.navigate('/add')
-      title = @title
-      listUrl = @listUrl
       $.ajax
-        url: @medias.get('links')._self_add
+        url: options.medias.get('links')._self_add
         method: 'GET'
         success: (response) ->
-          view = new FullPageFormView(
-            html: response
-            title: title
-            listUrl: listUrl
-          )
-
-  clickEditFolder: (event) ->
-    event.preventDefault()
-    $('.modal-title').text $(event.target).html()
-    view = new adminFormView(
-      url: @medias.get('links')._self_folder
-      deleteurl: @medias.get('links')._self_delete
-    )
-
-  clickDeleteFolder: (event) ->
-    event.preventDefault()
-    smartConfirm(
-      'fa-trash-o',
-      $('.folder-delete').data('title'),
-      $('.folder-delete').data('text'),
-      callBackParams:
-        galleryCollectionView: @
-      yesCallback: (params) ->
-        params.galleryCollectionView.deleteFolder()
-    )
-
-  deleteFolder: ->
-    if @medias.get('parent_id') == undefined
-      redirectUrl = appRouter.generateUrl('showHome')
-    else
-      redirectUrl = appRouter.generateUrl('listFolder', appRouter.addParametersToRoute(
-        'folderId': @medias.get('parent_id')
-      ))
-    $.ajax
-      url: @medias.get('links')._self_delete
-      method: 'DELETE'
-      success: ->
-        Backbone.history.loadUrl(redirectUrl)
-        displayMenu(redirectUrl)
-
+          new FullPageFormView($.extend({}, options,
+            html: response)
 
   addConfigurationButton: ->
-    cid = @cid
-    if @medias.get('links')._self_folder != undefined
-      view = new FolderConfigurationButtonView(
-        cid: cid
-      )
+    if @options.medias.get('links')._self_folder != undefined
+      new FolderConfigurationButtonView(@options)
 
   addDeleteButton: ->
-    if @medias.get('is_folder_deletable')
-      cid = @cid
-      if @medias.get('links')._self_delete != undefined
-        view = new FolderDeleteButtonView(
-          cid: cid
-        )
+    if @options.medias.get('is_folder_deletable')
+      if @options.medias.get('links')._self_delete != undefined
+        view = new FolderDeleteButtonView(@options)
 )

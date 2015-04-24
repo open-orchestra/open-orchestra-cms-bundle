@@ -50,7 +50,7 @@ $(document).on "click", ".media-modal-menu-folder", (event) ->
 
 # NEW FOLDER, ADD MEDIA
 
-$(document).on "click", ".modal-body-content a[class^='ajax-add-'], .media-modal-menu-new-folder", (event) ->
+$(document).on "click", ".modal-body-content a[class='ajax-add'], .media-modal-menu-new-folder", (event) ->
   event.preventDefault()
   modalId = $(event.target).parents(".mediaModalContainer").find('.fade').attr('id')
   

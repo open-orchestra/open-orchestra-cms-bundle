@@ -1,40 +1,32 @@
 GalleryView = OrchestraView.extend(
-  className: 'superbox-list'
-
   initialize: (options) ->
     @events = {}
-    @media = options.media
-    @title = options.title
-    @listUrl = options.listUrl
-    if options.target == '#content'
-      key = 'click .superbox-img-' + @cid
-      @events[key] = 'superboxOpen'
-      if @media.get('is_deletable')
-        @mediaClass = "media-remove-" + @cid
+    @options = options
+    if !@options.modal
+      @events['click .superbox-img'] = 'superboxOpen'
+      if @options.media.get('is_deletable')
+        @events['click span.media-remove'] = 'confirmRemoveMedia'
+        @mediaClass = "media-remove"
         @mediaLogo = "fa-trash-o"
-        media = "click span.media-remove-" + @cid
-        @events[media] = 'confirmRemoveMedia'
     else
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
-    _.bindAll this, "render"
     @loadTemplates [
       'galleryView'
     ]
     return
 
   render: ->
-    $(@el).append @renderTemplate('galleryView',
-      media: @media
-      cid: @cid
+    @setElement @renderTemplate('galleryView',
+      media: @options.media
       mediaClass: @mediaClass
       mediaLogo: @mediaLogo
     )
-    this
+    @options.domContainer.append @$el
 
   superboxOpen: ->
     listUrl = Backbone.history.fragment
-    Backbone.history.navigate(listUrl + '/media/' + @media.id + '/edit')
+    Backbone.history.navigate(listUrl + '/media/' + @options.media.id + '/edit')
     superboxView = new SuperboxView (
       media: @media
       listUrl: listUrl
@@ -54,7 +46,7 @@ GalleryView = OrchestraView.extend(
   removeMedia : (event) ->
     target = $(event.target)
     $.ajax
-      url: @media.get("links")._self_delete
+      url: @options.media.get("links")._self_delete
       method: 'Delete'
       success: (response) ->
         target.parents(".superbox-list").remove()
