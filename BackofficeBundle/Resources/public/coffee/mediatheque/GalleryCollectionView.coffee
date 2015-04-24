@@ -3,7 +3,12 @@ GalleryCollectionView = OrchestraView.extend(
     'click a.ajax-add': 'clickAdd'
 
   initialize: (options) ->
-    @options = options
+    @options = @reduce(options, [
+      'medias'
+      'domContainer'
+      'title'
+      'modal'
+    ])
     @loadTemplates [
       "galleryCollectionView",
     ]
