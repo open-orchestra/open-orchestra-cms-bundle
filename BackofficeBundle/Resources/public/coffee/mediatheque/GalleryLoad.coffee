@@ -13,6 +13,7 @@ GalleryLoad = (link, target) ->
         medias: medias
         title: title
         listUrl: listUrl
-        el: target
+        domContainer: $(target)
+        modal: target != '#content'
       )
       appRouter.setCurrentMainView(view)

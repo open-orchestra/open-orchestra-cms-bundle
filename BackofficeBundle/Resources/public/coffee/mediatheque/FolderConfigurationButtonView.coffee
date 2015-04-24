@@ -1,15 +1,27 @@
 FolderConfigurationButtonView = OrchestraView.extend(
+  events:
+    'click i.ajax-folder': 'clickEditFolder'
+
   initialize: (options) ->
-    @cid = options.cid
+    @options = @reduce(options, [
+      'medias'
+    ])
     @loadTemplates [
       "widgetFolderConfigurationButton"
     ]
     return
 
   render: ->
-    widget = @renderTemplate('widgetFolderConfigurationButton',
-      cid: @cid
-    )
-    addCustomJarvisWidget(widget)
+    @setElement @renderTemplate('widgetFolderConfigurationButton')
+    addCustomJarvisWidget(@$el)
     return
+
+  clickEditFolder: (event) ->
+    event.preventDefault()
+    $('.modal-title').text $(event.target).html()
+    new adminFormView(
+      url: @options.medias.get('links')._self_folder
+      deleteurl: @options.medias.get('links')._self_delete
+    )
+
 )
