@@ -34,7 +34,6 @@ TableviewCollectionView = OrchestraView.extend(
         viewContext.setElement viewContext.renderTemplate('tableviewCollectionView',
           displayedElements: response.displayed_elements
           links: viewContext.options.elements.get('links')
-          cid: viewContext.cid
         )
         viewContext.options.domContainer.html viewContext.$el
     $('.js-widget-title', @options.domContainer).text @options.title
@@ -85,17 +84,6 @@ TableviewCollectionView = OrchestraView.extend(
       success: (response) ->
         view = new FullPageFormView($.extend({}, options,
           html: response
-          triggers: [
-            {
-              event: "focusout input.generate-id-source"
-              name: "generateId"
-              fct: generateId
-            }
-            {
-              event: "blur input.generate-id-dest"
-              name: "stopGenerateId"
-              fct: stopGenerateId
-            }
-          ]
+          generateId: true
         ))
 )
