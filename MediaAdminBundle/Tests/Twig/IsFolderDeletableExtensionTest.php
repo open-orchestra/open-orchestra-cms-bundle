@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Twig;
+namespace OpenOrchestra\MediaAdminBundle\Tests\Twig;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Twig\IsFolderDeletableExtension;
+use OpenOrchestra\MediaAdminBundle\Twig\IsFolderDeletableExtension;
 
 /**
  * Class IsFolderDeletableExtension
@@ -18,7 +18,7 @@ class IsFolderDeletableExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->folderManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\FolderManager');
+        $this->folderManager = Phake::mock('OpenOrchestra\MediaAdminBundle\Manager\FolderManager');
         $this->helper = new IsFolderDeletableExtension($this->folderManager);
     }
 

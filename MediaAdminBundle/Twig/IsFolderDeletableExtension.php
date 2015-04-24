@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Twig;
+namespace OpenOrchestra\MediaAdminBundle\Twig;
 
-use OpenOrchestra\BackofficeBundle\Manager\FolderManager;
+use OpenOrchestra\MediaAdminBundle\Manager\FolderManager;
 use OpenOrchestra\Media\Model\MediaFolderInterface;
 
 /**
