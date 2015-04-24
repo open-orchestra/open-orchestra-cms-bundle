@@ -8,10 +8,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeFolderPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\GroupBundle\Document\Group;
+use OpenOrchestra\MediaAdminBundle\LeftPanel\Strategies\TreeFolderPanelStrategy;
 
 /**
  * Class LoadGroupData
