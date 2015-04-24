@@ -33,7 +33,7 @@ GalleryView = OrchestraView.extend(
     Backbone.history.navigate(listUrl + '/media/' + @options.media.id + '/edit')
     superboxView = new SuperboxView ($.extend({}, @options,
       listUrl: listUrl
-    )
+    ))
 
   confirmRemoveMedia: (event) ->
     smartConfirm(

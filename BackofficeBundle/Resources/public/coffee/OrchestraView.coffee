@@ -39,8 +39,9 @@ OrchestraView = Backbone.View.extend(
     @compiledTemplates[templateName](parameters)
 
   reduce: (options, keys) ->
-        $.each options, (key, value) ->
-          delete options[key] if $.inArray(key, keys) == -1
-          return
-    return options
+    cleanOptions = {}
+    $.each options, (key, value) ->
+      cleanOptions[key] = value if $.inArray(key, keys) != -1
+      return
+    return cleanOptions
 )
