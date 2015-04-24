@@ -1,10 +1,11 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\MediaAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\FolderNotDeletableException;
+use OpenOrchestra\ApiBundle\Controller\BaseController;
 use OpenOrchestra\Media\Event\FolderEvent;
 use OpenOrchestra\Media\FolderEvents;
+use OpenOrchestra\MediaAdminBundle\Exceptions\HttpException\FolderNotDeletableException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,7 @@ class FolderController extends BaseController
         $folder = $this->get('open_orchestra_media.repository.media_folder')->find($folderId);
 
         if ($folder) {
-            $folderManager = $this->get('open_orchestra_backoffice.manager.media_folder');
+            $folderManager = $this->get('open_orchestra_media_admin.manager.media_folder');
 
             if (!$folderManager->isDeletable($folder)) {
                 throw new FolderNotDeletableException();

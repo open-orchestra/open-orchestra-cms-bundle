@@ -15,8 +15,6 @@ parameters:
     open_orchestra_api.transformer.status_collection.class: OpenOrchestra\ApiBundle\Transformer\StatusCollectionTransformer
     open_orchestra_api.transformer.site.class: OpenOrchestra\ApiBundle\Transformer\SiteTransformer
     open_orchestra_api.transformer.site_collection.class: OpenOrchestra\ApiBundle\Transformer\SiteCollectionTransformer
-    open_orchestra_api.transformer.media.class: OpenOrchestra\ApiBundle\Transformer\MediaTransformer
-    open_orchestra_api.transformer.media_collection.class: OpenOrchestra\ApiBundle\Transformer\MediaCollectionTransformer
     open_orchestra_api.transformer.theme.class: OpenOrchestra\ApiBundle\Transformer\ThemeTransformer
     open_orchestra_api.transformer.theme_collection.class: OpenOrchestra\ApiBundle\Transformer\ThemeCollectionTransformer
     open_orchestra_api.transformer.role.class: OpenOrchestra\ApiBundle\Transformer\RoleTransformer
@@ -113,17 +111,6 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site_collection:
         class: %open_orchestra_api.transformer.site_collection.class%
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.media:
-        class: %open_orchestra_api.transformer.media.class%
-        arguments:
-            - %open_orchestra_media.thumbnail.configuration%
-            - @open_orchestra_backoffice.manager.translation_choice
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.media_collection:
-        class: %open_orchestra_api.transformer.media_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.theme:

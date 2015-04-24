@@ -1,13 +1,14 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\MediaAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\MediaNotDeletableException;
+use OpenOrchestra\ApiBundle\Controller\BaseController;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use OpenOrchestra\Media\Event\MediaEvent;
 use OpenOrchestra\Media\MediaEvents;
 use OpenOrchestra\Media\Model\FolderInterface;
 use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\MediaAdminBundle\Exceptions\HttpException\MediaNotDeletableException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +51,7 @@ class MediaController extends BaseController
         $folderId = $request->get('folderId');
         /** @var FolderInterface $folder */
         $folder = $this->get('open_orchestra_media.repository.media_folder')->find($folderId);
-        $folderDeletable = $this->get('open_orchestra_backoffice.manager.media_folder')->isDeletable($folder);
+        $folderDeletable = $this->get('open_orchestra_media_admin.manager.media_folder')->isDeletable($folder);
         $parentId = null;
         if ($folder->getParent() instanceof FolderInterface) {
             $parentId = $folder->getParent()->getId();

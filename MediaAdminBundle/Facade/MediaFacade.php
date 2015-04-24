@@ -1,8 +1,9 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Facade;
+namespace OpenOrchestra\MediaAdminBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\ApiBundle\Facade\AbstractFacade;
 use OpenOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
 use OpenOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
 

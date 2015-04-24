@@ -1,10 +1,11 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\MediaAdminBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Facade\MediaCollectionFacade;
+use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\MediaAdminBundle\Facade\MediaCollectionFacade;
 
 /**
  * Class MediaCollectionTransformer

@@ -1,10 +1,11 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\MediaAdminBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\MediaFacade;
+use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\MediaAdminBundle\Facade\MediaFacade;
 
 /**
  * Class MediaTransformer
