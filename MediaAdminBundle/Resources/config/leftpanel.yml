@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_backoffice.left_panel.folder.class: OpenOrchestra\MediaAdminBundle\LeftPanel\Strategies\TreeFolderPanelStrategy
+
+services:
+    open_orchestra_backoffice.left_panel.folder:
+        class: %open_orchestra_backoffice.left_panel.folder.class%
+        arguments:
+            - @open_orchestra_media.repository.media_folder
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
