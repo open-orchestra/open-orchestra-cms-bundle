@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\MediaAdminBundle\Manager;
 
 use OpenOrchestra\Media\Model\MediaFolderInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;

@@ -1,0 +1,8 @@
+parameters:
+    open_orchestra_media_admin.manager.media_folder.class: OpenOrchestra\MediaAdminBundle\Manager\FolderManager
+
+services:
+    open_orchestra_media_admin.manager.media_folder:
+        class: %open_orchestra_media_admin.manager.media_folder.class%
+        arguments:
+            - @doctrine.odm.mongodb.document_manager
