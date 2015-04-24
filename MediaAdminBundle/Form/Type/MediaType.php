@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\MediaAdminBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
@@ -8,18 +8,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class FolderType
+ * Class MediaType
  */
-class FolderType extends AbstractType
+class MediaType extends AbstractType
 {
-    protected $folderClass;
+    protected $mediaClass;
 
     /**
-     * @param string $folderClass
+     * @param string $mediaClass
      */
-    public function __construct($folderClass)
+    public function __construct($mediaClass)
     {
-        $this->folderClass = $folderClass;
+        $this->mediaClass = $mediaClass;
     }
 
     /**
@@ -28,14 +28,10 @@ class FolderType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.folder.name'
-            ))
-            ->add('sites', 'orchestra_site', array(
-                'label' => 'open_orchestra_backoffice.form.folder.site',
-                'multiple' => true
-            ));
+        $builder->add('file', 'file', array(
+            'label' => 'open_orchestra_backoffice.form.media.file',
+        ));
+
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
@@ -45,7 +41,7 @@ class FolderType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->folderClass,
+            'data_class' => $this->mediaClass,
         ));
     }
 
@@ -56,7 +52,7 @@ class FolderType extends AbstractType
      */
     public function getName()
     {
-        return 'folder';
+        return 'media';
     }
 
 }

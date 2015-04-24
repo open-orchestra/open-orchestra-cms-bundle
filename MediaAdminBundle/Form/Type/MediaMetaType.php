@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\MediaAdminBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;

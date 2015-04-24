@@ -1,30 +1,28 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\MediaAdminBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\MediaMetaType;
+use OpenOrchestra\MediaAdminBundle\Form\Type\MediaType;
 
 /**
- * Class MediaMetaTypeTest
+ * Class MediaTypeTest
  */
-class MediaMetaTypeTest extends \PHPUnit_Framework_TestCase
+class MediaTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var MediaMetaType
+     * @var MediaType
      */
     protected $form;
 
     protected $mediaClass = 'site';
-    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translateValueInitializer =  Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
-        $this->form = new MediaMetaType($this->translateValueInitializer, $this->mediaClass);
+        $this->form = new MediaType($this->mediaClass);
     }
 
     /**
@@ -40,7 +38,7 @@ class MediaMetaTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('media_meta', $this->form->getName());
+        $this->assertSame('media', $this->form->getName());
     }
 
     /**
@@ -54,7 +52,7 @@ class MediaMetaTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($builder)->add('file', 'file', array('label' => 'open_orchestra_backoffice.form.media.file'));
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\MediaAdminBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\MediaCropType;
+use OpenOrchestra\MediaAdminBundle\Form\Type\MediaCropType;
 
 /**
  * Class MediaCropTypeTest

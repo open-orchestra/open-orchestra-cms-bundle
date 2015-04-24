@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\MediaAdminBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraMediaType;
+use OpenOrchestra\MediaAdminBundle\Form\Type\OrchestraMediaType;
 
 /**
  * Class OrchestraMediaTypeTest

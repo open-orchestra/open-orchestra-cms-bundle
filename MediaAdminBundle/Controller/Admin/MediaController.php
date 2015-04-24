@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\MediaAdminBundle\Controller\Admin;
 
+use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 use OpenOrchestra\Media\Event\MediaEvent;
 use OpenOrchestra\Media\MediaEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;

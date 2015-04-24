@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Controller;
+namespace OpenOrchestra\MediaAdminBundle\Controller\Admin;
 
+use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 use OpenOrchestra\Media\Event\FolderEvent;
 use OpenOrchestra\Media\FolderEvents;
 use OpenOrchestra\Media\Model\FolderInterface;
@@ -50,6 +51,7 @@ class FolderController extends AbstractAdminController
     {
         $parentFolder = $this->container->get('open_orchestra_media.repository.media_folder')->find($parentId);
         $folderClass = $this->container->getParameter('open_orchestra_media.document.media_folder.class');
+        /** @var FolderInterface $folder */
         $folder = new $folderClass();
         if ($parentFolder) {
             $folder->setParent($parentFolder);

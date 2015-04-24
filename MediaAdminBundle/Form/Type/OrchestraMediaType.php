@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\MediaAdminBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\Form\DataTransformer\OrchestraMediaTransformer;
+use OpenOrchestra\MediaAdminBundle\Form\DataTransformer\OrchestraMediaTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

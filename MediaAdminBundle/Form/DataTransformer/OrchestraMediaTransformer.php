@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
+namespace OpenOrchestra\MediaAdminBundle\Form\DataTransformer;
 
 use OpenOrchestra\Media\Model\MediaInterface;
 use Symfony\Component\Form\DataTransformerInterface;
