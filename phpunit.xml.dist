@@ -18,6 +18,7 @@
             <directory>*Bundle/Tests</directory>
             <exclude>./ApiBundle/Tests/Functional</exclude>
             <exclude>./BackofficeBundle/Tests/Functional</exclude>
+            <exclude>./UserAdminBundle/Tests/Functional</exclude>
         </testsuite>
     </testsuites>
 

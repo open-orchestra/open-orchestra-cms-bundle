@@ -1,0 +1,5 @@
+open_orchestra_user_admin:
+    left_menu:
+        administration:
+            user:
+                list: Utilisateurs

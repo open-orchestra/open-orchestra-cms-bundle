@@ -1,0 +1,17 @@
+parameters:
+    open_orchestra_user.type.user.class: OpenOrchestra\UserAdminBundle\Form\Type\UserType
+    open_orchestra_user.type.registration_user.class: OpenOrchestra\UserAdminBundle\Form\Type\RegistrationUserType
+
+services:
+    open_orchestra_user.type.user:
+        class: %open_orchestra_user.type.user.class%
+        arguments:
+            - %open_orchestra_user.document.user.class%
+        tags:
+            - { name: form.type, alias: user}
+    open_orchestra_user.type.registration_user:
+        class: %open_orchestra_user.type.registration_user.class%
+        arguments:
+            - %open_orchestra_user.document.user.class%
+        tags:
+            - { name: form.type, alias: registration_user}

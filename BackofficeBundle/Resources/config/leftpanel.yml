@@ -91,13 +91,6 @@ services:
             - ROLE_ACCESS_THEME
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
-    open_orchestra_backoffice.left_panel.user:
-        class: %open_orchestra_backoffice.left_panel.administration.class%
-        arguments:
-            - user
-            - ROLE_ACCESS_USER
-        tags:
-            - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.api_client:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:

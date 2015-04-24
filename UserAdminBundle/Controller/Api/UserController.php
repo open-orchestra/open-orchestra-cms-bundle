@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Controller;
+namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
+use OpenOrchestra\ApiBundle\Controller\BaseController;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;

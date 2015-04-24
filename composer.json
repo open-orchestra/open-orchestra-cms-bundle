@@ -34,7 +34,8 @@
             "OpenOrchestra\\BackofficeBundle": "",
             "OpenOrchestra\\Backoffice": "",
             "OpenOrchestra\\GroupBundle": "",
-            "OpenOrchestra\\ApiBundle": ""
+            "OpenOrchestra\\ApiBundle": "",
+            "OpenOrchestra\\UserAdminBundle": ""
         }
     },
     "target-dir": "OpenOrchestra"

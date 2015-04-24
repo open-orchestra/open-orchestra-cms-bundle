@@ -1,9 +1,10 @@
 <?php
 
-namespace OpenOrchestra\ApiBundle\Transformer;
+namespace OpenOrchestra\UserAdminBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Facade\UserFacade;
+use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\UserAdminBundle\Facade\UserFacade;
 use OpenOrchestra\UserBundle\Document\User;
 
 /**
@@ -34,7 +35,7 @@ class UserTransformer extends AbstractTransformer
             array('userId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'open_orchestra_user_user_form',
+            'open_orchestra_user_admin_user_form',
             array('userId' => $mixed->getId())
         ));
 
