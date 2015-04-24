@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
@@ -33,7 +33,7 @@ class GalleryStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Gallery:show.html.twig');
+        return $this->render('OpenOrchestraMediaAdminBundle:Block/Gallery:show.html.twig');
     }
 
     /**

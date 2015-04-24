@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
@@ -34,7 +34,7 @@ class MediaListByKeywordStrategy extends AbstractStrategy
     public function show(ReadBlockInterface $block)
     {
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/MediaList:show.html.twig',
+            'OpenOrchestraMediaAdminBundle:Block/MediaList:show.html.twig',
             array(
                 'id' => $block->getId(),
                 'class' => $block->getClass(),

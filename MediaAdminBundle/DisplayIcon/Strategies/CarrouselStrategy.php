@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies;
 
+use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 
 /**
@@ -28,7 +29,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Carrousel:showIcon.html.twig');
+        return $this->render('OpenOrchestraMediaAdminBundle:Block/Carrousel:showIcon.html.twig');
     }
 
     /**

@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
 
 /**
- * Class CarrouselStrategy
+ * Class DisplayMediaStrategy
  */
-class CarrouselStrategy extends AbstractStrategy
+class DisplayMediaStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseCarrouselStrategy::CARROUSEL == $block->getComponent();
+       return BaseMediaStrategy::DISPLAY_MEDIA == $block->getComponent();
     }
 
     /**
@@ -33,7 +33,12 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Carrousel:show.html.twig');
+        $parameters = array(
+            'imageFormat' => $block->getAttribute('imageFormat'),
+            'nodeToLink' => $block->getAttribute('nodeToLink'),
+        );
+
+        return $this->render('OpenOrchestraMediaAdminBundle:Block/DisplayMedia:show.html.twig', $parameters);
     }
 
     /**
@@ -43,6 +48,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'carrousel';
+        return "display_media";
     }
+
 }

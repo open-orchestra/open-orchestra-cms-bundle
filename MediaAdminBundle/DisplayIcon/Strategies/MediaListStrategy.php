@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies;
 
+use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy as BaseMediaListByKeywordStrategy;
 
 /**
@@ -28,7 +29,7 @@ class MediaListStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/MediaList:showIcon.html.twig');
+        return $this->render('OpenOrchestraMediaAdminBundle:Block/MediaList:showIcon.html.twig');
     }
 
     /**
