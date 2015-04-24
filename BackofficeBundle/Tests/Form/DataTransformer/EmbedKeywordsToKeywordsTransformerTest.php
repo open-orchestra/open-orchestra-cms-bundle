@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
