@@ -31,7 +31,7 @@ GalleryCollectionView = OrchestraView.extend(
   addElementToView: (mediaData) ->
     mediaModel = new GalleryModel
     mediaModel.set mediaData
-    new GalleryView($.extend({}, options,
+    new GalleryView($.extend({}, @options,
       media: mediaModel
       domContainer: this.$el.find('.superbox'))
     )
