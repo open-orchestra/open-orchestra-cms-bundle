@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_media_admin.twig_extension.is_folder_deletable.class: OpenOrchestra\MediaAdminBundle\Twig\IsFolderDeletableExtension
+
+services:
+    open_orchestra_media_admin.twig_extension.is_folder_deletable:
+        class: %open_orchestra_media_admin.twig_extension.is_folder_deletable.class%
+        arguments:
+            - @open_orchestra_media_admin.manager.media_folder
+        tags:
+            - { name: twig.extension}

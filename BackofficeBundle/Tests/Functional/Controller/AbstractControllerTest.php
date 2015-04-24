@@ -28,7 +28,7 @@ abstract class AbstractControllerTest extends WebTestCase
         $form['_username'] = 'admin';
         $form['_password'] = 'admin';
 
-        $crawler = $this->client->submit($form);
+        $this->client->submit($form);
     }
 
     /**

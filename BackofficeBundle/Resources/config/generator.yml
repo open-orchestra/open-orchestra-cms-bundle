@@ -2,8 +2,6 @@ parameters:
     open_orchestra_backoffice.generate_form_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager
     open_orchestra_backoffice.sample.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\SampleStrategy
     open_orchestra_backoffice.contact.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContactStrategy
-    open_orchestra_backoffice.carrousel.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\CarrouselStrategy
-    open_orchestra_backoffice.gallery.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\GalleryStrategy
     open_orchestra_backoffice.footer.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\FooterStrategy
     open_orchestra_backoffice.menu.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\MenuStrategy
     open_orchestra_backoffice.tinymcewysiwyg.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\TinyMCEWysiwygStrategy
@@ -12,12 +10,10 @@ parameters:
     open_orchestra_backoffice.configurable_content.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ConfigurableContentStrategy
     open_orchestra_backoffice.sub_menu.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\SubMenuStrategy
     open_orchestra_backoffice.content_list.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContentListStrategy
-    open_orchestra_backoffice.media_list_by_keyword.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\MediaListByKeywordStrategy
     open_orchestra_backoffice.content.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContentStrategy
     open_orchestra_backoffice.language_list.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LanguageListStrategy
     open_orchestra_backoffice.login.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LoginStrategy
     open_orchestra_backoffice.audience_analysis.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AudienceAnalysisStrategy
-    open_orchestra_backoffice.display_media.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\DisplayMediaStrategy
 
 services:
     open_orchestra_backoffice.generate_form_manager:
@@ -29,19 +25,6 @@ services:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.contact.generate_form:
         class: %open_orchestra_backoffice.contact.generate_form.class%
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.carrousel.generate_form:
-        class: %open_orchestra_backoffice.carrousel.generate_form.class%
-        arguments:
-            - @translator
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.gallery.generate_form:
-        class: %open_orchestra_backoffice.gallery.generate_form.class%
-        arguments:
-            - @translator
-            - %open_orchestra_media.thumbnail.configuration%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.footer.generate_form:
@@ -82,10 +65,6 @@ services:
             - @translator
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.media_list_by_keyword.generate_form:
-        class: %open_orchestra_backoffice.media_list_by_keyword.generate_form.class%
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.content.generate_form:
         class: %open_orchestra_backoffice.content.generate_form.class%
         tags:
@@ -114,12 +93,5 @@ services:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.video:
         class: OpenOrchestra\Backoffice\GenerateForm\Strategies\VideoStrategy
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
-    open_orchestra_backoffice.display_media.generate_form:
-        class: %open_orchestra_backoffice.display_media.generate_form.class%
-        arguments:
-            - @translator
-            - %open_orchestra_media.thumbnail.configuration%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }

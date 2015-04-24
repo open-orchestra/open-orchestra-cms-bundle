@@ -39,17 +39,4 @@ class FormControllersTest extends AbstractControllerTest
             array('/admin/redirection/new'),
         );
     }
-
-    /**
-     * Test folder form
-     */
-    public function testMediaFolderForm()
-    {
-        $mediaFolderRepository = static::$kernel->getContainer()->get('open_orchestra_media.repository.media_folder');
-        $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
-
-        $url = '/admin/folder/form/' . $mediaFolder->getId();
-        $this->client->request('GET', $url);
-        $this->assertForm($this->client->getResponse());
-    }
 }

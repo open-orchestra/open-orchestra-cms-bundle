@@ -15,17 +15,12 @@ parameters:
     open_orchestra_backoffice.type.translated_value_collection.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
     open_orchestra_backoffice.type.orchestra_theme_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraThemeChoiceType
     open_orchestra_backoffice.type.theme.class: OpenOrchestra\BackofficeBundle\Form\Type\ThemeType
-    open_orchestra_backoffice.type.media.class: OpenOrchestra\BackofficeBundle\Form\Type\MediaType
-    open_orchestra_backoffice.type.orchestra_media.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraMediaType
-    open_orchestra_backoffice.type.folder.class: OpenOrchestra\BackofficeBundle\Form\Type\FolderType
     open_orchestra_backoffice.type.orchestra_node_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
     open_orchestra_backoffice.type.orchestra_site_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraSiteChoiceType
     open_orchestra_backoffice.type.orchestra_content_type_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
     open_orchestra_backoffice.type.orchestra_color_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
     open_orchestra_backoffice.type.orchestra_frequence_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType
     open_orchestra_backoffice.type.tinymce.class: OpenOrchestra\BackofficeBundle\Form\Type\TinymceType
-    open_orchestra_backoffice.type.media_crop.class: OpenOrchestra\BackofficeBundle\Form\Type\MediaCropType
-    open_orchestra_backoffice.type.media_meta.class: OpenOrchestra\BackofficeBundle\Form\Type\MediaMetaType
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\BackofficeBundle\Form\Type\KeywordType
     open_orchestra_backoffice.type.orchestra_keywords.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
     open_orchestra_backoffice.type.role.class: OpenOrchestra\BackofficeBundle\Form\Type\RoleType
@@ -202,22 +197,6 @@ services:
             - %open_orchestra_model.document.theme.class%
         tags:
             - { name: form.type, alias: theme}
-    open_orchestra_backoffice.type.media:
-        class: %open_orchestra_backoffice.type.media.class%
-        arguments:
-            - %open_orchestra_media.document.media.class%
-        tags:
-            - { name: form.type, alias: media}
-    open_orchestra_backoffice.type.orchestra_media:
-        class: %open_orchestra_backoffice.type.orchestra_media.class%
-        tags:
-            - { name: form.type, alias: orchestra_media}
-    open_orchestra_backoffice.type.folder:
-        class: %open_orchestra_backoffice.type.folder.class%
-        arguments:
-            - %open_orchestra_media.document.media_folder.class%
-        tags:
-            - { name: form.type, alias: folder}
     open_orchestra_backoffice.type.orchestra_node_choice:
         class: %open_orchestra_backoffice.type.orchestra_node_choice.class%
         arguments:
@@ -251,20 +230,6 @@ services:
         class: %open_orchestra_backoffice.type.tinymce.class%
         tags:
             - { name: form.type, alias: tinymce}
-    open_orchestra_backoffice.type.media_crop:
-        class: %open_orchestra_backoffice.type.media_crop.class%
-        arguments:
-            - %open_orchestra_media.thumbnail.configuration%
-            - @translator
-        tags:
-            - { name: form.type, alias: media_crop}
-    open_orchestra_backoffice.type.media_meta:
-        class: %open_orchestra_backoffice.type.media_meta.class%
-        arguments:
-            - @open_orchestra_backoffice.listener.translate_value_initializer
-            - %open_orchestra_media.document.media.class%
-        tags:
-            - { name: form.type, alias: media_meta}
     open_orchestra_backoffice.type.keyword:
         class: %open_orchestra_backoffice.type.keyword.class%
         tags:

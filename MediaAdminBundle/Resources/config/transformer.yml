@@ -1,0 +1,16 @@
+parameters:
+    open_orchestra_api.transformer.media.class: OpenOrchestra\MediaAdminBundle\Transformer\MediaTransformer
+    open_orchestra_api.transformer.media_collection.class: OpenOrchestra\MediaAdminBundle\Transformer\MediaCollectionTransformer
+
+services:
+    open_orchestra_api.transformer.media:
+        class: %open_orchestra_api.transformer.media.class%
+        arguments:
+            - %open_orchestra_media.thumbnail.configuration%
+            - @open_orchestra_backoffice.manager.translation_choice
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.media_collection:
+        class: %open_orchestra_api.transformer.media_collection.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}

@@ -1,0 +1,17 @@
+parameters:
+    open_orchestra_media_admin.extract_reference_manager.class: OpenOrchestra\MediaAdminBundle\ExtractReference\ExtractReferenceManager
+    open_orchestra_media_admin.extract_reference.node.class: OpenOrchestra\MediaAdminBundle\ExtractReference\Strategies\ExtractReferenceFromNodeStrategy
+    open_orchestra_media_admin.extract_reference.content.class: OpenOrchestra\MediaAdminBundle\ExtractReference\Strategies\ExtractReferenceFromContentStrategy
+
+services:
+    open_orchestra_media_admin.extract_reference_manager:
+        class: %open_orchestra_media_admin.extract_reference_manager.class%
+    open_orchestra_media_admin.extract_reference.node:
+        class: %open_orchestra_media_admin.extract_reference.node.class%
+        tags:
+            - { name: open_orchestra_media_admin.extract_reference.strategy }
+    open_orchestra_media_admin.extract_reference.content:
+        class: %open_orchestra_media_admin.extract_reference.content.class%
+        tags:
+            - { name: open_orchestra_media_admin.extract_reference.strategy }
+

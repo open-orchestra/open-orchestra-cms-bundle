@@ -1,0 +1,23 @@
+parameters:
+    open_orchestra_media_admin.display_icon.carrousel.class: OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies\CarrouselStrategy
+    open_orchestra_media_admin.display_icon.gallery.class: OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies\GalleryStrategy
+    open_orchestra_media_admin.display_icon.media_list.class: OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies\MediaListStrategy
+    open_orchestra_media_admin.display_icon.display_media.class: OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies\DisplayMediaStrategy
+
+services:
+    open_orchestra_media_admin.display_icon.carrousel:
+        class: %open_orchestra_media_admin.display_icon.carrousel.class%
+        tags:
+            - { name: open_orchestra_backoffice.display_icon.strategy }
+    open_orchestra_media_admin.display_icon.gallery:
+        class: %open_orchestra_media_admin.display_icon.gallery.class%
+        tags:
+            - { name: open_orchestra_backoffice.display_icon.strategy }
+    open_orchestra_media_admin.display_icon.display_media:
+        class: %open_orchestra_media_admin.display_icon.display_media.class%
+        tags:
+            - { name: open_orchestra_backoffice.display_icon.strategy }
+    open_orchestra_media_admin.display_icon.media_list:
+        class: %open_orchestra_media_admin.display_icon.media_list.class%
+        tags:
+            - { name: open_orchestra_backoffice.display_icon.strategy }

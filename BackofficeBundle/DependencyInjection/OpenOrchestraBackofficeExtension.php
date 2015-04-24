@@ -59,7 +59,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('icon.yml');
         $loader->load('leftpanel.yml');
         $loader->load('subscriber.yml');
-        $loader->load('extractreference.yml');
         $loader->load('blockparameter.yml');
         $loader->load('group.yml');
         $loader->load('voter.yml');
