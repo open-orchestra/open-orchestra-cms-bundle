@@ -1,10 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
+namespace OpenOrchestra\MediaAdminBundle\Tests\EventSubscriber;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\MediaChacheInvalidateSubscriber;
-use OpenOrchestra\Media\Model\MediaInterface;
+use OpenOrchestra\MediaAdminBundle\EventSubscriber\MediaChacheInvalidateSubscriber;
 use OpenOrchestra\Media\MediaEvents;
 
 /**

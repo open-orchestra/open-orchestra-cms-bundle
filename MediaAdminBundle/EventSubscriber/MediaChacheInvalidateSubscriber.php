@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\MediaAdminBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use OpenOrchestra\Media\MediaEvents;

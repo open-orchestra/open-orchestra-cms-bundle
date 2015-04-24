@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
+namespace OpenOrchestra\MediaAdminBundle\Tests\EventSubscriber;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateMediaReferenceSubscriber;
+use OpenOrchestra\MediaAdminBundle\EventSubscriber\UpdateMediaReferenceSubscriber;
 use OpenOrchestra\ModelInterface\StatusEvents;
 
 /**
@@ -28,7 +28,7 @@ class UpdateMediaReferenceSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->extractReferenceManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager');
+        $this->extractReferenceManager = Phake::mock('OpenOrchestra\MediaAdminBundle\ExtractReference\ExtractReferenceManager');
 
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusableElement = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');

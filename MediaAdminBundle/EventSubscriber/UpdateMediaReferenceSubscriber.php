@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
+namespace OpenOrchestra\MediaAdminBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
-use OpenOrchestra\BackofficeBundle\StrategyManager\ExtractReferenceManager;
+use OpenOrchestra\MediaAdminBundle\ExtractReference\ExtractReferenceManager;
 use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\Media\Repository\MediaRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
