@@ -70,7 +70,7 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
         $form = $event->getForm();
         $content = $form->getData();
         $data = $event->getData();
-        $contentType = $this->contentTypeRepository->findOneByContentTypeIdAndVersion($content->getContentType(), $content->getContentTypeVersion());
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
         if (is_object($contentType)) {
             $content->setContentTypeVersion($contentType->getVersion());

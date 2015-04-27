@@ -71,7 +71,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->contentType)->getVersion()->thenReturn($this->contentTypeVersion);
 
         $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-        Phake::when($this->repository)->findOneByContentTypeIdAndVersion(Phake::anyParameters())->thenReturn($this->contentType);
+        Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
         $this->transaltionChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
@@ -125,7 +125,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->repository)->findOneByContentTypeIdAndVersion($this->contentTypeId, null);
+        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
         Phake::verify($this->content)->setContentTypeVersion($this->contentTypeVersion);
         Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
             array(
@@ -142,11 +142,11 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreSetDataWithNoContentTypeFound()
     {
-        Phake::when($this->repository)->findOneByContentTypeIdAndVersion(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn(null);
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->repository)->findOneByContentTypeIdAndVersion($this->contentTypeId, null);
+        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
         Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
     }
 
@@ -178,7 +178,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->repository)->findOneByContentTypeIdAndVersion($this->contentTypeId, null);
+        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
         Phake::verify($this->content)->setContentTypeVersion($this->contentTypeVersion);
         Phake::when($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
@@ -232,7 +232,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->getData();
-        Phake::verify($this->repository)->findOneByContentTypeIdAndVersion($realContentTypeId, null);
+        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->contentAttribute)->setValue($title);
     }
@@ -269,7 +269,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->getData();
-        Phake::verify($this->repository)->findOneByContentTypeIdAndVersion($realContentTypeId, null);
+        Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->content)->addAttribute(Phake::anyParameters());
     }

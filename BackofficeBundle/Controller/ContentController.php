@@ -67,7 +67,7 @@ class ContentController extends AbstractAdminController
     {
         $template = AbstractAdminController::TEMPLATE;
 
-        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdAndVersion($contentTypeId);
+        $contentType = $this->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($contentTypeId);
 
         $customTemplate = $contentType->getTemplate();
 
