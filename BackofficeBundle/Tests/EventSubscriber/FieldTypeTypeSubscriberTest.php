@@ -183,24 +183,4 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'label' => 'open_orchestra_backoffice.form.field_type.options',
         ));
     }
-
-    /**
-     * Test preSubmit when type has no option
-     */
-    public function testPreSubmitWithTypeNoOption()
-    {
-        Phake::when($this->form)->getData()->thenReturn($this->fieldType);
-        Phake::when($this->event)->getData()->thenReturn(array('type' => 'hidden'));
-
-        $this->subscriber->preSubmit($this->event);
-
-        Phake::verify($this->fieldType, Phake::times(0))->addOption(Phake::anyParameters());
-        Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
-        Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'field_option',
-            'allow_add' => false,
-            'allow_delete' => false,
-            'label' => 'open_orchestra_backoffice.form.field_type.options',
-        ));
-    }
 }
