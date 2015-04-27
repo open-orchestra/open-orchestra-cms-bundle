@@ -48,6 +48,9 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
                     ),
                 ),
             ),
+            'hidden' => array(
+                'label' => 'label hidden',
+            ),
         );
 
         $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass);
@@ -159,5 +162,45 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->fieldType, Phake::never())->addOption(Phake::anyParameters());
         Phake::verify($this->fieldType, Phake::never())->removeOption(Phake::anyParameters());
         Phake::verify($this->form, Phake::never())->add(Phake::anyParameters());
+    }
+
+    /**
+     * Test preSetData when type has no option
+     */
+    public function testPreSetDataWithTypeNoOption()
+    {
+        Phake::when($this->fieldType)->getType()->thenReturn('hidden');
+
+        $this->subscriber->preSetData($this->event);
+
+        Phake::verify($this->fieldType, Phake::times(0))->addOption(Phake::anyParameters());
+        Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
+
+        Phake::verify($this->form)->add('options', 'collection', array(
+            'type' => 'field_option',
+            'allow_add' => false,
+            'allow_delete' => false,
+            'label' => 'open_orchestra_backoffice.form.field_type.options',
+        ));
+    }
+
+    /**
+     * Test preSubmit when type has no option
+     */
+    public function testPreSubmitWithTypeNoOption()
+    {
+        Phake::when($this->form)->getData()->thenReturn($this->fieldType);
+        Phake::when($this->event)->getData()->thenReturn(array('type' => 'hidden'));
+
+        $this->subscriber->preSubmit($this->event);
+
+        Phake::verify($this->fieldType, Phake::times(0))->addOption(Phake::anyParameters());
+        Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
+        Phake::verify($this->form)->add('options', 'collection', array(
+            'type' => 'field_option',
+            'allow_add' => false,
+            'allow_delete' => false,
+            'label' => 'open_orchestra_backoffice.form.field_type.options',
+        ));
     }
 }

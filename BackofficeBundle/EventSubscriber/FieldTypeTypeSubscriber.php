@@ -102,7 +102,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
                 }
             }
         } else {
-            $data->setOptions(new ArrayCollection());
+            $data->clearOptions();
         }
 
         $form->add('options', 'collection', array(
