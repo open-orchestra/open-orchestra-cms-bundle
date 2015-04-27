@@ -25,16 +25,6 @@ class ContentTypeFacade extends AbstractFacade
     public $version;
 
     /**
-     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\StatusFacade")
-     */
-    public $status;
-
-    /**
-     * @Serializer\Type("string")
-     */
-    public $statusLabel;
-
-    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\FieldTypeFacade>")
      */
     protected $fields = array();

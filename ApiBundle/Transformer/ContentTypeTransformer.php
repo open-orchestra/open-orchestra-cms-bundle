@@ -35,8 +35,6 @@ class ContentTypeTransformer extends AbstractTransformer
         $facade->contentTypeId = $mixed->getContentTypeId();
         $facade->name = $this->translationChoiceManager->choose($mixed->getNames());
         $facade->version = $mixed->getVersion();
-        $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
-        $facade->statusLabel = $facade->status->label;
 
         foreach ($mixed->getFields() as $field) {
             $facade->addField($this->getTransformer('field_type')->transform($field));
