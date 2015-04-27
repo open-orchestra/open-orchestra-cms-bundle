@@ -22,7 +22,7 @@ BlockView = OrchestraView.extend(
       node_published: @options.node_published
     )
     @options.domContainer.append @$el
-    this
+    return
 
   paramBlock: (event) ->
     $('.modal-title').text 'Please wait ...'

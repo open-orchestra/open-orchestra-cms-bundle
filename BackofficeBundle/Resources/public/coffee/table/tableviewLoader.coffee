@@ -29,7 +29,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
               title: title
               entityType: entityType
               element: elements
-              generateId: true
+              inheritance: [ 'generateId' ]
             )
         founded = true
       if entityId != undefined

@@ -2,9 +2,10 @@ OrchestraView = Backbone.View.extend(
 
   constructor: (attributes, options) ->
     Backbone.View.apply @, arguments
-    if attributes && attributes.generateId
-      $.extend(true, @, generateId)
-      @delegateEvents()
+    if attributes && attributes.inheritance
+      for i of attributes.inheritance
+        $.extend(true, @, inheritance[attributes.inheritance[i]])
+    @delegateEvents()
 
   loadTemplates: (templates) ->
     @compiledTemplates = {}

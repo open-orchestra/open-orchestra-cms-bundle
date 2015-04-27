@@ -84,6 +84,6 @@ TableviewCollectionView = OrchestraView.extend(
       success: (response) ->
         view = new FullPageFormView($.extend({}, options,
           html: response
-          generateId: true
+          inheritance: [ 'generateId' ]
         ))
 )

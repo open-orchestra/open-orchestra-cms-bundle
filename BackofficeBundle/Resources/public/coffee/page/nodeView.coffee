@@ -1,84 +1,52 @@
 NodeView = OrchestraView.extend(
   el: '#content'
 
-  events:
-    'click i#none' : 'clickButton'
-
   initialize: (options) ->
-    @node = options.node
-    @options = options
+    @options = @reduce(options, [
+      'node'
+    ])
     @options.multiLanguage = 
-      language: @node.get('language')
-      language_list: @node.get('links')._language_list
+      language: @options.node.get('language')
+      language_list: @options.node.get('links')._language_list
       path: 'showNodeWithLanguage'
     @options.multiStatus = 
-      language: @node.get('language')
-      version: @node.get('version')
-      status_list: @node.get('links')._status_list
-      status: @node.get('status')
-      self_status_change: @node.get('links')._self_status_change
+      language: @options.node.get('language')
+      version: @options.node.get('version')
+      status_list: @options.node.get('links')._status_list
+      status: @options.node.get('status')
+      self_status_change: @options.node.get('links')._self_status_change
     @options.multiVersion = 
-      language: @node.get('language')
-      version: @node.get('version')
-      self_version: @node.get('links')._self_version
+      language: @options.node.get('language')
+      version: @options.node.get('version')
+      self_version: @options.node.get('links')._self_version
       path: 'showNodeWithLanguageAndVersion'
     @options.duplicate = 
-      language: @node.get('language')
+      language: @options.node.get('language')
       path : 'showNodeWithLanguage'
-      self_duplicate: @node.get('links')._self_duplicate
-    @events['click span.' + @cid] = 'clickButton'
-    @events['click i.show-areas'] = 'showAreas'
-    @events['click i.hide-areas'] = 'hideAreas'
-    _.bindAll this, "render", "addAreaToView", "clickButton"
+      self_duplicate: @options.node.get('links')._self_duplicate
     @loadTemplates [
       "nodeView"
-      "areaView"
       "blockView"
       "elementTitle"
       "rightPanel"
     ]
     return
 
-  clickButton: (event) ->
-    $('.modal-title').text @node.get('name')
-    url = @node.get('links')._self_form
-    deleteurl = @node.get('links')._self_delete
-    redirectUrl = appRouter.generateUrl "showNode",
-      nodeId: @node.get('parent_id')
-    confirmText = $(".delete-confirm-txt-" + @cid).text()
-    confirmTitle = $(".delete-confirm-title-" + @cid).text()
-    if @node.attributes.alias is ''
-      view = new adminFormView(
-        url: url
-        deleteurl: deleteurl
-        confirmtext: confirmText
-        confirmtitle: confirmTitle
-        redirectUrl: redirectUrl
-        generateId: true
-      )
-    else
-      view = new adminFormView(
-        url: url
-        deleteurl: deleteurl
-        confirmtext: confirmText
-        confirmtitle: confirmTitle
-      )
-
   render: ->
     $(@el).html @renderTemplate('nodeView',
-      node: @node
+      node: @options.node
       cid: @cid
     )
     $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
-      element: @node
+      element: @options.node
     )
-    for area of @node.get('areas')
-      @addAreaToView(@node.get('areas')[area])
+    for area of @options.node.get('areas')
+      @addAreaToView(@options.node.get('areas')[area])
     @addListBlockToView()
-    if @node.get('node_type') == 'page'
+    if @options.node.get('node_type') == 'page'
       @addPreviewLink()
       @addConfigurationButton()
-      if @node.attributes.status.published
+      if @options.node.attributes.status.published
         $('.js-widget-blockpanel', @$el).hide()
       else
         $(".ui-model-areas, .ui-model-blocks", @$el).each ->
@@ -91,29 +59,29 @@ NodeView = OrchestraView.extend(
     areaElement.set area
     areaView = new AreaView(
       area: areaElement
-      node_id: @node.get('node_id'),
-      node_published: @node.attributes.status.published
+      node_id: @options.node.get('node_id'),
+      node_published: @options.node.attributes.status.published
       domContainer: areaContainer
       viewContainer: @
     )
-    areaContainer.addClass (if @node.get("bo_direction") is "h" then "bo-row" else "bo-column")
+    areaContainer.addClass (if @options.node.get("bo_direction") is "h" then "bo-row" else "bo-column")
     return
 
   addPreviewLink: ->
-    previewLinks = @node.get('preview_links')
+    previewLinks = @options.node.get('preview_links')
     Backbone.Wreqr.radio.commands.execute 'preview_link', 'render', previewLinks
 
   addConfigurationButton: ->
-    cid = @cid
-    view = new PageConfigurationButtonView(
-      cid: cid
-    )
+    view = new PageConfigurationButtonView($.extend({}, @options,
+      title: @options.node.get('name')
+      viewContainer: @
+    ))
 
   addListBlockToView: ->
     viewContext = @
     $.ajax
       type: "GET"
-      url: @node.get('links')._block_list
+      url: @options.node.get('links')._block_list
       success: (response) ->
         blockpanel = $('.js-widget-blockpanel', viewContext.$el)
         for i of response.blocks
@@ -131,13 +99,4 @@ NodeView = OrchestraView.extend(
           Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
           return
 
-  showAreas: ->
-    $('.show-areas').hide()
-    $('.hide-areas').show()
-    $('.area-toolbar').addClass('shown')
-
-  hideAreas: ->
-    $('.hide-areas').hide()
-    $('.show-areas').show()
-    $('.area-toolbar').removeClass('shown')
 )
