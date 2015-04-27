@@ -94,6 +94,7 @@ NodeView = OrchestraView.extend(
       node_id: @node.get('node_id'),
       node_published: @node.attributes.status.published
       domContainer: areaContainer
+      viewContainer: @
     )
     areaContainer.addClass (if @node.get("bo_direction") is "h" then "bo-row" else "bo-column")
     return
