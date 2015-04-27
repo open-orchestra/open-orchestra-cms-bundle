@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -79,24 +80,29 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         if (is_null($type) || !array_key_exists($type, $this->options)) {
             return;
         }
-        $keys = array();
-        foreach ($this->options[$type]['options'] as $key => $option) {
-            if (!$data->hasOption($key)) {
-                $fieldOptionClass = $this->fieldOptionClass;
-                /** @var FieldOptionInterface $fieldOption */
-                $fieldOption = new $fieldOptionClass();
-                $fieldOption->setKey($key);
-                $fieldOption->setValue($option['default_value']);
 
-                $data->addOption($fieldOption);
-            }
-            $keys[] = $key;
-        }
+        if (array_key_exists('options', $this->options[$type])) {
+            $keys = array();
+            foreach ($this->options[$type]['options'] as $key => $option) {
+                if (!$data->hasOption($key)) {
+                    $fieldOptionClass = $this->fieldOptionClass;
+                    /** @var FieldOptionInterface $fieldOption */
+                    $fieldOption = new $fieldOptionClass();
+                    $fieldOption->setKey($key);
+                    $fieldOption->setValue($option['default_value']);
 
-        foreach ($data->getOptions() as $option) {
-            if (!in_array($option->getKey(), $keys)) {
-                $data->removeOption($option);
+                    $data->addOption($fieldOption);
+                }
+                $keys[] = $key;
             }
+
+            foreach ($data->getOptions() as $option) {
+                if (!in_array($option->getKey(), $keys)) {
+                    $data->removeOption($option);
+                }
+            }
+        } else {
+            $data->clearOptions();
         }
 
         $form->add('options', 'collection', array(
