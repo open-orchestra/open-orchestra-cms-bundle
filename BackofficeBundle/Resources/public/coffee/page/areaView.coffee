@@ -15,7 +15,6 @@ AreaView = OrchestraView.extend(
   initEvents: ->
     @events = {}
     @events["click i#none"] = "clickButton"
-    @events["click i.block-remove-" + @area.cid] = "confirmRemoveBlock"
     @events["click span.area-param-" + @area.cid] = "paramArea"
     @events["click span.area-remove-" + @area.cid] = "confirmRemoveArea"
     sortUpdateKey = "sortupdate ul.blocks-" + @cid
@@ -81,10 +80,11 @@ AreaView = OrchestraView.extend(
     domContainer = $("ul.blocks-" + @cid, @el)
     blockElement = new Block()
     blockElement.set block
-    blockView = new BlockView(
+    new BlockView(
       block: blockElement
       area: @area
       domContainer: domContainer
+      viewContainer: @
       node_published: @node_published
     )
     domContainer.addClass (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
@@ -95,12 +95,12 @@ AreaView = OrchestraView.extend(
     blocks = ul.children()
     blockData = []
     for block in blocks
-      $infos = $('div[data-block-type]', block)[0]
-      if typeof $infos != 'undefined'
-        if $infos.getAttribute('data-node-id') != '' && $infos.getAttribute('data-block-id') != '' 
-          blockData.push({'node_id' : $infos.getAttribute('data-node-id'), 'block_id' : $infos.getAttribute('data-block-id')})
+      info = $('div[data-block-type]', block)
+      if info.length > 0
+        if info.data('node-id') != '' && info.data('block-id') != '' 
+          blockData.push({'node_id' : info.data('node-id'), 'block_id' : info.data('block-id')})
         else
-          blockData.push({'component' : $infos.getAttribute('data-block-type')})
+          blockData.push({'component' : info.data('block-type')})
     areaData = {}
     areaData['blocks'] = blockData
     mustRefresh = !! ul.find(".newly-inserted").length > 0
@@ -122,24 +122,6 @@ AreaView = OrchestraView.extend(
         currentView.purgeContent()
         currentView.drawContent()
         refreshUl $("ul.blocks-" + currentView.cid, currentView.el)
-
-  confirmRemoveBlock: (event) ->
-    if @area.get("blocks").length > 0
-      smartConfirm(
-        'fa-trash-o',
-        $(".delete-confirm-question-block-" + @cid).text(),
-        $(".delete-confirm-explanation-block-" + @cid).text(),
-        callBackParams:
-          blockView: @
-        yesCallback: (params) ->
-          params.blockView.removeBlock(event)
-      )
-
-  removeBlock: (event) ->
-    ul = $(event.target).parents("ul").first()
-    $(event.target).parents("li").first().remove()
-    refreshUl ul
-    @sendBlockData({target: ul})
 
   confirmRemoveArea: (event) ->
     smartConfirm(

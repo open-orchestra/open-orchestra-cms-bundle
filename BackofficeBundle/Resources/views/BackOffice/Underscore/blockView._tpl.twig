@@ -5,7 +5,7 @@
             <% if (node_published) { %>
                 <span class="tool block-title bg-color-blueDark"><%= block.get('ui_model').label %></span>
                 <% if ('generate' == block.get('method')) { %>
-                <span class="tool block-param block-param-<%= cid %> bg-color-blueDark">
+                <span class="tool block-param bg-color-blueDark">
                     <i class="glyphicon glyphicon-eye-open"></i>
                 </span>
                 <% } %>
@@ -15,12 +15,12 @@
                 </span>
                 <span class="tool block-title bg-color-blueDark"><%= block.get('ui_model').label %></span>
                 <% if ('generate' == block.get('method')) { %>
-                <span class="tool block-param block-param-<%= cid %> bg-color-blueDark">
+                <span class="tool block-param bg-color-blueDark">
                     <i class="glyphicon glyphicon-pencil"></i>
                 </span>
                 <% } %>
                 <span class="tool move-trash bg-color-blueDark">
-                    <i class="block-remove-<%= areaCid %> glyphicon glyphicon-trash"></i>
+                    <i class="block-remove glyphicon glyphicon-trash"></i>
                 </span>
             <% } %>
             </div>

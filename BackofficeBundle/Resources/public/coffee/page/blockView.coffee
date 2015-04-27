@@ -1,30 +1,50 @@
 BlockView = OrchestraView.extend(
+  events:
+    'click span.block-param': 'paramBlock'
+    'click i.block-remove': 'confirmRemoveBlock'
+
   initialize: (options) ->
-    @events = {}
-    @events['click span.block-param-' + @cid] = 'paramBlock'
-    @block = options.block
-    @area = options.area
-    @domContainer = options.domContainer
-    @node_published = options.node_published
-    _.bindAll this, "render"
+    @options = @reduce(options, [
+      'block'
+      'area'
+      'domContainer'
+      'viewContainer'
+      'node_published'
+    ])
     @loadTemplates [
         "blockView"
     ]
     return
 
-  paramBlock: (event) ->
-    $('.modal-title').text 'Please wait ...'
-    view = new adminFormView(
-      url: @block.get('links')._self_form
-    )
-
   render: ->
     @setElement @renderTemplate('blockView',
-      block: @block
-      cid: @cid
-      areaCid: @area.cid
-      node_published: @node_published
+      block: @options.block
+      node_published: @options.node_published
     )
-    @domContainer.append @$el
+    @options.domContainer.append @$el
     this
+
+  paramBlock: (event) ->
+    $('.modal-title').text 'Please wait ...'
+    new adminFormView(
+      url: @options.block.get('links')._self_form
+    )
+
+  confirmRemoveBlock: (event) ->
+    if @options.area.get("blocks").length > 0
+      smartConfirm(
+        'fa-trash-o',
+        @options.viewContainer.$el.data('delete-confirm-question-block'),
+        @options.viewContainer.$el.data('delete-confirm-explanation-block'),
+        callBackParams:
+          blockView: @
+        yesCallback: (params) ->
+          params.blockView.removeBlock(event)
+      )
+
+  removeBlock: (event) ->
+    ul = $(event.target).parents("ul").first()
+    $(event.target).parents("li").first().remove()
+    refreshUl ul
+    @options.viewContainer.sendBlockData({target: ul})
 )
