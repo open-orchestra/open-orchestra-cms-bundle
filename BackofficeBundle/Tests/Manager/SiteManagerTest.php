@@ -36,5 +36,7 @@ class SiteManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf($this->siteClass, $site);
         $this->assertEquals(SiteInterface::PRIORITY_DEFAULT, $site->getSitemapPriority());
         $this->assertEquals(SiteInterface::CHANGE_FREQ_DEFAULT, $site->getSitemapChangefreq());
+        $this->assertTrue($site->getMetaIndex());
+        $this->assertTrue($site->getMetaFollow());
     }
 }
