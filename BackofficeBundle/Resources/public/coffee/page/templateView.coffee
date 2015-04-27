@@ -42,6 +42,7 @@ TemplateView = OrchestraView.extend(
     areaView = new AreaView(
       area: areaElement,
       domContainer: domContainer
+      viewContainer: @
     )
     domContainer.addClass (if @template.get("bo_direction") is "h" then "bo-row" else "bo-column")
     $(".ui-model-areas", @$el).each ->

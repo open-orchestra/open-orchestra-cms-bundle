@@ -1,29 +1,29 @@
-<li id="area-<%= cid %>"
+<li id="area"
     data-delete-confirm-question-block="{{ 'open_orchestra_backoffice.block.delete_question'|trans }}"
-    data-delete-confirm-explanation-block="{{ 'open_orchestra_backoffice.block.delete_explanation'|trans }}">
+    data-delete-confirm-explanation-block="{{ 'open_orchestra_backoffice.block.delete_explanation'|trans }}"
+    data-delete-confirm-question="{{ 'open_orchestra_backoffice.areas.delete_question'|trans }}"
+    data-delete-confirm-explanation="{{ 'open_orchestra_backoffice.areas.delete_explanation'|trans }}"
+    data-delete-error-title="{{ 'open_orchestra_backoffice.areas.delete_error_title'|trans }}"
+    data-delete-error-txt="{{ 'open_orchestra_backoffice.areas.delete_error_txt'|trans }}">
     <div class="area-toolbar toolbar-container">
         <div class="toolbar">
             <span class="tool"><%= area.get('ui_model').label %></span>
         <% if (node_published) { %>
-            <span class="tool area-param-<%= area.cid %>">
+            <span class="tool area-param">
                 <i class="glyphicon glyphicon-eye-open"></i>
             </span>
         <% } else { %>
-            <span class="tool area-param-<%= area.cid %>">
+            <span class="tool area-param">
                 <i class="glyphicon glyphicon-pencil"></i>
             </span>
-            <span class="tool area-remove-<%= area.cid %>">
+            <span class="tool area-remove">
                 <i class="glyphicon glyphicon-trash"></i>
             </span>
         <% } %>
         </div>
     </div>
     <div class="area-content">
-        <ul class="ui-model-areas areas-<%= cid %>"></ul>
-        <ul class="ui-model-blocks blocks-<%= cid %> resizable-<%= cid %>"></ul>
-        <span class="delete-confirm-question-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.areas.delete_question'|trans }}</span>
-        <span class="delete-confirm-explanation-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.areas.delete_explanation'|trans }}</span>
-        <span class="delete-error-title-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.areas.delete_error_title'|trans }}</span>
-        <span class="delete-error-txt-<%= cid %> hidden-info">{{ 'open_orchestra_backoffice.areas.delete_error_txt'|trans }}</span>
+        <ul class="ui-model-areas"></ul>
+        <ul class="ui-model-blocks"></ul>
     </div>
 </li>

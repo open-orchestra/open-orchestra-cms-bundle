@@ -1,93 +1,84 @@
 AreaView = OrchestraView.extend(
+  events:
+    'click span.area-param': 'paramArea'
+    'click span.area-remove': 'confirmRemoveArea'
+    'sortupdate ul.ui-model-blocks': 'sendBlockData'
+
   initialize: (options) ->
-    @area = options.area
-    @height = options.height
-    @node_id = options.node_id
-    @node_published = options.node_published
-    @domContainer = options.domContainer
-    @initEvents()
-    _.bindAll this, "render", "addAreaToView", "addBlockToView"
+    @options = @reduce(options, [
+      'area'
+      'height'
+      'node_id'
+      'node_published'
+      'domContainer'
+      'viewContainer'
+    ])
     @loadTemplates [
       "areaView"
     ]
     return
 
-  initEvents: ->
-    @events = {}
-    @events["click i#none"] = "clickButton"
-    @events["click span.area-param-" + @area.cid] = "paramArea"
-    @events["click span.area-remove-" + @area.cid] = "confirmRemoveArea"
-    sortUpdateKey = "sortupdate ul.blocks-" + @cid
-    @events[sortUpdateKey] = "sendBlockData"
-    return
-
-  paramArea: (event) ->
-    label = "~no label yet~"
-    label = @area.get("label")  if @area.get("label") isnt undefined
-    $(".modal-title").text "Area : " + label
-    view = new adminFormView(
-      url: @area.get("links")._self_form
-      deleteurl: @area.get("links")._self_delete
-      confirmtext: $(".delete-confirm-txt-"+@cid).text()
-    )
-    return
-
   render: ->
     @setElement @renderTemplate('areaView',
-      area: @area
-      cid: @cid
-      node_published: @node_published
+      area: @options.area
+      node_published: @options.node_published
     )
-    @domContainer.append @$el
-    this.drawContent()
+    @options.domContainer.append @$el
+    @subAreas = @$el.find('ul.ui-model-areas').first()
+    @subBlocks = @$el.find('ul.ui-model-blocks').first()
+    @drawContent()
 
   drawContent: ->
-    if @area.get("areas").length == 0
+    if @options.area.get("areas").length == 0
       @$el.addClass('area-leaf')
     else
-      for area of @area.get("areas")
-        @addAreaToView @area.get("areas")[area]
-    
-    for block of @area.get("blocks")
-      @addBlockToView @area.get("blocks")[block]
-    
-    if $("ul.areas-" + @cid, @el).children().length is 0
-      $("ul.areas-" + @cid, @el).remove()
-      $("ul.blocks-" + @cid, @el).addClass('bo-column') if $("ul.blocks-" + @cid, @el).children().length is 0
+      for area of @options.area.get("areas")
+        @addAreaToView @options.area.get("areas")[area]
+    for block of @options.area.get("blocks")
+      @addBlockToView @options.area.get("blocks")[block]
+    if @subAreas.children().length is 0
+      @subAreas.remove()
+      @subBlocks.addClass('bo-column') if @subBlocks.children().length is 0
       makeSortable @el
     else
-      $("ul.blocks-" + @cid, @el).remove()
-    
-    this
+      @subBlocks.remove()
+    return
 
   purgeContent: ->
-    $("ul.areas-" + @cid, @el).empty()
-    $("ul.blocks-" + @cid, @el).empty()
+    @subAreas.empty()
+    @subBlocks.empty()
+
+  paramArea: (event) ->
+    event.stopImmediatePropagation()
+    label = "~no label yet~"
+    label = @options.area.get("label")  if @options.area.get("label") isnt undefined
+    $(".modal-title").text "Area : " + label
+    view = new adminFormView(
+      url: @options.area.get("links")._self_form
+      deleteurl: @options.area.get("links")._self_delete
+      confirmtext: @options.viewContainer.$el.data('delete-confirm-txt')
+    )
+    return
 
   addAreaToView: (area) ->
-    domContainer = $("ul.areas-" + @cid, @el)
     areaElement = new Area()
     areaElement.set area
-    areaView = new AreaView(
+    areaView = new AreaView($.extend({}, @options,
       area: areaElement
-      node_id: @node_id
-      node_published: @node_published
-      domContainer: domContainer
-    )
-    domContainer.addClass (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
+      domContainer: @subAreas
+      viewContainer: @
+    ))
+    @subAreas.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   addBlockToView: (block) ->
-    domContainer = $("ul.blocks-" + @cid, @el)
     blockElement = new Block()
     blockElement.set block
-    new BlockView(
+    new BlockView($.extend({}, @options,
       block: blockElement
-      area: @area
-      domContainer: domContainer
+      domContainer: @subBlocks
       viewContainer: @
-      node_published: @node_published
-    )
-    domContainer.addClass (if @area.get("bo_direction") is "h" then "bo-row" else "bo-column")
+    ))
+    @subBlocks.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   sendBlockData: (event)->
     ul = $(event.target)
@@ -101,52 +92,54 @@ AreaView = OrchestraView.extend(
           blockData.push({'node_id' : info.data('node-id'), 'block_id' : info.data('block-id')})
         else
           blockData.push({'component' : info.data('block-type')})
-    areaData = {}
-    areaData['blocks'] = blockData
     mustRefresh = !! ul.find(".newly-inserted").length > 0
-    currentView = this
+    currentView = @
     $.ajax
-      url: @area.get('links')._self_block
+      url: @options.area.get('links')._self_block
       method: 'POST'
-      data: JSON.stringify(areaData)
+      data: JSON.stringify(
+        blocks: blockData
+      )
       success: (response) ->
         currentView.refresh() if mustRefresh
 
   refresh: ->
-    currentView = this
+    currentView = @
     $.ajax
-      url: @area.get('links')._self
+      url: @options.area.get('links')._self
       method: 'GET'
       success: (response) ->
-        currentView.area.set(response)
+        currentView.options.area.set(response)
         currentView.purgeContent()
         currentView.drawContent()
-        refreshUl $("ul.blocks-" + currentView.cid, currentView.el)
+        refreshUl(currentView.subBlocks)
 
   confirmRemoveArea: (event) ->
+    event.stopImmediatePropagation()
     smartConfirm(
       'fa-trash-o',
-      $(".delete-confirm-question-" + @cid).text(),
-      $(".delete-confirm-explanation-" + @cid).text(),
+      @$el.data('delete-confirm-question'),
+      @$el.data('delete-confirm-explanation'),
       callBackParams:
         areaView: @
       yesCallback: (params) ->
-        params.areaView.removeArea(event)
+        params.areaView.removeArea()
     )
 
-  removeArea: (event) ->
-    $(event.target).closest('li').remove()
-    refreshUl $(@el)
+  removeArea: () ->
+    @$el.remove()
+    refreshUl @options.domContainer
     @sendRemoveArea()
     return
 
   sendRemoveArea: ->
+    currentView = @
     $.ajax
-      url: @area.get("links")._self_delete
+      url: @options.area.get("links")._self_delete
       method: "POST"
       error: ->
-        $(".modal-title").text $(".delete-error-title-" + @cid).text()
-        $(".modal-body").html $(".delete-error-txt-" + @cid).text()
+        $(".modal-title").text currentView.$el.data('delete-error-title')
+        $(".modal-body").html currentView.$el.data('delete-error-txt')
         $("#OrchestraBOModal").modal "show"
     return
 )
