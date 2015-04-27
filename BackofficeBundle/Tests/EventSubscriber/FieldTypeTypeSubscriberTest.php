@@ -173,15 +173,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->fieldType, Phake::times(0))->addOption(Phake::anyParameters());
-        Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
-
-        Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'field_option',
-            'allow_add' => false,
-            'allow_delete' => false,
-            'label' => 'open_orchestra_backoffice.form.field_type.options',
-        ));
+        $this->verifyWithTypeNoOption();
     }
 
     /**
@@ -193,6 +185,15 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getData()->thenReturn(array('type' => 'hidden'));
 
         $this->subscriber->preSubmit($this->event);
+
+        $this->verifyWithTypeNoOption();
+    }
+
+    /**
+     * Verify the field type with no option
+     */
+    protected function verifyWithTypeNoOption()
+    {
         Phake::verify($this->fieldType, Phake::times(0))->addOption(Phake::anyParameters());
         Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
 
