@@ -9,7 +9,7 @@ showNode = (url, language, version)->
       node.set response
       view = new NodeView(
         node: node
-        extendView : [ 'commonPage' ]
+        extendView : [ 'commonPage', 'addArea' ]
         domContainer: $('#main')
       )
       appRouter.setCurrentMainView(view)

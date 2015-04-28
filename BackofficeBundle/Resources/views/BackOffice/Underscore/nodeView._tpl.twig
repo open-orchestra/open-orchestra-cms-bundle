@@ -5,16 +5,12 @@
     <ul id="entity-languages" class="nav nav-tabs">
     </ul>
     <div id="preview"></div>
-    <% if (node.get('node_type') == 'page') { %>
-        <span id="entity-duplicate" data-text="{{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}"></span>
-    <% } %>
+    <span id="entity-duplicate" data-text="{{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}"></span>
     <div id="additionalContent" class="smart-form">
-        <% if (node.get('node_type') == 'page') { %>
-            <label class="select">
-                <select id="version-selectbox"/>
-                <i></i>
-            </label>
-        <% } %>
+        <label class="select">
+            <select id="version-selectbox"/>
+            <i></i>
+        </label>
     </div>
     <div role="container">
         <div class="ui-model bg-color-blueLight">

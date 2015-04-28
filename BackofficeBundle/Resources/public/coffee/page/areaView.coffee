@@ -7,8 +7,10 @@ AreaView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
       'area'
+      'configuration'
       'published'
       'domContainer'
+      'extendView'
     ])
     @loadTemplates [
       "areaView"
@@ -29,10 +31,10 @@ AreaView = OrchestraView.extend(
     if @options.area.get("areas").length == 0
       @$el.addClass('area-leaf')
     else
-      for area of @options.area.get("areas")
-        @addAreaToView @options.area.get("areas")[area]
+      @addAreasToView @options.area.get("areas")
     for block of @options.area.get("blocks")
       @addBlockToView @options.area.get("blocks")[block]
+    refreshUl @subBlocks
     if @subAreas.children().length is 0
       @subAreas.remove()
       @subBlocks.addClass('bo-column') if @subBlocks.children().length is 0
@@ -54,15 +56,6 @@ AreaView = OrchestraView.extend(
       url: @options.area.get("links")._self_form
     )
     return
-
-  addAreaToView: (area) ->
-    areaElement = new Area()
-    areaElement.set area
-    areaView = new AreaView(@addOption(
-      area: areaElement
-      domContainer: @subAreas
-    ))
-    @subAreas.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   addBlockToView: (block) ->
     blockElement = new Block()

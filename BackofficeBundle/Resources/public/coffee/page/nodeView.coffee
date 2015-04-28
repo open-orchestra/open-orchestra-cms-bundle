@@ -24,7 +24,7 @@ NodeView = OrchestraView.extend(
       language: @options.node.get('language')
       path : 'showNodeWithLanguage'
       self_duplicate: @options.node.get('links')._self_duplicate
-    @options.pageConfiguration = @options.node
+    @options.configuration = @options.node
     @loadTemplates [
       "nodeView"
       "blockView"
@@ -37,22 +37,17 @@ NodeView = OrchestraView.extend(
     @setElement @renderTemplate('nodeView',
       node: @options.node
     )
-    @options.domContainer.remove('#content')
+    @options.domContainer.find('#content').remove()
     @options.domContainer.append @$el
     $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
       element: @options.node
     )
-    for area of @options.node.get('areas')
-      @addAreaToView(@options.node.get('areas')[area])
+    @addAreasToView(@options.node.get('areas'))
     @addListBlockToView()
-    if @options.node.get('node_type') == 'page'
-      @addPreviewLink()
-      @addConfigurationButton()
-      if @options.node.attributes.status.published
-        $('.js-widget-blockpanel', @$el).hide()
-      else
-        $(".ui-model-areas, .ui-model-blocks", @$el).each ->
-          refreshUl $(this)
+    @addPreviewLink()
+    @addConfigurationButton()
+    if @options.node.attributes.status.published
+      $('.js-widget-blockpanel', @$el).hide()
     return
 
   addPreviewLink: ->
