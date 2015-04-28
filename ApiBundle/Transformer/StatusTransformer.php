@@ -62,25 +62,27 @@ class StatusTransformer extends AbstractTransformer
             }
         }
 
-        $toRoles = array();
-        foreach ($mixed->getToRoles() as $toRole) {
-            $toRoles[] = $toRole->getName();
-        }
-        $facade->toRole = implode(',', $toRoles);
-        $fromRoles = array();
-        foreach ($mixed->getFromRoles() as $fromRole) {
-            $fromRoles[] = $fromRole->getName();
-        }
-        $facade->fromRole = implode(',', $fromRoles);
+        if (!$this->hasGroup('GROUP_HIDE_ROLES')) {
+            $toRoles = array();
+            foreach ($mixed->getToRoles() as $toRole) {
+                $toRoles[] = $toRole->getName();
+            }
+            $facade->toRole = implode(',', $toRoles);
+            $fromRoles = array();
+            foreach ($mixed->getFromRoles() as $fromRole) {
+                $fromRoles[] = $fromRole->getName();
+            }
+            $facade->fromRole = implode(',', $fromRoles);
 
-        $facade->addLink('_self_delete', $this->generateRoute(
-            'open_orchestra_api_status_delete',
-            array('statusId' => $mixed->getId())
-        ));
-        $facade->addLink('_self_form', $this->generateRoute(
-            'open_orchestra_backoffice_status_form',
-            array('statusId' => $mixed->getId())
-        ));
+            $facade->addLink('_self_delete', $this->generateRoute(
+                'open_orchestra_api_status_delete',
+                array('statusId' => $mixed->getId())
+            ));
+            $facade->addLink('_self_form', $this->generateRoute(
+                'open_orchestra_backoffice_status_form',
+                array('statusId' => $mixed->getId())
+            ));
+        }
 
         return $facade;
     }

@@ -59,6 +59,8 @@ class ContentController extends BaseController
      *
      * @Api\Serialize()
      *
+     * @Api\Groups("GROUP_HIDE_ROLES")
+     *
      * @return FacadeInterface
      */
     public function listAction(Request $request)

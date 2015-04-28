@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Context\GroupContext;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -10,14 +11,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class TransformerManager
 {
     protected $transformers = array();
+    protected $groupContext;
     protected $router;
 
     /**
      * @param UrlGeneratorInterface $router
+     * @param GroupContext          $groupContext
      */
-    public function __construct(UrlGeneratorInterface $router)
+    public function __construct(UrlGeneratorInterface $router, GroupContext $groupContext)
     {
         $this->router = $router;
+        $this->groupContext = $groupContext;
     }
 
     /**
@@ -45,5 +49,13 @@ class TransformerManager
     public function getRouter()
     {
         return $this->router;
+    }
+
+    /**
+     * @return GroupContext
+     */
+    public function getGroupContext()
+    {
+        return $this->groupContext;
     }
 }

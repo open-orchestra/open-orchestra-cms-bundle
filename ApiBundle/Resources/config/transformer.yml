@@ -37,7 +37,9 @@ parameters:
 services:
     open_orchestra_api.transformer_manager:
         class: %open_orchestra_api.transformer_manager.class%
-        arguments: [@router]
+        arguments:
+            - @router
+            - @open_orchestra_api.context.group
     open_orchestra_api.transformer.node:
         class: %open_orchestra_api.transformer.node.class%
         arguments:
