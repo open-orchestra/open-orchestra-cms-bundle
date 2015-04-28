@@ -3,7 +3,7 @@ FolderConfigurationButtonView = OrchestraView.extend(
     'click i.ajax-folder': 'clickEditFolder'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'medias'
     ])
     @loadTemplates [

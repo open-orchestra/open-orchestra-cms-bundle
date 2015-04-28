@@ -8,7 +8,7 @@ showTemplate = (url)->
       template.set response
       view = new TemplateView(
         template: template
-        inheritance : [ 'areaManagement' ]
+        extendView : [ 'commonPage' ]
         )
       appRouter.setCurrentMainView(view)
       return

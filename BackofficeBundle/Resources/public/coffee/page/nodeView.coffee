@@ -1,9 +1,13 @@
 NodeView = OrchestraView.extend(
   el: '#content'
 
+  events:
+    'click i.test': 'showAreas'
+
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'node'
+      'extendView'
     ])
     @options.multiLanguage = 
       language: @options.node.get('language')
@@ -24,6 +28,7 @@ NodeView = OrchestraView.extend(
       language: @options.node.get('language')
       path : 'showNodeWithLanguage'
       self_duplicate: @options.node.get('links')._self_duplicate
+    @options.pageConfiguration = @options.node
     @loadTemplates [
       "nodeView"
       "blockView"
@@ -70,12 +75,6 @@ NodeView = OrchestraView.extend(
   addPreviewLink: ->
     previewLinks = @options.node.get('preview_links')
     Backbone.Wreqr.radio.commands.execute 'preview_link', 'render', previewLinks
-
-  addConfigurationButton: ->
-    view = new PageConfigurationButtonView($.extend({}, @options,
-      title: @options.node.get('name')
-      viewContainer: @
-    ))
 
   addListBlockToView: ->
     viewContext = @

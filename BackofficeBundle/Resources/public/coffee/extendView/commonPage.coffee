@@ -1,4 +1,4 @@
-inheritance['areaManagement'] = {
+extendView['commonPage'] = {
   events:
     'click i.show-areas': 'showAreas'
     'click i.hide-areas': 'hideAreas'
@@ -12,4 +12,9 @@ inheritance['areaManagement'] = {
     $('.hide-areas').hide()
     $('.show-areas').show()
     $('.area-toolbar').removeClass('shown')
+
+  addConfigurationButton: ->
+    view = new PageConfigurationButtonView(@addOption(
+      viewContainer: @
+    ))
 }

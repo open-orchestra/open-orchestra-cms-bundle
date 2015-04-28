@@ -68,9 +68,10 @@ TableviewCollectionView = OrchestraView.extend(
   addElementToView: (elementData) ->
     elementModel = new TableviewModel
     elementModel.set elementData
-    view = new TableviewView($.extend({}, @options,
+    view = new TableviewView(@addOption(
       element: elementModel
-      domContainer : @$el.find('tbody')))
+      domContainer : @$el.find('tbody')
+    ))
     return
 
   clickAdd: (event) ->
@@ -82,8 +83,8 @@ TableviewCollectionView = OrchestraView.extend(
       url: options.elements.get('links')._self_add
       method: 'GET'
       success: (response) ->
-        view = new FullPageFormView($.extend({}, options,
+        view = new FullPageFormView(@addOption(
           html: response
-          inheritance: [ 'generateId' ]
+          extendView: [ 'generateId' ]
         ))
 )

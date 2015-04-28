@@ -3,8 +3,8 @@ PageConfigurationButtonView = OrchestraView.extend(
     'click span': 'configurationPage'
 
   initialize: (options) ->
-    @options = @reduce(options, [
-      'node'
+    @options = @reduceOption(options, [
+      'pageConfiguration'
       'viewContainer'
     ])
     @loadTemplates [
@@ -18,15 +18,15 @@ PageConfigurationButtonView = OrchestraView.extend(
     return
 
   configurationPage: () ->
-    $('.modal-title').text @options.node.get('name')
+    $('.modal-title').text @options.pageConfiguration.get('name')
     options =
-      url: @options.node.get('links')._self_form
-      deleteurl: @options.node.get('links')._self_delete
+      url: @options.pageConfiguration.get('links')._self_form
+      deleteurl: @options.pageConfiguration.get('links')._self_delete
       redirectUrl: appRouter.generateUrl "showNode",
-        nodeId: @options.node.get('parent_id')
+        nodeId: @options.pageConfiguration.get('parent_id')
       confirmText: @options.viewContainer.$el.data('delete-confirm-txt')
       confirmTitle: @options.viewContainer.$el.data('delete-confirm-title')
-    if @options.node.attributes.alias is ''
-      $.extend options, inheritance: [ 'generateId' ]
+    if @options.pageConfiguration.attributes.alias is ''
+      $.extend options, extendView: [ 'generateId' ]
     view = new adminFormView(options)
 )

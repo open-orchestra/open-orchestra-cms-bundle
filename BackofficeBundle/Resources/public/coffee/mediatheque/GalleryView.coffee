@@ -1,7 +1,7 @@
 GalleryView = OrchestraView.extend(
   initialize: (options) ->
     @events = {}
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'modal'
       'media'
       'domContainer'
@@ -31,7 +31,7 @@ GalleryView = OrchestraView.extend(
   superboxOpen: ->
     listUrl = Backbone.history.fragment
     Backbone.history.navigate(listUrl + '/media/' + @options.media.id + '/edit')
-    superboxView = new SuperboxView ($.extend({}, @options,
+    superboxView = new SuperboxView (@addOption(
       listUrl: listUrl
     ))
 

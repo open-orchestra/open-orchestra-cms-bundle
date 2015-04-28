@@ -1,11 +1,10 @@
 OrchestraView = Backbone.View.extend(
 
   constructor: (attributes, options) ->
+    if attributes && attributes.extendView
+      for i of attributes.extendView
+        $.extend(true, @, extendView[attributes.extendView[i]])
     Backbone.View.apply @, arguments
-    if attributes && attributes.inheritance
-      for i of attributes.inheritance
-        $.extend(true, @, inheritance[attributes.inheritance[i]])
-    @delegateEvents()
 
   loadTemplates: (templates) ->
     @compiledTemplates = {}
@@ -39,10 +38,12 @@ OrchestraView = Backbone.View.extend(
   renderTemplate: (templateName, parameters) ->
     @compiledTemplates[templateName](parameters)
 
-  reduce: (options, keys) ->
+  reduceOption: (options, keys) ->
     cleanOptions = {}
     $.each options, (key, value) ->
       cleanOptions[key] = value if $.inArray(key, keys) != -1
       return
     return cleanOptions
+  addOption: (options) ->
+    return $.extend(true, {}, @options, options)
 )

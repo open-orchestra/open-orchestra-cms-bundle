@@ -4,7 +4,7 @@ BlockView = OrchestraView.extend(
     'click i.block-remove': 'confirmRemoveBlock'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'block'
       'area'
       'domContainer'

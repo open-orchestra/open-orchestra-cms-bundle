@@ -2,9 +2,11 @@ TemplateView = OrchestraView.extend(
   el: '#content'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'template'
+      'extendView'
     ])
+    @options.pageConfiguration = @options.template
     @loadTemplates [
       "templateView"
     ]
@@ -33,10 +35,4 @@ TemplateView = OrchestraView.extend(
     $(".ui-model-areas", @$el).each ->
       refreshUl $(this)
     return
-
-  addConfigurationButton: ->
-    view = new PageConfigurationButtonView($.extend({}, @options,
-      node: @options.template
-      viewContainer: @
-    ))
 )

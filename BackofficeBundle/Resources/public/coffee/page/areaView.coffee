@@ -5,7 +5,7 @@ AreaView = OrchestraView.extend(
     'sortupdate ul.ui-model-blocks': 'sendBlockData'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'area'
       'height'
       'node_id'
@@ -63,7 +63,7 @@ AreaView = OrchestraView.extend(
   addAreaToView: (area) ->
     areaElement = new Area()
     areaElement.set area
-    areaView = new AreaView($.extend({}, @options,
+    areaView = new AreaView(@addOption(
       area: areaElement
       domContainer: @subAreas
       viewContainer: @
@@ -73,7 +73,7 @@ AreaView = OrchestraView.extend(
   addBlockToView: (block) ->
     blockElement = new Block()
     blockElement.set block
-    new BlockView($.extend({}, @options,
+    new BlockView(@addOption(
       block: blockElement
       domContainer: @subBlocks
       viewContainer: @

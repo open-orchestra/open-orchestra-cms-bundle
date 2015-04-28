@@ -3,7 +3,7 @@ FolderDeleteButtonView = OrchestraView.extend(
     'click i.ajax-folder-delete': 'clickDeleteFolder'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'medias'
     ])
     @loadTemplates [

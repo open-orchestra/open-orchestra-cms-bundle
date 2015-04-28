@@ -58,7 +58,8 @@ TableviewView = OrchestraView.extend(
       url: options.element.get('links')._self_form
       method: "GET"
       success: (response) ->
-        view = new FullPageFormView($.extend({}, options,
-          html: response))
+        view = new FullPageFormView(@addOption(
+          html: response
+        ))
         appRouter.setCurrentMainView view
 )
