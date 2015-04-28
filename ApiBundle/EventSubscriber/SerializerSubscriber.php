@@ -16,11 +16,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * Class SerializerSubscriber
  */
-class SerializerSubscriber implements EventSubscriberInterface
+class SerializerSubscriber extends AbstractSubscriber implements EventSubscriberInterface
 {
-    protected $resolver;
     protected $serializer;
-    protected $annotationReader;
 
     /**
      * @param SerializerInterface         $serializer
@@ -29,9 +27,8 @@ class SerializerSubscriber implements EventSubscriberInterface
      */
     public function __construct(SerializerInterface $serializer, AnnotationReader $annotationReader, ControllerResolverInterface $resolver)
     {
-        $this->resolver = $resolver;
+        parent::__construct($annotationReader, $resolver);
         $this->serializer = $serializer;
-        $this->annotationReader = $annotationReader;
     }
 
     /**
@@ -41,17 +38,11 @@ class SerializerSubscriber implements EventSubscriberInterface
      */
     public function onKernelViewSerialize(GetResponseForControllerResultEvent $event)
     {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+        if (!$this->eventElligible($event)) {
             return;
         }
 
-        if (!$this->isApiRequest($event->getRequest())) {
-            return;
-        }
-
-        $controller = $this->resolver->getController($event->getRequest());
-        $reflectionClass = new \ReflectionClass($controller[0]);
-        $annot = $this->annotationReader->getMethodAnnotation($reflectionClass->getMethod($controller[1]), 'OpenOrchestra\ApiBundle\Controller\Annotation\Serialize');
+        $annot = $this->extractAnnotation($event, 'OpenOrchestra\ApiBundle\Controller\Annotation\Serialize');
 
         if (!$annot) {
             return;
@@ -65,16 +56,6 @@ class SerializerSubscriber implements EventSubscriberInterface
                     $format),
                 200,
                 array('content-type' => $this->generateContentType($format))));
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return boolean
-     */
-    protected function isApiRequest(Request $request)
-    {
-        return 0 === strpos($request->get('_route'), 'open_orchestra_api');
     }
 
     /**
