@@ -68,7 +68,7 @@ TableviewCollectionView = OrchestraView.extend(
   addElementToView: (elementData) ->
     elementModel = new TableviewModel
     elementModel.set elementData
-    view = new TableviewView(@addOption(
+    new TableviewView(@addOption(
       element: elementModel
       domContainer : @$el.find('tbody')
     ))
@@ -79,11 +79,12 @@ TableviewCollectionView = OrchestraView.extend(
     displayLoader('div[role="container"]')
     Backbone.history.navigate(@addUrl)
     options = @options
+    viewContext = @
     $.ajax
       url: options.elements.get('links')._self_add
       method: 'GET'
       success: (response) ->
-        view = new FullPageFormView(@addOption(
+        view = new FullPageFormView(viewContext.addOption(
           html: response
           extendView: [ 'generateId' ]
         ))
