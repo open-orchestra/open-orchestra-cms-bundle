@@ -54,11 +54,12 @@ TableviewView = OrchestraView.extend(
     redirectUrl = appRouter.generateUrl(redirectUrl, appRouter.addParametersToRoute(parameter))
     Backbone.history.navigate(redirectUrl)
     options = @options
+    viewContext = @
     $.ajax
       url: options.element.get('links')._self_form
       method: "GET"
       success: (response) ->
-        view = new FullPageFormView(@addOption(
+        view = new FullPageFormView(viewContext.addOption(
           html: response
         ))
         appRouter.setCurrentMainView view

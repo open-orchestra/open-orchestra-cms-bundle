@@ -45,6 +45,7 @@ GalleryCollectionView = OrchestraView.extend(
   clickAdd: (event) ->
     event.preventDefault()
     options = @options
+    viewContext = @
     if $('#main .' + $(event.target).attr('class')).length
       displayLoader('div[role="container"]')
       Backbone.history.navigate('/add')
@@ -52,7 +53,7 @@ GalleryCollectionView = OrchestraView.extend(
         url: options.medias.get('links')._self_add
         method: 'GET'
         success: (response) ->
-          new FullPageFormView(@addOption(
+          new FullPageFormView(viewContext.addOption(
             html: response
           ))
 

@@ -15,7 +15,7 @@ extendView['commonPage'] = {
     $('.area-toolbar').removeClass('shown')
 
   addConfigurationButton: ->
-    view = new PageConfigurationButtonView(@addOption(
+    new PageConfigurationButtonView(@addOption(
       viewContainer: @
     ))
 
