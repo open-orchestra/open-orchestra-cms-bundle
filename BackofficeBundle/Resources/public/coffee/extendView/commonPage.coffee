@@ -1,3 +1,4 @@
+extendView = extendView || {}
 extendView['commonPage'] = {
   events:
     'click i.show-areas': 'showAreas'

@@ -1,8 +1,9 @@
 TemplateView = OrchestraView.extend(
+  extendView : [ 'commonPage', 'addArea' ]
+
   initialize: (options) ->
     @options = @reduceOption(options, [
       'template'
-      'extendView'
       'domContainer'
     ])
     @options.configuration = @options.template

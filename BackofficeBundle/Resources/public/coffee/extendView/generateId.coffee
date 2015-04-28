@@ -1,3 +1,4 @@
+extendView = extendView || {}
 extendView['generateId'] = {
   events:
     'focusout input.generate-id-source': 'generateId'

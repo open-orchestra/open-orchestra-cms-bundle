@@ -1,9 +1,11 @@
 OrchestraView = Backbone.View.extend(
+  extendView: []
 
   constructor: (attributes, options) ->
     if attributes && attributes.extendView
-      for i of attributes.extendView
-        $.extend(true, @, extendView[attributes.extendView[i]])
+      $.extend(@extendView, attributes.extendView)
+    for i of @extendView
+      $.extend(true, @, extendView[@extendView[i]])
     Backbone.View.apply @, arguments
 
   loadTemplates: (templates) ->

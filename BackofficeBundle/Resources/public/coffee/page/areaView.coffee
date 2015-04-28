@@ -1,4 +1,6 @@
 AreaView = OrchestraView.extend(
+  extendView : [ 'addArea' ]
+
   events:
     'click span.area-param': 'paramArea'
     'click span.area-remove': 'confirmRemoveArea'
@@ -10,7 +12,6 @@ AreaView = OrchestraView.extend(
       'configuration'
       'published'
       'domContainer'
-      'extendView'
     ])
     @loadTemplates [
       "areaView"

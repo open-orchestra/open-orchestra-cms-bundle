@@ -1,6 +1,6 @@
 GalleryView = OrchestraView.extend(
   initialize: (options) ->
-    @events = {}
+    @events = @events || {}
     @options = @reduceOption(options, [
       'modal'
       'media'

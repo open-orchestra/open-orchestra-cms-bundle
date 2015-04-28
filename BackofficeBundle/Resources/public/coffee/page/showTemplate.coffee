@@ -8,7 +8,6 @@ showTemplate = (url)->
       template.set response
       view = new TemplateView(
         template: template
-        extendView : [ 'commonPage', 'addArea' ]
         domContainer: $('#main')
       )
       appRouter.setCurrentMainView(view)

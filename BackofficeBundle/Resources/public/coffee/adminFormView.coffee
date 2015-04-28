@@ -6,7 +6,7 @@ adminFormView = OrchestraView.extend(
     @options = options
     @deleteButton = @options.deleteurl && @options.confirmtext && @options.confirmtitle
     @method = if options.method then options.method else 'GET'
-    @events = {}
+    @events = @events || {}
     @formEvent = 'submit'
     @formClass = 'form'
     @loadTemplates [

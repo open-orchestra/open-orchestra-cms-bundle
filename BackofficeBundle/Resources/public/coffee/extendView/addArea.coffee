@@ -1,3 +1,4 @@
+extendView = extendView || {}
 extendView['addArea'] = {
   addAreasToView: (areas) ->
     @areaContainer = @$el.find('.ui-model-areas').first()
@@ -15,7 +16,6 @@ extendView['addArea'] = {
       configuration: areaElement
       published: published
       domContainer: @areaContainer
-      extendView : [ 'addArea' ]
     )
     @areaContainer.addClass (if @options.configuration.get("bo_direction") is "h" then "bo-row" else "bo-column")
     return

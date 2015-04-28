@@ -1,8 +1,9 @@
 NodeView = OrchestraView.extend(
+  extendView : [ 'commonPage', 'addArea' ]
+
   initialize: (options) ->
     @options = @reduceOption(options, [
       'node'
-      'extendView'
       'domContainer'
     ])
     @options.multiLanguage = 
