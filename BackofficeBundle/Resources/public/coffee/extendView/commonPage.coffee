@@ -17,4 +17,17 @@ extendView['commonPage'] = {
     view = new PageConfigurationButtonView(@addOption(
       viewContainer: @
     ))
+
+  addAreaToView: (area) ->
+    areaContainer = @$el.find('.ui-model-areas').first()
+    areaElement = new Area
+    areaElement.set area
+    areaView = new AreaView(
+      area: areaElement
+      published: @options.pageConfiguration.attributes.status.published
+      domContainer: areaContainer
+    )
+    areaContainer.addClass (if @options.node.get("bo_direction") is "h" then "bo-row" else "bo-column")
+    return
+
 }

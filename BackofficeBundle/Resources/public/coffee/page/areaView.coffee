@@ -7,11 +7,8 @@ AreaView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
       'area'
-      'height'
-      'node_id'
-      'node_published'
+      'published'
       'domContainer'
-      'viewContainer'
     ])
     @loadTemplates [
       "areaView"
@@ -21,7 +18,7 @@ AreaView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('areaView',
       area: @options.area
-      node_published: @options.node_published
+      published: @options.published
     )
     @options.domContainer.append @$el
     @subAreas = @$el.find('ul.ui-model-areas').first()
@@ -55,8 +52,6 @@ AreaView = OrchestraView.extend(
     $(".modal-title").text "Area : " + label
     view = new adminFormView(
       url: @options.area.get("links")._self_form
-      deleteurl: @options.area.get("links")._self_delete
-      confirmtext: @options.viewContainer.$el.data('delete-confirm-txt')
     )
     return
 
@@ -66,7 +61,6 @@ AreaView = OrchestraView.extend(
     areaView = new AreaView(@addOption(
       area: areaElement
       domContainer: @subAreas
-      viewContainer: @
     ))
     @subAreas.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
@@ -81,6 +75,7 @@ AreaView = OrchestraView.extend(
     @subBlocks.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   sendBlockData: (event)->
+    event.stopImmediatePropagation()
     ul = $(event.target)
     refreshUl ul
     blocks = ul.children()

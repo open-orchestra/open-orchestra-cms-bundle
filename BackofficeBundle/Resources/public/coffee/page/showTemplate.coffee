@@ -9,7 +9,8 @@ showTemplate = (url)->
       view = new TemplateView(
         template: template
         extendView : [ 'commonPage' ]
-        )
+        domContainer: $('#main')
+      )
       appRouter.setCurrentMainView(view)
       return
   return

@@ -1,29 +1,29 @@
+<div id="content"
+    data-delete-confirm-txt="{{ 'open_orchestra_backoffice.templates.delete.text'|trans }}"
+    data-delete-confirm-title="{{ 'open_orchestra_backoffice.templates.delete.title'|trans }}">
 {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
-
-<div class="hidden-info" id="generated-title" style="display: none">
-    <%= template.get('name') %>
-</div>
-<div id="generated-tools" style="display: none">
-    <div class="blocks-panel">
-        <span class="blocks-panel-setting">
-            <i class="fa fa-arrow-circle-left"></i>
-        </span>
-        <h2>Blocks</h2>
-        <div class="ui-model scroll panel-shadow">
-            <ul class="ui-model-blocks right-panel-blocks"></ul>
+    <div class="hidden-info" id="generated-title" style="display: none">
+        <%= template.get('name') %>
+    </div>
+    <div id="generated-tools" style="display: none">
+        <div class="blocks-panel">
+            <span class="blocks-panel-setting">
+                <i class="fa fa-arrow-circle-left"></i>
+            </span>
+            <h2>Blocks</h2>
+            <div class="ui-model scroll panel-shadow">
+                <ul class="ui-model-blocks right-panel-blocks"></ul>
+            </div>
         </div>
     </div>
-</div>
-<span class="delete-confirm-txt-<%= template.cid %> hidden-info">{{ 'open_orchestra_backoffice.templates.delete.text'|trans }}</span>
-<span class="delete-confirm-title-<%= template.cid %> hidden-info">{{ 'open_orchestra_backoffice.templates.delete.title'|trans }}</span>
-<div role="container">
-    <div class="ui-model bg-color-blueLight">
-        <div class="toolbar">
-            <i class="fa fa-eye-slash hide-areas"></i><i class="fa fa-eye show-areas"></i>
+    <div role="container">
+        <div class="ui-model bg-color-blueLight">
+            <div class="toolbar">
+                <i class="fa fa-eye-slash hide-areas"></i><i class="fa fa-eye show-areas"></i>
+            </div>
+            <ul class="ui-model-areas">
+            </ul>
         </div>
-        <ul class="ui-model-areas">
-        </ul>
     </div>
-</div>
-
 {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
+</div>

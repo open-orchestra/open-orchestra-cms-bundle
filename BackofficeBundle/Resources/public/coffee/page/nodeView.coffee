@@ -1,13 +1,9 @@
 NodeView = OrchestraView.extend(
-  el: '#content'
-
-  events:
-    'click i.test': 'showAreas'
-
   initialize: (options) ->
     @options = @reduceOption(options, [
       'node'
       'extendView'
+      'domContainer'
     ])
     @options.multiLanguage = 
       language: @options.node.get('language')
@@ -38,10 +34,11 @@ NodeView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).html @renderTemplate('nodeView',
+    @setElement @renderTemplate('nodeView',
       node: @options.node
-      cid: @cid
     )
+    @options.domContainer.remove('#content')
+    @options.domContainer.append @$el
     $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
       element: @options.node
     )
@@ -56,20 +53,6 @@ NodeView = OrchestraView.extend(
       else
         $(".ui-model-areas, .ui-model-blocks", @$el).each ->
           refreshUl $(this)
-    return
-
-  addAreaToView: (area) ->
-    areaContainer = @$el.find('.ui-model-areas').first()
-    areaElement = new Area
-    areaElement.set area
-    areaView = new AreaView(
-      area: areaElement
-      node_id: @options.node.get('node_id'),
-      node_published: @options.node.attributes.status.published
-      domContainer: areaContainer
-      viewContainer: @
-    )
-    areaContainer.addClass (if @options.node.get("bo_direction") is "h" then "bo-row" else "bo-column")
     return
 
   addPreviewLink: ->

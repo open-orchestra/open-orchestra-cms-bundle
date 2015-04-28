@@ -10,6 +10,7 @@ showNode = (url, language, version)->
       view = new NodeView(
         node: node
         extendView : [ 'commonPage' ]
+        domContainer: $('#main')
       )
       appRouter.setCurrentMainView(view)
       return

@@ -1,8 +1,10 @@
-<% if (typeof node_published != 'undefined') { %>
-    <li class="ui-model-block">
+<% if (typeof published != 'undefined') { %>
+    <li class="ui-model-block"
+        data-delete-confirm-question="{{ 'open_orchestra_backoffice.block.delete_question'|trans }}"
+        data-delete-confirm-explanation="{{ 'open_orchestra_backoffice.block.delete_explanation'|trans }}">
         <div class="toolbar-container">
             <div class="toolbar">
-            <% if (node_published) { %>
+            <% if (published) { %>
                 <span class="tool block-title bg-color-blueDark"><%= block.get('ui_model').label %></span>
                 <% if ('generate' == block.get('method')) { %>
                 <span class="tool block-param bg-color-blueDark">

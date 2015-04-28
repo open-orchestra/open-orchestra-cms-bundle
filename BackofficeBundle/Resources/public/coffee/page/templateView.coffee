@@ -1,10 +1,9 @@
 TemplateView = OrchestraView.extend(
-  el: '#content'
-
   initialize: (options) ->
     @options = @reduceOption(options, [
       'template'
       'extendView'
+      'domContainer'
     ])
     @options.pageConfiguration = @options.template
     @loadTemplates [
@@ -13,26 +12,15 @@ TemplateView = OrchestraView.extend(
     return
 
   render: ->
-    $(@el).html @renderTemplate('templateView',
+    @setElement @renderTemplate('templateView',
       template: @options.template
     )
+    @options.domContainer.remove('#content')
+    @options.domContainer.append @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addConfigurationButton()
     for area of @options.template.get('areas')
       @addAreaToView(@options.template.get('areas')[area])
     return
 
-  addAreaToView: (area) ->
-    domContainer = @$el.find('div[role="container"] > div > .ui-model-areas')
-    areaElement = new Area
-    areaElement.set area
-    areaView = new AreaView(
-      area: areaElement,
-      domContainer: domContainer
-      viewContainer: @
-    )
-    domContainer.addClass (if @options.template.get("bo_direction") is "h" then "bo-row" else "bo-column")
-    $(".ui-model-areas", @$el).each ->
-      refreshUl $(this)
-    return
 )
