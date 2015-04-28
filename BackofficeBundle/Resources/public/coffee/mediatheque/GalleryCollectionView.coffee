@@ -3,7 +3,7 @@ GalleryCollectionView = OrchestraView.extend(
     'click a.ajax-add': 'clickAdd'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'medias'
       'domContainer'
       'title'
@@ -36,10 +36,10 @@ GalleryCollectionView = OrchestraView.extend(
   addElementToView: (mediaData) ->
     mediaModel = new GalleryModel
     mediaModel.set mediaData
-    new GalleryView($.extend({}, @options,
+    new GalleryView(@addOption(
       media: mediaModel
-      domContainer: this.$el.find('.superbox'))
-    )
+      domContainer: this.$el.find('.superbox')
+    ))
     return
 
   clickAdd: (event) ->
@@ -52,8 +52,9 @@ GalleryCollectionView = OrchestraView.extend(
         url: options.medias.get('links')._self_add
         method: 'GET'
         success: (response) ->
-          new FullPageFormView($.extend({}, options,
-            html: response))
+          new FullPageFormView(@addOption(
+            html: response
+          ))
 
   addConfigurationButton: ->
     if @options.medias.get('links')._self_folder != undefined

@@ -5,7 +5,7 @@ FullPageFormView = OrchestraView.extend(
     @options = options
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     @completeOptions(@options.element) if @options.element != undefined
-    @events = {}
+    @events = @events || {}
     @loadTemplates [
       'fullPageFormView',
       'elementTitle'

@@ -4,12 +4,12 @@ BlockView = OrchestraView.extend(
     'click i.block-remove': 'confirmRemoveBlock'
 
   initialize: (options) ->
-    @options = @reduce(options, [
+    @options = @reduceOption(options, [
       'block'
       'area'
       'domContainer'
       'viewContainer'
-      'node_published'
+      'published'
     ])
     @loadTemplates [
         "blockView"
@@ -19,10 +19,10 @@ BlockView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('blockView',
       block: @options.block
-      node_published: @options.node_published
+      published: @options.published
     )
     @options.domContainer.append @$el
-    this
+    return
 
   paramBlock: (event) ->
     $('.modal-title').text 'Please wait ...'
@@ -34,8 +34,8 @@ BlockView = OrchestraView.extend(
     if @options.area.get("blocks").length > 0
       smartConfirm(
         'fa-trash-o',
-        @options.viewContainer.$el.data('delete-confirm-question-block'),
-        @options.viewContainer.$el.data('delete-confirm-explanation-block'),
+        @$el.data('delete-confirm-question'),
+        @$el.data('delete-confirm-explanation'),
         callBackParams:
           blockView: @
         yesCallback: (params) ->
