@@ -1,7 +1,7 @@
 parameters:
 
 #--[CUSTOM FIELDS]--------------#
-    open_orchestra_backoffice.custom_types:
+    open_orchestra_backoffice.field_types:
         text:
             label: text
             options:
