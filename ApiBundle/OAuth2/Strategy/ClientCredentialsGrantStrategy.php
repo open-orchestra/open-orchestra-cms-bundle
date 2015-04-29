@@ -40,7 +40,8 @@ class ClientCredentialsGrantStrategy extends AbstractStrategy
 
         if (is_null($accessToken) || $accessToken->isBlocked() || $accessToken->isExpired()) {
             // Create/Validate AccessToken
-            $accessToken = AccessToken::create(null, $client);
+            $tokenClass = $this->tokenClass;
+            $accessToken = $tokenClass::create(null, $client);
             if (!$accessToken->isValid($this->validator)) {
                 return Response::create($this->serializer->serialize($accessToken->getViolations(), 'json'), 200, array())->prepare($request);
             }

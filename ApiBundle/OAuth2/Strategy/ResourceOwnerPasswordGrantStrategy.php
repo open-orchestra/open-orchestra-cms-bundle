@@ -32,6 +32,7 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
      * @param Serializer            $serializer
      * @param LegacyValidator       $validator
      * @param string                $tokenExpiration
+     * @param string                $tokenClass
      */
     public function __construct(
         ApiClientRepository $apiClientRepository,
@@ -40,10 +41,11 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
         EncoderFactory $encoderFactory,
         Serializer $serializer,
         LegacyValidator $validator,
-        $tokenExpiration
+        $tokenExpiration,
+        $tokenClass
         )
     {
-        parent::__construct($apiClientRepository, $accessTokenRepository, $serializer, $validator, $tokenExpiration);
+        parent::__construct($apiClientRepository, $accessTokenRepository, $serializer, $validator, $tokenExpiration, $tokenClass);
         $this->encoderFactory = $encoderFactory;
         $this->userRepository = $userRepository;
     }
@@ -71,7 +73,8 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
         $user   = $this->getUser($request);
 
         // Create/Validate AccessToken
-        $accessToken = AccessToken::create($user, $client);
+        $tokenClass = $this->tokenClass;
+        $accessToken = $tokenClass::create($user, $client);
         $accessToken->setExpiredAt(new \DateTime($this->tokenExpiration));
         if (!$accessToken->isValid($this->validator)) {
             return Response::create($this->serializer->serialize($accessToken->getViolations(), 'json'), 200, array())->prepare($request);
