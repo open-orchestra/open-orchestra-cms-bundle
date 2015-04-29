@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 abstract class AbstractTransformer implements TransformerInterface
 {
+    /**
+     * @var TransformerManager
+     */
     protected $context;
 
     /**
@@ -48,6 +51,16 @@ abstract class AbstractTransformer implements TransformerInterface
     protected function generateRoute($name, $parameter = array())
     {
         return $this->getRouter()->generate($name, $parameter, UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    /**
+     * @param string $group
+     *
+     * @return bool
+     */
+    protected function hasGroup($group)
+    {
+        return $this->context->getGroupContext()->hasGroup($group);
     }
 
     /**
