@@ -49,7 +49,7 @@ PO.formPrototype:: =
       @addButton.on "click", (e) ->
         e.preventDefault()
         callbackAdd  = self.collectionHolder.data("prototype-callback-add")
-        if callbackAdd is undefined or eval(callbackAdd + "()")
+        if callbackAdd is undefined or eval(callbackAdd)
           self.addPrototype()
           self.clickLastPrototype()
         return
