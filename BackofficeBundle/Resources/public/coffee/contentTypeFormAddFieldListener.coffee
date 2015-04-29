@@ -9,4 +9,3 @@ checkContentTypeId = ->
     $(form).prepend(errorMessage);
     return false
   return true
-  
