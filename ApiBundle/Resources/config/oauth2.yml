@@ -14,6 +14,7 @@ services:
             - @serializer
             - @validator
             - '+1month'
+            - %open_orchestra_user.document.access_token.class%
         tags:
             - { name: open_orchestra_api.oauth2.strategy }
     open_orchestra_api.oauth2.strategy.resource_owner_password_grant:
@@ -26,5 +27,6 @@ services:
             - @serializer
             - @validator
             - '+1month'
+            - %open_orchestra_user.document.access_token.class%
         tags:
             - { name: open_orchestra_api.oauth2.strategy }

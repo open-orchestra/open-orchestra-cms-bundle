@@ -20,6 +20,7 @@ abstract class AbstractStrategy implements StrategyInterface
     protected $accessTokenRepository;
     protected $apiClientRepository;
     protected $tokenExpiration;
+    protected $tokenClass;
     protected $serializer;
     protected $validator;
 
@@ -29,19 +30,23 @@ abstract class AbstractStrategy implements StrategyInterface
      * @param Serializer            $serializer
      * @param LegacyValidator       $validator
      * @param string                $tokenExpiration
+     * @param string                $tokenClass
      */
     public function __construct(
         ApiClientRepository $apiClientRepository,
         AccessTokenRepository $accessTokenRepository,
         Serializer $serializer,
         LegacyValidator $validator,
-        $tokenExpiration)
+        $tokenExpiration,
+        $tokenClass
+    )
     {
         $this->apiClientRepository = $apiClientRepository;
-        $this->serializer = $serializer;
-        $this->validator = $validator;
         $this->accessTokenRepository = $accessTokenRepository;
         $this->tokenExpiration = $tokenExpiration;
+        $this->tokenClass = $tokenClass;
+        $this->serializer = $serializer;
+        $this->validator = $validator;
     }
 
     /**
