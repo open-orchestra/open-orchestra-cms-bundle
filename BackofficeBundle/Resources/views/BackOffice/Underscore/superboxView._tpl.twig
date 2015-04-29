@@ -13,7 +13,9 @@
     </ul>
 
     <div class="tab-content">
-        {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_crop._tpl.twig' %}
+        <% if (media.get('mime_type').indexOf('image') > -1) { %>
+            {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_crop._tpl.twig' %}
+        <% } %>
         {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_meta._tpl.twig' %}
     </div>
 
