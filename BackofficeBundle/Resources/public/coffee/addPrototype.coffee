@@ -45,12 +45,13 @@ PO.formPrototype:: =
     unless @addButtonExist
       @collectionHolder.append @addButtonContainer
       @addButtonExist = not @addButtonExist
-
       # add event in add button
       @addButton.on "click", (e) ->
         e.preventDefault()
-        self.addPrototype()
-        self.clickLastPrototype()
+        callbackAdd  = self.collectionHolder.data("prototype-callback-add")
+        if callbackAdd is undefined or eval(callbackAdd + "()")
+          self.addPrototype()
+          self.clickLastPrototype()
         return
 
     return
