@@ -52,7 +52,6 @@ class ExtractReferenceFromNodeStrategyTest extends \PHPUnit_Framework_TestCase
         return array(
             array('OpenOrchestra\ModelInterface\Model\NodeInterface', true),
             array('OpenOrchestra\ModelInterface\Model\ContentInterface', false),
-            array('OpenOrchestra\ModelInterface\Model\ContentTypeInterface', false),
             array('OpenOrchestra\ModelInterface\Model\StatusableInterface', false),
         );
     }

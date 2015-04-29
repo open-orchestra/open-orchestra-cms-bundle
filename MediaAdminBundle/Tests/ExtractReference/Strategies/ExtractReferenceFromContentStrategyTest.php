@@ -60,7 +60,6 @@ class ExtractReferenceFromContentStrategyTest extends \PHPUnit_Framework_TestCas
         return array(
             array('OpenOrchestra\ModelInterface\Model\NodeInterface', false),
             array('OpenOrchestra\ModelInterface\Model\ContentInterface', true),
-            array('OpenOrchestra\ModelInterface\Model\ContentTypeInterface', false),
             array('OpenOrchestra\ModelInterface\Model\StatusableInterface', false),
         );
     }
