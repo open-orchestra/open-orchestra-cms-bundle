@@ -3,54 +3,20 @@
 <div>
     <ul class="nav nav-tabs" role="tablist" id="superboxTab">
         <li class="active">
-            <a href="#tab-crop" role="tab" data-toggle="tab">{{ 'open_orchestra_backoffice.media.crop'|trans }}</a>
-        </li>
-        <li>
+        <% if (media.get('mime_type').indexOf('image') > -1) { %>
+                <a href="#tab-crop" role="tab" data-toggle="tab">{{ 'open_orchestra_backoffice.media.crop'|trans }}</a>
+            </li>
+            <li>
+        <% } %>
             <a href="#tab-meta" role="tab" data-toggle="tab">{{ 'open_orchestra_backoffice.media.meta'|trans }}</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="tab-crop">
-
-            <!-- FORMAT SELECTOR  -->
-            <div id ="selector-loader-container" class="form-group form-horizontal">
-                <label class="control-label col-lg-3" /><div id="selector-loader" />
-            </div>
-            <div class="media_crop_form"></div>
-
-            <!-- CROPPED VERSION IN USAGE -->
-            <div class="form-group form-horizontal">
-                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.media.current_preview'|trans }}</label>
-                <div class="col-lg-9 media_crop_preview" /><div id="image-loader" style="display:none;"/>
-            </div>
-            <div class="form-group form-horizontal">
-                <label class="control-label col-lg-3" />
-                <div class="col-lg-9 media_format_actions" style="display:none;">
-                    <a href="#;" class="btn btn-success" id="crop_action_button"><i class="fa fa-crop"></i> {{ 'open_orchestra_backoffice.form.media.manual_crop'|trans }}</a>
-                    <a href="#;" class="btn btn-success" id="upload_action_button"><i class="fa fa-upload"></i> {{ 'open_orchestra_backoffice.form.media.alternative_file'|trans }}</a>
-                </div>
-            </div>
-
-            <!-- CROP TOOL -->
-            <div class="form-group form-horizontal" id="crop-group" style="display:none">
-                <label class="control-label col-lg-3">{{ 'open_orchestra_backoffice.form.media.manual_crop'|trans }}</label>
-                <div class="col-lg-9" id="original-image">
-                    <img src="<%= media.get('displayed_image') %>" class="superbox-current-img"/><br />
-                    <a href="#;" class="btn btn-primary" id="crop_button"> {{ 'open_orchestra_backoffice.form.media.crop'|trans }}</a>
-                </div>
-            </div>
-
-            <!-- UPLOAD ALTERNATIVE CROPPED VERSION -->
-            <div id ="alternative-loader-container" class="form-group form-horizontal" style="display:none;">
-                <label class="control-label col-lg-3" /><div id="alternative-loader" />
-            </div>
-            <div class="media-override-format-form" style="display:none"></div>
-
-        </div>
-        <div class="tab-pane" id="tab-meta">
-            <div class="media_meta_form"></div>
-        </div>
+        <% if (media.get('mime_type').indexOf('image') > -1) { %>
+            {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_crop._tpl.twig' %}
+        <% } %>
+        {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_meta._tpl.twig' %}
     </div>
 
     {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
