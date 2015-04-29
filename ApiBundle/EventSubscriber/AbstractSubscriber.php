@@ -59,14 +59,6 @@ abstract class AbstractSubscriber
      */
     protected function eventElligible(KernelEvent $event)
     {
-        if (! $event->isMasterRequest()) {
-            return false;
-        }
-
-        if (!$this->isApiRequest($event->getRequest())) {
-            return false;
-        }
-
-        return true;
+        return $event->isMasterRequest() && $this->isApiRequest($event->getRequest());
     }
 }
