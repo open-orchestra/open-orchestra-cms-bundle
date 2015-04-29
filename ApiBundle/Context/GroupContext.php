@@ -4,6 +4,8 @@ namespace OpenOrchestra\ApiBundle\Context;
 
 /**
  * Class GroupContext
+ *
+ * This class is used to store the groups linked to a controller action through the whole request process
  */
 class GroupContext
 {
