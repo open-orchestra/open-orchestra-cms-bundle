@@ -38,6 +38,19 @@ class GroupContextTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $groupName
+     *
+     * @dataProvider provideGroupName
+     */
+    public function testAddGroup($groupName)
+    {
+        $this->context->addGroup($groupName);
+
+        $this->assertTrue($this->context->hasGroup($groupName));
+        $this->assertFalse($this->context->hasGroup("foo"));
+    }
+
+    /**
      * @return array
      */
     public function provideGroupName()

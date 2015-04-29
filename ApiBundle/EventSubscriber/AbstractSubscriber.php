@@ -1,12 +1,11 @@
 <?php
 
 namespace OpenOrchestra\ApiBundle\EventSubscriber;
+
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
-
 
 /**
  * Class AbstractSubscriber

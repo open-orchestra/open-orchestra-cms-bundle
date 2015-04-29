@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Context\GroupContext;
 use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
 use OpenOrchestra\ApiBundle\Facade\StatusFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -62,7 +63,7 @@ class StatusTransformer extends AbstractTransformer
             }
         }
 
-        if (!$this->hasGroup('GROUP_HIDE_ROLES')) {
+        if (!$this->hasGroup(GroupContext::G_HIDE_ROLES)) {
             $toRoles = array();
             foreach ($mixed->getToRoles() as $toRole) {
                 $toRoles[] = $toRole->getName();
