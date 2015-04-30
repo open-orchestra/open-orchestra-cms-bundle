@@ -3,28 +3,28 @@ parameters:
 #--[CUSTOM FIELDS]--------------#
     open_orchestra_backoffice.field_types:
         text:
-            label: text
+            label: open_orchestra_backoffice.form.field_type.custom_type.text
             options:
                 max_length:
                     default_value: 25
                 required:
                     default_value: false
         textarea:
-            label: textarea
+            label: open_orchestra_backoffice.form.field_type.custom_type.textarea
             options:
                 max_length:
                     default_value: 100
                 required:
                     default_value: false
         tinymce:
-            label: Wysiwyg
+            label: open_orchestra_backoffice.form.field_type.custom_type.wysiwyg
             options:
                 max_length:
                     default_value: 500
                 required:
                     default_value: false
         integer:
-            label: integer
+            label: open_orchestra_backoffice.form.field_type.custom_type.integer
             options:
                 rounding_mode:
                     default_value: 0
@@ -33,14 +33,14 @@ parameters:
                 required:
                     default_value: false
         email:
-            label: email
+            label: open_orchestra_backoffice.form.field_type.custom_type.email
             options:
                 max_length:
                     default_value: 50
                 required:
                     default_value: false
         orchestra_media:
-            label: Media
+            label: open_orchestra_backoffice.form.field_type.custom_type.media
             options:
                 required:
                     default_value: false

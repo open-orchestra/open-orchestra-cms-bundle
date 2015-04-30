@@ -46,6 +46,13 @@ open_orchestra_backoffice:
             type: Type
             options: Existing field
             error_content_id : Required content id field
+            custom_type:
+                text: Text line
+                textarea: Text area
+                wysiwyg: Rich text
+                integer: Integer
+                email: Email address
+                media: Media
         website:
             success: The website has been modified
             creation: The website has been created

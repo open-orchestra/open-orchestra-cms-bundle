@@ -120,7 +120,6 @@ class OpenOrchestraBackofficeExtension extends Extension
             $container->getParameter('open_orchestra_backoffice.field_types'),
             $appFieldTypes
         );
-        ksort($fieldTypes);
 
         $container->setParameter('open_orchestra_backoffice.field_types', $fieldTypes);
     }

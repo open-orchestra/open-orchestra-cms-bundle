@@ -46,6 +46,13 @@ open_orchestra_backoffice:
             type: Type
             options: Champ existant
             error_content_id : Champ id du type de contenu obligatoire
+            custom_type:
+                text: Ligne de texte
+                textarea: Zone de texte
+                wysiwyg: Texte riche
+                integer: Entier
+                email: Adresse email
+                media: Média
         website:
             success: Le site a été modifié
             creation: Le site a été créé

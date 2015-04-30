@@ -115,6 +115,7 @@ class FieldTypeType extends AbstractType
         foreach ($this->fieldOptions as $key => $option) {
             $choices[$key] = $this->translator->trans($option['label']);
         }
+        asort($choices);
 
         return $choices;
     }
