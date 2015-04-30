@@ -69,7 +69,7 @@ AreaView = OrchestraView.extend(
     @subBlocks.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
   sendBlockData: (event)->
-    event.stopImmediatePropagation()
+    event.stopImmediatePropagation() if event.stopImmediatePropagation
     ul = $(event.target)
     refreshUl ul
     blocks = ul.children()

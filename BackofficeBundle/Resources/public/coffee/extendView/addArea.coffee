@@ -7,14 +7,12 @@ extendView['addArea'] = {
     refreshUl @areaContainer
 
   addAreaToView: (area) ->
-    status = @options.configuration.attributes.status
-    published = if typeof status != 'undefined' then status.published else false
     areaElement = new Area
     areaElement.set area
     areaView = new AreaView(
       area: areaElement
       configuration: areaElement
-      published: published
+      published: @options.published
       domContainer: @areaContainer
     )
     @areaContainer.addClass (if @options.configuration.get("bo_direction") is "h" then "bo-row" else "bo-column")

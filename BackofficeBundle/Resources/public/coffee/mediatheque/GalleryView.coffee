@@ -1,4 +1,8 @@
 GalleryView = OrchestraView.extend(
+  events:
+    'click span.media-remove': 'confirmRemoveMedia'
+    'click span.media-select': 'mediaSelect'
+
   initialize: (options) ->
     @events = @events || {}
     @options = @reduceOption(options, [
@@ -9,7 +13,6 @@ GalleryView = OrchestraView.extend(
     if !@options.modal
       @events['click .superbox-img'] = 'superboxOpen'
       if @options.media.get('is_deletable')
-        @events['click span.media-remove'] = 'confirmRemoveMedia'
         @mediaClass = "media-remove"
         @mediaLogo = "fa-trash-o"
     else
@@ -53,4 +56,12 @@ GalleryView = OrchestraView.extend(
       method: 'Delete'
       success: (response) ->
         target.parents(".superbox-list").remove()
+
+  mediaSelect : (event) ->
+    event.preventDefault()
+    mediaModalContainer = @$el.parents(".mediaModalContainer")
+    intputName = mediaModalContainer.data('input')
+    $('#' + intputName).val @options.media.id
+    $('#previewImage_' + intputName).attr 'src', @$el.find('.superbox-img').attr('src')
+    mediaModalContainer.find('.mediaModalClose').click()
 )
