@@ -41,9 +41,11 @@ class ContentTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $contentTypeIdName = "contentTypeId";
+
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
-            ->add('contentTypeId', 'text', array(
+            ->add($contentTypeIdName, 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
                 'attr' => array(
                     'class' => 'generate-id-dest',
@@ -66,6 +68,8 @@ class ContentTypeType extends AbstractType
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_type.add'),
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_type.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_type.delete'),
+                    'data-prototype-callback-add' => "checkContentTypeId('#". $this->getName() . "_". $contentTypeIdName . "')",
+                    'data-prototype-callback-error-message' => $this->translator->trans('open_orchestra_backoffice.form.field_type.error_content_id')
                 )
             ));
 

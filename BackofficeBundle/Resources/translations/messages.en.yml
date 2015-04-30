@@ -45,6 +45,7 @@ open_orchestra_backoffice:
             searchable: Searchable
             type: Type
             options: Existing field
+            error_content_id : Required content id field
         website:
             success: The website has been modified
             creation: The website has been created
