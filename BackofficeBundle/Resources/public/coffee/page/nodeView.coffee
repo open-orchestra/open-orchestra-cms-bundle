@@ -26,6 +26,7 @@ NodeView = OrchestraView.extend(
       path : 'showNodeWithLanguage'
       self_duplicate: @options.node.get('links')._self_duplicate
     @options.configuration = @options.node
+    @options.published = @options.node.attributes.status.published
     @loadTemplates [
       "nodeView"
       "blockView"

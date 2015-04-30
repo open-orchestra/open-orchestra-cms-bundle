@@ -1,23 +1,21 @@
 <div class="figure superbox-list">
-<% if (media.get('displayed_image') != 'undefined') { %>
     <img
-        src="<%= media.get('displayed_image') %>"
-        data-img="<%= media.get('displayed_image') %>"
         class="superbox-img selectable"
-        data-id="<%= media.get('id') %>"
         title="<%= media.get('name') %>"
         alt="<%= media.get('name') %>"
         height="117px"
-        />
+<% if (media.get('displayed_image') != 'undefined') { %>
+        src="<%= media.get('displayed_image') %>"
 <% } else if (media.get('mime_type') == 'application/pdf') { %>
     {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-pdf.png' %}
-        <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
+        src="{{ asset_url }}"
     {% endimage %}
 <% } else { %>
     {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-content.png' %}
-        <img src="{{ asset_url }}" class="superbox-img selectable" data-id="<%= media.get('id') %>" title="<%= media.get('name') %>"/>
+        src="{{ asset_url }}"
     {% endimage %}
 <% } %>
+    />
     <div class="caption" style="display: none">
         <span class='title'> <%= media.get('name') %> </span>
         <% if (mediaClass != 'undefined' && mediaLogo != undefined) { %>
