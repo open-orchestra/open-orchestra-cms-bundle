@@ -103,14 +103,12 @@ class NodeManager
      */
     protected function getInitialStatus(NodeInterface $node)
     {
-        if (false !== array_search(NodeInterface::TRANSVERSE_NODE_ID, explode('/', $node->getPath()))) {
+        if ($node->getNodeType() == NodeInterface::TYPE_GENERAL) {
             return $this->statusRepository->findOneByEditable();
         }
 
         return null;
     }
-
-
 
     /**
      * @param mixed $nodes
@@ -204,6 +202,7 @@ class NodeManager
         $node->setParentId($parentId);
         $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId);
         $node->setStatus($this->getInitialStatus($parentNode));
+        $node->setNodeType($parentNode->getNodeType());
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
         if ($site) {

@@ -131,7 +131,7 @@ class NodeTransformer extends AbstractTransformer
             }
         }
 
-        if (false !== array_search(NodeInterface::TRANSVERSE_NODE_ID, explode('/', $mixed->getPath()))) {
+        if (NodeInterface::TYPE_GENERAL !== $mixed->getNodeType()) {
             $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_list_status_node', array(
                 'nodeMongoId' => $mixed->getId()
             )));
