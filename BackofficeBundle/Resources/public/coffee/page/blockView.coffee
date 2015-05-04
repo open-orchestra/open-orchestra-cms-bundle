@@ -12,12 +12,12 @@ BlockView = OrchestraView.extend(
       'published'
     ])
     @loadTemplates [
-        "blockView"
+        "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('blockView',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView',
       block: @options.block
       published: @options.published
     )

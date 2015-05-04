@@ -3,8 +3,8 @@ SmartConfirmView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      "smartConfirmButton"
-      "smartConfirmTitle"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/smartConfirmButton"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/smartConfirmTitle"
     ]
     return
 
@@ -12,9 +12,9 @@ SmartConfirmView = OrchestraView.extend(
     options = @options
     buttons = [];
     for i of options.buttons
-      options.buttons[i].html = @renderTemplate('smartConfirmButton', confirm:  options.buttons[i].text)
+      options.buttons[i].html = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/smartConfirmButton', confirm:  options.buttons[i].text)
       buttons.unshift options.buttons[i].html
-    title = @renderTemplate('smartConfirmTitle',
+    title = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/smartConfirmTitle',
       titleColorized: options.titleColorized
       logo: options.logo
     )

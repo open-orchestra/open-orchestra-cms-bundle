@@ -19,12 +19,12 @@ GalleryView = OrchestraView.extend(
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
     @loadTemplates [
-      'galleryView'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/galleryView'
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('galleryView',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/galleryView',
       media: @options.media
       mediaClass: @mediaClass
       mediaLogo: @mediaLogo

@@ -7,12 +7,12 @@ VersionView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      "widgetVersion"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersion"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('widgetVersion',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersion',
       element: @options.element
       version: @options.currentVersion.version
     )

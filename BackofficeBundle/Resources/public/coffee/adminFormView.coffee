@@ -10,7 +10,7 @@ adminFormView = OrchestraView.extend(
     @formEvent = 'submit'
     @formClass = 'form'
     @loadTemplates [
-        'deleteButton'
+        'OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton'
     ]
     $('.modal-footer', @el).addClass("hidden-info")
     return
@@ -34,7 +34,7 @@ adminFormView = OrchestraView.extend(
     $('.modal-body', @el).html options.html
     $('.modal-title', @el).html $('#dynamic-modal-title').html()
     if @deleteButton && $('form.form-disabled', @el).length == 0
-      $('.modal-footer', @el).html @renderTemplate('deleteButton', @options)
+      $('.modal-footer', @el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', @options)
       $('.modal-footer', @el).removeClass("hidden-info")
       $('.modal-footer', @el).prepend($('.submit_form', @$el))
       @formEvent = 'click'

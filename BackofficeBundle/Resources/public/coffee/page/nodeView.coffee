@@ -28,20 +28,20 @@ NodeView = OrchestraView.extend(
     @options.configuration = @options.node
     @options.published = @options.node.attributes.status.published
     @loadTemplates [
-      "nodeView"
-      "blockView"
-      "elementTitle"
-      "rightPanel"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('nodeView',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
       node: @options.node
     )
     @options.domContainer.find('#content').remove()
     @options.domContainer.append @$el
-    $('.js-widget-title', @$el).html @renderTemplate('elementTitle',
+    $('.js-widget-title', @$el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
       element: @options.node
     )
     @addAreasToView(@options.node.get('areas'))
@@ -66,10 +66,10 @@ NodeView = OrchestraView.extend(
         for i of response.blocks
           blockElement = new Block()
           blockElement.set response.blocks[i]
-          response.blocks[i] = viewContext.renderTemplate('blockView', 
+          response.blocks[i] = viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView', 
             block : blockElement
           )
-        blockpanel.html viewContext.renderTemplate('rightPanel', response)
+        blockpanel.html viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel', response)
         Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
         $(window).resize ->
           Backbone.Wreqr.radio.commands.execute 'viewport', 'init'

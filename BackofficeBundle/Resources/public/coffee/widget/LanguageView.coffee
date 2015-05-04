@@ -5,12 +5,12 @@ LanguageView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      "widgetLanguage"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetLanguage"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('widgetLanguage',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetLanguage',
       language: @options.language
       currentLanguage: @options.currentLanguage.language
     )

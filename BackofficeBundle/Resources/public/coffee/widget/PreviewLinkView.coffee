@@ -2,12 +2,12 @@ PreviewLinkView = OrchestraView.extend(
   initialize: (options) ->
     @previewLinks = options.previewLinks
     @loadTemplates [
-      "widgetPreviewLink"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPreviewLink"
     ]
     return
 
   render: ->
-    widget = @renderTemplate('widgetPreviewLink',
+    widget = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPreviewLink',
       previewLinks: @previewLinks
     )
     addCustomJarvisWidget(widget)

@@ -11,12 +11,12 @@ GalleryCollectionView = OrchestraView.extend(
       'modal'
     ])
     @loadTemplates [
-      "galleryCollectionView",
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/galleryCollectionView",
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('galleryCollectionView'
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/galleryCollectionView'
       links: @options.medias.get('links')
     )
     @options.domContainer.html @$el

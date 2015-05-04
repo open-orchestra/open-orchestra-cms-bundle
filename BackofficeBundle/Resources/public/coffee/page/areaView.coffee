@@ -14,12 +14,12 @@ AreaView = OrchestraView.extend(
       'domContainer'
     ])
     @loadTemplates [
-      "areaView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('areaView',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView',
       area: @options.area
       published: @options.published
     )

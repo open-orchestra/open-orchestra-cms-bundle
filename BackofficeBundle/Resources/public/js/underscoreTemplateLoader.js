@@ -10,12 +10,16 @@
       }
       if (!this.templates[language][templateName]) {
         var self = this;
-        filename = appRouter.generateUrl('loadUnderscoreTemplate', {'language': language, 'templateId': templateName})
-        jQuery.get(filename, function(tpl) {
-          self.addTemplate(templateName, language, tpl);
-          self.saveLocalTemplates();
-          view.onTemplateLoaded(templateName, tpl);
-        });
+        filename = appRouter.generateUrl('loadUnderscoreTemplate');
+        jQuery.get(
+          filename,
+          {'language': language, 'templateId': templateName},
+          function(tpl) {
+            self.addTemplate(templateName, language, tpl);
+            self.saveLocalTemplates();
+            view.onTemplateLoaded(templateName, tpl);
+          }
+        );
       }
       else {
         view.onTemplateLoaded(templateName, this.templates[language][templateName]);
