@@ -5,12 +5,12 @@ DuplicateView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      "widgetDuplicate"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetDuplicate"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('widgetDuplicate',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetDuplicate',
       text: @options.domContainer.data('text')
     )
     @options.domContainer.append @$el

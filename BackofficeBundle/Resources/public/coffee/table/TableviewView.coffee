@@ -7,18 +7,18 @@ TableviewView = OrchestraView.extend(
     @options = options
     _.bindAll this, "render"
     @loadTemplates [
-      'tableviewView',
-      'tableviewActions'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions'
     ]
     return
 
   render: ->
     @setElement $('<tr />')
     for displayedElement in @options.displayedElements
-      @$el.append @renderTemplate('tableviewView'
+      @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView'
         value: @options.element.get(displayedElement)
       )
-    @$el.append @renderTemplate('tableviewActions',
+    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions',
       deleted: @options.element.get('deleted')
       links: @options.element.get('links')
     )

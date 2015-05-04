@@ -7,17 +7,17 @@ FullPageFormView = OrchestraView.extend(
     @completeOptions(@options.element) if @options.element != undefined
     @events = @events || {}
     @loadTemplates [
-      'fullPageFormView',
-      'elementTitle'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle'
     ]
     return
 
   render: ->
     if @options.multiVersion
-      @options.title = @renderTemplate('elementTitle',
+      @options.title = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
         element: @options.element
       )
-    $(@el).html(@renderTemplate('fullPageFormView', @options))
+    $(@el).html(@renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView', @options))
     $('.js-widget-title', @$el).html @options.title
     @addEventOnForm()
     Backbone.Wreqr.radio.commands.execute 'widget', 'loaded', @$el

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
 /**
@@ -11,23 +12,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 class UnderscoreTemplateController extends Controller
 {
     /**
-     * @param string     $language
-     * @param string     $templateId
+     * @param Request $request
      *
-     * @Config\Route("/underscore-template/show/{language}/{templateId}", name="open_orchestra_backoffice_underscore_template_show")
+     * @Config\Route("/underscore-template/show", name="open_orchestra_backoffice_underscore_template_show")
      * @Config\Method({"GET"})
      *
      * @return Response
      */
-    public function showAction($language, $templateId)
+    public function showAction(Request $request)
     {
-        $path = 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/' . $templateId . '._tpl.twig';
-        if (false !== strpos($templateId, ':')) {
-            $path = 'OpenOrchestraBackofficeBundle:BackOffice/Underscore/' . $templateId . '._tpl.twig';
-        }
         return $this->render(
-            $path,
-            array('language' => $language)
+            $request->get('templateId') . '._tpl.twig',
+            array('language' => $request->get('language'))
         );
     }
 }

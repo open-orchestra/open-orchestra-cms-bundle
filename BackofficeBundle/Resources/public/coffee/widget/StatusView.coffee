@@ -5,12 +5,12 @@ StatusView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      "widgetStatus"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetStatus"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('widgetStatus',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetStatus',
       currentStatus: @options.currentStatus.status
       statuses: @options.statuses
       statusChangeLink: @options.currentStatus.self_status_change

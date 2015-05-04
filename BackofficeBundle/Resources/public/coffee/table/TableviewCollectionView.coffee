@@ -13,7 +13,7 @@ TableviewCollectionView = OrchestraView.extend(
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
     _.bindAll this, "render"
     @loadTemplates [
-      'tableviewCollectionView'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView'
     ]
     return
 
@@ -31,7 +31,7 @@ TableviewCollectionView = OrchestraView.extend(
         entityType: entityType
         displayedElements: @options.displayedElements
       success: (response) ->
-        viewContext.setElement viewContext.renderTemplate('tableviewCollectionView',
+        viewContext.setElement viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView',
           displayedElements: response.displayed_elements
           links: viewContext.options.elements.get('links')
         )

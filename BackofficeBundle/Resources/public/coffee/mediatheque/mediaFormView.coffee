@@ -3,12 +3,12 @@ mediaFormView = OrchestraView.extend(
     @html = options.html
     @title = options.title
     @loadTemplates [
-      'fullPageFormView'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView'
     ]
     return
 
   render: ->
-    $(@el).html @renderTemplate('fullPageFormView',
+    $(@el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
       html: @html
       listUrl: @listUrl
     )

@@ -9,12 +9,12 @@ TemplateView = OrchestraView.extend(
     @options.configuration = @options.template
     @options.published = false
     @loadTemplates [
-      "templateView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateView"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('templateView',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateView',
       template: @options.template
     )
     @options.domContainer.find('#content').remove()
