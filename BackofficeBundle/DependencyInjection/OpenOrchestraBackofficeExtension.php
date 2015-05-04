@@ -65,7 +65,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('validator.yml');
 
         if (isset($config['field_types'])) {
-            $this->addAppFieldTypes($config['field_types'], $container);
+            $this->addAppllicationFieldTypes($config['field_types'], $container);
         }
 
         if ('test' == $container->getParameter('kernel.environment')) {
@@ -114,7 +114,7 @@ class OpenOrchestraBackofficeExtension extends Extension
      * @param array            $appFieldTypes
      * @param ContainerBuilder $container
      */
-    protected function addAppFieldTypes($appFieldTypes, ContainerBuilder $container)
+    protected function addAppllicationFieldTypes($appFieldTypes, ContainerBuilder $container)
     {
         $fieldTypes = array_merge(
             $container->getParameter('open_orchestra_backoffice.field_types'),
