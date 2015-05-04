@@ -123,7 +123,7 @@ services:
         arguments:
             - @translator
             - @open_orchestra_backoffice.listener.translate_value_initializer
-            - %open_orchestra_backoffice.custom_types%
+            - %open_orchestra_backoffice.field_types%
             - %open_orchestra_model.document.field_option.class%
             - %open_orchestra_model.document.field_type.class%
         tags:

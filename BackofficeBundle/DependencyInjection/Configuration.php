@@ -34,6 +34,10 @@ class Configuration implements ConfigurationInterface
                 ->info('Add the global block attributes')
                 ->prototype('scalar')->end()
             ->end()
+            ->arrayNode('field_types')
+                ->info('Add the content attributes for content types')
+                ->prototype('variable')->end()
+            ->end()
         ->end();
 
         return $treeBuilder;

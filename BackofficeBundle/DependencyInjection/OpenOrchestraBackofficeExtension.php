@@ -64,6 +64,10 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('voter.yml');
         $loader->load('validator.yml');
 
+        if (isset($config['field_types'])) {
+            $this->addAppllicationFieldTypes($config['field_types'], $container);
+        }
+
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }
@@ -102,5 +106,21 @@ class OpenOrchestraBackofficeExtension extends Extension
         }
         $blocks = array_merge($blocksAlreadySet, $blocks);
         $container->setParameter('open_orchestra.blocks', $blocks);
+    }
+
+    /**
+     * Merge app conf with bundle conf
+     * 
+     * @param array            $appFieldTypes
+     * @param ContainerBuilder $container
+     */
+    protected function addAppllicationFieldTypes($appFieldTypes, ContainerBuilder $container)
+    {
+        $fieldTypes = array_merge(
+            $container->getParameter('open_orchestra_backoffice.field_types'),
+            $appFieldTypes
+        );
+
+        $container->setParameter('open_orchestra_backoffice.field_types', $fieldTypes);
     }
 }
