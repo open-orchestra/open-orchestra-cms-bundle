@@ -131,13 +131,15 @@ class NodeTransformer extends AbstractTransformer
             }
         }
 
-        $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_list_status_node', array(
-            'nodeMongoId' => $mixed->getId()
-        )));
+        if (false !== array_search(NodeInterface::TRANSVERSE_NODE_ID, explode('/', $mixed->getPath()))) {
+            $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_list_status_node', array(
+                'nodeMongoId' => $mixed->getId()
+            )));
 
-        $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
-            'nodeMongoId' => $mixed->getId()
-        )));
+            $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
+                'nodeMongoId' => $mixed->getId()
+            )));
+        }
 
         $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list', array(
             'language' => $mixed->getLanguage(),

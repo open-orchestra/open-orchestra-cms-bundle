@@ -58,8 +58,7 @@ class NodeController extends AbstractAdminController
      */
     public function newAction(Request $request, $parentId)
     {
-        $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode();
-        $node->setParentId($parentId);
+        $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode($parentId);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
