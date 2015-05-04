@@ -22,6 +22,6 @@ abstract class AbstractUserTypeTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
         Phake::when($this->builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($this->builder);
 
-        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
     }
 }
