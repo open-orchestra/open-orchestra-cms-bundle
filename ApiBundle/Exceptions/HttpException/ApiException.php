@@ -3,11 +3,12 @@
 namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 
 use OpenOrchestra\ApiBundle\Exceptions\ApiException as BaseApiAxception;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Class ApiException
  */
-abstract class ApiException extends BaseApiAxception
+abstract class ApiException extends BaseApiAxception implements HttpExceptionInterface
 {
     protected $statusCode;
     protected $errorCode;
