@@ -26,6 +26,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $contextManager;
     protected $nodeRepository;
     protected $siteRepository;
+    protected $statusRepository;
     protected $eventDispatcher;
 
     /**
@@ -45,6 +46,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
         $this->blockManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\BlockManager');
@@ -55,7 +57,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass, $this->eventDispatcher);
+        $this->manager = new NodeManager($this->nodeRepository, $this->siteRepository, $this->statusRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass, $this->eventDispatcher);
     }
 
     /**
@@ -226,7 +228,12 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitializeNewNode()
     {
-        $node = $this->manager->initializeNewNode();
+        $son = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($son)->getNodeType()->thenReturn('fakeType');
+        $fakeParentId = 'fakeParentId';
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId(Phake::anyParameters())->thenReturn($son);
+
+        $node = $this->manager->initializeNewNode($fakeParentId);
 
         $this->assertInstanceOf($this->nodeClass, $node);
         $this->assertEquals('fakeSiteId', $node->getSiteId());
