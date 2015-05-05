@@ -10,12 +10,13 @@ NodeView = OrchestraView.extend(
       language: @options.node.get('language')
       language_list: @options.node.get('links')._language_list
       path: 'showNodeWithLanguage'
-    @options.multiStatus = 
-      language: @options.node.get('language')
-      version: @options.node.get('version')
-      status_list: @options.node.get('links')._status_list
-      status: @options.node.get('status')
-      self_status_change: @options.node.get('links')._self_status_change
+    if @options.node.get('links')._self_status_change
+      @options.multiStatus = 
+        language: @options.node.get('language')
+        version: @options.node.get('version')
+        status_list: @options.node.get('links')._status_list
+        status: @options.node.get('status')
+        self_status_change: @options.node.get('links')._self_status_change
     @options.multiVersion = 
       language: @options.node.get('language')
       version: @options.node.get('version')
@@ -26,7 +27,9 @@ NodeView = OrchestraView.extend(
       path : 'showNodeWithLanguage'
       self_duplicate: @options.node.get('links')._self_duplicate
     @options.configuration = @options.node
-    @options.published = @options.node.attributes.status.published
+
+    @options.published = if @options.node.attributes.status then @options.node.attributes.status.published else true
+
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"

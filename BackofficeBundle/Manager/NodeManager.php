@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -18,6 +19,7 @@ class NodeManager
     protected $eventDispatcher;
     protected $nodeRepository;
     protected $siteRepository;
+    protected $statusRepository;
     protected $contextManager;
     protected $blockManager;
     protected $areaManager;
@@ -26,17 +28,19 @@ class NodeManager
     /**
      * Constructor
      *
-     * @param NodeRepositoryInterface  $nodeRepository
-     * @param SiteRepositoryInterface  $siteRepository
-     * @param AreaManager              $areaManager
-     * @param BlockManager             $blockManager
-     * @param ContextManager           $contextManager
-     * @param string                   $nodeClass
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param NodeRepositoryInterface    $nodeRepository
+     * @param SiteRepositoryInterface    $siteRepository
+     * @param StatusRepositoryInterface  $statusRepository
+     * @param AreaManager                $areaManager
+     * @param BlockManager               $blockManager
+     * @param ContextManager             $contextManager
+     * @param string                     $nodeClass
+     * @param EventDispatcherInterface   $eventDispatcher
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
         SiteRepositoryInterface $siteRepository,
+        StatusRepositoryInterface $statusRepository,
         AreaManager $areaManager,
         BlockManager $blockManager,
         ContextManager $contextManager,
@@ -46,6 +50,7 @@ class NodeManager
     {
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
+        $this->statusRepository = $statusRepository;
         $this->areaManager = $areaManager;
         $this->blockManager = $blockManager;
         $this->contextManager = $contextManager;
@@ -64,7 +69,7 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
-        $newNode->setStatus(null);
+        $newNode->setStatus($this->getEditableStatus($node));
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_DUPLICATE, new NodeEvent($node));
@@ -82,13 +87,27 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion(1);
-        $newNode->setStatus(null);
+        $newNode->setStatus($this->getEditableStatus($node));
         $newNode->setLanguage($language);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_ADD_LANGUAGE, new NodeEvent($node));
 
         return $newNode;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return StatusInterface
+     */
+    protected function getEditableStatus(NodeInterface $node)
+    {
+        if ($node->getNodeId() == NodeInterface::TRANSVERSE_NODE_ID) {
+            return $this->statusRepository->findOneByEditable();
+        }
+
+        return null;
     }
 
     /**
@@ -170,14 +189,20 @@ class NodeManager
     }
 
     /**
+     * @param string $parentId
+     *
      * @return NodeInterface
      */
-    public function initializeNewNode()
+    public function initializeNewNode($parentId)
     {
         $node = new $this->nodeClass();
         $node->setSiteId($this->contextManager->getCurrentSiteId());
         $node->setLanguage($this->contextManager->getCurrentSiteDefaultLanguage());
         $node->setMaxAge(NodeInterface::MAX_AGE);
+        $node->setParentId($parentId);
+        $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId);
+        $node->setStatus($this->getEditableStatus($parentNode));
+        $node->setNodeType($parentNode->getNodeType());
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
         if ($site) {
