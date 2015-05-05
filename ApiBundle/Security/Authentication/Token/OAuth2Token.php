@@ -8,6 +8,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class OAuth2Token
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class OAuth2Token extends AbstractToken
 {

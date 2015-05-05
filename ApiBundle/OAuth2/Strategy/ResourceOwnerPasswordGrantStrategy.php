@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Validator\LegacyValidator;
 
 /**
  * Class ResourceOwnerPasswordGrantStrategy
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
 {

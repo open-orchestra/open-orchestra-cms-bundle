@@ -8,6 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class Oauth2CompilerPass
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class Oauth2CompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
 {

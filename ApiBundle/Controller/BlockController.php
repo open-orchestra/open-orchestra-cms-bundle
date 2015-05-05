@@ -2,13 +2,12 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Document\Block;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class BlockController
@@ -18,8 +17,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 class BlockController extends BaseController
 {
     /**
-     * @param Request $request
-     * @param string $nodeId
+     * @param string $language
      *
      * @Config\Route("/list/{language}", name="open_orchestra_api_block_list")
      * @Config\Method({"GET"})

@@ -7,9 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class BaseController
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class BaseController extends Controller
 {

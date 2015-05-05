@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class TransformerManager
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class TransformerManager
 {
