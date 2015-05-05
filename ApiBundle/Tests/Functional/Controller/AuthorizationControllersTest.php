@@ -29,12 +29,12 @@ class AuthorizationControllersTest extends WebTestCase
     public function testTokenCreationAndUsage()
     {
         $this->client->request('GET', '/api/node/root');
-        $this->assertEquals(500, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
         $this->assertContains('client.access_denied', $this->client->getResponse()->getContent());
 
         $this->client->request('GET', '/api/node/root?access_token=access_token');
-        $this->assertEquals(500, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
         $this->assertContains('token.blocked', $this->client->getResponse()->getContent());
 
