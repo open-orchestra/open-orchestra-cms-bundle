@@ -2,9 +2,14 @@ adminFormView = OrchestraView.extend(
   el: '#OrchestraBOModal'
 
   initialize: (options) ->
-    @url = options.url
-    @options = options
-    @deleteButton = @options.deleteurl && @options.confirmtext && @options.confirmtitle
+    @options = @reduceOption(options, [
+      'deleteUrl'
+      'confirmText'
+      'confirmTitle'
+      'redirectUrl'
+      'url'
+    ])
+    @deleteButton = @options.deleteUrl && @options.confirmText && @options.confirmTitle
     @method = if options.method then options.method else 'GET'
     @events = @events || {}
     @formEvent = 'submit'
@@ -20,7 +25,7 @@ adminFormView = OrchestraView.extend(
     displayLoader('.modal-body')
     $("#OrchestraBOModal").modal "show"
     $.ajax
-      url: @url
+      url: @options.url
       method: @method
       success: (response) ->
         viewContext.renderContent(
