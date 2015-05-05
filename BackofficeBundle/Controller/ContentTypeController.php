@@ -100,11 +100,7 @@ class ContentTypeController extends AbstractAdminController
      * @return string
      */
     protected function getMethod(Request $request){
-        if ($request->get('no_save')) {
 
-            return 'PATCH';
-        }
-
-        return 'POST';
+        return $request->get('no_save') ? 'PATCH' : 'POST';
     }
 }
