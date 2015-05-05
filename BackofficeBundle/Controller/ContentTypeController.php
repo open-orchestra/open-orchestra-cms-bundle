@@ -77,22 +77,16 @@ class ContentTypeController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
+        if (!$request->get('no_save')) {
+            $handleForm = $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.creation'), $contentType);
 
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($contentType);
-            $documentManager->flush();
+            if ( $handleForm && !is_null($contentType->getId())) {
+                $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
 
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.content_type.creation')
-            );
-
-            $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
-
-            return $this->redirect(
-                $this->generateUrl('open_orchestra_backoffice_content_type_form', array('contentTypeId' => $contentType->getContentTypeId()))
-            );
+                return $this->redirect($this->generateUrl('open_orchestra_backoffice_content_type_form', array(
+                    'contentTypeId' => $contentType->getContentTypeId()
+                )));
+            }
         }
 
         return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
