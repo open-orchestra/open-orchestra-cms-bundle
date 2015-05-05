@@ -19,7 +19,7 @@ class ContentTypeController extends AbstractAdminController
      * @param string  $contentTypeId
      *
      * @Config\Route("/content-type/form/{contentTypeId}", name="open_orchestra_backoffice_content_type_form")
-     * @Config\Method({"GET", "POST"})
+     * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
      *
@@ -37,7 +37,7 @@ class ContentTypeController extends AbstractAdminController
                 'action' => $this->generateUrl('open_orchestra_backoffice_content_type_form', array(
                         'contentTypeId' => $contentTypeId,
                     )),
-                'method' => 'POST'
+                'method' => $this->getMethod($request),
             )
         );
 
@@ -56,7 +56,7 @@ class ContentTypeController extends AbstractAdminController
      * @param Request $request
      *
      * @Config\Route("/content-type/new", name="open_orchestra_backoffice_content_type_new")
-     * @Config\Method({"GET", "POST"})
+     * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
      *
@@ -72,7 +72,8 @@ class ContentTypeController extends AbstractAdminController
             'content_type',
             $contentType,
             array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_content_type_new', array())
+                'action' => $this->generateUrl('open_orchestra_backoffice_content_type_new', array()),
+                'method' => $this->getMethod($request),
             )
         );
 
@@ -92,5 +93,14 @@ class ContentTypeController extends AbstractAdminController
         return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    protected function getMethod(Request $request){
+
+        return $request->get('no_save') ? 'PATCH' : 'POST';
     }
 }

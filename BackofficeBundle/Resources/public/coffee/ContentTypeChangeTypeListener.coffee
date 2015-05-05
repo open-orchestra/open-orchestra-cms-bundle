@@ -6,6 +6,7 @@ $('html').on "change", ".content_type_change_type", (e) ->
   optionId = changedElement.attr('id').replace(/type$/g, 'options')
   displayLoader('#' + optionId)
   form.ajaxSubmit
+    type: 'PATCH'
     url: url
     success: (response) ->
       $('#' + optionId).html $('#' + optionId, response).html()
