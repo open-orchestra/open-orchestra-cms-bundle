@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Block;
+use OpenOrchestra\ModelBundle\Document\EmbedStatus;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -227,12 +228,15 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Test initializeNewNode
      *
+     * @param NodeInterface        $parentNode
+     * @param StatusInterface|null $status
+     *
      * @dataProvider provideParentNode
      */
-    public function testInitializeNewNode(NodeInterface $parentNode, StatusInterface $status)
+    public function testInitializeNewNode(NodeInterface $parentNode, $status)
     {
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId(Phake::anyParameters())->thenReturn($parentNode);
-        Phake::when($this->nodeRepository)->findOneByEditable()->thenReturn($status);
+        Phake::when($this->statusRepository)->findOneByEditable()->thenReturn($status);
         $node = $this->manager->initializeNewNode('fakeParentId');
 
         $this->assertInstanceOf($this->nodeClass, $node);
@@ -259,10 +263,12 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($parentNode1)->getNodeId()->thenReturn(NodeInterface::TRANSVERSE_NODE_ID);
         Phake::when($parentNode1)->getNodeType()->thenReturn(NodeInterface::TYPE_GENERAL);
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->getToRoles()->thenReturn(array());
+        Phake::when($status)->getFromRoles()->thenReturn(array());
 
         return array(
             array($parentNode0, null),
-            array($parentNode1, $status),
+            array($parentNode1, EmbedStatus::createFromStatus($status)),
         );
     }
 
