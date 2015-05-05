@@ -69,7 +69,7 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion($node->getVersion() + 1);
-        $newNode->setStatus($this->getInitialStatus($node));
+        $newNode->setStatus($this->getEditableStatus($node));
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_DUPLICATE, new NodeEvent($node));
@@ -87,7 +87,7 @@ class NodeManager
     {
         $newNode = clone $node;
         $newNode->setVersion(1);
-        $newNode->setStatus($this->getInitialStatus($node));
+        $newNode->setStatus($this->getEditableStatus($node));
         $newNode->setLanguage($language);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
 
@@ -101,7 +101,7 @@ class NodeManager
      *
      * @return StatusInterface
      */
-    protected function getInitialStatus(NodeInterface $node)
+    protected function getEditableStatus(NodeInterface $node)
     {
         if ($node->getNodeId() == NodeInterface::TRANSVERSE_NODE_ID) {
             return $this->statusRepository->findOneByEditable();
@@ -201,7 +201,7 @@ class NodeManager
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
         $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId);
-        $node->setStatus($this->getInitialStatus($parentNode));
+        $node->setStatus($this->getEditableStatus($parentNode));
         $node->setNodeType($parentNode->getNodeType());
 
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
