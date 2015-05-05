@@ -103,7 +103,7 @@ class NodeManager
      */
     protected function getInitialStatus(NodeInterface $node)
     {
-        if ($node->getNodeType() == NodeInterface::TYPE_GENERAL) {
+        if ($node->getNodeId() == NodeInterface::TRANSVERSE_NODE_ID) {
             return $this->statusRepository->findOneByEditable();
         }
 

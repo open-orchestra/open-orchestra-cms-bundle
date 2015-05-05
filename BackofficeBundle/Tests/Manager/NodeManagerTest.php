@@ -8,6 +8,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class NodeManagerTest
@@ -225,15 +226,14 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test initializeNewNode
+     *
+     * @dataProvider provideParentNode
      */
-    public function testInitializeNewNode()
+    public function testInitializeNewNode(NodeInterface $parentNode, StatusInterface $status)
     {
-        $son = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($son)->getNodeType()->thenReturn('fakeType');
-        $fakeParentId = 'fakeParentId';
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId(Phake::anyParameters())->thenReturn($son);
-
-        $node = $this->manager->initializeNewNode($fakeParentId);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId(Phake::anyParameters())->thenReturn($parentNode);
+        Phake::when($this->nodeRepository)->findOneByEditable()->thenReturn($status);
+        $node = $this->manager->initializeNewNode('fakeParentId');
 
         $this->assertInstanceOf($this->nodeClass, $node);
         $this->assertEquals('fakeSiteId', $node->getSiteId());
@@ -241,8 +241,29 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('fakeNameTheme', $node->getTheme());
         $this->assertEquals('fake keyword', $node->getMetaKeywords());
         $this->assertEquals('fake description', $node->getMetaDescription());
+        $this->assertEquals($status, $node->getStatus());
         $this->assertEquals(true, $node->getMetaIndex());
         $this->assertEquals(true, $node->getMetaFollow());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideParentNode()
+    {
+        $parentNode0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($parentNode0)->getNodeId()->thenReturn('fakeId');
+        Phake::when($parentNode0)->getNodeType()->thenReturn(NodeInterface::TYPE_DEFAULT);
+
+        $parentNode1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($parentNode1)->getNodeId()->thenReturn(NodeInterface::TRANSVERSE_NODE_ID);
+        Phake::when($parentNode1)->getNodeType()->thenReturn(NodeInterface::TYPE_GENERAL);
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+
+        return array(
+            array($parentNode0, null),
+            array($parentNode1, $status),
+        );
     }
 
     /**
