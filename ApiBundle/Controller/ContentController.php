@@ -10,7 +10,7 @@ use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\BaseApiBundle\Context\GroupContext;
+use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**

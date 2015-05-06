@@ -4,7 +4,8 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Facade\DeletedFacade;
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
 
 /**

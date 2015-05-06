@@ -3,7 +3,8 @@
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\UserAdminBundle\Facade\UserCollectionFacade;
 
 /**
@@ -14,7 +15,7 @@ class UserCollectionTransformer extends AbstractTransformer
     /**
      * @param Collection $mixed
      *
-     * @return \OpenOrchestra\ApiBundle\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function transform($mixed)
     {

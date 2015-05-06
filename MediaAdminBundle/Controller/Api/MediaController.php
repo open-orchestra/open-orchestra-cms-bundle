@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\MediaAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\Media\Event\MediaEvent;
 use OpenOrchestra\Media\MediaEvents;
 use OpenOrchestra\Media\Model\FolderInterface;

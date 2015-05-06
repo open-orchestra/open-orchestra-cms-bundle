@@ -1,5 +1,4 @@
 parameters:
-    open_orchestra_api.transformer_manager.class: OpenOrchestra\ApiBundle\Transformer\TransformerManager
     open_orchestra_api.transformer.node.class: OpenOrchestra\ApiBundle\Transformer\NodeTransformer
     open_orchestra_api.transformer.node_collection.class: OpenOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
     open_orchestra_api.transformer.template.class: OpenOrchestra\ApiBundle\Transformer\TemplateTransformer
@@ -35,11 +34,6 @@ parameters:
     open_orchestra_api.transformer.api_displayed_element.class: OpenOrchestra\ApiBundle\Transformer\DisplayedElementCollectionTransformer
 
 services:
-    open_orchestra_api.transformer_manager:
-        class: %open_orchestra_api.transformer_manager.class%
-        arguments:
-            - @router
-            - @open_orchestra_api.context.group
     open_orchestra_api.transformer.node:
         class: %open_orchestra_api.transformer.node.class%
         arguments:

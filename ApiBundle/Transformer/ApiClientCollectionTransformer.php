@@ -4,7 +4,8 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ApiClientCollectionFacade;
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class ApiClientCollectionTransformer

@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\ThemeFacade;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class ThemeTransformer

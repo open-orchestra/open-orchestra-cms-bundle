@@ -1,8 +1,0 @@
-open_orchestra_api_node_show:
-    pattern: /node/{nodeId}
-    defaults: { _controller: OpenOrchestraApiBundle:Node:show }
-    methods: [GET]
-open_orchestra_api_node_edit:
-    pattern: /node/edit/{nodeId}
-    defaults: { _controller: OpenOrchestraApiBundle:Node:edit, nodeId: 0}
-    methods: [POST]

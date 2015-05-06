@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\MediaAdminBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\MediaAdminBundle\Facade\MediaFacade;

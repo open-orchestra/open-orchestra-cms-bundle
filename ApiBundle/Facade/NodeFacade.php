@@ -2,8 +2,9 @@
 
 namespace OpenOrchestra\ApiBundle\Facade;
 
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use JMS\Serializer\Annotation as Serializer;
-use OpenOrchestra\ApiBundle\Facade\Traits\BlameableFacade;
+use OpenOrchestra\BaseApi\Facade\Traits\BlameableFacade;
 
 /**
  * Class NodeFacade

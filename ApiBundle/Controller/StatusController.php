@@ -17,7 +17,7 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  *
  * @Config\Route("status")
  */
-class StatusController extends Controller
+class StatusController extends BaseController
 {
     /**
      * @Config\Route("", name="open_orchestra_api_status_list")

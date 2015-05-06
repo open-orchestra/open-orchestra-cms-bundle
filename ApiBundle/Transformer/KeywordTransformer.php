@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\KeywordFacade;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class KeywordTransformer

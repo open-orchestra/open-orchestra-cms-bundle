@@ -6,7 +6,6 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class ContextController
