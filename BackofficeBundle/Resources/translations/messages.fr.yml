@@ -535,4 +535,3 @@ open_orchestra_backoffice:
         deleted:
           name: Nom
           updated_at: Supprimé le
-          
