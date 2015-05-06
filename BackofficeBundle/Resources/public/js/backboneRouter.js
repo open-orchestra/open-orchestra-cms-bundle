@@ -1,8 +1,5 @@
 var OrchestraBORouter = Backbone.Router.extend({
 
-  // Contains currentMainView, usefull to unbind event when view is changed
-  currentMainView: null,
-  
   // Declare here only routes that are not declared in this.routes.
   // Routes in this.routes will be automatically added to routePatterns at init time
   // cf this.generateRoutePatterns()
