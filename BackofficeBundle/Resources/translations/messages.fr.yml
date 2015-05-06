@@ -532,3 +532,6 @@ open_orchestra_backoffice:
           user_name: Utilisateur
           site_name: Site
           message: Message
+        deleted:
+          name: Nom
+          updated_at: Supprimé le
