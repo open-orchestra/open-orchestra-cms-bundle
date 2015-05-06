@@ -28,13 +28,7 @@ class DeletedCollectionTransformer extends AbstractTransformer
             }
         }
 
-        $deletedFacade = $facade->getDeleteds();
-
-        usort($deletedFacade, function(DeletedFacade $a,DeletedFacade $b) {
-            return ($b->updatedAt < $a->updatedAt)? -1 : 1;
-        });
-
-        $facade->setDeleteds($deletedFacade);
+        $facade->addLink('_translate', $this->generateRoute('open_orchestra_api_translate'));
 
         return $facade;
     }
