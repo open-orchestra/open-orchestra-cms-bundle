@@ -14,7 +14,7 @@ $(document).on "click", ".mediaModalOpen", (event) ->
     'margin-top': window.pageYOffset - $(this).height() / 2
   mediaModal.modal("show")
   
-  view = new mediaModalView(
+  new mediaModalView(
     menuUrl: $('#' + modalId + ' .modal-body-menu').data('url'),
     el: '#' + modalId
   )
@@ -62,7 +62,7 @@ $(document).on "click", ".modal-body-content a[class='ajax-add'], .media-modal-m
     url: $(event.target).attr('data-url')
     method: 'GET'
     success: (response) ->
-      view = new mediaFormView(
+      new mediaFormView(
         html: response
         el: ("#" + modalId + " .modal-body-content")
         title: $.trim(folderName)

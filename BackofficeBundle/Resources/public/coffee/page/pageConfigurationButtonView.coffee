@@ -28,5 +28,5 @@ PageConfigurationButtonView = OrchestraView.extend(
       confirmTitle: @options.viewContainer.$el.data('delete-confirm-title')
     if @options.configuration.attributes.alias is ''
       $.extend options, extendView: [ 'generateId' ]
-    view = new adminFormView(options)
+    new adminFormView(options)
 )

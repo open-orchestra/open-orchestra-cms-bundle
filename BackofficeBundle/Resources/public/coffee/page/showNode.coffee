@@ -7,17 +7,16 @@ showNode = (url, language, version)->
     success: (response) ->
       node = new Node
       node.set response
-      view = new NodeView(
+      new NodeView(
         node: node
-        domContainer: $('#main')
+        domContainer: $('#content')
       )
-      appRouter.setCurrentMainView(view)
       return
   return
 
 showNodeForm = (parentNode) ->
   $(".modal-title").text parentNode.text()
-  view = new adminFormView(
+  new adminFormView(
     url: parentNode.data("url")
     extendView: [ 'generateId' ]
   )

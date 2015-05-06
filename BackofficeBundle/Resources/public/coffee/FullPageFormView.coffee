@@ -35,10 +35,10 @@ FullPageFormView = OrchestraView.extend(
           button: $(".submit_form",e.target).parent()
         success: (response) ->
           options.html = response
-          view = new FullPageFormView(options)
+          new FullPageFormView(options)
         error: (response) ->
           options.html = response.responseText
-          view = new FullPageFormView(options)
+          new FullPageFormView(options)
       return
 
   completeOptions: (element) ->

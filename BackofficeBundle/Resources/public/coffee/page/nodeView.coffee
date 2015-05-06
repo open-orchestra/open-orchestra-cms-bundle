@@ -42,8 +42,7 @@ NodeView = OrchestraView.extend(
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
       node: @options.node
     )
-    @options.domContainer.find('#content').remove()
-    @options.domContainer.append @$el
+    @options.domContainer.html @$el
     $('.js-widget-title', @$el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
       element: @options.node
     )

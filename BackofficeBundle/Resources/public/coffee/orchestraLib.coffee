@@ -76,23 +76,6 @@ displayMenu = (route) ->
 
   return
 
-
-# AJAX LOADER
-orchestraAjaxLoad = (url, method, successCallback) ->
-  displayLoader()
-  method = "POST"  if typeof method is "undefined"
-  $.ajax
-    url: url
-    type: method
-    success: (response) ->
-      if response.success
-        window.location.hash = response.data
-      else
-        $("#content").html response
-        successCallback()  if typeof successCallback isnt "undefined"
-      return
-  return
-
 # SMARTADMIN CONFIRMATION
 smartConfirm = (logo, titleColorized, text, functions) ->
   new SmartConfirmView(

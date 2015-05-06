@@ -59,7 +59,7 @@ adminFormView = OrchestraView.extend(
           button: $(".submit_form", e.target.parentNode).parent()
         statusCode:
           200: (response) ->
-            view = viewContext.renderContent(
+            viewContext.renderContent(
               html: response
             )
             if $('#node_nodeId', viewContext.$el).length > 0
@@ -73,7 +73,7 @@ adminFormView = OrchestraView.extend(
               Backbone.history.loadUrl(displayRoute)
             displayMenu(displayRoute)
           400: (response) ->
-            view = viewContext.renderContent(
+            viewContext.renderContent(
               html: response.responseText
             )
     return

@@ -24,7 +24,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
           url: elements.get('links')._self_add
           method: "GET"
           success: (response) ->
-            view = new FullPageFormView(
+            new FullPageFormView(
               html: response
               title: title
               entityType: entityType
@@ -54,11 +54,10 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
                   title: title
                   entityType: entityType
                   element: element
-                view = new FullPageFormView(options)
-                appRouter.setCurrentMainView view
+                new FullPageFormView(options)
             founded = true
       unless founded
-        view = new TableviewCollectionView(
+        new TableviewCollectionView(
           elements: elements
           displayedElements: displayedElements
           order: order
@@ -66,7 +65,6 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
           entityType: entityType
           domContainer: $("#content")
         )
-        appRouter.setCurrentMainView view
 
 tableViewLoadSpecificElement = (link, title, entityType) ->
   $.ajax
@@ -90,5 +88,4 @@ tableViewLoadSpecificElement = (link, title, entityType) ->
             title: title
             entityType: entityType
             element: element
-          view = new FullPageFormView(options)
-          appRouter.setCurrentMainView view
+          new FullPageFormView(options)
