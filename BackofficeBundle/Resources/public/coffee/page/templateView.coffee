@@ -17,8 +17,7 @@ TemplateView = OrchestraView.extend(
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateView',
       template: @options.template
     )
-    @options.domContainer.find('#content').remove()
-    @options.domContainer.append @$el
+    @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addConfigurationButton()
     @addAreasToView(@options.template.get('areas'))

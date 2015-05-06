@@ -53,7 +53,7 @@ AreaView = OrchestraView.extend(
     label = "~no label yet~"
     label = @options.area.get("label")  if @options.area.get("label") isnt undefined
     $(".modal-title").text "Area : " + label
-    view = new adminFormView(
+    new adminFormView(
       url: @options.area.get("links")._self_form
     )
     return

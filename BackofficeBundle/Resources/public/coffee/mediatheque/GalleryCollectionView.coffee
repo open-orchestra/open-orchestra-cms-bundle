@@ -27,12 +27,6 @@ GalleryCollectionView = OrchestraView.extend(
     for mediaKey of @options.medias.get(@options.medias.get('collection_name'))
       @addElementToView (@options.medias.get(@options.medias.get('collection_name'))[mediaKey])
     $(".figure").width @options.domContainer.find("img").width()
-    $(".figure").mouseenter(->
-      $(this).find(".caption").slideToggle(150)
-      return
-    ).mouseleave ->
-      $(this).find(".caption").slideToggle(150)
-      return
 
   addElementToView: (mediaData) ->
     mediaModel = new GalleryModel
@@ -64,5 +58,5 @@ GalleryCollectionView = OrchestraView.extend(
   addDeleteButton: ->
     if @options.medias.get('is_folder_deletable')
       if @options.medias.get('links')._self_delete != undefined
-        view = new FolderDeleteButtonView(@options)
+        new FolderDeleteButtonView(@options)
 )

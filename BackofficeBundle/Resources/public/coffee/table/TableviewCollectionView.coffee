@@ -84,7 +84,7 @@ TableviewCollectionView = OrchestraView.extend(
       url: options.elements.get('links')._self_add
       method: 'GET'
       success: (response) ->
-        view = new FullPageFormView(viewContext.addOption(
+        new FullPageFormView(viewContext.addOption(
           html: response
           extendView: [ 'generateId' ]
         ))

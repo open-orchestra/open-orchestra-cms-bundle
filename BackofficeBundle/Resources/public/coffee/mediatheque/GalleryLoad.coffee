@@ -9,11 +9,11 @@ GalleryLoad = (link, target) ->
     success: (response) ->
       medias = new GalleryElement
       medias.set response
-      view = new GalleryCollectionView(
+      new GalleryCollectionView(
         medias: medias
         title: title
         listUrl: listUrl
         domContainer: $(target)
         modal: target != '#content'
       )
-      appRouter.setCurrentMainView(view)
+

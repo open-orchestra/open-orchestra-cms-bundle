@@ -120,7 +120,6 @@ var OrchestraBORouter = Backbone.Router.extend({
     var view = new TranslationView(
       {url : $("#nav-translation").data("url")}
     );
-    this.setCurrentMainView(view);
     return view;
   },
 
@@ -158,9 +157,6 @@ var OrchestraBORouter = Backbone.Router.extend({
       }
 
     drawBreadCrumb();
-
-    this.removeCurrentMainView();
-
     displayLoader();
   },
 
@@ -178,20 +174,6 @@ var OrchestraBORouter = Backbone.Router.extend({
         });
       }
     }); 
-  },
-
-  setCurrentMainView: function(view)
-  {
-    this.currentMainView = view;
-  },
-
-  removeCurrentMainView: function()
-  {
-    if (this.currentMainView) {
-      this.currentMainView.remove();
-      this.setCurrentMainView(null);
-      $('#main').append('<div id="content" />');
-    }
   },
 
   generateUrl: function(routeName, paramsObject)

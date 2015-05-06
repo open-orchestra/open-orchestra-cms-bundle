@@ -5,10 +5,7 @@ SuperboxLoad = (folderId, mediaId) ->
     success: (response) ->
       mediaModel = new GalleryModel
       mediaModel.set response
-      view = new SuperboxView(
+      new SuperboxView(
         media: mediaModel
         listUrl: appRouter.generateUrl('listFolder', folderId: folderId))
-      appRouter.setCurrentMainView view
-      return view
-      return
   return

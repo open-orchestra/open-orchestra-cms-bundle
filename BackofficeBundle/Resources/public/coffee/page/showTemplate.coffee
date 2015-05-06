@@ -6,10 +6,9 @@ showTemplate = (url)->
     success: (response) ->
       template = new Template
       template.set response
-      view = new TemplateView(
+      new TemplateView(
         template: template
-        domContainer: $('#main')
+        domContainer: $('#content')
       )
-      appRouter.setCurrentMainView(view)
       return
   return

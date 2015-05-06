@@ -2,6 +2,8 @@ GalleryView = OrchestraView.extend(
   events:
     'click span.media-remove': 'confirmRemoveMedia'
     'click span.media-select': 'mediaSelect'
+    'mouseenter': 'toggleCaption'
+    'mouseleave': 'toggleCaption'
 
   initialize: (options) ->
     @events = @events || {}
@@ -30,6 +32,9 @@ GalleryView = OrchestraView.extend(
       mediaLogo: @mediaLogo
     )
     @options.domContainer.append @$el
+
+  toggleCaption: (event) ->
+    @$el.find(".caption").slideToggle(150)
 
   superboxOpen: ->
     listUrl = Backbone.history.fragment
