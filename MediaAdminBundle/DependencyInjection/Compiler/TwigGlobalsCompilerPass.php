@@ -21,11 +21,8 @@ class TwigGlobalsCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if ($container->hasDefinition('twig')) {
-            $twig = $container->getDefinition('twig');
-            $twig->addMethodCall('addGlobal', array('context', new Reference('open_orchestra_backoffice.context_manager')));
-
             $formResources = $container->getParameter('twig.form.resources');
-            $formResources[] = 'OpenOrchestraBackofficeBundle:Form:form_div_layout.html.twig';
+            $formResources[] = 'OpenOrchestraMediaAdminBundle:Form:form_div_layout.html.twig';
             $container->setParameter('twig.form.resources', $formResources);
         }
     }
