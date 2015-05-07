@@ -14,12 +14,12 @@ SuperboxView = OrchestraView.extend(
     @media = options.media
     @listUrl = options.listUrl
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/superboxView'
+      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/superboxView'
     ]
 
   render: ->
     currentView = this
-    $(@el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/superboxView',
+    $(@el).html @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/superboxView',
       media: @media
       listUrl: @listUrl
     )
