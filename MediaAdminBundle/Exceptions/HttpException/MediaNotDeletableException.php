@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\MediaAdminBundle\Exceptions\HttpException;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\ApiException;
+use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
 
 /**
  * Class MediaNotDeletableException

@@ -77,7 +77,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $html = 'ok';
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $response = Phake::mock('Symfony\Component\HttpFoundation\Response');
-        $transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerInterface');
+        $transformer = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\UiModelFacade');
 
         Phake::when($block)->getComponent()->thenReturn($component);

@@ -5,7 +5,7 @@ namespace OpenOrchestra\LogBundle\Controller;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 
 /**
  * Class LogController

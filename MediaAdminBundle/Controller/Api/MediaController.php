@@ -7,7 +7,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\Media\Event\MediaEvent;
 use OpenOrchestra\Media\MediaEvents;
 use OpenOrchestra\Media\Model\FolderInterface;
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\MediaAdminBundle\Exceptions\HttpException\MediaNotDeletableException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
