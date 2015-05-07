@@ -7,12 +7,12 @@ FolderConfigurationButtonView = OrchestraView.extend(
       'medias'
     ])
     @loadTemplates [
-      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetFolderConfigurationButton"
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/widgetFolderConfigurationButton"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetFolderConfigurationButton')
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/widgetFolderConfigurationButton')
     addCustomJarvisWidget(@$el)
     return
 

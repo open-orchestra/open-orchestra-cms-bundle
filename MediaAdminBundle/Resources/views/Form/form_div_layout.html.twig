@@ -1,0 +1,20 @@
+{% extends 'BraincraftedBootstrapBundle:Form:bootstrap.html.twig' %}
+
+{% block orchestra_media_widget %}
+    {% spaceless %}
+        {% set type = 'hidden' %}
+        {{ block('form_widget') }}&nbsp;
+        <div class="btn">
+            <a class="btn btn-default mediaModalOpen" data-target="{{ id }}_modal">
+                <i class="fa fa-folder-open-o"></i> {{ 'open_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}
+            </a><br />
+            <button class="btn btn-warning clear-media" data-input="{{ id }}">
+                Delete
+            </button>
+        </div>
+        &nbsp;
+        {% set src= media_preview(value) %}
+        <img height="100px" {% if src != '' %}src="{{ src }}"{% endif %} id="previewImage_{{ id }}" class="previewImage" />
+        {% include 'OpenOrchestraMediaAdminBundle:Mediatheque:media_modal.html.twig' %}
+    {% endspaceless %}
+{% endblock %}
