@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
+use OpenOrchestra\ApiBundle\Tests\Functional\Controller\AbstractControllerTest;
+
 /**
  * Class ApiControllersTest
  */
@@ -36,7 +38,6 @@ class ApiControllersTest extends AbstractControllerTest
             array('/api/content-type'),
             array('/api/site'),
             array('/api/theme'),
-            array('/api/user'),
             array('/api/role'),
             array('/api/group'),
             array('/api/redirection'),

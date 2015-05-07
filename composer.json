@@ -12,6 +12,7 @@
     "require": {
         "jms/serializer-bundle" : "0.13.0",
         "open-orchestra/open-orchestra-base-bundle": "*",
+        "open-orchestra/open-orchestra-base-api-bundle": "*",
         "open-orchestra/open-orchestra-display-bundle": "*",
         "open-orchestra/open-orchestra-media-bundle": "*",
         "open-orchestra/open-orchestra-user-bundle": "*",

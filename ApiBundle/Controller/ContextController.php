@@ -4,7 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
 /**

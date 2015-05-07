@@ -45,7 +45,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
 
-        $this->transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
+        $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get('status')->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->get('content_attribute')->thenReturn($this->transformerAttribute);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
@@ -59,7 +59,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransform()
     {
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\FacadeInterface');
+        $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
         $facade->label = 'draft';
 
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');

@@ -2,10 +2,12 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Interface TransformerInterface
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 interface TransformerInterface
 {

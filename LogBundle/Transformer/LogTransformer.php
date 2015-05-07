@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\LogBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\LogBundle\Facade\LogFacade;
 use OpenOrchestra\LogBundle\Model\LogInterface;
 use Symfony\Component\Translation\TranslatorInterface;

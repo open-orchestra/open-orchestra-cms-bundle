@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\UserAdminBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\UserAdminBundle\Facade\UserFacade;
 use OpenOrchestra\UserBundle\Document\User;
 

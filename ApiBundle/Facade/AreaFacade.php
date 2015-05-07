@@ -3,6 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\BaseApi\Facade\AbstractFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Class AreaFacade

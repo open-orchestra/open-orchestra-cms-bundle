@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
-use OpenOrchestra\ApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -40,7 +40,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
-        $this->transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
+        $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
         $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager, $this->nodeRepository);
@@ -78,7 +78,6 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $response = Phake::mock('Symfony\Component\HttpFoundation\Response');
         $transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerInterface');
-        $transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\UiModelFacade');
 
         Phake::when($block)->getComponent()->thenReturn($component);
@@ -88,11 +87,8 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($response)->getContent()->thenReturn($html);
         Phake::when($this->displayIconManager)->show($component)->thenReturn('icon');
 
-        $this->blockTransformer->setContext($transformerManager);
-
-        Phake::when($transformerManager)->get('ui_model')->thenReturn($transformer);
+        Phake::when($this->transformerManager)->get('ui_model')->thenReturn($transformer);
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
-        Phake::when($transformerManager)->getRouter()->thenReturn($this->router);
 
         $facadeExcepted = $this->blockTransformer->transform($block, true, 'root', 0, 0, 0, 'fakeId');
 

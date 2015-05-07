@@ -2,21 +2,22 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class StatusController
  *
  * @Config\Route("status")
  */
-class StatusController extends Controller
+class StatusController extends BaseController
 {
     /**
      * @Config\Route("", name="open_orchestra_api_status_list")

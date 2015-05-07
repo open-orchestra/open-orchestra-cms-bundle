@@ -5,6 +5,8 @@ namespace OpenOrchestra\ApiBundle\Context;
 /**
  * Class GroupContext
  *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
+ *
  * This class is used to store the groups linked to a controller action through the whole request process
  */
 class GroupContext

@@ -3,8 +3,9 @@
 namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use OpenOrchestra\ApiBundle\Facade\Traits\BaseFacade;
-use OpenOrchestra\ApiBundle\Facade\Traits\TimestampableFacade;
+use OpenOrchestra\BaseApi\Facade\Traits\BaseFacade;
+use OpenOrchestra\BaseApi\Facade\Traits\TimestampableFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Class DeletedFacade

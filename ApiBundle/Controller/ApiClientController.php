@@ -2,10 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
-use OpenOrchestra\ApiBundle\Facade\FacadeInterface;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class ApiClientController

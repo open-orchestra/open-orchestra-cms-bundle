@@ -38,7 +38,7 @@ class NodeControllerTest extends AbstractControllerTest
         $this->client->request('GET', $url);
         $this->assertForm($this->client->getResponse());
 
-        $url = '/admin/node/new/' . $nodeRoot->getId();
+        $url = '/admin/node/new/' . $nodeRoot->getNodeId();
         $this->client->request('GET', $url);
         $this->assertForm($this->client->getResponse());
 
@@ -50,7 +50,7 @@ class NodeControllerTest extends AbstractControllerTest
         $this->client->request('GET', $url);
         $this->assertForm($this->client->getResponse());
 
-        $url = '/admin/node/new/' . $nodeFixtureFull->getId();
+        $url = '/admin/node/new/' . $nodeFixtureFull->getNodeId();
         $this->client->request('GET', $url);
         $this->assertForm($this->client->getResponse());
 

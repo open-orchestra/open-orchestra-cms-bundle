@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Facade\DisplayedElementCollectionFacade;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\Container;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class DisplayedElementCollectionTransformer

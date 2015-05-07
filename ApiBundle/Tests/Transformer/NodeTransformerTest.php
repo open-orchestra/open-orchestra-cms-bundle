@@ -64,7 +64,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn('route');
 
-        $this->transformerManager = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerManager');
+        $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
@@ -86,7 +86,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformNotTransverse()
     {
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\FacadeInterface');
+        $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
@@ -113,7 +113,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransformTransverse()
     {
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\FacadeInterface');
+        $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');

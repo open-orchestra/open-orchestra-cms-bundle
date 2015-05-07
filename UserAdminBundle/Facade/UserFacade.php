@@ -3,7 +3,7 @@
 namespace OpenOrchestra\UserAdminBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
-use OpenOrchestra\ApiBundle\Facade\AbstractFacade;
+use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 
 /**
  * Class UserFacade

@@ -4,6 +4,8 @@ namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 
 /**
  * Class BadClientCredentialsHttpException
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class BadClientCredentialsHttpException extends ApiException
 {

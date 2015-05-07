@@ -2,10 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\ApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class TranslateController
@@ -22,6 +23,8 @@ class TranslateController extends BaseController
      * @Api\Serialize()
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return FacadeInterface
      */
     public function translateAction(Request $request)
     {

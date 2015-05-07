@@ -12,6 +12,8 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
 /**
  * Class OAuth2Listener
+ *
+ * @deprecated use the one from base-api-bundle, will be removed in 0.2.2
  */
 class OAuth2Listener implements ListenerInterface
 {
