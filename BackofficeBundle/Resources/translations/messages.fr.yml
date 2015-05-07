@@ -53,6 +53,7 @@ open_orchestra_backoffice:
                 integer: Entier
                 email: Adresse email
                 media: Média
+                choice: Choix
         website:
             success: Le site a été modifié
             creation: Le site a été créé
@@ -174,6 +175,9 @@ open_orchestra_backoffice:
             required_field: Champ requis
             format: Format
             rounding_mode: Type d'arrondi
+            choices: Choix
+            multiple: Multiple
+            expanded: Etendu
         keyword:
             label: Libellé
             creation: Le mot-clé a été créé

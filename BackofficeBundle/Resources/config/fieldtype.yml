@@ -44,6 +44,18 @@ parameters:
             options:
                 required:
                     default_value: false
+        choice:
+            label: open_orchestra_backoffice.form.field_type.custom_type.choice
+            options:
+                required:
+                    default_value: false
+                multiple:
+                    default_value: false
+                expanded:
+                    default_value: false
+                choices:
+                    default_value: null
+
 
     open_orchestra_backoffice.options:
         max_length:
@@ -61,4 +73,16 @@ parameters:
         rounding_mode:
             type: integer
             label: open_orchestra_backoffice.form.orchestra_fields.rounding_mode
+            required: true
+        multiple:
+            type: checkbox
+            label: open_orchestra_backoffice.form.orchestra_fields.multiple
+            required: false
+        expanded:
+            type: checkbox
+            label: open_orchestra_backoffice.form.orchestra_fields.expanded
+            required: false
+        choices:
+            type: orchestra_choices_option
+            label: open_orchestra_backoffice.form.orchestra_fields.choices
             required: true
