@@ -4,21 +4,23 @@ namespace OpenOrchestra\Backoffice\Context;
 
 use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\DisplayBundle\Manager\SiteManager;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Centralize app contextual datas
  */
-class ContextManager implements CurrentSiteIdInterface
+class ContextManager extends SiteManager
 {
     const KEY_LOCALE = '_locale';
     const KEY_SITE = '_site';
 
     protected $session;
-    protected $siteRepository;
     protected $tokenStorage;
+    protected $siteRepository;
 
     /**
      * Constructor
@@ -27,9 +29,11 @@ class ContextManager implements CurrentSiteIdInterface
      * @param SiteRepositoryInterface $siteRepository
      * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
+     * @param RequestStack            $requestStack
      */
-    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, $defaultLocale = 'en')
+    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, $defaultLocale = 'en', RequestStack $requestStack)
     {
+        parent::__construct($requestStack);
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
 
@@ -88,6 +92,7 @@ class ContextManager implements CurrentSiteIdInterface
      */
     public function setCurrentSite($siteId, $siteName, $siteDefaultLanguage)
     {
+        $this->siteId = $siteId;
         $this->session->set(
             self::KEY_SITE,
             array(
@@ -105,9 +110,11 @@ class ContextManager implements CurrentSiteIdInterface
      */
     public function getCurrentSiteId()
     {
-        $site = $this->getCurrentSite();
+        if (is_null($this->siteId)) {
+            $this->siteId = $this->requestStack->getMasterRequest()->get('siteId', $this->getCurrentSite()['siteId']);
+        }
 
-        return $site['siteId'];
+        return $this->siteId;
     }
 
     /**
@@ -129,9 +136,11 @@ class ContextManager implements CurrentSiteIdInterface
      */
     public function getCurrentSiteDefaultLanguage()
     {
-        $site = $this->getCurrentSite();
+        if (is_null($this->currentLanguage) && ($request = $this->requestStack->getMasterRequest())) {
+            $this->currentLanguage = $request->get('language', $this->getCurrentSite()['defaultLanguage']);
+        }
 
-        return $site['defaultLanguage'];
+        return $this->currentLanguage;
     }
 
     /**

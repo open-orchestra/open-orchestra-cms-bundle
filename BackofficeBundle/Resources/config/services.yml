@@ -18,6 +18,7 @@ services:
             - @open_orchestra_model.repository.site
             - @security.token_storage
             - "%kernel.default_locale%"
+            - @request_stack
     open_orchestra.manager.current_site:
         alias: open_orchestra_backoffice.context_manager
     open_orchestra_backoffice.listener.translate_value_initializer:
