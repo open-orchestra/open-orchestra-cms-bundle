@@ -65,6 +65,12 @@ services:
         class: %open_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
         tags:
             - { name: open_orchestra_backoffice.display_block.strategy }
+    open_orchestra_backoffice.display.configurable_content:
+        class: %open_orchestra_backoffice.display.configurable_content.class%
+        arguments:
+            - @open_orchestra_model.repository.content
+        tags:
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.gmap:
         class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
         tags:
