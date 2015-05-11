@@ -14,7 +14,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     protected $request;
     protected $session;
     protected $tokenStorage;
-    protected $requestStatck;
+    protected $requestStack;
     protected $contextManager;
     protected $siteRepository;
 
@@ -24,8 +24,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->request = Phake::mock('Symfony\Component\HttpFoundation\Request');
-        $this->requestStatck = Phake::mock('Symfony\Component\HttpFoundation\RequestStack');
-        Phake::when($this->requestStatck)->getMasterRequest()->thenReturn($this->request);
+        $this->requestStack = Phake::mock('Symfony\Component\HttpFoundation\RequestStack');
+        Phake::when($this->requestStack)->getMasterRequest()->thenReturn($this->request);
 
         $this->token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $this->tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
@@ -34,7 +34,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
-        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage, 'en', $this->requestStatck);
+        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage, 'en', $this->requestStack);
     }
 
     /**
