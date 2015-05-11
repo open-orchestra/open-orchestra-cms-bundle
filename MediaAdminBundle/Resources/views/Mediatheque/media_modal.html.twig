@@ -4,10 +4,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close mediaModalClose" data-target="{{ id }}_modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="{{ id }}_modal_title">{{ 'open_orchestra_backoffice.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}</h4>
+                    <h4 class="modal-title" id="{{ id }}_modal_title">{{ 'open_orchestra_mediaadmin.left_menu.editorial.mediatheque'|trans({'language':context.currentLocale}) }}</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-body-menu" data-url="{{ path('open_orchestra_backoffice_media_list_form') }}"></div>
+                    <div class="modal-body-menu" data-url="{{ path('open_orchestra_mediaadmin_media_list_form') }}"></div>
                     <div class="modal-body-content"></div>
                     <div class="modal-body-end"></div>
                 </div>

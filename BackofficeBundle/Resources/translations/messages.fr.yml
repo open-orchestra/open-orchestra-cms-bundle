@@ -137,15 +137,6 @@ open_orchestra_backoffice:
             monthly: Mensuel
             yearly: Annuel
             never: Jamais
-        folder:
-            success: Le répertoire a été sauvegardé
-            delete: Ce répertoire contient des média, vous ne pouvez pas le supprimer.
-            confirm_delete:
-                title: Etes-vous sur de supprimer le dossier
-                text: La suppression entrainera la suppression des sous-dossier
-            name: Nom
-            site: Sélectionner des sites pour ce répertoire
-            edit: Editer le dossier
         area:
             success: La zone a été modifiée
             bo_direction: Direction des enfants
@@ -163,25 +154,6 @@ open_orchestra_backoffice:
             max_age: Max age pour le cache de la réponse
             id: Id html du block
             class: Class html du block
-        media:
-            file: Uploader un fichier
-            manual_crop: Crop manuel
-            alternative_file: Uploader une image alternative
-            crop: Crop
-            success: Le média a été sauvegardé
-            format: Choisissez un format
-            original_image: Originel
-            rectangle: Rectangle (100p x 70p)
-            max_width: Largeur fixe (100p)
-            max_height: Hauteur fixe (100p)
-            list:
-                keyword: Mot-clé
-            meta:
-                title: Titre
-                alt: Alt
-                copyright: Copyright
-                comment: Commentaire
-                keywords: Mot-clés
         sub_menu:
             node: Racine du menu
             level: Profondeur du menu
@@ -243,10 +215,8 @@ open_orchestra_backoffice:
         tree:
             new_page: Nouvelle page
             new_template: Nouveau gabarit
-            new_media_folder: Nouveau répertoire
             delete_node: Etes vous sûr de supprimer le noeud %nodeId% ?
             delete_template: Etes vous sûr de supprimer le gabarit %templateName% ?
-            delete_media_folder: Etes vous sûr de supprimer le répertoire %folderName%?
             confirm_move:
                 title: Déplacement de la page
                 text: En acceptant, la page sera déplacé pour être fils de "%nodeName%"
@@ -259,7 +229,6 @@ open_orchestra_backoffice:
             general_nodes: Pages générales
             templates: Gabarits
             contents: Contenus
-            mediatheque: Médiathèque
         administration:
             translation: Traduction
             icon: fa-desktop
@@ -294,31 +263,6 @@ open_orchestra_backoffice:
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
             description: Affiche un contenu sélectionné.
-        carrousel:
-            title: Bloc carrousel
-            description: Fait défiler des images.
-            form:
-                media:
-                    add: Ajouter un média
-                    new: Nouveau média
-                    delete: Retirer le média
-        gallery:
-            title: Bloc galerie
-            description: Affiche des images.
-            form:
-                pictures: Images
-                column_number: Nombre de colonnes
-                media:
-                    add: Ajouter un média
-                    new: Nouveau média
-                    delete: Retirer le média
-                item_number:
-                    label: Nombre d'éléments par page (0 pour tous)
-                    helper: Nombre d'éléments par page (0 pour tous)
-                thumbnail_format: Format des vignettes
-                image_format :
-                    label: Format de l'image (vue complète)
-                    helper: Format de l'image (vue complète)
         contact:
             title: Bloc contact
             description: Affiche un formulaire de contact.
@@ -327,9 +271,6 @@ open_orchestra_backoffice:
         footer:
             title: Bloc pied de page
             description: Affiche une liste de nom de noeud qui ont l'attribut footer.
-        media_list_by_keyword:
-            title: Block liste de média par mot clé
-            description: Affiche une liste de média par mot clé.
         menu:
             title: Bloc menu
             description: Affiche une liste de nom de noeud qui ont l'attribut menu.
@@ -427,11 +368,6 @@ open_orchestra_backoffice:
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
             site_id: Id de site (Google Analytics : Id de suivi / Xiti : paramètre 's')
-        display_media:
-            title: Bloc média
-            description: Affiche une image
-            form:
-                node_link: Ajoute un lien au média
     element:
         version:
             create: Nouvelle version
@@ -470,12 +406,6 @@ open_orchestra_backoffice:
         delete:
             title: Souhaitez-vous supprimer ce gabarit
             text: Cette opération est définitive.
-    media:
-        current_preview: Image
-        crop: Crop
-        meta: Méta
-        delete_question: Souhaitez-vous supprimer ce média
-        delete_explanation: Cette opération est non réversible.
     command:
         node:
             success: Les références des noeuds sont cohérentes.

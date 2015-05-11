@@ -137,15 +137,6 @@ open_orchestra_backoffice:
             monthly: Monthly
             yearly: Yearly
             never: Never
-        folder:
-            success: The folder has been saved
-            delete: This folder contains media, you can't delete it.
-            confirm_delete:
-                title: Are you sure to delete this folder
-                text: Deleting this folder will delete all of his subfolder.
-            name: Name
-            site: Select sites for this folder
-            edit: Edit folder
         area:
             success: The area has been modified
             bo_direction: Children direction
@@ -163,25 +154,6 @@ open_orchestra_backoffice:
             max_age: Max age of the response for this block
             id: Html id for the block
             class: Html class for the block
-        media:
-            file: Upload a file
-            manual_crop: Manual crop
-            alternative_file: Upload an alternative image
-            crop: Crop
-            success: The media has been saved
-            format: Choose a format
-            original_image: Original
-            rectangle: Rectangle (100p x 70p)
-            max_width: Fixed width (100p)
-            max_height: Fixed height (100p)
-            list:
-                keyword: Mot-clé
-            meta:
-                title: Title
-                alt: Alt
-                copyright: Copyright
-                comment: Comment
-                keywords: Keywords
         sub_menu:
             node: Menu root
             level: Menu depth
@@ -243,10 +215,8 @@ open_orchestra_backoffice:
         tree:
             new_page: New page
             new_template: New template
-            new_media_folder: New Folder
             delete_node: Are you sure to delete the node %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
-            delete_media_folder: Are you sure to delete the folder %folderName% ?
             confirm_move:
                 title: Reorder the node
                 text: By accepting, the node will be moved as child of "%nodeName%"
@@ -259,7 +229,6 @@ open_orchestra_backoffice:
             general_nodes: Global pages
             templates: Templates
             contents: Contents
-            mediatheque: Mediatheque
         administration:
             translation: Translation
             title: Administration
@@ -294,31 +263,6 @@ open_orchestra_backoffice:
             contentTypeId: Choose a content type
             contentId: Choose a content
             description: Display selected content.
-        carrousel:
-            title: Carousel block
-            description: Block to scroll images.
-            form:
-                media:
-                    add: Add media
-                    new: New media
-                    delete: Remove media
-        gallery:
-            title: Gallery block
-            description: Block to display images.
-            form:
-                pictures: Pictures
-                column_number: Number of columns
-                media:
-                    add: Add media
-                    new: New media
-                    delete: Remove media
-                item_number:
-                    label: Number of items per page (0 for all)
-                    helper: Number of items per page (0 for all)
-                thumbnail_format: Thumbnail format
-                image_format :
-                    label: Image format (full view)
-                    helper: Image format (full view)
         contact:
             title: Contact block
             description: Display a contact form.
@@ -327,9 +271,6 @@ open_orchestra_backoffice:
         footer:
             title: Footer block
             description: Display a node name list that have a footer attribute.
-        media_list_by_keyword:
-            title: Media list by keyword
-            description: Display a medias list.
         menu:
             title: Menu block
             description: Display a node name list that have the attribute menu.
@@ -427,11 +368,6 @@ open_orchestra_backoffice:
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
             site_id: Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)
-        display_media:
-            title: Media block
-            description: Display a picture
-            form:
-                node_link: Add a link to the media
     element:
         version:
             create: New version
@@ -470,12 +406,6 @@ open_orchestra_backoffice:
         delete:
           title: Would you like delete this template
           text: This operation is not reversible.
-    media:
-        current_preview: Image
-        crop: Crop
-        meta: Meta
-        delete_question: Would you like to delete this media
-        delete_explanation: This operation is not reversible.
     command:
         node:
             success: Nodes references are consistent.

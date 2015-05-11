@@ -1,0 +1,75 @@
+{% macro menu_folder(folders, first) %}
+    {% for folder in folders %}
+        <li>
+            <a
+                href="#folder/{{ folder.id }}/list"
+                id="{{ folder.id }}"
+                data-url="{{ path('open_orchestra_api_media_list', {'folderId': folder.id}) }}"
+                data-media-edit-url="{{ path('open_orchestra_api_media_show', {'mediaId': ':mediaId'}) }}"
+                data-displayed-elements="name">
+                <span>{{ folder.name }}</span>
+            </a>
+            <ul >
+                {% if folder.subFolders is not empty %}
+                    {{ _self.menu_folder(folder.subFoldersBySiteId(context.currentSiteId), 'child') }}
+                {% endif %}
+                <li>
+                    <div class="ui-state-unsortable">
+                        <a
+                            class="ajax-new"
+                            href="#"
+                            data-url="{{ path('open_orchestra_mediaadmin_folder_new', {'parentId': folder.id}) }}">
+                            <i class="fa fa-file"></i>
+                            {{ 'open_orchestra_mediaadmin.left_menu.tree.new_media_folder'|trans }}
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    {% endfor %}
+
+    {% if first == 'first' %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                        class="ajax-new"
+                        href="#"
+                        data-url="{{ path('open_orchestra_mediaadmin_folder_new', {'parentId': '-'}) }}">
+                    <i class="fa fa-file"></i>
+                    {{ 'open_orchestra_mediaadmin.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% macro menu_modal_folder(folders, parent_id) %}
+    {% for folder in folders %}
+        <li>
+            <a
+                id="media-modal-{{ folder.id }}"
+                class="media-modal-menu-folder"
+                data-url="{{ path('open_orchestra_api_media_list', {'folderId': folder.id}) }}"
+                data-displayed-elements="name">
+                {{ folder.name }}
+            </a>
+            {% if folder.subFolders is not empty %}
+                <ul >
+                    {{ _self.menu_modal_folder(folder.subFoldersBySiteId(context.currentSiteId), folder.id) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="media-modal-menu-new-folder"
+                    href="#"
+                    data-url="{{ path('open_orchestra_mediaadmin_folder_new', {'parentId': parent_id}) }}"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'open_orchestra_mediaadmin.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
+{% endmacro %}

@@ -52,7 +52,7 @@ class MediaTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder)->add('file', 'file', array('label' => 'open_orchestra_backoffice.form.media.file'));
+        Phake::verify($builder)->add('file', 'file', array('label' => 'open_orchestra_mediaadmin.form.media.file'));
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 

@@ -43,9 +43,9 @@ class CarrouselStrategy extends AbstractBlockStrategy
             'type' => 'orchestra_media',
             'allow_add' => true,
             'attr' => array(
-                'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.block.carrousel.form.media.add'),
-                'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.block.carrousel.form.media.new'),
-                'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.block.carrousel.form.media.delete'),
+                'data-prototype-label-add' => $this->translator->trans('open_orchestra_mediaadmin.block.carrousel.form.media.add'),
+                'data-prototype-label-new' => $this->translator->trans('open_orchestra_mediaadmin.block.carrousel.form.media.new'),
+                'data-prototype-label-remove' => $this->translator->trans('open_orchestra_mediaadmin.block.carrousel.form.media.delete'),
             ),
         ));
         $builder->add('width');
