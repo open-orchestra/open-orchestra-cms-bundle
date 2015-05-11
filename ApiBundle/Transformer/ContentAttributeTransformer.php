@@ -23,7 +23,6 @@ class ContentAttributeTransformer extends AbstractTransformer
 
         $facade->name = $mixed->getName();
         $facade->value = $mixed->getValue();
-
         return $facade;
     }
 

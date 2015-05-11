@@ -34,8 +34,9 @@ class ExtractReferenceFromContentStrategy implements ExtractReferenceInterface
 
         /** @var ContentAttributeInterface $attribute */
         foreach ($statusableElement->getAttributes() as $attribute) {
-            if (strpos($attribute->getValue(), MediaInterface::MEDIA_PREFIX) === 0) {
-                $references[substr($attribute->getValue(), strlen(MediaInterface::MEDIA_PREFIX))][] = 'content-' . $statusableElement->getId();
+            $value = $attribute->getValue();
+            if (is_string($value) && strpos($value, MediaInterface::MEDIA_PREFIX) === 0) {
+                $references[substr($value, strlen(MediaInterface::MEDIA_PREFIX))][] = 'content-' . $statusableElement->getId();
             }
         }
 

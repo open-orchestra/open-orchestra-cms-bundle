@@ -55,7 +55,28 @@ parameters:
                     default_value: false
                 choices:
                     default_value: null
-
+        money:
+            label: open_orchestra_backoffice.form.field_type.custom_type.money
+            options:
+                required:
+                    default_value: false
+                currency:
+                    default_value: EUR
+                precision:
+                    default_value: 2
+        hidden:
+            label: open_orchestra_backoffice.form.field_type.custom_type.hidden
+        date:
+            label: open_orchestra_backoffice.form.field_type.custom_type.date
+            options:
+                required:
+                    default_value: false
+                format:
+                    default_value: dd-MM-yyyy
+                widget:
+                    default_value: choice
+                input:
+                    default_value: array
 
     open_orchestra_backoffice.options:
         max_length:
@@ -85,4 +106,24 @@ parameters:
         choices:
             type: orchestra_choices_option
             label: open_orchestra_backoffice.form.orchestra_fields.choices
+            required: true
+        currency:
+            type: text
+            label: open_orchestra_backoffice.form.orchestra_fields.currency
+            required: true
+        precision:
+            type: integer
+            label: open_orchestra_backoffice.form.orchestra_fields.precision
+            required: true
+        format:
+            type: text
+            label: open_orchestra_backoffice.form.orchestra_fields.date_format
+            required: true
+        widget:
+            type: orchestra_date_widget_option
+            label: open_orchestra_backoffice.form.orchestra_fields.widget
+            required: true
+        input:
+            type: hidden
+            label: open_orchestra_backoffice.form.orchestra_fields.date_format
             required: true

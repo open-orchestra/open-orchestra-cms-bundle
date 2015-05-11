@@ -52,6 +52,9 @@ open_orchestra_backoffice:
                 wysiwyg: Texte riche
                 integer: Entier
                 email: Adresse email
+                money: Monnaie
+                hidden: Champ caché
+                date: Date
                 media: Média
                 choice: Choix
         website:
@@ -178,6 +181,14 @@ open_orchestra_backoffice:
             choices: Choix
             multiple: Multiple
             expanded: Etendu
+            currency: Devise
+            precision: Précision
+            date_format: Format de la date
+            widget: Widget
+            widget_type:
+                choice: Listes déroulantes
+                text: Plusieurs champs texte
+                single_text: Un Champ texte
         keyword:
             label: Libellé
             creation: Le mot-clé a été créé
