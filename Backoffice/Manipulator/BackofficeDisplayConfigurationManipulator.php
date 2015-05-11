@@ -21,7 +21,7 @@ class BackofficeDisplayConfigurationManipulator extends ConfigurationManiplulato
      */
     protected function getTag()
     {
-        return 'open_orchestra_display.display_block.strategy';
+        return 'open_orchestra_backoffice.display_block.strategy';
     }
 
     /**

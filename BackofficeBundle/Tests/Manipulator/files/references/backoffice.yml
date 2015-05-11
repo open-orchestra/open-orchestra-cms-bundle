@@ -2,4 +2,4 @@ services:
     open_orchestra_backoffice.display.test:
         class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\TestStrategy
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
