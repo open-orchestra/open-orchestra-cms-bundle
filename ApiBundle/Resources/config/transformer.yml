@@ -60,7 +60,7 @@ services:
     open_orchestra_api.transformer.block:
         class: %open_orchestra_api.transformer.block.class%
         arguments: 
-            - @open_orchestra_display.display_block_manager
+            - @open_orchestra_backoffice.display_block_manager
             - @open_orchestra_backoffice.display_icon_manager
             - %open_orchestra_model.document.block.class%
             - @open_orchestra_backoffice.block_parameter_manager

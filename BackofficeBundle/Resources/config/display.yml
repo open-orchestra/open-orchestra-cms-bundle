@@ -15,63 +15,69 @@ parameters:
     open_orchestra_backoffice.display.audience_analysis.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy
 
 services:
+    open_orchestra_backoffice.display_block_manager:
+        class: %open_orchestra_display.display_block_manager.class%
+        arguments:
+            - @templating
+            - @open_orchestra_display.manager.cacheable
+            - @open_orchestra_base.manager.tag
     open_orchestra_backoffice.display.contact:
         class: %open_orchestra_backoffice.display.contact.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.footer:
         class: %open_orchestra_backoffice.display.footer.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.menu:
         class: %open_orchestra_backoffice.display.menu.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.search_result:
         class: %open_orchestra_backoffice.display.search_result.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.search:
         class: %open_orchestra_backoffice.display.search.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.login:
         class: %open_orchestra_backoffice.display.login.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.sub_menu:
         class: %open_orchestra_backoffice.display.sub_menu.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.content_list:
         class: %open_orchestra_backoffice.display.content_list.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.content:
         class: %open_orchestra_backoffice.display.content.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.language_list:
         class: %open_orchestra_backoffice.display.language_list.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.tiny_mce_wysiwyg:
         class: %open_orchestra_backoffice.display.tiny_mce_wysiwyg.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.gmap:
         class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.add_this:
         class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\AddThisStrategy
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.audience_analysis:
         class: %open_orchestra_backoffice.display.audience_analysis.class%
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_backoffice.display.video:
         class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\VideoStrategy
         tags:
-            - { name: open_orchestra_display.display_block.strategy }
+            - { name: open_orchestra_backoffice.display_block.strategy }
