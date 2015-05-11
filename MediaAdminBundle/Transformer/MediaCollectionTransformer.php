@@ -31,11 +31,11 @@ class MediaCollectionTransformer extends AbstractTransformer
             $facade->addMedia($this->getTransformer('media')->transform($media));
         }
 
-        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_backoffice_media_new', array(
+        $facade->addLink('_self_add', $this->generateRoute('open_orchestra_mediaadmin_media_new', array(
             'folderId' => $folderId
         )));
 
-        $facade->addLink('_self_folder', $this->generateRoute('open_orchestra_backoffice_folder_form', array(
+        $facade->addLink('_self_folder', $this->generateRoute('open_orchestra_mediaadmin_folder_form', array(
             'folderId' => $folderId
         )));
 

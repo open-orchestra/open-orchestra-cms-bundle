@@ -36,23 +36,23 @@ class MediaMetaType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
 
         $builder->add('titles', 'translated_value_collection', array(
-            'label' => 'open_orchestra_backoffice.form.media.meta.title',
+            'label' => 'open_orchestra_mediaadmin.form.media.meta.title',
             'required' => false,
         ));
         $builder->add('alts', 'translated_value_collection', array(
-            'label' => 'open_orchestra_backoffice.form.media.meta.alt',
+            'label' => 'open_orchestra_mediaadmin.form.media.meta.alt',
             'required' => false,
         ));
         $builder->add('copyright', null, array(
-            'label' => 'open_orchestra_backoffice.form.media.meta.copyright',
+            'label' => 'open_orchestra_mediaadmin.form.media.meta.copyright',
             'required' => false,
         ));
         $builder->add('comment', 'textarea', array(
-            'label' => 'open_orchestra_backoffice.form.media.meta.comment',
+            'label' => 'open_orchestra_mediaadmin.form.media.meta.comment',
             'required' => false,
         ));
         $builder->add('keywords', 'orchestra_keywords', array(
-            'label' => 'open_orchestra_backoffice.form.media.meta.keywords',
+            'label' => 'open_orchestra_mediaadmin.form.media.meta.keywords',
             'required' => false
         ));
 

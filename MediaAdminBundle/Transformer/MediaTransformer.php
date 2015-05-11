@@ -48,16 +48,16 @@ class MediaTransformer extends AbstractTransformer
             $facade->addThumbnail($format, $this->generateRoute('open_orchestra_media_get', array(
                 'key' => $format . '-' . $mixed->getFilesystemName()
             )));
-            $facade->addLink('_self_format_' . $format, $this->generateRoute('open_orchestra_backoffice_media_override',
+            $facade->addLink('_self_format_' . $format, $this->generateRoute('open_orchestra_mediaadmin_media_override',
                 array('format' => $format, 'mediaId' => $mixed->getId())
             ));
         }
 
         $facade->addLink('_self_select', $mixed->getId());
-        $facade->addLink('_self_crop', $this->generateRoute('open_orchestra_backoffice_media_crop', array(
+        $facade->addLink('_self_crop', $this->generateRoute('open_orchestra_mediaadmin_media_crop', array(
             'mediaId' => $mixed->getId()
         )));
-        $facade->addLink('_self_meta', $this->generateRoute('open_orchestra_backoffice_media_meta', array(
+        $facade->addLink('_self_meta', $this->generateRoute('open_orchestra_mediaadmin_media_meta', array(
             'mediaId' => $mixed->getId()
         )));
         $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_media_delete', array(

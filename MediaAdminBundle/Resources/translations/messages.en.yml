@@ -1,0 +1,77 @@
+open_orchestra_mediaadmin:
+    form:
+        folder:
+            success: The folder has been saved
+            delete: This folder contains media, you can't delete it.
+            confirm_delete:
+                title: Are you sure to delete this folder
+                text: Deleting this folder will delete all of his subfolder.
+            name: Name
+            site: Select sites for this folder
+            edit: Edit folder
+        media:
+            file: Upload a file
+            manual_crop: Manual crop
+            alternative_file: Upload an alternative image
+            crop: Crop
+            success: The media has been saved
+            format: Choose a format
+            original_image: Original
+            rectangle: Rectangle (100p x 70p)
+            max_width: Fixed width (100p)
+            max_height: Fixed height (100p)
+            list:
+                keyword: Mot-clé
+            meta:
+                title: Title
+                alt: Alt
+                copyright: Copyright
+                comment: Comment
+                keywords: Keywords
+    left_menu:
+        tree:
+            new_media_folder: New Folder
+            delete_media_folder: Are you sure to delete the folder %folderName% ?
+        editorial:
+            mediatheque: Mediatheque
+        administration:
+    block:
+        carrousel:
+            title: Carousel block
+            description: Block to scroll images.
+            form:
+                media:
+                    add: Add media
+                    new: New media
+                    delete: Remove media
+        gallery:
+            title: Gallery block
+            description: Block to display images.
+            form:
+                pictures: Pictures
+                column_number: Number of columns
+                media:
+                    add: Add media
+                    new: New media
+                    delete: Remove media
+                item_number:
+                    label: Number of items per page (0 for all)
+                    helper: Number of items per page (0 for all)
+                thumbnail_format: Thumbnail format
+                image_format :
+                    label: Image format (full view)
+                    helper: Image format (full view)
+        media_list_by_keyword:
+            title: Media list by keyword
+            description: Display a medias list.
+        display_media:
+            title: Media block
+            description: Display a picture
+            form:
+                node_link: Add a link to the media
+    media:
+        current_preview: Image
+        crop: Crop
+        meta: Meta
+        delete_question: Would you like to delete this media
+        delete_explanation: This operation is not reversible.
