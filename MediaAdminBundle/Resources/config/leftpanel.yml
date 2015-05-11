@@ -7,4 +7,4 @@ services:
         arguments:
             - @open_orchestra_media.repository.media_folder
         tags:
-            - { name: open_orchestra_mediaadmin.left_panel.strategy }
+            - { name: open_orchestra_backoffice.left_panel.strategy }
