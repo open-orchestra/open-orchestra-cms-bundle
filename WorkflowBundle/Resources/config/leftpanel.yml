@@ -1,0 +1,11 @@
+parameters:
+    open_orchestra_backoffice.left_panel.fonction.class: OpenOrchestra\FonctionBundle\LeftPanel\Strategies\FonctionPanelStrategy
+
+services:
+    open_orchestra_workflow.left_panel.fonction:
+        class: %open_orchestra_backoffice.left_panel.fonction.class%
+        arguments:
+            - content_types
+            - ROLE_ACCESS_CONTENT_TYPE
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
