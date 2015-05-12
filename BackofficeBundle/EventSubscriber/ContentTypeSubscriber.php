@@ -59,20 +59,20 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
     {
         $form = $event->getForm();
         $content = $form->getData();
-        $data = $event->getData();
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
         if (is_object($contentType)) {
+            $data = $event->getData();
             $content->setContentTypeVersion($contentType->getVersion());
-            foreach ($contentType->getFields() as $field) {
-                $fieldId = $field->getFieldId();
-                if ($attribute = $content->getAttributeByName($fieldId)) {
-                    $attribute->setValue($this->transformData($data[$fieldId], $form->get($fieldId)));
+            foreach ($contentType->getFields() as $contentTypeField) {
+                $contentTypeFieldId = $contentTypeField->getFieldId();
+                if ($attribute = $content->getAttributeByName($contentTypeFieldId)) {
+                    $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
                 } elseif (is_null($attribute)) {
                     $contentAttributClass = $this->contentAttributClass;
                     $attribute = new $contentAttributClass;
-                    $attribute->setName($fieldId);
-                    $attribute->setValue($this->transformData($data[$fieldId], $form->get($fieldId)));
+                    $attribute->setName($contentTypeFieldId);
+                    $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
                     $content->addAttribute($attribute);
                 }
             }
