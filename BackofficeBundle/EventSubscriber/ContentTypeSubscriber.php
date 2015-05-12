@@ -7,7 +7,6 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
-use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
@@ -48,7 +47,8 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($data->getContentType());
 
         if (is_object($contentType)) {
-            $this->addContentTypeFieldsToForm($contentType, $event->getForm(), $data);
+            $data->setContentTypeVersion($contentType->getVersion());
+            $this->addContentTypeFieldsToForm($contentType->getFields(), $event->getForm(), $data);
         }
     }
 
@@ -80,22 +80,20 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
     }
 
     /**
-     * Add $contentType fields to $form with $data if content type is still valid
+     * Add $contentTypeFields to $form with values in $data if content type is still valid
      * 
-     * @param ContentTypeInterface $contentType
-     * @param FormInterface        $form
-     * @param ContentInterface     $data
+     * @param array<FieldTypeInterface> $contentTypeFields
+     * @param FormInterface             $form
+     * @param ContentInterface          $data
      */
-    protected function addContentTypeFieldsToForm(ContentTypeInterface $contentType, FormInterface $form, ContentInterface $data)
+    protected function addContentTypeFieldsToForm($contentTypeFields, FormInterface $form, ContentInterface $data)
     {
-        $data->setContentTypeVersion($contentType->getVersion());
-
         /** @var FieldTypeInterface $contentTypeField */
-        foreach ($contentType->getFields() as $contentTypeField) {
-            if (isset($this->fieldTypesConfiguration[$contentTypeField->getType()])) {
-                $savedAttribute = $data->getAttributeByName($contentTypeField->getFieldId());
-                $fieldValue = ($savedAttribute) ? $savedAttribute->getValue() : $contentTypeField->getDefaultValue();
+        foreach ($contentTypeFields as $contentTypeField) {
 
+            if (isset($this->fieldTypesConfiguration[$contentTypeField->getType()])) {
+                $dataAttribute = $data->getAttributeByName($contentTypeField->getFieldId());
+                $fieldValue = ($dataAttribute) ? $dataAttribute->getValue() : $contentTypeField->getDefaultValue();
                 $this->addFieldToForm($contentTypeField, $form, $fieldValue);
             }
         }
@@ -110,17 +108,19 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
      */
     protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form, $fieldValue)
     {
+        $fieldParameters = array_merge(
+            array(
+                'data' => $fieldValue,
+                'label' => $this->translationChoiceManager->choose($contentTypeField->getLabels()),
+                'mapped' => false,
+            ),
+            $this->getFieldOptions($contentTypeField)
+        );
+
         $form->add(
             $contentTypeField->getFieldId(),
             $this->fieldTypesConfiguration[$contentTypeField->getType()]['type'],
-            array_merge(
-                array(
-                    'data' => $fieldValue,
-                    'label' => $this->translationChoiceManager->choose($contentTypeField->getLabels()),
-                    'mapped' => false,
-                ),
-                $this->getFieldOptions($contentTypeField)
-            )
+            $fieldParameters
         );
     }
 
@@ -133,12 +133,12 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
      */
     protected function getFieldOptions(FieldTypeInterface $contentTypeField)
     {
-        $savedOptions = $contentTypeField->getFormOptions();
+        $contentTypeOptions = $contentTypeField->getFormOptions();
         $configuratedOptions = $this->fieldTypesConfiguration[$contentTypeField->getType()]['options'];
         $options = array();
 
         foreach ($configuratedOptions as $optionName => $optionConfiguration) {
-            $options[$optionName] = (isset($savedOptions[$optionName])) ? $savedOptions[$optionName] : $optionConfiguration['default_value'];
+            $options[$optionName] = (isset($contentTypeOptions[$optionName])) ? $contentTypeOptions[$optionName] : $optionConfiguration['default_value'];
         }
 
         return $options;
