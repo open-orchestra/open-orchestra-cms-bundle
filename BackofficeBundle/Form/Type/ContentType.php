@@ -26,7 +26,7 @@ class ContentType extends AbstractType
      * @param string                         $contentClass
      * @param string                         $contentAttributClass
      * @param TranslationChoiceManager       $translationChoiceManager
-     * @param string                         $fieldTypesConfiguration
+     * @param array                          $fieldTypesConfiguration
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,

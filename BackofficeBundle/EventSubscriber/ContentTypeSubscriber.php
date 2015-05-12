@@ -23,7 +23,7 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param string                         $contentAttributClass
      * @param TranslationChoiceManager       $translationChoiceManager
-     * @param string                         $fieldTypesConfiguration
+     * @param array                          $fieldTypesConfiguration
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
@@ -39,7 +39,7 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
     }
 
     /**
-     * @param FormEvent $eventFieldType
+     * @param FormEvent $event
      */
     public function preSetData(FormEvent $event)
     {
