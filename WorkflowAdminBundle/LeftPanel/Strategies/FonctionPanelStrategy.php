@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\WorkflowBundle\LeftPanel\Strategies;
+namespace OpenOrchestra\WorkflowAdminBundle\LeftPanel\Strategies;
 
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\AbstractLeftPanelStrategy;
-use OpenOrchestra\Workflow\Repository\FonctionRepositoryInterface;
+use OpenOrchestra\Fonction\Repository\FonctionRepositoryInterface;
 
 /**
- * Class TreeFonctionPanel
+ * Class FonctionPanelStrategy
  */
-class TreeFonctionPanelStrategy extends AbstractLeftPanelStrategy
+class FonctionPanelStrategy extends AbstractLeftPanelStrategy
 {
-    const ROLE_ACCESS_TREE_FONCTION = 'ROLE_ACCESS_TREE_FONCTION';
+    const ROLE_ACCESS_FONCTION = 'ROLE_ACCESS_FONCTION';
 
     /**
      * @var FonctionRepositoryInterface
@@ -30,11 +30,7 @@ class TreeFonctionPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function show()
     {
-        $rootFonctions = $this->fonctionRepository->findAllRootFonctionBySiteId();
-
-        return $this->render( 'OpenOrchestraWorkflowBundle:Tree:showFonctionTree.html.twig', array(
-            'fonctions' => $rootFonctions,
-        ));
+        return $this->render('OpenOrchestraWorkflowAdminBundle:AdministrationPanel:fonctions.html.twig');
     }
 
     /**
@@ -42,7 +38,7 @@ class TreeFonctionPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function getParent()
     {
-        return self::EDITORIAL;
+        return self::ADMINISTRATION;
     }
 
     /**
@@ -58,6 +54,6 @@ class TreeFonctionPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function getRole()
     {
-        return self::ROLE_ACCESS_TREE_FONCTION;
+        return self::ROLE_ACCESS_FONCTION;
     }
 }

@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_workflowadmin.left_panel.fonction.class: OpenOrchestra\WorkflowAdminBundle\LeftPanel\Strategies\FonctionPanelStrategy
+
+services:
+    open_orchestra_workflowadmin.left_panel.fonction:
+        class: %open_orchestra_workflowadmin.left_panel.fonction.class%
+        arguments:
+            - @open_orchestra_workflow.repository.fonction
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
