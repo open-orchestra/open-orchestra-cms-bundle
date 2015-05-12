@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
+
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
@@ -27,6 +28,7 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
         if (null === $arrayChoices) {
             return "";
         }
+
         return implode(',', $arrayChoices);
     }
 
@@ -43,9 +45,9 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
         $choices = explode(',', $choices);
         $arrayChoice = array();
 
-        foreach ($choices as $choice){
+        foreach ($choices as $choice) {
             $choice = $this->suppressSpecialCharacterClass->transform($choice);
-            if( '' != $choice) {
+            if ('' != $choice) {
                 $arrayChoice[$choice] = $choice;
             }
         }
