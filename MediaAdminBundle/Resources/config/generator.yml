@@ -10,22 +10,22 @@ services:
         arguments:
             - @translator
         tags:
-            - { name: open_orchestra_mediaadmin.generate_form.strategy }
+            - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_media_admin.gallery.generate_form:
         class: %open_orchestra_media_admin.gallery.generate_form.class%
         arguments:
             - @translator
             - %open_orchestra_media.thumbnail.configuration%
         tags:
-            - { name: open_orchestra_mediaadmin.generate_form.strategy }
+            - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_media_admin.media_list_by_keyword.generate_form:
         class: %open_orchestra_media_admin.media_list_by_keyword.generate_form.class%
         tags:
-            - { name: open_orchestra_mediaadmin.generate_form.strategy }
+            - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_media_admin.display_media.generate_form:
         class: %open_orchestra_media_admin.display_media.generate_form.class%
         arguments:
             - @translator
             - %open_orchestra_media.thumbnail.configuration%
         tags:
-            - { name: open_orchestra_mediaadmin.generate_form.strategy }
+            - { name: open_orchestra_backoffice.generate_form.strategy }
