@@ -61,16 +61,15 @@ ul, li {
 /*################################BLOCKS*/
 
 .ui-model-block {
-  position: relative;
   margin: 10px;
   color: white;
+  border-radius: 10px;
   .block-content {
-    padding: 10px;
-    border-radius: 10px;
-    height: 100%;
-    p{
+    .preview{
       margin-top: 10px;
     }
+    padding: 10px;
+    border-radius: 10px;
   }
 }
 /*################################TOOLBARS*/
@@ -117,27 +116,33 @@ ul, li {
   }
   //block toolbar
   .ui-model-block {
+    &::after {
+      content: "&nbsp;";
+      height: 0;
+      width: 0;
+      visibility: hidden;
+      clear: both;
+      display: block;
+    }
+    .toolbar-container {
+      width: 100%;
+      display:table;
+    }
     .toolbar {
-      z-index: 9999;
-      float: right;
-      &::after {
-        content: "&nbsp;";
-        height: 0;
-        width: 0;
-        visibility: hidden;
-        clear: both;
-        display: block;
-      }
+      display: table-cell;
+      text-align: center;
+      font-size: 0;
+      line-height: 28px;
     }
     .tool {
+      position: relative;
+      z-index: 9;
       color: #ffffff;
       font-size: 15px;
       padding: 8px 8px 5px 8px;
       background-color: #676564;
-      display: block;
-      float: left;
-      height: 32px;
       opacity: 0.8;
+      top: 10px;
     }
     .tool:hover {
       opacity: 1;
@@ -147,7 +152,7 @@ ul, li {
       border-bottom-left-radius: 3px;
     }
     .tool:last-child {
-      border-top-right-radius: 10px;
+      border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
     }
     .move-tool {
