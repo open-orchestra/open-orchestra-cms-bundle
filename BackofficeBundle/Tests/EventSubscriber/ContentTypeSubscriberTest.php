@@ -33,12 +33,25 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $contentAttributClass;
     protected $contentTypeVersion = 1;
     protected $transaltionChoiceManager;
+    protected $fieldTypesConfiguration;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->fieldTypesConfiguration = array(
+            'text' => 
+                array(
+                    'type' => 'text',
+                    'options' => array(
+                        'max_length' => array('default_value' => 12),
+                        'required' => array('default_value' => 'false'),
+                        'phake_option' => array('default_value' => 'phake_value')
+                    )
+                )
+        );
+
         $this->collection = Phake::mock('Doctrine\Common\Collections\Collection');
 
         $this->contentAttributClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';
@@ -79,7 +92,8 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
             $this->contentAttributClass,
-            $this->transaltionChoiceManager
+            $this->transaltionChoiceManager,
+            $this->fieldTypesConfiguration
         );
     }
 
@@ -114,7 +128,16 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $type = 'text';
         $options = array(
             'max_length' => 25,
-            'required' => true
+            'required' => true,
+            'oldOption' => 'oldValue'
+        );
+        $expectedOptions = array(
+            'data' => $defaultValue,
+            'label' => $label,
+            'mapped' => false,
+            'max_length' => 25,
+            'required' => true,
+            'phake_option' => 'phake_value'
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
@@ -127,14 +150,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
         Phake::verify($this->content)->setContentTypeVersion($this->contentTypeVersion);
-        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
-            array(
-                'data' => $defaultValue,
-                'label' => $label,
-                'mapped' => false
-            ),
-            $options
-        ));
+        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, $expectedOptions);
     }
 
     /**
@@ -161,18 +177,28 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $fieldId = 'title';
         $label = 'Title';
         $defaultValue = '';
+        $realValue = 'realValue';
         $type = 'text';
         $options = array(
             'max_length' => 25,
-            'required' => true
+            'required' => true,
+            'oldOption' => 'oldValue'
         );
+        $expectedOptions = array(
+            'data' => $realValue,
+            'label' => $label,
+            'mapped' => false,
+            'max_length' => 25,
+            'required' => true,
+            'phake_option' => 'phake_value'
+        );
+
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
-        $realValue = 'realValue';
         Phake::when($this->contentAttribute)->getValue()->thenReturn($realValue);
         Phake::when($this->content)->getAttributeByName($fieldId)->thenReturn($this->contentAttribute);
 
@@ -181,14 +207,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId);
         Phake::verify($this->content)->setContentTypeVersion($this->contentTypeVersion);
         Phake::when($this->content)->getAttributeByName($fieldId);
-        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, array_merge(
-            array(
-                'data' => $realValue,
-                'label' => $label,
-                'mapped' => false
-            ),
-            $options
-        ));
+        Phake::verify($this->form, Phake::times(2))->add($fieldId, $type, $expectedOptions);
     }
 
     /**
