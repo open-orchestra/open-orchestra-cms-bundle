@@ -110,7 +110,7 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
                 array('choice' => 'choice'),
             ),
             array('choîce@=!',
-                array('choice' => 'choi ce'),
+                array('choice' => 'choice'),
             ),
         );
     }
