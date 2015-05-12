@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer;
+use Phake;
 
 /**
  * Class ChoicesOptionToArrayTransformerTest
@@ -19,6 +20,7 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->suppressSpecialCharacter = new SuppressSpecialCharacterTransformer();
+        $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer');
         $this->transformer = new ChoicesOptionToArrayTransformer($this->suppressSpecialCharacter);
     }
 
@@ -91,6 +93,11 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
      * @dataProvider providerDifferentStringData
      */
     public function testReverseTransformWithStringData($data, $transformData){
+        Phake::when($this->suppressSpecialCharacter)->transform('')->thenReturn('');
+        Phake::when($this->suppressSpecialCharacter)->transform('choice')->thenReturn('choice');
+        Phake::when($this->suppressSpecialCharacter)->transform('choice2')->thenReturn('choice2');
+        Phake::when($this->suppressSpecialCharacter)->transform('choîce@=!')->thenReturn('choice');
+
         $this->assertSame($transformData, $this->transformer->reverseTransform($data));
     }
 
@@ -101,8 +108,8 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                'choice1,choice2',
-                array('choice1' => 'choice1', 'choice2' => 'choice2'),
+                'choice,choice2',
+                array('choice' => 'choice', 'choice2' => 'choice2'),
             ),
             array(
                 'choice,""',

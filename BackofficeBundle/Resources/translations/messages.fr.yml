@@ -188,7 +188,7 @@ open_orchestra_backoffice:
             widget_type:
                 choice: Listes déroulantes
                 text: Plusieurs champs texte
-                single_text: Un Champ texte
+                single_text: Un champ texte
         keyword:
             label: Libellé
             creation: Le mot-clé a été créé
