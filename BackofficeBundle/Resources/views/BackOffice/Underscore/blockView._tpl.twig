@@ -1,5 +1,5 @@
 <% if (typeof published != 'undefined') { %>
-    <li class="ui-model-block"
+    <li class="ui-model-block  <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>"
         data-delete-confirm-question="{{ 'open_orchestra_backoffice.block.delete_question'|trans }}"
         data-delete-confirm-explanation="{{ 'open_orchestra_backoffice.block.delete_explanation'|trans }}">
         <div class="toolbar-container">
