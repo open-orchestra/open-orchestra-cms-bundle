@@ -21,6 +21,7 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
 
     /**
      * @param array $arrayChoices
+     *
      * @return string
      */
     public function transform($arrayChoices)
@@ -34,7 +35,8 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
 
     /**
      * @param string $choices
-     * @return array choix1,choix2,choix3
+     *
+     * @return array
      */
     public function reverseTransform($choices)
     {
