@@ -8,13 +8,13 @@
     background-color: #e5590c;
 }
 //lists
-ul {
+ul, li {
   list-style-type: none;
   margin: 0;
   border: 0;
   padding: 0;
 }
-/* --- AREAS --- */
+/*################################AREAS*/
 
 .area-leaf > div > ul,.ui-model-areas  {
   border-radius: 10px;
@@ -55,6 +55,7 @@ ul {
   flex: 1;
   word-break: break-all;
   min-width: 10px;
+  min-height: 100px;
 }
 
 /*################################BLOCKS*/
@@ -62,16 +63,18 @@ ul {
 .ui-model-block {
   position: relative;
   margin: 10px;
+  color: white;
   .block-content {
     padding: 10px;
     border-radius: 10px;
-  }
-  .block-content{
     height: 100%;
+    p{
+      margin-top: 10px;
+    }
   }
 }
-  /*################################TOOLBARS*/
-  //Hide area toolbar button
+/*################################TOOLBARS*/
+//Hide area toolbar button
 .hide-areas {
   display:none;
 }
@@ -79,6 +82,8 @@ ul {
   display:inline;
 }
 .ui-model > .toolbar {
+  display: inline-block;
+  float:right;
   text-align:right;
   color:#666666;
   padding-right:5px;
@@ -160,6 +165,7 @@ ul {
 /*##############################################RIGHT MENU*/
 .scroll {
   overflow-y:scroll;
+  overflow-x: hidden;
 }
 
 .padding-10 {
