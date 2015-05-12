@@ -1,23 +1,23 @@
 parameters:
-    open_orchestra_media_admin_bundle.display.carrousel.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\CarrouselStrategy
-    open_orchestra_media_admin_bundle.display.gallery.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\GalleryStrategy
-    open_orchestra_media_admin_bundle.display.media_list_by_keyword.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy
-    open_orchestra_media_admin_bundle.display.display_media.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\DisplayMediaStrategy
+    open_orchestra_media_admin.display.carrousel.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\CarrouselStrategy
+    open_orchestra_media_admin.display.gallery.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\GalleryStrategy
+    open_orchestra_media_admin.display.media_list_by_keyword.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy
+    open_orchestra_media_admin.display.display_media.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\DisplayMediaStrategy
 
 services:
-    open_orchestra_media_admin_bundle.display.carrousel:
-        class: %open_orchestra_media_admin_bundle.display.carrousel.class%
+    open_orchestra_media_admin.display.carrousel:
+        class: %open_orchestra_media_admin.display.carrousel.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_block.strategy }
-    open_orchestra_media_admin_bundle.display.gallery:
-        class: %open_orchestra_media_admin_bundle.display.gallery.class%
+            - { name: open_orchestra_backoffice.display_block.strategy }
+    open_orchestra_media_admin.display.gallery:
+        class: %open_orchestra_media_admin.display.gallery.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_block.strategy }
-    open_orchestra_media_admin_bundle.display.media_list_by_keyword:
-        class: %open_orchestra_media_admin_bundle.display.media_list_by_keyword.class%
+            - { name: open_orchestra_backoffice.display_block.strategy }
+    open_orchestra_media_admin.display.media_list_by_keyword:
+        class: %open_orchestra_media_admin.display.media_list_by_keyword.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_block.strategy }
-    open_orchestra_media_admin_bundle.display.display_media:
-       class : %open_orchestra_media_admin_bundle.display.display_media.class%
+            - { name: open_orchestra_backoffice.display_block.strategy }
+    open_orchestra_media_admin.display.display_media:
+       class : %open_orchestra_media_admin.display.display_media.class%
        tags:
-           - { name: open_orchestra_mediaadmin.display_block.strategy }
+           - { name: open_orchestra_backoffice.display_block.strategy }

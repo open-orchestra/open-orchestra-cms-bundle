@@ -8,16 +8,16 @@ services:
     open_orchestra_media_admin.display_icon.carrousel:
         class: %open_orchestra_media_admin.display_icon.carrousel.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_icon.strategy }
+            - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_media_admin.display_icon.gallery:
         class: %open_orchestra_media_admin.display_icon.gallery.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_icon.strategy }
+            - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_media_admin.display_icon.display_media:
         class: %open_orchestra_media_admin.display_icon.display_media.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_icon.strategy }
+            - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_media_admin.display_icon.media_list:
         class: %open_orchestra_media_admin.display_icon.media_list.class%
         tags:
-            - { name: open_orchestra_mediaadmin.display_icon.strategy }
+            - { name: open_orchestra_backoffice.display_icon.strategy }
