@@ -17,19 +17,23 @@ class OrchestraChoicesOption extends AbstractType
     /**
      * @param ChoicesOptionToArrayTransformer $choiceTransformer
      */
-    public function __construct(ChoicesOptionToArrayTransformer $choiceTransformer){
+    public function __construct(ChoicesOptionToArrayTransformer $choiceTransformer)
+    {
         $this->choiceTransformer = $choiceTransformer;
     }
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->choiceTransformer);
     }
 
+    /**
+     * @return string
+     */
     public function getParent()
     {
         return 'text';
