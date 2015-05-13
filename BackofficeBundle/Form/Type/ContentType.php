@@ -19,24 +19,28 @@ class ContentType extends AbstractType
     protected $contentClass;
     protected $contentAttributClass;
     protected $translationChoiceManager;
+    protected $fieldTypesConfiguration;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param string                         $contentClass
      * @param string                         $contentAttributClass
      * @param TranslationChoiceManager       $translationChoiceManager
+     * @param array                          $fieldTypesConfiguration
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
         $contentClass,
         $contentAttributClass,
-        TranslationChoiceManager $translationChoiceManager
+        TranslationChoiceManager $translationChoiceManager,
+        $fieldTypesConfiguration
     )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentClass = $contentClass;
         $this->contentAttributClass = $contentAttributClass;
         $this->translationChoiceManager = $translationChoiceManager;
+        $this->fieldTypesConfiguration = $fieldTypesConfiguration;
     }
 
     /**
@@ -57,7 +61,8 @@ class ContentType extends AbstractType
         $builder->addEventSubscriber(new ContentTypeSubscriber(
             $this->contentTypeRepository,
             $this->contentAttributClass,
-            $this->translationChoiceManager
+            $this->translationChoiceManager,
+            $this->fieldTypesConfiguration
         ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }

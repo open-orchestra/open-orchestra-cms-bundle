@@ -166,6 +166,7 @@ services:
             - %open_orchestra_model.document.content.class%
             - %open_orchestra_model.document.content_attribute.class%
             - @open_orchestra_backoffice.manager.translation_choice
+            - %open_orchestra_backoffice.field_types%
         tags:
             - {name: form.type, alias: orchestra_content}
 

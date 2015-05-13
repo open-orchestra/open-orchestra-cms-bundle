@@ -4,6 +4,7 @@ parameters:
     open_orchestra_backoffice.field_types:
         text:
             label: open_orchestra_backoffice.form.field_type.custom_type.text
+            type: text
             options:
                 max_length:
                     default_value: 25
@@ -11,6 +12,7 @@ parameters:
                     default_value: false
         textarea:
             label: open_orchestra_backoffice.form.field_type.custom_type.textarea
+            type: textara
             options:
                 max_length:
                     default_value: 100
@@ -18,6 +20,7 @@ parameters:
                     default_value: false
         tinymce:
             label: open_orchestra_backoffice.form.field_type.custom_type.wysiwyg
+            type: tinymce
             options:
                 max_length:
                     default_value: 500
@@ -25,6 +28,7 @@ parameters:
                     default_value: false
         integer:
             label: open_orchestra_backoffice.form.field_type.custom_type.integer
+            type: integer
             options:
                 rounding_mode:
                     default_value: 0
@@ -34,6 +38,7 @@ parameters:
                     default_value: false
         email:
             label: open_orchestra_backoffice.form.field_type.custom_type.email
+            type: email
             options:
                 max_length:
                     default_value: 50
@@ -41,6 +46,7 @@ parameters:
                     default_value: false
         orchestra_media:
             label: open_orchestra_backoffice.form.field_type.custom_type.media
+            type: orchestra_media
             options:
                 required:
                     default_value: false
