@@ -1,9 +1,0 @@
-open_orchestra_workflow:
-    left_menu:
-        administration:
-            fonction: Fonction
-    form:
-        fonction:
-            success: La Fonction a bien été sauvegardée
-            name: Nom
-            role: Role
