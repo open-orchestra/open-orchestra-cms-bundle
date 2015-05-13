@@ -41,7 +41,8 @@ class ContentController extends BaseController
         $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
 
         if (!$content) {
-            $oldContent = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId);
+            $defaultCurrentSiteLanguage = $this->get('open_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage();
+            $oldContent = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $defaultCurrentSiteLanguage);
             $content = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($content);
