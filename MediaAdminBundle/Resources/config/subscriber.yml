@@ -1,6 +1,6 @@
 parameters:
     open_orchestra_media_admin.subscriber.update_media_reference.class: OpenOrchestra\MediaAdminBundle\EventSubscriber\UpdateMediaReferenceSubscriber
-    open_orchestra_media_admin.subscriber.media_cache_invalidate.class: OpenOrchestra\MediaAdminBundle\EventSubscriber\MediaChacheInvalidateSubscriber
+    open_orchestra_media_admin.subscriber.media_cache_invalidate.class: OpenOrchestra\MediaAdminBundle\EventSubscriber\MediaCacheInvalidateSubscriber
 
 services:
     open_orchestra_media_admin.subscriber.update_media_reference:
