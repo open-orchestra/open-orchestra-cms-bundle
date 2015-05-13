@@ -10,9 +10,9 @@ use OpenOrchestra\BaseBundle\Manager\TagManager;
 use OpenOrchestra\Media\Model\MediaInterface;
 
 /**
- * Class MediaChacheInvalidateSubscriber
+ * Class MediaCacheInvalidateSubscriber
  */
-class MediaChacheInvalidateSubscriber implements EventSubscriberInterface
+class MediaCacheInvalidateSubscriber implements EventSubscriberInterface
 {
     protected $cacheableManager;
     protected $tagManager;

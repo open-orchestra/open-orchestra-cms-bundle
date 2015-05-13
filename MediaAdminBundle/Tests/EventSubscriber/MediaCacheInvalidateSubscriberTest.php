@@ -3,13 +3,13 @@
 namespace OpenOrchestra\MediaAdminBundle\Tests\EventSubscriber;
 
 use Phake;
-use OpenOrchestra\MediaAdminBundle\EventSubscriber\MediaChacheInvalidateSubscriber;
+use OpenOrchestra\MediaAdminBundle\EventSubscriber\MediaCacheInvalidateSubscriber;
 use OpenOrchestra\Media\MediaEvents;
 
 /**
- * Class MediaChacheInvalidateSubscriberTest
+ * Class MediaCacheInvalidateSubscriberTest
  */
-class MediaChacheInvalidateSubscriberTest extends \PHPUnit_Framework_TestCase
+class MediaCacheInvalidateSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     protected $tagManager;
     protected $cacheableManager;
@@ -27,7 +27,7 @@ class MediaChacheInvalidateSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->cacheableManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\CacheableManager');
 
-        $this->subscriber = new MediaChacheInvalidateSubscriber($this->cacheableManager, $this->tagManager);
+        $this->subscriber = new MediaCacheInvalidateSubscriber($this->cacheableManager, $this->tagManager);
 
         $this->media = Phake::mock('OpenOrchestra\Media\Model\MediaInterface');
         Phake::when($this->media)->getId()->thenReturn($this->mediaId);
