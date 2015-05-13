@@ -19,7 +19,6 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->suppressSpecialCharacter = new SuppressSpecialCharacterTransformer();
         $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer');
         $this->transformer = new ChoicesOptionToArrayTransformer($this->suppressSpecialCharacter);
     }
