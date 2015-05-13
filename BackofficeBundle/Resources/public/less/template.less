@@ -50,12 +50,19 @@ ul, li {
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   -moz-flex-direction: row;
+  &>li.area-leaf{
+    display: flex;
+    flex-direction: column;
+    &>div.area-content{
+      display: flex;
+      flex: 1;
+    }
+  }
 }
 .bo-column>li,.bo-row>li {
   flex: 1;
   word-break: break-all;
   min-width: 10px;
-  min-height: 100px;
 }
 
 /*################################BLOCKS*/
