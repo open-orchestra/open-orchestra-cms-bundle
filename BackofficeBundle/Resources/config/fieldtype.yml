@@ -44,6 +44,39 @@ parameters:
             options:
                 required:
                     default_value: false
+        choice:
+            label: open_orchestra_backoffice.form.field_type.custom_type.choice
+            options:
+                required:
+                    default_value: false
+                multiple:
+                    default_value: false
+                expanded:
+                    default_value: false
+                choices:
+                    default_value: null
+        money:
+            label: open_orchestra_backoffice.form.field_type.custom_type.money
+            options:
+                required:
+                    default_value: false
+                currency:
+                    default_value: EUR
+                precision:
+                    default_value: 2
+        hidden:
+            label: open_orchestra_backoffice.form.field_type.custom_type.hidden
+        date:
+            label: open_orchestra_backoffice.form.field_type.custom_type.date
+            options:
+                required:
+                    default_value: false
+                format:
+                    default_value: dd-MM-yyyy
+                widget:
+                    default_value: choice
+                input:
+                    default_value: array
 
     open_orchestra_backoffice.options:
         max_length:
@@ -61,4 +94,36 @@ parameters:
         rounding_mode:
             type: integer
             label: open_orchestra_backoffice.form.orchestra_fields.rounding_mode
+            required: true
+        multiple:
+            type: checkbox
+            label: open_orchestra_backoffice.form.orchestra_fields.multiple
+            required: false
+        expanded:
+            type: checkbox
+            label: open_orchestra_backoffice.form.orchestra_fields.expanded
+            required: false
+        choices:
+            type: orchestra_choices_option
+            label: open_orchestra_backoffice.form.orchestra_fields.choices
+            required: true
+        currency:
+            type: text
+            label: open_orchestra_backoffice.form.orchestra_fields.currency
+            required: true
+        precision:
+            type: integer
+            label: open_orchestra_backoffice.form.orchestra_fields.precision
+            required: true
+        format:
+            type: text
+            label: open_orchestra_backoffice.form.orchestra_fields.date_format
+            required: true
+        widget:
+            type: orchestra_date_widget_option
+            label: open_orchestra_backoffice.form.orchestra_fields.widget
+            required: true
+        input:
+            type: hidden
+            label: open_orchestra_backoffice.form.orchestra_fields.date_format
             required: true

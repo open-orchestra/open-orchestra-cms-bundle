@@ -52,7 +52,11 @@ open_orchestra_backoffice:
                 wysiwyg: Rich text
                 integer: Integer
                 email: Email address
+                money: Money
+                hidden: Hidden
+                date: Date
                 media: Media
+                choice: Choice
         website:
             success: The website has been modified
             creation: The website has been created
@@ -174,6 +178,17 @@ open_orchestra_backoffice:
             required_field: Field required
             format: Format
             rounding_mode: Rounding mode
+            choices: Choices
+            multiple: Multiple
+            expanded: Expanded
+            currency: Currency
+            precision: Precision
+            date_format: Date's format
+            widget: Widget
+            widget_type:
+                choice: Select fields
+                text: Multiple text fields
+                single_text: One text field
         keyword:
             label: Label
             creation: Keyword has been created
