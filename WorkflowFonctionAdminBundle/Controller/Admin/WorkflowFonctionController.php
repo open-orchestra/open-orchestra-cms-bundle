@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class WorkflowFonctionController
+ *
+ * @Config\Route("workflowfonction")
  */
 class WorkflowFonctionController extends AbstractAdminController
 {
@@ -19,7 +21,7 @@ class WorkflowFonctionController extends AbstractAdminController
      * @param Request $request
      * @param string  $workflowFonctionId
      *
-     * @Config\Route("/workflowfonction/form/{workflowFonctionId}", name="open_orchestra_backoffice_workflowfonction_form")
+     * @Config\Route("/form/{workflowFonctionId}", name="open_orchestra_backoffice_workflowfonction_form")
      * @Config\Method({"GET", "POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_WORKFLOWFONCTION')")
@@ -39,7 +41,7 @@ class WorkflowFonctionController extends AbstractAdminController
     /**
      * @param Request $request
      *
-     * @Config\Route("/workflowfonction/new", name="open_orchestra_backoffice_workflowfonction_new")
+     * @Config\Route("/new", name="open_orchestra_backoffice_workflowfonction_new")
      * @Config\Method({"GET", "POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_WORKFLOWFONCTION')")
