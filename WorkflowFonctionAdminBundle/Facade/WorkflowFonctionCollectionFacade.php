@@ -14,7 +14,7 @@ class WorkflowFonctionCollectionFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $collectionName = 'workflowFonctions';
+    public $collectionName = 'workflow_fonctions';
 
     /**
      * @Serializer\Type("array<OpenOrchestra\WorkflowFonctionAdminBundle\Facade\WorkflowFonctionFacade>")
