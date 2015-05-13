@@ -60,5 +60,4 @@ class WorkflowFonctionType extends AbstractType
     {
         return 'workflowfonction';
     }
-
 }

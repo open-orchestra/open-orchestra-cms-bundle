@@ -4,7 +4,5 @@ parameters:
 services:
     open_orchestra_workflowfonction_admin.left_panel.workflowfonction:
         class: %open_orchestra_workflowfonction_admin.left_panel.workflowfonction.class%
-        arguments:
-            - @open_orchestra_workflowfonction.repository.workflowfonction
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }

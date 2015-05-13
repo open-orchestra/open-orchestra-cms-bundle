@@ -13,19 +13,6 @@ class WorkflowFonctionPanelStrategy extends AbstractLeftPanelStrategy
     const ROLE_ACCESS_WORKFLOWFONCTION = 'ROLE_ACCESS_WORKFLOWFONCTION';
 
     /**
-     * @var WorkflowFonctionRepositoryInterface
-     */
-    protected $workflowFonctionRepository;
-
-    /**
-     * @param WorkflowFonctionRepositoryInterface $workflowFonctionRepository
-     */
-    public function __construct(WorkflowFonctionRepositoryInterface $workflowFonctionRepository)
-    {
-        $this->workflowFonctionRepository = $workflowFonctionRepository;
-    }
-
-    /**
      * @return string
      */
     public function show()
