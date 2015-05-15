@@ -123,6 +123,7 @@ ul, li {
   }
   //block toolbar
   .ui-model-block {
+    position: relative;
     &::after {
       content: "&nbsp;";
       height: 0;
@@ -131,28 +132,47 @@ ul, li {
       clear: both;
       display: block;
     }
-    .toolbar-container {
-      width: 100%;
-      display:table;
+    &:hover .toolbar-container .toolbar {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      -moz-transition: opacity 0.5s ease;
+      -webkit-transition: opacity 0.5s ease;
+      -o-transition: opacity 0.5s ease;
     }
-    .toolbar {
-      display: table-cell;
-      text-align: center;
-      font-size: 0;
-      line-height: 28px;
+    .toolbar-container {
+      z-index: 9;
+      margin-top: -35px;
+      width: 100%;
+      position: absolute;
+      top:50%;
+      display:table;
+      padding: 20px;
+      .toolbar {
+        display: table-cell;
+        text-align: center;
+        font-size: 0;
+        line-height: 28px;
+        opacity:0;
+        transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -webkit-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+      }
     }
     .tool {
-      position: relative;
-      z-index: 9;
       color: #ffffff;
       font-size: 15px;
       padding: 8px 8px 5px 8px;
-      background-color: #676564;
-      opacity: 0.8;
-      top: 10px;
+      background-color: #888;
     }
-    .tool:hover {
-      opacity: 1;
+    .move-tool:hover,.block-param:hover, .move-trash:hover  {
+      background-color: #676564;
+    }
+    .tool:active {
+      box-shadow: 0px 0px 5px 1px black inset;
+      -moz-box-shadow: 0px 0px 5px 1px black inset;
+      -o-box-shadow: 0px 0px 5px 1px black inset;
+      -webkit-box-shadow: 0px 0px 5px 1px black inset;
     }
     .tool:first-child {
       border-top-left-radius: 3px;
