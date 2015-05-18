@@ -17,6 +17,7 @@
         "open-orchestra/open-orchestra-media-bundle": "*",
         "open-orchestra/open-orchestra-user-bundle": "*",
         "open-orchestra/open-orchestra-model-interface": "*",
+        "open-orchestra/open-orchestra-workflow-function-bundle": "*",
         "braincrafted/bootstrap-bundle": "2.1.2",
         "stfalcon/tinymce-bundle": "0.3.8"
     },
