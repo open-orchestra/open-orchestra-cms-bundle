@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\WorkflowFonctionAdminBundle\Form\Type;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
@@ -8,18 +8,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class WorkflowFonctionType
+ * Class WorkflowFunctionType
  */
-class WorkflowFonctionType extends AbstractType
+class WorkflowFunctionType extends AbstractType
 {
-    protected $workflowFonctionClass;
+    protected $workflowFunctionClass;
 
     /**
-     * @param string $workflowFonctionClass
+     * @param string $workflowFunctionClass
      */
-    public function __construct($workflowFonctionClass)
+    public function __construct($workflowFunctionClass)
     {
-        $this->workflowFonctionClass = $workflowFonctionClass;
+        $this->workflowFunctionClass = $workflowFunctionClass;
     }
 
     /**
@@ -30,12 +30,12 @@ class WorkflowFonctionType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'open_orchestra_workflowfonction.form.workflowfonction.name'
+                'label' => 'open_orchestra_workflowfunction.form.workflowfunction.name'
             ))
             ->add('roles', 'document', array(
                 'class' => 'OpenOrchestra\ModelBundle\Document\Role',
                 'property' => 'name',
-                'label' => 'open_orchestra_workflowfonction.form.workflowfonction.role',
+                'label' => 'open_orchestra_workflowfunction.form.workflowfunction.role',
                 'multiple' => true
             ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
@@ -47,7 +47,7 @@ class WorkflowFonctionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->workflowFonctionClass,
+            'data_class' => $this->workflowFunctionClass,
         ));
     }
 
@@ -58,6 +58,6 @@ class WorkflowFonctionType extends AbstractType
      */
     public function getName()
     {
-        return 'workflowfonction';
+        return 'workflowfunction';
     }
 }

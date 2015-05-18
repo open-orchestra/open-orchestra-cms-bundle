@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\WorkflowFonctionAdminBundle\Facade;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 
 /**
- * Class WorkflowFonctionFacade
+ * Class WorkflowFunctionFacade
  */
-class WorkflowFonctionFacade extends AbstractFacade
+class WorkflowFunctionFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("string")

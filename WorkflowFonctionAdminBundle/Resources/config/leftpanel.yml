@@ -1,8 +1,0 @@
-parameters:
-    open_orchestra_workflowfonction_admin.left_panel.workflowfonction.class: OpenOrchestra\WorkflowFonctionAdminBundle\LeftPanel\Strategies\WorkflowFonctionPanelStrategy
-
-services:
-    open_orchestra_workflowfonction_admin.left_panel.workflowfonction:
-        class: %open_orchestra_workflowfonction_admin.left_panel.workflowfonction.class%
-        tags:
-            - { name: open_orchestra_backoffice.left_panel.strategy }

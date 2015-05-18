@@ -1,0 +1,9 @@
+open_orchestra_workflowfunction_admin:
+    left_menu:
+        administration:
+            workflowfunction: Function de Workflow
+    form:
+        workflowfunction:
+            success: La Function de Workflow a bien été sauvegardée
+            name: Nom
+            role: Role

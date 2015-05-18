@@ -1,0 +1,13 @@
+parameters:
+    open_orchestra_workflowfunction_admin.transformer.workflowfunction_collection.class: OpenOrchestra\WorkflowFunctionAdminBundle\Transformer\WorkflowFunctionCollectionTransformer
+    open_orchestra_workflowfunction_admin.transformer.workflowfunction.class: OpenOrchestra\WorkflowFunctionAdminBundle\Transformer\WorkflowFunctionTransformer
+
+services:
+    open_orchestra_workflowfunction_admin.transformer.workflowfunction_collection:
+        class: %open_orchestra_workflowfunction_admin.transformer.workflowfunction_collection.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_workflowfunction_admin.transformer.log:
+        class: %open_orchestra_workflowfunction_admin.transformer.workflowfunction.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}

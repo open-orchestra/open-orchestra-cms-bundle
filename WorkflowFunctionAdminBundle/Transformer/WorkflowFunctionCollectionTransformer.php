@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\WorkflowFonctionAdminBundle\Transformer;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\WorkflowFonctionAdminBundle\Facade\WorkflowFonctionCollectionFacade;
+use OpenOrchestra\WorkflowFunctionAdminBundle\Facade\WorkflowFunctionCollectionFacade;
 
 /**
- * Class WorkflowFonctionCollectionTransformer
+ * Class WorkflowFunctionCollectionTransformer
  */
-class WorkflowFonctionCollectionTransformer extends AbstractTransformer
+class WorkflowFunctionCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param ArrayCollection $mixed
@@ -19,14 +19,14 @@ class WorkflowFonctionCollectionTransformer extends AbstractTransformer
      */
     public function transform($mixed)
     {
-        $facade = new WorkflowFonctionCollectionFacade();
+        $facade = new WorkflowFunctionCollectionFacade();
 
-        foreach ($mixed as $workflowFonction) {
-            $facade->addWorkflowFonction($this->getTransformer('workflowfonction')->transform($workflowFonction));
+        foreach ($mixed as $workflowFunction) {
+            $facade->addWorkflowFunction($this->getTransformer('workflowfunction')->transform($workflowFunction));
         }
 
         $facade->addLink('_self_add', $this->generateRoute(
-            'open_orchestra_backoffice_workflowfonction_new',
+            'open_orchestra_backoffice_workflowfunction_new',
             array()
         ));
 
@@ -41,6 +41,6 @@ class WorkflowFonctionCollectionTransformer extends AbstractTransformer
      */
     public function getName()
     {
-        return 'workflowfonction_collection';
+        return 'workflowfunction_collection';
     }
 }
