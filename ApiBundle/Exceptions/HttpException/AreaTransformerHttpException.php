@@ -1,7 +1,8 @@
 <?php
 
 namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
-use OpenOrchestra\BaseApi\Exceptions\ApiException;
+
+use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
 
 /**
  * Class AreaTransformerHttpException
