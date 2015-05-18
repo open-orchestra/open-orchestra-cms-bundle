@@ -6,5 +6,6 @@ services:
         class: %open_orchestra_media_admin.left_panel.folder.class%
         arguments:
             - @open_orchestra_media.repository.media_folder
+            - @open_orchestra.manager.current_site
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }

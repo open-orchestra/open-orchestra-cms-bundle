@@ -57,7 +57,8 @@ class MediaController extends AbstractAdminController
      */
     public function showFoldersAction()
     {
-        $rootFolders = $this->get('open_orchestra_media.repository.media_folder')->findAllRootFolderBySiteId();
+        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
+        $rootFolders = $this->get('open_orchestra_media.repository.media_folder')->findAllRootFolderBySiteId($siteId);
 
         return $this->render( 'OpenOrchestraMediaAdminBundle:Tree:showModalFolderTree.html.twig', array(
                 'folders' => $rootFolders,
