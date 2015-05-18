@@ -30,12 +30,12 @@ class WorkflowFunctionType extends AbstractType
     {
         $builder
             ->add('name', 'text', array(
-                'label' => 'open_orchestra_workflowfunction.form.workflowfunction.name'
+                'label' => 'open_orchestra_workflow_function.form.workflow_function.name'
             ))
             ->add('roles', 'document', array(
                 'class' => 'OpenOrchestra\ModelBundle\Document\Role',
                 'property' => 'name',
-                'label' => 'open_orchestra_workflowfunction.form.workflowfunction.role',
+                'label' => 'open_orchestra_workflow_function.form.workflow_function.role',
                 'multiple' => true
             ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
@@ -58,6 +58,6 @@ class WorkflowFunctionType extends AbstractType
      */
     public function getName()
     {
-        return 'workflowfunction';
+        return 'workflow_function';
     }
 }

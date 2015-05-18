@@ -25,15 +25,15 @@ class WorkflowFunctionTransformer extends AbstractTransformer
         $facade->name = $mixed->getName();
 
         $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_workflowfunction_show',
+            'open_orchestra_api_workflow_function_show',
             array('workflowFunctionId' => $mixed->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
-            'open_orchestra_api_workflowfunction_delete',
+            'open_orchestra_api_workflow_function_delete',
             array('workflowFunctionId' => $mixed->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
-            'open_orchestra_backoffice_workflowfunction_form',
+            'open_orchestra_backoffice_workflow_function_form',
             array('workflowFunctionId' => $mixed->getId())
         ));
 
@@ -45,6 +45,6 @@ class WorkflowFunctionTransformer extends AbstractTransformer
      */
     public function getName()
     {
-        return 'workflowfunction';
+        return 'workflow_function';
     }
 }

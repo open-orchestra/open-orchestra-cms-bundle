@@ -22,11 +22,11 @@ class WorkflowFunctionCollectionTransformer extends AbstractTransformer
         $facade = new WorkflowFunctionCollectionFacade();
 
         foreach ($mixed as $workflowFunction) {
-            $facade->addWorkflowFunction($this->getTransformer('workflowfunction')->transform($workflowFunction));
+            $facade->addWorkflowFunction($this->getTransformer('workflow_function')->transform($workflowFunction));
         }
 
         $facade->addLink('_self_add', $this->generateRoute(
-            'open_orchestra_backoffice_workflowfunction_new',
+            'open_orchestra_backoffice_workflow_function_new',
             array()
         ));
 
@@ -41,6 +41,6 @@ class WorkflowFunctionCollectionTransformer extends AbstractTransformer
      */
     public function getName()
     {
-        return 'workflowfunction_collection';
+        return 'workflow_function_collection';
     }
 }

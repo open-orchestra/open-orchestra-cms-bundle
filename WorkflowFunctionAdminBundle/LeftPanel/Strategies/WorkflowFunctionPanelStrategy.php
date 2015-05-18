@@ -33,7 +33,7 @@ class WorkflowFunctionPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function getName()
     {
-        return 'workflowfunctions';
+        return 'workflow_function';
     }
 
     /**

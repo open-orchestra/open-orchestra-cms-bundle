@@ -1,9 +1,9 @@
-open_orchestra_workflowfunction_admin:
+open_orchestra_workflow_function_admin:
     left_menu:
         administration:
             worflowfunction: Workflow Function
     form:
-        workflowfunction:
+        workflow_function:
             success: The workflow function has been saved
             name: Name
             role: Role
