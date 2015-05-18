@@ -21,6 +21,8 @@ services:
             - @templating
             - @open_orchestra_display.manager.cacheable
             - @open_orchestra_base.manager.tag
+            - @open_orchestra.manager.current_site
+
     open_orchestra_backoffice.display.contact:
         class: %open_orchestra_backoffice.display.contact.class%
         tags:
