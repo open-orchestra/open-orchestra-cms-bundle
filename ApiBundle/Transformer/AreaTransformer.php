@@ -7,6 +7,7 @@ use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
@@ -19,15 +20,18 @@ class AreaTransformer extends AbstractTransformer
 {
     protected $nodeRepository;
     protected $areaManager;
+    protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param AreaManager             $areaManager
+     * @param CurrentSiteIdInterface  $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, AreaManager $areaManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, AreaManager $areaManager, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->areaManager = $areaManager;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -56,7 +60,8 @@ class AreaTransformer extends AbstractTransformer
             $otherNode = $node;
             $isInside = true;
             if (0 !== $block['nodeId'] && $node->getNodeId() != $block['nodeId']) {
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
+                $siteId = $this->currentSiteManager->getCurrentSiteId();
+                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
                 $isInside = false;
             }
             $facade->addBlock($this->getTransformer('block')->transform(
@@ -194,7 +199,8 @@ class AreaTransformer extends AbstractTransformer
             $blockDocument[$position] = $blockArray;
             $block = $node->getBlock($blockArray['blockId']);
             if ($blockArray['nodeId'] !== 0) {
-                $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockArray['nodeId'], $node->getLanguage());
+                $siteId = $this->currentSiteManager->getCurrentSiteId();
+                $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($blockArray['nodeId'], $node->getLanguage(), $siteId);
                 $block = $blockNode->getBlock($blockArray['blockId']);
             }
             $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));

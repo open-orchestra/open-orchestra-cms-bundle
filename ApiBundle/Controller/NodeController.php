@@ -33,13 +33,16 @@ class NodeController extends BaseController
      */
     public function showAction(Request $request, $nodeId)
     {
-        $language = $request->get('language');
+        $currentSiteManager = $this->get('open_orchestra.manager.current_site');
+        $language = (null !== $request->get('language')) ? $request->get('language') : $currentSiteManager->getCurrentSiteDefaultLanguage();
         $version = $request->get('version');
+        $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->get('open_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $version);
+            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version);
 
         if (!$node) {
-            $oldNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId);
+            $defaultCurrentSiteLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
+            $oldNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $defaultCurrentSiteLanguage, $siteId);
             $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($node);
@@ -64,7 +67,8 @@ class NodeController extends BaseController
      */
     public function deleteAction($nodeId)
     {
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId);
+        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId, $siteId);
         $node = $nodes->getNext();
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
@@ -87,9 +91,10 @@ class NodeController extends BaseController
     public function duplicateAction(Request $request, $nodeId)
     {
         $language = $request->get('language');
+        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language);
+            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($node);
 
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
@@ -119,7 +124,8 @@ class NodeController extends BaseController
     public function listVersionAction(Request $request, $nodeId)
     {
         $language = $request->get('language');
-        $node = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndLanguageAndSiteId($nodeId, $language);
+        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
+        $node = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndLanguageAndSiteId($nodeId, $language, $siteId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
     }

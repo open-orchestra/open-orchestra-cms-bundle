@@ -33,8 +33,9 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->node2)->getNodeId()->thenReturn($this->nodeNodeId2);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
+        $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
-        $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository, $this->treeManager);
+        $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository, $this->treeManager, $currentSiteManager);
     }
 
     /**
@@ -68,7 +69,7 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
 
-        Phake::when($this->nodeRepository)->findLastVersionBySiteId()->thenReturn(
+        Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())->thenReturn(
             array(
                 $this->node1,
                 $this->node2

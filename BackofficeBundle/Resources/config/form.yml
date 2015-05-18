@@ -215,6 +215,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.node
             - @open_orchestra_display.manager.tree
+            - @open_orchestra.manager.current_site
         tags:
             - { name: form.type, alias: orchestra_node_choice}
     open_orchestra_backoffice.type.orchestra_site_choice:

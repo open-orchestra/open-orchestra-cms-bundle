@@ -21,6 +21,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     protected $blockClass;
     protected $router;
     protected $node;
+    protected $currentSiteManager;
 
     /**
      * Set up the test
@@ -43,7 +44,11 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager, $this->nodeRepository);
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
+        Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
+
+        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager, $this->nodeRepository, $this->currentSiteManager);
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
@@ -133,13 +138,13 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->blockFacade->blockId = $blockId;
 
         $nodeTransverse = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-
         Phake::when($this->node)->getNodeId()->thenReturn($nodeId);
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($block);
         Phake::when($nodeTransverse)->getBlock(Phake::anyParameters())->thenReturn($block);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($facadeNodeId, null)->thenReturn($nodeTransverse);
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($facadeNodeId, $this->node->getLanguage(), $siteId)->thenReturn($nodeTransverse);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 

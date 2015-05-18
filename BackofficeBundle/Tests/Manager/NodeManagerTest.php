@@ -160,15 +160,16 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $sons->add($son);
         $sons->add($son);
 
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($nodeId)->thenReturn($sons);
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($sonId)->thenReturn(new ArrayCollection());
+        $siteId = $this->contextManager->getCurrentSiteId();
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($nodeId, $siteId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($sonId, $siteId)->thenReturn(new ArrayCollection());
 
         $this->manager->deleteTree($nodes);
 
         Phake::verify($node, Phake::times(2))->setDeleted(true);
         Phake::verify($son, Phake::times(2))->setDeleted(true);
-        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($nodeId);
-        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($sonId);
+        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($nodeId, $siteId);
+        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($sonId, $siteId);
         Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
     }
 
@@ -381,7 +382,8 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $sons->add($this->node);
         $sons->add($this->node);
 
-        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId('son')->thenReturn($sons);
+        $siteId = $this->contextManager->getCurrentSiteId();
+        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId('son',$siteId)->thenReturn($sons);
 
         $this->manager->orderNodeChildren($orderedNode, $parentNode);
 

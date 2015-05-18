@@ -45,7 +45,7 @@ class BlockController extends BaseController
         }
 
         $node = $this->get('open_orchestra_model.repository.node')
-        ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language);
+        ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language, $currentSiteId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform($node->getBlocks(), $blocks, $node->getNodeId());
     }
