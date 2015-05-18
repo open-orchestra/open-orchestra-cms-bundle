@@ -26,7 +26,10 @@ class ContentController extends AbstractAdminController
      */
     public function formAction(Request $request, $contentId)
     {
-        $language = $this->getContentLanguage($request);
+        $language = $request->get(
+            'language',
+            $this->get('open_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage()
+        );
         $version = $request->get('version');
 
         $content = $this->get('open_orchestra_model.repository.content')->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
@@ -55,21 +58,6 @@ class ContentController extends AbstractAdminController
             null,
             $this->getFormTemplate($content->getContentType()
         ));
-    }
-
-    /**
-     * Get the content language from Request or current site
-     * 
-     * @param Request $request
-     * 
-     * @return string
-     */
-    protected function getContentLanguage(Request $request)
-    {
-        if ($request->get('language'))
-            return $request->get('language');
-
-        return $this->get('open_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage();
     }
 
     /**
