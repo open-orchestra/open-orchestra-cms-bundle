@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_workflow_function_admin.type.workflow_function.class: OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type\WorkflowFunctionType
+
+services:
+    open_orchestra_workflow_function_admin.type.workflow_function:
+        class: %open_orchestra_workflow_function_admin.type.workflow_function.class%
+        arguments:
+            - %open_orchestra_workflow_function.document.workflow_function.class%
+        tags:
+            - { name: form.type, alias: workflow_function}
