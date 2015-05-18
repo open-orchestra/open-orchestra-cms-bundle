@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -15,15 +16,17 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
 {
     protected $nodeRepository;
     protected $container;
+    protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param Container               $container
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, Container $container)
+    public function __construct(NodeRepositoryInterface $nodeRepository, Container $container, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->container = $container;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -33,8 +36,8 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
     {
         $node = $event->getNode();
         $parentPath = $node->getPath();
-
-        $sons = $this->nodeRepository->findByParentIdAndSiteId($node->getNodeId());
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $sons = $this->nodeRepository->findByParentIdAndSiteId($node->getNodeId(), $siteId);
 
         $sonsToUpdate = array();
         foreach ($sons as $son) {

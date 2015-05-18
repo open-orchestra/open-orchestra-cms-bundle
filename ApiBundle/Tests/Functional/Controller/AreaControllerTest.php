@@ -36,7 +36,9 @@ class AreaControllerTest extends AbstractControllerTest
         $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['node_id']);
+        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['node_id'], $language, $siteId);
         $this->assertSame(array(), $nodeAfter->getBlock(3)->getAreas());
 
         // Add ref of area in block 3

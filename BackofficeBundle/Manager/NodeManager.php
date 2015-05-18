@@ -123,7 +123,8 @@ class NodeManager
         }
 
         if ($parentId) {
-            $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId);
+            $siteId = $this->contextManager->getCurrentSiteId();
+            $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId, $siteId);
             $this->deleteTree($sons);
         }
 
@@ -140,7 +141,8 @@ class NodeManager
      */
     public function hydrateNodeFromNodeId(NodeInterface $node, $nodeId)
     {
-        $oldNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $node->getLanguage());
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $oldNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $node->getLanguage(), $siteId);
 
         if ($oldNode) {
             $this->duplicateBlockAndArea($oldNode, $node);
@@ -195,16 +197,20 @@ class NodeManager
      */
     public function initializeNewNode($parentId)
     {
+        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
+        $siteId = $this->contextManager->getCurrentSiteId();
+
         $node = new $this->nodeClass();
-        $node->setSiteId($this->contextManager->getCurrentSiteId());
-        $node->setLanguage($this->contextManager->getCurrentSiteDefaultLanguage());
+        $node->setSiteId($siteId);
+        $node->setLanguage($language);
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
-        $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId);
+
+        $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
         $node->setNodeType($parentNode->getNodeType());
 
-        $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
+        $site = $this->siteRepository->findOneBySiteId($siteId);
         if ($site) {
             $node->setMetaKeywords($site->getMetaKeywords());
             $node->setMetaDescription($site->getMetaDescription());
@@ -252,7 +258,8 @@ class NodeManager
     {
         $nodeId = $node->getNodeId();
         foreach ($orderedNode as $position => $childNodeId) {
-            $childs = $this->nodeRepository->findByNodeIdAndSiteId($childNodeId);
+            $siteId = $this->contextManager->getCurrentSiteId();
+            $childs = $this->nodeRepository->findByNodeIdAndSiteId($childNodeId, $siteId);
             $path = $node->getPath() . '/' . $childNodeId;
             /** @var NodeInterface $child */
             foreach ($childs as $child) {
