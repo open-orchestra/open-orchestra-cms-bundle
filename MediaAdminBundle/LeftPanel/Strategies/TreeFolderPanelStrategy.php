@@ -3,6 +3,7 @@
 namespace OpenOrchestra\MediaAdminBundle\LeftPanel\Strategies;
 
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\AbstractLeftPanelStrategy;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\Media\Repository\FolderRepositoryInterface;
 
 /**
@@ -18,11 +19,18 @@ class TreeFolderPanelStrategy extends AbstractLeftPanelStrategy
     protected $folderRepository;
 
     /**
-     * @param FolderRepositoryInterface $folderRepository
+     * @var CurrentSiteIdInterface
      */
-    public function __construct(FolderRepositoryInterface $folderRepository)
+    protected $currentSiteManager;
+
+    /**
+     * @param FolderRepositoryInterface $folderRepository
+     * @param CurrentSiteIdInterface    $currentSiteManager
+     */
+    public function __construct(FolderRepositoryInterface $folderRepository, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->folderRepository = $folderRepository;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -30,7 +38,8 @@ class TreeFolderPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function show()
     {
-        $rootFolders = $this->folderRepository->findAllRootFolderBySiteId();
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $rootFolders = $this->folderRepository->findAllRootFolderBySiteId($siteId);
 
         return $this->render( 'OpenOrchestraMediaAdminBundle:Tree:showFolderTree.html.twig', array(
             'folders' => $rootFolders,
