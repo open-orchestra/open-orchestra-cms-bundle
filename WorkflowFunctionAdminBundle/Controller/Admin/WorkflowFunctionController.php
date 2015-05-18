@@ -50,7 +50,7 @@ class WorkflowFunctionController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $workflowFunctionClass = $this->container->getParameter('open_orchestra_workflow_function.document.workflowFunction.class');
+        $workflowFunctionClass = $this->container->getParameter('open_orchestra_workflow_function.document.workflow_function.class');
         $workflowFunction = new $workflowFunctionClass();
 
         $url = $this->generateUrl('open_orchestra_backoffice_workflow_function_new');

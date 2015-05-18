@@ -8,13 +8,16 @@ use OpenOrchestra\WorkflowFunction\WorkflowFunctionEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
  * Class WorkflowFunctionController
  *
  * @Config\Route("workflow-function")
  */
-class WorkflowFunctionController extends Controller
+class WorkflowFunctionController extends BaseController
 {
     /**
      * @param string $workflowFunctionId
