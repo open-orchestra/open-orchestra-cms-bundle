@@ -38,7 +38,8 @@
             "OpenOrchestra\\GroupBundle": "",
             "OpenOrchestra\\ApiBundle": "",
             "OpenOrchestra\\UserAdminBundle": "",
-            "OpenOrchestra\\MediaAdminBundle": ""
+            "OpenOrchestra\\MediaAdminBundle": "",
+            "OpenOrchestra\\WorkflowFunctionAdminBundle": ""
         }
     },
     "target-dir": "OpenOrchestra"
