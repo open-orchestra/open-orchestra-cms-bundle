@@ -52,6 +52,7 @@ parameters:
                     default_value: false
         choice:
             label: open_orchestra_backoffice.form.field_type.custom_type.choice
+            type: choice
             options:
                 required:
                     default_value: false
@@ -63,6 +64,7 @@ parameters:
                     default_value: null
         money:
             label: open_orchestra_backoffice.form.field_type.custom_type.money
+            type: money
             options:
                 required:
                     default_value: false
@@ -72,8 +74,10 @@ parameters:
                     default_value: 2
         hidden:
             label: open_orchestra_backoffice.form.field_type.custom_type.hidden
+            type: hidden
         date:
             label: open_orchestra_backoffice.form.field_type.custom_type.date
+            type: date
             options:
                 required:
                     default_value: false
