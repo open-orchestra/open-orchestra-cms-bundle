@@ -38,6 +38,9 @@ class UserTransformer extends AbstractTransformer
             'open_orchestra_user_admin_user_form',
             array('userId' => $mixed->getId())
         ));
+        $facade->addLink('_self_reset_password', $this->generateRoute(
+            'fos_user_change_password'
+        ));
 
         return $facade;
     }
