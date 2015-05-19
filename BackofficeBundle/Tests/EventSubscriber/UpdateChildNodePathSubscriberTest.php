@@ -19,6 +19,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
 
     protected $nodeRepository;
     protected $eventDispatcher;
+    protected $currentSiteManager;
 
     /**
      * Set up the test
@@ -30,8 +31,10 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($container)->get('event_dispatcher')->thenReturn($this->eventDispatcher);
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');
 
-        $this->subscriber = new UpdateChildNodePathSubscriber($this->nodeRepository, $container);
+        $this->subscriber = new UpdateChildNodePathSubscriber($this->nodeRepository, $container, $this->currentSiteManager);
     }
 
     /**
@@ -52,6 +55,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdatePath()
     {
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
         $parentNodeId = 'parent';
         $parentPath = 'parentPath';
         $son1NodeId = 'son1NodeId';
@@ -70,7 +74,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $sons->add($son1);
         $sons->add($son2);
         $sons->add($son3);
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($parentNodeId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($parentNodeId, $siteId)->thenReturn($sons);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($parent);

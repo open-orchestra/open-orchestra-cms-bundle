@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
@@ -17,11 +18,17 @@ class TreeNodesPanelStrategy extends AbstractLeftPanelStrategy
     protected $nodeRepository;
 
     /**
+     * @var CurrentSiteIdInterface
+     */
+    protected $currentSiteManager;
+
+    /**
      * @param NodeRepositoryInterface $nodeRepository
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository)
+    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -29,7 +36,8 @@ class TreeNodesPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function show()
     {
-        $nodes = $this->nodeRepository->findLastVersionBySiteId();
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',

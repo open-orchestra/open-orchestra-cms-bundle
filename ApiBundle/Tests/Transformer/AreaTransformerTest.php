@@ -31,6 +31,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     protected $block;
     protected $node;
     protected $area;
+    protected $currentSiteManager;
 
     /**
      * Set up the test
@@ -65,7 +66,10 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
 
-        $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager);
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');
+
+        $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager, $this->currentSiteManager);
 
         $this->areaTransformer->setContext($this->transformerManager);
     }
@@ -192,7 +196,9 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->area)->setBlocks(array(
             0 => array('nodeId' => $nodeId, 'blockId' => $blockId)
         ));
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $this->language);
+
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $this->language, $siteId);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
         Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }
