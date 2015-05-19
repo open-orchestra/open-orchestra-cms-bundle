@@ -12,6 +12,9 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'template/show/:templateId': 'showTemplate',
+    'user/edit/:userId': 'userEdit',
+    'user/edit/:userId/:language': 'userEditWithLanguage',
+    'user/edit/:userId/:language/:version': 'userEditWithLanguageAndVersion',
     ':entityType/list': 'listEntities',
     ':entityType/add': 'addEntity',
     ':entityType/edit/:entityId': 'showEntity',
@@ -80,7 +83,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   addEntity: function(entityType)
   {
-      this.manageEntity(entityType, null, null, null, true)
+    this.manageEntity(entityType, null, null, null, true)
   },
 
   showEntity: function(entityType, entityId)
@@ -102,6 +105,22 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
     tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version, add);
+  },
+
+  userEdit: function(userId)
+  {
+    this.userEditWithLanguageAndVersion(userId)
+  },
+
+  userEditWithLanguage: function(userId, language)
+  {
+    this.userEditWithLanguageAndVersion(userId, language)
+  },
+
+  userEditWithLanguageAndVersion: function(userId, language, version)
+  {
+    this.initDisplayRouteChanges("#nav-user");
+    userPanelLoad($("#nav-user"),userId, language, version);
   },
 
   mediaEdit: function(folderId, mediaId)

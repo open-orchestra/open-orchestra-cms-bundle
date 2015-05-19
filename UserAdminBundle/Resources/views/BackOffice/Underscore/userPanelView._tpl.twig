@@ -1,0 +1,21 @@
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
+
+<div>
+    <ul class="nav nav-tabs" role="tablist" id="superboxTab">
+        <li class="active">
+            <a href="#tab-profile" role="tab" data-toggle="tab">{{ 'open_orchestra_useradmin.user.profile'|trans }}</a>
+        </li>
+            <li>
+            <a href="#tab-password" role="tab" data-toggle="tab">{{ 'open_orchestra_useradmin.user.password'|trans }}</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        {% include 'OpenOrchestraUserAdminBundle:BackOffice:Underscore/Include/panel_profile._tpl.twig' %}
+        {% include 'OpenOrchestraUserAdminBundle:BackOffice:Underscore/Include/panel_password._tpl.twig' %}
+    </div>
+
+    {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
+</div>
+
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
