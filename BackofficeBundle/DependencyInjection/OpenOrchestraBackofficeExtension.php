@@ -63,6 +63,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('group.yml');
         $loader->load('voter.yml');
         $loader->load('validator.yml');
+        $loader->load('initializer.yml');
 
         if (isset($config['field_types'])) {
             $this->addAppllicationFieldTypes($config['field_types'], $container);

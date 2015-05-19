@@ -24,8 +24,7 @@ services:
     open_orchestra_backoffice.listener.translate_value_initializer:
         class: %open_orchestra_backoffice.listener.translate_value_initializer.class%
         arguments:
-            - %open_orchestra_base.languages_availables%
-            - %open_orchestra_model.document.translated_value.class%
+            - @open_orchestra_backoffice.initializer.translated_value
             - %open_orchestra_model.document.field_type.class%
     open_orchestra_backoffice.manager.translation_choice:
         class: %open_orchestra_backoffice.manager.translation_choice.class%
