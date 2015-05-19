@@ -17,6 +17,7 @@ class NodeControllerTest extends AbstractControllerTest
     protected $language = 'en';
     protected $siteId = '1';
 
+
     /**
      * Set up the test
      */
