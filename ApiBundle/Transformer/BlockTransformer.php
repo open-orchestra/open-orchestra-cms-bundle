@@ -8,6 +8,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -24,6 +25,7 @@ class BlockTransformer extends AbstractTransformer
     protected $nodeRepository;
     protected $displayManager;
     protected $blockClass;
+    protected $currentSiteManager;
 
     /**
      * @param DisplayBlockManager     $displayBlockManager
@@ -32,6 +34,7 @@ class BlockTransformer extends AbstractTransformer
      * @param BlockParameterManager   $blockParameterManager
      * @param GenerateFormManager     $generateFormManager
      * @param NodeRepositoryInterface $nodeRepository
+     * @param CurrentSiteIdInterface  $currentSiteManager
      */
     public function __construct(
         DisplayBlockManager $displayBlockManager,
@@ -39,7 +42,8 @@ class BlockTransformer extends AbstractTransformer
         $blockClass,
         BlockParameterManager $blockParameterManager,
         GenerateFormManager   $generateFormManager,
-        NodeRepositoryInterface $nodeRepository
+        NodeRepositoryInterface $nodeRepository,
+        CurrentSiteIdInterface $currentSiteManager
     )
     {
         $this->blockParameterManager = $blockParameterManager;
@@ -48,6 +52,7 @@ class BlockTransformer extends AbstractTransformer
         $this->displayIconManager = $displayManager;
         $this->nodeRepository = $nodeRepository;
         $this->blockClass = $blockClass;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -134,7 +139,8 @@ class BlockTransformer extends AbstractTransformer
                     $block['nodeId'] = 0;
                     $blockElement = $node->getBlock($facade->blockId);
                 } elseif ($facade->nodeId != $node->getNodeId()) {
-                    $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage());
+                    $siteId = $this->currentSiteManager->getCurrentSiteId();
+                    $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
                     $blockElement = $blockNode->getBlock($facade->blockId);
                 }
             }

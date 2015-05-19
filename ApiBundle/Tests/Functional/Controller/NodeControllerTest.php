@@ -40,9 +40,9 @@ class NodeControllerTest extends AbstractControllerTest
      */
     protected function prepareDatabase()
     {
-        $nodes = $this->nodeRepository->findByNodeIdAndSiteId('fixture_deleted');
+        $nodes = $this->nodeRepository->findByNodeIdAndSiteId('fixture_deleted', '1');
         $this->undeleteNodes($nodes);
-        $sons = $this->nodeRepository->findByParentIdAndSiteId('fixture_deleted_son');
+        $sons = $this->nodeRepository->findByParentIdAndSiteId('fixture_deleted_son','1');
         $this->undeleteNodes($sons);
 
         static::$kernel->getContainer()->get('doctrine.odm.mongodb.document_manager')->flush();

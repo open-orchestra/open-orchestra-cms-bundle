@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -14,14 +15,18 @@ class OrchestraNodeChoiceType extends AbstractType
 {
     protected $nodeRepository;
     protected $treeManager;
+    protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
+     * @param TreeManager $treeManager
+     * @param CurrentSiteIdInterface $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, TreeManager $treeManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, TreeManager $treeManager, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->treeManager = $treeManager;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -44,7 +49,8 @@ class OrchestraNodeChoiceType extends AbstractType
      */
     protected function getChoices()
     {
-        $nodes = $this->nodeRepository->findLastVersionBySiteId();
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
         $orderedNodes = $this->treeManager->generateTree($nodes);
 
         return $this->getHierarchicalChoices($orderedNodes);

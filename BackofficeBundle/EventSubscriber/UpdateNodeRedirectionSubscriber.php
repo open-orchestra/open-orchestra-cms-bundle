@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -15,15 +16,17 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
 {
     protected $nodeRepository;
     protected $redirectionManager;
+    protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param RedirectionManager      $redirectionManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, RedirectionManager $redirectionManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, RedirectionManager $redirectionManager, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->redirectionManager = $redirectionManager;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -33,7 +36,8 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     {
         $node = $event->getNode();
         if ($node->getStatus()->isPublished()) {
-            $nodes = $this->nodeRepository->findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($node->getNodeId(), $node->getLanguage());
+            $siteId = $this->currentSiteManager->getCurrentSiteId();
+            $nodes = $this->nodeRepository->findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
             foreach ($nodes as $otherNode) {
                 if ($otherNode->getId() != $node->getId() && $otherNode->getRoutePattern() != $node->getRoutePattern()) {
                     $this->redirectionManager->createRedirection(
@@ -67,8 +71,8 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         if (is_null($parentId) || '-' == $parentId || '' == $parentId) {
             return $suffix;
         }
-
-        $parent = $this->nodeRepository->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($parentId, $language);
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $parent = $this->nodeRepository->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($parentId, $language, $siteId);
 
         return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));
     }
