@@ -34,7 +34,7 @@ class NodeController extends BaseController
     public function showAction(Request $request, $nodeId)
     {
         $currentSiteManager = $this->get('open_orchestra.manager.current_site');
-        $language = (null !== $request->get('language')) ? $request->get('language') : $currentSiteManager->getCurrentSiteDefaultLanguage();
+        $language = $request->get('language', $currentSiteManager->getCurrentSiteDefaultLanguage());
         $version = $request->get('version');
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->get('open_orchestra_model.repository.node')
