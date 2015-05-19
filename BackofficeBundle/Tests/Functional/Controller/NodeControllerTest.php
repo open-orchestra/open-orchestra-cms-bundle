@@ -14,8 +14,8 @@ class NodeControllerTest extends AbstractControllerTest
      * @var NodeRepositoryInterface
      */
     protected $nodeRepository;
-    protected $language = 'fakeLanguage';
-    protected $siteId = 'fakeId';
+    protected $language = 'en';
+    protected $siteId = '1';
 
     /**
      * Set up the test
