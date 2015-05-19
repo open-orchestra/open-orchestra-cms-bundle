@@ -1,6 +1,8 @@
 parameters:
     open_orchestra_user_admin.type.user.class: OpenOrchestra\UserAdminBundle\Form\Type\UserType
     open_orchestra_user_admin.type.registration_user.class: OpenOrchestra\UserAdminBundle\Form\Type\RegistrationUserType
+    open_orchestra_user.type.reset_password.class: OpenOrchestra\UserAdminBundle\Form\Type\ResetType
+
 services:
     open_orchestra_user_admin.type.user:
         class: %open_orchestra_user_admin.type.user.class%
