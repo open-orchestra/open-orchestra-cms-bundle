@@ -42,6 +42,16 @@ class UserType extends AbstractType
             'expanded' => true,
             'required' => false,
         ));
+        $builder->add('authorizations', 'collection', array(
+            'type' => 'orchestra_workflow_function',
+            'allow_add' => true,
+            'label' => 'open_orchestra_user.form.user.authorizations',
+            'attr' => array(
+                'data-prototype-label-add' => 'Ajout',
+                'data-prototype-label-new' => 'Nouveau',
+                'data-prototype-label-remove' => 'Suppression',
+            )
+        ));
         $builder->add('language', 'orchestra_language', array(
             'label' => 'open_orchestra_user.form.user.language'
         ));
