@@ -27,8 +27,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     protected $object;
     protected $fields;
     protected $fieldTypeClass;
-    protected $defaultLanguages;
-    protected $translatedValueClass;
+    protected $translatedValueDefaultValueInitializer;
 
     /**
      * Set up the test
@@ -36,8 +35,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->fieldTypeClass = 'OpenOrchestra\ModelBundle\Document\FieldType';
-        $this->translatedValueClass = 'OpenOrchestra\ModelBundle\Document\TranslatedValue';
-        $this->defaultLanguages = array('en', 'fr', 'es', 'de');
+        $this->translatedValueDefaultValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\Initializer\TranslatedValueDefaultValueInitializer');
         $this->names = new ArrayCollection();
         $this->fields = new ArrayCollection();
         $this->object = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
@@ -49,7 +47,7 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getData()->thenReturn($this->object);
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->listener = new TranslateValueInitializerListener($this->defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
+        $this->listener = new TranslateValueInitializerListener($this->translatedValueDefaultValueInitializer, $this->fieldTypeClass);
     }
 
     /**
@@ -62,98 +60,43 @@ class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $defaultLanguages
-     *
-     * @dataProvider provideDefaultLanguages
+     * test pre set data
      */
-    public function testPreSetDataWithNoPreviousData($defaultLanguages)
+    public function testPreSetDataWithNoPreviousData()
     {
         $translatedProperties = array('getNames');
 
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
-        $listener->preSetData($this->event);
+        $this->listener->preSetData($this->event);
 
-        $this->assertCount(count($defaultLanguages), $this->names);
-        foreach ($defaultLanguages as $key => $language) {
-            $translatedValue = $this->names->get($key);
-            $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
-            $this->assertSame($language, $translatedValue->getLanguage());
-            $this->assertNull($translatedValue->getValue());
-        }
+        Phake::verify($this->translatedValueDefaultValueInitializer)->generate($this->names);
     }
 
     /**
-     * @return array
-     */
-    public function provideDefaultLanguages()
-    {
-        return array(
-            array(array('en')),
-            array(array('en', 'fr')),
-            array(array('en', 'fr', 'es')),
-            array(array('en', 'fr', 'es', 'de')),
-        );
-    }
-
-    /**
-     * @param array $defaultLanguages
-     *
-     * @dataProvider provideDefaultLanguages
-     */
-    public function testPreSetDataWithPreviousData($defaultLanguages)
-    {
-        $dummyValue = 'dummyValue';
-        foreach ($defaultLanguages as $language) {
-            $translatedValue = new TranslatedValue();
-            $translatedValue->setLanguage($language);
-            $translatedValue->setValue($dummyValue);
-            $this->names->add($translatedValue);
-        }
-
-        $translatedProperties = array('getNames');
-
-        Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
-
-        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
-        $listener->preSetData($this->event);
-
-        $this->assertCount(count($defaultLanguages), $this->names);
-        foreach ($defaultLanguages as $key => $language) {
-            $translatedValue = $this->names->get($key);
-            $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface', $translatedValue);
-            $this->assertSame($language, $translatedValue->getLanguage());
-            $this->assertSame($dummyValue, $translatedValue->getValue());
-        }
-    }
-
-    /**
-     * @param array $defaultLanguages
      * @param array $translatedProperties
+     * @param int   $callTimes
      *
-     * @dataProvider provideDefaultLanguagesAndProperties
+     * @dataProvider provideProperties
      */
-    public function testPreSetDataWithDifferentProperties($defaultLanguages, $translatedProperties)
+    public function testPreSetDataWithDifferentProperties($translatedProperties, $callTimes)
     {
         Phake::when($this->object)->getTranslatedProperties()->thenReturn($translatedProperties);
 
-        $listener = new TranslateValueInitializerListener($defaultLanguages, $this->translatedValueClass, $this->fieldTypeClass);
-        $listener->preSetData($this->event);
+        $this->listener->preSetData($this->event);
 
-        $this->assertEquals(count($defaultLanguages) * count($translatedProperties), $this->names->count() + $this->fields->count());
+        Phake::verify($this->translatedValueDefaultValueInitializer, Phake::times($callTimes))->generate(Phake::anyParameters());
     }
 
     /**
      * @return array
      */
-    public function provideDefaultLanguagesAndProperties()
+    public function provideProperties()
     {
         return array(
-            array(array('en'), array('getNames')),
-            array(array('en', 'fr'), array('getFields')),
-            array(array('en'), array('getNames', 'getFields')),
-            array(array('en', 'fr'), array('getFields', 'getNames')),
+            array(array(), 0),
+            array(array('getNames'), 1),
+            array(array('getNames', 'getFields'), 2),
         );
     }
 

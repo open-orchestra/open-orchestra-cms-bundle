@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
@@ -108,6 +109,8 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
      */
     protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form, $fieldValue)
     {
+        $fieldTypeConfiguration = $this->fieldTypesConfiguration[$contentTypeField->getType()];
+
         $fieldParameters = array_merge(
             array(
                 'data' => $fieldValue,
@@ -119,7 +122,7 @@ class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
 
         $form->add(
             $contentTypeField->getFieldId(),
-            $this->fieldTypesConfiguration[$contentTypeField->getType()]['type'],
+            $fieldTypeConfiguration['type'],
             $fieldParameters
         );
     }
