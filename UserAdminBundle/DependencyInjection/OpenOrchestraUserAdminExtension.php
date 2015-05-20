@@ -23,5 +23,6 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('transformer.yml');
         $loader->load('form.yml');
         $loader->load('leftpanel.yml');
+        $loader->load('oauth2.yml');
     }
 }
