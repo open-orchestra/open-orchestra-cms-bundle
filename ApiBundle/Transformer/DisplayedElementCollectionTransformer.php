@@ -8,6 +8,8 @@ use Symfony\Component\DependencyInjection\Container;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
+ * @deprecated will be removed in 0.2.4
+ *
  * Class DisplayedElementCollectionTransformer
  */
 class DisplayedElementCollectionTransformer extends AbstractTransformer
@@ -27,7 +29,7 @@ class DisplayedElementCollectionTransformer extends AbstractTransformer
 
     /**
      * @param array $mixed
-
+     *
      * @return DisplayedElementCollectionFacade|void
      */
     public function transform($mixed, $entityType = '')

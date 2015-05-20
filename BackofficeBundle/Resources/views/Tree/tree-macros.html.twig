@@ -93,6 +93,7 @@
                 href="#contents_{{contentType.contentTypeId}}/list"
                 data-url="{{ path('open_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
                 data-displayed-elements="name, status_label, version, language"
+                data-translated-header="{{'open_orchestra_backoffice.table.content_type.name'|trans }},{{'open_orchestra_backoffice.table.content_type.status_label'|trans }},{{'open_orchestra_backoffice.table.content_type.version'|trans }},{{'open_orchestra_backoffice.table.content_type.language'|trans }}"
             >
                 {{ contentType.names| trans_choose }}
             </a>

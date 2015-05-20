@@ -23,19 +23,17 @@ TableviewCollectionView = OrchestraView.extend(
     parent = $('#nav-'+@options.entityType).parent('[data-type]')
     if (parent.length)
       entityType = parent[0].getAttribute('data-type')
-    $.ajax
-      url: @options.elements.get('links')._translate
-      method: 'GET'
-      async: false
-      data: 
-        entityType: entityType
-        displayedElements: @options.displayedElements
-      success: (response) ->
-        viewContext.setElement viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView',
-          displayedElements: response.displayed_elements
-          links: viewContext.options.elements.get('links')
-        )
-        viewContext.options.domContainer.html viewContext.$el
+
+    translateHeader = @options.translatedHeader
+    if (!translateHeader?)
+      translateHeader = @options.displayedElements
+
+    viewContext.setElement viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView',
+      displayedElements: translateHeader
+      links: viewContext.options.elements.get('links')
+    )
+    viewContext.options.domContainer.html viewContext.$el
+
     $('.js-widget-title', @options.domContainer).text @options.title
     for element of @options.elements.get(@options.elements.get('collection_name'))
       @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])

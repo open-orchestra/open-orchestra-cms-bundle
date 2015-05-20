@@ -10,6 +10,7 @@ addParameter = (element, label, value) ->
 
 tableViewLoad = (link, entityType, entityId, language, version, add) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
+  translatedHeader = link.data('translated-header').split(",") if link.data('translatedHeader') != undefined
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
   $.ajax
@@ -60,6 +61,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
         new TableviewCollectionView(
           elements: elements
           displayedElements: displayedElements
+          translatedHeader: translatedHeader
           order: order
           title: title
           entityType: entityType
