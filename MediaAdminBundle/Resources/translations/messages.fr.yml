@@ -1,4 +1,15 @@
 open_orchestra_backoffice:
+    block:
+        carrousel:
+            title: Bloc carrousel
+        gallery:
+            title: Bloc galerie
+        media_list_by_keyword:
+            title: Bloc liste de média par mot clé
+        display_media:
+            title: Bloc média
+
+open_orchestra_mediaadmin:
     form:
         folder:
             success: Le répertoire a été sauvegardé
@@ -36,7 +47,6 @@ open_orchestra_backoffice:
             mediatheque: Médiathèque
     block:
         carrousel:
-            title: Bloc carrousel
             description: Fait défiler des images.
             form:
                 media:
@@ -44,7 +54,6 @@ open_orchestra_backoffice:
                     new: Nouveau média
                     delete: Retirer le média
         gallery:
-            title: Bloc galerie
             description: Affiche des images.
             form:
                 pictures: Images
@@ -61,10 +70,8 @@ open_orchestra_backoffice:
                     label: Format de l'image (vue complète)
                     helper: Format de l'image (vue complète)
         media_list_by_keyword:
-            title: Block liste de média par mot clé
             description: Affiche une liste de média par mot clé.
         display_media:
-            title: Bloc média
             description: Affiche une image
             form:
                 node_link: Ajoute un lien au média

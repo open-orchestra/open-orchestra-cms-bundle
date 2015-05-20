@@ -46,7 +46,7 @@ class GalleryStrategy extends AbstractBlockStrategy
         $formats = $this->getFormats();
         $builder
             ->add('id', 'text', array(
-                'label' => 'open_orchestra_mediaadmin.form.block.id',
+                'label' => 'open_orchestra_backoffice.form.block.id',
                 'required' => true
             ))
             ->add('columnNumber', 'text', array(

@@ -1,9 +1,14 @@
+open_orchestra_backoffice:
+    table:
+        workflow_functions:
+            name: Fonction de Workflow
+
 open_orchestra_workflow_function_admin:
     left_menu:
         administration:
-            workflow_function: Function de Workflow
+            workflow_function: Fonction de Workflow
     form:
         workflow_function:
-            success: La Function de Workflow a bien été sauvegardée
+            success: La Fonction de Workflow a bien été sauvegardée
             name: Nom
-            role: Role
+            role: Rôle
