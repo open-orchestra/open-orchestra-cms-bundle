@@ -31,7 +31,6 @@ parameters:
     open_orchestra_api.transformer.link.class: OpenOrchestra\ApiBundle\Transformer\LinkTransformer
     open_orchestra_api.transformer.api_client.class: OpenOrchestra\ApiBundle\Transformer\ApiClientTransformer
     open_orchestra_api.transformer.api_client_collection.class: OpenOrchestra\ApiBundle\Transformer\ApiClientCollectionTransformer
-    open_orchestra_api.transformer.api_displayed_element.class: OpenOrchestra\ApiBundle\Transformer\DisplayedElementCollectionTransformer
 
 services:
     open_orchestra_api.transformer.node:
@@ -194,9 +193,3 @@ services:
         class: %open_orchestra_api.transformer.api_client_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.api_displayed_element:
-        class: %open_orchestra_api.transformer.api_displayed_element.class%
-        arguments:
-            - @translator
-        tags:
-            - { name: open_orchestra_api.transformer.strategy }
