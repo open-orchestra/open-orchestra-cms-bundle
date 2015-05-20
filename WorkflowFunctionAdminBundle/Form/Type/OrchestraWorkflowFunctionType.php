@@ -1,13 +1,13 @@
 <?php
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\AbstractOrchestraWorkflowFunctionType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class OrchestraWorkflowFunctionType
  */
-class OrchestraWorkflowFunctionType extends AbstractOrchestraWorkflowFunctionType
+class OrchestraWorkflowFunctionType extends AbstractType
 {
     /**
      * @var string
@@ -44,5 +44,13 @@ class OrchestraWorkflowFunctionType extends AbstractOrchestraWorkflowFunctionTyp
     public function getParent()
     {
         return 'document';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'orchestra_workflow_function';
     }
 }

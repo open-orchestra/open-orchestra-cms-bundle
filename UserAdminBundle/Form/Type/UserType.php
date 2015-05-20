@@ -6,6 +6,7 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use OpenOrchestra\UserAdminBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer;
 
 /**
  * Class UserType
@@ -13,13 +14,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class UserType extends AbstractType
 {
     protected $class;
+    /**
+     * @var ChoicesOptionToArrayTransformer
+     */
+    protected $choiceTransformer;
 
     /**
      * @param string              $class
      */
-    public function __construct($class)
+    public function __construct($class, ChoicesOptionToArrayTransformer $choiceTransformer)
     {
         $this->class = $class;
+        $this->choiceTransformer = $choiceTransformer;
     }
 
     /**
@@ -28,6 +34,7 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addModelTransformer($this->choiceTransformer);
         $builder->add('firstName', 'text', array(
             'label' => 'open_orchestra_user.form.user.firstName'
         ));

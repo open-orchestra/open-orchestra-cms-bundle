@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_user_admin.transformer.user.class: OpenOrchestra\UserAdminBundle\Transformer\UserTransformer
     open_orchestra_user_admin.transformer.user_collection.class: OpenOrchestra\UserAdminBundle\Transformer\UserCollectionTransformer
+    open_orchestra_user_admin.transformer.choices_option_to_array.class: OpenOrchestra\UserAdminBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer
 
 services:
     open_orchestra_user_admin.transformer.user:
@@ -11,3 +12,5 @@ services:
         class: %open_orchestra_user_admin.transformer.user_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_user_admin.transformer.choices_option_to_array:
+        class: %open_orchestra_user_admin.transformer.choices_option_to_array.class%
