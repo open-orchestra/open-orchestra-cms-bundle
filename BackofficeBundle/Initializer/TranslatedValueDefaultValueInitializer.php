@@ -8,7 +8,7 @@ use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 /**
  * Class TranslatedValueDefaultValueInitializer
  */
-class TranslatedValueDefaultValueInitializer implements DefaultValueInitializer
+class TranslatedValueDefaultValueInitializer implements DefaultValueInitializerInterface
 {
     protected $defaultLanguages;
     protected $translatedValueClass;
