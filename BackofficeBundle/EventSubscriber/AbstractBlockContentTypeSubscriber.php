@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
@@ -11,6 +12,16 @@ use Symfony\Component\Form\FormInterface;
  */
 abstract class AbstractBlockContentTypeSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @param FormEvent $event
+     */
+    abstract public function preSetData(FormEvent $event);
+
+    /**
+     * @param FormEvent $event
+     */
+    abstract public function preSubmit(FormEvent $event);
+
     /**
      * @return array The event names to listen to
      */
