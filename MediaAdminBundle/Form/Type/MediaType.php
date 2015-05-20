@@ -29,7 +29,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('file', 'file', array(
-            'label' => 'open_orchestra_mediaadmin.form.media.file',
+            'label' => 'open_orchestra_media_admin.form.media.file',
         ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());

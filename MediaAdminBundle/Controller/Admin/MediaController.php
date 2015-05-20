@@ -18,7 +18,7 @@ class MediaController extends AbstractAdminController
      * @param Request $request
      * @param string  $folderId
      *
-     * @Config\Route("/media/new/{folderId}", name="open_orchestra_mediaadmin_media_new")
+     * @Config\Route("/media/new/{folderId}", name="open_orchestra_media_admin_media_new")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -33,7 +33,7 @@ class MediaController extends AbstractAdminController
         $media->setMediaFolder($folder);
 
         $form = $this->createForm('media', $media, array(
-            'action' => $this->generateUrl('open_orchestra_mediaadmin_media_new', array(
+            'action' => $this->generateUrl('open_orchestra_media_admin_media_new', array(
                 'folderId' => $folderId,
             ))
         ));
@@ -42,7 +42,7 @@ class MediaController extends AbstractAdminController
 
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('open_orchestra_mediaadmin.form.media.success'),
+            $this->get('translator')->trans('open_orchestra_media_admin.form.media.success'),
             $media
         );
 
@@ -50,7 +50,7 @@ class MediaController extends AbstractAdminController
     }
 
     /**
-     * @Config\Route("/media/list/folders", name="open_orchestra_mediaadmin_media_list_form")
+     * @Config\Route("/media/list/folders", name="open_orchestra_media_admin_media_list_form")
      * @Config\Method({"GET"})
      *
      * @return Response
@@ -69,7 +69,7 @@ class MediaController extends AbstractAdminController
      * @param Request $request
      * @param string  $mediaId
      *
-     * @Config\Route("/media/{mediaId}/crop", name="open_orchestra_mediaadmin_media_crop")
+     * @Config\Route("/media/{mediaId}/crop", name="open_orchestra_media_admin_media_crop")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -78,7 +78,7 @@ class MediaController extends AbstractAdminController
     public function cropAction(Request $request, $mediaId)
     {
         $form = $this->createForm('media_crop', null, array(
-            'action' => $this->generateUrl('open_orchestra_mediaadmin_media_crop', array(
+            'action' => $this->generateUrl('open_orchestra_media_admin_media_crop', array(
                 'mediaId' => $mediaId,
             ))
         ));
@@ -118,7 +118,7 @@ class MediaController extends AbstractAdminController
      * @param string  $format
      * @param string  $mediaId
      *
-     * @Config\Route("/media/override/{mediaId}/{format}", name="open_orchestra_mediaadmin_media_override")
+     * @Config\Route("/media/override/{mediaId}/{format}", name="open_orchestra_media_admin_media_override")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -131,7 +131,7 @@ class MediaController extends AbstractAdminController
         $media = $mediaRepository->find($mediaId);
 
         $form = $this->createForm('media', null, array(
-            'action' => $this->generateUrl('open_orchestra_mediaadmin_media_override', array(
+            'action' => $this->generateUrl('open_orchestra_media_admin_media_override', array(
                 'mediaId' => $mediaId,
                 'format' => $format
             ))
@@ -155,7 +155,7 @@ class MediaController extends AbstractAdminController
      * @param Request $request
      * @param string  $mediaId
      *
-     * @Config\Route("/media/{mediaId}/meta", name="open_orchestra_mediaadmin_media_meta")
+     * @Config\Route("/media/{mediaId}/meta", name="open_orchestra_media_admin_media_meta")
      * @Config\Method({"GET", "POST"})
      *
      * @return Response
@@ -167,14 +167,14 @@ class MediaController extends AbstractAdminController
         $media = $mediaRepository->find($mediaId);
 
         $form = $this->createForm('media_meta', $media, array(
-            'action' => $this->generateUrl('open_orchestra_mediaadmin_media_meta', array(
+            'action' => $this->generateUrl('open_orchestra_media_admin_media_meta', array(
                 'mediaId' => $mediaId,
             ))
         ));
 
         $form->handleRequest($request);
 
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_mediaadmin.form.media.success'));
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_media_admin.form.media.success'));
 
         return $this->renderAdminForm($form);
     }

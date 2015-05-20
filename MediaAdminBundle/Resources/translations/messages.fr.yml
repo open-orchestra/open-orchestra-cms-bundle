@@ -9,7 +9,7 @@ open_orchestra_backoffice:
         display_media:
             title: Bloc média
 
-open_orchestra_mediaadmin:
+open_orchestra_media_admin:
     form:
         folder:
             success: Le répertoire a été sauvegardé

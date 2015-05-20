@@ -36,8 +36,8 @@ class MediaCropType extends AbstractType
         $builder->add('w', 'hidden');
         $builder->add('format', 'choice', array(
             'choices' => $this->getChoices(),
-            'label' => 'open_orchestra_mediaadmin.form.media.format',
-            'empty_value' => 'open_orchestra_mediaadmin.form.media.original_image',
+            'label' => 'open_orchestra_media_admin.form.media.format',
+            'empty_value' => 'open_orchestra_media_admin.form.media.original_image',
             'required' => false,
         ));
     }
@@ -47,7 +47,7 @@ class MediaCropType extends AbstractType
         $choices = array();
 
         foreach ($this->thumbnailConfig as $key => $thumbnail) {
-            $choices[$key] = $this->translator->trans('open_orchestra_mediaadmin.form.media.' . $key);
+            $choices[$key] = $this->translator->trans('open_orchestra_media_admin.form.media.' . $key);
         }
 
         return $choices;

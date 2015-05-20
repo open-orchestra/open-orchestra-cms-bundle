@@ -19,7 +19,7 @@ class FolderController extends AbstractAdminController
      * @param Request $request
      * @param string  $folderId
      *
-     * @Config\Route("/folder/form/{folderId}", name="open_orchestra_mediaadmin_folder_form")
+     * @Config\Route("/folder/form/{folderId}", name="open_orchestra_media_admin_folder_form")
      * @Config\Method({"GET", "POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_FOLDER')")
@@ -31,7 +31,7 @@ class FolderController extends AbstractAdminController
         $folderRepository = $this->container->get('open_orchestra_media.repository.media_folder');
         $folder = $folderRepository->find($folderId);
 
-        $url = $this->generateUrl('open_orchestra_mediaadmin_folder_form', array('folderId' => $folderId));
+        $url = $this->generateUrl('open_orchestra_media_admin_folder_form', array('folderId' => $folderId));
 
         return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_UPDATE);
     }
@@ -40,7 +40,7 @@ class FolderController extends AbstractAdminController
      * @param Request $request
      * @param string  $parentId
      *
-     * @Config\Route("/folder/new/{parentId}", name="open_orchestra_mediaadmin_folder_new")
+     * @Config\Route("/folder/new/{parentId}", name="open_orchestra_media_admin_folder_new")
      * @Config\Method({"GET", "POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_FOLDER')")
@@ -57,7 +57,7 @@ class FolderController extends AbstractAdminController
             $folder->setParent($parentFolder);
         }
 
-        $url = $this->generateUrl('open_orchestra_mediaadmin_folder_new', array('parentId' => $parentId));
+        $url = $this->generateUrl('open_orchestra_media_admin_folder_new', array('parentId' => $parentId));
 
         return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_CREATE);
     }
@@ -76,7 +76,7 @@ class FolderController extends AbstractAdminController
         $form->handleRequest($request);
         $this->handleForm(
             $form,
-            $this->get('translator')->trans('open_orchestra_mediaadmin.form.folder.success'),
+            $this->get('translator')->trans('open_orchestra_media_admin.form.folder.success'),
             $folder
         );
 
