@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
+ * @deprecated will be removed in 0.2.4
+ * 
  * Class TranslateController
  *
  * @Config\Route("translate")
