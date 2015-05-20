@@ -39,7 +39,7 @@ class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
     public function show()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId, NodeInterface::TYPE_GENERAL);
+        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId, NodeInterface::TYPE_TRANSVERSE);
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:Tree:showGeneralTreeNodes.html.twig',
