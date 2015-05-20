@@ -262,7 +262,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         $parentNode1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parentNode1)->getNodeId()->thenReturn(NodeInterface::TRANSVERSE_NODE_ID);
-        Phake::when($parentNode1)->getNodeType()->thenReturn(NodeInterface::TYPE_GENERAL);
+        Phake::when($parentNode1)->getNodeType()->thenReturn(NodeInterface::TYPE_TRANSVERSE);
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->getToRoles()->thenReturn(array());
         Phake::when($status)->getFromRoles()->thenReturn(array());
