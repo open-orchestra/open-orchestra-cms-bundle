@@ -5,9 +5,9 @@ namespace OpenOrchestra\BackofficeBundle\Initializer;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Class TranslatedValueDefaultValueInitializer
+ * Class DefaultValueInitializerInterface
  */
-interface DefaultValueInitializer
+interface DefaultValueInitializerInterface
 {
     /**
      * @param Collection $properties
