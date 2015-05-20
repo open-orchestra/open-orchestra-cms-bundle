@@ -16,6 +16,7 @@ class UserTypeTest extends AbstractUserTypeTest
     protected $form;
 
     protected $class = 'OpenOrchestra\UserBundle\Document\User';
+    protected $contentTypeToAuthorizationTransformer;
 
     /**
      * Set up the test
@@ -23,7 +24,8 @@ class UserTypeTest extends AbstractUserTypeTest
     public function setUp()
     {
         parent::setUp();
-        $this->form = new UserType($this->class);
+        $this->contentTypeToAuthorizationTransformer = Phake::mock('OpenOrchestra\UserAdminBundle\Form\DataTransformer\ContentTypeToAuthorizationTransformer');
+        $this->form = new UserType($this->class, $this->contentTypeToAuthorizationTransformer);
     }
 
     /**
@@ -41,7 +43,7 @@ class UserTypeTest extends AbstractUserTypeTest
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 
