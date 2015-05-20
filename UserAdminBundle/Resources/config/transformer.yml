@@ -1,7 +1,7 @@
 parameters:
     open_orchestra_user_admin.transformer.user.class: OpenOrchestra\UserAdminBundle\Transformer\UserTransformer
     open_orchestra_user_admin.transformer.user_collection.class: OpenOrchestra\UserAdminBundle\Transformer\UserCollectionTransformer
-    open_orchestra_user_admin.transformer.choices_option_to_array.class: OpenOrchestra\UserAdminBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer
+    open_orchestra_user_admin.transformer.content_type_to_authorization.class: OpenOrchestra\UserAdminBundle\Form\DataTransformer\ContentTypeToAuthorizationTransformer
 
 services:
     open_orchestra_user_admin.transformer.user:
@@ -12,5 +12,8 @@ services:
         class: %open_orchestra_user_admin.transformer.user_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_user_admin.transformer.choices_option_to_array:
-        class: %open_orchestra_user_admin.transformer.choices_option_to_array.class%
+    open_orchestra_user_admin.transformer.content_type_to_authorization:
+        class: %open_orchestra_user_admin.transformer.content_type_to_authorization.class%
+        arguments:
+            - @open_orchestra_model.repository.content_type
+            - %open_orchestra_user.document.authorization.class%

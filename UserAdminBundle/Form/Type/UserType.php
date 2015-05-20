@@ -6,7 +6,7 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use OpenOrchestra\UserAdminBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer;
+use OpenOrchestra\UserAdminBundle\Form\DataTransformer\ContentTypeToAuthorizationTransformer;
 
 /**
  * Class UserType
@@ -14,18 +14,16 @@ use OpenOrchestra\UserAdminBundle\Form\DataTransformer\ChoicesOptionToArrayTrans
 class UserType extends AbstractType
 {
     protected $class;
-    /**
-     * @var ChoicesOptionToArrayTransformer
-     */
-    protected $choiceTransformer;
+    protected $contentTypeToAuthorizationTransformer;
 
     /**
-     * @param string              $class
+     * @param string                                $class
+     * @param ContentTypeToAuthorizationTransformer $contentTypeToAuthorizationTransformer
      */
-    public function __construct($class, ChoicesOptionToArrayTransformer $choiceTransformer)
+    public function __construct($class, ContentTypeToAuthorizationTransformer $contentTypeToAuthorizationTransformer)
     {
         $this->class = $class;
-        $this->choiceTransformer = $choiceTransformer;
+        $this->contentTypeToAuthorizationTransformer = $contentTypeToAuthorizationTransformer;
     }
 
     /**
@@ -34,7 +32,7 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->choiceTransformer);
+        $builder->addModelTransformer($this->contentTypeToAuthorizationTransformer);
         $builder->add('firstName', 'text', array(
             'label' => 'open_orchestra_user.form.user.firstName'
         ));
@@ -50,14 +48,9 @@ class UserType extends AbstractType
             'required' => false,
         ));
         $builder->add('authorizations', 'collection', array(
-            'type' => 'orchestra_workflow_function',
-            'allow_add' => true,
-            'label' => 'open_orchestra_user.form.user.authorizations',
-            'attr' => array(
-                'data-prototype-label-add' => 'Ajout',
-                'data-prototype-label-new' => 'Nouveau',
-                'data-prototype-label-remove' => 'Suppression',
-            )
+            'type' => 'authorization',
+            'label' => false,
+            'required' => false,
         ));
         $builder->add('language', 'orchestra_language', array(
             'label' => 'open_orchestra_user.form.user.language'
