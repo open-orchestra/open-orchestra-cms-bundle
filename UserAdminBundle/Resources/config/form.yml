@@ -22,4 +22,3 @@ services:
             - %open_orchestra_user.document.authorization.class%
         tags:
             - { name: form.type, alias: authorization}
-            
