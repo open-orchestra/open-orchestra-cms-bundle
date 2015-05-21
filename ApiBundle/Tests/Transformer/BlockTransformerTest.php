@@ -22,6 +22,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     protected $router;
     protected $node;
     protected $currentSiteManager;
+    protected $translator;
 
     /**
      * Set up the test
@@ -48,7 +49,18 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
-        $this->blockTransformer = new BlockTransformer($this->displayBlockManager, $this->displayIconManager, $this->blockClass, $this->blockParameterManager, $this->generateFormManager, $this->nodeRepository, $this->currentSiteManager);
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+
+        $this->blockTransformer = new BlockTransformer(
+            $this->displayBlockManager,
+            $this->displayIconManager,
+            $this->blockClass,
+            $this->blockParameterManager,
+            $this->generateFormManager,
+            $this->nodeRepository,
+            $this->currentSiteManager,
+            $this->translator
+        );
         $this->blockTransformer->setContext($this->transformerManager);
     }
 
