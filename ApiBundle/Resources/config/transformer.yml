@@ -56,7 +56,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.manager.area
-            - @open_orchestra.manager.current_site
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block:
@@ -68,7 +68,7 @@ services:
             - @open_orchestra_backoffice.block_parameter_manager
             - @open_orchestra_backoffice.generate_form_manager
             - @open_orchestra_model.repository.node
-            - @open_orchestra.manager.current_site
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block_collection:

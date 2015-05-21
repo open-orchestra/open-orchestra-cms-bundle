@@ -11,10 +11,8 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 class ContextManagerTest extends \PHPUnit_Framework_TestCase
 {
     protected $token;
-    protected $request;
     protected $session;
     protected $tokenStorage;
-    protected $requestStack;
     protected $contextManager;
     protected $siteRepository;
 
@@ -23,10 +21,6 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->request = Phake::mock('Symfony\Component\HttpFoundation\Request');
-        $this->requestStack = Phake::mock('Symfony\Component\HttpFoundation\RequestStack');
-        Phake::when($this->requestStack)->getMasterRequest()->thenReturn($this->request);
-
         $this->token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $this->tokenStorage = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         Phake::when($this->tokenStorage)->getToken()->thenReturn($this->token);
@@ -34,7 +28,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
-        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage, 'en', $this->requestStack);
+        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage);
     }
 
     /**
@@ -139,13 +133,14 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array  $site
      * @param string $siteId
      *
      * @dataProvider getSiteId
      */
-    public function testGetCurrentSiteId($siteId)
+    public function testGetCurrentSiteId($site, $siteId)
     {
-        Phake::when($this->request)->get(Phake::anyParameters())->thenReturn($siteId);
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
 
         $this->assertEquals($siteId, $this->contextManager->getCurrentSiteId());
 
@@ -160,8 +155,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSiteId()
     {
         return array(
-            array('fakeId'),
-            array('id'),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'fakeId'),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'en'), 'id'),
         );
     }
 
@@ -194,13 +189,14 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array  $site
      * @param string $domain
      *
      * @dataProvider getSiteDefaultLanguage
      */
-    public function testGetCurrentSiteDefaultLanguage($domain)
+    public function testGetCurrentSiteDefaultLanguage($site, $domain)
     {
-        Phake::when($this->request)->get(Phake::anyParameters())->thenReturn($domain);
+        Phake::when($this->session)->get(Phake::anyParameters())->thenReturn($site);
 
         $this->assertEquals($domain, $this->contextManager->getCurrentSiteDefaultLanguage());
 
@@ -215,8 +211,8 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getSiteDefaultLanguage()
     {
         return array(
-            array('en'),
-            array('fr'),
+            array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'en'),
+            array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'fr'), 'fr'),
         );
     }
 }

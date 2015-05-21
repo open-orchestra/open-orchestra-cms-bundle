@@ -28,7 +28,7 @@ class ContentController extends AbstractAdminController
     {
         $language = $request->get(
             'language',
-            $this->get('open_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage()
+            $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage()
         );
         $version = $request->get('version');
 
@@ -97,7 +97,7 @@ class ContentController extends AbstractAdminController
         $contentClass = $this->container->getParameter('open_orchestra_model.document.content.class');
         $content = new $contentClass();
         $content->setContentType($contentType);
-        $content->setLanguage($this->get('open_orchestra.manager.current_site')->getCurrentSiteDefaultLanguage());
+        $content->setLanguage($this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage());
 
         $form = $this->createForm('orchestra_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(
