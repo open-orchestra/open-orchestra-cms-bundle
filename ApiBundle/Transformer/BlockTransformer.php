@@ -13,6 +13,7 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class BlockTransformer
@@ -26,6 +27,7 @@ class BlockTransformer extends AbstractTransformer
     protected $displayManager;
     protected $blockClass;
     protected $currentSiteManager;
+    protected $translator;
 
     /**
      * @param DisplayBlockManager     $displayBlockManager
@@ -35,6 +37,7 @@ class BlockTransformer extends AbstractTransformer
      * @param GenerateFormManager     $generateFormManager
      * @param NodeRepositoryInterface $nodeRepository
      * @param CurrentSiteIdInterface  $currentSiteManager
+     * @param TranslatorInterface     $translator
      */
     public function __construct(
         DisplayBlockManager $displayBlockManager,
@@ -43,8 +46,9 @@ class BlockTransformer extends AbstractTransformer
         BlockParameterManager $blockParameterManager,
         GenerateFormManager   $generateFormManager,
         NodeRepositoryInterface $nodeRepository,
-        CurrentSiteIdInterface $currentSiteManager
-    )
+        CurrentSiteIdInterface $currentSiteManager,
+        TranslatorInterface $translator
+        )
     {
         $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
@@ -53,6 +57,7 @@ class BlockTransformer extends AbstractTransformer
         $this->nodeRepository = $nodeRepository;
         $this->blockClass = $blockClass;
         $this->currentSiteManager = $currentSiteManager;
+        $this->translator = $translator;
     }
 
     /**
@@ -92,7 +97,7 @@ class BlockTransformer extends AbstractTransformer
         }
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
-            'label' => $mixed->getLabel()?: $mixed->getComponent(),
+            'label' => $mixed->getLabel()?: $this->translator->trans('open_orchestra_backoffice.block.' . $mixed->getComponent() . '.title'),
             'html' => $html
         ));
 
