@@ -28,6 +28,10 @@ class ContentTypeManager
                 $newLabel = clone $label;
                 $newField->addLabel($newLabel);
             }
+            foreach ($field->getOptions() as $option) {
+                $newOption = clone $option;
+                $newField->addOption($newOption);
+            }
 
             $newContentType->addFieldType($newField);
         }
