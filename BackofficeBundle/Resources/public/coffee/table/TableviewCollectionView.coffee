@@ -14,6 +14,8 @@ TableviewCollectionView = OrchestraView.extend(
     _.bindAll this, "render"
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions'
     ]
     return
 
