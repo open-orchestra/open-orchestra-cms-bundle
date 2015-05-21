@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\UserAdminBundle\Form\Type;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;

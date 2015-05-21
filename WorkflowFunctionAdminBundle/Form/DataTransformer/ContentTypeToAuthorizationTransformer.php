@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\UserAdminBundle\Form\DataTransformer;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use OpenOrchestra\UserBundle\Document\Authorization;
+use OpenOrchestra\WorkflowFunctionBundle\Document\Authorization;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use OpenOrchestra\UserBundle\Model\AuthorizationInterface;
@@ -13,7 +13,6 @@ use OpenOrchestra\UserBundle\Model\AuthorizationInterface;
  */
 class ContentTypeToAuthorizationTransformer implements DataTransformerInterface
 {
-
     /**
      * @param ContentTypeRepository $contentTypeRepository
      */
