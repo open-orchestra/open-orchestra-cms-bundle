@@ -14,9 +14,9 @@
 
     <div class="tab-content">
         <% if (media.get('mime_type').indexOf('image') > -1) { %>
-            {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_crop._tpl.twig' %}
+            {% include 'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/superboxView_crop._tpl.twig' %}
         <% } %>
-        {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Include/superboxView_meta._tpl.twig' %}
+        {% include 'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/superboxView_meta._tpl.twig' %}
     </div>
 
     {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
