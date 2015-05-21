@@ -9,8 +9,8 @@ use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
  */
 class FolderNotDeletableException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'open_orchestra_mediaadmin.folder.delete.impossible';
-    const HUMAN_MESSAGE      = 'open_orchestra_mediaadmin.form.folder.delete';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_media_admin.folder.delete.impossible';
+    const HUMAN_MESSAGE      = 'open_orchestra_media_admin.form.folder.delete';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 

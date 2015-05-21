@@ -154,10 +154,10 @@ open_orchestra_backoffice:
             existing_blocks: Ajouter un bloc existant
         block:
             success: Le bloc a été modifié
-            label: Nom du block
+            label: Nom du bloc
             max_age: Max age pour le cache de la réponse
-            id: Id html du block
-            class: Class html du block
+            id: Id html du bloc
+            class: Classe html du bloc
         sub_menu:
             node: Racine du menu
             level: Profondeur du menu
@@ -297,7 +297,7 @@ open_orchestra_backoffice:
             description: Affiche les résultats de la recherche.
         tiny_mce_wysiwyg:
             title: Bloc texte riche
-            description: Affiche un block de text riche.
+            description: Affiche un bloc de text riche.
         sub_menu:
             title: Bloc sous-menu
             description: Affiche un menu à partir d'un noeud racine.
@@ -373,7 +373,7 @@ open_orchestra_backoffice:
         gmap:
             title: Bloc Gmap
             description: Affiche une carte
-        addthis:
+        add_this:
             title: Bloc Add this
             description: Affiche des boutons pour partager des contenus
         audience_analysis:

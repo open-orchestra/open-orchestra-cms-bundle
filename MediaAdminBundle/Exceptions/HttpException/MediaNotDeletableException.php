@@ -9,8 +9,8 @@ use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
  */
 class MediaNotDeletableException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'open_orchestra_mediaadmin.media.delete.impossible';
-    const HUMAN_MESSAGE      = 'open_orchestra_mediaadmin.form.media.delete';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_media_admin.media.delete.impossible';
+    const HUMAN_MESSAGE      = 'open_orchestra_media_admin.form.media.delete';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 

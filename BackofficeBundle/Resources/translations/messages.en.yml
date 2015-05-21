@@ -269,7 +269,7 @@ open_orchestra_backoffice:
             keyword:
                 list: Keywords
             deleted:
-                list: Basket
+                list: Trashcan
             logs:
                 list: Logs
     block:
@@ -359,7 +359,7 @@ open_orchestra_backoffice:
             vimeo:
                 title: Vimeo Block
                 description: Display a viemo player
-                video_id: Video Id or url of the video
+                video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
                 fullscreen: Allow the player to go into fullscreen
                 color: Specify the hexadecimal color of the video controls
@@ -373,7 +373,7 @@ open_orchestra_backoffice:
         gmap:
             title: Gmap Block
             description: Display a map
-        addthis:
+        add_this:
             title: Add this block
             description: Display button to share content
         audience_analysis:

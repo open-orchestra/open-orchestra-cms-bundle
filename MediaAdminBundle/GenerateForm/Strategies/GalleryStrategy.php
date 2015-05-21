@@ -46,36 +46,36 @@ class GalleryStrategy extends AbstractBlockStrategy
         $formats = $this->getFormats();
         $builder
             ->add('id', 'text', array(
-                'label' => 'open_orchestra_mediaadmin.form.block.id',
+                'label' => 'open_orchestra_backoffice.form.block.id',
                 'required' => true
             ))
             ->add('columnNumber', 'text', array(
                 'empty_data' => 1,
-                'label' => 'open_orchestra_mediaadmin.block.gallery.form.column_number',
+                'label' => 'open_orchestra_media_admin.block.gallery.form.column_number',
             ))
             ->add('itemNumber', 'text', array(
                 'empty_data' => 0,
-                'label' => 'open_orchestra_mediaadmin.block.gallery.form.item_number.label',
-                'attr' => array('help_text' => 'open_orchestra_mediaadmin.block.gallery.form.item_number.helper'),
+                'label' => 'open_orchestra_media_admin.block.gallery.form.item_number.label',
+                'attr' => array('help_text' => 'open_orchestra_media_admin.block.gallery.form.item_number.helper'),
             ))
             ->add('thumbnailFormat', 'choice', array(
                 'choices' => $formats,
-                'label' => 'open_orchestra_mediaadmin.block.gallery.form.thumbnail_format',
+                'label' => 'open_orchestra_media_admin.block.gallery.form.thumbnail_format',
             ))
             ->add('imageFormat', 'choice', array(
                 'choices' => $formats,
-                'label' => 'open_orchestra_mediaadmin.block.gallery.form.image_format.label',
-                'attr' => array('help_text' => 'open_orchestra_mediaadmin.block.gallery.form.image_format.helper'),
+                'label' => 'open_orchestra_media_admin.block.gallery.form.image_format.label',
+                'attr' => array('help_text' => 'open_orchestra_media_admin.block.gallery.form.image_format.helper'),
             ))
             ->add('pictures', 'collection', array(
                 'type' => 'orchestra_media',
                 'allow_add' => true,
                 'attr' => array(
-                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_mediaadmin.block.gallery.form.media.add'),
-                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_mediaadmin.block.gallery.form.media.new'),
-                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_mediaadmin.block.gallery.form.media.delete'),
+                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_media_admin.block.gallery.form.media.add'),
+                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_media_admin.block.gallery.form.media.new'),
+                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_media_admin.block.gallery.form.media.delete'),
                 ),
-                'label' => 'open_orchestra_mediaadmin.block.gallery.form.pictures',
+                'label' => 'open_orchestra_media_admin.block.gallery.form.pictures',
             ))
             ;
     }
@@ -86,9 +86,9 @@ class GalleryStrategy extends AbstractBlockStrategy
     protected function getFormats()
     {
         $formats = array();
-        $formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('open_orchestra_mediaadmin.form.media.original_image');
+        $formats[MediaInterface::MEDIA_ORIGINAL] = $this->translator->trans('open_orchestra_media_admin.form.media.original_image');
         foreach ($this->thumbnailConfig as $key => $thumbnail) {
-            $formats[$key] = $this->translator->trans('open_orchestra_mediaadmin.form.media.' . $key);
+            $formats[$key] = $this->translator->trans('open_orchestra_media_admin.form.media.' . $key);
         }
 
         return $formats;

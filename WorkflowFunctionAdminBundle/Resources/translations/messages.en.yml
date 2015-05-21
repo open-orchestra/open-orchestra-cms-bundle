@@ -1,7 +1,12 @@
+open_orchestra_backoffice:
+    table:
+        workflow_functions:
+            name: Workflow Functions
+
 open_orchestra_workflow_function_admin:
     left_menu:
         administration:
-            worflowfunction: Workflow Function
+            workflow_function: Workflow Function
     form:
         workflow_function:
             success: The workflow function has been saved

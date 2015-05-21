@@ -1,4 +1,15 @@
-open_orchestra_mediaadmin:
+open_orchestra_backoffice:
+    block:
+        carrousel:
+            title: Carousel block
+        gallery:
+            title: Gallery block
+        media_list_by_keyword:
+            title: Media list by keyword
+        display_media:
+            title: Media block
+
+open_orchestra_media_admin:
     form:
         folder:
             success: The folder has been saved
@@ -33,11 +44,10 @@ open_orchestra_mediaadmin:
             new_media_folder: New Folder
             delete_media_folder: Are you sure to delete the folder %folderName% ?
         editorial:
-            mediatheque: Mediatheque
+            mediatheque: Media
         administration:
     block:
         carrousel:
-            title: Carousel block
             description: Block to scroll images.
             form:
                 media:
@@ -45,7 +55,6 @@ open_orchestra_mediaadmin:
                     new: New media
                     delete: Remove media
         gallery:
-            title: Gallery block
             description: Block to display images.
             form:
                 pictures: Pictures
@@ -62,10 +71,8 @@ open_orchestra_mediaadmin:
                     label: Image format (full view)
                     helper: Image format (full view)
         media_list_by_keyword:
-            title: Media list by keyword
             description: Display a medias list.
         display_media:
-            title: Media block
             description: Display a picture
             form:
                 node_link: Add a link to the media

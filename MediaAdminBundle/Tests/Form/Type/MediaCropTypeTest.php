@@ -70,15 +70,15 @@ class MediaCropTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->builder)->add('y', 'hidden');
         Phake::verify($this->builder)->add('h', 'hidden');
         Phake::verify($this->builder)->add('w', 'hidden');
-        Phake::verify($this->translator)->trans('open_orchestra_mediaadmin.form.media.rectangle');
-        Phake::verify($this->translator)->trans('open_orchestra_mediaadmin.form.media.max_width');
+        Phake::verify($this->translator)->trans('open_orchestra_media_admin.form.media.rectangle');
+        Phake::verify($this->translator)->trans('open_orchestra_media_admin.form.media.max_width');
         Phake::verify($this->builder)->add('format', 'choice', array(
             'choices' => array(
                 'rectangle' => $this->translatedString,
                 'max_width' => $this->translatedString,
             ),
-            'label' => 'open_orchestra_mediaadmin.form.media.format',
-            'empty_value' => 'open_orchestra_mediaadmin.form.media.original_image',
+            'label' => 'open_orchestra_media_admin.form.media.format',
+            'empty_value' => 'open_orchestra_media_admin.form.media.original_image',
             'required' => false,
         ));
     }
