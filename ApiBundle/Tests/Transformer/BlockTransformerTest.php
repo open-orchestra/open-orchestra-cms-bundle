@@ -87,7 +87,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
     public function testTransform(
         $component,
         $attributes,
-        $label = null,
+        $label,
         $expectedAttributes = null
     )
     {
@@ -107,17 +107,21 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get('ui_model')->thenReturn($transformer);
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
 
-        $facadeExcepted = $this->blockTransformer->transform($block, true, 'root', 0, 0, 0, 'fakeId');
+        $facadeResult = $this->blockTransformer->transform($block, true, 'root', 0, 0, 0, 'fakeId');
 
-        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\BlockFacade', $facadeExcepted);
-        $this->assertSame($component, $facadeExcepted->component);
-        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\UiModelFacade', $facadeExcepted->uiModel);
-        $this->assertArrayHasKey('_self_form', $facadeExcepted->getLinks());
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\BlockFacade', $facadeResult);
+        $this->assertSame($component, $facadeResult->component);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\UiModelFacade', $facadeResult->uiModel);
+        $this->assertArrayHasKey('_self_form', $facadeResult->getLinks());
         if (is_null($expectedAttributes)) {
             $expectedAttributes = $attributes;
         }
-        $this->assertSame($expectedAttributes, $facadeExcepted->getAttributes());
+        $this->assertSame($expectedAttributes, $facadeResult->getAttributes());
         Phake::verify($this->router)->generate(Phake::anyParameters());
+
+        if (!$label) {
+            Phake::verify($this->translator)->trans('open_orchestra_backoffice.block.' . $component . '.title');
+        }
     }
 
     /**
