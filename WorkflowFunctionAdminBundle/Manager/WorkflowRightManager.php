@@ -32,7 +32,7 @@ class WorkflowRightManager
      *
      * @return WorkflowRightInterface
      */
-    public function clean($workflowRight)
+    public function clean($workflowRight = null)
     {
         if (null === $workflowRight) {
             $workflowRightClass = $this->workflowRightClass;
