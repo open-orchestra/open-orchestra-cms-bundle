@@ -9,4 +9,3 @@ services:
             - @doctrine.odm.mongodb.document_manager
             - %open_orchestra_workflow_function.document.authorization.class%
             - %open_orchestra_workflow_function.document.workflow_right.class%
-            
