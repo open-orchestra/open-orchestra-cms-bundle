@@ -33,7 +33,7 @@ class NodeController extends BaseController
      */
     public function showAction(Request $request, $nodeId)
     {
-        $currentSiteManager = $this->get('open_orchestra.manager.current_site');
+        $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
         $language = $request->get('language', $currentSiteManager->getCurrentSiteDefaultLanguage());
         $version = $request->get('version');
         $siteId = $currentSiteManager->getCurrentSiteId();
@@ -67,7 +67,7 @@ class NodeController extends BaseController
      */
     public function deleteAction($nodeId)
     {
-        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId, $siteId);
         $node = $nodes->getNext();
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
@@ -91,7 +91,7 @@ class NodeController extends BaseController
     public function duplicateAction(Request $request, $nodeId)
     {
         $language = $request->get('language');
-        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')
             ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
@@ -124,7 +124,7 @@ class NodeController extends BaseController
     public function listVersionAction(Request $request, $nodeId)
     {
         $language = $request->get('language');
-        $siteId = $this->get('open_orchestra.manager.current_site')->getCurrentSiteId();
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $node = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndLanguageAndSiteId($nodeId, $language, $siteId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);

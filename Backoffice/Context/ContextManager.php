@@ -4,23 +4,23 @@ namespace OpenOrchestra\Backoffice\Context;
 
 use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use OpenOrchestra\DisplayBundle\Manager\SiteManager;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Centralize app contextual datas
  */
-class ContextManager extends SiteManager
+class ContextManager implements CurrentSiteIdInterface
 {
     const KEY_LOCALE = '_locale';
     const KEY_SITE = '_site';
 
+    protected $siteId;
     protected $session;
     protected $tokenStorage;
     protected $siteRepository;
+    protected $currentLanguage;
 
     /**
      * Constructor
@@ -29,11 +29,9 @@ class ContextManager extends SiteManager
      * @param SiteRepositoryInterface $siteRepository
      * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
-     * @param RequestStack            $requestStack
      */
-    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, $defaultLocale = 'en', RequestStack $requestStack)
+    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, $defaultLocale = 'en')
     {
-        parent::__construct($requestStack);
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
 
@@ -111,7 +109,7 @@ class ContextManager extends SiteManager
     public function getCurrentSiteId()
     {
         if (is_null($this->siteId)) {
-            $this->siteId = $this->requestStack->getMasterRequest()->get('siteId', $this->getCurrentSite()['siteId']);
+            $this->siteId = $this->getCurrentSite()['siteId'];
         }
 
         return $this->siteId;
@@ -136,8 +134,8 @@ class ContextManager extends SiteManager
      */
     public function getCurrentSiteDefaultLanguage()
     {
-        if (is_null($this->currentLanguage) && ($request = $this->requestStack->getMasterRequest())) {
-            $this->currentLanguage = $request->get('language', $this->getCurrentSite()['defaultLanguage']);
+        if (is_null($this->currentLanguage)) {
+            $this->currentLanguage = $this->getCurrentSite()['defaultLanguage'];
         }
 
         return $this->currentLanguage;

@@ -15,7 +15,7 @@ services:
         class: %open_orchestra_backoffice.left_panel.node.class%
         arguments:
             - @open_orchestra_model.repository.node
-            - @open_orchestra.manager.current_site
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.template:
@@ -34,7 +34,7 @@ services:
         class: %open_orchestra_backoffice.left_panel.general_node.class%
         arguments:
             - @open_orchestra_model.repository.node
-            - @open_orchestra.manager.current_site
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.content_types:
