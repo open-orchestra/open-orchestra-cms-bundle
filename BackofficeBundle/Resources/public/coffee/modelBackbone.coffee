@@ -27,4 +27,3 @@ GalleryCollection = Backbone.Collection.extend(model: GalleryModel)
 GalleryElement = Backbone.Model.extend(
   sites: GalleryCollection
 )
-PanelModel = Backbone.Model.extend({})

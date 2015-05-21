@@ -9,7 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use FOS\UserBundle\Doctrine\UserManager;
+use OpenOrchestra\UserBundle\Document\User;
 /**
  * Class UserController
  *
@@ -49,7 +50,7 @@ class UserController extends AbstractAdminController
 
     /**
      * @param Request $request
-     * @param string  $userId
+     * @param string $userId
      *
      * @Config\Route("/form/{userId}", name="open_orchestra_user_admin_user_form")
      * @Config\Method({"GET", "POST"})
@@ -66,9 +67,42 @@ class UserController extends AbstractAdminController
         ));
         $form->handleRequest($request);
         $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
-
         $this->dispatchEvent(UserEvents::USER_UPDATE, new UserEvent($user));
 
         return $this->renderAdminForm($form);
     }
+
+    /**
+     * @param Request $request
+     * @param string $userId
+     *
+     * @Config\Route("/password/change/{userId}", name="open_orchestra_user_admin_user_change_password")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_USER')")
+     *
+     * @return Response
+     */
+
+    public function changePasswordAction(Request $request, $userId)
+    {
+        /* @var User $user */
+        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+        $form = $this->createForm('user_change_password', $user, array(
+            'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $userId))
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updatePassword($user);
+            $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
+            $this->dispatchEvent(UserEvents::USER_CHANGE_PASSWORD, new UserEvent($user));
+        }
+
+
+
+        return $this->renderAdminForm($form);
+    }
+
 }

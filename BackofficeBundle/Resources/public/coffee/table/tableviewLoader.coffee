@@ -48,6 +48,13 @@ tableViewLoad = (link, entityType, entityId, language, version, add, sourceLangu
               link = link + '&version=' + version if version != undefined
               founded = tableViewLoadSpecificElement(link, title, entityType)
             else
+              links = element.get('links')
+              panelKeys = []
+              for key in Object.keys(links)
+                if /^_self_panel_/.test(key)
+                  panelKeys.push(key)
+              if panelKeys.length > 0
+                appConfigurationView.setConfiguration(entityType, 'edit', FullPagePanelView)
               $.ajax
                 url: element.get('links')._self_form
                 method: "GET"
