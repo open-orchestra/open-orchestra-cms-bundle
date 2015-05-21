@@ -30,11 +30,7 @@ class WorkflowRightController extends AbstractAdminController
      */
     public function formAction(Request $request, $userId)
     {
-        $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $workflowRight = null;
-        if (null !== $user) {
-            $workflowRight = $this->get('open_orchestra_workflow_function.repository.workflowRight')->findOneByUser($user);
-        }
+        $workflowRight = $this->get('open_orchestra_workflow_function.repository.workflowRight')->findOneByUserId($userId);
         $workflowRight = $this->get('open_orchestra_workflow_function_admin.manager.workflow_right')->clean($workflowRight);
         $url = $this->generateUrl('open_orchestra_backoffice_workflow_right_form', array('userId' => $userId));
 

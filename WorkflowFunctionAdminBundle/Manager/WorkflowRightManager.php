@@ -6,8 +6,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use OpenOrchestra\ModelBundle\Repository\ContentTypeRepository;
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
 
-
-
 /**
  * Class WorkflowRightManager
  */
@@ -19,14 +17,12 @@ class WorkflowRightManager
      * Constructor
      *
      * @param ContentTypeRepository $contentTypeRepository
-     * @param DocumentManager       $documentManager
      * @param string                $authorizationClass
      * @param string                $workflowRightClass
      */
-    public function __construct(ContentTypeRepository $contentTypeRepository, DocumentManager $documentManager, $authorizationClass, $workflowRightClass)
+    public function __construct(ContentTypeRepository $contentTypeRepository, $authorizationClass, $workflowRightClass)
     {
         $this->contentTypeRepository = $contentTypeRepository;
-        $this->documentManager = $documentManager;
         $this->authorizationClass = $authorizationClass;
         $this->workflowRightClass = $workflowRightClass;
     }
