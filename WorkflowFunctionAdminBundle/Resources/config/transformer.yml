@@ -1,7 +1,6 @@
 parameters:
     open_orchestra_workflow_function_admin.transformer.workflow_function_collection.class: OpenOrchestra\WorkflowFunctionAdminBundle\Transformer\WorkflowFunctionCollectionTransformer
     open_orchestra_workflow_function_admin.transformer.workflow_function.class: OpenOrchestra\WorkflowFunctionAdminBundle\Transformer\WorkflowFunctionTransformer
-    open_orchestra_workflow_function_admin.transformer.content_type_to_authorization.class: OpenOrchestra\UserAdminBundle\Form\DataTransformer\ContentTypeToAuthorizationTransformer
 services:
     open_orchestra_workflow_function_admin.transformer.workflow_function_collection:
         class: %open_orchestra_workflow_function_admin.transformer.workflow_function_collection.class%
@@ -11,8 +10,3 @@ services:
         class: %open_orchestra_workflow_function_admin.transformer.workflow_function.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_workflow_function_admin.transformer.content_type_to_authorization:
-        class: %open_orchestra_workflow_function_admin.transformer.content_type_to_authorization.class%
-        arguments:
-            - @open_orchestra_model.repository.content_type
-            - %open_orchestra_workflow_function.document.authorization.class%

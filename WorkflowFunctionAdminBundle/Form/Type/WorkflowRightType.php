@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\UserAdminBundle\Form\Type;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
@@ -8,18 +8,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class UserType
+ * Class WorkflowRightType
  */
-class UserType extends AbstractType
+class WorkflowRightType extends AbstractType
 {
-    protected $class;
+    protected $workflowRightClass;
 
     /**
-     * @param string  $class
+     * @param string $workflowRightClass
      */
-    public function __construct($class)
+    public function __construct($workflowRightClass)
     {
-        $this->class = $class;
+        $this->workflowRightClass = $workflowRightClass;
     }
 
     /**
@@ -28,22 +28,10 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName', 'text', array(
-            'label' => 'open_orchestra_user.form.user.firstName'
-        ));
-        $builder->add('lastName', 'text', array(
-            'label' => 'open_orchestra_user.form.user.lastName'
-        ));
-        $builder->add('email', 'email', array(
-            'label' => 'open_orchestra_user.form.user.email'
-        ));
-        $builder->add('groups', 'orchestra_group', array(
-            'multiple' => true,
-            'expanded' => true,
+        $builder->add('authorizations', 'collection', array(
+            'type' => 'authorization',
+            'label' => false,
             'required' => false,
-        ));
-        $builder->add('language', 'orchestra_language', array(
-            'label' => 'open_orchestra_user.form.user.language'
         ));
 
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
@@ -55,7 +43,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class
+            'data_class' => $this->workflowRightClass
         ));
     }
 
@@ -66,7 +54,7 @@ class UserType extends AbstractType
      */
     public function getName()
     {
-        return 'user';
+        return 'workflow_right';
     }
 
 }

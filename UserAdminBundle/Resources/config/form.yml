@@ -1,13 +1,11 @@
 parameters:
     open_orchestra_user_admin.type.user.class: OpenOrchestra\UserAdminBundle\Form\Type\UserType
     open_orchestra_user_admin.type.registration_user.class: OpenOrchestra\UserAdminBundle\Form\Type\RegistrationUserType
-    open_orchestra_user_admin.type.authorization.class: OpenOrchestra\UserAdminBundle\Form\Type\AuthorizationType
 services:
     open_orchestra_user_admin.type.user:
         class: %open_orchestra_user_admin.type.user.class%
         arguments:
             - %open_orchestra_user.document.user.class%
-            - @open_orchestra_user_admin.transformer.content_type_to_authorization
         tags:
             - { name: form.type, alias: user}
     open_orchestra_user_admin.type.registration_user:
@@ -16,9 +14,3 @@ services:
             - %open_orchestra_user.document.user.class%
         tags:
             - { name: form.type, alias: registration_user}
-    open_orchestra_user_admin.type.authorization:
-        class: %open_orchestra_user_admin.type.authorization.class%
-        arguments:
-            - %open_orchestra_user.document.authorization.class%
-        tags:
-            - { name: form.type, alias: authorization}
