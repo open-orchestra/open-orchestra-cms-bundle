@@ -94,10 +94,7 @@ class ContentController extends AbstractAdminController
      */
     public function newAction(Request $request, $contentType)
     {
-        $contentClass = $this->container->getParameter('open_orchestra_model.document.content.class');
-        $content = new $contentClass();
-        $content->setContentType($contentType);
-        $content->setLanguage($this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage());
+        $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentType);
 
         $form = $this->createForm('orchestra_content', $content, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(

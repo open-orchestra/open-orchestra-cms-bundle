@@ -10,10 +10,15 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
  */
 class ContextManagerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ContextManager
+     */
+    protected $contextManager;
+
     protected $token;
     protected $session;
     protected $tokenStorage;
-    protected $contextManager;
+    protected $defaultLocale;
     protected $siteRepository;
 
     /**
@@ -28,7 +33,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
-        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage);
+        $this->defaultLocale = 'en';
+
+        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage, $this->defaultLocale);
     }
 
     /**
@@ -214,5 +221,13 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
             array(array('siteId' => 'fakeId', 'name' => 'fakeName', 'defaultLanguage' => 'en'), 'en'),
             array(array('siteId' => 'id', 'name' => 'name', 'defaultLanguage' => 'fr'), 'fr'),
         );
+    }
+
+    /**
+     * Test default language
+     */
+    public function testGetDefaultLocale()
+    {
+        $this->assertSame($this->defaultLocale, $this->contextManager->getDefaultLocale());
     }
 }
