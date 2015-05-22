@@ -5,12 +5,12 @@ namespace OpenOrchestra\ApiBundle\Exceptions\HttpException;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\ApiException;
 
 /**
- * Class ContentSourceNotFoundHttpException
+ * Class SourceLanguageNotFoundHttpException
  */
-class ContentSourceNotFoundHttpException extends ApiException
+class SourceLanguageNotFoundHttpException extends ApiException
 {
-    const DEVELOPER_MESSAGE  = 'open_orchestra_api.content_source.not_found';
-    const HUMAN_MESSAGE      = 'open_orchestra_api.content_source.not_found';
+    const DEVELOPER_MESSAGE  = 'open_orchestra_api.source_language.not_found';
+    const HUMAN_MESSAGE      = 'open_orchestra_api.source_language.not_found';
     const STATUS_CODE        = '404';
     const ERROR_CODE         = 'x';
 
