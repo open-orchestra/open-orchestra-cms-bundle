@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
@@ -32,6 +33,7 @@ class ContentController extends BaseController
      * @Api\Serialize()
      *
      * @return FacadeInterface
+     * @throws ContentNotFoundHttpException
      */
     public function showAction(Request $request, $contentId)
     {
@@ -41,8 +43,11 @@ class ContentController extends BaseController
         $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
 
         if (!$content) {
-            $defaultCurrentSiteLanguage = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage();
-            $oldContent = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $defaultCurrentSiteLanguage);
+            $sourceLanguage = $request->get('source_language');
+            if (!$sourceLanguage) {
+                throw new ContentNotFoundHttpException();
+            }
+            $oldContent = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $sourceLanguage);
             $content = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($content);

@@ -16,6 +16,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     ':entityType/add': 'addEntity',
     ':entityType/edit/:entityId': 'showEntity',
     ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
+    ':entityType/edit/:entityId/:language/source/:sourceLanguage': 'showEntityWithLanguageAndSourceLanguage',
     ':entityType/edit/:entityId/:language/:version': 'showEntityWithLanguageAndVersion',
     'folder/:folderId/list/media/:mediaId/edit': 'mediaEdit',
     'folder/:folderId/list': 'listFolder',
@@ -92,16 +93,21 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.manageEntity(entityType, entityId, language);
   },
+
+  showEntityWithLanguageAndSourceLanguage: function(entityType, entityId, language, sourceLanguage)
+  {
+    this.manageEntity(entityType, entityId, language, undefined, undefined, sourceLanguage);
+  },
   
   showEntityWithLanguageAndVersion: function(entityType, entityId, language, version)
   {
     this.manageEntity(entityType, entityId, language, version);
   },
 
-  manageEntity: function(entityType, entityId, language, version, add)
+  manageEntity: function(entityType, entityId, language, version, add, sourceLanguage)
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
-    tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version, add);
+    tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version, add, sourceLanguage);
   },
 
   mediaEdit: function(folderId, mediaId)

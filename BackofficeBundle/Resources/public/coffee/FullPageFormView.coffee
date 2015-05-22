@@ -45,7 +45,7 @@ FullPageFormView = OrchestraView.extend(
     @options = $.extend(@options, multiLanguage:
       language_list : element.get('links')._language_list
       language : element.get('language')
-      path: 'showEntityWithLanguage'
+      path: 'showEntityWithLanguageAndSourceLanguage'
     ) if element.get('links')._language_list
 
     @options = $.extend(@options, multiStatus:
