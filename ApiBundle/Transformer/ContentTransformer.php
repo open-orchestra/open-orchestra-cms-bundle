@@ -74,13 +74,13 @@ class ContentTransformer extends AbstractTransformer
             'contentId' => $mixed->getId()
         )));
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $mixed->getContentId(),
             'version' => $mixed->getVersion(),
             'language' => $mixed->getLanguage(),
         )));
 
-        $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show', array(
+        $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $mixed->getContentId(),
         )));
 

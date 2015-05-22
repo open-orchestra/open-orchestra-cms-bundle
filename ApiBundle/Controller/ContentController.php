@@ -37,17 +37,40 @@ class ContentController extends BaseController
      */
     public function showAction(Request $request, $contentId)
     {
+        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
+
+        if (!$content) {
+            throw new ContentNotFoundHttpException();
+        }
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $contentId
+     *
+     * @Config\Route("/{contentId}/or/create", name="open_orchestra_api_content_show_or_create")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     *
+     * @Api\Serialize()
+     *
+     * @return FacadeInterface
+     * @throws ContentNotFoundHttpException
+     */
+    public function showOrCreateAction(Request $request, $contentId)
+    {
         $language = $request->get('language');
-        $version = $request->get('version');
-        $contentRepository = $this->get('open_orchestra_model.repository.content');
-        $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
+        $content = $this->findOneContent($contentId, $language, $request->get('version'));
 
         if (!$content) {
             $sourceLanguage = $request->get('source_language');
             if (!$sourceLanguage) {
                 throw new ContentNotFoundHttpException();
             }
-            $oldContent = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $sourceLanguage);
+            $oldContent = $this->findOneContent($contentId, $sourceLanguage);
             $content = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($content);
@@ -113,9 +136,8 @@ class ContentController extends BaseController
      */
     public function duplicateAction(Request $request, $contentId)
     {
-        $language = $request->get('language');
         /** @var ContentInterface $content */
-        $content = $this->get('open_orchestra_model.repository.content')->findOneByContentIdAndLanguageAndVersion($contentId, $language);
+        $content = $this->findOneContent($contentId, $request->get('language'));
         $newContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content);
 
 
@@ -143,8 +165,7 @@ class ContentController extends BaseController
      */
     public function listVersionAction(Request $request, $contentId)
     {
-        $language = $request->get('language');
-        $contents = $this->get('open_orchestra_model.repository.content')->findByContentIdAndLanguage($contentId, $language);
+        $contents = $this->get('open_orchestra_model.repository.content')->findByContentIdAndLanguage($contentId, $request->get('language'));
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
     }
@@ -171,5 +192,19 @@ class ContentController extends BaseController
             ContentEvents::CONTENT_CHANGE_STATUS,
             'OpenOrchestra\ModelInterface\Event\ContentEvent'
         );
+    }
+
+    /**
+     * @param string   $contentId
+     * @param string   $language
+     * @param int|null $version
+     *
+     * @return null|ContentInterface
+     */
+    protected function findOneContent($contentId, $language, $version = null)
+    {
+        $contentRepository = $this->get('open_orchestra_model.repository.content');
+        $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
+        return $content;
     }
 }
