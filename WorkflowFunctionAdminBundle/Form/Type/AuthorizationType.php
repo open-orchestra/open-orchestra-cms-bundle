@@ -29,7 +29,7 @@ class AuthorizationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('id', 'hidden');
+        $builder->add('referenceId', 'hidden');
         $builder->add('workflowFunctions', 'orchestra_workflow_function', array(
             'label' => false,
             'required' => false
