@@ -72,7 +72,7 @@ class NodeController extends AbstractAdminController
         $statusCode = 200;
         if ($form->getErrors()->count() > 0) {
             $statusCode = 400;
-        } elseif (!is_null($node->getNodeId())) {
+        } elseif (!is_null($node->getId())) {
             $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $node->getId()));
 
             $this->dispatchEvent(NodeEvents::NODE_CREATION, new NodeEvent($node));
