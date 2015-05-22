@@ -103,11 +103,11 @@ class NodeTransformer extends AbstractTransformer
             'nodeId' => $mixed->getNodeId()
         )));
 
-        $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show', array(
+        $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $mixed->getNodeId()
         )));
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $mixed->getNodeId(),
             'version' => $mixed->getVersion(),
             'language' => $mixed->getLanguage(),
@@ -168,7 +168,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->updatedAt = $mixed->getUpdatedAt();
         $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show', array(
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $mixed->getNodeId(),
             'version' => $mixed->getVersion(),
             'language' => $mixed->getLanguage(),
