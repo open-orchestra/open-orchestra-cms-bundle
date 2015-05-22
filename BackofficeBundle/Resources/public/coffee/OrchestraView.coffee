@@ -46,6 +46,7 @@ OrchestraView = Backbone.View.extend(
       cleanOptions[key] = value if $.inArray(key, keys) != -1
       return
     return cleanOptions
+
   addOption: (options) ->
     return $.extend(true, {}, @options, options)
 )

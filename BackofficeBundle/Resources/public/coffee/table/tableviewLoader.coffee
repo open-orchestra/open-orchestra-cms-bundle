@@ -8,7 +8,7 @@ addParameter = (element, label, value) ->
     element.set('links', links);
   return element
 
-tableViewLoad = (link, entityType, entityId, language, version, add) ->
+tableViewLoad = (link, entityType, entityId, language, version, add, sourceLanguage) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   translatedHeader = link.data('translated-header').split(",") if link.data('translatedHeader') != undefined
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
@@ -42,21 +42,21 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
           if entityId is element.get('id')
             if language != undefined
               link = element.get('links')._self_without_parameters + '?language=' + language
+              link = link + '&source_language=' + sourceLanguage if sourceLanguage != undefined
               link = link + '&version=' + version if version != undefined
-              tableViewLoadSpecificElement(link, title, entityType)
+              founded = tableViewLoadSpecificElement(link, title, entityType)
+            else
+              $.ajax
+                url: element.get('links')._self_form
+                method: "GET"
+                success: (response) ->
+                  options =
+                    html: response
+                    title: title
+                    entityType: entityType
+                    element: element
+                  new FullPageFormView(options)
               founded = true
-              return false
-            $.ajax
-              url: element.get('links')._self_form
-              method: "GET"
-              success: (response) ->
-                options =
-                  html: response
-                  title: title
-                  entityType: entityType
-                  element: element
-                new FullPageFormView(options)
-            founded = true
       unless founded
         new TableviewCollectionView(
           elements: elements
@@ -69,6 +69,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add) ->
         )
 
 tableViewLoadSpecificElement = (link, title, entityType) ->
+  displayed = true
   $.ajax
     url: link
     method: 'GET'
@@ -91,3 +92,6 @@ tableViewLoadSpecificElement = (link, title, entityType) ->
             entityType: entityType
             element: element
           new FullPageFormView(options)
+    error: ->
+      displayed = false
+  return displayed
