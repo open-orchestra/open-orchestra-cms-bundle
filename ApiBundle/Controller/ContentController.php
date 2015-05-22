@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentSourceNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
@@ -50,7 +51,7 @@ class ContentController extends BaseController
      * @param Request $request
      * @param string  $contentId
      *
-     * @Config\Route("/{contentId}/or/create", name="open_orchestra_api_content_show_or_create")
+     * @Config\Route("/{contentId}/show-or-create", name="open_orchestra_api_content_show_or_create")
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
@@ -58,7 +59,7 @@ class ContentController extends BaseController
      * @Api\Serialize()
      *
      * @return FacadeInterface
-     * @throws ContentNotFoundHttpException
+     * @throws ContentSourceNotFoundHttpException
      */
     public function showOrCreateAction(Request $request, $contentId)
     {
@@ -68,7 +69,7 @@ class ContentController extends BaseController
         if (!$content) {
             $sourceLanguage = $request->get('source_language');
             if (!$sourceLanguage) {
-                throw new ContentNotFoundHttpException();
+                throw new ContentSourceNotFoundHttpException();
             }
             $oldContent = $this->findOneContent($contentId, $sourceLanguage);
             $content = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
