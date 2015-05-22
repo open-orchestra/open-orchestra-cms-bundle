@@ -19,6 +19,7 @@ class ContextManager implements CurrentSiteIdInterface
     protected $siteId;
     protected $session;
     protected $tokenStorage;
+    protected $defaultLocale;
     protected $siteRepository;
     protected $currentLanguage;
 
@@ -34,6 +35,7 @@ class ContextManager implements CurrentSiteIdInterface
     {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
+        $this->defaultLocale = $defaultLocale;
 
         if ($this->getCurrentLocale() == '') {
             $this->setCurrentLocale($defaultLocale);
@@ -166,5 +168,13 @@ class ContextManager implements CurrentSiteIdInterface
         }
 
         return $currentSite;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLocale()
+    {
+        return $this->defaultLocale;
     }
 }

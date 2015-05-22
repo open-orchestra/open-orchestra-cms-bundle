@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;

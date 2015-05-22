@@ -18,6 +18,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     protected $contentRepository;
     protected $contentAttribute;
     protected $contextManager;
+    protected $contentClass;
     protected $keyword;
     protected $content;
 
@@ -36,7 +37,9 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('fakeLanguage');
 
-        $this->manager = new ContentManager($this->contextManager);
+        $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
+
+        $this->manager = new ContentManager($this->contextManager, $this->contentClass);
     }
 
     /**
@@ -81,4 +84,31 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @param string $contentType
+     * @param string $language
+     *
+     * @dataProvider provideContentTypeAndLanguage
+     */
+    public function testInitializeNewContent($contentType, $language)
+    {
+        Phake::when($this->contextManager)->getDefaultLocale()->thenReturn($language);
+
+        $content = $this->manager->initializeNewContent($contentType, $language);
+
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
+        $this->assertSame($language, $content->getLanguage());
+        $this->assertSame($contentType, $content->getContentType());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentTypeAndLanguage()
+    {
+        return array(
+            array('news', 'fr'),
+            array('car', 'en'),
+        );
+    }
 }

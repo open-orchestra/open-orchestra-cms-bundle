@@ -11,13 +11,16 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 class ContentManager
 {
     protected $contextManager;
+    protected $contentClass;
 
     /**
      * @param ContextManager $contextManager
+     * @param string         $contentClass
      */
-    public function __construct(ContextManager $contextManager)
+    public function __construct(ContextManager $contextManager, $contentClass)
     {
         $this->contextManager = $contextManager;
+        $this->contentClass = $contentClass;
     }
 
     /**
@@ -31,6 +34,22 @@ class ContentManager
         $content = $this->duplicateContent($contentSource);
         $content->setVersion(1);
         $content->setLanguage($language);
+
+        return $content;
+    }
+
+    /**
+     * @param string $contentType
+     *
+     * @return ContentInterface
+     */
+    public function initializeNewContent($contentType)
+    {
+        $contentClass = $this->contentClass;
+        /** @var ContentInterface $content */
+        $content = new $contentClass();
+        $content->setLanguage($this->contextManager->getDefaultLocale());
+        $content->setContentType($contentType);
 
         return $content;
     }
