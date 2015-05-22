@@ -9,3 +9,4 @@ services:
             - @open_orchestra_workflow_function.repository.workflow_right
             - @open_orchestra_workflow_function.manager.authorization_workflow_right
             - %open_orchestra_workflow_function.document.workflow_right.class%
+            - %open_orchestra_workflow_function.document.reference.class%

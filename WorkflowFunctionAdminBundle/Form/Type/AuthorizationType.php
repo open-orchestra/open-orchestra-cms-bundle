@@ -7,19 +7,30 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class AuthorizationType
  */
 class AuthorizationType extends AbstractType
 {
+    protected $contentTypeRepository;
+
+    protected $translationChoiceManager;
+
     protected $authorizationClass;
 
     /**
-     * @param string $authorizationClass
+     * @param ContentTypeRepositoryInterface    $contentTypeRepository
+     * @param TranslationChoiceManager          $translationChoiceManager
+     * @param string                            $authorizationClass
      */
-    public function __construct($authorizationClass)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, TranslationChoiceManager $translationChoiceManager, $authorizationClass)
     {
+        $this->contentTypeRepository = $contentTypeRepository;
+        $this->translationChoiceManager = $translationChoiceManager;
         $this->authorizationClass = $authorizationClass;
     }
 
@@ -38,7 +49,12 @@ class AuthorizationType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        //$view->vars['label'] = $view->vars['value']->getName();
+        $contentTypeName = 'open_orchestra_backoffice.left_menu.editorial.nodes';
+        $contentType = $this->contentTypeRepository->find($view->vars['value']->getReferenceId());
+        if (null !== $contentType) {
+            $contentTypeName = $this->translationChoiceManager->choose($contentType->getNames());
+        }
+        $view->vars['label'] = $contentTypeName;
     }
 
     /**

@@ -1,2 +1,0 @@
-resolve_target_documents:
-        OpenOrchestra\WorkflowFunction\Model\ReferenceInterface: OpenOrchestra\ModelBundle\Document\ContentType

@@ -20,6 +20,8 @@ services:
     open_orchestra_workflow_function_admin.type.authorization:
         class: %open_orchestra_workflow_function_admin.type.authorization.class%
         arguments:
+            - @open_orchestra_model.repository.content_type
+            - @open_orchestra_backoffice.manager.translation_choice
             - %open_orchestra_workflow_function.document.authorization.class%
         tags:
             - { name: form.type, alias: authorization}

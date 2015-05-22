@@ -23,19 +23,24 @@ class WorkflowRightManager
 
     protected $workflowRightClass;
 
+    protected $referenceClass;
+
     /**
      * Constructor
      *
      * @param ContentTypeRepositoryInterface    $contentTypeRepository
+     * @param WorkflowRightRepositoryInterface  $workflowRightRepository
      * @param AuthorizationWorkflowRightManager $authorizationWorkflowRightManager
      * @param string                            $workflowRightClass
+     * @param string                            $referenceClass
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, WorkflowRightRepositoryInterface $workflowRightRepository, AuthorizationWorkflowRightManager $authorizationWorkflowRightManager, $workflowRightClass)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, WorkflowRightRepositoryInterface $workflowRightRepository, AuthorizationWorkflowRightManager $authorizationWorkflowRightManager, $workflowRightClass, $referenceClass)
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->workflowRightRepository = $workflowRightRepository;
         $this->authorizationWorkflowRightManager = $authorizationWorkflowRightManager;
         $this->workflowRightClass = $workflowRightClass;
+        $this->referenceClass = $referenceClass;
     }
 
     /**
@@ -45,9 +50,11 @@ class WorkflowRightManager
      */
     public function loadOrGenerateByUser($userId)
     {
-        $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
-        $reference = new Reference();
+        $referenceClass = $this->referenceClass;
+        $reference = new $referenceClass();
         $reference->setId(WorkflowRightInterface::NODE);
+
+        $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
         $contentTypes[] = $reference;
 
         $workflowRight = $this->workflowRightRepository->findOneByUserId($userId);
