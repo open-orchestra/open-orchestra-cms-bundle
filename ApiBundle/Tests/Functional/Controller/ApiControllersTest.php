@@ -28,11 +28,11 @@ class ApiControllersTest extends AbstractControllerTest
     public function provideApiUrl()
     {
         return array(
-            array('/api/node/root'),
-            array('/api/node/root?language=en'),
-            array('/api/node/transverse'),
-            array('/api/node/fixture_full'),
-            array('/api/node/fixture_full?language=en'),
+            array('/api/node/root/show-or-create'),
+            array('/api/node/root/show-or-create?language=en'),
+            array('/api/node/transverse/show-or-create'),
+            array('/api/node/fixture_full/show-or-create'),
+            array('/api/node/fixture_full/show-or-create?language=en'),
             array('/api/content'),
             array('/api/content?content_type=news'),
             array('/api/content-type'),

@@ -34,15 +34,36 @@ class NodeController extends BaseController
     public function showAction(Request $request, $nodeId)
     {
         $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
-        $language = $request->get('language', $currentSiteManager->getCurrentSiteDefaultLanguage());
-        $version = $request->get('version');
+        $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
+        $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
-        $node = $this->get('open_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version);
+        $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $nodeId
+     *
+     * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create")
+     * @Config\Method({"GET"})
+     * @Api\Serialize()
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return FacadeInterface
+     */
+    public function showOrCreateAction(Request $request, $nodeId)
+    {
+        $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
+        $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
+        $language = $request->get('language', $currentSiteDefaultLanguage);
+        $siteId = $currentSiteManager->getCurrentSiteId();
+        $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
 
         if (!$node) {
-            $defaultCurrentSiteLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
-            $oldNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $defaultCurrentSiteLanguage, $siteId);
+            $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
             $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($node);
@@ -181,5 +202,20 @@ class NodeController extends BaseController
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
 
         return new Response('', 200);
+    }
+
+    /**
+     * @param string   $nodeId
+     * @param string   $language
+     * @param string   $siteId
+     * @param int|null $version
+     *
+     * @return NodeInterface|null
+     */
+    protected function findOneNode($nodeId, $language, $siteId, $version = null)
+    {
+        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version);
+
+        return $node;
     }
 }

@@ -89,7 +89,7 @@ class NodeControllerTest extends AbstractControllerTest
         $this->assertSame(null, $node);
         $this->assertSame(1, $countAreaRef);
 
-        $this->client->request('GET', '/api/node/fixture_full', array('language' => 'es'));
+        $this->client->request('GET', '/api/node/fixture_full/show-or-create', array('language' => 'es'));
 
 
         $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
