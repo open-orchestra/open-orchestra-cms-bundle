@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
+use OpenOrchestra\WorkflowFunctionBundle\Document\Reference;
 
 /**
  * Class WorkflowRightController
@@ -30,8 +31,13 @@ class WorkflowRightController extends AbstractAdminController
      */
     public function formAction(Request $request, $userId)
     {
+        $contentTypes = $this->get('open_orchestra_model.repository.content_type')->findAllByDeletedInLastVersion();
+        $reference = new Reference();
+        $reference->setId(WorkflowRightInterface::NODE);
+        $contentTypes[] = $reference;
+
         $workflowRight = $this->get('open_orchestra_workflow_function.repository.workflowRight')->findOneByUserId($userId);
-        $workflowRight = $this->get('open_orchestra_workflow_function_admin.manager.workflow_right')->clean($workflowRight);
+        $workflowRight = $this->get('open_orchestra_workflow_function.manager.workflow_right')->clean($contentTypes, $workflowRight);
         $url = $this->generateUrl('open_orchestra_backoffice_workflow_right_form', array('userId' => $userId));
 
         return $this->generateForm($request, $workflowRight, $url, WorkflowRightEvents::WORKFLOWRIGHT_UPDATE);

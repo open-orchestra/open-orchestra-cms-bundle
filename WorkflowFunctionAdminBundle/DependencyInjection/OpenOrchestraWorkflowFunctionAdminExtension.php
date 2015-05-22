@@ -23,6 +23,5 @@ class OpenOrchestraWorkflowFunctionAdminExtension extends Extension
         $loader->load('form.yml');
         $loader->load('leftpanel.yml');
         $loader->load('transformer.yml');
-        $loader->load('manager.yml');
     }
 }
