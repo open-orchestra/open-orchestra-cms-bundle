@@ -53,6 +53,7 @@ services:
         class: %open_orchestra_backoffice.manager.content.class%
         arguments:
             - @open_orchestra_backoffice.context_manager
+            - %open_orchestra_model.document.content.class%
     open_orchestra_backoffice.manager.block:
         class: %open_orchestra_backoffice.manager.block.class%
         arguments: [@open_orchestra_model.repository.node]
