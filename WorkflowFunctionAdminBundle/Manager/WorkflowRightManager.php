@@ -51,6 +51,7 @@ class WorkflowRightManager
         $contentTypes[] = $reference;
 
         $workflowRight = $this->workflowRightRepository->findOneByUserId($userId);
+
         if (null === $workflowRight) {
             $workflowRightClass = $this->workflowRightClass;
             $workflowRight = new $workflowRightClass();
