@@ -98,13 +98,13 @@ class NodeManager
     }
 
     /**
-     * @param NodeInterface $node
+     * @param NodeInterface|null $node
      *
      * @return StatusInterface
      */
-    protected function getEditableStatus(NodeInterface $node)
+    protected function getEditableStatus(NodeInterface $node = null)
     {
-        if ($node->getNodeId() == NodeInterface::TRANSVERSE_NODE_ID) {
+        if (is_null($node) || $node->getNodeId() == NodeInterface::TRANSVERSE_NODE_ID) {
             return $this->statusRepository->findOneByEditable();
         }
 
@@ -201,6 +201,7 @@ class NodeManager
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
         $siteId = $this->contextManager->getCurrentSiteId();
 
+        /** @var NodeInterface $node */
         $node = new $this->nodeClass();
         $node->setSiteId($siteId);
         $node->setLanguage($language);
@@ -209,7 +210,13 @@ class NodeManager
 
         $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
-        $node->setNodeType($parentNode->getNodeType());
+        $nodeType = NodeInterface::TYPE_DEFAULT;
+        if ($parentNode instanceof NodeInterface) {
+            $nodeType = $parentNode->getNodeType();
+        } else {
+            $node->setNodeId(NodeInterface::ROOT_NODE_ID);
+        }
+        $node->setNodeType($nodeType);
 
         $site = $this->siteRepository->findOneBySiteId($siteId);
         if ($site) {

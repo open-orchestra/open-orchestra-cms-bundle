@@ -229,12 +229,12 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Test initializeNewNode
      *
-     * @param NodeInterface        $parentNode
+     * @param NodeInterface|null   $parentNode
      * @param StatusInterface|null $status
      *
      * @dataProvider provideParentNode
      */
-    public function testInitializeNewNode(NodeInterface $parentNode, $status)
+    public function testInitializeNewNode(NodeInterface $parentNode = null, $status = null)
     {
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId(Phake::anyParameters())->thenReturn($parentNode);
         Phake::when($this->statusRepository)->findOneByEditable()->thenReturn($status);
@@ -249,6 +249,10 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($status, $node->getStatus());
         $this->assertEquals(true, $node->getMetaIndex());
         $this->assertEquals(true, $node->getMetaFollow());
+        if (is_null($parentNode)) {
+            $this->assertSame(NodeInterface::ROOT_NODE_ID, $node->getNodeId());
+            $this->assertSame(NodeInterface::TYPE_DEFAULT, $node->getNodeType());
+        }
     }
 
     /**
@@ -270,6 +274,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array($parentNode0, null),
             array($parentNode1, EmbedStatus::createFromStatus($status)),
+            array(null, EmbedStatus::createFromStatus($status)),
         );
     }
 
