@@ -7,6 +7,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Class OrchestraFrequenceChoiceType
+ *
+ * @deprecated we use the OrchestraChoiceType instead, will be removed in 0.2.5
  */
 class OrchestraFrequenceChoiceType extends AbstractType
 {

@@ -72,6 +72,26 @@ class OpenOrchestraBackofficeExtension extends Extension
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }
+
+        $availableColor = $config['available_color'];
+        if (empty($availableColor)) {
+            $availableColor = array(
+                'red' => 'open_orchestra_backoffice.form.status.color.red',
+                'green' => 'open_orchestra_backoffice.form.status.color.green',
+                'orange' => 'open_orchestra_backoffice.form.status.color.orange',
+            );
+        }
+        $container->setParameter('open_orchestra_backoffice.choice.available_color', $availableColor);
+
+        $container->setParameter('open_orchestra_backoffice.choice.frequence', array(
+            'always' => 'open_orchestra_backoffice.form.changefreq.always',
+            'hourly' => 'open_orchestra_backoffice.form.changefreq.hourly',
+            'daily' => 'open_orchestra_backoffice.form.changefreq.daily',
+            'weekly' => 'open_orchestra_backoffice.form.changefreq.weekly',
+            'monthly' => 'open_orchestra_backoffice.form.changefreq.monthly',
+            'yearly' => 'open_orchestra_backoffice.form.changefreq.yearly',
+            'never' => 'open_orchestra_backoffice.form.changefreq.never'
+        ));
     }
 
     /**

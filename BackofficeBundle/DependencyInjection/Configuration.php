@@ -38,6 +38,11 @@ class Configuration implements ConfigurationInterface
                 ->info('Add the content attributes for content types')
                 ->prototype('variable')->end()
             ->end()
+            ->arrayNode('available_color')
+                ->info('List of the color available, in the status for instance')
+                ->useAttributeAsKey('key')
+                ->prototype('scalar')->end()
+            ->end()
         ->end();
 
         return $treeBuilder;
