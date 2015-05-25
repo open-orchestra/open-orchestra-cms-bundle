@@ -60,10 +60,16 @@ ul, li {
   }
 }
 .bo-column>li,.bo-row>li {
-  flex: 1;
   word-break: break-all;
   min-width: 10px;
 }
+.ui-model-areas.bo-column>li,.bo-row>li {
+  flex: 1;
+}
+.ui-model-blocks.bo-column>li {
+  flex: unset;
+}
+
 
 /*################################BLOCKS*/
 
@@ -168,7 +174,7 @@ ul, li {
     .move-tool:hover,.block-param:hover, .move-trash:hover  {
       background-color: #676564;
     }
-    .tool:active {
+    .move-tool:active,.block-param:active, .move-trash:active  {
       box-shadow: 0px 0px 5px 1px black inset;
       -moz-box-shadow: 0px 0px 5px 1px black inset;
       -o-box-shadow: 0px 0px 5px 1px black inset;
