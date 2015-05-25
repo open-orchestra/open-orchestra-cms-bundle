@@ -14,7 +14,6 @@ use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
  */
 class WorkflowRightManager
 {
-
     protected $contentTypeRepository;
     protected $workflowRightRepository;
     protected $authorizationWorkflowRightManager;

@@ -17,9 +17,7 @@ use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 class AuthorizationType extends AbstractType
 {
     protected $contentTypeRepository;
-
     protected $translationChoiceManager;
-
     protected $authorizationClass;
 
     /**
