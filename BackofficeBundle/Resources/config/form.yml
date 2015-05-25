@@ -238,7 +238,10 @@ services:
         tags:
             - { name: form.type, alias: orchestra_color_choice}
     open_orchestra_backoffice.type.orchestra_frequence_choice:
-        class: %open_orchestra_backoffice.type.orchestra_frequence_choice.class%
+        class: %open_orchestra_backoffice.type.orchestra_choice.class%
+        arguments:
+            - %open_orchestra_backoffice.choice.frequence%
+            - "orchestra_frequence_choice"
         tags:
             - { name: form.type, alias: orchestra_frequence_choice}
     open_orchestra_backoffice.type.tinymce:
