@@ -72,6 +72,13 @@ class OpenOrchestraBackofficeExtension extends Extension
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('testservices.yml');
         }
+
+        $availableColor = array_merge($config['available_color'], array(
+            'red' => 'open_orchestra_backoffice.form.status.color.red',
+            'green' => 'open_orchestra_backoffice.form.status.color.green',
+            'orange' => 'open_orchestra_backoffice.form.status.color.orange',
+        ));
+        $container->setParameter('open_orchestra_backoffice.choice.available_color', $availableColor);
     }
 
     /**

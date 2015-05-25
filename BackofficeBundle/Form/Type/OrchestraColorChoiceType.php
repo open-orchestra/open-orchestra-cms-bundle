@@ -8,6 +8,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class OrchestraColorChoiceType
+ *
+ * @deprecated use OrchestraChoiceType instead, will be removed in 0.2.5
  */
 class OrchestraColorChoiceType extends AbstractType
 {
