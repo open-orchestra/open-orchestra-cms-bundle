@@ -15,7 +15,7 @@ class UserType extends AbstractType
     protected $class;
 
     /**
-     * @param string  $class
+     * @param string $class
      */
     public function __construct($class)
     {

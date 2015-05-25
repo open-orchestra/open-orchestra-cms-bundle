@@ -16,13 +16,9 @@ class WorkflowRightManager
 {
 
     protected $contentTypeRepository;
-
     protected $workflowRightRepository;
-
     protected $authorizationWorkflowRightManager;
-
     protected $workflowRightClass;
-
     protected $referenceClass;
 
     /**

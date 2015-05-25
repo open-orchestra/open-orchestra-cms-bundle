@@ -47,6 +47,11 @@ class AuthorizationType extends AbstractType
         ));
     }
 
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $contentTypeName = 'open_orchestra_backoffice.left_menu.editorial.nodes';
