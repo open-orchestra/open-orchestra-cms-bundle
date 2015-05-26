@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
@@ -13,7 +12,7 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 /**
  * Class ContentTypeSubscriber
  */
-class ContentTypeSubscriber extends AbstractBlockContentTypeSubscriber
+class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
 {
     protected $translationChoiceManager;
     protected $contentTypeRepository;
