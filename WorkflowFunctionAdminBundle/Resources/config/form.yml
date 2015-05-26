@@ -1,5 +1,8 @@
 parameters:
     open_orchestra_workflow_function_admin.type.workflow_function.class: OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type\WorkflowFunctionType
+    open_orchestra_workflow_function_admin.type.workflow_right.class: OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type\WorkflowRightType
+    open_orchestra_workflow_function_admin.type.orchestra_workflow_function.class: OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type\OrchestraWorkflowFunctionType
+    open_orchestra_workflow_function_admin.type.authorization.class: OpenOrchestra\WorkflowFunctionAdminBundle\Form\Type\AuthorizationType
 
 services:
     open_orchestra_workflow_function_admin.type.workflow_function:
@@ -8,3 +11,23 @@ services:
             - %open_orchestra_workflow_function.document.workflow_function.class%
         tags:
             - { name: form.type, alias: workflow_function}
+    open_orchestra_workflow_function_admin.type.orchestra_workflow_function:
+        class: %open_orchestra_workflow_function_admin.type.orchestra_workflow_function.class%
+        arguments:
+            - %open_orchestra_workflow_function.document.workflow_function.class%
+        tags:
+            - { name: form.type, alias: orchestra_workflow_function }
+    open_orchestra_workflow_function_admin.type.authorization:
+        class: %open_orchestra_workflow_function_admin.type.authorization.class%
+        arguments:
+            - @open_orchestra_model.repository.content_type
+            - @open_orchestra_backoffice.manager.translation_choice
+            - %open_orchestra_workflow_function.document.authorization.class%
+        tags:
+            - { name: form.type, alias: authorization}
+    open_orchestra_workflow_function_admin.type.workflow_right:
+        class: %open_orchestra_workflow_function_admin.type.workflow_right.class%
+        arguments:
+            - %open_orchestra_workflow_function.document.workflow_right.class%
+        tags:
+            - { name: form.type, alias: workflow_right}

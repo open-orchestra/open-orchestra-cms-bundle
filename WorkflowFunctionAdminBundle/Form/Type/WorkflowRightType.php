@@ -8,18 +8,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class WorkflowFunctionType
+ * Class WorkflowRightType
  */
-class WorkflowFunctionType extends AbstractType
+class WorkflowRightType extends AbstractType
 {
-    protected $workflowFunctionClass;
+    protected $workflowRightClass;
 
     /**
-     * @param string $workflowFunctionClass
+     * @param string $workflowRightClass
      */
-    public function __construct($workflowFunctionClass)
+    public function __construct($workflowRightClass)
     {
-        $this->workflowFunctionClass = $workflowFunctionClass;
+        $this->workflowRightClass = $workflowRightClass;
     }
 
     /**
@@ -28,15 +28,12 @@ class WorkflowFunctionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
-                'label' => 'open_orchestra_workflow_function_admin.form.workflow_function.name'
+        $builder->add('authorizations', 'collection', array(
+            'type' => 'authorization',
+            'label' => false,
+            'required' => false,
         ));
-        $builder->add('roles', 'document', array(
-                'class' => 'OpenOrchestra\ModelBundle\Document\Role',
-                'property' => 'name',
-                'label' => 'open_orchestra_workflow_function_admin.form.workflow_function.role',
-                'multiple' => true
-        ));
+
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
@@ -46,7 +43,7 @@ class WorkflowFunctionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->workflowFunctionClass,
+            'data_class' => $this->workflowRightClass
         ));
     }
 
@@ -57,6 +54,7 @@ class WorkflowFunctionType extends AbstractType
      */
     public function getName()
     {
-        return 'workflow_function';
+        return 'workflow_right';
     }
+
 }
