@@ -22,16 +22,30 @@ FullPagePanelView = OrchestraView.extend(
     $(@el).html(@renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPagePanelView', @options))
     $('.js-widget-title', @$el).html @options.title
     links = @options.element.get('links')
+    panels = @getPanels links
+    for panel in panels
+      $("#superboxTab").append('<li id="' + panel["id"] + '"></li>')
+      @callPanel panel["link"], panel["isActive"], panel["id"], panel["title"]
+
+
+  getPanels: (links) ->
+    panels = []
     for key in Object.keys(links)
       if /^_self_form$/.test(key) or /^_self_panel_/.test(key)
         if /^_self_form$/.test(key)
-          isActive = true
           id = "form"
+          active = true
+          position = 0
         else
-          isActive = false
-          id = key.replace("_self_panel_","")
-        title = id
-        @callPanel links[key], isActive, id, title
+          id = key.replace(/^_self_panel_[0-9]+_/,"")
+          active = false
+          position = key.replace(/^_self_panel_([0-9]+)_.+$/,'$1')
+        panels[position] = []
+        panels[position]["link"] = links[key]
+        panels[position]["isActive"] = active
+        panels[position]["id"] = id
+        panels[position]["title"] = id
+    return panels
 
   addEventOnPanelForm: (id) ->
     options = @options
@@ -72,7 +86,7 @@ FullPagePanelView = OrchestraView.extend(
       @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementPanelTab', element))
 
   addPanelTitle: (element) ->
-    $("#superboxTab").prepend(
+    $("#" + element["id"]).replaceWith(
       @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementPanelTitle', element))
 
   completeOptions: (element) ->
