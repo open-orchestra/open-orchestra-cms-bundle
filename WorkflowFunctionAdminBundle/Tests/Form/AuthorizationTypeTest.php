@@ -11,10 +11,14 @@ use Phake;
  */
 class AuthorizationTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var AuthorizationType
+     */
+    protected $authorizationType;
+
     protected $contentTypeRepository;
     protected $translationChoiceManager;
     protected $authorizationClass = 'fakeClass';
-    protected $authorizationType;
 
     /**
      * Set up the test
@@ -51,6 +55,41 @@ class AuthorizationTypeTest extends \PHPUnit_Framework_TestCase
         $this->authorizationType->buildForm($formBuilderInterface, array());
 
         Phake::verify($formBuilderInterface, Phake::times(2))->add(Phake::anyParameters());
+    }
+
+    /**
+     * @param mixed  $contentType
+     * @param string $contentTypeName
+     *
+     * @dataProvider provideContentTypeAndName
+     */
+    public function testBuildView($contentType, $contentTypeName = 'open_orchestra_backoffice.left_menu.editorial.nodes')
+    {
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+        $form = Phake::mock('Symfony\Component\Form\FormInterface');
+        $authorization = Phake::mock('OpenOrchestra\WorkflowFunctionBundle\Document\Authorization');
+        $formView->vars['value'] = $authorization;
+
+        Phake::when($this->contentTypeRepository)->find(Phake::anyParameters())->thenReturn($contentType);
+        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($contentTypeName);
+
+        $this->authorizationType->buildView($formView, $form, array());
+
+        $this->assertSame($contentTypeName, $formView->vars['label']);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentTypeAndName()
+    {
+        $contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        Phake::when($contentType)->getNames()->thenReturn(new ArrayCollection());
+
+        return array(
+            array(null),
+            array($contentType, 'contentTypeName'),
+        );
     }
 
     /**
