@@ -31,6 +31,7 @@ parameters:
     open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
     open_orchestra_backoffice.type.orchestra_role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraRoleChoiceType
+    open_orchestra_backoffice.type.api_client.class: OpenOrchestra\BackofficeBundle\Form\Type\ApiClientType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -296,3 +297,9 @@ services:
             - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: form.type, alias: orchestra_role_choice }
+    open_orchestra_backoffice.type.api_client:
+        class: %open_orchestra_backoffice.type.api_client.class%
+        arguments:
+            - %open_orchestra_api.document.api_client.class%
+        tags:
+            - { name: form.type, alias: api_client }

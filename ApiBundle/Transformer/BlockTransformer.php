@@ -48,7 +48,8 @@ class BlockTransformer extends AbstractTransformer
         NodeRepositoryInterface $nodeRepository,
         CurrentSiteIdInterface $currentSiteManager,
         TranslatorInterface $translator
-    ){
+    )
+    {
         $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
         $this->displayBlockManager = $displayBlockManager;
@@ -78,7 +79,8 @@ class BlockTransformer extends AbstractTransformer
         $areaId = 0,
         $blockPosition = 0,
         $nodeMongoId = null
-    ){
+    )
+    {
         $facade = new BlockFacade();
 
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;

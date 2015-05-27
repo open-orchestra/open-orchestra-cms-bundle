@@ -6,8 +6,8 @@ use JMS\Serializer\Serializer;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\BadUserCredentialsHttpException;
 use OpenOrchestra\BaseApi\Facade\OAuth2\AccessTokenFacade;
 use OpenOrchestra\BaseApi\OAuth2\Strategy\AbstractStrategy;
-use OpenOrchestra\UserBundle\Repository\AccessTokenRepository;
-use OpenOrchestra\UserBundle\Repository\ApiClientRepository;
+use OpenOrchestra\BaseApiBundle\Repository\AccessTokenRepository;
+use OpenOrchestra\BaseApiBundle\Repository\ApiClientRepository;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
 {
-    protected $apiClientRepository;
     protected $encoderFactory;
     protected $userRepository;
 

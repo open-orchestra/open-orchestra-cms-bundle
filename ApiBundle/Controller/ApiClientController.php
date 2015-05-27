@@ -27,7 +27,7 @@ class ApiClientController extends BaseController
      */
     public function listAction()
     {
-        $clientCollection = $this->get('open_orchestra_user.repository.api_client')->findAll();
+        $clientCollection = $this->get('open_orchestra_api.repository.api_client')->findAll();
 
         return $this->get('open_orchestra_api.transformer_manager')
                     ->get('api_client_collection')
@@ -46,9 +46,10 @@ class ApiClientController extends BaseController
      */
     public function deleteAction($apiClientId)
     {
-        $manager = $this->get('open_orchestra_user.domain_manager.api_client');
-        $apiClient = $manager->load($apiClientId);
-        $manager->delete($apiClient);
+        $apiClient = $this->get('open_orchestra_api.repository.api_client')->find($apiClientId);
+        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm->remove($apiClient);
+        $dm->flush();
 
         return new Response('', 200);
     }
