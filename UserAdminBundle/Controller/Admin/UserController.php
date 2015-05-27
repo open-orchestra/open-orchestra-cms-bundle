@@ -50,7 +50,7 @@ class UserController extends AbstractAdminController
 
     /**
      * @param Request $request
-     * @param string $userId
+     * @param string  $userId
      *
      * @Config\Route("/form/{userId}", name="open_orchestra_user_admin_user_form")
      * @Config\Method({"GET", "POST"})

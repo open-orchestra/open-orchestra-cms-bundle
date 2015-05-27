@@ -2,21 +2,21 @@ FullPageFormView = OrchestraView.extend(
   el: '#content'
 
   initialize: (options) ->
+    @initializer options
+    @loadTemplates [
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPagePanelView',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
+    ]
+    return
+
+  initializer: (options) ->
     @options = options
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     @completeOptions(@options.element) if @options.element != undefined
     @events = @events || {}
-    @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle'
-    ]
-    return
 
   render: ->
-    if @options.multiVersion
-      @options.title = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
-        element: @options.element
-      )
+    @callMultiVersionOptions()
     $(@el).html(@renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView', @options))
     $('.js-widget-title', @$el).html @options.title
     @addEventOnForm()
@@ -25,6 +25,12 @@ FullPageFormView = OrchestraView.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     return
+
+  callMultiVersionOptions: ->
+    if @options.multiVersion
+      @options.title = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
+        element: @options.element
+      )
 
   addEventOnForm: ->
     options = @options
