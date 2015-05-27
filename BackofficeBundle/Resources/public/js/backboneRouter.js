@@ -223,6 +223,8 @@ var OrchestraBORouter = Backbone.Router.extend({
 
 var appRouter = new OrchestraBORouter();
 
-if (window.location.pathname.indexOf('login') == -1) {
-    Backbone.history.start();
-}
+jQuery(function() {
+    if (window.location.pathname.indexOf('login') == -1) {
+        Backbone.history.start();
+    }
+});
