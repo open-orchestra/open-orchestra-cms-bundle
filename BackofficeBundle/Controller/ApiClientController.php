@@ -23,8 +23,8 @@ class ApiClientController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $manager = $this->get('open_orchestra_user.domain_manager.api_client');
-        $apiClient = $manager->create();
+        $apiClientClass = $this->container->getParameter('open_orchestra_api.document.api_client.class');
+        $apiClient = new $apiClientClass();
 
         $form = $this->createForm(
             'api_client',
@@ -33,14 +33,11 @@ class ApiClientController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $manager->save($apiClient);
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.api_client.new.success')
-            );
-
+        if ($this->handleForm(
+            $form,
+            $this->get('translator')->trans('open_orchestra_backoffice.form.api_client.new.success'),
+            $apiClient
+        )) {
             return $this->redirect($this->generateUrl('open_orchestra_backoffice_api_client_form', array(
                 'apiClientId' => $apiClient->getId()
             )));
@@ -62,7 +59,7 @@ class ApiClientController extends AbstractAdminController
      */
     public function formAction(Request $request, $apiClientId)
     {
-        $apiClient = $this->get('open_orchestra_user.repository.api_client')->find($apiClientId);
+        $apiClient = $this->get('open_orchestra_api.repository.api_client')->find($apiClientId);
 
         $form = $this->createForm('api_client', $apiClient, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_api_client_form', array(
@@ -71,14 +68,7 @@ class ApiClientController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $manager = $this->get('open_orchestra_user.domain_manager.api_client');
-            $manager->save($apiClient);
-
-            $this->get('session')->getFlashBag()->add(
-                'success', $this->get('translator')->trans('open_orchestra_backoffice.form.api_client.edit.success')
-            );
-        }
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.api_client.edit.success'));
 
         return $this->renderAdminForm($form);
     }

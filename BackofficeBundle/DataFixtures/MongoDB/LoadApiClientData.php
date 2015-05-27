@@ -4,7 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\UserBundle\Document\ApiClient;
+use OpenOrchestra\BaseApiBundle\Document\ApiClient;
 
 /**
  * Class LoadApiClientData

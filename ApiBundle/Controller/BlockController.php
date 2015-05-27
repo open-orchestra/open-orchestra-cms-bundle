@@ -39,13 +39,17 @@ class BlockController extends BaseController
                 $blocks = $this->getParameter('open_orchestra.blocks');
             }
         }
-        foreach($blocks as $key => $block){
+        foreach ($blocks as $key => $block) {
             $blocks[$key] = new Block();
             $blocks[$key]->setComponent($block);
         }
 
         $node = $this->get('open_orchestra_model.repository.node')
-        ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language, $currentSiteId);
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(
+                NodeInterface::TRANSVERSE_NODE_ID,
+                $language,
+                $currentSiteId
+            );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform($node->getBlocks(), $blocks, $node->getNodeId());
     }

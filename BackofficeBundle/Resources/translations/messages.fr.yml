@@ -222,6 +222,10 @@ open_orchestra_backoffice:
             url: Rediriger sur l'url
             permanent: Redirection permanente
         api_client:
+            name: Nom
+            trusted: Faire confiance
+            key: Clé
+            secret: Secret
             new:
                 success: Le client d'API a été créé
             edit:
