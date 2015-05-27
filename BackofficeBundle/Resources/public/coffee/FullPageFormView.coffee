@@ -4,7 +4,7 @@ FullPageFormView = OrchestraView.extend(
   initialize: (options) ->
     @initializer options
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPagePanelView',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
     ]
     return

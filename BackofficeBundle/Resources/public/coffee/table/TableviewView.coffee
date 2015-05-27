@@ -43,7 +43,7 @@ TableviewView = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
-    parameter = 
+    parameter =
       'entityId': @options.element.get('id')
       'language': @options.element.get('language')
       'version' : @options.element.get('version')

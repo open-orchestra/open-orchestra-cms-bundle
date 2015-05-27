@@ -2,7 +2,6 @@ parameters:
     open_orchestra_user_admin.type.user.class: OpenOrchestra\UserAdminBundle\Form\Type\UserType
     open_orchestra_user_admin.type.registration_user.class: OpenOrchestra\UserAdminBundle\Form\Type\RegistrationUserType
     open_orchestra_user.type.reset_password.class: OpenOrchestra\UserAdminBundle\Form\Type\ResetType
-    open_orchestra_user.type.change_password.class: OpenOrchestra\UserAdminBundle\Form\Type\ChangePasswordUserType
 
 services:
     open_orchestra_user_admin.type.user:
@@ -17,10 +16,3 @@ services:
             - %open_orchestra_user.document.user.class%
         tags:
             - { name: form.type, alias: registration_user}
-
-    open_orchestra_user.type.change_user_password:
-        class: %open_orchestra_user.type.change_password.class%
-        arguments:
-            - %open_orchestra_user.document.user.class%
-        tags:
-            - { name: form.type, alias: user_change_password}

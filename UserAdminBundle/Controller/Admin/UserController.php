@@ -83,7 +83,6 @@ class UserController extends AbstractAdminController
      *
      * @return Response
      */
-
     public function changePasswordAction(Request $request, $userId)
     {
         /* @var User $user */
@@ -100,9 +99,6 @@ class UserController extends AbstractAdminController
             $this->dispatchEvent(UserEvents::USER_CHANGE_PASSWORD, new UserEvent($user));
         }
 
-
-
         return $this->renderAdminForm($form);
     }
-
 }
