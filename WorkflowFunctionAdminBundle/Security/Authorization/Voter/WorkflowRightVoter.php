@@ -4,12 +4,28 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Security\Authorization\Voter
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
+use FOS\UserBundle\Model\UserInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class WorkflowRightVoter
  */
 class WorkflowRightVoter implements VoterInterface
 {
+    protected $workflowRightRepository;
+
+    /**
+     * @param WorkflowRightRepositoryInterface $workflowRightRepository
+     * @param ContentTypeRepositoryInterface   $contentTypeRepository
+     */
+    public function __construct(WorkflowRightRepositoryInterface $workflowRightRepository, ContentTypeRepositoryInterface $contentTypeRepository)
+    {
+        $this->workflowRightRepository = $workflowRightRepository;
+        $this->contentTypeRepository = $contentTypeRepository;
+    }
+
     /**
      * Checks if the voter supports the given attribute.
      *
@@ -31,7 +47,7 @@ class WorkflowRightVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return true;
+        return $class instanceof ContentInterface;
     }
 
     /**
@@ -48,30 +64,31 @@ class WorkflowRightVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        $result = VoterInterface::ACCESS_ABSTAIN;
-        if(get_class($object) == 'Symfony\Component\HttpFoundation\Request'){
-            var_dump($object->attributes);
-            var_dump($object->get('attributes'));
+        if (!$this->supportsClass($object)) {
+
+            return VoterInterface::ACCESS_ABSTAIN;
         }
 
-/*        var_dump('Done');
-var_dump($object->get('attributes'));*/
+        if (($user = $token->getUser()) instanceof UserInterface) {
+            $workflowRight = $this->workflowRightRepository->findOneByUserId($token->getUser()->getId());
+            $contentType = $this->contentTypeRepository->findOneByContentTypeIdAndVersion($object->getContentType());
+            if (null === $workflowRight) {
 
-/*        if (($user = $token->getUser()) instanceof GroupableInterface) {
-            $roles = $this->extractRoles($user->getGroups());
-            $currentSiteId = $this->contextManager->getCurrentSiteId();
-            foreach ($attributes as $attribute) {
-                if (!$this->supportsAttribute($attribute) ) {
-                    continue;
-                }
-                $result = VoterInterface::ACCESS_DENIED;
-                if (array_key_exists($attribute, $roles) && in_array($currentSiteId, $roles[$attribute])) {
-                    return VoterInterface::ACCESS_GRANTED;
+                return VoterInterface::ACCESS_DENIED;
+            }
+            $authorizations = $workflowRight->getAuthorizations();
+            foreach($authorizations as $authorization){
+                if ($authorization->getReferenceId() == $contentType->getId()) {
+                    $workflowFunctions = $authorization->getWorkflowFunctions();
+                    foreach($workflowFunctions as $workflowFunction){
+                        if (in_array($workflowFunction->getId(), $attributes)) {
+                            return VoterInterface::ACCESS_GRANTED;
+                        }
+                    }
                 }
             }
+        }
 
-        }*/
-
-        return $result;
+        return VoterInterface::ACCESS_DENIED;
     }
 }
