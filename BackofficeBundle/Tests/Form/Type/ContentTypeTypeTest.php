@@ -50,7 +50,7 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->buildForm($builder, array());
 
         Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
-        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.add');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.new');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.delete');

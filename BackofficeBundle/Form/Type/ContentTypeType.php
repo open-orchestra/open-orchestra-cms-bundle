@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
@@ -73,6 +74,7 @@ class ContentTypeType extends AbstractType
                 )
             ));
 
+        $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
