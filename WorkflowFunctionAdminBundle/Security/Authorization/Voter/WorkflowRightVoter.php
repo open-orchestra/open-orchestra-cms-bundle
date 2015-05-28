@@ -5,7 +5,7 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Security\Authorization\Voter
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\ModelInterface\Model\StatusableInterface
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
 use FOS\UserBundle\Model\UserInterface;
