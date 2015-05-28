@@ -47,7 +47,8 @@ GalleryCollectionView = OrchestraView.extend(
         url: @options.medias.get('links')._self_add
         method: 'GET'
         success: (response) ->
-          new FullPageFormView(viewContext.addOption(
+          viewClass = appConfigurationView.getConfiguration('media', 'add')
+          new window[viewClass](viewContext.addOption(
             html: response
           ))
 

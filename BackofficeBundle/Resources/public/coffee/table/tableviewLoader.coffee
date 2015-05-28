@@ -25,7 +25,8 @@ tableViewLoad = (link, entityType, entityId, language, version, add, sourceLangu
           url: elements.get('links')._self_add
           method: "GET"
           success: (response) ->
-            new FullPageFormView(
+            viewClass = appConfigurationView.getConfiguration(entityType, 'add')
+            new window[viewClass](
               html: response
               title: title
               entityType: entityType
@@ -55,7 +56,8 @@ tableViewLoad = (link, entityType, entityId, language, version, add, sourceLangu
                     title: title
                     entityType: entityType
                     element: element
-                  new FullPageFormView(options)
+                  viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
+                  new window[viewClass](options)
               founded = true
       unless founded
         new TableviewCollectionView(
@@ -91,7 +93,8 @@ tableViewLoadSpecificElement = (link, title, entityType) ->
             title: title
             entityType: entityType
             element: element
-          new FullPageFormView(options)
+          viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
+          new window[viewClass](options)
     error: ->
       displayed = false
   return displayed
