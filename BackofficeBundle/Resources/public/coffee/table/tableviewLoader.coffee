@@ -26,7 +26,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add, sourceLangu
           method: "GET"
           success: (response) ->
             viewClass = appConfigurationView.getConfiguration(entityType, 'add')
-            new window[viewClass](
+            new viewClass(
               html: response
               title: title
               entityType: entityType
@@ -57,7 +57,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add, sourceLangu
                     entityType: entityType
                     element: element
                   viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
-                  new window[viewClass](options)
+                  new viewClass(options)
               founded = true
       unless founded
         new TableviewCollectionView(
@@ -94,7 +94,7 @@ tableViewLoadSpecificElement = (link, title, entityType) ->
             entityType: entityType
             element: element
           viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
-          new window[viewClass](options)
+          new viewClass(options)
     error: ->
       displayed = false
   return displayed
