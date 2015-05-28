@@ -4,10 +4,13 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Security\Authorization\Voter
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
-use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
+use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
+use FOS\UserBundle\Model\UserInterface;
+
 
 /**
  * Class WorkflowRightVoter
@@ -47,7 +50,7 @@ class WorkflowRightVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return $class instanceof ContentInterface;
+        return $class instanceof ContentInterface || $class instanceof NodeInterface;
     }
 
     /**
@@ -65,20 +68,23 @@ class WorkflowRightVoter implements VoterInterface
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         if (!$this->supportsClass($object)) {
-
             return VoterInterface::ACCESS_ABSTAIN;
         }
-
         if (($user = $token->getUser()) instanceof UserInterface) {
             $workflowRight = $this->workflowRightRepository->findOneByUserId($token->getUser()->getId());
-            $contentType = $this->contentTypeRepository->findOneByContentTypeIdAndVersion($object->getContentType());
             if (null === $workflowRight) {
-
                 return VoterInterface::ACCESS_DENIED;
             }
+
+            $referenceId = WorkflowRightInterface::NODE;
+            if ($object instanceof ContentInterface) {
+                $contentType = $this->contentTypeRepository->findOneByContentTypeIdAndVersion($object->getContentType());
+                $referenceId = $contentType->getId();
+            }
+
             $authorizations = $workflowRight->getAuthorizations();
             foreach($authorizations as $authorization){
-                if ($authorization->getReferenceId() == $contentType->getId()) {
+                if ($authorization->getReferenceId() == $referenceId) {
                     $workflowFunctions = $authorization->getWorkflowFunctions();
                     foreach($workflowFunctions as $workflowFunction){
                         if (in_array($workflowFunction->getId(), $attributes)) {
