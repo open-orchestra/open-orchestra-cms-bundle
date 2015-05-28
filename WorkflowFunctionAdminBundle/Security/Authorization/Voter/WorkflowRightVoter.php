@@ -18,6 +18,7 @@ use FOS\UserBundle\Model\UserInterface;
 class WorkflowRightVoter implements VoterInterface
 {
     protected $workflowRightRepository;
+    protected $contentTypeRepository;
 
     /**
      * @param WorkflowRightRepositoryInterface $workflowRightRepository
@@ -38,7 +39,7 @@ class WorkflowRightVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return 0 === strpos($attribute, 'ROLE_ACCESS');
+        return is_string($attribute);
     }
 
     /**
