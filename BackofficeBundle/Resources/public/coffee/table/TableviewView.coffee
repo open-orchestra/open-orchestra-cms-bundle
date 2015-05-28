@@ -59,7 +59,8 @@ TableviewView = OrchestraView.extend(
       url: options.element.get('links')._self_form
       method: "GET"
       success: (response) ->
-        new FullPageFormView(viewContext.addOption(
+        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
+        new window[viewClass](viewContext.addOption(
           html: response
         ))
 )
