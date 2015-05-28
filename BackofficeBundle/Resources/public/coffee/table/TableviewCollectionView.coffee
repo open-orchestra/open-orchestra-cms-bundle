@@ -85,7 +85,7 @@ TableviewCollectionView = OrchestraView.extend(
       method: 'GET'
       success: (response) ->
         viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'add')
-        new window[viewClass](viewContext.addOption(
+        new viewClass(viewContext.addOption(
           html: response
           extendView: [ 'generateId' ]
         ))

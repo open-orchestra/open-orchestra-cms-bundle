@@ -60,7 +60,7 @@ TableviewView = OrchestraView.extend(
       method: "GET"
       success: (response) ->
         viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
-        new window[viewClass](viewContext.addOption(
+        new viewClass(viewContext.addOption(
           html: response
         ))
 )

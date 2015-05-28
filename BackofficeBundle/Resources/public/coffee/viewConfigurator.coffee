@@ -1,10 +1,11 @@
 OrchestraViewConfigurator = ->
   configurations: {}
   baseConfigurations:
-    'edit': 'FullPageFormView'
-    'add': 'FullPageFormView'
+    'edit': FullPageFormView
+    'add': FullPageFormView
 
-  addConfiguration: (entityType, action, view) ->
+  setConfiguration: (entityType, action, view) ->
+    @configurations[entityType] = [] if typeof @configurations[entityType] == "undefined"
     @configurations[entityType][action] = view
     return
 
@@ -16,5 +17,5 @@ OrchestraViewConfigurator = ->
         return view
     return @baseConfigurations[action]
 
-
-appConfigurationView = new OrchestraViewConfigurator()
+jQuery ->
+  window.appConfigurationView = new OrchestraViewConfigurator()

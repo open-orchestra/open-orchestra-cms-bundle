@@ -48,7 +48,7 @@ GalleryCollectionView = OrchestraView.extend(
         method: 'GET'
         success: (response) ->
           viewClass = appConfigurationView.getConfiguration('media', 'add')
-          new window[viewClass](viewContext.addOption(
+          new viewClass(viewContext.addOption(
             html: response
           ))
 
