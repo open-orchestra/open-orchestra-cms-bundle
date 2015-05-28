@@ -68,8 +68,6 @@ class AuthorizationTypeTest extends \PHPUnit_Framework_TestCase
         $formView = Phake::mock('Symfony\Component\Form\FormView');
         $form = Phake::mock('Symfony\Component\Form\FormInterface');
         $authorization = Phake::mock('OpenOrchestra\WorkflowFunctionBundle\Document\Authorization');
-        Phake::when($authorization)->getReferenceId()->thenReturn('fakeReference');
-
         $formView->vars['value'] = $authorization;
 
         Phake::when($this->contentTypeRepository)->find(Phake::anyParameters())->thenReturn($contentType);
