@@ -5,7 +5,6 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Security\Authorization\Voter
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
 use FOS\UserBundle\Model\UserInterface;
@@ -50,7 +49,7 @@ class WorkflowRightVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return $class instanceof StatusableInterface;
+        return is_subclass_of($class, 'OpenOrchestra\ModelInterface\Model\StatusableInterface');
     }
 
     /**

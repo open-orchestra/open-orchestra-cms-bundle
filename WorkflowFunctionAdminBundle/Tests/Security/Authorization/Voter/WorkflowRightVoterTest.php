@@ -55,13 +55,14 @@ class WorkflowRightVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $class
+     * @param string  $class
+     * @param boolean $isSupported
      *
      * @dataProvider provideClassName
      */
-    public function testSupportsClass($class)
+    public function testSupportsClass($class, $isSupported)
     {
-        $this->assertTrue($this->voter->supportsClass($class));
+        $this->assertEquals($isSupported, $this->voter->supportsClass($class));
     }
 
     /**
@@ -70,8 +71,9 @@ class WorkflowRightVoterTest extends \PHPUnit_Framework_TestCase
     public function provideClassName()
     {
         return array(
-            array(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface')),
-            array(Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface'))
+            array(Phake::mock('stdClass'), false),
+            array(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'), true),
+            array(Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface'), true)
         );
     }
 
