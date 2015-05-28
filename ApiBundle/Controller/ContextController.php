@@ -37,14 +37,13 @@ class ContextController extends Controller
      * Switch context current site
      *
      * @param string $siteId
-     * @param string $siteName
      *
-     * @Config\Route("/site/{siteId}/{siteName}", name="open_orchestra_api_context_site")
+     * @Config\Route("/site/{siteId}", name="open_orchestra_api_context_site")
      * @Api\Serialize()
      *
      * @return array
      */
-    public function siteAction($siteId, $siteName)
+    public function siteAction($siteId)
     {
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
