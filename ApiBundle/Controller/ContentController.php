@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class ContentController
@@ -22,6 +23,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ContentController extends BaseController
 {
+    use ListStatus;
+
     /**
      * @param Request $request
      * @param string  $contentId
@@ -175,7 +178,7 @@ class ContentController extends BaseController
      * @param Request $request
      * @param string $contentMongoId
      *
-     * @Config\Route("/update/{contentMongoId}", name="open_orchestra_api_content_update")
+     * @Config\Route("/{contentMongoId}/update", name="open_orchestra_api_content_update")
      * @Config\Method({"POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
@@ -193,6 +196,25 @@ class ContentController extends BaseController
             ContentEvents::CONTENT_CHANGE_STATUS,
             'OpenOrchestra\ModelInterface\Event\ContentEvent'
         );
+    }
+
+    /**
+     * @param string $contentMongoId
+     *
+     * @Config\Route("/{contentMongoId}/list-statuses", name="open_orchestra_api_content_list_status")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     *
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function listStatusesForContentAction($contentMongoId)
+    {
+        $content = $this->get('open_orchestra_model.repository.content')->find($contentMongoId);
+
+        return $this->listStatuses($content->getStatus());
     }
 
     /**
