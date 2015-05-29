@@ -84,6 +84,19 @@
 
 {% macro menu_content_types_for_content(contentTypes, name) %}
     {% for contentType in contentTypes %}
+        {% set displayedElement = 'name, status_label, version, language' %}
+        {% set translatedHeader = 'open_orchestra_backoffice.table.content_type.name'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.status_label'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.version'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.language'|trans %}
+        {% set visibleElement = '0, 1, 2, 3' %}
+        {% for field in contentType.fields %}
+            {% set displayedElement = displayedElement ~ ', linearize_attributes.' ~ field.fieldId %}
+            {% set translatedHeader = translatedHeader ~ ', ' ~ field.labels|trans_choose %}
+            {% if field.listable %}
+                {% set visibleElement = visibleElement ~ ', ' ~ (loop.index + 3) %}
+            {% endif %}
+        {% endfor %}
         <li
             data-element-id="{{ contentType.contentTypeId }}"
             data-type="ContentType"
@@ -92,8 +105,9 @@
                 id="nav-contents_{{contentType.contentTypeId}}"
                 href="#contents_{{contentType.contentTypeId}}/list"
                 data-url="{{ path('open_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
-                data-displayed-elements="name, status_label, version, language"
-                data-translated-header="{{'open_orchestra_backoffice.table.content_type.name'|trans }},{{'open_orchestra_backoffice.table.content_type.status_label'|trans }},{{'open_orchestra_backoffice.table.content_type.version'|trans }},{{'open_orchestra_backoffice.table.content_type.language'|trans }}"
+                data-displayed-elements="{{ displayedElement }}"
+                data-translated-header="{{ translatedHeader }}"
+                data-visible-elements="{{ visibleElement }}"
             >
                 {{ contentType.names| trans_choose }}
             </a>

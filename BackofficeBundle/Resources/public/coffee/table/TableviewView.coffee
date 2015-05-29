@@ -14,9 +14,10 @@ TableviewView = OrchestraView.extend(
 
   render: ->
     @setElement $('<tr />')
+    options = @options
     for displayedElement in @options.displayedElements
       @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView'
-        value: @options.element.get(displayedElement)
+        value: eval('options.element.attributes.' + displayedElement)
       )
     @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions',
       deleted: @options.element.get('deleted')

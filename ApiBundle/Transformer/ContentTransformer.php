@@ -51,7 +51,9 @@ class ContentTransformer extends AbstractTransformer
         $facade->deleted = $mixed->getDeleted();
 
         foreach ($mixed->getAttributes() as $attribute) {
-            $facade->addAttribute($this->getTransformer('content_attribute')->transform($attribute));
+            $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
+            $facade->addAttribute($contentAttribute);
+            $facade->addLinearizeAttribute($contentAttribute);
         }
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
