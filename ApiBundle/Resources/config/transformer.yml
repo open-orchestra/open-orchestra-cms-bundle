@@ -38,6 +38,8 @@ services:
         arguments:
             - @open_orchestra_base.manager.encryption
             - @open_orchestra_model.repository.site
+            - @open_orchestra_model.repository.role
+            - @open_orchestra_workflow_function.repository.workflow_function
             - @open_orchestra_model.repository.status
             - @event_dispatcher
             - @security.context
@@ -94,6 +96,9 @@ services:
         class: %open_orchestra_api.transformer.content.class%
         arguments:
             - @open_orchestra_model.repository.status
+            - @open_orchestra_model.repository.role
+            - @open_orchestra_workflow_function.repository.workflow_function
+            - @security.authorization_checker
             - @event_dispatcher
         tags:
             - { name: open_orchestra_api.transformer.strategy}

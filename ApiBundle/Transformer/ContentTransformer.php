@@ -9,7 +9,11 @@ use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class ContentTransformer
@@ -17,15 +21,29 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ContentTransformer extends AbstractTransformer
 {
     protected $statusRepository;
+    protected $roleRepository;
+    protected $workflowFunctionRepository;
+    protected $authorizationChecker;
     protected $eventDispatcher;
 
     /**
-     * @param StatusRepositoryInterface $statusRepository
-     * @param EventDispatcherInterface  $eventDispatcher
+     * @param StatusRepositoryInterface           $statusRepository
+     * @param RoleRepositoryInterface             $roleRepository
+     * @param WorkflowFunctionRepositoryInterface $workflowFunctionRepository
+     * @param AuthorizationCheckerInterface       $authorizationChecker
+     * @param EventDispatcherInterface            $eventDispatcher
      */
-    public function __construct(StatusRepositoryInterface $statusRepository, $eventDispatcher)
+    public function __construct(
+        StatusRepositoryInterface $statusRepository,
+        RoleRepositoryInterface $roleRepository,
+        WorkflowFunctionRepositoryInterface $workflowFunctionRepository,
+        AuthorizationCheckerInterface $authorizationChecker,
+        $eventDispatcher)
     {
         $this->statusRepository = $statusRepository;
+        $this->roleRepository = $roleRepository;
+        $this->workflowFunctionRepository = $workflowFunctionRepository;
+        $this->authorizationChecker = $authorizationChecker;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -108,9 +126,21 @@ class ContentTransformer extends AbstractTransformer
     {
         if ($source) {
             if ($facade->statusId) {
-                $newStatus = $this->statusRepository->find($facade->statusId);
-                if ($newStatus) {
-                    $source->setStatus($newStatus);
+                $fromStatus = $source->getStatus();
+                $toStatus = $this->statusRepository->find($facade->statusId);
+                $granted = true;
+                if ($fromStatus->getId() != $toStatus->getId()) {
+                    $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
+                    $workflowFunctions = $this->workflowFunctionRepository->findByRole($role);
+                    $attributes = array();
+                    foreach($workflowFunctions as $workflowFunction){
+                        $attributes[] = $workflowFunction->getId();
+                    }
+                    $granted = $this->authorizationChecker->isGranted($attributes, $source);
+                }
+
+                if ($granted && $toStatus) {
+                    $source->setStatus($toStatus);
                     $event = new StatusableEvent($source);
                     $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
                 }
