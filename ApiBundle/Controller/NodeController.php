@@ -155,7 +155,7 @@ class NodeController extends BaseController
      * @param Request $request
      * @param string $nodeMongoId
      *
-     * @Config\Route("/update/{nodeMongoId}", name="open_orchestra_api_node_update")
+     * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
@@ -174,10 +174,29 @@ class NodeController extends BaseController
     }
 
     /**
+     * @param string $nodeMongoId
+     *
+     * @Config\Route("/{nodeMongoId}/list-statuses", name="open_orchestra_api_node_list_status")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @Api\Serialize()
+     *
+     * @return Response
+     */
+    public function listStatusesForNodeAction($nodeMongoId)
+    {
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
+
+        return $this->listStatuses($node->getStatus());
+    }
+
+    /**
      * @param Request $request
      * @param string  $nodeId
      *
-     * @Config\Route("/update/children/order/{nodeId}", name="open_orchestra_api_node_update_children_order")
+     * @Config\Route("/{nodeId}/children/update/order", name="open_orchestra_api_node_update_children_order")
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
