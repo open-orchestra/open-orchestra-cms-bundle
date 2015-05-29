@@ -15,39 +15,17 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
-    protected $contentTypeRepository;
-    protected $translationChoiceManager;
+    protected $contentTypeSubscriber;
     protected $contentClass = 'content';
-    protected $contentAttributeClass = 'attribute';
-    protected $fieldTypesConfiguration;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->fieldTypesConfiguration = array(
-            'text' => 
-                array(
-                    'type' => 'text',
-                    'options' => array(
-                        'max_length' => 12,
-                        'required' => 'false'
-                    )
-                )
-        );
+        $this->contentTypeSubscriber = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber');
 
-        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
-
-        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
-
-        $this->form = new ContentType(
-            $this->contentTypeRepository,
-            $this->contentClass,
-            $this->contentAttributeClass,
-            $this->translationChoiceManager,
-            $this->fieldTypesConfiguration
-        );
+        $this->form = new ContentType($this->contentTypeSubscriber, $this->contentClass);
     }
 
     /**

@@ -15,32 +15,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ContentType extends AbstractType
 {
-    protected $contentTypeRepository;
+    protected $contentTypeSubscriber;
     protected $contentClass;
-    protected $contentAttributClass;
-    protected $translationChoiceManager;
-    protected $fieldTypesConfiguration;
 
     /**
-     * @param ContentTypeRepositoryInterface $contentTypeRepository
-     * @param string                         $contentClass
-     * @param string                         $contentAttributClass
-     * @param TranslationChoiceManager       $translationChoiceManager
-     * @param array                          $fieldTypesConfiguration
+     * @param ContentTypeSubscriber $contentTypeSubscriber
+     * @param string                $contentClass
      */
-    public function __construct(
-        ContentTypeRepositoryInterface $contentTypeRepository,
-        $contentClass,
-        $contentAttributClass,
-        TranslationChoiceManager $translationChoiceManager,
-        $fieldTypesConfiguration
-    )
+    public function __construct(ContentTypeSubscriber $contentTypeSubscriber, $contentClass)
     {
-        $this->contentTypeRepository = $contentTypeRepository;
+        $this->contentTypeSubscriber = $contentTypeSubscriber;
         $this->contentClass = $contentClass;
-        $this->contentAttributClass = $contentAttributClass;
-        $this->translationChoiceManager = $translationChoiceManager;
-        $this->fieldTypesConfiguration = $fieldTypesConfiguration;
     }
 
     /**
@@ -58,12 +43,7 @@ class ContentType extends AbstractType
                 'required' => false
             ));
 
-        $builder->addEventSubscriber(new ContentTypeSubscriber(
-            $this->contentTypeRepository,
-            $this->contentAttributClass,
-            $this->translationChoiceManager,
-            $this->fieldTypesConfiguration
-        ));
+        $builder->addEventSubscriber($this->contentTypeSubscriber);
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
