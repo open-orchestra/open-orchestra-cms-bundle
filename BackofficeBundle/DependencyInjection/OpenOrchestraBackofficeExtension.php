@@ -38,7 +38,7 @@ class OpenOrchestraBackofficeExtension extends Extension
 
         $this->updateBlockParameter($container, $config);
         if (empty($config['front_languages'])) {
-            $config['front_languages'] = array('en' => 'English', 'fr' => 'Français');
+            $config['front_languages'] = array('en' => 'English', 'fr' => 'Français', 'de' => 'Deutsch');
         }
         $fixedAttributes = array_merge($config['fixed_attributes'], array('component', 'submit', 'label', 'class', 'id', 'maxAge'));
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
