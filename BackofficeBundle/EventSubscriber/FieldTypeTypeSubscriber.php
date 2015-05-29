@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

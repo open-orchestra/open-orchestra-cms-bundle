@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**

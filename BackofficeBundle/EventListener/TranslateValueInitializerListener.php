@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventListener;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BackofficeBundle\Initializer\TranslatedValueDefaultValueInitializer;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use Symfony\Component\Form\FormEvent;

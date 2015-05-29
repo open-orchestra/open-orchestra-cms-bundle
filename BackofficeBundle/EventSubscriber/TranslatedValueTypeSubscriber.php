@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;

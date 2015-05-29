@@ -4,9 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;

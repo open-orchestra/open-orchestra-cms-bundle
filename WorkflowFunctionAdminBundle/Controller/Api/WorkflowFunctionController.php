@@ -5,10 +5,8 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Controller\Api;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\WorkflowFunction\Event\WorkflowFunctionEvent;
 use OpenOrchestra\WorkflowFunction\WorkflowFunctionEvents;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 

@@ -3,7 +3,6 @@
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\LeftPanel\Strategies;
 
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\AbstractLeftPanelStrategy;
-use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 
 /**
  * Class WorkflowFunctionPanelStrategy

@@ -2,10 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
-use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

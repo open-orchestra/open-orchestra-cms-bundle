@@ -7,7 +7,6 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class BlockController

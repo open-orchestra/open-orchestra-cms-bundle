@@ -3,9 +3,7 @@
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Manager;
 
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\WorkflowFunctionBundle\Manager\AuthorizationWorkflowRightManager;
-use OpenOrchestra\WorkflowFunctionBundle\Document\Reference;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
 
