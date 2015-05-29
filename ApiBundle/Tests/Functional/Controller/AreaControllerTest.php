@@ -12,7 +12,7 @@ class AreaControllerTest extends AbstractControllerTest
      */
     public function testAreaReverseTransform()
     {
-        $this->client->request('GET', '/admin/homepage/1/en');
+        $this->client->request('GET', '/admin/1/homepage/en');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $this->client->request('GET', '/api/node/root');
