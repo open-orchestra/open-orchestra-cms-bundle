@@ -127,7 +127,7 @@ class WorkflowRightVoterTest extends \PHPUnit_Framework_TestCase
         Phake::when($workflowRight)->getAuthorizations()->thenReturn($authorizations);
 
         Phake::when($this->workflowRightRepository)->findOneByUserId('fakeUserId')->thenReturn($workflowRight);
-        $this->assertSame($accessResponse, $this->voter->vote($this->token, $object, $attributes));
+        $this->assertEquals($accessResponse, $this->voter->vote($this->token, $object, $attributes));
     }
 
     /**

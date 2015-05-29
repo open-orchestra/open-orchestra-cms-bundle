@@ -5,6 +5,7 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Security\Authorization\Voter
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
 use FOS\UserBundle\Model\UserInterface;
@@ -74,13 +75,11 @@ class WorkflowRightVoter implements VoterInterface
             if (null === $workflowRight) {
                 return VoterInterface::ACCESS_DENIED;
             }
-
             $referenceId = WorkflowRightInterface::NODE;
             if ($object instanceof ContentInterface) {
                 $contentType = $this->contentTypeRepository->findOneByContentTypeIdAndVersion($object->getContentType());
                 $referenceId = $contentType->getId();
             }
-
             $authorizations = $workflowRight->getAuthorizations();
             foreach($authorizations as $authorization){
                 if ($authorization->getReferenceId() == $referenceId) {
