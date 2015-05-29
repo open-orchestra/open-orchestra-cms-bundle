@@ -163,11 +163,8 @@ services:
     open_orchestra_backoffice.type.orchestra_content:
         class: %open_orchestra_backoffice.type.orchestra_content.class%
         arguments:
-            - @open_orchestra_model.repository.content_type
+            - @open_orchestra_backoffice.subscriber.content_type
             - %open_orchestra_model.document.content.class%
-            - %open_orchestra_model.document.content_attribute.class%
-            - @open_orchestra_backoffice.manager.translation_choice
-            - %open_orchestra_backoffice.field_types%
         tags:
             - {name: form.type, alias: orchestra_content}
 
