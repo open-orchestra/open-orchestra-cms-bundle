@@ -43,6 +43,7 @@ open_orchestra_backoffice:
             labels: Label
             default_value: Default value
             searchable: Searchable
+            listable: Visible in BackOffice list
             type: Type
             options: Existing field
             error_content_id : Required content id field

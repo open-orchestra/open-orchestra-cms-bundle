@@ -30,7 +30,6 @@ class ContentTypeForContentPanelStrategy extends AbstractLeftPanelStrategy
     public function show()
     {
         $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
-
         return $this->render(
             'OpenOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
             array(

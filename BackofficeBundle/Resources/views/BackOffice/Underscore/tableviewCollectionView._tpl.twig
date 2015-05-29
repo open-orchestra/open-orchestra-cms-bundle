@@ -5,11 +5,17 @@
         <thead>
             <tr>
                 <% _.each(displayedElements, function(displayedElement) { %>
+                  <td><input type="text" placeholder="Search <%= displayedElement %>" ></td>
+                <% }); %>
+                <td></td>
+            </tr>
+            <tr>
+                <% _.each(displayedElements, function(displayedElement) { %>
                     <td><%= displayedElement %></td>
                 <% }); %>
                 <td></td>
             </tr>
-        </thead>
+            </thead>
         <tbody>
         </tbody>
     </table>

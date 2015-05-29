@@ -76,6 +76,10 @@ class FieldTypeType extends AbstractType
                 'attr' => array(
                     'class' => 'content_type_change_type'
                 )
+            ))
+            ->add('listable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.listable',
+                'required' => false,
             ));
         $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass));
     }

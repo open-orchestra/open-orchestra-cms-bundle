@@ -36,6 +36,7 @@ class FieldTypeTransformer extends AbstractTransformer
         $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
         $facade->defaultValue = $mixed->getDefaultValue();
         $facade->searchable = $mixed->getSearchable();
+        $facade->listable = $mixed->getListable();
         $facade->type = $mixed->getType();
 
         foreach ($mixed->getOptions() as $option) {
