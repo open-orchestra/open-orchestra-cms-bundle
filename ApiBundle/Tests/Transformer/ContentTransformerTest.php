@@ -61,10 +61,10 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
         $facade->label = 'draft';
+        $facade->name = 'fakeName';
+        $facade->value = 'fakeValue';
 
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        $attribute->name = 'fakeName';
-        $attribute->value = 'fakeValue';
         Phake::when($this->content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
         Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn($facade);
