@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class ContentController
@@ -22,6 +23,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ContentController extends BaseController
 {
+    use ListStatus;
+
     /**
      * @param Request $request
      * @param string  $contentId

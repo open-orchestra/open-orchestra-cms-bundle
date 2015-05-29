@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class NodeController
@@ -19,6 +20,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class NodeController extends BaseController
 {
+    use ListStatus;
+
     /**
      * @param Request $request
      * @param string $nodeId
