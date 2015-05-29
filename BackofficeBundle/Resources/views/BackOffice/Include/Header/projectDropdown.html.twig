@@ -9,7 +9,11 @@
     <ul class="dropdown-menu">
         {% for site in availableSites %}
             <li{% if context.getCurrentSiteId() is same as(site.siteId) %} class="active"{% endif %}>
-                <a href="javascript:callAndReload('{{ path('open_orchestra_api_context_site', {'siteId':site.siteId, 'siteName':site.name}) }}');">{{ site.name }}</a>
+                <a
+                        class="configuration-change"
+                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId':site.siteId, 'language': context.currentLocale}) }}">
+                    {{ site.name }}
+                </a>
             </li>
         {% endfor %}
     </ul>

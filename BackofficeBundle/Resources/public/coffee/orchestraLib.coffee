@@ -23,17 +23,6 @@ displayLoader = (element) ->
   $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
   true
 
-
-# CALL A URL TO CHANGE SOMETHING IN THE CONTEXT
-# AND RELOAD HOMEPAGE
-callAndReload = (action) ->
-  displayLoader()
-  $.post action, (response) ->
-    if response.success
-      window.location.reload()
-    return
-  return
-
 # REFRESH NAV MENU
 displayMenu = (route) ->
   selectedPath = undefined

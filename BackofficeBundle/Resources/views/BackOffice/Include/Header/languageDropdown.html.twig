@@ -12,7 +12,9 @@
         <ul class="dropdown-menu pull-right">
             {% for language in available_languages %}
             <li{% if context.currentLocale == language %} class="active"{% endif %}>
-                <a href="javascript:callAndReload('{{ path('open_orchestra_api_context_language', {'language':language}) }}');">
+                <a
+                        class="configuration-change"
+                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId': context.currentSiteId, 'language': language}) }}">
                     <img
                         src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
                         class="flag flag-{{ language }}"

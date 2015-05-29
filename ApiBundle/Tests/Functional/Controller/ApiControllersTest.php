@@ -43,7 +43,6 @@ class ApiControllersTest extends AbstractControllerTest
             array('/api/redirection'),
             array('/api/status'),
             array('/api/template/template_full'),
-            array('/api/context/site/2/www.bOpenOrchestra.fr'),
         );
     }
 }
