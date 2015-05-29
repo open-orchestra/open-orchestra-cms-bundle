@@ -15,7 +15,7 @@ class HomepageController extends Controller
      * Back Office Home Page
      *
      * @Config\Route("", name="homepage")
-     * @Config\Route("/homepage/{siteId}/{language}", name="homepage_with_site_id_and_language")
+     * @Config\Route("/{siteId}/homepage/{language}", name="homepage_with_site_id_and_language")
      *
      * @return Response
      */
