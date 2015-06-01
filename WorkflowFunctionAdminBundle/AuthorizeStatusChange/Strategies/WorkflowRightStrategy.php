@@ -40,8 +40,6 @@ class WorkflowRightStrategy implements AuthorizeStatusChangeInterface
      */
     public function isGranted(StatusableEvent $event)
     {
-        $isGranted = true;
-
         $document = $event->getStatusableElement();
         $fromStatus = $document->getStatus();
         $toStatus = $event->getToStatus();
@@ -49,12 +47,14 @@ class WorkflowRightStrategy implements AuthorizeStatusChangeInterface
             $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
             $workflowFunctions = $this->workflowFunctionRepository->findByRole($role);
             $attributes = array();
-            foreach($workflowFunctions as $workflowFunction){
+            foreach ($workflowFunctions as $workflowFunction) {
                 $attributes[] = $workflowFunction->getId();
             }
-            $isGranted = $isGranted && $this->authorizationChecker->isGranted($attributes, $document);
+            if ($this->authorizationChecker->isGranted($attributes, $document)) {
+                return false;
+            }
         }
 
-        return $isGranted;
+        return true;
     }
 }

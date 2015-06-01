@@ -10,7 +10,6 @@ use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
 use FOS\UserBundle\Model\UserInterface;
 
-
 /**
  * Class WorkflowRightVoter
  */
@@ -71,7 +70,7 @@ class WorkflowRightVoter implements VoterInterface
             return VoterInterface::ACCESS_ABSTAIN;
         }
         if (($user = $token->getUser()) instanceof UserInterface) {
-            $workflowRight = $this->workflowRightRepository->findOneByUserId($token->getUser()->getId());
+            $workflowRight = $this->workflowRightRepository->findOneByUserId($user->getId());
             if (null === $workflowRight) {
                 return VoterInterface::ACCESS_DENIED;
             }
@@ -81,7 +80,7 @@ class WorkflowRightVoter implements VoterInterface
                 $referenceId = $contentType->getId();
             }
             $authorizations = $workflowRight->getAuthorizations();
-            foreach($authorizations as $authorization){
+            foreach ($authorizations as $authorization) {
                 if ($authorization->getReferenceId() == $referenceId) {
                     $workflowFunctions = $authorization->getWorkflowFunctions();
                     foreach($workflowFunctions as $workflowFunction){

@@ -28,8 +28,8 @@ class AuthorizeStatusChangeManager
     public function isGranted(StatusableEvent $statusableEvent)
     {
         foreach ($this->strategies as $strategy) {
-            if(!$strategy->isGranted($statusableEvent)) {
-                return;
+            if (!$strategy->isGranted($statusableEvent)) {
+                return false;
             }
         }
         $document = $statusableEvent->getStatusableElement();
