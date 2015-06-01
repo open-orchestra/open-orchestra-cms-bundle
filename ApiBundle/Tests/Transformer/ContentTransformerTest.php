@@ -18,6 +18,9 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerAttribute;
     protected $transformerManager;
     protected $statusRepository;
+    protected $roleRepository;
+    protected $workflowFunctionRepository;
+    protected $authorizationChecker;
     protected $eventDispatcher;
     protected $transformer;
     protected $statusId;
@@ -37,8 +40,21 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
+        $this->role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
+
+        $this->workflowFunction = Phake::mock('OpenOrchestra\WorkflowFunction\Model\WorkflowFunctionInterface');
+        Phake::when($this->workflowFunction)->getId()->thenReturn('fakeId');
+
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
+
+        $this->roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
+        Phake::when($this->roleRepository)->findOneByFromStatusAndToStatus(Phake::anyParameters())->thenReturn($this->role);
+
+        $this->workflowFunctionRepository = Phake::mock('OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface');
+        Phake::when($this->workflowFunctionRepository)->findByRole(Phake::anyParameters())->thenReturn(array($this->workflowFunction, $this->workflowFunction));
+
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $this->transformerAttribute = Phake::mock('OpenOrchestra\ApiBundle\Transformer\ContentAttributeTransformer');
         $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\StatusTransformer');
@@ -50,7 +66,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get('content_attribute')->thenReturn($this->transformerAttribute);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher);
+        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->roleRepository, $this->workflowFunctionRepository, $this->authorizationChecker, $this->eventDispatcher);
         $this->contentTransformer->setContext($this->transformerManager);
     }
 
@@ -103,6 +119,12 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function changeStatusProvider()
     {
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+
+        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
+        Phake::when($content)->getStatus()->thenReturn($fromStatus);
+
         $facade1 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
 
         $facade2 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
