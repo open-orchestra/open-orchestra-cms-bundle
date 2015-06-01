@@ -18,7 +18,6 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $nodeTransformer;
 
     protected $roleName = 'ROLE_NAME';
-    protected $authorizationChecker;
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
@@ -68,14 +67,11 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-
         $this->nodeTransformer = new NodeTransformer(
             $this->encryptionManager,
             $this->siteRepository,
             $this->statusRepository,
-            $this->eventDispatcher,
-            $this->authorizationChecker
+            $this->eventDispatcher
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);
@@ -160,12 +156,9 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransform($facade, $source, $searchCount, $setCount, $isGranted = true)
     {
-        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
-
         $this->nodeTransformer->reverseTransform($facade, $source);
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
-        Phake::verify($this->authorizationChecker, Phake::times($searchCount))->isGranted(array($this->roleName));
         Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
 
         if ($source) {
@@ -184,14 +177,25 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $facadeB->statusId = 'fakeId';
 
         $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
+        Phake::when($node1)->getStatus()->thenReturn($fromStatus);
+
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
+        Phake::when($node2)->getStatus()->thenReturn($fromStatus);
+
         $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
+        Phake::when($node3)->getStatus()->thenReturn($fromStatus);
 
         return array(
             array($facadeA, null, 0, 0),
             array($facadeA, $node1, 0, 0),
             array($facadeB, $node2, 1, 1),
-            array($facadeB, $node3, 1, 0, false),
+            array($facadeB, $node3, 1, 1, false),
         );
     }
 }

@@ -1,0 +1,11 @@
+parameters:
+    open_orchestra_group.subscriber.update_status.class: OpenOrchestra\GroupBundle\EventSubscriber\UpdateStatusSubscriber
+
+services:
+    open_orchestra_group.subscriber.update_status:
+        class: %open_orchestra_group.subscriber.update_status.class%
+        arguments:
+            - @security.context
+            - @open_orchestra_model.repository.role
+        tags:
+            - { name: kernel.event_subscriber }

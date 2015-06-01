@@ -13,10 +13,7 @@ use OpenOrchestra\BaseBundle\Manager\EncryptionManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
-use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeTransformer
@@ -25,38 +22,26 @@ class NodeTransformer extends AbstractTransformer
 {
     protected $encrypter;
     protected $siteRepository;
-    protected $roleRepository;
-    protected $workflowFunctionRepository;
-    protected $authorizationChecker;
     protected $eventDispatcher;
     protected $statusRepository;
 
     /**
      * @param EncryptionManager             $encrypter
      * @param SiteRepositoryInterface       $siteRepository
-     * @param RoleRepositoryInterface             $roleRepository
-     * @param WorkflowFunctionRepositoryInterface $workflowFunctionRepository
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
-     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
-        RoleRepositoryInterface $roleRepository,
-        WorkflowFunctionRepositoryInterface $workflowFunctionRepository,
         StatusRepositoryInterface $statusRepository,
-        $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker
+        EventDispatcherInterface $eventDispatcher
     )
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
-        $this->roleRepository = $roleRepository;
-        $this->workflowFunctionRepository = $workflowFunctionRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
-        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -197,31 +182,12 @@ class NodeTransformer extends AbstractTransformer
     {
         if ($source) {
             if ($facade->statusId) {
+                $fromStatus = $source->getStatus();
                 $toStatus = $this->statusRepository->find($facade->statusId);
                 if ($toStatus) {
-                    $roles = array();
-                    foreach ($toStatus->getToRoles() as $roleEntity) {
-                        $roles[] = $roleEntity->getName();
-                    }
-
-                    $fromStatus = $source->getStatus();
-                    $toStatus = $this->statusRepository->find($facade->statusId);
-                    $granted = true;
-                    if ($fromStatus->getId() != $toStatus->getId()) {
-                        $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
-                        $workflowFunctions = $this->workflowFunctionRepository->findByRole($role);
-                        $attributes = array();
-                        foreach($workflowFunctions as $workflowFunction){
-                            $attributes[] = $workflowFunction->getId();
-                        }
-                        $granted = $this->authorizationChecker->isGranted($attributes, $source);
-                    }
-
-                    if ($granted && $this->authorizationChecker->isGranted($roles)) {
-                        $source->setStatus($toStatus);
-                        $event = new StatusableEvent($source);
-                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
-                    }
+                    $source->setStatus($toStatus);
+                    $event = new StatusableEvent($source, $fromStatus);
+                    $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
                 }
             }
         }
