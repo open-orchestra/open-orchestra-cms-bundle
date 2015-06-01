@@ -50,7 +50,7 @@ class WorkflowRightStrategy implements AuthorizeStatusChangeInterface
             foreach ($workflowFunctions as $workflowFunction) {
                 $attributes[] = $workflowFunction->getId();
             }
-            if ($this->authorizationChecker->isGranted($attributes, $document)) {
+            if (!$this->authorizationChecker->isGranted($attributes, $document)) {
                 return false;
             }
         }
