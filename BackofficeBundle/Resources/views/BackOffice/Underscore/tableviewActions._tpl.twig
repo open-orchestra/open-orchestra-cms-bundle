@@ -1,10 +1,8 @@
-<td>
-    <% if (deleted != true) { %>
-        <% if (typeof links._self_form !== 'undefined') { %>
-            <a href="#" class="btn btn-warning ajax-edit">{{ 'open_orchestra_backoffice.form.edit'|trans({}, 'messages', language) }}</a>
-        <% } %>
-        <% if (typeof links._self_delete !== 'undefined' ) { %>
-            <a href="#" class="btn btn-danger ajax-delete">{{ 'open_orchestra_backoffice.form.delete'|trans({}, 'messages', language) }}</a>
-        <% } %>
+<% if (deleted != true) { %>
+    <% if (typeof links._self_form !== 'undefined') { %>
+        <a href="#" class="btn btn-warning ajax-edit">{{ 'open_orchestra_backoffice.form.edit'|trans({}, 'messages', language) }}</a>
     <% } %>
-</td>
+    <% if (typeof links._self_delete !== 'undefined' ) { %>
+        <a href="#" class="btn btn-danger ajax-delete">{{ 'open_orchestra_backoffice.form.delete'|trans({}, 'messages', language) }}</a>
+    <% } %>
+<% } %>

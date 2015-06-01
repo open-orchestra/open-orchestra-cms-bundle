@@ -9,7 +9,6 @@ TableviewCollectionView = OrchestraView.extend(
 
   initialize: (options) ->
     @options = @reduceOption(options, [
-      'elements'
       'entityType'
       'translatedHeader'
       'displayedElements'
@@ -17,14 +16,15 @@ TableviewCollectionView = OrchestraView.extend(
       'domContainer'
       'order'
       'title'
+      'url'
     ])
     @options.order = [ 0, 'asc' ] if @options.order == undefined
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
     _.bindAll this, "render"
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView'
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView',
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewButtonAdd'
     ]
     return
 
@@ -35,17 +35,35 @@ TableviewCollectionView = OrchestraView.extend(
 
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView',
       displayedElements: @options.translatedHeader
-      links: @options.elements.get('links')
     )
     @options.domContainer.html @$el
 
     $('.js-widget-title', @options.domContainer).text @options.title
-    for element of @options.elements.get(@options.elements.get('collection_name'))
-      @addElementToView (@options.elements.get(@options.elements.get('collection_name'))[element])
 
+    columns = []
+    for index, element of @options.displayedElements
+      columns.push({'data' : element, 'defaultContent': ''});
+    columns.push({'data' : 'links'})
+
+    viewContext = @
     table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
+      ajax : {
+        url : @options.url
+        dataSrc: (json) ->
+          collectionName = json.collection_name
+          return json[collectionName]
+      },
+      columnDefs: [{
+        targets: -1,
+        data: 'links',
+        createdCell : (td, cellData, rowData, row, col) ->
+          viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
+      }]
+      initComplete: (settings, json) ->
+          viewContext.renderAddButton(viewContext, json.links)
+      columns: columns
       order: [@options.order]
       lengthChange: false
     )
@@ -56,25 +74,32 @@ TableviewCollectionView = OrchestraView.extend(
        api.column(i).visible(false)
     colvis = new ($.fn.dataTable.ColVis)(table, exclude: [ @options.displayedElements.length ])
     $('.jarviswidget-ctrls').prepend colvis.button()
+
     return
 
-  addElementToView: (elementData) ->
+  renderColumnActions : (viewContext, td, cellData, rowData, row, col) ->
     elementModel = new TableviewModel
-    elementModel.set elementData
-    new TableviewView(@addOption(
+    elementModel.set rowData
+
+    new TableviewAction(viewContext.addOption(
       element: elementModel
-      domContainer : @$el.find('tbody')
+      domContainer : $(td)
     ))
-    return
+
+  renderAddButton: (viewContext, links) ->
+    button =  viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewButtonAdd',
+      links: links
+    )
+    viewContext.$el.find('table').after button
 
   clickAdd: (event) ->
     event.preventDefault()
     displayLoader('div[role="container"]')
     Backbone.history.navigate(@addUrl)
-    options = @options
     viewContext = @
+    url = $(event.target).data('url')
     $.ajax
-      url: options.elements.get('links')._self_add
+      url: url
       method: 'GET'
       success: (response) ->
         viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'add')
