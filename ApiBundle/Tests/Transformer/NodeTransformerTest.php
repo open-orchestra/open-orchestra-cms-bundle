@@ -160,10 +160,6 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
         Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
-
-        if ($source) {
-            Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());
-        }
     }
 
     /**
