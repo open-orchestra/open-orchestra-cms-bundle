@@ -113,8 +113,7 @@ class ContentTransformer extends AbstractTransformer
                 $fromStatus = $source->getStatus();
                 $toStatus = $this->statusRepository->find($facade->statusId);
                 if ($toStatus) {
-                    $source->setStatus($toStatus);
-                    $event = new StatusableEvent($source, $fromStatus);
+                    $event = new StatusableEvent($source, $toStatus);
                     $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
                 }
             }

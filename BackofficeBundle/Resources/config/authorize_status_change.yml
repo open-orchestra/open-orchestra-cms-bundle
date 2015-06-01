@@ -1,0 +1,6 @@
+parameters:
+    open_orchestra_backoffice.authorize_status_change_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager
+
+services:
+    open_orchestra_backoffice.authorize_status_change_manager:
+        class: %open_orchestra_backoffice.authorize_status_change_manager.class%

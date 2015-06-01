@@ -1,17 +1,18 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\EventSubscriber;
+namespace OpenOrchestra\GroupBundle\AuthorizeStatusChange\Strategies;
+
+use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
 
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
-use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class UpdateStatusSubscriber
+ * Class GroupStrategy
  */
-class UpdateStatusSubscriber implements EventSubscriberInterface
+class GroupStrategy implements AuthorizeStatusChangeInterface
 {
     protected $authorizationChecker;
     protected $roleRepository;
@@ -28,25 +29,16 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
 
     /**
      * @param StatusableEvent $event
+     *
+     * @return bool
      */
-    public function updateStatus(StatusableEvent $event)
+    public function isGranted(StatusableEvent $event)
     {
         $document = $event->getStatusableElement();
-        $fromStatus = $event->getFromStatus();
-        $toStatus = $document->getStatus();
+        $fromStatus = $document->getStatus();
+        $toStatus = $event->getToStatus();
         $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
-        if ($role && !$this->authorizationChecker->isGranted(array($role->getName()))) {
-            $document->setStatus($fromStatus);
-        }
-    }
 
-    /**
-     * @return array The event names to listen to
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            StatusEvents::STATUS_CHANGE => 'updateStatus',
-        );
+        return !($role && !$this->authorizationChecker->isGranted(array($role->getName())));
     }
 }

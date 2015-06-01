@@ -1,21 +1,22 @@
 <?php
 
-namespace OpenOrchestra\WorkflowFunctionAdminBundle\EventSubscriber;
+namespace OpenOrchestra\WorkflowFunctionAdminBundle\AuthorizeStatusChange\Strategies;
+
+use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
 
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
-use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class UpdateStatusSubscriber
+ * Class WorkflowRightStrategy
  */
-class UpdateStatusSubscriber implements EventSubscriberInterface
+class WorkflowRightStrategy implements AuthorizeStatusChangeInterface
 {
     protected $authorizationChecker;
     protected $roleRepository;
+    protected $workflowFunctionRepository;
 
     /**
      * @param AuthorizationCheckerInterface       $authorizationChecker
@@ -34,12 +35,16 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
 
     /**
      * @param StatusableEvent $event
+     *
+     * @return bool
      */
-    public function updateStatus(StatusableEvent $event)
+    public function isGranted(StatusableEvent $event)
     {
+        $isGranted = true;
+
         $document = $event->getStatusableElement();
-        $fromStatus = $event->getFromStatus();
-        $toStatus = $document->getStatus();
+        $fromStatus = $document->getStatus();
+        $toStatus = $event->getToStatus();
         if ($fromStatus->getId() != $toStatus->getId()) {
             $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
             $workflowFunctions = $this->workflowFunctionRepository->findByRole($role);
@@ -47,19 +52,9 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
             foreach($workflowFunctions as $workflowFunction){
                 $attributes[] = $workflowFunction->getId();
             }
-            if (!$this->authorizationChecker->isGranted($attributes, $document)) {
-                $document->setStatus($fromStatus);
-            }
+            $isGranted = $isGranted && $this->authorizationChecker->isGranted($attributes, $document);
         }
-    }
 
-    /**
-     * @return array The event names to listen to
-     */
-    public static function getSubscribedEvents()
-    {
-        return array(
-            StatusEvents::STATUS_CHANGE => 'updateStatus',
-        );
+        return $isGranted;
     }
 }
