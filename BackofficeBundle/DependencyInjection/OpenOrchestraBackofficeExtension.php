@@ -67,7 +67,11 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('authorize_status_change.yml');
 
         if (isset($config['field_types'])) {
-            $this->addAppllicationFieldTypes($config['field_types'], $container);
+            $this->addApplicationFieldTypes($config['field_types'], $container);
+        }
+
+        if (isset($config['options'])) {
+            $this->addApplicationOptions($config['options'], $container);
         }
 
         if ('test' == $container->getParameter('kernel.environment')) {
@@ -136,7 +140,7 @@ class OpenOrchestraBackofficeExtension extends Extension
      * @param array            $appFieldTypes
      * @param ContainerBuilder $container
      */
-    protected function addAppllicationFieldTypes($appFieldTypes, ContainerBuilder $container)
+    protected function addApplicationFieldTypes($appFieldTypes, ContainerBuilder $container)
     {
         $fieldTypes = array_merge(
             $container->getParameter('open_orchestra_backoffice.field_types'),
@@ -144,5 +148,21 @@ class OpenOrchestraBackofficeExtension extends Extension
         );
 
         $container->setParameter('open_orchestra_backoffice.field_types', $fieldTypes);
+    }
+
+    /**
+     * Merge app conf with bundle conf
+     * 
+     * @param array            $appOptions
+     * @param ContainerBuilder $container
+     */
+    protected function addApplicationOptions($appOptions, ContainerBuilder $container)
+    {
+        $options = array_merge(
+            $container->getParameter('open_orchestra_backoffice.options'),
+            $appOptions
+        );
+
+        $container->setParameter('open_orchestra_backoffice.options', $options);
     }
 }
