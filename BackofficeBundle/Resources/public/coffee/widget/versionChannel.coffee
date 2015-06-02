@@ -4,6 +4,7 @@ versionChannel.commands.setHandler 'ready', (view) ->
   $.ajax
     type: "GET"
     url: view.options.multiVersion.self_version
+    async: false
     success: (response) ->
       collection = new VersionviewElement
       collection.set response
@@ -17,3 +18,6 @@ versionChannel.commands.setHandler 'ready', (view) ->
           domContainer: view.$el.find('#version-selectbox')
         )
       return
+  view.options.title = view.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
+    element: view.options.element
+  )

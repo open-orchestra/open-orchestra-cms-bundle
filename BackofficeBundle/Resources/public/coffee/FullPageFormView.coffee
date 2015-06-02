@@ -16,7 +16,6 @@ FullPageFormView = OrchestraView.extend(
     @events = @events || {}
 
   render: ->
-    @callMultiVersionOptions()
     $(@el).html(@renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView', @options))
     $('.js-widget-title', @$el).html @options.title
     @addEventOnForm()
@@ -25,12 +24,6 @@ FullPageFormView = OrchestraView.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     return
-
-  callMultiVersionOptions: ->
-    if @options.multiVersion
-      @options.title = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
-        element: @options.element
-      )
 
   addEventOnForm: ->
     options = @options
