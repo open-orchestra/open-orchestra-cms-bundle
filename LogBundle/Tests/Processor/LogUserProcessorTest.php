@@ -31,7 +31,7 @@ class LogUserProcessorTest extends \PHPUnit_Framework_TestCase
     {
         $this->token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         Phake::when($this->token)->getUsername()->thenReturn($this->userName);
-        $this->security = Phake::mock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $this->security = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         Phake::when($this->security)->getToken()->thenReturn($this->token);
 
         $this->request = Phake::mock('Symfony\Component\HttpFoundation\Request');
