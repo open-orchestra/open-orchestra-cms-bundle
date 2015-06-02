@@ -159,7 +159,7 @@ services:
     open_orchestra_api.transformer.status:
         class: %open_orchestra_api.transformer.status.class%
         arguments:
-            - @security.context
+            - @security.authorization_checker
             - @open_orchestra_model.repository.role
             - @open_orchestra_backoffice.manager.translation_choice
             - @translator

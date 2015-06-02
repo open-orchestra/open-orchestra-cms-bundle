@@ -9,8 +9,8 @@ use OpenOrchestra\ApiBundle\Facade\StatusFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class StatusTransformer
@@ -23,13 +23,13 @@ class StatusTransformer extends AbstractTransformer
     protected $translator;
 
     /**
-     * @param SecurityContextInterface $securityContext
-     * @param RoleRepositoryInterface  $roleRepository
-     * @param TranslationChoiceManager $translationChoiceManager
-     * @param TranslatorInterface      $translator
+     * @param AuthorizationCheckerInterface $securityContext
+     * @param RoleRepositoryInterface       $roleRepository
+     * @param TranslationChoiceManager      $translationChoiceManager
+     * @param TranslatorInterface           $translator
      */
     public function __construct(
-        SecurityContextInterface $securityContext,
+        AuthorizationCheckerInterface $securityContext,
         RoleRepositoryInterface $roleRepository,
         TranslationChoiceManager $translationChoiceManager,
         TranslatorInterface $translator
