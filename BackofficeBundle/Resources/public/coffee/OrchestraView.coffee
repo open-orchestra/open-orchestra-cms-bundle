@@ -33,8 +33,8 @@ OrchestraView = Backbone.View.extend(
       ready = false if templateData is false
       return
     if ready
-      Backbone.Wreqr.radio.commands.execute 'widget', 'ready', @
       @render()
+      Backbone.Wreqr.radio.commands.execute 'widget', 'ready', @
     return
 
   renderTemplate: (templateName, parameters) ->

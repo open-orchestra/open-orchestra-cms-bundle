@@ -19,6 +19,6 @@ versionChannel.commands.setHandler 'ready', (view) ->
         )
       return
   if view.options.element
-    view.options.title = view.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
+    $('.js-widget-title', view.options.domContainer).html view.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
       element: view.options.element
     )
