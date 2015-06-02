@@ -1,11 +1,7 @@
-search = (api, rank) ->
-  return ->
-    api.column(rank).search($(this).val()).draw()
-    return
-
 TableviewCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
+    'keyup input.search-column': 'searchColumn'
 
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -91,6 +87,12 @@ TableviewCollectionView = OrchestraView.extend(
       links: links
     )
     viewContext.$el.find('table').after button
+
+  searchColumn : (event) ->
+    value = $(event.target).val()
+    columnIndex = $(event.target).parent().get(0).cellIndex
+    api = @.$el.find('table').dataTable().api()
+    api.column(columnIndex).search(value).draw()
 
   clickAdd: (event) ->
     event.preventDefault()
