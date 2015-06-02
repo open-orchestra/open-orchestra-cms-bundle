@@ -81,7 +81,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   addEntity: function(entityType)
   {
-      this.manageEntity(entityType, null, null, null, true)
+    this.manageEntity(entityType, null, null, null, true)
   },
 
   showEntity: function(entityType, entityId)

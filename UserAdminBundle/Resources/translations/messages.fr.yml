@@ -3,3 +3,6 @@ open_orchestra_user_admin:
         administration:
             user:
                 list: Utilisateurs
+    user:
+        profile: Profil
+        password: Mot de passe

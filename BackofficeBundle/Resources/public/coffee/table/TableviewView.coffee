@@ -43,7 +43,7 @@ TableviewView = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
-    parameter = 
+    parameter =
       'entityId': @options.element.get('id')
       'language': @options.element.get('language')
       'version' : @options.element.get('version')
@@ -56,12 +56,17 @@ TableviewView = OrchestraView.extend(
     Backbone.history.navigate(redirectUrl)
     options = @options
     viewContext = @
+    links = options.element.get('links')
+    panelKeys = []
+    for key in Object.keys(links)
+      if /^_self_panel_/.test(key)
+        panelKeys.push(key)
+    if panelKeys.length > 0
+      appConfigurationView.setConfiguration(viewContext.options.entityType, 'edit', FullPagePanelView)
     $.ajax
-      url: options.element.get('links')._self_form
+      url: links._self_form
       method: "GET"
       success: (response) ->
-        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
-        new viewClass(viewContext.addOption(
-          html: response
-        ))
+          viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
+          new viewClass(viewContext.addOption(html: response))
 )
