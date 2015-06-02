@@ -29,7 +29,7 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
     {
         $document = $event->getStatusableElement();
         $toStatus = $event->getToStatus();
-        if ($this->authorizeStatusChangeManager->isGranted($event)) {
+        if ($this->authorizeStatusChangeManager->isGranted($document, $toStatus)) {
             $document->setStatus($toStatus);
         }
     }

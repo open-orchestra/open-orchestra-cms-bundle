@@ -3,8 +3,8 @@
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\AuthorizeStatusChange\Strategies;
 
 use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
-
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -34,15 +34,14 @@ class WorkflowRightStrategy implements AuthorizeStatusChangeInterface
     }
 
     /**
-     * @param StatusableEvent $event
+     * @param StatusableInterface $document
+     * @param StatusInterface     $toStatus
      *
      * @return bool
      */
-    public function isGranted(StatusableEvent $event)
+    public function isGranted(StatusableInterface $document, StatusInterface $toStatus)
     {
-        $document = $event->getStatusableElement();
         $fromStatus = $document->getStatus();
-        $toStatus = $event->getToStatus();
         if ($fromStatus->getId() != $toStatus->getId()) {
             $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
             $workflowFunctions = $this->workflowFunctionRepository->findByRole($role);

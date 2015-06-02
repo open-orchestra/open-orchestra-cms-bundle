@@ -3,7 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
 use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class AuthorizeStatusChangeManager
@@ -21,14 +22,15 @@ class AuthorizeStatusChangeManager
     }
 
     /**
-     * @param StatusableEvent $event
+     * @param StatusableInterface $document
+     * @param StatusInterface     $toStatus
      *
      * @return bool
      */
-    public function isGranted(StatusableEvent $statusableEvent)
+    public function isGranted(StatusableInterface $document, StatusInterface $toStatus)
     {
         foreach ($this->strategies as $strategy) {
-            if (!$strategy->isGranted($statusableEvent)) {
+            if (!$strategy->isGranted($document, $toStatus)) {
                 return false;
             }
         }

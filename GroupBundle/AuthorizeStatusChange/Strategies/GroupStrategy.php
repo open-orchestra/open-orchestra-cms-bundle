@@ -3,8 +3,8 @@
 namespace OpenOrchestra\GroupBundle\AuthorizeStatusChange\Strategies;
 
 use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterface;
-
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -28,15 +28,14 @@ class GroupStrategy implements AuthorizeStatusChangeInterface
     }
 
     /**
-     * @param StatusableEvent $event
+     * @param StatusableInterface $document
+     * @param StatusInterface     $toStatus
      *
      * @return bool
      */
-    public function isGranted(StatusableEvent $event)
+    public function isGranted(StatusableInterface $document, StatusInterface $toStatus)
     {
-        $document = $event->getStatusableElement();
         $fromStatus = $document->getStatus();
-        $toStatus = $event->getToStatus();
         $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
 
         return !($role && !$this->authorizationChecker->isGranted(array($role->getName())));

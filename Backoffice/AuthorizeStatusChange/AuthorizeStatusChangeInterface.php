@@ -2,7 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\AuthorizeStatusChange;
 
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Interface AuthorizeStatusChangeInterface
@@ -10,11 +11,12 @@ use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 interface AuthorizeStatusChangeInterface
 {
     /**
-     * @param StatusableEvent $event
+     * @param StatusableInterface $document
+     * @param StatusInterface     $toStatus
      *
      * @return bool
      */
-    public function isGranted(StatusableEvent $statusableEvent);
+    public function isGranted(StatusableInterface $document, StatusInterface $toStatus);
 
     /**
      * @return string

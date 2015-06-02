@@ -3,7 +3,8 @@
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Tests\AuthorizeStatusChange\Strategies;
 
 use OpenOrchestra\WorkflowFunctionAdminBundle\AuthorizeStatusChange\Strategies\WorkflowRightStrategy;
-use OpenOrchestra\ModelInterface\Event\StatusableEvent;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Phake;
 
 /**
@@ -33,16 +34,17 @@ class WorkflowRightStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param StatusableEvent $event
-     * @param bool            $granted
-     * @param bool            $expectedResult
+     * @param StatusableInterface $document
+     * @param StatusInterface     $toStatus
+     * @param bool                $granted
+     * @param bool                $expectedResult
      *
      * @dataProvider provideStatusableEvent
      */
-    public function testIsGranted(StatusableEvent $event, $granted, $expectedResult)
+    public function testIsGranted(StatusableInterface $document, StatusInterface $toStatus, $granted, $expectedResult)
     {
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($granted);
-        $this->assertEquals($expectedResult, $this->workflowRightStrategy->isGranted($event));
+        $this->assertEquals($expectedResult, $this->workflowRightStrategy->isGranted($document, $toStatus));
     }
 
     /**
@@ -59,10 +61,6 @@ class WorkflowRightStrategyTest extends \PHPUnit_Framework_TestCase
         $statusableInterface0 = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($statusableInterface0)->getStatus()->thenReturn($statusInterface0_0);
 
-        $event0 = Phake::mock('OpenOrchestra\ModelInterface\Event\StatusableEvent');
-        Phake::when($event0)->getStatusableElement()->thenReturn($statusableInterface0);
-        Phake::when($event0)->getToStatus()->thenReturn($statusInterface0_1);
-
 
         $statusInterface1_0 = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($statusInterface1_0)->getId()->thenReturn('fakeStatusId0');
@@ -73,15 +71,11 @@ class WorkflowRightStrategyTest extends \PHPUnit_Framework_TestCase
         $statusableInterface1 = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
         Phake::when($statusableInterface1)->getStatus()->thenReturn($statusInterface1_0);
 
-        $event1 = Phake::mock('OpenOrchestra\ModelInterface\Event\StatusableEvent');
-        Phake::when($event1)->getStatusableElement()->thenReturn($statusableInterface1);
-        Phake::when($event1)->getToStatus()->thenReturn($statusInterface1_1);
-
 
         return array(
-            array($event0, true, true),
-            array($event1, false, false),
-            array($event1, true, true),
+            array($statusableInterface0, $statusInterface0_1, true, true),
+            array($statusableInterface1, $statusInterface1_1, false, false),
+            array($statusableInterface1, $statusInterface1_1, true, true),
         );
 
     }
