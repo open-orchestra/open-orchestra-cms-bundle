@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -37,6 +38,8 @@ class SiteController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_site_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +49,26 @@ class SiteController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $siteCollection = $this->get('open_orchestra_model.repository.site')->findByDeleted(false);
+        $columns = $request->get('columns');
+        $search = $request->get('search');
+        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
+        $order = $request->get('order');
+        $skip = $request->get('skip');
+        $limit = $request->get('limit');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
+        $repository =  $this->get('open_orchestra_model.repository.site');
+
+        $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->countByDeleted(false);
+        $recordFiltered = $repository->countByDeletedFilterSearch(false, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
+        $facade->setRecordsTotal($recordsTotal);
+        $facade->setRecordFiltered($recordFiltered);
+
+        return $facade;
     }
 
     /**
