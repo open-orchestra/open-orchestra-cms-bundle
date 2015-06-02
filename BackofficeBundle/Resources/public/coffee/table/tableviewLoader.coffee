@@ -8,34 +8,30 @@ addParameter = (element, label, value) ->
     element.set('links', links);
   return element
 
-tableViewLoad = (link, entityType, entityId, language, version, add, sourceLanguage) ->
+tableViewLoad = (link, entityType, entityId, language, version, sourceLanguage) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   translatedHeader = link.data('translated-header').replace(/\s/g, '').split(",") if link.data('translated-header') != undefined
   visibleElements = link.data('visible-elements').replace(/\s/g, '').split(",") if link.data('visible-elements') != undefined
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
-  $.ajax
-    url: link.data('url')
-    method: 'GET'
-    success: (response) ->
-      founded = false
-      elements = new TableviewElement()
-      elements.set response
-      if add != undefined
-        $.ajax
-          url: elements.get('links')._self_add
-          method: "GET"
-          success: (response) ->
-            viewClass = appConfigurationView.getConfiguration(entityType, 'add')
-            new viewClass(
-              html: response
-              title: title
-              entityType: entityType
-              element: elements
-              extendView: [ 'generateId' ]
-            )
-        founded = true
-      if entityId != undefined
+  if entityId == undefined
+    new TableviewCollectionView(
+      displayedElements: displayedElements
+      translatedHeader: translatedHeader || displayedElements
+      visibleElements: visibleElements || []
+      order: order
+      title: title
+      url : link.data('url')
+      entityType: entityType
+      domContainer: $("#content")
+    )
+  else
+    $.ajax
+      url: link.data('url')
+      method: 'GET'
+      success: (response) ->
+        elements = new TableviewElement()
+        elements.set response
         collection_name = elements.get("collection_name")
         collection = elements.get(collection_name)
         $.each collection, (rank, values) ->
@@ -66,18 +62,7 @@ tableViewLoad = (link, entityType, entityId, language, version, add, sourceLangu
                     element: element
                   viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
                   new viewClass(options)
-              founded = true
-      unless founded
-        new TableviewCollectionView(
-          elements: elements
-          displayedElements: displayedElements
-          translatedHeader: translatedHeader || displayedElements
-          visibleElements: visibleElements || []
-          order: order
-          title: title
-          entityType: entityType
-          domContainer: $("#content")
-        )
+
 
 tableViewLoadSpecificElement = (link, title, entityType) ->
   displayed = true

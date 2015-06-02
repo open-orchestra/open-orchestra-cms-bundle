@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <% _.each(displayedElements, function(displayedElement) { %>
-                  <td><input type="text" placeholder="Search <%= displayedElement %>" ></td>
+                  <td><input class='search-column' type="text" placeholder="Search <%= displayedElement %>" ></td>
                 <% }); %>
                 <td></td>
             </tr>
@@ -19,11 +19,6 @@
         <tbody>
         </tbody>
     </table>
-    <% if (typeof links !== 'undefined' && typeof links._self_add !== 'undefined' ) { %>
-        <div>
-            <a href="<%= links._self_add %>" data-url="<%= links._self_add %>" class="btn btn-success ajax-add bh-button-add">{{ 'open_orchestra_backoffice.form.add'|trans({}, 'messages', language) }}</a>
-        </div>
-    <% } %>
 </div>
 
 {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}

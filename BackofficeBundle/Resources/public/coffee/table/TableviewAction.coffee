@@ -1,4 +1,4 @@
-TableviewView = OrchestraView.extend(
+TableviewAction = OrchestraView.extend(
   events:
     'click a.ajax-delete': 'clickDelete'
     'click a.ajax-edit' : 'clickEdit'
@@ -7,23 +7,17 @@ TableviewView = OrchestraView.extend(
     @options = options
     _.bindAll this, "render"
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView',
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions'
     ]
     return
 
   render: ->
-    @setElement $('<tr />')
-    options = @options
-    for displayedElement in @options.displayedElements
-      @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewView'
-        value: eval('options.element.attributes.' + displayedElement)
-      )
+    @setElement $('<p />')
     @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions',
       deleted: @options.element.get('deleted')
       links: @options.element.get('links')
     )
-    @options.domContainer.append(@$el)
+    @options.domContainer.html(@$el)
 
   clickDelete: (event) ->
     event.preventDefault()
