@@ -11,36 +11,6 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block orchestra_status_widget %}
-    {% spaceless %}
-        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-control')|trim }) %}
-
-        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
-            {% if empty_value is not none %}
-                <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %} value="">{{ empty_value|trans({}, translation_domain) }}</option>
-            {% endif %}
-            {% if preferred_choices|length > 0 %}
-                {% set options = preferred_choices %}
-                {{ block('choice_widget_options') }}
-                {% if choices|length > 0 and separator is not none %}
-                    <option disabled="disabled">{{ separator }}</option>
-                {% endif %}
-            {% endif %}
-            {% set options = choices %}
-            {% for group_label, choice in options %}
-                {% if choice is iterable %}
-                    <optgroup label="{{ group_label|trans({}, translation_domain) }}">
-                        {% set options = choice %}
-                        {{ block('choice_widget_options') }}
-                    </optgroup>
-                {% else %}
-                    <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label| trans_choose }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-    {% endspaceless %}
-{% endblock %}
-
 {% block translated_value_collection_widget %}
     {% spaceless %}
         <div {{ block('widget_container_attributes') }}>
