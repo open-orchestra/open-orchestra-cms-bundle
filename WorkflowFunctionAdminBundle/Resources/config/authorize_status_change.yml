@@ -1,0 +1,11 @@
+parameters:
+    open_orchestra_workflow_function_admin.authorize_status_change.workflow_right.class: OpenOrchestra\WorkflowFunctionAdminBundle\AuthorizeStatusChange\Strategies\WorkflowRightStrategy
+services:
+    open_orchestra_workflow_function_admin.authorize_status_change.workflow_right:
+        class: %open_orchestra_workflow_function_admin.authorize_status_change.workflow_right.class%
+        arguments:
+            - @security.context
+            - @open_orchestra_model.repository.role
+            - @open_orchestra_workflow_function.repository.workflow_function
+        tags:
+            - { name: open_orchestra_backoffice.authorize_status_change.strategy }

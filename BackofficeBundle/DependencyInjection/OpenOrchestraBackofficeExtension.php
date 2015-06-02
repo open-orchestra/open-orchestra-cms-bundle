@@ -64,6 +64,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('voter.yml');
         $loader->load('validator.yml');
         $loader->load('initializer.yml');
+        $loader->load('authorize_status_change.yml');
 
         if (isset($config['field_types'])) {
             $this->addAppllicationFieldTypes($config['field_types'], $container);
@@ -131,7 +132,7 @@ class OpenOrchestraBackofficeExtension extends Extension
 
     /**
      * Merge app conf with bundle conf
-     * 
+     *
      * @param array            $appFieldTypes
      * @param ContainerBuilder $container
      */

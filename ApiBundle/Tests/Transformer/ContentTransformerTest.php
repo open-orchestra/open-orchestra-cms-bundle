@@ -37,6 +37,8 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
+        $this->role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
+
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
@@ -92,10 +94,6 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->statusRepository, Phake::times($searchCount))->find(Phake::anyParameters());
         Phake::verify($this->eventDispatcher, Phake::times($setCount))->dispatch(Phake::anyParameters());
-
-        if ($source) {
-            Phake::verify($source, Phake::times($setCount))->setStatus(Phake::anyParameters());
-        }
     }
 
     /**
@@ -103,12 +101,16 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function changeStatusProvider()
     {
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+
+        $fromStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($fromStatus)->getId()->thenReturn('fromStatus');
+        Phake::when($content)->getStatus()->thenReturn($fromStatus);
+
         $facade1 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
 
         $facade2 = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
         $facade2->statusId = 'statusId';
-
-        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
 
         return array(
             array($facade1, null, 0, 0),

@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_group.authorize_status_change.group.class: OpenOrchestra\GroupBundle\AuthorizeStatusChange\Strategies\GroupStrategy
+services:
+    open_orchestra_group.authorize_status_change.group:
+        class: %open_orchestra_group.authorize_status_change.group.class%
+        arguments:
+            - @security.context
+            - @open_orchestra_model.repository.role
+        tags:
+            - { name: open_orchestra_backoffice.authorize_status_change.strategy }

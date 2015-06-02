@@ -20,10 +20,12 @@ class ContentTransformer extends AbstractTransformer
     protected $eventDispatcher;
 
     /**
-     * @param StatusRepositoryInterface $statusRepository
-     * @param EventDispatcherInterface  $eventDispatcher
+     * @param StatusRepositoryInterface           $statusRepository
+     * @param EventDispatcherInterface            $eventDispatcher
      */
-    public function __construct(StatusRepositoryInterface $statusRepository, $eventDispatcher)
+    public function __construct(
+        StatusRepositoryInterface $statusRepository,
+        EventDispatcherInterface $eventDispatcher)
     {
         $this->statusRepository = $statusRepository;
         $this->eventDispatcher = $eventDispatcher;
@@ -108,10 +110,10 @@ class ContentTransformer extends AbstractTransformer
     {
         if ($source) {
             if ($facade->statusId) {
-                $newStatus = $this->statusRepository->find($facade->statusId);
-                if ($newStatus) {
-                    $source->setStatus($newStatus);
-                    $event = new StatusableEvent($source);
+                $fromStatus = $source->getStatus();
+                $toStatus = $this->statusRepository->find($facade->statusId);
+                if ($toStatus) {
+                    $event = new StatusableEvent($source, $toStatus);
                     $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
                 }
             }
