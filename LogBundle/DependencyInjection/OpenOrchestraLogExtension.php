@@ -27,8 +27,7 @@ class OpenOrchestraLogExtension extends Extension
                 $container->setParameter('open_orchestra_log.document.' . $class . '.class', $content['class']);
 
                 $container->register('open_orchestra_log.repository.' . $class, $content['repository'])
-                    ->setFactoryService('doctrine.odm.mongodb.document_manager')
-                    ->setFactoryMethod('getRepository')
+                    ->setFactory('doctrine.odm.mongodb.document_manager::getRepository')
                     ->addArgument($content['class']);
             }
         }
