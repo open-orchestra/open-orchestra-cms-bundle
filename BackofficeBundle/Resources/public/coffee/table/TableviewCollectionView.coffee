@@ -107,5 +107,6 @@ TableviewCollectionView = OrchestraView.extend(
         new viewClass(viewContext.addOption(
           html: response
           extendView: [ 'generateId' ]
+          domContainer: $('#content')
         ))
 )
