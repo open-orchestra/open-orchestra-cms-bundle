@@ -18,6 +18,7 @@ versionChannel.commands.setHandler 'ready', (view) ->
           domContainer: view.$el.find('#version-selectbox')
         )
       return
-  view.options.title = view.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
-    element: view.options.element
-  )
+  if view.options.element
+    view.options.title = view.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
+      element: view.options.element
+    )
