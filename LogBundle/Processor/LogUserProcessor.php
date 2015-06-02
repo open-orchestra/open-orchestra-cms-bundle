@@ -4,7 +4,7 @@ namespace OpenOrchestra\LogBundle\Processor;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class LogUserProcessor
@@ -16,11 +16,11 @@ class LogUserProcessor
     protected $securityContext;
 
     /**
-     * @param SecurityContextInterface $securityContext
-     * @param RequestStack             $requestStack
-     * @param ContextManager           $context
+     * @param TokenStorageInterface $securityContext
+     * @param RequestStack          $requestStack
+     * @param ContextManager        $context
      */
-    public function __construct(SecurityContextInterface $securityContext, RequestStack $requestStack, ContextManager $context)
+    public function __construct(TokenStorageInterface $securityContext, RequestStack $requestStack, ContextManager $context)
     {
         $this->securityContext = $securityContext;
         $this->requestStack = $requestStack;
