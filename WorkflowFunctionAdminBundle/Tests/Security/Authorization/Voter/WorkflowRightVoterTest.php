@@ -71,6 +71,7 @@ class WorkflowRightVoterTest extends \PHPUnit_Framework_TestCase
     public function provideClassName()
     {
         return array(
+            array(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface'), false),
             array(Phake::mock('stdClass'), false),
             array(Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface'), true),
             array(Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface'), true)
