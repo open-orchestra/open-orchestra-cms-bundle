@@ -28,6 +28,7 @@ BlockView = OrchestraView.extend(
     $('.modal-title').text 'Please wait ...'
     new adminFormView(
       url: @options.block.get('links')._self_form
+      extendView: [ 'showVideo' ]
     )
 
   confirmRemoveBlock: (event) ->

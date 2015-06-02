@@ -1,13 +1,24 @@
-$(document).on "click", ".js-widget-blockpanel .header", (event) ->
-  $(this).parent().toggleClass "activate"
-  $('#content .jarviswidget > div').toggleClass "panel-activate"
-  $(this).effect "highlight", {}, 500
-  makeSortable ".js-widget-blockpanel .ui-model", true if $(this).parent().hasClass("activate")
-  event.preventDefault()
-  return
-$(document).on "mouseover", ".js-widget-blockpanel .ui-model li", (event) ->
-  $(this).addClass "hover"
-$(document).on "mouseout", ".js-widget-blockpanel .ui-model li", (event) ->
-  $(this).removeClass "hover"
-$(document).on "mousedown", ".js-widget-blockpanel .ui-model li", (event) ->
-  $(this).removeClass "hover"
+BlocksPanelView = OrchestraView.extend(
+  initialize: (options) ->
+    @options = @reduceOption(options, [
+      'blocks'
+      'domContainer'
+    ])
+    @loadTemplates [
+        "OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel"
+    ]
+    return
+
+  render: ->
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel', @options)
+    @options.domContainer.append @$el
+    Backbone.Wreqr.radio.commands.execute 'viewport', 'init', @options.domContainer
+    $(window).resize ->
+      Backbone.Wreqr.radio.commands.execute 'viewport', 'init'
+      return
+    $(window).add('div[role="content"]').scroll ->
+      Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
+      return
+    return
+
+)

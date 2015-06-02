@@ -1,4 +1,10 @@
 NodeView = OrchestraView.extend(
+  events:
+    'click .js-widget-blockpanel .header': 'toggle'
+    'mouseover .js-widget-blockpanel li': 'addClass'
+    'mouseout .js-widget-blockpanel li': 'removeClass'
+    'mousedown .js-widget-blockpanel li': 'removeClass'
+
   extendView : [ 'commonPage', 'addArea' ]
 
   initialize: (options) ->
@@ -46,20 +52,26 @@ NodeView = OrchestraView.extend(
       type: "GET"
       url: @options.node.get('links')._block_list
       success: (response) ->
-        blockpanel = $('.js-widget-blockpanel', viewContext.$el)
         for i of response.blocks
           blockElement = new Block()
           blockElement.set response.blocks[i]
           response.blocks[i] = viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView', 
             block : blockElement
           )
-        blockpanel.html viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel', response)
-        Backbone.Wreqr.radio.commands.execute 'viewport', 'init', blockpanel
-        $(window).resize ->
-          Backbone.Wreqr.radio.commands.execute 'viewport', 'init'
-          return
-        $(window).add('div[role="content"]').scroll ->
-          Backbone.Wreqr.radio.commands.execute 'viewport', 'scroll'
-          return
+        new BlocksPanelView(
+          blocks : response.blocks
+          domContainer : $('.js-widget-blockpanel', viewContext.$el))
 
+  toggle: (event) ->
+    event.preventDefault()
+    $(event.currentTarget).parent().toggleClass "activate"
+    $('#content .jarviswidget > div').toggleClass "panel-activate"
+    $(event.currentTarget).effect "highlight", {}, 500
+    makeSortable ".js-widget-blockpanel .ui-model", true if $(event.currentTarget).parent().hasClass("activate")
+
+  addClass: (event) ->
+    $(event.currentTarget).addClass "hover"
+    
+  removeClass: (event) ->
+    $(event.currentTarget).removeClass "hover"
 )
