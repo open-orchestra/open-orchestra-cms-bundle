@@ -61,6 +61,6 @@ TableviewAction = OrchestraView.extend(
       url: links._self_form
       method: "GET"
       success: (response) ->
-          viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
-          new viewClass(viewContext.addOption(html: response))
+        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
+        new viewClass(viewContext.addOption(html: response))
 )

@@ -8,6 +8,7 @@ VersionView = OrchestraView.extend(
     @options = options
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersion"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle"
     ]
     return
 

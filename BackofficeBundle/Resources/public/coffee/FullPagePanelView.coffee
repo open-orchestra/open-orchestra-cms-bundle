@@ -11,9 +11,9 @@ FullPagePanelView = FullPageFormView.extend(
     return
 
   render: ->
-    @callMultiVersionOptions()
-    $(@el).html(@renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPagePanelView', @options))
-    $('.js-widget-title', @$el).html @options.title
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPagePanelView', @options)
+    @options.domContainer.html @$el
+    $('.js-widget-title', @options.domContainer).html @options.title
     links = @options.element.get('links')
     panels = @getPanels links
     for panel in panels

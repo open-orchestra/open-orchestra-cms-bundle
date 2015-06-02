@@ -34,8 +34,6 @@ class AuthorizeStatusChangeManager
                 return false;
             }
         }
-        $document = $statusableEvent->getStatusableElement();
-        $toStatus = $statusableEvent->getToStatus();
         $document->setStatus($toStatus);
     }
 }
