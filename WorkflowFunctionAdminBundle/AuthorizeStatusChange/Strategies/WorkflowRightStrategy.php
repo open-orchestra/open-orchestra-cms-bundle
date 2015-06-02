@@ -57,4 +57,12 @@ class WorkflowRightStrategy implements AuthorizeStatusChangeInterface
 
         return true;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'workflow_right';
+    }
 }

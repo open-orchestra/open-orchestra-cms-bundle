@@ -41,4 +41,12 @@ class GroupStrategy implements AuthorizeStatusChangeInterface
 
         return !($role && !$this->authorizationChecker->isGranted(array($role->getName())));
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'group';
+    }
 }
