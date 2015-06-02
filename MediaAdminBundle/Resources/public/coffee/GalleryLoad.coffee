@@ -7,10 +7,11 @@ GalleryLoad = (link, target) ->
     url: link.data('url')
     method: 'GET'
     success: (response) ->
-      medias = new GalleryElement
+      medias = new MediaElement
       medias.set response
       viewClass = appConfigurationView.getConfiguration('media', 'showGalleryCollection')
       new viewClass(
+        media  modal activation
         medias: medias
         title: title
         listUrl: listUrl

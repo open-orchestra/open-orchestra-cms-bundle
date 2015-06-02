@@ -1,4 +1,4 @@
-GalleryView = OrchestraView.extend(
+MediaView = OrchestraView.extend(
   events:
     'click span.media-remove': 'confirmRemoveMedia'
     'click span.media-select': 'mediaSelect'
@@ -20,13 +20,14 @@ GalleryView = OrchestraView.extend(
     else
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
+
     @loadTemplates [
-      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView'
+      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView'
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView',
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView',
       media: @options.media
       mediaClass: @mediaClass
       mediaLogo: @mediaLogo
@@ -50,9 +51,9 @@ GalleryView = OrchestraView.extend(
       $(".delete-confirm-question").text(),
       $(".delete-confirm-explanation").text(),
       callBackParams:
-        galleryView: @
+        MediaView: @
       yesCallback: (params) ->
-        params.galleryView.removeMedia(event)
+        params.mediaModalView.removeMedia(event)
     )
 
   removeMedia : (event) ->

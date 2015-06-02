@@ -65,6 +65,7 @@ module.exports = {
 
         //--[ MEDIA ]--//
         'web/built/openorchestramediaadmin/js/*.js',
+        'web/built/openorchestramediaadmin/js/media/*.js',
 
         //--[ USER ]--//
         'web/built/openorchestrauseradmin/js/user/*.js',

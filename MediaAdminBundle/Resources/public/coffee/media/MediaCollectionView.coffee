@@ -1,4 +1,4 @@
-GalleryCollectionView = OrchestraView.extend(
+MediaCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
 
@@ -11,13 +11,12 @@ GalleryCollectionView = OrchestraView.extend(
       'modal'
     ])
     @loadTemplates [
-      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryCollectionView",
-      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView"
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaCollectionView",
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryCollectionView'
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaCollectionView'
       links: @options.medias.get('links')
     )
     @options.domContainer.html @$el
@@ -26,13 +25,14 @@ GalleryCollectionView = OrchestraView.extend(
       @addConfigurationButton()
       @addDeleteButton()
     for mediaKey of @options.medias.get(@options.medias.get('collection_name'))
-      @addElementToView (@options.medias.get(@options.medias.get('collection_name'))[mediaKey])
+      @addElementToView(@options.medias.get(@options.medias.get('collection_name'))[mediaKey], @$el)
     $(".figure").width @options.domContainer.find("img").width()
 
-  addElementToView: (mediaData) ->
-    mediaModel = new GalleryModel
+  addElementToView: (mediaData, el) ->
+    mediaModel = new MediaModel
     mediaModel.set mediaData
-    new GalleryView(@addOption(
+    viewClass = if el.parents("#select_media_modal").length != 0 then MediaWysiwygView else MediaView
+    new viewClass(@addOption(
       media: mediaModel
       domContainer: this.$el.find('.superbox')
     ))

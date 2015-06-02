@@ -1,15 +1,25 @@
-<div class="modal fade mediaModalContainer" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static" data-input="<%= input %>">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close mediaModalClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">{{ 'open_orchestra_media_admin.left_menu.editorial.media'|trans }}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="modal-body-menu"><%= body %></div>
-                <div class="modal-body-content"></div>
-                <div class="modal-body-end"></div>
-            </div>
-        </div>
+<div class="figure superbox-list">
+    <img
+        class="superbox-img selectable"
+        title="<%= media.get('name') %>"
+        alt="<%= media.get('name') %>"
+        height="117px"
+<% if (media.get('displayed_image') != 'undefined') { %>
+        src="<%= media.get('displayed_image') %>"
+<% } else if (media.get('mime_type') == 'application/pdf') { %>
+    {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-pdf.png' %}
+        src="{{ asset_url }}"
+    {% endimage %}
+<% } else { %>
+    {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/mediatheque/ico-content.png' %}
+        src="{{ asset_url }}"
+    {% endimage %}
+<% } %>
+    />
+    <div class="caption" style="display: none">
+        <span class='title'> <%= media.get('name') %> </span>
+        <% if (mediaClass != 'undefined' && mediaLogo != undefined) { %>
+            <span class="tool <%= mediaClass %>"><i class='fa <%= mediaLogo %>'></i></span>
+        <% } %>
     </div>
 </div>

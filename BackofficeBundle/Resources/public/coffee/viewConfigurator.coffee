@@ -21,7 +21,7 @@ OrchestraViewConfigurator = ->
     'showOrchestraModal': OrchestraModalView
     'addFolderConfigurationButton': FolderConfigurationButtonView
     'addFolderDeleteButton': FolderDeleteButtonView
-    'showGalleryCollection': GalleryCollectionView
+    'showGalleryCollection': MediaCollectionView
     'showSuperbox': SuperboxView
     'showMediaForm': mediaFormView
     'showMediaModal': MediaModalView
