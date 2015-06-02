@@ -55,18 +55,25 @@ class SiteController extends BaseController
         $search = $request->get('search');
         $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
         $order = $request->get('order');
-        $skip = $request->get('skip');
-        $limit = $request->get('limit');
+        $skip = $request->get('start');
+        $skip = (null !== $skip) ? (int)$skip : null;
+        $limit = $request->get('length');
+        $limit = (null !== $limit) ? (int)$limit : null;
+
+        $columnsNameToEntityAttribute = array(
+            'site_id' => 'siteId',
+            'name'    => 'name',
+        );
 
         $repository =  $this->get('open_orchestra_model.repository.site');
 
-        $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columns, $search, $order, $skip, $limit);
+        $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->countByDeleted(false);
-        $recordFiltered = $repository->countByDeletedFilterSearch(false, $columns, $search);
+        $recordsFiltered = $repository->countByDeletedFilterSearch(false, $columnsNameToEntityAttribute, $columns, $search);
 
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
         $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordFiltered($recordFiltered);
+        $facade->setRecordsFiltered($recordsFiltered);
 
         return $facade;
     }

@@ -37,31 +37,36 @@ TableviewCollectionView = OrchestraView.extend(
     $('.js-widget-title', @options.domContainer).text @options.title
 
     columns = []
+    columnDefs = []
     for index, element of @options.displayedElements
       columns.push({'data' : element, 'defaultContent': ''});
+      columnDefs.push({'name' : element, 'targets': parseInt(index)});
     columns.push({'data' : 'links'})
-
     viewContext = @
+
     table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
+      processing: true,
+      serverSide: true,
       ajax :
         url : @options.url
         dataSrc: (json) ->
           collectionName = json.collection_name
           return json[collectionName]
-      columnDefs: [
+      initComplete: (settings, json) ->
+        viewContext.renderAddButton(viewContext, json.links)
+      columns: columns
+      columnDefs: columnDefs.concat [
         targets: -1,
         data: 'links',
         createdCell : (td, cellData, rowData, row, col) ->
           viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
       ]
-      initComplete: (settings, json) ->
-          viewContext.renderAddButton(viewContext, json.links)
-      columns: columns
       order: [@options.order]
       lengthChange: false
     )
+
     api = table.api()
     headers = api.columns().header().toArray()
     for i of headers

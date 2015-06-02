@@ -12,13 +12,15 @@ abstract class PaginateCollectionFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsTotal")
      */
     public $recordsTotal;
 
     /**
      * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsFiltered")
      */
-    public $recordFiltered;
+    public $recordsFiltered;
 
     /**
      * @param $recordsTotal
@@ -29,10 +31,10 @@ abstract class PaginateCollectionFacade extends AbstractFacade
     }
 
     /**
-     * @param $recordFiltered
+     * @param $recordsFiltered
      */
-    public function setRecordFiltered($recordFiltered)
+    public function setRecordsFiltered($recordsFiltered)
     {
-        $this->recordFiltered = $recordFiltered;
+        $this->recordsFiltered = $recordsFiltered;
     }
 }
