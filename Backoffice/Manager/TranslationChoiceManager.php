@@ -4,11 +4,12 @@ namespace OpenOrchestra\Backoffice\Manager;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 
 /**
  * Class TranslationChoiceManager
  */
-class TranslationChoiceManager
+class TranslationChoiceManager implements TranslationChoiceManagerInterface
 {
     protected $currentLocale;
 
