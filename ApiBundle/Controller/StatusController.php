@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -18,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 class StatusController extends BaseController
 {
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_status_list")
      * @Config\Method({"GET"})
      *
@@ -27,11 +30,35 @@ class StatusController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $statusCollection = $this->get('open_orchestra_model.repository.status')->findAll();
+        $columns = $request->get('columns');
+        $search = $request->get('search');
+        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
+        $order = $request->get('order');
+        $skip = $request->get('start');
+        $skip = (null !== $skip) ? (int)$skip : null;
+        $limit = $request->get('length');
+        $limit = (null !== $limit) ? (int)$limit : null;
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
+        $columnsNameToEntityAttribute = array(
+            'label'     => array('key' => 'name'),
+            'published' => array('key' => 'published','type' => 'boolean'),
+            'initial' => array('key' => 'initial','type' => 'boolean'),
+            'display_color' => array('key' => 'displayColor'),
+        );
+
+        $repository = $this->get('open_orchestra_model.repository.status');
+
+        $statusCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
+        $facade->setRecordsTotal($recordsTotal);
+        $facade->setRecordsFiltered($recordsFiltered);
+
+        return $facade;
     }
 
     /**
