@@ -9,7 +9,7 @@ use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 /**
  * Class KeywordCollection
  */
-class KeywordCollectionFacade extends AbstractFacade
+class KeywordCollectionFacade extends PaginateCollectionFacade
 {
     /**
      * @Serializer\Type("string")
