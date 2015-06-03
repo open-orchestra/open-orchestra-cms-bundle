@@ -8,7 +8,7 @@ extendView['orchestraMediaType'] =
     $(inputId).val ''
     $(previewId).removeAttr 'src'
 widgetChannel.bind 'loaded', (view) ->
-  if $('.clear-media', view.$el).length > 0
+  if $("[data-prototype*='clear-media']", view.$el).length > 0
     $.extend true, view, extendView['orchestraMediaType']
     return view.delegateEvents()
   return
