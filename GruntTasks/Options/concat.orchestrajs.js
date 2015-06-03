@@ -14,12 +14,10 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/FullPagePanelView.js',
         'web/built/openorchestrabackoffice/js/ContentTypeChangeTypeListener.js',
         'web/built/openorchestrabackoffice/js/page/nodeConstructor.js',
-        'web/built/openorchestrabackoffice/js/treeAjaxDelete.js',
         'web/built/openorchestrabackoffice/js/configurableContentFormListener.js',
-        'web/built/openorchestrabackoffice/js/page/blocksPanel.js',
+        'web/built/openorchestrabackoffice/js/page/blocksPanelView.js',
         'web/built/openorchestrabackoffice/js/security.js',
         'web/built/openorchestrabackoffice/js/smartConfirmView.js',
-        'web/built/openorchestrabackoffice/js/block/video.js',
         'web/built/openorchestrabackoffice/js/adminFormView.js',
         'web/built/openorchestrabackoffice/js/generateId.js',
 
@@ -27,6 +25,9 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/extendView/addArea.js',
         'web/built/openorchestrabackoffice/js/extendView/commonPage.js',
         'web/built/openorchestrabackoffice/js/extendView/generateId.js',
+        'web/built/openorchestrabackoffice/js/extendView/showVideo.js',
+        'web/built/openorchestrabackoffice/js/extendView/deleteTree.js',
+
 
         //--[ WIDGETS ]--//
         'web/built/openorchestrabackoffice/js/widget/widgetChannel.js',
