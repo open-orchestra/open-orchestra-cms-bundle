@@ -11,9 +11,3 @@
     <span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('open_orchestra_backoffice.block.' ~ blockType ~ '.title') | trans }}</span>
 {% endif %}
 
-<script src="/built/openorchestrabackoffice/js/block/wysiwyg.js" ></script>
-{{ tinymce_init() }}
-{% set id = "select_media" %}
-<div id="{{ id }}">
-    {% include 'OpenOrchestraMediaAdminBundle:Media:media_modal.html.twig' %}
-</div>

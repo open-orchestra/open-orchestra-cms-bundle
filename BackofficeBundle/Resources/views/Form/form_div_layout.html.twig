@@ -126,3 +126,9 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_help %}
+
+{% block tinymce_widget %}
+    {{ block('textarea_widget') }}
+    {{ tinymce_init() }}
+    {% block tinymce_widget_extend %}{% endblock %}
+{% endblock %}

@@ -18,6 +18,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/smartConfirmView.js',
         'web/built/openorchestrabackoffice/js/adminFormView.js',
         'web/built/openorchestrabackoffice/js/generateId.js',
+        'web/built/openorchestrabackoffice/js/block/wysiwyg.js',
 
         //--[ EXTEND VIEWS ]--//
         'web/built/openorchestrabackoffice/js/extendView/addArea.js',

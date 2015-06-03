@@ -19,3 +19,10 @@
         <div id="{{ id }}_modal"></div>
     {% endspaceless %}
 {% endblock %}
+:
+{% block tinymce_widget_extend %}
+    {% set id = "select_media" %}
+    <div id="{{ id }}">
+        {% include 'OpenOrchestraMediaAdminBundle:Mediatheque:media_modal.html.twig' %}
+    </div>
+{% endblock %}
