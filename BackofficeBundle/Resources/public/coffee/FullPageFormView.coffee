@@ -22,7 +22,7 @@ FullPageFormView = OrchestraView.extend(
     @options.domContainer.html @$el
     $('.js-widget-title', @options.domContainer).html @options.title
     @addEventOnForm()
-    Backbone.Wreqr.radio.commands.execute 'widget', 'loaded', @$el
+    widgetChannel.trigger 'loaded', @
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return

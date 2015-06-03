@@ -48,7 +48,7 @@ adminFormView = OrchestraView.extend(
       PO.formPrototypes.addPrototype $(this)
       return
     @addEventOnSave()
-    Backbone.Wreqr.radio.commands.execute 'widget', 'loaded', @$el
+    widgetChannel.trigger 'loaded', @
 
   addEventOnSave: ->
     viewContext = this

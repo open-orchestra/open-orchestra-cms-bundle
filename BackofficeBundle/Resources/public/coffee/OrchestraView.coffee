@@ -34,7 +34,7 @@ OrchestraView = Backbone.View.extend(
       return
     if ready
       @render()
-      Backbone.Wreqr.radio.commands.execute 'widget', 'ready', @
+      widgetChannel.trigger 'ready', @
     return
 
   renderTemplate: (templateName, parameters) ->

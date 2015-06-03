@@ -1,18 +1,7 @@
-widgetChannel = Backbone.Wreqr.radio.channel('widget')
+widgetChannel = new (Backbone.Wreqr.EventAggregator)
 
-widgetChannel.commands.setHandler 'ready', (view) ->
-  if view.options
-    if view.options.multiLanguage
-      Backbone.Wreqr.radio.commands.execute 'language', 'ready', view
-    if view.options.multiStatus
-      Backbone.Wreqr.radio.commands.execute 'status', 'ready', view
-    if view.options.multiVersion
-      Backbone.Wreqr.radio.commands.execute 'version', 'ready', view
-    if view.options.duplicate
-      Backbone.Wreqr.radio.commands.execute 'duplicate', 'ready', view
-  return
-  
-widgetChannel.commands.setHandler 'loaded', (el) ->
+widgetChannel.bind 'loaded', (view) ->
+  el = view.$el
   if $(".select2", el).length > 0
     activateSelect2($(".select2", el))
   if $(".orchestra-node-choice", el).length > 0
