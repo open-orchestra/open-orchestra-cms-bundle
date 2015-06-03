@@ -64,7 +64,6 @@ tableViewLoad = (link, entityType, entityId, language, version, sourceLanguage) 
                   viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
                   new viewClass(options)
 
-
 tableViewLoadSpecificElement = (link, title, entityType) ->
   displayed = true
   $.ajax
