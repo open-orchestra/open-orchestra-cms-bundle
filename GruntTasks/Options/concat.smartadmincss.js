@@ -1,6 +1,7 @@
 module.exports = {
     src: [
-        // SMARTADMIN PACKAGE
+
+        //--[ SMARTADMIN ]--//
 //        'bower_components/bootstrap/dist/css/bootstrap.css',
        'bower_components/open-sans/css/open-sans.css',
        'bower_components/jquery-minicolors/jquery.minicolors.css',
@@ -11,7 +12,7 @@ module.exports = {
        'web/bundles/openorchestrabackoffice/smartadmin/css/smartadmin-skins.css',
        'web/bundles/openorchestrabackoffice/smartadmin/css/smartadmin-rtl.css',
 
-       // ORCHESTRA SMARTADMIN PATCHES
+       //--[ ORCHESTRA SMARTADMIN PATCHES ]--//
        'web/built/openorchestrabackoffice/css/smartadminPatches/flags.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/title.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/modal.css',
@@ -22,7 +23,7 @@ module.exports = {
        'web/built/openorchestrabackoffice/css/smartadminPatches/minicolors.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/logo.css',
 
-       // TINYMCE PATCHES
+       //--[ TINYMCE PATCHES ]--//
        'web/built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css'
     ],
     dest: 'web/built/smartadmin.css'

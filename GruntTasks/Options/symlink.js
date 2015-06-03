@@ -1,6 +1,6 @@
 module.exports = {
 
-    // BOWER COMPONENT
+    //--[ BOWER COMPONENTS ]--//
     open_sans_fonts_bold: {
         src: 'bower_components/open-sans/fonts/bold',
         dest: 'web/fonts/bold'
@@ -102,7 +102,7 @@ module.exports = {
         dest: 'web/img/jcrop/Jcrop.gif'
     },
 
-    // SMARTADMIN ASSETS
+    //--[ SMARTADMIN ASSETS ]--//
     smartadmin_bg: {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/mybg.png',
         dest: 'web/img/mybg.png'
@@ -124,7 +124,7 @@ module.exports = {
         dest: 'web/img/select2-spinner.gif'
     },
 
-    // ORCHESTRA ASSET
+    //--[ ORCHESTRA ASSETS ]--//
     no_image: {
         src: 'web/bundles/openorchestrabackoffice/images/no_image_available.jpg',
         dest: 'web/img/no_image_available.jpg'
