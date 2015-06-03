@@ -61,8 +61,8 @@ class SiteController extends BaseController
         $limit = (null !== $limit) ? (int)$limit : null;
 
         $columnsNameToEntityAttribute = array(
-            'site_id' => 'siteId',
-            'name'    => 'name',
+            'site_id' => array('key' => 'siteId'),
+            'name'    => array('key' => 'name'),
         );
 
         $repository =  $this->get('open_orchestra_model.repository.site');

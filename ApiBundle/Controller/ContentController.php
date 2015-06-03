@@ -101,10 +101,32 @@ class ContentController extends BaseController
     public function listAction(Request $request)
     {
         $contentType = $request->get('content_type');
+        $columns = $request->get('columns');
+        $search = $request->get('search');
+        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
+        $order = $request->get('order');
+        $skip = $request->get('start');
+        $skip = (null !== $skip) ? (int)$skip : null;
+        $limit = $request->get('length');
+        $limit = (null !== $limit) ? (int)$limit : null;
 
-        $contentCollection = $this->get('open_orchestra_model.repository.content')->findByContentTypeInLastVersion($contentType);
+        $columnsNameToEntityAttribute = array(
+            'name'         => array('key' => 'name'),
+            'status_label' => array('key' => 'status.name'),
+            'version'      => array('key' => 'version' , 'type' => 'integer'),
+            'language'     => array('key' => 'language'),
+        );
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
+        $repository =  $this->get('open_orchestra_model.repository.content');
+        $contentCollection = $repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
+        $recordsFiltered = $repository->countByContentTypeInLastVersionFilterSearch($contentType, $columnsNameToEntityAttribute, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
+        $facade->setRecordsTotal($recordsTotal);
+        $facade->setRecordsFiltered($recordsFiltered);
+
+        return $facade;
     }
 
     /**
