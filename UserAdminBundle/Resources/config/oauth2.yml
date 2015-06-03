@@ -11,7 +11,7 @@ services:
             - @security.encoder_factory
             - @serializer
             - @validator
-            - '+1month'
+            - %open_orchestra_api.token.expiration_time%
             - %open_orchestra_api.document.access_token.class%
         tags:
             - { name: open_orchestra_api.oauth2.strategy }
