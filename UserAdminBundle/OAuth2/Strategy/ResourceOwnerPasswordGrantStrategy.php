@@ -5,6 +5,7 @@ namespace OpenOrchestra\UserAdminBundle\OAuth2\Strategy;
 use JMS\Serializer\Serializer;
 use OpenOrchestra\BaseApi\Exceptions\HttpException\BadUserCredentialsHttpException;
 use OpenOrchestra\BaseApi\Facade\OAuth2\AccessTokenFacade;
+use OpenOrchestra\BaseApi\Manager\AccessTokenManager;
 use OpenOrchestra\BaseApi\OAuth2\Strategy\AbstractStrategy;
 use OpenOrchestra\BaseApiBundle\Repository\AccessTokenRepository;
 use OpenOrchestra\BaseApiBundle\Repository\ApiClientRepository;
@@ -24,27 +25,23 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
     protected $userRepository;
 
     /**
-     * @param ApiClientRepository   $apiClientRepository
-     * @param AccessTokenRepository $accessTokenRepository
-     * @param UserRepository        $userRepository
-     * @param EncoderFactory        $encoderFactory
-     * @param Serializer            $serializer
-     * @param ValidatorInterface    $validator
-     * @param string                $tokenExpiration
-     * @param string                $tokenClass
+     * @param ApiClientRepository $apiClientRepository
+     * @param UserRepository      $userRepository
+     * @param EncoderFactory      $encoderFactory
+     * @param Serializer          $serializer
+     * @param ValidatorInterface  $validator
+     * @param AccessTokenManager  $accessTokenManager
      */
     public function __construct(
         ApiClientRepository $apiClientRepository,
-        AccessTokenRepository $accessTokenRepository,
         UserRepository $userRepository,
         EncoderFactory $encoderFactory,
         Serializer $serializer,
         ValidatorInterface $validator,
-        $tokenExpiration,
-        $tokenClass
+        AccessTokenManager $accessTokenManager
         )
     {
-        parent::__construct($apiClientRepository, $accessTokenRepository, $serializer, $validator, $tokenExpiration, $tokenClass);
+        parent::__construct($apiClientRepository, $serializer, $validator, $accessTokenManager);
         $this->encoderFactory = $encoderFactory;
         $this->userRepository = $userRepository;
     }
@@ -71,14 +68,11 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
         $client = $this->getClient($request);
         $user   = $this->getUser($request);
 
-        // Create/Validate AccessToken
-        $tokenClass = $this->tokenClass;
-        $accessToken = $tokenClass::create($user, $client);
-        $accessToken->setExpiredAt(new \DateTime($this->tokenExpiration));
+        $accessToken = $this->accessTokenManager->createWithExpirationDate($user, $client);
         if (!$accessToken->isValid($this->validator)) {
             return Response::create($this->serializer->serialize($accessToken->getViolations(), 'json'), 200, array())->prepare($request);
         }
-        $this->accessTokenRepository->save($accessToken);
+        $this->accessTokenManager->save($accessToken);
 
         $tokenFacade = new AccessTokenFacade();
         $tokenFacade->accessToken   = $accessToken->getCode();
