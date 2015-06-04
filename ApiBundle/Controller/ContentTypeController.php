@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
@@ -18,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ContentTypeController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param string $contentTypeId
      *
@@ -51,7 +54,6 @@ class ContentTypeController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $contentType = $request->get('content_type');
         $columns = $request->get('columns');
         $search = $request->get('search');
         $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
@@ -72,11 +74,9 @@ class ContentTypeController extends BaseController
         $recordsTotal = $repository->countByContentTypeInLastVersion();
         $recordsFiltered = $repository->countByDeletedInLastVersionForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search);
 
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection')->transform($contentTypeCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
 
-        return $facade;
+        return $this->generateFacadeDataTable($transformer, $contentTypeCollection, $recordsTotal, $recordsFiltered);
     }
 
     /**

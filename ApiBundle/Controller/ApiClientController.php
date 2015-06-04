@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -16,6 +17,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ApiClientController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param Request $request
      *
@@ -30,31 +33,14 @@ class ApiClientController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
         $columnsNameToEntityAttribute = array(
             'name' => array('key' => 'name'),
             'trusted' => array('key' => 'trusted', 'type' => 'boolean'),
         );
-
         $repository = $this->get('open_orchestra_api.repository.api_client');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
 
-        $clientCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
-
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection')->transform($clientCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
-
-        return $facade;
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

@@ -123,8 +123,8 @@ class ContentController extends BaseController
         $recordsFiltered = $repository->countByContentTypeInLastVersionFilterSearch($contentType, $columnsNameToEntityAttribute, $columns, $search);
 
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
     }

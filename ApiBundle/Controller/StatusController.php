@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
@@ -18,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class StatusController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param Request $request
      *
@@ -32,33 +35,16 @@ class StatusController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
         $columnsNameToEntityAttribute = array(
             'label'     => array('key' => 'name'),
             'published' => array('key' => 'published','type' => 'boolean'),
             'initial' => array('key' => 'initial','type' => 'boolean'),
             'display_color' => array('key' => 'displayColor'),
         );
-
         $repository = $this->get('open_orchestra_model.repository.status');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
 
-        $statusCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
-
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
-
-        return $facade;
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

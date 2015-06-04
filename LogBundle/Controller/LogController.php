@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class LogController extends Controller
 {
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_log_list")
      * @Config\Method({"GET"})
      *
@@ -51,8 +53,8 @@ class LogController extends Controller
         $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
 
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('log_collection')->transform($logCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
     }

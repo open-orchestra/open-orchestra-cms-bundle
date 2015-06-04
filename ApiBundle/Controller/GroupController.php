@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
@@ -18,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class GroupController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param int $groupId
      *
@@ -51,30 +54,13 @@ class GroupController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
         $columnsNameToEntityAttribute = array(
             'name'     => array('key' => 'name'),
         );
-
         $repository = $this->get('open_orchestra_user.repository.group');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
 
-        $groupCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
-
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->transform($groupCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
-
-        return $facade;
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

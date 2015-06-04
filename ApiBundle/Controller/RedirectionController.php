@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
@@ -18,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class RedirectionController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param int $redirectionId
      *
@@ -51,15 +54,6 @@ class RedirectionController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
         $columnsNameToEntityAttribute = array(
             'site_name'     => array('key' => 'siteName'),
             'route_pattern' => array('key' => 'routePattern'),
@@ -67,18 +61,10 @@ class RedirectionController extends BaseController
             'redirection'   => array('key' => 'url'),
             'permanent'     => array('key' => 'permanent', 'type' => 'boolean'),
         );
-
         $repository = $this->get('open_orchestra_model.repository.redirection');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
 
-        $redirectionCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
-
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->transform($redirectionCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
-
-        return $facade;
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

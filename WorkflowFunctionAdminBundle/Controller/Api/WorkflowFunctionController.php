@@ -72,8 +72,8 @@ class WorkflowFunctionController extends BaseController
         $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
 
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('workflow_function_collection')->transform($workflowFunctionCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
 
         return $facade;
     }

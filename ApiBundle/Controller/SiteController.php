@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\SiteEvents;
@@ -18,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class SiteController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param string $siteId
      *
@@ -70,12 +73,9 @@ class SiteController extends BaseController
         $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->countByDeleted(false);
         $recordsFiltered = $repository->countByDeletedFilterSearch(false, $columnsNameToEntityAttribute, $columns, $search);
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
 
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('site_collection')->transform($siteCollection);
-        $facade->setRecordsTotal($recordsTotal);
-        $facade->setRecordsFiltered($recordsFiltered);
-
-        return $facade;
+        return $this->generateFacadeDataTable($transformer, $siteCollection, $recordsTotal, $recordsFiltered);
     }
 
     /**
