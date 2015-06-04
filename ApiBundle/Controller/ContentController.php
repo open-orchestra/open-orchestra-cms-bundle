@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\SourceLanguageNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -24,6 +25,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class ContentController extends BaseController
 {
     use ListStatus;
+    use HandleRequestDataTable;
 
     /**
      * @param Request $request
@@ -101,14 +103,7 @@ class ContentController extends BaseController
     public function listAction(Request $request)
     {
         $contentType = $request->get('content_type');
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
+        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
         $columnsNameToEntityAttribute = array(
             'name'         => array('key' => 'name'),

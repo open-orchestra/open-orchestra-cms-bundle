@@ -54,14 +54,7 @@ class ContentTypeController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
+        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
         $columnsNameToEntityAttribute = array(
             'content_type_id' => array('key' => 'contentTypeId'),

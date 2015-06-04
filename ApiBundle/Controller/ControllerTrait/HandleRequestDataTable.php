@@ -13,14 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 trait HandleRequestDataTable
 {
     /**
-     * @param Request              $request
-     * @param DocumentRepository   $entityRepository
-     * @param array                $mappingEntity
-     * @param TransformerInterface $transformerManager
+     * @param Request $request
      *
-     * @return FacadeInterface
+     * @return array
      */
-    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
+    protected function extractParameterRequestDataTable(Request $request)
     {
         $columns = $request->get('columns');
         $search = $request->get('search');
@@ -30,6 +27,21 @@ trait HandleRequestDataTable
         $skip = (null !== $skip) ? (int)$skip : null;
         $limit = $request->get('length');
         $limit = (null !== $limit) ? (int)$limit : null;
+
+        return array($columns, $search, $order, $skip, $limit);
+    }
+
+    /**
+     * @param Request              $request
+     * @param DocumentRepository   $entityRepository
+     * @param array                $mappingEntity
+     * @param TransformerInterface $transformerManager
+     *
+     * @return FacadeInterface
+     */
+    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
+    {
+        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
         $collection = $entityRepository->findForPaginateAndSearch($mappingEntity, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $entityRepository->count();
