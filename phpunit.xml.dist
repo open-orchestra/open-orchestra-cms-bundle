@@ -20,6 +20,7 @@
             <exclude>./BackofficeBundle/Tests/Functional</exclude>
             <exclude>./UserAdminBundle/Tests/Functional</exclude>
             <exclude>./MediaAdminBundle/Tests/Functional</exclude>
+            <exclude>./GroupBundle/Tests/Functional</exclude>
         </testsuite>
     </testsuites>
 
