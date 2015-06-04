@@ -11,6 +11,7 @@ services:
             - @serializer
             - @validator
             - @open_orchestra_api.manager.access_token
+            - @open_orchestra_api.repository.access_token
         tags:
             - { name: open_orchestra_api.oauth2.strategy }
 
