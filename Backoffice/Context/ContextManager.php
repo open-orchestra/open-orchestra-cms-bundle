@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Context;
 
 use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -76,7 +77,11 @@ class ContextManager implements CurrentSiteIdInterface
 
         if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
             foreach ($user->getGroups() as $group) {
-                $sites[] = $group->getSite();
+                /** @var SiteInterface $site */
+                $site = $group->getSite();
+                if (!$site->isDeleted()) {
+                    $sites[] = $site;
+                }
             }
         }
 
