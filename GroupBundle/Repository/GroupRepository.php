@@ -105,6 +105,7 @@ class GroupRepository extends DocumentRepository
                 }
             }
         }
+
         return $qb;
     }
 

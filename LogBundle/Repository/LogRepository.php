@@ -105,6 +105,7 @@ class LogRepository extends DocumentRepository implements LogRepositoryInterface
                 }
             }
         }
+
         return $qb;
     }
 
