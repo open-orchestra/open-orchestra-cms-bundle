@@ -45,13 +45,13 @@ class GroupRepository extends DocumentRepository
     }
 
     /**
-     * @param array|null   $columns
-     * @param array|null   $descriptionEntity
-     * @param array|null   $search
+     * @param array|null $columns
+     * @param array|null $descriptionEntity
+     * @param array|null $search
      *
      * @return int
      */
-    public function countFilterSearch($descriptionEntity = null, $columns = null, $search = null)
+    public function countWithSearchFilter($descriptionEntity = null, $columns = null, $search = null)
     {
         $qb = $this->createQueryWithSearchFilter($descriptionEntity, $columns, $search);
 

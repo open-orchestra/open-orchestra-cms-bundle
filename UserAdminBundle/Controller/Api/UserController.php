@@ -68,7 +68,7 @@ class UserController extends BaseController
 
         $userCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
 
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
         $facade->recordsTotal = $recordsTotal;

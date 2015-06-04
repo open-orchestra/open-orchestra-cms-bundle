@@ -45,7 +45,7 @@ trait HandleRequestDataTable
 
         $collection = $entityRepository->findForPaginateAndSearch($mappingEntity, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $entityRepository->count();
-        $recordsFiltered = $entityRepository->countFilterSearch($mappingEntity, $columns, $search);
+        $recordsFiltered = $entityRepository->countWithSearchFilter($mappingEntity, $columns, $search);
 
         return $this->generateFacadeDataTable($transformerManager, $collection, $recordsTotal, $recordsFiltered);
     }

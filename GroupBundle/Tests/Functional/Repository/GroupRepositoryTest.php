@@ -76,9 +76,9 @@ class GroupRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountFilterSearch($descriptionEntity, $columns, $search, $count)
+    public function testCountWithSearchFilter($descriptionEntity, $columns, $search, $count)
     {
-        $groups = $this->repository->countFilterSearch($descriptionEntity, $columns, $search);
+        $groups = $this->repository->countWithSearchFilter($descriptionEntity, $columns, $search);
         $this->assertEquals($count, $groups);
     }
 

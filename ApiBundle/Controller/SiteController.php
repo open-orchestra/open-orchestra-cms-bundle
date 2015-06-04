@@ -65,7 +65,7 @@ class SiteController extends BaseController
 
         $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->countByDeleted(false);
-        $recordsFiltered = $repository->countByDeletedFilterSearch(false, $columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countByDeletedWithFilterSearch(false, $columnsNameToEntityAttribute, $columns, $search);
         $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
 
         return $this->generateFacadeDataTable($transformer, $siteCollection, $recordsTotal, $recordsFiltered);

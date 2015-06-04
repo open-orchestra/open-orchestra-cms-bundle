@@ -65,7 +65,7 @@ class ContentTypeController extends BaseController
         $repository = $this->get('open_orchestra_model.repository.content_type');
         $contentTypeCollection = $repository->findAllByDeletedInLastVersionForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->countByContentTypeInLastVersion();
-        $recordsFiltered = $repository->countByDeletedInLastVersionForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countByDeletedInLastVersionWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
 
         $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
 
