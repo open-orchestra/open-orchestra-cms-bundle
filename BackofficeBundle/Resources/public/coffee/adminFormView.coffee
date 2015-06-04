@@ -23,14 +23,16 @@ adminFormView = OrchestraView.extend(
       url: @options.url
       method: @method
       success: (response) ->
-        body = $(response)
+        body = $('<div>').append(response)
         if viewContext.deleteButton && $('form.form-disabled', body).length == 0
-          footer = viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', viewContext.options)
-          footer.prepend($('.submit_form', body))
+          footer = $('<div>')
+          .append(viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', viewContext.options))
+          .prepend($('.submit_form', body)).html()
+        body = body.html()
         new OrchestraModalView(
-          body: body.html
+          body: body
           title: viewContext.options.title
-          footer: footer.html
+          footer: footer
           domContainer: $('#OrchestraBOModal')
           extendView: ['submitAdmin']
         )

@@ -11,7 +11,6 @@ widgetChannel.bind 'ready', (view) ->
   if $(".helper-block", el).length > 0
     activateHelper($(".helper-block", el))
   if $(".widget-grid", el).length > 0
-    console.log 'load widgets widgetChannel.coffee'
     setup_widgets_desktop()
   if $(".page-title", el).length > 0
     renderPageTitle()

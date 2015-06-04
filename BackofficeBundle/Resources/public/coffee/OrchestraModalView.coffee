@@ -17,9 +17,9 @@ OrchestraModalView = OrchestraView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/orchestraModalView', @options)
-    @options.domContainer.append @$el
-    $("[data-prototype]", @$el).each ->
-      PO.formPrototypes.addPrototype @
+    @options.domContainer.html @$el
+    $("[data-prototype]", @options.domContainer.$el).each ->
+      PO.formPrototypes.addPrototype $(@)
     $("#OrchestraBOModal").modal "show"
 
   close: ->
