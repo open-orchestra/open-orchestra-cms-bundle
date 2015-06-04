@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\LogBundle\Repository;
+namespace OpenOrchestra\GroupBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
- * Class LogRepository
+ * Class GroupRepository
  */
-class LogRepository extends DocumentRepository implements LogRepositoryInterface
+class GroupRepository extends DocumentRepository
 {
     /**
      * @param array|null  $descriptionEntity
@@ -138,5 +138,4 @@ class LogRepository extends DocumentRepository implements LogRepositoryInterface
 
         return $qb;
     }
-
 }

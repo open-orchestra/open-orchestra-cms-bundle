@@ -8,6 +8,7 @@ use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -37,6 +38,8 @@ class UserController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_user_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +49,32 @@ class UserController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $userCollection = $this->get('open_orchestra_user.repository.user')->findAll();
+        $columns = $request->get('columns');
+        $search = $request->get('search');
+        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
+        $order = $request->get('order');
+        $skip = $request->get('start');
+        $skip = (null !== $skip) ? (int)$skip : null;
+        $limit = $request->get('length');
+        $limit = (null !== $limit) ? (int)$limit : null;
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
+        $columnsNameToEntityAttribute = array(
+            'username' => array('key' => 'username')
+        );
+
+        $repository =  $this->get('open_orchestra_user.repository.user');
+
+        $userCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
+        $facade->setRecordsTotal($recordsTotal);
+        $facade->setRecordsFiltered($recordsFiltered);
+
+        return $facade;
     }
 
     /**

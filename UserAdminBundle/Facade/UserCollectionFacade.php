@@ -3,13 +3,14 @@
 namespace OpenOrchestra\UserAdminBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\ApiBundle\Facade\PaginateCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Class UserCollectionFacade
  */
-class UserCollectionFacade extends AbstractFacade
+class UserCollectionFacade extends PaginateCollectionFacade
 {
     /**
      * @Serializer\Type("string")

@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Controller;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -16,6 +17,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 class ApiClientController extends BaseController
 {
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_api_client_list")
      * @Config\Method({"GET"})
      *
@@ -25,13 +28,33 @@ class ApiClientController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $clientCollection = $this->get('open_orchestra_api.repository.api_client')->findAll();
+        $columns = $request->get('columns');
+        $search = $request->get('search');
+        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
+        $order = $request->get('order');
+        $skip = $request->get('start');
+        $skip = (null !== $skip) ? (int)$skip : null;
+        $limit = $request->get('length');
+        $limit = (null !== $limit) ? (int)$limit : null;
 
-        return $this->get('open_orchestra_api.transformer_manager')
-                    ->get('api_client_collection')
-                    ->transform($clientCollection);
+        $columnsNameToEntityAttribute = array(
+            'name' => array('key' => 'name'),
+            'trusted' => array('key' => 'trusted', 'type' => 'boolean'),
+        );
+
+        $repository = $this->get('open_orchestra_api.repository.api_client');
+
+        $clientCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection')->transform($clientCollection);
+        $facade->setRecordsTotal($recordsTotal);
+        $facade->setRecordsFiltered($recordsFiltered);
+
+        return $facade;
     }
 
     /**

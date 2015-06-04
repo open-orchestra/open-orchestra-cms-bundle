@@ -7,6 +7,7 @@ use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -37,6 +38,8 @@ class GroupController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_group_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +49,32 @@ class GroupController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $groupCollection = $this->get('open_orchestra_user.repository.group')->findAll();
+        $columns = $request->get('columns');
+        $search = $request->get('search');
+        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
+        $order = $request->get('order');
+        $skip = $request->get('start');
+        $skip = (null !== $skip) ? (int)$skip : null;
+        $limit = $request->get('length');
+        $limit = (null !== $limit) ? (int)$limit : null;
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->transform($groupCollection);
+        $columnsNameToEntityAttribute = array(
+            'name'     => array('key' => 'name'),
+        );
+
+        $repository = $this->get('open_orchestra_user.repository.group');
+
+        $groupCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->count();
+        $recordsFiltered = $repository->countFilterSearch($columnsNameToEntityAttribute, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->transform($groupCollection);
+        $facade->setRecordsTotal($recordsTotal);
+        $facade->setRecordsFiltered($recordsFiltered);
+
+        return $facade;
     }
 
     /**

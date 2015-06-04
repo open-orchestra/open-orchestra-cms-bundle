@@ -47,8 +47,8 @@ TableviewCollectionView = OrchestraView.extend(
     table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
-      processing: true,
-      serverSide: true,
+      processing: true
+      serverSide: true
       ajax :
         url : @options.url
         dataSrc: (json) ->
@@ -58,8 +58,8 @@ TableviewCollectionView = OrchestraView.extend(
         viewContext.renderAddButton(viewContext, json.links)
       columns: columns
       columnDefs: columnDefs.concat [
-        targets: -1,
-        data: 'links',
+        targets: -1
+        data: 'links'
         createdCell : (td, cellData, rowData, row, col) ->
           viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
       ]

@@ -83,7 +83,7 @@ class KeywordController extends BaseController
         $limit = (null !== $limit) ? (int)$limit : null;
 
         $columnsNameToEntityAttribute = array(
-            'label' => array('key'=> 'label'),
+            'label' => array('key' => 'label'),
         );
 
         $repository = $this->get('open_orchestra_model.repository.keyword');

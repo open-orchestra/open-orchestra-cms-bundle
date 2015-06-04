@@ -12,6 +12,18 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 class LogCollectionFacade extends AbstractFacade
 {
     /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsTotal")
+     */
+    public $recordsTotal;
+
+    /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsFiltered")
+     */
+    public $recordsFiltered;
+
+    /**
      * @Serializer\Type("string")
      */
     public $collectionName = 'logs';
@@ -35,5 +47,21 @@ class LogCollectionFacade extends AbstractFacade
     public function getLogs()
     {
         return $this->logs;
+    }
+
+    /**
+     * @param $recordsTotal
+     */
+    public function setRecordsTotal($recordsTotal)
+    {
+        $this->recordsTotal = $recordsTotal;
+    }
+
+    /**
+     * @param $recordsFiltered
+     */
+    public function setRecordsFiltered($recordsFiltered)
+    {
+        $this->recordsFiltered = $recordsFiltered;
     }
 }
