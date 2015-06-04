@@ -49,9 +49,9 @@ AreaView = OrchestraView.extend(
     event.stopImmediatePropagation()
     label = "~no label yet~"
     label = @options.area.get("label")  if @options.area.get("label") isnt undefined
-    $(".modal-title").text "Area : " + label
     new adminFormView(
       url: @options.area.get("links")._self_form
+      title: "Area : " + label
     )
     return
 
@@ -124,8 +124,10 @@ AreaView = OrchestraView.extend(
       url: @options.area.get("links")._self_delete
       method: "POST"
       error: ->
-        $(".modal-title").text currentView.$el.data('delete-error-title')
-        $(".modal-body").html currentView.$el.data('delete-error-txt')
-        $("#OrchestraBOModal").modal "show"
+        new OrchestraModalView(
+          body: currentView.$el.data('delete-error-txt')
+          title: currentView.$el.data('delete-error-title')
+          domContainer: $('#OrchestraBOModal')
+        )
     return
 )

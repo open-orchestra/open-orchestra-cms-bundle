@@ -1,12 +1,11 @@
 adminFormView = OrchestraView.extend(
-  el: '#OrchestraBOModal'
-
   initialize: (options) ->
     @options = @reduceOption(options, [
       'deleteUrl'
       'confirmText'
       'confirmTitle'
       'redirectUrl'
+      'title'
       'url'
     ])
     @deleteButton = @options.deleteUrl && @options.confirmText && @options.confirmTitle
@@ -19,8 +18,7 @@ adminFormView = OrchestraView.extend(
 
   render: ->
     viewContext = this
-    displayLoader('.modal-body')
-    $("#OrchestraBOModal").modal "show"
+    displayLoader('modal')
     $.ajax
       url: @options.url
       method: @method
@@ -31,11 +29,16 @@ adminFormView = OrchestraView.extend(
           footer.prepend($('.submit_form', body))
         new OrchestraModalView(
           body: body.html
-          title: $('#dynamic-modal-title').html()
+          title: viewContext.options.title
           footer: footer.html
           domContainer: $('#OrchestraBOModal')
           extendView: ['submitAdmin']
+        )
       error: ->
-        $('.modal-body', viewContext.el).html 'Erreur durant le chargement'
+        new OrchestraModalView(
+          body: 'Erreur durant le chargement'
+          title: viewContext.options.title
+          domContainer: $('#OrchestraBOModal')
+        )
     return
 )

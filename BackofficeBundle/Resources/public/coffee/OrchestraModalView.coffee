@@ -1,6 +1,7 @@
 OrchestraModalView = OrchestraView.extend(
   events:
     'click .close': 'close'
+    'resize ..modal-dialog': 'resize'
 
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -16,11 +17,15 @@ OrchestraModalView = OrchestraView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/orchestraModalView', @options)
-    $('.modal-footer', @$el).addClass("hidden-info")
     @options.domContainer.append @$el
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype @
+    $("#OrchestraBOModal").modal "show"
 
   close: ->
     $("#select2-drop-mask").click();
+
+  resize: (event) ->
+    target = $(event.currentTarget)
+    target.prev().height(target.parent().height())
 )
