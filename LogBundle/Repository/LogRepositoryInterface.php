@@ -26,9 +26,9 @@ interface LogRepositoryInterface
     public function count();
 
     /**
-     * @param array|null   $columns
-     * @param array|null   $descriptionEntity
-     * @param array|null   $search
+     * @param array|null $columns
+     * @param array|null $descriptionEntity
+     * @param array|null $search
      *
      * @return int
      */
