@@ -1,6 +1,6 @@
 widgetChannel = new (Backbone.Wreqr.EventAggregator)
 
-widgetChannel.bind 'loaded', (view) ->
+widgetChannel.bind 'ready', (view) ->
   el = view.$el
   if $(".select2", el).length > 0
     activateSelect2($(".select2", el))
@@ -10,3 +10,7 @@ widgetChannel.bind 'loaded', (view) ->
     activateColorPicker($(".colorpicker", el))
   if $(".helper-block", el).length > 0
     activateHelper($(".helper-block", el))
+  if $(".widget-grid").length > 0
+    setup_widgets_desktop()
+  if $(".page-title").length > 0
+    renderPageTitle()

@@ -19,10 +19,7 @@ AreaView = OrchestraView.extend(
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView',
-      area: @options.area
-      published: @options.published
-    )
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView', @options)
     @options.domContainer.append @$el
     @subAreas = @$el.find('ul.ui-model-areas').first()
     @subBlocks = @$el.find('ul.ui-model-blocks').first()

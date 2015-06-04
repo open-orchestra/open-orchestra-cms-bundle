@@ -7,7 +7,8 @@ extendView['orchestraMediaType'] =
     previewId = '#previewImage_' + $(event.currentTarget).data('input')
     $(inputId).val ''
     $(previewId).removeAttr 'src'
-widgetChannel.bind 'loaded', (view) ->
+
+widgetChannel.bind 'ready', (view) ->
   if $("[data-prototype*='clear-media']", view.$el).length > 0
     $.extend true, view, extendView['orchestraMediaType']
     return view.delegateEvents()

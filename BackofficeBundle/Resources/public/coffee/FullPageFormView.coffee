@@ -22,7 +22,6 @@ FullPageFormView = OrchestraView.extend(
     @options.domContainer.html @$el
     $('.js-widget-title', @options.domContainer).html @options.title
     @addEventOnForm()
-    widgetChannel.trigger 'loaded', @
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
