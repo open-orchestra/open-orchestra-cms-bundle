@@ -12,7 +12,7 @@ NodeView = OrchestraView.extend(
       'node'
       'domContainer'
     ])
-    @completeOptions @options.node, 'path':
+    @completeOptions @options.node,
       'multiLanguage': 'showNodeWithLanguage'
       'multiVersion': 'showNodeWithLanguageAndVersion'
       'duplicate': 'showNodeWithLanguage'

@@ -11,7 +11,7 @@ FullPageFormView = OrchestraView.extend(
     @options = options
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     if @options.element != undefined
-      @completeOptions @options.element, 'path':
+      @completeOptions @options.element,
         'multiLanguage': 'showEntityWithLanguageAndSourceLanguage'
         'multiVersion': 'showEntityWithLanguageAndVersion'
         'duplicate': 'showEntityWithLanguage'
