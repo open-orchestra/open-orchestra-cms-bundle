@@ -7,6 +7,7 @@ adminFormView = OrchestraView.extend(
       'redirectUrl'
       'title'
       'url'
+      'extendView'
     ])
     @deleteButton = @options.deleteUrl && @options.confirmText && @options.confirmTitle
     @method = if options.method then options.method else 'GET'
@@ -29,12 +30,14 @@ adminFormView = OrchestraView.extend(
           .append(viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', viewContext.options))
           .prepend($('.submit_form', body)).html()
         body = body.html()
+        extendView = viewContext.options.extendView || []
+        extendView.push 'submitAdmin'
         new OrchestraModalView(
           body: body
           title: viewContext.options.title
           footer: footer
           domContainer: $('#OrchestraBOModal')
-          extendView: ['submitAdmin']
+          extendView: extendView
         )
       error: ->
         new OrchestraModalView(

@@ -18,10 +18,10 @@ FolderConfigurationButtonView = OrchestraView.extend(
 
   clickEditFolder: (event) ->
     event.preventDefault()
-    $('.modal-title').text $(event.target).html()
     new adminFormView(
       url: @options.medias.get('links')._self_folder
       deleteurl: @options.medias.get('links')._self_delete
+      title: $(event.target).html()
     )
 
 )
