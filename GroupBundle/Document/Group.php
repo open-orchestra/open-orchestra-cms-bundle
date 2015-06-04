@@ -8,7 +8,6 @@ use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * @ODM\Document(collection="group_document")
  * @ODM\Document(
  *  collection="group_document",
  *  repositoryClass="OpenOrchestra\GroupBundle\Repository\GroupRepository"
