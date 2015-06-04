@@ -25,10 +25,10 @@ BlockView = OrchestraView.extend(
     return
 
   paramBlock: (event) ->
-    $('.modal-title').text 'Please wait ...'
     new adminFormView(
       url: @options.block.get('links')._self_form
       extendView: [ 'showVideo' ]
+      title: $('#dynamic-modal-title').html()
     )
 
   confirmRemoveBlock: (event) ->

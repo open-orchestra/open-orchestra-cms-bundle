@@ -2,7 +2,6 @@
 getCurrentLocale = ->
   $('#contextual-informations').data 'currentLanguage'
 
-
 # SHOW CONTENT TITLE
 renderPageTitle = ->
   if ($('nav li.active:first > a > i').length > 0)
@@ -10,17 +9,22 @@ renderPageTitle = ->
   $('#title-universe').text($('.breadcrumb li:nth-child(2)').text())
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 
-
 # ADD CUSTOM JARVIS WIDGET
 addCustomJarvisWidget = (widget) ->
   $(widget).insertAfter($(".js-widget-title"))
   return
 
-
 # DISPLAY LOADER
 displayLoader = (element) ->
-  element = "#content"  if typeof element is "undefined"
-  $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+  if element == 'modal'
+    new OrchestraModalView(
+      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+      title: "Please wait"
+      domContainer: $('#OrchestraBOModal')
+    )
+  else
+    element = "#content"  if typeof element is "undefined"
+    $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
   true
 
 # REFRESH NAV MENU
@@ -89,7 +93,7 @@ smartConfirm = (logo, titleColorized, text, functions) ->
 selectorExist = (selector) ->
   return selector.length
 
-#select2 enabled
+#SELECT2 ENABLED
 activateSelect2 = (element) ->
   tags = element.data('tags')
   url = element.data('check')
@@ -118,7 +122,7 @@ activateSelect2 = (element) ->
       term.text
   )
 
-#nodeChoice enabled
+#NODE CHOICE ENABLED
 activateOrchestraNodeChoice = (element) ->
   regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g')
   $('option', element).each ->
@@ -130,9 +134,15 @@ activateOrchestraNodeChoice = (element) ->
       term.text.replace regExp, ''
   )
 
-#colorpicker enabled
+#COLORPICKER ENABLED
 activateColorPicker = (element) ->
   element.minicolors()
 
+#HELPER ENABLED
 activateHelper = (element) ->
   element.tooltip()
+
+#LOAD EXTEND VIEW
+loadExtendView = (view, extendViewName) ->
+  $.extend true, view, extendView[extendViewName]
+  view.delegateEvents()

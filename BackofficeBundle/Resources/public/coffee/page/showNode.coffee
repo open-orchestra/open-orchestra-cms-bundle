@@ -15,9 +15,9 @@ showNode = (url, language, version)->
   return
 
 showNodeForm = (parentNode) ->
-  $(".modal-title").text parentNode.text()
   new adminFormView(
     url: parentNode.data("url")
     extendView: [ 'generateId' ]
+    title: parentNode.text()
   )
   return

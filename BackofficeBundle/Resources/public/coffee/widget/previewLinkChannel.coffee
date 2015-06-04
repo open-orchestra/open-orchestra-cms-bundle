@@ -1,6 +1,5 @@
-previewLinkChannel = Backbone.Wreqr.radio.channel('preview_link')
-
-previewLinkChannel.commands.setHandler 'render', (previewLinks) ->
-  new PreviewLinkView(
-    previewLinks: previewLinks
-  )
+widgetChannel.bind 'ready', (view) ->
+  if view.options && view.options.node
+    new PreviewLinkView(
+      previewLinks: view.options.node.get('preview_links')
+    )

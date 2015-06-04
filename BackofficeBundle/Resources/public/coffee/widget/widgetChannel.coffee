@@ -1,18 +1,7 @@
-widgetChannel = Backbone.Wreqr.radio.channel('widget')
+widgetChannel = new (Backbone.Wreqr.EventAggregator)
 
-widgetChannel.commands.setHandler 'ready', (view) ->
-  if view.options
-    if view.options.multiLanguage
-      Backbone.Wreqr.radio.commands.execute 'language', 'ready', view
-    if view.options.multiStatus
-      Backbone.Wreqr.radio.commands.execute 'status', 'ready', view
-    if view.options.multiVersion
-      Backbone.Wreqr.radio.commands.execute 'version', 'ready', view
-    if view.options.duplicate
-      Backbone.Wreqr.radio.commands.execute 'duplicate', 'ready', view
-  return
-  
-widgetChannel.commands.setHandler 'loaded', (el) ->
+widgetChannel.bind 'ready', (view) ->
+  el = view.$el
   if $(".select2", el).length > 0
     activateSelect2($(".select2", el))
   if $(".orchestra-node-choice", el).length > 0
@@ -21,3 +10,13 @@ widgetChannel.commands.setHandler 'loaded', (el) ->
     activateColorPicker($(".colorpicker", el))
   if $(".helper-block", el).length > 0
     activateHelper($(".helper-block", el))
+  if $(".widget-grid", el).length > 0
+    setup_widgets_desktop()
+  if $(".page-title", el).length > 0
+    renderPageTitle()
+  if $(".contentTypeSelector", el).length > 0
+    loadExtendView(view, 'contentTypeSelector')
+  if $(".content_type_change_type", el).length > 0
+    loadExtendView(view, 'contentTypeChange')
+  if $(".configuration-change", el).length > 0
+    loadExtendView(view, 'configurationChange')

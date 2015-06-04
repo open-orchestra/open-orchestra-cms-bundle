@@ -18,7 +18,6 @@ PageConfigurationButtonView = OrchestraView.extend(
     return
 
   configurationPage: () ->
-    $('.modal-title').text @options.configuration.get('name')
     options =
       url: @options.configuration.get('links')._self_form
       deleteUrl: @options.configuration.get('links')._self_delete
@@ -27,6 +26,7 @@ PageConfigurationButtonView = OrchestraView.extend(
       confirmText: @options.viewContainer.$el.data('delete-confirm-txt')
       confirmTitle: @options.viewContainer.$el.data('delete-confirm-title')
       extendView: [ 'deleteTree' ]
+      title: @options.configuration.get('name')
     if @options.configuration.attributes.alias is ''
       $.extend options, extendView: [ 'generateId']
     new adminFormView(options)

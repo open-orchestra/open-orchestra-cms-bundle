@@ -1,13 +1,14 @@
 DashboardView = OrchestraView.extend(
-  el: '#content'
-
   initialize: (options) ->
+    @options = @reduceOption(options, [
+      'domContainer'
+    ])
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboardView"
     ]
     return
 
   render: ->
-    $(@el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboardView')
-    return
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboardView')
+    @options.domContainer.html @$el
 )

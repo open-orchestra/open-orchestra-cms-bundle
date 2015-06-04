@@ -36,15 +36,10 @@ NodeView = OrchestraView.extend(
     )
     @addAreasToView(@options.node.get('areas'))
     @addListBlockToView()
-    @addPreviewLink()
     @addConfigurationButton()
     if @options.node.attributes.status.published
       $('.js-widget-blockpanel', @$el).hide()
     return
-
-  addPreviewLink: ->
-    previewLinks = @options.node.get('preview_links')
-    Backbone.Wreqr.radio.commands.execute 'preview_link', 'render', previewLinks
 
   addListBlockToView: ->
     viewContext = @

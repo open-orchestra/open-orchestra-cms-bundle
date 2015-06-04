@@ -5,10 +5,11 @@ extendView['deleteTree'] = {
 
   deleteElement: (event) ->
     event.preventDefault()
-    url = $(event.currentTarget).data("delete-url")
-    confirm_text = $(event.currentTarget).data("confirm-text")
-    confirm_title = $(event.currentTarget).data("confirm-title")
-    redirectUrl = $(event.currentTarget).data('redirect-url')
+    target = $(event.currentTarget)
+    url = target.data("delete-url")
+    confirm_text = target.data("confirm-text")
+    confirm_title = target.data("confirm-title")
+    redirectUrl = target.data('redirect-url')
     $("#OrchestraBOModal").modal "hide"
     smartConfirm(
       'fa-trash-o',
@@ -28,7 +29,7 @@ extendView['deleteTree'] = {
               displayMenu(redirectUrl)
             return
           error: (response) ->
-            $('.modal-footer', @el).html response.responseJSON.error.message
+            target.parents('.modal-footer').html response.responseJSON.error.message
             return
       noCallback: ->
         $("#OrchestraBOModal").modal "show"

@@ -1,8 +1,15 @@
-#--[ MEDIA SELECTED ]--#
-    
-$(document).on "click", ".clear-media", (event) ->
-  event.preventDefault()
-  inputId = '#' + $(event.target).data('input')
-  previewId = '#previewImage_' + $(event.target).data('input')
-  $(inputId).val('')
-  $(previewId).removeAttr('src')
+extendView = extendView || {}
+extendView['orchestraMediaType'] =
+  events: 'click .clear-media': 'clearMedia'
+  clearMedia: (event) ->
+    event.preventDefault()
+    inputId = '#' + $(event.currentTarget).data('input')
+    previewId = '#previewImage_' + $(event.currentTarget).data('input')
+    $(inputId).val ''
+    $(previewId).removeAttr 'src'
+
+widgetChannel.bind 'ready', (view) ->
+  if $("[data-prototype*='clear-media']", view.$el).length > 0
+    $.extend true, view, extendView['orchestraMediaType']
+    return view.delegateEvents()
+  return

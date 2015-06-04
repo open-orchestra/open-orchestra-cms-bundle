@@ -1,34 +1,39 @@
 mediaFormView = OrchestraView.extend(
+  events:
+    'submit': 'addEventOnForm'
+
   initialize: (options) ->
-    @html = options.html
-    @title = options.title
+    @options = @reduceOption(options, [
+      'html'
+      'title'
+      'domContainer'
+    ])
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView'
     ]
     return
 
   render: ->
-    $(@el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
-      html: @html
-      listUrl: @listUrl
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
+      html: @options.html
     )
-    $('.js-widget-title', @$el).text @title
-    $('.back-to-list', @el).remove()
-    $("[data-prototype]", @$el).each ->
+    @options.domContainer.html @$el
+    $('.js-widget-title', @options.domContainer).html @options.title
+    $('.back-to-list', @options.domContainer).remove()
+    $("[data-prototype]", @options.domContainer).each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    @addEventOnForm()
     return
 
-  addEventOnForm: ->
-    viewContext = this
-    $("form", @$el).on "submit", (e) ->
-      e.preventDefault() # prevent native submit
-      $(this).ajaxSubmit
-        context:
-          button: $(".submit_form",e.target).parent()
-        success: (response) ->
-          viewContext.html = response
-          viewContext.render()
-      return
+  addEventOnForm: (event) ->
+    event.preventDefault()
+    viewContext = @
+    $('form', @options.domContainer).ajaxSubmit
+      context:
+        button: $(".submit_form",event.currentTarget).parent()
+      success: (response) ->
+        new mediaFormView(viewContext.addOption(
+          html: response
+        ))
+    return
 )

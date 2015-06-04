@@ -39,7 +39,7 @@ var OrchestraBORouter = Backbone.Router.extend({
   showDashboard: function()
   {
     this.initDisplayRouteChanges();
-    return new DashboardView();
+    new DashboardView({domContainer : $('#content')});
   },
 
   showNode: function(nodeId)

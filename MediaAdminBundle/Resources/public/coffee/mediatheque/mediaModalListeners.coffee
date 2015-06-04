@@ -64,6 +64,6 @@ $(document).on "click", ".modal-body-content a[class='ajax-add'], .media-modal-m
     success: (response) ->
       new mediaFormView(
         html: response
-        el: ("#" + modalId + " .modal-body-content")
+        domContainer: $("#" + modalId + " .modal-body-content")
         title: $.trim(folderName)
       )
