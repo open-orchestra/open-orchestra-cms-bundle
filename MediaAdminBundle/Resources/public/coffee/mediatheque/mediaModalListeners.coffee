@@ -1,28 +1,3 @@
-# OPEN MEDIA MODAL
-
-$(document).on "click", ".mediaModalOpen", (event) ->
-  modalId = $(event.currentTarget).data("target")
-  mediaModal = $("#" + modalId)
-  
-  mediaModal.parent().detach().appendTo('body')
-  $('#' + modalId + ' .modal-body-menu').empty()
-  $('#' + modalId + ' .modal-body-content').empty()
-  
-  mediaModal.css('width', $(window).width() + 'px')
-  mediaModal.css('height', $(window).height() + 'px')
-  mediaModal.css
-    'margin-top': window.pageYOffset - $(this).height() / 2
-  mediaModal.modal("show")
-  
-  new mediaModalView(
-    menuUrl: $('#' + modalId + ' .modal-body-menu').data('url'),
-    el: '#' + modalId
-  )
-  
-  return
-
-
-
 # CLOSE MEDIA MODAL
 
 $(document).on "click", ".mediaModalClose", (event) ->

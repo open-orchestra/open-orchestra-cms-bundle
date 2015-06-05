@@ -1,23 +1,22 @@
-mediaModalView = Backbone.View.extend(
+MediaModalView = OrchestraView.extend(
+  events:
+    'click .mediaModalClose': 'closeModal'
   initialize: (options) ->
-    @el = options.el
-    @menuUrl = options.menuUrl
-    @method = if options.method then options.method else 'GET'
-    @call()
-    return
-  call: ->
-    viewContext = this
-    displayLoader(@el + ' .modal-body-menu')
-    $.ajax
-      url: @menuUrl
-      method: @method
-      success: (response) ->
-        viewContext.render(
-          html: response
-        )
-      error: ->
-        $(@el + ' .modal-body').html 'Erreur durant le chargement'
+    @options = @reduceOption(options, [
+      'body'
+      'domContainer'
+    ])
+    @loadTemplates [
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView"
+    ]
     return
   render: (options) ->
-    $(@el + ' .modal-body-menu').html options.html
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView', @options)
+    @options.domContainer.html @$el
+    @options.domContainer.modal "show"
+    @options.domContainer.detach().appendTo('body')
+
+  close: ->
+    @options.domContainer.modal "hide"
+    #@options.domContainer.detach().appendTo('body')
 )

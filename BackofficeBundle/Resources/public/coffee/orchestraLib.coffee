@@ -16,15 +16,8 @@ addCustomJarvisWidget = (widget) ->
 
 # DISPLAY LOADER
 displayLoader = (element) ->
-  if element == 'modal'
-    new OrchestraModalView(
-      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
-      title: "Please wait"
-      domContainer: $('#OrchestraBOModal')
-    )
-  else
-    element = "#content"  if typeof element is "undefined"
-    $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+  element = "#content"  if typeof element is "undefined"
+  $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
   true
 
 # REFRESH NAV MENU
