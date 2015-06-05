@@ -62,5 +62,5 @@ TableviewAction = OrchestraView.extend(
       method: "GET"
       success: (response) ->
         viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
-        new viewClass(viewContext.addOption(html: response))
+        new viewClass(viewContext.addOption(html: response, domContainer: $('#content')))
 )

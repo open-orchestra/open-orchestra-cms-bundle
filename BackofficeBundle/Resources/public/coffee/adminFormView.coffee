@@ -31,7 +31,8 @@ adminFormView = OrchestraView.extend(
           .prepend($('.submit_form', body)).html()
         body = body.html()
         extendView = viewContext.options.extendView || []
-        extendView.push 'submitAdmin'
+        if extendView.indexOf('submitAdmin') == -1
+          extendView.push 'submitAdmin'
         new OrchestraModalView(
           body: body
           title: viewContext.options.title

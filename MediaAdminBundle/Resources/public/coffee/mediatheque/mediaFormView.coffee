@@ -14,9 +14,7 @@ mediaFormView = OrchestraView.extend(
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
-      html: @options.html
-    )
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView', @options)
     @options.domContainer.html @$el
     $('.js-widget-title', @options.domContainer).html @options.title
     $('.back-to-list', @options.domContainer).remove()
