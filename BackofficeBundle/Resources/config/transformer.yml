@@ -18,5 +18,3 @@ services:
         class: %open_orchestra_backoffice.transformer.suppress_special_character.class%
     open_orchestra_backoffice.transformer.choices_option_to_array:
         class: %open_orchestra_backoffice.transformer.choices_option_to_array.class%
-        arguments:
-            - @open_orchestra_backoffice.transformer.suppress_special_character
