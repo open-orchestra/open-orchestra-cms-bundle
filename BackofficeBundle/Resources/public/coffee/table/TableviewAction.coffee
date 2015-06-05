@@ -37,7 +37,11 @@ TableviewAction = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
+    parent = $('#nav-'+@options.entityType).parent('[data-type]')
+    if (parent.length)
+      @options.entityType = parent[0].getAttribute('data-type')
     parameter =
+      'entityType': @options.entityType
       'entityId': @options.element.get('id')
       'language': @options.element.get('language')
       'version' : @options.element.get('version')
@@ -46,7 +50,7 @@ TableviewAction = OrchestraView.extend(
       redirectUrl = 'showEntityWithLanguage'
       if @options.element.get('version')
         redirectUrl = 'showEntityWithLanguageAndVersion'
-    redirectUrl = appRouter.generateUrl(redirectUrl, appRouter.addParametersToRoute(parameter))
+    redirectUrl = appRouter.generateUrl(redirectUrl, parameter)
     Backbone.history.navigate(redirectUrl)
     options = @options
     viewContext = @

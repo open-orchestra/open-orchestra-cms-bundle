@@ -12,7 +12,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'template/show/:templateId': 'showTemplate',
-    ':entityType/list': 'listEntities',
+    ':entityType/list(/:page)': 'listEntities',
     ':entityType/add': 'addEntity',
     ':entityType/edit/:entityId': 'showEntity',
     ':entityType/edit/:entityId/:language': 'showEntityWithLanguage',
@@ -74,40 +74,40 @@ var OrchestraBORouter = Backbone.Router.extend({
     GalleryLoad($('#' + folderId));
   },
 
-  listEntities: function(entityType)
+  listEntities: function(entityType, page)
   {
-    this.manageEntity(entityType);
+    this.manageEntity(entityType, page);
   },
 
   addEntity: function(entityType)
   {
-    this.manageEntity(entityType, null, null, null, true)
+    this.manageEntity(entityType, null, null, null, null, true)
   },
 
   showEntity: function(entityType, entityId)
   {
-    this.manageEntity(entityType, entityId);
+    this.manageEntity(entityType, null, entityId);
   },
 
   showEntityWithLanguage: function(entityType, entityId, language)
   {
-    this.manageEntity(entityType, entityId, language);
+    this.manageEntity(entityType, null, entityId, language);
   },
 
   showEntityWithLanguageAndSourceLanguage: function(entityType, entityId, language, sourceLanguage)
   {
-    this.manageEntity(entityType, entityId, language, undefined, sourceLanguage);
+    this.manageEntity(entityType, null, entityId, language, undefined, sourceLanguage);
   },
   
   showEntityWithLanguageAndVersion: function(entityType, entityId, language, version)
   {
-    this.manageEntity(entityType, entityId, language, version);
+    this.manageEntity(entityType, null, entityId, language, version);
   },
 
-  manageEntity: function(entityType, entityId, language, version, sourceLanguage)
+  manageEntity: function(entityType, page, entityId, language, version, sourceLanguage)
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
-    tableViewLoad($("#nav-" + entityType), entityType, entityId, language, version, sourceLanguage);
+    tableViewLoad($("#nav-" + entityType), entityType, page, entityId, language, version, sourceLanguage);
   },
 
   mediaEdit: function(folderId, mediaId)
@@ -178,7 +178,11 @@ var OrchestraBORouter = Backbone.Router.extend({
     if (typeof route !== "undefined") {
       if (typeof paramsObject !== "undefined") {
         $.each(paramsObject, function(paramName, paramValue) {
-          route = route.replace(':' + paramName, paramValue);
+            if (route.indexOf('(/:' + paramName + ')') != -1) {
+                route = route.replace('(/:' + paramName + ')', '/'+paramValue);
+            } else {
+                route = route.replace(':' + paramName, paramValue);
+            }
         });
       }
     } else {
