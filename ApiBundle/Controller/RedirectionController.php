@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -17,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class RedirectionController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param int $redirectionId
      *
@@ -37,6 +41,8 @@ class RedirectionController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_redirection_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +52,19 @@ class RedirectionController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $redirectionCollection = $this->get('open_orchestra_model.repository.redirection')->findAll();
+        $columnsNameToEntityAttribute = array(
+            'site_name'     => array('key' => 'siteName'),
+            'route_pattern' => array('key' => 'routePattern'),
+            'locale'        => array('key' => 'locale'),
+            'redirection'   => array('key' => 'url'),
+            'permanent'     => array('key' => 'permanent', 'type' => 'boolean'),
+        );
+        $repository = $this->get('open_orchestra_model.repository.redirection');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection')->transform($redirectionCollection);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

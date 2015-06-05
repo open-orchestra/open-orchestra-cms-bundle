@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\RoleEvent;
 use OpenOrchestra\ModelInterface\RoleEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -17,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class RoleController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param int $roleId
      *
@@ -37,6 +41,8 @@ class RoleController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_role_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +52,17 @@ class RoleController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $roleCollection = $this->get('open_orchestra_model.repository.role')->findAll();
+        $columnsNameToEntityAttribute = array(
+            'description' => array('key' => 'name'),
+            'from_status' => array('key' => 'fromStatus.name'),
+            'to_status'   => array('key' => 'toStatus.name'),
+        );
+        $repository = $this->get('open_orchestra_model.repository.role');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('role_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('role_collection')->transform($roleCollection);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

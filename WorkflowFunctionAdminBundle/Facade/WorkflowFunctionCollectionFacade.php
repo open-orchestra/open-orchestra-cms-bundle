@@ -22,6 +22,18 @@ class WorkflowFunctionCollectionFacade extends AbstractFacade
     public $workflowFunctions = array();
 
     /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsTotal")
+     */
+    public $recordsTotal;
+
+    /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsFiltered")
+     */
+    public $recordsFiltered;
+
+    /**
      * @param FacadeInterface $log
      */
     public function addWorkflowFunction(FacadeInterface $workflowFunction)
@@ -30,10 +42,18 @@ class WorkflowFunctionCollectionFacade extends AbstractFacade
     }
 
     /**
-     * @return mixed
+     * @param $recordsTotal
      */
-    public function getWorkflowFunctions()
+    public function setRecordsTotal($recordsTotal)
     {
-        return $this->workflowFunctions;
+        $this->recordsTotal = $recordsTotal;
+    }
+
+    /**
+     * @param $recordsFiltered
+     */
+    public function setRecordsFiltered($recordsFiltered)
+    {
+        $this->recordsFiltered = $recordsFiltered;
     }
 }

@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -17,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class GroupController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param int $groupId
      *
@@ -37,6 +41,8 @@ class GroupController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_group_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +52,15 @@ class GroupController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $groupCollection = $this->get('open_orchestra_user.repository.group')->findAll();
+        $columnsNameToEntityAttribute = array(
+            'name'     => array('key' => 'name'),
+        );
+        $repository = $this->get('open_orchestra_user.repository.group');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('group_collection')->transform($groupCollection);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

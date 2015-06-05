@@ -9,7 +9,7 @@ use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 /**
  * Class GroupCollection
  */
-class GroupCollectionFacade extends AbstractFacade
+class GroupCollectionFacade extends PaginateCollectionFacade
 {
     /**
      * @Serializer\Type("string")

@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -17,7 +19,11 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class StatusController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_status_list")
      * @Config\Method({"GET"})
      *
@@ -27,11 +33,18 @@ class StatusController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $statusCollection = $this->get('open_orchestra_model.repository.status')->findAll();
+        $columnsNameToEntityAttribute = array(
+            'label'     => array('key' => 'name'),
+            'published' => array('key' => 'published','type' => 'boolean'),
+            'initial' => array('key' => 'initial','type' => 'boolean'),
+            'display_color' => array('key' => 'displayColor'),
+        );
+        $repository = $this->get('open_orchestra_model.repository.status');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($statusCollection);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

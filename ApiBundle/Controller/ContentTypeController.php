@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -17,6 +19,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ContentTypeController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param string $contentTypeId
      *
@@ -37,6 +41,8 @@ class ContentTypeController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_content_type_list")
      * @Config\Method({"GET"})
      *
@@ -46,11 +52,24 @@ class ContentTypeController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $contentTypeCollection = $this->get('open_orchestra_model.repository.content_type')->findAllByDeletedInLastVersion();
+        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection')->transform($contentTypeCollection);
+        $columnsNameToEntityAttribute = array(
+            'content_type_id' => array('key' => 'contentTypeId'),
+            'name'            => array('key' => 'name'),
+            'version'         => array('key' => 'version' , 'type' => 'integer'),
+        );
+
+        $repository = $this->get('open_orchestra_model.repository.content_type');
+        $contentTypeCollection = $repository->findAllByDeletedInLastVersionForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->countByContentTypeInLastVersion();
+        $recordsFiltered = $repository->countByDeletedInLastVersionWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
+
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
+
+        return $this->generateFacadeDataTable($transformer, $contentTypeCollection, $recordsTotal, $recordsFiltered);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\KeywordEvent;
 use OpenOrchestra\ModelInterface\KeywordEvents;
@@ -19,6 +20,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class KeywordController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param Request $request
      *
@@ -60,6 +63,8 @@ class KeywordController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_keyword_list")
      * @Config\Method({"GET"})
      *
@@ -69,11 +74,15 @@ class KeywordController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $keywordCollection = $this->get('open_orchestra_model.repository.keyword')->findAll();
+        $columnsNameToEntityAttribute = array(
+            'label' => array('key' => 'label'),
+        );
+        $repository = $this->get('open_orchestra_model.repository.keyword');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection')->transform($keywordCollection);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

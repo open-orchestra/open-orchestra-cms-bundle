@@ -9,7 +9,7 @@ use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 /**
  * Class RoleCollection
  */
-class RoleCollectionFacade extends AbstractFacade
+class RoleCollectionFacade extends PaginateCollectionFacade
 {
     /**
      * @Serializer\Type("string")

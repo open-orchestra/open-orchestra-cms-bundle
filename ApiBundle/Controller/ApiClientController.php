@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -15,7 +17,11 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ApiClientController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_api_client_list")
      * @Config\Method({"GET"})
      *
@@ -25,13 +31,16 @@ class ApiClientController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $clientCollection = $this->get('open_orchestra_api.repository.api_client')->findAll();
+        $columnsNameToEntityAttribute = array(
+            'name' => array('key' => 'name'),
+            'trusted' => array('key' => 'trusted', 'type' => 'boolean'),
+        );
+        $repository = $this->get('open_orchestra_api.repository.api_client');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')
-                    ->get('api_client_collection')
-                    ->transform($clientCollection);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
     }
 
     /**

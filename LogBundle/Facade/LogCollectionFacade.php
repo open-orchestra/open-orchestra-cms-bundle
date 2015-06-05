@@ -12,6 +12,18 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 class LogCollectionFacade extends AbstractFacade
 {
     /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsTotal")
+     */
+    public $recordsTotal;
+
+    /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("recordsFiltered")
+     */
+    public $recordsFiltered;
+
+    /**
      * @Serializer\Type("string")
      */
     public $collectionName = 'logs';

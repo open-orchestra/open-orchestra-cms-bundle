@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\SourceLanguageNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -24,6 +25,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class ContentController extends BaseController
 {
     use ListStatus;
+    use HandleRequestDataTable;
 
     /**
      * @param Request $request
@@ -101,10 +103,25 @@ class ContentController extends BaseController
     public function listAction(Request $request)
     {
         $contentType = $request->get('content_type');
+        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
-        $contentCollection = $this->get('open_orchestra_model.repository.content')->findByContentTypeInLastVersion($contentType);
+        $columnsNameToEntityAttribute = array(
+            'name'         => array('key' => 'name'),
+            'status_label' => array('key' => 'status.name'),
+            'version'      => array('key' => 'version' , 'type' => 'integer'),
+            'language'     => array('key' => 'language'),
+        );
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
+        $repository =  $this->get('open_orchestra_model.repository.content');
+        $contentCollection = $repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
+        $recordsFiltered = $repository->countByContentTypeInLastVersionWithSearchFilter($contentType, $columnsNameToEntityAttribute, $columns, $search);
+
+        $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
+        $facade->recordsTotal = $recordsTotal;
+        $facade->recordsFiltered = $recordsFiltered;
+
+        return $facade;
     }
 
     /**
