@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\Backoffice\Context\ContextManager;
 
 /**
  * Class ContentTypeForContentPanel
@@ -17,11 +18,17 @@ class ContentTypeForContentPanelStrategy extends AbstractLeftPanelStrategy
     protected $contentTypeRepository;
 
     /**
+     * @var ContextManager
+     */
+    protected $contextManager;
+
+    /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager)
     {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->contextManager = $contextManager;
     }
 
     /**
@@ -29,7 +36,7 @@ class ContentTypeForContentPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function show()
     {
-        $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
+        $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion($this->contextManager->getCurrentLocale());
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
