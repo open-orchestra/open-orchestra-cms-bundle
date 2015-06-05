@@ -148,8 +148,9 @@ var OrchestraBORouter = Backbone.Router.extend({
   initDisplayRouteChanges: function(selector)
   {
     selector = (selector == undefined) ? '[href="#' + Backbone.history.fragment + "]" : selector;
-    $('nav li:has(a' + selector + '):not(.active)').each(function(){$(this).children().click()});
-    document.title = $('nav a' + selector + '').attr('title') || document.title;
+    $('nav li.active').removeClass("active");
+    $('nav li:has(a' + selector + ')').addClass("active");
+    document.title = $('nav a' + selector).attr('title') || document.title;
 
     drawBreadCrumb();
     displayLoader();
