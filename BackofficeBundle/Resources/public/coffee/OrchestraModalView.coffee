@@ -1,7 +1,7 @@
 OrchestraModalView = OrchestraView.extend(
   events:
     'click .close': 'close'
-    'resize ..modal-dialog': 'resize'
+    'resize .modal-dialog': 'resize'
 
   initialize: (options) ->
     @options = @reduceOption(options, [

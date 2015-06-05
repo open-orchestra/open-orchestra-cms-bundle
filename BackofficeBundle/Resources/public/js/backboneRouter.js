@@ -147,17 +147,9 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   initDisplayRouteChanges: function(selector)
   {
-    $('nav li.active').removeClass("active");
-      if (selector == undefined) {
-          var url = '#' + Backbone.history.fragment;
-          $('nav li:has(a[href="' + url + '"])').addClass("active");
-          var title = ($('nav a[href="' + url + '"]').attr('title'));
-          document.title = (title || document.title);
-      } else {
-          $('nav li:has(a' + selector + ')').addClass("active");
-          var title = ($('nav a' + selector).attr('title'));
-          document.title = (title || document.title);
-      }
+    selector = (selector == undefined) ? '[href="#' + Backbone.history.fragment + "]" : selector;
+    $('nav li:has(a' + selector + '):not(.active)').each(function(){$(this).children().click()});
+    document.title = $('nav a' + selector + '').attr('title') || document.title;
 
     drawBreadCrumb();
     displayLoader();
