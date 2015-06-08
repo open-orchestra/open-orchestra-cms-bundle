@@ -5,6 +5,8 @@ parameters:
 services:
     open_orchestra_user_admin.transformer.user:
         class: %open_orchestra_user_admin.transformer.user.class%
+        arguments:
+            - @event_dispatcher
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_user_admin.transformer.user_collection:

@@ -26,5 +26,6 @@ class OpenOrchestraWorkflowFunctionAdminExtension extends Extension
         $loader->load('manager.yml');
         $loader->load('voter.yml');
         $loader->load('authorize_status_change.yml');
+        $loader->load('subscriber.yml');
     }
 }
