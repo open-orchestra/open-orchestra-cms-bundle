@@ -17,6 +17,8 @@ OrchestraModalView = OrchestraView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/orchestraModalView', @options)
+    if $('#dynamic-modal-title', @$el).length > 0
+      $('.modal-title', @$el).html $('#dynamic-modal-title', @$el).html()
     @options.domContainer.html @$el
     $("[data-prototype]", @options.domContainer.$el).each ->
       PO.formPrototypes.addPrototype $(@)

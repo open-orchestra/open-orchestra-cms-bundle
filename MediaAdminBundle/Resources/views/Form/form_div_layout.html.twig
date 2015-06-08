@@ -16,6 +16,6 @@
         &nbsp;
         {% set src= media_preview(value) %}
         <img height="100px" {% if src != '' %}src="{{ src }}"{% endif %} id="previewImage_{{ id }}" class="previewImage" />
-        <div class="modal fade" id="{{ id }}_modal" tabindex="-1" role="dialog" aria-labelledby="{{ id }}_modal" aria-hidden="true" data-backdrop="static"></div>
+        <div id="{{ id }}_modal"></div>
     {% endspaceless %}
 {% endblock %}

@@ -20,6 +20,7 @@ extendView['orchestraMediaType'] =
     new MediaModalView(
       body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
       domContainer: modal
+      input: inputId
     )
     $.ajax
       url: url
@@ -28,11 +29,13 @@ extendView['orchestraMediaType'] =
         new MediaModalView(
           body: response
           domContainer: modal
+          input: inputId
         )
       error: ->
         new MediaModalView(
           body: 'Erreur durant le chargement'
           domContainer: modal
+          input: inputId
         )
     return
 

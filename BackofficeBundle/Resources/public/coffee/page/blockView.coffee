@@ -28,7 +28,6 @@ BlockView = OrchestraView.extend(
     new adminFormView(
       url: @options.block.get('links')._self_form
       extendView: [ 'showVideo' ]
-      title: $('#dynamic-modal-title').html()
     )
 
   confirmRemoveBlock: (event) ->
