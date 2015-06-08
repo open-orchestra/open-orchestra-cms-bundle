@@ -42,7 +42,6 @@ TableviewCollectionView = OrchestraView.extend(
     columns.push({'data' : 'links'})
     viewContext = @
 
-<<<<<<< HEAD
     $.fn.dataTable.Api.register('clearPipeline()', ->
       return this.iterator( 'table', (settings) ->
         settings.clearCache = true;
