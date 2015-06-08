@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
+use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,20 +12,20 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
 {
-    protected $suppressSpecialCharacterClass;
+    protected $suppressSpecialCharacterHelper;
     protected $keywordRepository;
     protected $embedKeywordClass;
     protected $keywordClass;
 
     /**
-     * @param KeywordRepositoryInterface          $keywordRepository
-     * @param SuppressSpecialCharacterTransformer $suppressSpecialCharacterClass
-     * @param string                              $embedKeywordClass
-     * @param string                              $keywordClass
+     * @param KeywordRepositoryInterface              $keywordRepository
+     * @param SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper
+     * @param string                                  $embedKeywordClass
+     * @param string                                  $keywordClass
      */
-    public function __construct(KeywordRepositoryInterface $keywordRepository, SuppressSpecialCharacterTransformer $suppressSpecialCharacterClass, $embedKeywordClass, $keywordClass)
+    public function __construct(KeywordRepositoryInterface $keywordRepository, SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper, $embedKeywordClass, $keywordClass)
     {
-        $this->suppressSpecialCharacterClass = $suppressSpecialCharacterClass;
+        $this->suppressSpecialCharacterHelper = $suppressSpecialCharacterHelper;
         $this->keywordRepository = $keywordRepository;
         $this->embedKeywordClass = $embedKeywordClass;
         $this->keywordClass = $keywordClass;
@@ -67,7 +68,7 @@ class EmbedKeywordsToKeywordsTransformer implements DataTransformerInterface
         $keywordClass = $this->keywordClass;
 
         foreach($keywordArray as $keyword) {
-            $keyword = $this->suppressSpecialCharacterClass->transform($keyword);
+            $keyword = $this->suppressSpecialCharacterHelper->transform($keyword);
             if ('' != $keywords && '' != $keyword) {
                 $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
                 if (!$keywordEntity) {

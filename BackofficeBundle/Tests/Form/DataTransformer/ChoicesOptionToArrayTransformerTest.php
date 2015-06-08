@@ -11,7 +11,7 @@ use Phake;
  */
 class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $suppressSpecialCharacter;
+    protected $suppressSpecialCharacterHelper;
     protected $transformer;
 
     /**
@@ -19,8 +19,8 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer');
-        $this->transformer = new ChoicesOptionToArrayTransformer($this->suppressSpecialCharacter);
+        $this->suppressSpecialCharacterHelper = Phake::mock('OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface');
+        $this->transformer = new ChoicesOptionToArrayTransformer($this->suppressSpecialCharacterHelper);
     }
 
     /**
@@ -92,10 +92,12 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
      * @dataProvider providerDifferentStringData
      */
     public function testReverseTransformWithStringData($data, $transformData){
-        Phake::when($this->suppressSpecialCharacter)->transform('')->thenReturn('');
-        Phake::when($this->suppressSpecialCharacter)->transform('choice')->thenReturn('choice');
-        Phake::when($this->suppressSpecialCharacter)->transform('choice2')->thenReturn('choice2');
-        Phake::when($this->suppressSpecialCharacter)->transform('choîce@=!')->thenReturn('choice');
+        Phake::when($this->suppressSpecialCharacterHelper)->transform('', array('_','.'))->thenReturn('');
+        Phake::when($this->suppressSpecialCharacterHelper)->transform('choice', array('_','.'))->thenReturn('choice');
+        Phake::when($this->suppressSpecialCharacterHelper)->transform('choice2', array('_','.'))->thenReturn('choice2');
+        Phake::when($this->suppressSpecialCharacterHelper)->transform('choîce@=!', array('_','.'))->thenReturn('choice');
+        Phake::when($this->suppressSpecialCharacterHelper)->transform('translate.choice_1', array('_','.'))->thenReturn('translate.choice_1');
+        Phake::when($this->suppressSpecialCharacterHelper)->transform('translate.choîce@=!_2', array('_','.'))->thenReturn('translate.choice_2');
 
         $this->assertSame($transformData, $this->transformer->reverseTransform($data));
     }
