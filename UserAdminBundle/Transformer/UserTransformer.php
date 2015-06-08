@@ -6,12 +6,25 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\UserAdminBundle\Facade\UserFacade;
 use OpenOrchestra\UserBundle\Document\User;
+use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
+use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class UserTransformer
  */
 class UserTransformer extends AbstractTransformer
 {
+    protected $eventDispatcher;
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     /**
      * @param User $mixed
      *
@@ -41,6 +54,11 @@ class UserTransformer extends AbstractTransformer
         $facade->addLink('_self_panel_1_password_change', $this->generateRoute(
             'open_orchestra_user_admin_user_change_password',
             array('userId' => $mixed->getId())));
+
+        $this->eventDispatcher->dispatch(
+            UserFacadeEvents::POST_USER_TRANSFORMATION,
+            new UserFacadeEvent($facade)
+        );
 
         return $facade;
     }
