@@ -49,11 +49,12 @@ TableviewCollectionView = OrchestraView.extend(
     );
     $.fn.dataTable.pipeline = @dataTablePipeline
 
-    table = $('#tableviewCollectionTable').dataTable(
+    @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
       processing: true
       serverSide: true
+      bAutoWidth: false
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
         pages: 5
@@ -74,14 +75,12 @@ TableviewCollectionView = OrchestraView.extend(
       lengthChange: false
     )
 
-    api = table.api()
+    api = @options.table.api()
     headers = api.columns().header().toArray()
     for i of headers
       if @options.visibleElements.length > 0 && $(api.column(i).header()).text() != '' && @options.visibleElements.indexOf(i.toString()) == -1
         api.column(i).visible(false)
-    colvis = new ($.fn.dataTable.ColVis)(table, exclude: [ @options.displayedElements.length ])
-    $('.jarviswidget-ctrls').prepend colvis.button()
-
+    @listenToOnce(widgetChannel, 'jarviswidget', @addColvis)
     return
 
   renderColumnActions : (viewContext, td, cellData, rowData) ->
@@ -197,4 +196,8 @@ TableviewCollectionView = OrchestraView.extend(
         data.splice(requestLength, data.length);
         settings.sAjaxDataProp = json.collection_name
         drawCallback(json)
+
+  addColvis: ->
+    colvis = new ($.fn.dataTable.ColVis)(@options.table, exclude: [ @options.displayedElements.length ])
+    $('.jarviswidget-ctrls').prepend colvis.button()
 )

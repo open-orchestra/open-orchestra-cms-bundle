@@ -10,8 +10,9 @@ widgetChannel.bind 'ready', (view) ->
     activateColorPicker($(".colorpicker", el))
   if $(".helper-block", el).length > 0
     activateHelper($(".helper-block", el))
-  if $(".widget-grid", el).length > 0
+  if view.options && view.options.domContainer && $(".widget-grid", view.options.domContainer).length > 0
     setup_widgets_desktop()
+    widgetChannel.trigger 'jarviswidget', view
   if $(".page-title", el).length > 0
     renderPageTitle()
   if $(".contentTypeSelector", el).length > 0
