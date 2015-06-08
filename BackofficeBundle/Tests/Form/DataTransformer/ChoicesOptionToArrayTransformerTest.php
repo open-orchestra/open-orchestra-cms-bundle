@@ -117,6 +117,9 @@ class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
             array('choîce@=!',
                 array('choice' => 'choice'),
             ),
+            array('translate.choice_1,translate.choîce@=!_2',
+                array('translate.choice_1' => 'translate.choice_1', 'translate.choice_2' => 'translate.choice_2'),
+            ),
         );
     }
 }
