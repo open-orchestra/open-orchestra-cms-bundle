@@ -13,6 +13,7 @@ extendView['submitAdmin'] = {
         200: (response) ->
           view = new OrchestraModalView(viewContext.addOption(
             body: response
+            title: viewContext.options.title
           ))
           if $('#node_nodeId', view.$el).length > 0
             displayRoute = appRouter.generateUrl "showNode",
@@ -27,5 +28,6 @@ extendView['submitAdmin'] = {
         400: (response) ->
           new OrchestraModalView(viewContext.addOption(
             body: response.responseText
+            title: viewContext.options.title
           ))
 }
