@@ -8,7 +8,7 @@ services:
         class: %open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%
         arguments:
             - @open_orchestra_model.repository.keyword
-            - @open_orchestra_model.helper.supress_special_character
+            - @open_orchestra_model.helper.suppress_special_character
             - %open_orchestra_model.document.embed_keyword.class%
             - %open_orchestra_model.document.keyword.class%
     open_orchestra_backoffice.transformer.video_url_to_id:
@@ -16,4 +16,4 @@ services:
     open_orchestra_backoffice.transformer.choices_option_to_array:
         class: %open_orchestra_backoffice.transformer.choices_option_to_array.class%
         arguments:
-            - @open_orchestra_model.helper.supress_special_character
+            - @open_orchestra_model.helper.suppress_special_character

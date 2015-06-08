@@ -36,7 +36,7 @@ class KeywordController extends BaseController
     {
         $keyword = $request->get('term');
 
-        $suppressSpecialCharacter = $this->get('open_orchestra_model.helper.supress_special_character');
+        $suppressSpecialCharacter = $this->get('open_orchestra_model.helper.suppress_special_character');
 
         $keyword = $suppressSpecialCharacter->transform($keyword);
 
