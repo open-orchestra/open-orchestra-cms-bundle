@@ -28,7 +28,6 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/extendView/submitAdmin.js',
         'web/built/openorchestrabackoffice/js/extendView/contentTypeSelector.js',
         'web/built/openorchestrabackoffice/js/extendView/contentTypeChange.js',
-        'web/built/openorchestrabackoffice/js/extendView/configurationChange.js',
 
         //--[ WIDGETS ]--//
         'web/built/openorchestrabackoffice/js/widget/widgetChannel.js',

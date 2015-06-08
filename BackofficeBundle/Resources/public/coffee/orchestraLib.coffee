@@ -139,3 +139,9 @@ activateHelper = (element) ->
 loadExtendView = (view, extendViewName) ->
   $.extend true, view, extendView[extendViewName]
   view.delegateEvents()
+
+#CONFIGURATION LISTENER
+$(document).on 'click', '.configuration-change', (e) ->
+  target = $(e.currentTarget)
+  url = target.data('url')
+  window.location = url + '#' + Backbone.history.fragment
