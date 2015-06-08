@@ -8,9 +8,10 @@ adminFormView = OrchestraView.extend(
       'title'
       'url'
       'extendView'
+      'method'
     ])
     @deleteButton = @options.deleteUrl && @options.confirmText && @options.confirmTitle
-    @method = if options.method then options.method else 'GET'
+    @method = if @options.method then @options.method else 'GET'
     @events = @events || {}
     @loadTemplates [
         'OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton'
@@ -19,7 +20,11 @@ adminFormView = OrchestraView.extend(
 
   render: ->
     viewContext = this
-    displayLoader('modal')
+    new OrchestraModalView(
+      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+      title: "Please wait"
+      domContainer: $('#OrchestraBOModal')
+    )
     $.ajax
       url: @options.url
       method: @method

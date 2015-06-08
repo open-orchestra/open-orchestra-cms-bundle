@@ -12,6 +12,7 @@ GalleryCollectionView = OrchestraView.extend(
     ])
     @loadTemplates [
       "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryCollectionView",
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView"
     ]
     return
 

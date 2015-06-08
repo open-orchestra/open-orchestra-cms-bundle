@@ -16,7 +16,5 @@ widgetChannel.bind 'ready', (view) ->
     renderPageTitle()
   if $(".contentTypeSelector", el).length > 0
     loadExtendView(view, 'contentTypeSelector')
-  if $(".content_type_change_type", el).length > 0
+  if $("[data-prototype*='content_type_change_type']", view.$el).length > 0
     loadExtendView(view, 'contentTypeChange')
-  if $(".configuration-change", el).length > 0
-    loadExtendView(view, 'configurationChange')

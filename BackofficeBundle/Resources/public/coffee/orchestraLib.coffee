@@ -16,15 +16,8 @@ addCustomJarvisWidget = (widget) ->
 
 # DISPLAY LOADER
 displayLoader = (element) ->
-  if element == 'modal'
-    new OrchestraModalView(
-      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
-      title: "Please wait"
-      domContainer: $('#OrchestraBOModal')
-    )
-  else
-    element = "#content"  if typeof element is "undefined"
-    $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+  element = "#content"  if typeof element is "undefined"
+  $(element).html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
   true
 
 # REFRESH NAV MENU
@@ -146,3 +139,9 @@ activateHelper = (element) ->
 loadExtendView = (view, extendViewName) ->
   $.extend true, view, extendView[extendViewName]
   view.delegateEvents()
+
+#CONFIGURATION LISTENER
+$(document).on 'click', '.configuration-change', (e) ->
+  target = $(e.currentTarget)
+  url = target.data('url')
+  window.location = url + '#' + Backbone.history.fragment

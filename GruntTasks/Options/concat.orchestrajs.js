@@ -28,7 +28,6 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/extendView/submitAdmin.js',
         'web/built/openorchestrabackoffice/js/extendView/contentTypeSelector.js',
         'web/built/openorchestrabackoffice/js/extendView/contentTypeChange.js',
-        'web/built/openorchestrabackoffice/js/extendView/configurationChange.js',
 
         //--[ WIDGETS ]--//
         'web/built/openorchestrabackoffice/js/widget/widgetChannel.js',
@@ -64,7 +63,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
         //--[ MEDIA ]--//
-        'web/built/openorchestramediaadmin/js/mediatheque/*.js',
+        'web/built/openorchestramediaadmin/js/*.js',
 
         //--[ USER ]--//
         'web/built/openorchestrauseradmin/js/user/*.js',
