@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
+use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
@@ -9,14 +10,14 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class ChoicesOptionToArrayTransformer implements DataTransformerInterface
 {
-    protected $suppressSpecialCharacterClass;
+    protected $suppressSpecialCharacterHelper;
 
     /**
-     * @param SuppressSpecialCharacterTransformer $suppressSpecialCharacterClass
+     * @param SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper
      */
-    public function __construct(SuppressSpecialCharacterTransformer $suppressSpecialCharacterClass)
+    public function __construct(SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper)
     {
-        $this->suppressSpecialCharacterClass = $suppressSpecialCharacterClass;
+        $this->suppressSpecialCharacterHelper = $suppressSpecialCharacterHelper;
     }
 
     /**
@@ -48,7 +49,7 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
         $arrayChoice = array();
 
         foreach ($choices as $choice) {
-            $choice = $this->suppressSpecialCharacterClass->transform($choice);
+            $choice = $this->suppressSpecialCharacterHelper->transform($choice, array('_','.'));
             if ('' != $choice) {
                 $arrayChoice[$choice] = $choice;
             }

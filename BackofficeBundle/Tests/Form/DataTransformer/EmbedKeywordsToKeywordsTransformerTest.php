@@ -35,7 +35,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
         $this->keywordRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface');
         Phake::when($this->keywordRepository)->getManager()->thenReturn($this->documentManager);
 
-        $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer');
+        $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface');
 
         $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository, $this->suppressSpecialCharacter, $this->embedKeywordClass, $this->keywordClass);
     }
