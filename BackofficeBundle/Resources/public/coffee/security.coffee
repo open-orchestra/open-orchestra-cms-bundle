@@ -8,7 +8,7 @@ isLoginForm = (html) ->
     false
 
 isInText = (text, message) ->
-  return false if typeof text == 'object'
+  return false if typeof text == 'object' || ! text
   nunberOccurence = text.indexOf message
   if nunberOccurence > 0
     true

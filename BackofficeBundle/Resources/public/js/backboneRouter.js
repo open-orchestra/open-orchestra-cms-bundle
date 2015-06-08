@@ -151,7 +151,8 @@ var OrchestraBORouter = Backbone.Router.extend({
     $('nav li.active').removeClass("active");
     $('nav li:has(a' + selector + ')').addClass("active");
     document.title = $('nav a' + selector).attr('title') || document.title;
-
+    $.ajaxSetup().abortXhr()
+    
     drawBreadCrumb();
     displayLoader();
   },
