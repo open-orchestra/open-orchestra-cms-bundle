@@ -6,7 +6,6 @@ use OpenOrchestra\Backoffice\AuthorizeStatusChange\AuthorizeStatusChangeInterfac
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
-use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Manager;
 
 use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
-use OpenOrchestra\WorkflowFunctionBundle\Manager\AuthorizationWorkflowRightManager;
+use OpenOrchestra\WorkflowFunction\Manager\AuthorizationWorkflowRightManager;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
 
@@ -27,7 +27,13 @@ class WorkflowRightManager
      * @param string                            $workflowRightClass
      * @param string                            $referenceClass
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, WorkflowRightRepositoryInterface $workflowRightRepository, AuthorizationWorkflowRightManager $authorizationWorkflowRightManager, $workflowRightClass, $referenceClass)
+    public function __construct(
+        ContentTypeRepositoryInterface $contentTypeRepository,
+        WorkflowRightRepositoryInterface $workflowRightRepository,
+        AuthorizationWorkflowRightManager $authorizationWorkflowRightManager,
+        $workflowRightClass,
+        $referenceClass
+    )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->workflowRightRepository = $workflowRightRepository;

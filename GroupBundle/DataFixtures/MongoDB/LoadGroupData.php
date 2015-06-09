@@ -10,7 +10,6 @@ use OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStra
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\WorkflowFunctionAdminBundle\LeftPanel\Strategies\WorkflowFunctionPanelStrategy;
 use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\MediaAdminBundle\LeftPanel\Strategies\TreeFolderPanelStrategy;
 
@@ -72,7 +71,6 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
             $group->addRole('ROLE_FROM_DRAFT_TO_PENDING');
             $group->addRole('ROLE_FROM_PENDING_TO_PUBLISHED');
             $group->addRole('ROLE_FROM_PUBLISHED_TO_DRAFT');
-            $group->addRole(WorkflowFunctionPanelStrategy::ROLE_ACCESS_WORKFLOWFUNCTION);
             $group->addRole(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE);
             $group->addRole(TreeFolderPanelStrategy::ROLE_ACCESS_TREE_FOLDER);
