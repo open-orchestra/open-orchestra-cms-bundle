@@ -44,7 +44,7 @@ open_orchestra_media_admin:
             new_media_folder: Nouveau répertoire
             delete_media_folder: Etes vous sûr de supprimer le répertoire %folderName%?
         editorial:
-            mediatheque: Médiathèque
+            media: Médiathèque
     block:
         carrousel:
             description: Fait défiler des images.

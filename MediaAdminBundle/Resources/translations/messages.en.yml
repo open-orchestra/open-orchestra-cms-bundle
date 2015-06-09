@@ -44,7 +44,7 @@ open_orchestra_media_admin:
             new_media_folder: New Folder
             delete_media_folder: Are you sure to delete the folder %folderName% ?
         editorial:
-            mediatheque: Media
+            media: Media
         administration:
     block:
         carrousel:
