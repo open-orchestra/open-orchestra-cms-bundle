@@ -4,7 +4,6 @@ namespace OpenOrchestra\UserAdminBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\ApiBundle\Facade\PaginateCollectionFacade;
-use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**

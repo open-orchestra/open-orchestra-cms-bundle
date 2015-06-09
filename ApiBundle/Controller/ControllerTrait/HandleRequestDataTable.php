@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
