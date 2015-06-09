@@ -186,6 +186,7 @@ var OrchestraBORouter = Backbone.Router.extend({
             }
         });
       }
+      route = route.replace(/\(\/:[^\/]*\)/g, '');
     } else {
       alert('Error, route name is unknown');
       return false;
