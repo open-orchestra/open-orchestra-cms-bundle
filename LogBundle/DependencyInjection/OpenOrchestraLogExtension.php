@@ -25,10 +25,10 @@ class OpenOrchestraLogExtension extends Extension
         foreach ($config['document'] as $class => $content) {
             if (is_array($content)) {
                 $container->setParameter('open_orchestra_log.document.' . $class . '.class', $content['class']);
-
                 $container->register('open_orchestra_log.repository.' . $class, $content['repository'])
-                    ->setFactory('doctrine.odm.mongodb.document_manager::getRepository')
-                    ->addArgument($content['class']);
+                ->setFactoryService('doctrine.odm.mongodb.document_manager')
+                ->setFactoryMethod('getRepository')
+                ->addArgument($content['class']);
             }
         }
 
