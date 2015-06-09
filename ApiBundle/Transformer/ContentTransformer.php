@@ -110,7 +110,6 @@ class ContentTransformer extends AbstractTransformer
     {
         if ($source) {
             if ($facade->statusId) {
-                $fromStatus = $source->getStatus();
                 $toStatus = $this->statusRepository->find($facade->statusId);
                 if ($toStatus) {
                     $event = new StatusableEvent($source, $toStatus);
