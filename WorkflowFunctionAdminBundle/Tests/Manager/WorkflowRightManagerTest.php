@@ -26,7 +26,7 @@ class WorkflowRightManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         $this->workflowRightRepository = Phake::mock('OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface');
-        $this->authorizationWorkflowRightManager = Phake::mock('OpenOrchestra\WorkflowFunctionBundle\Manager\AuthorizationWorkflowRightManager');
+        $this->authorizationWorkflowRightManager = Phake::mock('OpenOrchestra\WorkflowFunction\Manager\AuthorizationWorkflowRightManager');
 
         $this->workflowRightManager = new WorkflowRightManager($this->contentTypeRepository, $this->workflowRightRepository, $this->authorizationWorkflowRightManager, $this->workflowRightClass, $this->referenceClass);
     }
