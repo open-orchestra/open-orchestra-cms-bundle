@@ -21,10 +21,13 @@ OrchestraViewConfigurator = ->
     'showOrchestraModal': OrchestraModalView
     'addFolderConfigurationButton': FolderConfigurationButtonView
     'addFolderDeleteButton': FolderDeleteButtonView
-    'showGalleryCollection': MediaCollectionView
+    'showMediaCollection': MediaCollectionView
+    'showMediaCollectionWysiwyg': MediaCollectionWysiwygView
     'showSuperbox': SuperboxView
-    'showMediaForm': mediaFormView
+    'showMediaForm': MediaFormView
     'showMediaModal': MediaModalView
+    'showMediaWysiwyg': MediaWysiwygView
+    'showMedia': MediaView
 
   setConfiguration: (entityType, action, view) ->
     @configurations[entityType] = [] if typeof @configurations[entityType] == "undefined"

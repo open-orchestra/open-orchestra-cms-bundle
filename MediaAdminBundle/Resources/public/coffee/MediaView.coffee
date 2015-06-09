@@ -20,14 +20,13 @@ MediaView = OrchestraView.extend(
     else
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
-
     @loadTemplates [
-      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView'
+      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView'
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView',
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView',
       media: @options.media
       mediaClass: @mediaClass
       mediaLogo: @mediaLogo
@@ -51,9 +50,9 @@ MediaView = OrchestraView.extend(
       $(".delete-confirm-question").text(),
       $(".delete-confirm-explanation").text(),
       callBackParams:
-        MediaView: @
+        mediaView: @
       yesCallback: (params) ->
-        params.mediaModalView.removeMedia(event)
+        params.mediaView.removeMedia(event)
     )
 
   removeMedia : (event) ->

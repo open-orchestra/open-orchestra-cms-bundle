@@ -1,3 +1,4 @@
+
 MediaCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
@@ -12,6 +13,7 @@ MediaCollectionView = OrchestraView.extend(
     ])
     @loadTemplates [
       "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaCollectionView",
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView"
     ]
     return
 
@@ -25,13 +27,13 @@ MediaCollectionView = OrchestraView.extend(
       @addConfigurationButton()
       @addDeleteButton()
     for mediaKey of @options.medias.get(@options.medias.get('collection_name'))
-      @addElementToView(@options.medias.get(@options.medias.get('collection_name'))[mediaKey], @$el)
+      @addElementToView (@options.medias.get(@options.medias.get('collection_name'))[mediaKey])
     $(".figure").width @options.domContainer.find("img").width()
 
-  addElementToView: (mediaData, el) ->
+  addElementToView: (mediaData) ->
     mediaModel = new MediaModel
     mediaModel.set mediaData
-    viewClass = if el.parents("#select_media_modal").length != 0 then MediaWysiwygView else MediaView
+    viewClass = appConfigurationView.getConfiguration('media', 'showMedia')
     new viewClass(@addOption(
       media: mediaModel
       domContainer: this.$el.find('.superbox')
