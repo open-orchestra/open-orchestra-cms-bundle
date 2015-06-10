@@ -7,11 +7,11 @@
 <% if (media.get('displayed_image') != 'undefined') { %>
         src="<%= media.get('displayed_image') %>"
 <% } else if (media.get('mime_type') == 'application/pdf') { %>
-    {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/media/ico-pdf.png' %}
+    {% image '@OpenOrchestraMediaAdminBundle/Resources/public/images/icon/ico-pdf.png' %}
         src="{{ asset_url }}"
     {% endimage %}
 <% } else { %>
-    {% image '@OpenOrchestraBackofficeBundle/Resources/public/images/media/ico-content.png' %}
+    {% image '@OpenOrchestraMediaAdminBundle/Resources/public/images/icon/ico-content.png' %}
         src="{{ asset_url }}"
     {% endimage %}
 <% } %>
