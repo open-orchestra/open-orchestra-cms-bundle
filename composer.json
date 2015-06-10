@@ -23,9 +23,9 @@
     },
     "require-dev": {
         "open-orchestra/open-orchestra-model-bundle": "dev-master",
-        "phpunit/phpunit" : "4.6.1",
+        "phpunit/phpunit" : "4.7.2",
         "scrutinizer/ocular": "1.1.1",
-        "phake/phake": "2.0.2"
+        "phake/phake": "2.1.0"
     },
     "config" : {
         "bin-dir" : "bin"
