@@ -151,7 +151,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($siteId, $this->contextManager->getCurrentSiteId());
 
-        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_SITE);
+        Phake::verify($this->session, Phake::times(1))->get(ContextManager::KEY_SITE);
     }
 
     /**
@@ -179,7 +179,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($domain, $this->contextManager->getCurrentSiteName());
 
-        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_SITE);
+        Phake::verify($this->session, Phake::times(1))->get(ContextManager::KEY_SITE);
     }
 
     /**
@@ -207,7 +207,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($domain, $this->contextManager->getCurrentSiteDefaultLanguage());
 
-        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_SITE);
+        Phake::verify($this->session, Phake::times(1))->get(ContextManager::KEY_SITE);
     }
 
     /**
