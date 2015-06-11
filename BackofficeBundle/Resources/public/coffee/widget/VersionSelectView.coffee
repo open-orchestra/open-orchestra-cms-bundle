@@ -5,7 +5,11 @@ VersionSelectView = OrchestraView.extend(
     'change': 'changeVersion'
 
   initialize: (options) ->
-    @options = options
+    @options = @reduceOption(options, [
+      'currentVersion'
+      'versions'
+      'domContainer'
+    ])
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersionSelect"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersion"
