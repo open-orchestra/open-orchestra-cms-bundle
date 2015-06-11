@@ -29,13 +29,12 @@ FullPageFormView = OrchestraView.extend(
       return
     return
 
-  addEventOnForm: (e)->
+  addEventOnForm: (event)->
     event.preventDefault()
     viewContext = @
     $("form", @$el).ajaxSubmit
-      context: button: $(".submit_form",e.target).parent()
+      context: button: $(".submit_form",event.target).parent()
       success: (response) ->
-        viewContext.options.html = response
         new FullPageFormView(viewContext.addOption(
           html: response
         ))
