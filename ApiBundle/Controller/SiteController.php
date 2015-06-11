@@ -62,6 +62,10 @@ class SiteController extends BaseController
         );
 
         $repository =  $this->get('open_orchestra_model.repository.site');
+        if ($entityId = $request->get('entityId')) {
+            $element = $repository->find($entityId);
+            return $this->get('open_orchestra_api.transformer_manager')->get('site')->transform($element);
+        }
 
         $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->countByDeleted(false);

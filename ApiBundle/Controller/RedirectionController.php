@@ -62,9 +62,10 @@ class RedirectionController extends BaseController
             'permanent'     => array('key' => 'permanent', 'type' => 'boolean'),
         );
         $repository = $this->get('open_orchestra_model.repository.redirection');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
+        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
     }
 
     /**

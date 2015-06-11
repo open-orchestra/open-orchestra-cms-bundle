@@ -42,9 +42,10 @@ class StatusController extends BaseController
             'display_color' => array('key' => 'displayColor'),
         );
         $repository = $this->get('open_orchestra_model.repository.status');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
+        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
     }
 
     /**

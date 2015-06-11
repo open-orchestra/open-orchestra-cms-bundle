@@ -38,15 +38,20 @@ trait HandleRequestDataTable
      *
      * @return FacadeInterface
      */
-    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
+    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $collectionTransformerManager, TransformerInterface $elementTransformerManager)
     {
+        if ($entityId = $request->get('entityId')) {
+            $element = $entityRepository->find($entityId);
+            return $elementTransformerManager->transform($element);
+        }
+
         list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
         $collection = $entityRepository->findForPaginateAndSearch($mappingEntity, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $entityRepository->count();
         $recordsFiltered = $entityRepository->countWithSearchFilter($mappingEntity, $columns, $search);
 
-        return $this->generateFacadeDataTable($transformerManager, $collection, $recordsTotal, $recordsFiltered);
+        return $this->generateFacadeDataTable($collectionTransformerManager, $collection, $recordsTotal, $recordsFiltered);
     }
 
     /**

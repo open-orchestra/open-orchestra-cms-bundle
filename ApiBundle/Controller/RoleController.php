@@ -60,9 +60,10 @@ class RoleController extends BaseController
             'to_status'   => array('key' => 'toStatus.name'),
         );
         $repository = $this->get('open_orchestra_model.repository.role');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('role_collection');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('role_collection');
+        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('role');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
     }
 
     /**
