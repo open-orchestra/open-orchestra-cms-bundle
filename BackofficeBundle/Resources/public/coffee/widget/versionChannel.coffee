@@ -8,13 +8,17 @@ widgetChannel.bind 'ready', (view) ->
         collection = new VersionviewElement
         collection.set response
         collectionName = collection.get('collection_name')
+        versionSelectView = new VersionSelectView(
+          currentVersion: view.options.multiVersion
+          domContainer: view.$el.find('#version-selectbox')
+        )
         for version of collection.get(collectionName)
           versionElement = new VersionviewModel
           versionElement.set collection.get(collectionName)[version]
           new VersionView(
             element: versionElement
             currentVersion: view.options.multiVersion
-            domContainer: view.$el.find('#version-selectbox')
+            domContainer: versionSelectView.$el
           )
         return
     if view.options.element
