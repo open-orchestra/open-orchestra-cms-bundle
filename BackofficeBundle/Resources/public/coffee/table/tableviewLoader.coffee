@@ -24,6 +24,7 @@ entityViewLoad = (link, entityType, page, entityId, language, version, sourceLan
     data:
       entityId: entityId
       language: language
+      source_language: sourceLanguage
       version: version
     success: (response) ->
       element = new TableviewModel
