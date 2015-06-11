@@ -37,7 +37,7 @@ class TranslatedValueDefaultValueInitializer implements DefaultValueInitializerI
                 /** @var TranslatedValueInterface $translatedValue */
                 $translatedValue = new $translatedValueClass();
                 $translatedValue->setLanguage($defaultLanguage);
-                $properties->add($translatedValue);
+                $properties->set($defaultLanguage, $translatedValue);
             }
         }
     }
