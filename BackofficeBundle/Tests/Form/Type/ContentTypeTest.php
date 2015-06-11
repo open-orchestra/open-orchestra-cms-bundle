@@ -55,18 +55,18 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
      * Test the default options
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolverMock);
+        $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->contentClass,

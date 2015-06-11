@@ -15,10 +15,12 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
+    protected $contentTypeRepository;
     protected $contentRepository;
     protected $contentAttribute;
     protected $contextManager;
     protected $contentClass;
+    protected $contentType;
     protected $keyword;
     protected $content;
 
@@ -27,6 +29,10 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
+        $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
+
         $this->keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
         $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
 
@@ -39,7 +45,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
 
-        $this->manager = new ContentManager($this->contextManager, $this->contentClass);
+        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository);
     }
 
     /**
@@ -87,18 +93,24 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $contentType
      * @param string $language
+     * @param bool   $siteLinked
+     * @param string $siteId
      *
      * @dataProvider provideContentTypeAndLanguage
      */
-    public function testInitializeNewContent($contentType, $language)
+    public function testInitializeNewContent($contentType, $language, $siteLinked, $siteId)
     {
+        Phake::when($this->contentType)->isSiteLinked()->thenReturn($siteLinked);
         Phake::when($this->contextManager)->getDefaultLocale()->thenReturn($language);
+        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
 
         $content = $this->manager->initializeNewContent($contentType, $language);
 
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
         $this->assertSame($language, $content->getLanguage());
         $this->assertSame($contentType, $content->getContentType());
+        $this->assertSame($siteLinked, $content->isSiteLinked());
+        $this->assertSame($siteId, $content->getSiteId());
     }
 
     /**
@@ -107,8 +119,10 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     public function provideContentTypeAndLanguage()
     {
         return array(
-            array('news', 'fr'),
-            array('car', 'en'),
+            array('news', 'fr', true, '1'),
+            array('car', 'en', true, '2'),
+            array('news', 'fr', false, '3'),
+            array('car', 'en', false, '4'),
         );
     }
 }

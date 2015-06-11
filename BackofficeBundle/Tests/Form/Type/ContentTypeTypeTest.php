@@ -49,7 +49,7 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(5))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.add');
         Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.new');
@@ -63,11 +63,11 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Test the default options
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolverMock);
+        $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->class,

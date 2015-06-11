@@ -46,6 +46,11 @@ class ContentFacade extends DeletedFacade
     public $statusId;
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $siteLinked;
+
+    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade>")
      */
     protected $attributes = array();

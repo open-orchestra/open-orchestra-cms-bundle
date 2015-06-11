@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -60,6 +60,10 @@ class ContentTypeType extends AbstractType
                 'required' => false,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.template.helper'),
             ))
+            ->add('siteLinked', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.site_linked',
+                'required' => false,
+            ))
             ->add('fields', 'collection', array(
                 'type' => 'field_type',
                 'allow_add' => true,
@@ -79,9 +83,9 @@ class ContentTypeType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

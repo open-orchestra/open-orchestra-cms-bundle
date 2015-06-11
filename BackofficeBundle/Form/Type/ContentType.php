@@ -6,7 +6,7 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ContentType
@@ -37,8 +37,12 @@ class ContentType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.content.name'
             ))
             ->add('keywords', 'orchestra_keywords', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.keywords',
+                'label' => 'open_orchestra_backoffice.form.content.keywords',
                 'required' => false
+            ))
+            ->add('siteLinked', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content.site_linked',
+                'required' => false,
             ));
 
         $builder->addEventSubscriber($this->contentTypeSubscriber);
@@ -54,9 +58,9 @@ class ContentType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->contentClass,

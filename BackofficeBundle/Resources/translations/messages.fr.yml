@@ -92,6 +92,8 @@ open_orchestra_backoffice:
             name: Nom du contenu
             status: Statut
             language: Langue
+            site_linked: Lié au site courant
+            keywords: Mots-clé
             content_type: Type de contenu
             content_id: Id du contenu
         content_type:
@@ -102,6 +104,7 @@ open_orchestra_backoffice:
             version: Version
             status: Statut
             fields: Champs
+            site_linked: Lié au site courant
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition
@@ -443,11 +446,13 @@ open_orchestra_backoffice:
             status_label: Status
             version: Version
             language: Langue
+            site_linked: Liaison au site
         content_types:
             content_type_id: Clef
             name: Nom
             version: Version
             status_label: Status
+            site_linked: Liaison au site
         keywords:
             label: Etiquette
         role:
