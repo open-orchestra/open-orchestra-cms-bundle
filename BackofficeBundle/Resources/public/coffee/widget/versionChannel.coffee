@@ -10,16 +10,9 @@ widgetChannel.bind 'ready', (view) ->
         collectionName = collection.get('collection_name')
         versionSelectView = new VersionSelectView(
           currentVersion: view.options.multiVersion
+          versions: collection.get(collectionName)
           domContainer: view.$el.find('#version-selectbox')
         )
-        for version of collection.get(collectionName)
-          versionElement = new VersionviewModel
-          versionElement.set collection.get(collectionName)[version]
-          new VersionView(
-            element: versionElement
-            currentVersion: view.options.multiVersion
-            domContainer: versionSelectView.$el
-          )
         return
     if view.options.element
       $('.js-widget-title', view.options.domContainer).html view.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',

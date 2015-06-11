@@ -15,6 +15,14 @@ VersionSelectView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersionSelect')
     @options.domContainer.replaceWith @$el
+    for version of @options.versions
+      versionElement = new VersionviewModel
+      versionElement.set @options.versions[version]
+      new VersionView(
+        element: versionElement
+        currentVersion: @options.currentVersion
+        domContainer: @$el
+      )
     return
 
   changeVersion: (event) ->
