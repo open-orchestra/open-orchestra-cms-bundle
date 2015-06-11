@@ -38,8 +38,6 @@ TableviewAction = OrchestraView.extend(
   clickEdit: (event) ->
     event.preventDefault()
     parent = $('#nav-'+@options.entityType).parent('[data-type]')
-    if (parent.length)
-      @options.entityType = parent[0].getAttribute('data-type')
     parameter =
       'entityType': @options.entityType
       'entityId': @options.element.get('id')
