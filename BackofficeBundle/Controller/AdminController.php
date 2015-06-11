@@ -7,19 +7,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
 /**
- * Class HomepageController
+ * Class AdminController
  */
-class HomepageController extends Controller
+class AdminController extends Controller
 {
     /**
-     * Back Office Home Page
+     * Back Office
      *
      * @Config\Route("", name="homepage")
      * @Config\Route("/{siteId}/homepage/{language}", name="homepage_with_site_id_and_language")
      *
      * @return Response
      */
-    public function homeAction($siteId = null, $language = null)
+    public function adminAction($siteId = null, $language = null)
     {
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
