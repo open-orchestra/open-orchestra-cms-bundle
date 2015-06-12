@@ -26,6 +26,7 @@ adminFormView = OrchestraView.extend(
       body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
       title: "Please wait"
       domContainer: $('#OrchestraBOModal')
+      entityType: viewContext.options.entityType
     )
     $.ajax
       url: @options.url
@@ -46,12 +47,14 @@ adminFormView = OrchestraView.extend(
           footer: footer
           domContainer: $('#OrchestraBOModal')
           extendView: extendView
+          entityType: viewContext.options.entityType
         )
       error: ->
         new viewContext.viewClass(
           body: 'Erreur durant le chargement'
           title: viewContext.options.title
           domContainer: $('#OrchestraBOModal')
+          entityType: viewContext.options.entityType
         )
     return
 )
