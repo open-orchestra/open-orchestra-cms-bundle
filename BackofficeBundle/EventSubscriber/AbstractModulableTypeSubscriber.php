@@ -56,11 +56,11 @@ abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterfa
         }
         $viewTransformers = $form->getConfig()->getViewTransformers();
         $modelTransformers = $form->getConfig()->getModelTransformers();
-        foreach ($viewTransformers as $viewTransformer) {
-            $value = $viewTransformer->reverseTransform($value);
+        for ($i = count($viewTransformers) - 1; $i >= 0; --$i) {
+            $value = $viewTransformers[$i]->reverseTransform($value);
         }
-        foreach ($modelTransformers as $modelTransformer) {
-            $value = $modelTransformer->reverseTransform($value);
+        for ($i = count($modelTransformers) - 1; $i >= 0; --$i) {
+            $value = $modelTransformers[$i]->reverseTransform($value);
         }
 
         return $value;
