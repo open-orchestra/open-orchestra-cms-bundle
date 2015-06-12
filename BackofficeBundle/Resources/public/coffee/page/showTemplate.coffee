@@ -6,7 +6,8 @@ showTemplate = (url)->
     success: (response) ->
       template = new Template
       template.set response
-      new TemplateView(
+      templateViewClass = appConfigurationView.getConfiguration('template', 'showTemplate')
+      new templateViewClass(
         template: template
         domContainer: $('#content')
       )

@@ -86,8 +86,8 @@ TableviewCollectionView = OrchestraView.extend(
   renderColumnActions : (viewContext, td, cellData, rowData) ->
     elementModel = new TableviewModel
     elementModel.set rowData
-
-    new TableviewAction(viewContext.addOption(
+    tableActionViewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'addButtonAction')
+    new tableActionViewClass(viewContext.addOption(
       element: elementModel
       domContainer : $(td)
     ))
@@ -117,7 +117,7 @@ TableviewCollectionView = OrchestraView.extend(
       url: url
       method: 'GET'
       success: (response) ->
-        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'add')
+        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'addEntity')
         new viewClass(viewContext.addOption(
           html: response
           extendView: [ 'generateId' ]

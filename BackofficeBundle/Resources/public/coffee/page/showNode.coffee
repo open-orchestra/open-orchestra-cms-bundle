@@ -7,7 +7,8 @@ showNode = (url, language, version)->
     success: (response) ->
       node = new Node
       node.set response
-      new NodeView(
+      nodeViewClass = appConfigurationView.getConfiguration('node', 'showNode')
+      new nodeViewClass(
         node: node
         domContainer: $('#content')
       )
@@ -15,7 +16,8 @@ showNode = (url, language, version)->
   return
 
 showNodeForm = (parentNode) ->
-  new adminFormView(
+  adminFormViewClass = appConfigurationView.getConfiguration('node', 'showAdminForm')
+  new adminFormViewClass(
     url: parentNode.data("url")
     extendView: [ 'generateId' ]
     title: parentNode.text()

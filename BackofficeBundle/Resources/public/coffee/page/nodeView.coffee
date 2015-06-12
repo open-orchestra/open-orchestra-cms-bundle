@@ -16,6 +16,7 @@ NodeView = OrchestraView.extend(
       'multiLanguage': 'showNodeWithLanguage'
       'multiVersion': 'showNodeWithLanguageAndVersion'
       'duplicate': 'showNodeWithLanguage'
+      'entityType': 'node'
     @options.configuration = @options.node
     @options.published = if @options.node.attributes.status then @options.node.attributes.status.published else true
     @loadTemplates [
@@ -36,7 +37,7 @@ NodeView = OrchestraView.extend(
     )
     @addAreasToView(@options.node.get('areas'))
     @addListBlockToView()
-    @addConfigurationButton()
+    @addConfigurationButton('node')
     if @options.node.attributes.status.published
       $('.js-widget-blockpanel', @$el).hide()
     return
@@ -53,7 +54,8 @@ NodeView = OrchestraView.extend(
           response.blocks[i] = viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView', 
             block : blockElement
           )
-        new BlocksPanelView(
+        blocksPanelViewClass = appConfigurationView.getConfiguration('node', 'showBlocksPanel')
+        new blocksPanelViewClass(
           blocks : response.blocks
           domContainer : $('.js-widget-blockpanel', viewContext.$el))
 

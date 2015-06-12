@@ -1,10 +1,11 @@
-tableViewLoad = (link, entityType, page, entityId, language, version, sourceLanguage) ->
+tableViewLoad = (link, entityType, page) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   translatedHeader = link.data('translated-header').replace(/\s/g, '').split(",") if link.data('translated-header') != undefined
   visibleElements = link.data('visible-elements').replace(/\s/g, '').split(",") if link.data('visible-elements') != undefined
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
-  new TableviewCollectionView(
+  viewClass = appConfigurationView.getConfiguration(entityType, 'showTableCollection')
+  new viewClass(
     displayedElements: displayedElements
     translatedHeader: translatedHeader || displayedElements
     visibleElements: visibleElements || []
@@ -52,7 +53,7 @@ entityViewLoad = (link, entityType, page, entityId, language, version, sourceLan
       panelKeys = []
       for key in Object.keys(links)
         if /^_self_panel_/.test(key)
-          appConfigurationView.setConfiguration(entityType, 'edit', FullPagePanelView)
+          appConfigurationView.setConfiguration(entityType, 'editEntity', FullPagePanelView)
           break
       $.ajax
         url: element.get('links')._self_form
@@ -64,5 +65,5 @@ entityViewLoad = (link, entityType, page, entityId, language, version, sourceLan
             entityType: entityType
             element: element
             domContainer: $('#content')
-          viewClass = appConfigurationView.getConfiguration(entityType, 'edit')
+          viewClass = appConfigurationView.getConfiguration(entityType, 'editEntity')
           new viewClass(options)

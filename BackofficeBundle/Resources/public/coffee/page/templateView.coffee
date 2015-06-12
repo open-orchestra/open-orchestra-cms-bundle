@@ -19,7 +19,7 @@ TemplateView = OrchestraView.extend(
     )
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    @addConfigurationButton()
+    @addConfigurationButton('template')
     @addAreasToView(@options.template.get('areas'))
     return
 

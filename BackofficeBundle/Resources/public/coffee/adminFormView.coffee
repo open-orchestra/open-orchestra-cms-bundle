@@ -9,6 +9,7 @@ adminFormView = OrchestraView.extend(
       'url'
       'extendView'
       'method'
+      'entityType'
     ])
     @deleteButton = @options.deleteUrl && @options.confirmText && @options.confirmTitle
     @method = if @options.method then @options.method else 'GET'
@@ -20,7 +21,8 @@ adminFormView = OrchestraView.extend(
 
   render: ->
     viewContext = this
-    new OrchestraModalView(
+    @viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showOrchestraModal')
+    new @viewClass(
       body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
       title: "Please wait"
       domContainer: $('#OrchestraBOModal')
@@ -38,7 +40,7 @@ adminFormView = OrchestraView.extend(
         extendView = viewContext.options.extendView || []
         if extendView.indexOf('submitAdmin') == -1
           extendView.push 'submitAdmin'
-        new OrchestraModalView(
+        new viewContext.viewClass(
           body: body
           title: viewContext.options.title
           footer: footer
@@ -46,7 +48,7 @@ adminFormView = OrchestraView.extend(
           extendView: extendView
         )
       error: ->
-        new OrchestraModalView(
+        new viewContext.viewClass(
           body: 'Erreur durant le chargement'
           title: viewContext.options.title
           domContainer: $('#OrchestraBOModal')
