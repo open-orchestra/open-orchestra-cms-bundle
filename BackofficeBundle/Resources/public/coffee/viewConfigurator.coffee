@@ -17,6 +17,7 @@ OrchestraViewConfigurator = ->
     'showPreviewLinks': PreviewLinkView
     'showStatus': StatusView
     'showVersion': VersionView
+    'showVersionSelect': VersionSelectView
     'showOrchestraModal': OrchestraModalView
     'addFolderConfigurationButton': FolderConfigurationButtonView
     'addFolderDeleteButton': FolderDeleteButtonView
