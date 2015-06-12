@@ -44,11 +44,11 @@ class Log implements LogInterface
     protected $level;
 
     /**
-     * @var string $level_name
+     * @var string $levelName
      *
      * @ODM\Field(type="string")
      */
-    protected $level_name;
+    protected $levelName;
 
     /**
      * @var string $channel
@@ -108,7 +108,7 @@ class Log implements LogInterface
      */
     public function getLevelName()
     {
-        return $this->level_name;
+        return $this->levelName;
     }
 
     /**

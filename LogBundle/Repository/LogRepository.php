@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\LogBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
 /**
@@ -10,8 +9,6 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class LogRepository extends DocumentRepository implements LogRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
-
     /**
      * @param array|null  $descriptionEntity
      * @param array|null  $columns
