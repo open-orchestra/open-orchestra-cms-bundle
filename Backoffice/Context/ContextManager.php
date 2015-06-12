@@ -29,10 +29,11 @@ class ContextManager implements CurrentSiteIdInterface
      * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
      */
-    public function __construct(Session $session, TokenStorageInterface $tokenStorage)
+    public function __construct(Session $session, TokenStorageInterface $tokenStorage, $defaultLocale)
     {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
+        $this->defaultLocale = $defaultLocale;
     }
 
     /**
@@ -45,10 +46,12 @@ class ContextManager implements CurrentSiteIdInterface
         $currentLanguage = $this->session->get(self::KEY_LOCALE);
 
         if (!$currentLanguage) {
+            $currentLanguage = $this->defaultLocale;
             $token = $this->tokenStorage->getToken();
             if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
                 $currentLanguage = $user->getLanguage();
             }
+            $this->setCurrentLocale($currentLanguage);
         }
 
         return $currentLanguage;
