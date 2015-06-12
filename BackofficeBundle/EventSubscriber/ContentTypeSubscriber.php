@@ -66,6 +66,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
             $content->setContentTypeVersion($contentType->getVersion());
             foreach ($contentType->getFields() as $contentTypeField) {
                 $contentTypeFieldId = $contentTypeField->getFieldId();
+                $data[$contentTypeFieldId] = isset($data[$contentTypeFieldId]) ? $data[$contentTypeFieldId] : null;
                 if ($attribute = $content->getAttributeByName($contentTypeFieldId)) {
                     $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
                 } elseif (is_null($attribute)) {
