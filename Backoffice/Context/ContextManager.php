@@ -20,12 +20,12 @@ class ContextManager implements CurrentSiteIdInterface
     protected $session;
     protected $tokenStorage;
     protected $currentLanguage;
+    protected $defaultLocale;
 
     /**
      * Constructor
      *
      * @param Session                 $session
-     * @param SiteRepositoryInterface $siteRepository
      * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
      */
