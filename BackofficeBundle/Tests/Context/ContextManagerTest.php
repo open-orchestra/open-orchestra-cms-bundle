@@ -223,11 +223,4 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * Test default language
-     */
-    public function testGetDefaultLocale()
-    {
-        $this->assertSame($this->defaultLocale, $this->contextManager->getDefaultLocale());
-    }
 }

@@ -28,7 +28,7 @@ class ContentController extends AbstractAdminController
     {
         $language = $request->get(
             'language',
-            $this->get('open_orchestra_backoffice.context_manager')->getDefaultLocale()
+            $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage()
         );
         $version = $request->get('version');
 
@@ -62,9 +62,9 @@ class ContentController extends AbstractAdminController
 
     /**
      * Get Form Template related to content of $contentTypeId
-     * 
+     *
      * @param string $contentTypeId
-     * 
+     *
      * @return string
      */
     protected function getFormTemplate($contentTypeId)
