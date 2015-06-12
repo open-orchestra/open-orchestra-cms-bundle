@@ -29,7 +29,7 @@ class ContentTypeFacade extends AbstractFacade
     /**
      * @Serializer\Type("boolean")
      */
-    public $siteLinked;
+    public $linkedToSite;
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\FieldTypeFacade>")

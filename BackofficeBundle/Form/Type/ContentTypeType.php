@@ -60,8 +60,8 @@ class ContentTypeType extends AbstractType
                 'required' => false,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_type.template.helper'),
             ))
-            ->add('siteLinked', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content_type.site_linked',
+            ->add('linkedToSite', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content_type.linked_to_site',
                 'required' => false,
             ))
             ->add('fields', 'collection', array(

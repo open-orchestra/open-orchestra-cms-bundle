@@ -93,14 +93,14 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $contentType
      * @param string $language
-     * @param bool   $siteLinked
+     * @param bool   $linkedToSite
      * @param string $siteId
      *
      * @dataProvider provideContentTypeAndLanguage
      */
-    public function testInitializeNewContent($contentType, $language, $siteLinked, $siteId)
+    public function testInitializeNewContent($contentType, $language, $linkedToSite, $siteId)
     {
-        Phake::when($this->contentType)->isSiteLinked()->thenReturn($siteLinked);
+        Phake::when($this->contentType)->isLinkedToSite()->thenReturn($linkedToSite);
         Phake::when($this->contextManager)->getDefaultLocale()->thenReturn($language);
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId);
 
@@ -109,7 +109,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
         $this->assertSame($language, $content->getLanguage());
         $this->assertSame($contentType, $content->getContentType());
-        $this->assertSame($siteLinked, $content->isSiteLinked());
+        $this->assertSame($linkedToSite, $content->isLinkedToSite());
         $this->assertSame($siteId, $content->getSiteId());
     }
 

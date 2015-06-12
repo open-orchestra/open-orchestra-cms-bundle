@@ -92,7 +92,7 @@ open_orchestra_backoffice:
             name: Content name
             status: Status
             language: Language
-            site_linked: Link to the current site
+            linked_to_site: Link to the current site
             keywords: Keywords
             content_type: Content type
             content_id: Content id
@@ -103,7 +103,7 @@ open_orchestra_backoffice:
             names: Names in all the languages
             version: Version
             status: Status
-            site_linked: Link to the current site
+            linked_to_site: Link to the current site
             fields: Fields
             keywords: Keywords
             template:
@@ -446,13 +446,13 @@ open_orchestra_backoffice:
             status_label: Status label
             version: Version
             language: Language
-            site_linked: Site linked
+            linked_to_site: Site linked
         content_types:
             content_type_id: Content type id
             name: Name
             version: Version
             status_label: Status label
-            site_linked: Site linked
+            linked_to_site: Site linked
         keywords:
             label: Label
         role:

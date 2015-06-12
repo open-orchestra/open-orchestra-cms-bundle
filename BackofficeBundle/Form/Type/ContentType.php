@@ -40,8 +40,8 @@ class ContentType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.content.keywords',
                 'required' => false
             ))
-            ->add('siteLinked', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.content.site_linked',
+            ->add('linkedToSite', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.content.linked_to_site',
                 'required' => false,
             ));
 

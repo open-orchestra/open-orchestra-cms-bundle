@@ -57,7 +57,7 @@ class ContentManager
         $content->setContentType($contentType);
 
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($contentType);
-        $content->setSiteLinked($contentType->isSiteLinked());
+        $content->setLinkedToSite($contentType->isLinkedToSite());
 
         return $content;
     }
