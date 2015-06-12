@@ -39,7 +39,6 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/widget/PreviewLinkView.js',
         'web/built/openorchestrabackoffice/js/widget/statusChannel.js',
         'web/built/openorchestrabackoffice/js/widget/StatusView.js',
-        'web/built/openorchestrabackoffice/js/widget/StatusView2.js',
         'web/built/openorchestrabackoffice/js/widget/versionChannel.js',
         'web/built/openorchestrabackoffice/js/widget/VersionSelectView.js',
         'web/built/openorchestrabackoffice/js/widget/VersionView.js',
