@@ -9,7 +9,8 @@ GalleryLoad = (link, target) ->
     success: (response) ->
       medias = new GalleryElement
       medias.set response
-      new GalleryCollectionView(
+      viewClass = appConfigurationView.getConfiguration('media', 'showGalleryCollection')
+      new viewClass(
         medias: medias
         title: title
         listUrl: listUrl

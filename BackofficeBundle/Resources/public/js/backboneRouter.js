@@ -166,8 +166,8 @@ var OrchestraBORouter = Backbone.Router.extend({
       method: 'GET',
       success: function(response) {
         $('#OrchestraBOModal').modal('show');
-        var view;
-        return view = new adminFormView({
+          var viewClass = appConfigurationView.getConfiguration('node', 'showAdminForm')
+          return new viewClass({
           html: response
         });
       }

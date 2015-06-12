@@ -18,10 +18,12 @@ FolderConfigurationButtonView = OrchestraView.extend(
 
   clickEditFolder: (event) ->
     event.preventDefault()
-    new adminFormView(
+    viewClass = appConfigurationView.getConfiguration('media', 'showAdminForm')
+    new viewClass(
       url: @options.medias.get('links')._self_folder
       deleteurl: @options.medias.get('links')._self_delete
       title: $(event.target).html()
+      entityType: 'media'
     )
 
 )
