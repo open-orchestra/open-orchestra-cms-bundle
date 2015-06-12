@@ -37,7 +37,7 @@ module.exports = {
         src: 'bower_components/open-sans/fonts/semibold',
         dest: 'web/fonts/semibold'
     },
-    open_sans_fontssemibold_italic: {
+    open_sans_fonts_semibold_italic: {
         src: 'bower_components/open-sans/fonts/semibold-italic',
         dest: 'web/fonts/semibold-italic'
     },
@@ -61,7 +61,7 @@ module.exports = {
         src: 'bower_components/font-awesome/fonts/fontawesome-webfont.woff',
         dest: 'web/fonts/fontawesome-webfont.woff'
     },
-    fontawesome_font_woff: {
+    fontawesome_font_woff2: {
         src: 'bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
         dest: 'web/fonts/fontawesome-webfont.woff2'
     },
