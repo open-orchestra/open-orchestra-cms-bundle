@@ -4,21 +4,25 @@ namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentManager
  */
 class ContentManager
 {
+    protected $contentTypeRepository;
     protected $contextManager;
     protected $contentClass;
 
     /**
-     * @param ContextManager $contextManager
-     * @param string         $contentClass
+     * @param ContextManager                 $contextManager
+     * @param string                         $contentClass
+     * @param ContentTypeRepositoryInterface $contentTypeRepository
      */
-    public function __construct(ContextManager $contextManager, $contentClass)
+    public function __construct(ContextManager $contextManager, $contentClass, ContentTypeRepositoryInterface $contentTypeRepository)
     {
+        $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
     }
@@ -49,7 +53,11 @@ class ContentManager
         /** @var ContentInterface $content */
         $content = new $contentClass();
         $content->setLanguage($this->contextManager->getDefaultLocale());
+        $content->setSiteId($this->contextManager->getCurrentSiteId());
         $content->setContentType($contentType);
+
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($contentType);
+        $content->setLinkedToSite($contentType->isLinkedToSite());
 
         return $content;
     }

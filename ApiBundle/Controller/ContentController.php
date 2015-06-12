@@ -103,6 +103,7 @@ class ContentController extends BaseController
     public function listAction(Request $request)
     {
         $contentType = $request->get('content_type');
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
         $columnsNameToEntityAttribute = array(
@@ -113,7 +114,7 @@ class ContentController extends BaseController
         );
 
         $repository =  $this->get('open_orchestra_model.repository.content');
-        $contentCollection = $repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $contentCollection = $repository->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $columnsNameToEntityAttribute, $columns, $search, $siteId, $order, $skip, $limit);
         $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
         $recordsFiltered = $repository->countByContentTypeInLastVersionWithSearchFilter($contentType, $columnsNameToEntityAttribute, $columns, $search);
 

@@ -84,12 +84,13 @@
 
 {% macro menu_content_types_for_content(contentTypes, name) %}
     {% for contentType in contentTypes %}
-        {% set displayedElement = 'name, status_label, version, language' %}
+        {% set displayedElement = 'name, status_label, version, language, linked_to_site' %}
         {% set translatedHeader = 'open_orchestra_backoffice.table.content_type.name'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.status_label'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.version'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.language'|trans %}
-        {% set visibleElement = '0, 1, 2, 3' %}
+                                    'open_orchestra_backoffice.table.content_type.language'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.linked_to_site'|trans %}
+        {% set visibleElement = '0, 1, 2, 3, 4' %}
         {% for field in contentType.fields %}
             {% set displayedElement = displayedElement ~ ', linearize_attributes.' ~ field.fieldId %}
             {% set translatedHeader = translatedHeader ~ ', ' ~ field.labels|trans_choose %}

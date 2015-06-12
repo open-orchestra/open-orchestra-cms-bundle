@@ -51,6 +51,7 @@ class ContentTransformer extends AbstractTransformer
         $facade->createdAt = $mixed->getCreatedAt();
         $facade->updatedAt = $mixed->getUpdatedAt();
         $facade->deleted = $mixed->getDeleted();
+        $facade->linkedToSite = $mixed->isLinkedToSite();
 
         foreach ($mixed->getAttributes() as $attribute) {
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
