@@ -70,6 +70,10 @@ class FieldTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
             ))
+            ->add('translatable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.translatable',
+                'required' => false,
+            ))
             ->add('type', 'choice', array(
                 'choices' => $this->getChoices(),
                 'label' => 'open_orchestra_backoffice.form.field_type.type',

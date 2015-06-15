@@ -43,6 +43,7 @@ open_orchestra_backoffice:
             labels: Libellé
             default_value: Valeur par défaut
             searchable: Recherchable
+            translatable: Traduisible
             listable: Visible dans les listes du Backoffice
             type: Type
             options: Champ existant
