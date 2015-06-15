@@ -25,9 +25,9 @@ class UserTypeTest extends AbstractUserTypeTest
     {
         parent::setUp();
         $this->twig = Phake::mock('Twig_Environment');
-        Phake::when($this->twig)->getGlobals()->thenReturn(array(0 => 'en', 1 => 'fr'));
+        $parameters = array(0 => 'en', 1 => 'fr');
 
-        $this->form = new UserType($this->class, $this->twig);
+        $this->form = new UserType($this->class, $parameters);
     }
 
     /**
