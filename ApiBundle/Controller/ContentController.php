@@ -68,6 +68,20 @@ class ContentController extends BaseController
      */
     public function showOrCreateAction(Request $request, $contentId)
     {
+        $content = $this->showOrCreate($request, $contentId);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $contentId
+     *
+     * @return ContentInterface
+     * @throws SourceLanguageNotFoundHttpException
+     */
+    protected function showOrCreate(Request $request, $contentId)
+    {
         $language = $request->get('language');
         $content = $this->findOneContent($contentId, $language, $request->get('version'));
 
@@ -83,7 +97,7 @@ class ContentController extends BaseController
             $dm->flush($content);
         }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('content')->transform($content);
+        return $content;
     }
 
     /**
@@ -114,11 +128,18 @@ class ContentController extends BaseController
         );
 
         $repository =  $this->get('open_orchestra_model.repository.content');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_collection');
+
+        if ($request->get('entityId') && $request->get('language')) {
+            $content = $this->showOrCreate($request, $request->get('entityId'));
+            return $transformer->transform(array($content), $contentType);
+        }
+
         $contentCollection = $repository->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $columnsNameToEntityAttribute, $columns, $search, $siteId, $order, $skip, $limit);
         $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
         $recordsFiltered = $repository->countByContentTypeInLastVersionWithSearchFilter($contentType, $columnsNameToEntityAttribute, $columns, $search);
 
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contentCollection, $contentType);
+        $facade = $transformer->transform($contentCollection, $contentType);
         $facade->recordsTotal = $recordsTotal;
         $facade->recordsFiltered = $recordsFiltered;
 

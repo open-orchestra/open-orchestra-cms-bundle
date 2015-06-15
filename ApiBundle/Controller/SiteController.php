@@ -62,11 +62,16 @@ class SiteController extends BaseController
         );
 
         $repository =  $this->get('open_orchestra_model.repository.site');
+        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
+
+        if ($entityId = $request->get('entityId')) {
+            $element = $repository->find($entityId);
+            return $transformer->transform(array($element));
+        }
 
         $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
         $recordsTotal = $repository->countByDeleted(false);
         $recordsFiltered = $repository->countByDeletedWithSearchFilter(false, $columnsNameToEntityAttribute, $columns, $search);
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
 
         return $this->generateFacadeDataTable($transformer, $siteCollection, $recordsTotal, $recordsFiltered);
     }

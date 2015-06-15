@@ -38,9 +38,9 @@ class ApiClientController extends BaseController
             'trusted' => array('key' => 'trusted', 'type' => 'boolean'),
         );
         $repository = $this->get('open_orchestra_api.repository.api_client');
-        $transformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $transformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
     }
 
     /**
