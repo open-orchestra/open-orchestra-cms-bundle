@@ -33,7 +33,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
-        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
@@ -56,7 +56,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolver()
     {
-        $this->form->setDefaultOptions($this->resolver);
+        $this->form->configureOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
@@ -78,7 +78,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
@@ -95,7 +95,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
-        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
