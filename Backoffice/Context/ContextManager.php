@@ -48,7 +48,7 @@ class ContextManager implements CurrentSiteIdInterface
         if (!$currentLanguage) {
             $currentLanguage = $this->defaultLocale;
             $token = $this->tokenStorage->getToken();
-            if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
+            if ($token && ($user = $token->getUser())) {
                 $currentLanguage = $user->getLanguage();
             }
             $this->setCurrentLocale($currentLanguage);

@@ -28,7 +28,7 @@ class ContentController extends AbstractAdminController
     {
         $language = $request->get(
             'language',
-            $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteDefaultLanguage()
+            $this->get('open_orchestra_backoffice.context_manager')->getDefaultLocale()
         );
         $version = $request->get('version');
 
