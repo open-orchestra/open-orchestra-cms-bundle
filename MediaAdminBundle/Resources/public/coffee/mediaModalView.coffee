@@ -1,3 +1,5 @@
+formChannel = new (Backbone.Wreqr.EventAggregator)
+
 currentModal = null
 
 MediaModalView = OrchestraView.extend(
@@ -11,6 +13,7 @@ MediaModalView = OrchestraView.extend(
       'body'
       'input'
       'domContainer'
+      'url'
     ])
     @loadTemplates [
       "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView"
@@ -31,11 +34,22 @@ MediaModalView = OrchestraView.extend(
   showFolder: (event) ->
     displayLoader $(".modal-body-content", @$el)
     GalleryLoad $(event.target), $(".modal-body-content", @$el)
+  reloadFolder: ->
+    displayLoader $('.modal-body-menu', @$el)
+    viewContext = @
+    $.ajax
+      url: @options.url
+      method: 'GET'
+      success: (response) ->
+        $('.modal-body-menu', currentModal).html response
+    return
   openForm: (event) ->
     event.preventDefault()
     displayLoader $(".modal-body-content", @$el)
     folderName = $(".js-widget-title", @$el).text()
     domContainer = $(".modal-body-content", @$el)
+    if $(event.target).hasClass('media-modal-menu-new-folder')
+      @listenToOnce(formChannel, 'formSubmit', @reloadFolder)
     $.ajax
       url: $(event.target).attr('data-url')
       method: 'GET'

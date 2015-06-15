@@ -30,6 +30,7 @@ mediaFormView = OrchestraView.extend(
       context:
         button: $(".submit_form",event.currentTarget).parent()
       success: (response) ->
+        formChannel.trigger 'formSubmit'
         viewClass = appConfigurationView.getConfiguration('media', 'showMediaForm')
         new viewClass(viewContext.addOption(
           html: response
