@@ -7,7 +7,7 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelBundle\Document\FieldType;
 
@@ -70,6 +70,10 @@ class FieldTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
             ))
+            ->add('translatable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.translatable',
+                'required' => false,
+            ))
             ->add('type', 'choice', array(
                 'choices' => $this->getChoices(),
                 'label' => 'open_orchestra_backoffice.form.field_type.type',
@@ -93,9 +97,9 @@ class FieldTypeType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
