@@ -471,9 +471,6 @@ open_orchestra_backoffice:
             published: Published
             display_color: Display Color
             initial: Initial
-        user:
-            username: Username
-            groups: Groups
         api_client:
             name: Name
             trusted: Trusted

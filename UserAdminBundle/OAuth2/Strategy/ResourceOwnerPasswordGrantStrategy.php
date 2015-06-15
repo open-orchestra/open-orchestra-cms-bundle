@@ -47,6 +47,7 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
         $this->encoderFactory = $encoderFactory;
         $this->userRepository = $userRepository;
     }
+
     /**
      * @param Request $request
      *

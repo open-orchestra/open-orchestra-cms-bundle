@@ -6,3 +6,6 @@ open_orchestra_user_admin:
     user:
         profile: Profil
         password: Mot de passe
+    table:
+        username: Nom
+        groups: Groupes
