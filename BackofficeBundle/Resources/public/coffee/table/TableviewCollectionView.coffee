@@ -106,9 +106,6 @@ TableviewCollectionView = OrchestraView.extend(
 
   clickAdd: (event) ->
     event.preventDefault()
-    parent = $('#nav-'+@options.entityType).parent('[data-type]')
-    if (parent.length)
-      @options.entityType = parent[0].getAttribute('data-type')
     displayLoader('div[role="container"]')
     Backbone.history.navigate(@addUrl)
     viewContext = @
