@@ -127,10 +127,12 @@ AreaView = OrchestraView.extend(
       url: @options.area.get("links")._self_delete
       method: "POST"
       error: ->
-        new OrchestraModalView(
+        viewClass = appConfigurationView.getConfiguration('area', 'showOrchestraModal')
+        new viewClass(
           body: currentView.$el.data('delete-error-txt')
           title: currentView.$el.data('delete-error-title')
           domContainer: $('#OrchestraBOModal')
+          entityType: 'area'
         )
     return
 )

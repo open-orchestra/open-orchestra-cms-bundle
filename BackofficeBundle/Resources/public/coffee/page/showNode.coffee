@@ -21,5 +21,6 @@ showNodeForm = (parentNode) ->
     url: parentNode.data("url")
     extendView: [ 'generateId' ]
     title: parentNode.text()
+    entityType: 'node'
   )
   return

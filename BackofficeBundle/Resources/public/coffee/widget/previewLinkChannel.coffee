@@ -3,4 +3,5 @@ widgetChannel.bind 'ready', (view) ->
     viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showPreviewLinks')
     new viewClass(
       previewLinks: view.options.node.get('preview_links')
+      entityType: view.options.entityType
     )

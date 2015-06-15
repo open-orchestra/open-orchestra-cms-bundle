@@ -12,5 +12,6 @@ widgetChannel.bind 'ready', (view) ->
               language: site.get('languages')[language]
               domContainer: view.$el.find('#entity-languages')
               currentLanguage: view.options.multiLanguage
+              entityType: view.options.entityType
             )
         return

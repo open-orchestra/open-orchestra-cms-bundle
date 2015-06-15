@@ -9,7 +9,7 @@ widgetChannel.bind 'ready', (view) ->
         collection.set response
         collectionName = collection.get('collection_name')
         viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showVersionSelect')
-        versionSelectView = new viewClass(
+        new viewClass(
           currentVersion: view.options.multiVersion
           versions: collection.get(collectionName)
           domContainer: view.$el.find('#version-selectbox')

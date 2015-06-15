@@ -28,6 +28,7 @@ VersionSelectView = OrchestraView.extend(
         element: versionElement
         currentVersion: @options.currentVersion
         domContainer: @$el
+        entityType: @options.entityType
       )
     return
 

@@ -11,5 +11,6 @@ widgetChannel.bind 'ready', (view) ->
         new viewClass(
           statuses: response.statuses
           currentStatus: view.options.multiStatus
+          entityType: view.options.entityType
         )
         return

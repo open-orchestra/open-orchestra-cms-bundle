@@ -4,4 +4,5 @@ widgetChannel.bind 'ready', (view) ->
     new viewClass(
         domContainer: view.$el.find('#entity-duplicate')
         currentDuplicate: view.options.duplicate
+        entityType: view.options.entityType
       )
