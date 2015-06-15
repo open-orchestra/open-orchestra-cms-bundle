@@ -25,9 +25,11 @@ BlockView = OrchestraView.extend(
     return
 
   paramBlock: (event) ->
-    new adminFormView(
+    adminFormViewClass = appConfigurationView.getConfiguration('area', 'showAdminForm')
+    new adminFormViewClass(
       url: @options.block.get('links')._self_form
       extendView: [ 'showVideo' ]
+      entityType: 'block'
     )
 
   confirmRemoveBlock: (event) ->

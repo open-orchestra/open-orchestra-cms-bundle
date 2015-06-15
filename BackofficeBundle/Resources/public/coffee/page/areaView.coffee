@@ -49,16 +49,19 @@ AreaView = OrchestraView.extend(
     event.stopImmediatePropagation()
     label = "~no label yet~"
     label = @options.area.get("label")  if @options.area.get("label") isnt undefined
-    new adminFormView(
+    adminFormViewClass = appConfigurationView.getConfiguration('area', 'showAdminForm')
+    new adminFormViewClass(
       url: @options.area.get("links")._self_form
       title: "Area : " + label
+      entityType: 'area'
     )
     return
 
   addBlockToView: (block) ->
     blockElement = new Block()
     blockElement.set block
-    new BlockView(@addOption(
+    blockViewClass = appConfigurationView.getConfiguration('area', 'addBlock')
+    new blockViewClass(@addOption(
       block: blockElement
       domContainer: @subBlocks
       viewContainer: @
@@ -124,10 +127,12 @@ AreaView = OrchestraView.extend(
       url: @options.area.get("links")._self_delete
       method: "POST"
       error: ->
-        new OrchestraModalView(
+        viewClass = appConfigurationView.getConfiguration('area', 'showOrchestraModal')
+        new viewClass(
           body: currentView.$el.data('delete-error-txt')
           title: currentView.$el.data('delete-error-title')
           domContainer: $('#OrchestraBOModal')
+          entityType: 'area'
         )
     return
 )

@@ -37,7 +37,6 @@ TableviewAction = OrchestraView.extend(
 
   clickEdit: (event) ->
     event.preventDefault()
-    parent = $('#nav-'+@options.entityType).parent('[data-type]')
     parameter =
       'entityType': @options.entityType
       'entityId': @options.element.get('id')
@@ -63,6 +62,6 @@ TableviewAction = OrchestraView.extend(
       url: links._self_form
       method: "GET"
       success: (response) ->
-        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'edit')
+        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'editEntity')
         new viewClass(viewContext.addOption(html: response, domContainer: $('#content')))
 )

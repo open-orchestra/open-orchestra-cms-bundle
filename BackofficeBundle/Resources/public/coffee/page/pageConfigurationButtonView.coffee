@@ -6,6 +6,7 @@ PageConfigurationButtonView = OrchestraView.extend(
     @options = @reduceOption(options, [
       'configuration'
       'viewContainer'
+      'entityType'
     ])
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageConfigurationButton"
@@ -29,5 +30,6 @@ PageConfigurationButtonView = OrchestraView.extend(
       title: @options.configuration.get('name')
     if @options.configuration.attributes.alias is ''
       $.extend options, extendView: [ 'generateId']
-    new adminFormView(options)
+    adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
+    new adminFormViewClass(options)
 )

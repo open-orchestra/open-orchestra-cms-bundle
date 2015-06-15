@@ -17,7 +17,8 @@ extendView['orchestraMediaType'] =
     modal = $('#' + target.data("target"), @$el)
     inputId = target.data("input")
     url = target.data("url")
-    new MediaModalView(
+    viewClass = appConfigurationView.getConfiguration('media', 'showMediaModal')
+    new viewClass(
       body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
       domContainer: modal
       input: inputId
@@ -26,13 +27,13 @@ extendView['orchestraMediaType'] =
       url: url
       method: @method
       success: (response) ->
-        new MediaModalView(
+        new viewClass(
           body: response
           domContainer: modal
           input: inputId
         )
       error: ->
-        new MediaModalView(
+        new viewClass(
           body: 'Erreur durant le chargement'
           domContainer: modal
           input: inputId

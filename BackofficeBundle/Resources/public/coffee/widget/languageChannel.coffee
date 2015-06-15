@@ -7,9 +7,11 @@ widgetChannel.bind 'ready', (view) ->
         site = new Site
         site.set response
         for language of site.get('languages')
-          new LanguageView(
-            language: site.get('languages')[language]
-            domContainer: view.$el.find('#entity-languages')
-            currentLanguage: view.options.multiLanguage
-          )
+          viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showLanguage')
+          new viewClass(
+              language: site.get('languages')[language]
+              domContainer: view.$el.find('#entity-languages')
+              currentLanguage: view.options.multiLanguage
+              entityType: view.options.entityType
+            )
         return

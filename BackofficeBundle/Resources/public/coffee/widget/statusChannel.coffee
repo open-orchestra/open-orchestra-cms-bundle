@@ -7,8 +7,10 @@ widgetChannel.bind 'ready', (view) ->
         version: view.options.multiStatus.version
       url: view.options.multiStatus.status_list
       success: (response) ->
-        new StatusView(
+        viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showStatus')
+        new viewClass(
           statuses: response.statuses
           currentStatus: view.options.multiStatus
+          entityType: view.options.entityType
         )
         return

@@ -48,17 +48,19 @@ GalleryCollectionView = OrchestraView.extend(
         url: @options.medias.get('links')._self_add
         method: 'GET'
         success: (response) ->
-          viewClass = appConfigurationView.getConfiguration('media', 'add')
+          viewClass = appConfigurationView.getConfiguration('media', 'addEntity')
           new viewClass(viewContext.addOption(
             html: response
           ))
 
   addConfigurationButton: ->
     if @options.medias.get('links')._self_folder != undefined
-      new FolderConfigurationButtonView(@options)
+      viewClass = appConfigurationView.getConfiguration('media', 'addFolderConfigurationButton')
+      new viewClass(@options)
 
   addDeleteButton: ->
     if @options.medias.get('is_folder_deletable')
       if @options.medias.get('links')._self_delete != undefined
-        new FolderDeleteButtonView(@options)
+        viewClass = appConfigurationView.getConfiguration('media', 'addFolderDeleteButton')
+        new viewClass(@options)
 )
