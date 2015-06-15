@@ -69,6 +69,16 @@ class ContextManager implements CurrentSiteIdInterface
     }
 
     /**
+     * Get default locale
+     *
+     * @return string
+     */
+    public function getDefaultLocale()
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
      * Get availables sites on platform
      *
      * @return array<SiteInterface>
