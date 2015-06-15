@@ -20,7 +20,7 @@ class UserType extends AbstractType
      * @param string $class
      * @param array  $availableLanguages
      */
-    public function __construct($class, $availableLanguages)
+    public function __construct($class, array $availableLanguages)
     {
         $this->class = $class;
         $this->languages = array();
