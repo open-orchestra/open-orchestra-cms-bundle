@@ -278,8 +278,6 @@ open_orchestra_backoffice:
                 list: Keywords
             deleted:
                 list: Trashcan
-            logs:
-                list: Logs
     block:
         configurable_content:
             title: Configurable content block
@@ -481,12 +479,6 @@ open_orchestra_backoffice:
         websites:
             site_id: Site id
             name: Name
-        log:
-          date_time: Date time
-          user_ip: User IP
-          user_name: User name
-          site_name: Site name
-          message: Message
         deleted:
           name: Name
           updated_at: Deleted at

@@ -278,8 +278,6 @@ open_orchestra_backoffice:
                 list: Mots-clés
             deleted:
                 list: Corbeille
-            logs:
-                list: Logs
     block:
         configurable_content:
             title: Bloc contenu paramétrable
@@ -481,12 +479,6 @@ open_orchestra_backoffice:
         websites:
             site_id: Clef
             name: Nom
-        log:
-          date_time: Horaire
-          user_ip: Ip
-          user_name: Utilisateur
-          site_name: Site
-          message: Message
         deleted:
           name: Nom
           updated_at: Supprimé le

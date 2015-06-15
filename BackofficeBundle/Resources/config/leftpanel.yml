@@ -111,10 +111,3 @@ services:
             - editorial
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
-    open_orchestra_backoffice.left_panel.log:
-        class: %open_orchestra_backoffice.left_panel.administration.class%
-        arguments:
-            - logs
-            - ROLE_ACCESS_LOG
-        tags:
-            - { name: open_orchestra_backoffice.left_panel.strategy }
