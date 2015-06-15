@@ -38,11 +38,11 @@ trait HandleRequestDataTable
      *
      * @return FacadeInterface
      */
-    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $collectionTransformerManager, TransformerInterface $elementTransformerManager)
+    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $collectionTransformerManager)
     {
         if ($entityId = $request->get('entityId')) {
             $element = $entityRepository->find($entityId);
-            return $elementTransformerManager->transform($element);
+            return $collectionTransformerManager->transform(array($element));
         }
 
         list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);

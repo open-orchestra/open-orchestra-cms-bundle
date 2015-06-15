@@ -39,9 +39,8 @@ class ApiClientController extends BaseController
         );
         $repository = $this->get('open_orchestra_api.repository.api_client');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
-        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
     }
 
     /**

@@ -43,9 +43,8 @@ class StatusController extends BaseController
         );
         $repository = $this->get('open_orchestra_model.repository.status');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
-        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
     }
 
     /**

@@ -81,9 +81,8 @@ class KeywordController extends BaseController
         );
         $repository = $this->get('open_orchestra_model.repository.keyword');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection');
-        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
     }
 
     /**

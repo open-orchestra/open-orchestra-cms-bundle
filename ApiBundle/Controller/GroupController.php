@@ -59,9 +59,8 @@ class GroupController extends BaseController
         );
         $repository = $this->get('open_orchestra_user.repository.group');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
-        $elementTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer, $elementTransformer);
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
     }
 
     /**
