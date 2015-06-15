@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Context;
 
 use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
