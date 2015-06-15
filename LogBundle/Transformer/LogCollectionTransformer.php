@@ -27,6 +27,7 @@ class LogCollectionTransformer extends AbstractTransformer
 
         return $facade;
     }
+
     /**
      * @return string
      */

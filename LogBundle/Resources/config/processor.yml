@@ -5,7 +5,7 @@ services:
     open_orchestra_log.processor.log_user:
         class: %open_orchestra_log.processor.log_user.class%
         arguments:
-            - @security.context
+            - @security.token_storage
             - @request_stack
             - @open_orchestra_backoffice.context_manager
         tags:

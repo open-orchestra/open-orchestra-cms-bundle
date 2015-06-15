@@ -1,4 +1,15 @@
 open_orchestra_log:
+    left_menu:
+        administration:
+            logs:
+                list: Logs
+    table:
+        log:
+          date_time: Horaire
+          user_ip: Ip
+          user_name: Utilisateur
+          site_name: Site
+          message: Message
     node:
         create: Crée un nouveau noeud avec l'id du noeud node_id
         delete: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name

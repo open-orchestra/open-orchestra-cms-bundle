@@ -1,4 +1,15 @@
 open_orchestra_log:
+    left_menu:
+        administration:
+            logs:
+                list: Logs
+    table:
+        log:
+          date_time: Date time
+          user_ip: User IP
+          user_name: User name
+          site_name: Site name
+          message: Message
     node:
         create: Create a new node with node id node_id
         delete: Delete a node with node id node_id and node name node_name
