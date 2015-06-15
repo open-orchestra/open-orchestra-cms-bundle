@@ -18,16 +18,14 @@ class UserType extends AbstractType
 
     /**
      * @param string $class
+     * @param array  $availableLanguages
      */
-    public function __construct($class, Twig_Environment $twig)
+    public function __construct($class, $availableLanguages)
     {
-        $global = $twig->getGlobals();
         $this->class = $class;
         $this->languages = array();
-        if (array_key_exists('available_languages', $global) && is_array($global['available_languages'])) {
-            foreach($global['available_languages'] as $language) {
-                $this->languages[$language] = $language;
-            }
+        foreach($availableLanguages as $language) {
+            $this->languages[$language] = $language;
         }
     }
 
