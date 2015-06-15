@@ -2,6 +2,7 @@ extendView = extendView || {}
 extendView['orchestraMediaType'] =
   events:
     'click .mediaModalOpen': 'launchMediaModal'
+    'click .clear-media': 'clearMedia'
 
   launchMediaModal: (event) ->
     event.preventDefault()

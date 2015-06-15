@@ -22,8 +22,8 @@ TableviewCollection = Backbone.Collection.extend(model: TableviewModel)
 TableviewElement = Backbone.Model.extend({})
 VersionviewModel = Backbone.Model.extend({})
 VersionviewElement = Backbone.Model.extend({})
-MediaModel = Backbone.Model.extend({})
-MediaCollection = Backbone.Collection.extend(model: MediaModel)
-MediaElement = Backbone.Model.extend(
-  sites: MediaCollection
+GalleryModel = Backbone.Model.extend({})
+GalleryCollection = Backbone.Collection.extend(model: GalleryModel)
+GalleryElement = Backbone.Model.extend(
+  sites: GalleryCollection
 )

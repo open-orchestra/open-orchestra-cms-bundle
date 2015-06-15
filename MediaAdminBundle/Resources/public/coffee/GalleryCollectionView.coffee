@@ -1,5 +1,5 @@
 
-MediaCollectionView = OrchestraView.extend(
+GalleryCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
 
@@ -12,13 +12,13 @@ MediaCollectionView = OrchestraView.extend(
       'modal'
     ])
     @loadTemplates [
-      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaCollectionView",
-      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView"
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryCollectionView",
+      "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaCollectionView'
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryCollectionView'
       links: @options.medias.get('links')
     )
     @options.domContainer.html @$el
@@ -31,9 +31,9 @@ MediaCollectionView = OrchestraView.extend(
     $(".figure").width @options.domContainer.find("img").width()
 
   addElementToView: (mediaData) ->
-    mediaModel = new MediaModel
+    mediaModel = new GalleryModel
     mediaModel.set mediaData
-    viewClass = appConfigurationView.getConfiguration('media', 'showMedia')
+    viewClass = appConfigurationView.getConfiguration('media', 'showGallery')
     new viewClass(@addOption(
       media: mediaModel
       domContainer: this.$el.find('.superbox')

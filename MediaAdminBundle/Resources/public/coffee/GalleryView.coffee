@@ -1,4 +1,4 @@
-MediaView = OrchestraView.extend(
+GalleryView = OrchestraView.extend(
   events:
     'click span.media-remove': 'confirmRemoveMedia'
     'click span.media-select': 'mediaSelect'
@@ -21,12 +21,12 @@ MediaView = OrchestraView.extend(
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
     @loadTemplates [
-      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView'
+      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView'
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView',
+    @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView',
       media: @options.media
       mediaClass: @mediaClass
       mediaLogo: @mediaLogo

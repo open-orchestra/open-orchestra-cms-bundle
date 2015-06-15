@@ -1,19 +1,17 @@
-MediaWysiwygView = MediaView.extend(
-
+GalleryWysiwygView = GalleryView.extend(
   initialize: (options) ->
     @events = @events || {}
     @options = @reduceOption(options, [
-        'modal'
-        'media'
-        'domContainer'
-    ])
+          'modal'
+          'media'
+          'domContainer'
+      ])
     @mediaClass = "media-select"
     @mediaLogo = "fa-check-circle"
     @loadTemplates [
-      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaView',
-      'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/previewImageView',
-    ]
-
+        'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView',
+        'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/previewImageView',
+      ]
   mediaSelect: (event) ->
     event.preventDefault()
     viewContext = @
@@ -27,19 +25,18 @@ MediaWysiwygView = MediaView.extend(
       success: (response) ->
         $(".modal-body-content").html(response)
         .append(viewContext.renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/previewImageView'
-            src: thumbnail["original"]
-        ))
+              src: thumbnail["original"]
+          ))
         .find("#media_crop_format")
         .change(
-          ->
-            format = $('#media_crop_format').val()
-            $('#preview_thumbnail').attr 'src', thumbnail[format]
-            return
+            ->
+              format = $('#media_crop_format').val()
+              $('#preview_thumbnail').attr 'src', thumbnail[format]
+              return
         )
         .find("option[value='']")
         .prop('selected',true)
         .val("original")
-
       complete: () ->
         validationBtn = $("#sendToTiny")
         validationBtn.click(

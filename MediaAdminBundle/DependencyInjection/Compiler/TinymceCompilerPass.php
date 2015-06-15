@@ -22,11 +22,13 @@ class TinymceCompilerPass implements CompilerPassInterface
             if ($container->hasParameter('open_orchestra_media_admin.tinymce')) {
                 $param = array_merge($param, $container->getParameter('open_orchestra_media_admin.tinymce'));
             }
-            if (isset($param["theme"])
-                && isset($param["theme"]["simple"])
-                && isset($param["theme"]["simple"]["toolbar1"])) {
-                $param["theme"]["simple"]["toolbar1"] .= " mediamanager";
-                $param["theme"]["simple"]["toolbar1"] = str_replace(' image ', ' ', " " . $param["theme"]["simple"]["toolbar1"]);
+            if (isset($param["theme"])){
+                foreach($param["theme"] as $themeName => $theme ){
+                    if(isset($theme["toolbar1"])){
+                        $param["theme"][$themeName]["toolbar1"] .= " mediamanager ";
+                        $param["theme"][$themeName]["toolbar1"] = str_replace(' image ', ' ', " " . $param["theme"][$themeName]["toolbar1"]);
+                    }
+                }
             }
             $container->setParameter('stfalcon_tinymce.config', $param);
        }

@@ -33,7 +33,6 @@ MediaModalView = OrchestraView.extend(
     currentModal = null
   showFolder: (event) ->
     displayLoader $(".modal-body-content", @$el)
-    GalleryLoad $(event.target), $(".modal-body-content", @$el)
   reloadFolder: ->
     displayLoader $('.modal-body-menu', @$el)
     viewContext = @
@@ -43,6 +42,7 @@ MediaModalView = OrchestraView.extend(
       success: (response) ->
         $('.modal-body-menu', currentModal).html response
     return
+    GalleryLoad $(event.target), "showGalleryCollection", $(".modal-body-content", @$el)
   openForm: (event) ->
     event.preventDefault()
     displayLoader $(".modal-body-content", @$el)

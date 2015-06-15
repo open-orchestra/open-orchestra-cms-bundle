@@ -1,8 +1,8 @@
-MediaCollectionWysiwygView = MediaCollectionView.extend(
+GalleryCollectionWysiwygView = GalleryCollectionView.extend(
   addElementToView: (mediaData) ->
-    mediaModel = new MediaModel
+    mediaModel = new GalleryModel
     mediaModel.set mediaData
-    viewClass = appConfigurationView.getConfiguration('media', 'showMediaCollectionWysiwyg')
+    viewClass = appConfigurationView.getConfiguration('media', 'showGalleryWysiwyg')
     new viewClass(@addOption(
       media: mediaModel
       domContainer: this.$el.find('.superbox')

@@ -65,6 +65,8 @@ module.exports = {
 
         //--[ MEDIA ]--//
         'web/built/openorchestramediaadmin/js/*.js',
+        'web/built/openorchestramediaadmin/js/wysiwyg/*.js',
+        'web/built/openorchestramediaadmin/js/extendView/*.js',
 
         //--[ USER ]--//
         'web/built/openorchestrauseradmin/js/user/*.js',
