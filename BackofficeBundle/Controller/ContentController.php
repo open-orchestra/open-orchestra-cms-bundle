@@ -62,9 +62,9 @@ class ContentController extends AbstractAdminController
 
     /**
      * Get Form Template related to content of $contentTypeId
-     * 
+     *
      * @param string $contentTypeId
-     * 
+     *
      * @return string
      */
     protected function getFormTemplate($contentTypeId)

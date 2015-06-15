@@ -17,65 +17,42 @@ FullPagePanelView = FullPageFormView.extend(
     links = @options.element.get('links')
     panels = @getPanels links
     for panel in panels
-      $("#superboxTab").append('<li id="' + panel["id"] + '"></li>')
-      @callPanel panel["link"], panel["isActive"], panel["id"], panel["title"]
-
+      $("#superboxTab").append('<li id="' + panel.id + '"></li>')
+      @callPanel panel
 
   getPanels: (links) ->
     panels = []
+    if links._self_form
+      panels[0] = {link:links._self_form, isActive:true, id:'form', title:'form'}
     for key in Object.keys(links)
-      if /^_self_form$/.test(key) or /^_self_panel_/.test(key)
-        if /^_self_form$/.test(key)
-          id = "form"
-          active = true
-          position = 0
-        else
-          id = key.replace(/^_self_panel_[0-9]+_/,"")
-          active = false
-          position = key.replace(/^_self_panel_([0-9]+)_.+$/,'$1')
-        panels[position] = []
-        panels[position]["link"] = links[key]
-        panels[position]["isActive"] = active
-        panels[position]["id"] = id
-        panels[position]["title"] = id
+      if infos = key.match(/^_self_panel_([0-9]+)_(.*)/)
+        panels[infos[1]] = {link:links[key], isActive:false, id:infos[2], title:infos[2]}
     return panels
 
-  addEventOnForm: (id) ->
-    options = @options
-    viewContext = @
-    $("form", @$("#tab-" + id)).on "submit", (e) ->
-      e.preventDefault()
-      $(this).ajaxSubmit
-        context:
-          button: $(".submit_form",e.target).parent()
-        success: (response) ->
-          container = $(".tab-pane.active")
-          container.html(response)
-          container.attr("id").replace("tab-","")
-          viewContext.addEventOnForm  container.attr("id").replace("tab-","")
-        error: (response) ->
-          container = $(".tab-pane.active")
-          container.html(response.responseText)
-          viewContext.addEventOnForm  container.attr("id").replace("tab-","")
-      return
+  addEventOnForm: (event)->
+    event.preventDefault()
+    target = $(event.target)
+    target.ajaxSubmit
+      context:
+        button: $(".submit_form", target).parent()
+      success: (response) ->
+        target.parent().html response
+      error: (response) ->
+        target.parent().html response.responseText
+    return
 
-  callPanel: (url, isActive, id, title) ->
+  callPanel: (panel) ->
     viewContext = @
     $.ajax
-      url: url
+      url: panel["link"]
       method: "GET"
       success: (response) ->
-        element = []
-        element["isActive"] = isActive
-        element["id"] = id
-        element["title"] = title
-        viewContext.addPanelTitle(element);
-        element["response"] = response
-        viewContext.addResponseInTab(element)
-        viewContext.addEventOnForm id
+        viewContext.addPanelTitle panel
+        panel.response = response
+        viewContext.addResponseInTab panel
 
   addResponseInTab: (element) ->
-    $(".tab-content").prepend(
+    $(".tab-content", @$el).prepend(
       @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementPanelTab', element))
 
   addPanelTitle: (element) ->

@@ -6,6 +6,7 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Twig_Environment;
 
 /**
  * Class UserType
@@ -13,13 +14,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class UserType extends AbstractType
 {
     protected $class;
+    protected $languages;
 
     /**
      * @param string $class
+     * @param array  $availableLanguages
      */
-    public function __construct($class)
+    public function __construct($class, array $availableLanguages)
     {
         $this->class = $class;
+        $this->languages = array();
+        foreach($availableLanguages as $language) {
+            $this->languages[$language] = $language;
+        }
     }
 
     /**
@@ -42,7 +49,8 @@ class UserType extends AbstractType
             'expanded' => true,
             'required' => false,
         ));
-        $builder->add('language', 'orchestra_language', array(
+        $builder->add('language', 'choice', array(
+            'choices' => $this->languages,
             'label' => 'open_orchestra_user.form.user.language'
         ));
 

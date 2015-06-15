@@ -8,6 +8,7 @@ services:
         class: %open_orchestra_user_admin.type.user.class%
         arguments:
             - %open_orchestra_user.document.user.class%
+            - %open_orchestra_base.languages_availables%
         tags:
             - { name: form.type, alias: user}
     open_orchestra_user_admin.type.registration_user:

@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\Backoffice\Context;
 
+use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -20,29 +20,21 @@ class ContextManager implements CurrentSiteIdInterface
     protected $siteId;
     protected $session;
     protected $tokenStorage;
-    protected $defaultLocale;
-    protected $siteRepository;
     protected $currentLanguage;
+    protected $defaultLocale;
 
     /**
      * Constructor
      *
      * @param Session                 $session
-     * @param SiteRepositoryInterface $siteRepository
      * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
      */
-    public function __construct(Session $session, SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, $defaultLocale = 'en')
+    public function __construct(Session $session, TokenStorageInterface $tokenStorage, $defaultLocale)
     {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->defaultLocale = $defaultLocale;
-
-        if ($this->getCurrentLocale() == '') {
-            $this->setCurrentLocale($defaultLocale);
-        }
-
-        $this->siteRepository = $siteRepository;
     }
 
     /**
@@ -52,7 +44,20 @@ class ContextManager implements CurrentSiteIdInterface
      */
     public function getCurrentLocale()
     {
-        return $this->session->get(self::KEY_LOCALE);
+        $currentLanguage = $this->session->get(self::KEY_LOCALE);
+
+        if (!$currentLanguage) {
+            $currentLanguage = $this->defaultLocale;
+            $token = $this->tokenStorage->getToken();
+            if ($token && ($user = $token->getUser()) instanceof UserInterface) {
+                $currentLanguage = $user->getLanguage();
+                $this->setCurrentLocale($currentLanguage);
+            }
+            $currentLanguage = $this->getDefaultLocale();
+        }
+
+        return $currentLanguage;
+
     }
 
     /**
@@ -63,6 +68,16 @@ class ContextManager implements CurrentSiteIdInterface
     public function setCurrentLocale($locale)
     {
         $this->session->set(self::KEY_LOCALE, $locale);
+    }
+
+    /**
+     * Get default locale
+     *
+     * @return string
+     */
+    public function getDefaultLocale()
+    {
+        return $this->defaultLocale;
     }
 
     /**
@@ -173,13 +188,5 @@ class ContextManager implements CurrentSiteIdInterface
         }
 
         return $currentSite;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultLocale()
-    {
-        return $this->defaultLocale;
     }
 }

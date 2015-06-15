@@ -19,7 +19,6 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     protected $session;
     protected $tokenStorage;
     protected $defaultLocale;
-    protected $siteRepository;
 
     /**
      * Tests setup
@@ -31,11 +30,10 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->tokenStorage)->getToken()->thenReturn($this->token);
 
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
-        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
         $this->defaultLocale = 'en';
 
-        $this->contextManager = new ContextManager($this->session, $this->siteRepository, $this->tokenStorage, $this->defaultLocale);
+        $this->contextManager = new ContextManager($this->session, $this->tokenStorage, $this->defaultLocale);
     }
 
     /**
@@ -50,7 +48,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         $localReturned = $this->contextManager->getCurrentLocale();
 
         $this->assertEquals($locale, $localReturned);
-        Phake::verify($this->session, Phake::times(2))->get(ContextManager::KEY_LOCALE);
+        Phake::verify($this->session, Phake::times(1))->get(ContextManager::KEY_LOCALE);
     }
 
     /**
@@ -73,7 +71,6 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function getLocale()
     {
         return array(
-            array(''),
             array('fr'),
             array(3),
             array('fakeKey' => 'fakeValue')
@@ -223,11 +220,4 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * Test default language
-     */
-    public function testGetDefaultLocale()
-    {
-        $this->assertSame($this->defaultLocale, $this->contextManager->getDefaultLocale());
-    }
 }

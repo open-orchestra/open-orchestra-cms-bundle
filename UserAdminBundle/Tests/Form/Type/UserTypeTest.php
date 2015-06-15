@@ -16,6 +16,7 @@ class UserTypeTest extends AbstractUserTypeTest
     protected $form;
 
     protected $class = 'OpenOrchestra\UserBundle\Document\User';
+    protected $twig;
 
     /**
      * Set up the test
@@ -23,7 +24,10 @@ class UserTypeTest extends AbstractUserTypeTest
     public function setUp()
     {
         parent::setUp();
-        $this->form = new UserType($this->class);
+        $this->twig = Phake::mock('Twig_Environment');
+        $parameters = array(0 => 'en', 1 => 'fr');
+
+        $this->form = new UserType($this->class, $parameters);
     }
 
     /**
