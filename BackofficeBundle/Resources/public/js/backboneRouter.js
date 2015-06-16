@@ -85,7 +85,7 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   showEntity: function(entityType, entityId, language, version)
   {
-      this.manageEntity(entityType, entityId, language, version);
+    this.manageEntity(entityType, entityId, language, version);
   },
 
   showEntityWithLanguageAndSourceLanguage: function(entityType, entityId, language, sourceLanguage)
