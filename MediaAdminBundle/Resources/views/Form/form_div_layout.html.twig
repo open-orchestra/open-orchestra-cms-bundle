@@ -19,3 +19,10 @@
         <div id="{{ id }}_modal"></div>
     {% endspaceless %}
 {% endblock %}
+
+{% block tinymce_widget_extend %}
+  <script>
+      function tinymce_button_mediamanager(){};
+  </script>
+  <div id="select_media_modal" class="select_media_modal" data-url="{{ path('open_orchestra_media_admin_media_list_form') }}" ></div>
+{% endblock %}

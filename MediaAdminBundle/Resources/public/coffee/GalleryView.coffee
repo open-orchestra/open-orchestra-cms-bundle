@@ -50,9 +50,9 @@ GalleryView = OrchestraView.extend(
       $(".delete-confirm-question").text(),
       $(".delete-confirm-explanation").text(),
       callBackParams:
-        galleryView: @
+        mediaView: @
       yesCallback: (params) ->
-        params.galleryView.removeMedia(event)
+        params.mediaView.removeMedia(event)
     )
 
   removeMedia : (event) ->

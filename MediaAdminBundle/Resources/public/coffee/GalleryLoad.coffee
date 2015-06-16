@@ -1,4 +1,4 @@
-GalleryLoad = (link, target) ->
+GalleryLoad = (link, galleryView, target) ->
   if typeof target is "undefined"
     target = "#content"
   title = link.text()
@@ -16,5 +16,5 @@ GalleryLoad = (link, target) ->
         listUrl: listUrl
         domContainer: $(target)
         modal: target != '#content'
+        galleryView: galleryView
       )
-

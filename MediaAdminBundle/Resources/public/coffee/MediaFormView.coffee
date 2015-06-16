@@ -1,4 +1,4 @@
-mediaFormView = OrchestraView.extend(
+MediaFormView = OrchestraView.extend(
   events:
     'submit': 'addEventOnForm'
 
