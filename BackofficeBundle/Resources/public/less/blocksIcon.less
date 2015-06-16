@@ -6,6 +6,12 @@
   clear: both;
 }
 
+.display-block-icon-font:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .display-block-icon-font i.block-icon {
   font-size: 35px;
   display: block;
@@ -14,6 +20,11 @@
 }
 
 .display-block-icon-font strong {
-  display: inline-block;
-  white-space: nowrap;
+  display: block;
+}
+
+.display-block-icon-font p.block-text {
+  width: 66%;
+  width: ~"calc(100% - 45px)";
+  float:left;
 }
