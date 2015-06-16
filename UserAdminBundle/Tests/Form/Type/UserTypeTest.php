@@ -54,8 +54,10 @@ class UserTypeTest extends AbstractUserTypeTest
      */
     public function testResolver()
     {
-        $this->form->setDefaultOptions($this->resolver);
-
+        $this->form->configureOptions($this->resolver);
+        Phake::verify($this->resolver)->setDefaults(array(
+            'data_class' => $this->class
+        ));
         Phake::verify($this->resolver)->setDefaults(Phake::anyParameters());
     }
 }
