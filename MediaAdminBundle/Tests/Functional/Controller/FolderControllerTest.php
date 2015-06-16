@@ -18,7 +18,12 @@ class FolderControllerTest extends AbstractControllerTest
         $mediaFolder = $mediaFolderRepository->findOneByName('Images folder');
 
         $url = '/admin/folder/form/' . $mediaFolder->getId();
-        $this->client->request('GET', $url);
+        $crawler = $this->client->request('GET', $url);
+        $this->assertForm($this->client->getResponse());
+
+        $form = $crawler->selectButton('Save')->form();
+
+        $crawler = $this->client->submit($form);
         $this->assertForm($this->client->getResponse());
     }
 }

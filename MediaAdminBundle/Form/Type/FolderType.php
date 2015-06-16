@@ -5,7 +5,7 @@ namespace OpenOrchestra\MediaAdminBundle\Form\Type;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class FolderType
@@ -34,15 +34,17 @@ class FolderType extends AbstractType
             ))
             ->add('sites', 'orchestra_site', array(
                 'label' => 'open_orchestra_media_admin.form.folder.site',
-                'multiple' => true
+                'multiple' => true,
+                'required' => false,
+                'embed' => true,
             ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->folderClass,
