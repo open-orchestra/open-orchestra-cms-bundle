@@ -9,26 +9,31 @@ extendView['orchestraMediaAbstractType'] =
     $(inputId).val ''
     $(previewId).removeAttr 'src'
 
-  openMediaModal: (modal, inputId, url, method, mediaModalView = "showMediaModal") ->
-    viewClass = appConfigurationView.getConfiguration('media', mediaModalView)
-    new viewClass(
-      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+  openMediaModal: (modal, inputId, url, method, galleryView) ->
+    viewClass = appConfigurationView.getConfiguration('media', 'showMediaModal')
+    modalOptions =
       domContainer: modal
       input: inputId
-    )
+      url: url
+      galleryView: galleryView
+    new viewClass($.extend(modalOptions,
+      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"))
     $.ajax
       url: url
       method: method
       success: (response) ->
-        new viewClass(
-          body: response
-          domContainer: modal
-          input: inputId
-        )
+        new viewClass($.extend(modalOptions,
+          body: response))
       error: ->
-        new viewClass(
-          body: 'Erreur durant le chargement'
-          domContainer: modal
-          input: inputId
-        )
+        new viewClass($.extend(modalOptions,
+          body: 'Erreur durant le chargement'))
     return
+
+  launchMediaModal: (event) ->
+    event.preventDefault()
+    @method = if @options.method then @options.method else 'GET'
+    target = $(event.currentTarget)
+    modal = $('#' + target.data("target"), @$el)
+    inputId = target.data("input")
+    url = target.data("url")
+    @currentLaunchModal(modal, inputId, url, @method)

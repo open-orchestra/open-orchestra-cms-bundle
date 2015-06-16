@@ -8,17 +8,20 @@ MediaModalView = OrchestraView.extend(
     'click .media-modal-menu-folder' : 'showFolder'
     'click .ajax-add': 'openForm'
     'click .media-modal-menu-new-folder' : 'openForm'
+
   initialize: (options) ->
     @options = @reduceOption(options, [
       'body'
       'input'
       'domContainer'
       'url'
+      'galleryView'
     ])
     @loadTemplates [
       "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView"
     ]
     return
+
   render: (options) ->
     @setElement @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/mediaModalView', @options)
     if currentModal != null
@@ -27,12 +30,16 @@ MediaModalView = OrchestraView.extend(
       @options.domContainer.html @$el
       currentModal = @$el.detach().appendTo('body')
       @$el.modal "show"
+
   closeModal: ->
     @$el.modal "hide"
     @$el.remove()
     currentModal = null
+
   showFolder: (event) ->
     displayLoader $(".modal-body-content", @$el)
+    GalleryLoad $(event.target), @options.galleryView, $(".modal-body-content", @$el)
+
   reloadFolder: ->
     displayLoader $('.modal-body-menu', @$el)
     viewContext = @
@@ -42,7 +49,7 @@ MediaModalView = OrchestraView.extend(
       success: (response) ->
         $('.modal-body-menu', currentModal).html response
     return
-    GalleryLoad $(event.target), "showGalleryCollection", $(".modal-body-content", @$el)
+
   openForm: (event) ->
     event.preventDefault()
     displayLoader $(".modal-body-content", @$el)

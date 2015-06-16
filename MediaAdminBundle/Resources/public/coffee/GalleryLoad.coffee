@@ -1,4 +1,4 @@
-GalleryLoad = (link, mediaView, target) ->
+GalleryLoad = (link, galleryView, target) ->
   if typeof target is "undefined"
     target = "#content"
   title = link.text()
@@ -9,11 +9,12 @@ GalleryLoad = (link, mediaView, target) ->
     success: (response) ->
       medias = new GalleryElement
       medias.set response
-      viewClass = appConfigurationView.getConfiguration('media', mediaView)
+      viewClass = appConfigurationView.getConfiguration('media', 'showGalleryCollection')
       new viewClass(
         medias: medias
         title: title
         listUrl: listUrl
         domContainer: $(target)
         modal: target != '#content'
+        galleryView: galleryView
       )

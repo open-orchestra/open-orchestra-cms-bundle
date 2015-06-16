@@ -10,6 +10,7 @@ GalleryCollectionView = OrchestraView.extend(
       'listUrl'
       'domContainer'
       'modal'
+      'galleryView'
     ])
     @loadTemplates [
       "OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryCollectionView",
@@ -27,13 +28,13 @@ GalleryCollectionView = OrchestraView.extend(
       @addConfigurationButton()
       @addDeleteButton()
     for mediaKey of @options.medias.get(@options.medias.get('collection_name'))
-      @addElementToView (@options.medias.get(@options.medias.get('collection_name'))[mediaKey])
+      @addElementToView(@options.medias.get(@options.medias.get('collection_name'))[mediaKey], @options.galleryView)
     $(".figure").width @options.domContainer.find("img").width()
 
-  addElementToView: (mediaData) ->
+  addElementToView: (mediaData, galleryView) ->
     mediaModel = new GalleryModel
     mediaModel.set mediaData
-    viewClass = appConfigurationView.getConfiguration('media', 'showGallery')
+    viewClass = appConfigurationView.getConfiguration('media', galleryView)
     new viewClass(@addOption(
       media: mediaModel
       domContainer: this.$el.find('.superbox')

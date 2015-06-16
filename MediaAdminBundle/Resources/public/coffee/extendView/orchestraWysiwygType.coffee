@@ -1,8 +1,7 @@
 extendView = extendView || {}
 extendView['orchestraWysiwygType'] =
+  events:
+    'click .mce-btn[aria-label="mediamanager"] button': 'launchMediaModal'
 
-  launchWysiwygModal: (editorId) ->
-    mediaModal = $(".select_media_modal")
-    url = mediaModal.data('url')
-    @openMediaModal(mediaModal , editorId, url, "GET", "showMediaModalWysiwyg")
-    return
+  currentLaunchModal: (modal, inputId, url, method) ->
+    @openMediaModal(modal, inputId, url, method, "showGalleryWysiwyg")

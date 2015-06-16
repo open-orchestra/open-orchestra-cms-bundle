@@ -26,8 +26,6 @@ OrchestraViewConfigurator = ->
     'showMediaForm': MediaFormView
     'showMediaModal': MediaModalView
     'showGallery': GalleryView
-    'showGalleryCollectionWysiwyg': GalleryCollectionWysiwygView
-    'showMediaModalWysiwyg': MediaModalWysiwygView
     'showGalleryWysiwyg': GalleryWysiwygView
 
 
