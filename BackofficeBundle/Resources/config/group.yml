@@ -4,7 +4,8 @@ parameters:
 services:
     open_orchestra_user.repository.group:
         class: %open_orchestra_user.repository.group.class%
-        factory_service: doctrine.odm.mongodb.document_manager
-        factory_method: getRepository
+        factory:
+            - @doctrine.odm.mongodb.document_manager
+            - getRepository
         arguments:
             - %open_orchestra_user.document.group.class%
