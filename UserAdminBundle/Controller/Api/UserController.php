@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserAdminBundle\Controller\Api;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\UserEvent;
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UserController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param string $userId
      *
@@ -51,30 +54,14 @@ class UserController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
         $columnsNameToEntityAttribute = array(
             'username' => array('key' => 'username')
         );
 
         $repository =  $this->get('open_orchestra_user.repository.user');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
 
-        $userCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
-        $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
-
-        $facade = $this->get('open_orchestra_api.transformer_manager')->get('user_collection')->transform($userCollection);
-        $facade->recordsTotal = $recordsTotal;
-        $facade->recordsFiltered =$recordsFiltered;
-
-        return $facade;
+        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
     }
 
     /**
