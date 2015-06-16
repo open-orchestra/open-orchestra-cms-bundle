@@ -43,10 +43,6 @@ TableviewAction = OrchestraView.extend(
       'language': @options.element.get('language')
       'version' : @options.element.get('version')
     redirectUrl = 'showEntity'
-    if @options.element.get('language')
-      redirectUrl = 'showEntityWithLanguage'
-      if @options.element.get('version')
-        redirectUrl = 'showEntityWithLanguageAndVersion'
     redirectUrl = appRouter.generateUrl(redirectUrl, parameter)
     Backbone.history.navigate(redirectUrl)
     options = @options

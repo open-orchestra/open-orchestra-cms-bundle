@@ -17,7 +17,7 @@ tableViewLoad = (link, entityType, page) ->
     domContainer: $("#content")
   )
 
-entityViewLoad = (link, entityType, page, entityId, language, version, sourceLanguage) ->
+entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage) ->
   title = link.text()
   $.ajax
     url: link.data('url')
@@ -43,7 +43,7 @@ entityViewLoad = (link, entityType, page, entityId, language, version, sourceLan
           success: (response) ->
             element = new TableviewElement()
             element.set response
-            redirectUrl = appRouter.generateUrl('showEntityWithLanguageAndVersion', appRouter.addParametersToRoute(
+            redirectUrl = appRouter.generateUrl('showEntity', appRouter.addParametersToRoute(
               'entityId': element.get('id')
               'language': element.get('language')
               'version' : element.get('version')
