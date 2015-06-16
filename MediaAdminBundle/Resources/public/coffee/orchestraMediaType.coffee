@@ -12,32 +12,25 @@ extendView['orchestraMediaType'] =
     $(previewId).removeAttr 'src'
   openMediaModal: (event) ->
     event.preventDefault()
-    @method = if @options.method then @options.method else 'GET'
     target = $(event.currentTarget)
-    modal = $('#' + target.data("target"), @$el)
-    inputId = target.data("input")
     url = target.data("url")
+    @method = if @options.method then @options.method else 'GET'
+    modalOptions =
+      domContainer: $('#' + target.data("target"), @$el)
+      input: target.data("input")
+      url: url
     viewClass = appConfigurationView.getConfiguration('media', 'showMediaModal')
-    new viewClass(
-      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
-      domContainer: modal
-      input: inputId
-    )
+    new viewClass($.extend(modalOptions, 
+      body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"))
     $.ajax
       url: url
       method: @method
       success: (response) ->
-        new viewClass(
-          body: response
-          domContainer: modal
-          input: inputId
-        )
+        new viewClass($.extend(modalOptions, 
+          body: response))
       error: ->
-        new viewClass(
-          body: 'Erreur durant le chargement'
-          domContainer: modal
-          input: inputId
-        )
+        new viewClass($.extend(modalOptions, 
+          body: 'Erreur durant le chargement'))
     return
 
 widgetChannel.bind 'ready', (view) ->
