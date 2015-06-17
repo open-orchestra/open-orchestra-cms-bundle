@@ -139,9 +139,10 @@ var OrchestraBORouter = Backbone.Router.extend({
     selector = (selector == undefined) ? '[href="#' + Backbone.history.fragment + '"]' : selector;
     $('nav li.active').removeClass("active");
     $('nav li:has(a' + selector + ')').addClass("active");
+    openMenu(menu_speed, openedSign);
     document.title = $('nav a' + selector).attr('title') || document.title;
     $.ajaxSetup().abortXhr()
-    
+
     drawBreadCrumb();
     displayLoader();
   },

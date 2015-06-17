@@ -21,6 +21,9 @@ displayLoader = (element) ->
   true
 
 # REFRESH NAV MENU
+closedSign = "<em class=\"fa fa-plus-square-o\"></em>"
+openedSign = "<em class=\"fa fa-minus-square-o\"></em>"
+
 displayMenu = (route) ->
   selectedPath = undefined
   if typeof route isnt "undefined"
@@ -39,8 +42,8 @@ displayMenu = (route) ->
       opts =
         accordion: true
         speed: $.menu_speed
-        closedSign: "<em class=\"fa fa-plus-square-o\"></em>"
-        openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
+        closedSign: closedSign
+        openedSign: openedSign
 
       $("nav ul").jarvismenu opts
       
@@ -48,11 +51,7 @@ displayMenu = (route) ->
       $("nav li:has(a[href=\"" + selectedPath + "\"])").addClass "active"
       
       # open selected path
-      $("#left-panel nav").find("li.active").each ->
-        $(this).parents("ul").slideDown opts.speed
-        $(this).parents("ul").parent("li").find("b:first").html opts.openedSign
-        $(this).parents("ul").parent("li").addClass "open"
-        return
+      openMenu(opts.speed, opts.openedSign)
 
       if typeof route isnt "undefined"
         Backbone.history.navigate route,
@@ -61,6 +60,14 @@ displayMenu = (route) ->
       return
 
   return
+
+openMenu = (speed, openedSign) ->
+  $("#left-panel nav").find("li.active").each ->
+    $(this).parents("ul").slideDown speed
+    $(this).parents("ul").parent("li").find("b:first").html openedSign
+    $(this).parents("ul").parent("li").addClass "open"
+    return
+
 
 # SMARTADMIN CONFIRMATION
 smartConfirm = (logo, titleColorized, text, functions) ->
