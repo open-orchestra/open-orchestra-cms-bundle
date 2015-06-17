@@ -4,6 +4,7 @@ extendView['submitAdmin'] = {
     'click .submit_form': 'addEventOnSave'
 
   addEventOnSave: (event) ->
+    tinymce.remove();
     event.preventDefault()
     viewContext = @
     viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showOrchestraModal')

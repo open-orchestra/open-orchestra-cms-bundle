@@ -37,8 +37,24 @@ MediaModalView = OrchestraView.extend(
     currentModal = null
 
   showFolder: (event) ->
+    viewContext = @
     displayLoader $(".modal-body-content", @$el)
-    GalleryLoad $(event.target), @options.galleryView, $(".modal-body-content", @$el)
+    listUrl = Backbone.history.fragment
+    $.ajax
+      url: $(event.target).data('url')
+      method: 'GET'
+      success: (response) ->
+        medias = new GalleryElement
+        medias.set response
+        viewClass = appConfigurationView.getConfiguration('media', 'showGalleryCollection')
+        new viewClass(
+          medias: medias
+          title: $(event.target).text()
+          listUrl: listUrl
+          domContainer: $(".modal-body-content", viewContext.$el)
+          modal: true
+          galleryView: viewContext.options.galleryView
+        )
 
   reloadFolder: ->
     displayLoader $('.modal-body-menu', @$el)
