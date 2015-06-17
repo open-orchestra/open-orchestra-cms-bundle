@@ -47,7 +47,7 @@ class FolderTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Test the default options
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
         $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 

@@ -11,12 +11,12 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 interface GroupInterface extends BaseGroupInterface
 {
     /**
-     * @param ReadSiteInterface $site
+     * @param ReadSiteInterface|null $site
      */
-    public function setSite(ReadSiteInterface $site);
+    public function setSite(ReadSiteInterface $site = null);
 
     /**
-     * @return ReadSiteInterface
+     * @return ReadSiteInterface|null
      */
     public function getSite();
 }

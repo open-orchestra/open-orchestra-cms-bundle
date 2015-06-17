@@ -21,15 +21,15 @@ class Group extends BaseGroup implements GroupInterface
     protected $site;
 
     /**
-     * @param ReadSiteInterface $site
+     * @param ReadSiteInterface|null $site
      */
-    public function setSite(ReadSiteInterface $site)
+    public function setSite(ReadSiteInterface $site = null)
     {
         $this->site = $site;
     }
 
     /**
-     * @return ReadSiteInterface
+     * @return ReadSiteInterface|null
      */
     public function getSite()
     {
