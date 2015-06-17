@@ -28,16 +28,17 @@ GalleryCollectionView = OrchestraView.extend(
       @addConfigurationButton()
       @addDeleteButton()
     for mediaKey of @options.medias.get(@options.medias.get('collection_name'))
-      @addElementToView(@options.medias.get(@options.medias.get('collection_name'))[mediaKey], @options.galleryView)
+      @addElementToView(@options.medias.get(@options.medias.get('collection_name'))[mediaKey])
     $(".figure").width @options.domContainer.find("img").width()
 
-  addElementToView: (mediaData, galleryView) ->
+  addElementToView: (mediaData) ->
     mediaModel = new GalleryModel
     mediaModel.set mediaData
-    viewClass = appConfigurationView.getConfiguration('media', galleryView)
+    viewClass = appConfigurationView.getConfiguration('media', 'showGallery')
     new viewClass(@addOption(
       media: mediaModel
       domContainer: this.$el.find('.superbox')
+      extendView: @options.galleryView
     ))
     return
 

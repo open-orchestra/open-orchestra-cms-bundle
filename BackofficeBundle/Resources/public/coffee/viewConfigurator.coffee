@@ -26,8 +26,7 @@ OrchestraViewConfigurator = ->
     'showMediaForm': MediaFormView
     'showMediaModal': MediaModalView
     'showGallery': GalleryView
-    'showGalleryWysiwyg': GalleryWysiwygView
-
+    'showWysiwygSelect': WysiwygSelectView
 
   setConfiguration: (entityType, action, view) ->
     @configurations[entityType] = [] if typeof @configurations[entityType] == "undefined"

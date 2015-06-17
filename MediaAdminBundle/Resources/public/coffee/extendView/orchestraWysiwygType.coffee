@@ -4,4 +4,4 @@ extendView['orchestraWysiwygType'] =
     'click .mce-btn[aria-label="mediamanager"] button': 'launchMediaModal'
 
   currentLaunchModal: (modal, inputId, url, method) ->
-    @openMediaModal(modal, inputId, url, method, "showGalleryWysiwyg")
+    @openMediaModal(modal, inputId, url, method, ['galleryWysiwygView'])

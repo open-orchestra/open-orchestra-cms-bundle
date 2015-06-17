@@ -32,4 +32,9 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
     }
+
+    public function getParent()
+    {
+        return 'StfalconTinymceBundle';
+    }
 }

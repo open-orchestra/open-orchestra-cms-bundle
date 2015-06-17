@@ -5,4 +5,4 @@ extendView['orchestraMediaType'] =
     'click .clear-media': 'clearMedia'
   
   currentLaunchModal: (modal, inputId, url, method) ->
-    @openMediaModal(modal, inputId, url, method, "showGallery")
+    @openMediaModal(modal, inputId, url, method)

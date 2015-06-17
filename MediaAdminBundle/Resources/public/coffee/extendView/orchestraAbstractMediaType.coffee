@@ -9,13 +9,13 @@ extendView['orchestraMediaAbstractType'] =
     $(inputId).val ''
     $(previewId).removeAttr 'src'
 
-  openMediaModal: (modal, inputId, url, method, galleryView) ->
+  openMediaModal: (modal, inputId, url, method, extend) ->
     viewClass = appConfigurationView.getConfiguration('media', 'showMediaModal')
     modalOptions =
       domContainer: modal
       input: inputId
       url: url
-      galleryView: galleryView
+      galleryView: extend
     new viewClass($.extend(modalOptions,
       body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"))
     $.ajax
