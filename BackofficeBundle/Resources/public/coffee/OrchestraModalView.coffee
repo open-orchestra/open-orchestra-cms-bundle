@@ -10,6 +10,7 @@ OrchestraModalView = OrchestraView.extend(
       'footer'
       'domContainer'
       'entityType'
+      'extendView'
     ])
     @loadTemplates [
         'OpenOrchestraBackofficeBundle:BackOffice:Underscore/orchestraModalView'

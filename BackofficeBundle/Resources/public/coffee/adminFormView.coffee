@@ -20,7 +20,7 @@ adminFormView = OrchestraView.extend(
     return
 
   render: ->
-    viewContext = this
+    viewContext = @
     @viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showOrchestraModal')
     new @viewClass(
       body: "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
