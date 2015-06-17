@@ -49,11 +49,19 @@ TableviewCollectionView = OrchestraView.extend(
     );
     $.fn.dataTable.pipeline = @dataTablePipeline
 
+    displayStart = 0
+    pageLength = 10
+    if @options.page?
+      page = parseInt(@options.page) - 1
+      displayStart = pageLength * page
+
     @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
       processing: true
       serverSide: true
+      displayStart: displayStart
+      pageLength: pageLength
       bAutoWidth: false
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
@@ -61,9 +69,6 @@ TableviewCollectionView = OrchestraView.extend(
       )
       initComplete: (settings, json) ->
         viewContext.renderAddButton(viewContext, json.links, this)
-        page = parseInt(viewContext.options.page) - 1
-        if page? and page <= this.api().page.info().pages
-          this.api().page(page).draw(false)
       columns: columns
       columnDefs: columnDefs.concat [
         targets: -1
