@@ -10,4 +10,3 @@ jQuery ->
     'showWysiwygSelect': WysiwygSelectView
 
   $.extend true, window.appConfigurationView.baseConfigurations,baseMediaConfiguration
-
