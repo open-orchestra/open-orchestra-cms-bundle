@@ -170,10 +170,12 @@ var OrchestraBORouter = Backbone.Router.extend({
     if (typeof route !== "undefined") {
       if (typeof paramsObject !== "undefined") {
         $.each(paramsObject, function(paramName, paramValue) {
-            if (route.indexOf('(/:' + paramName + ')') != -1) {
-                route = route.replace('(/:' + paramName + ')', '/'+paramValue);
-            } else {
-                route = route.replace(':' + paramName, paramValue);
+            if (typeof  paramValue !== "undefined") {
+                if (route.indexOf('(/:' + paramName + ')') != -1) {
+                    route = route.replace('(/:' + paramName + ')', '/'+paramValue);
+                } else {
+                    route = route.replace(':' + paramName, paramValue);
+                }
             }
         });
       }
