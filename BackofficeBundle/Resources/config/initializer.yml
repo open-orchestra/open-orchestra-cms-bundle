@@ -5,5 +5,5 @@ services:
     open_orchestra_backoffice.initializer.translated_value:
         class: %open_orchestra_backoffice.initializer.translated_value.class%
         arguments:
-            - %open_orchestra_base.languages_availables%
+            - %open_orchestra_base.administration_languages%
             - %open_orchestra_model.document.translated_value.class%
