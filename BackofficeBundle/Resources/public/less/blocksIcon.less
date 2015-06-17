@@ -1,4 +1,4 @@
-.display-block-icon-font {
+.block-icon-font {
   margin-bottom: 4px;
   padding-bottom: 4px;
   padding-top: 4px;
@@ -6,14 +6,25 @@
   clear: both;
 }
 
-.display-block-icon-font i.block-icon {
+.block-icon-font:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.block-icon-font i.block-icon {
   font-size: 35px;
   display: block;
   float: left;
   margin-right: 10px;
 }
 
-.display-block-icon-font strong {
-  display: inline-block;
-  white-space: nowrap;
+.block-icon-font strong {
+  display: block;
+}
+
+.block-icon-font p.block-text {
+  width: 66%;
+  width: ~"calc(100% - 45px)";
+  float:left;
 }
