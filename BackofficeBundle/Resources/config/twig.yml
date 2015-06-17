@@ -2,6 +2,7 @@ parameters:
     open_orchestra_backoffice.twig_extension.translation_choice.class: OpenOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
     open_orchestra_backoffice.twig_extension.block_icon.class: OpenOrchestra\BackofficeBundle\Twig\BlockIconExtension
     open_orchestra_backoffice.twig_extension.left_panel.class: OpenOrchestra\BackofficeBundle\Twig\LeftPanelExtension
+    open_orchestra_backoffice.twig_extension.orchestra_tinymce.class: OpenOrchestra\BackofficeBundle\Twig\OrchestraTinymceExtension
 
 services:
     open_orchestra_backoffice.twig_extension.translation_choice:
@@ -18,6 +19,12 @@ services:
             - { name: twig.extension}
     open_orchestra_backoffice.twig_extension.left_panel:
         class: %open_orchestra_backoffice.twig_extension.left_panel.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
+    open_orchestra_backoffice.twig_extension.orchestra_tinymce:
+        class: %open_orchestra_backoffice.twig_extension.orchestra_tinymce.class%
         arguments:
             - @service_container
         tags:
