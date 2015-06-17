@@ -242,7 +242,7 @@ open_orchestra_backoffice:
             delete_node: Are you sure to delete the node %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
             confirm_move:
-                title: Reorder the node
+                title: Reorder the node ?
                 text: By accepting, the node will be moved as child of "%nodeName%"
         dashboard:
             title: Dashboard
@@ -324,7 +324,7 @@ open_orchestra_backoffice:
         login:
             title: Login Block
             description: Display a log form.
-        delete_question: Delete this block
+        delete_question: Delete this block ?
         delete_explanation: The removal will be final.
         video:
             title: Video Block
@@ -409,7 +409,7 @@ open_orchestra_backoffice:
             by: by
         delete:
             text: This operation is not reversible.
-            title: Would you like delete this node
+            title: Would you like delete this node ?
         blocks: Blocks
     status:
         none_available: No status available
@@ -426,7 +426,7 @@ open_orchestra_backoffice:
         delete_error_txt: Error while removing area, please reload the page
     templates:
         delete:
-          title: Would you like delete this template
+          title: Would you like delete this template ?
           text: This operation is not reversible.
     command:
         node:
