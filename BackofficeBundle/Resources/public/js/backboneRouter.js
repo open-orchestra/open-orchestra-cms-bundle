@@ -20,7 +20,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     'dashboard': 'showDashboard',
-    '': 'showHome'
+    '*path': 'showHome'
   },
 
   initialize: function() {
