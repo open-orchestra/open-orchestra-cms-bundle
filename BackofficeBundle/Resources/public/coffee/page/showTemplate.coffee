@@ -1,4 +1,3 @@
-
 showTemplate = (url)->
   $.ajax
     type: "GET"

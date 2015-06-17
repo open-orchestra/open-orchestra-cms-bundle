@@ -1,4 +1,4 @@
-adminFormView = OrchestraView.extend(
+AdminFormView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
       'deleteUrl'
