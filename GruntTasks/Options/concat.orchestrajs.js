@@ -13,10 +13,10 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/FullPageFormView.js',
         'web/built/openorchestrabackoffice/js/FullPagePanelView.js',
         'web/built/openorchestrabackoffice/js/page/nodeConstructor.js',
-        'web/built/openorchestrabackoffice/js/page/blocksPanelView.js',
+        'web/built/openorchestrabackoffice/js/page/BlocksPanelView.js',
         'web/built/openorchestrabackoffice/js/security.js',
-        'web/built/openorchestrabackoffice/js/smartConfirmView.js',
-        'web/built/openorchestrabackoffice/js/adminFormView.js',
+        'web/built/openorchestrabackoffice/js/SmartConfirmView.js',
+        'web/built/openorchestrabackoffice/js/AdminFormView.js',
         'web/built/openorchestrabackoffice/js/generateId.js',
 
         //--[ EXTEND VIEWS ]--//
@@ -44,18 +44,18 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/widget/VersionView.js',
 
         //--[ DASHBOARD ]--//
-        'web/built/openorchestrabackoffice/js/dashboard/dashboardView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/DashboardView.js',
 
         //--[ PAGE ]--//
         'web/built/openorchestrabackoffice/js/page/makeSortable.js',
-        'web/built/openorchestrabackoffice/js/page/areaView.js',
-        'web/built/openorchestrabackoffice/js/page/blockView.js',
-        'web/built/openorchestrabackoffice/js/page/nodeView.js',
-        'web/built/openorchestrabackoffice/js/page/templateView.js',
+        'web/built/openorchestrabackoffice/js/page/AreaView.js',
+        'web/built/openorchestrabackoffice/js/page/BlockView.js',
+        'web/built/openorchestrabackoffice/js/page/NodeView.js',
+        'web/built/openorchestrabackoffice/js/page/TemplateView.js',
         'web/built/openorchestrabackoffice/js/page/showNode.js',
         'web/built/openorchestrabackoffice/js/page/showTemplate.js',
         'web/built/openorchestrabackoffice/js/page/orderNode.js',
-        'web/built/openorchestrabackoffice/js/page/pageConfigurationButtonView.js',
+        'web/built/openorchestrabackoffice/js/page/PageConfigurationButtonView.js',
         'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
 
         //--[ TABLEVIEW ]--//
