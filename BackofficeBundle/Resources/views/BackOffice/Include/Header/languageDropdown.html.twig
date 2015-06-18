@@ -10,7 +10,7 @@
             <span> {{ ('open_orchestra_backoffice.language.' ~ context.currentLocale)|trans }} ({{ context.currentLocale|capitalize }})</span> <i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu pull-right">
-            {% for language in available_languages %}
+            {% for language in administration_languages %}
             <li{% if context.currentLocale == language %} class="active"{% endif %}>
                 <a
                         class="configuration-change"
