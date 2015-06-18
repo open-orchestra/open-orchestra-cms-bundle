@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
+use Symfony\Component\Form\Form;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,14 @@ class StatusController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_status_form', array('statusId' => $statusId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.success');
 
-        return $this->formHandler($url, $request, $status, $message, StatusEvents::STATUS_UPDATE);
+        $form = $this->generateForm($status, $url);
+        $form->handleRequest($request);
+
+        $this->handleForm($form, $message, $status);
+
+        $this->dispatchEvent(StatusEvents::STATUS_UPDATE, new StatusEvent($status));
+
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -54,19 +62,26 @@ class StatusController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_status_new');
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.creation');
 
-        return $this->formHandler($url, $request, $status, $message, StatusEvents::STATUS_CREATE);
+        $form = $this->generateForm($status, $url);
+        $form->handleRequest($request);
+
+        if ($this->handleForm($form, $message, $status)) {
+            $url = $this->generateUrl('open_orchestra_backoffice_status_form', array('statusId' => $status->getId()));
+            $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
+
+            return $this->redirect($url);
+        }
+
+        return $this->renderAdminForm($form);
     }
 
     /**
-     * @param String          $url
-     * @param Request         $request
      * @param StatusInterface $status
-     * @param String          $message
-     * @param String          $events
+     * @param string          $url
      *
-     * @return Response
+     * @return Form
      */
-    protected function formHandler($url, Request $request, StatusInterface $status, $message, $events)
+    protected function generateForm(StatusInterface $status, $url)
     {
         $form = $this->createForm(
             'status',
@@ -76,22 +91,6 @@ class StatusController extends AbstractAdminController
             )
         );
 
-        $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($status);
-            $documentManager->flush();
-
-            $this->dispatchEvent($events, new StatusEvent($status));
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $message
-            );
-        }
-
-        return $this->render('OpenOrchestraBackofficeBundle::form.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $form;
     }
 }

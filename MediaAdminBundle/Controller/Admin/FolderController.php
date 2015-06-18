@@ -6,6 +6,7 @@ use OpenOrchestra\BackofficeBundle\Controller\AbstractAdminController;
 use OpenOrchestra\Media\Event\FolderEvent;
 use OpenOrchestra\Media\FolderEvents;
 use OpenOrchestra\Media\Model\FolderInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,12 +29,20 @@ class FolderController extends AbstractAdminController
      */
     public function formAction(Request $request, $folderId)
     {
-        $folderRepository = $this->container->get('open_orchestra_media.repository.media_folder');
+        $folderRepository = $this->get('open_orchestra_media.repository.media_folder');
         $folder = $folderRepository->find($folderId);
 
         $url = $this->generateUrl('open_orchestra_media_admin_folder_form', array('folderId' => $folderId));
+        $message = $this->get('translator')->trans('open_orchestra_media_admin.form.folder.success');
 
-        return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_UPDATE);
+        $form = $this->generateForm($folder, $url);
+        $form->handleRequest($request);
+
+        $this->handleForm($form, $message, $folder);
+
+        $this->dispatchEvent(FolderEvents::FOLDER_UPDATE, new FolderEvent($folder));
+
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -58,30 +67,35 @@ class FolderController extends AbstractAdminController
         }
 
         $url = $this->generateUrl('open_orchestra_media_admin_folder_new', array('parentId' => $parentId));
+        $message = $this->get('translator')->trans('open_orchestra_media_admin.form.folder.success');
 
-        return $this->generateForm($request, $folder, $url, FolderEvents::FOLDER_CREATE);
+        $form = $this->generateForm($folder, $url);
+        $form->handleRequest($request);
+
+        if ($this->handleForm($form, $message, $folder)) {
+            $url = $this->generateUrl('open_orchestra_media_admin_folder_form', array('folderId' => $folder->getId()));
+            $this->dispatchEvent(FolderEvents::FOLDER_UPDATE, new FolderEvent($folder));
+
+            return $this->redirect($url);
+        }
+
+        return $this->renderAdminForm($form);
     }
 
     /**
-     * @param Request         $request
      * @param FolderInterface $folder
      * @param string          $url
-     * @param string          $folderEvents
      *
-     * @return Response
+     * @return Form
      */
-    protected function generateForm(Request $request, FolderInterface $folder, $url, $folderEvents)
+    protected function generateForm(FolderInterface $folder, $url)
     {
-        $form = $this->createForm('folder', $folder, array('action' => $url));
-        $form->handleRequest($request);
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_media_admin.form.folder.success'),
-            $folder
+        $form = $this->createForm(
+            'folder',
+            $folder,
+            array('action' => $url)
         );
 
-        $this->dispatchEvent($folderEvents, new FolderEvent($folder));
-
-        return $this->renderAdminForm($form);
+        return $form;
     }
 }
