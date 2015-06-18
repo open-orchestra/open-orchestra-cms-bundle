@@ -32,7 +32,7 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
       values = response[collection_name][0]
       element = new TableviewModel
       element.set values
-      if language != undefined
+      if language != undefined && language != null
         link = element.get('links')._self_without_parameters + '?language=' + language
         link = link + '&source_language=' + sourceLanguage if sourceLanguage != undefined
         link = link + '&version=' + version if version != undefined
