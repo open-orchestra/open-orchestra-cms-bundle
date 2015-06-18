@@ -38,7 +38,6 @@ MediaModalView = OrchestraView.extend(
 
   showFolder: (event) ->
     viewContext = @
-    console.log("show");
     displayLoader $(".modal-body-content", @$el)
     GalleryLoad $(event.target), @options.galleryView, $(".modal-body-content", @$el)
 
