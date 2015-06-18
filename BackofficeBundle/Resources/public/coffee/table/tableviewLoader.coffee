@@ -41,7 +41,7 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
           method: 'GET'
           async: false
           success: (response) ->
-            element = new TableviewElement()
+            element = new TableviewModel()
             element.set response
             redirectUrl = appRouter.generateUrl('showEntity', appRouter.addParametersToRoute(
               'entityId': element.get('id')
@@ -50,7 +50,6 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
             ))
             Backbone.history.navigate(redirectUrl)
       links = element.get('links')
-      panelKeys = []
       for key in Object.keys(links)
         if /^_self_panel_/.test(key)
           appConfigurationView.setConfiguration(entityType, 'editEntity', FullPagePanelView)

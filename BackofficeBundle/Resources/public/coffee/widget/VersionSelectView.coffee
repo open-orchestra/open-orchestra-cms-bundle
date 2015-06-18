@@ -21,7 +21,7 @@ VersionSelectView = OrchestraView.extend(
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetVersionSelect')
     @options.domContainer.replaceWith @$el
     for version of @options.versions
-      versionElement = new VersionviewModel
+      versionElement = new VersionModel
       versionElement.set @options.versions[version]
       viewClass = appConfigurationView.getConfiguration(@options.entityType, 'showVersion')
       new viewClass(

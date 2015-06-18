@@ -4,7 +4,7 @@ widgetChannel.bind 'ready', (view) ->
       type: "GET"
       url: view.options.multiLanguage.language_list
       success: (response) ->
-        site = new Site
+        site = new SiteModel
         site.set response
         for language of site.get('languages')
           viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showLanguage')

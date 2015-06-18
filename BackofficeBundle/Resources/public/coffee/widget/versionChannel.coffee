@@ -5,13 +5,13 @@ widgetChannel.bind 'ready', (view) ->
       url: view.options.multiVersion.self_version
       async: false
       success: (response) ->
-        collection = new VersionviewElement
-        collection.set response
-        collectionName = collection.get('collection_name')
+        versions = new VersionModel
+        versions.set response
+        collectionName = versions.get('collection_name')
         viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showVersionSelect')
         new viewClass(
           currentVersion: view.options.multiVersion
-          versions: collection.get(collectionName)
+          versions: versions.get(collectionName)
           domContainer: view.$el.find('#version-selectbox')
           entityType: view.options.entityType
         )

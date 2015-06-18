@@ -58,7 +58,7 @@ AreaView = OrchestraView.extend(
     return
 
   addBlockToView: (block) ->
-    blockElement = new Block()
+    blockElement = new BlockModel()
     blockElement.set block
     blockViewClass = appConfigurationView.getConfiguration('area', 'addBlock')
     new blockViewClass(@addOption(

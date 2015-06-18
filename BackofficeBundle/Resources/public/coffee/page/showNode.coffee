@@ -5,7 +5,7 @@ showNode = (url, language, version)->
     type: "GET"
     url: url
     success: (response) ->
-      node = new Node
+      node = new NodeModel
       node.set response
       nodeViewClass = appConfigurationView.getConfiguration('node', 'showNode')
       new nodeViewClass(
