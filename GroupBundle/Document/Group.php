@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(
- *  collection="group_document",
+ *  collection="users_group",
  *  repositoryClass="OpenOrchestra\GroupBundle\Repository\GroupRepository"
  * )
  */
