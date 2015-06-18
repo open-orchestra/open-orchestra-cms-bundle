@@ -49,7 +49,7 @@ NodeView = OrchestraView.extend(
       url: @options.node.get('links')._block_list
       success: (response) ->
         for i of response.blocks
-          blockElement = new Block()
+          blockElement = new BlockModel()
           blockElement.set response.blocks[i]
           response.blocks[i] = viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView', 
             block : blockElement

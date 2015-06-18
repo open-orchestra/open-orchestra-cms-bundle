@@ -3,7 +3,7 @@ showTemplate = (url)->
     type: "GET"
     url: url
     success: (response) ->
-      template = new Template
+      template = new TemplateModel
       template.set response
       templateViewClass = appConfigurationView.getConfiguration('template', 'showTemplate')
       new templateViewClass(
