@@ -26,6 +26,7 @@ MediaFormView = OrchestraView.extend(
   addEventOnForm: (event) ->
     event.preventDefault()
     viewContext = @
+    console.log("submit")
     $('form', @options.domContainer).ajaxSubmit
       context:
         button: $(".submit_form",event.currentTarget).parent()

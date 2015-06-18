@@ -9,6 +9,7 @@ use OpenOrchestra\WorkflowFunction\Model\WorkflowFunctionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Form;
 
 /**
  * Class WorkflowFunctionController
@@ -30,12 +31,20 @@ class WorkflowFunctionController extends AbstractAdminController
      */
     public function formAction(Request $request, $workflowFunctionId)
     {
-        $workflowFunctionRepository = $this->container->get('open_orchestra_workflow_function.repository.workflowFunction');
+        $workflowFunctionRepository = $this->get('open_orchestra_workflow_function.repository.workflow_function');
         $workflowFunction = $workflowFunctionRepository->find($workflowFunctionId);
 
         $url = $this->generateUrl('open_orchestra_backoffice_workflow_function_form', array('workflowFunctionId' => $workflowFunctionId));
+        $message = $this->get('translator')->trans('open_orchestra_workflow_function_admin.form.workflow_function.success');
 
-        return $this->generateForm($request, $workflowFunction, $url, WorkflowFunctionEvents::WORKFLOWFUNCTION_UPDATE);
+        $form = $this->generateForm($workflowFunction, $url);
+        $form->handleRequest($request);
+
+        $this->handleForm($form, $message, $workflowFunction);
+
+        $this->dispatchEvent(WorkflowFunctionEvents::WORKFLOWFUNCTION_UPDATE, new WorkflowFunctionEvent($workflowFunction));
+
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -50,34 +59,39 @@ class WorkflowFunctionController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $workflowFunctionClass = $this->container->getParameter('open_orchestra_workflow_function.document.workflow_function.class');
+        $workflowFunctionClass = $this->getParameter('open_orchestra_workflow_function.document.workflow_function.class');
         $workflowFunction = new $workflowFunctionClass();
 
         $url = $this->generateUrl('open_orchestra_backoffice_workflow_function_new');
+        $message = $this->get('translator')->trans('open_orchestra_workflow_function_admin.form.workflow_function.success');
 
-        return $this->generateForm($request, $workflowFunction, $url, WorkflowFunctionEvents::WORKFLOWFUNCTION_CREATE);
+        $form = $this->generateForm($workflowFunction, $url);
+        $form->handleRequest($request);
+
+        if ($this->handleForm($form, $message, $workflowFunction)) {
+            $url = $this->generateUrl('open_orchestra_backoffice_workflow_function_form', array('workflowFunctionId' => $workflowFunction->getId()));
+            $this->dispatchEvent(WorkflowFunctionEvents::WORKFLOWFUNCTION_CREATE, new WorkflowFunctionEvent($workflowFunction));
+
+            return $this->redirect($url);
+        }
+
+        return $this->renderAdminForm($form);
     }
 
     /**
-     * @param Request                   $request
      * @param WorkflowFunctionInterface $workflowFunction
      * @param string                    $url
-     * @param string                    $workflowFunctionEvents
      *
-     * @return Response
+     * @return Form
      */
-    protected function generateForm(Request $request, WorkflowFunctionInterface $workflowFunction, $url, $workflowFunctionEvents)
+    protected function generateForm(WorkflowFunctionInterface $workflowFunction, $url)
     {
-        $form = $this->createForm('workflow_function', $workflowFunction, array('action' => $url));
-        $form->handleRequest($request);
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_workflow_function.form.workflow_function.success'),
-            $workflowFunction
+        $form = $this->createForm(
+            'workflow_function',
+            $workflowFunction,
+            array('action' => $url)
         );
 
-        $this->dispatchEvent($workflowFunctionEvents, new WorkflowFunctionEvent($workflowFunction));
-
-        return $this->renderAdminForm($form);
+        return $form;
     }
 }
