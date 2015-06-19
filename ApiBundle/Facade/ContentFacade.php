@@ -55,9 +55,6 @@ class ContentFacade extends DeletedFacade
      */
     protected $attributes = array();
 
-    /**
-     * @Serializer\Type("array<string,string>")
-     */
     protected $linearizeAttributes = array();
 
     /**
