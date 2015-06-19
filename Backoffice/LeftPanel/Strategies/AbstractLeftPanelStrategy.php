@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
 use OpenOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Class AbstractLeftPanelStrategy
@@ -11,7 +11,7 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 abstract class AbstractLeftPanelStrategy implements LeftPanelInterface
 {
     /**
-     * @var TwigEngine
+     * @var EngineInterface
      */
     protected $templating;
 
@@ -24,9 +24,9 @@ abstract class AbstractLeftPanelStrategy implements LeftPanelInterface
     }
 
     /**
-     * @param TwigEngine $templating
+     * @param EngineInterface $templating
      */
-    public function setTemplating(TwigEngine $templating)
+    public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
     }
