@@ -10,7 +10,7 @@ services:
     open_orchestra_backoffice.left_panel_manager:
         class: %open_orchestra_backoffice.left_panel_manager.class%
         arguments:
-            - @service_container
+            - @templating
     open_orchestra_backoffice.left_panel.node:
         class: %open_orchestra_backoffice.left_panel.node.class%
         arguments:

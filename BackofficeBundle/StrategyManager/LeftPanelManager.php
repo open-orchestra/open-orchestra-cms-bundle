@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 
 use OpenOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Class LeftPanelManager
@@ -11,14 +11,14 @@ use Symfony\Component\DependencyInjection\Container;
 class LeftPanelManager
 {
     protected $strategies = array();
-    protected $container;
+    protected $templateEngine;
 
     /**
-     * @param Container $container
+     * @param EngineInterface $templateEngine
      */
-    public function __construct(Container $container)
+    public function __construct(EngineInterface $templateEngine)
     {
-        $this->container = $container;
+        $this->templateEngine = $templateEngine;
     }
 
     /**
@@ -27,7 +27,7 @@ class LeftPanelManager
     public function addStrategy(LeftPanelInterface $strategy)
     {
         $this->strategies[$strategy->getParent()][$strategy->getWeight()][$strategy->getName()] = $strategy;
-        $strategy->setTemplating($this->container->get('templating'));
+        $strategy->setTemplating($this->templateEngine);
     }
 
     /**
@@ -35,7 +35,7 @@ class LeftPanelManager
      */
     public function show()
     {
-        return $this->container->get('templating')->render('OpenOrchestraBackofficeBundle:BackOffice/Include/LeftPanel:show.html.twig', array(
+        return $this->templateEngine->render('OpenOrchestraBackofficeBundle:BackOffice/Include/LeftPanel:show.html.twig', array(
             'strategies' => $this->strategies
         ));
     }
