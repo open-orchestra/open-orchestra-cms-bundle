@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\LeftPanel;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
  * Interface LeftPanelInterface
@@ -13,9 +13,9 @@ interface LeftPanelInterface
     const ADMINISTRATION = 'administration';
 
     /**
-     * @param TwigEngine $templating
+     * @param EngineInterface $templating
      */
-    public function setTemplating(TwigEngine $templating);
+    public function setTemplating(EngineInterface $templating);
 
     /**
      * @return string
