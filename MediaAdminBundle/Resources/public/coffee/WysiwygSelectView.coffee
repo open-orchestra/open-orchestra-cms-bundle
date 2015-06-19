@@ -19,6 +19,7 @@ WysiwygSelectView = OrchestraView.extend(
       src: @options.thumbnails["original"]
     ))
     @options.domContainer.html @$el
+    $("option", "#media_crop_format").first().val("original")
 
   changeCropFormat: (event) ->
     format = $(event.currentTarget).val()
