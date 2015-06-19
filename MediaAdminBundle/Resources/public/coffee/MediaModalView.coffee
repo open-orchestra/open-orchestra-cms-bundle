@@ -44,6 +44,7 @@ MediaModalView = OrchestraView.extend(
   reloadFolder: ->
     displayLoader $('.modal-body-menu', @$el)
     viewContext = @
+    displayMenu()
     $.ajax
       url: @options.url
       method: 'GET'
