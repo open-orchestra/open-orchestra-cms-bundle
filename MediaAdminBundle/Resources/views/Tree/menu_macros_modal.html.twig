@@ -1,0 +1,25 @@
+{% macro node_folder(folder) %}
+    <a
+        id="media-modal-{{ folder.id }}"
+        class="media-modal-menu-folder"
+        data-url="{{ path('open_orchestra_api_media_list', {'folderId': folder.id}) }}"
+        data-displayed-elements="name"
+    >
+        {{ folder.name }}
+    </a>
+{% endmacro %}
+
+{% macro new_folder(parentId) %}
+    <li>
+        <div class="ui-state-unsortable">
+           <a
+               class="media-modal-menu-new-folder"
+               href="#"
+               data-url="{{ path('open_orchestra_media_admin_folder_new', {'parentId': parentId}) }}"
+           >
+           <i class="fa fa-file"></i>
+                    {{ 'open_orchestra_media_admin.left_menu.tree.new_media_folder'|trans }}
+                </a>
+            </div>
+        </li>
+{% endmacro %}
