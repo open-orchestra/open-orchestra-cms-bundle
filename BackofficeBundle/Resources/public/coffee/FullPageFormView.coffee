@@ -33,7 +33,7 @@ FullPageFormView = OrchestraView.extend(
     event.preventDefault()
     viewContext = @
     viewClass = appConfigurationView.getConfiguration(@options.entityType, 'editEntity')
-    $("form", @$el).ajaxSubmit
+    $(event.target).ajaxSubmit
       context: button: $(".submit_form",event.target).parent()
       success: (response) ->
         new viewClass(viewContext.addOption(
