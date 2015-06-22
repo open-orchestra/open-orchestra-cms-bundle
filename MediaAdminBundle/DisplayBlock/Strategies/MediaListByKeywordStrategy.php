@@ -5,7 +5,7 @@ namespace OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy as BaseMediaListByKeywordStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\MediaListByKeywordStrategy as BaseMediaListByKeywordStrategy;
 
 /**
  * Class MediaListByKeywordStrategy

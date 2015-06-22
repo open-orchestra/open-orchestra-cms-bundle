@@ -7,7 +7,7 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Media\Model\MediaInterface;
-use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
 
 /**
  * Class GalleryStrategy

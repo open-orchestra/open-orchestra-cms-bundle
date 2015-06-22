@@ -3,7 +3,7 @@
 namespace OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies;
 
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
-use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
 
 /**
  * Class GalleryIconStrategy

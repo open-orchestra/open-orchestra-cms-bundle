@@ -7,7 +7,7 @@ use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
 
 /**
  * Class DisplayMediaStrategy
