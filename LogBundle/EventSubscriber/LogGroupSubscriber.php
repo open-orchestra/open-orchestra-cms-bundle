@@ -5,23 +5,12 @@ namespace OpenOrchestra\LogBundle\EventSubscriber;
 use FOS\UserBundle\Model\GroupInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
-use Symfony\Bridge\Monolog\Logger;
 
 /**
  * Class LogGroupSubscriber
  */
 class LogGroupSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param GroupEvent $event
      */

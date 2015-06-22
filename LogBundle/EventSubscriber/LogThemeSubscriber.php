@@ -3,34 +3,20 @@
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Event\ThemeEvent;
+use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\ModelInterface\ThemeEvents;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogThemeSubscriber
  */
-class LogThemeSubscriber implements EventSubscriberInterface
+class LogThemeSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param ThemeEvent $event
      */
     public function themeCreate(ThemeEvent $event)
     {
-        $theme = $event->getTheme();
-        $this->logger->info('open_orchestra_log.theme.create', array(
-            'theme_name' => $theme->getName()
-        ));
+        $this->sendLog('open_orchestra_log.theme.create', $event->getTheme());
     }
 
     /**
@@ -38,10 +24,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
      */
     public function themeDelete(ThemeEvent $event)
     {
-        $theme = $event->getTheme();
-        $this->logger->info('open_orchestra_log.theme.delete', array(
-            'theme_name' => $theme->getName()
-        ));
+        $this->sendLog('open_orchestra_log.theme.delete', $event->getTheme());
     }
 
     /**
@@ -49,10 +32,7 @@ class LogThemeSubscriber implements EventSubscriberInterface
      */
     public function themeUpdate(ThemeEvent $event)
     {
-        $theme = $event->getTheme();
-        $this->logger->info('open_orchestra_log.theme.update', array(
-            'theme_name' => $theme->getName()
-        ));
+        $this->sendLog('open_orchestra_log.theme.update', $event->getTheme());
     }
 
     /**
@@ -65,5 +45,16 @@ class LogThemeSubscriber implements EventSubscriberInterface
             ThemeEvents::THEME_DELETE => 'themeDelete',
             ThemeEvents::THEME_UPDATE => 'themeUpdate',
         );
+    }
+
+    /**
+     * @param string         $message
+     * @param ThemeInterface $theme
+     */
+    protected function sendLog($message, ThemeInterface $theme)
+    {
+        $this->logger->info($message, array(
+            'theme_name' => $theme->getName()
+        ));
     }
 }

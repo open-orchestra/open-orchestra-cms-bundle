@@ -8,24 +8,12 @@ use OpenOrchestra\Media\Event\FolderEvent;
 use OpenOrchestra\Media\FolderEvents;
 use OpenOrchestra\Media\Model\FolderInterface;
 use OpenOrchestra\Media\Model\MediaInterface;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogMediaSubscriber
  */
-class LogMediaSubscriber implements EventSubscriberInterface
+class LogMediaSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param MediaEvent $event
      */

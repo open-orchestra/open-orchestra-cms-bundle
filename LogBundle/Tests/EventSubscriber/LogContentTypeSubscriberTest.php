@@ -47,6 +47,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
         $this->subscriber->contentTypeCreation($this->contentTypeEvent);
         $this->assertEventLogged('open_orchestra_log.content_type.create', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
+            'content_type_name' => $this->contentType->getName(),
         ));
     }
 

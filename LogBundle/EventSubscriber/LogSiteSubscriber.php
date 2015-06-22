@@ -3,6 +3,7 @@
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,28 +11,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class LogSiteSubscriber
  */
-class LogSiteSubscriber implements EventSubscriberInterface
+class LogSiteSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param SiteEvent $event
      */
     public function siteCreate(SiteEvent $event)
     {
-        $site = $event->getSite();
-        $this->logger->info('open_orchestra_log.site.create', array(
-            'site_id' => $site->getSiteId(),
-            'site_name' => $site->getName()
-        ));
+        $this->sendLog('open_orchestra_log.site.create', $event->getSite());
     }
 
     /**
@@ -39,11 +26,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
      */
     public function siteDelete(SiteEvent $event)
     {
-        $site = $event->getSite();
-        $this->logger->info('open_orchestra_log.site.delete', array(
-            'site_id' => $site->getSiteId(),
-            'site_name' => $site->getName()
-        ));
+        $this->sendLog('open_orchestra_log.site.delete', $event->getSite());
     }
 
     /**
@@ -51,11 +34,7 @@ class LogSiteSubscriber implements EventSubscriberInterface
      */
     public function siteUpdate(SiteEvent $event)
     {
-        $site = $event->getSite();
-        $this->logger->info('open_orchestra_log.site.update', array(
-            'site_id' => $site->getSiteId(),
-            'site_name' => $site->getName()
-        ));
+        $this->sendLog('open_orchestra_log.site.update', $event->getSite());
     }
 
     /**
@@ -68,5 +47,17 @@ class LogSiteSubscriber implements EventSubscriberInterface
             SiteEvents::SITE_DELETE => 'siteDelete',
             SiteEvents::SITE_UPDATE => 'siteUpdate',
         );
+    }
+
+    /**
+     * @param string        $message
+     * @param SiteInterface $site
+     */
+    protected function sendLog($message, SiteInterface $site)
+    {
+        $this->logger->info($message, array(
+            'site_id' => $site->getSiteId(),
+            'site_name' => $site->getName()
+        ));
     }
 }

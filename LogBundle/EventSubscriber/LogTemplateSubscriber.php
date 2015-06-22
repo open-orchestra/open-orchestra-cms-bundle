@@ -3,35 +3,20 @@
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\TemplateEvents;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogTemplateSubscriber
  */
-class LogTemplateSubscriber implements EventSubscriberInterface
+class LogTemplateSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param TemplateEvent $event
      */
     public function templateCreate(TemplateEvent $event)
     {
-        $template = $event->getTemplate();
-        $this->logger->info('open_orchestra_log.template.create', array(
-            'template_id' => $template->getTemplateId(),
-            'template_name' => $template->getName()
-        ));
+        $this->sendLog('open_orchestra_log.template.create', $event->getTemplate());
     }
 
     /**
@@ -39,11 +24,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
      */
     public function templateDelete(TemplateEvent $event)
     {
-        $template = $event->getTemplate();
-        $this->logger->info('open_orchestra_log.template.delete', array(
-            'template_id' => $template->getTemplateId(),
-            'template_name' => $template->getName()
-        ));
+        $this->sendLog('open_orchestra_log.template.delete', $event->getTemplate());
     }
 
     /**
@@ -51,11 +32,7 @@ class LogTemplateSubscriber implements EventSubscriberInterface
      */
     public function templateUpdate(TemplateEvent $event)
     {
-        $template = $event->getTemplate();
-        $this->logger->info('open_orchestra_log.template.update', array(
-            'template_id' => $template->getTemplateId(),
-            'template_name' => $template->getName()
-        ));
+        $this->sendLog('open_orchestra_log.template.update', $event->getTemplate());
     }
 
     /**
@@ -96,4 +73,15 @@ class LogTemplateSubscriber implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param string            $message
+     * @param TemplateInterface $template
+     */
+    protected function sendLog($message, TemplateInterface $template)
+    {
+        $this->logger->info($message, array(
+            'template_id' => $template->getTemplateId(),
+            'template_name' => $template->getName()
+        ));
+    }
 }

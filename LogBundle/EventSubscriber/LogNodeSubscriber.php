@@ -11,18 +11,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class LogNodeSubscriber
  */
-class LogNodeSubscriber implements EventSubscriberInterface
+class LogNodeSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param NodeEvent $event
      */
