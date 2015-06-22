@@ -152,3 +152,8 @@ $(document).on 'click', '.configuration-change', (e) ->
   target = $(e.currentTarget)
   url = target.data('url')
   window.location = url + '#' + Backbone.history.fragment
+
+#ACTIVATE TINYMCE
+activateTinyMce = (view) ->
+  tinymce.editors = []
+  initTinyMCE()
