@@ -5,7 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Functional\EventSubscriber;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
-use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\GalleryStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

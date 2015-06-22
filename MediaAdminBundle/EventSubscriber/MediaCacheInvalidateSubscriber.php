@@ -34,11 +34,9 @@ class MediaCacheInvalidateSubscriber implements EventSubscriberInterface
      */
     protected function invalidate($mediaId)
     {
-        $this->cacheableManager->invalidateTags(
-            array(
-                $this->tagManager->formatMediaIdTag(ltrim($mediaId, MediaInterface::MEDIA_PREFIX))
-            )
-        );
+        $this->cacheableManager->invalidateTags(array(
+            $this->tagManager->formatMediaIdTag(ltrim($mediaId, MediaInterface::MEDIA_PREFIX))
+        ));
     }
 
     /**

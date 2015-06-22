@@ -3,7 +3,7 @@
 namespace OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies;
 
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
-use OpenOrchestra\MediaBundle\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
 
 /**
  * Class DisplayMediaStrategy

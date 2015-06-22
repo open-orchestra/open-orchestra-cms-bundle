@@ -38,9 +38,10 @@ class FolderController extends AbstractAdminController
         $form = $this->generateForm($folder, $url);
         $form->handleRequest($request);
 
-        $this->handleForm($form, $message, $folder);
+        if ($this->handleForm($form, $message, $folder)) {
+            $this->dispatchEvent(FolderEvents::FOLDER_UPDATE, new FolderEvent($folder));
+        }
 
-        $this->dispatchEvent(FolderEvents::FOLDER_UPDATE, new FolderEvent($folder));
 
         return $this->renderAdminForm($form);
     }
@@ -90,11 +91,7 @@ class FolderController extends AbstractAdminController
      */
     protected function generateForm(FolderInterface $folder, $url)
     {
-        $form = $this->createForm(
-            'folder',
-            $folder,
-            array('action' => $url)
-        );
+        $form = $this->createForm('folder', $folder, array('action' => $url));
 
         return $form;
     }
