@@ -10,7 +10,11 @@ use OpenOrchestra\MediaAdminBundle\Twig\IsFolderDeletableExtension;
  */
 class IsFolderDeletableExtensionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var IsFolderDeletableExtension
+     */
     protected $helper;
+
     protected $folderManager;
 
     /**
@@ -31,6 +35,7 @@ class IsFolderDeletableExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test is folder deletable
      */
     public function testIsFolderDeletable()
     {
@@ -41,5 +46,24 @@ class IsFolderDeletableExtensionTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->folderManager)->isDeletable(Phake::anyParameters())->thenReturn(false);
         $this->assertEquals($this->helper->isFolderDeletable($folder), false);
+    }
+
+    /**
+     * Test get functions
+     */
+    public function testGetFunctions()
+    {
+        $functions = $this->helper->getFunctions();
+
+        $this->assertCount(1, $functions);
+        $this->assertInstanceOf('Twig_SimpleFunction', $functions[0]);
+    }
+
+    /**
+     * Test name
+     */
+    public function testGetName()
+    {
+        $this->assertSame('is_folder_deletable', $this->helper->getName());
     }
 }
