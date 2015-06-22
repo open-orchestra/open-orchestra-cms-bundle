@@ -3,6 +3,7 @@
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,28 +11,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class LogRedirectionSubscriber
  */
-class LogRedirectionSubscriber implements EventSubscriberInterface
+class LogRedirectionSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param RedirectionEvent $event
      */
     public function redirectionCreate(RedirectionEvent $event)
     {
-        $redirection = $event->getRedirection();
-        $this->logger->info('open_orchestra_log.redirection.create', array(
-            'redirection_pattern' => $redirection->getRoutePattern(),
-            'redirection_site_name' => $redirection->getSiteName()
-        ));
+        $this->sendLog('open_orchestra_log.redirection.create', $event->getRedirection());
     }
 
     /**
@@ -39,11 +26,7 @@ class LogRedirectionSubscriber implements EventSubscriberInterface
      */
     public function redirectionDelete(RedirectionEvent $event)
     {
-        $redirection = $event->getRedirection();
-        $this->logger->info('open_orchestra_log.redirection.delete', array(
-            'redirection_pattern' => $redirection->getRoutePattern(),
-            'redirection_site_name' => $redirection->getSiteName()
-        ));
+        $this->sendLog('open_orchestra_log.redirection.delete', $event->getRedirection());
     }
 
     /**
@@ -51,11 +34,7 @@ class LogRedirectionSubscriber implements EventSubscriberInterface
      */
     public function redirectionUpdate(RedirectionEvent $event)
     {
-        $redirection = $event->getRedirection();
-        $this->logger->info('open_orchestra_log.redirection.update', array(
-            'redirection_pattern' => $redirection->getRoutePattern(),
-            'redirection_site_name' => $redirection->getSiteName()
-        ));
+        $this->sendLog('open_orchestra_log.redirection.update', $event->getRedirection());
     }
 
     /**
@@ -68,5 +47,17 @@ class LogRedirectionSubscriber implements EventSubscriberInterface
             RedirectionEvents::REDIRECTION_DELETE => 'redirectionDelete',
             RedirectionEvents::REDIRECTION_UPDATE => 'redirectionUpdate',
         );
+    }
+
+    /**
+     * @param string               $message
+     * @param RedirectionInterface $redirection
+     */
+    protected function sendLog($message, RedirectionInterface $redirection)
+    {
+        $this->logger->info($message, array(
+            'redirection_pattern' => $redirection->getRoutePattern(),
+            'redirection_site_name' => $redirection->getSiteName()
+        ));
     }
 }

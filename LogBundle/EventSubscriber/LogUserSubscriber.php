@@ -4,33 +4,21 @@ namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\UserBundle\Event\UserEvent;
 use OpenOrchestra\UserBundle\UserEvents;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
  * Class LogUserSubscriber
  */
-class LogUserSubscriber implements EventSubscriberInterface
+class LogUserSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param UserEvent $event
      */
     public function userCreate(UserEvent $event)
     {
-        $user = $event->getUser();
-        $this->info('open_orchestra_log.user.create', $user->getUsername());
+        $this->sendLog('open_orchestra_log.user.create', $event->getUser());
     }
 
     /**
@@ -38,8 +26,7 @@ class LogUserSubscriber implements EventSubscriberInterface
      */
     public function userDelete(UserEvent $event)
     {
-        $user = $event->getUser();
-        $this->info('open_orchestra_log.user.delete', $user->getUsername());
+        $this->sendLog('open_orchestra_log.user.delete', $event->getUser());
     }
 
     /**
@@ -47,8 +34,7 @@ class LogUserSubscriber implements EventSubscriberInterface
      */
     public function userUpdate(UserEvent $event)
     {
-        $user = $event->getUser();
-        $this->info('open_orchestra_log.user.update', $user->getUsername());
+        $this->sendLog('open_orchestra_log.user.update', $event->getUser());
     }
 
     /**
@@ -56,8 +42,7 @@ class LogUserSubscriber implements EventSubscriberInterface
      */
     public function userLogin(InteractiveLoginEvent $event)
     {
-        $user = $event->getAuthenticationToken()->getUser();
-        $this->info('open_orchestra_log.user.login', $user->getUserName());
+        $this->sendLog('open_orchestra_log.user.login', $event->getAuthenticationToken()->getUser());
     }
 
     /**
@@ -82,5 +67,14 @@ class LogUserSubscriber implements EventSubscriberInterface
         $this->logger->info($message, array(
             'user_name' => $userName
         ));
+    }
+
+    /**
+     * @param string        $message
+     * @param UserInterface $user
+     */
+    protected function sendLog($message, UserInterface $user)
+    {
+        $this->info($message, $user->getUsername());
     }
 }

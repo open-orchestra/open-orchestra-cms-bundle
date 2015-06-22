@@ -3,32 +3,20 @@
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Event\RoleEvent;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\RoleEvents;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogRoleSubscriber
  */
-class LogRoleSubscriber implements EventSubscriberInterface
+class LogRoleSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param RoleEvent $event
      */
     public function roleCreate(RoleEvent $event)
     {
-        $role = $event->getRole();
-        $this->logger->info('open_orchestra_log.role.create', array('role_name' => $role->getName()));
+        $this->sendLog('open_orchestra_log.role.create', $event->getRole());
     }
 
     /**
@@ -36,8 +24,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
      */
     public function roleDelete(RoleEvent $event)
     {
-        $role = $event->getRole();
-        $this->logger->info('open_orchestra_log.role.delete', array('role_name' => $role->getName()));
+        $this->sendLog('open_orchestra_log.role.delete', $event->getRole());
     }
 
     /**
@@ -45,8 +32,7 @@ class LogRoleSubscriber implements EventSubscriberInterface
      */
     public function roleUpdate(RoleEvent $event)
     {
-        $role = $event->getRole();
-        $this->logger->info('open_orchestra_log.role.update', array('role_name' => $role->getName()));
+        $this->sendLog('open_orchestra_log.role.update', $event->getRole());
     }
 
     /**
@@ -59,5 +45,14 @@ class LogRoleSubscriber implements EventSubscriberInterface
             RoleEvents::ROLE_DELETE => 'roleDelete',
             RoleEvents::ROLE_UPDATE => 'roleUpdate',
         );
+    }
+
+    /**
+     * @param string        $message
+     * @param RoleInterface $role
+     */
+    protected function sendLog($message, RoleInterface $role)
+    {
+        $this->logger->info($message, array('role_name' => $role->getName()));
     }
 }
