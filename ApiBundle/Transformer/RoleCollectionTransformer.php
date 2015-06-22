@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
@@ -13,7 +13,7 @@ use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 class RoleCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $roleCollection
+     * @param Collection $roleCollection
      *
      * @return FacadeInterface
      */

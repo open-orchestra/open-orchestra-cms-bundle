@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade;
@@ -14,7 +14,7 @@ use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 class NodeCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $nodeCollection
+     * @param Collection $nodeCollection
      *
      * @return FacadeInterface
      */
@@ -30,7 +30,7 @@ class NodeCollectionTransformer extends AbstractTransformer
     }
 
     /**
-     * @param NodeCollectionFacade $nodeCollection
+     * @param Collection $nodeCollection
      *
      * @return array
      */

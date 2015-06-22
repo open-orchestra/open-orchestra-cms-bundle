@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Trait HandleRequestDataTable

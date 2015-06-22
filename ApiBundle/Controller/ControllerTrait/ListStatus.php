@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**

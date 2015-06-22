@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
