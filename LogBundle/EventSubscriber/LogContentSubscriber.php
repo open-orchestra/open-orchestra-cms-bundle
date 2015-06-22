@@ -4,6 +4,7 @@ namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -50,12 +51,7 @@ class LogContentSubscriber implements EventSubscriberInterface
      */
     public function contentUpdate(ContentEvent $event)
     {
-        $content = $event->getContent();
-        $this->logger->info('open_orchestra_log.content.update', array(
-            'content_id' => $content->getContentId(),
-            'content_version' => $content->getVersion(),
-            'content_language' => $content->getLanguage()
-        ));
+        $this->sendLog('open_orchestra_log.content.update', $event->getContent());
     }
 
     /**
@@ -63,12 +59,7 @@ class LogContentSubscriber implements EventSubscriberInterface
      */
     public function contentDuplicate(ContentEvent $event)
     {
-        $content = $event->getContent();
-        $this->logger->info('open_orchestra_log.content.duplicate', array(
-            'content_id' => $content->getContentId(),
-            'content_version' => $content->getVersion(),
-            'content_language' => $content->getLanguage()
-        ));
+        $this->sendLog('open_orchestra_log.content.duplicate', $event->getContent());
     }
 
     /**
@@ -76,12 +67,7 @@ class LogContentSubscriber implements EventSubscriberInterface
      */
     public function contentChangeStatus(ContentEvent $event)
     {
-        $content = $event->getContent();
-        $this->logger->info('open_orchestra_log.content.status', array(
-            'content_id' => $content->getContentId(),
-            'content_version' => $content->getVersion(),
-            'content_language' => $content->getLanguage()
-        ));
+        $this->sendLog('open_orchestra_log.content.status', $event->getContent());
     }
 
     /**
@@ -96,5 +82,18 @@ class LogContentSubscriber implements EventSubscriberInterface
             ContentEvents::CONTENT_DELETE => 'contentDelete',
             ContentEvents::CONTENT_UPDATE => 'contentUpdate',
         );
+    }
+
+    /**
+     * @param string           $message
+     * @param ContentInterface $content
+     */
+    protected function sendLog($message, $content)
+    {
+        $this->logger->info($message, array(
+            'content_id' => $content->getContentId(),
+            'content_version' => $content->getVersion(),
+            'content_language' => $content->getLanguage()
+        ));
     }
 }
