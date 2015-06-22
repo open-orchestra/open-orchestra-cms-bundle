@@ -4,33 +4,19 @@ namespace OpenOrchestra\LogBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 
 /**
  * Class LogContentTypeSubscriber
  */
-class LogContentTypeSubscriber implements EventSubscriberInterface
+class LogContentTypeSubscriber extends AbstractLogSubscriber
 {
-    protected $logger;
-
-    /**
-     * @param Logger $logger
-     */
-    public function __construct(Logger $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param ContentTypeEvent $event
      */
     public function contentTypeCreation(ContentTypeEvent $event)
     {
-        $contentType = $event->getContentType();
-        $this->logger->info('open_orchestra_log.content_type.create', array(
-            'content_type_id' => $contentType->getContentTypeId(),
-        ));
+        $this->sendLog('open_orchestra_log.content_type.create', $event->getContentType());
     }
 
     /**
@@ -38,11 +24,7 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
      */
     public function contentTypeDelete(ContentTypeEvent $event)
     {
-        $contentType = $event->getContentType();
-        $this->logger->info('open_orchestra_log.content_type.delete', array(
-            'content_type_id' => $contentType->getContentTypeId(),
-            'content_type_name' => $contentType->getName()
-        ));
+        $this->sendLog('open_orchestra_log.content_type.delete', $event->getContentType());
     }
 
     /**
@@ -50,11 +32,7 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
      */
     public function contentTypeUpdate(ContentTypeEvent $event)
     {
-        $contentType = $event->getContentType();
-        $this->logger->info('open_orchestra_log.content_type.update', array(
-            'content_type_id' => $contentType->getContentTypeId(),
-            'content_type_name' => $contentType->getName()
-        ));
+        $this->sendLog('open_orchestra_log.content_type.update', $event->getContentType());
     }
 
     /**
@@ -67,5 +45,17 @@ class LogContentTypeSubscriber implements EventSubscriberInterface
             ContentTypeEvents::CONTENT_TYPE_DELETE => 'contentTypeDelete',
             ContentTypeEvents::CONTENT_TYPE_UPDATE => 'contentTypeUpdate',
         );
+    }
+
+    /**
+     * @param string               $message
+     * @param ContentTypeInterface $contentType
+     */
+    protected function sendLog($message, ContentTypeInterface $contentType)
+    {
+        $this->logger->info($message, array(
+            'content_type_id' => $contentType->getContentTypeId(),
+            'content_type_name' => $contentType->getName()
+        ));
     }
 }

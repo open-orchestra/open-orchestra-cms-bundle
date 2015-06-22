@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
+use FOS\UserBundle\Model\GroupInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
 use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogGroupSubscriber
  */
-class LogGroupSubscriber implements EventSubscriberInterface
+class LogGroupSubscriber extends AbstractLogSubscriber
 {
     protected $logger;
 
@@ -27,8 +27,7 @@ class LogGroupSubscriber implements EventSubscriberInterface
      */
     public function groupCreate(GroupEvent $event)
     {
-        $group = $event->getGroup();
-        $this->logger->info('open_orchestra_log.group.create', array('group_name' => $group->getName()));
+        $this->sendLog('open_orchestra_log.group.create', $event->getGroup());
     }
 
     /**
@@ -36,8 +35,7 @@ class LogGroupSubscriber implements EventSubscriberInterface
      */
     public function groupDelete(GroupEvent $event)
     {
-        $group = $event->getGroup();
-        $this->logger->info('open_orchestra_log.group.delete', array('group_name' => $group->getName()));
+        $this->sendLog('open_orchestra_log.group.delete', $event->getGroup());
     }
 
     /**
@@ -45,8 +43,7 @@ class LogGroupSubscriber implements EventSubscriberInterface
      */
     public function groupUpdate(GroupEvent $event)
     {
-        $group = $event->getGroup();
-        $this->logger->info('open_orchestra_log.group.update', array('group_name' => $group->getName()));
+        $this->sendLog('open_orchestra_log.group.update', $event->getGroup());
     }
 
     /**
@@ -59,5 +56,14 @@ class LogGroupSubscriber implements EventSubscriberInterface
             GroupEvents::GROUP_DELETE => 'groupDelete',
             GroupEvents::GROUP_UPDATE => 'groupUpdate',
         );
+    }
+
+    /**
+     * @param string         $message
+     * @param GroupInterface $group
+     */
+    protected function sendLog($message, GroupInterface $group)
+    {
+        $this->logger->info($message, array('group_name' => $group->getName()));
     }
 }
