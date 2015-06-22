@@ -35,20 +35,11 @@ class GroupController extends AbstractAdminController
         $form = $this->createForm('group', $group, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_group_new')
         ));
-
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.group.new.success');
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($group);
-            $documentManager->flush();
 
+        if ($this->handleForm($form, $message, $group)) {
             $this->dispatchEvent(GroupEvents::GROUP_CREATE, new GroupEvent($group));
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.group.new.success')
-            );
-
 
             return $this->redirect($this->generateUrl('open_orchestra_backoffice_group_form', array(
                 'groupId' => $group->getId()
@@ -80,9 +71,10 @@ class GroupController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.group.edit.success'), $group);
-
-        $this->dispatchEvent(GroupEvents::GROUP_UPDATE, new GroupEvent($group));
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.group.edit.success');
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(GroupEvents::GROUP_UPDATE, new GroupEvent($group));
+        }
 
         return $this->renderAdminForm($form);
     }

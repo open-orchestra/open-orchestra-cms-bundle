@@ -43,14 +43,11 @@ class ContentController extends AbstractAdminController
         ));
 
         $form->handleRequest($request);
+        $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
 
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_backoffice.form.content.success'),
-            $content
-        );
-
-        $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(ContentEvents::CONTENT_UPDATE, new ContentEvent($content));
+        }
 
         return $this->renderAdminForm(
             $form,
@@ -84,6 +81,7 @@ class ContentController extends AbstractAdminController
 
     /**
      * @param Request $request
+     * @param string  $contentType
      *
      * @Config\Route("/content/new/{contentType}", name="open_orchestra_backoffice_content_new")
      * @Config\Method({"GET", "POST"})
@@ -104,18 +102,10 @@ class ContentController extends AbstractAdminController
         ));
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');
 
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($content);
-            $documentManager->flush();
-
+        if ($this->handleForm($form, $message, $content)) {
             $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation')
-            );
 
             return $this->redirect(
                 $this->generateUrl('open_orchestra_backoffice_content_form', array(

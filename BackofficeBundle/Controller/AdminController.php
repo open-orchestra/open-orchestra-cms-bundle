@@ -14,6 +14,9 @@ class AdminController extends Controller
     /**
      * Back Office
      *
+     * @param string|null $siteId
+     * @param string|null $language
+     *
      * @Config\Route("", name="homepage")
      * @Config\Route("/{siteId}/homepage/{language}", name="homepage_with_site_id_and_language")
      *

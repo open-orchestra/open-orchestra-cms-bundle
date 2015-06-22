@@ -36,9 +36,9 @@ class StatusController extends AbstractAdminController
         $form = $this->generateForm($status, $url);
         $form->handleRequest($request);
 
-        $this->handleForm($form, $message, $status);
-
-        $this->dispatchEvent(StatusEvents::STATUS_UPDATE, new StatusEvent($status));
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(StatusEvents::STATUS_UPDATE, new StatusEvent($status));
+        }
 
         return $this->renderAdminForm($form);
     }

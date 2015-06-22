@@ -37,18 +37,9 @@ class RoleController extends AbstractAdminController
         ));
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($role);
-            $documentManager->flush();
-
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.role.new.success');
+        if ($this->handleForm($form, $message, $role)) {
             $this->dispatchEvent(RoleEvents::ROLE_CREATE, new RoleEvent($role));
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.role.new.success')
-            );
-
 
             return $this->redirect($this->generateUrl('open_orchestra_backoffice_role_form', array(
                 'roleId' => $role->getId()
@@ -80,9 +71,11 @@ class RoleController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.role.edit.success'), $role);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.role.edit.success');
 
-        $this->dispatchEvent(RoleEvents::ROLE_UPDATE, new RoleEvent($role));
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(RoleEvents::ROLE_UPDATE, new RoleEvent($role));
+        }
 
         return $this->renderAdminForm($form);
     }
