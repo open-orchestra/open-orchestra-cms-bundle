@@ -36,9 +36,9 @@ FullPageFormView = OrchestraView.extend(
     $(event.target).ajaxSubmit
       context: button: $(".submit_form",event.target).parent()
       success: (response) ->
-        displayMenu() if $(event.target).attr('name') is 'content_type'
         new viewClass(viewContext.addOption(
           html: response
+          submitted: true
         ))
       error: (response) ->
         new viewClass(viewContext.addOption(
