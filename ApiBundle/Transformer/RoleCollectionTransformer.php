@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 class RoleCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $roleCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($roleCollection)
     {
         $facade = new RoleCollectionFacade();
 
-        foreach ($mixed as $role) {
+        foreach ($roleCollection as $role) {
             $facade->addRole($this->getTransformer('role')->transform($role));
         }
 

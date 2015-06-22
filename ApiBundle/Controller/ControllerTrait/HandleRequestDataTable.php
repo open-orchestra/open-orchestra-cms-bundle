@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Trait HandleRequestDataTable
@@ -38,11 +39,11 @@ trait HandleRequestDataTable
      *
      * @return FacadeInterface
      */
-    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $collectionTransformerManager)
+    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
     {
         if ($entityId = $request->get('entityId')) {
             $element = $entityRepository->find($entityId);
-            return $collectionTransformerManager->transform(array($element));
+            return $transformerManager->transform(array($element));
         }
 
         list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
@@ -51,7 +52,7 @@ trait HandleRequestDataTable
         $recordsTotal = $entityRepository->count();
         $recordsFiltered = $entityRepository->countWithSearchFilter($mappingEntity, $columns, $search);
 
-        return $this->generateFacadeDataTable($collectionTransformerManager, $collection, $recordsTotal, $recordsFiltered);
+        return $this->generateFacadeDataTable($transformerManager, $collection, $recordsTotal, $recordsFiltered);
     }
 
     /**

@@ -89,7 +89,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
-        Phake::when($area)->getClasses()->thenReturn(array('area_class'));
         Phake::when($area)->getHtmlClass()->thenReturn('html_class');
         Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
         Phake::when($area)->getBlocks()->thenReturn(array(
@@ -159,7 +158,6 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
-        Phake::when($area)->getClasses()->thenReturn(array('area_class'));
         Phake::when($area)->getHtmlClass()->thenReturn('html_class');
         Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
 

@@ -24,22 +24,22 @@ class FieldTypeTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FieldTypeInterface $mixed
+     * @param FieldTypeInterface $fieldType
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($fieldType)
     {
         $facade = new FieldTypeFacade();
 
-        $facade->fieldId = $mixed->getFieldId();
-        $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
-        $facade->defaultValue = $mixed->getDefaultValue();
-        $facade->searchable = $mixed->getSearchable();
-        $facade->listable = $mixed->getListable();
-        $facade->type = $mixed->getType();
+        $facade->fieldId = $fieldType->getFieldId();
+        $facade->label = $this->translationChoiceManager->choose($fieldType->getLabels());
+        $facade->defaultValue = $fieldType->getDefaultValue();
+        $facade->searchable = $fieldType->getSearchable();
+        $facade->listable = $fieldType->getListable();
+        $facade->type = $fieldType->getType();
 
-        foreach ($mixed->getOptions() as $option) {
+        foreach ($fieldType->getOptions() as $option) {
             $value = $option->getValue();
             if (!is_string($value))
                 $value = \serialize($value);

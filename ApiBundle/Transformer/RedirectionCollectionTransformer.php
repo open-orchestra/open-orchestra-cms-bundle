@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\RedirectionCollectionFacade;
 class RedirectionCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $redirectionCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($redirectionCollection)
     {
         $facade = new RedirectionCollectionFacade();
 
-        foreach ($mixed as $redirection) {
+        foreach ($redirectionCollection as $redirection) {
             $facade->addRedirection($this->getTransformer('redirection')->transform($redirection));
         }
 

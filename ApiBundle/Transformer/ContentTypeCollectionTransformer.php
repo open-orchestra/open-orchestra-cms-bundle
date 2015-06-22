@@ -13,15 +13,15 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class ContentTypeCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $contentTypeCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($contentTypeCollection)
     {
         $facade = new ContentTypeCollectionFacade();
 
-        foreach ($mixed as $contentType) {
+        foreach ($contentTypeCollection as $contentType) {
             $facade->addContentType($this->getTransformer('content_type')->transform($contentType));
         }
 

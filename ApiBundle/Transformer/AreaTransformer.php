@@ -27,7 +27,11 @@ class AreaTransformer extends AbstractTransformer
      * @param AreaManager             $areaManager
      * @param CurrentSiteIdInterface  $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, AreaManager $areaManager, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(
+        NodeRepositoryInterface $nodeRepository,
+        AreaManager $areaManager,
+        CurrentSiteIdInterface $currentSiteManager
+    )
     {
         $this->nodeRepository = $nodeRepository;
         $this->areaManager = $areaManager;
@@ -35,14 +39,14 @@ class AreaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param AreaInterface $mixed
-     * @param NodeInterface $node
-     * @param string        $parentAreaId
+     * @param AreaInterface      $area
+     * @param NodeInterface|null $node
+     * @param string|null        $parentAreaId
      *
      * @return FacadeInterface
      * @throws AreaTransformerHttpException
      */
-    public function transform($mixed, NodeInterface $node = null, $parentAreaId = null)
+    public function transform($area, NodeInterface $node = null, $parentAreaId = null)
     {
         $facade = new AreaFacade();
 
@@ -50,13 +54,13 @@ class AreaTransformer extends AbstractTransformer
             throw new AreaTransformerHttpException();
         }
 
-        $facade->label = $mixed->getLabel();
-        $facade->areaId = $mixed->getAreaId();
-        $facade->classes = implode(',', $mixed->getClasses());
-        foreach ($mixed->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area')->transform($subArea, $node, $mixed->getAreaId()));
+        $facade->label = $area->getLabel();
+        $facade->areaId = $area->getAreaId();
+        $facade->classes = $area->getHtmlClass();
+        foreach ($area->getAreas() as $subArea) {
+            $facade->addArea($this->getTransformer('area')->transform($subArea, $node, $area->getAreaId()));
         }
-        foreach ($mixed->getBlocks() as $blockPosition => $block) {
+        foreach ($area->getBlocks() as $blockPosition => $block) {
             $otherNode = $node;
             $isInside = true;
             if (0 !== $block['nodeId'] && $node->getNodeId() != $block['nodeId']) {
@@ -69,31 +73,31 @@ class AreaTransformer extends AbstractTransformer
                 $isInside,
                 $otherNode->getNodeId(),
                 $block['blockId'],
-                $mixed->getAreaId(),
+                $area->getAreaId(),
                 $blockPosition,
                 $otherNode->getId()
             ));
         }
-        $facade->boDirection = $mixed->getBoDirection();
+        $facade->boDirection = $area->getBoDirection();
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
-                'label' => $mixed->getLabel(),
-                'class' => $mixed->getHtmlClass(),
-                'id' => $mixed->getAreaId()
+                'label' => $area->getLabel(),
+                'class' => $area->getHtmlClass(),
+                'id' => $area->getAreaId()
             )
         );
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_area_form', array(
             'nodeId' => $node->getId(),
-            'areaId' => $mixed->getAreaId(),
+            'areaId' => $area->getAreaId(),
         )));
         $facade->addLink('_self_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
             'nodeId' => $node->getId(),
-            'areaId' => $mixed->getAreaId()
+            'areaId' => $area->getAreaId()
         )));
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
             'nodeId' => $node->getId(),
-            'areaId' => $mixed->getAreaId()
+            'areaId' => $area->getAreaId()
         )));
 
         if ($parentAreaId) {
@@ -101,7 +105,7 @@ class AreaTransformer extends AbstractTransformer
                 array(
                     'nodeId' => $node->getId(),
                     'parentAreaId' => $parentAreaId,
-                    'areaId' => $mixed->getAreaId()
+                    'areaId' => $area->getAreaId()
                 )
             ));
 
@@ -109,7 +113,7 @@ class AreaTransformer extends AbstractTransformer
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node',
                 array(
                     'nodeId' => $node->getId(),
-                    'areaId' => $mixed->getAreaId(),
+                    'areaId' => $area->getAreaId(),
                 )
             ));
         }
@@ -118,13 +122,13 @@ class AreaTransformer extends AbstractTransformer
     }
 
     /**
-     * @param AreaInterface          $mixed
+     * @param AreaInterface          $area
      * @param TemplateInterface|null $template
      * @param string|null            $parentAreaId
      *
      * @return FacadeInterface
      */
-    public function transformFromTemplate($mixed, TemplateInterface $template = null, $parentAreaId = null)
+    public function transformFromTemplate($area, TemplateInterface $template = null, $parentAreaId = null)
     {
         $facade = new AreaFacade();
 
@@ -133,32 +137,32 @@ class AreaTransformer extends AbstractTransformer
             $templateId = $template->getTemplateId();
         }
 
-        $facade->label = $mixed->getLabel();
-        $facade->areaId = $mixed->getAreaId();
-        $facade->classes = implode(',', $mixed->getClasses());
-        foreach ($mixed->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $mixed->getAreaId()));
+        $facade->label = $area->getLabel();
+        $facade->areaId = $area->getAreaId();
+        $facade->classes = $area->getHtmlClass();
+        foreach ($area->getAreas() as $subArea) {
+            $facade->addArea($this->getTransformer('area')->transformFromTemplate($subArea, $template, $area->getAreaId()));
         }
 
-        $facade->boDirection = $mixed->getBoDirection();
+        $facade->boDirection = $area->getBoDirection();
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
-                'label' => $mixed->getLabel(),
-                'class' => $mixed->getHtmlClass(),
-                'id' => $mixed->getAreaId()
+                'label' => $area->getLabel(),
+                'class' => $area->getHtmlClass(),
+                'id' => $area->getAreaId()
             )
         );
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_area_form',
             array(
                 'templateId' => $templateId,
-                'areaId' => $mixed->getAreaId(),
+                'areaId' => $area->getAreaId(),
             )
         ));
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_template', array(
             'templateId' => $templateId,
-            'areaId' => $mixed->getAreaId()
+            'areaId' => $area->getAreaId()
         )));
 
         if ($parentAreaId) {
@@ -166,7 +170,7 @@ class AreaTransformer extends AbstractTransformer
                 array(
                     'templateId' => $templateId,
                     'parentAreaId' => $parentAreaId,
-                    'areaId' => $mixed->getAreaId()
+                    'areaId' => $area->getAreaId()
                 )
             ));
 
@@ -174,7 +178,7 @@ class AreaTransformer extends AbstractTransformer
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template',
                 array(
                     'templateId' => $templateId,
-                    'areaId' => $mixed->getAreaId(),
+                    'areaId' => $area->getAreaId(),
                 )
             ));
         }

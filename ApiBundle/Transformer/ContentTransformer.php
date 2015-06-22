@@ -20,82 +20,83 @@ class ContentTransformer extends AbstractTransformer
     protected $eventDispatcher;
 
     /**
-     * @param StatusRepositoryInterface           $statusRepository
-     * @param EventDispatcherInterface            $eventDispatcher
+     * @param StatusRepositoryInterface $statusRepository
+     * @param EventDispatcherInterface  $eventDispatcher
      */
     public function __construct(
         StatusRepositoryInterface $statusRepository,
-        EventDispatcherInterface $eventDispatcher)
+        EventDispatcherInterface $eventDispatcher
+    )
     {
         $this->statusRepository = $statusRepository;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * @param ContentInterface $mixed
+     * @param ContentInterface $content
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($content)
     {
         $facade = new ContentFacade();
 
-        $facade->id = $mixed->getContentId();
-        $facade->contentType = $mixed->getContentType();
-        $facade->name = $mixed->getName();
-        $facade->version = $mixed->getVersion();
-        $facade->contentTypeVersion = $mixed->getContentTypeVersion();
-        $facade->language = $mixed->getLanguage();
-        $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
+        $facade->id = $content->getContentId();
+        $facade->contentType = $content->getContentType();
+        $facade->name = $content->getName();
+        $facade->version = $content->getVersion();
+        $facade->contentTypeVersion = $content->getContentTypeVersion();
+        $facade->language = $content->getLanguage();
+        $facade->status = $this->getTransformer('status')->transform($content->getStatus());
         $facade->statusLabel = $facade->status->label;
-        $facade->createdAt = $mixed->getCreatedAt();
-        $facade->updatedAt = $mixed->getUpdatedAt();
-        $facade->deleted = $mixed->getDeleted();
-        $facade->linkedToSite = $mixed->isLinkedToSite();
+        $facade->createdAt = $content->getCreatedAt();
+        $facade->updatedAt = $content->getUpdatedAt();
+        $facade->deleted = $content->getDeleted();
+        $facade->linkedToSite = $content->isLinkedToSite();
 
-        foreach ($mixed->getAttributes() as $attribute) {
+        foreach ($content->getAttributes() as $attribute) {
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
             $facade->addAttribute($contentAttribute);
             $facade->addLinearizeAttribute($contentAttribute);
         }
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
-            'contentId' => $mixed->getContentId(),
-            'language' => $mixed->getLanguage(),
-            'version' => $mixed->getVersion(),
+            'contentId' => $content->getContentId(),
+            'language' => $content->getLanguage(),
+            'version' => $content->getVersion(),
         )));
 
         $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
-            'contentId' => $mixed->getContentId(),
-            'language' => $mixed->getLanguage(),
+            'contentId' => $content->getContentId(),
+            'language' => $content->getLanguage(),
         )));
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
-            'contentId' => $mixed->getContentId(),
-            'language' => $mixed->getLanguage(),
+            'contentId' => $content->getContentId(),
+            'language' => $content->getLanguage(),
         )));
 
         $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
-            'contentId' => $mixed->getId()
+            'contentId' => $content->getId()
         )));
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
-            'contentId' => $mixed->getContentId(),
-            'version' => $mixed->getVersion(),
-            'language' => $mixed->getLanguage(),
+            'contentId' => $content->getContentId(),
+            'version' => $content->getVersion(),
+            'language' => $content->getLanguage(),
         )));
 
         $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
-            'contentId' => $mixed->getContentId(),
+            'contentId' => $content->getContentId(),
         )));
 
         $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_parameter_languages_show'));
 
         $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_content_list_status', array(
-            'contentMongoId' => $mixed->getId()
+            'contentMongoId' => $content->getId()
         )));
         $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_content_update', array(
-            'contentMongoId' => $mixed->getId()
+            'contentMongoId' => $content->getId()
         )));
 
         return $facade;

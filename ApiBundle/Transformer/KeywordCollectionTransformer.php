@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\KeywordCollectionFacade;
 class KeywordCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $keywordCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($keywordCollection)
     {
         $facade = new KeywordCollectionFacade();
 
-        foreach ($mixed as $keyword) {
+        foreach ($keywordCollection as $keyword) {
             $facade->addKeyword($this->getTransformer('keyword')->transform($keyword));
         }
 

@@ -4,7 +4,8 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\ContentTransformer;
-
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 /**
  * Class ContentTransformerTest
  */
@@ -36,8 +37,6 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
-
-        $this->role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
 
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
@@ -85,6 +84,10 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * test reverseTransform
+     * @param FacadeInterface  $facade
+     * @param ContentInterface $source
+     * @param int              $searchCount
+     * @param int              $setCount
      *
      * @dataProvider changeStatusProvider
      */

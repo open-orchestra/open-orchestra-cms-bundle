@@ -74,7 +74,6 @@ class ContentTypeController extends BaseController
         $recordsTotal = $repository->countByContentTypeInLastVersion();
         $recordsFiltered = $repository->countByDeletedInLastVersionWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
 
-
         return $this->generateFacadeDataTable($transformer, $contentTypeCollection, $recordsTotal, $recordsFiltered);
     }
 

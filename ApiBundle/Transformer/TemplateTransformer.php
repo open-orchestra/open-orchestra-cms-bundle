@@ -12,32 +12,32 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class TemplateTransformer extends AbstractTransformer
 {
     /**
-     * @param TemplateInterface $mixed
+     * @param TemplateInterface $template
      *
      * @return TemplateFacade
      */
-    public function transform($mixed)
+    public function transform($template)
     {
         $facade = new TemplateFacade();
 
-        foreach ($mixed->getAreas() as $area) {
-            $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $mixed));
+        foreach ($template->getAreas() as $area) {
+            $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $template));
         }
 
-        $facade->id = $mixed->getId();
-        $facade->name = $mixed->getName();
-        $facade->siteId = $mixed->getSiteId();
-        $facade->templateId = $mixed->getTemplateId();
-        $facade->language = $mixed->getLanguage();
-        $facade->deleted = $mixed->getDeleted();
-        $facade->boDirection = $mixed->getBoDirection();
+        $facade->id = $template->getId();
+        $facade->name = $template->getName();
+        $facade->siteId = $template->getSiteId();
+        $facade->templateId = $template->getTemplateId();
+        $facade->language = $template->getLanguage();
+        $facade->deleted = $template->getDeleted();
+        $facade->boDirection = $template->getBoDirection();
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_form',
-            array('templateId' => $mixed->getTemplateId())
+            array('templateId' => $template->getTemplateId())
         ));
 
         $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
-            array('templateId' => $mixed->getTemplateId())
+            array('templateId' => $template->getTemplateId())
         ));
 
         return $facade;

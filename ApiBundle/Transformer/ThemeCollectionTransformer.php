@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\ThemeCollectionFacade;
 class ThemeCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $themeCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($themeCollection)
     {
         $facade = new ThemeCollectionFacade();
 
-        foreach ($mixed as $theme) {
+        foreach ($themeCollection as $theme) {
             $facade->addTheme($this->getTransformer('theme')->transform($theme));
         }
 

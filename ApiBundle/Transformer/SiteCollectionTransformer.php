@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\SiteCollectionFacade;
 class SiteCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $siteCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($siteCollection)
     {
         $facade = new SiteCollectionFacade();
 
-        foreach ($mixed as $site) {
+        foreach ($siteCollection as $site) {
             $facade->addSite($this->getTransformer('site')->transform($site));
         }
 

@@ -5,7 +5,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Facade\ApiClientFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\UserBundle\Document\ApiClient;
+use OpenOrchestra\BaseApi\Model\ApiClientInterface;
 
 /**
  * Class ApiClientTransformer
@@ -13,24 +13,24 @@ use OpenOrchestra\UserBundle\Document\ApiClient;
 class ApiClientTransformer extends AbstractTransformer
 {
     /**
-     * @param ApiClient $mixed
+     * @param ApiClientInterface $apiClient
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($apiClient)
     {
         $facade = new ApiClientFacade();
-        $facade->id = $mixed->getId();
-        $facade->name = $mixed->getName();
-        $facade->trusted = $mixed->isTrusted();
-        $facade->key = $mixed->getKey();
-        $facade->secret = $mixed->getSecret();
+        $facade->id = $apiClient->getId();
+        $facade->name = $apiClient->getName();
+        $facade->trusted = $apiClient->isTrusted();
+        $facade->key = $apiClient->getKey();
+        $facade->secret = $apiClient->getSecret();
 
         $facade->addLink(
             '_self_delete',
             $this->generateRoute(
                 'open_orchestra_api_api_client_delete',
-                array('apiClientId' => $mixed->getId())
+                array('apiClientId' => $apiClient->getId())
             )
         );
 
@@ -38,7 +38,7 @@ class ApiClientTransformer extends AbstractTransformer
             '_self_form',
             $this->generateRoute(
                 'open_orchestra_backoffice_api_client_form',
-                array('apiClientId' => $mixed->getId())
+                array('apiClientId' => $apiClient->getId())
             )
         );
 

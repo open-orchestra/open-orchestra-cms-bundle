@@ -12,28 +12,28 @@ use OpenOrchestra\ApiBundle\Facade\UiModelFacade;
 class UiModelTransformer extends AbstractTransformer
 {
     /**
-     * @param mixed $mixed
+     * @param array $uiModel
      *
-     * @return FacadeInterface|void
+     * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($uiModel)
     {
         $facade = new UiModelFacade();
 
-        if (array_key_exists('label', $mixed)) {
-            $facade->label = $mixed['label'];
+        if (array_key_exists('label', $uiModel)) {
+            $facade->label = $uiModel['label'];
         }
 
-        if (array_key_exists('class', $mixed)) {
-            $facade->class = $mixed['class'];
+        if (array_key_exists('class', $uiModel)) {
+            $facade->class = $uiModel['class'];
         }
 
-        if (array_key_exists('id', $mixed)) {
-            $facade->id = $mixed['id'];
+        if (array_key_exists('id', $uiModel)) {
+            $facade->id = $uiModel['id'];
         }
 
-        if (array_key_exists('html', $mixed)) {
-            $facade->html = $mixed['html'];
+        if (array_key_exists('html', $uiModel)) {
+            $facade->html = $uiModel['html'];
         }
 
         return $facade;

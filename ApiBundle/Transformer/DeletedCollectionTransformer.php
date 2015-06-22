@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
 class DeletedCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $deletedCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($deletedCollection)
     {
         $facade = new DeletedCollectionFacade();
 
-        foreach ($mixed as $deleted) {
+        foreach ($deletedCollection as $deleted) {
             $deleted = $this->getTransformer('deleted')->transform($deleted);
             if (!is_null($deleted)) {
                 $facade->addDeleted($deleted);

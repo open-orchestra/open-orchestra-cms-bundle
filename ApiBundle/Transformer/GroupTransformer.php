@@ -12,35 +12,35 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class GroupTransformer extends AbstractTransformer
 {
     /**
-     * @param GroupInterface $mixed
+     * @param GroupInterface $group
      *
      * @return GroupFacade
      */
-    public function transform($mixed)
+    public function transform($group)
     {
         $facade = new GroupFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->name = $mixed->getName();
-        foreach ($mixed->getRoles() as $role) {
+        $facade->id = $group->getId();
+        $facade->name = $group->getName();
+        foreach ($group->getRoles() as $role) {
             $facade->addRole($role);
         }
-        if ($site = $mixed->getSite()) {
+        if ($site = $group->getSite()) {
             $facade->site = $this->getTransformer('site')->transform($site);
         }
 
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_group_show',
-            array('groupId' => $mixed->getId())
+            array('groupId' => $group->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'open_orchestra_api_group_delete',
-            array('groupId' => $mixed->getId())
+            array('groupId' => $group->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_backoffice_group_form',
-            array('groupId' => $mixed->getId())
+            array('groupId' => $group->getId())
         ));
 
         return $facade;

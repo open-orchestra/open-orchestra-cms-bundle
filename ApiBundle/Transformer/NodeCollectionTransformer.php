@@ -14,15 +14,15 @@ use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 class NodeCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param ArrayCollection $nodeCollection
      *
      * @return FacadeInterface
      */
-    public function transformVersions($mixed)
+    public function transformVersions($nodeCollection)
     {
         $facade = new NodeCollectionFacade();
 
-        foreach ($mixed as $node) {
+        foreach ($nodeCollection as $node) {
             $facade->addNode($this->getTransformer('node')->transformVersion($node));
         }
 
@@ -30,15 +30,15 @@ class NodeCollectionTransformer extends AbstractTransformer
     }
 
     /**
-     * @param NodeCollectionFacade $mixed
+     * @param NodeCollectionFacade $nodeCollection
      *
      * @return array
      */
-    public function reverseTransformOrder($mixed)
+    public function reverseTransformOrder($nodeCollection)
     {
         $orderedNode = array();
         /** @var NodeFacade $node */
-        foreach ($mixed->getNodes() as $node) {
+        foreach ($nodeCollection->getNodes() as $node) {
             $orderedNode[] = $node->nodeId;
         }
 

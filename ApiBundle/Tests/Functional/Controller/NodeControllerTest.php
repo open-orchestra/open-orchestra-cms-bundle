@@ -26,7 +26,7 @@ class NodeControllerTest extends AbstractControllerTest
     }
 
     /**
-     * @param $nodes
+     * @param array $nodes
      */
     protected function undeleteNodes($nodes)
     {

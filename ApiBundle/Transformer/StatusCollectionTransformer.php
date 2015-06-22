@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class StatusCollectionTransformer
@@ -13,16 +14,16 @@ use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
 class StatusCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
-     * @param StatusInterface $currentStatus
+     * @param ArrayCollection      $statusCollection
+     * @param StatusInterface|null $currentStatus
      *
      * @return FacadeInterface|StatusCollectionFacade
      */
-    public function transform($mixed, $currentStatus = null)
+    public function transform($statusCollection, $currentStatus = null)
     {
         $facade = new StatusCollectionFacade();
 
-        foreach ($mixed as $status) {
+        foreach ($statusCollection as $status) {
             $facade->addStatus($this->getTransformer('status')->transform($status, $currentStatus));
         }
 

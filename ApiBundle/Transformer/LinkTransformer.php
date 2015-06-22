@@ -12,18 +12,18 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class LinkTransformer extends AbstractTransformer
 {
     /**
-     * @param array $mixed
+     * @param array $link
      *
      * @return FacadeInterface|LinkFacade
      */
-    public function transform($mixed)
+    public function transform($link)
     {
-        $link = new LinkFacade();
+        $facade = new LinkFacade();
 
-        $link->name = $mixed['name'];
-        $link->link = $mixed['link'];
+        $facade->name = $link['name'];
+        $facade->link = $link['link'];
 
-        return $link;
+        return $facade;
     }
 
     /**

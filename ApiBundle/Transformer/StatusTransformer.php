@@ -41,24 +41,24 @@ class StatusTransformer extends AbstractTransformer
     }
 
     /**
-     * @param StatusInterface $mixed
+     * @param StatusInterface $status
      * @param StatusInterface $currentStatus
      *
      * @return FacadeInterface|StatusFacade
      */
-    public function transform($mixed, $currentStatus = null)
+    public function transform($status, $currentStatus = null)
     {
         $facade = new StatusFacade();
 
-        $facade->published = $mixed->isPublished();
-        $facade->initial = $mixed->isInitial();
-        $facade->label = $this->translationChoiceManager->choose($mixed->getLabels());
-        $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $mixed->getDisplayColor());
-        $facade->codeColor = $mixed->getDisplayColor();
-        $facade->id = $mixed->getId();
+        $facade->published = $status->isPublished();
+        $facade->initial = $status->isInitial();
+        $facade->label = $this->translationChoiceManager->choose($status->getLabels());
+        $facade->displayColor = $this->translator->trans('open_orchestra_backoffice.form.status.color.' . $status->getDisplayColor());
+        $facade->codeColor = $status->getDisplayColor();
+        $facade->id = $status->getId();
         $facade->allowed = false;
         if ($currentStatus) {
-            $role = $this->roleRepository->findOneByFromStatusAndToStatus($currentStatus, $mixed);
+            $role = $this->roleRepository->findOneByFromStatusAndToStatus($currentStatus, $status);
             if ($this->securityContext->isGranted($role->getName())) {
                 $facade->allowed = true;
             }
@@ -66,23 +66,23 @@ class StatusTransformer extends AbstractTransformer
 
         if (!$this->hasGroup(GroupContext::G_HIDE_ROLES)) {
             $toRoles = array();
-            foreach ($mixed->getToRoles() as $toRole) {
+            foreach ($status->getToRoles() as $toRole) {
                 $toRoles[] = $toRole->getName();
             }
             $facade->toRole = implode(',', $toRoles);
             $fromRoles = array();
-            foreach ($mixed->getFromRoles() as $fromRole) {
+            foreach ($status->getFromRoles() as $fromRole) {
                 $fromRoles[] = $fromRole->getName();
             }
             $facade->fromRole = implode(',', $fromRoles);
 
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_status_delete',
-                array('statusId' => $mixed->getId())
+                array('statusId' => $status->getId())
             ));
             $facade->addLink('_self_form', $this->generateRoute(
                 'open_orchestra_backoffice_status_form',
-                array('statusId' => $mixed->getId())
+                array('statusId' => $status->getId())
             ));
         }
 

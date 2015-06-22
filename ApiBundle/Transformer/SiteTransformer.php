@@ -13,42 +13,42 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 class SiteTransformer extends AbstractTransformer
 {
     /**
-     * @param SiteInterface $mixed
+     * @param SiteInterface $site
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($site)
     {
         $facade = new SiteFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->siteId = $mixed->getSiteId();
-        $facade->name = $mixed->getName();
-        $facade->metaKeywords = $mixed->getMetaKeywords();
-        $facade->metaDescription = $mixed->getMetaDescription();
-        $facade->metaIndex = $mixed->getMetaIndex();
-        $facade->metaFollow = $mixed->getMetaFollow();
-        $facade->theme = $this->getTransformer('theme')->transform($mixed->getTheme());
+        $facade->id = $site->getId();
+        $facade->siteId = $site->getSiteId();
+        $facade->name = $site->getName();
+        $facade->metaKeywords = $site->getMetaKeywords();
+        $facade->metaDescription = $site->getMetaDescription();
+        $facade->metaIndex = $site->getMetaIndex();
+        $facade->metaFollow = $site->getMetaFollow();
+        $facade->theme = $this->getTransformer('theme')->transform($site->getTheme());
 
-        foreach ($mixed->getLanguages() as $language) {
+        foreach ($site->getLanguages() as $language) {
             $facade->addLanguage($language);
         }
 
-        foreach ($mixed->getBlocks() as $value) {
+        foreach ($site->getBlocks() as $value) {
             $facade->addBlocks($value);
         }
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_site_show',
-            array('siteId' => $mixed->getSiteId())
+            array('siteId' => $site->getSiteId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'open_orchestra_api_site_delete',
-            array('siteId' => $mixed->getSiteId())
+            array('siteId' => $site->getSiteId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_backoffice_site_form',
-            array('siteId' => $mixed->getSiteId())
+            array('siteId' => $site->getSiteId())
         ));
 
         return $facade;
