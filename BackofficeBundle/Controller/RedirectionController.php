@@ -35,20 +35,11 @@ class RedirectionController extends AbstractAdminController
         $form = $this->createForm('redirection', $redirection, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new')
         ));
-
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($redirection);
-            $documentManager->flush();
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success');
 
+        if ($this->handleForm($form, $message, $redirection)) {
             $this->dispatchEvent(RedirectionEvents::REDIRECTION_CREATE, new RedirectionEvent($redirection));
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success')
-            );
-
 
             return $this->redirect($this->generateUrl('open_orchestra_backoffice_redirection_form', array(
                 'redirectionId' => $redirection->getId()
@@ -80,9 +71,10 @@ class RedirectionController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.edit.success'), $redirection);
-
-        $this->dispatchEvent(RedirectionEvents::REDIRECTION_UPDATE, new RedirectionEvent($redirection));
+        $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.edit.success');
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(RedirectionEvents::REDIRECTION_UPDATE, new RedirectionEvent($redirection));
+        }
 
         return $this->renderAdminForm($form);
     }

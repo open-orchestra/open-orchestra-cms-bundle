@@ -39,14 +39,11 @@ class ThemeController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.theme.success');
 
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_backoffice.form.theme.success'),
-            $theme
-        );
-
-        $this->dispatchEvent(ThemeEvents::THEME_UPDATE, new ThemeEvent($theme));
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(ThemeEvents::THEME_UPDATE, new ThemeEvent($theme));
+        }
 
         return $this->renderAdminForm($form);
     }
@@ -75,17 +72,9 @@ class ThemeController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.theme.creation');
 
-        if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-            $documentManager->persist($theme);
-            $documentManager->flush();
-
-            $this->get('session')->getFlashBag()->add(
-                'success',
-                $this->get('translator')->trans('open_orchestra_backoffice.form.theme.creation')
-            );
-
+        if ($this->handleForm($form, $message, $theme)) {
             $this->dispatchEvent(ThemeEvents::THEME_CREATE, new ThemeEvent($theme));
 
             return $this->redirect(

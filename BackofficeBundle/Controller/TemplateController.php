@@ -37,14 +37,11 @@ class TemplateController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
 
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_backoffice.form.template.success'),
-            $template
-        );
-
-        $this->dispatchEvent(TemplateEvents::TEMPLATE_UPDATE, new TemplateEvent($template));
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(TemplateEvents::TEMPLATE_UPDATE, new TemplateEvent($template));
+        }
 
         return $this->renderAdminForm($form);
     }
@@ -71,31 +68,16 @@ class TemplateController extends AbstractAdminController
         $form = $this->generateTemplateForm($template, $this->generateUrl('open_orchestra_backoffice_template_new'));
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
 
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_backoffice.form.template.success'),
-            $template
-        );
-
-        $statusCode = 200;
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } elseif (!is_null($template->getTemplateId())) {
+        if ($this->handleForm($form, $message, $template)) {
             $url = $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
-
             $this->dispatchEvent(TemplateEvents::TEMPLATE_CREATE, new TemplateEvent($template));
 
             return $this->redirect($url);
         }
 
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-        return $this->render(
-            'OpenOrchestraBackofficeBundle::form.html.twig',
-            array('form' => $form->createView()),
-            $response
-        );
+        return $this->renderAdminForm($form);
     }
 
     /**

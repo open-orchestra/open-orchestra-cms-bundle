@@ -50,6 +50,8 @@ abstract class AbstractAdminController extends Controller
      *
      * @param FormInterface $form
      * @param array         $params additional view parameters
+     * @param Response|null $response
+     * @param string        $template
      *
      * @return Response
      */

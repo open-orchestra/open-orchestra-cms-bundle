@@ -38,7 +38,7 @@ class KeywordController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.success'), $keyword);
+        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.success'));
 
         return $this->renderAdminForm($form);
     }
@@ -66,23 +66,16 @@ class KeywordController extends AbstractAdminController
                 'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
             )
         );
-
         $form->handleRequest($request);
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.creation'), $keyword);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.creation');
 
-        $statusCode = 200;
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } elseif (!is_null($keyword->getId())) {
+        if ($this->handleForm($form, $message, $keyword)) {
             $url = $this->generateUrl('open_orchestra_backoffice_keyword_form', array('keywordId' => $keyword->getId()));
-
             $this->dispatchEvent(KeywordEvents::KEYWORD_CREATE, new KeywordEvent($keyword));
+
             return $this->redirect($url);
-        };
+        }
 
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-
-        return $this->renderAdminForm($form, array(), $response);
+        return $this->renderAdminForm($form);
     }
 }

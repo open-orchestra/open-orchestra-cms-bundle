@@ -43,11 +43,12 @@ class BlockController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
 
-        $this->handleForm($form, $this->get('translator')
-            ->trans('open_orchestra_backoffice.form.block.success'), $node);
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
+        }
 
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
         return $this->renderAdminForm(
             $form,
             array('blockType' => $block->getComponent()),

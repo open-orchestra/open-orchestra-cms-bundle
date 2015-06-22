@@ -38,9 +38,9 @@ class NodeController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->handleForm($form, $message, $node);
-
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(NodeEvents::NODE_UPDATE, new NodeEvent($node));
+        }
 
         return $this->renderAdminForm($form);
     }
@@ -67,26 +67,14 @@ class NodeController extends AbstractAdminController
 
         $form->handleRequest($request);
 
-        $this->handleForm($form, $message, $node);
-
-        $statusCode = 200;
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } elseif (!is_null($node->getId())) {
+        if ($this->handleForm($form, $message, $node)) {
             $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $node->getId()));
-
             $this->dispatchEvent(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
             return $this->redirect($url);
         };
 
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-        return $this->render(
-            'OpenOrchestraBackofficeBundle::form.html.twig',
-            array('form' => $form->createView()),
-            $response
-        );
+        return $this->renderAdminForm($form);
     }
 
     /**

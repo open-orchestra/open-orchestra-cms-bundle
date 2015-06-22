@@ -39,10 +39,10 @@ class SiteController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
-
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.website.success'));
-
-        $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site));
+        $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.website.success');
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site));
+        }
 
         return $this->renderAdminForm($form);
     }
@@ -74,22 +74,15 @@ class SiteController extends AbstractAdminController
         );
 
         $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation');
 
-        $this->handleForm($form, $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation'), $site);
-
-        $statusCode = 200;
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        } elseif (!is_null($site->getId())) {
+        if ($this->handleForm($form, $message, $site)) {
             $url = $this->generateUrl('open_orchestra_backoffice_site_form', array('siteId' => $site->getSiteId()));
-
             $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site));
 
             return $this->redirect($url);
-        };
+        }
 
-        $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
-
-        return $this->renderAdminForm($form, array(), $response);
+        return $this->renderAdminForm($form);
     }
 }
