@@ -3,13 +3,13 @@
 namespace OpenOrchestra\MediaAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB\AbstractLoadRoleData;
 use OpenOrchestra\MediaAdminBundle\LeftPanel\Strategies\TreeFolderPanelStrategy;
-use OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB\LoadRoleData as BaseLoadRoleData;
 
 /**
  * Class LoadRoleData
  */
-class LoadRoleData extends BaseLoadRoleData
+class LoadRoleData extends AbstractLoadRoleData
 {
     /**
      * @param ObjectManager $manager

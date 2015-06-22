@@ -4,12 +4,12 @@ namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB\LoadRoleData as BaseLoadRoleData;
+use OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB\AbstractLoadRoleData;
 
 /**
  * Class LoadRoleData
  */
-class LoadRoleData extends BaseLoadRoleData
+class LoadRoleData extends AbstractLoadRoleData
 {
     /**
      * @param ObjectManager $manager
