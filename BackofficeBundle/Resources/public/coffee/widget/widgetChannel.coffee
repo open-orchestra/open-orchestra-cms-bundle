@@ -20,4 +20,4 @@ widgetChannel.bind 'ready', (view) ->
   if $("[data-prototype*='content_type_change_type']", view.$el).length > 0
     loadExtendView(view, 'contentTypeChange')
   if $(".tinymce", view.$el).length > 0
-    initTinyMCE();
+    activateTinyMce(view)

@@ -4,8 +4,8 @@ extendView['submitAdmin'] = {
     'click .submit_form': 'addEventOnSave'
 
   addEventOnSave: (event) ->
-    tinymce.remove();
     event.preventDefault()
+    tinymce.triggerSave();
     viewContext = @
     viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showOrchestraModal')
     $("form", @$el).ajaxSubmit
