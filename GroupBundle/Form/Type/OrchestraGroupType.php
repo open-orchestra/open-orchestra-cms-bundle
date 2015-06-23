@@ -1,21 +1,19 @@
 <?php
+
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\AbstractOrchestraGroupType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class OrchestraGroupType
  */
 class OrchestraGroupType extends AbstractOrchestraGroupType
 {
-    /**
-     * @var string
-     */
-    private $groupClass;
+    protected $groupClass;
 
     /**
-     * @param $groupClass
+     * @param string $groupClass
      */
     public function __construct($groupClass)
     {
@@ -23,20 +21,18 @@ class OrchestraGroupType extends AbstractOrchestraGroupType
     }
 
     /**
-     * {@inheritDoc}
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'class' => $this->groupClass,
-                'property' => 'name'
-            )
-        );
+        $resolver->setDefaults(array(
+            'class' => $this->groupClass,
+            'property' => 'name'
+        ));
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function getParent()
     {
