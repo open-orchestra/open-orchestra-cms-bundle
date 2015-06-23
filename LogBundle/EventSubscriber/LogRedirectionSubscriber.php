@@ -5,8 +5,6 @@ namespace OpenOrchestra\LogBundle\EventSubscriber;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogRedirectionSubscriber

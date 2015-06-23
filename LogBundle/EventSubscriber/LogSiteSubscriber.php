@@ -5,8 +5,6 @@ namespace OpenOrchestra\LogBundle\EventSubscriber;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\SiteEvents;
-use Symfony\Bridge\Monolog\Logger;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class LogSiteSubscriber
