@@ -1,13 +1,8 @@
 ContentTypeFormView = FullPageFormView.extend(
 
-  initialize: (options) ->
-    @initializer options
-    @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView',
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
-    ]
-    displayMenu() if options.submitted
-    return
+  onViewReady: ->
+    displayMenu() if @options.submitted
+
 )
 
 jQuery ->
