@@ -18,6 +18,7 @@ NodeView = OrchestraView.extend(
       'duplicate': 'showNodeWithLanguage'
       'entityType': 'node'
     @options.configuration = @options.node
+    @options.entityType = 'node'
     @options.published = if @options.node.attributes.status then @options.node.attributes.status.published else true
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView"

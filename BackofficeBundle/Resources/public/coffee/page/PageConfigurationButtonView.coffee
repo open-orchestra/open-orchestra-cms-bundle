@@ -28,6 +28,7 @@ PageConfigurationButtonView = OrchestraView.extend(
       confirmTitle: @options.viewContainer.$el.data('delete-confirm-title')
       extendView: [ 'deleteTree' ]
       title: @options.configuration.get('name')
+      entityType: @options.entityType
     if @options.configuration.attributes.alias is ''
       $.extend options, extendView: [ 'generateId']
     adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
