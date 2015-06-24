@@ -14,20 +14,17 @@ FullPagePanelView = FullPageFormView.extend(
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPagePanelView', @options)
     @options.domContainer.html @$el
     $('.js-widget-title', @options.domContainer).html @options.title
-    links = @options.element.get('links')
-    panels = @getPanels links
-    for panel in panels
-      $("#superboxTab").append('<li id="' + panel.id + '"></li>')
-      @callPanel panel
+    @options.links = @options.element.get('links')
+    @getPanels()
+    @callPanels()
 
-  getPanels: (links) ->
-    panels = []
-    if links._self_form
-      panels[0] = {link:links._self_form, isActive:true, id:'form', title:'form'}
-    for key in Object.keys(links)
-      if infos = key.match(/^_self_panel_([0-9]+)_(.*)/)
-        panels[infos[1]] = {link:links[key], isActive:false, id:infos[2], title:infos[2]}
-    return panels
+  getPanels: ->
+    @options.panels = []
+    if @options.links._self_form
+      @options.panels.push {link:@options.links._self_form, isActive:true, id:'form'}
+    for key in Object.keys(@options.links)
+      if infos = key.match(/^_self_panel_(.*)/)
+        @options.panels.push {link:@options.links[key], isActive:false, id:infos[1]}
 
   addEventOnForm: (event)->
     event.preventDefault()
@@ -41,15 +38,19 @@ FullPagePanelView = FullPageFormView.extend(
         target.parent().html response.responseText
     return
 
-  callPanel: (panel) ->
+  callPanels: ->
     viewContext = @
-    $.ajax
-      url: panel["link"]
-      method: "GET"
-      success: (response) ->
-        viewContext.addPanelTitle panel
-        panel.response = response
-        viewContext.addResponseInTab panel
+    for panel in @options.panels
+      $("#superboxTab", viewContext.$el).append('<li id="' + panel.id + '"></li>')
+      do (panel) ->
+        $.ajax
+          url: panel["link"]
+          method: "GET"
+          success: (response) ->
+            panel.response = response
+            viewContext.addResponseInTab panel
+            panel.title = $('#tab-' + panel.id + ' form', viewContext.$el).data('title')
+            viewContext.addPanelTitle panel
 
   addResponseInTab: (element) ->
     $(".tab-content", @$el).prepend(

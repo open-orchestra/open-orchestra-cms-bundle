@@ -9,3 +9,7 @@ open_orchestra_user_admin:
     table:
         username: Username
         groups: Groups
+    form:
+        title: Form
+    password:
+        title: Password Form
