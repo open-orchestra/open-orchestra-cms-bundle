@@ -2,30 +2,34 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\BlockCollectionFacade;
 
 /**
- * Class ContentCollectionTransformer
+ * Class BlockCollectionTransformer
  */
 class BlockCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param Collection      $blockCollection
+     * @param Collection|null $generateMixed
+     * @param string|null     $nodeId
      *
      * @return FacadeInterface
      */
-    public function transform($mixed, $generateMixed = null, $nodeId = null)
+    public function transform($blockCollection, $generateMixed = null, $nodeId = null)
     {
         $facade = new BlockCollectionFacade();
 
-        foreach($generateMixed as $block) {
-            $facade->addBlock($this->getTransformer('block')->transform($block, true));
+        if (null !== $generateMixed) {
+            foreach($generateMixed as $block) {
+                $facade->addBlock($this->getTransformer('block')->transform($block, true));
+            }
         }
 
-        foreach ($mixed as $key => $block) {
+        foreach ($blockCollection as $key => $block) {
             $facade->addBlock($this->getTransformer('block')->transform($block, false, $nodeId, $key));
         }
 

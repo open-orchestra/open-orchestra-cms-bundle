@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
@@ -45,79 +46,85 @@ class NodeTransformer extends AbstractTransformer
     }
 
     /**
-     * @param NodeInterface $mixed
+     * @param NodeInterface $node
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($node)
     {
-        $facade = new NodeFacade();
-
-        foreach ($mixed->getAreas() as $area) {
-            $facade->addArea($this->getTransformer('area')->transform($area, $mixed));
+        if (!$node instanceof NodeInterface) {
+            throw new TransformerParameterTypeException();
         }
 
-        $facade->id = $mixed->getId();
-        $facade->nodeId = $mixed->getNodeId();
-        $facade->name = $mixed->getName();
-        $facade->siteId = $mixed->getSiteId();
-        $facade->deleted = $mixed->getDeleted();
-        $facade->templateId = $mixed->getTemplateId();
-        $facade->nodeType = $mixed->getNodeType();
-        $facade->parentId = $mixed->getParentId();
-        $facade->path = $mixed->getPath();
-        $facade->routePattern = $mixed->getRoutePattern();
-        $facade->language = $mixed->getLanguage();
-        $facade->metaKeywords = $mixed->getMetaKeywords();
-        $facade->metaDescription = $mixed->getMetaDescription();
-        $facade->metaIndex = $mixed->getMetaIndex();
-        $facade->metaFollow = $mixed->getMetaFollow();
-        $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
-        $facade->theme = $mixed->getTheme();
-        $facade->version = $mixed->getVersion();
-        $facade->createdBy = $mixed->getCreatedBy();
-        $facade->updatedBy = $mixed->getUpdatedBy();
-        $facade->createdAt = $mixed->getCreatedAt();
-        $facade->updatedAt = $mixed->getUpdatedAt();
+        $facade = new NodeFacade();
+
+        foreach ($node->getAreas() as $area) {
+            $facade->addArea($this->getTransformer('area')->transform($area, $node));
+        }
+
+        $facade->id = $node->getId();
+        $facade->nodeId = $node->getNodeId();
+        $facade->name = $node->getName();
+        $facade->siteId = $node->getSiteId();
+        $facade->deleted = $node->getDeleted();
+        $facade->templateId = $node->getTemplateId();
+        $facade->nodeType = $node->getNodeType();
+        $facade->parentId = $node->getParentId();
+        $facade->path = $node->getPath();
+        $facade->routePattern = $node->getRoutePattern();
+        $facade->language = $node->getLanguage();
+        $facade->metaKeywords = $node->getMetaKeywords();
+        $facade->metaDescription = $node->getMetaDescription();
+        $facade->metaIndex = $node->getMetaIndex();
+        $facade->metaFollow = $node->getMetaFollow();
+        $facade->status = $this->getTransformer('status')->transform($node->getStatus());
+        $facade->theme = $node->getTheme();
+        $facade->version = $node->getVersion();
+        $facade->createdBy = $node->getCreatedBy();
+        $facade->updatedBy = $node->getUpdatedBy();
+        $facade->createdAt = $node->getCreatedAt();
+        $facade->updatedAt = $node->getUpdatedAt();
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
-            'id' => $mixed->getId(),
+            'id' => $node->getId(),
         )));
 
         $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
-            'nodeId' => $mixed->getNodeId(),
-            'language' => $mixed->getLanguage(),
+            'nodeId' => $node->getNodeId(),
+            'language' => $node->getLanguage(),
         )));
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
-            'nodeId' => $mixed->getNodeId(),
-            'language' => $mixed->getLanguage(),
+            'nodeId' => $node->getNodeId(),
+            'language' => $node->getLanguage(),
         )));
 
         $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
-            'nodeId' => $mixed->getNodeId()
+            'nodeId' => $node->getNodeId()
         )));
 
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $mixed->getNodeId()
+            'nodeId' => $node->getNodeId()
         )));
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $mixed->getNodeId(),
-            'version' => $mixed->getVersion(),
-            'language' => $mixed->getLanguage(),
+            'nodeId' => $node->getNodeId(),
+            'version' => $node->getVersion(),
+            'language' => $node->getLanguage(),
         )));
 
         $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_show', array(
-            'siteId' => $mixed->getSiteId(),
+            'siteId' => $node->getSiteId(),
         )));
 
-        if ($site = $this->siteRepository->findOneBySiteId($mixed->getSiteId())) {
+        if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
             /** @var SiteAliasInterface $alias */
-            $encryptedId = $this->encrypter->encrypt($mixed->getId());
+            $encryptedId = $this->encrypter->encrypt($node->getId());
             foreach ($site->getAliases() as $alias) {
-                if ($alias->getLanguage() == $mixed->getLanguage()) {
-                    $scheme = $mixed->getScheme();
+                if ($alias->getLanguage() == $node->getLanguage()) {
+                    $scheme = $node->getScheme();
                     if (is_null($scheme) || SchemeableInterface::SCHEME_DEFAULT == $scheme) {
                         $scheme = $alias->getScheme();
                     }
@@ -127,46 +134,46 @@ class NodeTransformer extends AbstractTransformer
             }
         }
 
-        if (NodeInterface::TRANSVERSE_NODE_ID !== $mixed->getNodeId()) {
+        if (NodeInterface::TRANSVERSE_NODE_ID !== $node->getNodeId()) {
             $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
-                'nodeMongoId' => $mixed->getId()
+                'nodeMongoId' => $node->getId()
             )));
 
             $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
-                'nodeMongoId' => $mixed->getId()
+                'nodeMongoId' => $node->getId()
             )));
         }
 
         $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list', array(
-            'language' => $mixed->getLanguage(),
+            'language' => $node->getLanguage(),
         )));
 
         return $facade;
     }
 
     /**
-     * @param NodeInterface $mixed
+     * @param NodeInterface $node
      *
      * @return FacadeInterface
      */
-    public function transformVersion($mixed)
+    public function transformVersion($node)
     {
         $facade = new NodeFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->nodeId = $mixed->getNodeId();
-        $facade->name = $mixed->getName();
-        $facade->version = $mixed->getVersion();
-        $facade->createdBy = $mixed->getCreatedBy();
-        $facade->updatedBy = $mixed->getUpdatedBy();
-        $facade->createdAt = $mixed->getCreatedAt();
-        $facade->updatedAt = $mixed->getUpdatedAt();
-        $facade->status = $this->getTransformer('status')->transform($mixed->getStatus());
+        $facade->id = $node->getId();
+        $facade->nodeId = $node->getNodeId();
+        $facade->name = $node->getName();
+        $facade->version = $node->getVersion();
+        $facade->createdBy = $node->getCreatedBy();
+        $facade->updatedBy = $node->getUpdatedBy();
+        $facade->createdAt = $node->getCreatedAt();
+        $facade->updatedAt = $node->getUpdatedAt();
+        $facade->status = $this->getTransformer('status')->transform($node->getStatus());
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $mixed->getNodeId(),
-            'version' => $mixed->getVersion(),
-            'language' => $mixed->getLanguage(),
+            'nodeId' => $node->getNodeId(),
+            'version' => $node->getVersion(),
+            'language' => $node->getLanguage(),
         )));
 
         return $facade;
@@ -174,7 +181,7 @@ class NodeTransformer extends AbstractTransformer
 
     /**
      * @param NodeFacade|FacadeInterface $facade
-     * @param NodeInterface              $source
+     * @param NodeInterface|null         $source
      *
      * @return mixed
      */

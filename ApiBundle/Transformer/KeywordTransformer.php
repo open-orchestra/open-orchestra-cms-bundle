@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\KeywordFacade;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -12,28 +13,34 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class KeywordTransformer extends AbstractTransformer
 {
     /**
-     * @param KeywordInterface $mixed
+     * @param KeywordInterface $keyword
      *
      * @return KeywordFacade
+     *
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($keyword)
     {
+        if (!$keyword instanceof KeywordInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = new KeywordFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->label = $mixed->getLabel();
+        $facade->id = $keyword->getId();
+        $facade->label = $keyword->getLabel();
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_keyword_show',
-            array('keywordId' => $mixed->getId())
+            array('keywordId' => $keyword->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'open_orchestra_api_keyword_delete',
-            array('keywordId' => $mixed->getId())
+            array('keywordId' => $keyword->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_backoffice_keyword_form',
-            array('keywordId' => $mixed->getId())
+            array('keywordId' => $keyword->getId())
         ));
 
         return $facade;

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ThemeFacade;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -12,28 +13,34 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class ThemeTransformer extends AbstractTransformer
 {
     /**
-     * @param ThemeInterface $mixed
+     * @param ThemeInterface $theme
      *
      * @return ThemeFacade
+     *
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($theme)
     {
+        if (!$theme instanceof ThemeInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = new ThemeFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->name = $mixed->getName();
+        $facade->id = $theme->getId();
+        $facade->name = $theme->getName();
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_theme_show',
-            array('themeId' => $mixed->getId())
+            array('themeId' => $theme->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'open_orchestra_api_theme_delete',
-            array('themeId' => $mixed->getId())
+            array('themeId' => $theme->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_backoffice_theme_form',
-            array('themeId' => $mixed->getId())
+            array('themeId' => $theme->getId())
         ));
 
         return $facade;

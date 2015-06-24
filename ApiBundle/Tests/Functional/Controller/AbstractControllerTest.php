@@ -37,7 +37,7 @@ abstract class AbstractControllerTest extends WebTestCase
         $form['_username'] = 'admin';
         $form['_password'] = 'admin';
 
-        $crawler = $this->client->submit($form);
+        $this->client->submit($form);
 
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentTypeFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -24,35 +25,41 @@ class ContentTypeTransformer extends AbstractTransformer
     }
 
     /**
-     * @param ContentTypeInterface $mixed
+     * @param ContentTypeInterface $contentType
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($contentType)
     {
+        if (!$contentType instanceof ContentTypeInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = new ContentTypeFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->contentTypeId = $mixed->getContentTypeId();
-        $facade->name = $this->translationChoiceManager->choose($mixed->getNames());
-        $facade->version = $mixed->getVersion();
-        $facade->linkedToSite = $mixed->isLinkedToSite();
+        $facade->id = $contentType->getId();
+        $facade->contentTypeId = $contentType->getContentTypeId();
+        $facade->name = $this->translationChoiceManager->choose($contentType->getNames());
+        $facade->version = $contentType->getVersion();
+        $facade->linkedToSite = $contentType->isLinkedToSite();
 
-        foreach ($mixed->getFields() as $field) {
+        foreach ($contentType->getFields() as $field) {
             $facade->addField($this->getTransformer('field_type')->transform($field));
         }
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_content_type_show',
-            array('contentTypeId' => $mixed->getContentTypeId())
+            array('contentTypeId' => $contentType->getContentTypeId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'open_orchestra_api_content_type_delete',
-            array('contentTypeId' => $mixed->getContentTypeId())
+            array('contentTypeId' => $contentType->getContentTypeId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_backoffice_content_type_form',
-            array('contentTypeId' => $mixed->getContentTypeId())
+            array('contentTypeId' => $contentType->getContentTypeId())
         ));
 
         return $facade;

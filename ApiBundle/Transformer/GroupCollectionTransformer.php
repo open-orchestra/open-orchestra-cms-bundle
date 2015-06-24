@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\GroupCollectionFacade;
@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\GroupCollectionFacade;
 class GroupCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param Collection $groupCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($groupCollection)
     {
         $facade = new GroupCollectionFacade();
 
-        foreach ($mixed as $group) {
+        foreach ($groupCollection as $group) {
             $facade->addGroup($this->getTransformer('group')->transform($group));
         }
 

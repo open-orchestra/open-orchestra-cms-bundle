@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,8 +26,8 @@ class DeletedController extends BaseController
      */
     public function listAction()
     {
-        /** @var Collection $nodes */
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        /** @var array $nodes */
         $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByDeletedAndSiteId($siteId);
         $contents = $this->get('open_orchestra_model.repository.content')->findAllDeleted();
 

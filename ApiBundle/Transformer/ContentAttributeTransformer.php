@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -13,16 +14,22 @@ use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 class ContentAttributeTransformer extends AbstractTransformer
 {
     /**
-     * @param ContentAttributeInterface $mixed
+     * @param ContentAttributeInterface $contentAttribute
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($contentAttribute)
     {
+        if (!$contentAttribute instanceof ContentAttributeInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = new ContentAttributeFacade();
 
-        $facade->name = $mixed->getName();
-        $facade->value = $mixed->getValue();
+        $facade->name = $contentAttribute->getName();
+        $facade->value = $contentAttribute->getValue();
         return $facade;
     }
 

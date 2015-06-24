@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ContentTypeCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -13,15 +13,15 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class ContentTypeCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param Collection $contentTypeCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($contentTypeCollection)
     {
         $facade = new ContentTypeCollectionFacade();
 
-        foreach ($mixed as $contentType) {
+        foreach ($contentTypeCollection as $contentType) {
             $facade->addContentType($this->getTransformer('content_type')->transform($contentType));
         }
 

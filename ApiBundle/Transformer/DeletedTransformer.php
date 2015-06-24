@@ -15,7 +15,7 @@ class DeletedTransformer extends AbstractTransformer
     /**
      * @param NodeInterface|ContentInterface $mixed
 
-     * @return DeletedFacade|void
+     * @return DeletedFacade|null
      */
     public function transform($mixed)
     {

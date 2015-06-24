@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
-use OpenOrchestra\ApiBundle\Tests\Functional\Controller\AbstractControllerTest;
-
 /**
  * Class ApiControllersTest
  */

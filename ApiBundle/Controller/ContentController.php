@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\SourceLanguageNotFoundHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -13,9 +14,8 @@ use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\BaseApi\Context\GroupContext;
 
 /**
  * Class ContentController
@@ -267,6 +267,7 @@ class ContentController extends BaseController
     {
         $contentRepository = $this->get('open_orchestra_model.repository.content');
         $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
+
         return $content;
     }
 }

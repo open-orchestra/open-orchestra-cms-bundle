@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -61,18 +62,20 @@ class BlockTransformer extends AbstractTransformer
     }
 
     /**
-     * @param BlockInterface $mixed
+     * @param BlockInterface $block
      * @param boolean        $isInside
      * @param string|null    $nodeId
      * @param int|null       $blockNumber
-     * @param int|null       $areaId
-     * @param int|null       $blockPosition
+     * @param int            $areaId
+     * @param int            $blockPosition
      * @param string|null    $nodeMongoId
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeException
      */
     public function transform(
-        $mixed,
+        $block,
         $isInside = true,
         $nodeId = null,
         $blockNumber = null,
@@ -81,31 +84,35 @@ class BlockTransformer extends AbstractTransformer
         $nodeMongoId = null
     )
     {
+        if (!$block instanceof BlockInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = new BlockFacade();
 
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
-        $facade->component = $mixed->getComponent();
-        $facade->label = $mixed->getLabel();
-        $facade->class = $mixed->getClass();
-        $facade->id = $mixed->getId();
+        $facade->component = $block->getComponent();
+        $facade->label = $block->getLabel();
+        $facade->class = $block->getClass();
+        $facade->id = $block->getId();
         $facade->nodeId = $nodeId;
         $facade->blockId = $blockNumber;
 
-        foreach ($mixed->getAttributes() as $key => $attribute) {
+        foreach ($block->getAttributes() as $key => $attribute) {
             if (is_array($attribute)) {
                 $attribute = json_encode($attribute);
             }
             $facade->addAttribute($key, $attribute);
         }
 
-        if (count($mixed->getAttributes()) > 0) {
-            $html = $this->displayBlockManager->show($mixed)->getContent();
+        if (count($block->getAttributes()) > 0) {
+            $html = $this->displayBlockManager->show($block)->getContent();
         } else {
-            $html = $this->displayIconManager->show($mixed->getComponent());
+            $html = $this->displayIconManager->show($block->getComponent());
         }
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(array(
-            'label' => $mixed->getLabel()?: $this->translator->trans('open_orchestra_backoffice.block.' . $mixed->getComponent() . '.title'),
+            'label' => $block->getLabel()?: $this->translator->trans('open_orchestra_backoffice.block.' . $block->getComponent() . '.title'),
             'html' => $html
         ));
 
@@ -132,6 +139,7 @@ class BlockTransformer extends AbstractTransformer
         $block  = array(
             'blockParameter' => array()
         );
+        $blockElement = null;
 
         if (!is_null($facade->component)) {
             $blockClass = $this->blockClass;
@@ -146,7 +154,6 @@ class BlockTransformer extends AbstractTransformer
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             $block['nodeId'] = $facade->nodeId;
-            $blockElement = null;
             if (!is_null($node)) {
                 if ($facade->nodeId == $node->getNodeId()) {
                     $block['nodeId'] = 0;

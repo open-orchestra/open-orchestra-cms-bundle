@@ -13,15 +13,15 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class ApiClientCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection $mixed
+     * @param Collection $apiClientCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($apiClientCollection)
     {
         $facade = new ApiClientCollectionFacade();
 
-        foreach ($mixed as $apiClient) {
+        foreach ($apiClientCollection as $apiClient) {
             $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));
         }
 

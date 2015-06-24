@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
@@ -13,15 +13,15 @@ use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 class RoleCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param ArrayCollection $mixed
+     * @param Collection $roleCollection
      *
      * @return FacadeInterface
      */
-    public function transform($mixed)
+    public function transform($roleCollection)
     {
         $facade = new RoleCollectionFacade();
 
-        foreach ($mixed as $role) {
+        foreach ($roleCollection as $role) {
             $facade->addRole($this->getTransformer('role')->transform($role));
         }
 

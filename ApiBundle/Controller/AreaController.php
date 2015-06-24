@@ -139,10 +139,10 @@ class AreaController extends BaseController
     }
 
     /**
-     * @param string $areaId
-     * @param string $parentAreaId
-     * @param string $nodeId
-     * @param string $templateId
+     * @param string      $areaId
+     * @param string      $parentAreaId
+     * @param string|null $nodeId
+     * @param string|null $templateId
      *
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
@@ -154,16 +154,19 @@ class AreaController extends BaseController
      */
     public function deleteAreaFromAreaAction($areaId, $parentAreaId, $nodeId = null, $templateId = null)
     {
+        $areaContainer = null;
+
         if ($nodeId) {
             $nodeRepository = $this->get('open_orchestra_model.repository.node');
             $node = $nodeRepository->find($nodeId);
             $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
-        }
-        if ($templateId && is_null($nodeId)) {
+        } else if ($templateId) {
             $areaContainer = $this->get('open_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
         }
 
-        $this->deleteAreaFromContainer($areaId, $areaContainer);
+        if ($areaContainer) {
+            $this->deleteAreaFromContainer($areaId, $areaContainer);
+        }
 
         return new Response();
     }

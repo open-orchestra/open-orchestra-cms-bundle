@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -11,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class NodeController
@@ -156,7 +156,7 @@ class NodeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $nodeMongoId
+     * @param string  $nodeMongoId
      *
      * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})

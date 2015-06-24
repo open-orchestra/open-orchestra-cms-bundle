@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\RedirectionFacade;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -12,35 +13,41 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class RedirectionTransformer extends AbstractTransformer
 {
     /**
-     * @param RedirectionInterface $mixed
+     * @param RedirectionInterface $redirection
      *
      * @return RedirectionFacade
+     *
+     * @throws TransformerParameterTypeException
      */
-    public function transform($mixed)
+    public function transform($redirection)
     {
+        if (!$redirection instanceof RedirectionInterface) {
+            throw new TransformerParameterTypeException();
+        }
+
         $facade = new RedirectionFacade();
 
-        $facade->id = $mixed->getId();
-        $facade->siteName = $mixed->getSiteName();
-        $facade->routePattern = $mixed->getRoutePattern();
-        $facade->locale = $mixed->getLocale();
-        $facade->redirection = $mixed->getUrl();
-        if ($mixed->getNodeId()) {
-            $facade->redirection = $mixed->getNodeId();
+        $facade->id = $redirection->getId();
+        $facade->siteName = $redirection->getSiteName();
+        $facade->routePattern = $redirection->getRoutePattern();
+        $facade->locale = $redirection->getLocale();
+        $facade->redirection = $redirection->getUrl();
+        if ($redirection->getNodeId()) {
+            $facade->redirection = $redirection->getNodeId();
         }
-        $facade->permanent = $mixed->isPermanent();
+        $facade->permanent = $redirection->isPermanent();
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_redirection_show',
-            array('redirectionId' => $mixed->getId())
+            array('redirectionId' => $redirection->getId())
         ));
         $facade->addLink('_self_delete', $this->generateRoute(
             'open_orchestra_api_redirection_delete',
-            array('redirectionId' => $mixed->getId())
+            array('redirectionId' => $redirection->getId())
         ));
         $facade->addLink('_self_form', $this->generateRoute(
             'open_orchestra_backoffice_redirection_form',
-            array('redirectionId' => $mixed->getId())
+            array('redirectionId' => $redirection->getId())
         ));
 
         return $facade;
