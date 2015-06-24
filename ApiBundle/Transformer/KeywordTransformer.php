@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\ApiBundle\Facade\KeywordFacade;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -15,9 +16,15 @@ class KeywordTransformer extends AbstractTransformer
      * @param KeywordInterface $keyword
      *
      * @return KeywordFacade
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($keyword)
     {
+        if (!$keyword instanceof KeywordInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new KeywordFacade();
 
         $facade->id = $keyword->getId();

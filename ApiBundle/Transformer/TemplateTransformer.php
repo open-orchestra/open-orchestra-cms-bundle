@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\ApiBundle\Facade\TemplateFacade;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -15,9 +16,15 @@ class TemplateTransformer extends AbstractTransformer
      * @param TemplateInterface $template
      *
      * @return TemplateFacade
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($template)
     {
+        if (!$template instanceof TemplateInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new TemplateFacade();
 
         foreach ($template->getAreas() as $area) {

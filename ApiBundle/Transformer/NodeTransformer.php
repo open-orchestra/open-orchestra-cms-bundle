@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
@@ -48,9 +49,15 @@ class NodeTransformer extends AbstractTransformer
      * @param NodeInterface $node
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($node)
     {
+        if (!$node instanceof NodeInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new NodeFacade();
 
         foreach ($node->getAreas() as $area) {

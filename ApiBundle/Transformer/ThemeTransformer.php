@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\ApiBundle\Facade\ThemeFacade;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -15,9 +16,15 @@ class ThemeTransformer extends AbstractTransformer
      * @param ThemeInterface $theme
      *
      * @return ThemeFacade
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($theme)
     {
+        if (!$theme instanceof ThemeInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new ThemeFacade();
 
         $facade->id = $theme->getId();

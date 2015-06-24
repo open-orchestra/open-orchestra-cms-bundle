@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\ApiBundle\Facade\RedirectionFacade;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -15,9 +16,15 @@ class RedirectionTransformer extends AbstractTransformer
      * @param RedirectionInterface $redirection
      *
      * @return RedirectionFacade
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($redirection)
     {
+        if (!$redirection instanceof RedirectionInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new RedirectionFacade();
 
         $facade->id = $redirection->getId();

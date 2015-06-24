@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\ApiBundle\Facade\GroupFacade;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -15,9 +16,15 @@ class GroupTransformer extends AbstractTransformer
      * @param GroupInterface $group
      *
      * @return GroupFacade
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($group)
     {
+        if (!$group instanceof GroupInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new GroupFacade();
 
         $facade->id = $group->getId();

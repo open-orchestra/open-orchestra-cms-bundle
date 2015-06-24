@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\ApiBundle\Facade\ApiClientFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -16,9 +17,15 @@ class ApiClientTransformer extends AbstractTransformer
      * @param ApiClientInterface $apiClient
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($apiClient)
     {
+        if (!$apiClient instanceof ApiClientInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new ApiClientFacade();
         $facade->id = $apiClient->getId();
         $facade->name = $apiClient->getName();

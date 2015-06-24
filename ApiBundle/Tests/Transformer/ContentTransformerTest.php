@@ -83,6 +83,8 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * test reverseTransform
+     *
      * @param FacadeInterface  $facade
      * @param ContentInterface $source
      * @param int              $searchCount

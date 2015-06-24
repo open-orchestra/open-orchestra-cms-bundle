@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\FieldTypeFacade;
@@ -27,9 +28,15 @@ class FieldTypeTransformer extends AbstractTransformer
      * @param FieldTypeInterface $fieldType
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($fieldType)
     {
+        if (!$fieldType instanceof FieldTypeInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new FieldTypeFacade();
 
         $facade->fieldId = $fieldType->getFieldId();

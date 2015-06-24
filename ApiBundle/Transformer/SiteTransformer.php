@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\SiteFacade;
@@ -16,9 +17,15 @@ class SiteTransformer extends AbstractTransformer
      * @param SiteInterface $site
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeHttpException
      */
     public function transform($site)
     {
+        if (!$site instanceof SiteInterface) {
+            throw new TransformerParameterTypeHttpException();
+        }
+
         $facade = new SiteFacade();
 
         $facade->id = $site->getId();
