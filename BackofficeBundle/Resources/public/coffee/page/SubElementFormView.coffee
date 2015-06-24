@@ -1,7 +1,7 @@
 SubElementFormView = OrchestraModalView.extend(
 
   onViewReady: ->
-    displayMenu(displayRoute) if @options.submitted
+    displayMenu() if @options.submitted
 
 )
 
