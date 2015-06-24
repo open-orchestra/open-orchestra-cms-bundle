@@ -12,4 +12,5 @@ extendView['galleryWysiwygView'] =
           domContainer: viewContext.$el.closest(".modal-body-content")
           html: response
           thumbnails: viewContext.options.thumbnails
+          original: viewContext.options.original
         )

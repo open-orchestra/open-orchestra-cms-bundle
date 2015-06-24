@@ -21,7 +21,7 @@ GalleryView = OrchestraView.extend(
       @mediaClass = "media-select"
       @mediaLogo = "fa-check-circle"
     @options.thumbnails = @options.media.get("thumbnails")
-    @options.thumbnails["original"] = @options.media.get("displayed_image")
+    @options.original = @options.media.get("displayed_image")
     @loadTemplates [
       'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/galleryView'
     ]
