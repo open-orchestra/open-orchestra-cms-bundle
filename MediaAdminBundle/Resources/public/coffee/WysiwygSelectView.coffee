@@ -8,6 +8,7 @@ WysiwygSelectView = OrchestraView.extend(
       'domContainer'
       'html'
       'thumbnails'
+      'original'
     ])
     @loadTemplates [
         'OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/previewImageView',
@@ -16,22 +17,25 @@ WysiwygSelectView = OrchestraView.extend(
 
   render: (options) ->
     @setElement $(@options.html).append(@renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/Include/previewImageView'
-      src: @options.thumbnails["original"]
+      src: @options.original
     ))
     @options.domContainer.html @$el
-    $("option", "#media_crop_format").first().val("original")
 
   changeCropFormat: (event) ->
     format = $(event.currentTarget).val()
-    $('#preview_thumbnail', @$el).attr 'src', @options.thumbnails[format]
+    image = @options.thumbnails[format] || @options.original
+    $('#preview_thumbnail', @$el).attr 'src', image
  
   sendToTiny: (event) ->
+    event.preventDefault()
     modalContainer = @$el.closest(".mediaModalContainer")
     editorId = modalContainer.data("input")
+    format = $(event.currentTarget).val()
+    image = @options.thumbnails[format] || @options.original
     tinymce.get(editorId).execCommand(
       'mceInsertContent',
       false,
-      '<img src="' + @options.thumbnails[$('#media_crop_format').val()] + '"/>'
+      '<img src="' + image + '"/>'
     )
     modalContainer.find('.mediaModalClose').click()
 )
