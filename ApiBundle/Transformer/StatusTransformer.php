@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -47,12 +47,12 @@ class StatusTransformer extends AbstractTransformer
      *
      * @return FacadeInterface|StatusFacade
      *
-     * @throws TransformerParameterTypeHttpException
+     * @throws TransformerParameterTypeException
      */
     public function transform($status, $currentStatus = null)
     {
         if (!$status instanceof StatusInterface) {
-            throw new TransformerParameterTypeHttpException();
+            throw new TransformerParameterTypeException();
         }
 
         $facade = new StatusFacade();

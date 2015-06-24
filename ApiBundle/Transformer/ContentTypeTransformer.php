@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentTypeFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -29,12 +29,12 @@ class ContentTypeTransformer extends AbstractTransformer
      *
      * @return FacadeInterface
      *
-     * @throws TransformerParameterTypeHttpException
+     * @throws TransformerParameterTypeException
      */
     public function transform($contentType)
     {
         if (!$contentType instanceof ContentTypeInterface) {
-            throw new TransformerParameterTypeHttpException();
+            throw new TransformerParameterTypeException();
         }
 
         $facade = new ContentTypeFacade();

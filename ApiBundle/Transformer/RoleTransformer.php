@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\RoleFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
@@ -28,12 +28,12 @@ class RoleTransformer extends AbstractTransformer
      *
      * @return RoleFacade
      *
-     * @throws TransformerParameterTypeHttpException
+     * @throws TransformerParameterTypeException
      */
     public function transform($role)
     {
         if (!$role instanceof RoleInterface) {
-            throw new TransformerParameterTypeHttpException();
+            throw new TransformerParameterTypeException();
         }
 
         $facade = new RoleFacade();

@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeHttpException;
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -72,7 +72,7 @@ class BlockTransformer extends AbstractTransformer
      *
      * @return FacadeInterface
      *
-     * @throws TransformerParameterTypeHttpException
+     * @throws TransformerParameterTypeException
      */
     public function transform(
         $block,
@@ -85,7 +85,7 @@ class BlockTransformer extends AbstractTransformer
     )
     {
         if (!$block instanceof BlockInterface) {
-            throw new TransformerParameterTypeHttpException();
+            throw new TransformerParameterTypeException();
         }
 
         $facade = new BlockFacade();
