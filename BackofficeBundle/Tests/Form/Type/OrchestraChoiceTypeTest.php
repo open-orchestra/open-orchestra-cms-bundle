@@ -31,13 +31,13 @@ class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test default options
+     * test configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->orchestraChoiceType->setDefaultOptions($resolverMock);
+        $this->orchestraChoiceType->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(
             array('choices' => $this->choices)

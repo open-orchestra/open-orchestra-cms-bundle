@@ -157,6 +157,9 @@ open_orchestra_backoffice:
             new_blocks: Ajouter de nouveaux blocs
             existing_block: Bloc existant
             existing_blocks: Ajouter un bloc existant
+            add_sub: Ajout
+            label_sub: Libellé de la zone
+            remove_sub: Suppression
         block:
             success: Le bloc a été modifié
             label: Nom du bloc

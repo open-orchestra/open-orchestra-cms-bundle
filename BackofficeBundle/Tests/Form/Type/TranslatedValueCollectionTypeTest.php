@@ -37,13 +37,13 @@ class TranslatedValueCollectionTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the default options
+     * Test configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolverMock);
+        $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'type' => 'translated_value',

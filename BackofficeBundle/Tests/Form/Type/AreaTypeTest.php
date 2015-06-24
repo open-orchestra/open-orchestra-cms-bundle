@@ -12,13 +12,15 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $areaType;
     protected $areaClass = 'areaClass';
+    protected $translator;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->areaType = new AreaType($this->areaClass);
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->areaType = new AreaType($this->areaClass, $this->translator);
     }
 
     /**
@@ -44,11 +46,11 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Test the default options
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->areaType->setDefaultOptions($resolverMock);
+        $this->areaType->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->areaClass,

@@ -8,7 +8,8 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class TemplateAreaType
@@ -16,13 +17,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class AreaType extends AbstractType
 {
     protected $areaClass;
+    protected $translator;
 
     /**
-     * @param string $areaClass
+     * @param string              $areaClass
+     * @param TranslatorInterface $translator
      */
-    public function __construct($areaClass)
+    public function __construct($areaClass, TranslatorInterface $translator)
     {
         $this->areaClass = $areaClass;
+        $this->translator = $translator;
     }
 
     /**
@@ -60,15 +64,15 @@ class AreaType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.area.bo_percent'
         ));
         if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
-            $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
+            $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
             $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
         }
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->areaClass,

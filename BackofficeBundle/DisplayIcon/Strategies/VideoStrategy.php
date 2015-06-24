@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BasevideoStrategy;
-use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
  * Class VideoStrategy

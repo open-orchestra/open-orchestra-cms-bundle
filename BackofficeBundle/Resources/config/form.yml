@@ -20,8 +20,6 @@ parameters:
     open_orchestra_backoffice.type.orchestra_node_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
     open_orchestra_backoffice.type.orchestra_site_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraSiteChoiceType
     open_orchestra_backoffice.type.orchestra_content_type_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
-    open_orchestra_backoffice.type.orchestra_color_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorChoiceType
-    open_orchestra_backoffice.type.orchestra_frequence_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraFrequenceChoiceType
     open_orchestra_backoffice.type.tinymce.class: OpenOrchestra\BackofficeBundle\Form\Type\TinymceType
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\BackofficeBundle\Form\Type\KeywordType
     open_orchestra_backoffice.type.orchestra_keywords.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
@@ -56,6 +54,7 @@ services:
         arguments:
             - %open_orchestra_model.document.template.class%
             - %open_orchestra_model.document.area.class%
+            - @translator
         tags:
             - { name: form.type, alias: template }
     # Node form type
@@ -66,6 +65,7 @@ services:
             - @open_orchestra_model.repository.template
             - @open_orchestra_backoffice.manager.node
             - %open_orchestra_model.document.area.class%
+            - @translator
         tags:
             - { name: form.type, alias: node }
     # Area form type
@@ -73,6 +73,7 @@ services:
         class: %open_orchestra_backoffice.type.area.class%
         arguments:
             - %open_orchestra_model.document.area.class%
+            - @translator
         tags:
             - { name: form.type, alias: area }
     # Block form type

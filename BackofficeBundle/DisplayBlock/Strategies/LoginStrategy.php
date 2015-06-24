@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LoginStrategy extends AbstractStrategy
 {
     const LOGIN = 'login';
+
     /**
      * Check if the strategy support this block
      *

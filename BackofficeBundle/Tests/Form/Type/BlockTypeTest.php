@@ -51,13 +51,13 @@ class BlockTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test default options
+     * Test configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->blockType->setDefaultOptions($resolver);
+        $this->blockType->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
             'blockPosition' => 0,

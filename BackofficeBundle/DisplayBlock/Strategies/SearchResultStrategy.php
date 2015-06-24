@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SearchResultStrategy extends AbstractStrategy
 {
     const SEARCH_RESULT = 'search_result';
+
     /**
      * Check if the strategy support this block
      *

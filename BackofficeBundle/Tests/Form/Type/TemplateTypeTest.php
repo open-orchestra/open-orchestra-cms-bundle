@@ -15,6 +15,7 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
     protected $nodeTypeTransformer;
     protected $areaClass = 'areaClass';
     protected $templateClass = 'templateClass';
+    protected $translator;
 
     /**
      * Set up the test
@@ -24,8 +25,8 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
         $this->formBuilder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->formBuilder)->addModelTransformer(Phake::anyParameters())->thenReturn($this->formBuilder);
         Phake::when($this->formBuilder)->add(Phake::anyParameters())->thenReturn($this->formBuilder);
-
-        $this->templateType = new TemplateType($this->templateClass, $this->areaClass);
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->templateType = new TemplateType($this->templateClass, $this->areaClass, $this->translator);
     }
 
     /**
@@ -41,13 +42,13 @@ class TemplateTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test set default option
+     * test configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->templateType->setDefaultOptions($resolverMock);
+        $this->templateType->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->templateClass,

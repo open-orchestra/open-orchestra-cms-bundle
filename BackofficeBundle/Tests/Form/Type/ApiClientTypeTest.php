@@ -29,7 +29,7 @@ class ApiClientTypeTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
         Phake::when($this->builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($this->builder);
 
-        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
         $this->form = new ApiClientType($this->class);
     }
 
@@ -53,11 +53,11 @@ class ApiClientTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test setDefaultOptions
+     * Test configureOptions
      */
     public function testResolver()
     {
-        $this->form->setDefaultOptions($this->resolver);
+        $this->form->configureOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(Phake::anyParameters());
     }

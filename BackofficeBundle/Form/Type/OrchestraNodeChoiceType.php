@@ -5,7 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
@@ -30,9 +30,9 @@ class OrchestraNodeChoiceType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
@@ -57,6 +57,9 @@ class OrchestraNodeChoiceType extends AbstractType
     }
 
     /**
+     * @param array $nodes
+     * @param int   $depth
+     *
      * @return array
      */
     protected function getHierarchicalChoices($nodes, $depth = 0)
@@ -84,6 +87,7 @@ class OrchestraNodeChoiceType extends AbstractType
         return $choices;
 
     }
+
     /**
      * Returns the name of this type.
      *
@@ -95,7 +99,7 @@ class OrchestraNodeChoiceType extends AbstractType
     }
 
     /**
-     * @return null|string|\Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     public function getParent()
     {

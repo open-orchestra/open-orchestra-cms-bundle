@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class WebSiteSubscriberTest
@@ -31,6 +32,14 @@ class WebSiteSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getData()->thenReturn($this->data);
 
         $this->subscriber = new WebSiteSubscriber();
+    }
+
+    /**
+     * Test subscribed events
+     */
+    public function testEventSubscribed()
+    {
+        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
     }
 
     /**

@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
-use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Class TranslateValueInitializerListenerTest

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy as BaseAudienceAnalysisStrategy;
 
 /**
