@@ -55,6 +55,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/page/NodeFormView.js',
         'web/built/openorchestrabackoffice/js/page/TemplateView.js',
         'web/built/openorchestrabackoffice/js/page/TemplateFormView.js',
+        'web/built/openorchestrabackoffice/js/page/SubElementFormView.js',
         'web/built/openorchestrabackoffice/js/page/showNode.js',
         'web/built/openorchestrabackoffice/js/page/showTemplate.js',
         'web/built/openorchestrabackoffice/js/page/orderNode.js',
