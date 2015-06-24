@@ -28,13 +28,12 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
-        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        Phake::when($container)->get('event_dispatcher')->thenReturn($this->eventDispatcher);
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcher');
+
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');
 
-        $this->subscriber = new UpdateChildNodePathSubscriber($this->nodeRepository, $container, $this->currentSiteManager);
+        $this->subscriber = new UpdateChildNodePathSubscriber($this->nodeRepository, $this->eventDispatcher, $this->currentSiteManager);
     }
 
     /**

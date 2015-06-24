@@ -18,7 +18,7 @@ services:
             - { name: twig.extension}
     open_orchestra_backoffice.twig_extension.left_panel:
         class: %open_orchestra_backoffice.twig_extension.left_panel.class%
-        arguments:
-            - @service_container
+        calls:
+            - [ setContainer, [ @service_container ]  ]
         tags:
             - { name: twig.extension }

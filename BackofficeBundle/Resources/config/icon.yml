@@ -18,7 +18,8 @@ parameters:
 services:
     open_orchestra_backoffice.display_icon_manager:
         class: %open_orchestra_backoffice.display_icon_manager.class%
-        arguments: [@service_container]
+        calls:
+            - [ setContainer,[ @service_container ] ]
     open_orchestra_backoffice.display_icon.contact:
         class: %open_orchestra_backoffice.display_icon.contact.class%
         tags:
