@@ -57,7 +57,7 @@ OrchestraView = Backbone.View.extend(
     if $("[data-prototype*='content_type_change_type']", @$el).length > 0
       loadExtendView(@, 'contentTypeChange')
     if $("textarea.tinymce", @$el).length > 0
-      activateTinyMce(view, $("textarea.tinymce", @$el).attr('disabled') == 'disabled')
+      activateTinyMce(@$el, $("textarea.tinymce", @$el).attr('disabled') == 'disabled')
     return
 
   onViewReady: ->
