@@ -11,7 +11,7 @@ class TestContextManager extends ContextManager
 {
     protected $siteId = '1';
     protected $defaultLanguage = 'fr';
-    protected $siteName = 'First site';
+    protected $siteName = 'Front site';
 
     /**
      * @param SiteRepositoryInterface $siteRepository
