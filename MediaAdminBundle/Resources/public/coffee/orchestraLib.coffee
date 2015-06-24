@@ -1,6 +1,6 @@
 #ACTIVATE TINYMCE
 callback_tinymce_init = null
-activateTinyMce = (view) ->
+activateTinyMce = (view, isDisabled) ->
   tinymce.editors = []
   do (view) ->
     callback_tinymce_init = (editor) ->
@@ -13,4 +13,7 @@ activateTinyMce = (view) ->
       view.delegateEvents()
       return
     return
-  initTinyMCE()
+  if !isDisabled
+    initTinyMCE()
+  else
+    initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))

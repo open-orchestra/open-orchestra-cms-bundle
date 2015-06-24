@@ -19,5 +19,5 @@ widgetChannel.bind 'ready', (view) ->
     loadExtendView(view, 'contentTypeSelector')
   if $("[data-prototype*='content_type_change_type']", view.$el).length > 0
     loadExtendView(view, 'contentTypeChange')
-  if $(".tinymce", view.$el).length > 0
-    activateTinyMce(view)
+  if $("textarea.tinymce", view.$el).length > 0
+    activateTinyMce(view, $("textarea.tinymce", view.$el).attr('disabled') == 'disabled')
