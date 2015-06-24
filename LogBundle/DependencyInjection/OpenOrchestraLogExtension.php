@@ -29,6 +29,9 @@ class OpenOrchestraLogExtension extends Extension
                 $container->setParameter('open_orchestra_log.document.' . $class . '.class', $content['class']);
                 $definition = new Definition($content['repository'], array($content['class']));
                 $definition->setFactory(array(new Reference('doctrine.odm.mongodb.document_manager'), 'getRepository'));
+                $definition->addMethodCall('setAggregationQueryBuilder', array(
+                    new Reference('doctrine_mongodb.odm.default_aggregation_query')
+                ));
                 $container->setDefinition('open_orchestra_log.repository.' . $class, $definition);
             }
         }

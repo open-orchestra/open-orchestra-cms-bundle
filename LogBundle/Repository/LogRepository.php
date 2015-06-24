@@ -2,15 +2,13 @@
 
 namespace OpenOrchestra\LogBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use OpenOrchestra\Pagination\MongoTrait\FilterTrait;
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class LogRepository
  */
-class LogRepository extends DocumentRepository implements LogRepositoryInterface
+class LogRepository extends AbstractAggregateRepository implements LogRepositoryInterface
 {
-    use FilterTrait;
     use PaginationTrait;
 }

@@ -30,8 +30,7 @@ class UserRepositoryTest extends KernelTestCase
 
     /**
      * @param array  $descriptionEntity
-     * @param array  $columns
-     * @param string $search
+     * @param array  $search
      * @param array  $order
      * @param int    $skip
      * @param int    $limit
@@ -39,9 +38,9 @@ class UserRepositoryTest extends KernelTestCase
      *
      * @dataProvider providePaginateAndSearch
      */
-    public function testFindForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindForPaginate($descriptionEntity, $search, $order, $skip, $limit, $count)
     {
-        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $search);
         $configuration->setPaginateConfiguration($order, $skip, $limit);
         $users = $this->repository->findForPaginate($configuration);
         $this->assertCount($count, $users);
@@ -55,10 +54,10 @@ class UserRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,5 , 4),
-            array($descriptionEntity, $this->generateColumnsProvider('admin'), null, null, 0 ,5 , 1),
-            array($descriptionEntity, $this->generateColumnsProvider('fakeUsername'), null, null, 0 ,5 , 0),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'user', null, 0 ,5 , 3),
+            array($descriptionEntity, null, null, 0 ,5 , 4),
+            array($descriptionEntity, $this->generateSearchProvider('admin'), null, 0 ,5 , 1),
+            array($descriptionEntity, $this->generateSearchProvider('fakeUsername'), null, 0 ,5 , 0),
+            array($descriptionEntity, $this->generateSearchProvider('', 'user'), null, 0 ,5 , 3),
         );
     }
 
@@ -72,16 +71,15 @@ class UserRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param array  $columns
      * @param array  $descriptionEntity
-     * @param string $search
+     * @param array  $search
      * @param int    $count
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountFilterSearch($descriptionEntity, $columns, $search, $count)
+    public function testCountWithFilter($descriptionEntity, $search, $count)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $search);
         $users = $this->repository->countWithFilter($configuration);
         $this->assertEquals($count, $users);
     }
@@ -94,10 +92,10 @@ class UserRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, $this->generateColumnsProvider(), null, 4),
-            array($descriptionEntity, $this->generateColumnsProvider('admin'), null, 1),
-            array($descriptionEntity, $this->generateColumnsProvider('user'), null, 3),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'admin', 1),
+            array($descriptionEntity, null, 4),
+            array($descriptionEntity, $this->generateSearchProvider('admin'), 1),
+            array($descriptionEntity, $this->generateSearchProvider('user'), 3),
+            array($descriptionEntity, $this->generateSearchProvider('', 'admin'), 1),
         );
     }
 
@@ -105,14 +103,21 @@ class UserRepositoryTest extends KernelTestCase
      * Generate columns of content with search value
      *
      * @param string $searchUsername
+     * @param string $globalSearch
      *
      * @return array
      */
-    protected function generateColumnsProvider($searchUsername = '')
+    protected function generateSearchProvider($searchUsername = '', $globalSearch = '')
     {
-        return array(
-            array('name' => 'username', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchUsername)),
-        );
+        $search = array();
+        if (!empty($searchUsername)) {
+            $search['columns'] = array('username' => $searchUsername);
+        }
+        if (!empty($globalSearch)) {
+            $search['global'] = $globalSearch;
+        }
+
+        return $search;
     }
 
     /**

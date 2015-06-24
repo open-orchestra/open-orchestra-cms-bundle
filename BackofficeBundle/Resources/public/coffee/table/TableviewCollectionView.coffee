@@ -67,6 +67,11 @@ TableviewCollectionView = OrchestraView.extend(
         url : @options.url
         pages: 5
       )
+      fnServerParams: (aoData) ->
+        aoData.search = viewContext.transformerDataSearch(aoData)
+        aoData.order = viewContext.transformDataOrder(aoData)
+        delete aoData.columns
+        delete aoData.draw
       initComplete: (settings, json) ->
         viewContext.renderAddButton(viewContext, json.links, this)
       columns: columns
@@ -87,6 +92,25 @@ TableviewCollectionView = OrchestraView.extend(
         api.column(i).visible(false)
     @listenToOnce(widgetChannel, 'jarviswidget', @addColvis)
     return
+
+  transformerDataSearch : (data) ->
+    search =
+      columns : {}
+    for column in data.columns
+      if column.searchable = true and column.search.value != '' and column.name != ''
+        name = column.name
+        search.columns[name] = column.search.value
+    if data.search.value != ''
+      search['global'] = data.search.value
+    return search
+
+  transformDataOrder: (data) ->
+    for order in data.order
+      if data.columns[order.column]? and data.columns[order.column].orderable = true
+          name = data.columns[order.column].name if data.columns[order.column]?
+          dir = order.dir
+          return name: name, dir:dir
+    return null
 
   renderColumnActions : (viewContext, td, cellData, rowData) ->
     elementModel = new TableviewModel

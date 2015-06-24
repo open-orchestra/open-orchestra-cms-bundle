@@ -36,8 +36,7 @@ class LogController extends Controller
                 'date_time' => array('key' => 'datetime'),
                 'user_ip'   => array('key' => 'extra.user_ip'),
                 'user_name' => array('key' => 'extra.user_name'),
-                'site_name' => array('key' => 'extra.site_name'),
-                'message'   => array('key' => 'extra.message'),
+                'site_name' => array('key' => 'extra.site_name')
          ));
 
         $logCollection = $repository->findForPaginate($configuration);
