@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class TranslatedValueCollectionType
@@ -11,9 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TranslatedValueCollectionType extends AbstractType
 {
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'type' => 'translated_value',
@@ -35,7 +35,7 @@ class TranslatedValueCollectionType extends AbstractType
     }
 
     /**
-     * @return null|string|\Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     public function getParent()
     {

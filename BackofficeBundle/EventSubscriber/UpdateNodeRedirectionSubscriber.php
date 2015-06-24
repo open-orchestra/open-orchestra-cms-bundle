@@ -21,6 +21,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param RedirectionManager      $redirectionManager
+     * @param CurrentSiteIdInterface  $currentSiteManager
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, RedirectionManager $redirectionManager, CurrentSiteIdInterface $currentSiteManager)
     {

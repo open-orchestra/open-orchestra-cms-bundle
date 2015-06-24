@@ -44,6 +44,8 @@ class DisplayManager
                 return $strategy->show();
             }
         }
+
+        return '';
     }
 
     /**

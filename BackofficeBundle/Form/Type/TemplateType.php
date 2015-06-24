@@ -6,7 +6,8 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class TemplateType
@@ -15,15 +16,18 @@ class TemplateType extends AbstractType
 {
     protected $templateClass;
     protected $areaClass;
+    protected $translator;
 
     /**
-     * @param string $templateClass
-     * @param string $areaClass
+     * @param string              $templateClass
+     * @param string              $areaClass
+     * @param TranslatorInterface $translator
      */
-    public function __construct($templateClass, $areaClass)
+    public function __construct($templateClass, $areaClass, TranslatorInterface $translator)
     {
         $this->templateClass = $templateClass;
         $this->areaClass = $areaClass;
+        $this->translator = $translator;
     }
 
     /**
@@ -46,14 +50,14 @@ class TemplateType extends AbstractType
                 'disabled' => true
             ));
 
-        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
+        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(

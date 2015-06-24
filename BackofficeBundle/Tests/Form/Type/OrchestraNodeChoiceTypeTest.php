@@ -65,9 +65,9 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Test resolver
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
         Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())->thenReturn(
             array(
@@ -81,7 +81,7 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
                 array('node' => $this->node1, 'child' => array(array('node' => $this->node2))),
             )
         );
-        $this->orchestraNodeChoiceType->setDefaultOptions($resolver);
+        $this->orchestraNodeChoiceType->configureOptions($resolver);
         Phake::verify($resolver)->setDefaults(
             array(
                 'choices' => array(

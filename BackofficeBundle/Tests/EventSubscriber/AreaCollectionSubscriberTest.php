@@ -20,6 +20,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $event;
     protected $areaClass;
     protected $areaContainer;
+    protected $translator;
 
     /**
      * Set up the test
@@ -29,7 +30,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
 
         $this->areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
-
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
         Phake::when($this->form)->getData()->thenReturn($this->areaContainer);
@@ -37,7 +38,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new AreaCollectionSubscriber($this->areaClass);
+        $this->subscriber = new AreaCollectionSubscriber($this->areaClass, $this->translator);
     }
 
     /**
@@ -107,6 +108,10 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getData()->thenReturn($this->areaContainer);
 
         Phake::when($this->areaContainer)->getBlocks()->thenReturn($blockArray);
+        Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.add_sub')->thenReturn('Add');
+        Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.label_sub')->thenReturn('Area label');
+        Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.remove_sub')->thenReturn('Remove');
+
 
         $this->subscriber->preSetData($this->event);
 
@@ -116,9 +121,9 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             'mapped' => false,
             'label' => 'open_orchestra_backoffice.form.area.new_areas',
             'attr' => array(
-                'data-prototype-label-add' => 'Ajout',
-                'data-prototype-label-new' => 'Nouveau',
-                'data-prototype-label-remove' => 'Suppression',
+                'data-prototype-label-add' => 'Add',
+                'data-prototype-label-new' => 'Area label',
+                'data-prototype-label-remove' => 'Remove',
             )
         ));
     }

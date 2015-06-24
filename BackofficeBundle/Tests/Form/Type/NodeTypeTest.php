@@ -15,6 +15,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     protected $templateRepository;
     protected $nodeClass = 'nodeClass';
     protected $areaClass = 'areaClass';
+    protected $translator;
 
     /**
      * Set up the test
@@ -23,8 +24,8 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
-
-        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager, $this->areaClass);
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager, $this->areaClass, $this->translator);
     }
 
     /**
@@ -44,13 +45,13 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the default options
+     * Test configureOptions
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->nodeType->setDefaultOptions($resolverMock);
+        $this->nodeType->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'data_class' => $this->nodeClass

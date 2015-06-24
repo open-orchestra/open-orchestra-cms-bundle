@@ -53,6 +53,9 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(NodeEvents::PATH_UPDATED, $this->subscriber->getSubscribedEvents());
     }
 
+    /**
+     * Test update path
+     */
     public function testUpdatePath()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();

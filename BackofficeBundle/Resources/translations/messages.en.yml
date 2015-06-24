@@ -157,6 +157,9 @@ open_orchestra_backoffice:
             new_blocks: Add new blocks
             existing_block: Existing block
             existing_blocks: Add an existing block
+            add_sub: Add
+            label_sub: Area label
+            remove_sub: Remove
         block:
             success: The block has been modified
             label: Block label

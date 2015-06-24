@@ -4,7 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\ModelInterface\Repository\ThemeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class OrchestraThemeChoiceType
@@ -22,9 +22,9 @@ class OrchestraThemeChoiceType extends AbstractType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'choices' => $this->getChoices()
@@ -56,7 +56,7 @@ class OrchestraThemeChoiceType extends AbstractType
     }
 
     /**
-     * @return null|string|\Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     public function getParent()
     {

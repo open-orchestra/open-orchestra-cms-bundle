@@ -10,8 +10,9 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class NodeType
@@ -19,6 +20,7 @@ use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 class NodeType extends AbstractType
 {
     protected $areaClass;
+    protected $translator;
     protected $nodeClass;
     protected $nodeManager;
     protected $templateRepository;
@@ -29,13 +31,15 @@ class NodeType extends AbstractType
      * @param TemplateRepositoryInterface $templateRepository
      * @param NodeManager                 $nodeManager
      * @param string                      $areaClass
+     * @param TranslatorInterface         $translator
      */
-    public function __construct($nodeClass, TemplateRepositoryInterface $templateRepository, NodeManager $nodeManager, $areaClass)
+    public function __construct($nodeClass, TemplateRepositoryInterface $templateRepository, NodeManager $nodeManager, $areaClass, TranslatorInterface $translator)
     {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
         $this->areaClass = $areaClass;
+        $this->translator = $translator;
         $this->schemeChoices = array(
             SchemeableInterface::SCHEME_DEFAULT => 'open_orchestra_backoffice.form.node.default_scheme',
             SchemeableInterface::SCHEME_HTTP => SchemeableInterface::SCHEME_HTTP,
@@ -119,22 +123,20 @@ class NodeType extends AbstractType
         if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
             $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
             $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
-            $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass));
+            $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
             $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
         }
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => $this->nodeClass
         ));
     }
-
-
 
     /**
      * @return string

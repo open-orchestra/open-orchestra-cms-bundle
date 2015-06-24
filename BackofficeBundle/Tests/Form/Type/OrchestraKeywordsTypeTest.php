@@ -66,16 +66,16 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideTagLabel
      */
-    public function testSetDefaultOptions($tagLabel)
+    public function testConfigureOptions($tagLabel)
     {
         $route = 'path';
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn($route);
         Phake::when($this->keyword1)->getLabel()->thenReturn($tagLabel);
         Phake::when($this->keyword2)->getLabel()->thenReturn($tagLabel);
 
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolverMock);
+        $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'embedded' => true,

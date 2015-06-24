@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Translation\TranslatorInterface;
 
 
 /**
@@ -15,13 +16,16 @@ use Symfony\Component\Form\FormEvents;
 class AreaCollectionSubscriber implements EventSubscriberInterface
 {
     protected $areaClass;
+    protected $translator;
 
     /**
-     * @param string $areaClass
+     * @param string              $areaClass
+     * @param TranslatorInterface $translator
      */
-    public function __construct($areaClass)
+    public function __construct($areaClass, TranslatorInterface $translator)
     {
         $this->areaClass = $areaClass;
+        $this->translator = $translator;
     }
 
     /**
@@ -74,9 +78,9 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                 'mapped' => false,
                 'label' => 'open_orchestra_backoffice.form.area.new_areas',
                 'attr' => array(
-                    'data-prototype-label-add' => 'Ajout',
-                    'data-prototype-label-new' => 'Nouveau',
-                    'data-prototype-label-remove' => 'Suppression',
+                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.area.add_sub'),
+                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.area.label_sub'),
+                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.area.remove_sub'),
                 )
             ));
         }

@@ -29,7 +29,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
-        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
@@ -50,7 +50,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolver()
     {
-        $this->form->setDefaultOptions($this->resolver);
+        $this->form->configureOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(array(
             'data_class' => $this->fieldOptionClass,

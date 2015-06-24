@@ -14,13 +14,16 @@ class SiteManager
     /**
      * Constructor
      *
-     * @param string                   $siteClass
+     * @param string $siteClass
      */
     public function __construct($siteClass)
     {
        $this->siteClass = $siteClass;
     }
 
+    /**
+     * @return SiteInterface
+     */
     public function initializeNewSite()
     {
         $site = new $this->siteClass();
