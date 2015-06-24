@@ -154,6 +154,10 @@ $(document).on 'click', '.configuration-change', (e) ->
   window.location = url + '#' + Backbone.history.fragment
 
 #ACTIVATE TINYMCE
-activateTinyMce = (view) ->
+activateTinyMce = (view, isDisabled) ->
   tinymce.editors = []
-  initTinyMCE()
+  if !isDisabled
+    initTinyMCE()
+  else
+    initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
+
