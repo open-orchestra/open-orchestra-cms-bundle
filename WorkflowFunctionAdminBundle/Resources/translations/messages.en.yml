@@ -12,3 +12,5 @@ open_orchestra_workflow_function_admin:
             success: The workflow function has been saved
             name: Name
             role: Role
+    right:
+        title: Right Form

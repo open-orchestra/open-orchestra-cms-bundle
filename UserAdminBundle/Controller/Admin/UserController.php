@@ -69,7 +69,10 @@ class UserController extends AbstractAdminController
         $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
         $this->dispatchEvent(UserEvents::USER_UPDATE, new UserEvent($user));
 
-        return $this->renderAdminForm($form);
+        $title = 'open_orchestra_user_admin.form.title';
+        $title = $this->get('translator')->trans($title);
+
+        return $this->renderAdminForm($form, array('title' => $title));
     }
 
     /**
@@ -99,6 +102,9 @@ class UserController extends AbstractAdminController
             $this->dispatchEvent(UserEvents::USER_CHANGE_PASSWORD, new UserEvent($user));
         }
 
-        return $this->renderAdminForm($form);
+        $title = 'open_orchestra_user_admin.password.title';
+        $title = $this->get('translator')->trans($title);
+
+        return $this->renderAdminForm($form, array('title' => $title));
     }
 }

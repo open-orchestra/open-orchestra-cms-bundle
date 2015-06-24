@@ -5,8 +5,10 @@
     {% set class = class ~ ' form-disabled' %}
 {% endif %}
 
-{{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9, 'attr' : {'class': class}}) }}
-
-{% if blockType is defined %}
-    <span class="orchestra-hidden-info" id="dynamic-modal-title">{{ ('open_orchestra_backoffice.block.' ~ blockType ~ '.title') | trans }}</span>
+{% if title is defined %}
+    {% set attr = {'class': class, 'data-title': title} %}
+{%  else %}
+    {% set attr = {'class': class} %}
 {% endif %}
+
+{{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9, 'attr' : attr}) }}

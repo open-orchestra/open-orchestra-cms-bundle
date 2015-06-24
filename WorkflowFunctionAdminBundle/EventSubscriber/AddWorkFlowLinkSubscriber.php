@@ -28,7 +28,7 @@ class AddWorkFlowLinkSubscriber implements EventSubscriberInterface
     public function postUserTransformation(UserFacadeEvent $event)
     {
         $facade = $event->getUserFacade();
-        $facade->addLink('_self_panel_2_workflow_right',
+        $facade->addLink('_self_panel_workflow_right',
             $this->router->generate('open_orchestra_backoffice_workflow_right_form',
             array('userId' => $facade->id),
             UrlGeneratorInterface::ABSOLUTE_URL));
