@@ -26,8 +26,8 @@ class DeletedController extends BaseController
      */
     public function listAction()
     {
-        /** @var Array $nodes */
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        /** @var array $nodes */
         $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByDeletedAndSiteId($siteId);
         $contents = $this->get('open_orchestra_model.repository.content')->findAllDeleted();
 
