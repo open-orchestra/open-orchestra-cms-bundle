@@ -38,6 +38,7 @@ FullPageFormView = OrchestraView.extend(
       success: (response) ->
         new viewClass(viewContext.addOption(
           html: response
+          submitted: true
         ))
       error: (response) ->
         new viewClass(viewContext.addOption(

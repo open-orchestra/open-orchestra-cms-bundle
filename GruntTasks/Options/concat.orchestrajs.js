@@ -11,6 +11,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/addPrototype.js',
         'web/built/openorchestrabackoffice/js/modelBackbone.js',
         'web/built/openorchestrabackoffice/js/FullPageFormView.js',
+        'web/built/openorchestrabackoffice/js/ContentTypeFormView.js',
         'web/built/openorchestrabackoffice/js/FullPagePanelView.js',
         'web/built/openorchestrabackoffice/js/page/nodeConstructor.js',
         'web/built/openorchestrabackoffice/js/page/BlocksPanelView.js',
