@@ -2,22 +2,15 @@
 
 namespace OpenOrchestra\BackofficeBundle\Twig;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class LeftPanelExtension
  */
-class LeftPanelExtension extends \Twig_Extension
+class LeftPanelExtension extends \Twig_Extension implements ContainerAwareInterface
 {
     protected $container;
-
-    /**
-     * @param Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
 
     /**
      * @return array
@@ -45,5 +38,17 @@ class LeftPanelExtension extends \Twig_Extension
     public function getName()
     {
         return 'left_panel';
+    }
+
+     /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface|null $container A ContainerInterface instance or null
+     *
+     * @api
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

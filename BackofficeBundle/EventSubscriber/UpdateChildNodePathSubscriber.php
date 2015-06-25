@@ -6,7 +6,7 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -15,17 +15,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class UpdateChildNodePathSubscriber implements EventSubscriberInterface
 {
     protected $nodeRepository;
-    protected $container;
+    protected $eventDispatcher;
     protected $currentSiteManager;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
-     * @param Container               $container
+     * @param EventDispatcher $eventDispatcher
+     * @param CurrentSiteIdInterface $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, Container $container, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, EventDispatcher $eventDispatcher, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
-        $this->container = $container;
+        $this->eventDispatcher = $eventDispatcher;
         $this->currentSiteManager = $currentSiteManager;
     }
 
@@ -47,7 +48,7 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
 
         foreach ($sonsToUpdate as $sonToUpdate) {
             $event = new NodeEvent($sonToUpdate);
-            $this->container->get('event_dispatcher')->dispatch(NodeEvents::PATH_UPDATED, $event);
+            $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
     }
 

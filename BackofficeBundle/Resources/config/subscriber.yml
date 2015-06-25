@@ -11,7 +11,7 @@ services:
         class: %open_orchestra_backoffice.subscriber.update_child_node_path.class%
         arguments:
             - @open_orchestra_model.repository.node
-            - @service_container
+            - @event_dispatcher
             - @open_orchestra_backoffice.context_manager
         tags:
             - { name: kernel.event_subscriber }
