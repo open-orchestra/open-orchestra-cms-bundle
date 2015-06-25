@@ -12,7 +12,7 @@ parameters:
                     default_value: false
         textarea:
             label: open_orchestra_backoffice.form.field_type.custom_type.textarea
-            type: textara
+            type: textarea
             options:
                 max_length:
                     default_value: 100
