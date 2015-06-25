@@ -6,11 +6,13 @@ OrchestraModalView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
       'title'
-      'body'
+      'html'
       'footer'
       'domContainer'
       'entityType'
       'extendView'
+      'formView'
+      'submitted'
     ])
     @loadTemplates [
         'OpenOrchestraBackofficeBundle:BackOffice:Underscore/orchestraModalView'

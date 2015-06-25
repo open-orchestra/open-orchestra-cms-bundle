@@ -1,6 +1,6 @@
 FullPageFormView = OrchestraView.extend(
-  events:
-    'submit': 'addEventOnForm'
+
+  extendView : [ 'submitAdmin' ]
 
   initialize: (options) ->
     @initializer options
@@ -18,6 +18,7 @@ FullPageFormView = OrchestraView.extend(
         'multiLanguage': 'showEntityWithLanguageAndSourceLanguage'
         'multiVersion': 'showEntity'
         'duplicate': 'showEntity'
+    @options.formView = 'editEntity'
     @events = @events || {}
 
   render: ->
@@ -27,22 +28,5 @@ FullPageFormView = OrchestraView.extend(
     $("[data-prototype]", @$el).each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    return
-
-  addEventOnForm: (event)->
-    event.preventDefault()
-    viewContext = @
-    viewClass = appConfigurationView.getConfiguration(@options.entityType, 'editEntity')
-    $(event.target).ajaxSubmit
-      context: button: $(".submit_form",event.target).parent()
-      success: (response) ->
-        new viewClass(viewContext.addOption(
-          html: response
-          submitted: true
-        ))
-      error: (response) ->
-        new viewClass(viewContext.addOption(
-          html: response.responseText
-        ))
     return
 )
