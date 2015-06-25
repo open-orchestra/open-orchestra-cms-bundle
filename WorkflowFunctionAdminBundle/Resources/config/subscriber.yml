@@ -1,9 +1,0 @@
-parameters:
-    open_orchestra_workflow_function_admin.subscriber.add_workflow_link.class: OpenOrchestra\WorkflowFunctionAdminBundle\EventSubscriber\AddWorkFlowLinkSubscriber
-services:
-    open_orchestra_workflow_function_admin.subscriber.add_workflow_link:
-        class: %open_orchestra_workflow_function_admin.subscriber.add_workflow_link.class%
-        arguments:
-            - @router
-        tags:
-            - { name: kernel.event_subscriber }
