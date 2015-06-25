@@ -17,7 +17,6 @@
         "open-orchestra/open-orchestra-media-bundle": "*",
         "open-orchestra/open-orchestra-user-bundle": "*",
         "open-orchestra/open-orchestra-model-interface": "*",
-        "open-orchestra/open-orchestra-workflow-function-bundle": "*",
         "braincrafted/bootstrap-bundle": "2.1.2",
         "stfalcon/tinymce-bundle": "0.3.8"
     },
@@ -39,8 +38,7 @@
             "OpenOrchestra\\GroupBundle": "",
             "OpenOrchestra\\ApiBundle": "",
             "OpenOrchestra\\UserAdminBundle": "",
-            "OpenOrchestra\\MediaAdminBundle": "",
-            "OpenOrchestra\\WorkflowFunctionAdminBundle": ""
+            "OpenOrchestra\\MediaAdminBundle": ""
         }
     },
     "target-dir": "OpenOrchestra"
