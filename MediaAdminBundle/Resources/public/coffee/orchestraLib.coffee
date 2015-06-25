@@ -1,9 +1,11 @@
 #ACTIVATE TINYMCE
 callback_tinymce_init = null
-activateTinyMce = (view, isDisabled) ->
-  tinymce.editors = []
-  do (view) ->
+doCallBack = (view, textarea) ->
+  isRequired = textarea.attr('required') == 'required'
+  do (view, textarea, isRequired) ->
     callback_tinymce_init = (editor) ->
+      if isRequired
+        textarea.attr('required', 'required')
       $.extend true, view, extendView['orchestraMediaAbstractType'], extendView['orchestraWysiwygType']
       target = editor.id + '_modal'
       $('#' + editor.editorContainer.id + ' .mce-btn[aria-label="mediamanager"] button').data
@@ -13,7 +15,3 @@ activateTinyMce = (view, isDisabled) ->
       view.delegateEvents()
       return
     return
-  if !isDisabled
-    initTinyMCE()
-  else
-    initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
