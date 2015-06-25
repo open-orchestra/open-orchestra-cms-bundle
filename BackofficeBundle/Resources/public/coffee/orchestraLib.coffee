@@ -158,16 +158,24 @@ callback_tinymce_init = null
 
 activateTinyMce = (view, textarea) ->
   tinymce.editors = []
-  doCallBack(view, textarea)
+  do (view, textarea) ->
+    isRequired = textarea.attr('required') == 'required'
+    callback_tinymce_init = (editor) ->
+      if isRequired
+        textarea.attr('required', 'required')
+      textarea.css(
+         display: 'block'
+         position: 'absolute'
+         width: '1px'
+         height: '1px'
+         top: '0px'
+         zIndex: '1')
+      doCallBack(editor, view)
+      return
+    return
   if textarea.attr('disabled') == 'disabled'
     initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
   else
     initTinyMCE()
 
-doCallBack = (view, textarea) ->
-  if textarea.attr('required') == 'required'
-    do (textarea) ->
-      callback_tinymce_init = (editor) ->
-        textarea.attr('required', 'required')
-        return
-      return
+doCallBack = (editor, view) ->
