@@ -46,11 +46,11 @@ class RegistrationUserTypeTest extends AbstractUserTypeTest
     }
 
     /**
-     * Test setDefaultOptions
+     * Test configureOptions
      */
     public function testResolver()
     {
-        $this->form->setDefaultOptions($this->resolver);
+        $this->form->configureOptions($this->resolver);
 
         Phake::verify($this->resolver)->setDefaults(Phake::anyParameters());
     }

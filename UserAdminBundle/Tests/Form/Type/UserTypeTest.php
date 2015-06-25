@@ -50,7 +50,7 @@ class UserTypeTest extends AbstractUserTypeTest
     }
 
     /**
-     * Test setDefaultOptions
+     * Test configureOptions
      */
     public function testResolver()
     {

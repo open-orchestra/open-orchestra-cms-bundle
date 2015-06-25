@@ -61,9 +61,9 @@ class MediaTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetDefaultOptions()
     {
-        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolver);
+        $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
             'data_class' => $this->mediaClass
