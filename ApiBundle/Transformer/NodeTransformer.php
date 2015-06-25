@@ -15,6 +15,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class NodeTransformer
@@ -124,12 +125,9 @@ class NodeTransformer extends AbstractTransformer
             $encryptedId = $this->encrypter->encrypt($node->getId());
             foreach ($site->getAliases() as $alias) {
                 if ($alias->getLanguage() == $node->getLanguage()) {
-                    $scheme = $node->getScheme();
-                    if (is_null($scheme) || SchemeableInterface::SCHEME_DEFAULT == $scheme) {
-                        $scheme = $alias->getScheme();
-                    }
-                    $previewLink = $scheme . '://' . $alias->getDomain() . '/preview?token=' . $encryptedId;
-                    $facade->addPreviewLink($this->getTransformer('link')->transform(array('name' => $alias->getDomain(), 'link' => $previewLink)));
+                    $facade->addPreviewLink(
+                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId)
+                    );
                 }
             }
         }
@@ -149,6 +147,37 @@ class NodeTransformer extends AbstractTransformer
         )));
 
         return $facade;
+    }
+
+    /**
+     * Get a preview link
+     * 
+     * @param string             $scheme
+     * @param SiteAliasInterface $alias
+     * @param string             $encryptedId
+     * 
+     * @return FacadeInterface|LinkFacade
+     */
+    protected function getPreviewLink($scheme, $alias, $encryptedId)
+    {
+        $previewLink = array(
+            'name' => $alias->getDomain(),
+            'link' => ''
+        );
+
+        if (is_null($scheme) || SchemeableInterface::SCHEME_DEFAULT == $scheme) {
+            $scheme = $alias->getScheme();
+        }
+        $domain = $scheme . '://' . $alias->getDomain();
+
+        if ($alias->getPrefix() != "") {
+            $previewLink['name'] .= '/' . $alias->getPrefix();
+            $previewLink['link'] = $domain . $this->generateRoute('node_preview_with_prefix', array('languagePrefix' => $alias->getPrefix(), 'token' => $encryptedId), UrlGeneratorInterface::ABSOLUTE_PATH);
+        } else {
+            $previewLink['link'] = $domain . $this->generateRoute('node_preview', array('token' => $encryptedId), UrlGeneratorInterface::ABSOLUTE_PATH);
+        }
+
+        return $this->getTransformer('link')->transform($previewLink);
     }
 
     /**

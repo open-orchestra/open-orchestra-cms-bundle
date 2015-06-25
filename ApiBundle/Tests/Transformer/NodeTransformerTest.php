@@ -99,7 +99,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
         $this->assertArrayHasKey('_block_list', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(10))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(11))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node);
         Phake::verify($this->siteRepository)->findOneBySiteId(Phake::anyParameters());
     }
@@ -128,7 +128,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayNotHasKey('_self_status_change', $facade->getLinks());
         $this->assertArrayHasKey('_block_list', $facade->getLinks());
-        Phake::verify($this->router, Phake::times(8))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(9))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform($area, $this->node);
         Phake::verify($this->siteRepository)->findOneBySiteId(Phake::anyParameters());
     }
