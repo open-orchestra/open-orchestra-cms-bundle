@@ -54,7 +54,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $this->otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())
             ->thenReturn($this->otherNode);
 
         $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');

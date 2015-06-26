@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,20 +15,21 @@ trait HandleRequestDataTable
     /**
      * @param Request $request
      *
-     * @return array
+     * @return PaginateFinderConfiguration
      */
     protected function extractParameterRequestDataTable(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($request->get('columns'));
+        $search= $request->get('search');
+        if (isset($search['value'])){
+            $configuration->setSearch($search['value']);
+        }
+        $configuration->setOrder($request->get('order'));
+        $configuration->setSkip($request->get('start'));
+        $configuration->setLimit($request->get('length'));
 
-        return array($columns, $search, $order, $skip, $limit);
+        return $configuration;
     }
 
     /**
@@ -45,11 +47,11 @@ trait HandleRequestDataTable
             return $transformerManager->transform(array($element));
         }
 
-        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
-
-        $collection = $entityRepository->findForPaginateAndSearch($mappingEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = $this->extractParameterRequestDataTable($request);
+        $configuration->setDescriptionEntity($mappingEntity);
+        $collection = $entityRepository->findForPaginate($configuration);
         $recordsTotal = $entityRepository->count();
-        $recordsFiltered = $entityRepository->countWithSearchFilter($mappingEntity, $columns, $search);
+        $recordsFiltered = $entityRepository->countWithSearchFilter($configuration->getFinderConfiguration());
 
         return $this->generateFacadeDataTable($transformerManager, $collection, $recordsTotal, $recordsFiltered);
     }

@@ -28,7 +28,7 @@ class DeletedController extends BaseController
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         /** @var array $nodes */
-        $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByDeletedAndSiteId($siteId);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findDeletedInLastVersionBySiteId($siteId);
         $contents = $this->get('open_orchestra_model.repository.content')->findAllDeleted();
 
         $deleted = array_merge($nodes, $contents);

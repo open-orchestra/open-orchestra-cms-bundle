@@ -118,7 +118,7 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
+            ->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId);
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($node);
 
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
@@ -236,7 +236,7 @@ class NodeController extends BaseController
      */
     protected function findOneNode($nodeId, $language, $siteId, $version = null)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version);
+        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
 
         return $node;
     }

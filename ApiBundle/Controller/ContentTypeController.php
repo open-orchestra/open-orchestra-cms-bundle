@@ -7,6 +7,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,13 +55,12 @@ class ContentTypeController extends BaseController
      */
     public function listAction(Request $request)
     {
-        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
-
-        $columnsNameToEntityAttribute = array(
+        $configuration = $this->extractParameterRequestDataTable($request);
+        $configuration->setDescriptionEntity(array(
             'content_type_id' => array('key' => 'contentTypeId'),
             'name'            => array('key' => 'name'),
             'version'         => array('key' => 'version' , 'type' => 'integer'),
-        );
+        ));
 
         $repository = $this->get('open_orchestra_model.repository.content_type');
         $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_type_collection');
@@ -70,9 +70,9 @@ class ContentTypeController extends BaseController
             return $transformer->transform(array($element));
         }
 
-        $contentTypeCollection = $repository->findAllByDeletedInLastVersionForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $contentTypeCollection = $repository->findAllNotDeletedInLastVersionForPaginateAndSearch($configuration);
         $recordsTotal = $repository->countByContentTypeInLastVersion();
-        $recordsFiltered = $repository->countByDeletedInLastVersionWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countNotDeletedInLastVersionWithSearchFilter($configuration->getFinderConfiguration());
 
         return $this->generateFacadeDataTable($transformer, $contentTypeCollection, $recordsTotal, $recordsFiltered);
     }
