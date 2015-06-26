@@ -196,7 +196,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         ));
 
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $this->language, $siteId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $this->language, $siteId);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
         Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }
