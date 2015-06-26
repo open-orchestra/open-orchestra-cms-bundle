@@ -164,7 +164,7 @@ activateTinyMce = (view, textarea) ->
       textarea.each ->
         if $(this).data('required')
           $(this).attr('required', 'required')
-      textarea.css({display: 'block'}).addClass('patch-tinymce')
+      textarea.css({display: 'block'}).addClass('focusable')
       doCallBack(editor, view)
       return
     return
