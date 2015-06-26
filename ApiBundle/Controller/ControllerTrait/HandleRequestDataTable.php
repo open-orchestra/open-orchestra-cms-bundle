@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\PaginateRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,14 +33,14 @@ trait HandleRequestDataTable
     }
 
     /**
-     * @param Request              $request
-     * @param DocumentRepository   $entityRepository
-     * @param array                $mappingEntity
-     * @param TransformerInterface $transformerManager
+     * @param Request                     $request
+     * @param PaginateRepositoryInterface $entityRepository
+     * @param array                       $mappingEntity
+     * @param TransformerInterface        $transformerManager
      *
      * @return FacadeInterface
      */
-    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
+    protected function handleRequestDataTable(Request $request, PaginateRepositoryInterface $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
     {
         if ($entityId = $request->get('entityId')) {
             $element = $entityRepository->find($entityId);
@@ -51,7 +51,7 @@ trait HandleRequestDataTable
         $configuration->setDescriptionEntity($mappingEntity);
         $collection = $entityRepository->findForPaginate($configuration);
         $recordsTotal = $entityRepository->count();
-        $recordsFiltered = $entityRepository->countWithSearchFilter($configuration->getFinderConfiguration());
+        $recordsFiltered = $entityRepository->countWithFilter($configuration->getFinderConfiguration());
 
         return $this->generateFacadeDataTable($transformerManager, $collection, $recordsTotal, $recordsFiltered);
     }

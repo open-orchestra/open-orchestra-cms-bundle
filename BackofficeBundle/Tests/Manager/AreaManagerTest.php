@@ -210,7 +210,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testAreaConsistency($node, $nodeTransverse)
     {
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn(array());
 
         $this->assertTrue($this->manager->areaConsistency($node));
@@ -302,7 +302,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailingAreaConsistencyOnBlockParameter($node, $nodeTransverse)
     {
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn(array('newsId'));
 
         $this->assertFalse($this->manager->areaConsistency($node));
@@ -316,7 +316,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailingAreaConsistencyOnBlockReference($node, $nodeTransverse)
     {
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($nodeTransverse);
 
         $this->assertFalse($this->manager->areaConsistency($node));
     }

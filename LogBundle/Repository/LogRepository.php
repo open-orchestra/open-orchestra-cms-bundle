@@ -5,6 +5,7 @@ namespace OpenOrchestra\LogBundle\Repository;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\PaginateRepositoryInterface;
 
 /**
  * Class LogRepository

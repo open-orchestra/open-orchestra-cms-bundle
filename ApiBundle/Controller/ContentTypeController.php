@@ -70,7 +70,7 @@ class ContentTypeController extends BaseController
             return $transformer->transform(array($element));
         }
 
-        $contentTypeCollection = $repository->findAllNotDeletedInLastVersionForPaginateAndSearch($configuration);
+        $contentTypeCollection = $repository->findAllNotDeletedInLastVersionForPaginate($configuration);
         $recordsTotal = $repository->countByContentTypeInLastVersion();
         $recordsFiltered = $repository->countNotDeletedInLastVersionWithSearchFilter($configuration->getFinderConfiguration());
 
