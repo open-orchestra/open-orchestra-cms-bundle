@@ -190,7 +190,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $oldNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($oldNode)->getAreas()->thenReturn($areas);
         Phake::when($oldNode)->getBlocks()->thenReturn($blocks);
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($oldNode);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($oldNode);
 
         $this->manager->hydrateNodeFromNodeId($newNode, $oldNodeId);
 
@@ -236,7 +236,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitializeNewNode(NodeInterface $parentNode = null, $status = null)
     {
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId(Phake::anyParameters())->thenReturn($parentNode);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion(Phake::anyParameters())->thenReturn($parentNode);
         Phake::when($this->statusRepository)->findOneByEditable()->thenReturn($status);
         $node = $this->manager->initializeNewNode('fakeParentId');
 
@@ -345,11 +345,11 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($oldNode)->getId()->thenReturn($oldId);
 
         Phake::when($this->nodeRepository)
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($transverseNode);
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($transverseNode);
 
         $this->manager->updateBlockReferences($oldNode, $newNode);
 
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters());
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters());
         Phake::verify($block1)->addArea(array('nodeId' => $newId, 'areaId' => 'main'));
     }
 

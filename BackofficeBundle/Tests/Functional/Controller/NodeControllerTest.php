@@ -33,9 +33,9 @@ class NodeControllerTest extends AbstractControllerTest
      */
     public function testNodeForms()
     {
-        $nodeRoot = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID, $this->language, $this->siteId);
-        $nodeTransverse = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $this->language, $this->siteId);
-        $nodeFixtureFull = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', $this->language, $this->siteId);
+        $nodeRoot = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $this->language, $this->siteId);
+        $nodeTransverse = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $this->language, $this->siteId);
+        $nodeFixtureFull = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('fixture_full', $this->language, $this->siteId);
 
         $url = '/admin/node/form/' . $nodeRoot->getId();
         $this->client->request('GET', $url);
@@ -79,7 +79,7 @@ class NodeControllerTest extends AbstractControllerTest
      */
     public function testNodeTransverseEditable()
     {
-        $nodeTransverse = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $this->language, $this->siteId);
+        $nodeTransverse = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $this->language, $this->siteId);
 
         $url = '/admin/node/form/' . $nodeTransverse->getId();
         $crawler = $this->client->request('GET', $url);
