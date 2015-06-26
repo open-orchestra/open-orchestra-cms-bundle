@@ -60,6 +60,9 @@ OrchestraView = Backbone.View.extend(
       activateTinyMce(@, textarea)
     if (hidden = $("input[type='hidden'][required='required']", @$el)) && hidden.length > 0
       validateHidden(@, hidden)
+    $("[data-prototype]", @$el).each ->
+      PO.formPrototypes.addPrototype $(@)
+
     return
 
   onViewReady: ->

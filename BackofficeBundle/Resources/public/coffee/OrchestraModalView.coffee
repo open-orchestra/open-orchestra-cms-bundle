@@ -25,8 +25,6 @@ OrchestraModalView = OrchestraView.extend(
       @options.title = title
       $('.modal-title', @$el).html @options.title
     @options.domContainer.html @$el
-    $("[data-prototype]", @options.domContainer.$el).each ->
-      PO.formPrototypes.addPrototype $(@)
     $("#OrchestraBOModal").modal "show"
 
   close: ->

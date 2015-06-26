@@ -53,7 +53,8 @@ PO.formPrototype:: =
           self.addPrototype()
           self.clickLastPrototype()
         return
-
+    if @collectionHolder.children().filter('.form-group').length == 0 && @::match(/required="required"/g)
+      @addButton.click()
     return
 
   removeAddButton: ->
@@ -80,7 +81,8 @@ PO.formPrototype:: =
   addPrototype: ->
     newPrototype = @::replace(/__name__label__/g, @newElementLabel)
     newPrototype = newPrototype.replace(/__name__/g, @index)
-
+    newPrototype = $(newPrototype)
+    newPrototype.find('input[type="hidden"]').addClass('focusable').attr('type', 'text')
     # increase the index with one for the next item
     @index++
 
