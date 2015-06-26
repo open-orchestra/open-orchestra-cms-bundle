@@ -16,6 +16,12 @@ PO.formPrototype = (collectionHolder) ->
   @addButton = $(PO.formPrototypes.addButton.replace(/__label__/g, @collectionHolder.data("prototype-label-add")))
   @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
   @newElementLabel = @collectionHolder.data("prototype-label-new")
+  @newPrototype = @::replace(/__name__label__/g, @newElementLabel)
+  @newPrototype = $(@newPrototype)
+  @required = false
+  if (hidden = @newPrototype.find("input[type='hidden'][required='required']")) && hidden.length > 0
+    hidden.addClass('focusable').attr('type', 'text')
+    @required = true
   @addButtonContainer = $(PO.formPrototypes.addButtonContainer).append(@addButton)
   @addButtonExist = false
   self = this
@@ -53,7 +59,7 @@ PO.formPrototype:: =
           self.addPrototype()
           self.clickLastPrototype()
         return
-    if @collectionHolder.children().filter('.form-group').length == 0 && @::match(/required="required"/g)
+    if @index == 0 && @required
       @addButton.click()
     return
 
@@ -79,10 +85,8 @@ PO.formPrototype:: =
     return
 
   addPrototype: ->
-    newPrototype = @::replace(/__name__label__/g, @newElementLabel)
-    newPrototype = newPrototype.replace(/__name__/g, @index)
-    newPrototype = $(newPrototype)
-    newPrototype.find('input[type="hidden"]').addClass('focusable').attr('type', 'text')
+    newPrototype = @newPrototype.clone()
+    newPrototype.html newPrototype.html().replace(/__name__/g, @index)
     # increase the index with one for the next item
     @index++
 
