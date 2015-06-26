@@ -154,10 +154,28 @@ $(document).on 'click', '.configuration-change', (e) ->
   window.location = url + '#' + Backbone.history.fragment
 
 #ACTIVATE TINYMCE
-activateTinyMce = (view, isDisabled) ->
-  tinymce.editors = []
-  if !isDisabled
-    initTinyMCE()
-  else
-    initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
+callback_tinymce_init = null
 
+activateTinyMce = (view, textarea) ->
+  tinymce.editors = []
+  do (view, textarea) ->
+    isRequired = textarea.attr('required') == 'required'
+    callback_tinymce_init = (editor) ->
+      if isRequired
+        textarea.attr('required', 'required')
+      textarea.css(
+         display: 'block'
+         position: 'absolute'
+         width: '1px'
+         height: '1px'
+         top: '0px'
+         zIndex: '1')
+      doCallBack(editor, view)
+      return
+    return
+  if textarea.attr('disabled') == 'disabled'
+    initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
+  else
+    initTinyMCE()
+
+doCallBack = (editor, view) ->
