@@ -58,6 +58,8 @@ OrchestraView = Backbone.View.extend(
       loadExtendView(@, 'contentTypeChange')
     if (textarea = $("textarea.tinymce", @$el)) && textarea.length > 0
       activateTinyMce(@, textarea)
+    if (hidden = $("input[type='hidden'][required='required']", @$el)) && hidden.length > 0
+      validateHidden(@, hidden)
     return
 
   onViewReady: ->

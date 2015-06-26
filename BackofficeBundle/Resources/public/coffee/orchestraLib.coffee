@@ -159,10 +159,11 @@ callback_tinymce_init = null
 activateTinyMce = (view, textarea) ->
   tinymce.editors = []
   do (view, textarea) ->
-    isRequired = textarea.attr('required') == 'required'
+    textarea.filter('[required="required"]').data('required', true)
     callback_tinymce_init = (editor) ->
-      if isRequired
-        textarea.attr('required', 'required')
+      textarea.each ->
+        if $(this).data('required')
+          $(this).attr('required', 'required')
       textarea.css(
          display: 'block'
          position: 'absolute'
@@ -179,3 +180,11 @@ activateTinyMce = (view, textarea) ->
     initTinyMCE()
 
 doCallBack = (editor, view) ->
+
+#ACTIVATE HTML5 VALIDATION FOR HIDDEN
+validateHidden = (view, hidden) ->
+  hidden.css(
+    border: '0'
+    height: '1px'
+    width: '1px'
+    'margin-bottom': '-20px').attr('type', 'text')
