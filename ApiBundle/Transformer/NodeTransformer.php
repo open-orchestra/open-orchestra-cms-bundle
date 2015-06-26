@@ -169,13 +169,15 @@ class NodeTransformer extends AbstractTransformer
             $scheme = $alias->getScheme();
         }
         $domain = $scheme . '://' . $alias->getDomain();
+        $routeName = 'open_orchestra_base_node_preview';
+        $parameters = array('token' => $encryptedId);
 
         if ($alias->getPrefix() != "") {
             $previewLink['name'] .= '/' . $alias->getPrefix();
-            $previewLink['link'] = $domain . $this->generateRoute('node_preview_with_prefix', array('languagePrefix' => $alias->getPrefix(), 'token' => $encryptedId), UrlGeneratorInterface::ABSOLUTE_PATH);
-        } else {
-            $previewLink['link'] = $domain . $this->generateRoute('node_preview', array('token' => $encryptedId), UrlGeneratorInterface::ABSOLUTE_PATH);
+            $routeName = 'open_orchestra_base_node_preview_with_prefix';
+            $parameters['languagePrefix'] = $alias->getPrefix();
         }
+        $previewLink['link'] = $domain . $this->generateRoute($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
 
         return $this->getTransformer('link')->transform($previewLink);
     }
