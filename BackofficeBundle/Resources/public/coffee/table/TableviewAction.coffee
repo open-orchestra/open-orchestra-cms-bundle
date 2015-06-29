@@ -48,12 +48,10 @@ TableviewAction = OrchestraView.extend(
     options = @options
     viewContext = @
     links = options.element.get('links')
-    panelKeys = []
     for key in Object.keys(links)
       if /^_self_panel_/.test(key)
-        panelKeys.push(key)
-    if panelKeys.length > 0
-      appConfigurationView.setConfiguration(viewContext.options.entityType, 'edit', FullPagePanelView)
+        appConfigurationView.setConfiguration(viewContext.options.entityType, 'editEntity', FullPagePanelView)
+        break
     $.ajax
       url: links._self_form
       method: "GET"
