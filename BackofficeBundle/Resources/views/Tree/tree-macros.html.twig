@@ -106,6 +106,7 @@
                 id="nav-contents_{{contentType.contentTypeId}}"
                 href="#contents_{{contentType.contentTypeId}}/list"
                 data-url="{{ path('open_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
+                data-add="{{ path('open_orchestra_backoffice_content_new', {'contentType': contentType.contentTypeId}) }}"
                 data-displayed-elements="{{ displayedElement }}"
                 data-translated-header="{{ translatedHeader }}"
                 data-visible-elements="{{ visibleElement }}"
