@@ -4,6 +4,7 @@ TemplateFormView = OrchestraModalView.extend(
     if @options.submitted
       displayRoute = appRouter.generateUrl "showTemplate",
         templateId: $('#template_templateId', @$el).val()
+      Backbone.history.loadUrl(displayRoute)
       displayMenu(displayRoute)
 
 )

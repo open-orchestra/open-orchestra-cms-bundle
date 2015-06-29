@@ -1,7 +1,9 @@
 SubElementFormView = OrchestraModalView.extend(
 
   onViewReady: ->
-    displayMenu() if @options.submitted
+    if @options.submitted
+      displayRoute = Backbone.history.fragment
+      Backbone.history.loadUrl(displayRoute)
 
 )
 
