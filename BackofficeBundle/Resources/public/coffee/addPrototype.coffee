@@ -10,19 +10,27 @@ PO.formPrototypes =
 
 PO.formPrototype = (collectionHolder) ->
   @collectionHolder = collectionHolder
-  @:: = @collectionHolder.data("prototype")
+  @newElementLabel = @collectionHolder.data("prototype-label-new")
+  @:: = @collectionHolder.data("prototype").replace(/__name__label__/g, @newElementLabel)
   @index = @collectionHolder.find("input").length + @collectionHolder.find("select").length
   @limit = @collectionHolder.data("limit")
   @addButton = $(PO.formPrototypes.addButton.replace(/__label__/g, @collectionHolder.data("prototype-label-add")))
   @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
-  @newElementLabel = @collectionHolder.data("prototype-label-new")
+  @newPrototype = $(@::)
+  @required = false
+  if (hidden = @newPrototype.find("input[type='hidden'][required='required']")) && hidden.length > 0
+    hidden.addClass('focusable').attr('type', 'text')
+    @required = true
   @addButtonContainer = $(PO.formPrototypes.addButtonContainer).append(@addButton)
   @addButtonExist = false
   self = this
 
   # add old class for know if this children is already save in database
+  required = @required
   @collectionHolder.children().each ->
-    prototype = self.createRemoveButton($(this))
+    prototype = $(this)
+    if !required
+      prototype = self.createRemoveButton($(this))
     if prototype.find(".alert-error").length is 0
       prototype.addClass("old").removeClass("new")
     else
@@ -53,7 +61,8 @@ PO.formPrototype:: =
           self.addPrototype()
           self.clickLastPrototype()
         return
-
+    if @index == 0 && @required
+      @addButton.click()
     return
 
   removeAddButton: ->
@@ -78,9 +87,8 @@ PO.formPrototype:: =
     return
 
   addPrototype: ->
-    newPrototype = @::replace(/__name__label__/g, @newElementLabel)
-    newPrototype = newPrototype.replace(/__name__/g, @index)
-
+    newPrototype = @newPrototype.clone()
+    newPrototype.html newPrototype.html().replace(/__name__/g, @index)
     # increase the index with one for the next item
     @index++
 

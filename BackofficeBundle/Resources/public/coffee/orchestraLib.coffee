@@ -164,13 +164,7 @@ activateTinyMce = (view, textarea) ->
       textarea.each ->
         if $(this).data('required')
           $(this).attr('required', 'required')
-      textarea.css(
-         display: 'block'
-         position: 'absolute'
-         width: '1px'
-         height: '1px'
-         top: '0px'
-         zIndex: '1')
+      textarea.addClass('focusable')
       doCallBack(editor, view)
       return
     return
@@ -183,8 +177,4 @@ doCallBack = (editor, view) ->
 
 #ACTIVATE HTML5 VALIDATION FOR HIDDEN
 validateHidden = (view, hidden) ->
-  hidden.css(
-    border: '0'
-    height: '1px'
-    width: '1px'
-    'margin-bottom': '-20px').attr('type', 'text')
+  hidden.addClass('focusable').attr('type', 'text')

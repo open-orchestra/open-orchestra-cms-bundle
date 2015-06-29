@@ -25,8 +25,5 @@ FullPageFormView = OrchestraView.extend(
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView', @options)
     @options.domContainer.html @$el
     $('.js-widget-title', @options.domContainer).html @options.title
-    $("[data-prototype]", @$el).each ->
-      PO.formPrototypes.addPrototype $(this)
-      return
     return
 )
