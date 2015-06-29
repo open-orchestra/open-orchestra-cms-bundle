@@ -5,7 +5,6 @@ services:
     open_orchestra_model.validatorcontent_template:
         class: %open_orchestra_model.validatorcontent_template.class%
         arguments:
-            - @translator
             - @twig
         tags:
             - { name: validator.constraint_validator, alias: content_template}

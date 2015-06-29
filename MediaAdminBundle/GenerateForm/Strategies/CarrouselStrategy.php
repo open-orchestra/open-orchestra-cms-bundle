@@ -7,6 +7,7 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as Bas
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class CarrouselStrategy
@@ -41,6 +42,7 @@ class CarrouselStrategy extends AbstractBlockStrategy
     {
         $builder->add('pictures', 'collection', array(
             'type' => 'orchestra_media',
+            'constraints' => new NotBlank(),
             'allow_add' => true,
             'attr' => array(
                 'data-prototype-label-add' => $this->translator->trans('open_orchestra_media_admin.block.carrousel.form.media.add'),
@@ -48,8 +50,12 @@ class CarrouselStrategy extends AbstractBlockStrategy
                 'data-prototype-label-remove' => $this->translator->trans('open_orchestra_media_admin.block.carrousel.form.media.delete'),
             ),
         ));
-        $builder->add('width');
-        $builder->add('height');
+        $builder->add('width', 'text', array(
+            'constraints' => new NotBlank(),
+        ));
+        $builder->add('height', 'text', array(
+            'constraints' => new NotBlank(),
+        ));
     }
 
     /**

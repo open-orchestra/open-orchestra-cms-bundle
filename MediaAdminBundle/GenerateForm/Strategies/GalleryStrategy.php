@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Media\Model\MediaInterface;
 use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy as BaseGalleryStrategy;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Class GalleryStrategy
@@ -47,28 +49,33 @@ class GalleryStrategy extends AbstractBlockStrategy
         $builder
             ->add('id', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.block.id',
-                'required' => true
+                'constraints' => new NotBlank(),
             ))
             ->add('columnNumber', 'text', array(
                 'empty_data' => 1,
                 'label' => 'open_orchestra_media_admin.block.gallery.form.column_number',
+                'constraints' => array(new NotBlank(), new Type('integer')),
             ))
             ->add('itemNumber', 'text', array(
                 'empty_data' => 0,
                 'label' => 'open_orchestra_media_admin.block.gallery.form.item_number.label',
                 'attr' => array('help_text' => 'open_orchestra_media_admin.block.gallery.form.item_number.helper'),
+                'constraints' => array(new NotBlank(), new Type('integer')),
             ))
             ->add('thumbnailFormat', 'choice', array(
                 'choices' => $formats,
                 'label' => 'open_orchestra_media_admin.block.gallery.form.thumbnail_format',
+                'constraints' => new NotBlank(),
             ))
             ->add('imageFormat', 'choice', array(
                 'choices' => $formats,
+                'constraints' => new NotBlank(),
                 'label' => 'open_orchestra_media_admin.block.gallery.form.image_format.label',
                 'attr' => array('help_text' => 'open_orchestra_media_admin.block.gallery.form.image_format.helper'),
             ))
             ->add('pictures', 'collection', array(
                 'type' => 'orchestra_media',
+                'constraints' => new NotBlank(),
                 'allow_add' => true,
                 'attr' => array(
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_media_admin.block.gallery.form.media.add'),

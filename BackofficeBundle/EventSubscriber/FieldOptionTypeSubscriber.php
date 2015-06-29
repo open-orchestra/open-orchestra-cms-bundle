@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class FieldOptionTypeSubscriber
@@ -29,10 +30,15 @@ class FieldOptionTypeSubscriber implements EventSubscriberInterface
         $element = $event->getData();
         $option = $this->options[$element->getKey()];
         $form = $event->getForm();
-        $form->add('value', $option['type'], array(
+
+        $optionsField = array(
             'label' => $option['label'],
             'required' => $option['required']
-        ));
+        );
+        if ($option['required'] == true) {
+            $optionsField['constraints'] = new NotBlank();
+        }
+        $form->add('value', $option['type'], $optionsField);
     }
 
     /**
