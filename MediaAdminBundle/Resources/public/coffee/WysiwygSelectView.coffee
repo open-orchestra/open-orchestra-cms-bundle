@@ -30,12 +30,10 @@ WysiwygSelectView = OrchestraView.extend(
     event.preventDefault()
     modalContainer = @$el.closest(".mediaModalContainer")
     editorId = modalContainer.data("input")
-    format = $(event.currentTarget).val()
-    image = @options.thumbnails[format] || @options.original
     tinymce.get(editorId).execCommand(
       'mceInsertContent',
       false,
-      '<img src="' + image + '"/>'
+      '<img src="' + $('#preview_thumbnail', @$el).attr('src') + '"/>'
     )
     modalContainer.find('.mediaModalClose').click()
 )
