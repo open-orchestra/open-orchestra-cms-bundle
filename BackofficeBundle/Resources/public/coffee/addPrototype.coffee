@@ -18,18 +18,17 @@ PO.formPrototype = (collectionHolder) ->
   @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
   @newPrototype = $(@::)
   @required = false
-  if (hidden = @newPrototype.find("input[type='hidden'][required='required']")) && hidden.length > 0
-    hidden.addClass('focusable').attr('type', 'text')
-    @required = true
+  if (requiredInput = @newPrototype.find("input[required='required']")) && (@required = requiredInput.length > 0)
+    requiredInput.filter("[type='hidden']").addClass('focusable').attr('type', 'text')
   @addButtonContainer = $(PO.formPrototypes.addButtonContainer).append(@addButton)
   @addButtonExist = false
   self = this
 
   # add old class for know if this children is already save in database
   required = @required
-  @collectionHolder.children().each ->
+  @collectionHolder.children().each (index) ->
     prototype = $(this)
-    if !required
+    if !required || index > 0
       prototype = self.createRemoveButton($(this))
     if prototype.find(".alert-error").length is 0
       prototype.addClass("old").removeClass("new")
@@ -89,15 +88,15 @@ PO.formPrototype:: =
   addPrototype: ->
     newPrototype = @newPrototype.clone()
     newPrototype.html newPrototype.html().replace(/__name__/g, @index)
-    # increase the index with one for the next item
-    @index++
 
     # Display the input in the page before the add button
     @addButtonContainer.before newPrototype
     $("[data-prototype]", @addButtonContainer.prev()).each ->
       PO.formPrototypes.addPrototype $(this)
       return
-    @createRemoveButton @addButtonContainer.prev()
+    @createRemoveButton @addButtonContainer.prev() if @index > 0 || !@required
+    # increase the index with one for the next item
+    @index++
     @toogleAddButton()
     return
 
