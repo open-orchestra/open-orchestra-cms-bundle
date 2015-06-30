@@ -121,7 +121,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
             $this->getFieldOptions($contentTypeField)
         );
 
-        if (isset($fieldParameters['required']) && $fieldParameters['required'] == true) {
+        if (isset($fieldParameters['required']) && $fieldParameters['required'] === true) {
             $fieldParameters['constraints'] = new NotBlank();
         }
 

@@ -35,7 +35,7 @@ class FieldOptionTypeSubscriber implements EventSubscriberInterface
             'label' => $option['label'],
             'required' => $option['required']
         );
-        if ($option['required'] == true) {
+        if ($option['required'] === true) {
             $optionsField['constraints'] = new NotBlank();
         }
         $form->add('value', $option['type'], $optionsField);

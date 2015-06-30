@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Validator\Constraints;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Twig_Environment;
