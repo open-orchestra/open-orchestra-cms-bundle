@@ -31,7 +31,6 @@ class ContactStrategy extends AbstractBlockStrategy
         $builder->add('recipient', 'email', array(
             'label' => 'open_orchestra_backoffice.block.contact.recipient',
             'constraints' => new NotBlank(),
-
         ));
         $builder->add('signature', 'text', array(
             'label' => 'open_orchestra_backoffice.block.contact.signature',
