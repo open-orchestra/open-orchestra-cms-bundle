@@ -21,6 +21,7 @@ TableviewAction = OrchestraView.extend(
 
   clickDelete: (event) ->
     event.preventDefault()
+    options = @options
     smartConfirm(
       'fa-trash-o',
       'Delete this element',
@@ -33,6 +34,7 @@ TableviewAction = OrchestraView.extend(
           url: params.url
           method: 'DELETE'
         params.row.hide()
+        options.table.fnSettings().clearCache = true
     )
 
   clickEdit: (event) ->
@@ -58,4 +60,5 @@ TableviewAction = OrchestraView.extend(
       success: (response) ->
         viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'editEntity')
         new viewClass(viewContext.addOption(html: response, domContainer: $('#content')))
+        viewContext.options.table.fnSettings().clearCache = true
 )
