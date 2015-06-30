@@ -14,7 +14,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'template/show/:templateId': 'showTemplate',
     ':entityType/list(/:page)': 'listEntities',
     ':entityType/add': 'addEntity',
-    ':entityType/edit/:entityId(/:language)(/:version)': 'showEntity',
+    ':entityType/edit/:entityId(/language_:language)(/version_:version)': 'showEntity',
     ':entityType/edit/:entityId/:language/source/:sourceLanguage': 'showEntityWithLanguageAndSourceLanguage',
     'folder/:folderId/list/media/:mediaId/edit': 'mediaEdit',
     'folder/:folderId/list': 'listFolder',
@@ -166,20 +166,17 @@ var OrchestraBORouter = Backbone.Router.extend({
 
   generateUrl: function(routeName, paramsObject)
   {
+    var optionalParam = /\(([^)]*):([^)]*)\)/g;
+    var namedParam    = /():([^/]*)/g;
     var route = this.routePatterns[routeName];
+    var replaceFunction = function() {
+      key = arguments[2];
+      return paramsObject[key] ? arguments[1] + paramsObject[key] : '';
+    }
     if (typeof route !== "undefined") {
-      if (typeof paramsObject !== "undefined") {
-        $.each(paramsObject, function(paramName, paramValue) {
-            if (typeof  paramValue !== "undefined") {
-                if (route.indexOf('(/:' + paramName + ')') != -1) {
-                    route = route.replace('(/:' + paramName + ')', '/'+paramValue);
-                } else {
-                    route = route.replace(':' + paramName, paramValue);
-                }
-            }
-        });
-      }
-      route = route.replace(/\(\/:[^\/]*\)/g, '');
+      route = route
+        .replace(optionalParam, replaceFunction)
+        .replace(namedParam, replaceFunction);
     } else {
       alert('Error, route name is unknown');
       return false;
