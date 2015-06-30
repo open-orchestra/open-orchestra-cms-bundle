@@ -6,6 +6,7 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class AudienceAnalysisStrategy
@@ -44,10 +45,12 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
         $builder
             ->add('tag_type', 'choice', array(
                 'choices' => $this->choices,
-                'label' => 'open_orchestra_backoffice.block.audience_analysis.tag_type'
+                'label' => 'open_orchestra_backoffice.block.audience_analysis.tag_type',
+                'constraints' => new NotBlank(),
             ))
             ->add('site_id', 'text', array(
-                'label' => 'open_orchestra_backoffice.block.audience_analysis.site_id'
+                'label' => 'open_orchestra_backoffice.block.audience_analysis.site_id',
+                'constraints' => new NotBlank(),
             ))
         ;
     }

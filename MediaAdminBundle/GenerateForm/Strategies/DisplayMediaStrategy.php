@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\Media\DisplayBlock\Strategies\DisplayMediaStrategy as BaseMediaStrategy;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class DisplayMediaStrategy
@@ -42,13 +43,16 @@ class DisplayMediaStrategy extends AbstractBlockStrategy
         $builder
             ->add('imageFormat', 'choice', array(
                 'choices' => $this->getFormats(),
+                'constraints' => new NotBlank(),
                 'label' => 'open_orchestra_media_admin.block.gallery.form.image_format.label',
                 'attr' => array('help_text' => 'open_orchestra_media_admin.block.gallery.form.image_format.helper'),
             ))
             ->add('picture', 'orchestra_media', array(
+                'constraints' => new NotBlank(),
                 'label' => 'open_orchestra_media_admin.block.gallery.form.pictures',
             ))
             ->add('nodeToLink', 'orchestra_node_choice', array(
+                'constraints' => new NotBlank(),
                 'label' => 'open_orchestra_media_admin.block.display_media.form.node_link',
                 'required' => false
             ));

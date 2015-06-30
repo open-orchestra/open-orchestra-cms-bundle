@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ContentTypeSubscriberTest
@@ -34,6 +35,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $contentTypeVersion = 1;
     protected $transaltionChoiceManager;
     protected $fieldTypesConfiguration;
+    protected $constraintsNotBlank;
 
     /**
      * Set up the test
@@ -88,6 +90,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
         $this->transaltionChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->constraintsNotBlank =  new NotBlank();
 
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
@@ -137,7 +140,8 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'mapped' => false,
             'max_length' => 25,
             'required' => true,
-            'phake_option' => 'phake_value'
+            'phake_option' => 'phake_value',
+            'constraints' => $this->constraintsNotBlank
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
@@ -174,6 +178,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->fieldCollection->add($this->fieldType1);
         $this->fieldCollection->add($this->fieldType1);
 
+        $constraintsNotBlank =  Phake::mock('Symfony\Component\Validator\Constraints\NotBlank');
         $fieldId = 'title';
         $label = 'Title';
         $defaultValue = '';
@@ -190,7 +195,8 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'mapped' => false,
             'max_length' => 25,
             'required' => true,
-            'phake_option' => 'phake_value'
+            'phake_option' => 'phake_value',
+            'constraints' => $this->constraintsNotBlank
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);

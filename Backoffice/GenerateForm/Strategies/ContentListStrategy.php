@@ -9,6 +9,8 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Class ContentListStrategy
@@ -43,9 +45,11 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         $builder->add('contentNodeId', 'orchestra_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_list.node',
+            'constraints' => new NotBlank(),
         ));
         $builder->add('characterNumber', 'text', array(
             'empty_data' => 50,
+            'constraints' => new Type('integer'),
             'label' => 'open_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
         ));
@@ -56,7 +60,7 @@ class ContentListStrategy extends AbstractBlockStrategy
         $builder->add('choiceType', 'choice', array(
             'empty_data' => ContentRepositoryInterface::CHOICE_AND,
             'label' => 'open_orchestra_backoffice.form.content_list.choice_type',
-            'required' => true,
+            'constraints' => new NotBlank(),
             'choices' => array(
                 ContentRepositoryInterface::CHOICE_AND => $this->translator->trans('open_orchestra_backoffice.form.content_list.choice_type_and'),
                 ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('open_orchestra_backoffice.form.content_list.choice_type_or'),

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class ContentTemplate extends Constraint
 {
-    public $message = 'open_orchestra_backoffice.block.content.content_template';
+    public $message = 'open_orchestra_backoffice_validators.form.content.content_template';
 
     /**
      * @return string|void

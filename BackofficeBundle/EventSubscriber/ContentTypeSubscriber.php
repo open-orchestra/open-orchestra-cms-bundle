@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ContentTypeSubscriber
@@ -119,6 +120,10 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
             ),
             $this->getFieldOptions($contentTypeField)
         );
+
+        if (isset($fieldParameters['required']) && $fieldParameters['required'] === true) {
+            $fieldParameters['constraints'] = new NotBlank();
+        }
 
         $form->add(
             $contentTypeField->getFieldId(),

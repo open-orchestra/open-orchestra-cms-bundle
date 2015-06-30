@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ConfigurableContentStrategy
@@ -71,11 +72,13 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
 
         $contentCollection = $this->contentRepository->findBy(array('deleted' => false));
 
+        $contents = array();
         foreach($contentCollection as $content) {
             $contents[$content->getContentId()] = $content->getName();
         }
 
         $options = array(
+            'constraints' => new NotBlank(),
             'choices' => $contents,
             'label' => 'open_orchestra_backoffice.block.configurable_content.contentId'
         );

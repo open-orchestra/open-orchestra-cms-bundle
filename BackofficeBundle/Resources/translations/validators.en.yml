@@ -1,0 +1,4 @@
+open_orchestra_backoffice_validators:
+    form:
+        content:
+            content_template: Twig syntax error

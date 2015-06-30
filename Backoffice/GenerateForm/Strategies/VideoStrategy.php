@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BaseVideoStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class VideoStrategy
@@ -52,6 +53,7 @@ class VideoStrategy extends AbstractBlockStrategy
         $builder
             ->add('youtubeVideoId', 'orchestra_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.video_id',
+                'constraints' => new NotBlank(),
             ))
             ->add('youtubeWidth', 'text', array(
                 'empty_data' => '480',

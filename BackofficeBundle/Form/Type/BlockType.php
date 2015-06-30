@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class BlockType
@@ -39,7 +40,8 @@ class BlockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('label', null, array(
-            'label' => 'open_orchestra_backoffice.form.block.label'
+            'label' => 'open_orchestra_backoffice.form.block.label',
+            'constraints' => new NotBlank(),
         ));
         $builder->add('class', 'text', array(
             'label' => 'open_orchestra_backoffice.form.block.class',
