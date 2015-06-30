@@ -171,7 +171,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     var route = this.routePatterns[routeName];
     var replaceFunction = function() {
       key = arguments[2];
-      return (key && paramsObject[key]) ? arguments[1] + paramsObject[key] : '';
+      return paramsObject[key] ? arguments[1] + paramsObject[key] : '';
     }
     if (typeof route !== "undefined") {
       route = route
