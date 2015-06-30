@@ -6,13 +6,11 @@ extendView['contentTypeSelector'] = {
   changeContentTypeSelector: (event) ->
     event.preventDefault()
     target = $(event.currentTarget)
-    contentTypeId = target
-    url = target.data("url")
     $.ajax
       type: "GET"
-      url: url
+      url: target.data("url")
       data:
-        content_type: contentTypeId
+        content_type: target.val()
       success: (response) ->
         $("#block_contentId").find("option").remove()
         $.each response.contents, (index, item) ->
