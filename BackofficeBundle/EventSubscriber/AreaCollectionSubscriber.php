@@ -76,6 +76,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                 'type' => 'text',
                 'allow_add' => true,
                 'mapped' => false,
+                'required' => false,
                 'label' => 'open_orchestra_backoffice.form.area.new_areas',
                 'attr' => array(
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.area.add_sub'),

@@ -17,9 +17,8 @@ PO.formPrototype = (collectionHolder) ->
   @addButton = $(PO.formPrototypes.addButton.replace(/__label__/g, @collectionHolder.data("prototype-label-add")))
   @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
   @newPrototype = $(@::)
-  @required = false
-  if (requiredInput = @newPrototype.find("input[required='required']")) && (@required = requiredInput.length > 0)
-    requiredInput.filter("[type='hidden']").addClass('focusable').attr('type', 'text')
+  @required = collectionHolder.parent().prev().hasClass('required')
+  @newPrototype.find("input[required='required'][type='hidden']").addClass('focusable').attr('type', 'text')
   @addButtonContainer = $(PO.formPrototypes.addButtonContainer).append(@addButton)
   @addButtonExist = false
   self = this
