@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -37,9 +38,16 @@ class UserRepositoryTest extends KernelTestCase
      *
      * @dataProvider providePaginateAndSearch
      */
-    public function testFindForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindForPaginate($descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
     {
-        $users = $this->repository->findForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($columns);
+        $configuration->setSearch($search);
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setOrder($order);
+        $configuration->setSkip($skip);
+        $configuration->setLimit($limit);
+        $users = $this->repository->findForPaginate($configuration);
         $this->assertCount($count, $users);
     }
 

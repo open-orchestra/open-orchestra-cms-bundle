@@ -118,14 +118,14 @@ class ContentController extends BaseController
     {
         $contentType = $request->get('content_type');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
 
-        $columnsNameToEntityAttribute = array(
+        $configuration = $this->extractParameterRequestDataTable($request);
+        $configuration->setDescriptionEntity(array(
             'name'         => array('key' => 'name'),
             'status_label' => array('key' => 'status.name'),
             'version'      => array('key' => 'version' , 'type' => 'integer'),
             'language'     => array('key' => 'language'),
-        );
+        ));
 
         $repository =  $this->get('open_orchestra_model.repository.content');
         $transformer = $this->get('open_orchestra_api.transformer_manager')->get('content_collection');
@@ -135,9 +135,9 @@ class ContentController extends BaseController
             return $transformer->transform(array($content), $contentType);
         }
 
-        $contentCollection = $repository->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $columnsNameToEntityAttribute, $columns, $search, $siteId, $order, $skip, $limit);
+        $contentCollection = $repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration);
         $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
-        $recordsFiltered = $repository->countByContentTypeInLastVersionWithSearchFilter($contentType, $columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countByContentTypeInLastVersionWithFilter($contentType,$configuration->getFinderConfiguration());
 
         $facade = $transformer->transform($contentCollection, $contentType);
         $facade->recordsTotal = $recordsTotal;

@@ -54,12 +54,11 @@ class SiteController extends BaseController
      */
     public function listAction(Request $request)
     {
-        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
-
-        $columnsNameToEntityAttribute = array(
+        $configuration = $this->extractParameterRequestDataTable($request);
+        $configuration->setDescriptionEntity(array(
             'site_id' => array('key' => 'siteId'),
             'name'    => array('key' => 'name'),
-        );
+        ));
 
         $repository =  $this->get('open_orchestra_model.repository.site');
         $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
@@ -69,9 +68,9 @@ class SiteController extends BaseController
             return $transformer->transform(array($element));
         }
 
-        $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $siteCollection = $repository->findByDeletedForPaginate(false, $configuration);
         $recordsTotal = $repository->countByDeleted(false);
-        $recordsFiltered = $repository->countByDeletedWithSearchFilter(false, $columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countByDeletedWithSearchFilter(false, $configuration->getFinderConfiguration());
 
         return $this->generateFacadeDataTable($transformer, $siteCollection, $recordsTotal, $recordsFiltered);
     }

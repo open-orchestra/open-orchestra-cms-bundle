@@ -2,7 +2,10 @@
 
 namespace OpenOrchestra\UserBundle\Tests\Functional\Repository;
 
-use OpenOrchestra\UserBundle\Repository\GroupRepository;
+use OpenOrchestra\GroupBundle\Repository\GroupRepository;
+use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -30,32 +33,38 @@ class GroupRepositoryTest extends KernelTestCase
      * @param array  $descriptionEntity
      * @param array  $columns
      * @param string $search
-     * @param array  $order
      * @param int    $skip
      * @param int    $limit
      * @param int    $count
      *
-     * @dataProvider providePaginateAndSearch
+     * @dataProvider providePaginate
      */
-    public function testFindForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindForPaginate($descriptionEntity, $columns, $search, $skip, $limit, $count)
     {
-        $groups = $this->repository->findForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($columns);
+        $configuration->setLimit($limit);
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setSearch($search);
+        $configuration->setSkip($skip);
+
+        $groups = $this->repository->findForPaginate($configuration);
         $this->assertCount($count, $groups);
     }
 
     /**
      * @return array
      */
-    public function providePaginateAndSearch()
+    public function providePaginate()
     {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,5 , 5),
-            array($descriptionEntity, $this->generateColumnsProvider('group'), null, null, 0 ,5 , 5),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'group', null, 0 ,5 , 5),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'fakeGroup', null, 0 ,5 , 0),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'First', null, 0 ,5 , 1),
+            array($descriptionEntity, $this->generateColumnsProvider(), null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateColumnsProvider('group'), null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateColumnsProvider(), 'group', 0 ,5 , 5),
+            array($descriptionEntity, $this->generateColumnsProvider(), 'fakeGroup', 0 ,5 , 0),
+            array($descriptionEntity, $this->generateColumnsProvider(), 'First', 0 ,5 , 1),
         );
     }
 
@@ -76,9 +85,13 @@ class GroupRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountWithSearchFilter($descriptionEntity, $columns, $search, $count)
+    public function testCountWithFilter($descriptionEntity, $columns, $search, $count)
     {
-        $groups = $this->repository->countWithSearchFilter($descriptionEntity, $columns, $search);
+        $configuration = new FinderConfiguration();
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setSearch($search);
+        $configuration->setColumns($columns);
+        $groups = $this->repository->countWithFilter($configuration);
         $this->assertEquals($count, $groups);
     }
 
