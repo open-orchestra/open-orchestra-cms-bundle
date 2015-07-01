@@ -39,30 +39,13 @@ OrchestraView = Backbone.View.extend(
     return
 
   onOrchestraViewReady: ->
-    if $(".select2", @$el).length > 0
-      activateSelect2($(".select2", @$el))
-    if $(".orchestra-node-choice", @$el).length > 0
-      activateOrchestraNodeChoice($(".orchestra-node-choice", @$el))
-    if $(".colorpicker", @$el).length > 0
-      activateColorPicker($(".colorpicker", @$el))
-    if $(".helper-block", @$el).length > 0
-      activateHelper($(".helper-block", @$el))
     if @options && @options.domContainer && $(".widget-grid", @options.domContainer).length > 0
       setup_widgets_desktop()
       widgetChannel.trigger 'jarviswidget', @
     if $(".page-title", @$el).length > 0
       renderPageTitle()
-    if $(".contentTypeSelector", @$el).length > 0
-      loadExtendView(@, 'contentTypeSelector')
-    if $("[data-prototype*='content_type_change_type']", @$el).length > 0
-      loadExtendView(@, 'contentTypeChange')
-    if (textarea = $("textarea.tinymce", @$el)) && textarea.length > 0
-      activateTinyMce(@, textarea)
-    if (hidden = $("input[type='hidden'][required='required']", @$el)) && hidden.length > 0
-      validateHidden(@, hidden)
-    $("[data-prototype]", @$el).each ->
-      PO.formPrototypes.addPrototype $(@)
-
+    if (form = $('form', @$el)) && form.length > 0
+      activateForm(@, form)
     return
 
   onViewReady: ->
