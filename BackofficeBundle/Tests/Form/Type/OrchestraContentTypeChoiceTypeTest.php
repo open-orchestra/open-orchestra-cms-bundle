@@ -63,7 +63,7 @@ class OrchestraContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        Phake::when($this->contentTypeRepository)->findAllByDeletedInLastVersion()->thenReturn(
+        Phake::when($this->contentTypeRepository)->findAllNotDeletedInLastVersion()->thenReturn(
             array(
                 $this->contentType1,
                 $this->contentType2

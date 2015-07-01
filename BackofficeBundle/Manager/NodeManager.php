@@ -143,7 +143,7 @@ class NodeManager
     public function hydrateNodeFromNodeId(NodeInterface $node, $nodeId)
     {
         $siteId = $this->contextManager->getCurrentSiteId();
-        $oldNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $node->getLanguage(), $siteId);
+        $oldNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $node->getLanguage(), $siteId);
 
         if ($oldNode) {
             $this->duplicateBlockAndArea($oldNode, $node);
@@ -208,7 +208,7 @@ class NodeManager
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
 
-        $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($parentId, $language, $siteId);
+        $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndVersion($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
         $nodeType = NodeInterface::TYPE_DEFAULT;
         if ($parentNode instanceof NodeInterface) {
@@ -239,7 +239,7 @@ class NodeManager
     public function updateBlockReferences(NodeInterface $oldNode, NodeInterface $node)
     {
         $nodeTransverse = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
 
         foreach($node->getAreas() as $area) {
             foreach ($area->getBlocks() as $areaBlock) {

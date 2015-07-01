@@ -39,7 +39,7 @@ class OrchestraContentTypeChoiceType extends AbstractType
      */
     protected function getChoices()
     {
-        $contentTypes = $this->contentTypeRepository->findAllByDeletedInLastVersion();
+        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion();
 
         $choices = array_map(function (ContentTypeInterface $element) {
             return $element->getName();

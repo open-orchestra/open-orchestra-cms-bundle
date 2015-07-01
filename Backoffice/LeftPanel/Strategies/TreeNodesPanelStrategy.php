@@ -24,6 +24,7 @@ class TreeNodesPanelStrategy extends AbstractLeftPanelStrategy
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
+     * @param CurrentSiteIdInterface  $currentSiteManager
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
     {

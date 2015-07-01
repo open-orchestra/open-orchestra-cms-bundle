@@ -73,7 +73,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
             return $suffix;
         }
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $parent = $this->nodeRepository->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($parentId, $language, $siteId);
 
         return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));
     }

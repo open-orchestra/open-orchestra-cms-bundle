@@ -54,18 +54,18 @@ class NodeControllerTest extends AbstractControllerTest
     public function testDuplicateNode()
     {
         $node = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('fixture_full', 'fr', '1');
         $nodeTransverse = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
 
         $this->client->request('POST', '/api/node/fixture_full/duplicate?language=fr');
 
         $nodeLastVersion = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('fixture_full', 'fr', '1');
 
         $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
 
         $this->assertSame($node->getVersion()+1, $nodeLastVersion->getVersion());
         $this->assertGreaterThan($this->countAreaRef($nodeTransverse), $this->countAreaRef($nodeTransverseAfter));
@@ -77,13 +77,13 @@ class NodeControllerTest extends AbstractControllerTest
     public function testCreateNewLanguageNode()
     {
         $node = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'es', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('fixture_full', 'es', '1');
         if (!is_null($node)) {
             $this->markTestSkipped();
         }
 
         $nodeTransverse = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
         $countAreaRef = $this->countAreaRef($nodeTransverse);
 
         $this->assertSame(null, $node);
@@ -94,7 +94,7 @@ class NodeControllerTest extends AbstractControllerTest
 
         $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
 
         $this->assertGreaterThan($countAreaRef, $this->countAreaRef($nodeTransverseAfter));
     }
