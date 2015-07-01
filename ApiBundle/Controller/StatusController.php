@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -31,7 +30,7 @@ class StatusController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listAction(Request $request)
     {

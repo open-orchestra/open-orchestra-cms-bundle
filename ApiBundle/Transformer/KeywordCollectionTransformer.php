@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\KeywordCollectionFacade;
 
@@ -13,9 +11,9 @@ use OpenOrchestra\ApiBundle\Facade\KeywordCollectionFacade;
 class KeywordCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection $keywordCollection
+     * @param \Doctrine\Common\Collections\Collection $keywordCollection
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function transform($keywordCollection)
     {

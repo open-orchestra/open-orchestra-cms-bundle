@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 
@@ -16,7 +15,7 @@ class ContentAttributeTransformer extends AbstractTransformer
     /**
      * @param ContentAttributeInterface $contentAttribute
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */

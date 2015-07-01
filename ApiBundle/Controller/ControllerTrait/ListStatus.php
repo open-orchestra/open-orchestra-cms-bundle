@@ -12,7 +12,7 @@ trait ListStatus
     /**
      * @param StatusInterface $status
      *
-     * @return StatusCollectionFacade
+     * @return \OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade
      */
     protected function listStatuses(StatusInterface $status)
     {

@@ -2,11 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class StatusCollectionTransformer
@@ -14,10 +11,10 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class StatusCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection           $statusCollection
-     * @param StatusInterface|null $currentStatus
+     * @param \Doctrine\Common\Collections\Collection                  $statusCollection
+     * @param \OpenOrchestra\ModelInterface\Model\StatusInterface|null $currentStatus
      *
-     * @return FacadeInterface|StatusCollectionFacade
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface|StatusCollectionFacade
      */
     public function transform($statusCollection, $currentStatus = null)
     {

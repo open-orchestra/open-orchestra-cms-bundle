@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
 
@@ -13,9 +11,9 @@ use OpenOrchestra\ApiBundle\Facade\DeletedCollectionFacade;
 class DeletedCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection $deletedCollection
+     * @param \Doctrine\Common\Collections\Collection $deletedCollection
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function transform($deletedCollection)
     {

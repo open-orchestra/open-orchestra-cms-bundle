@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\LinkFacade;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -14,7 +13,7 @@ class LinkTransformer extends AbstractTransformer
     /**
      * @param array $link
      *
-     * @return FacadeInterface|LinkFacade
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface|LinkFacade
      */
     public function transform($link)
     {

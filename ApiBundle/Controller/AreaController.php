@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -32,7 +31,7 @@ class AreaController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showInNodeAction($areaId, $nodeId)
     {
@@ -54,7 +53,7 @@ class AreaController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showInTemplateAction($areaId, $templateId)
     {

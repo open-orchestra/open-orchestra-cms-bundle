@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -31,7 +30,7 @@ class RedirectionController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showAction($redirectionId)
     {
@@ -50,7 +49,7 @@ class RedirectionController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listAction(Request $request)
     {

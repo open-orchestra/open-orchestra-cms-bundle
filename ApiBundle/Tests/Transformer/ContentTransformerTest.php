@@ -4,8 +4,7 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\ContentTransformer;
-use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+
 /**
  * Class ContentTransformerTest
  */
@@ -85,8 +84,8 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * test reverseTransform
      *
-     * @param FacadeInterface  $facade
-     * @param ContentInterface $source
+     * @param \OpenOrchestra\BaseApi\Facade\FacadeInterface  $facade
+     * @param \OpenOrchestra\ModelInterface\Model\ContentInterface $source
      * @param int              $searchCount
      * @param int              $setCount
      *

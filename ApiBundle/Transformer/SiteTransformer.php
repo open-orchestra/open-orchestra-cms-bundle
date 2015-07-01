@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\SiteFacade;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
@@ -16,7 +15,7 @@ class SiteTransformer extends AbstractTransformer
     /**
      * @param SiteInterface $site
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */

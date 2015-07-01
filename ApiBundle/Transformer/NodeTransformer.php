@@ -8,7 +8,6 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
-use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BaseBundle\Manager\EncryptionManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -121,7 +120,7 @@ class NodeTransformer extends AbstractTransformer
         )));
 
         if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
-            /** @var SiteAliasInterface $alias */
+            /** @var \OpenOrchestra\ModelInterface\Model\SiteAliasInterface $alias */
             $encryptedId = $this->encrypter->encrypt($node->getId());
             foreach ($site->getAliases() as $alias) {
                 if ($alias->getLanguage() == $node->getLanguage()) {
@@ -152,11 +151,11 @@ class NodeTransformer extends AbstractTransformer
     /**
      * Get a preview link
      * 
-     * @param string             $scheme
-     * @param SiteAliasInterface $alias
-     * @param string             $encryptedId
+     * @param string                                                 $scheme
+     * @param \OpenOrchestra\ModelInterface\Model\SiteAliasInterface $alias
+     * @param string                                                 $encryptedId
      * 
-     * @return FacadeInterface|LinkFacade
+     * @return FacadeInterface|\OpenOrchestra\ApiBundle\Facade\LinkFacade
      */
     protected function getPreviewLink($scheme, $alias, $encryptedId)
     {

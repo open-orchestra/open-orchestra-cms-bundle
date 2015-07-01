@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -32,7 +31,7 @@ class ContentTypeController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showAction($contentTypeId)
     {
@@ -51,7 +50,7 @@ class ContentTypeController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listAction(Request $request)
     {

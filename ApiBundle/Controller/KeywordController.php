@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\KeywordEvent;
 use OpenOrchestra\ModelInterface\KeywordEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -53,7 +52,7 @@ class KeywordController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showAction($keywordId)
     {
@@ -72,7 +71,7 @@ class KeywordController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listAction(Request $request)
     {

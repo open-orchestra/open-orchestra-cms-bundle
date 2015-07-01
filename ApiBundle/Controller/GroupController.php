@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 use OpenOrchestra\UserBundle\GroupEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -31,7 +30,7 @@ class GroupController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showAction($groupId)
     {
@@ -50,7 +49,7 @@ class GroupController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listAction(Request $request)
     {

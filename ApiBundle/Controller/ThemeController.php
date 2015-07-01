@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\ThemeEvent;
 use OpenOrchestra\ModelInterface\ThemeEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -27,7 +26,7 @@ class ThemeController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function showAction($themeId)
     {
@@ -44,7 +43,7 @@ class ThemeController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listAction()
     {

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
-use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -25,7 +24,7 @@ class BlockController extends BaseController
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     public function listBlockAction($language)
     {
