@@ -13,3 +13,4 @@ $(document).ready ->
     redirectToLogin() if isAccessDenied(jqXHR.responseText)
   $(document).ajaxSuccess (event, xhr, settings) ->
     redirectToLogin() if isLoginForm(xhr.responseText)
+    updateDebugBar(xhr) if xhr.getResponseHeader('X-Debug-Token-Link')?
