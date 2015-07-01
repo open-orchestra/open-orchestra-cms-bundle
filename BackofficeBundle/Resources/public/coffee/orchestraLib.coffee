@@ -157,7 +157,6 @@ $(document).on 'click', '.configuration-change', (e) ->
 callback_tinymce_init = null
 
 activateTinyMce = (view, textarea) ->
-  tinymce.editors = []
   do (view, textarea) ->
     textarea.filter('[required="required"]').data('required', true)
     callback_tinymce_init = (editor) ->
@@ -176,5 +175,18 @@ activateTinyMce = (view, textarea) ->
 doCallBack = (editor, view) ->
 
 #ACTIVATE HTML5 VALIDATION FOR HIDDEN
-validateHidden = (view, hidden) ->
+activateHidden = (hidden) ->
   hidden.addClass('focusable').attr('type', 'text')
+
+#ACTIVATE FORM JS
+activateForm = (view, form) ->
+  tinymce.editors = []
+  activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
+  activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
+  activateColorPicker(elements) if (elements = $(".colorpicker", form)) && elements.length > 0
+  activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0
+  activateTinyMce(view, elements) if (elements = $("textarea.tinymce", form)) && elements.length > 0
+  activateHidden(elements) if (elements = $("input[type='hidden'][required='required']", form)) && elements.length > 0
+  $("[data-prototype]", form).each ->
+    PO.formPrototypes.addPrototype $(@)
+  loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0

@@ -7,11 +7,13 @@ extendView['submitAdmin'] = {
     tinymce.triggerSave()
     viewContext = @
     viewClass = appConfigurationView.getConfiguration(@options.entityType, @options.formView)
-    button = $(event.target).parent()
+    @button = $(event.target).parent() if !@button?
     form = $(event.target).closest('form')
     if form.length == 0 && (clone = $(event.target).data('clone'))
       $('#' + clone).click()
     else
+      button = @button
+      @button = null
       form.submit ->
         event.preventDefault()
         form.ajaxSubmit
