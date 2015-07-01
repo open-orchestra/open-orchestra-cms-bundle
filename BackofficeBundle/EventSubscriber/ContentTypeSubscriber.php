@@ -17,24 +17,24 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
 {
     protected $translationChoiceManager;
     protected $contentTypeRepository;
-    protected $contentAttributClass;
+    protected $contentAttributeClass;
     protected $fieldTypesConfiguration;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
-     * @param string                         $contentAttributClass
+     * @param string                         $contentAttributeClass
      * @param TranslationChoiceManager       $translationChoiceManager
      * @param array                          $fieldTypesConfiguration
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
-        $contentAttributClass,
+        $contentAttributeClass,
         TranslationChoiceManager $translationChoiceManager,
         $fieldTypesConfiguration
     )
     {
         $this->contentTypeRepository = $contentTypeRepository;
-        $this->contentAttributClass = $contentAttributClass;
+        $this->contentAttributeClass = $contentAttributeClass;
         $this->translationChoiceManager = $translationChoiceManager;
         $this->fieldTypesConfiguration = $fieldTypesConfiguration;
     }
@@ -71,8 +71,8 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
                 if ($attribute = $content->getAttributeByName($contentTypeFieldId)) {
                     $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
                 } elseif (is_null($attribute)) {
-                    $contentAttributClass = $this->contentAttributClass;
-                    $attribute = new $contentAttributClass;
+                    $contentAttributeClass = $this->contentAttributeClass;
+                    $attribute = new $contentAttributeClass;
                     $attribute->setName($contentTypeFieldId);
                     $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
                     $content->addAttribute($attribute);

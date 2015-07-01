@@ -75,7 +75,6 @@ class GroupSiteVoter implements VoterInterface
                     return VoterInterface::ACCESS_GRANTED;
                 }
             }
-
         }
 
         return $result;
