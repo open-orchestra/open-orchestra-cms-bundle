@@ -69,9 +69,23 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
         $areaContainer = $event->getData();
 
         if (
-            (!$areaContainer instanceof NodeInterface && 0 == count($areaContainer->getBlocks()))
+            ($areaContainer instanceof AreaInterface && 0 == count($areaContainer->getBlocks()))
             || ($areaContainer instanceof NodeInterface && $areaContainer->getId() )
         ) {
+            $form->add('newAreas', 'collection', array(
+                'type' => 'text',
+                'allow_add' => true,
+                'mapped' => false,
+                'required' => false,
+                'label' => 'open_orchestra_backoffice.form.area.new_areas',
+                'attr' => array(
+                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.area.add_sub'),
+                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.area.label_sub'),
+                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.area.remove_sub'),
+                )
+            ));
+        }
+        elseif ($areaContainer instanceof AreaInterface) {
             $form->add('newAreas', 'collection', array(
                 'type' => 'text',
                 'allow_add' => true,
