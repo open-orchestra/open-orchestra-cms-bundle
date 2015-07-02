@@ -49,6 +49,6 @@ services:
         arguments:
             - @open_orchestra_model.repository.site
             - @security.token_storage
-            - @open_orchestra_model.transformer.embed_site_to_siteid
+            - @open_orchestra_media_admin.transformer.embed_site_to_siteid
         tags:
             - { name: form.type, alias: orchestra_site_for_folder_choice}

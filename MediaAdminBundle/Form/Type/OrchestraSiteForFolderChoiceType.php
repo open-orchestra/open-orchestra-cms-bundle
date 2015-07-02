@@ -8,7 +8,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedSiteToSiteIdTransformer;
+use OpenOrchestra\MediaAdminBundle\Form\DataTransformer\EmbedSiteToSiteIdTransformer;
 
 /**
  * Class OrchestraSiteForFolderChoiceType
