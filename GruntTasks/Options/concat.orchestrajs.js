@@ -13,7 +13,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/FullPageFormView.js',
         'web/built/openorchestrabackoffice/js/ContentTypeFormView.js',
         'web/built/openorchestrabackoffice/js/FullPagePanelView.js',
-        'web/built/openorchestrabackoffice/js/page/nodeConstructor.js',
+        'web/built/openorchestrabackoffice/js/createNew.js',
         'web/built/openorchestrabackoffice/js/page/BlocksPanelView.js',
         'web/built/openorchestrabackoffice/js/security.js',
         'web/built/openorchestrabackoffice/js/SmartConfirmView.js',
