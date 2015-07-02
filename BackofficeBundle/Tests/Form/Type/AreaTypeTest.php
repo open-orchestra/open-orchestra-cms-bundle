@@ -35,7 +35,7 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->areaType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(5))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(4))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::times(2))->create(Phake::anyParameters());
         Phake::verify($formBuilderMock, Phake::times(2))->addViewTransformer(Phake::anyParameters());
