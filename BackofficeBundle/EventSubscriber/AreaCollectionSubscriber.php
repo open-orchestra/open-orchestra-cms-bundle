@@ -69,7 +69,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
         $areaContainer = $event->getData();
 
         if (
-            ($areaContainer instanceof AreaInterface && 0 == count($areaContainer->getBlocks()))
+            (!$areaContainer instanceof NodeInterface && 0 == count($areaContainer->getBlocks()))
             || ($areaContainer instanceof NodeInterface && $areaContainer->getId() )
         ) {
             $form->add('newAreas', 'collection', array(
