@@ -86,17 +86,9 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
             ));
         }
         elseif ($areaContainer instanceof AreaInterface) {
-            $form->add('newAreas', 'collection', array(
-                'type' => 'text',
-                'allow_add' => true,
-                'mapped' => false,
-                'required' => false,
-                'label' => 'open_orchestra_backoffice.form.area.new_areas',
-                'attr' => array(
-                    'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.area.add_sub'),
-                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.area.label_sub'),
-                    'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.area.remove_sub'),
-                )
+            $form->add('newAreas', 'button', array(
+                'disabled' => true,
+                'label' => $this->translator->trans('open_orchestra_backoffice.form.area.block_exists')
             ));
         }
     }

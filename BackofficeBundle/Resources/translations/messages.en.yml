@@ -160,6 +160,7 @@ open_orchestra_backoffice:
             add_sub: Add
             label_sub: Area label
             remove_sub: Remove
+            block_exists: Can't add Area, area contains blocks
         block:
             success: The block has been modified
             label: Block label

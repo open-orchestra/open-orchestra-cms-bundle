@@ -160,6 +160,7 @@ open_orchestra_backoffice:
             add_sub: Ajout
             label_sub: Libellé de la zone
             remove_sub: Suppression
+            block_exists: Ajout de zone impossible, cette zone contient au moins un bloc
         block:
             success: Le bloc a été modifié
             label: Nom du bloc
