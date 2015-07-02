@@ -7,7 +7,6 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/setUpCallAjax.js',
         'web/built/openorchestrabackoffice/js/OrchestraView.js',
         'web/built/openorchestrabackoffice/js/OrchestraModalView.js',
-        'web/built/openorchestrabackoffice/js/contentTypeFormAddFieldListener.js',
         'web/built/openorchestrabackoffice/js/addPrototype.js',
         'web/built/openorchestrabackoffice/js/modelBackbone.js',
         'web/built/openorchestrabackoffice/js/FullPageFormView.js',

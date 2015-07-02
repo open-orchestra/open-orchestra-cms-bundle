@@ -47,7 +47,6 @@ open_orchestra_backoffice:
             listable: Visible dans les listes du Backoffice
             type: Type
             options: Champ existant
-            error_content_id : Id du type de contenu nécessaire pour l'ajout de champ
             custom_type:
                 text: Ligne de texte
                 textarea: Zone de texte
