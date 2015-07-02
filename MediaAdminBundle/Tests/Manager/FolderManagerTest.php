@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\MediaAdminBundle\Tests\Manager;
 
+use OpenOrchestra\Media\Model\MediaFolderInterface;
 use OpenOrchestra\MediaAdminBundle\Manager\FolderManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -55,11 +56,11 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideFolder()
     {
-        $subfolder0 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
+        $subfolder0 = Phake::mock('OpenOrchestra\Media\Model\MediaFolderInterface');
         Phake::when($subfolder0)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($subfolder0)->getSubFolders()->thenReturn(new ArrayCollection());
 
-        $subfolder1 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
+        $subfolder1 = Phake::mock('OpenOrchestra\Media\Model\MediaFolderInterface');
         Phake::when($subfolder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($subfolder1)->getSubFolders()->thenReturn(new ArrayCollection());
 
@@ -71,11 +72,11 @@ class FolderManagerTest extends \PHPUnit_Framework_TestCase
         $subfolders->add($subfolder0);
         $subfolders->add($subfolder1);
 
-        $folder0 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
+        $folder0 = Phake::mock('OpenOrchestra\Media\Model\MediaFolderInterface');
         Phake::when($folder0)->getMedias()->thenReturn($medias);
         Phake::when($folder0)->getSubFolders()->thenReturn($subfolders);
 
-        $folder1 = Phake::mock('OpenOrchestra\MediaBundle\Document\MediaFolder');
+        $folder1 = Phake::mock('OpenOrchestra\Media\Model\MediaFolderInterface');
         Phake::when($folder1)->getMedias()->thenReturn(new ArrayCollection());
         Phake::when($folder1)->getSubFolders()->thenReturn(new ArrayCollection());
 

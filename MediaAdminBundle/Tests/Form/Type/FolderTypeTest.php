@@ -11,7 +11,7 @@ use OpenOrchestra\MediaAdminBundle\Form\Type\FolderType;
 class FolderTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
-    protected $class = 'OpenOrchestra\MediaBundle\Document\MediaFolder';
+    protected $class = 'OpenOrchestra\MediaModelBundle\Document\MediaFolder';
 
     /**
      * Set up the test
