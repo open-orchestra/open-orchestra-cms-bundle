@@ -14,13 +14,3 @@ showNode = (url, language, version)->
       )
       return
   return
-
-showNodeForm = (parentNode) ->
-  adminFormViewClass = appConfigurationView.getConfiguration('node', 'showAdminForm')
-  new adminFormViewClass(
-    url: parentNode.data("url")
-    extendView: [ 'generateId' ]
-    title: parentNode.text()
-    entityType: 'node'
-  )
-  return
