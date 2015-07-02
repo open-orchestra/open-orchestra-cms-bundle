@@ -2,8 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade;
+use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 
 /**
  * Class NodeCollectionTransformer
@@ -11,9 +14,9 @@ use OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade;
 class NodeCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param \Doctrine\Common\Collections\Collection $nodeCollection
+     * @param Collection $nodeCollection
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function transformVersions($nodeCollection)
     {
@@ -27,14 +30,14 @@ class NodeCollectionTransformer extends AbstractTransformer
     }
 
     /**
-     * @param \Doctrine\Common\Collections\Collection $nodeCollection
+     * @param Collection $nodeCollection
      *
      * @return array
      */
     public function reverseTransformOrder($nodeCollection)
     {
         $orderedNode = array();
-        /** @var \OpenOrchestra\ApiBundle\Facade\NodeFacade $node */
+        /** @var NodeFacade $node */
         foreach ($nodeCollection->getNodes() as $node) {
             $orderedNode[] = $node->nodeId;
         }

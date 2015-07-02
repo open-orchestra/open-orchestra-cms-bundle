@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\FieldTypeFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -26,7 +27,7 @@ class FieldTypeTransformer extends AbstractTransformer
     /**
      * @param FieldTypeInterface $fieldType
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */

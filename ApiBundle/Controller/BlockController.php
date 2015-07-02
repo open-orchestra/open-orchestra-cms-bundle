@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -24,7 +25,7 @@ class BlockController extends BaseController
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function listBlockAction($language)
     {
@@ -44,7 +45,7 @@ class BlockController extends BaseController
         }
 
         $node = $this->get('open_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(
+            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(
                 NodeInterface::TRANSVERSE_NODE_ID,
                 $language,
                 $currentSiteId

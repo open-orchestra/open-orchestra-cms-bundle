@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\RedirectionFacade;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -12,7 +13,7 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class RedirectionTransformer extends AbstractTransformer
 {
     /**
-     * @param \OpenOrchestra\ModelInterface\Model\RedirectionInterface $redirection
+     * @param RedirectionInterface $redirection
      *
      * @return RedirectionFacade
      *

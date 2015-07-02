@@ -2,7 +2,9 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -26,7 +28,7 @@ class TemplateController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function showAction($templateId)
     {
@@ -47,7 +49,7 @@ class TemplateController extends BaseController
      */
     public function deleteAction($templateId)
     {
-        /** @var \OpenOrchestra\ModelInterface\Model\TemplateInterface $template */
+        /** @var TemplateInterface $template */
         $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $template->setDeleted(true);
         $this->dispatchEvent(TemplateEvents::TEMPLATE_DELETE, new TemplateEvent($template));

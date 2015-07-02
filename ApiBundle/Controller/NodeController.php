@@ -3,8 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +32,7 @@ class NodeController extends BaseController
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function showAction(Request $request, $nodeId)
     {
@@ -53,7 +55,7 @@ class NodeController extends BaseController
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function showOrCreateAction(Request $request, $nodeId)
     {
@@ -114,7 +116,7 @@ class NodeController extends BaseController
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        /** @var \OpenOrchestra\ModelInterface\Model\NodeInterface $node */
+        /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')
             ->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId);
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($node);
@@ -230,7 +232,7 @@ class NodeController extends BaseController
      * @param string   $siteId
      * @param int|null $version
      *
-     * @return \OpenOrchestra\ModelInterface\Model\NodeInterface|null
+     * @return NodeInterface|null
      */
     protected function findOneNode($nodeId, $language, $siteId, $version = null)
     {

@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Context\GroupContext;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\StatusFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -44,7 +45,7 @@ class StatusTransformer extends AbstractTransformer
      * @param StatusInterface $status
      * @param StatusInterface $currentStatus
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface|StatusFacade
+     * @return FacadeInterface|StatusFacade
      *
      * @throws TransformerParameterTypeException
      */

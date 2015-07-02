@@ -33,11 +33,6 @@ class OrchestraCheckConsistencyCommand extends ContainerAwareCommand
     /**
      * Execute the command
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return void
-     *
      * @see \Symfony\Component\Console\Command\Command::execute()
      */
     protected function execute(InputInterface $input, OutputInterface $output)

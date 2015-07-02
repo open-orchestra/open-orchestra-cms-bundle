@@ -6,6 +6,7 @@ use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\ContentNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\SourceLanguageNotFoundHttpException;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
@@ -15,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\BaseApi\Context\GroupContext;
 
 /**
  * Class ContentController
@@ -37,8 +39,7 @@ class ContentController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
-     *
+     * @return FacadeInterface
      * @throws ContentNotFoundHttpException
      */
     public function showAction(Request $request, $contentId)
@@ -63,8 +64,7 @@ class ContentController extends BaseController
      *
      * @Api\Serialize()
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
-     *
+     * @return FacadeInterface
      * @throws SourceLanguageNotFoundHttpException
      */
     public function showOrCreateAction(Request $request, $contentId)
@@ -79,7 +79,6 @@ class ContentController extends BaseController
      * @param string  $contentId
      *
      * @return ContentInterface
-     *
      * @throws SourceLanguageNotFoundHttpException
      */
     protected function showOrCreate(Request $request, $contentId)
@@ -114,7 +113,7 @@ class ContentController extends BaseController
      *
      * @Api\Groups({GroupContext::G_HIDE_ROLES})
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function listAction(Request $request)
     {

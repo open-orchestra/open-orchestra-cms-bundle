@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ContentCollectionFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -15,7 +16,7 @@ class ContentCollectionTransformer extends AbstractTransformer
      * @param Collection  $contentCollection
      * @param string|null $contentType
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function transform($contentCollection, $contentType = null)
     {

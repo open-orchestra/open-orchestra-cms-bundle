@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Facade\DeletedFacade;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -14,7 +15,7 @@ class DeletedTransformer extends AbstractTransformer
     /**
      * @param NodeInterface|ContentInterface $mixed
 
-     * @return \OpenOrchestra\ApiBundle\Facade\DeletedFacade|null
+     * @return DeletedFacade|null
      */
     public function transform($mixed)
     {

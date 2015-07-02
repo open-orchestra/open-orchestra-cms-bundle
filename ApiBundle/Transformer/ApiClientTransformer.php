@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ApiClientFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\BaseApi\Model\ApiClientInterface;
 
@@ -15,7 +16,7 @@ class ApiClientTransformer extends AbstractTransformer
     /**
      * @param ApiClientInterface $apiClient
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */

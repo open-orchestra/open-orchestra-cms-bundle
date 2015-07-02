@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\GroupCollectionFacade;
 
@@ -11,9 +13,9 @@ use OpenOrchestra\ApiBundle\Facade\GroupCollectionFacade;
 class GroupCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param \Doctrine\Common\Collections\Collection $groupCollection
+     * @param Collection $groupCollection
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function transform($groupCollection)
     {

@@ -2,7 +2,9 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ApiClientCollectionFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -11,9 +13,9 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 class ApiClientCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param \Doctrine\Common\Collections\Collection $apiClientCollection
+     * @param Collection $apiClientCollection
      *
-     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
+     * @return FacadeInterface
      */
     public function transform($apiClientCollection)
     {
