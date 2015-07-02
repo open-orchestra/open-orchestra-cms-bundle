@@ -7,8 +7,8 @@ use OpenOrchestra\BaseApi\Exceptions\HttpException\BadUserCredentialsHttpExcepti
 use OpenOrchestra\BaseApi\Facade\OAuth2\AccessTokenFacade;
 use OpenOrchestra\BaseApi\Manager\AccessTokenManager;
 use OpenOrchestra\BaseApi\OAuth2\Strategy\AbstractStrategy;
-use OpenOrchestra\BaseApiBundle\Repository\AccessTokenRepository;
-use OpenOrchestra\BaseApiBundle\Repository\ApiClientRepository;
+use OpenOrchestra\BaseApi\Repository\AccessTokenRepositoryInterface;
+use OpenOrchestra\BaseApi\Repository\ApiClientRepositoryInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,22 +25,22 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
     protected $userRepository;
 
     /**
-     * @param ApiClientRepository $apiClientRepository
-     * @param UserRepository      $userRepository
-     * @param EncoderFactory      $encoderFactory
-     * @param Serializer          $serializer
-     * @param ValidatorInterface  $validator
-     * @param AccessTokenManager  $accessTokenManager
-     * @param AccessTokenRepository $accessTokenRepository
+     * @param ApiClientRepositoryInterface   $apiClientRepository
+     * @param UserRepository                 $userRepository
+     * @param EncoderFactory                 $encoderFactory
+     * @param Serializer                     $serializer
+     * @param ValidatorInterface             $validator
+     * @param AccessTokenManager             $accessTokenManager
+     * @param AccessTokenRepositoryInterface $accessTokenRepository
      */
     public function __construct(
-        ApiClientRepository $apiClientRepository,
+        ApiClientRepositoryInterface $apiClientRepository,
         UserRepository $userRepository,
         EncoderFactory $encoderFactory,
         Serializer $serializer,
         ValidatorInterface $validator,
         AccessTokenManager $accessTokenManager,
-        AccessTokenRepository $accessTokenRepository
+        AccessTokenRepositoryInterface $accessTokenRepository
         )
     {
         parent::__construct($apiClientRepository, $serializer, $validator, $accessTokenManager, $accessTokenRepository);
