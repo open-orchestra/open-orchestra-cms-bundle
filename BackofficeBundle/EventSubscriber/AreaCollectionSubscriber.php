@@ -84,8 +84,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.area.remove_sub'),
                 )
             ));
-        }
-        elseif ($areaContainer instanceof AreaInterface) {
+        } elseif ($areaContainer instanceof AreaInterface) {
             $form->add('newAreas', 'button', array(
                 'disabled' => true,
                 'label' => $this->translator->trans('open_orchestra_backoffice.form.area.block_exists')
