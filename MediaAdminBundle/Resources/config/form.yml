@@ -4,6 +4,7 @@ parameters:
     open_orchestra_media_admin.type.media_crop.class: OpenOrchestra\MediaAdminBundle\Form\Type\MediaCropType
     open_orchestra_media_admin.type.media_meta.class: OpenOrchestra\MediaAdminBundle\Form\Type\MediaMetaType
     open_orchestra_media_admin.type.orchestra_media.class: OpenOrchestra\MediaAdminBundle\Form\Type\OrchestraMediaType
+    open_orchestra_media_admin.type.orchestra_site_for_folder_choice.class: OpenOrchestra\MediaAdminBundle\Form\Type\OrchestraSiteForFolderChoiceType
 
     open_orchestra_media_admin.tinymce:
         tinymce_buttons:
@@ -43,3 +44,11 @@ services:
         class: %open_orchestra_media_admin.type.orchestra_media.class%
         tags:
             - { name: form.type, alias: orchestra_media}
+    open_orchestra_media_admin.type.orchestra_site_for_folder_choice:
+        class: %open_orchestra_media_admin.type.orchestra_site_for_folder_choice.class%
+        arguments:
+            - @open_orchestra_model.repository.site
+            - @security.token_storage
+            - @open_orchestra_model.transformer.embed_site_to_siteid
+        tags:
+            - { name: form.type, alias: orchestra_site_for_folder_choice}
