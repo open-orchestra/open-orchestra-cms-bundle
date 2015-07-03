@@ -56,7 +56,7 @@ class OrchestraSiteForFolderChoiceType extends AbstractType
     /**
      * @return array
      */
-    public function getChoices()
+    protected function getChoices()
     {
         $sites = $this->siteRepository->findByDeleted(false);
 

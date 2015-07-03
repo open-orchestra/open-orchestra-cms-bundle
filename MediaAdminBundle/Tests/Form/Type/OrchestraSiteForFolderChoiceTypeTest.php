@@ -132,12 +132,4 @@ class OrchestraSiteForFolderChoiceTypeTest extends \PHPUnit_Framework_TestCase
                 'choices' => $this->choiceList
         ));
     }
-
-    /**
-     * Test Choices list creation 
-     */
-    public function testGetChoices()
-    {
-        $this->assertSame($this->choiceList, $this->form->getChoices());
-    }
 }
