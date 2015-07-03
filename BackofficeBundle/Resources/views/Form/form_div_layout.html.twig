@@ -31,10 +31,10 @@
             <div class="tab-content">
                 {% for key, field in form %}
                     <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
-                        <div class="form-group">
+                        <div class="form-group{% if field.value.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_widget(field.value) }}
                             {{ form_rest(field) }}
-                            {{ form_errors(field) }}
+                            {{ form_errors(field.value) }}
                         </div>
                     </div>
                 {% endfor %}

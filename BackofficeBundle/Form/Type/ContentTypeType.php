@@ -73,8 +73,6 @@ class ContentTypeType extends AbstractType
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_type.add'),
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_type.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_type.delete'),
-                    'data-prototype-callback-add' => "checkContentTypeId('#". $this->getName() . "_". $contentTypeIdName . "')",
-                    'data-prototype-callback-error-message' => $this->translator->trans('open_orchestra_backoffice.form.field_type.error_content_id')
                 )
             ));
 
