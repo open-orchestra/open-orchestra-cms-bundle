@@ -19,7 +19,6 @@ class TranslatedValueCollectionType extends AbstractType
             'type' => 'translated_value',
             'allow_add' => false,
             'allow_delete' => false,
-            'required' => false,
             'label_attr' => array('class' => 'translated-value'),
         ));
     }
