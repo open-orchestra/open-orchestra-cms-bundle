@@ -18,7 +18,8 @@
         "open-orchestra/open-orchestra-user-bundle": "*",
         "open-orchestra/open-orchestra-model-interface": "*",
         "braincrafted/bootstrap-bundle": "2.1.2",
-        "stfalcon/tinymce-bundle": "0.3.8"
+        "stfalcon/tinymce-bundle": "0.3.8",
+        "solution/mongo-odm-aggregation-bundle": "*"
     },
     "require-dev": {
         "open-orchestra/open-orchestra-model-bundle": "dev-master",
