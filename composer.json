@@ -10,7 +10,6 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "jms/serializer-bundle" : "1.0.0",
         "open-orchestra/open-orchestra-base-bundle": "*",
         "open-orchestra/open-orchestra-base-api-bundle": "*",
         "open-orchestra/open-orchestra-display-bundle": "*",
