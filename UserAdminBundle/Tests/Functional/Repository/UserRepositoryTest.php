@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -39,7 +41,9 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function testFindForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
     {
-        $users = $this->repository->findForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
+        $users = $this->repository->findForPaginate($configuration);
         $this->assertCount($count, $users);
     }
 
@@ -77,7 +81,8 @@ class UserRepositoryTest extends KernelTestCase
      */
     public function testCountFilterSearch($descriptionEntity, $columns, $search, $count)
     {
-        $users = $this->repository->countWithSearchFilter($descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $users = $this->repository->countWithFilter($configuration);
         $this->assertEquals($count, $users);
     }
 
