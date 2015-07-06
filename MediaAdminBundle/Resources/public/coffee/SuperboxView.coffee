@@ -29,7 +29,8 @@ SuperboxView = OrchestraView.extend(
     @setupMetaForm()
     displayLoader('#alternative-loader')
 
-  setupCrop: ->
+  setupCrop: (e) ->
+    e.preventDefault()
     superboxViewParam['jcrop_api'].destroy() if superboxViewParam['jcrop_api'] != undefined
 
     $(".media-override-format-form").hide()
@@ -187,7 +188,8 @@ SuperboxView = OrchestraView.extend(
     if $(".select2", @$el).length > 0
       activateSelect2($(".select2", @$el))
 
-  setupOverrideForm: () ->
+  setupOverrideForm: (e) ->
+    e.preventDefault()
     $('#crop-group').hide()
     $(".media-override-format-form").hide()
     $('#alternative-loader-container').show()
@@ -203,6 +205,7 @@ SuperboxView = OrchestraView.extend(
         $(".media-override-format-form").show()
         currentView.addEventOnOverrideForm()
 
-  cropImage: ->
+  cropImage: (e) ->
+    e.preventDefault()
     $("#media_crop").submit()
 )
