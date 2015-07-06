@@ -3,6 +3,7 @@
 namespace OpenOrchestra\LogBundle\Controller;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -29,28 +30,19 @@ class LogController extends Controller
      */
     public function listAction(Request $request)
     {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
-        $columnsNameToEntityAttribute = array(
-            'date_time' => array('key' => 'datetime'),
-            'user_ip'   => array('key' => 'extra.user_ip'),
-            'user_name' => array('key' => 'extra.user_name'),
-            'site_name' => array('key' => 'extra.site_name'),
-            'message'   => array('key' => 'extra.message'),
-        );
-
         $repository =  $this->get('open_orchestra_log.repository.log');
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
+        $configuration->setDescriptionEntity(array(
+                'date_time' => array('key' => 'datetime'),
+                'user_ip'   => array('key' => 'extra.user_ip'),
+                'user_name' => array('key' => 'extra.user_name'),
+                'site_name' => array('key' => 'extra.site_name'),
+                'message'   => array('key' => 'extra.message'),
+         ));
 
-        $logCollection = $repository->findForPaginateAndSearch($columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $logCollection = $repository->findForPaginate($configuration);
         $recordsTotal = $repository->count();
-        $recordsFiltered = $repository->countWithSearchFilter($columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countWithFilter($configuration);
 
         $facade = $this->get('open_orchestra_api.transformer_manager')->get('log_collection')->transform($logCollection);
         $facade->recordsTotal = $recordsTotal;

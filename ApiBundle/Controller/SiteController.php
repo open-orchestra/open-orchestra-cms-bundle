@@ -7,6 +7,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,13 +55,6 @@ class SiteController extends BaseController
      */
     public function listAction(Request $request)
     {
-        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
-
-        $columnsNameToEntityAttribute = array(
-            'site_id' => array('key' => 'siteId'),
-            'name'    => array('key' => 'name'),
-        );
-
         $repository =  $this->get('open_orchestra_model.repository.site');
         $transformer = $this->get('open_orchestra_api.transformer_manager')->get('site_collection');
 
@@ -69,9 +63,14 @@ class SiteController extends BaseController
             return $transformer->transform(array($element));
         }
 
-        $siteCollection = $repository->findByDeletedForPaginateAndSearch(false, $columnsNameToEntityAttribute, $columns, $search, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
+        $configuration->setDescriptionEntity(array(
+            'site_id' => array('key' => 'siteId'),
+            'name'    => array('key' => 'name'),
+        ));
+        $siteCollection = $repository->findByDeletedForPaginate(false, $configuration);
         $recordsTotal = $repository->countByDeleted(false);
-        $recordsFiltered = $repository->countByDeletedWithSearchFilter(false, $columnsNameToEntityAttribute, $columns, $search);
+        $recordsFiltered = $repository->countWithSearchFilterByDeleted(false, $configuration);
 
         return $this->generateFacadeDataTable($transformer, $siteCollection, $recordsTotal, $recordsFiltered);
     }

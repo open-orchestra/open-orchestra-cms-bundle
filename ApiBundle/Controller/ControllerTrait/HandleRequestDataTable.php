@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -12,31 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 trait HandleRequestDataTable
 {
     /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    protected function extractParameterRequestDataTable(Request $request)
-    {
-        $columns = $request->get('columns');
-        $search = $request->get('search');
-        $search = (null !== $search && isset($search['value'])) ? $search['value'] : null;
-        $order = $request->get('order');
-        $skip = $request->get('start');
-        $skip = (null !== $skip) ? (int)$skip : null;
-        $limit = $request->get('length');
-        $limit = (null !== $limit) ? (int)$limit : null;
-
-        return array($columns, $search, $order, $skip, $limit);
-    }
-
-    /**
      * @param Request              $request
      * @param DocumentRepository   $entityRepository
      * @param array                $mappingEntity
      * @param TransformerInterface $transformerManager
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
     {
@@ -44,12 +26,11 @@ trait HandleRequestDataTable
             $element = $entityRepository->find($entityId);
             return $transformerManager->transform(array($element));
         }
-
-        list($columns, $search, $order, $skip, $limit) = $this->extractParameterRequestDataTable($request);
-
-        $collection = $entityRepository->findForPaginateAndSearch($mappingEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromRequest($request);
+        $configuration->setDescriptionEntity($mappingEntity);
+        $collection = $entityRepository->findForPaginate($configuration);
         $recordsTotal = $entityRepository->count();
-        $recordsFiltered = $entityRepository->countWithSearchFilter($mappingEntity, $columns, $search);
+        $recordsFiltered = $entityRepository->countWithFilter($configuration);
 
         return $this->generateFacadeDataTable($transformerManager, $collection, $recordsTotal, $recordsFiltered);
     }
@@ -60,7 +41,7 @@ trait HandleRequestDataTable
      * @param int                  $recordsTotal
      * @param int                  $recordsFiltered
      *
-     * @return FacadeInterface
+     * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
     protected function generateFacadeDataTable(TransformerInterface $transformerManager, $collection, $recordsTotal, $recordsFiltered)
     {
