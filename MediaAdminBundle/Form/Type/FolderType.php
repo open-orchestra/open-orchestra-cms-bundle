@@ -32,11 +32,11 @@ class FolderType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_media_admin.form.folder.name'
             ))
-            ->add('sites', 'orchestra_site', array(
+            ->add('sites', 'orchestra_site_for_folder_choice', array(
                 'label' => 'open_orchestra_media_admin.form.folder.site',
                 'multiple' => true,
                 'required' => false,
-                'embed' => true,
+                'embed' => true
             ));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
