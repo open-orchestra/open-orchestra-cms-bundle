@@ -32,8 +32,9 @@ MediaModalView = OrchestraView.extend(
       @$el.modal "show"
 
   closeModal: ->
-    @$el.modal "hide"
-    @$el.remove()
+    currentModal.modal "hide"
+    currentModal.remove()
+    $('body').removeClass('modal-open')
     currentModal = null
 
   showFolder: (event) ->
