@@ -11,12 +11,12 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 interface LogRepositoryInterface
 {
     /**
-     * @param array|null $descriptionEntity
-     * @param array|null $columns
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
      * @param string|null $search
-     * @param array|null $order
-     * @param int|null $skip
-     * @param int|null $limit
+     * @param array|null  $order
+     * @param int|null    $skip
+     * @param int|null    $limit
      *
      * @deprecated will be removed in 0.3.0, use findForPaginate instead
      *
