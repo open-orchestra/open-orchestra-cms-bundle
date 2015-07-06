@@ -1,8 +1,9 @@
 extendView = extendView || {}
 extendView['orchestraMediaType'] =
   events:
-    'click .mediaModalOpen': 'launchMediaModal'
+    'click .mediaModalOpen': 'mediaTypeModal'
     'click .clear-media': 'clearMedia'
   
-  currentLaunchModal: (modal, inputId, url, method) ->
-    @openMediaModal(modal, inputId, url, method)
+  mediaTypeModal: (event) ->
+    options = @launchMediaModal(event)
+    @openMediaModal(options)
