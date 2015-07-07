@@ -37,6 +37,14 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test get default locale
+     */
+    public function testGetDefaultLocale()
+    {
+        $this->assertSame($this->defaultLocale, $this->contextManager->getDefaultLocale());
+    }
+
+    /**
      * @param string $locale
      *
      * @dataProvider getLocale
@@ -74,6 +82,35 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
             array('fr'),
             array(3),
             array('fakeKey' => 'fakeValue')
+        );
+    }
+
+    /**
+     * @param string $expectedLocale
+     * @param string $userLocale
+     * @param string $userClass
+     *
+     * @dataProvider provideExpectedLocaleUserLocaleAndUserClass
+     */
+    public function testGetCurrentLocaleWhenNotInSession($expectedLocale, $userLocale, $userClass)
+    {
+        $user = Phake::mock($userClass);
+        Phake::when($user)->getLanguage()->thenReturn($userLocale);
+        Phake::when($this->token)->getUser()->thenReturn($user);
+
+        $this->assertSame($expectedLocale, $this->contextManager->getCurrentLocale());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideExpectedLocaleUserLocaleAndUserClass()
+    {
+        return array(
+            array('fr', 'fr', 'OpenOrchestra\UserBundle\Model\UserInterface'),
+            array('en', 'en', 'OpenOrchestra\UserBundle\Model\UserInterface'),
+            array('en', 'fr', 'FOS\UserBundle\Model\UserInterface'),
+            array('en', 'en', 'FOS\UserBundle\Model\UserInterface'),
         );
     }
 
