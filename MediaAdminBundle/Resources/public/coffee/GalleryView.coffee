@@ -67,9 +67,9 @@ GalleryView = OrchestraView.extend(
 
   mediaSelect : (event) ->
     event.preventDefault()
-    mediaModalContainer = @$el.parents(".mediaModalContainer")
-    intputName = mediaModalContainer.data('input')
+    modalContainer = @$el.closest(".mediaModalContainer")
+    intputName = modalContainer.data('input')
     $('#' + intputName).val @options.media.id
     $('#previewImage_' + intputName).attr 'src', @$el.find('.superbox-img').attr('src')
-    mediaModalContainer.find('.mediaModalClose').click()
+    modalContainer.find('.mediaModalClose').click()
 )
