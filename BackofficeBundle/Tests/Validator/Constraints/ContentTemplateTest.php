@@ -46,4 +46,12 @@ class ContentTemplateTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame('open_orchestra_backoffice_validators.form.content.content_template', $this->constraint->message);
     }
+
+    /**
+     * Test validate by
+     */
+    public function testValidateBy()
+    {
+        $this->assertSame('content_template', $this->constraint->validatedBy());
+    }
 }

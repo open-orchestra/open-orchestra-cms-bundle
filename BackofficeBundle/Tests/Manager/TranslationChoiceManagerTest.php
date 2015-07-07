@@ -21,6 +21,7 @@ class TranslationChoiceManagerTest extends \PHPUnit_Framework_TestCase
     protected $object;
     protected $enName;
     protected $frName;
+    protected $baseValue;
     protected $contextManager;
 
     /**
@@ -28,45 +29,65 @@ class TranslationChoiceManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->baseValue = array('en' => 'English', 'fr' => 'Francais');
+
         $this->frName = new TranslatedValue();
         $this->frName->setLanguage('fr');
+        $this->frName->setValue($this->baseValue['fr']);
 
         $this->enName = new TranslatedValue();
         $this->enName->setLanguage('en');
+        $this->enName->setValue($this->baseValue['en']);
 
         $this->names = new ArrayCollection();
         $this->names->add($this->enName);
         $this->names->add($this->frName);
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+
+        $this->manager = new TranslationChoiceManager($this->contextManager);
     }
 
     /**
      * @param string $lang
-     * @param array  $baseValue
      *
-     * @dataProvider provideLangAndTranslation
+     * @dataProvider provideLang
      */
-    public function testChooseMethod($lang, array $baseValue)
+    public function testChooseMethod($lang)
     {
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn($lang);
-        $this->frName->setValue($baseValue['fr']);
-        $this->enName->setValue($baseValue['en']);
 
-        $this->manager = new TranslationChoiceManager($this->contextManager);
         $returnedValue = $this->manager->choose($this->names);
 
-        $this->assertSame($returnedValue, $baseValue[$lang]);
+        $this->assertSame($this->baseValue[$lang], $returnedValue);
     }
 
     /**
      * @return array
      */
-    public function provideLangAndTranslation()
+    public function provideLang()
     {
         return array(
-            array('en', array('en' => 'English', 'fr' => 'Francais')),
-            array('fr', array('en' => 'English', 'fr' => 'Francais')),
+            array('en'),
+            array('fr'),
         );
+    }
+
+    /**
+     * Test with no translations
+     */
+    public function testChooseWithEmptyCollection()
+    {
+        $this->assertSame('no translation', $this->manager->choose(new ArrayCollection()));
+    }
+
+    /**
+     * Test with new language
+     */
+    public function testChooseWithNotIncludedLanguage()
+    {
+        Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('de');
+
+        $this->assertSame($this->baseValue['en'], $this->manager->choose($this->names));
     }
 }

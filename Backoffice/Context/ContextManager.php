@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\Backoffice\Context;
 
-use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -47,13 +47,12 @@ class ContextManager implements CurrentSiteIdInterface
         $currentLanguage = $this->session->get(self::KEY_LOCALE);
 
         if (!$currentLanguage) {
-            $currentLanguage = $this->defaultLocale;
+            $currentLanguage = $this->getDefaultLocale();
             $token = $this->tokenStorage->getToken();
             if ($token && ($user = $token->getUser()) instanceof UserInterface) {
                 $currentLanguage = $user->getLanguage();
                 $this->setCurrentLocale($currentLanguage);
             }
-            $currentLanguage = $this->getDefaultLocale();
         }
 
         return $currentLanguage;

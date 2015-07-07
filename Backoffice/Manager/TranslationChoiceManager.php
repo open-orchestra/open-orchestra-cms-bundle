@@ -11,14 +11,14 @@ use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
  */
 class TranslationChoiceManager implements TranslationChoiceManagerInterface
 {
-    protected $currentLocale;
+    protected $contextManager;
 
     /**
      * @param ContextManager $contextManager
      */
     public function __construct(ContextManager $contextManager)
     {
-        $this->currentLocale = $contextManager->getCurrentLocale();
+        $this->contextManager = $contextManager;
     }
 
     /**
@@ -32,7 +32,7 @@ class TranslationChoiceManager implements TranslationChoiceManagerInterface
             return 'no translation';
         }
 
-        $local = $this->currentLocale;
+        $local = $this->contextManager->getCurrentLocale();
 
         foreach ($collection as $element) {
             if ($local == $element->getLanguage()) {
