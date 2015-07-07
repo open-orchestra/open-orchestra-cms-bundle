@@ -10,8 +10,12 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerP
  */
 class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
-    protected $tinymce;
+    /**
+     * @var TinymceCompilerPass
+     */
     protected $compiler;
+
+    protected $tinymce;
     protected $container;
 
     /**
@@ -133,5 +137,23 @@ class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
                 )
             ),
         );
+    }
+
+    /**
+     * Test parameter addition
+     */
+    public function testWithDefinitionAndOpenOrchestraParameters()
+    {
+        Phake::when($this->container)->hasDefinition(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->container)->getParameter('stfalcon_tinymce.config')->thenReturn(array());
+        Phake::when($this->container)->hasParameter(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->container)->getParameter('open_orchestra_backoffice.tinymce')->thenReturn(array(
+            'content_css' => 'testcontent',
+        ));
+        Phake::when($this->container)->getParameter('router.request_context.host')->thenReturn('foo.host');
+
+        $this->compiler->process($this->container);
+
+        Phake::verify($this->container)->setParameter('stfalcon_tinymce.config', array('content_css' => 'foo.hosttestcontent'));
     }
 }
