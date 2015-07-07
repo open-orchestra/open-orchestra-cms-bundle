@@ -2,8 +2,12 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * Class BlockToArrayTransformer
+ */
 class BlockToArrayTransformer implements DataTransformerInterface
 {
     /**
@@ -13,7 +17,7 @@ class BlockToArrayTransformer implements DataTransformerInterface
      */
     public function transform($data)
     {
-        if (!empty($data)) {
+        if ($data instanceof BlockInterface) {
             return array_merge(array(
                 'label' => $data->getLabel(),
                 'class' => $data->getClass(),
