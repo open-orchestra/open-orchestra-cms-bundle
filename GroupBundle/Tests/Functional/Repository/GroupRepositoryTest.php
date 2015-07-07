@@ -30,7 +30,7 @@ class GroupRepositoryTest extends KernelTestCase
 
     /**
      * @param array  $descriptionEntity
-     * @param string $search
+     * @param array  $search
      * @param array  $order
      * @param int    $skip
      * @param int    $limit
@@ -73,7 +73,7 @@ class GroupRepositoryTest extends KernelTestCase
 
     /**
      * @param array  $descriptionEntity
-     * @param string $search
+     * @param array  $search
      * @param int    $count
      *
      * @dataProvider provideColumnsAndSearchAndCount
