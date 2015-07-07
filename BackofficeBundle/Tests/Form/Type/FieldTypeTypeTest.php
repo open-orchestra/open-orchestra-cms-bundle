@@ -20,6 +20,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     protected $builder;
     protected $resolver;
     protected $translator;
+    protected $fieldOptions;
     protected $translateValueInitializer;
     protected $translatedLabel = 'existing option';
     protected $fieldOptionClass = 'fieldOptionClass';
@@ -30,6 +31,14 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->fieldOptions = array('text' => array(
+            'label' => 'foo',
+            'type' => 'text',
+            'options' =>array(
+                'max_length' => array('default_value' => 25)
+            )
+        ));
+
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
@@ -40,7 +49,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
-        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, array(), $this->fieldOptionClass, $this->fieldTypeClass);
+        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, $this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeClass);
     }
 
     /**
@@ -62,8 +71,9 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             'data_class' => $this->fieldTypeClass,
             'label' => $this->translatedLabel,
             'prototype_data' => function(){
+                $default = each($this->fieldOptions);
                 $fieldType = new FieldType();
-                $fieldType->setType('text');
+                $fieldType->setType($default['key']);
 
                 return $fieldType;
             }
