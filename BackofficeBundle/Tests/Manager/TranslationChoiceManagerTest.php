@@ -84,7 +84,7 @@ class TranslationChoiceManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Test with new language
      */
-    public function testWithNotIncludedLanguage()
+    public function testChooseWithNotIncludedLanguage()
     {
         Phake::when($this->contextManager)->getCurrentLocale()->thenReturn('de');
 
