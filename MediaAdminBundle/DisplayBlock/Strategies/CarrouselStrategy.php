@@ -3,7 +3,7 @@
 namespace OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 

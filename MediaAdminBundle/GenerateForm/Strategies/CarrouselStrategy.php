@@ -3,7 +3,7 @@
 namespace OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies;
 
 use OpenOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies;
 
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
 
 /**
  * Class CarrouselIconStrategy

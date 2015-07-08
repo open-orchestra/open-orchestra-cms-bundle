@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\CarrouselStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
@@ -111,7 +110,6 @@ class OpenOrchestraBackofficeExtension extends Extension
             MenuStrategy::MENU,
             SubMenuStrategy::SUBMENU,
             ContentListStrategy::CONTENT_LIST,
-            CarrouselStrategy::CARROUSEL,
             ContentStrategy::CONTENT,
             ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
             TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
