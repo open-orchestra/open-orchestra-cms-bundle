@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Translation\TranslatorInterface;
 
-
 /**
  * Class AreaCollectionSubscriber
  */
@@ -43,6 +42,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                 /** @var AreaInterface $newArea */
                 $newArea = new $areaClass();
                 $newArea->setAreaId($newAreaData);
+                $newArea->setLabel($newAreaData);
 
                 $areaContainer->addArea($newArea);
             }

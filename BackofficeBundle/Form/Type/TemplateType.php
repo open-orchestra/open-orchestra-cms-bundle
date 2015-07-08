@@ -40,9 +40,6 @@ class TemplateType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.template.name',
             ))
-            ->add('language', 'orchestra_language', array(
-                'label' => 'open_orchestra_backoffice.form.template.language',
-            ))
             ->add('boDirection', 'orchestra_direction', array(
                 'label' => 'open_orchestra_backoffice.form.template.boDirection',
             ))
