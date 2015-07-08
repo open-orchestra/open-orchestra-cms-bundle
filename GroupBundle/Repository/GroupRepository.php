@@ -2,15 +2,13 @@
 
 namespace OpenOrchestra\GroupBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use OpenOrchestra\Pagination\MongoTrait\FilterTrait;
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class GroupRepository
  */
-class GroupRepository extends DocumentRepository
+class GroupRepository extends AbstractAggregateRepository
 {
     use PaginationTrait;
-    use FilterTrait;
 }

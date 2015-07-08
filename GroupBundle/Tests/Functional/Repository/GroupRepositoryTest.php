@@ -30,8 +30,7 @@ class GroupRepositoryTest extends KernelTestCase
 
     /**
      * @param array  $descriptionEntity
-     * @param array  $columns
-     * @param string $search
+     * @param array  $search
      * @param array  $order
      * @param int    $skip
      * @param int    $limit
@@ -39,10 +38,10 @@ class GroupRepositoryTest extends KernelTestCase
      *
      * @dataProvider providePaginateAndSearch
      */
-    public function testFindForPaginateAndSearch($descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindForPaginate($descriptionEntity, $search, $order, $skip, $limit, $count)
     {
-        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $configuration->setPaginateConfiguration($order, $limit, $skip);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
         $groups = $this->repository->findForPaginate($configuration);
         $this->assertCount($count, $groups);
     }
@@ -55,11 +54,11 @@ class GroupRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,5 , 5),
-            array($descriptionEntity, $this->generateColumnsProvider('group'), null, null, 0 ,5 , 5),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'group', null, 0 ,5 , 5),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'fakeGroup', null, 0 ,5 , 0),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'First', null, 0 ,5 , 1),
+            array($descriptionEntity, null, null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateSearchProvider('group'), null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateSearchProvider('', 'group'), null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateSearchProvider('', 'fakeGroup'), null, 0 ,5 , 0),
+            array($descriptionEntity, $this->generateSearchProvider('First'), null, 0 ,5 , 1),
         );
     }
 
@@ -73,16 +72,15 @@ class GroupRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param array  $columns
      * @param array  $descriptionEntity
-     * @param string $search
+     * @param array  $search
      * @param int    $count
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountWithSearchFilter($descriptionEntity, $columns, $search, $count)
+    public function testCountWithFilter($descriptionEntity, $search, $count)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $search);
         $groups = $this->repository->countWithFilter($configuration);
         $this->assertEquals($count, $groups);
     }
@@ -94,10 +92,10 @@ class GroupRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, $this->generateColumnsProvider(), null, 5),
-            array($descriptionEntity, $this->generateColumnsProvider('group'), null, 5),
-            array($descriptionEntity, $this->generateColumnsProvider('first'), null, 1),
-            array($descriptionEntity, $this->generateColumnsProvider(), 'fakeName', 0),
+            array($descriptionEntity, null, 5),
+            array($descriptionEntity, $this->generateSearchProvider('group'), 5),
+            array($descriptionEntity, $this->generateSearchProvider('first'), 1),
+            array($descriptionEntity, $this->generateSearchProvider('', 'fakeName'), 0),
         );
     }
 
@@ -105,14 +103,21 @@ class GroupRepositoryTest extends KernelTestCase
      * Generate columns of content with search value
      *
      * @param string $searchName
+     * @param string $globalSearch
      *
      * @return array
      */
-    protected function generateColumnsProvider($searchName = '')
+    protected function generateSearchProvider($searchName = '', $globalSearch = '')
     {
-        return array(
-            array('name' => 'name', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchName)),
-        );
+        $search = array();
+        if (!empty($searchName)) {
+            $search['columns'] = array('name' => $searchName);
+        }
+        if (!empty($globalSearch)) {
+            $search['global'] = $globalSearch;
+        }
+
+        return $search;
     }
 
     /**
