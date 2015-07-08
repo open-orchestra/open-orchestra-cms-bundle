@@ -110,7 +110,6 @@ class OpenOrchestraBackofficeExtension extends Extension
             MenuStrategy::MENU,
             SubMenuStrategy::SUBMENU,
             ContentListStrategy::CONTENT_LIST,
-            CarrouselStrategy::CARROUSEL,
             ContentStrategy::CONTENT,
             ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
             TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
