@@ -3,6 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager;
+use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\FormEvent;
@@ -19,24 +21,28 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
     protected $contentTypeRepository;
     protected $contentAttributeClass;
     protected $fieldTypesConfiguration;
+    protected $valueTransformerManager;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param string                         $contentAttributeClass
      * @param TranslationChoiceManager       $translationChoiceManager
      * @param array                          $fieldTypesConfiguration
+     * @param ValueTransformerManager        $valueTransformerManager
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
         $contentAttributeClass,
         TranslationChoiceManager $translationChoiceManager,
-        $fieldTypesConfiguration
+        $fieldTypesConfiguration,
+        ValueTransformerManager $valueTransformerManager
     )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentAttributeClass = $contentAttributeClass;
         $this->translationChoiceManager = $translationChoiceManager;
         $this->fieldTypesConfiguration = $fieldTypesConfiguration;
+        $this->valueTransformerManager = $valueTransformerManager;
     }
 
     /**
@@ -68,15 +74,18 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
             foreach ($contentType->getFields() as $contentTypeField) {
                 $contentTypeFieldId = $contentTypeField->getFieldId();
                 $data[$contentTypeFieldId] = isset($data[$contentTypeFieldId]) ? $data[$contentTypeFieldId] : null;
-                if ($attribute = $content->getAttributeByName($contentTypeFieldId)) {
-                    $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
-                } elseif (is_null($attribute)) {
-                    $contentAttributeClass = $this->contentAttributeClass;
-                    $attribute = new $contentAttributeClass;
+                $value = $this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId));
+
+                $attribute = $content->getAttributeByName($contentTypeFieldId);
+                if (is_null($attribute)) {
+                    /** @var ContentAttributeInterface $attribute */
+                    $attribute = new $this->contentAttributeClass();
                     $attribute->setName($contentTypeFieldId);
-                    $attribute->setValue($this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId)));
                     $content->addAttribute($attribute);
                 }
+                $attribute->setValue($value);
+                $attribute->setType($contentTypeField->getType());
+                $attribute->setStringValue($this->valueTransformerManager->transform($attribute->getType(), $value));
             }
         }
     }

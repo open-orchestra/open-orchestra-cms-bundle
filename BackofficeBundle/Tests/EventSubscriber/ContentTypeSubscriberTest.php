@@ -3,6 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerInterface;
+use OpenOrchestra\ModelBundle\Document\Keyword;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -33,9 +35,13 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $contentAttribute;
     protected $contentAttributClass;
     protected $contentTypeVersion = 1;
-    protected $transaltionChoiceManager;
+    protected $translationChoiceManager;
     protected $fieldTypesConfiguration;
     protected $constraintsNotBlank;
+    protected $valueTransformerManager;
+    protected $transformer;
+    protected $eventDispatcher;
+    protected $contentAttributeClass;
 
     /**
      * Set up the test
@@ -67,8 +73,10 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->contentTypeId = 'contentTypeId';
         $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        Phake::when($this->contentAttribute)->getType()->thenReturn("bar");
         $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($this->content)->getContentType()->thenReturn($this->contentTypeId);
+        Phake::when($this->content)->getAttributeByName(Phake::anyParameters())->thenReturn($this->contentAttribute);
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
@@ -89,15 +97,26 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->repository)->find(Phake::anyParameters())->thenReturn($this->contentType);
 
-        $this->transaltionChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
         $this->constraintsNotBlank =  new NotBlank();
+
+        $this->contentAttributeClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';
+
+        $this->valueTransformerManager = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager');
+        $this->transformer = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerInterface');
+        Phake::when($this->transformer)->support(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn('foo');
+        Phake::when($this->valueTransformerManager)->transform(Phake::anyParameters())->thenReturn('foo');
+        $this->valueTransformerManager->addStrategy($this->transformer);
 
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
             $this->contentAttributClass,
-            $this->transaltionChoiceManager,
-            $this->fieldTypesConfiguration
+            $this->translationChoiceManager,
+            $this->fieldTypesConfiguration,
+            $this->valueTransformerManager
         );
+
     }
 
     /**
@@ -145,7 +164,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
+        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
@@ -200,7 +219,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         );
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
+        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
@@ -225,13 +244,13 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $status = 'status';
         $language = 'fr';
         $realContentTypeId = 'contentTypeId';
-        $title = 'Content title';
+        $realValueArray = array('value1', 'value2');
         $data = array(
             'name' => $name,
             'status' => $status,
             'language' => $language,
             'contentType' => $realContentTypeId,
-            'title' => $title,
+            'title' => $realValueArray,
         );
         Phake::when($this->event)->getData()->thenReturn($data);
 
@@ -247,19 +266,22 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'required' => true
         );
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
-        Phake::when($this->transaltionChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
+        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
-        Phake::when($this->content)->getAttributeByName(Phake::anyParameters())->thenReturn($this->contentAttribute);
+        Phake::when($this->content)->getAttributeByName($fieldId)->thenReturn($this->contentAttribute);
 
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->getData();
         Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
-        Phake::verify($this->contentAttribute)->setValue($title);
+        Phake::verify($this->contentAttribute)->setValue($realValueArray);
+        Phake::verify($this->contentAttribute)->setType($type);
+        Phake::verify($this->valueTransformerManager)->transform('bar', $realValueArray);
+        Phake::verify($this->contentAttribute)->setStringValue('foo');
     }
 
     /**
@@ -289,7 +311,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
 
-        Phake::when($this->content)->getAttributeByName(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->content)->getAttributeByName($fieldId)->thenReturn(null);
 
         $this->subscriber->preSubmit($this->event);
 
@@ -297,5 +319,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->content)->addAttribute(Phake::anyParameters());
+        Phake::verify($this->valueTransformerManager)->transform(null, $title);
     }
 }

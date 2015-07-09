@@ -64,7 +64,6 @@ class ContentTransformer extends AbstractTransformer
         foreach ($content->getAttributes() as $attribute) {
             $contentAttribute = $this->getTransformer('content_attribute')->transform($attribute);
             $facade->addAttribute($contentAttribute);
-            $facade->addLinearizeAttribute($contentAttribute);
         }
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(

@@ -1,0 +1,27 @@
+parameters:
+    open_orchestra_backoffice.value_transformer.manager.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager
+    open_orchestra_backoffice.value_transformer.array.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ArrayToStringTransformer
+    open_orchestra_backoffice.value_transformer.integer.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\IntegerToStringTransformer
+    open_orchestra_backoffice.value_transformer.null.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\NullToStringTransformer
+    open_orchestra_backoffice.value_transformer.object.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ObjectToStringTransformer
+
+services:
+    open_orchestra_backoffice.value_transformer.manager:
+        class: %open_orchestra_backoffice.value_transformer.manager.class%
+
+    open_orchestra_backoffice.value_transformer.array:
+            class: %open_orchestra_backoffice.value_transformer.array.class%
+            tags:
+                - { name: open_orchestra_backoffice.value_transformer.strategy }
+    open_orchestra_backoffice.value_transformer.integer:
+            class: %open_orchestra_backoffice.value_transformer.integer.class%
+            tags:
+                - { name: open_orchestra_backoffice.value_transformer.strategy }
+    open_orchestra_backoffice.value_transformer.null:
+        class: %open_orchestra_backoffice.value_transformer.null.class%
+        tags:
+            - { name: open_orchestra_backoffice.value_transformer.strategy }
+    open_orchestra_backoffice.value_transformer.object:
+        class: %open_orchestra_backoffice.value_transformer.object.class%
+        tags:
+            - { name: open_orchestra_backoffice.value_transformer.strategy }
