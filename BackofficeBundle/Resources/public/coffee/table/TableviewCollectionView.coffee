@@ -38,7 +38,7 @@ TableviewCollectionView = OrchestraView.extend(
     columnDefs = []
     for index, element of @options.displayedElements
       columns.push({'data' : element, 'defaultContent': ''});
-      columnDefs.push({'name' : element, 'targets': parseInt(index)});
+      columnDefs.push({'name' : element, 'visible': @checkDefaultVisible(element), 'targets': parseInt(index)});
     columns.push({'data' : 'links'})
     viewContext = @
 
@@ -84,14 +84,13 @@ TableviewCollectionView = OrchestraView.extend(
       order: [@options.order]
       lengthChange: false
     )
-
     api = @options.table.api()
-    headers = api.columns().header().toArray()
-    for i of headers
-      if @options.visibleElements.length > 0 && $(api.column(i).header()).text() != '' && @options.visibleElements.indexOf(i.toString()) == -1
-        api.column(i).visible(false)
+
     @listenToOnce(widgetChannel, 'jarviswidget', @addColvis)
     return
+
+  checkDefaultVisible : (name) ->
+    return @options.visibleElements.indexOf(name) >= 0
 
   transformerDataSearch : (data) ->
     search =

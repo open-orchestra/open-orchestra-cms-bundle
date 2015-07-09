@@ -104,6 +104,7 @@ open_orchestra_backoffice:
             version: Version
             status: Status
             linked_to_site: Link to the current site
+            default_display: Visible by default in BackOffice list
             fields: Fields
             keywords: Keywords
             template:
