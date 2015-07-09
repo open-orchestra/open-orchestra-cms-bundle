@@ -72,7 +72,7 @@ class ContentTypeManager
     {
         return array(
             'name'           => true,
-            'status_label'   => false,
+            'status_label'   => true,
             'version'        => true,
             'language'       => true,
             'linked_to_site' => true,
