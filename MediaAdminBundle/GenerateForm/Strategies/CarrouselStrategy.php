@@ -40,6 +40,10 @@ class CarrouselStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('id', 'text', array(
+            'label' => 'open_orchestra_backoffice.form.block.id',
+            'constraints' => new NotBlank(),
+        ));
         $builder->add('pictures', 'collection', array(
             'type' => 'orchestra_media',
             'constraints' => new NotBlank(),
