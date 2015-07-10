@@ -9,7 +9,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/css/node.css',
         'web/built/openorchestramediaadmin/css/media.css',
         'web/built/openorchestramediaadmin/css/mediaModal.css',
-        'web/built/openorchestraworkflowfunctionadminBundle/css/table.css'
+        'web/built/openorchestraworkflowfunctionadmin/css/table.css'
     ],
     dest: 'web/built/orchestra.css'
 };
