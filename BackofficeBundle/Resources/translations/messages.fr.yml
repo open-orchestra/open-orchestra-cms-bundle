@@ -105,6 +105,7 @@ open_orchestra_backoffice:
             status: Statut
             fields: Champs
             linked_to_site: Lié au site courant
+            default_display: Visible par défaut dans les listes du Backoffice
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition

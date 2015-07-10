@@ -10,6 +10,19 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 class ContentTypeManager
 {
     /**
+     * @param string $contentTypeClass
+     *
+     * @return ContentTypeInterface
+     */
+    public function initializeNewContentType($contentTypeClass)
+    {
+        $contentType = new $contentTypeClass();
+        $contentType->setDefaultListable($this->getDefaultListableColumns());
+
+        return $contentType;
+    }
+
+    /**
      * @param ContentTypeInterface $contentType
      *
      * @return ContentTypeInterface
@@ -50,5 +63,19 @@ class ContentTypeManager
                 $contentType->setDeleted(true);
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultListableColumns()
+    {
+        return array(
+            'name'           => true,
+            'status_label'   => true,
+            'version'        => true,
+            'language'       => true,
+            'linked_to_site' => true,
+        );
     }
 }

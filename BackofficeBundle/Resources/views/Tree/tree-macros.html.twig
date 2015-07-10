@@ -93,12 +93,25 @@
                                     'open_orchestra_backoffice.table.content_type.version'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.language'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.linked_to_site'|trans %}
-        {% set visibleElement = '0, 1, 2, 3, 4' %}
+        {% set visibleElement = '' %}
+        {% for columnName, listable in contentType.defaultListable %}
+            {% if listable %}
+                {% if visibleElement is empty %}
+                    {% set visibleElement = columnName %}
+                {% else %}
+                    {% set visibleElement = visibleElement ~ ', ' ~ columnName %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
         {% for field in contentType.fields %}
-            {% set displayedElement = displayedElement ~ ', linearize_attributes.' ~ field.fieldId %}
+            {% set displayedElement = displayedElement ~ ',' ~ field.fieldId %}
             {% set translatedHeader = translatedHeader ~ ', ' ~ field.labels|trans_choose %}
             {% if field.listable %}
-                {% set visibleElement = visibleElement ~ ', ' ~ (loop.index + 3) %}
+                {% if visibleElement is empty %}
+                    {% set visibleElement = field.fieldId %}
+                {% else %}
+                    {% set visibleElement = visibleElement ~ ',' ~ field.fieldId %}
+                {% endif %}
             {% endif %}
         {% endfor %}
         <li
