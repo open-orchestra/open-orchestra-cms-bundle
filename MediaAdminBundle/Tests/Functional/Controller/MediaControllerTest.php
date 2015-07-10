@@ -19,7 +19,7 @@ class MediaControllerTest extends AbstractControllerTest
         parent::setUp();
 
         $mediaRepository = static::$kernel->getContainer()->get('open_orchestra_media.repository.media');
-        $this->media = $mediaRepository->findOneByName('logo Open-Orchestra');
+        $this->media = $mediaRepository->findOneByName('logo Phporchestra');
     }
 
     /**
