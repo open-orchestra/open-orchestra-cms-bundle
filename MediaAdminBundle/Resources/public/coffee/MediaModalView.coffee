@@ -30,14 +30,14 @@ MediaModalView = OrchestraView.extend(
       @options.domContainer.html @$el
       currentModal = @$el.detach().appendTo('body')
       currentModal.modal "show"
+      currentModal.on 'hidden.bs.modal', ->
+        currentModal = null
+        this.remove()
+        return
 
   closeModal: ->
     if currentModal
       currentModal.modal "hide"
-      currentModal.on 'hidden.bs.modal', ->
-        this.remove()
-        return
-    currentModal = null
 
   showFolder: (event) ->
     viewContext = @
