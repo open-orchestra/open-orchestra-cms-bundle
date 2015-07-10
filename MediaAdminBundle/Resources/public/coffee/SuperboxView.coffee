@@ -94,6 +94,8 @@ SuperboxView = OrchestraView.extend(
       success: (response) ->
         $('#selector-loader-container').hide()
         $('.media_crop_form', currentView.$el).html response
+        if (form = $('.media_crop_form form', currentView.$el)) && form.length > 0
+          activateForm(currentView, form)
 
   setupMetaForm: ->
     currentView = this
@@ -103,6 +105,8 @@ SuperboxView = OrchestraView.extend(
       method: 'GET'
       success: (response) ->
         $('.media_meta_form', currentView.$el).html response
+        if (form = $('.media_meta_form form', currentView.$el)) && form.length > 0
+          activateForm(currentView, form)
 
   changeView: (e) ->
     $('#crop-group').hide()
