@@ -51,12 +51,12 @@ class GalleryStrategy extends AbstractBlockStrategy
                 'label' => 'open_orchestra_backoffice.form.block.id',
                 'constraints' => new NotBlank(),
             ))
-            ->add('columnNumber', 'text', array(
+            ->add('columnNumber', 'integer', array(
                 'empty_data' => 1,
                 'label' => 'open_orchestra_media_admin.block.gallery.form.column_number',
                 'constraints' => array(new NotBlank(), new Type('integer')),
             ))
-            ->add('itemNumber', 'text', array(
+            ->add('itemNumber', 'integer', array(
                 'empty_data' => 0,
                 'label' => 'open_orchestra_media_admin.block.gallery.form.item_number.label',
                 'attr' => array('help_text' => 'open_orchestra_media_admin.block.gallery.form.item_number.helper'),
