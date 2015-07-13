@@ -1,17 +1,18 @@
 <!-- multiple lang dropdown : find all flags in the flags page -->
 <ul class="header-dropdown-list hidden-xs">
     <li>
+        {% set currentLocale = (context.currentLocale is null) ? context.defaultLocale : context.currentLocale%}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <img
                 src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
-                class="flag flag-{{ context.currentLocale }}"
-                alt="{{ ('open_orchestra_backoffice.language.' ~ context.currentLocale)|trans }}"
+                class="flag flag-{{ currentLocale }}"
+                alt="{{ ('open_orchestra_backoffice.language.' ~ currentLocale)|trans }}"
             >
-            <span> {{ ('open_orchestra_backoffice.language.' ~ context.currentLocale)|trans }} ({{ context.currentLocale|capitalize }})</span> <i class="fa fa-angle-down"></i>
+            <span> {{ ('open_orchestra_backoffice.language.' ~ currentLocale)|trans }} ({{ currentLocale|capitalize }})</span> <i class="fa fa-angle-down"></i>
         </a>
         <ul class="dropdown-menu pull-right">
             {% for language in administration_languages %}
-            <li{% if context.currentLocale == language %} class="active"{% endif %}>
+            <li{% if currentLocale == language %} class="active"{% endif %}>
                 <a
                         class="configuration-change"
                         data-url="{{ path('homepage_with_site_id_and_language', {'siteId': context.currentSiteId, 'language': language}) }}">
