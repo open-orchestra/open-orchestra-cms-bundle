@@ -1,7 +1,7 @@
 open_orchestra_backoffice:
     block:
-        carrousel:
-            title: Bloc carrousel
+        slideshow:
+            title: Bloc diaporama
         gallery:
             title: Bloc galerie
         media_list_by_keyword:
@@ -46,7 +46,7 @@ open_orchestra_media_admin:
         editorial:
             media: Médiathèque
     block:
-        carrousel:
+        slideshow:
             description: Fait défiler des images.
             form:
                 media:

@@ -1,7 +1,7 @@
 open_orchestra_backoffice:
     block:
-        carrousel:
-            title: Carousel block
+        slideshow:
+            title: Slideshow block
         gallery:
             title: Gallery block
         media_list_by_keyword:
@@ -46,8 +46,8 @@ open_orchestra_media_admin:
         editorial:
             media: Media
     block:
-        carrousel:
-            description: Block to scroll images.
+        slideshow:
+            description: Scroll images.
             form:
                 media:
                     add: Add media

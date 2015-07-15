@@ -3,16 +3,16 @@
 namespace OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies;
 
 use OpenOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
-use OpenOrchestra\Media\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\SlideshowStrategy as BaseSlideshowStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Class CarrouselStrategy
+ * Class SlideshowStrategy
  */
-class CarrouselStrategy extends AbstractBlockStrategy
+class SlideshowStrategy extends AbstractBlockStrategy
 {
     protected $translator;
 
@@ -31,7 +31,7 @@ class CarrouselStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseCarrouselStrategy::CARROUSEL === $block->getComponent();
+        return BaseSlideshowStrategy::SLIDESHOW === $block->getComponent();
     }
 
     /**
@@ -49,9 +49,9 @@ class CarrouselStrategy extends AbstractBlockStrategy
             'constraints' => new NotBlank(),
             'allow_add' => true,
             'attr' => array(
-                'data-prototype-label-add' => $this->translator->trans('open_orchestra_media_admin.block.carrousel.form.media.add'),
-                'data-prototype-label-new' => $this->translator->trans('open_orchestra_media_admin.block.carrousel.form.media.new'),
-                'data-prototype-label-remove' => $this->translator->trans('open_orchestra_media_admin.block.carrousel.form.media.delete'),
+                'data-prototype-label-add' => $this->translator->trans('open_orchestra_media_admin.block.slideshow.form.media.add'),
+                'data-prototype-label-new' => $this->translator->trans('open_orchestra_media_admin.block.slideshow.form.media.new'),
+                'data-prototype-label-remove' => $this->translator->trans('open_orchestra_media_admin.block.slideshow.form.media.delete'),
             ),
         ));
         $builder->add('width', 'text', array(
@@ -67,7 +67,7 @@ class CarrouselStrategy extends AbstractBlockStrategy
      */
     public function getName()
     {
-        return 'carrousel';
+        return 'slideshow';
     }
 
 }

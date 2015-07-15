@@ -3,14 +3,14 @@
 namespace OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\Media\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\SlideshowStrategy as BaseSlideshowStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CarrouselStrategy
+ * Class SlideshowStrategy
  */
-class CarrouselStrategy extends AbstractStrategy
+class SlideshowStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseCarrouselStrategy::CARROUSEL == $block->getComponent();
+        return BaseSlideshowStrategy::SLIDESHOW == $block->getComponent();
     }
 
     /**
@@ -33,7 +33,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render('OpenOrchestraMediaAdminBundle:Block/Carrousel:show.html.twig');
+        return $this->render('OpenOrchestraMediaAdminBundle:Block/Slideshow:show.html.twig');
     }
 
     /**
@@ -43,6 +43,6 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'carrousel';
+        return 'slideshow';
     }
 }

@@ -1,12 +1,12 @@
 parameters:
-    open_orchestra_media_admin.display.carrousel.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\CarrouselStrategy
+    open_orchestra_media_admin.display.slideshow.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\SlideshowStrategy
     open_orchestra_media_admin.display.gallery.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\GalleryStrategy
     open_orchestra_media_admin.display.media_list_by_keyword.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\MediaListByKeywordStrategy
     open_orchestra_media_admin.display.display_media.class: OpenOrchestra\MediaAdminBundle\DisplayBlock\Strategies\DisplayMediaStrategy
 
 services:
-    open_orchestra_media_admin.display.carrousel:
-        class: %open_orchestra_media_admin.display.carrousel.class%
+    open_orchestra_media_admin.display.slideshow:
+        class: %open_orchestra_media_admin.display.slideshow.class%
         tags:
             - { name: open_orchestra_backoffice.display_block.strategy }
     open_orchestra_media_admin.display.gallery:
