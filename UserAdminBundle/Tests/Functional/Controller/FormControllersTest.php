@@ -2,35 +2,13 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Functional\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use OpenOrchestra\BackofficeBundle\Tests\Functional\Controller\AbstractControllerTest;
 
 /**
  * Class FormControllersTest
  */
-class FormControllersTest extends WebTestCase
+class FormControllersTest extends AbstractControllerTest
 {
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * Set up the test
-     */
-    public function setUp()
-    {
-        $this->client = static::createClient();
-        $this->client->setServerParameters(
-            array(
-                'PHP_AUTH_USER' => 'nicolas',
-                'PHP_AUTH_PW'   => 'nicolas',
-            ),
-            array('HTTP_HOST' => 'www.openorchestra.dev')
-        );
-        $this->client->followRedirects();
-    }
-
     /**
      * Test user form
      */
@@ -38,6 +16,10 @@ class FormControllersTest extends WebTestCase
     {
         $this->client->request('GET', '/admin/user/new');
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $response = $this->client->getResponse();
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertRegExp('/form/', $response->getContent());
+        $this->assertNotRegExp('/<html/', $response->getContent());
+        $this->assertRegExp('/registration_user/', $response->getContent());
     }
 }
