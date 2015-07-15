@@ -54,7 +54,6 @@ TableviewCollectionView = OrchestraView.extend(
     if @options.page?
       page = parseInt(@options.page) - 1
       displayStart = pageLength * page
-
     @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
@@ -63,6 +62,11 @@ TableviewCollectionView = OrchestraView.extend(
       displayStart: displayStart
       pageLength: pageLength
       bAutoWidth: false
+      orderCellsTop: true
+      sPaginationType: "bs_normal"
+      sDom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>>"+
+                    "t"+
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
         pages: 5

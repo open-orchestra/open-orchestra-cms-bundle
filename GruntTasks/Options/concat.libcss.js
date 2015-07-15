@@ -2,7 +2,7 @@ module.exports = {
     src: [
         'bower_components/jquery-ui/themes/base/base.css',
         'bower_components/jquery-ui/themes/base/theme.css',
-        'bower_components/datatables/media/css/jquery.dataTables.css'
+        'bower_components/datatables-bootstrap3/BS3/assets/css/datatables.css'
     ],
     dest: 'web/built/lib.css'
 };
