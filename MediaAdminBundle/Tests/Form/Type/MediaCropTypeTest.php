@@ -62,6 +62,9 @@ class MediaCropTypeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('media_crop', $this->form->getName());
     }
 
+    /**
+     * Test build form
+     */
     public function testBuildForm()
     {
         $this->form->buildForm($this->builder, array());

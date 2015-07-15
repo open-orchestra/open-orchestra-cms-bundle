@@ -22,7 +22,11 @@ class OrchestraSiteForFolderChoiceType extends AbstractType
     /**
      * @param SiteRepositoryInterface $siteRepository
      */
-    public function __construct(SiteRepositoryInterface $siteRepository, TokenStorageInterface $tokenStorage, EmbedSiteToSiteIdTransformer $embedSiteToSiteIdTransformer)
+    public function __construct(
+        SiteRepositoryInterface $siteRepository,
+        TokenStorageInterface $tokenStorage,
+        EmbedSiteToSiteIdTransformer $embedSiteToSiteIdTransformer
+    )
     {
         $this->siteRepository = $siteRepository;
         $this->tokenStorage = $tokenStorage;

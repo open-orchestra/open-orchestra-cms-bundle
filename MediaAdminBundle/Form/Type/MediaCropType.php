@@ -42,6 +42,9 @@ class MediaCropType extends AbstractType
         ));
     }
 
+    /**
+     * @return array
+     */
     protected function getChoices()
     {
         $choices = array();
@@ -52,6 +55,7 @@ class MediaCropType extends AbstractType
 
         return $choices;
     }
+
     /**
      * Returns the name of this type.
      *
