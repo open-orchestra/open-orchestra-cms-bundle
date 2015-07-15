@@ -14,6 +14,7 @@ extendView['submitAdmin'] = {
     else
       button = @button
       @button = null
+      form.unbind()
       form.submit ->
         event.preventDefault()
         form.ajaxSubmit
