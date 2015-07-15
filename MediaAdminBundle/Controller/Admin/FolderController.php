@@ -42,7 +42,6 @@ class FolderController extends AbstractAdminController
             $this->dispatchEvent(FolderEvents::FOLDER_UPDATE, new FolderEvent($folder));
         }
 
-
         return $this->renderAdminForm($form);
     }
 

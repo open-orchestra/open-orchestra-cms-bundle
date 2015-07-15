@@ -13,6 +13,7 @@ parameters:
                 image: "asset[bundles/openorchestramediaadmin/images/icon/ico-image.png]"
                 icon: false
         use_callback_tinymce_init: true
+
 services:
     open_orchestra_media_admin.type.media:
         class: %open_orchestra_media_admin.type.media.class%

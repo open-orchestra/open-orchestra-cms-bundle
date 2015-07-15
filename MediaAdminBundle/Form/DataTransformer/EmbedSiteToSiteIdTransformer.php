@@ -3,7 +3,6 @@
 namespace OpenOrchestra\MediaAdminBundle\Form\DataTransformer;
 
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 

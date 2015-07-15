@@ -23,7 +23,7 @@ class FolderControllerTest extends AbstractControllerTest
 
         $form = $crawler->selectButton('Save')->form();
 
-        $crawler = $this->client->submit($form);
+        $this->client->submit($form);
         $this->assertForm($this->client->getResponse());
     }
 }

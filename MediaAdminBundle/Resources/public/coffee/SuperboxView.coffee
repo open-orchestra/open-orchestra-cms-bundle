@@ -21,7 +21,6 @@ SuperboxView = OrchestraView.extend(
     ]
 
   render: ->
-    currentView = this
     $(@el).html @renderTemplate('OpenOrchestraMediaAdminBundle:BackOffice:Underscore/superboxView',
       media: @media
       listUrl: @listUrl
@@ -184,7 +183,6 @@ SuperboxView = OrchestraView.extend(
     $(".media-override-format-form").hide()
     $('#alternative-loader-container').show()
     format = $('#media_crop_format').val()
-    currentView = this
     linkFormat = '_self_format_' + format
     $.ajax
       url: @media.get('links')[linkFormat]

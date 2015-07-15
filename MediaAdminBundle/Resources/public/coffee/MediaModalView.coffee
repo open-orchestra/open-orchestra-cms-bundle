@@ -40,13 +40,11 @@ MediaModalView = OrchestraView.extend(
       currentModal.modal "hide"
 
   showFolder: (event) ->
-    viewContext = @
     displayLoader $(".modal-body-content", @$el)
     GalleryLoad $(event.target), @options.galleryView, $(".modal-body-content", @$el)
 
   reloadFolder: ->
     displayLoader $('.modal-body-menu', @$el)
-    viewContext = @
     displayMenu()
     $.ajax
       url: @options.url

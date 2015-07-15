@@ -45,7 +45,6 @@ open_orchestra_media_admin:
             delete_media_folder: Are you sure to delete the folder %folderName% ?
         editorial:
             media: Media
-        administration:
     block:
         carrousel:
             description: Block to scroll images.
