@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UserType extends AbstractType
 {
     protected $class;
-    protected $languages;
+    protected $availableLanguages;
 
     /**
      * @param string $class
@@ -22,10 +22,7 @@ class UserType extends AbstractType
     public function __construct($class, array $availableLanguages)
     {
         $this->class = $class;
-        $this->languages = array();
-        foreach($availableLanguages as $language) {
-            $this->languages[$language] = $language;
-        }
+        $this->availableLanguages = $availableLanguages;
     }
 
     /**
@@ -49,7 +46,7 @@ class UserType extends AbstractType
             'required' => false,
         ));
         $builder->add('language', 'choice', array(
-            'choices' => $this->languages,
+            'choices' => $this->getLanguages(),
             'label' => 'open_orchestra_user.form.user.language'
         ));
 
@@ -76,4 +73,17 @@ class UserType extends AbstractType
         return 'user';
     }
 
+    /**
+     * @return array
+     */
+    protected function getLanguages()
+    {
+        $languages = array();
+
+        foreach($this->availableLanguages as $language) {
+            $languages[$language] = $language;
+        }
+
+        return $languages;
+    }
 }

@@ -77,7 +77,7 @@ class UserController extends AbstractAdminController
 
     /**
      * @param Request $request
-     * @param string $userId
+     * @param string  $userId
      *
      * @Config\Route("/password/change/{userId}", name="open_orchestra_user_admin_user_change_password")
      * @Config\Method({"GET", "POST"})
