@@ -104,7 +104,7 @@
             {% endif %}
         {% endfor %}
         {% for field in contentType.fields %}
-            {% set displayedElement = displayedElement ~ ',' ~ field.fieldId %}
+            {% set displayedElement = displayedElement ~ ', attributes.' ~ field.fieldId ~ '.value' %}
             {% set translatedHeader = translatedHeader ~ ', ' ~ field.labels|trans_choose %}
             {% if field.listable %}
                 {% if visibleElement is empty %}
