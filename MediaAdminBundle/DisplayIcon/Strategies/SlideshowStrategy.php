@@ -3,12 +3,12 @@
 namespace OpenOrchestra\MediaAdminBundle\DisplayIcon\Strategies;
 
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
-use OpenOrchestra\Media\DisplayBlock\Strategies\CarrouselStrategy as BaseCarrouselStrategy;
+use OpenOrchestra\Media\DisplayBlock\Strategies\SlideshowStrategy as BaseSlideshowStrategy;
 
 /**
- * Class CarrouselIconStrategy
+ * Class SlideshowIconStrategy
  */
-class CarrouselStrategy extends AbstractStrategy
+class SlideshowStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -19,7 +19,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseCarrouselStrategy::CARROUSEL == $block;
+        return BaseSlideshowStrategy::SLIDESHOW == $block;
     }
 
     /**
@@ -29,7 +29,7 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraMediaAdminBundle:Block/Carrousel:showIcon.html.twig');
+        return $this->render('OpenOrchestraMediaAdminBundle:Block/Slideshow:showIcon.html.twig');
     }
 
     /**
@@ -39,6 +39,6 @@ class CarrouselStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'carrousel';
+        return 'slideshow';
     }
 }

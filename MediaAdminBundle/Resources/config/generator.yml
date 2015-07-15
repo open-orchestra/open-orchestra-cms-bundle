@@ -1,12 +1,12 @@
 parameters:
-    open_orchestra_media_admin.carrousel.generate_form.class: OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies\CarrouselStrategy
+    open_orchestra_media_admin.slideshow.generate_form.class: OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies\SlideshowStrategy
     open_orchestra_media_admin.gallery.generate_form.class: OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies\GalleryStrategy
     open_orchestra_media_admin.media_list_by_keyword.generate_form.class: OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies\MediaListByKeywordStrategy
     open_orchestra_media_admin.display_media.generate_form.class: OpenOrchestra\MediaAdminBundle\GenerateForm\Strategies\DisplayMediaStrategy
 
 services:
-    open_orchestra_media_admin.carrousel.generate_form:
-        class: %open_orchestra_media_admin.carrousel.generate_form.class%
+    open_orchestra_media_admin.slideshow.generate_form:
+        class: %open_orchestra_media_admin.slideshow.generate_form.class%
         arguments:
             - @translator
         tags:
