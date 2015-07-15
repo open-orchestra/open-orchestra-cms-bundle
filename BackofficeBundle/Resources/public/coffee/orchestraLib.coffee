@@ -174,6 +174,11 @@ activateTinyMce = (view, textarea) ->
 
 doCallBack = (editor, view) ->
 
+$(document).on('focusin', (e) ->
+  if ($(e.target).closest(".mce-window").length)
+      e.stopImmediatePropagation();
+)
+
 #ACTIVATE HTML5 VALIDATION FOR HIDDEN
 activateHidden = (hidden) ->
   hidden.addClass('focusable').attr('type', 'text')
