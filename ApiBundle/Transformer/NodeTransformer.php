@@ -66,7 +66,8 @@ class NodeTransformer extends AbstractTransformer
         }
 
         $facade->id = $node->getId();
-        $facade->nodeId = $node->getNodeId();
+        $nodeId = $node->getNodeId();
+        $facade->nodeId = $nodeId;
         $facade->name = $node->getName();
         $facade->siteId = $node->getSiteId();
         $facade->deleted = $node->getDeleted();
@@ -93,25 +94,25 @@ class NodeTransformer extends AbstractTransformer
         )));
 
         $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
-            'nodeId' => $node->getNodeId(),
+            'nodeId' => $nodeId,
             'language' => $node->getLanguage(),
         )));
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
-            'nodeId' => $node->getNodeId(),
+            'nodeId' => $nodeId,
             'language' => $node->getLanguage(),
         )));
 
         $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
-            'nodeId' => $node->getNodeId()
+            'nodeId' => $nodeId
         )));
 
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $node->getNodeId()
+            'nodeId' => $nodeId
         )));
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $node->getNodeId(),
+            'nodeId' => $nodeId,
             'version' => $node->getVersion(),
             'language' => $node->getLanguage(),
         )));
@@ -123,16 +124,16 @@ class NodeTransformer extends AbstractTransformer
         if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
             /** @var SiteAliasInterface $alias */
             $encryptedId = $this->encrypter->encrypt($node->getId());
-            foreach ($site->getAliases() as $alias) {
+            foreach ($site->getAliases() as $aliasId => $alias) {
                 if ($alias->getLanguage() == $node->getLanguage()) {
                     $facade->addPreviewLink(
-                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId)
+                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $nodeId)
                     );
                 }
             }
         }
 
-        if (NodeInterface::TRANSVERSE_NODE_ID !== $node->getNodeId()) {
+        if (NodeInterface::TRANSVERSE_NODE_ID !== $nodeId) {
             $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
                 'nodeMongoId' => $node->getId()
             )));
@@ -155,10 +156,12 @@ class NodeTransformer extends AbstractTransformer
      * @param string             $scheme
      * @param SiteAliasInterface $alias
      * @param string             $encryptedId
-     * 
-     * @return FacadeInterface|LinkFacade
+     * @param int                $aliasId
+     * @param string             $nodeId
+     *
+     * @return FacadeInterface
      */
-    protected function getPreviewLink($scheme, $alias, $encryptedId)
+    protected function getPreviewLink($scheme, $alias, $encryptedId, $aliasId, $nodeId)
     {
         $previewLink = array(
             'name' => $alias->getDomain(),
@@ -170,13 +173,12 @@ class NodeTransformer extends AbstractTransformer
         }
         $domain = $scheme . '://' . $alias->getDomain();
         $routeName = 'open_orchestra_base_node_preview';
-        $parameters = array('token' => $encryptedId);
+        $parameters = array(
+            'token' => $encryptedId,
+            'aliasId' => $aliasId,
+            'nodeId' => $nodeId
+        );
 
-        if ($alias->getPrefix() != "") {
-            $previewLink['name'] .= '/' . $alias->getPrefix();
-            $routeName = 'open_orchestra_base_node_preview_with_prefix';
-            $parameters['languagePrefix'] = $alias->getPrefix();
-        }
         $previewLink['link'] = $domain . $this->generateRoute($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
 
         return $this->getTransformer('link')->transform($previewLink);
