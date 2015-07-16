@@ -56,25 +56,10 @@ class ContentFacade extends DeletedFacade
     protected $attributes = array();
 
     /**
-     * @deprecated this attribute won't be used anymory, suppression in 0.3.0
-     */
-    protected $linearizeAttributes = array();
-
-    /**
      * @param FacadeInterface $facade
      */
     public function addAttribute(FacadeInterface $facade)
     {
         $this->attributes[$facade->name] = $facade;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     *
-     * @deprecated this attribute won't be used anymory, suppression in 0.3.0
-     */
-    public function addLinearizeAttribute(FacadeInterface $facade)
-    {
-        $this->linearizeAttributes[$facade->name] = $facade->value;
     }
 }

@@ -9,6 +9,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormComp
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -31,5 +32,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new LeftPanelCompilerPass());
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
+        $container->addCompilerPass(new ValueTransformerCompilerPass());
     }
 }

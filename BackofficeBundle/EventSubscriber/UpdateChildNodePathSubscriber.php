@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -19,11 +20,11 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
     protected $currentSiteManager;
 
     /**
-     * @param NodeRepositoryInterface $nodeRepository
-     * @param EventDispatcher $eventDispatcher
-     * @param CurrentSiteIdInterface $currentSiteManager
+     * @param NodeRepositoryInterface  $nodeRepository
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param CurrentSiteIdInterface   $currentSiteManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, EventDispatcher $eventDispatcher, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, EventDispatcherInterface $eventDispatcher, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->nodeRepository = $nodeRepository;
         $this->eventDispatcher = $eventDispatcher;

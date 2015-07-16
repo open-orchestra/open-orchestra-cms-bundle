@@ -16,4 +16,9 @@ class ContentAttributeFacade extends AbstractFacade
     public $name;
 
     public $value;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $stringValue;
 }
