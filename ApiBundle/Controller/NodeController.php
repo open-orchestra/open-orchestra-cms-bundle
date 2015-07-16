@@ -67,11 +67,19 @@ class NodeController extends BaseController
 
         if (!$node) {
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
-            $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
+
+            if ($oldNode) {
+                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
+            } elseif ($request->get('errorPage')) {
+                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
+            }
+
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($node);
 
-            $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
+            if ($oldNode) {
+                $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
+            }
 
             $dm->flush();
         }

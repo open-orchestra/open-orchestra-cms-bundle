@@ -87,6 +87,30 @@ class NodeManager
     }
 
     /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return NodeInterface
+     */
+    public function createNewErrorNode($nodeId, $siteId, $language)
+    {
+        $node = $this->initializeNewNode(NodeInterface::ROOT_NODE_ID);
+        $node->setNodeId($nodeId);
+        $node->setNodeType(NodeInterface::TYPE_ERROR);
+        $node->setSiteId($siteId);
+        $node->setRoutePattern($nodeId);
+        $node->setName($nodeId);
+        $node->setLanguage($language);
+        $node->setInFooter(false);
+        $node->setInMenu(false);
+
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
+
+        return $node;
+    }
+
+    /**
      * @param NodeInterface $node
      * @param string        $language
      *
@@ -104,7 +128,7 @@ class NodeManager
 
         return $newNode;
     }
-
+    
     /**
      * @param NodeInterface|null $node
      *

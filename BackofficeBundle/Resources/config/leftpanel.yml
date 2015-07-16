@@ -5,6 +5,7 @@ parameters:
     open_orchestra_backoffice.left_panel.content_type.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy
     open_orchestra_backoffice.left_panel.general_node.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy
     open_orchestra_backoffice.left_panel.administration.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy
+    open_orchestra_backoffice.left_panel.error_pages.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\ErrorPagesPanelStrategy
 
 services:
     open_orchestra_backoffice.left_panel_manager:
@@ -101,7 +102,6 @@ services:
             - ROLE_ACCESS_SITE
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
-
     open_orchestra_backoffice.left_panel.deleted:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:
@@ -109,5 +109,9 @@ services:
             - ROLE_ACCESS_DELETED
             - 0
             - editorial
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
+    open_orchestra_backoffice.left_panel.error_pages:
+        class: %open_orchestra_backoffice.left_panel.error_pages.class%
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
