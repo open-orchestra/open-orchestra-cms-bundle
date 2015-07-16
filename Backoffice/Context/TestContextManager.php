@@ -9,9 +9,9 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class TestContextManager extends ContextManager
 {
-    protected $siteId = '1';
+    protected $siteId = '2';
     protected $defaultLanguage = 'fr';
-    protected $siteName = 'Front site';
+    protected $siteName = 'Demo site';
 
     /**
      * @param SiteRepositoryInterface $siteRepository

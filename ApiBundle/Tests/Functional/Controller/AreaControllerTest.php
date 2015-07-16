@@ -12,24 +12,23 @@ class AreaControllerTest extends AbstractControllerTest
      */
     public function testAreaReverseTransform()
     {
-        $this->client->request('GET', '/admin/1/homepage/en');
+        $this->client->request('GET', '/admin/2/homepage/en');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $this->client->request('GET', '/api/node/root');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         $json = json_decode($this->client->getResponse()->getContent(), true);
-        $area = $json['areas'][0];
-        $this->assertSame('main', $area['area_id']);
-        $block = $area['blocks'][3];
-        $update = $area['links']['_self_block'];
+        $area = $json['areas'][1];
+        $this->assertSame('myMain', $area['area_id']);
+        $subArea = $area['areas'][0];
+        $this->assertSame('mainContentArea1', $subArea['area_id']);
+        $block = $subArea['blocks'][0];
+        $update = $subArea['links']['_self_block'];
 
 
-        // Remove ref of area in block 3
+        // Remove ref of area in block
         $formData = json_encode(array('blocks' => array(
-            array('node_id' => 'root', 'block_id' => 0),
-            array('node_id' => 'root', 'block_id' => 1),
-            array('node_id' => 'root', 'block_id' => 2),
         )));
 
         $this->client->request('POST', $update, array(), array(), array(), $formData);
@@ -37,15 +36,12 @@ class AreaControllerTest extends AbstractControllerTest
 
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($block['node_id'], $language, $siteId);
-        $this->assertSame(array(), $nodeAfter->getBlock(3)->getAreas());
+        $nodeAfter = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($block['node_id'], $language, $siteId);
+        $this->assertSame(array(), $nodeAfter->getBlock(0)->getAreas());
 
-        // Add ref of area in block 3
+        // Add ref of area in block
         $formData = json_encode(array('blocks' => array(
             array('node_id' => 'root', 'block_id' => 0),
-            array('node_id' => 'root', 'block_id' => 1),
-            array('node_id' => 'root', 'block_id' => 2),
-            array('node_id' => 'root', 'block_id' => 3),
         )));
 
         $this->client->request('POST', $update, array(), array(), array(), $formData);

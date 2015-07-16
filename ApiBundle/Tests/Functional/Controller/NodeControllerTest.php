@@ -18,7 +18,7 @@ class NodeControllerTest extends AbstractControllerTest
         $crawler = $this->client->request('GET', '/admin/');
         $nbLink = $crawler->filter('a')->count();
 
-        $this->client->request('DELETE', '/api/node/fixture_deleted/delete');
+        $this->client->request('DELETE', '/api/node/fixture_page_contact/delete');
 
         $crawler = $this->client->request('GET', '/admin/');
 
@@ -40,10 +40,8 @@ class NodeControllerTest extends AbstractControllerTest
      */
     protected function prepareDatabase()
     {
-        $nodes = $this->nodeRepository->findByNodeIdAndSiteId('fixture_deleted', '1');
+        $nodes = $this->nodeRepository->findByNodeIdAndSiteId('fixture_page_contact', '2');
         $this->undeleteNodes($nodes);
-        $sons = $this->nodeRepository->findByParentIdAndSiteId('fixture_deleted_son','1');
-        $this->undeleteNodes($sons);
 
         static::$kernel->getContainer()->get('doctrine.odm.mongodb.document_manager')->flush();
     }
@@ -54,18 +52,18 @@ class NodeControllerTest extends AbstractControllerTest
     public function testDuplicateNode()
     {
         $node = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('fixture_page_community', 'fr', '2');
         $nodeTransverse = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '2');
 
-        $this->client->request('POST', '/api/node/fixture_full/duplicate?language=fr');
+        $this->client->request('POST', '/api/node/fixture_page_community/duplicate?language=fr');
 
         $nodeLastVersion = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('fixture_page_community', 'fr', '2');
 
         $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '2');
 
         $this->assertSame($node->getVersion()+1, $nodeLastVersion->getVersion());
         $this->assertGreaterThan($this->countAreaRef($nodeTransverse), $this->countAreaRef($nodeTransverseAfter));
@@ -77,24 +75,24 @@ class NodeControllerTest extends AbstractControllerTest
     public function testCreateNewLanguageNode()
     {
         $node = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion('fixture_full', 'es', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('root', 'en', '2');
         if (!is_null($node)) {
             $this->markTestSkipped();
         }
 
         $nodeTransverse = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', '2');
         $countAreaRef = $this->countAreaRef($nodeTransverse);
 
         $this->assertSame(null, $node);
-        $this->assertSame(1, $countAreaRef);
+        $this->assertSame(5, $countAreaRef);
 
-        $this->client->request('GET', '/api/node/fixture_full/show-or-create', array('language' => 'es'));
+        $this->client->request('GET', '/api/node/root/show-or-create', array('language' => 'en'));
 
 
         $nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $nodeTransverseAfter = $nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'es', '1');
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', '2');
 
         $this->assertGreaterThan($countAreaRef, $this->countAreaRef($nodeTransverseAfter));
     }

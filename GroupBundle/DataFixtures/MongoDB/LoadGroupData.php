@@ -23,9 +23,6 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $group1 = $this->generateGroup('First group', 'site1', 'group1');
-        $group1->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
-        $manager->persist($group1);
         $group2 = $this->generateGroup('Demo group', 'site2', 'group2');
         $group2->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
         $manager->persist($group2);
