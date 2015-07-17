@@ -16,15 +16,13 @@ class HomepageControllerTest extends AbstractControllerTest
 
         $this->assertEquals(1, $crawler->filter('html:contains("Editorial")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Administration")')->count());
-        $this->assertEquals(1, $crawler->filter('html:contains("Fixture full sample")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Orchestra ?")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Content")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Fixture Home")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Fixture full sample")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Fixture About Us")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Fixture Contact Us")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Fixture Directory")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Fixture Search")')->count());
-        $this->assertEquals(2, $crawler->filter('a:contains("Home")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Orchestra ?")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Communauté")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Actualité")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Mentions Légales")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Home")')->count());
     }
 
     /**

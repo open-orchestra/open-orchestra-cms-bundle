@@ -25,7 +25,7 @@ class FormControllersTest extends AbstractControllerTest
     public function provideApiUrl()
     {
         return array(
-            array('/admin/site/form/1'),
+            array('/admin/site/form/2'),
             array('/admin/status/new'),
             array('/admin/theme/new'),
             array('/admin/keyword/new'),

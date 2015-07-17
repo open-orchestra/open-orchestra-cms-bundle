@@ -40,7 +40,7 @@ abstract class AbstractControllerTest extends WebTestCase
         $this->client->submit($form);
 
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('2');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
         $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
