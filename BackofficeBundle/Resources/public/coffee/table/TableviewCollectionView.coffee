@@ -54,15 +54,21 @@ TableviewCollectionView = OrchestraView.extend(
     if @options.page?
       page = parseInt(@options.page) - 1
       displayStart = pageLength * page
-
     @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
+      oLanguage: sSearch: ''
       ordering: true
       processing: true
       serverSide: true
       displayStart: displayStart
       pageLength: pageLength
       bAutoWidth: false
+      orderCellsTop: true
+      sPaginationType: "bs_normal"
+      sDom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>>"+
+                    "t"+
+                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
+      colVis: exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
         pages: 5
@@ -84,9 +90,11 @@ TableviewCollectionView = OrchestraView.extend(
       order: [@options.order]
       lengthChange: false
     )
+    $('#tableviewCollectionTable_filter label').prepend('<span class="input-group-addon"><i class="fa fa-search"></i></span>')
+    $('#tableviewCollectionTable_filter input').addClass('form-control')
+    
     api = @options.table.api()
 
-    @listenToOnce(widgetChannel, 'jarviswidget', @addColvis)
     return
 
   checkDefaultVisible : (name) ->
@@ -221,8 +229,4 @@ TableviewCollectionView = OrchestraView.extend(
         data.splice(requestLength, data.length);
         settings.sAjaxDataProp = json.collection_name
         drawCallback(json)
-
-  addColvis: ->
-    colvis = new ($.fn.dataTable.ColVis)(@options.table, exclude: [ @options.displayedElements.length ])
-    $('.jarviswidget-ctrls').prepend colvis.button()
 )
