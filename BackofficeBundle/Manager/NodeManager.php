@@ -12,6 +12,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class NodeManager
@@ -104,6 +105,11 @@ class NodeManager
         $node->setLanguage($language);
         $node->setInFooter(false);
         $node->setInMenu(false);
+
+        $area = new Area();
+        $area->setLabel('main');
+        $area->setAreaId('main');
+        $node->addArea($area);
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
