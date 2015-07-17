@@ -108,5 +108,6 @@ class NodeControllerTest extends AbstractControllerTest
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
 
         $this->client->request('DELETE', '/api/node/' . $nodeName . '/delete');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }
