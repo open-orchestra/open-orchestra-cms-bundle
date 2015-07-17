@@ -119,7 +119,7 @@ class NodeController extends BaseController
         $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
         $documentManager->getConnection()->initialize();
         $dataBase = $documentManager->getDocumentDatabase('OpenOrchestra\ModelBundle\Document\Node');
-        $dataBase->execute("db.loadServerScripts();duplicateNode({ nodeId: 'root', siteId: '2', language: 'en' });");
+        $dataBase->execute('db.loadServerScripts();duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' });');
 
         return new Response('', 200);
     }
