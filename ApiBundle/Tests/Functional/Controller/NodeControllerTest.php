@@ -10,11 +10,20 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 class NodeControllerTest extends AbstractControllerTest
 {
     /**
+     * Reset removing node after test
+     */
+    public function tearDown()
+    {
+        $nodes = $this->nodeRepository->findByNodeIdAndSiteId('fixture_page_contact', '2');
+        $this->undeleteNodes($nodes);
+        static::$kernel->getContainer()->get('doctrine.odm.mongodb.document_manager')->flush();
+    }
+
+    /**
      * Test delete action
      */
     public function testDeleteAction()
     {
-        $this->prepareDatabase();
         $crawler = $this->client->request('GET', '/admin/');
         $nbLink = $crawler->filter('a')->count();
 
@@ -33,17 +42,6 @@ class NodeControllerTest extends AbstractControllerTest
         foreach ($nodes as $node) {
             $node->setDeleted(false);
         }
-    }
-
-    /**
-     * @return array
-     */
-    protected function prepareDatabase()
-    {
-        $nodes = $this->nodeRepository->findByNodeIdAndSiteId('fixture_page_contact', '2');
-        $this->undeleteNodes($nodes);
-
-        static::$kernel->getContainer()->get('doctrine.odm.mongodb.document_manager')->flush();
     }
 
     /**
