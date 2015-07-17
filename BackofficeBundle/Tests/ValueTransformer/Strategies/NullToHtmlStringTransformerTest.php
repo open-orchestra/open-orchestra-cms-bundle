@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Tests\ValueTransformer\Strategies;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\NullToHtmlStringTransformer;
+use OpenOrchestra\Backoffice\ValueTransformer\Strategies\NullToHtmlStringTransformer;
 
 /**
  * Class NullToHtmlStringTransformerTest

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager;
+use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;

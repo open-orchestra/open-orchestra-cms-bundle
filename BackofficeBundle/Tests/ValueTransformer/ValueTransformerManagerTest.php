@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Tests\ValueTransformer;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager;
+use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
 use Phake;
 
 /**
@@ -19,7 +19,7 @@ class ValueTransformerManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->manager = new ValueTransformerManager();
-        $this->valueTransformer = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerInterface');
+        $this->valueTransformer = Phake::mock('OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerInterface');
         Phake::when($this->valueTransformer)->getName()->thenReturn('foo');
         Phake::when($this->valueTransformer)->transform(Phake::anyParameters())->thenReturn('foo');
         Phake::when($this->valueTransformer)->support(Phake::anyParameters())->thenReturn(true);

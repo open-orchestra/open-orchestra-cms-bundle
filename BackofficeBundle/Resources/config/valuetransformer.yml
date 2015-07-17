@@ -1,9 +1,9 @@
 parameters:
-    open_orchestra_backoffice.value_transformer.manager.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager
-    open_orchestra_backoffice.value_transformer.array.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ArrayToStringTransformer
-    open_orchestra_backoffice.value_transformer.integer.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\IntegerToStringTransformer
-    open_orchestra_backoffice.value_transformer.null.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\NullToStringTransformer
-    open_orchestra_backoffice.value_transformer.object.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ObjectToStringTransformer
+    open_orchestra_backoffice.value_transformer.manager.class: OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager
+    open_orchestra_backoffice.value_transformer.array.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\ArrayToHtmlStringTransformer
+    open_orchestra_backoffice.value_transformer.integer.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\IntegerToHtmlStringTransformer
+    open_orchestra_backoffice.value_transformer.null.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\NullToHtmlStringTransformer
+    open_orchestra_backoffice.value_transformer.object.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\ObjectToHtmlStringTransformer
 
 services:
     open_orchestra_backoffice.value_transformer.manager:

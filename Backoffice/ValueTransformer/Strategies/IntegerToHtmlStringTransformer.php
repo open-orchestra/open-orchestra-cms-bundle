@@ -1,6 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer;
+namespace OpenOrchestra\Backoffice\ValueTransformer\Strategies;
+
+use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerInterface;
 
 /**
  * Class IntegerToHtmlStringTransformer
