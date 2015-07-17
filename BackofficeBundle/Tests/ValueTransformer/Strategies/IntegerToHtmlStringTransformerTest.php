@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Tests\ValueTransformer\Strategies;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\IntegerToHtmlStringTransformer;
+use OpenOrchestra\Backoffice\ValueTransformer\Strategies\IntegerToHtmlStringTransformer;
 
 /**
  * Class IntegerToHtmlStringTransformerTest

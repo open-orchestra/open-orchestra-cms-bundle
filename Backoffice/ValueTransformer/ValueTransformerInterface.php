@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer;
+namespace OpenOrchestra\Backoffice\ValueTransformer;
 
 /**
  * ValueTransformerInterface

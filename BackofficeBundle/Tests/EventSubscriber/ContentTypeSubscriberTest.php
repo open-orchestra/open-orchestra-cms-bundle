@@ -3,8 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerInterface;
-use OpenOrchestra\ModelBundle\Document\Keyword;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -39,7 +37,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $fieldTypesConfiguration;
     protected $constraintsNotBlank;
     protected $valueTransformerManager;
-    protected $transformer;
     protected $eventDispatcher;
     protected $contentAttributeClass;
 
@@ -102,12 +99,8 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->contentAttributeClass = 'OpenOrchestra\ModelBundle\Document\ContentAttribute';
 
-        $this->valueTransformerManager = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerManager');
-        $this->transformer = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\DataTransformer\ValueTransformerInterface');
-        Phake::when($this->transformer)->support(Phake::anyParameters())->thenReturn(true);
-        Phake::when($this->transformer)->transform(Phake::anyParameters())->thenReturn('foo');
+        $this->valueTransformerManager = Phake::mock('OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager');
         Phake::when($this->valueTransformerManager)->transform(Phake::anyParameters())->thenReturn('foo');
-        $this->valueTransformerManager->addStrategy($this->transformer);
 
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
@@ -197,7 +190,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->fieldCollection->add($this->fieldType1);
         $this->fieldCollection->add($this->fieldType1);
 
-        $constraintsNotBlank =  Phake::mock('Symfony\Component\Validator\Constraints\NotBlank');
         $fieldId = 'title';
         $label = 'Title';
         $defaultValue = '';

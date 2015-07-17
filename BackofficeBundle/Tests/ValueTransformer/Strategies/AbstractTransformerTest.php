@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber\DataTransformer;
+namespace OpenOrchestra\BackofficeBundle\Tests\ValueTransformer\Strategies;
 
 /**
  * Class AbstractTransformerTest
