@@ -20,9 +20,6 @@ class FieldTypeFacade extends AbstractFacade
      */
     public $label;
 
-    /**
-     * @Serializer\Type("string")
-     */
     public $defaultValue;
 
     /**

@@ -5,9 +5,9 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class FieldTypeTypeSubscriber
@@ -39,6 +39,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             $type = $data->getType();
 
             $this->checkFieldType($data, $type, $form);
+            $this->addDefaultValueField($type, $form);
         }
     }
 
@@ -55,6 +56,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
 
         if ($data instanceof FieldTypeInterface) {
             $this->checkFieldType($data, $type, $form);
+            $this->addDefaultValueField($type, $form);
         }
     }
 
@@ -70,11 +72,27 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param string        $type
+     * @param FormInterface $form
+     */
+    protected function addDefaultValueField($type, FormInterface $form)
+    {
+        if (is_null($type) || !array_key_exists($type, $this->options)) {
+            return;
+        }
+
+        if (isset($this->options[$type]['default_value'])) {
+            $default_value_field = $this->options[$type]['default_value'];
+            $form->add('default_value', $default_value_field['type'], $default_value_field['options']);
+        }
+    }
+
+    /**
      * @param FieldTypeInterface $data
      * @param string             $type
-     * @param Form               $form
+     * @param FormInterface      $form
      */
-    protected function checkFieldType(FieldTypeInterface $data, $type, Form $form)
+    protected function checkFieldType(FieldTypeInterface $data, $type, FormInterface $form)
     {
         if (is_null($type) || !array_key_exists($type, $this->options)) {
             return;

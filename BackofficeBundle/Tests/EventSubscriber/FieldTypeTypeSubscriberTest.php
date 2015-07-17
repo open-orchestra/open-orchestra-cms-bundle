@@ -39,6 +39,13 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->options = array(
             'text' => array(
                 'label' => 'label text',
+                'default_value' => array(
+                    'label' => 'default value label',
+                    'type' => 'text',
+                    'options' => array(
+                        'required' => 'false',
+                    )
+                ),
                 'options' => array(
                     'max_length' => array(
                         'default_value' => 25,
@@ -50,7 +57,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             ),
             'hidden' => array(
                 'label' => 'label hidden',
-            ),
+            )
         );
 
         $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass);
@@ -87,7 +94,8 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $options = new ArrayCollection();
         $options->add($option);
 
-        Phake::when($this->fieldType)->getType()->thenReturn('text');
+        $type = 'text';
+        Phake::when($this->fieldType)->getType()->thenReturn($type);
         Phake::when($this->fieldType)->hasOption('max_length')->thenReturn($hasMaxLength);
         Phake::when($this->fieldType)->hasOption('required')->thenReturn($hasRequired);
         Phake::when($this->fieldType)->getOptions()->thenReturn($options);
@@ -102,6 +110,9 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'label' => 'open_orchestra_backoffice.form.field_type.options',
         ));
         Phake::verify($this->fieldType)->removeOption($option);
+
+        $defaultValue = $this->options[$type]['default_value'];
+        Phake::verify($this->form)->add('default_value', $defaultValue['type'], $defaultValue['options']);
     }
 
     /**
@@ -118,12 +129,13 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $options = new ArrayCollection();
         $options->add($option);
 
+        $type = "text";
         Phake::when($this->fieldType)->hasOption('max_length')->thenReturn($hasMaxLength);
         Phake::when($this->fieldType)->hasOption('required')->thenReturn($hasRequired);
         Phake::when($this->fieldType)->getOptions()->thenReturn($options);
 
         Phake::when($this->form)->getData()->thenReturn($this->fieldType);
-        Phake::when($this->event)->getData()->thenReturn(array('type' => 'text'));
+        Phake::when($this->event)->getData()->thenReturn(array('type' => $type));
 
         $this->subscriber->preSubmit($this->event);
 
@@ -135,6 +147,9 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'label' => 'open_orchestra_backoffice.form.field_type.options',
         ));
         Phake::verify($this->fieldType)->removeOption($option);
+
+        $defaultValue = $this->options[$type]['default_value'];
+        Phake::verify($this->form)->add('default_value', $defaultValue['type'], $defaultValue['options']);
     }
 
     /**

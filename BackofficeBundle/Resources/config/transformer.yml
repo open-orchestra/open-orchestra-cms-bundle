@@ -2,6 +2,8 @@ parameters:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
     open_orchestra_backoffice.transformer.video_url_to_id.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer
     open_orchestra_backoffice.transformer.choices_option_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer
+    open_orchestra_backoffice.transformer.choice_array_to_string.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer
+    open_orchestra_backoffice.transformer.choice_string_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceStringToArrayTransformer
 
 services:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
@@ -13,6 +15,10 @@ services:
             - %open_orchestra_model.document.keyword.class%
     open_orchestra_backoffice.transformer.video_url_to_id:
         class: %open_orchestra_backoffice.transformer.video_url_to_id.class%
+    open_orchestra_backoffice.transformer.choice_array_to_string:
+        class: %open_orchestra_backoffice.transformer.choice_array_to_string.class%
+    open_orchestra_backoffice.transformer.choice_string_to_array:
+        class: %open_orchestra_backoffice.transformer.choice_string_to_array.class%
     open_orchestra_backoffice.transformer.choices_option_to_array:
         class: %open_orchestra_backoffice.transformer.choices_option_to_array.class%
         arguments:

@@ -92,7 +92,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
 
     /**
      * Add $contentTypeFields to $form with values in $data if content type is still valid
-     * 
+     *
      * @param array<FieldTypeInterface> $contentTypeFields
      * @param FormInterface             $form
      * @param ContentInterface          $data
