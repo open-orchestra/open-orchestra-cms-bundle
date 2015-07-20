@@ -10,6 +10,8 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -18,6 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class NodeManager
 {
     protected $eventDispatcher;
+    protected $nodeManager;
     protected $nodeRepository;
     protected $siteRepository;
     protected $statusRepository;
@@ -29,6 +32,7 @@ class NodeManager
     /**
      * Constructor
      *
+     * @param NodeManagerInterface       $nodeManager,
      * @param NodeRepositoryInterface    $nodeRepository
      * @param SiteRepositoryInterface    $siteRepository
      * @param StatusRepositoryInterface  $statusRepository
@@ -39,6 +43,7 @@ class NodeManager
      * @param EventDispatcherInterface   $eventDispatcher
      */
     public function __construct(
+        NodeManagerInterface $nodeManager,
         NodeRepositoryInterface $nodeRepository,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
@@ -49,6 +54,7 @@ class NodeManager
         $eventDispatcher
     )
     {
+        $this->nodeManager = $nodeManager;
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
         $this->statusRepository = $statusRepository;
@@ -62,20 +68,19 @@ class NodeManager
     /**
      * Duplicate a node
      *
-     * @param NodeInterface $node
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
      *
      * @return NodeInterface
      */
-    public function duplicateNode(NodeInterface $node)
+    public function duplicateNode($nodeId, $siteId, $language)
     {
-        $newNode = clone $node;
-        $newNode->setVersion($node->getVersion() + 1);
-        $newNode->setStatus($this->getEditableStatus($node));
-        $newNode = $this->duplicateBlockAndArea($node, $newNode);
+        $node = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
+        $newNode = $this->nodeManager->duplicateNode($nodeId, $siteId, $language);
+        $this->updateBlockReferences($node, $newNode);
 
-        $this->eventDispatcher->dispatch(NodeEvents::NODE_DUPLICATE, new NodeEvent($node));
-
-        return $newNode;
+        return $node;
     }
 
     /**

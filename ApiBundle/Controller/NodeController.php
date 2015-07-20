@@ -116,10 +116,8 @@ class NodeController extends BaseController
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         /** @var NodeInterface $node */
-        $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
-        $documentManager->getConnection()->initialize();
-        $dataBase = $documentManager->getDocumentDatabase('OpenOrchestra\ModelBundle\Document\Node');
-        $dataBase->execute('db.loadServerScripts();duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' });');
+        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language);
+        $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return new Response('', 200);
     }
