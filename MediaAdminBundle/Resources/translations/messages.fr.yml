@@ -57,14 +57,10 @@ open_orchestra_media_admin:
             description: Affiche des images.
             form:
                 pictures: Images
-                column_number: Nombre de colonnes
                 media:
                     add: Ajouter un média
                     new: Nouveau média
                     delete: Retirer le média
-                item_number:
-                    label: Nombre d'éléments par page (0 pour tous)
-                    helper: Nombre d'éléments par page (0 pour tous)
                 thumbnail_format: Format des vignettes
                 image_format :
                     label: Format de l'image (vue complète)

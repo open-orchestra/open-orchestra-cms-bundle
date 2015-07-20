@@ -57,14 +57,10 @@ open_orchestra_media_admin:
             description: Block to display images.
             form:
                 pictures: Pictures
-                column_number: Number of columns
                 media:
                     add: Add media
                     new: New media
                     delete: Remove media
-                item_number:
-                    label: Number of items per page (0 for all)
-                    helper: Number of items per page (0 for all)
                 thumbnail_format: Thumbnail format
                 image_format :
                     label: Image format (full view)
