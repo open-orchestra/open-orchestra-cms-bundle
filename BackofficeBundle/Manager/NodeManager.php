@@ -11,7 +11,6 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
