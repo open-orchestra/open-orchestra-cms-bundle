@@ -16,14 +16,12 @@ class ChoiceStringToArrayTransformer implements DataTransformerInterface
      */
     public function transform($dataChoice)
     {
-        if (null === $dataChoice || '' === $dataChoice) {
-            return array();
-        }
-
-        if (is_array($dataChoice)) {
+        if (is_scalar($dataChoice) && $dataChoice !== '') {
+            return array((string)$dataChoice);
+        } elseif (is_array($dataChoice)) {
             return $dataChoice;
         } else {
-            return array($dataChoice);
+            return array();
         }
     }
 

@@ -11,17 +11,22 @@ extendView['contentTypeChange'] = {
     url = form.attr('action')
     url = url + '?no_save=1'
     optionId = target.attr('id').replace(/type$/g, 'options')
-    default_valueId = target.attr('id').replace(/type$/g, 'default_value')
+    defaultValueId = target.attr('id').replace(/type$/g, 'default_value')
+    defaultValueField = $('#' + defaultValueId)
+    formGroupDefaultValue = defaultValueField.closest( ".form-group" )
+
     displayLoader('#' + optionId)
-    $('#' + default_valueId).closest( ".form-group" ).hide()
-    $('#' + default_valueId).val('')
+    formGroupDefaultValue.hide()
+    defaultValueField.val('')
+
     form.ajaxSubmit
       type: 'PATCH'
       url: url
       success: (response) ->
         $('#' + optionId).html $('#' + optionId, response).html()
-        default_value_field = if $('#' + default_valueId, response).length > 0  then $('#' + default_valueId, response).closest( ".form-group" ).html() else ""
-        $('#' + default_valueId).closest( ".form-group" ).html default_value_field
-        $('#' + default_valueId).closest( ".form-group" ).show()
-        activateTinyMce(viewContext, $('#' + default_valueId)) if $('#' + default_valueId).hasClass('tinymce')
+        default_value_field = if $('#' + defaultValueId, response).length > 0  then $('#' + defaultValueId, response).closest( ".form-group" ).html() else ""
+
+        formGroupDefaultValue.html default_value_field
+        formGroupDefaultValue.show()
+        activateTinyMce(viewContext, $('#' + defaultValueId)) if $('#' + defaultValueId).hasClass('tinymce')
 }

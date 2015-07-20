@@ -57,6 +57,7 @@ class ChoiceArrayToStringTransformerTest extends \PHPUnit_Framework_TestCase
             array(null,''),
             array(array('choice1'),'choice1'),
             array('choice1','choice1'),
+            array(1,'1'),
             array(array(),''),
         );
     }
