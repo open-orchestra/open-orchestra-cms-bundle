@@ -79,7 +79,7 @@ class NodeManager
         $newNode = $this->nodeManager->duplicateNode($nodeId, $siteId, $language);
         $this->updateBlockReferences($node, $newNode);
 
-        return $node;
+        return $newNode;
     }
 
     /**
