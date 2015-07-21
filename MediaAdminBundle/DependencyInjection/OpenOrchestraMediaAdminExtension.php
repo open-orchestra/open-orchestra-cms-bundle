@@ -30,5 +30,32 @@ class OpenOrchestraMediaAdminExtension extends Extension
         $loader->load('display.yml');
         $loader->load('icon.yml');
         $loader->load('extractreference.yml');
+
+        $this->addMediaFieldType($container);
+    }
+
+    /**
+     * Merge app conf with bundle conf
+     *
+     * @param ContainerBuilder $container
+     */
+    protected function addMediaFieldType(ContainerBuilder $container)
+    {
+        $fieldTypes = array_merge(
+            $container->getParameter('open_orchestra_backoffice.field_types'),
+            array(
+                'orchestra_media' => array(
+                    'label' => 'open_orchestra_backoffice.form.field_type.custom_type.media',
+                    'type' => 'orchestra_media',
+                    'options' => array(
+                        'required' => array(
+                            'default_value' => false,
+                        )
+                    )
+                )
+            )
+        );
+
+        $container->setParameter('open_orchestra_backoffice.field_types', $fieldTypes);
     }
 }

@@ -69,17 +69,6 @@ parameters:
                     default_value: 50
                 required:
                     default_value: false
-        orchestra_media:
-            label: open_orchestra_backoffice.form.field_type.custom_type.media
-            type: orchestra_media
-            default_value:
-                type: orchestra_media
-                options:
-                    label: open_orchestra_backoffice.form.field_type.default_value
-                    required: false
-            options:
-                required:
-                    default_value: false
         choice:
             label: open_orchestra_backoffice.form.field_type.custom_type.choice
             type: orchestra_field_choice
