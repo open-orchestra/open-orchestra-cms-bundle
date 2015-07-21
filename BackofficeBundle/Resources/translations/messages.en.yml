@@ -56,7 +56,6 @@ open_orchestra_backoffice:
                 money: Money
                 hidden: Hidden
                 date: Date
-                media: Media
                 choice: Choice
         website:
             success: The website has been modified
