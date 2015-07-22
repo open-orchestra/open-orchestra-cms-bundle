@@ -6,6 +6,7 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -98,7 +99,7 @@ class NodeManager
     {
         $node = $this->initializeNewNode(NodeInterface::ROOT_NODE_ID);
         $node->setNodeId($nodeId);
-        $node->setNodeType(NodeInterface::TYPE_ERROR);
+        $node->setNodeType(ReadNodeInterface::TYPE_ERROR);
         $node->setSiteId($siteId);
         $node->setRoutePattern($nodeId);
         $node->setName($nodeId);
@@ -134,7 +135,7 @@ class NodeManager
 
         return $newNode;
     }
-    
+
     /**
      * @param NodeInterface|null $node
      *
