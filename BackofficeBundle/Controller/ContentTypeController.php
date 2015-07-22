@@ -90,11 +90,13 @@ class ContentTypeController extends AbstractAdminController
      */
     protected function createContentTypeForm(Request $request, $action, ContentTypeInterface $contentType)
     {
-        $method = ("PATCH" === $request->getMethod()) ? "PATCH" : "POST";
-        $option = array('action' => $action,'method' => $method);
+        $method = "POST";
+        $option = array('action' => $action);
         if ("PATCH" === $request->getMethod()) {
             $option["validation_groups"] = false;
+            $method = "PATCH";
         }
+        $option["method"] = $method;
 
         return $this->createForm('content_type', $contentType, $option);
     }
