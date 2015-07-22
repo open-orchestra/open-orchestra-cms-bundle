@@ -107,7 +107,6 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeId}/duplicate", name="open_orchestra_api_node_duplicate")
      * @Config\Method({"POST"})
-     *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
@@ -117,18 +116,8 @@ class NodeController extends BaseController
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         /** @var NodeInterface $node */
-        $node = $this->get('open_orchestra_model.repository.node')
-            ->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
-        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($node);
-
+        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
-
-        $em = $this->get('doctrine.odm.mongodb.document_manager');
-        $em->persist($newNode);
-
-        $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($node, $newNode);
-
-        $em->flush();
 
         return new Response('', 200);
     }
