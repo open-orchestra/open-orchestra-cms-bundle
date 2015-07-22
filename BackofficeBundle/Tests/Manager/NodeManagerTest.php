@@ -71,20 +71,24 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $nodeId = 'fakeNodeId';
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
+        $statusId = 'fakeStatusId';
 
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node1)->getAreas()->thenReturn(array());
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->getId()->thenReturn($statusId);
 
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId)->thenReturn($node0);
-        Phake::when($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, null)->thenReturn($node1);
+        Phake::when($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, $statusId)->thenReturn($node1);
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($node2);
+        Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($status);
 
         $alteredNode = $this->manager->duplicateNode($nodeId, $siteId, $language);
 
         Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
-        Phake::verify($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, null);
+        Phake::verify($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, $statusId);
     }
 
     /**
