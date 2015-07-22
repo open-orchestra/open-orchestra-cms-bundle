@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Block;
@@ -125,6 +126,41 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         return array(
             array($node0, 'fr'),
             array($node1, 'en'),
+        );
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     *
+     * @dataProvider provideNodeAndSiteAndLanguage
+     */
+    public function testCreateNewErrorNode($nodeId, $siteId, $language)
+    {
+        $newNode = $this->manager->createNewErrorNode($nodeId, $siteId, $language);
+
+        $this->assertEquals($nodeId, $newNode->getNodeId());
+        $this->assertEquals(ReadNodeInterface::TYPE_ERROR, $newNode->getNodeType());
+        $this->assertEquals($siteId, $newNode->getSiteId());
+        $this->assertEquals($nodeId, $newNode->getRoutePattern());
+        $this->assertEquals($nodeId, $newNode->getName());
+        $this->assertEquals($language, $newNode->getLanguage());
+        $this->assertEquals(false, $newNode->getInFooter());
+        $this->assertEquals(false, $newNode->getInMenu());
+        $this->assertEquals(1, $newNode->getVersion());
+
+        Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeAndSiteAndLanguage()
+    {
+        return array(
+            array('errorPage404', '2', 'fr'),
+            array('errorPage503', '1', 'en')
         );
     }
 

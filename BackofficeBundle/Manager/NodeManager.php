@@ -106,6 +106,7 @@ class NodeManager
         $node->setLanguage($language);
         $node->setInFooter(false);
         $node->setInMenu(false);
+        $node->setVersion(1);
 
         $area = new Area();
         $area->setLabel('main');
