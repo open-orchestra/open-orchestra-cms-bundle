@@ -76,7 +76,7 @@ class NodeManager
     public function duplicateNode($nodeId, $siteId, $language)
     {
         $node = $this->nodeRepository->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
-        $newNode = $this->nodeManager->duplicateNode($nodeId, $siteId, $language);
+        $newNode = $this->nodeManager->duplicateNode($nodeId, $siteId, $language, $this->getEditableStatus($node));
         $this->updateBlockReferences($node, $newNode);
 
         return $newNode;

@@ -78,13 +78,13 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId)->thenReturn($node0);
-        Phake::when($this->nodeManager)->duplicateNode($nodeId, $siteId, $language)->thenReturn($node1);
+        Phake::when($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, null)->thenReturn($node1);
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($node2);
 
         $alteredNode = $this->manager->duplicateNode($nodeId, $siteId, $language);
 
         Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId);
-        Phake::verify($this->nodeManager)->duplicateNode($nodeId, $siteId, $language);
+        Phake::verify($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, null);
     }
 
     /**
