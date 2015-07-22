@@ -45,12 +45,19 @@ class OpenOrchestraMediaAdminExtension extends Extension
             $container->getParameter('open_orchestra_backoffice.field_types'),
             array(
                 'orchestra_media' => array(
-                    'label' => 'open_orchestra_media_admin.form.field_type.custom_type.media',
+                    'label' => 'open_orchestra_backoffice.form.field_type.custom_type.media',
                     'type' => 'orchestra_media',
+                    'default_value' => array(
+                        'type' => 'orchestra_media',
+                        'options' => array(
+                            'label' => 'open_orchestra_backoffice.form.field_type.default_value',
+                            'required' => false,
+                        ),
+                    ),
                     'options' => array(
                         'required' => array(
                             'default_value' => false,
-                        )
+                        ),
                     )
                 )
             )
