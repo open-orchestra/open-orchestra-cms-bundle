@@ -2,13 +2,13 @@
     <span class="menu-item-parent">Error pages</span>
 </a>
 <ul>
-    <li data-element-id="errorPage404" data-type="Node">
-        <a id="nav-node-errorPage404" data-url="{{ path('open_orchestra_api_node_show_or_create_error', {'nodeId': 'errorPage404'}) }}" data-node="errorPage404" href="#node/show/errorPage404">
+    <li data-element-id="{{ nodeId404 }}" data-type="Node">
+        <a id="nav-node-{{ nodeId404 }}" data-url="{{ path('open_orchestra_api_node_show_or_create_error', {'nodeId': nodeId404}) }}" data-node="{{ nodeId404 }}" href="#node/show/{{ nodeId404 }}">
             <span>404</span>
         </a>
     </li>
-    <li data-element-id="errorPage503" data-type="Node">
-        <a id="nav-node-errorPage503" data-url="{{ path('open_orchestra_api_node_show_or_create_error', {'nodeId': 'errorPage503'}) }}" data-node="errorPage503" href="#node/show/errorPage503">
+    <li data-element-id="{{ nodeId503 }}" data-type="Node">
+        <a id="nav-node-{{ nodeId503 }}" data-url="{{ path('open_orchestra_api_node_show_or_create_error', {'nodeId': nodeId503}) }}" data-node="{{ nodeId503 }}" href="#node/show/{{ nodeId503 }}">
             <span>503</span>
         </a>
     </li>

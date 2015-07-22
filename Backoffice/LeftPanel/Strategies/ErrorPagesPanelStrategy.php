@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
+
 /**
  * Class ErrorPagesPanelStrategy
  */
@@ -14,7 +16,13 @@ class ErrorPagesPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:AdministrationPanel:errorPages.html.twig');
+        return $this->render(
+            'OpenOrchestraBackofficeBundle:AdministrationPanel:errorPages.html.twig',
+            array(
+                'nodeId404' => ReadNodeInterface::ERROR_404_NODE_ID,
+                'nodeId503' => ReadNodeInterface::ERROR_503_NODE_ID,
+            )
+        );
     }
 
     /**
