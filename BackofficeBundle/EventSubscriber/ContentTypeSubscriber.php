@@ -7,9 +7,13 @@ use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -22,6 +26,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
     protected $contentAttributeClass;
     protected $fieldTypesConfiguration;
     protected $valueTransformerManager;
+    protected $translator;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
@@ -29,13 +34,15 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
      * @param TranslationChoiceManager       $translationChoiceManager
      * @param array                          $fieldTypesConfiguration
      * @param ValueTransformerManager        $valueTransformerManager
+     * @param TranslatorInterface            $translator
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
         $contentAttributeClass,
         TranslationChoiceManager $translationChoiceManager,
         $fieldTypesConfiguration,
-        ValueTransformerManager $valueTransformerManager
+        ValueTransformerManager $valueTransformerManager,
+        TranslatorInterface $translator
     )
     {
         $this->contentTypeRepository = $contentTypeRepository;
@@ -43,6 +50,18 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         $this->translationChoiceManager = $translationChoiceManager;
         $this->fieldTypesConfiguration = $fieldTypesConfiguration;
         $this->valueTransformerManager = $valueTransformerManager;
+        $this->translator = $translator;
+    }
+
+    /**
+     * @return array The event names to listen to
+     */
+    public static function getSubscribedEvents()
+    {
+        return array_merge(
+            parent::getSubscribedEvents(),
+            array(FormEvents::POST_SET_DATA => 'postSetData')
+        );
     }
 
     /**
@@ -56,6 +75,31 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         if (is_object($contentType)) {
             $data->setContentTypeVersion($contentType->getVersion());
             $this->addContentTypeFieldsToForm($contentType->getFields(), $event->getForm(), $data);
+        }
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function postSetData(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+
+        $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($data->getContentType());
+        if (is_object($contentType)) {
+            foreach ($contentType->getFields() as $contentTypeField) {
+                $contentTypeFieldId = $contentTypeField->getFieldId();
+                $dataAttribute = $data->getAttributeByName($contentTypeFieldId);
+                $fieldValue = ($dataAttribute) ? $dataAttribute->getValue() : $contentTypeField->getDefaultValue();
+                try {
+                    $form->get($contentTypeFieldId)->setData($fieldValue);
+                } catch (TransformationFailedException $e) {
+                    $message = $this->translator->trans("open_orchestra_backoffice.form.content.transformation_error");
+                    $error = new FormError($message);
+                    $form->get($contentTypeFieldId)->addError($error);
+                }
+            }
         }
     }
 
@@ -103,9 +147,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         foreach ($contentTypeFields as $contentTypeField) {
 
             if (isset($this->fieldTypesConfiguration[$contentTypeField->getType()])) {
-                $dataAttribute = $data->getAttributeByName($contentTypeField->getFieldId());
-                $fieldValue = ($dataAttribute) ? $dataAttribute->getValue() : $contentTypeField->getDefaultValue();
-                $this->addFieldToForm($contentTypeField, $form, $fieldValue);
+                $this->addFieldToForm($contentTypeField, $form);
             }
         }
     }
@@ -115,15 +157,13 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
      * 
      * @param FieldTypeInterface $contentTypeField
      * @param FormInterface      $form
-     * @param mixed              $fieldValue
      */
-    protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form, $fieldValue)
+    protected function addFieldToForm(FieldTypeInterface $contentTypeField, FormInterface $form)
     {
         $fieldTypeConfiguration = $this->fieldTypesConfiguration[$contentTypeField->getType()];
 
         $fieldParameters = array_merge(
             array(
-                'data' => $fieldValue,
                 'label' => $this->translationChoiceManager->choose($contentTypeField->getLabels()),
                 'mapped' => false,
             ),
@@ -133,7 +173,6 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         if (isset($fieldParameters['required']) && $fieldParameters['required'] === true) {
             $fieldParameters['constraints'] = new NotBlank();
         }
-
         $form->add(
             $contentTypeField->getFieldId(),
             $fieldTypeConfiguration['type'],

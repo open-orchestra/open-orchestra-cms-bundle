@@ -86,6 +86,7 @@ open_orchestra_backoffice:
             name: Name
             default: by default
         content:
+            transformation_error: Unable to load the value of this field (the type does not match)
             success: The content has been modified
             creation: The content has been created
             name: Content name

@@ -86,6 +86,7 @@ open_orchestra_backoffice:
             name: Nom
             default: par defaut
         content:
+            transformation_error: Impossible de charger la valeur de ce champ (le type ne correspond pas)
             success: Le contenu a été modifié
             creation: Le contenu a été créé
             name: Nom du contenu
