@@ -39,6 +39,9 @@ open_orchestra_media_admin:
                 copyright: Copyright
                 comment: Commentaire
                 keywords: Mot-clés
+        field_type:
+            custom_type:
+                media: Média
     left_menu:
         tree:
             new_media_folder: Nouveau répertoire
