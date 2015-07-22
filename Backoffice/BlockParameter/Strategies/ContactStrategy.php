@@ -3,13 +3,13 @@
 namespace OpenOrchestra\Backoffice\BlockParameter\Strategies;
 
 use OpenOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy as BaseContactStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
- * Class ContentStrategy
+ * Class ContactStrategy
  */
-class ContentStrategy implements BlockParameterInterface
+class ContactStrategy implements BlockParameterInterface
 {
     /**
      * @param BlockInterface $block
@@ -18,7 +18,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function support(BlockInterface $block)
     {
-        return BaseContentStrategy::CONTENT == $block->getComponent();
+        return BaseContactStrategy::CONTACT == $block->getComponent();
     }
 
     /**
@@ -26,7 +26,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function getBlockParameter()
     {
-        return array('request.contentId');
+        return array('post_data');
     }
 
     /**
@@ -34,7 +34,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function getName()
     {
-        return 'content';
+        return 'contact';
     }
 
 }
