@@ -60,6 +60,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/page/orderNode.js',
         'web/built/openorchestrabackoffice/js/page/PageConfigurationButtonView.js',
         'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
+        'web/built/openorchestrabackoffice/js/page/FieldOptionDefaultValueView.js',
 
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableviewAction.js',

@@ -19,6 +19,7 @@ OrchestraViewConfigurator = ->
     'showVersion': VersionView
     'showVersionSelect': VersionSelectView
     'showOrchestraModal': OrchestraModalView
+    'addFieldOptionDefaultValue': FieldOptionDefaultValueView
 
   setConfiguration: (entityType, action, view) ->
     @configurations[entityType] = [] if typeof @configurations[entityType] == "undefined"

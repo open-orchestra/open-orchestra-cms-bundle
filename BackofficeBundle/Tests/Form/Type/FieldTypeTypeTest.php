@@ -88,7 +88,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
@@ -105,7 +105,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
-        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')

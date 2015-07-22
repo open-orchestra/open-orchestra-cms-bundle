@@ -62,10 +62,6 @@ class FieldTypeType extends AbstractType
             ->add('labels', 'translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.labels'
             ))
-            ->add('defaultValue', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.field_type.default_value',
-                'required' => false,
-            ))
             ->add('searchable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
