@@ -82,8 +82,9 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         }
 
         if (isset($this->options[$type]['default_value'])) {
-            $default_value_field = $this->options[$type]['default_value'];
-            $form->add('default_value', $default_value_field['type'], $default_value_field['options']);
+            $defaultValueField = $this->options[$type]['default_value'];
+            $defaultOption = (isset($defaultValueField['options'])) ? $defaultValueField['options'] : array();
+            $form->add('default_value', $defaultValueField['type'], $defaultOption);
         }
     }
 

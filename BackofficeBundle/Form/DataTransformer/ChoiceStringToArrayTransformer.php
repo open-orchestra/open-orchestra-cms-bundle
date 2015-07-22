@@ -20,9 +20,9 @@ class ChoiceStringToArrayTransformer implements DataTransformerInterface
             return array((string)$dataChoice);
         } elseif (is_array($dataChoice)) {
             return $dataChoice;
-        } else {
-            return array();
         }
+
+        return array();
     }
 
     /**

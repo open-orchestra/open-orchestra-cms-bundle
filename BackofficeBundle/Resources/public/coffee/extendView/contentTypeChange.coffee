@@ -5,7 +5,6 @@ extendView['contentTypeChange'] = {
 
   changeContentTypeChange: (event) ->
     event.preventDefault()
-    viewContext = @
     target = $(event.currentTarget)
     form = target.parents('form')
     url = form.attr('action')
@@ -23,10 +22,14 @@ extendView['contentTypeChange'] = {
       type: 'PATCH'
       url: url
       success: (response) ->
-        $('#' + optionId).html $('#' + optionId, response).html()
-        default_value_field = if $('#' + defaultValueId, response).length > 0  then $('#' + defaultValueId, response).closest( ".form-group" ).html() else ""
+        defaultValueField = if $('#' + defaultValueId, response).length > 0  then $('#' + defaultValueId, response).closest( ".form-group" ).html() else ""
+        defaultValueViewClass = appConfigurationView.getConfiguration('fieldType', 'addFieldOptionDefaultValue')
+        defaultValueView = new defaultValueViewClass(html: defaultValueField)
 
-        formGroupDefaultValue.html default_value_field
+        $('#' + optionId).html $('#' + optionId, response).html()
+        formGroupDefaultValue.html defaultValueView.render().$el
         formGroupDefaultValue.show()
-        activateTinyMce(viewContext, $('#' + defaultValueId)) if $('#' + defaultValueId).hasClass('tinymce')
+
+        widgetChannel.trigger 'ready', defaultValueView
+        activateTinyMce(defaultValueView, $('#' + defaultValueId)) if $('#' + defaultValueId).hasClass('tinymce')
 }
