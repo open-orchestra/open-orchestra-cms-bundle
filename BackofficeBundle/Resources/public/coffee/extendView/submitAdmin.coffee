@@ -26,7 +26,12 @@ extendView['submitAdmin'] = {
                     submitted: true
                   ))
               else
-                  tableViewLoad($("#nav-" + viewContext.options.entityType), viewContext.options.entityType, 1);
+                  successMessage = $( response )[0].innerHTML
+                  tableViewLoad($("#nav-" + viewContext.options.entityType),
+                    viewContext.options.entityType,
+                    1,
+                    successMessage
+                  );
             error: (response) ->
               new viewClass(viewContext.addOption(
                 html: response.responseText
