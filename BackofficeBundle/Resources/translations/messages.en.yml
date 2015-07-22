@@ -257,6 +257,10 @@ open_orchestra_backoffice:
             general_nodes: Global pages
             templates: Templates
             contents: Contents
+            error_nodes:
+                title: Error pages
+                error_404: 404
+                error_503: 503
         administration:
             translation: Translation
             title: Administration

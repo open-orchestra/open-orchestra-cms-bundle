@@ -257,6 +257,10 @@ open_orchestra_backoffice:
             general_nodes: Pages générales
             templates: Gabarits
             contents: Contenus
+            error_nodes:
+                title: Pages d'erreur
+                error_404: 404
+                error_503: 503
         administration:
             translation: Traduction
             icon: fa-desktop
