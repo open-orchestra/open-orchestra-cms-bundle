@@ -122,5 +122,9 @@ module.exports = {
     select2_gif: {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/select2-spinner.gif',
         dest: 'web/img/select2-spinner.gif'
+    },
+    jquery_ui: {
+        src: 'bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
+        dest: 'web/css/images/ui-icons_222222_256x240.png'
     }
 };

@@ -44,6 +44,10 @@ OrchestraView = Backbone.View.extend(
       widgetChannel.trigger 'jarviswidget', @
     if $(".page-title", @$el).length > 0
       renderPageTitle()
+    if $(".grid-stack", @$el).length > 0
+      $('.grid-stack').gridstack
+        width: 12
+        resizable: handles: 'e, se, s, sw, w'
     if (form = $('form', @$el)) && form.length > 0
       activateForm(@, form)
     return
