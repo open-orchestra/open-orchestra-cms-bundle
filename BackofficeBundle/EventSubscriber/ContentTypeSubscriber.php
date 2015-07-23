@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -72,7 +73,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         $data = $event->getData();
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($data->getContentType());
 
-        if (is_object($contentType)) {
+        if ($contentType instanceof ContentTypeInterface) {
             $data->setContentTypeVersion($contentType->getVersion());
             $this->addContentTypeFieldsToForm($contentType->getFields(), $event->getForm(), $data);
         }
@@ -87,7 +88,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         $data = $event->getData();
 
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($data->getContentType());
-        if (is_object($contentType)) {
+        if ($contentType instanceof ContentTypeInterface) {
             foreach ($contentType->getFields() as $contentTypeField) {
                 $contentTypeFieldId = $contentTypeField->getFieldId();
                 $dataAttribute = $data->getAttributeByName($contentTypeFieldId);
@@ -112,7 +113,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         $content = $form->getData();
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
-        if (is_object($contentType)) {
+        if ($contentType instanceof ContentTypeInterface) {
             $data = $event->getData();
             $content->setContentTypeVersion($contentType->getVersion());
             foreach ($contentType->getFields() as $contentTypeField) {
