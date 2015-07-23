@@ -67,11 +67,6 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',
         'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
-        //--[ MEDIA ]--//
-        'web/built/openorchestramediaadmin/js/extendView/*.js',
-        'web/built/openorchestramediaadmin/js/*.js',
-
-
         //--[ USER ]--//
         'web/built/openorchestrauseradmin/js/user/*.js',
 
