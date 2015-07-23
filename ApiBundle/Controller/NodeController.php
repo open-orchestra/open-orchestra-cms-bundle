@@ -47,7 +47,8 @@ class NodeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $nodeId
+     * @param string  $nodeId
+     * @param bool    $errorNode
      *
      * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create")
      * @Config\Method({"GET"})
