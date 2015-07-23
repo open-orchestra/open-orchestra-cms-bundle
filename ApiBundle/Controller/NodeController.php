@@ -50,7 +50,8 @@ class NodeController extends BaseController
      * @param string  $nodeId
      * @param bool    $errorNode
      *
-     * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create")
+     * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create", defaults={"errorNode" = false})
+     * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -58,7 +59,7 @@ class NodeController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function showOrCreateAction(Request $request, $nodeId, $errorNode = false)
+    public function showOrCreateAction(Request $request, $nodeId, $errorNode)
     {
         $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
         $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
@@ -86,23 +87,6 @@ class NodeController extends BaseController
         }
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
-    }
-
-    /**
-     * @param Request $request
-     * @param string $nodeId
-     *
-     * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error")
-     * @Config\Method({"GET"})
-     * @Api\Serialize()
-     *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @return FacadeInterface
-     */
-    public function showOrCreateErrorAction(Request $request, $nodeId)
-    {
-        return $this->showOrCreateAction($request, $nodeId, true);
     }
 
     /**
