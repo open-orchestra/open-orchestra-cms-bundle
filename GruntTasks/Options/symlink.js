@@ -122,12 +122,5 @@ module.exports = {
     select2_gif: {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/select2-spinner.gif',
         dest: 'web/img/select2-spinner.gif'
-    },
-
-    //--[ ORCHESTRA ASSETS ]--//
-    no_image: {
-        src: 'web/bundles/openorchestramediaadmin/images/no_image_available.jpg',
-        dest: 'web/img/no_image_available.jpg'
     }
-
 };

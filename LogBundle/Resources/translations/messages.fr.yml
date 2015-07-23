@@ -39,14 +39,6 @@ open_orchestra_log:
     keyword:
         create: Crée un tag avec le label keyword_label
         delete: Supprime un tag avec le label keyword_label
-    media:
-        add_image: Ajoute un média nommé media_name
-        delete: Supprime un média nommé media_name
-        resize: Redimensionne un média nommé media_name
-    folder:
-        create: Crée un nouveau dossier nommé folder_name
-        delete: Supprime un dossier nommé folder_name
-        update: Met à jour un dossier nommé folder_name
     role:
         create: Crée un nouveau rôle nommé role_name
         delete: Supprime un rôle nommé role_name

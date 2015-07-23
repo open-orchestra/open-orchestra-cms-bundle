@@ -16,8 +16,6 @@ var OrchestraBORouter = Backbone.Router.extend({
     ':entityType/add': 'addEntity',
     ':entityType/edit/:entityId(/language_:language)(/version_:version)': 'showEntity',
     ':entityType/edit/:entityId/:language/source/:sourceLanguage': 'showEntityWithLanguageAndSourceLanguage',
-    'folder/:folderId/list/media/:mediaId/edit': 'mediaEdit',
-    'folder/:folderId/list': 'listFolder',
     'translation': 'listTranslations',
     'dashboard': 'showDashboard',
     '*path': 'showHome'
@@ -66,12 +64,6 @@ var OrchestraBORouter = Backbone.Router.extend({
     showTemplate($("#nav-template-" + templateId).data("url"));
   },
 
-  listFolder: function(folderId)
-  {
-    this.initDisplayRouteChanges();
-    GalleryLoad($('#' + folderId));
-  },
-
   listEntities: function(entityType, page)
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
@@ -97,13 +89,6 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.initDisplayRouteChanges("#nav-" + entityType);
     entityViewLoad($("#nav-" + entityType), entityType, entityId, language, version, sourceLanguage);
-  },
-
-  mediaEdit: function(folderId, mediaId)
-  {
-    this.initDisplayRouteChanges("#" + folderId);
-    this.addRoutePattern("apiMediaEdit", $("#" + folderId).data("media-edit-url"));
-    SuperboxLoad(folderId, mediaId);
   },
 
   listTranslations: function()
