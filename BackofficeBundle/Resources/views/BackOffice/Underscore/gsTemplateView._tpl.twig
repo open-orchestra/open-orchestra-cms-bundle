@@ -1,0 +1,46 @@
+<div id="template"
+    data-delete-confirm-txt="{{ 'open_orchestra_backoffice.templates.delete.text'|trans }}"
+    data-delete-confirm-title="{{ 'open_orchestra_backoffice.templates.delete.title'|trans }}">
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
+    <div class="hidden-info" id="generated-title" style="display: none">
+        <%= template.get('name') %>
+    </div>
+    <div id="generated-tools" style="display: none">
+        <div class="blocks-panel">
+            <span class="blocks-panel-setting">
+                <i class="fa fa-arrow-circle-left"></i>
+            </span>
+            <h2>Blocks</h2>
+            <div class="ui-model scroll panel-shadow">
+                <ul class="ui-model-blocks right-panel-blocks"></ul>
+            </div>
+        </div>
+    </div>
+    <div role="container">
+<div class="grid-stack">
+    <div class="grid-stack-item"
+        data-gs-x="0" data-gs-y="0"
+        data-gs-width="4" data-gs-height="2">
+            <div class="grid-stack-item-content"></div>
+    </div>
+    <div class="grid-stack-item"
+        data-gs-x="4" data-gs-y="0"
+        data-gs-width="4" data-gs-height="4">
+            <div class="grid-stack-item-content"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    $('.grid-stack').gridstack({
+        width: 12,
+        always_show_resize_handle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+        resizable: {
+            handles: 'e, se, s, sw, w'
+        }
+    });
+});
+</script>
+    </div>
+{% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/footer._tpl.twig' %}
+</div>

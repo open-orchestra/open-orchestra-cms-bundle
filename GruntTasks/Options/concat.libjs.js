@@ -7,6 +7,7 @@ module.exports = {
         'bower_components/datatables-colvis/js/dataTables.colVis.js',
         'bower_components/datatables-bootstrap3/BS3/assets/js/datatables.js',
         'bower_components/jquery-form/jquery.form.js',
+        'bower_components/lodash/lodash.js',
         'bower_components/gridstack/src/gridstack.js',
         'web/bundles/openorchestrabackoffice/js/latinise.js',
         'web/bundles/openorchestrabackoffice/js/underscoreTemplateLoader.js'

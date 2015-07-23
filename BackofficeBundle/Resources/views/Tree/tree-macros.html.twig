@@ -98,6 +98,36 @@
     </li>
 {% endmacro %}
 
+{% macro menu_gs_templates(templates, name) %}
+    {% for template in templates %}
+        <li data-element-id="{{ template.templateId }}"
+            data-type="Template"
+        >
+            <a
+                id="nav-gs-template-{{ template.templateId }}"
+                href="#gs_template/show/{{ template.templateId }}"
+                data-url="{{ path('open_orchestra_api_gs_template_show', {'templateId': template.templateId}) }}"
+                data-template="{{ template.templateId }}"
+            >
+                <span>{{ template.name }}</span>
+            </a>
+        </li>
+    {% endfor %}
+    <li>
+        <div class="ui-state-unsortable">
+            <a
+                class="ajax-new"
+                href="#"
+                data-url="{{ path('open_orchestra_backoffice_template_new') }}"
+                data-type="template"
+            >
+                <i class="fa fa-file"></i>
+                {{ 'open_orchestra_backoffice.left_menu.tree.new_template'|trans }}
+            </a>
+        </div>
+    </li>
+{% endmacro %}
+
 {% macro menu_content_types_for_content(contentTypes, name) %}
     {% for contentType in contentTypes %}
         {% set displayedElement = 'name, status_label, version, language, linked_to_site' %}
