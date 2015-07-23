@@ -102,12 +102,14 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->valueTransformerManager = Phake::mock('OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager');
         Phake::when($this->valueTransformerManager)->transform(Phake::anyParameters())->thenReturn('foo');
 
+        $translator = Phake::mock('Symfony\Component\Translation\Translator');
         $this->subscriber = new ContentTypeSubscriber(
             $this->repository,
             $this->contentAttributClass,
             $this->translationChoiceManager,
             $this->fieldTypesConfiguration,
-            $this->valueTransformerManager
+            $this->valueTransformerManager,
+            $translator
         );
 
     }
@@ -126,6 +128,7 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::POST_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::PRE_SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
@@ -139,7 +142,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $fieldId = 'title';
         $label = 'Title';
-        $defaultValue = '';
         $type = 'text';
         $options = array(
             'max_length' => 25,
@@ -147,7 +149,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'oldOption' => 'oldValue'
         );
         $expectedOptions = array(
-            'data' => $defaultValue,
             'label' => $label,
             'mapped' => false,
             'max_length' => 25,
@@ -158,7 +159,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
-        Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
@@ -192,7 +192,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $fieldId = 'title';
         $label = 'Title';
-        $defaultValue = '';
         $realValue = 'realValue';
         $type = 'text';
         $options = array(
@@ -201,7 +200,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
             'oldOption' => 'oldValue'
         );
         $expectedOptions = array(
-            'data' => $realValue,
             'label' => $label,
             'mapped' => false,
             'max_length' => 25,
@@ -212,7 +210,6 @@ class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->fieldType1)->getFieldId()->thenReturn($fieldId);
         Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($label);
-        Phake::when($this->fieldType1)->getDefaultValue()->thenReturn($defaultValue);
         Phake::when($this->fieldType1)->getType()->thenReturn($type);
         Phake::when($this->fieldType1)->getFormOptions()->thenReturn($options);
 
