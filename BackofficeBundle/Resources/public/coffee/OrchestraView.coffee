@@ -46,7 +46,7 @@ OrchestraView = Backbone.View.extend(
       renderPageTitle()
     if $(".grid-stack", @$el).length > 0
       $('.grid-stack').gridstack
-        width: 12
+        width: 6
         resizable: handles: 'e, se, s, sw, w'
     if (form = $('form', @$el)) && form.length > 0
       activateForm(@, form)
