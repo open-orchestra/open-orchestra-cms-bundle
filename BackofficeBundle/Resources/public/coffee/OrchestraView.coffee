@@ -42,11 +42,12 @@ OrchestraView = Backbone.View.extend(
     if @options && @options.domContainer && $(".widget-grid", @options.domContainer).length > 0
       setup_widgets_desktop()
       widgetChannel.trigger 'jarviswidget', @
-    if $(".page-title", @$el).length > 0
+    if $('.page-title', @$el).length > 0
       renderPageTitle()
-    if $(".grid-stack", @$el).length > 0
+    if $('.grid-stack', @$el).length > 0
       $('.grid-stack').gridstack
         width: 6
+        min_width: 1024
         resizable: handles: 'e, se, s, sw, w'
     if (form = $('form', @$el)) && form.length > 0
       activateForm(@, form)

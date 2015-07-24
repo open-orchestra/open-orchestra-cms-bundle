@@ -1,6 +1,8 @@
 #template {
-    .jarviswidget, div[role="content"], widget-body, .grid-stack{
+    .jarviswidget, div[role="content"], .widget-body, .grid-stack{
         background-color: #92a2a8;
+    }
+    .jarviswidget, div[role="content"], .grid-stack{
         background-clip: content-box;
     }
 }
@@ -25,4 +27,21 @@ header a, header a:hover {
 }
 .darklue hr.star-light::after {
     background-color: #2c3e50;
+}
+.grid-stack > .grid-stack-item[data-gs-width="6"] { width: 100% }
+.grid-stack > .grid-stack-item[data-gs-width="5"] { width: 83.33333333% }
+.grid-stack > .grid-stack-item[data-gs-width="4"]  { width: 66.66666667% }
+.grid-stack > .grid-stack-item[data-gs-width="3"]  { width: 50% }
+.grid-stack > .grid-stack-item[data-gs-width="2"]  { width: 33.33333333% }
+.grid-stack > .grid-stack-item[data-gs-width="1"]  { width: 16.66666667% }
+
+.grid-stack > .grid-stack-item[data-gs-x="6"] { left: 100% }
+.grid-stack > .grid-stack-item[data-gs-x="5"] { left: 83.33333333% }
+.grid-stack > .grid-stack-item[data-gs-x="4"]  { left: 66.66666667% }
+.grid-stack > .grid-stack-item[data-gs-x="3"]  { left: 50% }
+.grid-stack > .grid-stack-item[data-gs-x="2"]  { left: 33.33333333% }
+.grid-stack > .grid-stack-item[data-gs-x="1"]  { left: 16.66666667% }
+
+.grid-stack .ui-icon-gripsmall-diagonal-se {
+    background-position: 2000px 2000px;
 }
