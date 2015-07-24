@@ -1,4 +1,4 @@
-{% macro menu_nodes(nodes, name) %}
+{% macro menu_nodes(nodes, name, nodeId404, nodeId503) %}
     {% for element in nodes %}
         {% set node = element.node %}
         <li data-element-id="{{ node.nodeId }}"
@@ -24,15 +24,7 @@
                     {% endif %}
                     <li class="node-unsortable">
                         <div>
-                            <a
-                                class="ajax-new"
-                                href="#"
-                                data-url="{{ path('open_orchestra_backoffice_node_new', {'parentId': node.nodeId}) }}"
-                                data-type="node"
-                            >
-                                <i class="fa fa-file"></i>
-                                {{ 'open_orchestra_backoffice.left_menu.tree.new_page'|trans }}
-                            </a>
+                            {{ _self.new_node(node.nodeId) }}
                         </div>
                     </li>
                 </ul>
@@ -41,18 +33,39 @@
     {% else %}
         <li>
             <div class="ui-state-unsortable">
-                <a
-                    class="ajax-new"
-                    href="#"
-                    data-url="{{ path('open_orchestra_backoffice_node_new', {'parentId': '-'}) }}"
-                    data-type="node"
-                >
-                    <i class="fa fa-file"></i>
-                    {{ 'open_orchestra_backoffice.left_menu.tree.new_page'|trans }}
-                </a>
+                {{ _self.new_node('-') }}
             </div>
         </li>
     {% endfor %}
+
+    {% if nodeId404 %}
+        {{ _self.error_node(404, 'error_404') }}
+    {% endif %}
+
+    {% if nodeId503 %}
+        {{ _self.error_node(503, 'error_503') }}
+    {% endif %}
+
+{% endmacro %}
+
+{% macro new_node(parentId) %}
+    <a
+        class="ajax-new"
+        href="#"
+        data-url="{{ path('open_orchestra_backoffice_node_new', {'parentId': parentId}) }}"
+        data-type="node"
+    >
+        <i class="fa fa-file"></i>
+        {{ 'open_orchestra_backoffice.left_menu.tree.new_page'|trans }}
+    </a>
+{% endmacro %}
+
+{% macro error_node(nodeId, translationKey) %}
+        <li data-element-id="{{ nodeId }}" data-type="Node">
+            <a id="nav-node-{{ nodeId }}" data-url="{{ path('open_orchestra_api_node_show_or_create_error', {'nodeId': nodeId}) }}" data-node="{{ nodeId }}" href="#node/show/{{ nodeId }}">
+                <span>{{ ('open_orchestra_backoffice.left_menu.editorial.error_nodes.' ~ translationKey)|trans }}</span>
+            </a>
+        </li>
 {% endmacro %}
 
 {% macro menu_templates(templates, name) %}
