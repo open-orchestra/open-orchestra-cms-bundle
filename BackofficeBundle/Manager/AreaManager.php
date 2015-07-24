@@ -16,15 +16,17 @@ class AreaManager
 {
     protected $nodeRepository;
     protected $blockParameterManager;
+    protected $areaClass;
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param BlockParameterManager   $blockParameterManager
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, BlockParameterManager $blockParameterManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, BlockParameterManager $blockParameterManager, $areaClass)
     {
         $this->nodeRepository = $nodeRepository;
         $this->blockParameterManager = $blockParameterManager;
+        $this->areaClass = $areaClass;
     }
 
     /**
@@ -35,9 +37,37 @@ class AreaManager
      *
      * @return AreaContainerInterface
      */
-    public function deleteAreaFromAreas(AreaContainerInterface $areaContainer, $areaId)
+    public function deleteAreaFromContainer(AreaContainerInterface $areaContainer, $areaId)
     {
         $areaContainer->removeAreaByAreaId($areaId);
+
+        return $areaContainer;
+    }
+
+    /**
+     * Update an area from an AreaCollections
+     *
+     * @param AreaContainerInterface $areaContainer
+     * @param string                 $areaId
+     *
+     * @return AreaContainerInterface
+     */
+    public function updateAreaFromContainer(AreaContainerInterface $areaContainer, $areaId, $x, $y, $width, $height)
+    {
+        $areas = $areaContainer->getAreas();
+        var_dump($areas->count());
+        foreach ($areas as $key => $area) {
+            if ($areaId == $area->getAreaId()) {
+                var_dump('founded');
+                $areas[$key]->setX($x);
+                $areas[$key]->setY($y);
+                $areas[$key]->setWidth($width);
+                $areas[$key]->setHeight($height);
+                break;
+            }
+        }
+        var_dump($areas->count());
+        $areaContainer->setAreas($areas);
 
         return $areaContainer;
     }

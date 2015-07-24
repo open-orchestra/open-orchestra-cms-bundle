@@ -56,7 +56,7 @@ class TemplateFacade extends AbstractFacade
      */
     public function addArea(FacadeInterface $facade)
     {
-        $this->areas[] = $facade;
+        $this->areas[$facade->areaId] = $facade;
     }
 
     /**

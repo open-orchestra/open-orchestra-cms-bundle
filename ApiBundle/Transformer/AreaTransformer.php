@@ -152,6 +152,10 @@ class AreaTransformer extends AbstractTransformer
         }
 
         $facade->boDirection = $area->getBoDirection();
+        $facade->x = $area->getX();
+        $facade->y = $area->getY();
+        $facade->width = $area->getWidth();
+        $facade->height = $area->getHeight();
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
@@ -183,6 +187,12 @@ class AreaTransformer extends AbstractTransformer
 
         } else {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template',
+                array(
+                    'templateId' => $templateId,
+                    'areaId' => $area->getAreaId(),
+                )
+            ));
+            $facade->addLink('_self_update', $this->generateRoute('open_orchestra_api_area_update_in_template',
                 array(
                     'templateId' => $templateId,
                     'areaId' => $area->getAreaId(),

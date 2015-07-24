@@ -42,6 +42,26 @@ class AreaFacade extends AbstractFacade
     public $boDirection;
 
     /**
+     * @Serializer\Type("integer")
+     */
+    public $x;
+
+    /**
+     * @Serializer\Type("integer")
+     */
+    public $y;
+
+    /**
+     * @Serializer\Type("integer")
+     */
+    public $width;
+
+    /**
+     * @Serializer\Type("integer")
+     */
+    public $height;
+
+    /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\UiModelFacade")
      */
     public $uiModel;

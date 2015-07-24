@@ -26,7 +26,6 @@ class TemplateTransformer extends AbstractTransformer
         }
 
         $facade = new TemplateFacade();
-
         foreach ($template->getAreas() as $area) {
             $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $template));
         }

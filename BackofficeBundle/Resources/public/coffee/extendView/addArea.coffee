@@ -9,7 +9,7 @@ extendView['addArea'] = {
   addAreaToView: (area) ->
     areaElement = new Area
     areaElement.set area
-    areaViewClass = appConfigurationView.getConfiguration('area', 'addArea')
+    areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addArea')
     new areaViewClass(
       area: areaElement
       configuration: areaElement
