@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
 
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 
 /**
  * Class TreeNodesPanel
@@ -42,7 +43,9 @@ class TreeNodesPanelStrategy extends AbstractLeftPanelStrategy
         return $this->render(
             'OpenOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
             array(
-                'nodes' => $nodes
+                'nodes' => $nodes,
+                'nodeId404' => ReadNodeInterface::ERROR_404_NODE_ID,
+                'nodeId503' => ReadNodeInterface::ERROR_503_NODE_ID
             )
         );
     }

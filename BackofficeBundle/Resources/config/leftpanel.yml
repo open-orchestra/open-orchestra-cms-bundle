@@ -101,7 +101,6 @@ services:
             - ROLE_ACCESS_SITE
         tags:
             - { name: open_orchestra_backoffice.left_panel.strategy }
-
     open_orchestra_backoffice.left_panel.deleted:
         class: %open_orchestra_backoffice.left_panel.administration.class%
         arguments:

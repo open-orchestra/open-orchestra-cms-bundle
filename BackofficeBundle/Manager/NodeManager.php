@@ -6,12 +6,14 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class NodeManager
@@ -84,6 +86,36 @@ class NodeManager
         $this->updateBlockReferences($node, $newNode);
 
         return $newNode;
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return NodeInterface
+     */
+    public function createNewErrorNode($nodeId, $siteId, $language)
+    {
+        $node = $this->initializeNewNode(NodeInterface::ROOT_NODE_ID);
+        $node->setNodeId($nodeId);
+        $node->setNodeType(ReadNodeInterface::TYPE_ERROR);
+        $node->setSiteId($siteId);
+        $node->setRoutePattern($nodeId);
+        $node->setName($nodeId);
+        $node->setLanguage($language);
+        $node->setInFooter(false);
+        $node->setInMenu(false);
+        $node->setVersion(1);
+
+        $area = new Area();
+        $area->setLabel('main');
+        $area->setAreaId('main');
+        $node->addArea($area);
+
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_CREATION, new NodeEvent($node));
+
+        return $node;
     }
 
     /**

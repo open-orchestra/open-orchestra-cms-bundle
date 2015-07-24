@@ -47,9 +47,11 @@ class NodeController extends BaseController
 
     /**
      * @param Request $request
-     * @param string $nodeId
+     * @param string  $nodeId
+     * @param bool    $errorNode
      *
-     * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create")
+     * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create", defaults={"errorNode" = false})
+     * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      * @Api\Serialize()
      *
@@ -57,7 +59,7 @@ class NodeController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function showOrCreateAction(Request $request, $nodeId)
+    public function showOrCreateAction(Request $request, $nodeId, $errorNode)
     {
         $currentSiteManager = $this->get('open_orchestra_backoffice.context_manager');
         $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
@@ -67,11 +69,19 @@ class NodeController extends BaseController
 
         if (!$node) {
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
-            $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
+
+            if ($oldNode) {
+                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
+            } elseif ($errorNode) {
+                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
+            }
+
             $dm = $this->get('doctrine.odm.mongodb.document_manager');
             $dm->persist($node);
 
-            $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
+            if ($oldNode) {
+                $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
+            }
 
             $dm->flush();
         }
