@@ -39,7 +39,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             $type = $data->getType();
 
             $this->checkFieldType($data, $type, $form);
-            $this->addDefaultValueField($type, $form);
+            $this->addDefaultValueField($data, $type, $form);
         }
     }
 
@@ -56,7 +56,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
 
         if ($data instanceof FieldTypeInterface) {
             $this->checkFieldType($data, $type, $form);
-            $this->addDefaultValueField($type, $form);
+            $this->addDefaultValueField($data, $type, $form);
         }
     }
 
@@ -72,13 +72,18 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string        $type
-     * @param FormInterface $form
+     * @param FieldTypeInterface        $data
+     * @param string                    $type
+     * @param FormInterface             $form
      */
-    protected function addDefaultValueField($type, FormInterface $form)
+    protected function addDefaultValueField(FieldTypeInterface $data, $type, FormInterface $form)
     {
         if (is_null($type) || !array_key_exists($type, $this->options)) {
             return;
+        }
+
+        if ($data->getType() !== $type) {
+            $data->setDefaultValue(null);
         }
 
         if (isset($this->options[$type]['default_value'])) {
