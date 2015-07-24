@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_backoffice.block_parameter_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager
     open_orchestra_backoffice.block_parameter.content.class: OpenOrchestra\Backoffice\BlockParameter\Strategies\ContentStrategy
+    open_orchestra_backoffice.block_parameter.content_list.class: OpenOrchestra\Backoffice\BlockParameter\Strategies\ContentListStrategy
     open_orchestra_backoffice.block_parameter.contact.class: OpenOrchestra\Backoffice\BlockParameter\Strategies\ContactStrategy
     open_orchestra_backoffice.block_parameter.menu.class: OpenOrchestra\Backoffice\BlockParameter\Strategies\MenuStrategy
     open_orchestra_backoffice.block_parameter.footer.class: OpenOrchestra\Backoffice\BlockParameter\Strategies\FooterStrategy
@@ -10,6 +11,10 @@ services:
         class: %open_orchestra_backoffice.block_parameter_manager.class%
     open_orchestra_backoffice.block_parameter.content:
         class: %open_orchestra_backoffice.block_parameter.content.class%
+        tags:
+            - { name: open_orchestra_backoffice.block_parameter.strategy }
+    open_orchestra_backoffice.block_parameter.content_list:
+        class: %open_orchestra_backoffice.block_parameter.content_list.class%
         tags:
             - { name: open_orchestra_backoffice.block_parameter.strategy }
     open_orchestra_backoffice.block_parameter.contact:
