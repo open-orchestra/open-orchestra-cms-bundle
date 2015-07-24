@@ -26,7 +26,7 @@ class ContactStrategy implements BlockParameterInterface
      */
     public function getBlockParameter()
     {
-        return array('post_data');
+        return array('post_data', 'request.aliasId');
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\Backoffice\BlockParameter\Strategies;
 
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
 use OpenOrchestra\Backoffice\BlockParameter\BlockParameterInterface;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
- * Class ContentStrategy
+ * Class FooterStrategy
  */
-class ContentStrategy implements BlockParameterInterface
+class FooterStrategy implements BlockParameterInterface
 {
     /**
      * @param BlockInterface $block
@@ -18,7 +18,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function support(BlockInterface $block)
     {
-        return BaseContentStrategy::CONTENT == $block->getComponent();
+        return BaseFooterStrategy::FOOTER == $block->getComponent();
     }
 
     /**
@@ -26,7 +26,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function getBlockParameter()
     {
-        return array('request.contentId');
+        return array('request.aliasId');
     }
 
     /**
@@ -34,6 +34,6 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function getName()
     {
-        return 'content';
+        return 'footer';
     }
 }
