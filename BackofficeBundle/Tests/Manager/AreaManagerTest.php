@@ -38,7 +38,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
 
-        $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager);
+        $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager, 'OpenOrchestra\ModelInterface\Model\AreaInterface');
     }
 
     /**
@@ -50,7 +50,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteAreaFromAreas(AreaContainerInterface $areaContainer, $areaId, AreaContainerInterface $expectedArea)
     {
-        $this->manager->deleteAreaFromAreas($areaContainer, $areaId);
+        $this->manager->deleteAreaFromContainer($areaContainer, $areaId);
 
         $this->assertTrue(
             $this->arrayContains($expectedArea->getAreas(), $areaContainer->getAreas())
