@@ -180,26 +180,6 @@ class AreaController extends BaseController
     }
 
     /**
-     * @param string      $areaId
-     * @param string|null $templateId
-     *
-     * @Config\Route("/{areaId}/update-in-template/{templateId}", name="open_orchestra_api_area_update_in_template")
-     * @Config\Method({"POST"})
-     *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @return Response
-     */
-    public function updateAreaInTemplateAction(Request $request, $areaId, $templateId)
-    {
-        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
-        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($areaContainer));
-        $this->updateAreaFromContainer($areaId, $areaContainer, $request->get('x'), $request->get('y'), $request->get('width'), $request->get('height'));
-
-        return new Response();
-    }
-
-    /**
      * Remove an area from an areaContainer
      *
      * @param string                 $areaId
@@ -208,18 +188,6 @@ class AreaController extends BaseController
     protected function deleteAreaFromContainer($areaId, AreaContainerInterface $areaContainer)
     {
         $this->get('open_orchestra_backoffice.manager.area')->deleteAreaFromContainer($areaContainer, $areaId);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
-    }
-
-    /**
-     * Update an area from an areaContainer
-     *
-     * @param string                 $areaId
-     * @param AreaContainerInterface $areaContainer
-     */
-    protected function updateAreaFromContainer($areaId, AreaContainerInterface $areaContainer, $x, $y, $width, $height)
-    {
-        $this->get('open_orchestra_backoffice.manager.area')->updateAreaFromContainer($areaContainer, $areaId, $x, $y, $width, $height);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
     }
 }

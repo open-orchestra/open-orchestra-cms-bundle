@@ -8,8 +8,10 @@ use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\AreaContainer;
 
 /**
  * Class TemplateController
@@ -18,6 +20,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class TemplateController extends BaseController
 {
+    use AreaContainer;
+
     /**
      * @param string $templateId
      *
@@ -54,6 +58,25 @@ class TemplateController extends BaseController
         $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('template')->transform($template);
+    }
+
+    /**
+     * @param string|null $templateId
+     *
+     * @Config\Route("/update-in-template/{templateId}", name="open_orchestra_api_areas_update_in_template")
+     * @Config\Method({"POST"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return Response
+     */
+    public function updateAreasInTemplateAction(Request $request, $templateId)
+    {
+        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($areaContainer));
+        $this->updateAreasFromContainer($request->get('areas'), $areaContainer);
+
+        return new Response();
     }
 
     /**

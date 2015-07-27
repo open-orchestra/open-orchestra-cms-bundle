@@ -47,26 +47,23 @@ class AreaManager
     /**
      * Update an area from an AreaCollections
      *
+     * @param array                 $newAreas
      * @param AreaContainerInterface $areaContainer
-     * @param string                 $areaId
      *
      * @return AreaContainerInterface
      */
-    public function updateAreaFromContainer(AreaContainerInterface $areaContainer, $areaId, $x, $y, $width, $height)
+    public function updateAreaFromContainer($newAreas, AreaContainerInterface $areaContainer)
     {
         $areas = $areaContainer->getAreas();
-        var_dump($areas->count());
         foreach ($areas as $key => $area) {
-            if ($areaId == $area->getAreaId()) {
-                var_dump('founded');
-                $areas[$key]->setX($x);
-                $areas[$key]->setY($y);
-                $areas[$key]->setWidth($width);
-                $areas[$key]->setHeight($height);
-                break;
+            $areaId = $area->getAreaId();
+            if (array_key_exists($areaId, $newAreas)) {
+                $areas[$key]->setX($newAreas[$areaId]['x']);
+                $areas[$key]->setY($newAreas[$areaId]['y']);
+                $areas[$key]->setWidth($newAreas[$areaId]['width']);
+                $areas[$key]->setHeight($newAreas[$areaId]['height']);
             }
         }
-        var_dump($areas->count());
         $areaContainer->setAreas($areas);
 
         return $areaContainer;

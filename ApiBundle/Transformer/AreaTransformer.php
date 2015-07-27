@@ -192,12 +192,6 @@ class AreaTransformer extends AbstractTransformer
                     'areaId' => $area->getAreaId(),
                 )
             ));
-            $facade->addLink('_self_update', $this->generateRoute('open_orchestra_api_area_update_in_template',
-                array(
-                    'templateId' => $templateId,
-                    'areaId' => $area->getAreaId(),
-                )
-            ));
         }
 
         return $facade;

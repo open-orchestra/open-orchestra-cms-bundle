@@ -46,6 +46,11 @@ class TemplateTransformer extends AbstractTransformer
             array('templateId' => $template->getTemplateId())
         ));
 
+        $facade->addLink('_self_update_areas', $this->generateRoute('open_orchestra_api_areas_update_in_template',
+            array(
+                'templateId' => $template->getTemplateId())
+        ));
+
         return $facade;
     }
 

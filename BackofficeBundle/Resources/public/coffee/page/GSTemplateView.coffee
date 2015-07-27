@@ -30,19 +30,21 @@ GSTemplateView = OrchestraView.extend(
 
   sendAreaData: (event, items)->
     event.stopImmediatePropagation() if event.stopImmediatePropagation
-    currentView = @
-    areas = @options.template.get('areas')
-    for i of items
-      areaId = items[i].el.data('id')
-      $.ajax
-        url: areas[areaId].links._self_update
-        method: 'POST'
-        asynch: false
-        data:
-          x: items[i].x
-          y: items[i].y
-          width: items[i].width
-          height: items[i].height
-        success: (response) ->
-
+    results = {}
+    items = $.makeArray(items)
+    $.each(items, (key, item) ->
+      results[item.el.data('id')] = 
+      {
+        x: item.x
+        y: item.y
+        width: item.width
+        height: item.height
+      }
+    )
+    $.ajax
+      url: @options.template.get('links')._self_update_areas
+      method: 'POST'
+      data:
+        areas : results
+      success: (response) ->
 )
