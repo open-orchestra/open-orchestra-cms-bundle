@@ -39,11 +39,11 @@
     {% endfor %}
 
     {% if nodeId404 %}
-        {{ _self.error_node(404, 'error_404') }}
+        {{ _self.error_node(nodeId404, 'error_404') }}
     {% endif %}
 
     {% if nodeId503 %}
-        {{ _self.error_node(503, 'error_503') }}
+        {{ _self.error_node(nodeId503, 'error_503') }}
     {% endif %}
 
 {% endmacro %}
