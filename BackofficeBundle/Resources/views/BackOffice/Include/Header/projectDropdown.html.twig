@@ -11,7 +11,7 @@
             <li{% if context.getCurrentSiteId() is same as(site.siteId) %} class="active"{% endif %}>
                 <a
                         class="configuration-change"
-                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId':site.siteId, 'language': context.currentLocale}) }}">
+                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId':site.siteId, '_locale': context.currentLocale}) }}">
                     {{ site.name }}
                 </a>
             </li>
