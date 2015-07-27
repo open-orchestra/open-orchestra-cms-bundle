@@ -1,6 +1,6 @@
 <!-- projects dropdown -->
 <div class="project-context hidden-xs">
-
+    {% set currentLocale = (context.currentLocale is null) ? context.defaultLocale : context.currentLocale%}
     {% set availableSites = context.getAvailableSites() %}
     <span class="label">{{ 'open_orchestra_backoffice.top_menu.site'|trans }}</span>
     <span class="project-selector dropdown-toggle" data-toggle="dropdown">{{ context.getCurrentSiteName() }} <i class="fa fa-angle-down"></i></span>
@@ -11,7 +11,7 @@
             <li{% if context.getCurrentSiteId() is same as(site.siteId) %} class="active"{% endif %}>
                 <a
                         class="configuration-change"
-                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId':site.siteId, '_locale': context.currentLocale}) }}">
+                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId':site.siteId, '_locale': currentLocale}) }}">
                     {{ site.name }}
                 </a>
             </li>
