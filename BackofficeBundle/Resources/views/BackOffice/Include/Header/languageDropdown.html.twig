@@ -15,7 +15,7 @@
             <li{% if currentLocale == language %} class="active"{% endif %}>
                 <a
                         class="configuration-change"
-                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId': context.currentSiteId, 'language': language}) }}">
+                        data-url="{{ path('homepage_with_site_id_and_language', {'siteId': context.currentSiteId, '_locale': language}) }}">
                     <img
                         src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
                         class="flag flag-{{ language }}"
