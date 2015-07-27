@@ -5,14 +5,14 @@ extendView['commonPage'] = {
     'click i.hide-areas': 'hideAreas'
 
   showAreas: ->
-    $('.show-areas').hide()
-    $('.hide-areas').show()
-    $('.area-toolbar').addClass('shown')
+    $('.show-areas', @$el).hide()
+    $('.hide-areas', @$el).show()
+    $('.area-toolbar', @$el).addClass('shown')
 
   hideAreas: ->
-    $('.hide-areas').hide()
-    $('.show-areas').show()
-    $('.area-toolbar').removeClass('shown')
+    $('.hide-areas', @$el).hide()
+    $('.show-areas', @$el).show()
+    $('.area-toolbar', @$el).removeClass('shown')
 
   addConfigurationButton: () ->
     pageConfigurationButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addConfigurationButton')

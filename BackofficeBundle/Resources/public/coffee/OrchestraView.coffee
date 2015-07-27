@@ -45,7 +45,7 @@ OrchestraView = Backbone.View.extend(
     if $('.page-title', @$el).length > 0
       renderPageTitle()
     if $('.grid-stack', @$el).length > 0
-      $('.grid-stack').gridstack
+      $('.grid-stack', @$el).gridstack
         width: 6
         min_width: 1024
         resizable: handles: 'e, se, s, sw, w'

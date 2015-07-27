@@ -2,12 +2,16 @@ GSTemplateView = OrchestraView.extend(
   extendView : [ 'commonPage', 'addArea' ]
 
   events:
-    'change .grid-stack': 'sendAreaData'
+    'change .grid-stack': 'changeAreaData'
+    'add .grid-stack': 'addAreaData'
+    'delete .grid-stack': 'deleteAreaData'
+    'click .add-grid-stack': 'addArea'
 
   initialize: (options) ->
     @options = @reduceOption(options, [
       'template'
       'domContainer'
+      'areaButtonVisible'
     ])
     @options.configuration = @options.template
     @options.entityType = 'gstemplate'
@@ -26,14 +30,17 @@ GSTemplateView = OrchestraView.extend(
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addConfigurationButton()
     @addAreasToView(@options.template.get('areas'))
+    @showAreas() if @options.areaButtonVisible
     return
 
-  sendAreaData: (event, items)->
-    event.stopImmediatePropagation() if event.stopImmediatePropagation
-    results = {}
-    items = $.makeArray(items)
+  sendAreaData: (event, refresh)->
+    event.stopImmediatePropagation()
+    areaButtonVisible = $('.show-areas', @$el).is(':hidden')
+    areas = {}
+    items = $.makeArray($('.grid-stack .grid-stack-item:visible'))
     $.each(items, (key, item) ->
-      results[item.el.data('id')] = 
+      item = $(item).data('_gridstack_node');
+      areas[item.el.data('id')] = 
       {
         x: item.x
         y: item.y
@@ -45,6 +52,29 @@ GSTemplateView = OrchestraView.extend(
       url: @options.template.get('links')._self_update_areas
       method: 'POST'
       data:
-        areas : results
+        areas : areas
       success: (response) ->
+        if refresh
+          template = new TemplateModel
+          template.set response
+          templateViewClass = appConfigurationView.getConfiguration('GStemplate', 'showGSTemplate')
+          new templateViewClass(
+            template: template
+            domContainer: $('#content')
+            areaButtonVisible: areaButtonVisible
+          )
+
+  changeAreaData: (event, items)->
+    @sendAreaData(event, false)
+
+  deleteAreaData: (event)->
+    @sendAreaData(event, false)
+
+  addAreaData: (event, items)->
+    @sendAreaData(event, true)
+
+  addArea: (event)->
+    grid = $('.grid-stack', @$el).data('gridstack')
+    grid.add_widget '<div class="grid-stack-item"><div class="grid-stack-item-content"><h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1></div></div>', 0, 0, 1, 1, true
+    grid.container.trigger('add')
 )

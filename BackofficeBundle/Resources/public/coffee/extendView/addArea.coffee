@@ -2,6 +2,7 @@ extendView = extendView || {}
 extendView['addArea'] = {
   addAreasToView: (areas) ->
     @areaContainer = @$el.find('.ui-model-areas').first()
+    @areaContainer.html ''
     for index of areas
       @addAreaToView(areas[index])
     refreshUl @areaContainer

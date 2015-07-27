@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
@@ -11,14 +11,19 @@ use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 trait AreaContainer
 {
     /**
-     * Update an area from an areaContainer
+     * Update areas from an areaContainer
      *
      * @param array                  $areas
      * @param AreaContainerInterface $areaContainer
+     * @param TransformerInterface   $transformerManager
+     *
+     * return AreaContainerInterface
      */
-    protected function updateAreasFromContainer($areas, AreaContainerInterface $areaContainer)
+    protected function updateAreasFromContainer($areas, AreaContainerInterface $areaContainer, TransformerInterface $transformerManager)
     {
-        $this->get('open_orchestra_backoffice.manager.area')->updateAreaFromContainer($areas, $areaContainer);
+        $container = $this->get('open_orchestra_backoffice.manager.area')->updateAreasFromContainer($areas, $areaContainer);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
+
+        return $transformerManager->transform($container);
     }
 }

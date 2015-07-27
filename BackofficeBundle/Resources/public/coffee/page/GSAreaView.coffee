@@ -33,7 +33,6 @@ GSAreaView = OrchestraView.extend(
     return
 
   confirmRemoveArea: (event) ->
-    event.stopImmediatePropagation()
     smartConfirm(
       'fa-trash-o',
       @$el.data('delete-confirm-question'),
@@ -41,18 +40,8 @@ GSAreaView = OrchestraView.extend(
       callBackParams:
         areaView: @
       yesCallback: (params) ->
-        params.areaView.$el.remove()
-        $.ajax
-          url: params.areaView.options.area.get("links")._self_delete
-          method: "POST"
-          error: ->
-            viewClass = appConfigurationView.getConfiguration('area', 'showOrchestraModal')
-            new viewClass(
-              body: params.areaView.$el.data('delete-error-txt')
-              title: params.areaView.$el.data('delete-error-title')
-              domContainer: $('#OrchestraBOModal')
-              entityType: 'area'
-            )
-        return
+        grid = $('.grid-stack', params.areaView.domContainer).data('gridstack')
+        grid.remove_widget(params.areaView.$el)
+        grid.container.trigger('delete')
     )
 )
