@@ -54,7 +54,7 @@ class UserRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, null, null, 0 ,5 , 4),
+            array($descriptionEntity, null, null, 0 ,5 , 5),
             array($descriptionEntity, $this->generateSearchProvider('admin'), null, 0 ,5 , 1),
             array($descriptionEntity, $this->generateSearchProvider('fakeUsername'), null, 0 ,5 , 0),
             array($descriptionEntity, $this->generateSearchProvider('', 'user'), null, 0 ,5 , 3),
