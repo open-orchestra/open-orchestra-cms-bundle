@@ -59,27 +59,28 @@ class AreaManager
         foreach ($areas as $key => $area) {
             $areaId = $area->getAreaId();
             if (array_key_exists($areaId, $newAreas)) {
-                $areas[$key]->setX($newAreas[$areaId]['x']);
-                $areas[$key]->setY($newAreas[$areaId]['y']);
-                $areas[$key]->setWidth($newAreas[$areaId]['width']);
-                $areas[$key]->setHeight($newAreas[$areaId]['height']);
+                $areas[$key]->setGridX($newAreas[$areaId]['x']);
+                $areas[$key]->setGridY($newAreas[$areaId]['y']);
+                $areas[$key]->setGridWidth($newAreas[$areaId]['width']);
+                $areas[$key]->setGridHeight($newAreas[$areaId]['height']);
                 if(preg_match('/^area-(\d+)$/', $areaId, $matches)) {
                     $rank = max($rank, $matches[1]);
                 }
+                unset($newAreas[$areaId]);
             }
             else {
                 unset($areas[$key]);
             }
         }
-        $rank++;
-        if (array_key_exists('undefined', $newAreas)) {
+        foreach ($newAreas as $key => $area) {
+            $rank++;
             $newArea = new $this->areaClass();
             $newArea->setAreaId('area-' . $rank);
             $newArea->setLabel('Area #' . $rank);
-            $newArea->setX(intval($newAreas['undefined']['x']));
-            $newArea->setY($newAreas['undefined']['y']);
-            $newArea->setWidth($newAreas['undefined']['width']);
-            $newArea->setHeight($newAreas['undefined']['height']);
+            $newArea->setGridX(intval($area['x']));
+            $newArea->setGridY($area['y']);
+            $newArea->setGridWidth($area['width']);
+            $newArea->setGridHeight($area['height']);
             $areas[] = $newArea;
         }
         $areaContainer->setAreas($areas);

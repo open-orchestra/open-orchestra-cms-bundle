@@ -38,9 +38,19 @@ GSTemplateView = OrchestraView.extend(
     areaButtonVisible = $('.show-areas', @$el).is(':hidden')
     areas = {}
     items = $.makeArray($('.grid-stack .grid-stack-item:visible'))
+    rank = -1
     $.each(items, (key, item) ->
       item = $(item).data('_gridstack_node');
-      areas[item.el.data('id')] = 
+      if item.el.data('id')
+        rank = item.el.data('id').replace(/^area-(\d+)$/, '$1');
+    )
+    $.each(items, (key, item) ->
+      item = $(item).data('_gridstack_node');
+      id = item.el.data('id')
+      if !id
+        rank++
+        id = 'area-' + rank
+      areas[id] = 
       {
         x: item.x
         y: item.y
@@ -48,6 +58,7 @@ GSTemplateView = OrchestraView.extend(
         height: item.height
       }
     )
+    $.ajaxSetup().abortXhr()
     $.ajax
       url: @options.template.get('links')._self_update_areas
       method: 'POST'

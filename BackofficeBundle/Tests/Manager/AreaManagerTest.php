@@ -441,10 +441,10 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->manager->updateAreasFromContainer($newAreas, $areaContainer)->getAreas();
 
-        Phake::verify($area0)->setX($x);
-        Phake::verify($area0)->setY($y);
-        Phake::verify($area0)->setWidth($width);
-        Phake::verify($area0)->setHeight($height);
+        Phake::verify($area0)->setGridX($x);
+        Phake::verify($area0)->setGridY($y);
+        Phake::verify($area0)->setGridWidth($width);
+        Phake::verify($area0)->setGridHeight($height);
 
         $this->assertTrue(!array_key_exists(1, $result));
         $this->assertEquals('area-1', $result[2]->getAreaId());

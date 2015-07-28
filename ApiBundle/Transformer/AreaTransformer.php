@@ -152,10 +152,10 @@ class AreaTransformer extends AbstractTransformer
         }
 
         $facade->boDirection = $area->getBoDirection();
-        $facade->x = $area->getX();
-        $facade->y = $area->getY();
-        $facade->width = $area->getWidth();
-        $facade->height = $area->getHeight();
+        $facade->gridX = intval($area->getGridX());
+        $facade->gridY = intval($area->getGridY());
+        $facade->gridWidth = intval($area->getGridWidth());
+        $facade->gridHeight = intval($area->getGridHeight());
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
