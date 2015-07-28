@@ -18,7 +18,11 @@
     </div>
 <% } %>
 
-<div role="container">
+<div role="container" class="formCreation"
+<% if (typeof type != 'undefined' && type == "listableCreation") { %>
+data-type="listableCreation"
+<% } %>
+>
     <%= html %>
     {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList.html.twig' %}
 </div>

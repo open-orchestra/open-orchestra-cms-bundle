@@ -6,7 +6,7 @@ extendView['submitAdmin'] = {
   addEventOnSave: (event) ->
     tinymce.triggerSave()
     viewContext = @
-    viewClass = appConfigurationView.getConfiguration(@options.entityType, @options.formView)
+    viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, viewContext.options.formView)
     @button = $(event.target).parent() if event.originalEvent
     form = $(event.target).closest('form')
     if form.length == 0 && (clone = $(event.target).data('clone'))
@@ -20,10 +20,18 @@ extendView['submitAdmin'] = {
             context:
               button: viewContext.button
             success: (response) ->
-              new viewClass(viewContext.addOption(
-                html: response
-                submitted: true
-              ))
+              if($(".formCreation").data('type') != "listableCreation")
+                  new viewClass(viewContext.addOption(
+                    html: response
+                    submitted: true
+                  ))
+              else
+                  successMessage = $( response )[0].innerHTML
+                  tableViewLoad($("#nav-" + viewContext.options.entityType),
+                    viewContext.options.entityType,
+                    1,
+                    successMessage
+                  );
             error: (response) ->
               new viewClass(viewContext.addOption(
                 html: response.responseText

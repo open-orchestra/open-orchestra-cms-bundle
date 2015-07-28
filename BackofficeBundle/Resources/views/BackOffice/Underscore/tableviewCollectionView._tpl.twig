@@ -21,6 +21,11 @@
             </tr>
         </thead>
         <tbody>
+        <% if (message != undefined && message != "") { %>
+            <div class="alert alert-success">
+                <%= message  %>
+            </div>
+        <% } %>
         </tbody>
     </table>
 </div>
