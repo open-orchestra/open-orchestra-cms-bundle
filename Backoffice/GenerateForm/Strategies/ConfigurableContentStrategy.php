@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
+use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy as BaseConfigurableContentStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -84,6 +85,17 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         );
 
         $builder->add('contentId', 'choice', $options);
+
+        $builder->add('contentTemplateEnabled', 'checkbox', array(
+            'label' => 'open_orchestra_backoffice.block.configurable_content.content_template_enabled.title',
+            'attr' => array('help_text' => 'open_orchestra_backoffice.block.configurable_content.content_template_enabled.helper'),
+            'required' => false,
+        ));
+        $builder->add('contentTemplate', 'tinymce', array(
+            'required' => false,
+            'label' => 'open_orchestra_backoffice.block.configurable_content.content_template',
+            'constraints' => new ContentTemplate(),
+        ));
     }
 
     /**

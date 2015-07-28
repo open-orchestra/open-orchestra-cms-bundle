@@ -1,7 +1,9 @@
 {{ display_icon('configurable_content') }}
 
 <p>
+    template enabled : <i>{{ contentTemplateEnabled }}</i><br />
     {% for attribute in contentAttributes %}
         {{ attribute.name }} : <i>{{ attribute.stringValue }}</i><br />
     {% endfor %}
+
 </p>
