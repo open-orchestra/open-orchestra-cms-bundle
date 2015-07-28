@@ -112,7 +112,7 @@ class BlockManager
             $blockRef = $node->getBlock($refBlock['blockId']);
             if (!($node->getNodeId() === $refBlock['nodeId'] || 0 === $refBlock['nodeId'])) {
                 $otherNode = $this->nodeRepository
-                    ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($refBlock['nodeId'], $node->getLanguage(), $node->getSiteId());
+                    ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($refBlock['nodeId'], $node->getLanguage(), $node->getSiteId());
                 $blockRef = $otherNode->getBlock($refBlock['blockId']);
             }
 
