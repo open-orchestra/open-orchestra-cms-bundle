@@ -38,7 +38,7 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
 
-        $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager, 'OpenOrchestra\ModelInterface\Model\AreaInterface');
+        $this->manager = new AreaManager($this->nodeRepository, $this->blockParameterManager, 'OpenOrchestra\ModelBundle\Document\Area');
     }
 
     /**
@@ -409,5 +409,46 @@ class AreaManagerTest extends \PHPUnit_Framework_TestCase
             array($node, $node2),
             array($node3, $node2),
         );
+    }
+
+    /**
+     * test updateAreasFromContainer
+     */
+    public function testUpdateAreasFromContainer()
+    {
+        $x = 1;
+        $y = 2;
+        $width = 3;
+        $height = 4;
+
+        $newAreas = array(
+            'area-0' => array('x' => $x, 'y' => $y, 'width' => $width, 'height' => $height),
+            'undefined' => array('x' => 0, 'y' => 0, 'width' => 0, 'height' => 0),
+        );
+
+        $area0 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area0)->getAreaId()->thenReturn('area-0');
+
+        $area1 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area1)->getAreaId()->thenReturn('toDelete');
+
+        $areas = new ArrayCollection();
+        $areas->add($area0);
+        $areas->add($area1);
+
+        $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($areaContainer)->getAreas()->thenReturn($areas);
+
+        $result = $this->manager->updateAreasFromContainer($newAreas, $areaContainer)->getAreas();
+
+        Phake::verify($area0)->setX($x);
+        Phake::verify($area0)->setY($y);
+        Phake::verify($area0)->setWidth($width);
+        Phake::verify($area0)->setHeight($height);
+
+        $this->assertTrue(!array_key_exists(1, $result));
+        $this->assertEquals('area-1', $result[2]->getAreaId());
+        $this->assertEquals('Area #1', $result[2]->getLabel());
+
     }
 }

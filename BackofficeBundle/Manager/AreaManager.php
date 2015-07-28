@@ -58,14 +58,14 @@ class AreaManager
         $rank = -1;
         foreach ($areas as $key => $area) {
             $areaId = $area->getAreaId();
-            if(preg_match('/^area-(\d+)$/', $areaId, $matches)) {
-                $rank = max($rank, $matches[1]);
-            }
             if (array_key_exists($areaId, $newAreas)) {
                 $areas[$key]->setX($newAreas[$areaId]['x']);
                 $areas[$key]->setY($newAreas[$areaId]['y']);
                 $areas[$key]->setWidth($newAreas[$areaId]['width']);
                 $areas[$key]->setHeight($newAreas[$areaId]['height']);
+                if(preg_match('/^area-(\d+)$/', $areaId, $matches)) {
+                    $rank = max($rank, $matches[1]);
+                }
             }
             else {
                 unset($areas[$key]);
