@@ -30,7 +30,7 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
           title: title
           entityType: entityType
           domContainer: $('#content')
-          type: "creation"
+          type: "listableCreation"
         viewClass = appConfigurationView.getConfiguration(entityType, 'addEntity')
         new viewClass(options)
   else

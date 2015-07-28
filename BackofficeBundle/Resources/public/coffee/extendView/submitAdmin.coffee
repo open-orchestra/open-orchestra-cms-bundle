@@ -20,7 +20,7 @@ extendView['submitAdmin'] = {
             context:
               button: viewContext.button
             success: (response) ->
-              if($(".formCreation").data('type') != "creation")
+              if($(".formCreation").data('type') != "listableCreation")
                   new viewClass(viewContext.addOption(
                     html: response
                     submitted: true

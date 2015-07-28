@@ -156,7 +156,7 @@ TableviewCollectionView = OrchestraView.extend(
           html: response
           extendView: [ 'generateId' ]
           domContainer: $('#content')
-          type: "creation"
+          type: "listableCreation"
         ))
 
   changePage : (event) ->
