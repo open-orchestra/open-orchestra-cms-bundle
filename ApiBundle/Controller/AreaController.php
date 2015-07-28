@@ -95,8 +95,8 @@ class AreaController extends BaseController
     }
 
     /**
-     * @param string $areaId
-     * @param string $nodeId
+     * @param string      $areaId
+     * @param string|null $nodeId
      *
      * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="open_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
@@ -105,35 +105,11 @@ class AreaController extends BaseController
      *
      * @return Response
      */
-    public function deleteAreaFromNodeAction($areaId, $nodeId)
+    public function deleteAreaInNodeAction($areaId, $nodeId)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
-
-        $this->deleteAreaFromContainer($areaId, $node);
-
+        $areaContainer = $this->get('open_orchestra_model.repository.node')->find($nodeId);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
-
-        return new Response();
-    }
-
-    /**
-     * @param string $areaId
-     * @param string $templateId
-     *
-     * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_delete_in_template")
-     * @Config\Method({"POST", "DELETE"})
-     *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @return Response
-     */
-    public function deleteAreaFromTemplateAction($areaId, $templateId)
-    {
-        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
-
         $this->deleteAreaFromContainer($areaId, $areaContainer);
-
-        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($areaContainer));
 
         return new Response();
     }
@@ -142,31 +118,63 @@ class AreaController extends BaseController
      * @param string      $areaId
      * @param string      $parentAreaId
      * @param string|null $nodeId
+     *
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area")
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return Response
+     */
+    public function deleteAreaInNodeAreaAction($areaId, $parentAreaId, $nodeId)
+    {
+        $nodeRepository= $this->get('open_orchestra_model.repository.node');
+        $node = $nodeRepository->find($nodeId);
+        $areaContainer = $nodeRepository->findAreaByAreaId($node, $areaId);
+        $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
+        $this->deleteAreaFromContainer($areaId, $areaContainer);
+
+        return new Response();
+    }
+
+    /**
+     * @param string      $areaId
      * @param string|null $templateId
      *
-     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area", defaults={"templateId" = null})
-     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area", defaults={"nodeId" = null})
+     * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
-    public function deleteAreaFromAreaAction($areaId, $parentAreaId, $nodeId = null, $templateId = null)
+    public function deleteAreaInTemplateAction($areaId, $templateId)
     {
-        $areaContainer = null;
+        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($areaContainer));
+        $this->deleteAreaFromContainer($areaId, $areaContainer);
 
-        if ($nodeId) {
-            $nodeRepository = $this->get('open_orchestra_model.repository.node');
-            $node = $nodeRepository->find($nodeId);
-            $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
-        } else if ($templateId) {
-            $areaContainer = $this->get('open_orchestra_model.repository.template')->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
-        }
+        return new Response();
+    }
 
-        if ($areaContainer) {
-            $this->deleteAreaFromContainer($areaId, $areaContainer);
-        }
+    /**
+     * @param string      $areaId
+     * @param string      $parentAreaId
+     * @param string|null $templateId
+     *
+     * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area")
+     * @Config\Method({"POST", "DELETE"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return Response
+     */
+    public function deleteAreaInTemplateAreaAction($areaId, $parentAreaId, $templateId)
+    {
+        $templateRepository = $this->get('open_orchestra_model.repository.template');
+        $template = $templateRepository->findOneByTemplateId($templateId);
+        $areaContainer = $templateRepository->findAreaByTemplateIdAndAreaId($templateId, $parentAreaId);
+        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($template));
+        $this->deleteAreaFromContainer($areaId, $areaContainer);
 
         return new Response();
     }
@@ -179,8 +187,7 @@ class AreaController extends BaseController
      */
     protected function deleteAreaFromContainer($areaId, AreaContainerInterface $areaContainer)
     {
-        $this->get('open_orchestra_backoffice.manager.area')->deleteAreaFromAreas($areaContainer, $areaId);
-
+        $this->get('open_orchestra_backoffice.manager.area')->deleteAreaFromContainer($areaContainer, $areaId);
         $this->get('doctrine.odm.mongodb.document_manager')->flush();
     }
 }

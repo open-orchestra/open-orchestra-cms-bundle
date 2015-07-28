@@ -112,27 +112,19 @@ AreaView = OrchestraView.extend(
       callBackParams:
         areaView: @
       yesCallback: (params) ->
-        params.areaView.removeArea()
+        params.areaView.$el.remove()
+        refreshUl params.areaView.options.domContainer
+        $.ajax
+          url: params.areaView.options.area.get("links")._self_delete
+          method: "POST"
+          error: ->
+            viewClass = appConfigurationView.getConfiguration('area', 'showOrchestraModal')
+            new viewClass(
+              body: params.areaView.$el.data('delete-error-txt')
+              title: params.areaView.$el.data('delete-error-title')
+              domContainer: $('#OrchestraBOModal')
+              entityType: 'area'
+            )
+        return
     )
-
-  removeArea: () ->
-    @$el.remove()
-    refreshUl @options.domContainer
-    @sendRemoveArea()
-    return
-
-  sendRemoveArea: ->
-    currentView = @
-    $.ajax
-      url: @options.area.get("links")._self_delete
-      method: "POST"
-      error: ->
-        viewClass = appConfigurationView.getConfiguration('area', 'showOrchestraModal')
-        new viewClass(
-          body: currentView.$el.data('delete-error-txt')
-          title: currentView.$el.data('delete-error-title')
-          domContainer: $('#OrchestraBOModal')
-          entityType: 'area'
-        )
-    return
 )

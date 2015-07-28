@@ -159,6 +159,10 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($area)->getLabel()->thenReturn('label');
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getHtmlClass()->thenReturn('html_class');
+        Phake::when($area)->getXInGrid()->thenReturn(0);
+        Phake::when($area)->getYInGrid()->thenReturn(0);
+        Phake::when($area)->getWidthInGrid()->thenReturn(0);
+        Phake::when($area)->getHeightInGrid()->thenReturn(0);
         Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
 
         $areaFacade = $this->areaTransformer->transformFromTemplate($area, $template, $parentAreaId);

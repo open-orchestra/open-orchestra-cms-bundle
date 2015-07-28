@@ -26,7 +26,6 @@ class TemplateTransformer extends AbstractTransformer
         }
 
         $facade = new TemplateFacade();
-
         foreach ($template->getAreas() as $area) {
             $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $template));
         }
@@ -45,6 +44,11 @@ class TemplateTransformer extends AbstractTransformer
 
         $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
             array('templateId' => $template->getTemplateId())
+        ));
+
+        $facade->addLink('_self_update_areas', $this->generateRoute('open_orchestra_api_areas_update_in_template',
+            array(
+                'templateId' => $template->getTemplateId())
         ));
 
         return $facade;

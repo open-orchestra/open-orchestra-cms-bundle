@@ -12,6 +12,7 @@ var OrchestraBORouter = Backbone.Router.extend({
     'node/show/:nodeId/:language': 'showNodeWithLanguage',
     'node/show/:nodeId/:language/:version': 'showNodeWithLanguageAndVersion',
     'template/show/:templateId': 'showTemplate',
+    'gs_template/show/:templateId': 'showGSTemplate',
     ':entityType/list(/:page)': 'listEntities',
     ':entityType/add': 'addEntity',
     ':entityType/edit/:entityId(/language_:language)(/version_:version)': 'showEntity',
@@ -62,6 +63,12 @@ var OrchestraBORouter = Backbone.Router.extend({
   {
     this.initDisplayRouteChanges();
     showTemplate($("#nav-template-" + templateId).data("url"));
+  },
+
+  showGSTemplate: function(templateId)
+  {
+    this.initDisplayRouteChanges();
+    showGSTemplate($("#nav-gs-template-" + templateId).data("url"));
   },
 
   listEntities: function(entityType, page)

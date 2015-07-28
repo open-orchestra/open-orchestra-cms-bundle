@@ -2,6 +2,7 @@ parameters:
     open_orchestra_backoffice.left_panel_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\LeftPanelManager
     open_orchestra_backoffice.left_panel.node.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy
     open_orchestra_backoffice.left_panel.template.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy
+    open_orchestra_backoffice.left_panel.gs_template.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\GSTreeTemplatePanelStrategy
     open_orchestra_backoffice.left_panel.content_type.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy
     open_orchestra_backoffice.left_panel.general_node.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy
     open_orchestra_backoffice.left_panel.administration.class: OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy
@@ -20,6 +21,12 @@ services:
             - { name: open_orchestra_backoffice.left_panel.strategy }
     open_orchestra_backoffice.left_panel.template:
         class: %open_orchestra_backoffice.left_panel.template.class%
+        arguments:
+            - @open_orchestra_model.repository.template
+        tags:
+            - { name: open_orchestra_backoffice.left_panel.strategy }
+    open_orchestra_backoffice.left_panel.gs_template:
+        class: %open_orchestra_backoffice.left_panel.gs_template.class%
         arguments:
             - @open_orchestra_model.repository.template
         tags:

@@ -38,7 +38,7 @@ NodeView = OrchestraView.extend(
     )
     @addAreasToView(@options.node.get('areas'))
     @addListBlockToView()
-    @addConfigurationButton('node')
+    @addConfigurationButton()
     if @options.node.attributes.status.published
       $('.js-widget-blockpanel', @$el).hide()
     return

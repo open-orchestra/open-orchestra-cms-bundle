@@ -2,6 +2,7 @@ extendView = extendView || {}
 extendView['addArea'] = {
   addAreasToView: (areas) ->
     @areaContainer = @$el.find('.ui-model-areas').first()
+    @areaContainer.html ''
     for index of areas
       @addAreaToView(areas[index])
     refreshUl @areaContainer
@@ -9,7 +10,7 @@ extendView['addArea'] = {
   addAreaToView: (area) ->
     areaElement = new Area
     areaElement.set area
-    areaViewClass = appConfigurationView.getConfiguration('area', 'addArea')
+    areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addArea')
     new areaViewClass(
       area: areaElement
       configuration: areaElement
