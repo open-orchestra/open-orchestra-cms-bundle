@@ -77,11 +77,7 @@ class ThemeController extends AbstractAdminController
         if ($this->handleForm($form, $message, $theme)) {
             $this->dispatchEvent(ThemeEvents::THEME_CREATE, new ThemeEvent($theme));
 
-            return $this->redirect(
-                $this->generateUrl('open_orchestra_backoffice_theme_form', array(
-                    'themeId' => $theme->getId(),
-                ))
-            );
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);

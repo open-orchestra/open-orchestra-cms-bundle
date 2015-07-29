@@ -41,9 +41,7 @@ class RedirectionController extends AbstractAdminController
         if ($this->handleForm($form, $message, $redirection)) {
             $this->dispatchEvent(RedirectionEvents::REDIRECTION_CREATE, new RedirectionEvent($redirection));
 
-            return $this->redirect($this->generateUrl('open_orchestra_backoffice_redirection_form', array(
-                'redirectionId' => $redirection->getId()
-            )));
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);

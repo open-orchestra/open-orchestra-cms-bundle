@@ -20,18 +20,18 @@ extendView['submitAdmin'] = {
             context:
               button: viewContext.button
             success: (response) ->
-              if($(".formCreation").data('type') != "listableCreation")
-                new viewClass(viewContext.addOption(
-                  html: response
-                  submitted: true
-                ))
-              else
+              if(form.addClass('new'))
                 displayRoute = $("#nav-" + viewContext.options.entityType).attr('href')
                 Backbone.history.navigate(displayRoute, {trigger: true})
                 viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showFlashBag')
                 new viewClass(viewContext.addOption(
                   html: response
                   domContainer: $('h1.page-title').parent()
+                ))
+              else
+                new viewClass(viewContext.addOption(
+                  html: response
+                  submitted: true
                 ))
             error: (response) ->
               new viewClass(viewContext.addOption(

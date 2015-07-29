@@ -66,10 +66,9 @@ class StatusController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($this->handleForm($form, $message, $status)) {
-            $url = $this->generateUrl('open_orchestra_backoffice_status_form', array('statusId' => $status->getId()));
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
 
-            return $this->redirect($url);
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);

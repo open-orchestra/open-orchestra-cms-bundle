@@ -41,9 +41,7 @@ class GroupController extends AbstractAdminController
         if ($this->handleForm($form, $message, $group)) {
             $this->dispatchEvent(GroupEvents::GROUP_CREATE, new GroupEvent($group));
 
-            return $this->redirect($this->generateUrl('open_orchestra_backoffice_group_form', array(
-                'groupId' => $group->getId()
-            )));
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);
