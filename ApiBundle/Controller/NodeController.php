@@ -235,7 +235,7 @@ class NodeController extends BaseController
      */
     protected function findOneNode($nodeId, $language, $siteId, $version = null)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version);
+        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
 
         return $node;
     }

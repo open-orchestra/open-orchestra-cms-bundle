@@ -83,7 +83,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId)->thenReturn($node0);
         Phake::when($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, $statusId)->thenReturn($node1);
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($node2);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node2);
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($status);
 
         $alteredNode = $this->manager->duplicateNode($nodeId, $siteId, $language);
@@ -146,8 +146,8 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($nodeId, $newNode->getRoutePattern());
         $this->assertEquals($nodeId, $newNode->getName());
         $this->assertEquals($language, $newNode->getLanguage());
-        $this->assertEquals(false, $newNode->getInFooter());
-        $this->assertEquals(false, $newNode->getInMenu());
+        $this->assertEquals(false, $newNode->isInFooter());
+        $this->assertEquals(false, $newNode->isInMenu());
         $this->assertEquals(1, $newNode->getVersion());
 
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
