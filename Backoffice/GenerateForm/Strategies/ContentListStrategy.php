@@ -47,7 +47,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'label' => 'open_orchestra_backoffice.form.content_list.node',
             'constraints' => new NotBlank(),
         ));
-        $builder->add('characterNumber', 'text', array(
+        $builder->add('characterNumber', 'integer', array(
             'empty_data' => 50,
             'constraints' => new Type('integer'),
             'label' => 'open_orchestra_backoffice.form.content_list.nb_characters',

@@ -292,6 +292,10 @@ open_orchestra_backoffice:
             contentTypeId: Choisissez un type de contenu
             contentId: Choisissez un contenu
             description: Affiche un contenu sélectionné.
+            content_template: Gabarit à utiliser pour afficher le contenu
+            content_template_enabled:
+                title: Usage du gabarit
+                helper: Usage du gabarit
         contact:
             title: Bloc contact
             description: Affiche un formulaire de contact.

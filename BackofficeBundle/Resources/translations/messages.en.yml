@@ -292,6 +292,10 @@ open_orchestra_backoffice:
             contentTypeId: Choose a content type
             contentId: Choose a content
             description: Display selected content.
+            content_template: Template to use to display the content
+            content_template_enabled:
+                title: Template usage
+                helper: Template usage
         contact:
             title: Contact block
             description: Display a contact form.

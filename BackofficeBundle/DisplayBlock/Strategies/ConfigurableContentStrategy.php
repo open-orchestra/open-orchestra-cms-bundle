@@ -53,7 +53,10 @@ class ConfigurableContentStrategy extends AbstractStrategy
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:Block/ConfigurableContent:show.html.twig',
-            array('contentAttributes' => $contentAttributes)
+            array(
+                'contentAttributes' => $contentAttributes,
+                'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
+            )
         );
     }
 
