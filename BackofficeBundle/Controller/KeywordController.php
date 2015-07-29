@@ -59,13 +59,12 @@ class KeywordController extends AbstractAdminController
         /** @var KeywordInterface $keyword */
         $keyword = new $keywordClass();
 
-        $form = $this->createForm(
-            'keyword',
-            $keyword,
-            array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
-            )
-        );
+        $form = $this->createForm('keyword', $keyword, array(
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
+            'method' => 'POST',
+        ));
+
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.keyword.creation');
 

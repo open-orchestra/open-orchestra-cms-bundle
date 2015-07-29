@@ -64,14 +64,11 @@ class SiteController extends AbstractAdminController
         $siteAlias = new $siteAliasClass();
 
         $site->addAlias($siteAlias);
-        $form = $this->createForm(
-            'site',
-            $site,
-            array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
-                'method' => 'POST',
-            )
-        );
+        $form = $this->createForm('site', $site, array(
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
+            'method' => 'POST',
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.website.creation');

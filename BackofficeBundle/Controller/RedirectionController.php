@@ -33,8 +33,11 @@ class RedirectionController extends AbstractAdminController
         $redirection = new $redirectionClass();
 
         $form = $this->createForm('redirection', $redirection, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new')
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
+            'method' => 'POST',
         ));
+
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.redirection.new.success');
 

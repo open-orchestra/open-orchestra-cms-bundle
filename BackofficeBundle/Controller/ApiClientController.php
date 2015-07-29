@@ -26,11 +26,11 @@ class ApiClientController extends AbstractAdminController
         $apiClientClass = $this->container->getParameter('open_orchestra_api.document.api_client.class');
         $apiClient = new $apiClientClass();
 
-        $form = $this->createForm(
-            'api_client',
-            $apiClient,
-            array('action' => $this->generateUrl('open_orchestra_backoffice_api_client_new'))
-        );
+        $form = $this->createForm('api_client', $apiClient, array(
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_api_client_new'),
+            'method' => 'POST',
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.api_client.new.success');

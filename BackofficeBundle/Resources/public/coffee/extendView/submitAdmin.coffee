@@ -20,7 +20,7 @@ extendView['submitAdmin'] = {
             context:
               button: viewContext.button
             success: (response) ->
-              if(form.addClass('new'))
+              if(form.hasClass('new'))
                 displayRoute = $("#nav-" + viewContext.options.entityType).attr('href')
                 Backbone.history.navigate(displayRoute, {trigger: true})
                 viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showFlashBag')

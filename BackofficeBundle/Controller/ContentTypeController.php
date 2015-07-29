@@ -31,7 +31,7 @@ class ContentTypeController extends AbstractAdminController
         $newContentType = $this->get('open_orchestra_backoffice.manager.content_type')->duplicate($contentType);
 
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_form', array('contentTypeId' => $contentTypeId));
-        $form = $this->createContentTypeForm($request, $action, $newContentType);
+        $form = $this->createContentTypeForm($request, array('action' => $action), $newContentType);
 
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
@@ -61,7 +61,7 @@ class ContentTypeController extends AbstractAdminController
         $contentType = $this->get('open_orchestra_backoffice.manager.content_type')->initializeNewContentType($contentTypeClass);
 
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_new', array());
-        $form = $this->createContentTypeForm($request, $action, $contentType);
+        $form = $this->createContentTypeForm($request, array('action' => $action, 'attr' => array('class' => 'new')), $contentType);
 
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
@@ -86,10 +86,9 @@ class ContentTypeController extends AbstractAdminController
      *
      * @return \Symfony\Component\Form\Form
      */
-    protected function createContentTypeForm(Request $request, $action, ContentTypeInterface $contentType)
+    protected function createContentTypeForm(Request $request, $option, ContentTypeInterface $contentType)
     {
         $method = "POST";
-        $option = array('action' => $action);
         if ("PATCH" === $request->getMethod()) {
             $option["validation_groups"] = false;
             $method = "PATCH";

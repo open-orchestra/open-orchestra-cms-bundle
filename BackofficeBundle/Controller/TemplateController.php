@@ -71,10 +71,11 @@ class TemplateController extends AbstractAdminController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
 
         if ($this->handleForm($form, $message, $template)) {
-            $url = $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $template->getTemplateId()));
             $this->dispatchEvent(TemplateEvents::TEMPLATE_CREATE, new TemplateEvent($template));
 
-            return $this->redirect($url);
+            return $this->redirect($this->generateUrl('open_orchestra_backoffice_template_form', array(
+                'templateId' => $template->getTemplateId()
+            )));
         }
 
         return $this->renderAdminForm($form);
