@@ -30,12 +30,14 @@ class StatusController extends AbstractAdminController
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
 
-        $url = $this->generateUrl('open_orchestra_backoffice_status_form', array('statusId' => $statusId));
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.success');
+        $form = $this->createForm('status', $status, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_status_form', array(
+                'statusId' => $statusId,
+            )))
+        );
 
-        $form = $this->generateForm($status, $url);
         $form->handleRequest($request);
-
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(StatusEvents::STATUS_UPDATE, new StatusEvent($status));
         }
@@ -59,38 +61,21 @@ class StatusController extends AbstractAdminController
         /** @var StatusInterface $status */
         $status = new $statusClass();
 
-        $url = $this->generateUrl('open_orchestra_backoffice_status_new');
+        $form = $this->createForm('status', $status, array(
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_status_new'),
+            'method' => 'POST',
+        ));
+
+        $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.status.creation');
 
-        $form = $this->generateForm($status, $url);
-        $form->handleRequest($request);
-
         if ($this->handleForm($form, $message, $status)) {
-            $url = $this->generateUrl('open_orchestra_backoffice_status_form', array('statusId' => $status->getId()));
             $this->dispatchEvent(StatusEvents::STATUS_CREATE, new StatusEvent($status));
 
-            return $this->redirect($url);
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);
-    }
-
-    /**
-     * @param StatusInterface $status
-     * @param string          $url
-     *
-     * @return Form
-     */
-    protected function generateForm(StatusInterface $status, $url)
-    {
-        $form = $this->createForm(
-            'status',
-            $status,
-            array(
-                'action' => $url,
-            )
-        );
-
-        return $form;
     }
 }

@@ -17,6 +17,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/security.js',
         'web/built/openorchestrabackoffice/js/SmartConfirmView.js',
         'web/built/openorchestrabackoffice/js/AdminFormView.js',
+        'web/built/openorchestrabackoffice/js/FlashBagView.js',
         'web/built/openorchestrabackoffice/js/generateId.js',
 
         //--[ EXTEND VIEWS ]--//

@@ -62,14 +62,12 @@ class ThemeController extends AbstractAdminController
     {
         $themeClass = $this->container->getParameter('open_orchestra_model.document.theme.class');
         $theme = new $themeClass();
-        $form = $this->createForm(
-            'theme',
-            $theme,
-            array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_theme_new'),
-                'method' => 'POST',
-            )
-        );
+
+        $form = $this->createForm('theme', $theme, array(
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_theme_new'),
+            'method' => 'POST',
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.theme.creation');
@@ -77,11 +75,7 @@ class ThemeController extends AbstractAdminController
         if ($this->handleForm($form, $message, $theme)) {
             $this->dispatchEvent(ThemeEvents::THEME_CREATE, new ThemeEvent($theme));
 
-            return $this->redirect(
-                $this->generateUrl('open_orchestra_backoffice_theme_form', array(
-                    'themeId' => $theme->getId(),
-                ))
-            );
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);

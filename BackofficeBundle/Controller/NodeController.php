@@ -68,11 +68,12 @@ class NodeController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($this->handleForm($form, $message, $node)) {
-            $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $node->getId()));
             $this->dispatchEvent(NodeEvents::NODE_CREATION, new NodeEvent($node));
 
-            return $this->redirect($url);
-        };
+            return $this->redirect($this->generateUrl('open_orchestra_backoffice_node_form', array(
+                'id' => $node->getId()
+            )));
+        }
 
         return $this->renderAdminForm($form);
     }

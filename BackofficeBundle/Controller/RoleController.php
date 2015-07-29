@@ -33,7 +33,9 @@ class RoleController extends AbstractAdminController
         $role = new $roleClass();
 
         $form = $this->createForm('role', $role, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_role_new')
+            'attr' => array('class' => 'new'),
+            'action' => $this->generateUrl('open_orchestra_backoffice_role_new'),
+            'method' => 'POST',
         ));
 
         $form->handleRequest($request);
@@ -41,9 +43,7 @@ class RoleController extends AbstractAdminController
         if ($this->handleForm($form, $message, $role)) {
             $this->dispatchEvent(RoleEvents::ROLE_CREATE, new RoleEvent($role));
 
-            return $this->redirect($this->generateUrl('open_orchestra_backoffice_role_form', array(
-                'roleId' => $role->getId()
-            )));
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->renderAdminForm($form);

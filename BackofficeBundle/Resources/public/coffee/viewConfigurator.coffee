@@ -21,6 +21,7 @@ OrchestraViewConfigurator = ->
     'showVersionSelect': VersionSelectView
     'showOrchestraModal': OrchestraModalView
     'addFieldOptionDefaultValue': FieldOptionDefaultValueView
+    'showFlashBag': FlashBagView
 
   setConfiguration: (entityType, action, view) ->
     @configurations[entityType] = [] if typeof @configurations[entityType] == "undefined"
