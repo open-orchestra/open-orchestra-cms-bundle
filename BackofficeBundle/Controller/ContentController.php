@@ -107,11 +107,7 @@ class ContentController extends AbstractAdminController
         if ($this->handleForm($form, $message, $content)) {
             $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
 
-            return $this->redirect(
-                $this->generateUrl('open_orchestra_backoffice_content_form', array(
-                    'contentId' => $content->getContentId()
-                ))
-            );
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
         }
 
         return $this->render(

@@ -1,4 +1,4 @@
-tableViewLoad = (link, entityType, page, flashMessage = "") ->
+tableViewLoad = (link, entityType, page) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   translatedHeader = link.data('translated-header').replace(/\s/g, '').split(",") if link.data('translated-header') != undefined
   visibleElements = link.data('visible-elements').replace(/\s/g, '').split(",") if link.data('visible-elements') != undefined
@@ -15,7 +15,6 @@ tableViewLoad = (link, entityType, page, flashMessage = "") ->
     url : link.data('url')
     entityType: entityType
     domContainer: $("#content")
-    flashMessage: flashMessage
   )
 
 entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage) ->

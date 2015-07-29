@@ -15,7 +15,6 @@ TableviewCollectionView = OrchestraView.extend(
       'title'
       'url'
       'page'
-      'flashMessage'
     ])
     @options.order = [ 0, 'asc' ] if @options.order == undefined
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
@@ -29,7 +28,7 @@ TableviewCollectionView = OrchestraView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView',
-      {displayedElements: @options.translatedHeader, message: @options.flashMessage}
+      {displayedElements: @options.translatedHeader}
     )
     @options.domContainer.html @$el
 
