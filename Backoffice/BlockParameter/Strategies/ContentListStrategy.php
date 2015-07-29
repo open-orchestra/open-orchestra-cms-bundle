@@ -34,6 +34,6 @@ class ContentListStrategy implements BlockParameterInterface
      */
     public function getName()
     {
-        return 'content';
+        return 'content_list';
     }
 }
