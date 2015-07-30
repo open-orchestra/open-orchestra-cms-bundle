@@ -1,17 +1,24 @@
 .nav-tabs > li > a {
     height: 34px;
 }
-.form-horizontal li .control-label {
-    padding-top: 0px;
-    float: none;
+
+.tab-content > .tab-pane {
+    display: block;
+    margin-bottom: -32px;
+    position: relative;
+    visibility: visible;
+    z-index: 1;
+}
+.tab-content > .active ~ .tab-pane {
+    top: -32px;
 }
 
-table.table thead .sorting::after {
-    content: none !important;
+.tab-content > .active {
+    margin-bottom: 0;
+    top: 0;
+    z-index: 2;
 }
-table.table thead .sorting_asc::after {
-    content: none !important;
-}
-table.table thead .sorting_desc::after {
-    content: none !important;
+
+.tab-content .form-group {
+    margin-bottom: 0;
 }

@@ -19,6 +19,7 @@ module.exports = {
        'web/built/openorchestrabackoffice/css/smartadminPatches/widget.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/checkbox.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/tab.css',
+       'web/built/openorchestrabackoffice/css/smartadminPatches/table.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/form.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/minicolors.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/logo.css',
