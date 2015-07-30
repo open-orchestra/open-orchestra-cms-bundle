@@ -111,6 +111,10 @@ module.exports = {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/pattern/overlay-pattern.png',
         dest: 'web/img/pattern/overlay-pattern.png'
     },
+    smartadmin_messagebox_sounds: {
+        src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/messagebox.mp3',
+        dest: 'web/sound/messagebox.mp3'
+    },
     smartadmin_flags: {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/flags/flags.png',
         dest: 'web/img/flags/flags.png'
