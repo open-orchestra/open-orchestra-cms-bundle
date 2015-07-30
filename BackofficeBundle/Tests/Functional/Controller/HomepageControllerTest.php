@@ -22,7 +22,7 @@ class HomepageControllerTest extends AbstractControllerTest
         $this->assertEquals(1, $crawler->filter('a:contains("Communauté")')->count());
         $this->assertEquals(1, $crawler->filter('a:contains("Actualité")')->count());
         $this->assertEquals(1, $crawler->filter('a:contains("Mentions Légales")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Home")')->count());
+        $this->assertEquals(2, $crawler->filter('a:contains("Home")')->count());
     }
 
     /**
@@ -41,6 +41,6 @@ class HomepageControllerTest extends AbstractControllerTest
 
         $crawler = $this->client->request('GET', '/admin/');
 
-        $this->assertEquals($nbLink + 1, $crawler->filter('a')->count());
+        $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
     }
 }
