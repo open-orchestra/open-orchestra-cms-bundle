@@ -67,7 +67,7 @@ class UserRepositoryTest extends KernelTestCase
     public function testCount()
     {
         $users = $this->repository->count();
-        $this->assertEquals(4, $users);
+        $this->assertEquals(5, $users);
     }
 
     /**
