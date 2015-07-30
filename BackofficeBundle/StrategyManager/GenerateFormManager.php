@@ -57,6 +57,25 @@ class GenerateFormManager
     }
 
     /**
+     * Get the required Uri parameters for the block
+     *
+     * @param BlockInterface $block
+     *
+     * @return array
+     */
+    public function getRequiredUriParameter(BlockInterface $block)
+    {
+        /** @var GenerateFormInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                return $strategy->getRequiredUriParameter();
+            }
+        }
+
+        return array();
+    }
+
+    /**
      * @param BlockInterface $block
      *
      * @throws MissingGenerateFormStrategyException

@@ -40,6 +40,11 @@ class ContentStrategy extends AbstractBlockStrategy
         ));
     }
 
+    public function getRequiredUriParameter()
+    {
+        return array('contentId');
+    }
+
     /**
      * @return string
      */
