@@ -77,7 +77,7 @@ class UserController extends BaseController
     public function deleteAction($userId)
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('document_manager');
         $this->dispatchEvent(UserEvents::USER_DELETE, new UserEvent($user));
         $dm->remove($user);
         $dm->flush();

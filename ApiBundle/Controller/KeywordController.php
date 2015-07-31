@@ -98,7 +98,7 @@ class KeywordController extends BaseController
     public function deleteAction($keywordId)
     {
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('document_manager');
         $this->dispatchEvent(KeywordEvents::KEYWORD_DELETE, new KeywordEvent($keyword));
         $dm->remove($keyword);
         $dm->flush();

@@ -29,7 +29,7 @@ abstract class AbstractAdminController extends Controller
     protected function handleForm(FormInterface $form, $successMessage, $itemToPersist = null)
     {
         if ($form->isValid()) {
-            $documentManager = $this->get('doctrine.odm.mongodb.document_manager');
+            $documentManager = $this->get('document_manager');
 
             if ($itemToPersist) {
                 $documentManager->persist($itemToPersist);

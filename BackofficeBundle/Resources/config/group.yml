@@ -5,7 +5,7 @@ services:
     open_orchestra_user.repository.group:
         class: %open_orchestra_user.repository.group.class%
         factory:
-            - @doctrine.odm.mongodb.document_manager
+            - @document_manager
             - getRepository
         calls:
             - [setAggregationQueryBuilder, [@doctrine_mongodb.odm.default_aggregation_query]]

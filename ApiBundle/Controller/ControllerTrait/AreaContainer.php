@@ -17,12 +17,12 @@ trait AreaContainer
      * @param AreaContainerInterface $areaContainer
      * @param TransformerInterface   $transformerManager
      *
-     * return AreaContainerInterface
+     *  @return AreaContainerInterface
      */
     protected function updateAreasFromContainer($areas, AreaContainerInterface $areaContainer, TransformerInterface $transformerManager)
     {
         $container = $this->get('open_orchestra_backoffice.manager.area')->updateAreasFromContainer($areas, $areaContainer);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('document_manager')->flush();
 
         return $transformerManager->transform($container);
     }

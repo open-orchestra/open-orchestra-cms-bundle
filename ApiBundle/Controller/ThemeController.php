@@ -66,7 +66,7 @@ class ThemeController extends BaseController
     public function deleteAction($themeId)
     {
         $theme = $this->get('open_orchestra_model.repository.theme')->find($themeId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('document_manager');
         $this->dispatchEvent(ThemeEvents::THEME_DELETE, new ThemeEvent($theme));
         $dm->remove($theme);
         $dm->flush();

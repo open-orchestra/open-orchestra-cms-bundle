@@ -78,7 +78,7 @@ class RoleController extends BaseController
     public function deleteAction($roleId)
     {
         $role = $this->get('open_orchestra_model.repository.role')->find($roleId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('document_manager');
         $this->dispatchEvent(RoleEvents::ROLE_DELETE, new RoleEvent($role));
         $dm->remove($role);
         $dm->flush();

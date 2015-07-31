@@ -80,7 +80,7 @@ class RedirectionController extends BaseController
     public function deleteAction($redirectionId)
     {
         $redirection = $this->get('open_orchestra_model.repository.redirection')->find($redirectionId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('document_manager');
         $this->dispatchEvent(RedirectionEvents::REDIRECTION_DELETE, new RedirectionEvent($redirection));
         $dm->remove($redirection);
         $dm->flush();

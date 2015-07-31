@@ -76,7 +76,7 @@ class GroupController extends BaseController
     public function deleteAction($groupId)
     {
         $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('document_manager');
         $this->dispatchEvent(GroupEvents::GROUP_DELETE, new GroupEvent($group));
         $dm->remove($group);
         $dm->flush();

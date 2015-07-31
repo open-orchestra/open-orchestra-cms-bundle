@@ -76,7 +76,7 @@ class NodeController extends BaseController
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
             }
 
-            $dm = $this->get('doctrine.odm.mongodb.document_manager');
+            $dm = $this->get('document_manager');
             $dm->persist($node);
 
             if ($oldNode) {
@@ -105,7 +105,7 @@ class NodeController extends BaseController
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId, $siteId);
         $node = current($nodes);
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('document_manager')->flush();
         $this->dispatchEvent(NodeEvents::NODE_DELETE, new NodeEvent($node));
 
         return new Response('', 200);
@@ -220,7 +220,7 @@ class NodeController extends BaseController
 
         $this->get('open_orchestra_backoffice.manager.node')->orderNodeChildren($orderedNode, $node);
 
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('document_manager')->flush();
 
         return new Response('', 200);
     }

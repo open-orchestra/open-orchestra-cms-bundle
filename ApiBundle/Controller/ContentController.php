@@ -93,7 +93,7 @@ class ContentController extends BaseController
             }
             $oldContent = $this->findOneContent($contentId, $sourceLanguage);
             $content = $this->get('open_orchestra_backoffice.manager.content')->createNewLanguageContent($oldContent, $language);
-            $dm = $this->get('doctrine.odm.mongodb.document_manager');
+            $dm = $this->get('document_manager');
             $dm->persist($content);
             $dm->flush($content);
         }
@@ -160,7 +160,7 @@ class ContentController extends BaseController
     {
         $content = $this->get('open_orchestra_model.repository.content')->find($contentId);
         $content->setDeleted(true);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('document_manager')->flush();
         $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
 
         return new Response('', 200);
@@ -184,7 +184,7 @@ class ContentController extends BaseController
         $newContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content);
 
 
-        $em = $this->get('doctrine.odm.mongodb.document_manager');
+        $em = $this->get('document_manager');
         $em->persist($newContent);
         $em->flush();
 
