@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 /**
@@ -25,7 +25,7 @@ class BlockNodePatternValidator extends ConstraintValidator
      * @param EngineInterface     $templating
      * @param TranslatorInterface $translator
      */
-    public function __construct(GenerateFormManager $generateFormManager, SessionInterface $session, EngineInterface $templating, TranslatorInterface $translator)
+    public function __construct(GenerateFormManager $generateFormManager, Session $session, EngineInterface $templating, TranslatorInterface $translator)
     {
         $this->generateFormManager = $generateFormManager;
         $this->session = $session;
@@ -57,8 +57,8 @@ class BlockNodePatternValidator extends ConstraintValidator
             }
         }
         if (!$isValid) {
-            $response = $this->templating->renderResponse('BraincraftedBootstrapBundle::flash.html.twig');
-            $this->context->buildViolation($response->getContent())
+            $response = $this->templating->render('BraincraftedBootstrapBundle::flash.html.twig');
+            $this->context->buildViolation($response)
                 ->atPath('BlockNodePattern')
                 ->addViolation();
         }
