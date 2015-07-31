@@ -6,20 +6,31 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class BlockNodePatternValidator
  */
 class BlockNodePatternValidator extends ConstraintValidator
 {
     protected $generateFormManager;
+    protected $session;
+    protected $templating;
+    protected $translator;
 
     /**
      * @param GenerateFormManager $generateFormManager
+     * @param SessionInterface    $session
+     * @param EngineInterface     $templating
+     * @param TranslatorInterface $translator
      */
-    public function __construct(GenerateFormManager $generateFormManager)
+    public function __construct(GenerateFormManager $generateFormManager, SessionInterface $session, EngineInterface $templating, TranslatorInterface $translator)
     {
         $this->generateFormManager = $generateFormManager;
+        $this->session = $session;
+        $this->templating = $templating;
+        $this->translator = $translator;
     }
 
     /**
@@ -30,16 +41,26 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         $blocks = $node->getBlocks();
         $routePattern = $node->getRoutePattern();
+        $isValid = true;
         foreach ($blocks as $block) {
             $parameters = $this->generateFormManager->getRequiredUriParameter($block);
             $blockLabel = $block->getLabel();
             foreach ($parameters as $parameter) {
                 if (false === strpos($routePattern, '{' . $parameter . '}')) {
-                    $this->context->buildViolation($constraint->message, array('%blockLabel%' => $blockLabel, '%parameter%' => $parameter))
-                        ->atPath('BlockNodePattern')
-                        ->addViolation();
+                    $this->session->getFlashBag()->add('alert',
+                        $this->translator->trans('open_orchestra_backoffice.form.node.error.pattern', array(
+                            '%blockLabel%' => $blockLabel,
+                            '%parameter%' => $parameter))
+                    );
+                    $isValid = false;
                 }
             }
+        }
+        if (!$isValid) {
+            $response = $this->templating->renderResponse('BraincraftedBootstrapBundle::flash.html.twig');
+            $this->context->buildViolation($response->getContent())
+                ->atPath('BlockNodePattern')
+                ->addViolation();
         }
     }
 }
