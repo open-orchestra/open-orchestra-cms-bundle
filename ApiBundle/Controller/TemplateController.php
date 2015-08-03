@@ -95,7 +95,7 @@ class TemplateController extends BaseController
         $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
         $template->setDeleted(true);
         $this->dispatchEvent(TemplateEvents::TEMPLATE_DELETE, new TemplateEvent($template));
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('object_manager')->flush();
 
         return new Response('', 200);
     }

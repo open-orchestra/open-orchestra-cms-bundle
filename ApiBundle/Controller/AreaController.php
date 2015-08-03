@@ -87,7 +87,7 @@ class AreaController extends BaseController
 
         $this->get('open_orchestra_api.transformer_manager')->get('area')->reverseTransform($facade, $area, $node);
 
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('object_manager')->flush();
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
 
@@ -188,6 +188,6 @@ class AreaController extends BaseController
     protected function deleteAreaFromContainer($areaId, AreaContainerInterface $areaContainer)
     {
         $this->get('open_orchestra_backoffice.manager.area')->deleteAreaFromContainer($areaContainer, $areaId);
-        $this->get('doctrine.odm.mongodb.document_manager')->flush();
+        $this->get('object_manager')->flush();
     }
 }

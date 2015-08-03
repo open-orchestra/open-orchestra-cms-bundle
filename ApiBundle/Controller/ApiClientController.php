@@ -56,7 +56,7 @@ class ApiClientController extends BaseController
     public function deleteAction($apiClientId)
     {
         $apiClient = $this->get('open_orchestra_api.repository.api_client')->find($apiClientId);
-        $dm = $this->get('doctrine.odm.mongodb.document_manager');
+        $dm = $this->get('object_manager');
         $dm->remove($apiClient);
         $dm->flush();
 
