@@ -61,8 +61,8 @@ class StatusController extends BaseController
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
         $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));
-        $this->get('document_manager')->remove($status);
-        $this->get('document_manager')->flush();
+        $this->get('object_manager')->remove($status);
+        $this->get('object_manager')->flush();
 
         return new Response('', 200);
     }

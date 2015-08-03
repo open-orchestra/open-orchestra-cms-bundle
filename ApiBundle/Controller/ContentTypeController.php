@@ -91,7 +91,7 @@ class ContentTypeController extends BaseController
         $contentTypes = $this->get('open_orchestra_model.repository.content_type')->findBy(array('contentTypeId' => $contentTypeId));
         $this->get('open_orchestra_backoffice.manager.content_type')->delete($contentTypes);
         $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent(current($contentTypes)));
-        $this->get('document_manager')->flush();
+        $this->get('object_manager')->flush();
 
         return new Response('', 200);
     }

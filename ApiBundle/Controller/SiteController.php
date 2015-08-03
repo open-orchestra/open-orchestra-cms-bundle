@@ -90,7 +90,7 @@ class SiteController extends BaseController
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
         $site->setDeleted(true);
         $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
-        $this->get('document_manager')->flush();
+        $this->get('object_manager')->flush();
 
         return new Response('', 200);
     }

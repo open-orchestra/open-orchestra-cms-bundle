@@ -22,7 +22,7 @@ trait AreaContainer
     protected function updateAreasFromContainer($areas, AreaContainerInterface $areaContainer, TransformerInterface $transformerManager)
     {
         $container = $this->get('open_orchestra_backoffice.manager.area')->updateAreasFromContainer($areas, $areaContainer);
-        $this->get('document_manager')->flush();
+        $this->get('object_manager')->flush();
 
         return $transformerManager->transform($container);
     }
