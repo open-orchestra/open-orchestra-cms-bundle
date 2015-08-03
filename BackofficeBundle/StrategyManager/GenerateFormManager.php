@@ -44,6 +44,8 @@ class GenerateFormManager
      *
      * @param BlockInterface $block
      *
+     * @throws MissingGenerateFormStrategyException
+     *
      * @return array
      */
     public function getDefaultConfiguration(BlockInterface $block)
@@ -62,6 +64,8 @@ class GenerateFormManager
      * Get the required Uri parameters for the block
      *
      * @param BlockInterface $block
+     *
+     * @throws MissingGenerateFormStrategyException
      *
      * @return array
      */

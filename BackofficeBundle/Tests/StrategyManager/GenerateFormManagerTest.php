@@ -40,17 +40,6 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test build form
-     */
-    public function testBuildForm()
-    {
-        $this->manager->buildForm($this->form, array(), $this->block);
-
-        Phake::verify($this->strategy1)->buildForm($this->form, array());
-        Phake::verify($this->strategy2, Phake::never())->buildForm($this->form, array());
-    }
-
-    /**
      * Test get template
      */
     public function testGetTemplate()
