@@ -26,6 +26,8 @@ class GenerateFormManager
      * @param FormBuilderInterface  $form
      * @param array                 $options
      * @param BlockInterface        $block
+     *
+     * @deprecated remove in tag 0.4.0
      */
     public function buildForm(FormBuilderInterface $form, array $options, BlockInterface $block)
     {
@@ -53,7 +55,7 @@ class GenerateFormManager
             }
         }
 
-        return array();
+        throw new MissingGenerateFormStrategyException();
     }
 
     /**
@@ -72,7 +74,7 @@ class GenerateFormManager
             }
         }
 
-        return array();
+        throw new MissingGenerateFormStrategyException();
     }
 
     /**
