@@ -39,28 +39,30 @@ class BlockNodePatternValidator extends ConstraintValidator
      */
     public function validate($node, Constraint $constraint)
     {
-        $blocks = $node->getBlocks();
-        $routePattern = $node->getRoutePattern();
-        $isValid = true;
-        foreach ($blocks as $block) {
-            $parameters = $this->generateFormManager->getRequiredUriParameter($block);
-            $blockLabel = $block->getLabel();
-            foreach ($parameters as $parameter) {
-                if (false === strpos($routePattern, '{' . $parameter . '}')) {
-                    $this->session->getFlashBag()->add('alert',
-                        $this->translator->trans('open_orchestra_backoffice.form.node.error.pattern', array(
-                            '%blockLabel%' => $blockLabel,
-                            '%parameter%' => $parameter))
-                    );
-                    $isValid = false;
+        if ($node->getStatus()->isPublished()) {
+            $blocks = $node->getBlocks();
+            $routePattern = $node->getRoutePattern();
+            $isValid = true;
+            foreach ($blocks as $block) {
+                $parameters = $this->generateFormManager->getRequiredUriParameter($block);
+                $blockLabel = $block->getLabel();
+                foreach ($parameters as $parameter) {
+                    if (false === strpos($routePattern, '{' . $parameter . '}')) {
+                        $this->session->getFlashBag()->add('alert',
+                            $this->translator->trans('open_orchestra_backoffice.form.node.error.pattern', array(
+                                '%blockLabel%' => $blockLabel,
+                                '%parameter%' => $parameter))
+                        );
+                        $isValid = false;
+                    }
                 }
             }
-        }
-        if (!$isValid) {
-            $response = $this->templating->render('BraincraftedBootstrapBundle::flash.html.twig');
-            $this->context->buildViolation($response)
-                ->atPath('BlockNodePattern')
-                ->addViolation();
+            if (!$isValid) {
+                $response = $this->templating->render('BraincraftedBootstrapBundle::flash.html.twig');
+                $this->context->buildViolation($response)
+                    ->atPath('BlockNodePattern')
+                    ->addViolation();
+            }
         }
     }
 }

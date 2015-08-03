@@ -84,23 +84,29 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         Phake::when($block)->getLabel()->thenReturn('fakeLabel');
 
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->isPublished()->thenReturn(true);
+
         $blocks0 = new ArrayCollection();
         $blocks0->add($block);
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getRoutePattern()->thenReturn('');
         Phake::when($node0)->getBlocks()->thenReturn($blocks0);
+        Phake::when($node0)->getStatus()->thenReturn($status);
 
         $blocks1 = new ArrayCollection();
         $blocks1->add($block);
         $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node1)->getRoutePattern()->thenReturn('{' . $fakeId . '}');
         Phake::when($node1)->getBlocks()->thenReturn($blocks1);
+        Phake::when($node1)->getStatus()->thenReturn($status);
 
         $blocks2 = new ArrayCollection();
         $blocks2->add($block);
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node2)->getRoutePattern()->thenReturn('');
         Phake::when($node2)->getBlocks()->thenReturn($blocks2);
+        Phake::when($node2)->getStatus()->thenReturn($status);
 
         $blocks3 = new ArrayCollection();
         $blocks3->add($block);
@@ -108,6 +114,7 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
         $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node3)->getRoutePattern()->thenReturn('');
         Phake::when($node3)->getBlocks()->thenReturn($blocks3);
+        Phake::when($node3)->getStatus()->thenReturn($status);
 
         return array(
             array($node0, array(array()), 0, 0),
