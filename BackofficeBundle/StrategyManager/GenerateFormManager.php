@@ -103,6 +103,8 @@ class GenerateFormManager
     /**
      * @param BlockInterface $block
      *
+     * @throws MissingGenerateFormStrategyException
+     *
      * @return string
      */
     public function getTemplate(BlockInterface $block)
@@ -113,5 +115,7 @@ class GenerateFormManager
                 return $strategy->getTemplate();
             }
         }
+
+        throw new MissingGenerateFormStrategyException();
     }
 }
