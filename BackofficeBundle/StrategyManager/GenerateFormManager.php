@@ -26,6 +26,8 @@ class GenerateFormManager
      * @param FormBuilderInterface  $form
      * @param array                 $options
      * @param BlockInterface        $block
+     *
+     * @deprecated remove in tag 0.4.0
      */
     public function buildForm(FormBuilderInterface $form, array $options, BlockInterface $block)
     {
@@ -42,6 +44,8 @@ class GenerateFormManager
      *
      * @param BlockInterface $block
      *
+     * @throws MissingGenerateFormStrategyException
+     *
      * @return array
      */
     public function getDefaultConfiguration(BlockInterface $block)
@@ -53,7 +57,28 @@ class GenerateFormManager
             }
         }
 
-        return array();
+        throw new MissingGenerateFormStrategyException();
+    }
+
+    /**
+     * Get the required Uri parameters for the block
+     *
+     * @param BlockInterface $block
+     *
+     * @throws MissingGenerateFormStrategyException
+     *
+     * @return array
+     */
+    public function getRequiredUriParameter(BlockInterface $block)
+    {
+        /** @var GenerateFormInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                return $strategy->getRequiredUriParameter();
+            }
+        }
+
+        throw new MissingGenerateFormStrategyException();
     }
 
     /**
@@ -78,6 +103,8 @@ class GenerateFormManager
     /**
      * @param BlockInterface $block
      *
+     * @throws MissingGenerateFormStrategyException
+     *
      * @return string
      */
     public function getTemplate(BlockInterface $block)
@@ -88,5 +115,7 @@ class GenerateFormManager
                 return $strategy->getTemplate();
             }
         }
+
+        throw new MissingGenerateFormStrategyException();
     }
 }

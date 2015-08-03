@@ -138,6 +138,8 @@ open_orchestra_backoffice:
             node_source: The source page (in case of copy)
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
+            error:
+                pattern: The block %blockLabel% need parameter %parameter% in node pattern url
         changefreq:
             always: Always
             hourly: Hourly

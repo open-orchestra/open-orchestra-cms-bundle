@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_model.validatorcontent_template.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplateValidator
+    open_orchestra_model.validator.block_node_pattern.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePatternValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -8,3 +9,12 @@ services:
             - @twig
         tags:
             - { name: validator.constraint_validator, alias: content_template}
+    open_orchestra_model.validator.block_node_pattern:
+        class: %open_orchestra_model.validator.block_node_pattern.class%
+        arguments:
+            - @open_orchestra_backoffice.generate_form_manager
+            - @session
+            - @templating
+            - @translator
+        tags:
+            - { name: validator.constraint_validator, alias: block_node_pattern}

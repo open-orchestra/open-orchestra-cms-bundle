@@ -20,14 +20,21 @@ StatusView = OrchestraView.extend(
 
   changeStatus: (event) ->
     event.preventDefault()
+    content = $('#content').html()
     displayLoader()
-    url = $(event.currentTarget).data("url")
-    statusId = $(event.currentTarget).data("status")
-    data =
-      status_id: statusId
-    data = JSON.stringify(data)
-    $.post(url, data).always (response) ->
-      Backbone.history.loadUrl(Backbone.history.fragment)
-      return
+    $.ajax
+      url: $(event.currentTarget).data("url")
+      data: JSON.stringify({status_id: $(event.currentTarget).data("status")})
+      dataType: 'json'
+      method: 'POST'
+      success: ->
+        Backbone.history.loadUrl(Backbone.history.fragment)
+      error: (jqXHR, textStatus, errorThrown) ->
+        $('#content').html(content)
+        viewClass = appConfigurationView.getConfiguration('status', 'showFlashBag')
+        new viewClass(
+          html: jqXHR.responseJSON[0].message
+          domContainer: $('h1.page-title').parent()
+        )
     return
 )

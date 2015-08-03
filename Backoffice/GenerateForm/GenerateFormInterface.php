@@ -31,6 +31,13 @@ interface GenerateFormInterface
     public function getDefaultConfiguration();
 
     /**
+     * Get the required uri parameter
+     *
+     * @return array
+     */
+    public function getRequiredUriParameter();
+
+    /**
      * @return string
      */
     public function getTemplate();

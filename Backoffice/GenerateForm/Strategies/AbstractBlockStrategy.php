@@ -12,7 +12,7 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
 {
     /**
      * Get block form template
-     * 
+     *
      * @return string
      */
     public function getTemplate()
@@ -26,6 +26,16 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
      * @return array
      */
     public function getDefaultConfiguration()
+    {
+        return array();
+    }
+
+    /**
+     * Get the required Uri parameters
+     *
+     * @return array
+     */
+    public function getRequiredUriParameter()
     {
         return array();
     }

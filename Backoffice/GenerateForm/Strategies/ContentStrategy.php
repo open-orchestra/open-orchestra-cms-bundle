@@ -41,6 +41,14 @@ class ContentStrategy extends AbstractBlockStrategy
     }
 
     /**
+     * @return array
+     */
+    public function getRequiredUriParameter()
+    {
+        return array('contentId');
+    }
+
+    /**
      * @return string
      */
     public function getName()
