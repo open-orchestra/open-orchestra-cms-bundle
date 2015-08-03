@@ -81,6 +81,10 @@ module.exports = {
         src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
         dest: 'web/fonts/glyphicons-halflings-regular.woff'
     },
+    bootstrap_font_woff2: {
+        src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
+        dest: 'web/fonts/glyphicons-halflings-regular.woff2'
+    },
     datatable_img_sort_asc: {
         src: 'bower_components/datatables/media/images/sort_asc.png',
         dest: 'web/images/sort_asc.png'
