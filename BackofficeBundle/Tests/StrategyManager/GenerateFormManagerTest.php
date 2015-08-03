@@ -28,6 +28,10 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
         $this->strategy1 = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
         Phake::when($this->strategy1)->getName()->thenReturn('strategy1');
         Phake::when($this->strategy1)->support(Phake::anyParameters())->thenReturn(true);
+
+        Phake::when($this->strategy1)->getRequiredUriParameter()->thenReturn(array());
+        Phake::when($this->strategy1)->getDefaultConfiguration()->thenReturn(array());
+
         $this->strategy2 = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
         Phake::when($this->strategy2)->getName()->thenReturn('strategy2');
         Phake::when($this->strategy2)->support(Phake::anyParameters())->thenReturn(false);
@@ -57,5 +61,25 @@ class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
     {
         $strategy = $this->manager->createForm($this->block);
         $this->assertSame($this->strategy1, $strategy);
+    }
+
+    /**
+     * Test getDefaultConfiguration
+     */
+    public function testGetDefaultConfiguration() {
+        $this->manager->getDefaultConfiguration($this->block);
+
+        Phake::verify($this->strategy1)->getDefaultConfiguration();
+        Phake::verify($this->strategy2, Phake::never())->getDefaultConfiguration();
+    }
+
+    /**
+     * Test getDefaultConfiguration
+     */
+    public function testGetRequiredUriParameter() {
+        $this->manager->getRequiredUriParameter($this->block);
+
+        Phake::verify($this->strategy1)->getRequiredUriParameter();
+        Phake::verify($this->strategy2, Phake::never())->getRequiredUriParameter();
     }
 }
