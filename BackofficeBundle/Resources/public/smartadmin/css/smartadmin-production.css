@@ -1,6 +1,6 @@
 /*!
- * SmartAdmin v1.5.1 ()
- * Copyright 2011-2014 
+ * SmartAdmin v1.5.2 ()
+ * Copyright 2011-2015 
  */
 /*!
  * SmartAdmin - Responsive WebApp
@@ -16370,7 +16370,7 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
   }
 }
 @-ms-viewport {
-  
+
 }
 #extr-page #main {
   margin-top: 0px !important;

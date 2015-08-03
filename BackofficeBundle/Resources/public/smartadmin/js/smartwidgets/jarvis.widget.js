@@ -1,15 +1,15 @@
 /*         ______________________________________
-  ________|                                      |_______
-  \       |             JarvisWidget             |      /
-   \      |      Copyright © 2014 MyOrange       |     /
-   /      |______________________________________|     \
-  /__________)                                (_________\
+ ________|                                      |_______
+ \       |             JarvisWidget             |      /
+ \      |      Copyright © 2014 MyOrange       |     /
+ /      |______________________________________|     \
+ /__________)                                (_________\
 
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
  * =======================================================================
  * JarvisWidget is FULLY owned and LICENSED by MYORANGE INC.
- * This script may NOT be RESOLD or REDISTRUBUTED under any
+ * This script may NOT be RESOLD or REDISTRUBUTED on its own under any
  * circumstances, and is only to be used with this purchased
  * copy of SmartAdmin Template.
  * =======================================================================
@@ -32,11 +32,11 @@
 
     var pluginName = 'jarvisWidgets';
 
-	/**
-	 * Check for touch support and set right click events.
-	 **/
-	var clickEvent = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch ? 
-		'touchstart' : 'click') + '.' + pluginName;
+    /**
+     * Check for touch support and set right click events.
+     **/
+    var clickEvent = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch ?
+            'touchstart' : 'click') + '.' + pluginName;
 
     function Plugin(element, options) {
         /**
@@ -51,8 +51,8 @@
         this.editClass = this.o.editClass.split('|');
         this.fullscreenClass = this.o.fullscreenClass.split('|');
         this.customClass = this.o.customClass.split('|');
-		this.storage = {enabled: this.o.localStorage};
-		this.initialized = false;
+        this.storage = {enabled: this.o.localStorage};
+        this.initialized = false;
 
         this.init();
     }
@@ -86,7 +86,7 @@
             var self = this;
 
             var da = new Date(t);
-            
+
 
             /**
              * Get and set the date and time.
@@ -178,7 +178,7 @@
                         }
                     }
 
-					self = null;
+                    self = null;
                 });
 
             /**
@@ -188,28 +188,28 @@
 
         },
 
-		_loadKeys : function () {
-			
-			var self = this;
+        _loadKeys : function () {
 
-			//*****************************************************************//
+            var self = this;
+
+            //*****************************************************************//
             /////////////////////////// SET/GET KEYS ////////////////////////////
             //*****************************************************************//
 
             // TODO : Push state does not work on IE9, try to find a way to detect IE and use a seperate filter
 
-			if (self.o.ajaxnav === true) {
-				var widget_url = location.hash.replace(/^#/, '');
-				self.storage.keySettings = 'Plugin_settings_' + widget_url + '_' + self.objId;
-				self.storage.keyPosition = 'Plugin_position_' + widget_url + '_' + self.objId;
-			} else if (self.initialized === false) {
-				var widget_url = self.o.pageKey || location.pathname;
-				self.storage.keySettings = 'jarvisWidgets_settings_' + widget_url + '_' + self.objId;
-				self.storage.keyPosition = 'jarvisWidgets_position_' + widget_url + '_' + self.objId;
-			}
+            if (self.o.ajaxnav === true) {
+                var widget_url = location.hash.replace(/^#/, '');
+                self.storage.keySettings = 'Plugin_settings_' + widget_url + '_' + self.objId;
+                self.storage.keyPosition = 'Plugin_position_' + widget_url + '_' + self.objId;
+            } else if (self.initialized === false) {
+                var widget_url = self.o.pageKey || location.pathname;
+                self.storage.keySettings = 'jarvisWidgets_settings_' + widget_url + '_' + self.objId;
+                self.storage.keyPosition = 'jarvisWidgets_position_' + widget_url + '_' + self.objId;
+            }
 
-		},
- 
+        },
+
         /**
          * Save all settings to the localStorage.
          *
@@ -218,42 +218,42 @@
         _saveSettingsWidget: function () {
 
             var self = this;
-			var storage = self.storage;
+            var storage = self.storage;
 
-			self._loadKeys();
+            self._loadKeys();
 
-			var storeSettings = self.obj.find(self.o.widgets)
-				.map(function () {
-					var storeSettingsStr = {};
-					storeSettingsStr.id = $(this)
-						.attr('id');
-					storeSettingsStr.style = $(this)
-						.attr('data-widget-attstyle');
-					storeSettingsStr.title = $(this)
-						.children('header')
-						.children('h2')
-						.text();
-					storeSettingsStr.hidden = ($(this)
-						.css('display') == 'none' ? 1 : 0);
-					storeSettingsStr.collapsed = ($(this)
-						.hasClass('jarviswidget-collapsed') ? 1 : 0);
-					return storeSettingsStr;
-				}).get();
+            var storeSettings = self.obj.find(self.o.widgets)
+                .map(function () {
+                    var storeSettingsStr = {};
+                    storeSettingsStr.id = $(this)
+                        .attr('id');
+                    storeSettingsStr.style = $(this)
+                        .attr('data-widget-attstyle');
+                    storeSettingsStr.title = $(this)
+                        .children('header')
+                        .children('h2')
+                        .text();
+                    storeSettingsStr.hidden = ($(this)
+                        .css('display') == 'none' ? 1 : 0);
+                    storeSettingsStr.collapsed = ($(this)
+                        .hasClass('jarviswidget-collapsed') ? 1 : 0);
+                    return storeSettingsStr;
+                }).get();
 
-			var storeSettingsObj = JSON.stringify({
-				'widget': storeSettings
-			});
+            var storeSettingsObj = JSON.stringify({
+                'widget': storeSettings
+            });
 
-			/* Place it in the storage(only if needed) */
-			if (storage.enabled && storage.getKeySettings != storeSettingsObj) {
-				localStorage.setItem(storage.keySettings, storeSettingsObj);
-				storage.getKeySettings = storeSettingsObj;
-			}
+            /* Place it in the storage(only if needed) */
+            if (storage.enabled && storage.getKeySettings != storeSettingsObj) {
+                localStorage.setItem(storage.keySettings, storeSettingsObj);
+                storage.getKeySettings = storeSettingsObj;
+            }
 
             /**
              * Run the callback function.
              **/
-            
+
             if (typeof self.o.onSave == 'function') {
                 self.o.onSave.call(this, null, storeSettingsObj, storage.keySettings);
             }
@@ -267,33 +267,33 @@
         _savePositionWidget: function () {
 
             var self = this;
-			var storage = self.storage;
+            var storage = self.storage;
 
-			self._loadKeys();
+            self._loadKeys();
 
-			var mainArr = self.obj.find(self.o.grid + '.sortable-grid')
-				.map(function () {
-					var subArr = $(this)
-						.children(self.o.widgets)
-						.map(function () {
-							return {
-								'id': $(this).attr('id')
-							};
-						}).get();
-					return {
-						'section': subArr
-					};
-				}).get();
+            var mainArr = self.obj.find(self.o.grid + '.sortable-grid')
+                .map(function () {
+                    var subArr = $(this)
+                        .children(self.o.widgets)
+                        .map(function () {
+                            return {
+                                'id': $(this).attr('id')
+                            };
+                        }).get();
+                    return {
+                        'section': subArr
+                    };
+                }).get();
 
-			var storePositionObj = JSON.stringify({
-				'grid': mainArr
-			});
+            var storePositionObj = JSON.stringify({
+                'grid': mainArr
+            });
 
-			/* Place it in the storage(only if needed) */
-			if (storage.enabled && storage.getKeyPosition != storePositionObj) {
-				localStorage.setItem(storage.keyPosition, storePositionObj);
-				storage.getKeyPosition = storePositionObj
-			}
+            /* Place it in the storage(only if needed) */
+            if (storage.enabled && storage.getKeyPosition != storePositionObj) {
+                localStorage.setItem(storage.keyPosition, storePositionObj);
+                storage.getKeyPosition = storePositionObj
+            }
 
             /**
              * Run the callback function.
@@ -311,8 +311,8 @@
         init: function () {
 
             var self = this;
-			
-			if (self.initialized) return;
+
+            if (self.initialized) return;
 
             self._initStorage(self.storage);
 
@@ -320,7 +320,7 @@
              * Force users to use an id(it's needed for the local storage).
              **/
             if (!$('#' + self.objId)
-                .length) {
+                    .length) {
                 alert('It looks like your using a class instead of an ID, dont do that!');
             }
 
@@ -340,8 +340,8 @@
             $(self.o.grid)
                 .each(function () {
                     if ($(this)
-                        .find(self.o.widgets)
-                        .length) {
+                            .find(self.o.widgets)
+                            .length) {
                         $(this)
                             .addClass('sortable-grid');
                     }
@@ -423,8 +423,8 @@
                      * Update title widget (if needed).
                      **/
                     if (widgetId.children('header')
-                        .children('h2')
-                        .text() != jsonSettings.widget[key].title) {
+                            .children('h2')
+                            .text() != jsonSettings.widget[key].title) {
                         widgetId.children('header')
                             .children('h2')
                             .text(jsonSettings.widget[key].title);
@@ -442,21 +442,21 @@
             self.widget.each(function () {
 
                 var tWidget = $(this),
-                	thisHeader = $(this).children('header'),
-                	customBtn,
-                	deleteBtn,  
-                	editBtn,  
-                	fullscreenBtn,
-                	widgetcolorBtn,
-                	toggleBtn,
-                	toggleSettings,
-                  	refreshBtn;
+                    thisHeader = $(this).children('header'),
+                    customBtn,
+                    deleteBtn,
+                    editBtn,
+                    fullscreenBtn,
+                    widgetcolorBtn,
+                    toggleBtn,
+                    toggleSettings,
+                    refreshBtn;
 
                 /**
                  * Dont double wrap(check).
                  **/
                 if (!thisHeader.parent()
-                    .attr('role')) {
+                        .attr('role')) {
 
                     /**
                      * Hide the widget if the dataset 'widget-hidden' is set to true.
@@ -467,10 +467,10 @@
                     }
 
                     /**
-					 * Hide the content of the widget if the dataset
-					 * 'widget-collapsed' is set to true.
+                     * Hide the content of the widget if the dataset
+                     * 'widget-collapsed' is set to true.
 
-					 **/
+                     **/
                     if (tWidget.data('widget-collapsed') === true) {
                         tWidget.addClass('jarviswidget-collapsed')
                             .children('div')
@@ -492,7 +492,7 @@
                     if (self.o.customButton === true && tWidget.data('widget-custombutton') ===
                         undefined && self.customClass[0].length !== 0) {
                         customBtn =
-                            '<a href="#;" class="button-icon jarviswidget-custom-btn"><i class="' +
+                            '<a href="javascript:void(0);" class="button-icon jarviswidget-custom-btn"><i class="' +
                             self.customClass[0] + '"></i></a>';
                     } else {
                         customBtn = '';
@@ -504,7 +504,7 @@
                     if (self.o.deleteButton === true && tWidget.data('widget-deletebutton') ===
                         undefined) {
                         deleteBtn =
-                            '<a href="#;" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="Delete" data-placement="bottom"><i class="' +
+                            '<a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="Delete" data-placement="bottom"><i class="' +
                             self.o.deleteClass + '"></i></a>';
                     } else {
                         deleteBtn = '';
@@ -515,7 +515,7 @@
                      **/
                     if (self.o.editButton === true && tWidget.data('widget-editbutton') === undefined) {
                         editBtn =
-                            '<a href="#;" class="button-icon jarviswidget-edit-btn" rel="tooltip" title="Edit" data-placement="bottom"><i class="' +
+                            '<a href="javascript:void(0);" class="button-icon jarviswidget-edit-btn" rel="tooltip" title="Edit" data-placement="bottom"><i class="' +
                             self.editClass[0] + '"></i></a>';
                     } else {
                         editBtn = '';
@@ -527,7 +527,7 @@
                     if (self.o.fullscreenButton === true && tWidget.data('widget-fullscreenbutton') ===
                         undefined) {
                         fullscreenBtn =
-                            '<a href="#;" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="Fullscreen" data-placement="bottom"><i class="' +
+                            '<a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="Fullscreen" data-placement="bottom"><i class="' +
                             self.fullscreenClass[0] + '"></i></a>';
                     } else {
                         fullscreenBtn = '';
@@ -539,7 +539,7 @@
                     if (self.o.colorButton === true && tWidget.data('widget-colorbutton') ===
                         undefined) {
                         widgetcolorBtn =
-                            '<a data-toggle="dropdown" class="dropdown-toggle color-box selector" href="#;"></a><ul class="dropdown-menu arrow-box-up-right color-select pull-right"><li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li><li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li><li><span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span></li><li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li><li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li><li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li><li><span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span></li><li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li><li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li><li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li><li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li><li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li><li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li><li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li><li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li><li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li><li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li><li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li><li><a href="#;" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li></ul>';
+                            '<a data-toggle="dropdown" class="dropdown-toggle color-box selector" href="javascript:void(0);"></a><ul class="dropdown-menu arrow-box-up-right color-select pull-right"><li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green" rel="tooltip" data-placement="left" data-original-title="Green Grass"></span></li><li><span class="bg-color-greenDark" data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip" data-placement="top" data-original-title="Dark Green"></span></li><li><span class="bg-color-greenLight" data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip" data-placement="top" data-original-title="Light Green"></span></li><li><span class="bg-color-purple" data-widget-setstyle="jarviswidget-color-purple" rel="tooltip" data-placement="top" data-original-title="Purple"></span></li><li><span class="bg-color-magenta" data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip" data-placement="top" data-original-title="Magenta"></span></li><li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink" rel="tooltip" data-placement="right" data-original-title="Pink"></span></li><li><span class="bg-color-pinkDark" data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip" data-placement="left" data-original-title="Fade Pink"></span></li><li><span class="bg-color-blueLight" data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip" data-placement="top" data-original-title="Light Blue"></span></li><li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal" rel="tooltip" data-placement="top" data-original-title="Teal"></span></li><li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue" rel="tooltip" data-placement="top" data-original-title="Ocean Blue"></span></li><li><span class="bg-color-blueDark" data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip" data-placement="top" data-original-title="Night Sky"></span></li><li><span class="bg-color-darken" data-widget-setstyle="jarviswidget-color-darken" rel="tooltip" data-placement="right" data-original-title="Night"></span></li><li><span class="bg-color-yellow" data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip" data-placement="left" data-original-title="Day Light"></span></li><li><span class="bg-color-orange" data-widget-setstyle="jarviswidget-color-orange" rel="tooltip" data-placement="bottom" data-original-title="Orange"></span></li><li><span class="bg-color-orangeDark" data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip" data-placement="bottom" data-original-title="Dark Orange"></span></li><li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red" rel="tooltip" data-placement="bottom" data-original-title="Red Rose"></span></li><li><span class="bg-color-redLight" data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip" data-placement="bottom" data-original-title="Light Red"></span></li><li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white" rel="tooltip" data-placement="right" data-original-title="Purity"></span></li><li><a href="javascript:void(0);" class="jarviswidget-remove-colors" data-widget-setstyle="" rel="tooltip" data-placement="bottom" data-original-title="Reset widget color to default">Remove</a></li></ul>';
                         thisHeader.prepend('<div class="widget-toolbar">' + widgetcolorBtn + '</div>');
 
                     } else {
@@ -552,13 +552,13 @@
                     if (self.o.toggleButton === true && tWidget.data('widget-togglebutton') ===
                         undefined) {
                         if (tWidget.data('widget-collapsed') === true || tWidget.hasClass(
-                            'jarviswidget-collapsed')) {
+                                'jarviswidget-collapsed')) {
                             toggleSettings = self.toggleClass[1];
                         } else {
                             toggleSettings = self.toggleClass[0];
                         }
                         toggleBtn =
-                            '<a href="#;" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="Collapse" data-placement="bottom"><i class="' +
+                            '<a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="Collapse" data-placement="bottom"><i class="' +
                             toggleSettings + '"></i></a>';
                     } else {
                         toggleBtn = '';
@@ -570,7 +570,7 @@
                     if (self.o.refreshButton === true && tWidget.data('widget-refreshbutton') !==
                         false && tWidget.data('widget-load')) {
                         refreshBtn =
-                            '<a href="#;" class="button-icon jarviswidget-refresh-btn" data-loading-text="&nbsp;&nbsp;Loading...&nbsp;" rel="tooltip" title="Refresh" data-placement="bottom"><i class="' +
+                            '<a href="javascript:void(0);" class="button-icon jarviswidget-refresh-btn" data-loading-text="&nbsp;&nbsp;Loading...&nbsp;" rel="tooltip" title="Refresh" data-placement="bottom"><i class="' +
                             self.o.refreshButtonClass + '"></i></a>';
                     } else {
                         refreshBtn = '';
@@ -608,7 +608,7 @@
                      * If the edit box is present copy the title to the input.
                      **/
                     if (tWidget.find(self.o.editPlaceholder)
-                        .length) {
+                            .length) {
                         tWidget.find(self.o.editPlaceholder)
                             .find('input')
                             .val($.trim(thisHeader.children('h2')
@@ -654,7 +654,7 @@
             /**
              * Loop all ajax widgets.
              **/
-            // $.intervalArr = new Array(); - decleared in app.js
+                // $.intervalArr = new Array(); - decleared in app.js
             self.obj.find('[data-widget-load]')
                 .each(function () {
 
@@ -668,14 +668,14 @@
                         ajaxLoader = thisItem.children();
 
                     if (!thisItem.find('.jarviswidget-ajax-placeholder')
-                        .length) {
+                            .length) {
 
                         /**
                          * Append a AJAX placeholder.
                          **/
                         thisItem.children('widget-body')
                             .append('<div class="jarviswidget-ajax-placeholder">' + self.o.loadingLabel +
-                                '</div>');
+                            '</div>');
 
                         /**
                          * If widget has a reload time refresh the widget, if the value
@@ -693,7 +693,7 @@
                              * intervalArr.push(setInterval(intervalOne, 2000)  );
                              **/
                             $.intervalArr.push( setInterval(function () {self._loadAjaxFile(thisItem, pathToFile, thisItemHeader)}, reloadTime) );
-                            
+
                         } else {
 
                             /**
@@ -765,7 +765,7 @@
                             .stop(true, true)
                             .fadeTo(100, 1.0);
                     })
-					.on('mouseleave.' + pluginName, function () {
+                    .on('mouseleave.' + pluginName, function () {
                         $(this)
                             .children(self.o.pwCtrls)
                             .stop(true, true)
@@ -783,32 +783,32 @@
             ///////////////////// DELETE LOCAL STORAGE KEYS /////////////////////
             //*****************************************************************//
 
-			if (self.storage.enabled) {
-				/**
-				 * Delete the settings key.
-				 **/
-				$(self.o.deleteSettingsKey)
-					.on(clickEvent, this, function (e) {
+            if (self.storage.enabled) {
+                /**
+                 * Delete the settings key.
+                 **/
+                $(self.o.deleteSettingsKey)
+                    .on(clickEvent, this, function (e) {
                         var cleared = confirm(self.o.settingsKeyLabel);
                         if (cleared) {
                             localStorage.removeItem(keySettings);
                         }
-						e.preventDefault();
-					});
-				/**
-				 * Delete the position key.
-				 **/
-				$(self.o.deletePositionKey)
-					.on(clickEvent, this, function (e) {
+                        e.preventDefault();
+                    });
+                /**
+                 * Delete the position key.
+                 **/
+                $(self.o.deletePositionKey)
+                    .on(clickEvent, this, function (e) {
                         var cleared = confirm(self.o.positionKeyLabel);
                         if (cleared) {
                             localStorage.removeItem(keyPosition);
                         }
-						e.preventDefault();
-					});
-			}
+                        e.preventDefault();
+                    });
+            }
 
-			initialized = true;
+            initialized = true;
         },
 
         /**
@@ -823,22 +823,22 @@
             //*****************************************************************//
 
             storage.enabled = storage.enabled && !! function () {
-                var result, uid = +new Date();
-                try {
-                    localStorage.setItem(uid, uid);
-                    result = localStorage.getItem(uid) == uid;
-                    localStorage.removeItem(uid);
-                    return result;
-                } catch (e) {}
-            }();
+                    var result, uid = +new Date();
+                    try {
+                        localStorage.setItem(uid, uid);
+                        result = localStorage.getItem(uid) == uid;
+                        localStorage.removeItem(uid);
+                        return result;
+                    } catch (e) {}
+                }();
 
-			this._loadKeys();
+            this._loadKeys();
 
             if (storage.enabled) {
 
-				storage.getKeySettings = localStorage.getItem(storage.keySettings);
-				storage.getKeyPosition = localStorage.getItem(storage.keyPosition);
-				
+                storage.getKeySettings = localStorage.getItem(storage.keySettings);
+                storage.getKeyPosition = localStorage.getItem(storage.keyPosition);
+
             } // end if
 
         },
@@ -915,7 +915,7 @@
              **/
             function heightFullscreen() {
                 if ($('#jarviswidget-fullscreen-mode')
-                    .length) {
+                        .length) {
 
                     /**
                      * Setting height variables.
@@ -955,7 +955,7 @@
                  * Wrap the widget and go fullsize.
                  **/
                 if ($('#jarviswidget-fullscreen-mode')
-                    .length) {
+                        .length) {
 
                     /**
                      * Remove class from the body.
@@ -996,10 +996,10 @@
                         .addClass('nooverflow');
 
                     /**
-					 * Wrap, append it to the body, show the right button
+                     * Wrap, append it to the body, show the right button
 
-					 * and hide all other buttons.
-					 **/
+                     * and hide all other buttons.
+                     **/
                     thisWidget.wrap('<div id="jarviswidget-fullscreen-mode"/>')
                         .parent()
                         .find('.jarviswidget-fullscreen-btn:first')
@@ -1067,7 +1067,7 @@
                  * Show/hide the edit box.
                  **/
                 if (tWidget.find(self.o.editPlaceholder)
-                    .is(':visible')) {
+                        .is(':visible')) {
                     $(this)
                         .children()
                         .removeClass(self.editClass[1])
@@ -1128,7 +1128,7 @@
                     .find('[data-widget-setstyle]')
                     .each(function () {
                         styles += $(this)
-                            .data('widget-setstyle') + ' ';
+                                .data('widget-setstyle') + ' ';
                     });
 
                 /**
@@ -1174,8 +1174,8 @@
                  * Start and end custom action.
                  **/
                 if ($(this)
-                    .children('.' + self.customClass[0])
-                    .length) {
+                        .children('.' + self.customClass[0])
+                        .length) {
                     $(this)
                         .children()
                         .removeClass(self.customClass[0])
@@ -1228,61 +1228,61 @@
                 /**
                  * Delete the widgets with a confirm popup.
                  **/
-                
+
                 if ($.SmartMessageBox) {
-   
-                   $.SmartMessageBox({
-	                    title: "<i class='fa fa-times' style='color:#ed1c24'></i> " + self.o.labelDelete +
-	                        ' "' + widTitle + '"',
-	                    content: self.o.deleteMsg,
-	                    buttons: '[No][Yes]'
-	                }, function (ButtonPressed) {
-	                    //console.log(ButtonPressed);
-	                    if (ButtonPressed == "Yes") {
-	                        /**
-	                         * Run function for the indicator image.
-	                         **/
-	                        self._runLoaderWidget($(this));
-	
-	                        /**
-	                         * Delete the right widget.
-	                         **/
-	                        $('#' + removeId)
-	                            .fadeOut(self.o.deleteSpeed, function () {
-	
-	                                $(this)
-	                                    .remove();
-	
-	                                /**
-	                                 * Run the callback function.
-	                                 **/
-	                                if (typeof self.o.onDelete == 'function') {
-	                                    self.o.onDelete.call(this, tWidget);
-	                                }
-	                            });
-	                    }
-	
-	                });
-	                	
+
+                    $.SmartMessageBox({
+                        title: "<i class='fa fa-times' style='color:#ed1c24'></i> " + self.o.labelDelete +
+                        ' "' + widTitle + '"',
+                        content: self.o.deleteMsg,
+                        buttons: '[No][Yes]'
+                    }, function (ButtonPressed) {
+                        //console.log(ButtonPressed);
+                        if (ButtonPressed == "Yes") {
+                            /**
+                             * Run function for the indicator image.
+                             **/
+                            self._runLoaderWidget($(this));
+
+                            /**
+                             * Delete the right widget.
+                             **/
+                            $('#' + removeId)
+                                .fadeOut(self.o.deleteSpeed, function () {
+
+                                    $(this)
+                                        .remove();
+
+                                    /**
+                                     * Run the callback function.
+                                     **/
+                                    if (typeof self.o.onDelete == 'function') {
+                                        self.o.onDelete.call(this, tWidget);
+                                    }
+                                });
+                        }
+
+                    });
+
                 } else {
-                	
-                	/**
+
+                    /**
                      * Delete the right widget.
                      **/
                     $('#' + removeId)
-                    .fadeOut(self.o.deleteSpeed, function () {
+                        .fadeOut(self.o.deleteSpeed, function () {
 
-                        $(this)
-                            .remove();
+                            $(this)
+                                .remove();
 
-                        /**
-                         * Run the callback function.
-                         **/
-                        if (typeof self.o.onDelete == 'function') {
-                            self.o.onDelete.call(this, tWidget);
-                        }
-                    });
-                	
+                            /**
+                             * Run the callback function.
+                             **/
+                            if (typeof self.o.onDelete == 'function') {
+                                self.o.onDelete.call(this, tWidget);
+                            }
+                        });
+
                 }
 
                 e.preventDefault();
@@ -1301,7 +1301,7 @@
                  * Variables.
                  **/
                 var rItem = $(this)
-                    .parents(self.o.widgets),
+                        .parents(self.o.widgets),
                     pathToFile = rItem.data('widget-load'),
                     ajaxLoader = rItem.children(),
                     btn = $(this);
@@ -1320,8 +1320,8 @@
 
                 e.preventDefault();
             });
-			
-			headers = null;
+
+            headers = null;
         },
 
         /**
@@ -1330,15 +1330,15 @@
          * @param:
          **/
         destroy: function () {
-            var self = this, 
-            namespace = '.' + pluginName, 
-            sortItem = self.obj.find(self.o.grid + '.sortable-grid').not('[data-widget-excludegrid]');
-            
+            var self = this,
+                namespace = '.' + pluginName,
+                sortItem = self.obj.find(self.o.grid + '.sortable-grid').not('[data-widget-excludegrid]');
+
             sortItem.sortable('destroy');
             self.widget.children('header').off(namespace);
-			$(self.o.deleteSettingsKey).off(namespace);
-			$(self.o.deletePositionKey).off(namespace);
-			$(window).off(namespace);
+            $(self.o.deleteSettingsKey).off(namespace);
+            $(self.o.deletePositionKey).off(namespace);
+            $(window).off(namespace);
             self.obj.removeData(pluginName);
         }
     };
@@ -1348,7 +1348,7 @@
             var $this = $(this);
             var data = $this.data(pluginName);
             if (!data) {
-				var options = typeof option == 'object' && option;
+                var options = typeof option == 'object' && option;
                 $this.data(pluginName, (data = new Plugin(this, options)));
             }
             if (typeof option == 'string') {
