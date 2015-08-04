@@ -66,7 +66,7 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.route_pattern.name',
                 'attr' => array(
                     'class' => 'generate-id-dest',
-                    'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.route_pattern.helper'),
+                    'help_text' => 'open_orchestra_backoffice.form.node.route_pattern.helper',
                 )
             ))
             ->add('scheme', 'choice', array(
