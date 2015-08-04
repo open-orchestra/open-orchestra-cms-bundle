@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class BlockNodePatternValidator
@@ -43,9 +44,11 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
+            $blockRef = $this->getRefBlock($node);
             $routePattern = $node->getRoutePattern();
             $isValid = true;
-            foreach ($blocks as $block) {
+            foreach ($blockRef as $blockRef) {
+                $block = $blocks[$blockRef];
                 $parameters = $this->generateFormManager->getRequiredUriParameter($block);
                 $blockLabel = $block->getLabel();
                 foreach ($parameters as $parameter) {
@@ -66,5 +69,32 @@ class BlockNodePatternValidator extends ConstraintValidator
                     ->addViolation();
             }
         }
+    }
+
+    /**
+     * @param AreaContainerInterface $container
+     *
+     * @return array
+     */
+    protected function getRefBlock(AreaContainerInterface $container)
+    {
+        $blockRef = array();
+        $areas = $container->getAreas();
+        if (count($areas) > 0){
+            foreach ($areas as $area) {
+                $blockRef = array_merge($blockRef, $this->getRefBlock($area));
+            }
+        } else {
+            $blocks = $container->getBlocks();
+            if (count($blocks) > 0){
+                foreach ($blocks as $block) {
+                    if($block['nodeId'] === 0) {
+                        $blockRef[] = $block['blockId'];
+                    }
+                }
+            }
+        }
+
+        return array_unique($blockRef);
     }
 }

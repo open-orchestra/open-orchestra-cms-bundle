@@ -87,12 +87,25 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn(true);
 
+        $area0 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($area0)->getAreas()->thenReturn(array());
+        Phake::when($area0)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0), array('nodeId' => 1, 'blockId' => 0)));
+        $areas0 = new ArrayCollection();
+        $areas0->add($area0);
+
+        $area1 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($area1)->getAreas()->thenReturn(array());
+        Phake::when($area1)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0), array('nodeId' => 0, 'blockId' => 1)));
+        $areas1 = new ArrayCollection();
+        $areas1->add($area1);
+
         $blocks0 = new ArrayCollection();
         $blocks0->add($block);
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getRoutePattern()->thenReturn('');
         Phake::when($node0)->getBlocks()->thenReturn($blocks0);
         Phake::when($node0)->getStatus()->thenReturn($status);
+        Phake::when($node0)->getAreas()->thenReturn($areas0);
 
         $blocks1 = new ArrayCollection();
         $blocks1->add($block);
@@ -100,6 +113,7 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
         Phake::when($node1)->getRoutePattern()->thenReturn('{' . $fakeId . '}');
         Phake::when($node1)->getBlocks()->thenReturn($blocks1);
         Phake::when($node1)->getStatus()->thenReturn($status);
+        Phake::when($node1)->getAreas()->thenReturn($areas0);
 
         $blocks2 = new ArrayCollection();
         $blocks2->add($block);
@@ -107,6 +121,7 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
         Phake::when($node2)->getRoutePattern()->thenReturn('');
         Phake::when($node2)->getBlocks()->thenReturn($blocks2);
         Phake::when($node2)->getStatus()->thenReturn($status);
+        Phake::when($node2)->getAreas()->thenReturn($areas0);
 
         $blocks3 = new ArrayCollection();
         $blocks3->add($block);
@@ -115,6 +130,7 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
         Phake::when($node3)->getRoutePattern()->thenReturn('');
         Phake::when($node3)->getBlocks()->thenReturn($blocks3);
         Phake::when($node3)->getStatus()->thenReturn($status);
+        Phake::when($node3)->getAreas()->thenReturn($areas1);
 
         return array(
             array($node0, array(array()), 0, 0),
