@@ -94,6 +94,7 @@ class BlockNodePatternValidator extends ConstraintValidator
                 }
             }
         }
+
         return array_unique($blockRef);
     }
 }
