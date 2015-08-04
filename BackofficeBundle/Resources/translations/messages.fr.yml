@@ -79,7 +79,7 @@ open_orchestra_backoffice:
             robots_txt: Informations contenues dans le fichier robots.txt
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
-                helper: Indicative periodicity of change (for the sitemap)
+                helper: Fréquence de modification indicative (pour le sitemap)
         theme:
             success: Le thème a été modifié
             creation: Le thème a été crée
@@ -128,7 +128,13 @@ open_orchestra_backoffice:
             theme: Le thème
             template_id: Id du gabarit
             alias: Alias
-            route_pattern: Pattern de l'url
+            route_pattern:
+                name : Pattern de l'url
+                helper: |
+                    Exemples d'utilisation :
+                    - simple, exemple: <i>pattern</i> corespond à <i>base_url/url_page_parent/pattern</i>
+                    - absolu, exemple: <i>/pattern</i> correspond à <i>base_url/pattern</i> \n
+                    - avec variable, exemple: <i>/pattern/{contentId}</i> pour une url nécessitant l'id d'un contenu.
             language: Langue
             status: Statut
             in_menu: Affiché dans les menus
