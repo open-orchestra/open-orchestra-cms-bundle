@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class BlockNodePatternValidator
@@ -20,6 +21,7 @@ class BlockNodePatternValidator extends ConstraintValidator
     protected $session;
     protected $templating;
     protected $translator;
+    protected $blockRef = array();
 
     /**
      * @param GenerateFormManager $generateFormManager
@@ -43,9 +45,11 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
+            $this->getRefBlock($node);
             $routePattern = $node->getRoutePattern();
             $isValid = true;
-            foreach ($blocks as $block) {
+            foreach ($this->blockRef as $blockRef) {
+                $block = $blocks[$blockRef];
                 $parameters = $this->generateFormManager->getRequiredUriParameter($block);
                 $blockLabel = $block->getLabel();
                 foreach ($parameters as $parameter) {
@@ -64,6 +68,24 @@ class BlockNodePatternValidator extends ConstraintValidator
                 $this->context->buildViolation($response)
                     ->atPath('BlockNodePattern')
                     ->addViolation();
+            }
+        }
+    }
+    protected function getRefBlock(AreaContainerInterface $container)
+    {
+        $areas = $container->getAreas();
+        if (count($areas) > 0){
+            foreach ($areas as $area) {
+                $this->getRefBlock($area);
+            }
+        } else {
+            $blocks = $container->getBlocks();
+            if (count($blocks) > 0){
+                foreach ($blocks as $block) {
+                    if($block['nodeId'] !== NodeInterface::TRANSVERSE_NODE_ID) {
+                        $this->blockRef[] = $block['blockId'];
+                    }
+                }
             }
         }
     }
