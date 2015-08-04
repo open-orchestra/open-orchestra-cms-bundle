@@ -21,7 +21,6 @@ class BlockNodePatternValidator extends ConstraintValidator
     protected $session;
     protected $templating;
     protected $translator;
-    protected $blockRef = array();
 
     /**
      * @param GenerateFormManager $generateFormManager
@@ -45,10 +44,10 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
-            $this->getRefBlock($node);
+            $blockRef = $this->getRefBlock($node);
             $routePattern = $node->getRoutePattern();
             $isValid = true;
-            foreach ($this->blockRef as $blockRef) {
+            foreach ($blockRef as $blockRef) {
                 $block = $blocks[$blockRef];
                 $parameters = $this->generateFormManager->getRequiredUriParameter($block);
                 $blockLabel = $block->getLabel();
@@ -71,22 +70,30 @@ class BlockNodePatternValidator extends ConstraintValidator
             }
         }
     }
+
+    /**
+     * @param AreaContainerInterface $container
+     *
+     * @return array
+     */
     protected function getRefBlock(AreaContainerInterface $container)
     {
+        $blockRef = array();
         $areas = $container->getAreas();
         if (count($areas) > 0){
             foreach ($areas as $area) {
-                $this->getRefBlock($area);
+                $blockRef = array_merge($blockRef, $this->getRefBlock($area));
             }
         } else {
             $blocks = $container->getBlocks();
             if (count($blocks) > 0){
                 foreach ($blocks as $block) {
-                    if($block['nodeId'] !== NodeInterface::TRANSVERSE_NODE_ID) {
-                        $this->blockRef[] = $block['blockId'];
+                    if($block['nodeId'] === 0) {
+                        $blockRef[] = $block['blockId'];
                     }
                 }
             }
         }
+        return array_unique($blockRef);
     }
 }
