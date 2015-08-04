@@ -1,24 +1,25 @@
 .nav-tabs > li > a {
     height: 34px;
 }
-
-.tab-content > .tab-pane {
-    display: block;
-    margin-bottom: -32px;
-    position: relative;
-    visibility: visible;
-    z-index: 1;
-}
-.tab-content > .active ~ .tab-pane {
-    top: -32px;
-}
-
-.tab-content > .active {
-    margin-bottom: 0;
-    top: 0;
-    z-index: 2;
-}
-
-.tab-content .form-group {
-    margin-bottom: 0;
+.form-group {
+    .tab-content > .tab-pane {
+        display: block;
+        margin-bottom: -32px;
+        position: relative;
+        visibility: visible;
+        z-index: 1;
+    }
+    .tab-content > .active ~ .tab-pane {
+        top: -32px;
+    }
+    
+    .tab-content > .active {
+        margin-bottom: 0;
+        top: 0;
+        z-index: 2;
+    }
+    
+    .tab-content .form-group {
+        margin-bottom: 0;
+    }
 }
