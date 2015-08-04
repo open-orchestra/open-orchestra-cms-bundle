@@ -89,7 +89,7 @@ class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
 
         $area0 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
         Phake::when($area0)->getAreas()->thenReturn(array());
-        Phake::when($area0)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0)));
+        Phake::when($area0)->getBlocks()->thenReturn(array(array('nodeId' => 0, 'blockId' => 0), array('nodeId' => 1, 'blockId' => 0)));
         $areas0 = new ArrayCollection();
         $areas0->add($area0);
 
