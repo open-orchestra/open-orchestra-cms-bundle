@@ -9,6 +9,8 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+
 /**
  * Class BlockNodePatternValidator
  */
@@ -39,7 +41,7 @@ class BlockNodePatternValidator extends ConstraintValidator
      */
     public function validate($node, Constraint $constraint)
     {
-        if ($node->getStatus()->isPublished()) {
+        if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
             $routePattern = $node->getRoutePattern();
             $isValid = true;
