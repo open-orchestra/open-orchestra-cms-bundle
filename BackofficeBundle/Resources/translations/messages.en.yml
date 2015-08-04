@@ -128,7 +128,13 @@ open_orchestra_backoffice:
             theme: The theme
             template_id: Template id
             alias: Alias
-            route_pattern: Url pattern
+            route_pattern:
+                name : Url Pattern
+                helper: |
+                    Examples of use :
+                    - simple, example: <i>pattern</i> matches <i>base_url/parent_node_url/pattern</i>
+                    - absolute, example: <i>/pattern</i> matches <i>base_url/pattern</i> \n
+                    - with variable, example: <i>/pattern/{contentId}</i> for an url with a content id requirement .
             language: Language
             status: Status
             in_menu: Shown in menus
