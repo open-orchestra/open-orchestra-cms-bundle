@@ -131,10 +131,7 @@ open_orchestra_backoffice:
             route_pattern:
                 name : Pattern de l'url
                 helper: |
-                    Exemples d'utilisation :
-                    - simple, exemple: <i>pattern</i> corespond à <i>base_url/url_page_parent/pattern</i>
-                    - absolu, exemple: <i>/pattern</i> correspond à <i>base_url/pattern</i> \n
-                    - avec variable, exemple: <i>/pattern/{contentId}</i> pour une url nécessitant l'id d'un contenu.
+                    Types de pattern : simple (pattern), absolu (/pattern), avec variable (/{contentId})
             language: Langue
             status: Statut
             in_menu: Affiché dans les menus
