@@ -2,7 +2,8 @@ TableviewCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
     'keyup input.search-column': 'searchColumn'
-    'page.dt table': 'changePage'
+    'draw.dt table': 'changePage'
+    'processing.dt table': 'processingData'
 
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -48,7 +49,11 @@ TableviewCollectionView = OrchestraView.extend(
       );
     );
     $.fn.dataTable.pipeline = @dataTablePipeline
-
+    $.extend( $.fn.dataTableExt.oStdClasses, {
+      "sWrapper": "dataTables_wrapper form-inline",
+      "sFilterInput": "form-control",
+      "sLengthSelect": "form-control"
+    } );
     displayStart = 0
     pageLength = 10
     if @options.page?
@@ -56,18 +61,22 @@ TableviewCollectionView = OrchestraView.extend(
       displayStart = pageLength * page
     @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
-      oLanguage: sSearch: ''
       ordering: true
-      processing: true
       serverSide: true
       displayStart: displayStart
       pageLength: pageLength
       bAutoWidth: false
       orderCellsTop: true
-      sPaginationType: "bs_normal"
-      sDom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-6 hidden-xs'C>>"+
+      processing: true
+      sPaginationType: "input_full"
+      sDom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-5 col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"+
                     "t"+
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
+      oLanguage:
+        sLengthMenu: "_MENU_"
+        sSearch: "<span class='input-group-addon'><i class='glyphicon glyphicon-search'></i></span> "
+        sInfo: "Showing <span class='txt-color-darken'>_START_</span> to <span class='txt-color-darken'>_END_</span> of <span class='text-primary'>_TOTAL_</span> entries",
+        sInfoEmpty: "<span class='text-danger'>Showing 0 to 0 of 0 entries</span>",
       colVis: exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
@@ -84,17 +93,21 @@ TableviewCollectionView = OrchestraView.extend(
       columnDefs: columnDefs.concat [
         targets: -1
         data: 'links'
+        orderable: false
         createdCell : (td, cellData, rowData, row, col) ->
           viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
       ]
       order: [@options.order]
-      lengthChange: false
     )
-    $('#tableviewCollectionTable_filter label').prepend('<span class="input-group-addon"><i class="fa fa-search"></i></span>')
-    $('#tableviewCollectionTable_filter input').addClass('form-control')
-    
+
     api = @options.table.api()
 
+    return
+  processingData : (e, seggings, processing) ->
+    if processing
+      $('.dataTables_processing').show()
+    else
+      $('.dataTables_processing').hide()
     return
 
   checkDefaultVisible : (name) ->
@@ -127,7 +140,6 @@ TableviewCollectionView = OrchestraView.extend(
       element: elementModel
       domContainer : $(td)
     ))
-
   renderAddButton: (viewContext, links, table) ->
     button =  viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewButtonAdd',
       links: links
