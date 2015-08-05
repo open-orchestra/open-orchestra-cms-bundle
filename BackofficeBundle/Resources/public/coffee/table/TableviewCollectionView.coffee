@@ -136,7 +136,7 @@ TableviewCollectionView = OrchestraView.extend(
 
   searchColumn : (event) ->
     value = $(event.target).val()
-    columnIndex = $(event.target).parent().get(0).cellIndex
+    columnIndex = $(event.target).closest("td").get(0).cellIndex
     api = @.$el.find('table').dataTable().api()
     api.column(columnIndex).search(value).draw()
 
