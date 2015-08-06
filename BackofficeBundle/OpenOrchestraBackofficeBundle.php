@@ -10,6 +10,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompile
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeStatusChangeCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -33,5 +34,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());
+        $container->addCompilerPass(new AuthorizeStatusChangeCompilerPass());
     }
 }
