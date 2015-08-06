@@ -65,14 +65,14 @@ TableviewCollectionView = OrchestraView.extend(
       serverSide: true
       displayStart: displayStart
       pageLength: pageLength
-      bAutoWidth: false
       orderCellsTop: true
       processing: true
-      sPaginationType: "input_full"
-      sDom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-5 col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"+
+      autowidth: false
+      pagingType: "input_full"
+      dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-5 col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"+
                     "t"+
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
-      oLanguage:
+      language:
         sLengthMenu: "_MENU_"
         sSearch: "<span class='input-group-addon'><i class='glyphicon glyphicon-search'></i></span> "
         sInfo: "Showing <span class='txt-color-darken'>_START_</span> to <span class='txt-color-darken'>_END_</span> of <span class='text-primary'>_TOTAL_</span> entries",
@@ -99,9 +99,6 @@ TableviewCollectionView = OrchestraView.extend(
       ]
       order: [@options.order]
     )
-
-    api = @options.table.api()
-
     return
   processingData : (e, seggings, processing) ->
     if processing
