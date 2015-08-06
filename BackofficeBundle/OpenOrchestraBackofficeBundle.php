@@ -6,7 +6,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCo
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\LeftPanelCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\NavigationPanelCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
@@ -30,7 +30,7 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new TwigGlobalsCompilerPass());
         $container->addCompilerPass(new TinymceCompilerPass());
         $container->addCompilerPass(new DisplayIconCompilerPass());
-        $container->addCompilerPass(new LeftPanelCompilerPass());
+        $container->addCompilerPass(new NavigationPanelCompilerPass());
         $container->addCompilerPass(new BlockParameterCompilerPass());
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());

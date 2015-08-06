@@ -3,7 +3,7 @@
 namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB\AbstractLoadRoleData;
 
 /**

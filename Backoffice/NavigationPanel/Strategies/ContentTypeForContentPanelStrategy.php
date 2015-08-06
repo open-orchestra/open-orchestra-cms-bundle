@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
@@ -8,7 +8,7 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 /**
  * Class ContentTypeForContentPanel
  */
-class ContentTypeForContentPanelStrategy extends AbstractLeftPanelStrategy
+class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
 {
     const ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT';
 

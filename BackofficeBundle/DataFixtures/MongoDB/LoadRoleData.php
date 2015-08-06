@@ -2,15 +2,12 @@
 
 namespace OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\ModelBundle\Document\Role;
-use OpenOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 
 /**
  * Class LoadRoleData

@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\LeftPanel;
+namespace OpenOrchestra\Backoffice\NavigationPanel;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
- * Interface LeftPanelInterface
+ * Interface NavigationPanelInterface
  */
-interface LeftPanelInterface
+interface NavigationPanelInterface
 {
     const EDITORIAL = 'editorial';
     const ADMINISTRATION = 'administration';
