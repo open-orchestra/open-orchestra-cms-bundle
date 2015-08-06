@@ -1,92 +1,90 @@
 # DataTable Pagination
 $.extend $.fn.dataTableExt.oPagination, 'input_full':
-  'fnInit': (oSettings, nPaging, fnDraw) ->
-    oLang = oSettings.oLanguage.oPaginate
-    fnClickHandler = (e) ->
+  'fnInit': (settings, pagingElement, drawCallback) ->
+    lang = settings.oLanguage.oPaginate
+    clickHandler = (e) ->
       e.preventDefault()
-      if oSettings.oApi._fnPageChange(oSettings, e.data.action)
-        fnDraw oSettings
+      if settings.oApi._fnPageChange(settings, e.data.action)
+        drawCallback settings
       return
-    $(nPaging).append '<ul class="pagination pagination-sm">' + '<li class="prev disabled"><a href="#">&larr; ' + oLang.sPrevious + '</a></li>' + '<li class="next disabled"><a href="#">' + oLang.sNext + ' &rarr; </a></li>' + '</ul>'
-    els = $('a', nPaging)
-    $(els[0]).bind 'click.DT', { action: 'previous' }, fnClickHandler
-    $(els[1]).bind 'click.DT', { action: 'next' }, fnClickHandler
+    $(pagingElement).append '<ul class="pagination pagination-sm">' + '<li class="prev disabled"><a href="#">&larr; ' + lang.sPrevious + '</a></li>' + '<li class="next disabled"><a href="#">' + lang.sNext + ' &rarr; </a></li>' + '</ul>'
+    els = $('a', pagingElement)
+    $(els[0]).bind 'click.DT', { action: 'previous' }, clickHandler
+    $(els[1]).bind 'click.DT', { action: 'next' }, clickHandler
     return
 
-  'fnUpdate': (oSettings, fnDraw) ->
+  'fnUpdate': (settings, drawCallback) ->
     fnUpdatePage = (e) ->
       e.preventDefault()
       startPage = (parseInt($('a', this).text(), 10) - 1)
       if startPage >= 0
-        oSettings._iDisplayStart = startPage * oPaging.iLength
-        fnDraw oSettings
+        settings._iDisplayStart = startPage * paging.iLength
+        drawCallback settings
       return
     insertLinkPage = (number, i, cssClass) ->
       cssClass = if cssClass? then 'class=' + cssClass  else ''
       link = $('<li ' + cssClass + '><a href="#">' + number + '</a></li>').bind 'click', fnUpdatePage
-      link.insertBefore($('li:last', an[i])[0])
+      link.insertBefore($('li:last', domP[i])[0])
 
-    iListLength = 5
-    oPaging = oSettings.oInstance.fnPagingInfo()
-    an = oSettings.aanFeatures.p
+    listLength = 5
+    paging = settings.oInstance.fnPagingInfo()
+    domP = settings.aanFeatures.p
     i = undefined
-    ien = undefined
     j = undefined
-    sClass = undefined
-    iStart = undefined
-    iEnd = undefined
-    iHalf = Math.floor(iListLength / 2)
-    if oPaging.iTotalPages < iListLength
-      iStart = 1
-      iEnd = oPaging.iTotalPages
-    else if oPaging.iPage <= iHalf
-      iStart = 1
-      iEnd = iListLength
-    else if oPaging.iPage >= oPaging.iTotalPages - iHalf
-      iStart = oPaging.iTotalPages - iListLength + 1
-      iEnd = oPaging.iTotalPages
+    start = undefined
+    end = undefined
+    half = Math.floor(listLength / 2)
+    if paging.iTotalPages < listLength
+      start = 1
+      end = paging.iTotalPages
+    else if paging.iPage <= half
+      start = 1
+      end = listLength
+    else if paging.iPage >= paging.iTotalPages - half
+      start = paging.iTotalPages - listLength + 1
+      end = paging.iTotalPages
     else
-      iStart = oPaging.iPage - iHalf + 1
-      iEnd = iStart + iListLength - 1
+      start = paging.iPage - half + 1
+      end = start + listLength - 1
 
     i = 0
-    ien = an.length
-    while i < ien
-# Remove the middle elements
-      $('li:gt(0)', an[i]).filter(':not(:last)').remove()
+    #for multiple pagination
+    while i < domP.length
+      # Remove the middle elements
+      $('li:gt(0)', domP[i]).filter(':not(:last)').remove()
       # Add the new list items and their event handlers
-      j = iStart
-      if iStart > 1
+      j = start
+      if start > 1
         insertLinkPage('1', i)
         insertLinkPage('...', i, 'disabled')
-      while j <= iEnd
-        if iStart + iHalf + 1 == j && j != oPaging.iTotalPages
-          liInput = $('<li ' + sClass + '></li>')
+      while j <= end
+        if start + half + 1 == j && j != paging.iTotalPages
+          liInput = $('<li></li>')
           input = $('<input type="integer" value='+j+'>')
           input.keyup (e) ->
             e.preventDefault()
             startPage = (parseInt($(this).val()) - 1)
             if startPage > 0
-              oSettings._iDisplayStart = startPage * oPaging.iLength
-              fnDraw oSettings
+              settings._iDisplayStart = startPage * paging.iLength
+              drawCallback settings
             return
           liInput.html(input)
-          liInput.insertBefore($('li:last', an[i])[0])
+          liInput.insertBefore($('li:last', domP[i])[0])
         else
-          cssClass = if j == oPaging.iPage + 1 then 'active' else ''
+          cssClass = if j == paging.iPage + 1 then 'active' else ''
           insertLinkPage(j, i, cssClass)
         j++
-      if j < oPaging.iTotalPages + 1
+      if j < paging.iTotalPages + 1
         insertLinkPage('...', i, 'disabled')
-        insertLinkPage(oPaging.iTotalPages, i)
+        insertLinkPage(paging.iTotalPages, i)
       # Add / remove disabled classes from the static elements
-      if oPaging.iPage == 0
-        $('li:first', an[i]).addClass 'disabled'
+      if paging.iPage == 0
+        $('li:first', domP[i]).addClass 'disabled'
       else
-        $('li:first', an[i]).removeClass 'disabled'
-      if oPaging.iPage == oPaging.iTotalPages - 1 or oPaging.iTotalPages == 0
-        $('li:last', an[i]).addClass 'disabled'
+        $('li:first', domP[i]).removeClass 'disabled'
+      if paging.iPage == paging.iTotalPages - 1 or paging.iTotalPages == 0
+        $('li:last', domP[i]).addClass 'disabled'
       else
-        $('li:last', an[i]).removeClass 'disabled'
+        $('li:last', domP[i]).removeClass 'disabled'
       i++
     return
