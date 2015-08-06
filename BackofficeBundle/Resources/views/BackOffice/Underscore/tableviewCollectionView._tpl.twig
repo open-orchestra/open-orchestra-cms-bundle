@@ -1,6 +1,7 @@
 {% include 'OpenOrchestraBackofficeBundle:BackOffice:Underscore/Jarvis/header._tpl.twig' %}
 
 <div role="container" class="tableviewCollectionTable">
+<div class="dataTables_processing"><i class="fa fa-cog fa-spin"></i> Loading...</div>
 <table id="tableviewCollectionTable" class="table table-striped table-bordered table-hover smart-form dataTable">
         <thead>
             <tr>
@@ -17,7 +18,7 @@
                     </label>
                   </td>
                 <% }); %>
-                <th></th>
+                <td></td>
             </tr>
         </thead>
         <tbody>
