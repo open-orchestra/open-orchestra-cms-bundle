@@ -97,8 +97,6 @@ class BlockTypeSubscriberTest extends KernelTestCase
                 'multipleChoice' => array('foo', 'none'),
             )),
             array(GalleryStrategy::GALLERY, array(
-                'columnNumber' => 1,
-                'itemNumber' => 0,
                 'pictures' => array(
                     'media1',
                     'media2'
