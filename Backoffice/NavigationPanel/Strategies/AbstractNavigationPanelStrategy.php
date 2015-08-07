@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
-use OpenOrchestra\Backoffice\LeftPanel\LeftPanelInterface;
+use OpenOrchestra\Backoffice\NavigationPanel\NavigationPanelInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 /**
- * Class AbstractLeftPanelStrategy
+ * Class AbstractNavigationPanelStrategy
  */
-abstract class AbstractLeftPanelStrategy implements LeftPanelInterface
+abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterface
 {
     /**
      * @var EngineInterface

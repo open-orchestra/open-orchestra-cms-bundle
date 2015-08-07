@@ -6,9 +6,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class LeftPanelExtension
+ * Class NavigationPanelExtension
  */
-class LeftPanelExtension extends \Twig_Extension implements ContainerAwareInterface
+class NavigationPanelExtension extends \Twig_Extension implements ContainerAwareInterface
 {
     protected $container;
 
@@ -18,16 +18,16 @@ class LeftPanelExtension extends \Twig_Extension implements ContainerAwareInterf
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('left_panel', array($this, 'displayLeftPanel'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('navigation_panel', array($this, 'displayNavigationPanel'), array('is_safe' => array('html'))),
         );
     }
 
     /**
      * @return string
      */
-    public function displayLeftPanel()
+    public function displayNavigationPanel()
     {
-        return $this->container->get('open_orchestra_backoffice.left_panel_manager')->show();
+        return $this->container->get('open_orchestra_backoffice.navigation_panel_manager')->show();
     }
 
     /**
@@ -37,7 +37,7 @@ class LeftPanelExtension extends \Twig_Extension implements ContainerAwareInterf
      */
     public function getName()
     {
-        return 'left_panel';
+        return 'navigation_panel';
     }
 
      /**

@@ -1,17 +1,17 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 
 /**
- * Class GeneralNodesPanel
+ * Class TreeNodesPanel
  */
-class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
+class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
 {
-    const ROLE_ACCESS_GENERAL_NODE = 'ROLE_ACCESS_GENERAL_NODE';
+    const ROLE_ACCESS_TREE_NODE = 'ROLE_ACCESS_TREE_NODE';
 
     /**
      * @var NodeRepositoryInterface
@@ -25,7 +25,6 @@ class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
-     * @param CurrentSiteIdInterface  $currentSiteManager
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
     {
@@ -39,12 +38,14 @@ class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
     public function show()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId, NodeInterface::TYPE_TRANSVERSE);
+        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showGeneralTreeNodes.html.twig',
+            'OpenOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
             array(
-                'nodes' => $nodes
+                'nodes' => $nodes,
+                'nodeId404' => ReadNodeInterface::ERROR_404_NODE_ID,
+                'nodeId503' => ReadNodeInterface::ERROR_503_NODE_ID
             )
         );
     }
@@ -62,7 +63,7 @@ class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function getName()
     {
-        return 'generale_node';
+        return 'nodes';
     }
 
     /**
@@ -70,6 +71,6 @@ class GeneralNodesPanelStrategy extends AbstractLeftPanelStrategy
      */
     public function getRole()
     {
-        return self::ROLE_ACCESS_GENERAL_NODE;
+        return self::ROLE_ACCESS_TREE_NODE;
     }
 }

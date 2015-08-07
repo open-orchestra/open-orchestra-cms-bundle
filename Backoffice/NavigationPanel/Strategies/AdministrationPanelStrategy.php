@@ -1,12 +1,12 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 
 /**
  * Class AdministrationPanelStrategy
  */
-class AdministrationPanelStrategy extends AbstractLeftPanelStrategy
+class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
 {
     const ROLE_ACCESS_CONTENT_TYPE = 'ROLE_ACCESS_CONTENT_TYPE';
     const ROLE_ACCESS_REDIRECTION = 'ROLE_ACCESS_REDIRECTION';

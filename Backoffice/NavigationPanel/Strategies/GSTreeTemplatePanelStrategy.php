@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\LeftPanel\Strategies;
+namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 
 /**
  * Class TreeTemplatePanel
  */
-class GSTreeTemplatePanelStrategy extends AbstractLeftPanelStrategy
+class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
 {
     const ROLE_ACCESS_TREE_TEMPLATE = 'ROLE_ACCESS_TREE_TEMPLATE';
 

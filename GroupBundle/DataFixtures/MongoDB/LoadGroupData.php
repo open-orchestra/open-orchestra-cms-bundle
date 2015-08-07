@@ -5,13 +5,13 @@ namespace OpenOrchestra\GroupBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\AdministrationPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\ContentTypeForContentPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\Backoffice\LeftPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\GroupBundle\Document\Group;
-use OpenOrchestra\MediaAdminBundle\LeftPanel\Strategies\TreeFolderPanelStrategy;
+use OpenOrchestra\MediaAdminBundle\NavigationPanel\Strategies\TreeFolderPanelStrategy;
 
 /**
  * Class LoadGroupData

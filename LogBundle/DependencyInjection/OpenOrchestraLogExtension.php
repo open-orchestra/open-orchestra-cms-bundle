@@ -37,7 +37,7 @@ class OpenOrchestraLogExtension extends Extension
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('leftpanel.yml');
+        $loader->load('navigationpanel.yml');
         $loader->load('subscriber.yml');
         $loader->load('processor.yml');
         $loader->load('transformer.yml');

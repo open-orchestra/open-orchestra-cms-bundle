@@ -1,7 +1,7 @@
 parameters:
     open_orchestra_backoffice.twig_extension.translation_choice.class: OpenOrchestra\BackofficeBundle\Twig\TranslationChoiceExtension
     open_orchestra_backoffice.twig_extension.block_icon.class: OpenOrchestra\BackofficeBundle\Twig\BlockIconExtension
-    open_orchestra_backoffice.twig_extension.left_panel.class: OpenOrchestra\BackofficeBundle\Twig\LeftPanelExtension
+    open_orchestra_backoffice.twig_extension.navigation_panel.class: OpenOrchestra\BackofficeBundle\Twig\NavigationPanelExtension
 
 services:
     open_orchestra_backoffice.twig_extension.translation_choice:
@@ -16,8 +16,8 @@ services:
             - @open_orchestra_backoffice.display_icon_manager
         tags:
             - { name: twig.extension}
-    open_orchestra_backoffice.twig_extension.left_panel:
-        class: %open_orchestra_backoffice.twig_extension.left_panel.class%
+    open_orchestra_backoffice.twig_extension.navigation_panel:
+        class: %open_orchestra_backoffice.twig_extension.navigation_panel.class%
         calls:
             - [ setContainer, [ @service_container ]  ]
         tags:

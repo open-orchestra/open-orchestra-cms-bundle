@@ -16,6 +16,6 @@ class MenuController extends Controller
      */
     public function renderAction()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:BackOffice/Include:leftPanel.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:BackOffice/Include:navigationPanel.html.twig');
     }
 }

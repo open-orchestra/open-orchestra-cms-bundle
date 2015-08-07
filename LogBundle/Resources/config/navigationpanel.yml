@@ -1,0 +1,10 @@
+services:
+    open_orchestra_log.navigation_panel.log:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - logs
+            - ROLE_ACCESS_LOG
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+        calls:
+            - [ setTemplate, ['OpenOrchestraLogBundle:AdministrationPanel:logs.html.twig'] ]
