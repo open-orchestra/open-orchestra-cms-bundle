@@ -49,14 +49,13 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test new langage creation
+     * test new language creation
      */
     public function testCreateNewLanguageContent()
     {
         $language = 'fr';
         $newContent = $this->manager->createNewLanguageContent($this->content, $language);
 
-        Phake::verify($newContent, Phake::times(2))->setVersion(1);
         Phake::verify($newContent)->setStatus(null);
         Phake::verify($newContent)->setLanguage($language);
     }
@@ -71,7 +70,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     {
         Phake::when($this->content)->getVersion()->thenReturn($version);
 
-        $newContent = $this->manager->duplicateContent($this->content);
+        $newContent = $this->manager->duplicateContent($this->content, $version);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus(null);
