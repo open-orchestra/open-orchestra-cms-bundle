@@ -176,9 +176,9 @@ class ContentController extends BaseController
     public function duplicateAction(Request $request, $contentId)
     {
         /** @var ContentInterface $content */
-        $content = $this->findOneContent($contentId, $request->get('language'));
-        $newContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content);
-
+        $content = $this->findOneContent($contentId, $request->get('language'), $request->get('version'));
+        $lastContent = $this->findOneContent($contentId, $request->get('language'));
+        $newContent = $this->get('open_orchestra_backoffice.manager.content')->duplicateContent($content, $lastContent);
 
         $em = $this->get('object_manager');
         $em->persist($newContent);
