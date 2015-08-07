@@ -2,8 +2,10 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentFacade;
+use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
@@ -113,6 +115,7 @@ class ContentTransformer extends AbstractTransformer
      * @param ContentInterface|null         $source
      *
      * @return mixed
+     * @throws StatusChangeNotGrantedHttpException
      */
     public function reverseTransform(FacadeInterface $facade, $source = null)
     {
@@ -121,7 +124,11 @@ class ContentTransformer extends AbstractTransformer
                 $toStatus = $this->statusRepository->find($facade->statusId);
                 if ($toStatus) {
                     $event = new StatusableEvent($source, $toStatus);
-                    $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+                    try {
+                        $this->eventDispatcher->dispatch(StatusEvents::STATUS_CHANGE, $event);
+                    } catch (StatusChangeNotGrantedException $e) {
+                        throw new StatusChangeNotGrantedHttpException();
+                    }
                 }
             }
         }

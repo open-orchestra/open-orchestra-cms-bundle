@@ -44,7 +44,7 @@ class BlockNodePatternTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('', $this->constraint->message);
+        $this->assertSame('open_orchestra_backoffice_validators.node.pattern', $this->constraint->message);
     }
 
     /**

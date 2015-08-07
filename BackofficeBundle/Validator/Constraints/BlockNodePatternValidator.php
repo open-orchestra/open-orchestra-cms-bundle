@@ -6,9 +6,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
@@ -18,55 +15,41 @@ use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 class BlockNodePatternValidator extends ConstraintValidator
 {
     protected $generateFormManager;
-    protected $session;
-    protected $templating;
-    protected $translator;
 
     /**
      * @param GenerateFormManager $generateFormManager
-     * @param SessionInterface    $session
-     * @param EngineInterface     $templating
-     * @param TranslatorInterface $translator
      */
-    public function __construct(GenerateFormManager $generateFormManager, Session $session, EngineInterface $templating, TranslatorInterface $translator)
+    public function __construct(GenerateFormManager $generateFormManager)
     {
         $this->generateFormManager = $generateFormManager;
-        $this->session = $session;
-        $this->templating = $templating;
-        $this->translator = $translator;
     }
 
     /**
-     * @param NodeInterface $node
-     * @param Constraint $constraint
+     * @param NodeInterface               $node
+     * @param BlockNodePattern|Constraint $constraint
      */
     public function validate($node, Constraint $constraint)
     {
         if ($node->getStatus() instanceof StatusInterface && $node->getStatus()->isPublished()) {
             $blocks = $node->getBlocks();
-            $blockRef = $this->getRefBlock($node);
+            $blockReferences = $this->getRefBlock($node);
             $routePattern = $node->getRoutePattern();
-            $isValid = true;
-            foreach ($blockRef as $blockRef) {
+            foreach ($blockReferences as $blockRef) {
                 $block = $blocks[$blockRef];
                 $parameters = $this->generateFormManager->getRequiredUriParameter($block);
                 $blockLabel = $block->getLabel();
                 foreach ($parameters as $parameter) {
                     if (false === strpos($routePattern, '{' . $parameter . '}')) {
-                        $this->session->getFlashBag()->add('alert',
-                            $this->translator->trans('open_orchestra_backoffice.form.node.error.pattern', array(
+                        $this->context
+                            ->buildViolation($constraint->message)
+                            ->setParameters(array(
                                 '%blockLabel%' => $blockLabel,
-                                '%parameter%' => $parameter))
-                        );
-                        $isValid = false;
+                                '%parameter%' => $parameter
+                            ))
+                            ->atPath('routePattern')
+                            ->addViolation();
                     }
                 }
-            }
-            if (!$isValid) {
-                $response = $this->templating->render('BraincraftedBootstrapBundle::flash.html.twig');
-                $this->context->buildViolation($response)
-                    ->atPath('BlockNodePattern')
-                    ->addViolation();
             }
         }
     }
@@ -80,7 +63,7 @@ class BlockNodePatternValidator extends ConstraintValidator
     {
         $blockRef = array();
         $areas = $container->getAreas();
-        if (count($areas) > 0){
+        if ($container instanceof NodeInterface || count($areas) > 0){
             foreach ($areas as $area) {
                 $blockRef = array_merge($blockRef, $this->getRefBlock($area));
             }

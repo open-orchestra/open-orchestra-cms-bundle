@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
+use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager;
@@ -24,6 +25,8 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
 
     /**
      * @param StatusableEvent $event
+     *
+     * @throws StatusChangeNotGrantedException
      */
     public function updateStatus(StatusableEvent $event)
     {
@@ -31,6 +34,8 @@ class UpdateStatusSubscriber implements EventSubscriberInterface
         $toStatus = $event->getToStatus();
         if ($this->authorizeStatusChangeManager->isGranted($document, $toStatus)) {
             $document->setStatus($toStatus);
+        } else {
+            throw new StatusChangeNotGrantedException();
         }
     }
 
