@@ -150,11 +150,10 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      * @param mixed $source
      * @param int   $searchCount
      * @param int   $setCount
-     * @param bool  $isGranted
      *
      * @dataProvider getChangeStatus
      */
-    public function testReverseTransform($facade, $source, $searchCount, $setCount, $isGranted = true)
+    public function testReverseTransform($facade, $source, $searchCount, $setCount)
     {
         $this->nodeTransformer->reverseTransform($facade, $source);
 
@@ -191,7 +190,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
             array($facadeA, null, 0, 0),
             array($facadeA, $node1, 0, 0),
             array($facadeB, $node2, 1, 1),
-            array($facadeB, $node3, 1, 1, false),
+            array($facadeB, $node3, 1, 1),
         );
     }
 }

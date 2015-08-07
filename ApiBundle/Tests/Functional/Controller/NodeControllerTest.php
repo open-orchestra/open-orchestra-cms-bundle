@@ -3,12 +3,27 @@
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class NodeControllerTest
  */
 class NodeControllerTest extends AbstractControllerTest
 {
+    /**
+     * @var StatusRepositoryInterface
+     */
+    protected $statusRepository;
+
+    /**
+     * Set up the test
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->statusRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.status');
+    }
+
     /**
      * Reset removing node after test
      */
@@ -64,7 +79,7 @@ class NodeControllerTest extends AbstractControllerTest
             ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', '2');
 
         $this->assertSame($node->getVersion()+1, $nodeLastVersion->getVersion());
-        $this->assertGreaterThan($this->countAreaRef($nodeTransverse), $this->countAreaRef($nodeTransverseAfter));
+        $this->assertGreaterThanOrEqual($this->countAreaRef($nodeTransverse), $this->countAreaRef($nodeTransverseAfter));
     }
 
     /**
@@ -75,7 +90,7 @@ class NodeControllerTest extends AbstractControllerTest
         $node = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('root', 'en', '2');
         if (!is_null($node)) {
-            $this->markTestSkipped();
+            $this->markTestSkipped('The node has already been created');
         }
 
         $nodeTransverse = $this->nodeRepository
@@ -108,5 +123,44 @@ class NodeControllerTest extends AbstractControllerTest
         }
 
         return $areaRef;
+    }
+
+    /**
+     * @param string $name
+     * @param int    $publishedVersion
+     *
+     * @dataProvider provideStatusNameAndPublishedVersion
+     */
+    public function testChangeNodeStatus($name, $publishedVersion)
+    {
+        $node = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('root', 'fr', '2');
+        $newStatus = $this->statusRepository->findOneByName($name);
+        $newStatusId = $newStatus->getId();
+
+        $this->client->request(
+            'POST',
+            '/api/node/' . $node->getId() . '/update',
+            array(),
+            array(),
+            array(),
+            json_encode(array('status_id' => $newStatusId))
+        );
+
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+
+        $newNode = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion('root', 'fr', '2');
+        $this->assertEquals($publishedVersion, $newNode->getVersion());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideStatusNameAndPublishedVersion()
+    {
+        return array(
+            array('pending', 1),
+            array('published', 2),
+            array('draft', 1),
+        );
     }
 }

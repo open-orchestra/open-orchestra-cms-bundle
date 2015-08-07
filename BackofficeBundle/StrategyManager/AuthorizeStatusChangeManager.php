@@ -29,11 +29,13 @@ class AuthorizeStatusChangeManager
      */
     public function isGranted(StatusableInterface $document, StatusInterface $toStatus)
     {
+        /** @var AuthorizeStatusChangeInterface $strategy */
         foreach ($this->strategies as $strategy) {
             if (!$strategy->isGranted($document, $toStatus)) {
                 return false;
             }
         }
-        $document->setStatus($toStatus);
+
+        return true;
     }
 }
