@@ -56,6 +56,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
         $language = 'fr';
         $newContent = $this->manager->createNewLanguageContent($this->content, $language);
 
+        Phake::verify($newContent, Phake::times(1))->setVersion(1);
         Phake::verify($newContent)->setStatus(null);
         Phake::verify($newContent)->setLanguage($language);
     }
@@ -66,11 +67,12 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideVersionsAndExpected
      */
-    public function testDuplicateNode($version, $expectedVersion)
+    public function testDuplicateNode($version, $lastVersion, $expectedVersion)
     {
         Phake::when($this->content)->getVersion()->thenReturn($version);
-
-        $newContent = $this->manager->duplicateContent($this->content, $version);
+        $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($lastContent)->getVersion()->thenReturn($lastVersion);
+        $newContent = $this->manager->duplicateContent($this->content, $lastContent);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus(null);
@@ -84,8 +86,8 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     public function provideVersionsAndExpected()
     {
         return array(
-            array(1, 2),
-            array(5, 6),
+            array(1, 1, 2),
+            array(5, 6, 7),
         );
     }
 

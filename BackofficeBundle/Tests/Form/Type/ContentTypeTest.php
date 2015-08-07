@@ -24,8 +24,8 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->contentTypeSubscriber = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber');
-
-        $this->form = new ContentType($this->contentTypeSubscriber, $this->contentClass);
+        $this->addButtonSubscriber = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\AddContentSubmitButtonSubscriber');
+        $this->form = new ContentType($this->contentTypeSubscriber, $this->contentClass, $this->addButtonSubscriber);
     }
 
     /**
