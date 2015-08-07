@@ -33,14 +33,11 @@ class ApiClientController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columnsNameToEntityAttribute = array(
-            'name' => array('key' => 'name'),
-            'trusted' => array('key' => 'trusted', 'type' => 'boolean'),
-        );
+        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\BaseApiMongoModelBundle\Document\ApiClient');
         $repository = $this->get('open_orchestra_api.repository.api_client');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
+        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 
     /**

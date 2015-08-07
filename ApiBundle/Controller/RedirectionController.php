@@ -54,17 +54,11 @@ class RedirectionController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columnsNameToEntityAttribute = array(
-            'site_name'     => array('key' => 'siteName'),
-            'route_pattern' => array('key' => 'routePattern'),
-            'locale'        => array('key' => 'locale'),
-            'redirection'   => array('key' => 'url'),
-            'permanent'     => array('key' => 'permanent', 'type' => 'boolean'),
-        );
+        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Redirection');
         $repository = $this->get('open_orchestra_model.repository.redirection');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
+        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 
     /**

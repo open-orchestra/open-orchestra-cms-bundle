@@ -129,12 +129,8 @@ class ContentController extends BaseController
         }
 
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $configuration->setDescriptionEntity(array(
-            'name'         => array('key' => 'name'),
-            'status_label' => array('key' => 'status.name'),
-            'version'      => array('key' => 'version' , 'type' => 'integer'),
-            'language'     => array('key' => 'language'),
-        ));
+        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Content');
+        $configuration->setDescriptionEntity($mapping);
         $contentCollection = $repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration, $siteId);
         $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
         $recordsFiltered = $repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);

@@ -54,13 +54,11 @@ class GroupController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $columnsNameToEntityAttribute = array(
-            'name'     => array('key' => 'name'),
-        );
+        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\GroupBundle\Document\Group');
         $repository = $this->get('open_orchestra_user.repository.group');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('group_collection');
 
-        return $this->handleRequestDataTable($request, $repository, $columnsNameToEntityAttribute, $collectionTransformer);
+        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\ModelInterface\Mapping\Annotations\Search;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\UserBundle\Repository\GroupRepository;
@@ -127,8 +128,9 @@ class GroupRepositoryTest extends KernelTestCase
      */
     protected function getDescriptionColumnEntity()
     {
+
         return array(
-            'name' => array('key' => 'name')
+            'name' => new Search(array('key' => 'name', 'field' => 'name', 'type' => 'string'))
         );
     }
 
