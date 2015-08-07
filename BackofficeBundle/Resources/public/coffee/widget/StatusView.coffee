@@ -30,7 +30,7 @@ StatusView = OrchestraView.extend(
         eval('error = ' + jqXHR.responseText + ';');
         viewClass = appConfigurationView.getConfiguration('status', 'showFlashBag')
         new viewClass(
-          html: error[0].message 
+          error: jqXHR.responseJSON.error.message
           domContainer: $('h1.page-title').parent()
         )
     return

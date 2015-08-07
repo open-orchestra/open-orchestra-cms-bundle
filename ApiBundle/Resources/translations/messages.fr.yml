@@ -1,0 +1,3 @@
+open_orchestra_api:
+    status:
+        change_not_granted: Vous ne pouvez pas modifier le status en raison de limitation de droits
