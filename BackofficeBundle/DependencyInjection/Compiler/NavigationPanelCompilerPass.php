@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * Class NavigationPanelCompilerPass
  */
-class NavigationCompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
+class NavigationPanelCompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
 {
     /**
      * You can modify the container here before it is dumped to PHP code.

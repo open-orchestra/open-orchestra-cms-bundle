@@ -1,4 +1,4 @@
-$('#navigation-panel').on 'click', '.ajax-new', (e) ->
+$('#left-panel').on 'click', '.ajax-new', (e) ->
   e.preventDefault()
   createNew $(this)
 

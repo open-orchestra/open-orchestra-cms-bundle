@@ -5,12 +5,12 @@ BlocksPanelView = OrchestraView.extend(
       'domContainer'
     ])
     @loadTemplates [
-        "OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel"
+        "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blocksPanel"
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/rightPanel', @options)
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blocksPanel', @options)
     @options.domContainer.append @$el
     Backbone.Wreqr.radio.commands.execute 'viewport', 'init', @options.domContainer
     $(window).resize ->

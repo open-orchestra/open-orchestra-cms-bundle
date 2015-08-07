@@ -31,12 +31,12 @@ displayMenu = (route) ->
   else
     selectedPath = "#" + Backbone.history.fragment
   $.ajax
-    url: $("#navigation-panel nav").data("url")
+    url: $("#left-panel nav").data("url")
     type: "GET"
     success: (response) ->
       
       # render html
-      $("#navigation-panel nav").replaceWith response
+      $("#left-panel nav").replaceWith response
       
       # create the jarvis menu
       opts =
@@ -62,7 +62,7 @@ displayMenu = (route) ->
   return
 
 openMenu = (speed, openedSign) ->
-  $("#navigation-panel nav").find("li.active").each ->
+  $("#left-panel nav").find("li.active").each ->
     $(this).parents("ul").slideDown speed
     $(this).parents("ul").parent("li").find("b:first").html openedSign
     $(this).parents("ul").parent("li").addClass "open"
