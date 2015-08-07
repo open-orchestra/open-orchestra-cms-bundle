@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class BlockNodePattern extends Constraint
 {
-    public $message = '';
+    public $message = 'open_orchestra_backoffice_validators.node.pattern';
 
     /**
      * @return string|void

@@ -13,8 +13,5 @@ services:
         class: %open_orchestra_model.validator.block_node_pattern.class%
         arguments:
             - @open_orchestra_backoffice.generate_form_manager
-            - @session
-            - @templating
-            - @translator
         tags:
             - { name: validator.constraint_validator, alias: block_node_pattern}

@@ -1,10 +1,13 @@
 <div class="flashbag">
-    <% if (typeof error != 'undefined') { %>
+    <% if (typeof errors.error != 'undefined') { %>
         <div class="alert alert-danger">
-            <%= error %>
+            <%= errors.error.message %>
         </div>
-    <% } %>
-    <% if (typeof html != 'undefined') { %>
-        <%= html %>
+    <% } else { %>
+        <% _.each(errors, function(error) { %>
+            <div class="alert alert-warning">
+                <%= error.message %>
+            </div>
+        <% }); %>
     <% } %>
 </div>
