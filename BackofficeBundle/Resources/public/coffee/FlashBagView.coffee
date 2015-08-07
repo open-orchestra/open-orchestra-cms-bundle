@@ -1,7 +1,7 @@
 FlashBagView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
-      'errors'
+      'html'
       'domContainer'
     ])
     @loadTemplates [

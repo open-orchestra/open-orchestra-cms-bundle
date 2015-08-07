@@ -26,9 +26,8 @@ StatusView = OrchestraView.extend(
       method: 'POST'
       success: ->
         Backbone.history.loadUrl(Backbone.history.fragment)
-      error: (jqXHR, textStatus, errorThrown) ->
-        eval('error = ' + jqXHR.responseText + ';');
-        viewClass = appConfigurationView.getConfiguration('status', 'showFlashBag')
+      error: (jqXHR) ->
+        viewClass = appConfigurationView.getConfiguration('status', 'apiError')
         new viewClass(
           errors: jqXHR.responseJSON
           domContainer: $('h1.page-title').parent()

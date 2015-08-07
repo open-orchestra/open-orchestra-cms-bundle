@@ -22,6 +22,7 @@ OrchestraViewConfigurator = ->
     'showOrchestraModal': OrchestraModalView
     'addFieldOptionDefaultValue': FieldOptionDefaultValueView
     'showFlashBag': FlashBagView
+    'apiError': DisplayApiErrorView
 
   setConfiguration: (entityType, action, view) ->
     @configurations[entityType] = [] if typeof @configurations[entityType] == "undefined"
