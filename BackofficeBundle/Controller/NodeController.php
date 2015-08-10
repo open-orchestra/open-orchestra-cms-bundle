@@ -91,7 +91,7 @@ class NodeController extends AbstractAdminController
             $node,
             array(
                 'action' => $url,
-                'disabled' => !$node->isEditable()
+                'disabled' => !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($node)
             )
         );
 

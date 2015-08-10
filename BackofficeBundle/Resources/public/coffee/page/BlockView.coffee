@@ -9,7 +9,7 @@ BlockView = OrchestraView.extend(
       'area'
       'domContainer'
       'viewContainer'
-      'published'
+      'editable'
     ])
     @loadTemplates [
         "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"
@@ -19,7 +19,7 @@ BlockView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView',
       block: @options.block
-      published: @options.published
+      editable: @options.editable
     )
     @options.domContainer.append @$el
     return

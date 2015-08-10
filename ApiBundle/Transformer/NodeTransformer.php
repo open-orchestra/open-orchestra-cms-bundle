@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
+use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
@@ -28,24 +29,28 @@ class NodeTransformer extends AbstractTransformer
     protected $siteRepository;
     protected $eventDispatcher;
     protected $statusRepository;
+    protected $authorizeEdition;
 
     /**
      * @param EncryptionManager             $encrypter
      * @param SiteRepositoryInterface       $siteRepository
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
+     * @param AuthorizeEditionManager       $authorizeEdition
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        AuthorizeEditionManager $authorizeEdition
     )
     {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
+        $this->authorizeEdition = $authorizeEdition;
     }
 
     /**
@@ -90,6 +95,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
+        $facade->editable = $this->authorizeEdition->isEditable($node);
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
             'id' => $node->getId(),

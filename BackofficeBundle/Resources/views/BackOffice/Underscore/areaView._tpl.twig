@@ -6,16 +6,16 @@
     <div class="area-toolbar toolbar-container">
         <div class="toolbar">
             <span class="title tool"><%= area.get('ui_model').label %></span>
-        <% if (published) { %>
-            <span class="tool area-param">
-                <i class="glyphicon glyphicon-eye-open"></i>
-            </span>
-        <% } else { %>
+        <% if (editable) { %>
             <span class="tool area-param">
                 <i class="glyphicon glyphicon-pencil"></i>
             </span>
             <span class="tool area-remove">
                 <i class="glyphicon glyphicon-trash"></i>
+            </span>
+        <% } else { %>
+            <span class="tool area-param">
+                <i class="glyphicon glyphicon-eye-open"></i>
             </span>
         <% } %>
         </div>

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle;
 
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeEditionCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
@@ -35,5 +36,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());
         $container->addCompilerPass(new AuthorizeStatusChangeCompilerPass());
+        $container->addCompilerPass(new AuthorizeEditionCompilerPass());
     }
 }
