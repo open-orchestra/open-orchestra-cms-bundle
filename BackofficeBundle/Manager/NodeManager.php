@@ -69,21 +69,28 @@ class NodeManager
     /**
      * Duplicate a node
      *
-     * @param string $nodeId
-     * @param string $siteId
-     * @param string $language
+     * @param string   $nodeId
+     * @param string   $siteId
+     * @param string   $language
+     * @param int|null $version
      *
      * @return NodeInterface
      */
-    public function duplicateNode($nodeId, $siteId, $language)
+    public function duplicateNode($nodeId, $siteId, $language, $version = null)
     {
-        $node = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId);
+        $node = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
+        $lastNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
+        $lastNodeVersion = $lastNode->getVersion();
         $status = $this->getEditableStatus($node);
         if ($status === null) {
             $status = $this->statusRepository->findOneByInitial();
         }
-        $newNode = $this->nodeManager->duplicateNode($nodeId, $siteId, $language, $status->getId());
+        $newNode = clone $node;
+        $newNode->setStatus($status);
+        $newNode->setVersion($lastNodeVersion + 1);
         $this->updateBlockReferences($node, $newNode);
+
+        $newNode = $this->nodeManager->saveDuplicatedNode($newNode);
 
         return $newNode;
     }
@@ -228,6 +235,7 @@ class NodeManager
 
             return true;
         }
+
         return false;
     }
 
