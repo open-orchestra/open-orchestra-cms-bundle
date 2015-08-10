@@ -9,7 +9,7 @@ parameters:
     open_orchestra_backoffice.manager.content_type.class: OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager
     open_orchestra_backoffice.manager.block.class: OpenOrchestra\BackofficeBundle\Manager\BlockManager
     open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\BackofficeBundle\Manager\RedirectionManager
-    open_orchestra_model.annotation_search_reader.class: OpenOrchestra\ModelInterface\Mapping\Reader\SearchMappingReader
+    open_orchestra_model.annotation_search_reader.class: OpenOrchestra\Mapping\Reader\SearchMappingReader
 
 services:
     open_orchestra_backoffice.context_manager:

@@ -4,7 +4,7 @@ namespace OpenOrchestra\LogBundle\Document;
 
 use OpenOrchestra\LogBundle\Model\LogInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Log
