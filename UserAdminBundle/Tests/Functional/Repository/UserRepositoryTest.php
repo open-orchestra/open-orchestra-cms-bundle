@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\Mapping\Annotations\Search;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
@@ -128,7 +129,7 @@ class UserRepositoryTest extends KernelTestCase
     protected function getDescriptionColumnEntity()
     {
         return array(
-            'username' => array('key' => 'username')
+            'username' => new Search(array('key' => 'username', 'field' => 'username', 'type' => 'string'))
         );
     }
 

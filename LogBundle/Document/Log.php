@@ -4,6 +4,7 @@ namespace OpenOrchestra\LogBundle\Document;
 
 use OpenOrchestra\LogBundle\Model\LogInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Log
@@ -61,6 +62,7 @@ class Log implements LogInterface
      * @var string $datetime
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="date_time")
      */
     protected $datetime;
 
@@ -68,6 +70,9 @@ class Log implements LogInterface
      * @var array $extra
      *
      * @ODM\Field(type="collection")
+     * @ORCHESTRA\Search(field="extra.user_ip",key="user_ip")
+     * @ORCHESTRA\Search(field="extra.user_name",key="user_name")
+     * @ORCHESTRA\Search(field="extra.site_name",key="site_name")
      */
     protected $extra;
 
