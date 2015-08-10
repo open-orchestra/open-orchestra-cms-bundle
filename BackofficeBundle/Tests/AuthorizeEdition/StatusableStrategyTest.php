@@ -40,6 +40,7 @@ class StatusableStrategyTest extends \PHPUnit_Framework_TestCase
     public function testSupport($document, $support)
     {
         $document = Phake::mock($document);
+        Phake::when($document)->getStatus()->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface'));
 
         $this->assertSame($support, $this->strategy->support($document));
     }

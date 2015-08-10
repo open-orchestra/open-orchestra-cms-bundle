@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
 
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class StatusableStrategy
@@ -16,7 +17,7 @@ class StatusableStrategy implements AuthorizeEditionInterface
      */
     public function support($document)
     {
-        return $document instanceof StatusableInterface;
+        return $document instanceof StatusableInterface && $document->getStatus() instanceof StatusInterface;
     }
 
     /**
