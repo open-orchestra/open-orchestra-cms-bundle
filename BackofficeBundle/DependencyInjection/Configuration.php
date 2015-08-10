@@ -34,13 +34,17 @@ class Configuration implements ConfigurationInterface
                 ->info('Add the global block attributes')
                 ->prototype('scalar')->end()
             ->end()
-            ->arrayNode('field_types')
-                ->info('Array of content attributes (for content types)')
-                ->prototype('variable')->end()
-            ->end()
-                ->arrayNode('options')
+            ->append($this->addFieldTypesParameter())
+            ->arrayNode('options')
                 ->info('Array of content attributes options')
-                ->prototype('variable')->end()
+                ->useAttributeAsKey('option_name')
+                ->prototype('array')
+                    ->children()
+                        ->scalarNode('type')->isRequired()->end()
+                        ->scalarNode('label')->isRequired()->end()
+                        ->booleanNode('required')->defaultTrue()->end()
+                    ->end()
+                ->end()
             ->end()
             ->arrayNode('available_color')
                 ->info('List of the color available, in the status for instance')
@@ -50,5 +54,47 @@ class Configuration implements ConfigurationInterface
         ->end();
 
         return $treeBuilder;
+    }
+
+    /**
+     * @return NodeDefinition
+     */
+    public function addFieldTypesParameter()
+    {
+        $builder = new TreeBuilder();
+        $fieldTypes = $builder->root('field_types');
+
+        $fieldTypes
+            ->info('Array of content attributes (for content types)')
+            ->useAttributeAsKey('field_name')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('label')->isRequired()->end()
+                    ->scalarNode('type')->isRequired()->end()
+                    ->arrayNode('default_value')
+                        ->children()
+                            ->scalarNode('type')->end()
+                            ->arrayNode('options')
+                                ->children()
+                                    ->scalarNode('label')->end()
+                                    ->booleanNode('required')->defaultTrue()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('options')
+                    ->useAttributeAsKey('option_name')
+                    ->requiresAtLeastOneElement()
+                        ->prototype('array')
+                            ->children()
+                                ->scalarNode('default_value')->isRequired()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $fieldTypes;
     }
 }
