@@ -10,7 +10,7 @@ AreaView = OrchestraView.extend(
     @options = @reduceOption(options, [
       'area'
       'configuration'
-      'published'
+      'editable'
       'domContainer'
     ])
     @loadTemplates [

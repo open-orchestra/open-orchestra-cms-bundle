@@ -40,6 +40,7 @@ services:
             - @open_orchestra_model.repository.site
             - @open_orchestra_model.repository.status
             - @event_dispatcher
+            - @open_orchestra_backoffice.authorize_edition.manager
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_collection:

@@ -14,7 +14,7 @@ extendView['addArea'] = {
     new areaViewClass(
       area: areaElement
       configuration: areaElement
-      published: @options.published
+      editable: @options.editable
       domContainer: @areaContainer
     )
     @areaContainer.addClass (if @options.configuration.get("bo_direction") is "h" then "bo-row" else "bo-column")

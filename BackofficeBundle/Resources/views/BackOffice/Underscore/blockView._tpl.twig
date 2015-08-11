@@ -1,29 +1,29 @@
-<% if (typeof published != 'undefined') { %>
+<% if (typeof editable != 'undefined') { %>
     <li class="ui-model-block  <% if ('generate' == block.get('method'))  { %>bg-orchestra-orange<% } else { %>bg-orchestra-blue<% } %>"
         data-delete-confirm-question="{{ 'open_orchestra_backoffice.block.delete_question'|trans }}"
         data-delete-confirm-explanation="{{ 'open_orchestra_backoffice.block.delete_explanation'|trans }}">
         <div class="toolbar-container">
             <div class="toolbar">
-            <% if (published) { %>
-                <span class="tool block-title"><%= block.get('ui_model').label %></span>
-                <% if ('generate' == block.get('method')) { %>
-                <span class="tool block-param">
-                    <i class="glyphicon glyphicon-eye-open"></i>
-                </span>
-                <% } %>
-            <% } else { %>
+            <% if (editable) { %>
                 <span class="tool move-tool">
                     <i class="glyphicon glyphicon-move"></i>
                 </span>
                 <span class="tool block-title"><%= block.get('ui_model').label %></span>
                 <% if ('generate' == block.get('method')) { %>
-                <span class="tool block-param">
-                    <i class="glyphicon glyphicon-pencil"></i>
-                </span>
+                    <span class="tool block-param">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </span>
                 <% } %>
                 <span class="tool move-trash">
                     <i class="block-remove glyphicon glyphicon-trash"></i>
                 </span>
+            <% } else { %>
+                <span class="tool block-title"><%= block.get('ui_model').label %></span>
+                <% if ('generate' == block.get('method')) { %>
+                    <span class="tool block-param">
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                    </span>
+                <% } %>
             <% } %>
             </div>
         </div>

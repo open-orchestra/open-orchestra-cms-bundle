@@ -72,24 +72,27 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $nodeId = 'fakeNodeId';
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
-        $statusId = 'fakeStatusId';
+        $version = 1;
 
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getBlocks()->thenReturn(array());
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node1)->getAreas()->thenReturn(array());
+        Phake::when($node0)->getAreas()->thenReturn(array($area));
+        Phake::when($node0)->getBlocks()->thenReturn(array($block));
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($status)->getId()->thenReturn($statusId);
 
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId)->thenReturn($node0);
-        Phake::when($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, $statusId)->thenReturn($node1);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion(Phake::anyParameters())->thenReturn($node0);
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node2);
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($status);
 
-        $alteredNode = $this->manager->duplicateNode($nodeId, $siteId, $language);
+        $newNode = $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
 
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId);
-        Phake::verify($this->nodeManager)->duplicateNode($nodeId, $siteId, $language, $statusId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
+        Phake::verify($this->nodeManager)->saveDuplicatedNode($node0);
+        Phake::verify($newNode)->addBlock($block);
+        Phake::verify($newNode)->addArea($area);
     }
 
     /**

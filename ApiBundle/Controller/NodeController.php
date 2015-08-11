@@ -115,18 +115,18 @@ class NodeController extends BaseController
      * @param Request $request
      * @param string  $nodeId
      *
-     * @Config\Route("/{nodeId}/duplicate", name="open_orchestra_api_node_duplicate")
+     * @Config\Route("/{nodeId}/duplicate/{version}", name="open_orchestra_api_node_duplicate", defaults={"version": null})
      * @Config\Method({"POST"})
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
-    public function duplicateAction(Request $request, $nodeId)
+    public function duplicateAction(Request $request, $nodeId, $version = null)
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         /** @var NodeInterface $node */
-        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language);
+        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return new Response('', 200);

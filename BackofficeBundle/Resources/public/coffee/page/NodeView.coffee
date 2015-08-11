@@ -19,7 +19,7 @@ NodeView = OrchestraView.extend(
       'entityType': 'node'
     @options.configuration = @options.node
     @options.entityType = 'node'
-    @options.published = if @options.node.attributes.status then @options.node.attributes.status.published else true
+    @options.editable = @options.node.get('editable')
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"
@@ -37,10 +37,11 @@ NodeView = OrchestraView.extend(
       element: @options.node
     )
     @addAreasToView(@options.node.get('areas'))
-    @addListBlockToView()
     @addConfigurationButton()
-    if @options.node.attributes.status.published
+    if !@options.editable
       $('.js-widget-blockpanel', @$el).hide()
+    else
+      @addListBlockToView()
     return
 
   addListBlockToView: ->
