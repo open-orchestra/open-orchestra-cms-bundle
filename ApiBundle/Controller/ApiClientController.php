@@ -14,6 +14,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class ApiClientController
  *
  * @Config\Route("api-client")
+ *
+ * @Api\Serialize()
  */
 class ApiClientController extends BaseController
 {
@@ -26,8 +28,6 @@ class ApiClientController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_API_CLIENT')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -57,6 +57,6 @@ class ApiClientController extends BaseController
         $dm->remove($apiClient);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

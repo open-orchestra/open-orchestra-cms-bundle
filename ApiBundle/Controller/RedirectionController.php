@@ -16,6 +16,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class RedirectionController
  *
  * @Config\Route("redirection")
+ *
+ * @Api\Serialize()
  */
 class RedirectionController extends BaseController
 {
@@ -28,8 +30,6 @@ class RedirectionController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -47,8 +47,6 @@ class RedirectionController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -79,6 +77,6 @@ class RedirectionController extends BaseController
         $dm->remove($redirection);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

@@ -11,13 +11,14 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class ParameterController
  *
  * @Config\Route("parameter")
+ *
+ * @Api\Serialize()
  */
 class ParameterController extends BaseController
 {
     /**
      * @Config\Route("/languages", name="open_orchestra_api_parameter_languages_show")
      * @Config\Method({"GET"})
-     * @Api\Serialize()
      *
      * @return Response
      */

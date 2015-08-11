@@ -16,6 +16,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class GroupController
  *
  * @Config\Route("group")
+ *
+ * @Api\Serialize()
  */
 class GroupController extends BaseController
 {
@@ -28,8 +30,6 @@ class GroupController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_GROUP')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -47,8 +47,6 @@ class GroupController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_GROUP')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -79,6 +77,6 @@ class GroupController extends BaseController
         $dm->remove($group);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

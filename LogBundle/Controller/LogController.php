@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  * Class LogController
  *
  * @Config\Route("log")
+ *
+ * @Api\Serialize()
  */
 class LogController extends Controller
 {
@@ -23,8 +25,6 @@ class LogController extends Controller
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_LOG')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */

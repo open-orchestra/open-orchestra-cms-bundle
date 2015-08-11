@@ -11,6 +11,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class DeletedController
  *
  * @Config\Route("deleted")
+ *
+ * @Api\Serialize()
  */
 class DeletedController extends BaseController
 {
@@ -19,8 +21,6 @@ class DeletedController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_DELETED')")
-     *
-     * @Api\Serialize()
      *
      * @return Response
      */

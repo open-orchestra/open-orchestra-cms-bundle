@@ -17,6 +17,8 @@ use OpenOrchestra\ApiBundle\Controller\ControllerTrait\AreaContainer;
  * Class TemplateController
  *
  * @Config\Route("template")
+ *
+ * @Api\Serialize()
  */
 class TemplateController extends BaseController
 {
@@ -29,8 +31,6 @@ class TemplateController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -49,8 +49,6 @@ class TemplateController extends BaseController
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
      *
-     * @Api\Serialize()
-     *
      * @return FacadeInterface
      */
     public function showGSAction($templateId)
@@ -67,8 +65,6 @@ class TemplateController extends BaseController
      * @Config\Method({"POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @Api\Serialize()
      *
      * @return Response
      */
@@ -97,6 +93,6 @@ class TemplateController extends BaseController
         $this->dispatchEvent(TemplateEvents::TEMPLATE_DELETE, new TemplateEvent($template));
         $this->get('object_manager')->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

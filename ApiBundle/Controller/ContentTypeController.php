@@ -17,6 +17,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class ContentTypeController
  *
  * @Config\Route("content-type")
+ *
+ * @Api\Serialize()
  */
 class ContentTypeController extends BaseController
 {
@@ -29,8 +31,6 @@ class ContentTypeController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -48,8 +48,6 @@ class ContentTypeController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -90,6 +88,6 @@ class ContentTypeController extends BaseController
         $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_DELETE, new ContentTypeEvent(current($contentTypes)));
         $this->get('object_manager')->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }
