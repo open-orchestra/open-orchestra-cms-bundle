@@ -88,9 +88,10 @@ class NodeManager
         $newNode = clone $node;
         $newNode->setStatus($status);
         $newNode->setVersion($lastNodeVersion + 1);
+        $this->duplicateBlockAndArea($node, $newNode);
         $this->updateBlockReferences($node, $newNode);
 
-        $newNode = $this->nodeManager->saveDuplicatedNode($newNode);
+        $this->nodeManager->saveDuplicatedNode($newNode);
 
         return $newNode;
     }

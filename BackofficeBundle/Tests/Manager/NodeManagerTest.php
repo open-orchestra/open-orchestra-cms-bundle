@@ -74,8 +74,12 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $language = 'fakeLanguage';
         $version = 1;
 
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getBlocks()->thenReturn(array());
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node0)->getAreas()->thenReturn(array());
+        Phake::when($node0)->getAreas()->thenReturn(array($area));
+        Phake::when($node0)->getBlocks()->thenReturn(array($block));
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
@@ -83,10 +87,12 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node2);
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($status);
 
-        $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
+        $newNode = $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
 
         Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
         Phake::verify($this->nodeManager)->saveDuplicatedNode($node0);
+        Phake::verify($newNode)->addBlock($block);
+        Phake::verify($newNode)->addArea($area);
     }
 
     /**

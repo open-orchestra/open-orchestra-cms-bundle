@@ -104,6 +104,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
             'nodeId' => $nodeId,
             'language' => $node->getLanguage(),
+            'version' => $node->getVersion(),
         )));
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
