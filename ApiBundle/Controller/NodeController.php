@@ -17,6 +17,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class NodeController
  *
  * @Config\Route("node")
+ *
+ * @Api\Serialize()
  */
 class NodeController extends BaseController
 {
@@ -28,7 +30,6 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeId}", name="open_orchestra_api_node_show")
      * @Config\Method({"GET"})
-     * @Api\Serialize()
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
@@ -53,7 +54,6 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/show-or-create", name="open_orchestra_api_node_show_or_create", defaults={"errorNode" = false})
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
-     * @Api\Serialize()
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
@@ -108,7 +108,7 @@ class NodeController extends BaseController
         $this->get('object_manager')->flush();
         $this->dispatchEvent(NodeEvents::NODE_DELETE, new NodeEvent($node));
 
-        return new Response('', 200);
+        return array();
     }
 
     /**
@@ -129,7 +129,7 @@ class NodeController extends BaseController
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
-        return new Response('', 200);
+        return array();
     }
 
     /**
@@ -138,7 +138,6 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeId}/list-version", name="open_orchestra_api_node_list_version")
      * @Config\Method({"GET"})
-     * @Api\Serialize()
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
@@ -159,7 +158,6 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
-     * @Api\Serialize()
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
@@ -182,8 +180,6 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @Api\Serialize()
      *
      * @return Response
      */
@@ -222,7 +218,7 @@ class NodeController extends BaseController
 
         $this->get('object_manager')->flush();
 
-        return new Response('', 200);
+        return array();
     }
 
     /**

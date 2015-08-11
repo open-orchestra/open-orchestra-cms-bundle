@@ -16,6 +16,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class RoleController
  *
  * @Config\Route("role")
+ *
+ * @Api\Serialize()
  */
 class RoleController extends BaseController
 {
@@ -28,8 +30,6 @@ class RoleController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_ROLE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -47,8 +47,6 @@ class RoleController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_ROLE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -79,6 +77,6 @@ class RoleController extends BaseController
         $dm->remove($role);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

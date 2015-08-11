@@ -14,6 +14,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class ThemeController
  *
  * @Config\Route("theme")
+ *
+ * @Api\Serialize()
  */
 class ThemeController extends BaseController
 {
@@ -24,8 +26,6 @@ class ThemeController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_THEME')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -41,8 +41,6 @@ class ThemeController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_THEME')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -71,6 +69,6 @@ class ThemeController extends BaseController
         $dm->remove($theme);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

@@ -17,6 +17,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class KeywordController
  *
  * @Config\Route("keyword")
+ *
+ * @Api\Serialize()
  */
 class KeywordController extends BaseController
 {
@@ -40,7 +42,7 @@ class KeywordController extends BaseController
 
         $keyword = $suppressSpecialCharacter->transform($keyword);
 
-        return new JsonResponse(array('term' => $keyword), 200);
+        return array('term' => $keyword);
     }
 
     /**
@@ -50,8 +52,6 @@ class KeywordController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_KEYWORD')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -69,8 +69,6 @@ class KeywordController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_KEYWORD')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -101,6 +99,6 @@ class KeywordController extends BaseController
         $dm->remove($keyword);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

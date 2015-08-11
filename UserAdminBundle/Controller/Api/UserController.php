@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
  * Class UserController
  *
  * @Config\Route("user")
+ *
+ * @Api\Serialize()
  */
 class UserController extends BaseController
 {
@@ -28,8 +30,6 @@ class UserController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_USER')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -47,8 +47,6 @@ class UserController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_USER')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -80,6 +78,6 @@ class UserController extends BaseController
         $dm->remove($user);
         $dm->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

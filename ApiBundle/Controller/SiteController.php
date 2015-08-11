@@ -17,6 +17,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class SiteController
  *
  * @Config\Route("site")
+ *
+ * @Api\Serialize()
  */
 class SiteController extends BaseController
 {
@@ -29,8 +31,6 @@ class SiteController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_SITE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -48,8 +48,6 @@ class SiteController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_SITE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -90,6 +88,6 @@ class SiteController extends BaseController
         $this->dispatchEvent(SiteEvents::SITE_DELETE, new SiteEvent($site));
         $this->get('object_manager')->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

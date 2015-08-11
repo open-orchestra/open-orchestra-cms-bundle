@@ -16,6 +16,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class StatusController
  *
  * @Config\Route("status")
+ *
+ * @Api\Serialize()
  */
 class StatusController extends BaseController
 {
@@ -28,8 +30,6 @@ class StatusController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_STATUS')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -60,6 +60,6 @@ class StatusController extends BaseController
         $this->get('object_manager')->remove($status);
         $this->get('object_manager')->flush();
 
-        return new Response('', 200);
+        return array();
     }
 }

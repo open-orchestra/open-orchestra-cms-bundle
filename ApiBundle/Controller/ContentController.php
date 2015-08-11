@@ -22,6 +22,8 @@ use OpenOrchestra\BaseApi\Context\GroupContext;
  * Class ContentController
  *
  * @Config\Route("content")
+ *
+ * @Api\Serialize()
  */
 class ContentController extends BaseController
 {
@@ -36,8 +38,6 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      * @throws ContentNotFoundHttpException
@@ -61,8 +61,6 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      * @throws SourceLanguageNotFoundHttpException
@@ -108,8 +106,6 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
-     * @Api\Serialize()
      *
      * @Api\Groups({GroupContext::G_HIDE_ROLES})
      *
@@ -159,7 +155,7 @@ class ContentController extends BaseController
         $this->get('object_manager')->flush();
         $this->dispatchEvent(ContentEvents::CONTENT_DELETE, new ContentEvent($content));
 
-        return new Response('', 200);
+        return array();
     }
 
     /**
@@ -186,7 +182,7 @@ class ContentController extends BaseController
 
         $this->dispatchEvent(ContentEvents::CONTENT_DUPLICATE, new ContentEvent($newContent));
 
-        return new Response('', 200);
+        return array();
     }
 
     /**
@@ -197,8 +193,6 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
-     * @Api\Serialize()
      *
      * @return Response
      */
@@ -217,8 +211,6 @@ class ContentController extends BaseController
      * @Config\Method({"POST"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
-     * @Api\Serialize()
      *
      * @return Response
      */
@@ -240,8 +232,6 @@ class ContentController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
-     * @Api\Serialize()
      *
      * @return Response
      */

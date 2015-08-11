@@ -18,6 +18,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class AreaController
  *
  * @Config\Route("area")
+ *
+ * @Api\Serialize
  */
 class AreaController extends BaseController
 {
@@ -29,8 +31,6 @@ class AreaController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -51,8 +51,6 @@ class AreaController extends BaseController
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
-     *
-     * @Api\Serialize()
      *
      * @return FacadeInterface
      */
@@ -91,7 +89,7 @@ class AreaController extends BaseController
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
 
-        return new Response();
+        return array();
     }
 
     /**
@@ -111,7 +109,7 @@ class AreaController extends BaseController
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
-        return new Response();
+        return array();
     }
 
     /**
@@ -133,7 +131,7 @@ class AreaController extends BaseController
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
-        return new Response();
+        return array();
     }
 
     /**
@@ -153,7 +151,7 @@ class AreaController extends BaseController
         $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($areaContainer));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
-        return new Response();
+        return array();
     }
 
     /**
@@ -176,7 +174,7 @@ class AreaController extends BaseController
         $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($template));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
-        return new Response();
+        return array();
     }
 
     /**

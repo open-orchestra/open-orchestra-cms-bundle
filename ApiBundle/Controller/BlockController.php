@@ -13,6 +13,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  * Class BlockController
  *
  * @Config\Route("block")
+ *
+ * @Api\Serialize()
  */
 class BlockController extends BaseController
 {
@@ -21,7 +23,6 @@ class BlockController extends BaseController
      *
      * @Config\Route("/list/{language}", name="open_orchestra_api_block_list")
      * @Config\Method({"GET"})
-     * @Api\Serialize()
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
      *
