@@ -26,18 +26,6 @@ FullPagePanelView = FullPageFormView.extend(
       if infos = key.match(/^_self_panel_(.*)/)
         @options.panels.push {link:@options.links[key], isActive:false, id:infos[1]}
 
-  addEventOnForm: (event)->
-    event.preventDefault()
-    target = $(event.target)
-    target.ajaxSubmit
-      context:
-        button: $(".submit_form", target).parent()
-      success: (response) ->
-        target.parent().html response
-      error: (response) ->
-        target.parent().html response.responseText
-    return
-
   callPanels: ->
     viewContext = @
     for panel in @options.panels
