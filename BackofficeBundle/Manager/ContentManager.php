@@ -36,7 +36,6 @@ class ContentManager
     public function createNewLanguageContent($contentSource, $language)
     {
         $content = $this->duplicateContent($contentSource);
-        $content->setVersion(1);
         $content->setLanguage($language);
 
         return $content;
@@ -66,13 +65,15 @@ class ContentManager
      * Duplicate a content
      *
      * @param ContentInterface $content
+     * @param ContentInterface $lastContent
      *
      * @return ContentInterface
      */
-    public function duplicateContent(ContentInterface $content)
+    public function duplicateContent(ContentInterface $content, ContentInterface $lastContent = null)
     {
+        $lastVersion = $lastContent !== null ? $lastContent->getVersion() : 0;
         $newContent = clone $content;
-        $newContent->setVersion($content->getVersion() + 1);
+        $newContent->setVersion($lastVersion + 1);
         $newContent->setStatus(null);
         foreach ($content->getKeywords() as $keyword) {
             $newKeyword = clone $keyword;
@@ -83,9 +84,7 @@ class ContentManager
             $newContent->addAttribute($newAttribute);
         }
 
-
         return $newContent;
     }
-
 
 }

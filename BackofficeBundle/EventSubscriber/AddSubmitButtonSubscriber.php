@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -17,14 +18,20 @@ class AddSubmitButtonSubscriber implements EventSubscriberInterface
      */
     public function postSetData(FormEvent $event)
     {
-        $form = $event->getForm();
         $data = $event->getData();
-        $parameter = array('label' => 'open_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'));
+        $form = $event->getForm();
+        $parameter = $this->generateParameter($data);
+        $form->add('submit', 'submit', $parameter);
+    }
 
+    protected function generateParameter($data)
+    {
+        $parameter = array('label' => 'open_orchestra_base.form.submit', 'attr' => array('class' => 'submit_form'));
         if ($data instanceof StatusableInterface && is_object($data->getStatus()) && $data->getStatus()->isPublished()) {
             $parameter['attr'] = array('class' => 'disabled');
         }
-        $form->add('submit', 'submit', $parameter);
+
+        return $parameter;
     }
 
     /**

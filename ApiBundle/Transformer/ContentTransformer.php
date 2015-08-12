@@ -77,6 +77,7 @@ class ContentTransformer extends AbstractTransformer
         $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
             'contentId' => $content->getContentId(),
             'language' => $content->getLanguage(),
+            'version' => $content->getVersion(),
         )));
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(

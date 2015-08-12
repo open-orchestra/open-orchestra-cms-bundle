@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\AddContentSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,15 +15,17 @@ class ContentType extends AbstractType
 {
     protected $contentTypeSubscriber;
     protected $contentClass;
-
+    protected $buttonSubscriber;
     /**
-     * @param ContentTypeSubscriber $contentTypeSubscriber
-     * @param string                $contentClass
+     * @param ContentTypeSubscriber            $contentTypeSubscriber
+     * @param string                           $contentClass
+     * @param AddContentSubmitButtonSubscriber $buttonSubscriber
      */
-    public function __construct(ContentTypeSubscriber $contentTypeSubscriber, $contentClass)
+    public function __construct(ContentTypeSubscriber $contentTypeSubscriber, $contentClass, AddContentSubmitButtonSubscriber $buttonSubscriber)
     {
         $this->contentTypeSubscriber = $contentTypeSubscriber;
         $this->contentClass = $contentClass;
+        $this->buttonSubscriber = $buttonSubscriber;
     }
 
     /**
@@ -46,7 +48,7 @@ class ContentType extends AbstractType
             ));
 
         $builder->addEventSubscriber($this->contentTypeSubscriber);
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        $builder->addEventSubscriber($this->buttonSubscriber);
     }
 
     /**
