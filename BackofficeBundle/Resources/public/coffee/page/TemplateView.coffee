@@ -8,7 +8,7 @@ TemplateView = OrchestraView.extend(
     ])
     @options.configuration = @options.template
     @options.entityType = 'template'
-    @options.published = false
+    @options.editable = false
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateView"
     ]
