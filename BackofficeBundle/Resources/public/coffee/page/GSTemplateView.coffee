@@ -15,7 +15,7 @@ GSTemplateView = OrchestraView.extend(
     ])
     @options.configuration = @options.template
     @options.entityType = 'gstemplate'
-    @options.published = false
+    @options.editable = false
     appConfigurationView.setConfiguration(@options.entityType, 'addArea', GSAreaView)
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/gsAreaView"
