@@ -36,7 +36,7 @@ class StatusController extends BaseController
     public function listAction(Request $request)
     {
 
-        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Status');
+        $mapping = $this->get('open_orchestra_api.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Status');
         $repository = $this->get('open_orchestra_model.repository.status');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('status_collection');
 

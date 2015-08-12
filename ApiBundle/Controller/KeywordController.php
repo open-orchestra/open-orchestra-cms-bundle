@@ -74,7 +74,7 @@ class KeywordController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Keyword');
+        $mapping = $this->get('open_orchestra_api.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Keyword');
         $repository = $this->get('open_orchestra_model.repository.keyword');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('keyword_collection');
 

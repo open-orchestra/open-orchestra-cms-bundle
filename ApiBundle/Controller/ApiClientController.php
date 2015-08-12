@@ -33,7 +33,7 @@ class ApiClientController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $mapping = $this->get('open_orchestra_model.annotation_search_reader')->extractMapping('OpenOrchestra\BaseApiMongoModelBundle\Document\ApiClient');
+        $mapping = $this->get('open_orchestra_api.annotation_search_reader')->extractMapping('OpenOrchestra\BaseApiMongoModelBundle\Document\ApiClient');
         $repository = $this->get('open_orchestra_api.repository.api_client');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('api_client_collection');
 
