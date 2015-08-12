@@ -53,19 +53,19 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('generator.yml');
         $loader->load('display.yml');
         $loader->load('twig.yml');
-        $loader->load('fieldtype.yml');
+        $loader->load('field_type.yml');
         $loader->load('transformer.yml');
         $loader->load('icon.yml');
-        $loader->load('navigationpanel.yml');
-        $loader->load('valuetransformer.yml');
+        $loader->load('navigation_panel.yml');
+        $loader->load('value_transformer.yml');
         $loader->load('subscriber.yml');
-        $loader->load('blockparameter.yml');
+        $loader->load('block_parameter.yml');
         $loader->load('group.yml');
         $loader->load('voter.yml');
         $loader->load('validator.yml');
         $loader->load('initializer.yml');
-        $loader->load('authorizestatuschange.yml');
-        $loader->load('authorizeedition.yml');
+        $loader->load('authorize_status_change.yml');
+        $loader->load('authorize_edition.yml');
 
         if (isset($config['field_types'])) {
             $this->addApplicationFieldTypes($config['field_types'], $container);
@@ -76,7 +76,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         }
 
         if ('test' == $container->getParameter('kernel.environment')) {
-            $loader->load('testservices.yml');
+            $loader->load('test_services.yml');
         }
 
         $availableColor = $config['available_color'];
