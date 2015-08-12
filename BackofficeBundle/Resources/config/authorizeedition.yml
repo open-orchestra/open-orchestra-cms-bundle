@@ -2,6 +2,7 @@ parameters:
     open_orchestra_backoffice.authorize_edition.manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager
     open_orchestra_backoffice.authorize_edition.statusable.class: OpenOrchestra\Backoffice\AuthorizeEdition\StatusableStrategy
     open_orchestra_backoffice.authorize_edition.node_version.class: OpenOrchestra\Backoffice\AuthorizeEdition\NodeVersionStrategy
+    open_orchestra_backoffice.authorize_edition.content_version.class: OpenOrchestra\Backoffice\AuthorizeEdition\ContentVersionStrategy
 
 services:
     open_orchestra_backoffice.authorize_edition.manager:
@@ -15,5 +16,11 @@ services:
         class: %open_orchestra_backoffice.authorize_edition.node_version.class%
         arguments:
             - @open_orchestra_model.repository.node
+        tags:
+            - { name: open_orchestra_backoffice.authorize_edition.strategy }
+    open_orchestra_backoffice.authorize_edition.content_version:
+        class: %open_orchestra_backoffice.authorize_edition.content_version.class%
+        arguments:
+            - @open_orchestra_model.repository.content
         tags:
             - { name: open_orchestra_backoffice.authorize_edition.strategy }

@@ -83,4 +83,20 @@ abstract class AbstractAdminController extends Controller
     {
         $this->get('event_dispatcher')->dispatch($eventName, $event);
     }
+
+    /**
+     * @param string|\Symfony\Component\Form\FormTypeInterface $type
+     * @param null                                             $data
+     * @param array                                            $options
+     *
+     * @return \Symfony\Component\Form\Form
+     */
+    public function createForm($type, $data = null, array $options = array())
+    {
+        if ($data) {
+            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($data);
+        }
+
+        return parent::createForm($type, $data, $options);
+    }
 }
