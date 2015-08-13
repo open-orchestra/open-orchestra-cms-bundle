@@ -78,8 +78,9 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
         $this->accessTokenManager->save($accessToken);
 
         $tokenFacade = new AccessTokenFacade();
-        $tokenFacade->accessToken   = $accessToken->getCode();
-        $tokenFacade->expiresAt     = $accessToken->getExpiredAt();
+        $tokenFacade->accessToken  = $accessToken->getCode();
+        $tokenFacade->expiresAt    = $accessToken->getExpiredAt();
+        $tokenFacade->refreshToken = $accessToken->getRefreshCode();
 
         return Response::create($this->serializer->serialize($tokenFacade, 'json'), 200, array('Content-Type' => 'application/json'))->prepare($request);
     }
