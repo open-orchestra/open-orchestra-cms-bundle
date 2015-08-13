@@ -11,7 +11,7 @@ class MappingContentAttributeTest extends \PHPUnit_Framework_TestCase
      * @var MappingContentAttribute
      */
     protected $mapping;
-    protected $contentTypeReposioty;
+    protected $contentTypeRepository;
     protected $contentType;
     protected $field;
 
@@ -20,14 +20,14 @@ class MappingContentAttributeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->contentTypeReposioty = Phake::Mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
+        $this->contentTypeRepository = Phake::Mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         $this->field = Phake::mock('OpenOrchestra\ModelInterface\Model\FieldTypeInterface');
 
-        Phake::when($this->contentTypeReposioty)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
+        Phake::when($this->contentTypeRepository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($this->contentType);
         Phake::when($this->contentType)->getFields()->thenReturn(array($this->field));
 
-        $this->mapping = new MappingContentAttribute($this->contentTypeReposioty);
+        $this->mapping = new MappingContentAttribute($this->contentTypeRepository);
     }
 
     /**
