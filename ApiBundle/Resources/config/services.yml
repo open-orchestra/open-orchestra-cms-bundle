@@ -1,0 +1,8 @@
+parameters:
+    open_orchestra_api.mapping.content_attribute.class: OpenOrchestra\ApiBundle\Mapping\MappingContentAttribute
+
+services:
+    open_orchestra_api.mapping.content_attribute:
+        class: %open_orchestra_api.mapping.content_attribute.class%
+        arguments:
+            - @open_orchestra_model.repository.content_type
