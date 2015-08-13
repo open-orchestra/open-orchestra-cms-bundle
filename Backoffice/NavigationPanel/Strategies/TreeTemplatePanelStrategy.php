@@ -60,7 +60,7 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function getWeight()
     {
-        return 1;
+        return 10;
     }
 
     /**

@@ -58,7 +58,7 @@ services:
         arguments:
             - keywords
             - ROLE_ACCESS_KEYWORD
-            - 1
+            - 10
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.role:
@@ -66,7 +66,7 @@ services:
         arguments:
             - role
             - ROLE_ACCESS_ROLE
-            - 2
+            - 20
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.group:
@@ -74,7 +74,7 @@ services:
         arguments:
             - group
             - ROLE_ACCESS_GROUP
-            - 3
+            - 30
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.redirection:
@@ -82,7 +82,7 @@ services:
         arguments:
             - redirection
             - ROLE_ACCESS_REDIRECTION
-            - 4
+            - 40
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.status:
@@ -90,7 +90,7 @@ services:
         arguments:
             - status
             - ROLE_ACCESS_STATUS
-            - 5
+            - 50
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.themes:
@@ -98,7 +98,7 @@ services:
         arguments:
             - themes
             - ROLE_ACCESS_THEME
-            - 6
+            - 60
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.api_client:
@@ -106,7 +106,7 @@ services:
         arguments:
             - api_client
             - ROLE_ACCESS_API_CLIENT
-            - 7
+            - 70
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.websites:
@@ -114,7 +114,7 @@ services:
         arguments:
             - websites
             - ROLE_ACCESS_SITE
-            - 8
+            - 80
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.deleted:
@@ -122,7 +122,7 @@ services:
         arguments:
             - deleted
             - ROLE_ACCESS_DELETED
-            - 5
+            - 50
             - editorial
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }

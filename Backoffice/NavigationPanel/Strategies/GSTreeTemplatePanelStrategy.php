@@ -60,7 +60,7 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function getWeight()
     {
-        return 2;
+        return 20;
     }
 
     /**

@@ -70,7 +70,7 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function getWeight()
     {
-        return 4;
+        return 40;
     }
 
     /**
