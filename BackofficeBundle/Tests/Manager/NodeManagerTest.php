@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
+use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\ModelBundle\Document\Area;
@@ -21,6 +22,11 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      * @var NodeManager
      */
     protected $manager;
+
+    /**
+     * @var VersionableSaverInterface
+     */
+    protected $versionableSaver;
 
     protected $node;
     protected $nodeClass;
@@ -51,6 +57,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\NodeManagerInterface');
+        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
         $this->blockManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\BlockManager');
@@ -61,7 +68,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->manager = new NodeManager($this->nodeManager, $this->nodeRepository, $this->siteRepository, $this->statusRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass, $this->eventDispatcher);
+        $this->manager = new NodeManager($this->versionableSaver, $this->nodeRepository, $this->siteRepository, $this->statusRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass, $this->eventDispatcher);
     }
 
     /**
@@ -90,7 +97,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $newNode = $this->manager->duplicateNode($nodeId, $siteId, $language, $version);
 
         Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
-        Phake::verify($this->nodeManager)->saveDuplicatedNode($node0);
+        Phake::verify($this->versionableSaver)->saveDuplicated($node0);
         Phake::verify($newNode)->addBlock($block);
         Phake::verify($newNode)->addArea($area);
     }

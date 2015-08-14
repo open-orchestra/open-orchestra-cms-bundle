@@ -3,6 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Manager\ContentManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
@@ -14,17 +16,20 @@ class ContentManager
     protected $contentTypeRepository;
     protected $contextManager;
     protected $contentClass;
+    protected $versionableSaver;
 
     /**
      * @param ContextManager                 $contextManager
      * @param string                         $contentClass
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param VersionableSaverInterface      $versionableSaver
      */
-    public function __construct(ContextManager $contextManager, $contentClass, ContentTypeRepositoryInterface $contentTypeRepository)
+    public function __construct(ContextManager $contextManager, $contentClass, ContentTypeRepositoryInterface $contentTypeRepository, VersionableSaverInterface $versionableSaver)
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
+        $this->versionableSaver = $versionableSaver;
     }
 
     /**
@@ -36,7 +41,6 @@ class ContentManager
     public function createNewLanguageContent($contentSource, $language)
     {
         $content = $this->duplicateContent($contentSource);
-        $content->setVersion(1);
         $content->setLanguage($language);
 
         return $content;
@@ -66,13 +70,15 @@ class ContentManager
      * Duplicate a content
      *
      * @param ContentInterface $content
+     * @param ContentInterface $lastContent
      *
      * @return ContentInterface
      */
-    public function duplicateContent(ContentInterface $content)
+    public function duplicateContent(ContentInterface $content, ContentInterface $lastContent = null)
     {
+        $lastVersion = $lastContent !== null ? $lastContent->getVersion() : 0;
         $newContent = clone $content;
-        $newContent->setVersion($content->getVersion() + 1);
+        $newContent->setVersion($lastVersion + 1);
         $newContent->setStatus(null);
         foreach ($content->getKeywords() as $keyword) {
             $newKeyword = clone $keyword;
@@ -83,9 +89,8 @@ class ContentManager
             $newContent->addAttribute($newAttribute);
         }
 
+        $this->versionableSaver->saveDuplicated($newContent);
 
         return $newContent;
     }
-
-
 }

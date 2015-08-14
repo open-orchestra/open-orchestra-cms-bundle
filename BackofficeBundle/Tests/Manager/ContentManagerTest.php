@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
+use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use Phake;
 
 /**
@@ -15,6 +16,8 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
+    /** @var  VersionableSaverInterface */
+    protected $versionableSaver;
     protected $contentTypeRepository;
     protected $contentRepository;
     protected $contentAttribute;
@@ -45,18 +48,20 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
 
-        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository);
+        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Manager\VersionableSaver');
+
+        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository, $this->versionableSaver);
     }
 
     /**
-     * test new langage creation
+     * test new language creation
      */
     public function testCreateNewLanguageContent()
     {
         $language = 'fr';
         $newContent = $this->manager->createNewLanguageContent($this->content, $language);
 
-        Phake::verify($newContent, Phake::times(2))->setVersion(1);
+        Phake::verify($newContent, Phake::times(1))->setVersion(1);
         Phake::verify($newContent)->setStatus(null);
         Phake::verify($newContent)->setLanguage($language);
     }
@@ -67,11 +72,12 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideVersionsAndExpected
      */
-    public function testDuplicateNode($version, $expectedVersion)
+    public function testDuplicateNode($version, $lastVersion, $expectedVersion)
     {
         Phake::when($this->content)->getVersion()->thenReturn($version);
-
-        $newContent = $this->manager->duplicateContent($this->content);
+        $lastContent = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($lastContent)->getVersion()->thenReturn($lastVersion);
+        $newContent = $this->manager->duplicateContent($this->content, $lastContent);
 
         Phake::verify($newContent)->setVersion($expectedVersion);
         Phake::verify($newContent)->setStatus(null);
@@ -85,8 +91,8 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     public function provideVersionsAndExpected()
     {
         return array(
-            array(1, 2),
-            array(5, 6),
+            array(1, 1, 2),
+            array(5, 6, 7),
         );
     }
 
