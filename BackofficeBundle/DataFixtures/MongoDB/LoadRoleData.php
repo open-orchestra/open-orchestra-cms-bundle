@@ -8,11 +8,12 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPan
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
  * Class LoadRoleData
  */
-class LoadRoleData extends AbstractLoadRoleData
+class LoadRoleData extends AbstractLoadRoleData implements OrchestraProductionFixturesInterface
 {
     /**
      * @param ObjectManager $manager
