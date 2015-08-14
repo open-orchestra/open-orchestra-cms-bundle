@@ -63,9 +63,10 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
               ))
               Backbone.history.navigate(redirectUrl)
         links = element.get('links')
+        panels = false
         for key in Object.keys(links)
           if /^_self_panel_/.test(key)
-            appConfigurationView.setConfiguration(entityType, 'editEntity', FullPagePanelView)
+            panels = true
             break
         $.ajax
           url: element.get('links')._self_form
@@ -77,5 +78,8 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
               entityType: entityType
               element: element
               domContainer: $('#content')
-            viewClass = appConfigurationView.getConfiguration(entityType, 'editEntity')
-            new viewClass(options)
+            if panels
+              tabViewFormLoad(options)
+            else
+              viewClass = appConfigurationView.getConfiguration(entityType, 'editEntity')
+              new viewClass(options)
