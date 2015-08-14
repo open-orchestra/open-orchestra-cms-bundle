@@ -67,10 +67,19 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
     }
 
     /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return 0;
+    }
+
+    /**
      * @return string
      */
     public function getRole()
     {
         return self::ROLE_ACCESS_TREE_NODE;
     }
+
 }

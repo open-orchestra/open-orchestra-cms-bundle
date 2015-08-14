@@ -66,6 +66,14 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
     }
 
     /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return 40;
+    }
+
+    /**
      * @return string
      */
     public function getRole()

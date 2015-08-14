@@ -63,6 +63,14 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
     }
 
     /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return 30;
+    }
+
+    /**
      * @return string
      */
     public function getRole()
