@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
+use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use Phake;
 
 /**
@@ -15,6 +16,8 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
+    /** @var  VersionableSaverInterface */
+    protected $versionableSaver;
     protected $contentTypeRepository;
     protected $contentRepository;
     protected $contentAttribute;
@@ -45,7 +48,9 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
 
-        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository);
+        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Manager\VersionableSaver');
+
+        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository, $this->versionableSaver);
     }
 
     /**

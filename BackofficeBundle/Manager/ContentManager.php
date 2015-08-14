@@ -3,6 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\ModelInterface\Manager\ContentManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
@@ -14,17 +16,20 @@ class ContentManager
     protected $contentTypeRepository;
     protected $contextManager;
     protected $contentClass;
+    protected $versionableSaver;
 
     /**
      * @param ContextManager                 $contextManager
      * @param string                         $contentClass
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param VersionableSaverInterface      $versionableSaver
      */
-    public function __construct(ContextManager $contextManager, $contentClass, ContentTypeRepositoryInterface $contentTypeRepository)
+    public function __construct(ContextManager $contextManager, $contentClass, ContentTypeRepositoryInterface $contentTypeRepository, VersionableSaverInterface $versionableSaver)
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
+        $this->versionableSaver = $versionableSaver;
     }
 
     /**
@@ -84,7 +89,8 @@ class ContentManager
             $newContent->addAttribute($newAttribute);
         }
 
+        $this->versionableSaver->saveDuplicated($newContent);
+
         return $newContent;
     }
-
 }

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -11,7 +12,6 @@ use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
-use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\ModelBundle\Document\Area;
 
@@ -21,7 +21,7 @@ use OpenOrchestra\ModelBundle\Document\Area;
 class NodeManager
 {
     protected $eventDispatcher;
-    protected $nodeManager;
+    protected $versionableSaver;
     protected $nodeRepository;
     protected $siteRepository;
     protected $statusRepository;
@@ -33,7 +33,7 @@ class NodeManager
     /**
      * Constructor
      *
-     * @param NodeManagerInterface       $nodeManager,
+     * @param VersionableSaverInterface  $versionableSaver
      * @param NodeRepositoryInterface    $nodeRepository
      * @param SiteRepositoryInterface    $siteRepository
      * @param StatusRepositoryInterface  $statusRepository
@@ -44,7 +44,7 @@ class NodeManager
      * @param EventDispatcherInterface   $eventDispatcher
      */
     public function __construct(
-        NodeManagerInterface $nodeManager,
+        VersionableSaverInterface  $versionableSaver,
         NodeRepositoryInterface $nodeRepository,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
@@ -55,7 +55,7 @@ class NodeManager
         $eventDispatcher
     )
     {
-        $this->nodeManager = $nodeManager;
+        $this->versionableSaver =  $versionableSaver;
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
         $this->statusRepository = $statusRepository;
@@ -91,7 +91,7 @@ class NodeManager
         $this->duplicateBlockAndArea($node, $newNode);
         $this->updateBlockReferences($node, $newNode);
 
-        $this->nodeManager->saveDuplicatedNode($newNode);
+        $this->versionableSaver->saveDuplicated($newNode);
 
         return $newNode;
     }
