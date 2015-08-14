@@ -61,9 +61,9 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getRole()
+    public function getName()
     {
-        return self::ROLE_ACCESS_TREE_NODE;
+        return 'nodes';
     }
 
     /**
@@ -77,9 +77,9 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getName()
+    public function getRole()
     {
-        return 'nodes';
+        return self::ROLE_ACCESS_TREE_NODE;
     }
 
 }

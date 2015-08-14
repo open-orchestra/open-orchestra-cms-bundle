@@ -50,9 +50,9 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getRole()
+    public function getName()
     {
-        return self::ROLE_ACCESS_TREE_TEMPLATE;
+        return 'GStemplates';
     }
 
     /**
@@ -66,9 +66,8 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getName()
+    public function getRole()
     {
-        return 'GStemplates';
+        return self::ROLE_ACCESS_TREE_TEMPLATE;
     }
-
 }
