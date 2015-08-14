@@ -12,9 +12,10 @@ TabElementFormView = OrchestraView.extend(
   initializer: (options) ->
     @options = options
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
+    @options.formView = 'editEntityTab'
+    @options.domContainer = @$el if !@options.submitted
 
   render: ->
-    @setElement $(@options.html)
-    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList', listUrl : @options.listUrl)
+    @options.domContainer.html $(@options.html)
 )
 

@@ -1,18 +1,22 @@
 tabViewFormLoad = (options) ->
-  tabView = new TabView(options)
+  tabViewClass = appConfigurationView.getConfiguration(options.entityType, 'showTab')
+  elementTabViewClass = appConfigurationView.getConfiguration(options.entityType, 'editEntityTab')
+
+  tabView = new tabViewClass(options)
   panels = getPanelsLink(options.element.get('links'))
+
   for panel in panels
     do (panel) ->
       $.ajax
-        url: panel["link"]
+        url: panel.link
         method: "GET"
         success: (response) ->
-          view = new TabElementFormView(
+          view = new elementTabViewClass(
             html: response,
             entityType: options.entityType,
             listUrl: options.listUrl
           )
-          tabView.addPanel($(response).data('title'), panel['id'], view)
+          tabView.addPanel($(response).data('title'), panel.id, view, panel.isActive)
 
 getPanelsLink = (links) ->
   panels = []

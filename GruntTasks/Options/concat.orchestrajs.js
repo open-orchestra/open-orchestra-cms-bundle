@@ -68,8 +68,8 @@ module.exports = {
 
         //--[ TAB ]--//
         'web/built/openorchestrabackoffice/js/tab/TabView.js',
-        'web/built/openorchestrabackoffice/js/tab/tabViewFormLoader.js',
         'web/built/openorchestrabackoffice/js/tab/TabElementFormView.js',
+        'web/built/openorchestrabackoffice/js/tab/tabViewFormLoader.js',
 
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
