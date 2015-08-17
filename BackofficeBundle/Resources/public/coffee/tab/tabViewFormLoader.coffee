@@ -5,8 +5,8 @@ tabViewFormLoad = (options) ->
   tabView = new tabViewClass(options)
   panels = getPanelsLink(options.element.get('links'))
 
-  for panel in panels
-    do (panel) ->
+  for panel, i in panels
+    do (panel, i) ->
       $.ajax
         url: panel.link
         method: "GET"
@@ -16,7 +16,7 @@ tabViewFormLoad = (options) ->
             entityType: options.entityType,
             listUrl: options.listUrl
           )
-          tabView.addPanel($(response).data('title'), panel.id, view, panel.isActive)
+          tabView.addPanel($(response).data('title'), panel.id, view, panel.isActive, i)
 
 getPanelsLink = (links) ->
   panels = []
