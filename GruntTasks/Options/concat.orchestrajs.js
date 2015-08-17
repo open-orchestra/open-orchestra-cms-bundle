@@ -75,11 +75,13 @@ module.exports = {
         //--[ USER ]--//
         'web/built/openorchestrauseradmin/js/user/*.js',
 
-        //--[ INDEXATION ]--//
-        'web/bundles/openorchestraindexation/js/*.js',
-
         //--[ BACKBONE ROUTER ]--//
-        'web/bundles/openorchestrabackoffice/js/backboneRouter.js'
+        'web/built/openorchestrabackoffice/js/backboneRouter.js',
+        'web/built/openorchestrabackoffice/js/page/LoadNodeConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/page/LoadTemplateConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/table/LoadTableConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/dashboard/LoadDashboardConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/underscoreTemplateLoader.js'
     ],
     dest: 'web/built/orchestra.js'
 };
