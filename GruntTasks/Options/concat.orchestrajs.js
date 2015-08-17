@@ -66,6 +66,11 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
         'web/built/openorchestrabackoffice/js/page/FieldOptionDefaultValueView.js',
 
+        //--[ TAB ]--//
+        'web/built/openorchestrabackoffice/js/tab/TabView.js',
+        'web/built/openorchestrabackoffice/js/tab/TabElementFormView.js',
+        'web/built/openorchestrabackoffice/js/tab/tabViewFormLoader.js',
+
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
         'web/built/openorchestrabackoffice/js/table/TableviewAction.js',

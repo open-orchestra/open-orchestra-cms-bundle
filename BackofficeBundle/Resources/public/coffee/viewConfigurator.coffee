@@ -3,6 +3,8 @@ OrchestraViewConfigurator = ->
   baseConfigurations:
     'editEntity': FullPageFormView
     'addEntity': FullPageFormView
+    'editEntityTab': TabElementFormView
+    'showTab': TabView
     'addArea': AreaView
     'addBlock': BlockView
     'addButtonAction': TableviewAction

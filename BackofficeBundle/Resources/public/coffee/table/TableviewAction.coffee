@@ -50,15 +50,20 @@ TableviewAction = OrchestraView.extend(
     options = @options
     viewContext = @
     links = options.element.get('links')
+    panels = false
     for key in Object.keys(links)
       if /^_self_panel_/.test(key)
-        appConfigurationView.setConfiguration(viewContext.options.entityType, 'editEntity', FullPagePanelView)
+        panels = true
         break
     $.ajax
       url: links._self_form
       method: "GET"
       success: (response) ->
-        viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'editEntity')
-        new viewClass(viewContext.addOption(html: response, domContainer: $('#content')))
+        options = viewContext.addOption(html: response, domContainer: $('#content'))
         viewContext.options.table.fnSettings().clearCache = true
+        if panels
+          tabViewFormLoad(options)
+        else
+          viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'editEntity')
+          new viewClass(options)
 )
