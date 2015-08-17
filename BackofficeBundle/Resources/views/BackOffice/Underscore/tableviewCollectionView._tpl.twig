@@ -14,7 +14,7 @@
                 <% _.each(displayedElements, function(displayedElement) { %>
                   <td>
                     <label class="input">
-                        <input class='search-column search_init' type="text" placeholder="Search <%= displayedElement %>" >
+                        <input class='search-column search_init' type="text" placeholder="{{ 'open_orchestra_backoffice.table.search'| trans({}, 'messages', language) }} <%= displayedElement %>" >
                     </label>
                   </td>
                 <% }); %>
