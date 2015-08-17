@@ -14,7 +14,7 @@ OrchestraBORouter = Backbone.Router.extend(
     return
   generateRoutePatterns: ->
     currentRouter = this
-    $.each @routes, (routePattern, routeName) ->
+    for routePattern, routeName in @routes
       currentRouter.addRoutePattern routeName, routePattern
       return
     return
@@ -37,7 +37,7 @@ OrchestraBORouter = Backbone.Router.extend(
       key = arguments[2]
       if paramsObject[key] then arguments[1] + paramsObject[key] else ''
 
-    if typeof route != 'undefined'
+    if route?
       route = route.replace(optionalParam, replaceFunction).replace(namedParam, replaceFunction)
     else
       alert 'Error, route name is unknown'
@@ -47,10 +47,6 @@ OrchestraBORouter = Backbone.Router.extend(
     Router = this
     fragment = Backbone.history.fragment
     routes = _.pairs(Router.routePatterns)
-    route = null
-    matched = undefined
-    paramsObject = null
-    paramsKeys = null
     matched = _.find(routes, (handler) ->
       return false if handler[0] == 'showHome'
       route = if _.isRegExp(handler[1]) then handler[1] else Router._routeToRegExp(handler[1])
