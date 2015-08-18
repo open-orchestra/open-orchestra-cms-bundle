@@ -19,6 +19,11 @@ class AuthorizeEditionManager
         $this->strategies[] = $strategy;
     }
 
+    /**
+     * @param mixed $document
+     *
+     * @return bool
+     */
     public function isEditable($document)
     {
         /** @var AuthorizeEditionInterface $strategy */
