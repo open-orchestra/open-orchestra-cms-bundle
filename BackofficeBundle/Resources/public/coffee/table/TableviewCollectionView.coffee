@@ -73,7 +73,7 @@ TableviewCollectionView = OrchestraView.extend(
                     "t"+
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
       language: {
-        url: '/app_dev.php/api/datatable/translation'
+        url: $('#contextual-informations').data('datatableTranslationUrlPattern')
       }
       colVis: exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
