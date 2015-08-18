@@ -454,6 +454,7 @@ open_orchestra_backoffice:
             yes: Yes
             no: No
     table:
+        search : Search
         content_type:
             name: Name
             status_label: Status label

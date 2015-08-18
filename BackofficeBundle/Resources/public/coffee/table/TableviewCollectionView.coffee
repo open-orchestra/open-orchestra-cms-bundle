@@ -72,11 +72,9 @@ TableviewCollectionView = OrchestraView.extend(
       dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-5 col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"+
                     "t"+
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
-      language:
-        sLengthMenu: "_MENU_"
-        sSearch: "<span class='input-group-addon'><i class='glyphicon glyphicon-search'></i></span> "
-        sInfo: "Showing <span class='txt-color-darken'>_START_</span> to <span class='txt-color-darken'>_END_</span> of <span class='text-primary'>_TOTAL_</span> entries",
-        sInfoEmpty: "<span class='text-danger'>Showing 0 to 0 of 0 entries</span>",
+      language: {
+        url: appRouter.generateUrl('loadTranslationDatatable')
+      }
       colVis: exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
@@ -88,6 +86,7 @@ TableviewCollectionView = OrchestraView.extend(
         delete aoData.columns
         delete aoData.draw
       initComplete: (settings, json) ->
+        $('#tableviewCollectionTable_filter label').prepend('<span class="input-group-addon"><i class="fa fa-search"></i></span>')
         viewContext.renderAddButton(viewContext, json.links, this)
       columns: columns
       columnDefs: columnDefs.concat [
@@ -99,6 +98,7 @@ TableviewCollectionView = OrchestraView.extend(
       ]
       order: [@options.order]
     )
+
     return
   processingData : (e, seggings, processing) ->
     if processing
@@ -239,3 +239,7 @@ TableviewCollectionView = OrchestraView.extend(
         settings.sAjaxDataProp = json.collection_name
         drawCallback(json)
 )
+
+((router) ->
+  router.addRoutePattern 'loadTranslationDatatable', $('#contextual-informations').data('datatableTranslationUrlPattern')
+) window.appRouter
