@@ -1,6 +1,5 @@
 tabViewFormLoad = (options) ->
   tabViewClass = appConfigurationView.getConfiguration(options.entityType, 'showTab')
-  elementTabViewClass = appConfigurationView.getConfiguration(options.entityType, 'editEntityTab')
 
   tabView = new tabViewClass(options)
   panels = getPanelsLink(options.element.get('links'))
@@ -11,6 +10,7 @@ tabViewFormLoad = (options) ->
         url: panel.link
         method: "GET"
         success: (response) ->
+          elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
           view = new elementTabViewClass(
             html: response,
             entityType: options.entityType,
