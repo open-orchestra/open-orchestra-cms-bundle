@@ -21,6 +21,14 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/DisplayApiErrorView.js',
         'web/built/openorchestrabackoffice/js/generateId.js',
 
+        //--[ BACKBONE ROUTER ]--//
+        'web/built/openorchestrabackoffice/js/backboneRouter.js',
+        'web/built/openorchestrabackoffice/js/page/LoadNodeConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/page/LoadTemplateConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/table/LoadTableConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/dashboard/LoadDashboardConfigurationRoute.js',
+        'web/built/openorchestrabackoffice/js/underscoreTemplateLoader.js',
+
         //--[ EXTEND VIEWS ]--//
         'web/built/openorchestrabackoffice/js/extendView/addArea.js',
         'web/built/openorchestrabackoffice/js/extendView/commonPage.js',
@@ -78,15 +86,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
         //--[ USER ]--//
-        'web/built/openorchestrauseradmin/js/user/*.js',
-
-        //--[ BACKBONE ROUTER ]--//
-        'web/built/openorchestrabackoffice/js/backboneRouter.js',
-        'web/built/openorchestrabackoffice/js/page/LoadNodeConfigurationRoute.js',
-        'web/built/openorchestrabackoffice/js/page/LoadTemplateConfigurationRoute.js',
-        'web/built/openorchestrabackoffice/js/table/LoadTableConfigurationRoute.js',
-        'web/built/openorchestrabackoffice/js/dashboard/LoadDashboardConfigurationRoute.js',
-        'web/built/openorchestrabackoffice/js/underscoreTemplateLoader.js'
+        'web/built/openorchestrauseradmin/js/user/*.js'
     ],
     dest: 'web/built/orchestra.js'
 };

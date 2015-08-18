@@ -73,7 +73,7 @@ TableviewCollectionView = OrchestraView.extend(
                     "t"+
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
       language: {
-        url: $('#contextual-informations').data('datatableTranslationUrlPattern')
+        url: appRouter.generateUrl('loadTranslationDatatable')
       }
       colVis: exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
@@ -239,3 +239,7 @@ TableviewCollectionView = OrchestraView.extend(
         settings.sAjaxDataProp = json.collection_name
         drawCallback(json)
 )
+
+((router) ->
+  router.addRoutePattern 'loadTranslationDatatable', $('#contextual-informations').data('datatableTranslationUrlPattern')
+) window.appRouter
