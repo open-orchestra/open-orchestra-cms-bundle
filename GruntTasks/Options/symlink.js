@@ -134,13 +134,5 @@ module.exports = {
     jquery_ui: {
         src: 'bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
         dest: 'web/css/images/ui-icons_222222_256x240.png'
-    },
-    translations_dataTables_fr: {
-        src: 'web/bundles/openorchestrabackoffice/dataTables/translations/fr.lang.json',
-        dest: 'web/dataTables/translations/fr.lang.json'
-    },
-    translations_dataTables_en: {
-        src: 'web/bundles/openorchestrabackoffice/dataTables/translations/en.lang.json',
-        dest: 'web/dataTables/translations/en.lang.json'
     }
 };
