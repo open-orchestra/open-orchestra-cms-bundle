@@ -1,0 +1,17 @@
+open_orchestra_datatable:
+    empty_table: Aucune donnée disponible dans le tableau
+    info: Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments
+    info_empty: Affichage de l'élément 0 à 0 sur 0 éléments
+    info_filtered: (filtré de _MAX_ éléments au total)
+    info_post_fix: ""
+    info_thousands: ""
+    length_menu: _MENU_
+    loading_records: Chargement en cours...
+    processing: Traitement en cours...
+    search: ""
+    zero_records: Aucun élément à afficher
+    paginate:
+        first: Premier
+        last: Dernier
+        next: Suivant
+        previous: Précédent

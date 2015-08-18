@@ -41,6 +41,7 @@ class ApiControllersTest extends AbstractControllerTest
             array('/api/redirection'),
             array('/api/status'),
             array('/api/template/template_full'),
+            array('/api/datatable/translation'),
         );
     }
 }

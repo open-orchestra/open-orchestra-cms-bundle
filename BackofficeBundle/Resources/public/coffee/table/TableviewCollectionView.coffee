@@ -59,7 +59,6 @@ TableviewCollectionView = OrchestraView.extend(
     if @options.page?
       page = parseInt(@options.page) - 1
       displayStart = pageLength * page
-    language = if $('#contextual-informations').data('current-language')? then $('#contextual-informations').data('current-language') else "en"
     @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
       ordering: true
@@ -74,7 +73,7 @@ TableviewCollectionView = OrchestraView.extend(
                     "t"+
                     "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
       language: {
-        url: '/dataTables/translations/'+language+'.lang.json'
+        url: '/app_dev.php/api/datatable/translation'
       }
       colVis: exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
