@@ -4,3 +4,5 @@ open_orchestra_backoffice_validators:
             content_template: Twig syntax error
     node:
          pattern: The block %blockLabel% need parameter %parameter% in node pattern url
+    authorize:
+        edition: You cannot edit this document anymore

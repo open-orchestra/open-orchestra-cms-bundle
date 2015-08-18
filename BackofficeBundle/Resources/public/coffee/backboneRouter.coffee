@@ -47,6 +47,7 @@ OrchestraBORouter = Backbone.Router.extend(
     Router = this
     fragment = Backbone.history.fragment
     routes = _.pairs(Router.routePatterns)
+    route = null
     matched = _.find(routes, (handler) ->
       return false if handler[0] == 'showHome'
       route = if _.isRegExp(handler[1]) then handler[1] else Router._routeToRegExp(handler[1])
