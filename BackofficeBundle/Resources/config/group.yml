@@ -9,5 +9,6 @@ services:
             - getRepository
         calls:
             - [setAggregationQueryBuilder, [@doctrine_mongodb.odm.default_aggregation_query]]
+            - [setFilterTypeManager, [@open_orchestra_pagination.filter_type.manager]]
         arguments:
             - %open_orchestra_user.document.group.class%
