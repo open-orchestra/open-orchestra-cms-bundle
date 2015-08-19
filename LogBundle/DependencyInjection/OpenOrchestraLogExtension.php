@@ -32,6 +32,9 @@ class OpenOrchestraLogExtension extends Extension
                 $definition->addMethodCall('setAggregationQueryBuilder', array(
                     new Reference('doctrine_mongodb.odm.default_aggregation_query')
                 ));
+                $definition->addMethodCall('setFilterTypeManager', array(
+                    new Reference('open_orchestra_pagination.filter_type.manager')
+                ));
                 $container->setDefinition('open_orchestra_log.repository.' . $class, $definition);
             }
         }
