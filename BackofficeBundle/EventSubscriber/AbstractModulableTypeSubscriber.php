@@ -43,13 +43,23 @@ abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterfa
     {
         if (is_array($value) && !is_null($form->getConfig()->getOption('type'))) {
             $tmpValue = null;
+            $children = null;
             foreach ($value as $key => $element) {
                 if ($form->has($key)) {
-                    $tmpValue[] = $this->transformData($element, $form->get($key));
+                    $children = $form->get($key);
+                }
+                if ($children instanceof FormInterface) {
+                    $tmpValue[] = $this->transformData($element, $children);
                 } else {
                     $tmpValue[] = $element;
                 }
             }
+            foreach (array_keys($form->all()) as $key) {
+                if (!array_key_exists($key, $value)) {
+                    $form->remove($key);
+                }
+            }
+
 
             return $tmpValue;
 
