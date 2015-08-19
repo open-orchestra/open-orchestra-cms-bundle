@@ -29,4 +29,9 @@ class ApiClientFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $secret;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    public $roles;
 }

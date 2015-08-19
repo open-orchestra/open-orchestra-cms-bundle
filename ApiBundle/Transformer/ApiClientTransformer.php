@@ -32,6 +32,7 @@ class ApiClientTransformer extends AbstractTransformer
         $facade->trusted = $apiClient->isTrusted();
         $facade->key = $apiClient->getKey();
         $facade->secret = $apiClient->getSecret();
+        $facade->roles = implode(',', $apiClient->getRoles());
 
         $facade->addLink(
             '_self_delete',

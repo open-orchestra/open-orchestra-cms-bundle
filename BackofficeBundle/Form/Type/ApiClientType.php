@@ -27,15 +27,19 @@ class ApiClientType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', 'text', array('label' => 'open_orchestra_backoffice.form.api_client.name'))
-            ->add('trusted', 'checkbox', array(
+        $builder->add('name', 'text', array('label' => 'open_orchestra_backoffice.form.api_client.name'));
+        $builder->add('trusted', 'checkbox', array(
                     'label' => 'open_orchestra_backoffice.form.api_client.trusted',
                     'required' => false
-            ))
-            ->add('key', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.key'))
-            ->add('secret', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.secret'))
-        ;
+            ));
+        $builder->add('roles', 'orchestra_role_choice', array(
+            'label' => 'open_orchestra_backoffice.form.group.roles',
+            'multiple' => true,
+            'expanded' => true,
+            'required' => false,
+        ));
+        $builder->add('key', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.key'));
+        $builder->add('secret', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.secret'));
         $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
     }
 
