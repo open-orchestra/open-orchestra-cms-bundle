@@ -126,7 +126,7 @@ class ContentController extends BaseController
 
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
 
-        $mapping = $this->get('open_orchestra_api.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Content');
+        $mapping = $this->get('open_orchestra_base.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Content');
         $mappingAttributes = $this->get('open_orchestra_api.mapping.content_attribute')->getMapping($contentType);
         $mapping = array_merge($mapping, $mappingAttributes);
 
