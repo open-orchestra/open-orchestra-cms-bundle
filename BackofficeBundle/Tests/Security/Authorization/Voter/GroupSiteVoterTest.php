@@ -89,10 +89,11 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     /**
      * @param array  $roles
      * @param string $accessResponse
+     * @param bool   $superAdmin
      *
      * @dataProvider provideRoleAndAccess
      */
-    public function testVote($roles, $accessResponse)
+    public function testVote($roles, $accessResponse, $superAdmin = false)
     {
         $siteId1 = '1';
         $siteId2 = '2';
@@ -110,8 +111,13 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
         Phake::when($group2)->getSite()->thenReturn($site2);
         Phake::when($group2)->getRoles()->thenReturn(array($role2));
 
-        $user = Phake::mock('FOS\UserBundle\Model\GroupableInterface');
+        if ($superAdmin) {
+            $user = Phake::mock('FOS\UserBundle\Model\UserInterface');
+        } else {
+            $user = Phake::mock('FOS\UserBundle\Model\GroupableInterface');
+        }
         Phake::when($user)->getGroups()->thenReturn(array($group1, $group2));
+        Phake::when($user)->isSuperAdmin()->thenReturn($superAdmin);
 
         $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         Phake::when($token)->getUser()->thenReturn($user);
@@ -137,6 +143,8 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
             array(array('ROLE_USER', 'ROLE_ACCESS_2'), VoterInterface::ACCESS_DENIED),
             array(array('ROLE_ACCESS_1', 'ROLE_ACCESS_2'), VoterInterface::ACCESS_GRANTED),
             array(array('ROLE_ACCESS_2', 'ROLE_ACCESS_1'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_USER'), VoterInterface::ACCESS_GRANTED, true),
+            array(array('ROLE_USER', 'ROLE_ACCESS_2'), VoterInterface::ACCESS_GRANTED, true),
         );
     }
 }
