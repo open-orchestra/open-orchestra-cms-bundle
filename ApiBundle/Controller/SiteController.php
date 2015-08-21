@@ -62,7 +62,7 @@ class SiteController extends BaseController
         }
 
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $mapping = $this->get('open_orchestra_api.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Site');
+        $mapping = $this->get('open_orchestra_base.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\Site');
         $configuration->setDescriptionEntity($mapping);
         $siteCollection = $repository->findByDeletedForPaginate(false, $configuration);
         $recordsTotal = $repository->countByDeleted(false);
