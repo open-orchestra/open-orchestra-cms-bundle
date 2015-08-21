@@ -26,12 +26,12 @@ parameters:
     open_orchestra_api.transformer.status.class: OpenOrchestra\ApiBundle\Transformer\StatusTransformer
     open_orchestra_api.transformer.keyword.class: OpenOrchestra\ApiBundle\Transformer\KeywordTransformer
     open_orchestra_api.transformer.keyword_collection.class: OpenOrchestra\ApiBundle\Transformer\KeywordCollectionTransformer
-    open_orchestra_api.transformer.deleted.class: OpenOrchestra\ApiBundle\Transformer\DeletedTransformer
-    open_orchestra_api.transformer.deleted_collection.class: OpenOrchestra\ApiBundle\Transformer\DeletedCollectionTransformer
     open_orchestra_api.transformer.link.class: OpenOrchestra\ApiBundle\Transformer\LinkTransformer
     open_orchestra_api.transformer.api_client.class: OpenOrchestra\ApiBundle\Transformer\ApiClientTransformer
     open_orchestra_api.transformer.api_client_collection.class: OpenOrchestra\ApiBundle\Transformer\ApiClientCollectionTransformer
     open_orchestra_api.transformer.datatable_translation.class: OpenOrchestra\ApiBundle\Transformer\DatatableTranslationTransformer
+    open_orchestra_api.transformer.trashcan.class: OpenOrchestra\ApiBundle\Transformer\TrashCanTransformer
+    open_orchestra_api.transformer.trashcan_collection.class: OpenOrchestra\ApiBundle\Transformer\TrashCanCollectionTransformer
 
 services:
     open_orchestra_api.transformer.node:
@@ -175,14 +175,6 @@ services:
         class: %open_orchestra_api.transformer.keyword_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.deleted:
-        class: %open_orchestra_api.transformer.deleted.class%
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.deleted_collection:
-        class: %open_orchestra_api.transformer.deleted_collection.class%
-        tags:
-            - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.link:
         class: %open_orchestra_api.transformer.link.class%
         tags:
@@ -199,5 +191,13 @@ services:
         class: %open_orchestra_api.transformer.datatable_translation.class%
         arguments:
             - @translator
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.trashcan:
+        class: %open_orchestra_api.transformer.trashcan.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.trashcan_collection:
+        class: %open_orchestra_api.transformer.trashcan_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}

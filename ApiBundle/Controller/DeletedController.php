@@ -2,8 +2,10 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -16,7 +18,11 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class DeletedController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
+     * @param Request $request
+     *
      * @Config\Route("/list", name="open_orchestra_api_deleted_list")
      * @Config\Method({"GET"})
      *
@@ -24,15 +30,12 @@ class DeletedController extends BaseController
      *
      * @return Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        /** @var array $nodes */
-        $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByDeletedAndSiteId($siteId);
-        $contents = $this->get('open_orchestra_model.repository.content')->findAllDeleted();
+        $mapping = $this->get('open_orchestra_base.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\TrashCan');
+        $repository = $this->get('open_orchestra_model.repository.trash_can');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('trashcan_collection');
 
-        $deleted = array_merge($nodes, $contents);
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('deleted_collection')->transform($deleted);
+        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 }
