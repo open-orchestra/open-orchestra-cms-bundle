@@ -208,3 +208,17 @@ updateDebugBar = (xhr) ->
         btn = $('.sf-toolbar .sf-toolbarreset .hide-button');
         $('.sf-toolbar .sf-toolbarreset').html(toolbarData.html()).append(btn)
   return
+
+#LAUNCH SMARTADMIN NOTIFICATION
+launchNotification = (type, message) ->
+  if type == 'error'
+    color = "#C26565"
+    iconClass = "times"
+  else
+    color = "#826430"
+    iconClass = type
+  $.smallBox
+    title: '<i class="fa-fw fa fa-' + iconClass + '"></i>'
+    content: message
+    color: color
+    timeout: 4000

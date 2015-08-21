@@ -2,15 +2,16 @@ DisplayApiErrorView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
       'errors'
-      'domContainer'
     ])
-    @loadTemplates [
-        'OpenOrchestraBackofficeBundle:BackOffice:Underscore/apiError'
-    ]
+    @initializer options
     return
 
-  render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/apiError', @options)
-    @options.domContainer.append @$el
+  initializer: (options) ->
+    errors = options.errors
+    if (typeof errors.error != 'undefined')
+      launchNotification 'error', errors.error.message
+    else
+      for error of errors
+        launchNotification 'warning', error.message
     return
 )
