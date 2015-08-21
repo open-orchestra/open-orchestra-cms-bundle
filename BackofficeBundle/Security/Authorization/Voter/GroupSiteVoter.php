@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Security\Authorization\Voter;
 
 use FOS\UserBundle\Model\GroupableInterface;
+use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -62,12 +63,14 @@ class GroupSiteVoter implements VoterInterface
     public function vote(TokenInterface $token, $object, array $attributes)
     {
         $result = VoterInterface::ACCESS_ABSTAIN;
-
-        if (($user = $token->getUser()) instanceof GroupableInterface) {
+        if (($user = $token->getUser()) instanceof UserInterface && $user->isSuperAdmin()) {
+            return VoterInterface::ACCESS_GRANTED;
+        }
+        if ($user instanceof GroupableInterface) {
             $roles = $this->extractRoles($user->getGroups());
             $currentSiteId = $this->contextManager->getCurrentSiteId();
             foreach ($attributes as $attribute) {
-                if (!$this->supportsAttribute($attribute) ) {
+                if (!$this->supportsAttribute($attribute)) {
                     continue;
                 }
                 $result = VoterInterface::ACCESS_DENIED;
