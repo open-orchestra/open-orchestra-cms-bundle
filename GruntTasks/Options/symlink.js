@@ -115,9 +115,21 @@ module.exports = {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/pattern/overlay-pattern.png',
         dest: 'web/img/pattern/overlay-pattern.png'
     },
-    smartadmin_messagebox_sounds: {
+    smartadmin_messagebox_sounds_mp3: {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/messagebox.mp3',
         dest: 'web/sound/messagebox.mp3'
+    },
+    smartadmin_messagebox_sounds_ogg: {
+        src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/messagebox.ogg',
+        dest: 'web/sound/messagebox.ogg'
+    },
+    smartadmin_smallbox_sounds_mp3: {
+        src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/smallbox.mp3',
+        dest: 'web/sound/smallbox.mp3'
+    },
+    smartadmin_smallbox_sounds_ogg: {
+        src: 'web/bundles/openorchestrabackoffice/smartadmin/sound/smallbox.ogg',
+        dest: 'web/sound/smallbox.ogg'
     },
     smartadmin_flags: {
         src: 'web/bundles/openorchestrabackoffice/smartadmin/img/flags/flags.png',
