@@ -154,32 +154,6 @@ $(document).on 'click', '.configuration-change', (e) ->
   url = target.data('url')
   window.location = url + '#' + Backbone.history.fragment
 
-#ACTIVATE TINYMCE
-callback_tinymce_init = null
-
-activateTinyMce = (view, textarea) ->
-  do (view, textarea) ->
-    textarea.filter('[required="required"]').data('required', true)
-    callback_tinymce_init = (editor) ->
-      textarea.each ->
-        if $(this).data('required')
-          $(this).attr('required', 'required')
-      textarea.addClass('focusable')
-      doCallBack(editor, view)
-      return
-    return
-  if textarea.attr('disabled') == 'disabled'
-    initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
-  else
-    initTinyMCE()
-
-doCallBack = (editor, view) ->
-
-$(document).on('focusin', (e) ->
-  if ($(e.target).closest(".mce-window").length)
-      e.stopImmediatePropagation();
-)
-
 #ACTIVATE HTML5 VALIDATION FOR HIDDEN
 activateHidden = (hidden) ->
   hidden.addClass('focusable').attr('type', 'text')
