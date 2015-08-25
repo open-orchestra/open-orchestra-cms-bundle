@@ -30,8 +30,8 @@ parameters:
     open_orchestra_api.transformer.api_client.class: OpenOrchestra\ApiBundle\Transformer\ApiClientTransformer
     open_orchestra_api.transformer.api_client_collection.class: OpenOrchestra\ApiBundle\Transformer\ApiClientCollectionTransformer
     open_orchestra_api.transformer.datatable_translation.class: OpenOrchestra\ApiBundle\Transformer\DatatableTranslationTransformer
-    open_orchestra_api.transformer.trashcan.class: OpenOrchestra\ApiBundle\Transformer\TrashCanTransformer
-    open_orchestra_api.transformer.trashcan_collection.class: OpenOrchestra\ApiBundle\Transformer\TrashCanCollectionTransformer
+    open_orchestra_api.transformer.trash_item.class: OpenOrchestra\ApiBundle\Transformer\TrashItemTransformer
+    open_orchestra_api.transformer.trash_item_collection.class: OpenOrchestra\ApiBundle\Transformer\TrashItemCollectionTransformer
 
 services:
     open_orchestra_api.transformer.node:
@@ -193,11 +193,11 @@ services:
             - @translator
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.trashcan:
-        class: %open_orchestra_api.transformer.trashcan.class%
+    open_orchestra_api.transformer.trash_item:
+        class: %open_orchestra_api.transformer.trash_item.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
-    open_orchestra_api.transformer.trashcan_collection:
-        class: %open_orchestra_api.transformer.trashcan_collection.class%
+    open_orchestra_api.transformer.trash_item_collection:
+        class: %open_orchestra_api.transformer.trash_item_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}

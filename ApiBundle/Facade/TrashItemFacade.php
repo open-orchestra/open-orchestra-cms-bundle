@@ -6,9 +6,9 @@ use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 
 /**
- * Class TrashCanFacade
+ * Class TrashItemFacade
  */
-class TrashCanFacade extends AbstractFacade
+class TrashItemFacade extends AbstractFacade
 {
     /**
      * @Serializer\Type("string")

@@ -6,25 +6,25 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Class TrashCanCollection
+ * Class TrashItemCollectionFacade
  */
-class TrashCanCollectionFacade extends PaginateCollectionFacade
+class TrashItemCollectionFacade extends PaginateCollectionFacade
 {
     /**
      * @Serializer\Type("string")
      */
-    public $collectionName = 'trashcan';
+    public $collectionName = 'trashitem';
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\TrashCanFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\TrashItemFacade>")
      */
-    protected $trashcan = array();
+    protected $trashitem= array();
 
     /**
      * @param FacadeInterface $facade
      */
     public function addElement(FacadeInterface $facade)
     {
-        $this->trashcan[] = $facade;
+        $this->trashitem[] = $facade;
     }
 }
