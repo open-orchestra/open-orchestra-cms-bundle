@@ -18,7 +18,7 @@ class TrashItemCollectionFacade extends PaginateCollectionFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\TrashItemFacade>")
      */
-    protected $trashitem= array();
+    protected $trashitem = array();
 
     /**
      * @param FacadeInterface $facade

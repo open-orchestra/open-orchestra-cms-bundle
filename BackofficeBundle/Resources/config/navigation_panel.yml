@@ -117,10 +117,10 @@ services:
             - 80
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.deleted:
+    open_orchestra_backoffice.navigation_panel.trashcan:
         class: %open_orchestra_backoffice.navigation_panel.administration.class%
         arguments:
-            - deleted
+            - trashcan
             - ROLE_ACCESS_DELETED
             - 50
             - editorial

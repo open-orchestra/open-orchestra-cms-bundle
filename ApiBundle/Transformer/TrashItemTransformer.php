@@ -23,7 +23,7 @@ class TrashItemTransformer extends AbstractTransformer
 
         $facade = new TrashItemFacade();
         $facade->id = $trashItem->getId();
-        $facade->deleteAt = $trashItem->getDeleteAt();
+        $facade->deletedAt = $trashItem->getDeletedAt();
         $facade->name = $trashItem->getName();
         return $facade;
     }

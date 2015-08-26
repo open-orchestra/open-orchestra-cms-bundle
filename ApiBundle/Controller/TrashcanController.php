@@ -10,20 +10,20 @@ use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
- * Class DeletedController
+ * Class TrashcanController
  *
- * @Config\Route("deleted")
+ * @Config\Route("trashcan")
  *
  * @Api\Serialize()
  */
-class DeletedController extends BaseController
+class TrashcanController extends BaseController
 {
     use HandleRequestDataTable;
 
     /**
      * @param Request $request
      *
-     * @Config\Route("/list", name="open_orchestra_api_deleted_list")
+     * @Config\Route("/list", name="open_orchestra_api_trashcan_list")
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_DELETED')")

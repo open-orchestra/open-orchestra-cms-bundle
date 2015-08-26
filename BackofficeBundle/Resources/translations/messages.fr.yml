@@ -287,7 +287,7 @@ open_orchestra_backoffice:
                 list: Redirections
             keyword:
                 list: Mots-clés
-            deleted:
+            trashcan:
                 list: Corbeille
     block:
         configurable_content:
@@ -492,6 +492,6 @@ open_orchestra_backoffice:
         websites:
             site_id: Clef
             name: Nom
-        deleted:
+        trashcan:
           name: Nom
-          updated_at: Supprimé le
+          deleted_at: Supprimé le
