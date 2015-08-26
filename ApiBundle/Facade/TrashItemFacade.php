@@ -19,5 +19,4 @@ class TrashItemFacade extends AbstractFacade
      * @Serializer\Type("string")
      */
     public $deletedAt;
-
 }

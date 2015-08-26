@@ -7,6 +7,9 @@ use OpenOrchestra\ApiBundle\Facade\TrashItemFacade;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 
+/**
+ * Class TrashItemTransformer
+ */
 class TrashItemTransformer extends AbstractTransformer
 {
     /**
@@ -25,6 +28,7 @@ class TrashItemTransformer extends AbstractTransformer
         $facade->id = $trashItem->getId();
         $facade->deletedAt = $trashItem->getDeletedAt();
         $facade->name = $trashItem->getName();
+
         return $facade;
     }
 

@@ -13,18 +13,18 @@ class TrashItemCollectionFacade extends PaginateCollectionFacade
     /**
      * @Serializer\Type("string")
      */
-    public $collectionName = 'trashitem';
+    public $collectionName = 'trash_items';
 
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\TrashItemFacade>")
      */
-    protected $trashitem = array();
+    protected $trashItems = array();
 
     /**
      * @param FacadeInterface $facade
      */
     public function addElement(FacadeInterface $facade)
     {
-        $this->trashitem[] = $facade;
+        $this->trashItems[] = $facade;
     }
 }

@@ -93,7 +93,7 @@ class ContextManager implements CurrentSiteIdInterface
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
                 $site = $group->getSite();
-                if (!$site->getDeleted()) {
+                if (!$site->isDeleted()) {
                     $sites[] = $site;
                 }
             }

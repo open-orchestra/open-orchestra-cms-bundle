@@ -60,7 +60,7 @@ class ContentTransformer extends AbstractTransformer
         $facade->statusLabel = $facade->status->label;
         $facade->createdAt = $content->getCreatedAt();
         $facade->updatedAt = $content->getUpdatedAt();
-        $facade->deleted = $content->getDeleted();
+        $facade->deleted = $content->isDeleted();
         $facade->linkedToSite = $content->isLinkedToSite();
 
         foreach ($content->getAttributes() as $attribute) {

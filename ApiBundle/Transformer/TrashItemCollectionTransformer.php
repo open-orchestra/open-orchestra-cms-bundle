@@ -7,6 +7,9 @@ use OpenOrchestra\ApiBundle\Facade\TrashItemCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
+/**
+ * Class TrashItemCollectionTransformer
+ */
 class TrashItemCollectionTransformer extends AbstractTransformer
 {
     /**
