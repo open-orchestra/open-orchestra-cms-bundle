@@ -1,7 +1,8 @@
 <?php
 
-namespace OpenOrchestra\LogBundle\Repository;
+namespace OpenOrchestra\ModelLogBundle\Repository;
 
+use OpenOrchestra\LogBundle\Repository\LogRepositoryInterface;
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 
