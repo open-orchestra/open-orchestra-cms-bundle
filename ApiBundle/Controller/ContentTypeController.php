@@ -62,7 +62,9 @@ class ContentTypeController extends BaseController
         }
 
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $mapping = $this->get('open_orchestra_base.annotation_search_reader')->extractMapping('OpenOrchestra\ModelBundle\Document\ContentType');
+        $mapping = $this
+            ->get('open_orchestra_base.annotation_search_reader')
+            ->extractMapping($this->container->getParameter('open_orchestra_model.document.content_type.class'));
         $configuration->setDescriptionEntity($mapping);
         $contentTypeCollection = $repository->findAllNotDeletedInLastVersionForPaginate($configuration);
         $recordsTotal = $repository->countByContentTypeInLastVersion();
