@@ -52,7 +52,9 @@ class UserController extends BaseController
      */
     public function listAction(Request $request)
     {
-        $mapping = $this->get('open_orchestra_base.annotation_search_reader')->extractMapping('OpenOrchestra\UserBundle\Document\User');
+        $mapping = $this
+            ->get('open_orchestra_base.annotation_search_reader')
+            ->extractMapping($this->container->getParameter('open_orchestra_user.document.user.class'));
 
         $repository =  $this->get('open_orchestra_user.repository.user');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('user_collection');
