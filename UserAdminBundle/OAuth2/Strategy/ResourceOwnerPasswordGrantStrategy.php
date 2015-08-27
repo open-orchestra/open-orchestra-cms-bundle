@@ -12,7 +12,6 @@ use OpenOrchestra\BaseApi\Repository\AccessTokenRepositoryInterface;
 use OpenOrchestra\BaseApi\Repository\ApiClientRepositoryInterface;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

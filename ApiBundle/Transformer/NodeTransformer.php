@@ -77,7 +77,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->nodeId = $nodeId;
         $facade->name = $node->getName();
         $facade->siteId = $node->getSiteId();
-        $facade->deleted = $node->getDeleted();
+        $facade->deleted = $node->isDeleted();
         $facade->templateId = $node->getTemplateId();
         $facade->nodeType = $node->getNodeType();
         $facade->parentId = $node->getParentId();
