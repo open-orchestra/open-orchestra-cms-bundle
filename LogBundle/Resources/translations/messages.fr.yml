@@ -12,7 +12,8 @@ open_orchestra_log:
           message: Message
     node:
         create: Crée un nouveau noeud avec l'id du noeud node_id
-        delete: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name
+        restore: Supprime un noeud avec l'id du noeud node_id et le nom du noeud node_name
+        delete: Restaure un noeud avec l'id du noeud node_id et le nom du noeud node_name
         update: Mise à jour un noeud avec l'id du noeud node_id, la version node_version et  la langue node_language
         duplicate: Duplique un noeud avec l'id du noeud node_id, la version node_version et  la langue node_language
         add_language: Ajoute une langue à un noeud avec l'id du noeud node_id, sont nom node_name et la langue node_language
@@ -28,6 +29,7 @@ open_orchestra_log:
     content:
         create: Crée un contenu avec l'id du contenu content_id
         delete: Supprime un contenu avec l'id du contenu content_id et sont nom content_name
+        restore: Restaure un contenu avec l'id du contenu content_id et sont nom content_name
         update: Met à jour un contenu avec l'id du contenu content_id, la langue content_language et la version content_version
         add_language: Ajoute une langue à un contenu avec l'id du contenu content_id et la langue content_language
         duplicate: Duplique un contenu avec l'id du contenu content_id, la langue content_language et la version content_version

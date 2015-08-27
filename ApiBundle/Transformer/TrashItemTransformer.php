@@ -28,6 +28,10 @@ class TrashItemTransformer extends AbstractTransformer
         $facade->id = $trashItem->getId();
         $facade->deletedAt = $trashItem->getDeletedAt();
         $facade->name = $trashItem->getName();
+        $facade->addLink('_self_restore',  $this->generateRoute(
+            'open_orchestra_api_trashcan_restore',
+            array('trashItemId' => $trashItem->getId())
+        ));
 
         return $facade;
     }

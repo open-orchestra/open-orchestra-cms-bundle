@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
+use OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface;
 
 /**
  * Class TrashcanController
@@ -37,5 +39,33 @@ class TrashcanController extends BaseController
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('trash_item_collection');
 
         return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
+    }
+
+
+    /**
+     * @param $trashItemId
+     *
+     * @Config\Route("/{trashItemId}/restore", name="open_orchestra_api_trashcan_restore")
+     * @Config\Method({"PUT"})
+     *
+     * @return array|mixed
+     */
+    public function restoreAction($trashItemId)
+    {
+        /* @var TrashItemInterface $trashItem */
+        $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
+        /* @var $entity SoftDeleteableInterface */
+        $entity = $trashItem->getEntity();
+        $dm = $this->get('object_manager');
+
+        if ($this->isValid($entity, 'restore')) {
+            $this->get('open_orchestra_backoffice.restore_entity.manager')->restore($entity);
+            $dm->remove($trashItem);
+            $dm->flush();
+
+            return array();
+        }
+
+        return $this->getViolations();
     }
 }

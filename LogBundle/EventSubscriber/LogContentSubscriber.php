@@ -37,6 +37,18 @@ class LogContentSubscriber extends AbstractLogSubscriber
     /**
      * @param ContentEvent $event
      */
+    public function contentRestore(ContentEvent $event)
+    {
+        $content = $event->getContent();
+        $this->logger->info('open_orchestra_log.content.restore', array(
+            'content_id' => $content->getContentId(),
+            'content_name' => $content->getName(),
+        ));
+    }
+
+    /**
+     * @param ContentEvent $event
+     */
     public function contentUpdate(ContentEvent $event)
     {
         $this->sendLog('open_orchestra_log.content.update', $event->getContent());
@@ -68,6 +80,7 @@ class LogContentSubscriber extends AbstractLogSubscriber
             ContentEvents::CONTENT_DUPLICATE => 'contentDuplicate',
             ContentEvents::CONTENT_CREATION => 'contentCreation',
             ContentEvents::CONTENT_DELETE => 'contentDelete',
+            ContentEvents::CONTENT_RESTORE => 'contentRestore',
             ContentEvents::CONTENT_UPDATE => 'contentUpdate',
         );
     }

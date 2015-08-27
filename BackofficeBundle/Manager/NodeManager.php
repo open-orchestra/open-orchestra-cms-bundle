@@ -328,4 +328,17 @@ class NodeManager
             $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
     }
+
+    /**
+     * @param NodeInterface $node
+     */
+    public function restoreNode(NodeInterface $node)
+    {
+        $nodes = $this->nodeRepository->findByNodeIdAndSiteId($node->getNodeId(), $node->getSiteId());
+        /** @var NodeInterface $node */
+        foreach ($nodes as $node) {
+            $node->setDeleted(false);
+        }
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_RESTORE, new NodeEvent($node));
+    }
 }

@@ -85,6 +85,7 @@ module.exports = {
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
         'web/built/openorchestrabackoffice/js/table/TableviewAction.js',
+        'web/built/openorchestrabackoffice/js/table/TableviewRestoreAction.js',
         'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',
         'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 

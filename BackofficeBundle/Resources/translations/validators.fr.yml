@@ -4,5 +4,6 @@ open_orchestra_backoffice_validators:
             content_template: Erreur de syntax twig
     node:
         pattern: Le bloc %blockLabel% nécessite le paramètre %parameter% dans la pattern de l'url du node
+        restore: Vous ne pouvez pas restaurer ce noeud, vous devez restaurer son parent %nodeparent% avant
     authorize:
         edition: Ce document n'est plus modifiable

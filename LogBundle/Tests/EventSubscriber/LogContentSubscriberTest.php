@@ -37,6 +37,7 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
             array(ContentEvents::CONTENT_DELETE),
             array(ContentEvents::CONTENT_DUPLICATE),
             array(ContentEvents::CONTENT_UPDATE),
+            array(ContentEvents::CONTENT_RESTORE),
         );
     }
 
@@ -58,6 +59,18 @@ class LogContentSubscriberTest extends LogAbstractSubscriberTest
     {
         $this->subscriber->contentDelete($this->contentEvent);
         $this->assertEventLogged('open_orchestra_log.content.delete', array(
+            'content_id' => $this->content->getContentId(),
+            'content_name' => $this->content->getName(),
+        ));
+    }
+
+    /**
+     * Test contentRestore
+     */
+    public function testContentRestore()
+    {
+        $this->subscriber->contentRestore($this->contentEvent);
+        $this->assertEventLogged('open_orchestra_log.content.restore', array(
             'content_id' => $this->content->getContentId(),
             'content_name' => $this->content->getName(),
         ));

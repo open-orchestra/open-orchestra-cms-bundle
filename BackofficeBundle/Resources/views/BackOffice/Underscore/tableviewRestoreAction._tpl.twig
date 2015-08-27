@@ -1,0 +1,9 @@
+<% if (typeof links._self_restore !== 'undefined') { %>
+    <a href="#" class="btn btn-success btn-xs ajax-restore"
+       title="{{ 'open_orchestra_backoffice.form.edit'|trans() }}"
+       data-restore-confirm-txt = "{{ 'open_orchestra_backoffice.table.trashcan.restore_confirm_txt'|trans() }}""
+       data-restore-confirm-title = "{{ 'open_orchestra_backoffice.table.trashcan.restore_confirm_title'|trans() }}""
+    >
+        <span class="fa fa-undo fa-lg" aria-hidden="true"></span>
+    </a>
+<% } %>

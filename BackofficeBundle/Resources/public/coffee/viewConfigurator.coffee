@@ -8,6 +8,7 @@ OrchestraViewConfigurator = ->
     'addArea': AreaView
     'addBlock': BlockView
     'addButtonAction': TableviewAction
+    'addRestoreButtonAction': TableviewRestoreAction
     'addConfigurationButton': PageConfigurationButtonView
     'showTableCollection': TableviewCollectionView
     'showAdminForm': AdminFormView

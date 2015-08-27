@@ -44,6 +44,7 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
             array(NodeEvents::NODE_CREATION),
             array(NodeEvents::NODE_ADD_LANGUAGE),
             array(NodeEvents::NODE_DELETE),
+            array(NodeEvents::NODE_RESTORE),
             array(NodeEvents::NODE_DUPLICATE),
             array(NodeEvents::NODE_UPDATE),
             array(NodeEvents::NODE_UPDATE_BLOCK),
@@ -69,6 +70,16 @@ class LogNodeSubscriberTest extends LogAbstractSubscriberTest
         $this->subscriber->nodeDelete($this->nodeEvent);
 
         $this->assertEventLogged('open_orchestra_log.node.delete', $this->context);
+    }
+
+    /**
+     * Test nodeRestore
+     */
+    public function testNodeRestore()
+    {
+        $this->subscriber->nodeRestore($this->nodeEvent);
+
+        $this->assertEventLogged('open_orchestra_log.node.restore', $this->context);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
 use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use Phake;
@@ -20,6 +21,7 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
     protected $versionableSaver;
     protected $contentTypeRepository;
     protected $contentRepository;
+    protected $eventDispatcher;
     protected $contentAttribute;
     protected $contextManager;
     protected $contentClass;
@@ -50,7 +52,10 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Manager\VersionableSaver');
 
-        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository, $this->versionableSaver);
+        $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+
+        $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository, $this->versionableSaver, $this->contentRepository, $this->eventDispatcher);
     }
 
     /**
@@ -130,5 +135,26 @@ class ContentManagerTest extends \PHPUnit_Framework_TestCase
             array('news', 'fr', false, '3'),
             array('car', 'en', false, '4'),
         );
+    }
+
+    /**
+     * Test restore node
+     */
+    public function testRestoreContent()
+    {
+        $contentId = 'contentId';
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($content)->getContentId()->thenReturn($contentId);
+        $contents = new ArrayCollection();
+        $contents->add($content);
+        $contents->add($content);
+
+        Phake::when($this->contentRepository)->findByContentId($contentId)->thenReturn($contents);
+
+        $this->manager->restoreContent($content);
+
+        Phake::verify($content, Phake::times(2))->setDeleted(false);
+        Phake::verify($this->contentRepository)->findByContentId($contentId);
+        Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 }
