@@ -1,0 +1,4 @@
+services:
+#    open_orchestra_model_log.example:
+#        class: OpenOrchestra\ModelLogBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
