@@ -11,7 +11,7 @@ DisplayApiErrorView = OrchestraView.extend(
     if (typeof errors.error != 'undefined')
       launchNotification 'error', errors.error.message
     else
-      for error of errors
+      for key,error of errors
         launchNotification 'warning', error.message
     return
 )
