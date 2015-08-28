@@ -193,17 +193,26 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $sons->add($son);
         $sons->add($son);
 
+        $grandsonId = 'grandsonId';
+        $grandson = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($grandson)->getNodeId()->thenReturn($grandsonId);
+        $grandsons = new ArrayCollection();
+        $grandsons->add($grandson);
+
         $siteId = $this->contextManager->getCurrentSiteId();
         Phake::when($this->nodeRepository)->findByParentIdAndSiteId($nodeId, $siteId)->thenReturn($sons);
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($sonId, $siteId)->thenReturn(new ArrayCollection());
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($sonId, $siteId)->thenReturn($grandsons);
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($grandsonId, $siteId)->thenReturn(new ArrayCollection());
 
         $this->manager->deleteTree($nodes);
 
         Phake::verify($node, Phake::times(2))->setDeleted(true);
         Phake::verify($son, Phake::times(2))->setDeleted(true);
+        Phake::verify($grandson, Phake::times(1))->setDeleted(true);
         Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($nodeId, $siteId);
         Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($sonId, $siteId);
-        Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
+        Phake::verify($this->nodeRepository)->findByParentIdAndSiteId($grandsonId, $siteId);
+        Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
     }
 
     /**
