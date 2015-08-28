@@ -39,7 +39,6 @@ TableviewRestoreAction = OrchestraView.extend(
             viewClass = appConfigurationView.getConfiguration('status', 'apiError')
             new viewClass(
               errors: jqXHR.responseJSON
-              domContainer: $('h1.page-title').parent()
             )
     )
 

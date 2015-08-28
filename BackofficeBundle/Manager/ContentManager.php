@@ -3,13 +3,9 @@
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
-use OpenOrchestra\ModelInterface\ContentEvents;
-use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class ContentManager
@@ -20,31 +16,24 @@ class ContentManager
     protected $contextManager;
     protected $contentClass;
     protected $versionableSaver;
-    protected $eventDispatcher;
 
     /**
      * @param ContextManager                 $contextManager
      * @param string                         $contentClass
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param VersionableSaverInterface      $versionableSaver
-     * @param ContentRepositoryInterface     $contentRepository
-     * @param EventDispatcherInterface       $eventDispatcher
      */
     public function __construct(
         ContextManager $contextManager,
         $contentClass,
         ContentTypeRepositoryInterface $contentTypeRepository,
-        VersionableSaverInterface $versionableSaver,
-        ContentRepositoryInterface $contentRepository,
-        EventDispatcherInterface $eventDispatcher
+        VersionableSaverInterface $versionableSaver
     )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
         $this->contentClass = $contentClass;
         $this->versionableSaver = $versionableSaver;
-        $this->contentRepository = $contentRepository;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -107,18 +96,5 @@ class ContentManager
         $this->versionableSaver->saveDuplicated($newContent);
 
         return $newContent;
-    }
-
-    /**
-     * @param ContentInterface $content
-     */
-    public function restoreContent(ContentInterface $content)
-    {
-        $contents = $this->contentRepository->findByContentId($content->getContentId());
-        /** @var ContentInterface $content */
-        foreach ($contents as $content) {
-            $content->setDeleted(false);
-        }
-        $this->eventDispatcher->dispatch(ContentEvents::CONTENT_RESTORE, new ContentEvent($content));
     }
 }

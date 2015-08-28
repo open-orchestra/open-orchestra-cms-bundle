@@ -4,24 +4,31 @@ namespace OpenOrchestra\Backoffice\RestoreEntity\Strategies;
 
 use OpenOrchestra\Backoffice\RestoreEntity\RestoreEntityInterface;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class RestoreNodeStrategy
  */
 class RestoreNodeStrategy implements RestoreEntityInterface
 {
-    /**
-     * @var NodeManager
-     */
-    protected $nodeManager;
+    protected $nodeRepository;
+    protected $eventDispatcher;
 
     /**
-     * @param NodeManager $nodeManager
+     * @param NodeRepositoryInterface  $nodeRepository
+     * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(NodeManager $nodeManager)
+    public function __construct(
+        NodeRepositoryInterface $nodeRepository,
+        EventDispatcherInterface $eventDispatcher
+    )
     {
-        $this->nodeManager = $nodeManager;
+        $this->nodeRepository = $nodeRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -39,7 +46,12 @@ class RestoreNodeStrategy implements RestoreEntityInterface
      */
     public function restore($node)
     {
-        $this->nodeManager->restoreNode($node);
+        $nodes = $this->nodeRepository->findByNodeIdAndSiteId($node->getNodeId(), $node->getSiteId());
+        /** @var NodeInterface $node */
+        foreach ($nodes as $node) {
+            $node->setDeleted(false);
+        }
+        $this->eventDispatcher->dispatch(NodeEvents::NODE_RESTORE, new NodeEvent($node));
     }
 
     /**

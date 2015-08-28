@@ -451,27 +451,4 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array(4, 'fixture', '/test/fixture'),
         );
     }
-
-    /**
-     * Test restore node
-     */
-    public function testRestoreNode()
-    {
-        $nodeId = 'nodeId';
-        $siteId = $this->contextManager->getCurrentSiteId();
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node)->getNodeId()->thenReturn($nodeId);
-        Phake::when($node)->getSiteId()->thenReturn($siteId);
-        $nodes = new ArrayCollection();
-        $nodes->add($node);
-        $nodes->add($node);
-
-        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId($nodeId, $siteId)->thenReturn($nodes);
-
-        $this->manager->restoreNode($node);
-
-        Phake::verify($node, Phake::times(2))->setDeleted(false);
-        Phake::verify($this->nodeRepository)->findByNodeIdAndSiteId($nodeId, $siteId);
-        Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
-    }
 }

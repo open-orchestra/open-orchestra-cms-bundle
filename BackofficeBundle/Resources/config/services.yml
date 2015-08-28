@@ -57,8 +57,6 @@ services:
             - %open_orchestra_model.document.content.class%
             - @open_orchestra_model.repository.content_type
             - @open_orchestra_model.manager.versionnable_saver
-            - @open_orchestra_model.repository.content
-            - @event_dispatcher
     open_orchestra_backoffice.manager.block:
         class: %open_orchestra_backoffice.manager.block.class%
         arguments: [@open_orchestra_model.repository.node]

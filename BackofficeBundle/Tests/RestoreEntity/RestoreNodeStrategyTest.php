@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\RestoreEntity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\RestoreEntity\Strategies\RestoreNodeStrategy;
 use Phake;
 
@@ -15,16 +16,18 @@ class RestoreNodeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     protected $strategy;
 
-    protected $nodeManager;
+    protected $nodeRepository;
+    protected $eventDispatcher;
 
     /**
      * Set up the test
      */
     protected function setUp()
     {
-        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->strategy = new RestoreNodeStrategy($this->nodeManager);
+        $this->strategy = new RestoreNodeStrategy($this->nodeRepository, $this->eventDispatcher);
     }
 
     /**
@@ -60,9 +63,21 @@ class RestoreNodeStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testRestore()
     {
+        $nodeId = 'nodeId';
+        $siteId = 'fakeSiteId';
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getSiteId()->thenReturn($siteId);
+        $nodes = new ArrayCollection();
+        $nodes->add($node);
+        $nodes->add($node);
+
+        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId($nodeId, $siteId)->thenReturn($nodes);
+
         $this->strategy->restore($node);
 
-        Phake::verify($this->nodeManager)->restoreNode($node);
+        Phake::verify($node, Phake::times(2))->setDeleted(false);
+        Phake::verify($this->nodeRepository)->findByNodeIdAndSiteId($nodeId, $siteId);
+        Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 }

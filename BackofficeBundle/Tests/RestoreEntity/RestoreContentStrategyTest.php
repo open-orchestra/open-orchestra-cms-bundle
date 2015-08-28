@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\RestoreEntity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\RestoreEntity\Strategies\RestoreContentStrategy;
 use Phake;
 
@@ -15,16 +16,18 @@ class RestoreContentStrategyTest extends \PHPUnit_Framework_TestCase
      */
     protected $strategy;
 
-    protected $contentManager;
+    protected $contentRepository;
+    protected $eventDispatcher;
 
     /**
      * Set up the test
      */
     protected function setUp()
     {
-        $this->contentManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\ContentManager');
+        $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->strategy = new RestoreContentStrategy($this->contentManager);
+        $this->strategy = new RestoreContentStrategy($this->contentRepository, $this->eventDispatcher);
     }
 
     /**
@@ -60,9 +63,19 @@ class RestoreContentStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testRestore()
     {
+        $contentId = 'contentId';
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($content)->getContentId()->thenReturn($contentId);
+        $contents = new ArrayCollection();
+        $contents->add($content);
+        $contents->add($content);
+
+        Phake::when($this->contentRepository)->findByContentId($contentId)->thenReturn($contents);
+
         $this->strategy->restore($content);
 
-        Phake::verify($this->contentManager)->restoreContent($content);
+        Phake::verify($content, Phake::times(2))->setDeleted(false);
+        Phake::verify($this->contentRepository)->findByContentId($contentId);
+        Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 }
