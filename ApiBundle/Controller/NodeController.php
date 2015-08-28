@@ -103,10 +103,8 @@ class NodeController extends BaseController
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId, $siteId);
-        $node = current($nodes);
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('object_manager')->flush();
-        $this->dispatchEvent(NodeEvents::NODE_DELETE, new NodeEvent($node));
 
         return array();
     }

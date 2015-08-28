@@ -165,20 +165,20 @@ class NodeManager
     public function deleteTree($nodes)
     {
         $parentId = null;
-        $node = null;
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $nodeIdDeleted = array();
         foreach ($nodes as $node) {
+            $nodeId = $node->getNodeId();
             $node->setDeleted(true);
-            $parentId = $node->getNodeId();
-        }
-
-        if ($parentId) {
-            $siteId = $this->contextManager->getCurrentSiteId();
-            $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId, $siteId);
-            $this->deleteTree($sons);
-        }
-
-        if ($node) {
-            $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
+            $parentId = $nodeId;
+            if (!in_array($nodeId, $nodeIdDeleted)) {
+                $nodeIdDeleted[] = $nodeId;
+                $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
+                $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId, $siteId);
+                if (!empty($sons)) {
+                    $this->deleteTree($sons);
+                }
+            }
         }
     }
 

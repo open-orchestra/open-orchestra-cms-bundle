@@ -5,6 +5,8 @@ parameters:
     open_orchestra_backoffice.subscriber.change_content_status.class: OpenOrchestra\BackofficeBundle\EventSubscriber\ChangeContentStatusSubscriber
     open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber
     open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateStatusSubscriber
+    open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteNodeSubscriber
+    open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteContentSubscriber
     open_orchestra_backoffice.subscriber.display_attribute.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DisplayAttributeSubscriber
 
 services:
@@ -51,5 +53,19 @@ services:
         class: %open_orchestra_backoffice.subscriber.update_status.class%
         arguments:
             - @open_orchestra_backoffice.authorize_status_change_manager
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.delete_node:
+        class: %open_orchestra_backoffice.subscriber.delete_node.class%
+        arguments:
+            - @object_manager
+            - %open_orchestra_model.document.trash_item.class%
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.delete_content:
+        class: %open_orchestra_backoffice.subscriber.delete_content.class%
+        arguments:
+            - @object_manager
+            - %open_orchestra_model.document.trash_item.class%
         tags:
             - { name: kernel.event_subscriber }
