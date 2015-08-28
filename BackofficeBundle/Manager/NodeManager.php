@@ -175,7 +175,7 @@ class NodeManager
                 $nodeIdDeleted[] = $nodeId;
                 $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
                 $sons = $this->nodeRepository->findByParentIdAndSiteId($parentId, $siteId);
-                if(!empty($sons)) {
+                if (!empty($sons)) {
                     $this->deleteTree($sons);
                 }
             }
