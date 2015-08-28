@@ -12,13 +12,9 @@ activateTinyMce = (view, textarea) ->
           return
         ed.on 'postProcess', (e) ->
           if e.set
-            console.log "beforebbcode2" + e.content
             e.content = self.bbcodeToHtml e.content
-            console.log "afterbbcode2" + e.content
           if e.get
-            console.log "beforehtml2" + e.content
             e.content = self.htmlToBBcode e.content
-            console.log "afterhtml2" + e.content
           return
         ed.on 'submit', (e) ->
           e.content = self.htmlToBBcode e.content
@@ -32,9 +28,7 @@ activateTinyMce = (view, textarea) ->
 
       punbbConvert: (string, replacementList) ->
         string = tinymce.trim(string)
-        console.log string
         rep = (re, str) ->
-          console.log re + '  :  ' + str
           string = string.replace(new RegExp(re,'gi'), str)
           return
         for regex, str of replacementList
