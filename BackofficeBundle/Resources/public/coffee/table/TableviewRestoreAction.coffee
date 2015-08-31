@@ -34,7 +34,9 @@ TableviewRestoreAction = OrchestraView.extend(
           success : () ->
             params.row.hide()
             options.table.fnSettings().clearCache = true
-            Backbone.history.loadUrl(Backbone.history.fragment)
+            displayRoute = appRouter.generateUrl "listEntities",
+              entityType: options.entityType
+            displayMenu(displayRoute)
           error: (jqXHR) ->
             viewClass = appConfigurationView.getConfiguration('status', 'apiError')
             new viewClass(
