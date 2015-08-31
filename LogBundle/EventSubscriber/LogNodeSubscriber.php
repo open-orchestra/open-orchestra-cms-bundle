@@ -38,6 +38,14 @@ class LogNodeSubscriber extends AbstractLogSubscriber
     /**
      * @param NodeEvent $event
      */
+    public function nodeRestore(NodeEvent $event)
+    {
+        $this->info('open_orchestra_log.node.restore', $event->getNode());
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
     public function nodeDuplicate(NodeEvent $event)
     {
         $this->info('open_orchestra_log.node.duplicate', $event->getNode());
@@ -98,6 +106,7 @@ class LogNodeSubscriber extends AbstractLogSubscriber
     {
         return array(
             NodeEvents::NODE_DELETE => 'nodeDelete',
+            NodeEvents::NODE_RESTORE => 'nodeRestore',
             NodeEvents::NODE_UPDATE => 'nodeUpdate',
             NodeEvents::NODE_CREATION => 'nodeCreation',
             NodeEvents::NODE_DUPLICATE => 'nodeDuplicate',

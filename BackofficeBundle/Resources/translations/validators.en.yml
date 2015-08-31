@@ -4,5 +4,6 @@ open_orchestra_backoffice_validators:
             content_template: Twig syntax error
     node:
          pattern: The block %blockLabel% need parameter %parameter% in node pattern url
+         restore: You can not restore this node, you should be restore her parent %nodeparent% before
     authorize:
         edition: You cannot edit this document anymore

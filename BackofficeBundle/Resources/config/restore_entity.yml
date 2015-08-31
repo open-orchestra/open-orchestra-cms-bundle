@@ -1,0 +1,23 @@
+parameters:
+    open_orchestra_backoffice.restore_entity.manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\RestoreEntityManager
+    open_orchestra_backoffice.restore_entity.node.class: OpenOrchestra\Backoffice\RestoreEntity\Strategies\RestoreNodeStrategy
+    open_orchestra_backoffice.restore_entity.content.class: OpenOrchestra\Backoffice\RestoreEntity\Strategies\RestoreContentStrategy
+
+services:
+    open_orchestra_backoffice.restore_entity.manager:
+        class: %open_orchestra_backoffice.restore_entity.manager.class%
+
+    open_orchestra_backoffice.restore_entity.node_version:
+        class: %open_orchestra_backoffice.restore_entity.node.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+            - @event_dispatcher
+        tags:
+            - { name: open_orchestra_backoffice.restore_entity.strategy }
+    open_orchestra_backoffice.restore_entity.content_version:
+        class: %open_orchestra_backoffice.restore_entity.content.class%
+        arguments:
+            - @open_orchestra_model.repository.content
+            - @event_dispatcher
+        tags:
+            - { name: open_orchestra_backoffice.restore_entity.strategy }

@@ -2,6 +2,7 @@ parameters:
     open_orchestra_model.validatorcontent_template.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplateValidator
     open_orchestra_model.validator.block_node_pattern.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePatternValidator
     open_orchestra_model.validator.authorize_edition.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\AuthorizeEditionValidator
+    open_orchestra_model.validator.restore_node.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNodeValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -22,3 +23,9 @@ services:
             - @open_orchestra_backoffice.authorize_edition.manager
         tags:
             - { name: validator.constraint_validator, alias: authorize_edition}
+    open_orchestra_model.validator.restore_node:
+        class: %open_orchestra_model.validator.restore_node.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+        tags:
+            - { name: validator.constraint_validator, alias: restore_node}

@@ -132,11 +132,16 @@ TableviewCollectionView = OrchestraView.extend(
   renderColumnActions : (viewContext, td, cellData, rowData) ->
     elementModel = new TableviewModel
     elementModel.set rowData
+
+    tableviewRestoreActionClass = appConfigurationView.getConfiguration('trashcan','addRestoreButtonAction')
+    appConfigurationView.setConfiguration('trashcan', 'addButtonAction', tableviewRestoreActionClass)
     tableActionViewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'addButtonAction')
+
     new tableActionViewClass(viewContext.addOption(
       element: elementModel
       domContainer : $(td)
     ))
+
   renderAddButton: (viewContext, links, table) ->
     button =  viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewButtonAdd',
       links: links

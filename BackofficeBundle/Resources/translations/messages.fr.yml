@@ -495,3 +495,5 @@ open_orchestra_backoffice:
         trashcan:
           name: Nom
           deleted_at: Supprimé le
+          restore_confirm_txt: Vous voulez vous restaurer cette élément ?
+          restore_confirm_title: Restaurer

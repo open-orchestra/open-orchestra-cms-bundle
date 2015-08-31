@@ -495,3 +495,5 @@ open_orchestra_backoffice:
         trashcan:
           name: Name
           deleted_at: Deleted at
+          restore_confirm_txt: Would you like to restore this element ?
+          restore_confirm_title: Restore

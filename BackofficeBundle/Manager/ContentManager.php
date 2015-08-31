@@ -23,7 +23,12 @@ class ContentManager
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param VersionableSaverInterface      $versionableSaver
      */
-    public function __construct(ContextManager $contextManager, $contentClass, ContentTypeRepositoryInterface $contentTypeRepository, VersionableSaverInterface $versionableSaver)
+    public function __construct(
+        ContextManager $contextManager,
+        $contentClass,
+        ContentTypeRepositoryInterface $contentTypeRepository,
+        VersionableSaverInterface $versionableSaver
+    )
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;

@@ -13,6 +13,7 @@ open_orchestra_log:
     node:
         create: Create a new node with node id node_id
         delete: Delete a node with node id node_id and node name node_name
+        restore: Restore a node with node id node_id and node name node_name
         update: Update a node with node id node_id, node version node_version and node language node_language
         duplicate: Duplicate a node with node id node_id, node version node_version and node language node_language
         add_language: Add a language to a node with node id node_id, node name node_name and node language node_language
@@ -28,6 +29,7 @@ open_orchestra_log:
     content:
         create: Create a new content with content id content_id
         delete: Delete a content with content id content_id and content name content_name
+        restore: Restore a content with content id content_id and content name content_name
         update: Update a content with content id content_id, content language content_language and content version content_version
         add_language: Add a language to a content with content id content_id and content language content_language
         duplicate: Duplicate a content with content id content_id, content language content_language and content version content_version
