@@ -152,7 +152,7 @@ TableviewCollectionView = OrchestraView.extend(
     value = $(event.target).val()
     columnIndex = $(event.target).closest("td").get(0).cellIndex
     api = @.$el.find('table').dataTable().api()
-    api.column(columnIndex).search(value).draw()
+    api.column(columnIndex+':visible').search(value).draw()
 
   clickAdd: (event) ->
     event.preventDefault()
