@@ -38,7 +38,7 @@ PO.formPrototype = (collectionHolder) ->
   return
 
 PO.formPrototype:: =
-  toogleAddButton: ->
+   toogleAddButton: ->
     if @limit is `undefined` or @index < @limit
       @createAddButton()
     else
