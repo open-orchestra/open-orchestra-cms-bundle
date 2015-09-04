@@ -53,7 +53,7 @@ class RedirectionController extends BaseController
     public function listAction(Request $request)
     {
         $mapping = $this
-            ->get('open_orchestra_base.annotation_search_reader')
+            ->get('open_orchestra.annotation_search_reader')
             ->extractMapping($this->container->getParameter('open_orchestra_model.document.redirection.class'));
         $repository = $this->get('open_orchestra_model.repository.redirection');
         $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('redirection_collection');
