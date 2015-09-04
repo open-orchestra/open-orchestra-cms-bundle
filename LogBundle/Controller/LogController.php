@@ -32,7 +32,7 @@ class LogController extends Controller
     {
         $repository =  $this->get('open_orchestra_log.repository.log');
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
-        $mapping = $this->get('open_orchestra_base.annotation_search_reader')->extractMapping($this->container->getParameter('open_orchestra_log.document.log.class'));
+        $mapping = $this->get('open_orchestra.annotation_search_reader')->extractMapping($this->container->getParameter('open_orchestra_log.document.log.class'));
         $configuration->setDescriptionEntity($mapping);
         $logCollection = $repository->findForPaginate($configuration);
         $recordsTotal = $repository->count();
