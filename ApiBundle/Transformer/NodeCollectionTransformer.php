@@ -13,6 +13,22 @@ use OpenOrchestra\ApiBundle\Facade\NodeFacade;
  */
 class NodeCollectionTransformer extends AbstractTransformer
 {
+
+    /**
+     * @param Collection $nodeCollection
+     *
+     * @return FacadeInterface
+     */
+    public function transform($nodeCollection)
+    {
+        $facade = new NodeCollectionFacade();
+
+        foreach ($nodeCollection as $node) {
+            $facade->addNode($this->getTransformer('node')->transform($node));
+        }
+        return $facade;
+    }
+
     /**
      * @param Collection $nodeCollection
      *

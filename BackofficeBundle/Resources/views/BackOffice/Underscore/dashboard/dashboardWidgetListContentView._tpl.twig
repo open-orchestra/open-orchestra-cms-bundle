@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>{{ ('open_orchestra_backoffice.dashboard.widget.list.name')|trans }}</th>
+        <th>{{ ('open_orchestra_backoffice.dashboard.widget.list.language')|trans }}</th>
+        <th>{{ ('open_orchestra_backoffice.dashboard.widget.list.date')|trans }}</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <% if (_.isEmpty(entities)) { %>
+            <tr>
+                <td class="text-center" colspan="12" >{{ ('open_orchestra_backoffice.dashboard.widget.list.no_entities')|trans }}</td>
+            </tr>
+        <% } else { %>
+            <% _.each(entities, function(entity) { %>
+                <tr>
+                    <td><%= entity.name %></td>
+                    <td><%= entity.language %></td>
+                    <td><%= entity.updated_at %></td>
+                    <td class="text-center">
+                        <a href="#<%= generateUrl(entity) %>" class="btn btn-info btn-xs">
+                            <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                </tr>
+            <% }); %>
+        <% } %>
+    </tbody>
+</table>
