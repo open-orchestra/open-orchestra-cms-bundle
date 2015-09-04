@@ -12,7 +12,7 @@ PO.formPrototype = (collectionHolder) ->
   @collectionHolder = collectionHolder
   @newElementLabel = @collectionHolder.data("prototype-label-new")
   @:: = @collectionHolder.data("prototype").replace(/__name__label__/g, @newElementLabel)
-  @index = @collectionHolder.find("input").length + @collectionHolder.find("select").length
+  @index = @collectionHolder.children().length
   @limit = @collectionHolder.data("limit")
   @addButton = $(PO.formPrototypes.addButton.replace(/__label__/g, @collectionHolder.data("prototype-label-add")))
   @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
@@ -27,8 +27,7 @@ PO.formPrototype = (collectionHolder) ->
   required = @required
   @collectionHolder.children().each (index) ->
     prototype = $(this)
-    if !required || index > 0
-      prototype = self.createRemoveButton($(this))
+    prototype = self.createRemoveButton($(this))
     if prototype.find(".alert-error").length is 0
       prototype.addClass("old").removeClass("new")
     else
@@ -40,10 +39,14 @@ PO.formPrototype = (collectionHolder) ->
 
 PO.formPrototype:: =
   toogleAddButton: ->
-    if @limit is `undefined` or @collectionHolder.find("input").length < @limit
+    if @limit is `undefined` or @index < @limit
       @createAddButton()
     else
       @removeAddButton()
+    if @index < 2 && @required
+      @collectionHolder.children().children("button.prototype-remove").hide()
+    else
+      @collectionHolder.children().children("button.prototype-remove").show()
     return
 
   createAddButton: ->
@@ -101,5 +104,6 @@ PO.formPrototype:: =
 
   removePrototype: (removeButton) ->
     removeButton.parent().remove()
+    @index--
     @toogleAddButton()
     return
