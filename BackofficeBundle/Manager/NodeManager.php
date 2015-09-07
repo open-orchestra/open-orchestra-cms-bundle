@@ -167,10 +167,16 @@ class NodeManager
         $siteId = $this->contextManager->getCurrentSiteId();
         foreach ($nodes as $node) {
             $nodePath = $node->getPath();
-            $node->setDeleted(true);
-            $sons = $this->nodeRepository->findByPathAndSiteId($nodePath, $siteId);
-            foreach ($sons as $son) {
-                $son->setDeleted(true);
+            if (!$node->isDeleted()) {
+                $node->setDeleted(true);
+                $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
+                $sons = $this->nodeRepository->findByPathAndSiteId($nodePath, $siteId);
+                foreach ($sons as $son) {
+                    if (!$son->isDeleted()) {
+                        $son->setDeleted(true);
+                        $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($son));
+                    }
+                }
             }
         }
     }
