@@ -2,8 +2,7 @@ html2bbcodeConfigurator = ->
   finalTransformation :
     '"'                                : '&quot;'          ,
     '>'                                : '&gt;'            ,
-    '<'                                : '&lt;'            ,
-    ' '                                : '&nbsp;'
+    '<'                                : '&lt;'
 
   transformation :
     '<img.*?src="([^"]*)" alt="([^"]*)" width="([0-9]*)" height="([0-9]*)"\\/>' : '[img alt="$2" width="$3" height="$4"]$1[/img]',
@@ -31,9 +30,6 @@ html2bbcodeConfigurator = ->
     '<p style="([^"]*)">'              : '[p="$1"]'        ,
     '<\\/p>'                           : '[/p]'            ,
     '<p>'                              : '[p]'             ,
-    '<br \\/>'                         : '[br]'            ,
-    '<br\\/>'                          : '[br]'            ,
-    '<br>'                             : '[br]'            ,
     '<\\/h([0-6])>'                    : '[/h$1]'          ,
     '<h([0-6])>'                       : '[h$1]'           ,
     '<\\/code>'                        : '[/code]'         ,
