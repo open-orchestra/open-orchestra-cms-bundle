@@ -187,19 +187,19 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $nodes = new ArrayCollection();
         $nodes->add($node);
 
-        $son = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($son)->isDeleted()->thenReturn(false);
-        $sons = new ArrayCollection();
-        $sons->add($son);
-        $sons->add($son);
+        $subNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($subNode)->isDeleted()->thenReturn(false);
+        $subNodes = new ArrayCollection();
+        $subNodes->add($subNode);
+        $subNodes->add($subNode);
 
         $siteId = $this->contextManager->getCurrentSiteId();
-        Phake::when($this->nodeRepository)->findByPathAndSiteId($nodePath, $siteId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByIncludingPathAndSiteId($nodePath, $siteId)->thenReturn($subNodes);
 
         $this->manager->deleteTree($nodes);
 
         Phake::verify($node, Phake::times(1))->setDeleted(true);
-        Phake::verify($son, Phake::times(2))->setDeleted(true);
+        Phake::verify($subNode, Phake::times(2))->setDeleted(true);
         Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
     }
 

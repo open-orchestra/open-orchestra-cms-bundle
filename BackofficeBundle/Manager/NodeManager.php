@@ -170,11 +170,11 @@ class NodeManager
                 $node->setDeleted(true);
                 $nodePath = $node->getPath();
                 $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
-                $sons = $this->nodeRepository->findByPathAndSiteId($nodePath, $siteId);
-                foreach ($sons as $son) {
-                    if (!$son->isDeleted()) {
-                        $son->setDeleted(true);
-                        $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($son));
+                $subNodes = $this->nodeRepository->findByIncludingPathAndSiteId($nodePath, $siteId);
+                foreach ($subNodes as $subNode) {
+                    if (!$subNode->isDeleted()) {
+                        $subNode->setDeleted(true);
+                        $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($subNode));
                     }
                 }
             }
