@@ -194,7 +194,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $subNodes->add($subNode);
 
         $siteId = $this->contextManager->getCurrentSiteId();
-        Phake::when($this->nodeRepository)->findByIncludingPathAndSiteId($nodePath, $siteId)->thenReturn($subNodes);
+        Phake::when($this->nodeRepository)->findByIncludedPathAndSiteId($nodePath, $siteId)->thenReturn($subNodes);
 
         $this->manager->deleteTree($nodes);
 

@@ -170,7 +170,7 @@ class NodeManager
                 $node->setDeleted(true);
                 $nodePath = $node->getPath();
                 $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
-                $subNodes = $this->nodeRepository->findByIncludingPathAndSiteId($nodePath, $siteId);
+                $subNodes = $this->nodeRepository->findByIncludedPathAndSiteId($nodePath, $siteId);
                 foreach ($subNodes as $subNode) {
                     if (!$subNode->isDeleted()) {
                         $subNode->setDeleted(true);
