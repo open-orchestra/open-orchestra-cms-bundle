@@ -112,9 +112,11 @@ class NodeTransformer extends AbstractTransformer
             'language' => $node->getLanguage(),
         )));
 
-        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
-            'nodeId' => $nodeId
-        )));
+        if (NodeInterface::ERROR_404_NODE_ID !== $nodeId && NodeInterface::ERROR_503_NODE_ID !== $nodeId) {
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
+                'nodeId' => $nodeId
+            )));
+        }
 
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
