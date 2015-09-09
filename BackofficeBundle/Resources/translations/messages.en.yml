@@ -6,7 +6,7 @@ open_orchestra_backoffice:
         de: Deutsch
     dashboard:
         last_node_title: My latest contributions of pages
-        last_content_title: My latest contributions of contents
+        last_content*_title: My latest contributions of contents
         node_draft_title: My contributions of pages not published
         content_draft_title: My contributions of contents not published
         widget:

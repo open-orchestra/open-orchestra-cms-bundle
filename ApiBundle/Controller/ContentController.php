@@ -263,18 +263,18 @@ class ContentController extends BaseController
     /**
      * @param boolean|null $published
      *
-     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_content_list_author_not_published", defaults={"published": null})
-     * @Config\Route("/list/by-author", name="open_orchestra_api_content_list_author", defaults={"published": false})
+     * @Config\Route("/list/not-published-by-contributor", name="open_orchestra_api_content_list_contributor_not_published", defaults={"published": null})
+     * @Config\Route("/list/by-contributor", name="open_orchestra_api_content_list_contributor", defaults={"published": false})
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return FacadeInterface
      */
-    public function listContentByAuthor($published)
+    public function listContentByContributor($published)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $content = $this->get('open_orchestra_model.repository.content')->findByAuthor($user->getUsername(), $published, 10);
+        $content = $this->get('open_orchestra_model.repository.content')->findByContributor($user->getUsername(), $published, 10);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
     }
