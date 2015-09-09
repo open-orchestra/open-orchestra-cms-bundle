@@ -112,7 +112,7 @@ class NodeTransformer extends AbstractTransformer
             'language' => $node->getLanguage(),
         )));
 
-        if (NodeInterface::ERROR_404_NODE_ID !== $nodeId && NodeInterface::ERROR_503_NODE_ID !== $nodeId) {
+        if (NodeInterface::TYPE_ERROR !== $node->getNodeType()) {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
                 'nodeId' => $nodeId
             )));
