@@ -3,7 +3,7 @@ DashboardWidgetListView = OrchestraView.extend(
     @options = options
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/dashboardWidgetListView"
-      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/dashboardWidgetListContentView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/dashboardWidgetListItemView"
     ]
     return
 
@@ -26,7 +26,7 @@ DashboardWidgetListView = OrchestraView.extend(
         entities = response[collectionName]
         generateUrl = currentView.generateUrl
         data = _.extend({entities: entities}, { generateUrl })
-        $('.widget-body', currentView.$el).html currentView.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/dashboardWidgetListContentView', data)
+        $('.widget-body', currentView.$el).html currentView.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/dashboardWidgetListItemView', data)
 
   generateUrl: (entity) ->
     return

@@ -263,8 +263,8 @@ class ContentController extends BaseController
     /**
      * @param boolean|null $published
      *
-     * @Config\Route("/list/not-published-by-contributor", name="open_orchestra_api_content_list_contributor_not_published", defaults={"published": null})
-     * @Config\Route("/list/by-contributor", name="open_orchestra_api_content_list_contributor", defaults={"published": false})
+     * @Config\Route("/list/not-published-by-contributor", name="open_orchestra_api_content_list_contributor_not_published", defaults={"published": false})
+     * @Config\Route("/list/by-contributor", name="open_orchestra_api_content_list_contributor", defaults={"published": null})
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
