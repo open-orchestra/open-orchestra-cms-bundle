@@ -4,6 +4,17 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
+    dashboard:
+        last_node_title: Mes dernières pages contribuées
+        last_content_title: Mes dernièrs contenus contribués
+        node_draft_title: Mes pages non publiées
+        content_draft_title: Mes contenus non publiés
+        widget:
+            list:
+              no_entities: Aucun élément à afficher
+              name: Nom
+              language: Langue
+              date: Date
     form:
         submit: Sauvegarder
         edit: Editer

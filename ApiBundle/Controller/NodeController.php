@@ -131,6 +131,25 @@ class NodeController extends BaseController
     }
 
     /**
+     * @param boolean|null $published
+     *
+     * @Config\Route("/list/not-published-by-contributor", name="open_orchestra_api_node_list_contributor_not_published", defaults={"published": null})
+     * @Config\Route("/list/by-contributor", name="open_orchestra_api_node_list_contributor", defaults={"published": false})
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return FacadeInterface
+     */
+    public function listNodeByContributor($published)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $content = $this->get('open_orchestra_model.repository.node')->findByContributor($user->getUsername(), $published, 10);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($content);
+    }
+
+    /**
      * @param Request $request
      * @param string  $nodeId
      *

@@ -4,6 +4,17 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
+    dashboard:
+        last_node_title: My latest contributions of pages
+        last_content*_title: My latest contributions of contents
+        node_draft_title: My contributions of pages not published
+        content_draft_title: My contributions of contents not published
+        widget:
+            list:
+              no_entities: No records found
+              name: Name
+              language: Language
+              date: Date
     form:
         submit: Save
         edit: Edit

@@ -1,10 +1,7 @@
 <nav data-url="{{ path('open_orchestra_backoffice_menu') }}">
     <ul>
         <li>
-            <a href="#dashboard" title="{{ ('open_orchestra_backoffice.left_menu.dashboard.title')|trans }}">
-                <i class="fa fa-lg fa-fw fa-home"></i>
-                <span class="menu-item-parent">{{ ('open_orchestra_backoffice.left_menu.dashboard.title')|trans }}</span>
-            </a>
+            {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/NavigationPanel:dashboard.html.twig' %}
         </li>
         {% for sectionName, section in strategies %}
             <li>
