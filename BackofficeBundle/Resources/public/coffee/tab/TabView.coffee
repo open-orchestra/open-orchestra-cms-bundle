@@ -39,4 +39,20 @@ TabView = OrchestraView.extend(
         return
     @$tabNav.append(tab)
 
+  onViewReady: ->
+    viewContext = @
+    for panel, i in @options.panels
+      do (panel, i) ->
+        $.ajax
+          url: panel.link
+          method: "GET"
+          success: (response) ->
+            elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
+            view = new elementTabViewClass(
+              html: response,
+              entityType: options.entityType,
+              listUrl: options.listUrl
+            )
+            viewContext.addPanel($(response).data('title'), panel.id, view, panel.isActive, i)
+
 )
