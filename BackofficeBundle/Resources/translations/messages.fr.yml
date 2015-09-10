@@ -5,8 +5,8 @@ open_orchestra_backoffice:
         es: Español
         de: Deutsch
     dashboard:
-        last_node_title: Mes dernières pages contribuées
-        last_content_title: Mes dernièrs contenus contribués
+        last_node_title: Mes dernières pages
+        last_content_title: Mes dernièrs contenus
         node_draft_title: Mes pages non publiées
         content_draft_title: Mes contenus non publiés
         widget:
