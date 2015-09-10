@@ -6,11 +6,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB\AbstractLoadRoleData;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadRoleData
  */
-class LoadRoleData extends AbstractLoadRoleData implements OrchestraProductionFixturesInterface
+class LoadRoleData extends AbstractLoadRoleData implements OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager

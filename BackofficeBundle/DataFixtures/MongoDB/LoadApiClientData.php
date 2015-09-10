@@ -5,11 +5,12 @@ namespace OpenOrchestra\BackofficeBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\BaseApiMongoModelBundle\Document\ApiClient;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadApiClientData
  */
-class LoadApiClientData implements FixtureInterface
+class LoadApiClientData implements FixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * Load data fixtures with the passed EntityManager
