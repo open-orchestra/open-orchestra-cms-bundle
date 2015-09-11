@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\RestoreEntity\Strategies;
 
 use OpenOrchestra\Backoffice\RestoreEntity\RestoreEntityInterface;
-use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;

@@ -141,7 +141,7 @@ class NodeController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listNodeByAuthor($published)
+    public function listNodeByAuthorAction($published)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $content = $this->get('open_orchestra_model.repository.node')->findByAuthor($user->getUsername(), $published, 10);

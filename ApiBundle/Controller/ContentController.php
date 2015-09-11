@@ -271,7 +271,7 @@ class ContentController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listContentByAuthor($published)
+    public function listContentByAuthorAction($published)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $content = $this->get('open_orchestra_model.repository.content')->findByAuthor($user->getUsername(), $published, 10);
