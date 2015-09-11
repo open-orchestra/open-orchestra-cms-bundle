@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class DeleteContentSubscriber

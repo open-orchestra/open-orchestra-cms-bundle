@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\RestoreEntity\Strategies;
 
 use OpenOrchestra\Backoffice\RestoreEntity\RestoreEntityInterface;
-use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
