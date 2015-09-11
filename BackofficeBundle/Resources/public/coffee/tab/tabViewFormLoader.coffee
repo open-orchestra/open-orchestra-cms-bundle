@@ -1,7 +1,7 @@
 tabViewFormLoad = (options) ->
   tabViewClass = appConfigurationView.getConfiguration(options.entityType, 'showTab')
 
-  options. panels = getPanelsLink(options.element.get('links'))
+  options.panels = getPanelsLink(options.element.get('links'))
   tabView = new tabViewClass(options)
 
 getPanelsLink = (links) ->
