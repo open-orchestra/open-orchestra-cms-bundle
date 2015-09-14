@@ -33,15 +33,10 @@ OrchestraBORouter = Backbone.Router.extend(
           async: false
           success: (response) ->
             ul.html(response)
-            # create the jarvis menu
-            opts =
-              accordion: true
-              speed: $.menu_speed
-              closedSign: closedSign
-              openedSign: openedSign
-            ul.jarvismenu opts
+            ul.jarvismenu $("nav").data('opts')
+            link.data('subtree', null)
         return
-    openMenu menu_speed, openedSign
+    openMenu $("nav").data('opts').speed, $("nav").data('opts').openedSign
     document.title = $('nav a' + selector).attr('title') or document.title
     $.ajaxSetup().abortXhr()
     drawBreadCrumb()
