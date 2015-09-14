@@ -21,7 +21,26 @@ OrchestraBORouter = Backbone.Router.extend(
   initDisplayRouteChanges: (selector) ->
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
     $('nav li.active').removeClass 'active'
-    $('nav li:has(a' + selector + ')').addClass 'active'
+    lis = $('nav li:has(a' + selector + ')')
+    lis.addClass 'active'
+    lis.each ->
+      ul = $('ul', this)
+      link = $(this).children('a').first()
+      if link.data('subtree')
+        $.ajax
+          url: link.data('subtree')
+          type: "GET"
+          async: false
+          success: (response) ->
+            ul.html(response)
+            # create the jarvis menu
+            opts =
+              accordion: true
+              speed: $.menu_speed
+              closedSign: closedSign
+              openedSign: openedSign
+            ul.jarvismenu opts
+        return
     openMenu menu_speed, openedSign
     document.title = $('nav a' + selector).attr('title') or document.title
     $.ajaxSetup().abortXhr()
