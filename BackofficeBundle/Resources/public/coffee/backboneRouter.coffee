@@ -19,26 +19,25 @@ OrchestraBORouter = Backbone.Router.extend(
       return
     return
   initDisplayRouteChanges: (selector) ->
+    $.ajaxSetup().abortXhr()
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
     $('nav li.active').removeClass 'active'
-    lis = $('nav li:has(a' + selector + ')')
-    lis.addClass 'active'
-    lis.each ->
-      ul = $('ul', this)
-      link = $(this).children('a').first()
-      if link.data('subtree')
-        $.ajax
-          url: link.data('subtree')
-          type: "GET"
-          async: false
-          success: (response) ->
-            ul.html(response)
-            ul.jarvismenu $("nav").data('opts')
-            link.data('subtree', null)
-        return
-    openMenu $("nav").data('opts').speed, $("nav").data('opts').openedSign
+    $('nav li:has(a' + selector + ')').addClass 'active'
+    link = $('nav li a' + selector)
+    if link.data('subtree')
+      $.ajax
+        url: link.data('subtree')
+        type: "GET"
+        success: (response) ->
+          ul = link.next()
+          ul.html(response)
+          ul.jarvismenu $("nav").data('opts')
+          link.data('subtree', null)
+          openMenu $("nav").data('opts').speed, $("nav").data('opts').openedSign
+      return
+    else
+      openMenu $("nav").data('opts').speed, $("nav").data('opts').openedSign
     document.title = $('nav a' + selector).attr('title') or document.title
-    $.ajaxSetup().abortXhr()
     drawBreadCrumb()
     displayLoader()
     return
