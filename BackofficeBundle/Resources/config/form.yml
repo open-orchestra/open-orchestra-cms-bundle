@@ -253,6 +253,8 @@ services:
             - { name: form.type, alias: orchestra_frequence_choice}
     open_orchestra_backoffice.type.tinymce:
         class: %open_orchestra_backoffice.type.tinymce.class%
+        arguments:
+            - @open_orchestra_backoffice.transformer.bbcode_to_html
         tags:
             - { name: form.type, alias: tinymce}
     open_orchestra_backoffice.type.keyword:
