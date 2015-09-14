@@ -47,7 +47,7 @@ TabView = OrchestraView.extend(
           url: panel.link
           method: "GET"
           success: (response) ->
-            elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
+            elementTabViewClass = appConfigurationView.getConfiguration(viewContext.options.entityType+'_tab_'+panel.id, 'editEntityTab')
             view = new elementTabViewClass(
               html: response,
               entityType: viewContext.options.entityType,
