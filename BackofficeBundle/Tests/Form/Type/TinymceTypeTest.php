@@ -15,12 +15,15 @@ class TinymceTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
+    protected $transformer;
+
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new TinymceType();
+        $this->transformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
+        $this->form = new TinymceType($this->transformer);
     }
 
     /**
