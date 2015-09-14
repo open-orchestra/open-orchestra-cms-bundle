@@ -16,6 +16,7 @@ class TinymceTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $transformer;
+    protected $builder;
 
     /**
      * Set up the test
@@ -23,6 +24,7 @@ class TinymceTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->transformer = Phake::mock('Symfony\Component\Form\DataTransformerInterface');
+        $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->form = new TinymceType($this->transformer);
     }
 
@@ -40,6 +42,16 @@ class TinymceTypeTest extends \PHPUnit_Framework_TestCase
     public function testName()
     {
         $this->assertSame('tinymce', $this->form->getName());
+    }
+
+    /**
+     * Test builder
+     */
+    public function testBuilder()
+    {
+        $this->form->buildForm($this->builder, array());
+
+        Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
 
     /**
