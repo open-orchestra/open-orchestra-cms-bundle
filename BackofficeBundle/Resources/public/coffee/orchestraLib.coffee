@@ -39,7 +39,7 @@ displayMenu = (route) ->
     url: $("#left-panel nav").data("url")
     type: "GET"
     success: (response) ->
-      
+
       # render html
       $("#left-panel nav").replaceWith response
       
