@@ -28,9 +28,6 @@ extendView['deleteTree'] = {
               redirectUrl = appRouter.generateUrl 'showDashboard'
               displayMenu(redirectUrl)
             return
-          error: (response) ->
-            target.parents('.modal-footer').html response.responseJSON.error.message
-            return
       noCallback: ->
         $("#OrchestraBOModal").modal "show"
     )

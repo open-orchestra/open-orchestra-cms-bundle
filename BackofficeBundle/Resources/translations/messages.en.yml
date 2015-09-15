@@ -4,6 +4,7 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
+    error_txt: Unable to finish your request
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents

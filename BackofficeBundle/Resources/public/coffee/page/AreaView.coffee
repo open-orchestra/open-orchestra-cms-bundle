@@ -111,20 +111,14 @@ AreaView = OrchestraView.extend(
       @$el.data('delete-confirm-explanation'),
       callBackParams:
         areaView: @
+        message: @$el.data('delete-error-txt')
       yesCallback: (params) ->
         params.areaView.$el.remove()
         refreshUl params.areaView.options.domContainer
         $.ajax
           url: params.areaView.options.area.get("links")._self_delete
           method: "POST"
-          error: ->
-            viewClass = appConfigurationView.getConfiguration('area', 'showOrchestraModal')
-            new viewClass(
-              body: params.areaView.$el.data('delete-error-txt')
-              title: params.areaView.$el.data('delete-error-title')
-              domContainer: $('#OrchestraBOModal')
-              entityType: 'area'
-            )
+          message: params.message
         return
     )
 )
