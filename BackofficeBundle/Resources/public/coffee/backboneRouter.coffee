@@ -19,15 +19,37 @@ OrchestraBORouter = Backbone.Router.extend(
       return
     return
   initDisplayRouteChanges: (selector) ->
+    $.ajaxSetup().abortXhr()
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
     $('nav li.active').removeClass 'active'
-    $('nav li:has(a' + selector + ')').addClass 'active'
-    openMenu menu_speed, openedSign
-    document.title = $('nav a' + selector).attr('title') or document.title
-    $.ajaxSetup().abortXhr()
-    drawBreadCrumb()
+    link = $('nav li a' + selector)
+    if link.length == 0
+      Backbone.history.navigate('', {trigger: true})
+      return false
+    if link.data('subtree')
+      viewContext = @
+      ul = link.next()
+      ul.html('<li></li>')
+      displayLoader $('li', ul)
+      $.ajax
+        url: link.data('subtree')
+        type: "GET"
+        success: (response) ->
+          ul.html(response)
+          ul.jarvismenu $("nav").data('opts')
+          link.data('subtree', null)
+          viewContext.afterRouteChanges(selector)
+      return true
+    else
+      @afterRouteChanges(selector)
     displayLoader()
-    return
+    return true
+  afterRouteChanges: (selector) ->
+    $('nav li:has(a' + selector + ')').addClass 'active'
+    openMenu $("nav").data('opts').speed, $("nav").data('opts').openedSign
+    document.title = $('nav a' + selector).attr('title') or document.title
+    drawBreadCrumb()
+
   generateUrl: (routeName, paramsObject) ->
     optionalParam = /\(([^)]*):([^)]*)\)/g
     namedParam = /():([^/]*)/g

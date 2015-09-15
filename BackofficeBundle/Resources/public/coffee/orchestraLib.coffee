@@ -22,8 +22,12 @@ displayLoader = (element, context) ->
   true
 
 # REFRESH NAV MENU
-closedSign = "<em class=\"fa fa-plus-square-o\"></em>"
-openedSign = "<em class=\"fa fa-minus-square-o\"></em>"
+opts =
+  accordion: true
+  speed: $.menu_speed
+  closedSign: "<em class=\"fa fa-plus-square-o\"></em>"
+  openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
+$("nav").data({opts : opts})
 
 displayMenu = (route) ->
   selectedPath = undefined
@@ -35,24 +39,18 @@ displayMenu = (route) ->
     url: $("#left-panel nav").data("url")
     type: "GET"
     success: (response) ->
-      
+
       # render html
       $("#left-panel nav").replaceWith response
       
       # create the jarvis menu
-      opts =
-        accordion: true
-        speed: $.menu_speed
-        closedSign: closedSign
-        openedSign: openedSign
-
-      $("nav ul").jarvismenu opts
+      $("nav ul").jarvismenu $("nav").data('opts')
       
       # tag selected path 
       $("nav li:has(a[href=\"" + selectedPath + "\"])").addClass "active"
       
       # open selected path
-      openMenu(opts.speed, opts.openedSign)
+      openMenu($("nav").data('opts').speed, $("nav").data('opts').openedSign)
 
       if typeof route isnt "undefined"
         Backbone.history.navigate route,
