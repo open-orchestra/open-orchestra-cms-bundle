@@ -10,7 +10,7 @@ $(document).ready ->
         xhrFifo[i].abort()
       xhrFifo = []
   $(document).ajaxError (event, jqXHR, settings) ->
-    errors = {error : {message :$('#content').datat('error-txt')}}
+    errors = {error : {message :$('#content').data('error-txt')}}
     if isAccessDenied(jqXHR.responseText)
       redirectToLogin()
     else if jqXHR.responseJSON
