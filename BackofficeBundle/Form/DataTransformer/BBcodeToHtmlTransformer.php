@@ -30,6 +30,7 @@ class BBcodeToHtmlTransformer implements DataTransformerInterface
     public function transform($bbCode)
     {
         $this->parser->parse($bbCode);
+
         return $this->parser->getAsPreviewHTML();
     }
 
