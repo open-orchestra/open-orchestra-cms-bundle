@@ -37,11 +37,6 @@ TableviewRestoreAction = OrchestraView.extend(
             displayRoute = appRouter.generateUrl "listEntities",
               entityType: options.entityType
             displayMenu(displayRoute)
-          error: (jqXHR) ->
-            viewClass = appConfigurationView.getConfiguration('status', 'apiError')
-            new viewClass(
-              errors: jqXHR.responseJSON
-            )
     )
 
 )

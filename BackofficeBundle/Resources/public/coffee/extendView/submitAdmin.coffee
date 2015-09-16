@@ -33,10 +33,6 @@ extendView['submitAdmin'] = {
                   html: response
                   submitted: true
                 ))
-            error: (response) ->
-              new viewClass(viewContext.addOption(
-                html: response.responseText
-              ))
           false
     return
 }

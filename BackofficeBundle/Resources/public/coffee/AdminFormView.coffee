@@ -51,12 +51,5 @@ AdminFormView = OrchestraView.extend(
           entityType: viewContext.options.entityType
           formView: 'showOrchestraModal'
         )
-      error: ->
-        new viewContext.viewClass(
-          html: 'Erreur durant le chargement'
-          title: viewContext.options.title
-          domContainer: $('#OrchestraBOModal')
-          entityType: viewContext.options.entityType
-        )
     return
 )

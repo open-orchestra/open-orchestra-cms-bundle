@@ -4,6 +4,7 @@ open_orchestra_backoffice:
         fr: Français
         es: Español
         de: Deutsch
+    error_txt: Impossible de terminer votre opération
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes dernièrs contenus
