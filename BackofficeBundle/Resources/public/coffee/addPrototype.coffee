@@ -45,11 +45,11 @@ PO.formPrototype:: =
     return @collectionHolder.children('div').length
 
   toogleAddButton: ->
-    if @settings.limit is `undefined` or @getIndex < @settings.limit
+    if @settings.limit is `undefined` or @getIndex() < @settings.limit
       @createAddButton()
     else
       @removeAddButton()
-    if @getIndex < 2 && @settings.required
+    if @getIndex() < 2 && @settings.required
       $("button.prototype-remove", @collectionHolder).hide()
     else
       $("button.prototype-remove", @collectionHolder).show()
@@ -87,7 +87,7 @@ PO.formPrototype:: =
 
   addPrototype: ->
     newPrototype = @settings.prototype.clone()
-    newPrototype.html newPrototype.html().replace(/__name__/g, @getIndex)
+    newPrototype.html newPrototype.html().replace(/__name__/g, @getIndex())
 
     # Display the input in the page before the add button
     @settings.addButtonContainer.before newPrototype
