@@ -32,7 +32,7 @@ PO.formPrototype = (collectionHolder, settings) ->
     else
       prototype.addClass "error"
     return
- 
+
   @toogleAddButton()
 
   if @getIndex() == 0 && @settings.required
