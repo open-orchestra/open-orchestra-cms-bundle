@@ -1,6 +1,7 @@
 open_orchestra_backoffice:
-    http: http
-    https: https
+    scheme:
+        http: http
+        https: https
     language:
         en: English
         fr: Français

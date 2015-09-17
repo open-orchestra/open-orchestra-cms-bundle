@@ -22,8 +22,8 @@ class SiteAliasType extends AbstractType
     {
         $this->siteAliasClass = $siteAliasClass;
         $this->schemeChoices = array(
-            SchemeableInterface::SCHEME_HTTP => 'open_orchestra_backoffice.http',
-            SchemeableInterface::SCHEME_HTTPS => 'open_orchestra_backoffice.https'
+            SchemeableInterface::SCHEME_HTTP => 'open_orchestra_backoffice.scheme.http',
+            SchemeableInterface::SCHEME_HTTPS => 'open_orchestra_backoffice.scheme.https'
         );
     }
 
