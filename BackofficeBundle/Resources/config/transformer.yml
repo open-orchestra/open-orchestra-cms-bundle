@@ -4,6 +4,7 @@ parameters:
     open_orchestra_backoffice.transformer.choices_option_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer
     open_orchestra_backoffice.transformer.choice_array_to_string.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer
     open_orchestra_backoffice.transformer.choice_string_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceStringToArrayTransformer
+    open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\BBcodeToHtmlTransformer
 
 services:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
@@ -23,3 +24,7 @@ services:
         class: %open_orchestra_backoffice.transformer.choices_option_to_array.class%
         arguments:
             - @open_orchestra_model.helper.suppress_special_character
+    open_orchestra_backoffice.transformer.bbcode_to_html:
+        class: %open_orchestra_backoffice.transformer.bbcode_to_html.class%
+        arguments:
+            - @open_orchestra_bbcode.parser
