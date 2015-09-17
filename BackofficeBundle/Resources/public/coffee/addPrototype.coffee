@@ -3,29 +3,28 @@ PO.formPrototypes =
   addButtonContainer: "<li class=\"prototype-add-container\"></li>"
   addButton: "<button class=\"btn btn-success prototype-add\">__label__</button>"
   removeButton: "<button class=\"btn btn-warning prototype-remove\">__label__</button>"
-  prototypes: []
   addPrototype: (collectionHolder) ->
-    @prototypes.push new PO.formPrototype(collectionHolder)
+    settings = {}
+    prototype = collectionHolder.data("prototype")
+    settings.limit = collectionHolder.data("limit")
+    settings.required = collectionHolder.parent().prev().hasClass('required')
+    settings.prototype = $(prototype.replace(/__name__label__/g, collectionHolder.data("prototype-label-new")))
+    settings.prototype.find("input[required='required'][type='hidden']").addClass('focusable').attr('type', 'text')
+    settings.addButton = $(@addButton.replace(/__label__/g, collectionHolder.data("prototype-label-add")))
+    settings.removeButton = $(@removeButton.replace(/__label__/g, collectionHolder.data("prototype-label-remove")))
+    settings.addButtonContainer = $(@addButtonContainer).append(settings.addButton)
+    settings.callback = collectionHolder.data("prototype-callback-add")
+    new PO.formPrototype(collectionHolder, settings)
     return
 
-PO.formPrototype = (collectionHolder) ->
+PO.formPrototype = (collectionHolder, settings) ->
   @collectionHolder = collectionHolder
-  @newElementLabel = @collectionHolder.data("prototype-label-new")
-  @:: = @collectionHolder.data("prototype").replace(/__name__label__/g, @newElementLabel)
-  @index = @collectionHolder.children().length
-  @limit = @collectionHolder.data("limit")
-  @addButton = $(PO.formPrototypes.addButton.replace(/__label__/g, @collectionHolder.data("prototype-label-add")))
-  @removeButton = $(PO.formPrototypes.removeButton.replace(/__label__/g, @collectionHolder.data("prototype-label-remove")))
-  @newPrototype = $(@::)
-  @required = collectionHolder.parent().prev().hasClass('required')
-  @newPrototype.find("input[required='required'][type='hidden']").addClass('focusable').attr('type', 'text')
-  @addButtonContainer = $(PO.formPrototypes.addButtonContainer).append(@addButton)
+  @settings = settings
   @addButtonExist = false
   self = this
 
   # add old class for know if this children is already save in database
-  required = @required
-  @collectionHolder.children().each (index) ->
+  @collectionHolder.children().each () ->
     prototype = $(this)
     prototype = self.createRemoveButton($(this))
     if prototype.find(".alert-error").length is 0
@@ -35,46 +34,49 @@ PO.formPrototype = (collectionHolder) ->
     return
 
   @toogleAddButton()
+
+  if @getIndex() == 0 && @settings.required
+    @addPrototype()
+
   return
 
 PO.formPrototype:: =
+  getIndex: ->
+    return @collectionHolder.children('div').length
+
   toogleAddButton: ->
-    if @limit is `undefined` or @index < @limit
+    if @settings.limit is `undefined` or @getIndex() < @settings.limit
       @createAddButton()
     else
       @removeAddButton()
-    if @index < 2 && @required
-      @collectionHolder.children().children("button.prototype-remove").hide()
+    if @getIndex() < 2 && @settings.required
+      $("button.prototype-remove", @collectionHolder).hide()
     else
-      @collectionHolder.children().children("button.prototype-remove").show()
+      $("button.prototype-remove", @collectionHolder).show()
     return
 
   createAddButton: ->
     self = this
     unless @addButtonExist
-      @collectionHolder.append @addButtonContainer
-      @addButtonExist = not @addButtonExist
+      @collectionHolder.append @settings.addButtonContainer
+      @addButtonExist = true
       # add event in add button
-      @addButton.on "click", (e) ->
+      @settings.addButton.on "click", (e) ->
         e.preventDefault()
-        callbackAdd  = self.collectionHolder.data("prototype-callback-add")
-        if callbackAdd is undefined or eval(callbackAdd)
+        if self.settings.callback is undefined or eval(self.settings.callback)
           self.addPrototype()
-          self.clickLastPrototype()
         return
-    if @index == 0 && @required
-      @addButton.click()
     return
 
   removeAddButton: ->
     if @addButtonExist
       @collectionHolder.children(".prototype-add-container").remove()
-      @addButtonExist = not @addButtonExist
+      @addButtonExist = false
     return
 
   createRemoveButton: (prototype) ->
     self = this
-    newRemoveButton = self.removeButton.clone()
+    newRemoveButton = self.settings.removeButton.clone()
     prototype.append newRemoveButton
     newRemoveButton.on "click", (e) ->
       e.preventDefault()
@@ -83,27 +85,20 @@ PO.formPrototype:: =
 
     prototype
 
-  clickLastPrototype: ->
-    @collectionHolder.children().not(".prototype-add-container").last().find("input").click()
-    return
-
   addPrototype: ->
-    newPrototype = @newPrototype.clone()
-    newPrototype.html newPrototype.html().replace(/__name__/g, @index)
+    newPrototype = @settings.prototype.clone()
+    newPrototype.html newPrototype.html().replace(/__name__/g, @getIndex())
 
     # Display the input in the page before the add button
-    @addButtonContainer.before newPrototype
-    $("[data-prototype]", @addButtonContainer.prev()).each ->
-      PO.formPrototypes.addPrototype $(this)
-      return
-    @createRemoveButton @addButtonContainer.prev() if @index > 0 || !@required
+    @settings.addButtonContainer.before newPrototype
+    newPrototype.find("input").click()
+
+    @createRemoveButton newPrototype
     # increase the index with one for the next item
-    @index++
     @toogleAddButton()
     return
 
   removePrototype: (removeButton) ->
     removeButton.parent().remove()
-    @index--
     @toogleAddButton()
     return
