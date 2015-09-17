@@ -129,7 +129,7 @@ class UserRepositoryTest extends KernelTestCase
     protected function getDescriptionColumnEntity()
     {
         return array(
-            'username' => new Search(array('key' => 'username', 'field' => 'username', 'type' => 'string'))
+            'username' => array('key' => 'username', 'field' => 'username', 'type' => 'string')
         );
     }
 
