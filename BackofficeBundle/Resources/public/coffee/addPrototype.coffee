@@ -35,7 +35,7 @@ PO.formPrototype = (collectionHolder, settings) ->
 
   @toogleAddButton()
 
-  if @collectionHolder.children().length == 0 && @settings.required
+  if @getIndex() == 0 && @settings.required
     @addPrototype()
 
   return
