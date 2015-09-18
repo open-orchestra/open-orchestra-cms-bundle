@@ -45,7 +45,7 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
         $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/nodes.html.twig',
             array(
                 'nodes' => $nodes,
                 'nodeId404' => ReadNodeInterface::ERROR_404_NODE_ID,

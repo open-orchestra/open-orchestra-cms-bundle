@@ -35,7 +35,7 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
         $templates = $this->templateRepository->findByDeleted(false);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showTreeTemplates.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/templates.html.twig',
             array(
                 'templates' => $templates
             )

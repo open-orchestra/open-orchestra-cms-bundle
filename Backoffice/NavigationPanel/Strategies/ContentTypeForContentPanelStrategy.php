@@ -43,7 +43,7 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
         $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($this->contextManager->getCurrentLocale());
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/contents.html.twig',
             array(
                 'contentTypes' => $contentTypes,
             )

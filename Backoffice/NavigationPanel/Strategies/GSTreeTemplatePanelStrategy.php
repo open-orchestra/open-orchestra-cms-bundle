@@ -35,7 +35,7 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
         $templates = $this->templateRepository->findByDeleted(false);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showGSTreeTemplates.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/gsTemplates.html.twig',
             array(
                 'templates' => $templates
             )

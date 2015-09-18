@@ -85,6 +85,8 @@ services:
             - ROLE_ACCESS_DELETED
             - 250
             - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+        calls:
+            - [ setTemplate, [OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/trashcan.html.twig] ]
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
 
