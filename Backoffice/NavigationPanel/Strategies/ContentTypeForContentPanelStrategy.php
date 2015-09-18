@@ -30,10 +30,9 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager, $parent, $weight)
     {
+        parent::__construct('content_type_for_content', self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $weight, $parent);
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
-        $this->parent = $parent;
-        $this->weight = $weight;
     }
 
     /**
@@ -49,21 +48,5 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
                 'contentTypes' => $contentTypes,
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'content_type_for_content';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT;
     }
 }

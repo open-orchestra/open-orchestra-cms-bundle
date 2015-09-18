@@ -17,15 +17,39 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
      */
     protected $templating;
 
+    protected $name;
     protected $parent;
     protected $weight = 0;
+    protected $role = null;
 
     /**
-     * @return int
+     * @param string $name
+     * @param string $role
+     * @param int    $weight
+     * @param string $parent
      */
-    public function getWeight()
+    public function __construct($name, $role, $weight, $parent)
     {
-        return $this->weight;
+        $this->name = $name;
+        $this->role = $role;
+        $this->weight = $weight;
+        $this->parent = $parent;
+    }
+
+    /**
+     * @param EngineInterface $templating
+     */
+    public function setTemplating(EngineInterface $templating)
+    {
+        $this->templating = $templating;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -41,11 +65,19 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     }
 
     /**
-     * @param EngineInterface $templating
+     * @return int
      */
-    public function setTemplating(EngineInterface $templating)
+    public function getWeight()
     {
-        $this->templating = $templating;
+        return $this->weight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
     /**

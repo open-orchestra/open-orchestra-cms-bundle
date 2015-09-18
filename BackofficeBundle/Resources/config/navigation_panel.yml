@@ -44,12 +44,21 @@ services:
             - 210
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.general_node:
+        class: %open_orchestra_backoffice.navigation_panel.general_node.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_backoffice.context_manager
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 220
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.template:
         class: %open_orchestra_backoffice.navigation_panel.template.class%
         arguments:
             - @open_orchestra_model.repository.template
             - %open_orchestra_backoffice.navigation_panel.menu.editorial%
-            - 220
+            - 230
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
 #    open_orchestra_backoffice.navigation_panel.gs_template:
@@ -57,18 +66,9 @@ services:
 #        arguments:
 #            - @open_orchestra_model.repository.template
 #            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
-#            - 225
+#            - 235
 #        tags:
 #            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.general_node:
-        class: %open_orchestra_backoffice.navigation_panel.general_node.class%
-        arguments:
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.context_manager
-            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
-            - 230
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.content_type:
         class: %open_orchestra_backoffice.navigation_panel.content_type.class%
         arguments:

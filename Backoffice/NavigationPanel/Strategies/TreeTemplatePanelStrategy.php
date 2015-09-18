@@ -23,9 +23,8 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
+        parent::__construct('templates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent);
         $this->templateRepository = $templateRepository;
-        $this->parent = $parent;
-        $this->weight = $weight;
     }
 
     /**
@@ -41,21 +40,5 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
                 'templates' => $templates
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'templates';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_TREE_TEMPLATE;
     }
 }

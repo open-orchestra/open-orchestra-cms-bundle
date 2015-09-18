@@ -31,10 +31,9 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
+        parent::__construct('nodes', self::ROLE_ACCESS_TREE_NODE, $weight, $parent);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
-        $this->parent = $parent;
-        $this->weight = $weight;
     }
 
     /**
@@ -54,21 +53,4 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
             )
         );
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'nodes';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_TREE_NODE;
-    }
-
 }

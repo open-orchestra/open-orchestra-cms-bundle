@@ -23,9 +23,8 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
+        parent::__construct('GStemplates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent);
         $this->templateRepository = $templateRepository;
-        $this->parent = $parent;
-        $this->weight = $weight;
     }
 
     /**
@@ -41,21 +40,5 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
                 'templates' => $templates
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'GStemplates';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_TREE_TEMPLATE;
     }
 }

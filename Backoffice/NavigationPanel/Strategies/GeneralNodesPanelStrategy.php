@@ -31,10 +31,9 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
+        parent::__construct('generale_node', self::ROLE_ACCESS_GENERAL_NODE, $weight, $parent);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
-        $this->parent = $parent;
-        $this->weight = $weight;
     }
 
     /**
@@ -51,21 +50,5 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
                 'nodes' => $nodes
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'generale_node';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_GENERAL_NODE;
     }
 }

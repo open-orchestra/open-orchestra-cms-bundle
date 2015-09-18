@@ -2,21 +2,20 @@
 
 namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AbstractNavigationPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 
 /**
  * Class TopMenuPanelStrategy
  */
-class TopMenuPanelStrategy extends AbstractNavigationPanelStrategy
+class TopMenuPanelStrategy extends AdministrationPanelStrategy
 {
-    protected $name;
-    protected $weight;
-
+    /**
+     * @param string $name
+     * @param int    $weight
+     */
     public function __construct($name, $weight = 0)
     {
-        $this->name = $name;
-        $this->parent = parent::ROOT_MENU;
-        $this->weight = $weight;
+        parent::__construct($name, null, $weight, self::ROOT_MENU);
     }
 
     /**
@@ -25,21 +24,5 @@ class TopMenuPanelStrategy extends AbstractNavigationPanelStrategy
     public function show()
     {
         return $this->render('OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/' . $this->name . '.html.twig');
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return null;
     }
 }
