@@ -2,6 +2,7 @@ TabView = OrchestraView.extend(
 
   initialize: (options) ->
     @options = options
+    @options.panels = []
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tabView'
     ]
@@ -19,6 +20,19 @@ TabView = OrchestraView.extend(
 
 
   addPanel: (title, id, view, active, position) ->
+    if @$tabNav? and @$tabContent?
+      @createPanel(title, id, view, active, position)
+    else
+      @options.panels.push {title: title, id: id, view: view, active: active, position: position}
+
+  insertTabNavPosition : (tab, position) ->
+    for li in  @$tabNav.children('li')
+      if parseInt($(li).attr('tab-position')) > position
+        tab.insertBefore($(li))
+        return
+    @$tabNav.append(tab)
+
+  createPanel : (title, id, view, active, position) ->
     id = 'tab-'+id
 
     a = $('<a>').attr('href', '#' + id).attr('data-toggle', 'tab').text(title);
@@ -32,27 +46,10 @@ TabView = OrchestraView.extend(
 
     a.tab('show') if active
 
-  insertTabNavPosition : (tab, position) ->
-    for li in  @$tabNav.children('li')
-      if parseInt($(li).attr('tab-position')) > position
-        tab.insertBefore($(li))
-        return
-    @$tabNav.append(tab)
-
   onViewReady: ->
-    viewContext = @
-    for panel, i in @options.panels
-      do (panel, i) ->
-        $.ajax
-          url: panel.link
-          method: "GET"
-          success: (response) ->
-            elementTabViewClass = appConfigurationView.getConfiguration(viewContext.options.entityType+'_tab_'+panel.id, 'editEntityTab')
-            view = new elementTabViewClass(
-              html: response,
-              entityType: viewContext.options.entityType,
-              listUrl: viewContext.options.listUrl
-            )
-            viewContext.addPanel($(response).data('title'), panel.id, view, panel.isActive, i)
+    if @options.panels.length > 0
+      for panel, i in @options.panels
+        @createPanel(panel.title, panel.id, panel.view, panel.active, panel.position)
+      @options.panels = []
 
 )
