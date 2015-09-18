@@ -26,22 +26,7 @@ OrchestraBORouter = Backbone.Router.extend(
     if link.length == 0
       Backbone.history.navigate('', {trigger: true})
       return false
-    if link.data('subtree')
-      viewContext = @
-      ul = link.next()
-      ul.html('<li></li>')
-      displayLoader $('li', ul)
-      $.ajax
-        url: link.data('subtree')
-        type: "GET"
-        success: (response) ->
-          ul.html(response)
-          ul.jarvismenu $("nav").data('opts')
-          link.data('subtree', null)
-          viewContext.afterRouteChanges(selector)
-      return true
-    else
-      @afterRouteChanges(selector)
+    @afterRouteChanges(selector)
     displayLoader()
     return true
   afterRouteChanges: (selector) ->
