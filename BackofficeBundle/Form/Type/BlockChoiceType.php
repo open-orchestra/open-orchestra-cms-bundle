@@ -18,7 +18,7 @@ class BlockChoiceType extends AbstractType
     public function __construct(array $choices, TranslatorInterface $translator)
     {
         foreach ($choices as $choice) {
-            $this->choices[$choice] = $translator->trans('open_orchestra_backoffice.block.' . $choice . '.title');
+            $this->choices[$choice] = 'open_orchestra_backoffice.block.' . $choice . '.title';
         }
     }
 
