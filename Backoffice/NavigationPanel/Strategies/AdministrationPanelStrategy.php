@@ -21,8 +21,6 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
     const ROLE_ACCESS_SITE = 'ROLE_ACCESS_SITE';
     const ROLE_ACCESS_LOG = 'ROLE_ACCESS_LOG';
 
-    const ADMINISTRATION = 'administration';
-
     protected $name;
     protected $role;
     protected $weight;
@@ -35,7 +33,7 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
      * @param int    $weight
      * @param string $parent
      */
-    public function __construct($name, $role, $weight = 0, $parent = self::ADMINISTRATION)
+    public function __construct($name, $role, $weight = 0, $parent)
     {
         $this->name = $name;
         $this->role = $role;
