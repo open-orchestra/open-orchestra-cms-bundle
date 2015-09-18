@@ -47,16 +47,15 @@
     {% spaceless %}
         {% set style = style|default(bootstrap_get_style()) %}
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
-        {% set widget_name = widget_col|default('form_input_group') %}
+        {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
+        {% set label_col = label_col|default(bootstrap_get_label_col()) %}
+        {% set widget_name = widget_name|default('form_input_group') %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
             {% set label_col = attr.label_col %}
         {% endif %}
         {% if attr.widget_col is defined and attr.widget_col is not empty %}
             {% set widget_col = attr.widget_col %}
-            {% if label is sameas(false) and label_col is defined %}
-                {% set widget_col = widget_col + label_col %}
-            {% endif %}
         {% endif %}
         {% if attr.col_size is defined and attr.col_size is not empty %}
             {% set col_size = attr.col_size %}
@@ -65,8 +64,10 @@
             {% set style = attr.style %}
         {% endif %}
 
-        {% set label_col = label_col|default(bootstrap_get_label_col()) %}
-        {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
+        {% if label is sameas(false) %}
+            {% set widget_col = widget_col + label_col %}
+        {% endif %}
+
 
         <div class="form-group{% if form.vars.errors|length > 0 %} has-error{% endif %}">
             {% if style == 'horizontal' %}
