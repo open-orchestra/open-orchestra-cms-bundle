@@ -10,17 +10,34 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
  */
 abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterface
 {
+    const ROOT_MENU = 'root_menu';
+
     /**
      * @var EngineInterface
      */
     protected $templating;
+
+    protected $parent;
+    protected $weight = 0;
 
     /**
      * @return int
      */
     public function getWeight()
     {
-        return 0;
+        return $this->weight;
+    }
+
+    /**
+     * return string
+     */
+    public function getParent()
+    {
+        if (!is_null($this->parent)) {
+            return $this->parent;
+        }
+
+        return self::ROOT_MENU;
     }
 
     /**

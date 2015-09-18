@@ -1,26 +1,24 @@
 <nav data-url="{{ path('open_orchestra_backoffice_menu') }}">
     <ul>
-        <li>
-            {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/NavigationPanel:dashboard.html.twig' %}
-        </li>
-        {% for sectionName, section in strategies %}
-            <li>
-                <a href="#" title="{{ ('open_orchestra_backoffice.left_menu.' ~ sectionName ~ '.title')|trans }}">
-                    <i class="fa fa-lg fa-fw {{ ('open_orchestra_backoffice.left_menu.' ~ sectionName ~ '.icon')|trans }}"></i>
-                    <span class="menu-item-parent">{{ ('open_orchestra_backoffice.left_menu.' ~ sectionName ~ '.title')|trans }}</span>
-                </a>
-                <ul>
-                    {% for weight in section %}
-                        {% for element in weight %}
-                            {% if is_granted(element.getRole) %}
-                                <li>
-                                    {{ element.show|raw }}
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </li>
+        {% for rootMenuWeights in strategies[navigation_panel.root_menu] %}
+            {% for rootMenu in rootMenuWeights %}
+                <li>
+                    {{ rootMenu.show|raw }}
+                    {% if strategies[rootMenu.name] is defined %}
+                        <ul>
+                            {% for subMenuWeights in strategies[rootMenu.name] %}
+                                {% for subMenu in subMenuWeights %}
+                                    {% if is_granted(subMenu.getRole) %}
+                                        <li>
+                                            {{ subMenu.show|raw }}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
         {% endfor %}
     </ul>
 </nav>

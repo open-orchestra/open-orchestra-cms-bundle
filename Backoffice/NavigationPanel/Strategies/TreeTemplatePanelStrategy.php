@@ -18,10 +18,14 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
 
     /**
      * @param TemplateRepositoryInterface $templateRepository
+     * @param string                      $parent
+     * @param int                         $weight
      */
-    public function __construct(TemplateRepositoryInterface $templateRepository)
+    public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
         $this->templateRepository = $templateRepository;
+        $this->parent = $parent;
+        $this->weight = $weight;
     }
 
     /**
@@ -42,25 +46,9 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'templates';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 10;
     }
 
     /**

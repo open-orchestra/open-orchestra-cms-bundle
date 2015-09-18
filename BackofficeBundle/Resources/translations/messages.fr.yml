@@ -270,7 +270,6 @@ open_orchestra_backoffice:
             title: Tableau de bord
         editorial:
             title: Editorial
-            icon: fa-edit
             nodes: Pages
             general_nodes: Pages générales
             templates: Gabarits
@@ -280,7 +279,6 @@ open_orchestra_backoffice:
                 error_503: Erreur 503
         administration:
             translation: Traduction
-            icon: fa-desktop
             title: Administration
             sites:
                 list: Sites

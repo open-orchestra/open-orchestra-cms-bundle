@@ -24,11 +24,16 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param ContextManager                 $contextManager
+     * @param string                         $parent
+     * @param int                            $weight
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager, $parent, $weight)
     {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
+        $this->parent = $parent;
+        $this->weight = $weight;
     }
 
     /**
@@ -49,25 +54,9 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'content_type_for_content';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 30;
     }
 
     /**

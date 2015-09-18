@@ -26,11 +26,15 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param CurrentSiteIdInterface  $currentSiteManager
+     * @param string                  $parent
+     * @param int                     $weight
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
+        $this->parent = $parent;
+        $this->weight = $weight;
     }
 
     /**
@@ -52,25 +56,9 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'generale_node';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 40;
     }
 
     /**

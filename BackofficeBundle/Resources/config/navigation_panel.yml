@@ -1,5 +1,10 @@
 parameters:
+    open_orchestra_backoffice.navigation_panel.menu.dashboard: dashboard
+    open_orchestra_backoffice.navigation_panel.menu.editorial: editorial
+    open_orchestra_backoffice.navigation_panel.menu.administration: administration
+
     open_orchestra_backoffice.navigation_panel_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\NavigationPanelManager
+    open_orchestra_backoffice.navigation_panel.top_menu.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TopMenuPanelStrategy
     open_orchestra_backoffice.navigation_panel.node.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy
     open_orchestra_backoffice.navigation_panel.template.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy
 #    open_orchestra_backoffice.navigation_panel.gs_template.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\GSTreeTemplatePanelStrategy
@@ -12,109 +17,65 @@ services:
         class: %open_orchestra_backoffice.navigation_panel_manager.class%
         arguments:
             - @templating
+
+
+    open_orchestra_backoffice.navigation_panel.dashboard:
+        class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
+        arguments:
+            - %open_orchestra_backoffice.navigation_panel.menu.dashboard%
+            - 100
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+
+
+    open_orchestra_backoffice.navigation_panel.editorial:
+        class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
+        arguments:
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 200
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.node:
         class: %open_orchestra_backoffice.navigation_panel.node.class%
         arguments:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.context_manager
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 210
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.template:
         class: %open_orchestra_backoffice.navigation_panel.template.class%
         arguments:
             - @open_orchestra_model.repository.template
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 220
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
 #    open_orchestra_backoffice.navigation_panel.gs_template:
 #        class: %open_orchestra_backoffice.navigation_panel.gs_template.class%
 #        arguments:
 #            - @open_orchestra_model.repository.template
+#            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+#            - 225
 #        tags:
 #            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.content_type:
-        class: %open_orchestra_backoffice.navigation_panel.content_type.class%
-        arguments:
-            - @open_orchestra_model.repository.content_type
-            - @open_orchestra_backoffice.context_manager
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.general_node:
         class: %open_orchestra_backoffice.navigation_panel.general_node.class%
         arguments:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.context_manager
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 230
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.content_types:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+    open_orchestra_backoffice.navigation_panel.content_type:
+        class: %open_orchestra_backoffice.navigation_panel.content_type.class%
         arguments:
-            - content_types
-            - ROLE_ACCESS_CONTENT_TYPE
-            - 0
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.keywords:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - keywords
-            - ROLE_ACCESS_KEYWORD
-            - 10
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.role:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - role
-            - ROLE_ACCESS_ROLE
-            - 20
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.group:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - group
-            - ROLE_ACCESS_GROUP
-            - 30
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.redirection:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - redirection
-            - ROLE_ACCESS_REDIRECTION
-            - 40
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.status:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - status
-            - ROLE_ACCESS_STATUS
-            - 50
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.themes:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - themes
-            - ROLE_ACCESS_THEME
-            - 60
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.api_client:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - api_client
-            - ROLE_ACCESS_API_CLIENT
-            - 70
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.websites:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
-        arguments:
-            - websites
-            - ROLE_ACCESS_SITE
-            - 80
+            - @open_orchestra_model.repository.content_type
+            - @open_orchestra_backoffice.context_manager
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 240
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.trashcan:
@@ -122,7 +83,88 @@ services:
         arguments:
             - trashcan
             - ROLE_ACCESS_DELETED
-            - 50
-            - editorial
+            - 250
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+
+
+    open_orchestra_backoffice.navigation_panel.administration:
+        class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
+        arguments:
+            - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - 300
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.content_types:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - content_types
+            - ROLE_ACCESS_CONTENT_TYPE
+            - 310
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.keywords:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - keywords
+            - ROLE_ACCESS_KEYWORD
+            - 320
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.websites:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - websites
+            - ROLE_ACCESS_SITE
+            - 330
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.themes:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - themes
+            - ROLE_ACCESS_THEME
+            - 340
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.redirection:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - redirection
+            - ROLE_ACCESS_REDIRECTION
+            - 350
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.api_client:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - api_client
+            - ROLE_ACCESS_API_CLIENT
+            - 360
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.status:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - status
+            - ROLE_ACCESS_STATUS
+            - 370
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.role:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - role
+            - ROLE_ACCESS_ROLE
+            - 380
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.group:
+        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        arguments:
+            - group
+            - ROLE_ACCESS_GROUP
+            - 390
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }

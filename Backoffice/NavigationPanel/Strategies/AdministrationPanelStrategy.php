@@ -21,6 +21,8 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
     const ROLE_ACCESS_SITE = 'ROLE_ACCESS_SITE';
     const ROLE_ACCESS_LOG = 'ROLE_ACCESS_LOG';
 
+    const ADMINISTRATION = 'administration';
+
     protected $name;
     protected $role;
     protected $weight;
@@ -90,7 +92,7 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
             return $this->template;
         }
 
-        return 'OpenOrchestraBackofficeBundle:AdministrationPanel:' . $this->name . '.html.twig';
+        return 'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Administration/' . $this->name . '.html.twig';
     }
 
     /**

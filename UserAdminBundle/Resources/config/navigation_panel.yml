@@ -4,7 +4,7 @@ services:
         arguments:
             - user
             - ROLE_ACCESS_USER
-            - 10
+            - 395
         calls:
             - [ setTemplate, ['OpenOrchestraUserAdminBundle:AdministrationPanel:user.html.twig'] ]
         tags:
