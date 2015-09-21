@@ -46,7 +46,7 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->roles->add($this->role2);
 
         $this->roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
-        Phake::when($this->roleRepository)->findAll()->thenReturn($this->roles);
+        Phake::when($this->roleRepository)->findAccessRole()->thenReturn($this->roles);
 
         $this->form = new OrchestraRoleChoiceType($this->roleRepository, $this->translationChoiceManager);
     }
