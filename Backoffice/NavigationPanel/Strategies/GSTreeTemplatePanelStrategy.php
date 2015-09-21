@@ -19,7 +19,7 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @param TemplateRepositoryInterface $templateRepository
      * @param string                      $parent
-     * @param                             $weight
+     * @param int                         $weight
      */
     public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
