@@ -35,9 +35,9 @@ class NavigationPanelManager
      */
     public function show()
     {
-        foreach ($this->strategies as $parent => $weight) {
-            ksort($weight);
-            $this->strategies[$parent] = $weight;
+        foreach ($this->strategies as $parent => $weightedStrategies) {
+            ksort($weightedStrategies);
+            $this->strategies[$parent] = $weightedStrategies;
         }
 
         return $this->templateEngine->render('OpenOrchestraBackofficeBundle:BackOffice/Include/NavigationPanel:show.html.twig', array(
