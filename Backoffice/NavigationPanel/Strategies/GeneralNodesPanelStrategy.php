@@ -26,9 +26,12 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @param NodeRepositoryInterface $nodeRepository
      * @param CurrentSiteIdInterface  $currentSiteManager
+     * @param string                  $parent
+     * @param int                     $weight
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
+        parent::__construct('generale_node', self::ROLE_ACCESS_GENERAL_NODE, $weight, $parent);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }
@@ -42,42 +45,10 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
         $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId, NodeInterface::TYPE_TRANSVERSE);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showGeneralTreeNodes.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/generalNodes.html.twig',
             array(
                 'nodes' => $nodes
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'generale_node';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 40;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_GENERAL_NODE;
     }
 }

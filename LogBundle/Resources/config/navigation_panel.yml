@@ -4,7 +4,8 @@ services:
         arguments:
             - logs
             - ROLE_ACCESS_LOG
-            - 9
+            - 365
+            - %open_orchestra_backoffice.navigation_panel.menu.administration%
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
         calls:

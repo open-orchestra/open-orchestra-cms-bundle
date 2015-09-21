@@ -24,9 +24,13 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param ContextManager                 $contextManager
+     * @param string                         $parent
+     * @param int                            $weight
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager, $parent, $weight)
     {
+        parent::__construct('content_type_for_content', self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $weight, $parent);
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contextManager = $contextManager;
     }
@@ -39,42 +43,10 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
         $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($this->contextManager->getCurrentLocale());
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showContentTypeForContent.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/contents.html.twig',
             array(
                 'contentTypes' => $contentTypes,
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'content_type_for_content';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 30;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT;
     }
 }

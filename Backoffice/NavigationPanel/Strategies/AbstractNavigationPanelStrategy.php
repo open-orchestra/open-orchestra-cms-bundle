@@ -10,17 +10,30 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
  */
 abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterface
 {
+    const ROOT_MENU = 'root_menu';
+
     /**
      * @var EngineInterface
      */
     protected $templating;
 
+    protected $name;
+    protected $parent;
+    protected $weight = 0;
+    protected $role = null;
+
     /**
-     * @return int
+     * @param string $name
+     * @param string $role
+     * @param int    $weight
+     * @param string $parent
      */
-    public function getWeight()
+    public function __construct($name, $role, $weight, $parent)
     {
-        return 0;
+        $this->name = $name;
+        $this->role = $role;
+        $this->weight = $weight;
+        $this->parent = $parent;
     }
 
     /**
@@ -29,6 +42,42 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * return string
+     */
+    public function getParent()
+    {
+        if (!is_null($this->parent)) {
+            return $this->parent;
+        }
+
+        return self::ROOT_MENU;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
     /**

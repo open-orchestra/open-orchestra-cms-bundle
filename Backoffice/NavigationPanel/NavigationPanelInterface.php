@@ -9,9 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
  */
 interface NavigationPanelInterface
 {
-    const EDITORIAL = 'editorial';
-    const ADMINISTRATION = 'administration';
-
     /**
      * @param EngineInterface $templating
      */

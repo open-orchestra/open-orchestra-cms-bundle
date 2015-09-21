@@ -25,9 +25,13 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
 
     /**
      * @param NodeRepositoryInterface $nodeRepository
+     * @param CurrentSiteIdInterface  $currentSiteManager
+     * @param string                  $parent
+     * @param int                     $weight
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
+        parent::__construct('nodes', self::ROLE_ACCESS_TREE_NODE, $weight, $parent);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }
@@ -41,7 +45,7 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
         $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showTreeNodes.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/nodes.html.twig',
             array(
                 'nodes' => $nodes,
                 'nodeId404' => ReadNodeInterface::ERROR_404_NODE_ID,
@@ -49,37 +53,4 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
             )
         );
     }
-
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'nodes';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 0;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_TREE_NODE;
-    }
-
 }

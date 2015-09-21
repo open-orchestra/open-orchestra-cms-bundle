@@ -271,7 +271,6 @@ open_orchestra_backoffice:
         editorial:
             title: Editorial
             nodes: Pages
-            icon: fa-edit
             general_nodes: Global pages
             templates: Templates
             contents: Contents
@@ -281,7 +280,6 @@ open_orchestra_backoffice:
         administration:
             translation: Translation
             title: Administration
-            icon: fa-desktop
             sites:
                 list: Websites
             themes:

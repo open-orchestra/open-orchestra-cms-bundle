@@ -18,9 +18,12 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
 
     /**
      * @param TemplateRepositoryInterface $templateRepository
+     * @param string                      $parent
+     * @param int                         $weight
      */
-    public function __construct(TemplateRepositoryInterface $templateRepository)
+    public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
+        parent::__construct('GStemplates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent);
         $this->templateRepository = $templateRepository;
     }
 
@@ -32,42 +35,10 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
         $templates = $this->templateRepository->findByDeleted(false);
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Tree:showGSTreeTemplates.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/gsTemplates.html.twig',
             array(
                 'templates' => $templates
             )
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return self::EDITORIAL;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'GStemplates';
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return 20;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return self::ROLE_ACCESS_TREE_TEMPLATE;
     }
 }

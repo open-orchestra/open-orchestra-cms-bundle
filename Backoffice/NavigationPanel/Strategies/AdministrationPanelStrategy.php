@@ -21,25 +21,7 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
     const ROLE_ACCESS_SITE = 'ROLE_ACCESS_SITE';
     const ROLE_ACCESS_LOG = 'ROLE_ACCESS_LOG';
 
-    protected $name;
-    protected $role;
-    protected $weight;
-    protected $parent;
     protected $template;
-
-    /**
-     * @param string $name
-     * @param string $role
-     * @param int    $weight
-     * @param string $parent
-     */
-    public function __construct($name, $role, $weight = 0, $parent = self::ADMINISTRATION)
-    {
-        $this->name = $name;
-        $this->role = $role;
-        $this->weight = $weight;
-        $this->parent = $parent;
-    }
 
     /**
      * @return string
@@ -52,45 +34,13 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
     /**
      * @return string
      */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return $this->weight;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @return string
-     */
     protected function getTemplate()
     {
         if ($this->template) {
             return $this->template;
         }
 
-        return 'OpenOrchestraBackofficeBundle:AdministrationPanel:' . $this->name . '.html.twig';
+        return 'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Administration/' . $this->name . '.html.twig';
     }
 
     /**
