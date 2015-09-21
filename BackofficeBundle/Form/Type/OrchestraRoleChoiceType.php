@@ -42,7 +42,7 @@ class OrchestraRoleChoiceType extends AbstractType
     {
         $choices = array();
 
-        foreach ($this->roleRepository->findAll() as $role) {
+        foreach ($this->roleRepository->findAccessRole() as $role) {
             $choices[$role->getName()] = $this->translationChoiceManager->choose($role->getDescriptions());
         }
 
