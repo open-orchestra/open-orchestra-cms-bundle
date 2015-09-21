@@ -33,7 +33,7 @@ abstract class AbstractControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/login');
 
-        $form = $crawler->selectButton('Login')->form();
+        $form = $crawler->selectButton('Log in')->form();
         $form['_username'] = 'admin';
         $form['_password'] = 'admin';
 
