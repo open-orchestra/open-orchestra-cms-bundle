@@ -204,7 +204,7 @@ class NodeController extends BaseController
     {
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
 
-        return $this->listStatuses($node->getStatus());
+        return $this->listStatuses($node);
     }
 
     /**

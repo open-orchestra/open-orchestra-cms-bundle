@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class StatusCollectionTransformer
@@ -14,17 +14,17 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class StatusCollectionTransformer extends AbstractTransformer
 {
     /**
-     * @param Collection           $statusCollection
-     * @param StatusInterface|null $currentStatus
+     * @param Collection               $statusCollection
+     * @param StatusableInterface|null $document
      *
      * @return FacadeInterface|StatusCollectionFacade
      */
-    public function transform($statusCollection, $currentStatus = null)
+    public function transform($statusCollection, $document = null)
     {
         $facade = new StatusCollectionFacade();
 
         foreach ($statusCollection as $status) {
-            $facade->addStatus($this->getTransformer('status')->transform($status, $currentStatus));
+            $facade->addStatus($this->getTransformer('status')->transform($status, $document));
         }
 
         $facade->addLink('_self_add', $this->generateRoute(

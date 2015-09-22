@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Trait ListStatus
@@ -10,13 +10,13 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 trait ListStatus
 {
     /**
-     * @param StatusInterface $status
+     * @param StatusableInterface $document
      *
      * @return StatusCollectionFacade
      */
-    protected function listStatuses(StatusInterface $status)
+    protected function listStatuses(StatusableInterface $document)
     {
-        $transitions = $status->getFromRoles();
+        $transitions = $document->getStatus()->getFromRoles();
 
         $possibleStatuses = array();
 
@@ -24,6 +24,6 @@ trait ListStatus
             $possibleStatuses[] = $transition->getToStatus();
         }
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $status);
+        return $this->get('open_orchestra_api.transformer_manager')->get('status_collection')->transform($possibleStatuses, $document);
     }
 }

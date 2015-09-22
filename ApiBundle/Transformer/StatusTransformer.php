@@ -10,46 +10,47 @@ use OpenOrchestra\ApiBundle\Facade\StatusFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\BackofficeBundle\StrategyManager\authorizeStatusChangeManager;
 use Symfony\Component\Translation\TranslatorInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class StatusTransformer
  */
 class StatusTransformer extends AbstractTransformer
 {
-    protected $securityContext;
+    protected $authorizeStatusChangeManager;
     protected $roleRepository;
     protected $translationChoiceManager;
     protected $translator;
 
     /**
-     * @param AuthorizationCheckerInterface $securityContext
+     * @param AuthorizeStatusChangeManager  $authorizeStatusChangeManager
      * @param RoleRepositoryInterface       $roleRepository
      * @param TranslationChoiceManager      $translationChoiceManager
      * @param TranslatorInterface           $translator
      */
     public function __construct(
-        AuthorizationCheckerInterface $securityContext,
+        AuthorizeStatusChangeManager $authorizeStatusChangeManager,
         RoleRepositoryInterface $roleRepository,
         TranslationChoiceManager $translationChoiceManager,
         TranslatorInterface $translator
     ) {
-        $this->securityContext = $securityContext;
+        $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
         $this->roleRepository = $roleRepository;
         $this->translationChoiceManager = $translationChoiceManager;
         $this->translator = $translator;
     }
 
     /**
-     * @param StatusInterface $status
-     * @param StatusInterface $currentStatus
+     * @param StatusInterface          $status
+     * @param StatusableInterface|null $document
      *
      * @return FacadeInterface|StatusFacade
      *
      * @throws TransformerParameterTypeException
      */
-    public function transform($status, $currentStatus = null)
+    public function transform($status, $document = null)
     {
         if (!$status instanceof StatusInterface) {
             throw new TransformerParameterTypeException();
@@ -64,11 +65,8 @@ class StatusTransformer extends AbstractTransformer
         $facade->codeColor = $status->getDisplayColor();
         $facade->id = $status->getId();
         $facade->allowed = false;
-        if ($currentStatus) {
-            $role = $this->roleRepository->findOneByFromStatusAndToStatus($currentStatus, $status);
-            if ($this->securityContext->isGranted($role->getName())) {
-                $facade->allowed = true;
-            }
+        if ($document) {
+            $facade->allowed = $this->authorizeStatusChangeManager->isGranted($document, $status);
         }
 
         if (!$this->hasGroup(GroupContext::G_HIDE_ROLES)) {

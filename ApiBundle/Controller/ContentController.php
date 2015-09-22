@@ -242,7 +242,7 @@ class ContentController extends BaseController
     {
         $content = $this->get('open_orchestra_model.repository.content')->find($contentMongoId);
 
-        return $this->listStatuses($content->getStatus());
+        return $this->listStatuses($content);
     }
 
     /**
