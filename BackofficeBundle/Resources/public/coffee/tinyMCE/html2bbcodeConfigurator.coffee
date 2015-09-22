@@ -1,9 +1,5 @@
 html2bbcodeConfigurator = ->
-  finalTransformation :
-    '"'                                : '&quot;'          ,
-    '>'                                : '&gt;'            ,
-    '<'                                : '&lt;'
-
+  finalTransformation : []
   transformation : []
 
   getTransformation: () ->
