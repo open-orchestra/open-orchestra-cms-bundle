@@ -1,8 +1,5 @@
 bbcode2htmlConfigurator = ->
-  transformation :
-    '&quot;'                         : '"',
-    '&gt;'                           : '>',
-    '&lt;'                           : '<'
+  transformation : []
 
   getTransformation: () ->
     return @transformation
