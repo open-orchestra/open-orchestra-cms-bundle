@@ -7,6 +7,7 @@ services:
         class: %open_orchestra_user_admin.transformer.user.class%
         arguments:
             - @event_dispatcher
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_user_admin.transformer.user_collection:

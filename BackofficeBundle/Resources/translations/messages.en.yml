@@ -235,6 +235,7 @@ open_orchestra_backoffice:
             edit:
                 success: The group has been updated
             name: Name
+            label: Label
             roles: Roles
             site: Website
         redirection:
@@ -488,6 +489,7 @@ open_orchestra_backoffice:
             to_status: To status
         group:
             name: Name
+            label: Label
         redirection:
             site_name: Site name
             route_pattern: Routte pattern

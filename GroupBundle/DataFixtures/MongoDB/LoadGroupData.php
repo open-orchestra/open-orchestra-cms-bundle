@@ -14,6 +14,7 @@ use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\MediaAdminBundle\NavigationPanel\Strategies\TreeFolderPanelStrategy;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Class LoadGroupData
@@ -25,21 +26,38 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
      */
     public function load(ObjectManager $manager)
     {
-        $group2 = $this->generateGroup('Demo group', 'site2', 'group2');
+        $group2 = $this->generateGroup('Demo group', 'Demo group', 'Groupe de démo', 'site2', 'group2');
         $group2->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
         $manager->persist($group2);
-        $group3 = $this->generateGroup('Empty group', 'site3', 'group3');
+        $group3 = $this->generateGroup('Empty group', 'Empty group', 'Groupe vide', 'site3', 'group3');
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
         $manager->persist($group3);
 
-        $groupContentType = $this->generateGroup('Content type group', 'site2', 'groupContentType', AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
+        $groupContentType = $this->generateGroup('Content type group', 'Content type group', 'Groupe pour les types de contenu', 'site2', 'groupContentType', AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
         $manager->persist($groupContentType);
 
-        $groupLog = $this->generateGroup('Log group', 'site2', 'groupLog', AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+        $groupLog = $this->generateGroup('Log group', 'Log group', 'Groupe de consultation de log', 'site2', 'groupLog', AdministrationPanelStrategy::ROLE_ACCESS_LOG);
         $manager->persist($groupLog);
 
         $manager->flush();
 
+    }
+
+    /**
+     * Generate a translatedValue
+     *
+     * @param string $language
+     * @param string $value
+     *
+     * @return TranslatedValue
+     */
+    protected function generateTranslatedValue($language, $value)
+    {
+        $label = new TranslatedValue();
+        $label->setLanguage($language);
+        $label->setValue($value);
+
+        return $label;
     }
 
     /**
@@ -60,10 +78,15 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
      *
      * @return Group
      */
-    protected function generateGroup($name, $siteNumber, $referenceName, $role = null)
+    protected function generateGroup($name, $enLabel, $frLabel, $siteNumber, $referenceName, $role = null)
     {
         $group = new Group();
         $group->setName($name);
+
+        $enLabel = $this->generateTranslatedValue('en', $enLabel);
+        $frLabel = $this->generateTranslatedValue('fr', $frLabel);
+        $group->addLabel($enLabel);
+        $group->addLabel($frLabel);
 
         if (is_null($role)) {
             $group->addRole('ROLE_ADMIN');

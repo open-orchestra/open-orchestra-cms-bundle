@@ -9,6 +9,7 @@ use OpenOrchestra\UserBundle\Document\User;
 use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
 use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class UserTransformer
@@ -16,13 +17,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class UserTransformer extends AbstractTransformer
 {
     protected $eventDispatcher;
+    protected $translationChoiceManager;
 
     /**
      * @param EventDispatcherInterface $eventDispatcher
+     * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, TranslationChoiceManager $translationChoiceManager)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
@@ -37,7 +41,14 @@ class UserTransformer extends AbstractTransformer
         $facade->id = $mixed->getId();
         $facade->username = $mixed->getUsername();
         $facade->roles = implode(',', $mixed->getRoles());
-        $facade->groups = implode(',', $mixed->getGroupNames());
+
+        $groups = $mixed->getGroups();
+        $labels = array();
+        foreach($groups as $group){
+            $labels[] = $this->translationChoiceManager->choose($group->getLabels());
+        }
+
+        $facade->groups = implode(',', $labels);
 
         $facade->addLink('_self', $this->generateRoute(
             'open_orchestra_api_user_show',

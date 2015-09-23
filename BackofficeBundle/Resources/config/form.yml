@@ -280,6 +280,7 @@ services:
         class: %open_orchestra_backoffice.type.group.class%
         arguments:
             - %open_orchestra_user.document.group.class%
+            - @open_orchestra_backoffice.listener.translate_value_initializer
         tags:
             - { name: form.type, alias: group }
     open_orchestra_backoffice.type.redirection:
