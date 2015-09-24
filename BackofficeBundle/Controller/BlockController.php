@@ -55,6 +55,7 @@ class BlockController extends AbstractAdminController
         return $this->renderAdminForm(
             $form,
             array('title' => $title),
+            null,
             $form->getConfig()->getAttribute('template')
         );
     }
