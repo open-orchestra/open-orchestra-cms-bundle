@@ -33,7 +33,6 @@ class RedirectionController extends AbstractAdminController
         $redirection = new $redirectionClass();
 
         $form = $this->createForm('redirection', $redirection, array(
-            'attr' => array('class' => 'new'),
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
             'method' => 'POST',
         ));
@@ -43,8 +42,9 @@ class RedirectionController extends AbstractAdminController
 
         if ($this->handleForm($form, $message, $redirection)) {
             $this->dispatchEvent(RedirectionEvents::REDIRECTION_CREATE, new RedirectionEvent($redirection));
+            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
         }
 
         return $this->renderAdminForm($form);

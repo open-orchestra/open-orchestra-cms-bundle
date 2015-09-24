@@ -65,7 +65,6 @@ class SiteController extends AbstractAdminController
 
         $site->addAlias($siteAlias);
         $form = $this->createForm('site', $site, array(
-            'attr' => array('class' => 'new'),
             'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
             'method' => 'POST',
         ));
@@ -75,8 +74,9 @@ class SiteController extends AbstractAdminController
 
         if ($this->handleForm($form, $message, $site)) {
             $this->dispatchEvent(SiteEvents::SITE_CREATE, new SiteEvent($site));
+            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
         }
 
         return $this->renderAdminForm($form);

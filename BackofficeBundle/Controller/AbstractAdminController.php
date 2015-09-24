@@ -61,13 +61,9 @@ abstract class AbstractAdminController extends Controller
         $response = null,
         $template = self::TEMPLATE
     ){
-        $statusCode = 200;
-        if ($form->getErrors()->count() > 0) {
-            $statusCode = 400;
-        }
 
         if (is_null($response)) {
-            $response = new Response('', $statusCode, array('Content-type' => 'text/html; charset=utf-8'));
+            $response = new Response('', Response::HTTP_OK, array('Content-type' => 'text/html; charset=utf-8'));
         }
 
         $params = array_merge($params, array('form' => $form->createView()));

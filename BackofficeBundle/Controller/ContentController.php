@@ -52,7 +52,6 @@ class ContentController extends AbstractAdminController
         return $this->renderAdminForm(
             $form,
             array(),
-            null,
             $this->getFormTemplate($content->getContentType()
         ));
     }
@@ -95,7 +94,6 @@ class ContentController extends AbstractAdminController
         $content = $this->get('open_orchestra_backoffice.manager.content')->initializeNewContent($contentType);
 
         $form = $this->createForm('orchestra_content', $content, array(
-            'attr' => array('class' => 'new'),
             'action' => $this->generateUrl('open_orchestra_backoffice_content_new', array(
                 'contentType' => $contentType
             )),
@@ -107,8 +105,9 @@ class ContentController extends AbstractAdminController
 
         if ($this->handleForm($form, $message, $content)) {
             $this->dispatchEvent(ContentEvents::CONTENT_CREATION, new ContentEvent($content));
+            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
         }
 
         return $this->render(

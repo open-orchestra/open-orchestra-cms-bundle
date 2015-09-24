@@ -61,7 +61,7 @@ class ContentTypeController extends AbstractAdminController
         $contentType = $this->get('open_orchestra_backoffice.manager.content_type')->initializeNewContentType($contentTypeClass);
 
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_new', array());
-        $form = $this->createContentTypeForm($request, array('action' => $action, 'attr' => array('class' => 'new')), $contentType);
+        $form = $this->createContentTypeForm($request, array('action' => $action), $contentType);
 
         $form->handleRequest($request);
         if ('PATCH' !== $request->getMethod()) {
@@ -69,8 +69,9 @@ class ContentTypeController extends AbstractAdminController
 
             if ($handleForm && !is_null($contentType->getId())) {
                 $this->dispatchEvent(ContentTypeEvents::CONTENT_TYPE_CREATE, new ContentTypeEvent($contentType));
+                $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
-                return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
+                return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
             }
         }
 
