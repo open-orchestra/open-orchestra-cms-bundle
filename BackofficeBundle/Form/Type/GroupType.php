@@ -24,8 +24,7 @@ class GroupType extends AbstractType
     public function __construct(
         $groupClass,
         TranslateValueInitializerListener $translateValueInitializer
-    )
-    {
+    ) {
         $this->groupClass = $groupClass;
         $this->translateValueInitializer = $translateValueInitializer;
     }

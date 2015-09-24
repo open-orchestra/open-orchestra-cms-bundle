@@ -72,6 +72,8 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
 
     /**
      * @param string $name
+     * @param string $enLabel
+     * @param string $frLabel
      * @param string $siteNumber
      * @param string $referenceName
      * @param string $role

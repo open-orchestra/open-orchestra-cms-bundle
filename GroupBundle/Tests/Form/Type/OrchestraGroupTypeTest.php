@@ -6,7 +6,6 @@ use OpenOrchestra\GroupBundle\Form\Type\OrchestraGroupType;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 
-
 /**
  * Test OrchestraGroupTypeTest
  */
