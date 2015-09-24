@@ -57,12 +57,10 @@ class RouteDocumentManager
                     $scheme = $alias->getScheme();
                 }
                 $route->setSchemes($scheme);
-                $route->setDefaults(array(
-                    '_locale' => $node->getLanguage(),
-                    'nodeId' => $node->getNodeId(),
-                    'siteId' => $site->getSiteId(),
-                    'aliasId' => $key
-                ));
+                $route->setLanguage($node->getLanguage());
+                $route->setNodeId($node->getNodeId());
+                $route->setSiteId($site->getSiteId());
+                $route->setAliasId($key);
                 $pattern = $this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage(), $site->getSiteId());
                 $route->setPattern($pattern);
                 $routes[] = $route;

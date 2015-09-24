@@ -95,6 +95,9 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
                 'siteId' => 'siteId',
                 'aliasId' => $aliasIds[$key],
             ), $route->getDefaults());
+            $this->assertSame($nodeId, $route->getNodeId());
+            $this->assertSame('siteId', $route->getSiteId());
+            $this->assertSame($language, $route->getLanguage());
             $this->assertSame($exceptedPattern, $route->getPattern());
         }
     }
