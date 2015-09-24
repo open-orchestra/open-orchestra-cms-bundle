@@ -52,6 +52,7 @@ class ContentController extends AbstractAdminController
         return $this->renderAdminForm(
             $form,
             array(),
+            null,
             $this->getFormTemplate($content->getContentType()
         ));
     }
