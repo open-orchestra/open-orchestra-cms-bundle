@@ -9,6 +9,7 @@ parameters:
     open_orchestra_backoffice.manager.content_type.class: OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager
     open_orchestra_backoffice.manager.block.class: OpenOrchestra\BackofficeBundle\Manager\BlockManager
     open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\BackofficeBundle\Manager\RedirectionManager
+    open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager
 
 services:
     open_orchestra_backoffice.context_manager:
@@ -68,3 +69,9 @@ services:
             - @object_manager
             - @event_dispatcher
             - @open_orchestra_model.repository.site
+    open_orchestra_backoffice.manager.route_document:
+        class: %open_orchestra_backoffice.manager.route_document.class%
+        arguments:
+            - %open_orchestra_model.document.route_document.class%
+            - @open_orchestra_model.repository.site
+            - @open_orchestra_model.repository.node

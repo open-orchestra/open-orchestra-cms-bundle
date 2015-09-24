@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -75,6 +76,10 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $parent = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($parentId, $language, $siteId);
 
-        return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));
+        if ($parent instanceof NodeInterface) {
+            return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));
+        }
+
+        return $suffix;
     }
 }
