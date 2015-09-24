@@ -22,6 +22,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, O
         $admin = $this->generate('admin', 'group2');
         $this->addReference('user-admin', $admin);
         $admin->addGroup($this->getReference('group3'));
+        $admin->setSuperAdmin(true);
         $manager->persist($admin);
 
         $demoUser = $this->generate('demo', 'group2');
