@@ -4,6 +4,7 @@ namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
 use OpenOrchestra\GroupBundle\Form\Type\OrchestraGroupType;
 use Phake;
+use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 
 /**
  * Test OrchestraGroupTypeTest
@@ -16,13 +17,16 @@ class OrchestraGroupTypeTest extends \PHPUnit_Framework_TestCase
     protected $type;
 
     protected $groupClass = 'groupClass';
+    protected $translationChoiceManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->type = new OrchestraGroupType($this->groupClass);
+        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+
+        $this->type = new OrchestraGroupType($this->groupClass, $this->translationChoiceManager);
     }
 
     /**
@@ -40,12 +44,15 @@ class OrchestraGroupTypeTest extends \PHPUnit_Framework_TestCase
     public function testConfigureOptions()
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
+        $translationChoiceManager = $this->translationChoiceManager;
 
         $this->type->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
             'class' => $this->groupClass,
-            'property' => 'name'
+            'choice_label' => function (GroupInterface $choice) use ($translationChoiceManager) {
+                return $translationChoiceManager->choose($choice->getLabels());
+            },
         ));
     }
 

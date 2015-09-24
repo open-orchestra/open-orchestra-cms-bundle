@@ -16,13 +16,15 @@ class GroupTypeTest extends \PHPUnit_Framework_TestCase
     protected $form;
 
     protected $groupClass = 'groupClass';
+    protected $translateValueInitializer;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new GroupType($this->groupClass);
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->form = new GroupType($this->groupClass, $this->translateValueInitializer);
     }
 
     /**
@@ -52,7 +54,7 @@ class GroupTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
         Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 

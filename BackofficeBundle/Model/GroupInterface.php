@@ -4,11 +4,12 @@ namespace OpenOrchestra\BackofficeBundle\Model;
 
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 
 /**
  * Interface GroupInterface
  */
-interface GroupInterface extends BaseGroupInterface
+interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInterface
 {
     /**
      * @param ReadSiteInterface|null $site
