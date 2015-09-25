@@ -6,12 +6,23 @@ use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\GroupFacade;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class GroupTransformer
  */
 class GroupTransformer extends AbstractTransformer
 {
+    protected $translationChoiceManager;
+
+    /**
+     * @param TranslationChoiceManager $translationChoiceManager
+     */
+    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    {
+        $this->translationChoiceManager = $translationChoiceManager;
+    }
+
     /**
      * @param GroupInterface $group
      *
@@ -29,6 +40,8 @@ class GroupTransformer extends AbstractTransformer
 
         $facade->id = $group->getId();
         $facade->name = $group->getName();
+        $facade->label = $this->translationChoiceManager->choose($group->getLabels());
+
         foreach ($group->getRoles() as $role) {
             $facade->addRole($role);
         }

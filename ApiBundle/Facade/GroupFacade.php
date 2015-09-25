@@ -16,6 +16,11 @@ class GroupFacade extends AbstractFacade
     public $name;
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $label;
+
+    /**
      * @Serializer\Type("array<string>")
      */
     protected $roles = array();
