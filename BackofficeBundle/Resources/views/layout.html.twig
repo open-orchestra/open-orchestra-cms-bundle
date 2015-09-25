@@ -65,6 +65,8 @@
 
     <script data-pace-options='{ "restartOnRequestAfter": true }' src="{{ asset('js/pace.min.js') }} "></script>
 
+    {{ tinymce_init() }}
+
     {% block javascripts %}
         {% if app.debug %}
             {% javascripts 'js/all.js' %}
@@ -79,11 +81,10 @@
 
     <script>
         $(document).ready(function() {
-
             // DO NOT REMOVE : GLOBAL FUNCTIONS!
             pageSetUp();
         });
     </script>
-    {{ tinymce_init() }}
+
     </body>
 </html>

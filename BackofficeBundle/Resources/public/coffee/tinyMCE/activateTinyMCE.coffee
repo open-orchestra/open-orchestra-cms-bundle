@@ -1,7 +1,22 @@
 # ACTIVATE TINYMCE
+
 callback_tinymce_init = null
 
+doCallBack = (editor, view) ->
+
+initParameter = () ->
+
+$(document).on('focusin', (e) ->
+  if ($(e.target).closest(".mce-window").length)
+    e.stopImmediatePropagation();
+)
+
 activateTinyMce = (view, textarea) ->
+  $.ajax
+    url: $("#contextual-informations").data("translation-url-pattern").replace("*domain*", "tinymce")
+    success: (response) ->
+      tinymce.util.I18n.add response.lcoale, response.catalog
+
   do (view, textarea) ->
     initParameter()
     tinymce.create 'tinymce.plugins.BBCodeOrchestraPlugin',
@@ -52,15 +67,8 @@ activateTinyMce = (view, textarea) ->
       doCallBack(editor, view)
       return
     return
+
   if textarea.attr('disabled') == 'disabled'
     initTinyMCE($.extend(true, {}, stfalcon_tinymce_config, {theme: {simple: {readonly: 1}}}))
   else
     initTinyMCE()
-
-doCallBack = (editor, view) ->
-initParameter = () ->
-
-$(document).on('focusin', (e) ->
-  if ($(e.target).closest(".mce-window").length)
-    e.stopImmediatePropagation();
-)
