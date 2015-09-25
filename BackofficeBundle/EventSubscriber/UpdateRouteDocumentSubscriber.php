@@ -36,11 +36,17 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $routesToClear = $this->routeDocumentManager->clearForNode($node);
+        foreach ($routesToClear as $route) {
+            $this->objectManager->remove($route);
+        }
+
         $routes = $this->routeDocumentManager->createForNode($node);
         foreach ($routes as $routeDocument) {
             $this->objectManager->persist($routeDocument);
-            $this->objectManager->flush($routeDocument);
         }
+
+        $this->objectManager->flush();
     }
 
     /**

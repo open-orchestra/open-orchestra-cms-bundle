@@ -75,3 +75,4 @@ services:
             - %open_orchestra_model.document.route_document.class%
             - @open_orchestra_model.repository.site
             - @open_orchestra_model.repository.node
+            - @open_orchestra_model.repository.route_document

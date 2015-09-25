@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\RouteDocumentInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\RouteDocumentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
@@ -14,21 +16,25 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
  */
 class RouteDocumentManager
 {
+    protected $routeDocumentRepository;
     protected $routeDocumentClass;
     protected $siteRepository;
     protected $nodeRepository;
 
     /**
-     * @param string                  $routeDocumentClass
-     * @param SiteRepositoryInterface $siteRepository
-     * @param NodeRepositoryInterface $nodeRepository
+     * @param string                           $routeDocumentClass
+     * @param SiteRepositoryInterface          $siteRepository
+     * @param NodeRepositoryInterface          $nodeRepository
+     * @param RouteDocumentRepositoryInterface $routeDocumentRepository
      */
     public function __construct(
         $routeDocumentClass,
         SiteRepositoryInterface $siteRepository,
-        NodeRepositoryInterface $nodeRepository
+        NodeRepositoryInterface $nodeRepository,
+        RouteDocumentRepositoryInterface $routeDocumentRepository
     )
     {
+        $this->routeDocumentRepository = $routeDocumentRepository;
         $this->routeDocumentClass = $routeDocumentClass;
         $this->siteRepository = $siteRepository;
         $this->nodeRepository = $nodeRepository;
@@ -91,5 +97,15 @@ class RouteDocumentManager
         }
 
         return $suffix;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return Collection
+     */
+    public function clearForNode(NodeInterface $node)
+    {
+        return $this->routeDocumentRepository->findByNodeIdSiteIdAndLanguage($node->getNodeId(), $node->getSiteId(), $node->getLanguage());
     }
 }

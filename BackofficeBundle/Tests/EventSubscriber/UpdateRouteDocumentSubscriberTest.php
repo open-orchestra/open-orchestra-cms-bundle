@@ -76,11 +76,13 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         Phake::when($this->routeDocumentManager)->createForNode(Phake::anyParameters())->thenReturn(array($route));
+        Phake::when($this->routeDocumentManager)->clearForNode(Phake::anyParameters())->thenReturn(array($route));
         Phake::when($this->status)->isPublished()->thenReturn(true);
 
         $this->subscriber->updateRouteDocument($this->event);
 
         Phake::verify($this->objectManager)->persist($route);
-        Phake::verify($this->objectManager)->flush($route);
+        Phake::verify($this->objectManager)->remove($route);
+        Phake::verify($this->objectManager, Phake::never())->flush(Phake::anyParameters());
     }
 }

@@ -18,6 +18,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected $manager;
 
+    protected $routeDocumentRepository;
     protected $domainFr = 'domain.fr';
     protected $domainEn = 'domain.en';
     protected $routeDocumentClass;
@@ -35,6 +36,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         $this->routeDocumentClass = 'OpenOrchestra\ModelBundle\Document\RouteDocument';
 
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->routeDocumentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RouteDocumentRepositoryInterface');
 
         $this->siteAliasFr = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($this->siteAliasFr)->getLanguage()->thenReturn('fr');
@@ -59,7 +61,8 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager = new RouteDocumentManager(
             $this->routeDocumentClass,
             $this->siteRepository,
-            $this->nodeRepository
+            $this->nodeRepository,
+            $this->routeDocumentRepository
         );
     }
 
@@ -124,6 +127,40 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             array('en', 'nodeId', array(0, 2), '/foo', '/foo', 'parent'),
             array('fr', 'nodeId', array(1, 3), 'foo', '/bar/foo', 'parent'),
             array('en', 'nodeId', array(0, 2), 'foo', '/bar/foo', 'parent'),
+        );
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     *
+     * @dataProvider provideClearNodeData
+     */
+    public function testClearForNode($nodeId, $siteId, $language)
+    {
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getLanguage()->thenReturn($language);
+        Phake::when($node)->getSiteId()->thenReturn($siteId);
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+
+        $routeDocuments = new ArrayCollection();
+        Phake::when($this->routeDocumentRepository)->findByNodeIdSiteIdAndLanguage(Phake::anyParameters())->thenReturn($routeDocuments);
+
+        $routes = $this->manager->clearForNode($node);
+
+        $this->assertSame($routeDocuments, $routes);
+        Phake::verify($this->routeDocumentRepository)->findByNodeIdSiteIdAndLanguage($nodeId, $siteId, $language);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideClearNodeData()
+    {
+        return array(
+            array('root', '2', 'fr'),
+            array('foo', 'bar', 'en'),
         );
     }
 }
