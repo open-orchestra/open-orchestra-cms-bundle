@@ -493,7 +493,7 @@ open_orchestra_backoffice:
         redirection:
             site_name: Site name
             route_pattern: Routte pattern
-            locale: Lacale
+            locale: Locale
             redirection: Redirection
             permanent: Permanent
         status:

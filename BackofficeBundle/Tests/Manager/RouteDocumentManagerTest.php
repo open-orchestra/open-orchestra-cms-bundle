@@ -163,4 +163,110 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             array('foo', 'bar', 'en'),
         );
     }
+
+    /**
+     * @param string $locale
+     * @param string $id
+     * @param array  $aliasIds
+     * @param bool   $permanent
+     * @param string $pattern
+     *
+     * @dataProvider provideNodeRedirectionData
+     */
+    public function testCreateForRedirectionToNode($locale, $id, $aliasIds, $permanent, $pattern)
+    {
+        $mongoNodeId = 'mongoNodeId';
+        $nodeId = 'nodeId';
+        $siteId = 'siteId';
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getId()->thenReturn($mongoNodeId);
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getSiteId()->thenReturn($siteId);
+
+        $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
+        Phake::when($redirection)->getId()->thenReturn($id);
+        Phake::when($redirection)->getNodeId()->thenReturn($nodeId);
+        Phake::when($redirection)->isPermanent()->thenReturn($permanent);
+        Phake::when($redirection)->getSiteId()->thenReturn($siteId);
+        Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
+        Phake::when($redirection)->getLocale()->thenReturn($locale);
+
+        Phake::when($this->nodeRepository)->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node);
+
+        $routeDocuments = $this->manager->createForRedirection($redirection);
+
+        $this->assertCount(2, $routeDocuments);
+        foreach ($routeDocuments as $key => $route) {
+            $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
+            $this->assertSame($this->{'domain'. ucfirst($locale)}, $route->getHost());
+            $this->assertSame(array(
+                '_controller' => 'FrameworkBundle:Redirect:redirect',
+                'route' => $aliasIds[$key] . '_' . $mongoNodeId,
+                'permanent' => $permanent,
+            ), $route->getDefaults());
+        }
+        Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
+        Phake::verify($this->nodeRepository)->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $locale, $siteId);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeRedirectionData()
+    {
+        return array(
+            array('fr', 'nodeId', array(1, 3), true, '/foo'),
+            array('en', 'nodeId', array(0, 2), false, '/bar'),
+        );
+    }
+
+    /**
+     * @param string $locale
+     * @param string $id
+     * @param array  $aliasIds
+     * @param bool   $permanent
+     * @param string $pattern
+     * @param string $url
+     *
+     * @dataProvider provideUrlRedirectionData
+     */
+    public function testCreateRedirectionToUrl($locale, $id, $aliasIds, $permanent, $pattern, $url)
+    {
+        $siteId = 'siteId';
+
+        $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
+        Phake::when($redirection)->getId()->thenReturn($id);
+        Phake::when($redirection)->isPermanent()->thenReturn($permanent);
+        Phake::when($redirection)->getSiteId()->thenReturn($siteId);
+        Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
+        Phake::when($redirection)->getUrl()->thenReturn($url);
+        Phake::when($redirection)->getLocale()->thenReturn($locale);
+
+        $routeDocuments = $this->manager->createForRedirection($redirection);
+
+        $this->assertCount(2, $routeDocuments);
+        foreach ($routeDocuments as $key => $route) {
+            $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
+            $this->assertSame($this->{'domain'. ucfirst($locale)}, $route->getHost());
+            $this->assertSame(array(
+                '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+                'path' => $url,
+                'permanent' => $permanent,
+            ), $route->getDefaults());
+        }
+        Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
+        Phake::verify($this->nodeRepository, Phake::never())->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters());
+
+    }
+
+    /**
+     * @return array
+     */
+    public function provideUrlRedirectionData()
+    {
+        return array(
+            array('fr', 'nodeId', array(1, 3), true, '/foo', 'http://foo.bar'),
+            array('en', 'nodeId', array(0, 2), false, '/bar', 'http://bar.baz'),
+        );
+    }
 }

@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\ModelInterface\Model\RouteDocumentInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
@@ -77,6 +78,49 @@ class RouteDocumentManager
     }
 
     /**
+     * @param RedirectionInterface $redirection
+     *
+     * @return array
+     */
+    public function createForRedirection(RedirectionInterface $redirection)
+    {
+        $routeDocumentClass = $this->routeDocumentClass;
+        $routes = array();
+        $site = $this->siteRepository->findOneBySiteId($redirection->getSiteId());
+        $node = $this->getNodeForRedirection($redirection);
+        $controller = 'FrameworkBundle:Redirect:urlRedirect';
+        $paramKey = 'path';
+        if ($node instanceof NodeInterface) {
+            $controller = 'FrameworkBundle:Redirect:redirect';
+            $paramKey = 'route';
+        }
+
+        /** @var SiteAliasInterface $alias */
+        foreach ($site->getAliases() as $key => $alias) {
+            if ($alias->getLanguage() == $redirection->getLocale()) {
+                /** @var RouteDocumentInterface $route */
+                $route = new $routeDocumentClass();
+                $route->setName($key . '_' . $redirection->getId());
+                $route->setHost($alias->getDomain());
+                if ($node instanceof NodeInterface) {
+                    $paramValue = $key . '_' . $node->getId();
+                } else {
+                    $paramValue = $redirection->getUrl();
+                }
+                $route->setDefaults(array(
+                    '_controller' => $controller,
+                    $paramKey => $paramValue,
+                    'permanent' => $redirection->isPermanent()
+                ));
+                $route->setPattern($redirection->getRoutePattern());
+                $routes[] = $route;
+            }
+        }
+
+        return $routes;
+    }
+
+    /**
      * @param string|null $parentId
      * @param string|null $suffix
      * @param string      $language
@@ -107,5 +151,25 @@ class RouteDocumentManager
     public function clearForNode(NodeInterface $node)
     {
         return $this->routeDocumentRepository->findByNodeIdSiteIdAndLanguage($node->getNodeId(), $node->getSiteId(), $node->getLanguage());
+    }
+
+    /**
+     * @param RedirectionInterface $redirection
+     *
+     * @return NodeInterface|null
+     */
+    protected function getNodeForRedirection(RedirectionInterface $redirection)
+    {
+        if (is_null($redirection->getNodeId())) {
+            return null;
+        }
+
+        $node = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(
+            $redirection->getNodeId(),
+            $redirection->getLocale(),
+            $redirection->getSiteId()
+        );
+
+        return $node;
     }
 }

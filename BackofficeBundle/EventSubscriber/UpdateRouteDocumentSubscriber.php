@@ -5,7 +5,9 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\RedirectionEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -24,6 +26,19 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     {
         $this->objectManager = $objectManager;
         $this->routeDocumentManager = $routeDocumentManager;
+    }
+
+    /**
+     * @param RedirectionEvent $event
+     */
+    public function createRedirection(RedirectionEvent $event)
+    {
+        $routes = $this->routeDocumentManager->createForRedirection($event->getRedirection());
+
+        foreach ($routes as $route) {
+            $this->objectManager->persist($route);
+            $this->objectManager->flush($route);
+        }
     }
 
     /**
@@ -58,6 +73,8 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     {
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRouteDocument',
+            RedirectionEvents::REDIRECTION_CREATE => 'createRedirection',
+            RedirectionEvents::REDIRECTION_UPDATE => 'updateRedirection',
         );
     }
 }
