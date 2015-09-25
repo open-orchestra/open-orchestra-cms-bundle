@@ -83,6 +83,6 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->objectManager)->persist($route);
         Phake::verify($this->objectManager)->remove($route);
-        Phake::verify($this->objectManager, Phake::never())->flush(Phake::anyParameters());
+        Phake::verify($this->objectManager)->flush();
     }
 }
