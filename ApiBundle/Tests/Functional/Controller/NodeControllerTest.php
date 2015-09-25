@@ -90,7 +90,7 @@ class NodeControllerTest extends AbstractControllerTest
         $node = $this->nodeRepository
             ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion('root', 'en', '2');
         if (!is_null($node)) {
-            $this->markTestSkipped('The node has already been created');
+            $this->markTestIncomplete('The node has already been created');
         }
 
         $nodeTransverse = $this->nodeRepository
