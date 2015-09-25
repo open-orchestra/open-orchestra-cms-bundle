@@ -32,20 +32,22 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
         viewClass = appConfigurationView.getConfiguration(entityType, 'addEntity')
         new viewClass(options)
   else
+    data = {
+      entityId: entityId
+      source_language: sourceLanguage
+    }
+    data.language = language if language?
+    data.version = version if version?
     $.ajax
       url: link.data('url')
       method: 'GET'
-      data:
-        entityId: entityId
-        language: language
-        source_language: sourceLanguage
-        version: version
+      data: data
       success: (response) ->
         collection_name = response.collection_name
         values = response[collection_name][0]
         element = new TableviewModel
         element.set values
-        if language?
+        if language? and sourceLanguage?
           link = element.get('links')._self_without_parameters + '?language=' + language
           link = link + '&source_language=' + sourceLanguage if sourceLanguage != undefined
           link = link + '&version=' + version if version != undefined

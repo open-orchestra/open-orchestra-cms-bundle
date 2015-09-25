@@ -19,9 +19,11 @@ DuplicateView = OrchestraView.extend(
   duplicateElement: (event) ->
     event.preventDefault()
     displayLoader()
-    redirectUrl = appRouter.generateUrl(@options.currentDuplicate.path, appRouter.addParametersToRoute(
+    parameter = appRouter.addParametersToRoute(
       language: @options.currentDuplicate.language
-    ))
+    )
+    delete parameter.version if parameter.version
+    redirectUrl = appRouter.generateUrl(@options.currentDuplicate.path, parameter)
     $.ajax
       url: @options.currentDuplicate.self_duplicate
       method: 'POST'
