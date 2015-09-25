@@ -1,10 +1,16 @@
 xhrFifo = []
 $(document).ready ->
   $.ajaxSetup
+    url: 'defaultUrl',
     beforeSend: (xhr, settings) ->
-      xhrFifo.push(xhr)
-      context = settings.context
-      displayLoader(context.button) if context != undefined && context.button != undefined
+      if settings.url == 'defaultUrl'
+        xhr.abort()
+        redirectUrl = appRouter.generateUrl 'showDashboard'
+        displayMenu(redirectUrl)
+      else
+        xhrFifo.push(xhr)
+        context = settings.context
+        displayLoader(context.button) if context != undefined && context.button != undefined
     abortXhr: ->
       for i of xhrFifo
         xhrFifo[i].abort()
