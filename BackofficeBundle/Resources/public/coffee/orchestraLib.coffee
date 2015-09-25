@@ -4,8 +4,8 @@ getCurrentLocale = ->
 
 # SHOW CONTENT TITLE
 renderPageTitle = ->
-  if ($('nav li.active:first > a > i').length > 0)
-    $('#title-logo').addClass($('nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
+  if ($('#left-panel nav li.active:first > a > i').length > 0)
+    $('#title-logo').addClass($('#left-panel nav li.active:first > a > i').attr('class').replace('fa-lg', ''))
   $('#title-universe').text($('.breadcrumb li:nth-child(2)').text())
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 
@@ -27,7 +27,7 @@ opts =
   speed: $.menu_speed
   closedSign: "<em class=\"fa fa-plus-square-o\"></em>"
   openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
-$("nav").data({opts : opts})
+$("#left-panel nav").data({opts : opts})
 
 displayMenu = (route) ->
   selectedPath = undefined
@@ -39,18 +39,19 @@ displayMenu = (route) ->
     url: $("#left-panel nav").data("url")
     type: "GET"
     success: (response) ->
-
       # render html
+      opts = $("#left-panel nav").data('opts')
       $("#left-panel nav").replaceWith response
-      
+      $("#left-panel nav").data({opts : opts})
+
       # create the jarvis menu
-      $("nav ul").jarvismenu $("nav").data('opts')
+      $("#left-panel nav ul").jarvismenu $("#left-panel nav").data('opts')
       
       # tag selected path 
-      $("nav li:has(a[href=\"" + selectedPath + "\"])").addClass "active"
+      $("#left-panel nav li:has(a[href=\"" + selectedPath + "\"])").addClass "active"
       
       # open selected path
-      openMenu($("nav").data('opts').speed, $("nav").data('opts').openedSign)
+      openMenu($("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign)
 
       if typeof route isnt "undefined"
         Backbone.history.navigate route,

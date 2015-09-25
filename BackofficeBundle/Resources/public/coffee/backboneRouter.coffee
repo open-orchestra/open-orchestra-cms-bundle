@@ -21,8 +21,8 @@ OrchestraBORouter = Backbone.Router.extend(
   initDisplayRouteChanges: (selector) ->
     $.ajaxSetup().abortXhr()
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
-    $('nav li.active').removeClass 'active'
-    link = $('nav li a' + selector)
+    $('#left-panel nav li.active').removeClass 'active'
+    link = $('#left-panel nav li a' + selector)
     if link.length == 0
       Backbone.history.navigate('', {trigger: true})
       return false
@@ -30,9 +30,9 @@ OrchestraBORouter = Backbone.Router.extend(
     displayLoader()
     return true
   afterRouteChanges: (selector) ->
-    $('nav li:has(a' + selector + ')').addClass 'active'
-    openMenu $("nav").data('opts').speed, $("nav").data('opts').openedSign
-    document.title = $('nav a' + selector).attr('title') or document.title
+    $('#left-panel nav li:has(a' + selector + ')').addClass 'active'
+    openMenu $("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign
+    document.title = $('#left-panel nav a' + selector).attr('title') or document.title
     drawBreadCrumb()
 
   generateUrl: (routeName, paramsObject) ->

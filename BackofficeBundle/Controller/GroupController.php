@@ -33,7 +33,6 @@ class GroupController extends AbstractAdminController
         $group = new $groupClass();
 
         $form = $this->createForm('group', $group, array(
-            'attr' => array('class' => 'new'),
             'action' => $this->generateUrl('open_orchestra_backoffice_group_new'),
             'method' => 'POST',
         ));
@@ -43,8 +42,9 @@ class GroupController extends AbstractAdminController
 
         if ($this->handleForm($form, $message, $group)) {
             $this->dispatchEvent(GroupEvents::GROUP_CREATE, new GroupEvent($group));
+            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
 
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
         }
 
         return $this->renderAdminForm($form);

@@ -27,7 +27,6 @@ class ApiClientController extends AbstractAdminController
         $apiClient = new $apiClientClass();
 
         $form = $this->createForm('api_client', $apiClient, array(
-            'attr' => array('class' => 'new'),
             'action' => $this->generateUrl('open_orchestra_backoffice_api_client_new'),
             'method' => 'POST',
         ));
@@ -36,7 +35,9 @@ class ApiClientController extends AbstractAdminController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.api_client.new.success');
 
         if ($this->handleForm($form, $message, $apiClient)) {
-            return $this->render('BraincraftedBootstrapBundle::flash.html.twig');
+            $response = new Response('', Response::HTTP_CREATED, array('Content-type' => 'text/html; charset=utf-8'));
+
+            return $this->render('BraincraftedBootstrapBundle::flash.html.twig', array(), $response);
         }
 
         return $this->renderAdminForm($form);

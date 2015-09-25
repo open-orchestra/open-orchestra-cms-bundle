@@ -19,8 +19,8 @@ extendView['submitAdmin'] = {
           form.ajaxSubmit
             context:
               button: viewContext.button
-            success: (response) ->
-              if(form.hasClass('new'))
+            statusCode:
+              201: (response) ->
                 displayRoute = $("#nav-" + viewContext.options.entityType).attr('href')
                 Backbone.history.navigate(displayRoute, {trigger: true})
                 viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showFlashBag')
@@ -28,7 +28,7 @@ extendView['submitAdmin'] = {
                   html: response
                   domContainer: $('h1.page-title').parent()
                 ))
-              else
+              200: (response) ->
                 new viewClass(viewContext.addOption(
                   html: response
                   submitted: true
