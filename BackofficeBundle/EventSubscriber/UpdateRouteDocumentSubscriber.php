@@ -74,7 +74,6 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRouteDocument',
             RedirectionEvents::REDIRECTION_CREATE => 'createRedirection',
-            RedirectionEvents::REDIRECTION_UPDATE => 'updateRedirection',
         );
     }
 }
