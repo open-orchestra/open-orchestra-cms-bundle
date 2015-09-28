@@ -15,7 +15,7 @@ activateTinyMce = (view, textarea) ->
   $.ajax
     url: $("#contextual-informations").data("translation-url-pattern").replace("*domain*", "tinymce")
     success: (response) ->
-      tinymce.util.I18n.add response.lcoale, response.catalog
+      tinymce.util.I18n.add response.locale, response.catalog
 
   do (view, textarea) ->
     initParameter()
