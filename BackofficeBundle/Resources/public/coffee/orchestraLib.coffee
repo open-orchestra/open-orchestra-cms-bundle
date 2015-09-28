@@ -159,7 +159,6 @@ activateHidden = (hidden) ->
 
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
-  tinymce.editors = []
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
   activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
   activateColorPicker(elements) if (elements = $(".colorpicker", form)) && elements.length > 0
