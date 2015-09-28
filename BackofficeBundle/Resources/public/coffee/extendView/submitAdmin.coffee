@@ -4,11 +4,13 @@ extendView['submitAdmin'] = {
     'click .submit_form': 'addEventOnSave'
 
   addEventOnSave: (event) ->
-    tinymce.triggerSave()
     viewContext = @
     viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, viewContext.options.formView)
     @button = $(event.target).parent() if event.originalEvent
     form = $(event.target).closest('form')
+    if $("textarea.tinymce", form).length > 0
+      tinymce.triggerSave()
+      tinymce.editors = []
     if form.length == 0 && (clone = $(event.target).data('clone'))
       $('#' + clone).click()
     else
