@@ -173,7 +173,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideNodeRedirectionData
      */
-    public function testCreateForRedirectionToNode($locale, $id, $aliasIds, $permanent, $pattern)
+    public function testcreateOrUpdateForRedirectionToNode($locale, $id, $aliasIds, $permanent, $pattern)
     {
         $mongoNodeId = 'mongoNodeId';
         $nodeId = 'nodeId';
@@ -193,7 +193,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->nodeRepository)->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node);
 
-        $routeDocuments = $this->manager->createForRedirection($redirection);
+        $routeDocuments = $this->manager->createOrUpdateForRedirection($redirection);
 
         $this->assertCount(2, $routeDocuments);
         foreach ($routeDocuments as $key => $route) {
@@ -242,7 +242,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($redirection)->getUrl()->thenReturn($url);
         Phake::when($redirection)->getLocale()->thenReturn($locale);
 
-        $routeDocuments = $this->manager->createForRedirection($redirection);
+        $routeDocuments = $this->manager->createOrUpdateForRedirection($redirection);
 
         $this->assertCount(2, $routeDocuments);
         foreach ($routeDocuments as $key => $route) {

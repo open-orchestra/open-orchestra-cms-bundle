@@ -40,7 +40,7 @@ class LoadRedirectionRouteDocumentData extends AbstractFixture implements Ordere
         $updateRoute = $this->container->get('open_orchestra_backoffice.manager.route_document');
 
         foreach ($nodes as $node) {
-            $routes = $updateRoute->createForRedirection($node);
+            $routes = $updateRoute->createOrUpdateForRedirection($node);
             foreach ($routes as $route) {
                 $manager->persist($route);
             }

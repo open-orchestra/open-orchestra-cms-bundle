@@ -31,9 +31,9 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     /**
      * @param RedirectionEvent $event
      */
-    public function createRedirection(RedirectionEvent $event)
+    public function createOrUpdateForRedirection(RedirectionEvent $event)
     {
-        $routes = $this->routeDocumentManager->createForRedirection($event->getRedirection());
+        $routes = $this->routeDocumentManager->createOrUpdateForRedirection($event->getRedirection());
 
         foreach ($routes as $route) {
             $this->objectManager->persist($route);
@@ -73,7 +73,8 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     {
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRouteDocument',
-            RedirectionEvents::REDIRECTION_CREATE => 'createRedirection',
+            RedirectionEvents::REDIRECTION_CREATE => 'createOrUpdateForRedirection',
+            RedirectionEvents::REDIRECTION_UPDATE => 'createOrUpdateForRedirection',
         );
     }
 }

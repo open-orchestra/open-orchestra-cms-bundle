@@ -82,9 +82,8 @@ class RouteDocumentManager
      *
      * @return array
      */
-    public function createForRedirection(RedirectionInterface $redirection)
+    public function createOrUpdateForRedirection(RedirectionInterface $redirection)
     {
-        $routeDocumentClass = $this->routeDocumentClass;
         $routes = array();
         $site = $this->siteRepository->findOneBySiteId($redirection->getSiteId());
         $node = $this->getNodeForRedirection($redirection);
@@ -99,8 +98,7 @@ class RouteDocumentManager
         foreach ($site->getAliases() as $key => $alias) {
             if ($alias->getLanguage() == $redirection->getLocale()) {
                 /** @var RouteDocumentInterface $route */
-                $route = new $routeDocumentClass();
-                $route->setName($key . '_' . $redirection->getId());
+                $route = $this->getOrCreateRouteDocument($redirection, $key);
                 $route->setHost($alias->getDomain());
                 if ($node instanceof NodeInterface) {
                     $paramValue = $key . '_' . $node->getId();
@@ -171,5 +169,24 @@ class RouteDocumentManager
         );
 
         return $node;
+    }
+
+    /**
+     * @param RedirectionInterface $redirection
+     * @param int                  $key
+     *
+     * @return RouteDocumentInterface
+     */
+    protected function getOrCreateRouteDocument(RedirectionInterface $redirection, $key)
+    {
+        $routeDocumentClass = $this->routeDocumentClass;
+        $routeName = $key . '_' . $redirection->getId();
+
+        if (!($route = $this->routeDocumentRepository->findOneByName($routeName))) {
+            $route = new $routeDocumentClass();
+            $route->setName($routeName);
+        }
+
+        return $route;
     }
 }

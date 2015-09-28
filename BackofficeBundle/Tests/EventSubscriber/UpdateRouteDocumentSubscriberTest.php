@@ -56,6 +56,7 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertArrayHasKey(NodeEvents::NODE_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(RedirectionEvents::REDIRECTION_CREATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(RedirectionEvents::REDIRECTION_UPDATE, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -91,16 +92,16 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * Test with redirection
      */
-    public function testCreateRedirection()
+    public function testCreateOrUpdateForRedirection()
     {
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\RedirectionEvent');
         Phake::when($event)->getRedirection()->thenReturn($redirection);
 
-        Phake::when($this->routeDocumentManager)->createForRedirection(Phake::anyParameters())->thenReturn(array($route));
+        Phake::when($this->routeDocumentManager)->createOrUpdateForRedirection(Phake::anyParameters())->thenReturn(array($route));
 
-        $this->subscriber->createRedirection($event);
+        $this->subscriber->createOrUpdateForRedirection($event);
 
         Phake::verify($this->objectManager)->persist($route);
         Phake::verify($this->objectManager)->flush($route);
