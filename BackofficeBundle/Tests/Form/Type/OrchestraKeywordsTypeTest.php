@@ -40,7 +40,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer');
 
-        $this->router = Phake::mock('Symfony\Component\Routing\Router');
+        $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
         $this->form = new OrchestraKeywordsType($this->transformer, $this->keywordRepository, $this->router);
     }
