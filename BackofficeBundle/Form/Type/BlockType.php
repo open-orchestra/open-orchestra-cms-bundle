@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\BlockToArrayTransformer;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
@@ -60,8 +59,8 @@ class BlockType extends AbstractType
 
         $builder->addViewTransformer(new BlockToArrayTransformer());
         $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParameters, $this->formFactory, $options['blockPosition']));
-        if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
-            $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if(array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
         }
     }
 

@@ -6,7 +6,6 @@ use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListen
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -83,7 +82,9 @@ class ContentTypeType extends AbstractType
             ));
 
         $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if(array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
+        }
     }
 
     /**

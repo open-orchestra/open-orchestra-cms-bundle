@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -51,7 +50,9 @@ class TemplateType extends AbstractType
             ));
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if(array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
+        }
     }
 
     /**

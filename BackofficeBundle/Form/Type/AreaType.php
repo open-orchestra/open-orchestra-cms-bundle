@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\Transformer\HtmlIdTransformer;
 use OpenOrchestra\BackofficeBundle\Transformer\HtmlClassTransformer;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,7 +41,6 @@ class AreaType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.area.label',
             'required' => false,
         ));
-
         $builder->add(
             $builder->create('areaId', 'text', array('label' => 'open_orchestra_backoffice.form.area.area_id'))
                 ->addViewTransformer($htmlIdTransformer)
@@ -59,9 +57,10 @@ class AreaType extends AbstractType
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.area.bo_direction'
         ));
-        if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
-            $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
-            $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+
+        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
+        if(array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
         }
     }
 
