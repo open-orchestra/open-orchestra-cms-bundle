@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class OrchestraKeywordsType
@@ -21,12 +21,12 @@ class OrchestraKeywordsType extends AbstractType
     /**
      * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
      * @param KeywordRepositoryInterface         $keywordRepository
-     * @param Router                             $router
+     * @param RouterInterface                    $router
      */
     public function __construct(
         EmbedKeywordsToKeywordsTransformer $keywordsTransformer,
         KeywordRepositoryInterface $keywordRepository,
-        Router $router
+        RouterInterface $router
     )
     {
         $this->keywordsTransformer = $keywordsTransformer;
