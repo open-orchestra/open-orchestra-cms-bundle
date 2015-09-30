@@ -18,7 +18,12 @@ class LoadRoleData extends AbstractLoadRoleData implements OrchestraProductionFi
      */
     function load(ObjectManager $manager)
     {
-        $manager->persist($this->generateRole(AdministrationPanelStrategy::ROLE_ACCESS_USER));
+        $manager->persist(
+            $this->generateRole(
+                AdministrationPanelStrategy::ROLE_ACCESS_USER,
+                array('en' => 'Manage users', 'fr' => 'Gérer les utilisateurs')
+            )
+        );
 
         $manager->flush();
     }

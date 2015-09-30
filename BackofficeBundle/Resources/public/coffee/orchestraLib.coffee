@@ -194,3 +194,14 @@ launchNotification = (type, message) ->
     content: message
     color: color
     timeout: 4000
+
+#SMARTADMIN RESET LOCAL STORAGE OVERRIDE
+$.root_.on 'click', '[data-action="orchestraResetWidgets"]', (e) ->
+  console.log(e.currentTarget)
+  callbacks = {}
+  callbacks.yesCallback = ->
+    if localStorage
+      localStorage.clear()
+      location.reload()
+    return
+  smartConfirm('fa-refresh', $(e.currentTarget).data('message-title'), $(e.currentTarget).data('message-text'), callbacks)

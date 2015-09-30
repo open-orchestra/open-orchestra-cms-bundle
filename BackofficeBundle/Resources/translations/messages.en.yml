@@ -8,6 +8,10 @@ open_orchestra_backoffice:
         es: Español
         de: Deutsch
     error_txt: Unable to finish your request
+    clear_local_storage:
+        tooltip: '*Warning! This will reset all your widget settings.*'
+        title: Clear Local Storage
+        text: Would you like to RESET all your saved widgets and clear LocalStorage?
     dashboard:
         last_node_title: My latest pages
         last_content_title: My latest contents
@@ -23,6 +27,9 @@ open_orchestra_backoffice:
         submit: Save
         edit: Edit
         delete: Delete
+        delete_confirm:
+            title: Delete this element?
+            text: The removal will be final
         add: Add
         select: Select
         status:

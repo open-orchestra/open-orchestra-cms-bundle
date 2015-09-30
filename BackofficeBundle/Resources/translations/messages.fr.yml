@@ -8,6 +8,10 @@ open_orchestra_backoffice:
         es: Español
         de: Deutsch
     error_txt: Impossible de terminer votre opération
+    clear_local_storage:
+        tooltip: '*Attention ! Ceci réitinialisera tous les settings de widgets.*'
+        title: Purger le Local Storage
+        text: Voulez-vous REINITIALISER toutes vos configurations de widgets sauvegardées et purger votre Local Storage ?
     dashboard:
         last_node_title: Mes dernières pages
         last_content_title: Mes dernièrs contenus
@@ -23,6 +27,9 @@ open_orchestra_backoffice:
         submit: Sauvegarder
         edit: Editer
         delete: Supprimer
+        delete_confirm:
+            title: Supprimer cet élément ?
+            text: La suppression sera définitive
         add: Ajouter
         select: Sélectionner
         status:
