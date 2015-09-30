@@ -191,13 +191,14 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
     protected function getFieldOptions(FieldTypeInterface $contentTypeField)
     {
         $contentTypeOptions = $contentTypeField->getFormOptions();
-        $configuratedOptions = $this->fieldTypesConfiguration[$contentTypeField->getType()]['options'];
         $options = array();
-
-        foreach ($configuratedOptions as $optionName => $optionConfiguration) {
-            $options[$optionName] = (isset($contentTypeOptions[$optionName])) ? $contentTypeOptions[$optionName] : $optionConfiguration['default_value'];
+        $field = $this->fieldTypesConfiguration[$contentTypeField->getType()];
+        if (isset($field['options'])) {
+            $configuratedOptions = $field['options'];
+            foreach ($configuratedOptions as $optionName => $optionConfiguration) {
+                $options[$optionName] = (isset($contentTypeOptions[$optionName])) ? $contentTypeOptions[$optionName] : $optionConfiguration['default_value'];
+            }
         }
-
         return $options;
     }
 }
