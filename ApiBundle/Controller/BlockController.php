@@ -6,7 +6,6 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
 /**
@@ -41,7 +40,8 @@ class BlockController extends BaseController
             }
         }
         foreach ($blocks as $key => $block) {
-            $blocks[$key] = new Block();
+            $blockClass = $this->container->getParameter('open_orchestra_model.document.block.class');
+            $blocks[$key] = new $blockClass();
             $blocks[$key]->setComponent($block);
         }
 
