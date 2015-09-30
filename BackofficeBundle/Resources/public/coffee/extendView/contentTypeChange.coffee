@@ -31,5 +31,7 @@ extendView['contentTypeChange'] = {
         formGroupDefaultValue.show()
 
         widgetChannel.trigger 'ready', defaultValueView
-        activateTinyMce(defaultValueView, $('#' + defaultValueId)) if $('#' + defaultValueId).hasClass('tinymce')
+        if $('#' + defaultValueId).hasClass('tinymce')
+            tinymce.editors = []
+            activateTinyMce(defaultValueView, $('#' + defaultValueId))
 }
