@@ -132,7 +132,8 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
             'type' => 'field_option',
             'allow_add' => false,
             'allow_delete' => false,
-            'label' => 'open_orchestra_backoffice.form.field_type.options',
+            'label' => false,
+            'options' => array( 'label' => false ),
         ));
     }
 }

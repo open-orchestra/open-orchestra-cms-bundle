@@ -78,7 +78,8 @@ class ContentTypeType extends AbstractType
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.field_type.add'),
                     'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.field_type.new'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.field_type.delete'),
-                )
+                ),
+                'options' => array( 'label' => false ),
             ));
 
         $builder->addEventSubscriber(new ContentTypeTypeSubscriber());
