@@ -51,6 +51,5 @@ class KeywordTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->buildForm($builder, array());
 
         Phake::verify($builder, Phake::times(1))->add(Phake::anyParameters());
-        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 }

@@ -91,8 +91,8 @@ class BlockTypeTest extends \PHPUnit_Framework_TestCase
     public function provideOptionsAndCount()
     {
         return array(
-            array(array(), 2),
-            array(array('disabled' => false), 2),
+            array(array(), 1),
+            array(array('disabled' => false), 1),
             array(array('disabled' => true), 1),
         );
     }

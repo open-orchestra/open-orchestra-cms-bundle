@@ -58,7 +58,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($builder, Phake::times(12))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(3))->trans(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**

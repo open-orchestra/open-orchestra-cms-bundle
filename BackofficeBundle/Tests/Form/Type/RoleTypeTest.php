@@ -57,7 +57,6 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->buildForm($builder, array());
 
         Phake::verify($builder, Phake::times(4))->add(Phake::anyParameters());
-        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
         Phake::verify($builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
