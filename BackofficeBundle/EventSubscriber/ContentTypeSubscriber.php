@@ -193,7 +193,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
         $contentTypeOptions = $contentTypeField->getFormOptions();
         $options = array();
         $field = $this->fieldTypesConfiguration[$contentTypeField->getType()];
-        if( isset($field['options'])) {
+        if (isset($field['options'])) {
             $configuratedOptions = $field['options'];
             foreach ($configuratedOptions as $optionName => $optionConfiguration) {
                 $options[$optionName] = (isset($contentTypeOptions[$optionName])) ? $contentTypeOptions[$optionName] : $optionConfiguration['default_value'];
