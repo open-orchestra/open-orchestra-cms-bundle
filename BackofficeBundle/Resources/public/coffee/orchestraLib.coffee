@@ -197,7 +197,6 @@ launchNotification = (type, message) ->
 
 #SMARTADMIN RESET LOCAL STORAGE OVERRIDE
 $.root_.on 'click', '[data-action="orchestraResetWidgets"]', (e) ->
-  console.log(e.currentTarget)
   callbacks = {}
   callbacks.yesCallback = ->
     if localStorage

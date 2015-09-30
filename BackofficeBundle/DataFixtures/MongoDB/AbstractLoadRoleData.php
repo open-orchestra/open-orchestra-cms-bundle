@@ -31,7 +31,8 @@ abstract class AbstractLoadRoleData implements FixtureInterface
      * Generate a translatedValue
      *
      * @param string $language
-     * @param string $value
+     * @param array  $translations
+     * @param string $defaultValue
      *
      * @return TranslatedValue
      */
