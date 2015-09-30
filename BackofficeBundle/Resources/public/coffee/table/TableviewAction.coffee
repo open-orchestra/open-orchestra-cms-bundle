@@ -24,8 +24,8 @@ TableviewAction = OrchestraView.extend(
     options = @options
     smartConfirm(
       'fa-trash-o',
-      'Delete this element',
-      'The removal will be final',
+      $(event.currentTarget).data('title'),
+      $(event.currentTarget).data('text'),
       callBackParams:
         url: @options.element.get('links')._self_delete
         row: $(event.target).closest('tr')

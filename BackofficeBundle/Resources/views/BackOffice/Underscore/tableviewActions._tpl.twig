@@ -5,7 +5,12 @@
         </a>
     <% } %>
     <% if (typeof links._self_delete !== 'undefined' ) { %>
-        <a href="#" class="btn btn-danger btn-xs ajax-delete" title="{{ 'open_orchestra_backoffice.form.delete'|trans({}, 'messages', language) }}">
+        <a
+            href="#" class="btn btn-danger btn-xs ajax-delete"
+            title="{{ 'open_orchestra_backoffice.form.delete'|trans({}, 'messages', language) }}"
+            data-title="{{ 'open_orchestra_backoffice.form.delete_confirm.title'|trans() }}"
+            data-text="{{ 'open_orchestra_backoffice.form.delete_confirm.text'|trans() }}"
+        >
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </a>
     <% } %>
