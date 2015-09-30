@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -207,16 +208,26 @@ class NodeManager
      */
     protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
     {
-        foreach ($node->getAreas() as $area) {
-            $newArea = clone $area;
-            $newNode->addArea($newArea);
-        }
+        $this->duplicateArea($node, $newNode);
         foreach ($node->getBlocks() as $block) {
             $newBlock = clone $block;
             $newNode->addBlock($newBlock);
         }
 
         return $newNode;
+    }
+
+    /**
+     * @param AreaContainerInterface $areaContainer
+     * @param AreaContainerInterface $newAreaContainer
+     */
+    protected function duplicateArea(AreaContainerInterface $areaContainer, AreaContainerInterface $newAreaContainer)
+    {
+        foreach ($areaContainer->getAreas() as $area) {
+            $newArea = clone $area;
+            $newAreaContainer->addArea($newArea);
+            $this->duplicateArea($area, $newArea);
+        }
     }
 
     /**
