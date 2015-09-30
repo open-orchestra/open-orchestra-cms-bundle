@@ -84,6 +84,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getBlocks()->thenReturn(array());
+        Phake::when($area)->getAreas()->thenReturn(array());
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getAreas()->thenReturn(array($area));
         Phake::when($node0)->getBlocks()->thenReturn(array($block));
