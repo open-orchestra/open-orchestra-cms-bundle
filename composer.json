@@ -10,11 +10,11 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "open-orchestra/open-orchestra-base-bundle": "*",
-        "open-orchestra/open-orchestra-base-api-bundle": "*",
-        "open-orchestra/open-orchestra-display-bundle": "*",
-        "open-orchestra/open-orchestra-user-bundle": "*",
-        "open-orchestra/open-orchestra-model-interface": "*",
+        "open-orchestra/open-orchestra-base-bundle": "~1.0.0",
+        "open-orchestra/open-orchestra-base-api-bundle": "~1.0.0",
+        "open-orchestra/open-orchestra-display-bundle": "~1.0.0",
+        "open-orchestra/open-orchestra-user-bundle": "~1.0.0",
+        "open-orchestra/open-orchestra-model-interface": "~1.0.0",
         "braincrafted/bootstrap-bundle": "2.1.2",
         "stfalcon/tinymce-bundle": "0.3.8"
     },
