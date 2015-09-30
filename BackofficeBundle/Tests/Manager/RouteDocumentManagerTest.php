@@ -42,6 +42,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->siteAliasFr)->getLanguage()->thenReturn('fr');
         Phake::when($this->siteAliasFr)->getDomain()->thenReturn($this->domainFr);
         Phake::when($this->siteAliasFr)->getScheme()->thenReturn(ReadSchemeableInterface::SCHEME_HTTPS);
+        Phake::when($this->siteAliasFr)->getPrefix()->thenReturn('prefixFr');
         $this->siteAliasEn = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($this->siteAliasEn)->getLanguage()->thenReturn('en');
         Phake::when($this->siteAliasEn)->getDomain()->thenReturn($this->domainEn);
@@ -111,21 +112,21 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     public function provideNodeData()
     {
         return array(
-            array('fr', 'nodeId', array(1, 3), '/foo', '/foo'),
+            array('fr', 'nodeId', array(1, 3), '/foo', '/prefixFr/foo'),
             array('en', 'nodeId', array(0, 2), '/foo', '/foo'),
-            array('fr', 'nodeId', array(1, 3), 'foo', 'foo'),
+            array('fr', 'nodeId', array(1, 3), 'foo', '/prefixFr/foo'),
             array('en', 'nodeId', array(0, 2), 'foo', 'foo'),
-            array('fr', 'nodeId', array(1, 3), '/foo', '/foo', NodeInterface::ROOT_NODE_ID),
+            array('fr', 'nodeId', array(1, 3), '/foo', '/prefixFr/foo', NodeInterface::ROOT_NODE_ID),
             array('en', 'nodeId', array(0, 2), '/foo', '/foo', NodeInterface::ROOT_NODE_ID),
-            array('fr', 'nodeId', array(1, 3), 'foo', 'foo', NodeInterface::ROOT_NODE_ID),
+            array('fr', 'nodeId', array(1, 3), 'foo', '/prefixFr/foo', NodeInterface::ROOT_NODE_ID),
             array('en', 'nodeId', array(0, 2), 'foo', 'foo', NodeInterface::ROOT_NODE_ID),
-            array('fr', 'nodeId', array(1, 3), '/foo', '/foo', '-'),
+            array('fr', 'nodeId', array(1, 3), '/foo', '/prefixFr/foo', '-'),
             array('en', 'nodeId', array(0, 2), '/foo', '/foo', '-'),
-            array('fr', 'nodeId', array(1, 3), 'foo', 'foo', '-'),
+            array('fr', 'nodeId', array(1, 3), 'foo', '/prefixFr/foo', '-'),
             array('en', 'nodeId', array(0, 2), 'foo', 'foo', '-'),
-            array('fr', 'nodeId', array(1, 3), '/foo', '/foo', 'parent'),
+            array('fr', 'nodeId', array(1, 3), '/foo', '/prefixFr/foo', 'parent'),
             array('en', 'nodeId', array(0, 2), '/foo', '/foo', 'parent'),
-            array('fr', 'nodeId', array(1, 3), 'foo', '/bar/foo', 'parent'),
+            array('fr', 'nodeId', array(1, 3), 'foo', '/prefixFr/bar/foo', 'parent'),
             array('en', 'nodeId', array(0, 2), 'foo', '/bar/foo', 'parent'),
         );
     }

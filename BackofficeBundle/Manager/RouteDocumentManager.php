@@ -69,6 +69,9 @@ class RouteDocumentManager
                 $route->setSiteId($site->getSiteId());
                 $route->setAliasId($key);
                 $pattern = $this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage(), $site->getSiteId());
+                if ($alias->getPrefix()) {
+                    $pattern = $this->suppressDoubleSlashes('/' . $alias->getPrefix() . '/' . $pattern);
+                }
                 $route->setPattern($pattern);
                 $routes[] = $route;
             }
@@ -135,7 +138,7 @@ class RouteDocumentManager
         $parent = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
-            return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language, $siteId));
+            return $this->suppressDoubleSlashes($this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language, $siteId));
         }
 
         return $suffix;
@@ -188,5 +191,15 @@ class RouteDocumentManager
         }
 
         return $route;
+    }
+
+    /**
+     * @param string $route
+     *
+     * @return string
+     */
+    protected function suppressDoubleSlashes($route)
+    {
+        return str_replace('//', '/', $route);
     }
 }
