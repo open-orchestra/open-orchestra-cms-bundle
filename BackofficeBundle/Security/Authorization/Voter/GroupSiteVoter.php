@@ -6,6 +6,7 @@ use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -93,6 +94,9 @@ class GroupSiteVoter implements VoterInterface
         $roles = array();
         /** @var GroupInterface $group */
         foreach ($groups as $group) {
+            if (!$group->getSite() instanceof SiteInterface) {
+                continue;
+            }
             $siteId = $group->getSite()->getSiteId();
             foreach ($group->getRoles() as $role) {
                 $roles[$role][] = $siteId;
