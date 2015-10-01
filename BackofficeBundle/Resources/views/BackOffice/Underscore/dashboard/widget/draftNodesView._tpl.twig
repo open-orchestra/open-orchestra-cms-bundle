@@ -1,0 +1,7 @@
+{% extends "OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/widget/abstract/abstractWidgetListView._tpl.twig" %}
+
+{% block name %}draft-nodes{% endblock %}
+
+{% block title %}{{ 'open_orchestra_backoffice.dashboard.node_draft_title'|trans }}{% endblock %}
+
+{% block apiUrl %}{{ path('open_orchestra_api_node_list_author_not_published') }}{% endblock %}

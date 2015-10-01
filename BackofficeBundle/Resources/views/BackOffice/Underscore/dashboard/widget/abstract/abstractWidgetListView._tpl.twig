@@ -1,13 +1,14 @@
 <article class="col-sm-12 col-md-12 col-lg-6 sortable-grid ui-sortable">
     <!-- new widget -->
-    <div id="widget-id-<%= widget_name %>"
+    <div id="widget-id-{% block name %}{% endblock %}"
          class="jarviswidget jarviswidget-sortable jarviswidget-color-blueDark"
          data-widget-deletebutton="false"
          data-widget-editbutton="false"
          data-widget-colorbutton="false"
+         data-widget-apiurl="{% block apiUrl %}{% endblock %}"
      >
         <header>
-            <h2><%= title %></h2>
+            <h2>{% block title %}{% endblock %}</h2>
         </header>
         <div>
             <div class="widget-body">

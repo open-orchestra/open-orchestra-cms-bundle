@@ -33,6 +33,8 @@ parameters:
     open_orchestra_api.transformer.trash_item.class: OpenOrchestra\ApiBundle\Transformer\TrashItemTransformer
     open_orchestra_api.transformer.trash_item_collection.class: OpenOrchestra\ApiBundle\Transformer\TrashItemCollectionTransformer
     open_orchestra_api.transformer.translation.class: OpenOrchestra\ApiBundle\Transformer\TranslationTransformer
+    open_orchestra_api.transformer.widget_collection.class: OpenOrchestra\ApiBundle\Transformer\WidgetCollectionTransformer
+    open_orchestra_api.transformer.widget.class: OpenOrchestra\ApiBundle\Transformer\WidgetTransformer
 
 services:
     open_orchestra_api.transformer.node:
@@ -206,5 +208,13 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.translation:
         class: %open_orchestra_api.transformer.translation.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.widget_collection:
+        class: %open_orchestra_api.transformer.widget_collection.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.widget:
+        class: %open_orchestra_api.transformer.widget.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
