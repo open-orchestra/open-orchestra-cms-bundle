@@ -3,7 +3,6 @@
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -27,7 +26,9 @@ class RegistrationUserType extends RegistrationFormType
 
         parent::buildForm($builder, $options);
 
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if (array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
+        }
     }
 
     /**

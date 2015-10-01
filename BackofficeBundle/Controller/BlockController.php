@@ -29,18 +29,18 @@ class BlockController extends AbstractAdminController
     {
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
         $block = $node->getBlocks()->get($blockNumber);
-        $form = $this->createForm(
-            'block',
-            $block,
-            array(
-                'action' => $this->generateUrl('open_orchestra_backoffice_block_form', array(
-                    'nodeId' => $nodeId,
-                    'blockNumber' => $blockNumber
-                )),
-                'blockPosition' => $blockNumber,
-                'disabled' => !$node->isEditable()
-            )
+
+        $options = array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_block_form', array(
+                'nodeId' => $nodeId,
+                'blockNumber' => $blockNumber)),
+            'blockPosition' => $blockNumber,
         );
+
+        if ($node) {
+            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($node);
+        }
+        $form = parent::createForm('block', $block, $options);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');

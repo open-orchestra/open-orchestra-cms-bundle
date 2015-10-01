@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,7 +39,9 @@ class ApiClientType extends AbstractType
         ));
         $builder->add('key', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.key'));
         $builder->add('secret', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.secret'));
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if (array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
+        }
     }
 
     /**

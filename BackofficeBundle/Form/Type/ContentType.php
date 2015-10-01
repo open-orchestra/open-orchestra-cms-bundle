@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,7 +45,9 @@ class ContentType extends AbstractType
             ));
 
         $builder->addEventSubscriber($this->contentTypeSubscriber);
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if (array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
+        }
     }
 
     /**

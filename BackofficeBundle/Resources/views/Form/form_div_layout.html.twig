@@ -135,3 +135,16 @@
         {% for attrname, attrvalue in label_attr %}{{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}"{% endfor %}
     {% endspaceless %}
 {% endblock widget_attributes %}
+
+{% block form_end %}
+    {% spaceless %}
+        <div class="form-group">
+            <div class="col-lg-12">
+                {% set label = 'open_orchestra_backoffice.form.submit' %}
+                {% set attr = {'class': 'submit_form'} %}
+                {{ block('submit_widget') }}
+            </div>
+        </div>
+        {{ parent() }}
+    {% endspaceless %}
+{% endblock form_end %}

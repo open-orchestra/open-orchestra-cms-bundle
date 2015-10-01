@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,7 +49,9 @@ class UserType extends AbstractType
             'label' => 'open_orchestra_user.form.user.language'
         ));
 
-        $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        if (array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
+        }
     }
 
     /**

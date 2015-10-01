@@ -37,9 +37,13 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE_AREA, new NodeEvent($node));
+        $form = $this->generateForm($request, $actionUrl, $area);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(NodeEvents::NODE_UPDATE_AREA, new NodeEvent($node));
+        }
 
-        return $this->handleAreaForm($request, $actionUrl, $area, $node);
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -61,9 +65,13 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
-        $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($template));
+        $form = $this->generateForm($request, $actionUrl, $area);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($template));
+        }
 
-        return $this->handleAreaForm($request, $actionUrl, $area);
+        return $this->renderAdminForm($form);
     }
 
     /**
@@ -74,21 +82,16 @@ class AreaController extends AbstractAdminController
      *
      * @return Response
      */
-    protected function handleAreaForm(Request $request, $actionUrl, $area, NodeInterface $node = null)
+    protected function generateForm(Request $request, $actionUrl, $area, NodeInterface $node = null)
     {
-        $formParameters = array('action' => $actionUrl);
-        if ($node && !$node->isEditable()) {
-            $formParameters['disabled'] = true;
+        $options = array('action' => $actionUrl);
+        if ($node) {
+            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($node);
         }
-        $form = $this->createForm('area', $area, $formParameters);
+        $form = parent::createForm('area', $area, $options);
 
         $form->handleRequest($request);
 
-        $this->handleForm(
-            $form,
-            $this->get('translator')->trans('open_orchestra_backoffice.form.area.success')
-        );
-
-        return $this->renderAdminForm($form);
+        return $form;
     }
 }

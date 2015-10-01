@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
@@ -125,7 +124,9 @@ class NodeType extends AbstractType
             $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
             $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
-            $builder->addEventSubscriber(new AddSubmitButtonSubscriber());
+        }
+        if (array_key_exists('disabled', $options)) {
+            $builder->setAttribute('disabled', $options['disabled']);
         }
     }
 
