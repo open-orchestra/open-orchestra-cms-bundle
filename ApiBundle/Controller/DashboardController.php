@@ -26,7 +26,7 @@ class DashboardController extends BaseController
      */
     public function listWidgetsAction(Request $request)
     {
-        $widgetCollection = $this->container->getParameter('open_orchestra_backoffice.dashboard.widgets');
+        $widgetCollection = $this->container->getParameter('open_orchestra_backoffice.dashboard_widgets');
 
         return $this->get('open_orchestra_api.transformer_manager')->get('widget_collection')->transform($widgetCollection);
     }

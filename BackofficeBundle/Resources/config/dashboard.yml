@@ -1,5 +1,5 @@
 parameters:
-    open_orchestra_backoffice.dashboard.widgets:
+    open_orchestra_backoffice.dashboard_widgets:
         - last_nodes
         - draft_nodes
         - last_contents
