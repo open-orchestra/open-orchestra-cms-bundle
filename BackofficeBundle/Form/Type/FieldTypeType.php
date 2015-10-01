@@ -52,7 +52,7 @@ class FieldTypeType extends AbstractType
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this->translateValueInitializer, 'preSubmitFieldType'));
-        if(array_key_exists('property_path', $options) && is_null($options['property_path'])){
+        if (array_key_exists('property_path', $options) && is_null($options['property_path'])){
             $builder->setData($options['prototype_data']());
         }
         $builder

@@ -31,7 +31,7 @@ class ThemeType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.theme.name'
         ));
 
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }

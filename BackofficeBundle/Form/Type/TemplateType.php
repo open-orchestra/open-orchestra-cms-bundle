@@ -50,7 +50,7 @@ class TemplateType extends AbstractType
             ));
 
         $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }

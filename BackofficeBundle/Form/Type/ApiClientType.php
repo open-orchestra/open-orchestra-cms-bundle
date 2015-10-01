@@ -39,7 +39,7 @@ class ApiClientType extends AbstractType
         ));
         $builder->add('key', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.key'));
         $builder->add('secret', 'text', array('disabled' => true, 'label' => 'open_orchestra_backoffice.form.api_client.secret'));
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }

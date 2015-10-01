@@ -49,7 +49,7 @@ class UserType extends AbstractType
             'label' => 'open_orchestra_user.form.user.language'
         ));
 
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }

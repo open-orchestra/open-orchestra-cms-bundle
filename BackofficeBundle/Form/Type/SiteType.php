@@ -94,7 +94,7 @@ class SiteType extends AbstractType
             ))
             ;
         $builder->addEventSubscriber(new WebSiteSubscriber());
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }

@@ -51,7 +51,7 @@ class StatusType extends AbstractType
         $builder->add('displayColor', 'orchestra_color_choice', array(
             'label' => 'open_orchestra_backoffice.form.status.display_color'
         ));
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }

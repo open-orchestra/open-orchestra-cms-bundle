@@ -51,7 +51,7 @@ class RedirectionType extends AbstractType
         ));
 
         $builder->addEventSubscriber(new RedirectionTypeSubscriber());
-        if(array_key_exists('disabled', $options)) {
+        if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
     }
