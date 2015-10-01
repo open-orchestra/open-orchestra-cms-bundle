@@ -18,7 +18,7 @@ DashboardView = OrchestraView.extend(
     currentView = @
     $.ajax
       type: "GET"
-      url: $('a[href="#dashboard"]').data("url")
+      url: $('#nav-dashboard').data('url')
       success: (response) ->
         for widget in response.widgets
           new window[appConfigurationView.getConfiguration 'dashboard_widgets', widget.type]

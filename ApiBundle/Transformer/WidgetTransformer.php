@@ -10,10 +10,8 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
  */
 class WidgetTransformer extends AbstractTransformer
 {
-
     /**
-     * @param string $type
-     * @param array  $parameters
+     * @param string $widget
      *
      * @return FacadeInterface
      *
