@@ -81,7 +81,7 @@ class OpenOrchestraBackofficeExtension extends Extension
             $loader->load('test_services.yml');
         }
 
-        if (isset($config['dashboard_widgets'])) {
+        if (isset($config['dashboard_widgets']) && count($config['dashboard_widgets'])) {
             $container->setParameter(
                 'open_orchestra_backoffice.dashboard_widgets',
                 $config['dashboard_widgets']
