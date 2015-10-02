@@ -47,6 +47,8 @@ class ApiControllersTest extends AbstractControllerTest
             array('/api/template/template_full'),
             array('/api/datatable/translation'),
             array('/api/trashcan/list'),
+            array('/api/translation/tinymce'),
+            array('/api/dashboard'),
         );
     }
 }
