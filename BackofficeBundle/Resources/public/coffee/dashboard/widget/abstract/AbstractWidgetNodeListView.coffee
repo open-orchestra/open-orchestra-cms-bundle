@@ -1,4 +1,4 @@
-DashboardWidgetListNodeView = DashboardWidgetListView.extend(
+AbstractWidgetNodeListView = AbstractWidgetListView.extend(
 
   generateUrl: (entity) ->
     parameter =

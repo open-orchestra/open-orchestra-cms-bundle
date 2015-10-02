@@ -4,7 +4,7 @@ module.exports = function(grunt) {
         // Source COFFEE files are located inside : bundles/[bundle]/coffee/
         // Destination JS files are located inside : built/[bundle]/js/
         var mappingFileCoffee = grunt.file.expandMapping(
-            ['*/coffee/*.coffee', '*/coffee/*/*.coffee', '*/coffee/*/*/*.coffee'],
+            ['*/coffee/*.coffee', '*/coffee/*/*.coffee', '*/coffee/*/*/*.coffee', '*/coffee/*/*/*/*.coffee'],
             'web/built/', {
                 cwd: 'web/bundles/',
                 rename: function(dest, matchedSrcPath, options) {

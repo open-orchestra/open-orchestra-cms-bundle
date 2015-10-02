@@ -58,9 +58,13 @@ module.exports = {
 
         //--[ DASHBOARD ]--//
         'web/built/openorchestrabackoffice/js/dashboard/DashboardView.js',
-        'web/built/openorchestrabackoffice/js/dashboard/DashboardWidgetListView.js',
-        'web/built/openorchestrabackoffice/js/dashboard/DashboardWidgetListNodeView.js',
-        'web/built/openorchestrabackoffice/js/dashboard/DashboardWidgetListContentView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/abstract/AbstractWidgetListView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/abstract/AbstractWidgetNodeListView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/abstract/AbstractWidgetContentListView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/LastNodesView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/DraftNodesView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/LastContentsView.js',
+        'web/built/openorchestrabackoffice/js/dashboard/widget/DraftContentsView.js',
 
         //--[ PAGE ]--//
         'web/built/openorchestrabackoffice/js/page/makeSortable.js',

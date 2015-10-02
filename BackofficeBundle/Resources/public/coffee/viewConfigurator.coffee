@@ -4,7 +4,6 @@ OrchestraViewConfigurator = ->
     'editEntity': FullPageFormView
     'addEntity': FullPageFormView
     'editEntityTab': TabElementFormView
-    'addDashboardWidget': DashboardWidgetListView
     'showTab': TabView
     'addArea': AreaView
     'addBlock': BlockView

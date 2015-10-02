@@ -51,8 +51,11 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('key')
                 ->prototype('scalar')->end()
             ->end()
-        ->end();
-
+            ->arrayNode('dashboard_widgets')
+                ->info('List of widgets presented on the dashboard')
+                ->prototype('scalar')->end()
+                ->end()
+            ->end();
         return $treeBuilder;
     }
 

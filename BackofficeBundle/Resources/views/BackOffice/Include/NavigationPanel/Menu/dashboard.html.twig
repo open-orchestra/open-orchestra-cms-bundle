@@ -1,19 +1,8 @@
 <a
-        href="#dashboard"
-        title="{{ ('open_orchestra_backoffice.left_menu.dashboard.title')|trans }}"
-        data-widget-name = "last-node, node-draft, last-content, content-draft"
-        data-widget-last-node-options = "title, url"
-        data-widget-last-node-title = "{{ ('open_orchestra_backoffice.dashboard.last_node_title')|trans }}"
-        data-widget-last-node-url = "{{ path('open_orchestra_api_node_list_author') }}"
-        data-widget-node-draft-options = "title, url"
-        data-widget-node-draft-title = "{{ ('open_orchestra_backoffice.dashboard.node_draft_title')|trans }}"
-        data-widget-node-draft-url= "{{ path('open_orchestra_api_node_list_author_not_published') }}"
-        data-widget-last-content-options = "title, url"
-        data-widget-last-content-title = "{{ ('open_orchestra_backoffice.dashboard.last_content_title')|trans }}"
-        data-widget-last-content-url = "{{ path('open_orchestra_api_content_list_author') }}"
-        data-widget-content-draft-options = "title, url"
-        data-widget-content-draft-title = "{{ ('open_orchestra_backoffice.dashboard.content_draft_title')|trans }}"
-        data-widget-content-draft-url= "{{ path('open_orchestra_api_content_list_author_not_published') }}"
+    href="#dashboard"
+    title="{{ ('open_orchestra_backoffice.left_menu.dashboard.title')|trans }}"
+    data-url="{{ path('open_orchestra_api_dashboard') }}"
+    id="nav-dashboard"
 >
     <i class="fa fa-lg fa-fw fa-home"></i>
     <span class="menu-item-parent">{{ ('open_orchestra_backoffice.left_menu.dashboard.title')|trans }}</span>

@@ -67,6 +67,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('authorize_status_change.yml');
         $loader->load('authorize_edition.yml');
         $loader->load('restore_entity.yml');
+        $loader->load('dashboard.yml');
 
         if (isset($config['field_types'])) {
             $this->addApplicationFieldTypes($config['field_types'], $container);
@@ -78,6 +79,13 @@ class OpenOrchestraBackofficeExtension extends Extension
 
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('test_services.yml');
+        }
+
+        if (isset($config['dashboard_widgets']) && count($config['dashboard_widgets'])) {
+            $container->setParameter(
+                'open_orchestra_backoffice.dashboard_widgets',
+                $config['dashboard_widgets']
+            );
         }
 
         $availableColor = $config['available_color'];
