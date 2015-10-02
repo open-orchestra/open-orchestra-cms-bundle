@@ -81,6 +81,13 @@ class OpenOrchestraBackofficeExtension extends Extension
             $loader->load('test_services.yml');
         }
 
+        if (isset($config['dashboard_widgets'])) {
+            $container->setParameter(
+                'open_orchestra_backoffice.dashboard_widgets',
+                $config['dashboard_widgets']
+            );
+        }
+
         $availableColor = $config['available_color'];
         if (empty($availableColor)) {
             $availableColor = array(
