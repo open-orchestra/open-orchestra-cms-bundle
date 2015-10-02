@@ -91,7 +91,7 @@ class NodeControllerTest extends AbstractControllerTest
 
         $crawler = $this->client->request('GET', '/admin/node/new/fixture_page_community');
 
-        $formUser = $crawler->selectButton('node_submit')->form();
+        $formUser = $crawler->selectButton('Save')->form();
 
         $nodeName = 'fixturetest' . time();
         $formUser['node[name]'] = 'fixturetest' . time();
