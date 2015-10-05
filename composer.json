@@ -29,15 +29,14 @@
         "bin-dir" : "bin"
     },
     "autoload": {
-        "psr-0": {
-            "OpenOrchestra\\ModelLogBundle": "",
-            "OpenOrchestra\\LogBundle": "",
-            "OpenOrchestra\\BackofficeBundle": "",
-            "OpenOrchestra\\Backoffice": "",
-            "OpenOrchestra\\GroupBundle": "",
-            "OpenOrchestra\\ApiBundle": "",
-            "OpenOrchestra\\UserAdminBundle": ""
+        "psr-4": {
+            "OpenOrchestra\\ModelLogBundle\\": "ModelLogBundle/",
+            "OpenOrchestra\\LogBundle\\": "LogBundle/",
+            "OpenOrchestra\\BackofficeBundle\\": "BackofficeBundle/",
+            "OpenOrchestra\\Backoffice\\": "Backoffice/",
+            "OpenOrchestra\\GroupBundle\\": "GroupBundle/",
+            "OpenOrchestra\\ApiBundle\\": "ApiBundle/",
+            "OpenOrchestra\\UserAdminBundle\\": "UserAdminBundle/"
         }
-    },
-    "target-dir": "OpenOrchestra"
+    }
 }
