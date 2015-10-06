@@ -164,7 +164,7 @@ class NodeController extends BaseController
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $node = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndLanguageAndSiteId($nodeId, $language, $siteId);
+        $node = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
     }
@@ -248,7 +248,7 @@ class NodeController extends BaseController
      */
     protected function findOneNode($nodeId, $language, $siteId, $version = null)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
+        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
 
         return $node;
     }

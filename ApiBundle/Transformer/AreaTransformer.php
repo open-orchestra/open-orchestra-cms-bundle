@@ -72,7 +72,7 @@ class AreaTransformer extends AbstractTransformer
             $isInside = true;
             if (0 !== $block['nodeId'] && $node->getNodeId() != $block['nodeId']) {
                 $siteId = $this->currentSiteManager->getCurrentSiteId();
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
+                $otherNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
                 $isInside = false;
             }
             $facade->addBlock($this->getTransformer('block')->transform(
@@ -215,7 +215,7 @@ class AreaTransformer extends AbstractTransformer
             $block = $node->getBlock($blockArray['blockId']);
             if ($blockArray['nodeId'] !== 0) {
                 $siteId = $this->currentSiteManager->getCurrentSiteId();
-                $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($blockArray['nodeId'], $node->getLanguage(), $siteId);
+                $blockNode = $this->nodeRepository->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $siteId);
                 $block = $blockNode->getBlock($blockArray['blockId']);
             }
             $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));

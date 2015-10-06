@@ -135,7 +135,7 @@ class RouteDocumentManager
             return $suffix;
         }
 
-        $parent = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findPublishedInLastVersion($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
             return $this->suppressDoubleSlashes($this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language, $siteId));
@@ -165,7 +165,7 @@ class RouteDocumentManager
             return null;
         }
 
-        $node = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(
+        $node = $this->nodeRepository->findPublishedInLastVersion(
             $redirection->getNodeId(),
             $redirection->getLocale(),
             $redirection->getSiteId()

@@ -26,7 +26,7 @@ class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
         $this->lastVersionNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         Phake::when($this->repository)
-            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())
+            ->findInLastVersion(Phake::anyParameters())
             ->thenReturn($this->lastVersionNode);
 
         $this->strategy = new NodeVersionStrategy($this->repository);
@@ -101,7 +101,7 @@ class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
     public function testIsEditableWithNoNode()
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->repository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->repository)->findInLastVersion(Phake::anyParameters())->thenReturn(null);
 
         $this->assertSame(true, $this->strategy->isEditable($node));
     }

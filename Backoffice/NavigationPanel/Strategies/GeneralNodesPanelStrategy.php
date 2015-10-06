@@ -42,7 +42,7 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
     public function show()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId, NodeInterface::TYPE_TRANSVERSE);
+        $nodes = $this->nodeRepository->findLastVersionByType($siteId, NodeInterface::TYPE_TRANSVERSE);
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/generalNodes.html.twig',

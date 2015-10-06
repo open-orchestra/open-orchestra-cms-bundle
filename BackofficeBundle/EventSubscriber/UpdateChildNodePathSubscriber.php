@@ -39,7 +39,7 @@ class UpdateChildNodePathSubscriber implements EventSubscriberInterface
         $node = $event->getNode();
         $parentPath = $node->getPath();
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $sons = $this->nodeRepository->findByParentIdAndSiteId($node->getNodeId(), $siteId);
+        $sons = $this->nodeRepository->findByParent($node->getNodeId(), $siteId);
 
         $sonsToUpdate = array();
         foreach ($sons as $son) {

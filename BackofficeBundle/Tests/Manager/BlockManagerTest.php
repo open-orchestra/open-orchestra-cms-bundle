@@ -33,7 +33,7 @@ class BlockManagerTest extends \PHPUnit_Framework_TestCase
     public function testBlockConsistency($node, $node2)
     {
         Phake::when($this->nodeRepository)
-            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node2);
+            ->findInLastVersion(Phake::anyParameters())->thenReturn($node2);
         Phake::when($this->nodeRepository)->find(Phake::anyParameters())->thenReturn($node2);
 
         $this->assertTrue($this->manager->blockConsistency($node));

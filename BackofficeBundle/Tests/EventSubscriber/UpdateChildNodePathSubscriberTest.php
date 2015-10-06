@@ -76,7 +76,7 @@ class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
         $sons->add($son1);
         $sons->add($son2);
         $sons->add($son3);
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($parentNodeId, $siteId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByParent($parentNodeId, $siteId)->thenReturn($sons);
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($event)->getNode()->thenReturn($parent);

@@ -69,7 +69,7 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())->thenReturn(
+        Phake::when($this->nodeRepository)->findLastVersionByType(Phake::anyParameters())->thenReturn(
             array(
                 $this->node1,
                 $this->node2

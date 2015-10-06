@@ -40,7 +40,7 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        $lastVersionNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(
+        $lastVersionNode = $this->nodeRepository->findInLastVersion(
             $document->getNodeId(),
             $document->getLanguage(),
             $document->getSiteId()

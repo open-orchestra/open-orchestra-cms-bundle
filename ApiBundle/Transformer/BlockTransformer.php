@@ -160,7 +160,7 @@ class BlockTransformer extends AbstractTransformer
                     $blockElement = $node->getBlock($facade->blockId);
                 } elseif ($facade->nodeId != $node->getNodeId()) {
                     $siteId = $this->currentSiteManager->getCurrentSiteId();
-                    $blockNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
+                    $blockNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
                     $blockElement = $blockNode->getBlock($facade->blockId);
                 }
             }
