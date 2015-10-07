@@ -101,7 +101,7 @@ class AreaManager
                 $block = $node->getBlock($blockReference['blockId']);
                 if ($blockReference['nodeId'] !== 0) {
                     $blockNode = $this->nodeRepository
-                        ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($blockReference['nodeId'], $node->getLanguage(), $node->getSiteId());
+                        ->findInLastVersion($blockReference['nodeId'], $node->getLanguage(), $node->getSiteId());
                     $block = $blockNode->getBlock($blockReference['blockId']);
                 }
                 $block->removeAreaRef($areaId, $node->getId());
@@ -150,7 +150,7 @@ class AreaManager
         foreach ($blocks as $block) {
             $otherNode = $node;
             if (!($block['nodeId'] === $node->getNodeId() || $block['nodeId'] === 0)) {
-                $otherNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
+                $otherNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
             }
             $consideredBlock = $otherNode->getBlock($block['blockId']);
             if (!$this->areaIdExistInBlock($consideredBlock, $area->getAreaId())) {

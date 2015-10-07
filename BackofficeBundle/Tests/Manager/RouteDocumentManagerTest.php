@@ -83,7 +83,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn('/bar');
         Phake::when($this->nodeRepository)
-            ->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())
+            ->findPublishedInLastVersion(Phake::anyParameters())
             ->thenReturn($parent);
 
         $routeDocuments = $this->manager->createForNode($node);
@@ -192,7 +192,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
         Phake::when($redirection)->getLocale()->thenReturn($locale);
 
-        Phake::when($this->nodeRepository)->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($node);
+        Phake::when($this->nodeRepository)->findPublishedInLastVersion(Phake::anyParameters())->thenReturn($node);
 
         $routeDocuments = $this->manager->createOrUpdateForRedirection($redirection);
 
@@ -207,7 +207,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             ), $route->getDefaults());
         }
         Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
-        Phake::verify($this->nodeRepository)->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $locale, $siteId);
+        Phake::verify($this->nodeRepository)->findPublishedInLastVersion($nodeId, $locale, $siteId);
     }
 
     /**
@@ -256,7 +256,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             ), $route->getDefaults());
         }
         Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
-        Phake::verify($this->nodeRepository, Phake::never())->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters());
+        Phake::verify($this->nodeRepository, Phake::never())->findPublishedInLastVersion(Phake::anyParameters());
 
     }
 

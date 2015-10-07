@@ -160,7 +160,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($nodeTransverse)->getBlock(Phake::anyParameters())->thenReturn($block);
         Phake::when($this->blockParameterManager)->getBlockParameter(Phake::anyParameters())->thenReturn($blockParameter);
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($facadeNodeId, $this->node->getLanguage(), $siteId)->thenReturn($nodeTransverse);
+        Phake::when($this->nodeRepository)->findInLastVersion($facadeNodeId, $this->node->getLanguage(), $siteId)->thenReturn($nodeTransverse);
 
         $expected = $this->blockTransformer->reverseTransformToArray($this->blockFacade, $this->node);
 

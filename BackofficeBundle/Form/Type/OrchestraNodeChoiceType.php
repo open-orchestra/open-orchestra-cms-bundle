@@ -50,7 +50,7 @@ class OrchestraNodeChoiceType extends AbstractType
     protected function getChoices()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
+        $nodes = $this->nodeRepository->findLastVersionByType($siteId);
         $orderedNodes = $this->treeManager->generateTree($nodes);
 
         return $this->getHierarchicalChoices($orderedNodes);

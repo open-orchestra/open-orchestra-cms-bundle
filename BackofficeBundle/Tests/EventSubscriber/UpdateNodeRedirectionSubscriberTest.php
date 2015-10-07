@@ -71,7 +71,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateRedirectionWithNoPerviousNode()
     {
-        Phake::when($this->nodeRepository)->findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
             ->thenReturn(array($this->node));
 
         $this->subscriber->updateRedirection($this->nodeEvent);
@@ -88,7 +88,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($node)->getId()->thenReturn('other');
         Phake::when($node)->getRoutePattern()->thenReturn($this->routePattern);
 
-        Phake::when($this->nodeRepository)->findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
             ->thenReturn(array($this->node, $node));
 
         $this->subscriber->updateRedirection($this->nodeEvent);
@@ -109,9 +109,9 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
         $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn($oldPattern);
 
-        Phake::when($this->nodeRepository)->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findPublishedInLastVersion(Phake::anyParameters())
             ->thenReturn($parent);
-        Phake::when($this->nodeRepository)->findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
             ->thenReturn(array($this->node, $node));
 
         $this->subscriber->updateRedirection($this->nodeEvent);

@@ -54,7 +54,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $this->otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())
             ->thenReturn($this->otherNode);
 
         $this->transformer = Phake::mock('OpenOrchestra\ApiBundle\Transformer\BlockTransformer');
@@ -200,7 +200,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         ));
 
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $this->language, $siteId);
+        Phake::verify($this->nodeRepository)->findInLastVersion($nodeId, $this->language, $siteId);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
         Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }

@@ -79,8 +79,8 @@ class NodeManager
      */
     public function duplicateNode($nodeId, $siteId, $language, $version = null)
     {
-        $node = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
-        $lastNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
+        $node = $this->nodeRepository->findVersion($nodeId, $language, $siteId, $version);
+        $lastNode = $this->nodeRepository->findInLastVersion($nodeId, $language, $siteId);
         $lastNodeVersion = $lastNode->getVersion();
         $status = $this->getEditableStatus($node);
         if ($status === null) {
@@ -191,7 +191,7 @@ class NodeManager
     public function hydrateNodeFromNodeId(NodeInterface $node, $nodeId)
     {
         $siteId = $this->contextManager->getCurrentSiteId();
-        $oldNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $node->getLanguage(), $siteId);
+        $oldNode = $this->nodeRepository->findInLastVersion($nodeId, $node->getLanguage(), $siteId);
 
         if ($oldNode) {
             $this->duplicateBlockAndArea($oldNode, $node);
@@ -267,7 +267,7 @@ class NodeManager
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
 
-        $parentNode = $this->nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndVersion($parentId, $language, $siteId);
+        $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
         $nodeType = NodeInterface::TYPE_DEFAULT;
         if ($parentNode instanceof NodeInterface) {
@@ -298,7 +298,7 @@ class NodeManager
     public function updateBlockReferences(NodeInterface $oldNode, NodeInterface $node)
     {
         $nodeTransverse = $this->nodeRepository
-            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
+            ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
 
         foreach($node->getAreas() as $area) {
             foreach ($area->getBlocks() as $areaBlock) {

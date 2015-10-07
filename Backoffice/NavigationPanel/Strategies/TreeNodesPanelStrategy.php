@@ -42,7 +42,7 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
     public function show()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
+        $nodes = $this->nodeRepository->findLastVersionByType($siteId);
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/nodes.html.twig',

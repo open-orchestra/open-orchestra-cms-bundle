@@ -39,7 +39,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         $node = $event->getNode();
         if ($node->getStatus()->isPublished()) {
             $siteId = $this->currentSiteManager->getCurrentSiteId();
-            $nodes = $this->nodeRepository->findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
+            $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
             foreach ($nodes as $otherNode) {
                 if ($otherNode->getId() != $node->getId() && $otherNode->getRoutePattern() != $node->getRoutePattern()) {
                     $this->redirectionManager->createRedirection(
@@ -74,7 +74,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
             return $suffix;
         }
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $parent = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findPublishedInLastVersion($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
             return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));

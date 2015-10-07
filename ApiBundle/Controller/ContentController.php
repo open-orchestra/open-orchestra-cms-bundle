@@ -134,7 +134,7 @@ class ContentController extends BaseController
         $mapping = array_merge($mapping, $mappingAttributes);
 
         $configuration->setDescriptionEntity($mapping);
-        $contentCollection = $repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration, $siteId);
+        $contentCollection = $repository->findPaginatedLastVersionByContentTypeAndSite($contentType, $configuration, $siteId);
         $recordsTotal = $repository->countByContentTypeInLastVersion($contentType);
         $recordsFiltered = $repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
 
@@ -201,7 +201,7 @@ class ContentController extends BaseController
      */
     public function listVersionAction(Request $request, $contentId)
     {
-        $contents = $this->get('open_orchestra_model.repository.content')->findByContentIdAndLanguage($contentId, $request->get('language'));
+        $contents = $this->get('open_orchestra_model.repository.content')->findByLanguage($contentId, $request->get('language'));
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($contents);
     }
@@ -255,7 +255,7 @@ class ContentController extends BaseController
     protected function findOneContent($contentId, $language, $version = null)
     {
         $contentRepository = $this->get('open_orchestra_model.repository.content');
-        $content = $contentRepository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
+        $content = $contentRepository->findOneByLanguageAndVersion($contentId, $language, $version);
 
         return $content;
     }

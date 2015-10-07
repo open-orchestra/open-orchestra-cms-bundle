@@ -25,7 +25,7 @@ class ContentVersionStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
-        Phake::when($this->contentRepository)->findOneByContentIdAndLanguage(Phake::anyParameters())->thenReturn($this->content);
+        Phake::when($this->contentRepository)->findOneByLanguage(Phake::anyParameters())->thenReturn($this->content);
 
         $this->strategy = new ContentVersionStrategy($this->contentRepository);
 
@@ -95,7 +95,7 @@ class ContentVersionStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testIsEditableWithNoContent()
     {
-        Phake::when($this->contentRepository)->findOneByContentIdAndLanguage(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->contentRepository)->findOneByLanguage(Phake::anyParameters())->thenReturn(null);
         $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
 
         $this->assertTrue($this->strategy->isEditable($content));

@@ -37,7 +37,7 @@ class ContentVersionStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        $lastDocument = $this->contentRepository->findOneByContentIdAndLanguage($document->getContentId(), $document->getLanguage());
+        $lastDocument = $this->contentRepository->findOneByLanguage($document->getContentId(), $document->getLanguage());
 
         if (!$lastDocument instanceof ContentInterface) {
             return true;
