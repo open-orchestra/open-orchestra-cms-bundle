@@ -133,8 +133,8 @@ class NodeController extends BaseController
     /**
      * @param boolean|null $published
      *
-     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_not_published", defaults={"published": null})
-     * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author", defaults={"published": false})
+     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_not_published", defaults={"published": false})
+     * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author", defaults={"published": null})
      * @Config\Method({"GET"})
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
