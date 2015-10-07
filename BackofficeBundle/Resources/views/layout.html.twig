@@ -21,6 +21,7 @@
                 {% endstylesheets %}
             {% endif %}
         {% endblock %}
+        <link rel="stylesheet" href="http://cdn.wysibb.com/css/default/wbbtheme.css" />
 
         <!-- Specifying a Webpage Icon for Web Clip
              Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
@@ -72,7 +73,8 @@
         </script>
     {% endif %}
 
-    {{ tinymce_init() }}
+    {#{{ tinymce_init() }}#}
+
 
     {% block javascripts %}
         {% if app.debug %}
@@ -85,7 +87,7 @@
             {% endjavascripts %}
         {% endif %}
     {% endblock %}
-
+    <script src="http://cdn.wysibb.com/js/jquery.wysibb.min.js"></script>
     <script>
         $(document).ready(function() {
             // DO NOT REMOVE : GLOBAL FUNCTIONS!

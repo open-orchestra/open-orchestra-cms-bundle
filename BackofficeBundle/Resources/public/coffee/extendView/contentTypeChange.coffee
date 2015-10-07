@@ -33,5 +33,5 @@ extendView['contentTypeChange'] = {
         widgetChannel.trigger 'ready', defaultValueView
         if $('#' + defaultValueId).hasClass('tinymce')
             tinymce.editors = []
-            activateTinyMce(defaultValueView, $('#' + defaultValueId))
+#            activateTinyMce(defaultValueView, $('#' + defaultValueId))
 }

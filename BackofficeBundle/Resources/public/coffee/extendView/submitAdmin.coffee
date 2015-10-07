@@ -8,6 +8,10 @@ extendView['submitAdmin'] = {
     viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, viewContext.options.formView)
     @button = $(event.target).parent() if event.originalEvent
     form = $(event.target).closest('form')
+    if $("textarea.tinymce", form).length > 0
+      $('textarea.tinymce').sync()
+#      tinymce.triggerSave()
+#      tinymce.editors = []
     if form.length == 0 && (clone = $(event.target).data('clone'))
       $('#' + clone).click()
     else
