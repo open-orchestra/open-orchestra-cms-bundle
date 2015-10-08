@@ -16,7 +16,8 @@
         <div {{ block('widget_container_attributes') }}>
             <ul class="nav nav-tabs" role="tablist" id="myTab">
                 {% for key, field in form %}
-                    <li {% if loop.first %}class="active" {% endif %}>
+                   {% if attribute(field.children, 'value') is defined %}
+                   <li {% if loop.first %}class="active" {% endif %}>
                         <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
                             <img
                                 src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
@@ -26,10 +27,12 @@
                             {{ form_label(field.value) }}
                         </a>
                     </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
             <div class="tab-content">
                 {% for key, field in form %}
+                   {% if attribute(field.children, 'value') is defined %}
                     <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
                         <div class="form-group{% if field.value.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_widget(field.value) }}
@@ -37,6 +40,7 @@
                             {{ form_errors(field.value) }}
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

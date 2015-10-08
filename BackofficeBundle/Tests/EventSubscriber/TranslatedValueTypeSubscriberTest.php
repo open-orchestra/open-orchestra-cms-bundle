@@ -20,12 +20,14 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     protected $data;
     protected $event;
     protected $builder;
-
+    protected $languages;
+    
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->languages = array('en', 'fr');
         $this->data = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
 
         $this->form = Phake::mock('Symfony\Component\Form\Form');
@@ -35,7 +37,7 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->data);
 
-        $this->subscriber = new TranslatedValueTypeSubscriber();
+        $this->subscriber = new TranslatedValueTypeSubscriber($this->languages);
     }
 
     /**
@@ -52,13 +54,12 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideLanguage
      */
-    public function testPreSetData($language)
+    public function testPreSetData($language, $nbrAdd)
     {
         Phake::when($this->data)->getLanguage()->thenReturn($language);
 
         $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->form)->add('value', 'text', array(
+        Phake::verify($this->form, Phake::times($nbrAdd))->add('value', 'text', array(
             'label' => $language,
             'attr' => array(
                 'class' => 'generate-id-source',
@@ -72,10 +73,10 @@ class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
     public function provideLanguage()
     {
         return array(
-            array('en'),
-            array('fr'),
-            array('de'),
-            array('es'),
+            array('en', 1),
+            array('fr', 1),
+            array('de', 0),
+            array('es', 0),
         );
     }
 }

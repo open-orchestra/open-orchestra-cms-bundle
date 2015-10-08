@@ -199,6 +199,7 @@ services:
         class: %open_orchestra_backoffice.type.translated_value.class%
         arguments:
             - %open_orchestra_model.document.translated_value.class%
+            - %open_orchestra_base.administration_languages%
         tags:
             - { name: form.type, alias: translated_value }
     open_orchestra_backoffice.type.translated_value_collection:
