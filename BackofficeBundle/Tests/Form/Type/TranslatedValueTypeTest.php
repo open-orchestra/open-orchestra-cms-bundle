@@ -17,15 +17,17 @@ class TranslatedValueTypeTest extends \PHPUnit_Framework_TestCase
 
     protected $builder;
     protected $translatedValueClass = 'translatedValueClass';
-
+    protected $languages;
+    
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->languages = array('en', 'fr');
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
 
-        $this->form = new TranslatedValueType($this->translatedValueClass);
+        $this->form = new TranslatedValueType($this->translatedValueClass, $this->languages);
     }
 
     /**
@@ -58,7 +60,6 @@ class TranslatedValueTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder)->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventSubscriber(Phake::anyParameters());
     }
 }

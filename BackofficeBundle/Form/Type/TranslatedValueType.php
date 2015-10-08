@@ -13,13 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TranslatedValueType extends AbstractType
 {
     protected $translatedValueClass;
-
+    protected $languages;
+    
     /**
      * @param string $translatedValueClass
+     * @param array  $languages
      */
-    public function __construct($translatedValueClass)
+    public function __construct($translatedValueClass, $languages)
     {
         $this->translatedValueClass = $translatedValueClass;
+        $this->languages = $languages;
     }
 
     /**
@@ -28,8 +31,7 @@ class TranslatedValueType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('language', 'hidden');
-        $builder->addEventSubscriber(new TranslatedValueTypeSubscriber());
+        $builder->addEventSubscriber(new TranslatedValueTypeSubscriber($this->languages));
     }
 
     /**

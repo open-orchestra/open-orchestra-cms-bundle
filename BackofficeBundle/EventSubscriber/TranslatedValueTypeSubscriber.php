@@ -11,6 +11,16 @@ use Symfony\Component\Form\FormEvents;
  */
 class TranslatedValueTypeSubscriber implements EventSubscriberInterface
 {
+    protected $languages;
+    
+    /**
+     * @param array $languages
+     */
+    public function __construct($languages)
+    {
+        $this->languages = $languages;
+    }
+    
     /**
      * @param FormEvent $event
      */
@@ -19,12 +29,15 @@ class TranslatedValueTypeSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        $form->add('value', 'text', array(
-            'label' => $data->getLanguage(),
-            'attr' => array(
-                'class' => 'generate-id-source',
-            ),
-        ));
+        if (in_array($data->getLanguage(), $this->languages)) {
+            $form->add('language', 'hidden');
+            $form->add('value', 'text', array(
+                'label' => $data->getLanguage(),
+                'attr' => array(
+                    'class' => 'generate-id-source',
+                ),
+            ));
+        }
     }
 
     /**
