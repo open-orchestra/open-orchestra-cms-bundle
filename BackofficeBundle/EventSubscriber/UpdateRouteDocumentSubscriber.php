@@ -47,9 +47,6 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     public function updateRouteDocument(NodeEvent $event)
     {
         $node = $event->getNode();
-        if (!$node->getStatus()->isPublished()) {
-            return;
-        }
 
         $routesToClear = $this->routeDocumentManager->clearForNode($node);
         foreach ($routesToClear as $route) {
