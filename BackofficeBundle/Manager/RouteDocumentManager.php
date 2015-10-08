@@ -51,7 +51,7 @@ class RouteDocumentManager
         $routeDocumentClass = $this->routeDocumentClass;
         $routes = array();
         $site = $this->siteRepository->findOneBySiteId($givenNode->getSiteId());
-        $node = $this->nodeRepository->findPublishedInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
+        $node = $this->nodeRepository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
 
         /** @var SiteAliasInterface $alias */
         foreach ($site->getAliases() as $key => $alias) {
