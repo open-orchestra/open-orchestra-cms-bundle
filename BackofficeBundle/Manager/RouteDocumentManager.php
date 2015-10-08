@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\ModelInterface\Model\RouteDocumentInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\RouteDocumentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -39,6 +40,33 @@ class RouteDocumentManager
         $this->routeDocumentClass = $routeDocumentClass;
         $this->siteRepository = $siteRepository;
         $this->nodeRepository = $nodeRepository;
+    }
+
+    /**
+     * @param SiteInterface $site
+     *
+     * @return array
+     */
+    public function createForSite(SiteInterface $site)
+    {
+        $nodes = $this->nodeRepository->findLastVersionByType($site->getSiteId());
+
+        $routes = array();
+        foreach ($nodes as $node) {
+            $routes = array_merge($this->createForNode($node), $routes);
+        }
+
+        return $routes;
+    }
+
+    /**
+     * @param SiteInterface $site
+     *
+     * @return array
+     */
+    public function clearForSite(SiteInterface $site)
+    {
+        return $this->routeDocumentRepository->findBySiteId($site->getSiteId());
     }
 
     /**
