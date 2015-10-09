@@ -12,11 +12,20 @@ $(document).on('focusin', (e) ->
 )
 
 activateTinyMce = (view, textarea) ->
+  textareaId = []
+  textarea.each ->
+    textareaId.push @id
+    return
+  $.each tinymce.editors, (index, editor) ->
+    if $('#' + editor.id).length == 0 or $.inArray(editor.id, textareaId) != -1
+      delete tinymce.editors[index]
+    return
+  tinymce.editors = tinymce.editors.filter (e) ->
+    e != undefined
   $.ajax
     url: $("#contextual-informations").data("translation-url-pattern").replace("*domain*", "tinymce")
     success: (response) ->
       tinymce.util.I18n.add response.locale, response.catalog
-
   do (view, textarea) ->
     initParameter()
     tinymce.create 'tinymce.plugins.BBCodeOrchestraPlugin',
