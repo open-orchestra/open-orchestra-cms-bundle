@@ -80,15 +80,20 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($node)->getRoutePattern()->thenReturn($pattern);
         Phake::when($node)->getParentId()->thenReturn($parentId);
 
+        Phake::when($this->nodeRepository)
+            ->findPublishedInLastVersion($nodeId, $language, 'siteId')
+            ->thenReturn($node);
+
         $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn('/bar');
         Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion(Phake::anyParameters())
+            ->findPublishedInLastVersion($parentId, $language, 'siteId')
             ->thenReturn($parent);
 
         $routeDocuments = $this->manager->createForNode($node);
 
         $this->assertCount(2, $routeDocuments);
+        Phake::verify($this->nodeRepository)->findPublishedInLastVersion($nodeId, $language, 'siteId');
         foreach ($routeDocuments as $key => $route) {
             $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
             $this->assertSame($this->{'domain'. ucfirst($language)}, $route->getHost());

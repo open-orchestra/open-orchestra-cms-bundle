@@ -42,15 +42,16 @@ class RouteDocumentManager
     }
 
     /**
-     * @param NodeInterface $node
+     * @param NodeInterface $givenNode
      *
      * @return array
      */
-    public function createForNode(NodeInterface $node)
+    public function createForNode(NodeInterface $givenNode)
     {
         $routeDocumentClass = $this->routeDocumentClass;
         $routes = array();
-        $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
+        $site = $this->siteRepository->findOneBySiteId($givenNode->getSiteId());
+        $node = $this->nodeRepository->findPublishedInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
 
         /** @var SiteAliasInterface $alias */
         foreach ($site->getAliases() as $key => $alias) {

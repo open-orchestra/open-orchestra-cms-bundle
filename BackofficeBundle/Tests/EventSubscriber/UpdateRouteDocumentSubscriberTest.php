@@ -60,33 +60,34 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test when node not published
+     * @param boolean $published
+     *
+     * @dataProvider providePublishedStates
      */
-    public function testUpdateDocumentWithNoPublishedNode()
-    {
-        Phake::when($this->status)->isPublished()->thenReturn(false);
-
-        $this->subscriber->updateRouteDocument($this->event);
-
-        Phake::verify($this->objectManager, Phake::never())->persist(Phake::anyParameters());
-        Phake::verify($this->objectManager, Phake::never())->flush(Phake::anyParameters());
-    }
-
-    /**
-     * Test when the node has been published
-     */
-    public function testUpdateDocumentWithPublishedNode()
+    public function testUpdateDocument($published)
     {
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         Phake::when($this->routeDocumentManager)->createForNode(Phake::anyParameters())->thenReturn(array($route));
         Phake::when($this->routeDocumentManager)->clearForNode(Phake::anyParameters())->thenReturn(array($route));
-        Phake::when($this->status)->isPublished()->thenReturn(true);
+
+        Phake::when($this->status)->isPublished()->thenReturn($published);
 
         $this->subscriber->updateRouteDocument($this->event);
 
         Phake::verify($this->objectManager)->persist($route);
         Phake::verify($this->objectManager)->remove($route);
         Phake::verify($this->objectManager)->flush();
+    }
+
+    /**
+     * @return array
+     */
+    public function providePublishedStates()
+    {
+        return array(
+            array(true),
+            array(false),
+        );
     }
 
     /**
