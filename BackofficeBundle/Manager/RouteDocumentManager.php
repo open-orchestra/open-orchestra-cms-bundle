@@ -66,7 +66,7 @@ class RouteDocumentManager
      */
     public function clearForSite(SiteInterface $site)
     {
-        return $this->routeDocumentRepository->findBySiteId($site->getSiteId());
+        return $this->routeDocumentRepository->findBySite($site->getSiteId());
     }
 
     /**
