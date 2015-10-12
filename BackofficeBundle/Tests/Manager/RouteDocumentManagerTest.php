@@ -283,11 +283,11 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     {
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         $routes = array($route);
-        Phake::when($this->routeDocumentRepository)->findBySiteId(Phake::anyParameters())->thenReturn($routes);
+        Phake::when($this->routeDocumentRepository)->findBySite(Phake::anyParameters())->thenReturn($routes);
 
         $foundRoutes = $this->manager->clearForSite($this->site);
 
         $this->assertSame($routes, $foundRoutes);
-        Phake::verify($this->routeDocumentRepository)->findBySiteId('siteId');
+        Phake::verify($this->routeDocumentRepository)->findBySite('siteId');
     }
 }
