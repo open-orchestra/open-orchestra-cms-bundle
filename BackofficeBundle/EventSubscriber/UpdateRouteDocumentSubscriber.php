@@ -6,8 +6,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
+use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
+use OpenOrchestra\ModelInterface\SiteEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -46,19 +48,15 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
      */
     public function updateRouteDocument(NodeEvent $event)
     {
-        $node = $event->getNode();
+        $this->updateRouteDocumentByType($event->getNode(), 'Node');
+    }
 
-        $routesToClear = $this->routeDocumentManager->clearForNode($node);
-        foreach ($routesToClear as $route) {
-            $this->objectManager->remove($route);
-        }
-
-        $routes = $this->routeDocumentManager->createForNode($node);
-        foreach ($routes as $routeDocument) {
-            $this->objectManager->persist($routeDocument);
-        }
-
-        $this->objectManager->flush();
+    /**
+     * @param SiteEvent $event
+     */
+    public function updateRouteDocumentOnSiteUpdate(SiteEvent $event)
+    {
+        $this->updateRouteDocumentByType($event->getSite(), 'Site');
     }
 
     /**
@@ -72,6 +70,26 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_CHANGE_STATUS => 'updateRouteDocument',
             RedirectionEvents::REDIRECTION_CREATE => 'createOrUpdateForRedirection',
             RedirectionEvents::REDIRECTION_UPDATE => 'createOrUpdateForRedirection',
+            SiteEvents::SITE_UPDATE => 'updateRouteDocumentOnSiteUpdate',
         );
+    }
+
+    /**
+     * @param mixed  $element
+     * @param string $type
+     */
+    protected function updateRouteDocumentByType($element, $type)
+    {
+        $routesToClear = $this->routeDocumentManager->{'clearFor' . $type}($element);
+        foreach ($routesToClear as $route) {
+            $this->objectManager->remove($route);
+        }
+
+        $routes = $this->routeDocumentManager->{'createFor' . $type}($element);
+        foreach ($routes as $routeDocument) {
+            $this->objectManager->persist($routeDocument);
+        }
+
+        $this->objectManager->flush();
     }
 }

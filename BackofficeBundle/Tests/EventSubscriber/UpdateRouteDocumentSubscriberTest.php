@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateRouteDocumentSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
+use OpenOrchestra\ModelInterface\SiteEvents;
 use Phake;
 
 /**
@@ -57,6 +58,7 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(NodeEvents::NODE_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(RedirectionEvents::REDIRECTION_CREATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(RedirectionEvents::REDIRECTION_UPDATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(SiteEvents::SITE_UPDATE, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -106,5 +108,25 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->objectManager)->persist($route);
         Phake::verify($this->objectManager)->flush($route);
+    }
+
+    /**
+     * Test on site update
+     */
+    public function testUpdateRouteDocumentOnSiteUpdate()
+    {
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $event = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteEvent');
+        Phake::when($event)->getSite()->thenReturn($site);
+
+        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
+        Phake::when($this->routeDocumentManager)->createForSite(Phake::anyParameters())->thenReturn(array($route));
+        Phake::when($this->routeDocumentManager)->clearForSite(Phake::anyParameters())->thenReturn(array($route));
+
+        $this->subscriber->updateRouteDocumentOnSiteUpdate($event);
+
+        Phake::verify($this->objectManager)->persist($route);
+        Phake::verify($this->objectManager)->remove($route);
+        Phake::verify($this->objectManager)->flush();
     }
 }
