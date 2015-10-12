@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "open-orchestra/open-orchestra-model-bundle": "dev-master",
-        "phpunit/phpunit" : "4.7.2",
+        "phpunit/phpunit" : "4.8.9",
         "psr/log": "1.0.0",
         "codeclimate/php-test-reporter": "dev-master",
         "phake/phake": "2.1.0"

@@ -275,4 +275,19 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             array('en', 'nodeId', array(0, 2), false, '/bar', 'http://bar.baz'),
         );
     }
+
+    /**
+     * Test clear for site
+     */
+    public function testClearForSite()
+    {
+        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
+        $routes = array($route);
+        Phake::when($this->routeDocumentRepository)->findBySite(Phake::anyParameters())->thenReturn($routes);
+
+        $foundRoutes = $this->manager->clearForSite($this->site);
+
+        $this->assertSame($routes, $foundRoutes);
+        Phake::verify($this->routeDocumentRepository)->findBySite('siteId');
+    }
 }
