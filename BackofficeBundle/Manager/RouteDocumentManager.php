@@ -49,7 +49,7 @@ class RouteDocumentManager
      */
     public function createForSite(SiteInterface $site)
     {
-        $nodes = $this->nodeRepository->findLastVersionByType($site->getSiteId());
+        $nodes = $this->nodeRepository->findLastVersionBySiteId($site->getSiteId());
 
         $routes = array();
         foreach ($nodes as $node) {
