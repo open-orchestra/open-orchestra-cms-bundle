@@ -10,7 +10,6 @@ use Phake;
  */
 class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $contentAttribute;
     protected $transformer;
 
     /**
@@ -18,7 +17,6 @@ class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $this->transformer = new ContentAttributeTransformer();
     }
 
@@ -27,12 +25,13 @@ class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransform()
     {
+        $contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $contentAttributeString = 'ContentAttributeString';
-        Phake::when($this->contentAttribute)->getName()->thenReturn($contentAttributeString);
-        Phake::when($this->contentAttribute)->getValue()->thenReturn($contentAttributeString);
-        Phake::when($this->contentAttribute)->getStringValue()->thenReturn($contentAttributeString);
+        Phake::when($contentAttribute)->getName()->thenReturn($contentAttributeString);
+        Phake::when($contentAttribute)->getValue()->thenReturn($contentAttributeString);
+        Phake::when($contentAttribute)->getStringValue()->thenReturn($contentAttributeString);
 
-        $facade = $this->transformer->transform($this->contentAttribute);
+        $facade = $this->transformer->transform($contentAttribute);
 
         $this->assertSame($contentAttributeString, $facade->name);
         $this->assertSame($contentAttributeString, $facade->value);
