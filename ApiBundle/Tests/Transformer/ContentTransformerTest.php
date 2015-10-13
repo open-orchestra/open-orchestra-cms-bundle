@@ -31,13 +31,12 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-
         $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         $this->statusId = 'StatusId';
         Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
 
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
@@ -73,8 +72,24 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facade = $this->contentTransformer->transform($this->content);
 
+        Phake::verify($this->content)->getAttributes();
+        Phake::verify($this->content,Phake::atLeast(1))->getContentType();
+        Phake::verify($this->content,Phake::atLeast(1))->getName();
+        Phake::verify($this->content,Phake::atLeast(1))->getContentTypeVersion();
+        Phake::verify($this->content,Phake::atLeast(1))->getStatus();
+        Phake::verify($this->content,Phake::atLeast(1))->getCreatedAt();
+        Phake::verify($this->content,Phake::atLeast(1))->getUpdatedAt();
+        Phake::verify($this->content,Phake::atLeast(1))->isDeleted();
+        Phake::verify($this->content,Phake::atLeast(1))->isLinkedToSite();
+        Phake::verify($this->content,Phake::atLeast(1))->getLanguage();
+        Phake::verify($this->content,Phake::atLeast(1))->getContentId();
+        Phake::verify($this->content,Phake::atLeast(1))->getVersion();
+
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
         $this->assertArrayHasKey('_self_form', $facade->getLinks());
+        $this->assertArrayHasKey('_self_duplicate', $facade->getLinks());
+        $this->assertArrayHasKey('_self_version', $facade->getLinks());
+        $this->assertArrayHasKey('_language_list', $facade->getLinks());
         $this->assertArrayHasKey('_self', $facade->getLinks());
         $this->assertArrayHasKey('_self_without_parameters', $facade->getLinks());
         $this->assertArrayHasKey('_self_delete', $facade->getLinks());
