@@ -166,6 +166,42 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Exception transform with wrong object a parameters
+     */
+    public function testExceptionTransform()
+    {
+        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException');
+        $this->nodeTransformer->transform(Phake::mock('stdClass'));
+    }
+
+    /**
+     * Test Exception reverse transform with wrong object a parameters
+     */
+    public function testExceptionReverseTransform()
+    {
+        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
+        $source = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+
+        $eventDispatcher = clone $this->eventDispatcher;
+        $facade->statusId = 'statusId';
+
+        Phake::when($eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
+
+        new NodeTransformer(
+            $this->encryptionManager,
+            $this->siteRepository,
+            $this->statusRepository,
+            $eventDispatcher,
+            $this->authorizeEditionManager
+        );
+
+        $this->nodeTransformer->setContext($this->transformerManager);
+
+        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
+        $this->nodeTransformer->reverseTransform($facade, $source);
+    }
+
+    /**
      * @return array
      */
     public function getChangeStatus()
@@ -196,5 +232,13 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
             array($facadeB, $node2, 1, 1),
             array($facadeB, $node3, 1, 1),
         );
+    }
+
+    /**
+     * Test getName
+     */
+    public function testGetName()
+    {
+        $this->assertSame('node', $this->nodeTransformer->getName());
     }
 }

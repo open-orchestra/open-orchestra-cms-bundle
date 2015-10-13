@@ -10,7 +10,6 @@ use Phake;
  */
 class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $contentAttributeString;
     protected $contentAttribute;
     protected $transformer;
 
@@ -21,10 +20,6 @@ class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->contentAttribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
         $this->transformer = new ContentAttributeTransformer();
-        $this->contentAttributeString = 'ContentAttributeString';
-        Phake::when($this->contentAttribute)->getName()->thenReturn($this->contentAttributeString);
-        Phake::when($this->contentAttribute)->getValue()->thenReturn($this->contentAttributeString);
-        Phake::when($this->contentAttribute)->getStringValue()->thenReturn($this->contentAttributeString);
     }
 
     /**
@@ -32,11 +27,25 @@ class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransform()
     {
+        $contentAttributeString = 'ContentAttributeString';
+        Phake::when($this->contentAttribute)->getName()->thenReturn($contentAttributeString);
+        Phake::when($this->contentAttribute)->getValue()->thenReturn($contentAttributeString);
+        Phake::when($this->contentAttribute)->getStringValue()->thenReturn($contentAttributeString);
+
         $facade = $this->transformer->transform($this->contentAttribute);
 
-        $this->assertSame($this->contentAttributeString, $facade->name);
-        $this->assertSame($this->contentAttributeString, $facade->value);
-        $this->assertSame($this->contentAttributeString, $facade->stringValue);
+        $this->assertSame($contentAttributeString, $facade->name);
+        $this->assertSame($contentAttributeString, $facade->value);
+        $this->assertSame($contentAttributeString, $facade->stringValue);
+    }
+
+    /**
+     * Test Exception transform with wrong object a parameters
+     */
+    public function testExceptionTransform()
+    {
+        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException');
+        $this->transformer->transform(Phake::mock('stdClass'));
     }
 
     /**

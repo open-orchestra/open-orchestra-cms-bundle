@@ -14,16 +14,10 @@ use OpenOrchestra\ApiBundle\Transformer\StatusTransformer;
 class StatusTransformerTest extends \PHPUnit_Framework_TestCase
 {
     protected $authorizeStatusChangeManager;
-    protected $translationChoiceManager;
     protected $transformerManager;
-    protected $roleRepository;
     protected $groupContext;
     protected $transformer;
     protected $translator;
-    protected $statusable;
-    protected $statusId;
-    protected $content;
-    protected $router;
     protected $status;
 
     /**
@@ -31,83 +25,70 @@ class StatusTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        $this->statusable = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        $this->statusId = 'StatusId';
-        Phake::when($this->status)->getId(Phake::anyParameters())->thenReturn($this->statusId);
-
-        /** Set router */
-        $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
-        Phake::when($this->router)->generateRoute(Phake::anyParameters())->thenReturn('route');
-
-        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
-
-        /** Set Construct Params */
         $this->authorizeStatusChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
-        $this->roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
-        $this->translator = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
-        $this->translationChoiceManager = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-
-        /** Set Context */
         $this->groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
-        $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
-        Phake::when($this->transformerManager)->getGroupContext()->thenReturn($this->groupContext);
-        Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
+        $this->translator = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
-        /** init Transformer */
-        $this->transformer = new StatusTransformer($this->authorizeStatusChangeManager, $this->roleRepository, $this->translator, $this->translationChoiceManager);
-        $this->transformer->setContext($this->transformerManager);
+        $translationChoiceManager = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
+        $statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        $roleRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
+        $router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
+        $statusId = 'StatusId';
+
+        Phake::when($this->status)->getId()->thenReturn($statusId);
+        Phake::when($router)->generateRoute(Phake::anyParameters())->thenReturn('route');
+        Phake::when($statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
+        Phake::when($transformerManager)->getGroupContext()->thenReturn($this->groupContext);
+        Phake::when($transformerManager)->getRouter()->thenReturn($router);
+
+        $this->transformer = new StatusTransformer($this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager);
+        $this->transformer->setContext($transformerManager);
     }
 
     /**
      * @dataProvider provideTransformData
      */
-    public function testTransform($published, $initial, $isGranted)
+    public function testTransform($published, $initial, $isGranted, $hasGroup)
     {
-        Phake::when($this->authorizeStatusChangeManager)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-
-        Phake::when($this->groupContext)->hasGroup(Phake::anyParameters())->thenReturn(false);
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn(true);
-        Phake::when($this->status)->getDisplayColor(Phake::anyParameters())->thenReturn(true);
+        $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $labels = Phake::mock('Doctrine\Common\Collections\Collection');
+        $role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
 
         $roles = new ArrayCollection();
-        $role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
-        Phake::when($role)->getName()->thenReturn(true);
+
+        Phake::when($role)->getName()->thenReturn('role_name');
+
         $roles->add($role);
 
-        $labels = Phake::mock('Doctrine\Common\Collections\Collection');
+        Phake::when($this->authorizeStatusChangeManager)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+        Phake::when($this->groupContext)->hasGroup(Phake::anyParameters())->thenReturn($hasGroup);
+        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('trans_display_color');
+        Phake::when($this->status)->getDisplayColor()->thenReturn('display_color');
+        Phake::when($this->status)->isPublished()->thenReturn($published);
+        Phake::when($this->status)->isInitial()->thenReturn($initial);
         Phake::when($this->status)->getFromRoles()->thenReturn($roles);
         Phake::when($this->status)->getToRoles()->thenReturn($roles);
         Phake::when($this->status)->getLabels()->thenReturn($labels);
-
-        $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
-        $facade->label = 'draft';
-        $facade->name = 'fakeName';
-        $facade->value = 'fakeValue';
-        $facade = $this->transformer->transform($this->status);
-
-        Phake::when($this->status)->isPublished()->thenReturn($published);
-        Phake::when($this->status)->isInitial()->thenReturn($initial);
-
-        $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
-        Phake::when($this->content)->getAttributes()->thenReturn(array($attribute, $attribute));
+        Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
 
         $facade = $this->transformer->transform($this->status, $document);
 
         $this->assertInstanceOf('OpenOrchestra\BaseApi\Facade\FacadeInterface', $facade);
-        $this->assertArrayHasKey('_self_delete', $facade->getLinks());
-        $this->assertArrayHasKey('_self_form', $facade->getLinks());
-
         $this->assertSame($published, $facade->published);
         $this->assertSame($initial, $facade->initial);
         $this->assertSame($isGranted, $facade->allowed);
-        Phake::verify($this->groupContext, Phake::atLeast(0))->hasGroup(GroupContext::G_HIDE_ROLES);
-        Phake::verify($this->translator, Phake::atLeast(0))->trans('open_orchestra_backoffice.form.status.color.');
-        Phake::verify($this->status, Phake::atLeast(0))->getDisplayColor('open_orchestra_backoffice.form.status.color.');
+
+        if (!$hasGroup) {
+            $this->assertArrayHasKey('_self_delete', $facade->getLinks());
+            $this->assertArrayHasKey('_self_form', $facade->getLinks());
+        } else {
+            $this->isEmpty($facade->getLinks());
+        }
     }
 
     /**
@@ -116,15 +97,32 @@ class StatusTransformerTest extends \PHPUnit_Framework_TestCase
     public function provideTransformData()
     {
         return array(
-            array(true, true, true),
-            array(true, false, true),
-            array(false, true, true),
-            array(false, false, true),
-            array(true, true, false),
-            array(true, false, false),
-            array(false, true, false),
-            array(false, false, false),
+            array(true, true, true, false),
+            array(true, false, true, false),
+            array(false, true, true, false),
+            array(false, false, true, false),
+            array(true, true, false, false),
+            array(true, false, false, false),
+            array(false, true, false, false),
+            array(false, false, false, false),
+            array(true, true, true, true),
+            array(true, false, true, true),
+            array(false, true, true, true),
+            array(false, false, true, true),
+            array(true, true, false, true),
+            array(true, false, false, true),
+            array(false, true, false, true),
+            array(false, false, false, true),
         );
+    }
+
+    /**
+     * Test Exception transform with wrong object a parameters
+     */
+    public function testExceptionTransform()
+    {
+        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException');
+        $this->transformer->transform(Phake::mock('stdClass'));
     }
 
     /**
