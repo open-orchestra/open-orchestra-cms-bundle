@@ -8,16 +8,13 @@ extendView['submitAdmin'] = {
     viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, viewContext.options.formView)
     @button = $(event.target).parent() if event.originalEvent
     form = $(event.target).closest('form')
-    if $("textarea.tinymce", form).length > 0
-      $('textarea.tinymce').each ->
-        $(@).sync()
-#      tinymce.triggerSave()
-#      tinymce.editors = []
     if form.length == 0 && (clone = $(event.target).data('clone'))
       $('#' + clone).click()
     else
       if $("textarea.tinymce", form).length > 0
-        tinymce.triggerSave()
+        $('textarea.tinymce').each ->
+          $(@).sync()
+      #  tinymce.triggerSave()
       if !form.hasClass('HTML5validation')
         form.addClass('HTML5validation')
         form.submit ->
