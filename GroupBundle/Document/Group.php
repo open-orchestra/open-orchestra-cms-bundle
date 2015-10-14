@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Document;
 
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
@@ -24,7 +25,7 @@ class Group extends BaseGroup implements GroupInterface
     protected $site;
 
     /**
-     * @var collection $labels
+     * @var Collection $labels
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
      * @ORCHESTRA\Search(key="label", type="translatedValue")
@@ -47,7 +48,11 @@ class Group extends BaseGroup implements GroupInterface
         $this->initCollections();
     }
 
-    protected function initCollections() {
+    /**
+     * Initialize collections
+     */
+    protected function initCollections()
+    {
         $this->labels = new ArrayCollection();
         $this->roles = array();
     }
