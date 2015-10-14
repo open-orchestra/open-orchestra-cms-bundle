@@ -3,17 +3,17 @@
 namespace OpenOrchestra\GroupBundle\Tests\Document;
 
 use OpenOrchestra\GroupBundle\Document\Group;
-use \Phake;
+use Phake;
 
 /**
  * Class GroupTest
  */
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
-    protected $labels;
-    protected $label;
+    /**
+     * @var Group
+     */
     protected $group;
-    protected $site;
 
     /**
      * set Up
@@ -21,32 +21,45 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->group = new Group();
-        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\ReadSiteInterface');
-        $this->labels = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
-        $this->label = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
-        Phake::when($this->label)->getLanguage()->thenReturn('en');
     }
 
     /**
      * test site
      */
-    public function testSite(){
-        $this->assertSame(null, $this->group->getSite());
-        $this->group->setSite($this->site);
-        $this->isTrue($this->site == $this->group->getSite());
+    public function testSite()
+    {
+        $this->assertNull($this->group->getSite());
+
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $this->group->setSite($site);
+        $this->assertSame($site, $this->group->getSite());
     }
 
     /**
-     * test Labels
+     * @param string $language
+     * @param string $value
+     *
+     * @dataProvider provideLabelLanguageAndValue
      */
-    public function testLabels()
+    public function testLabels($language, $value)
     {
-        $this->isTrue($this->labels == $this->group->getLabels());
-        $this->group->addLabel($this->label);
-        $this->isTrue($this->label == $this->group->getLabel());
-        $this->group->removeLabel($this->label);
-        $clone = clone $this->group;
-        $this->isTrue($clone == new Group());
+        $label = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
+        Phake::when($label)->getLanguage()->thenReturn($language);
+        Phake::when($label)->getValue()->thenReturn($value);
+        $this->group->addLabel($label);
+
+        $this->assertSame($value, $this->group->getLabel($language));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLabelLanguageAndValue()
+    {
+        return array(
+            array('en', 'foo'),
+            array('fr', 'bar'),
+        );
     }
 
     /**
@@ -54,8 +67,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetTranslatedProperties()
     {
-        $this->assertSame(['getLabels'], $this->group->getTranslatedProperties());
+        $this->assertSame(array('getLabels'), $this->group->getTranslatedProperties());
     }
-
-
 }
