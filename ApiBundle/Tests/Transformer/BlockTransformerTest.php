@@ -276,4 +276,13 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
             array('News', 1, array('newsId')),
         );
     }
+
+    /**
+     * Test Exception transform with wrong object a parameters
+     */
+    public function testExceptionTransform()
+    {
+        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException');
+        $this->blockTransformer->transform(Phake::mock('stdClass'));
+    }
 }

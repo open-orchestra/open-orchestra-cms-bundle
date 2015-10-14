@@ -246,4 +246,12 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
         Phake::verify($this->nodeRepository, Phake::never())->find(Phake::anyParameters());
     }
+
+    /**
+     * Test getName
+     */
+    public function testGetName()
+    {
+        $this->assertSame('area', $this->areaTransformer->getName());
+    }
 }
