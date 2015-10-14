@@ -16,6 +16,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      * @var ContentTransformer
      */
     protected $contentTransformer;
+
     protected $transformerManager;
     protected $statusRepository;
     protected $eventDispatcher;
@@ -25,26 +26,25 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');//+
+        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');//+
-        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');//+
-        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($status);//+
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($status);
+
+        $router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
         $facade = Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface');
         $facade->label = 'status';
         $facade->name = 'name';
         $transformer = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
         Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
-
-        $router = Phake::mock('Symfony\Component\Routing\RouterInterface');
-
         $this->transformerManager = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($router);
 
-        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher);//+
-        $this->contentTransformer->setContext($this->transformerManager);//+
+        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher);
+        $this->contentTransformer->setContext($this->transformerManager);
     }
 
     /**
@@ -109,10 +109,10 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * test reverseTransform
      *
-     * @param FacadeInterface $facade
+     * @param FacadeInterface  $facade
      * @param ContentInterface $source
-     * @param int $searchCount
-     * @param int $setCount
+     * @param int              $searchCount
+     * @param int              $setCount
      *
      * @dataProvider changeStatusProvider
      */
@@ -132,13 +132,9 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
         $source = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
 
-        $eventDispatcher = clone $this->eventDispatcher;
         $facade->statusId = 'statusId';
 
-        Phake::when($eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
-
-        $contentTransformer = new ContentTransformer($this->statusRepository, $eventDispatcher);//+
-        $contentTransformer->setContext($this->transformerManager);
+        Phake::when($this->eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
 
         $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
         $this->contentTransformer->reverseTransform($facade, $source);

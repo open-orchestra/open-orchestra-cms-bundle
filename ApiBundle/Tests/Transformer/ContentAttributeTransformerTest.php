@@ -10,6 +10,9 @@ use Phake;
  */
 class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ContentAttributeTransformer
+     */
     protected $transformer;
 
     /**
@@ -33,6 +36,7 @@ class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
 
         $facade = $this->transformer->transform($contentAttribute);
 
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade', $facade);
         $this->assertSame($contentAttributeString, $facade->name);
         $this->assertSame($contentAttributeString, $facade->value);
         $this->assertSame($contentAttributeString, $facade->stringValue);

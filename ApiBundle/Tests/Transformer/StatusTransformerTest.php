@@ -49,6 +49,11 @@ class StatusTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param bool $published
+     * @param bool $initial
+     * @param bool $isGranted
+     * @param bool $hasGroup
+     *
      * @dataProvider provideTransformData
      */
     public function testTransform($published, $initial, $isGranted, $hasGroup)

@@ -182,20 +182,9 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ContentFacade');
         $source = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
 
-        $eventDispatcher = clone $this->eventDispatcher;
         $facade->statusId = 'statusId';
 
-        Phake::when($eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
-
-        new NodeTransformer(
-            $this->encryptionManager,
-            $this->siteRepository,
-            $this->statusRepository,
-            $eventDispatcher,
-            $this->authorizeEditionManager
-        );
-
-        $this->nodeTransformer->setContext($this->transformerManager);
+        Phake::when($this->eventDispatcher)->dispatch(Phake::anyParameters())->thenThrow(Phake::mock('OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException'));
 
         $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException');
         $this->nodeTransformer->reverseTransform($facade, $source);
