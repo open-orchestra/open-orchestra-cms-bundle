@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
+use DateTime;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\ContentTransformer;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
@@ -48,41 +49,48 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test transform
+     * @param string   $contentId
+     * @param string   $contentType
+     * @param string   $name
+     * @param int      $version
+     * @param int      $contentTypeVersion
+     * @param string   $language
+     * @param DateTime $creationDate
+     * @param DateTime $updateDate
+     * @param bool     $deleted
+     * @param bool     $linkedToSite
+     *
+     * @dataProvider provideContentData
      */
-    public function testTransform()
+    public function testTransform($contentId, $contentType, $name, $version, $contentTypeVersion, $language, $creationDate, $updateDate, $deleted, $linkedToSite)
     {
-        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
-        Phake::when($content)->getId()->thenReturn(1);
-        $contentData = 'contentData';
-        $contentDate = '2015/09/01';
-        $contentBool = true;
         $attribute = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentAttributeInterface');
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content)->getAttributes()->thenReturn(array($attribute, $attribute));
-        Phake::when($content)->getContentId()->thenReturn($contentData);
-        Phake::when($content)->getContentType()->thenReturn($contentData);
-        Phake::when($content)->getName()->thenReturn($contentData);
-        Phake::when($content)->getVersion()->thenReturn($contentData);
-        Phake::when($content)->getContentTypeVersion()->thenReturn($contentData);
-        Phake::when($content)->getLanguage()->thenReturn($contentData);
-        Phake::when($content)->isDeleted()->thenReturn($contentBool);
-        Phake::when($content)->isLinkedToSite()->thenReturn($contentBool);
-        Phake::when($content)->getCreatedAt()->thenReturn($contentDate);
-        Phake::when($content)->getUpdatedAt()->thenReturn($contentDate);
+        Phake::when($content)->getContentId()->thenReturn($contentId);
+        Phake::when($content)->getContentType()->thenReturn($contentType);
+        Phake::when($content)->getName()->thenReturn($name);
+        Phake::when($content)->getVersion()->thenReturn($version);
+        Phake::when($content)->getContentTypeVersion()->thenReturn($contentTypeVersion);
+        Phake::when($content)->getLanguage()->thenReturn($language);
+        Phake::when($content)->getCreatedAt()->thenReturn($creationDate);
+        Phake::when($content)->getUpdatedAt()->thenReturn($updateDate);
+        Phake::when($content)->isDeleted()->thenReturn($deleted);
+        Phake::when($content)->isLinkedToSite()->thenReturn($linkedToSite);
 
         $facade = $this->contentTransformer->transform($content);
 
-        $this->assertSame($contentData, $facade->id);
-        $this->assertSame($contentData, $facade->contentType);
-        $this->assertSame($contentData, $facade->name);
-        $this->assertSame($contentData, $facade->version);
-        $this->assertSame($contentData, $facade->contentTypeVersion);
-        $this->assertSame($contentData, $facade->language);
+        $this->assertSame($contentId, $facade->id);
+        $this->assertSame($contentType, $facade->contentType);
+        $this->assertSame($name, $facade->name);
+        $this->assertSame($version, $facade->version);
+        $this->assertSame($contentTypeVersion, $facade->contentTypeVersion);
+        $this->assertSame($language, $facade->language);
+        $this->assertSame($creationDate, $facade->createdAt);
+        $this->assertSame($updateDate, $facade->updatedAt);
+        $this->assertSame($deleted, $facade->deleted);
+        $this->assertSame($linkedToSite, $facade->linkedToSite);
         $this->assertSame($facade->status->label, $facade->statusLabel);
-        $this->assertSame($contentDate, $facade->createdAt);
-        $this->assertSame($contentDate, $facade->updatedAt);
-        $this->assertSame($contentBool, $facade->deleted);
-        $this->assertSame($contentBool, $facade->linkedToSite);
         Phake::verify($content, Phake::times(1))->getStatus();
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ContentFacade', $facade);
@@ -95,6 +103,20 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('_self_delete', $facade->getLinks());
         $this->assertArrayHasKey('_status_list', $facade->getLinks());
         $this->assertArrayHasKey('_self_status_change', $facade->getLinks());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentData()
+    {
+        $date1 = new DateTime();
+        $date2 = new DateTime();
+
+        return array(
+            array('foo', 'bar', 'baz', 1, 2, 'fr', $date1, $date2, true, false),
+            array('bar', 'baz', 'foo', 2, 1, 'en', $date2, $date1, false, true),
+        );
     }
 
     /**
