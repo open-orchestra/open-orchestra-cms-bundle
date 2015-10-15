@@ -2,19 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -36,10 +23,9 @@ class OpenOrchestraBackofficeExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->updateBlockParameter($container, $config);
-        if (empty($config['front_languages'])) {
-            $config['front_languages'] = array('en' => 'open_orchestra_backoffice.language.en', 'fr' => 'open_orchestra_backoffice.language.fr', 'de' => 'open_orchestra_backoffice.language.de');
-        }
+
         $fixedAttributes = array_merge($config['fixed_attributes'], array('component', 'submit', 'label', 'class', 'id', 'maxAge'));
+
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
 
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
@@ -67,7 +53,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('authorize_status_change.yml');
         $loader->load('authorize_edition.yml');
         $loader->load('restore_entity.yml');
-        $loader->load('dashboard.yml');
 
         if (isset($config['field_types'])) {
             $this->addApplicationFieldTypes($config['field_types'], $container);
@@ -81,22 +66,9 @@ class OpenOrchestraBackofficeExtension extends Extension
             $loader->load('test_services.yml');
         }
 
-        if (isset($config['dashboard_widgets']) && count($config['dashboard_widgets'])) {
-            $container->setParameter(
-                'open_orchestra_backoffice.dashboard_widgets',
-                $config['dashboard_widgets']
-            );
-        }
+        $container->setParameter('open_orchestra_backoffice.dashboard_widgets', $config['dashboard_widgets']);
 
-        $availableColor = $config['available_color'];
-        if (empty($availableColor)) {
-            $availableColor = array(
-                'red' => 'open_orchestra_backoffice.form.status.color.red',
-                'green' => 'open_orchestra_backoffice.form.status.color.green',
-                'orange' => 'open_orchestra_backoffice.form.status.color.orange',
-            );
-        }
-        $container->setParameter('open_orchestra_backoffice.choice.available_color', $availableColor);
+        $container->setParameter('open_orchestra_backoffice.choice.available_color', $config['available_color']);
 
         $container->setParameter('open_orchestra_backoffice.choice.frequence', array(
             'always' => 'open_orchestra_backoffice.form.changefreq.always',
@@ -115,31 +87,11 @@ class OpenOrchestraBackofficeExtension extends Extension
      */
     protected function updateBlockParameter(ContainerBuilder $container, $config)
     {
-        $blockType = array(
-            FooterStrategy::FOOTER,
-            LanguageListStrategy::LANGUAGE_LIST,
-            MenuStrategy::MENU,
-            SubMenuStrategy::SUBMENU,
-            ContentListStrategy::CONTENT_LIST,
-            ContentStrategy::CONTENT,
-            ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
-            TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
-            VideoStrategy::VIDEO,
-            GmapStrategy::GMAP,
-            AddThisStrategy::ADDTHIS,
-            AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
-            ContactStrategy::CONTACT,
-        );
-
-        $blocks = $config['blocks'];
-        if (empty($blocks)) {
-            $blocks = $blockType;
-        }
         $blocksAlreadySet = array();
         if ($container->hasParameter('open_orchestra.blocks')) {
             $blocksAlreadySet = $container->getParameter('open_orchestra.blocks');
         }
-        $blocks = array_merge($blocksAlreadySet, $blocks);
+        $blocks = array_merge($blocksAlreadySet, $config['blocks']);
         $container->setParameter('open_orchestra.blocks', $blocks);
     }
 
