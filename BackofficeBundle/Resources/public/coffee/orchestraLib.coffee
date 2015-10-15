@@ -127,12 +127,13 @@ activateOrchestraNodeChoice = (element) ->
   regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g')
   $('option', element).each ->
     $(this).addClass 'orchestra-node-choice'
-  element.select2(
-    formatResult: (term) ->
-      term.text.replace regExp, '<span class="hierarchical">$1</span>'
-    formatSelection: (term) ->
-      term.text.replace regExp, ''
-  )
+    element.select2(
+      allowClear: true,
+      formatResult: (term) ->
+        term.text.replace regExp, '<span class="hierarchical">$1</span>'
+      formatSelection: (term) ->
+        term.text.replace regExp, ''
+    )
 
 #COLORPICKER ENABLED
 activateColorPicker = (element) ->
