@@ -130,12 +130,16 @@
 
 {% macro menu_content_types_for_content(contentTypes, name) %}
     {% for contentType in contentTypes %}
-        {% set displayedElement = 'name, status_label, version, language, linked_to_site' %}
+        {% set displayedElement = 'name, status_label, version, language, linked_to_site, created_at, created_by, updated_at, updated_by' %}
         {% set translatedHeader = 'open_orchestra_backoffice.table.content_type.name'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.status_label'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.version'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.language'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.linked_to_site'|trans %}
+                                    'open_orchestra_backoffice.table.content_type.linked_to_site'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.created_at'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.created_by'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.updated_at'|trans ~ ', ' ~
+                                    'open_orchestra_backoffice.table.content_type.updated_by'|trans %}
         {% set visibleElement = '' %}
         {% for columnName, listable in contentType.defaultListable %}
             {% if listable %}
