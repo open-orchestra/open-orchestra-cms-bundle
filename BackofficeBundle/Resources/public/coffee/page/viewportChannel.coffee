@@ -12,6 +12,6 @@ viewportChannel.commands.setHandler 'init', (blockpanel) ->
 
 viewportChannel.commands.setHandler 'scroll', ->
   $(this).data('blockpanel').removeClass('panel-fixed')
-  if $(this).data('blockpanel')[0].getBoundingClientRect().top <= $(this).data('fixedtop')
+  if $(this).data('blockpanel')[0].getBoundingClientRect().top + 2 < $(this).data('fixedtop')
     $(this).data('blockpanel').addClass('panel-fixed')
   return
