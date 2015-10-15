@@ -58,7 +58,11 @@ class BlockType extends AbstractType
         $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
 
         $builder->addViewTransformer(new BlockToArrayTransformer());
-        $builder->addEventSubscriber(new BlockTypeSubscriber($this->generateFormManager, $this->fixedParameters, $this->formFactory, $options['blockPosition']));
+        $builder->addEventSubscriber(
+            new BlockTypeSubscriber(
+                $this->generateFormManager, $this->fixedParameters, $this->formFactory, $options['blockPosition']
+            )
+        );
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
