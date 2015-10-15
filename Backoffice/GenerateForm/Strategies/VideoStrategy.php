@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class VideoStrategy extends AbstractBlockStrategy
 {
-    const TEMPLATE = 'OpenOrchestraBackofficeBundle:Block:Video/Form/form.html.twig';
+    const TEMPLATE = 'OpenOrchestraBackofficeBundle:Block/Video/Form:form.html.twig';
 
     /**
      * @param BlockInterface $block
