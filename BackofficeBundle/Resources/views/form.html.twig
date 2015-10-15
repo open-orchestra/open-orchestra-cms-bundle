@@ -7,8 +7,10 @@
 
 {% if title is defined %}
     {% set attr = {'class': class, 'data-title': title} %}
-{%  else %}
+{% else %}
     {% set attr = {'class': class} %}
 {% endif %}
 
-{{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9, 'attr' : attr}) }}
+{% block form %}
+    {{ form(form, {'style': 'horizontal', 'label_col': 3, 'widget_col': 9, 'attr' : attr}) }}
+{% endblock %}

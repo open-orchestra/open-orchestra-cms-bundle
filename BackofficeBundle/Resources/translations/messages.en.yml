@@ -1,4 +1,6 @@
 open_orchestra_backoffice:
+    modal:
+        close: Close
     scheme:
         http: http
         https: https
@@ -366,8 +368,9 @@ open_orchestra_backoffice:
             description: Insert a Youtube, Dailymotion or Vimeo video
             type: Video type
             youtube:
+                name: Youtube
                 title: Youtube block
-                description: Display a youtube video
+                description: Display a Youtube video
                 video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
                 fs: Allow the player to go into fullscreen
@@ -384,14 +387,15 @@ open_orchestra_backoffice:
                 theme: Display player's controls in light
                 color: Display progress bar in white
             dailymotion:
-                title: Dailymotion Block
-                description: Display a dailymotion player
+                name: Dailymotion
+                title: Dailymotion block
+                description: Display a Dailymotion video
                 video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
                 info: Shows videos information
-                background: Hexadecimal background color of the controls elements
-                foreground: Hexadecimal forground color of the controls elements
-                highlight: Hexadecimal color of the controls elements’ highlights
+                background: Background color of the controls elements (Hexadecimal format)
+                foreground: Foreground color of the controls elements (Hexadecimal format)
+                highlight: Color of the controls elements’ highlights (Hexadecimal format)
                 width:  Width of the player
                 height: Height of the player
                 chromeless: Disable player's controls
@@ -399,12 +403,13 @@ open_orchestra_backoffice:
                 quality: Determines the quality that must be played by default if available
                 logo: Allows to show the Dailymotion logo
             vimeo:
-                title: Vimeo Block
-                description: Display a viemo player
+                name: Vimeo
+                title: Vimeo block
+                description: Display a Vimeo video
                 video_id: Video id or url of the video
                 autoplay: Play the video automatically on load
                 fullscreen: Allow the player to go into fullscreen
-                color: Specify the hexadecimal color of the video controls
+                color: Color of the video controls (Hexadecimal format)
                 title_video: Show the title on the video
                 byline: Show the user’s byline on the video
                 loop: Play the video again when it reaches the end
