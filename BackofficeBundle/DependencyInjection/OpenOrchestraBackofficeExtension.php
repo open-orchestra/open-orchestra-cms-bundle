@@ -22,18 +22,19 @@ class OpenOrchestraBackofficeExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('parameters.yml');
+
+
         $this->updateBlockParameter($container, $config);
 
-        $fixedAttributes = array_merge($config['fixed_attributes'], array('component', 'submit', 'label', 'class', 'id', 'maxAge'));
-
-        $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
-
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
-        $container->setParameter('open_orchestra_backoffice.orchestra_choice.direction', array('h' => 'Horizontal', 'v' => 'Vertical'));
         $container->setParameter('open_orchestra_user.base_layout', 'OpenOrchestraBackofficeBundle::layout.html.twig');
         $container->setParameter('open_orchestra_user.form_template', 'OpenOrchestraBackofficeBundle::form.html.twig');
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $fixedAttributes = array_merge($config['fixed_attributes'], $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
+        $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
+
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('generator.yml');
@@ -67,18 +68,8 @@ class OpenOrchestraBackofficeExtension extends Extension
         }
 
         $container->setParameter('open_orchestra_backoffice.dashboard_widgets', $config['dashboard_widgets']);
-
         $container->setParameter('open_orchestra_backoffice.choice.available_color', $config['available_color']);
 
-        $container->setParameter('open_orchestra_backoffice.choice.frequence', array(
-            'always' => 'open_orchestra_backoffice.form.changefreq.always',
-            'hourly' => 'open_orchestra_backoffice.form.changefreq.hourly',
-            'daily' => 'open_orchestra_backoffice.form.changefreq.daily',
-            'weekly' => 'open_orchestra_backoffice.form.changefreq.weekly',
-            'monthly' => 'open_orchestra_backoffice.form.changefreq.monthly',
-            'yearly' => 'open_orchestra_backoffice.form.changefreq.yearly',
-            'never' => 'open_orchestra_backoffice.form.changefreq.never'
-        ));
     }
 
     /**

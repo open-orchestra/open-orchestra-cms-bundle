@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->arrayNode('front_languages')
-                ->info('Add the language available for the front with the key, default (en, fr, de)')
+                ->info('Add the availables languages in the Front Office, default (en, fr, de)')
                 ->useAttributeAsKey('key')
                 ->defaultValue(array(
                     'en'=>'open_orchestra_backoffice.language.en',
@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
                 ->prototype('scalar')->end()
             ->end()
             ->arrayNode('blocks')
-                ->info('Add the block activated for the project')
+                ->info('Set the available block types for this application')
                 ->prototype('scalar')->end()
                 ->defaultValue(array(
                     FooterStrategy::FOOTER,

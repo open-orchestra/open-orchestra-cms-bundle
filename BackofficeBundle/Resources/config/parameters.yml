@@ -1,0 +1,21 @@
+parameters:
+    open_orchestra_backoffice.block.fixed_attributes:
+        - component
+        - submit
+        - label
+        - class
+        - id
+        - maxAge
+
+    open_orchestra_backoffice.orchestra_choice.direction:
+        h : Horizontal
+        v : Vertical
+
+    open_orchestra_backoffice.choice.frequence:
+        always  : open_orchestra_backoffice.form.changefreq.always
+        hourly  : open_orchestra_backoffice.form.changefreq.hourly
+        daily   : open_orchestra_backoffice.form.changefreq.daily
+        weekly  : open_orchestra_backoffice.form.changefreq.weekly
+        monthly : open_orchestra_backoffice.form.changefreq.monthly
+        yearly  : open_orchestra_backoffice.form.changefreq.yearly
+        never   : open_orchestra_backoffice.form.changefreq.never
