@@ -16,6 +16,7 @@ class ContentTypeManager
      */
     public function initializeNewContentType($contentTypeClass)
     {
+        /** @var ContentTypeInterface $contentType */
         $contentType = new $contentTypeClass();
         $contentType->setDefaultListable($this->getDefaultListableColumns());
 
@@ -72,10 +73,14 @@ class ContentTypeManager
     {
         return array(
             'name'           => true,
-            'status_label'   => true,
-            'version'        => true,
-            'language'       => true,
+            'status_label'   => false,
+            'version'        => false,
+            'language'       => false,
             'linked_to_site' => true,
+            'created_at'     => true,
+            'created_by'     => true,
+            'updated_at'     => false,
+            'updated_by'     => false,
         );
     }
 }

@@ -4,12 +4,15 @@ namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Facade\Traits\BlameableFacade;
 
 /**
  * Class ContentFacade
  */
 class ContentFacade extends DeletedFacade
 {
+    use BlameableFacade;
+
     /**
      * @Serializer\Type("string")
      */

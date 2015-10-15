@@ -482,6 +482,10 @@ open_orchestra_backoffice:
             version: Version
             language: Langue
             linked_to_site: Liaison au site
+            created_at: Date de création
+            created_by: Auteur
+            updated_at: Date de modification
+            updated_by: Dernier contributeur
         content_types:
             content_type_id: Clef
             name: Nom
