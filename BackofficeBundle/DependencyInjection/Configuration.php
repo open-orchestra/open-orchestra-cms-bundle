@@ -4,6 +4,19 @@ namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -22,13 +35,33 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->arrayNode('front_languages')
-                ->info('Add the language available for the front with the key')
+                ->info('Add the available languages in the Front Office, default (en, fr, de)')
                 ->useAttributeAsKey('key')
+                ->defaultValue(array(
+                    'en'=>'open_orchestra_backoffice.language.en',
+                    'fr'=>'open_orchestra_backoffice.language.fr',
+                    'de' => 'open_orchestra_backoffice.language.de',
+                ))
                 ->prototype('scalar')->end()
             ->end()
             ->arrayNode('blocks')
-                ->info('Add the block activated for the project')
+                ->info('Set the available block types for this application')
                 ->prototype('scalar')->end()
+                ->defaultValue(array(
+                    FooterStrategy::FOOTER,
+                    LanguageListStrategy::LANGUAGE_LIST,
+                    MenuStrategy::MENU,
+                    SubMenuStrategy::SUBMENU,
+                    ContentListStrategy::CONTENT_LIST,
+                    ContentStrategy::CONTENT,
+                    ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
+                    TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
+                    VideoStrategy::VIDEO,
+                    GmapStrategy::GMAP,
+                    AddThisStrategy::ADDTHIS,
+                    AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
+                    ContactStrategy::CONTACT,
+                ))
             ->end()
             ->arrayNode('fixed_attributes')
                 ->info('Add the global block attributes')
@@ -49,11 +82,22 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('available_color')
                 ->info('List of the color available, in the status for instance')
                 ->useAttributeAsKey('key')
+                ->defaultValue( array(
+                    'red' => 'open_orchestra_backoffice.form.status.color.red',
+                    'green' => 'open_orchestra_backoffice.form.status.color.green',
+                    'orange' => 'open_orchestra_backoffice.form.status.color.orange',
+                ))
                 ->prototype('scalar')->end()
             ->end()
             ->arrayNode('dashboard_widgets')
                 ->info('List of widgets presented on the dashboard')
                 ->prototype('scalar')->end()
+                ->defaultValue( array(
+                    "last_nodes",
+                    "draft_nodes",
+                    "last_contents",
+                    "draft_contents"
+                ))
                 ->end()
             ->end();
         return $treeBuilder;
