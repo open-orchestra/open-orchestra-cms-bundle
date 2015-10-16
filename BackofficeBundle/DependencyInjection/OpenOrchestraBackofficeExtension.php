@@ -25,7 +25,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('parameters.yml');
 
-
         $this->updateBlockParameter($container, $config);
 
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
@@ -69,7 +68,6 @@ class OpenOrchestraBackofficeExtension extends Extension
 
         $container->setParameter('open_orchestra_backoffice.dashboard_widgets', $config['dashboard_widgets']);
         $container->setParameter('open_orchestra_backoffice.choice.available_color', $config['available_color']);
-
     }
 
     /**

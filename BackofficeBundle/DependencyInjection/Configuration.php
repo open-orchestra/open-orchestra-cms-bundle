@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->arrayNode('front_languages')
-                ->info('Add the availables languages in the Front Office, default (en, fr, de)')
+                ->info('Add the available languages in the Front Office, default (en, fr, de)')
                 ->useAttributeAsKey('key')
                 ->defaultValue(array(
                     'en'=>'open_orchestra_backoffice.language.en',
