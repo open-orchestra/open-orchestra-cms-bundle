@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
-
 /**
  * Class TopMenuPanelStrategy
  */

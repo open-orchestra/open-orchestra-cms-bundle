@@ -9,6 +9,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompi
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\NavigationPanelCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RestoreEntityCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RoleCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TwigGlobalsCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\ValueTransformerCompilerPass;
@@ -39,5 +40,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new AuthorizeStatusChangeCompilerPass());
         $container->addCompilerPass(new AuthorizeEditionCompilerPass());
         $container->addCompilerPass(new RestoreEntityCompilerPass());
+        $container->addCompilerPass(new RoleCompilerPass());
     }
 }
