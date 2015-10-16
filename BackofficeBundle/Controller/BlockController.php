@@ -49,7 +49,7 @@ class BlockController extends AbstractAdminController
             $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
         }
 
-        $title = 'open_orchestra_backoffice.block.'.$block->getComponent().'.title';
+        $title = 'open_orchestra_backoffice.block.' . $block->getComponent() . '.title';
         $title = $this->get('translator')->trans($title);
 
         return $this->renderAdminForm(
