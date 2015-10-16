@@ -10,8 +10,10 @@ use Phake;
  */
 class ValueTransformerManagerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ValueTransformerManager
+     */
     protected $manager;
-    protected $valueTransformer;
 
     /**
      * Set up the test
@@ -19,22 +21,49 @@ class ValueTransformerManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->manager = new ValueTransformerManager();
-        $this->valueTransformer = Phake::mock('OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerInterface');
-        Phake::when($this->valueTransformer)->getName()->thenReturn('foo');
-        Phake::when($this->valueTransformer)->transform(Phake::anyParameters())->thenReturn('foo');
-        Phake::when($this->valueTransformer)->support(Phake::anyParameters())->thenReturn(true);
     }
 
-    public function testGetter()
+    /**
+     * Test transformation
+     */
+    public function testTransform()
     {
         $value = $this->manager->transform('foo','bar');
         $this->assertEquals($value, 'bar');
 
-        $this->manager->addStrategy($this->valueTransformer);
+        $valueTransformer = Phake::mock('OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerInterface');
+        Phake::when($valueTransformer)->getName()->thenReturn('foo');
+        Phake::when($valueTransformer)->transform(Phake::anyParameters())->thenReturn('foo');
+        Phake::when($valueTransformer)->support(Phake::anyParameters())->thenReturn(true);
+
+        $this->manager->addStrategy($valueTransformer);
         $value = $this->manager->transform('foo','bar');
         $this->assertEquals($value, 'foo');
 
-        Phake::verify($this->valueTransformer)->support('foo','bar');
-        Phake::verify($this->valueTransformer)->transform('bar');
+        Phake::verify($valueTransformer)->support('foo','bar');
+        Phake::verify($valueTransformer)->transform('bar');
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @dataProvider provideNoString
+     */
+    public function testTransformWhenNotDone($value)
+    {
+        $this->setExpectedException('OpenOrchestra\Backoffice\Exception\ValueTransfomationFailedException');
+        $this->manager->transform('foo', $value);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNoString()
+    {
+        return array(
+            array(1),
+            array(Phake::mock('stdClass')),
+            array(array()),
+        );
     }
 }
