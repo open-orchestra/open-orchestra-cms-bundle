@@ -1,0 +1,5 @@
+open_orchestra_model_log:
+    document:
+        log:
+            class: FakeClassLog
+            repository: FakeRepositoryLog
