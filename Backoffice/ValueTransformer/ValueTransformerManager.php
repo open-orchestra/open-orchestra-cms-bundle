@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\ValueTransformer;
 
+use OpenOrchestra\Backoffice\Exception\ValueTransfomationFailedException;
+
 /**
  * Class ValueTransformerManager
  */
@@ -21,6 +23,8 @@ class ValueTransformerManager
      * @param string $fieldType
      * @param mixed  $value
      *
+     * @throws ValueTransfomationFailedException
+     *
      * @return string $valueTransformer
      */
     public function transform($fieldType, $value)
@@ -31,6 +35,10 @@ class ValueTransformerManager
             }
         }
 
-        return $value;
+        if (is_string($value)) {
+            return $value;
+        }
+
+        throw new ValueTransfomationFailedException($fieldType);
     }
 }
