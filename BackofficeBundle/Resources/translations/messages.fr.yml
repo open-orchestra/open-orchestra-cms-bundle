@@ -1,4 +1,6 @@
 open_orchestra_backoffice:
+    modal:
+        close: Fermer
     scheme:
         http: http
         https: https
@@ -366,8 +368,9 @@ open_orchestra_backoffice:
             description: Insère une vidéo Youtube, Dailymotion ou Vimeo
             type: Type de vidéo
             youtube:
+                name: Youtube
                 title: Bloc youtube
-                description: Affiche une vidéo de youtube
+                description: Affiche une vidéo de Youtube
                 video_id: Id ou url de la vidéo
                 autoplay: Lance automatiquement la vidéo
                 fs: Affiche le bouton du mode plein écran
@@ -375,32 +378,34 @@ open_orchestra_backoffice:
                 hl: Définit la langue du lecteur
                 loop: Lit la vidéo indéfiniment
                 rel:
-                    title: Affiche des vidéo similaire à la fin
-                    helper: Affiche des vidéo similaire à la fin
-                showinfo: Affiche des information sur la vidéo
+                    title: Affiche des vidéos similaires à la fin
+                    helper: Affiche des vidéos similaires à la fin
+                showinfo: Affiche des informations sur la vidéo
                 width: Largeur du lecteur
                 height: Hauteur du lecteur
                 controls: Affiche les commandes du lecteur
-                theme: Affiche les commandes du lecteur en claire
+                theme: Affiche les commandes du lecteur en clair
                 color: Affiche la barre de progression en blanc
             dailymotion:
+                name: Dailymotion
                 title: Bloc dailymotion
-                description: Affiche un lecteur vidéo de dailymotion
+                description: Affiche une vidéo de Dailymotion
                 video_id: Id ou url de la vidéo
                 autoplay: Lance automatiquement la vidéo
                 info: Cache les informations de la vidéo
-                background: Couleur d'arrière plan du lecteur en hexadécimal
-                foreground: Change la couleur du lecteur en hexadécimal
-                highlight: Change la couleur des boutons au survole en hexadécimal
+                background: Couleur d'arrière plan du lecteur (en hexadécimal)
+                foreground: Couleur du lecteur (en hexadécimal)
+                highlight: Couleur des boutons au survol (en hexadécimal)
                 width: Largeur du lecteur
                 height: Hauteur du lecteur
                 chromeless: Cache les commandes du lecteur
-                related: Affiche des vidéos similaire à la fin de la vidéo
+                related: Affiche des vidéos similaires à la fin de la vidéo
                 quality: Détermine la qualité de la vidéo
                 logo: Affiche le logo Dailymotion
             vimeo:
+                name: Vimeo
                 title: Bloc Vimeo
-                description: Affiche un lecteur vidéo vimeo
+                description: Affiche une vidéo de Vimeo
                 video_id: Id ou url de la vidéo
                 autoplay: Lance automatiquement la vidéo
                 fullscreen: Affiche le bouton du mode plein écran

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class VideoStrategy extends AbstractBlockStrategy
 {
-    const TEMPLATE = 'OpenOrchestraBackofficeBundle:Block/Video:form.html.twig';
+    const TEMPLATE = 'OpenOrchestraBackofficeBundle:Block/Video/Form:form.html.twig';
 
     /**
      * @param BlockInterface $block
@@ -33,9 +33,9 @@ class VideoStrategy extends AbstractBlockStrategy
         $builder->add('videoType', 'choice', array(
             'label' => 'open_orchestra_backoffice.block.video.type',
             'choices' => array(
-                'youtube' => 'youtube',
-                'dailymotion' => 'dailymotion',
-                'vimeo' => 'vimeo'
+                'youtube' => 'open_orchestra_backoffice.block.video.youtube.name',
+                'dailymotion' => 'open_orchestra_backoffice.block.video.dailymotion.name',
+                'vimeo' => 'open_orchestra_backoffice.block.video.vimeo.name'
             )
         ));
         $this->addYoutubeForm($builder);
@@ -52,8 +52,7 @@ class VideoStrategy extends AbstractBlockStrategy
     {
         $builder
             ->add('youtubeVideoId', 'orchestra_video', array(
-                'label' => 'open_orchestra_backoffice.block.video.youtube.video_id',
-                'constraints' => new NotBlank(),
+                'label' => 'open_orchestra_backoffice.block.video.youtube.video_id'
             ))
             ->add('youtubeWidth', 'text', array(
                 'empty_data' => '480',
