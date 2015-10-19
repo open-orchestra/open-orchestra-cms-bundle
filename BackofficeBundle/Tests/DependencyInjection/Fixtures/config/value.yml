@@ -1,0 +1,30 @@
+open_orchestra_backoffice:
+    front_languages:
+        fake_language : fake_translation_language
+    blocks:
+        - fakeBlocks
+    fixed_attributes:
+        - fake_attribute
+    available_color:
+        fake_color : fake_translation_color
+    dashboard_widgets:
+        - fake_widget
+    field_types:
+        fake_field:
+            label: fake_label
+            type: fake_type
+            default_value:
+                type: text
+                options:
+                    label: fake_label.default_value
+                    required: false
+            options:
+                max_length:
+                    default_value: 25
+                required:
+                    default_value: false
+    options:
+        fake_option:
+            type: fake_type
+            label: fake_label
+            required: false
