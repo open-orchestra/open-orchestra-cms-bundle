@@ -119,7 +119,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion(Phake::anyParameters())
+            ->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())
             ->thenReturn(null);
 
         $routes = $this->manager->createForNode($node);
