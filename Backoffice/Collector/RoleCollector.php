@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Collector;
 
-
 /**
  * Class RoleCollector
  */

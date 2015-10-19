@@ -43,7 +43,7 @@ class OrchestraRoleChoiceType extends AbstractType
         $choices = array();
 
         foreach ($this->roleCollector->getRoles() as $role) {
-            $choices[$role] = $this->translator->trans('open_orchestra_role.' . strtolower($role));
+            $choices[$role] = $this->translator->trans('open_orchestra_role.' . strtolower($role), array(), 'role');
         }
 
         return $choices;

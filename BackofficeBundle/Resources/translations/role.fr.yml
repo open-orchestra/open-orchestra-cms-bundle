@@ -1,0 +1,16 @@
+open_orchestra_role:
+    role_access_general_node: Gérer les pages transverses
+    role_access_tree_node: Gérer les pages
+    role_access_tree_template: Gérer les gabarits de pages
+    role_access_content_type_for_content: Gérer les contenus
+    role_access_content_type: Gérer les types de contenus
+    role_access_redirection: Gérer les redirections HTTP
+    role_access_api_client: Gérer les accès à l'API
+    role_access_keyword: Gérer les mots-clefs (tags)
+    role_access_deleted: Gérer la corbeille
+    role_access_status: Gérer les états de publication
+    role_access_theme: Gérer les thèmes
+    role_access_group: Gérer les groupes utilisateurs
+    role_access_site: Gérer les sites
+    role_access_role: Gérer les rôles
+    role_access_logs: Visualiser le journal d'administration
