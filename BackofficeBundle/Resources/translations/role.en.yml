@@ -13,4 +13,3 @@ open_orchestra_role:
     role_access_group: Manage user groups
     role_access_site: Manage web sites
     role_access_role: Manage roles
-    role_access_logs: View administration log

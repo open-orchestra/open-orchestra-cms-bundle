@@ -5,17 +5,14 @@ namespace OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GSTreeTemplatePanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TopMenuPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class RoleCompilerPass
  */
-class RoleCompilerPass implements CompilerPassInterface
+class RoleCompilerPass extends AbstractRoleCompilerPass
 {
     /**
      * You can modify the container here before it is dumped to PHP code.
@@ -42,26 +39,8 @@ class RoleCompilerPass implements CompilerPassInterface
             AdministrationPanelStrategy::ROLE_ACCESS_ROLE,
             TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_SITE,
-            AdministrationPanelStrategy::ROLE_ACCESS_LOG,
-            TopMenuPanelStrategy::ROOT_MENU,
         );
 
         $this->addRoles($container, $roles);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param array            $roles
-     */
-    protected function addRoles(ContainerBuilder $container, array $roles = array())
-    {
-        if (!$container->hasDefinition('open_orchestra_backoffice.collector.role')) {
-            return;
-        }
-
-        $definition = $container->getDefinition('open_orchestra_backoffice.collector.role');
-        foreach ($roles as $role) {
-            $definition->addMethodCall('addRole', array($role));
-        }
     }
 }
