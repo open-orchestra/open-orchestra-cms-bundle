@@ -81,6 +81,10 @@ class RouteDocumentManager
         $site = $this->siteRepository->findOneBySiteId($givenNode->getSiteId());
         $node = $this->nodeRepository->findPublishedInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
 
+        if (!$node instanceof NodeInterface) {
+            return $routes;
+        }
+
         /** @var SiteAliasInterface $alias */
         foreach ($site->getAliases() as $key => $alias) {
             if ($alias->getLanguage() == $node->getLanguage()) {
