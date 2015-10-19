@@ -73,12 +73,9 @@ class RoleCompilerPassTest extends \PHPUnit_Framework_TestCase
             AdministrationPanelStrategy::ROLE_ACCESS_STATUS,
             AdministrationPanelStrategy::ROLE_ACCESS_THEME,
             AdministrationPanelStrategy::ROLE_ACCESS_GROUP,
-            AdministrationPanelStrategy::ROLE_ACCESS_USER,
             AdministrationPanelStrategy::ROLE_ACCESS_ROLE,
             TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_SITE,
-            AdministrationPanelStrategy::ROLE_ACCESS_LOG,
-            TopMenuPanelStrategy::ROOT_MENU,
         );
 
         Phake::when($this->containerBuilder)->hasDefinition(Phake::anyParameters())->thenReturn(true);

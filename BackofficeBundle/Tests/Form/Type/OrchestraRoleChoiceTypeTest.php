@@ -91,7 +91,7 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
             'choices' => $expectedChoices
         ));
         foreach ($roles as $role) {
-            Phake::verify($this->translator)->trans('open_orchestra_role.' . strtolower($role));
+            Phake::verify($this->translator)->trans('open_orchestra_role.' . strtolower($role), array(), 'role');
         }
 
     }
