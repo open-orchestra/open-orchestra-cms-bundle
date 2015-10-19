@@ -112,6 +112,22 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test if no node is published
+     */
+    public function testCreateForNodeWithNoPublishedNode()
+    {
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+
+        Phake::when($this->nodeRepository)
+            ->findPublishedInLastVersion(Phake::anyParameters())
+            ->thenReturn(null);
+
+        $routes = $this->manager->createForNode($node);
+
+        $this->assertSame(array(), $routes);
+    }
+
+    /**
      * @return array
      */
     public function provideNodeData()
