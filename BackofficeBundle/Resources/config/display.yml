@@ -22,6 +22,7 @@ services:
             - @open_orchestra_display.manager.cacheable
             - @open_orchestra_base.manager.tag
             - @open_orchestra_backoffice.context_manager
+            - @event_dispatcher
 
     open_orchestra_backoffice.display.contact:
         class: %open_orchestra_backoffice.display.contact.class%

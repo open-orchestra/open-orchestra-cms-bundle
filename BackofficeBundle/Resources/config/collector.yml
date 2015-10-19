@@ -1,0 +1,6 @@
+parameters:
+    open_orchestra_backoffice.collector.role.class: OpenOrchestra\Backoffice\Collector\RoleCollector
+
+services:
+    open_orchestra_backoffice.collector.role:
+        class: %open_orchestra_backoffice.collector.role.class%

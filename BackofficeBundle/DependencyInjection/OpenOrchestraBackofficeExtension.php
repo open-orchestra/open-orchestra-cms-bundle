@@ -53,6 +53,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('authorize_status_change.yml');
         $loader->load('authorize_edition.yml');
         $loader->load('restore_entity.yml');
+        $loader->load('collector.yml');
 
         if (isset($config['field_types'])) {
             $this->addApplicationFieldTypes($config['field_types'], $container);

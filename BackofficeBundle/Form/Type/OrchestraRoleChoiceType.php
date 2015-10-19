@@ -2,27 +2,27 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\Backoffice\Collector\RoleCollector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class OrchestraRoleChoiceType
  */
 class OrchestraRoleChoiceType extends AbstractType
 {
-    protected $roleRepository;
-    protected $translationChoiceManager;
+    protected $roleCollector;
+    protected $translator;
 
     /**
-     * @param RoleRepositoryInterface  $roleRepository
-     * @param TranslationChoiceManager $translationChoiceManager
+     * @param RoleCollector       $roleCollector
+     * @param TranslatorInterface $translator
      */
-    public function __construct(RoleRepositoryInterface $roleRepository, TranslationChoiceManager $translationChoiceManager)
+    public function __construct(RoleCollector $roleCollector, TranslatorInterface $translator)
     {
-        $this->roleRepository = $roleRepository;
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->roleCollector = $roleCollector;
+        $this->translator = $translator;
     }
 
     /**
@@ -42,8 +42,8 @@ class OrchestraRoleChoiceType extends AbstractType
     {
         $choices = array();
 
-        foreach ($this->roleRepository->findAccessRole() as $role) {
-            $choices[$role->getName()] = $this->translationChoiceManager->choose($role->getDescriptions());
+        foreach ($this->roleCollector->getRoles() as $role) {
+            $choices[$role] = $this->translator->trans('open_orchestra_role.' . strtolower($role), array(), 'role');
         }
 
         return $choices;
