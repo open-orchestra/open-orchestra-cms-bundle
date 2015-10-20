@@ -172,7 +172,7 @@ activateForm = (view, form) ->
     PO.formPrototypes.addPrototype $(@)
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
   loadExtendView(view, 'contentTypeChange') if (elements = $("[data-prototype*='content_type_change_type']", form)) && elements.length > 0
-  $('textarea.tinymce').wysibb()
+  $('textarea.tinymce').wysibb wysibb_config
 
 #LAUNCH SMARTADMIN NOTIFICATION
 launchNotification = (type, message) ->

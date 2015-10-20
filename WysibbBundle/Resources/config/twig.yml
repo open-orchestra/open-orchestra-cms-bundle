@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_backoffice.twig_extension.wysibb.class: OpenOrchestra\WysibbBundle\Twig\WysibbExtension
+
+services:
+    open_orchestra_backoffice.twig_extension.wysibb:
+        class: %open_orchestra_backoffice.twig_extension.wysibb.class%
+        calls:
+            - [ setContainer, [ @service_container ]  ]
+        tags:
+            - { name: twig.extension }
