@@ -1,0 +1,529 @@
+open_orchestra_backoffice:
+    modal:
+        close: Close
+    scheme:
+        http: http
+        https: https
+    language:
+        en: English
+        fr: Français
+        es: Español
+        de: Deutsch
+    error_txt: Die Anfrage konnte nicht beenden
+    clear_local_storage:
+        tooltip: '*Achtung! Dies wird alle Ihre Widget Einstellungen zurücksetzen.*'
+        title: Klar Local Storage
+        text: Would you like to RESET all your saved widgets and clear LocalStorage?
+    dashboard:
+        last_node_title: Meine neuesten Seiten
+        last_content_title: Meine neuesten Inhalte
+        node_draft_title: Meine Seiten nicht veröffentlicht
+        content_draft_title: Meine Inhalte nicht veröffentlicht
+        widget:
+            list:
+              no_entities: Keine Aufzeichnungen gefunden
+              name: Name
+              language: Sprache
+              date: Datum
+    form:
+        submit: Speichern
+        edit: Editieren
+        delete: Löschen
+        delete_confirm:
+            title: Löschen Sie dieses Element?
+            text: Das Entfernen ist endgültig
+        add: Hinzufügen
+        select: Wähle
+        status:
+            published: Veröffentlicht
+            draft: Zug
+            pending: Pending
+            name: Name
+            initial: Anfangs
+            labels: Etiketten in allen Sprachen
+            from_role: Rolle benötigt wird, um den Status von diesem einen ändern
+            to_role: Rolle benötigt wird, um diesen Status zu erhalten
+            color:
+                red: Rote
+                orange: Orange
+                green: grün
+            display_color: Anzeigefarbe
+            creation: Der neue Status erstellt wurde
+            success: Der Status wurde geändert
+        field_option:
+            label: Bestehenden options
+            new: Neue option
+            add: Option hinzufügen
+            delete: Option löschen
+            key: Schlüssel
+            value: Wert
+        field_type:
+            label: Bestehende feld
+            add: Feld hinzufügen
+            new: Neue feld
+            delete: Feld löschen
+            field_id: Feld id
+            labels: Etikette
+            default_value: Standardwert
+            searchable: durchsuchbare
+            translatable: übersetzbar
+            listable: Sichtbar in BackOffice list
+            type: Type
+            options: Bestehende feld
+            custom_type:
+                text: Textzeile
+                textarea: Textbereich
+                wysiwyg: Voller Text
+                integer: ganze
+                email: Email address
+                money: Geld
+                hidden: versteckt
+                date: Datum
+                choice: Wahl
+        website:
+            success: Die Website wurde geändert
+            creation: Die Website wurde erstellt
+            site_id: Die Website id
+            scheme: Standardschema
+            domain: Domäne
+            name: Name
+            aliases: Aliasen
+            alias: Alias
+            default_language: Standard-Sprache
+            language: Sprache
+            prefix: Sprache Präfix
+            main: Haupt-alias
+            blocks: Blocks verfügbar
+            theme: Default Theme
+            meta_keywords: Meta keywords
+            meta_description: Meta beschreibung
+            meta_index: Meta index
+            meta_follow: Meta follow
+            robots_txt: Informationen in der robots.txt-Datei enthalten
+            changefreq:
+                title: Richt Periodizität der Änderung (der Sitemap)
+                helper: Richt Periodizität der Änderung (der Sitemap)
+        theme:
+            success: Das Thema wurde geändert
+            creation: Das Thema erstellt wurde
+            name: Name
+            default: standardmäßig
+        content:
+            transformation_error: Nicht in der Lage, den Wert dieses Feldes zu laden (der Typ nicht übereinstimmt)
+            success: Der Inhalt wurde geändert
+            creation: Der Inhalt erstellt wurde
+            name: Inhalt Name
+            status: Status
+            language: Sprache
+            linked_to_site: Link zum aktuellen Website
+            keywords: Schlüsselwörter
+            content_type: Inhaltstyp
+            content_id: Inhalt id
+        content_type:
+            success: Der Inhaltstyp wurde geändert
+            creation: Der Inhaltstyp erstellt wurde
+            content_type_id: Inhaltstyp id
+            names: Namen in allen Sprachen
+            version: Fassung
+            status: Status
+            linked_to_site: Link zum aktuellen Website
+            default_display: Visible standardmäßig im Backoffice-Liste
+            fields: Felds
+            keywords: Schlüsselwörter
+            template:
+                label: Bearbeitungsformular eigenes Template
+                helper: Optional. Alternative Vorlage verwendet, um die Bearbeitungsform der Inhalte dieser Art zu machen.
+        template:
+            success: Die Vorlage wurde gespeichert
+            name: Name
+            language: Sprache
+            status: Status
+            boDirection: Kinder Richtung
+        node:
+            success: Der Knoten wurde gespeichert
+            name: Page
+            scheme: Scheme
+            default_scheme: Default (Alias configuration)
+            node_type: Knotentyp
+            priority:
+                label: Relative Bedeutung im Vergleich zu den anderen Seiten der Website (für die Sitemap)
+                helper: Relative Bedeutung im Vergleich zu den anderen Seiten der Website (für die Sitemap)
+            theme: Das Thema
+            template_id: Template id
+            alias: Alias
+            route_pattern:
+                name : Url Pattern
+                helper: |
+                    Pattern types: einfach (pattern), absolut (/pattern), mit variabler (/{contentId})
+            language: Sprache
+            status: Status
+            in_menu: Gezeigt in Menüs
+            in_footer: Gezeigt in footer
+            role: Rolle benötigt, um die Seite anzuzeigen
+            max_age: Max Alter der Reaktion des Knotens
+            node_source: Die Quelle-Seite (bei der Kopie)
+            changefreq:
+                title: Richt Periodizität der Änderung (der Sitemap)
+        changefreq:
+            always: Always
+            hourly: Hourly
+            daily: Daily
+            weekly: Weekly
+            monthly: Monthly
+            yearly: Yearly
+            never: Never
+        area:
+            success: Das Gebiet wurde geändert
+            bo_direction: Kinder Richtung
+            bo_percent: Kindergröße Prozent
+            html_class: Html class für den Bereich
+            label: Bereich label
+            area_id: Bereich id
+            new_areas: Hinzufügen neue Bereiche
+            new_blocks: Hinzufügen neuer Blöcke
+            existing_block: bestehende Block
+            existing_blocks: Hinzufügen einen vorhandenen Block
+            add_sub: Hinzufügen
+            label_sub: Bereich label
+            remove_sub: herausnehmen
+            block_exists: Kann Bereich nicht hinzufügen, enthält Bereich Blöcke
+        block:
+            success: Der Block wurde geändert
+            label: Block label
+            max_age: Max Alter der Antwort für diesen Block
+            id: Html id für den block
+            class: Html class für den block
+        sub_menu:
+            node: Menu root
+            level: Menu depth
+        content_list:
+            node: Url einen Kommentar zu hinterlassen.
+            content_type: Content type to display
+            content_keyword: Keyword to display
+            nb_characters: Anzahl der Zeichen, die vor dem Anzeigen zu kürzen den Text.
+            choice_type: Art der Wahl
+            choice_type_and: AND
+            choice_type_or: OR
+            content_template: Template zu verwenden, um den Inhalt anzeigen
+            content_template_enabled:
+                title: Template nutzung
+                helper: Template nutzung
+        orchestra_fields:
+            max_length: Max length
+            required_field: Feld ist obligatorisch
+            format: Format
+            rounding_mode: Rundungsmodus
+            choices: Choices
+            multiple: Multiple
+            expanded: Expanded
+            currency: Currency
+            precision: Precision
+            date_format: Date's format
+            widget: Widget
+            widget_type:
+                choice: Select fields
+                text: Multiple text fields
+                single_text: One text field
+        keyword:
+            label: Label
+            creation: Keyword erstellt wurde
+            success: Keyword wurde erfolgreich aktualisiert
+        role:
+            new:
+                success: Die Rolle wurde erfolgreich erstellt
+            edit:
+                success: Die Rolle wurde aktualisiert
+            name: Name
+            descriptions: Beschreibung
+            from_status: Status from
+            to_status: Status destination
+        group:
+            new:
+                success: Die Gruppe wurde erfolgreich erstellt
+            edit:
+                success: Die Gruppe wurde aktualisiert
+            name: Name
+            label: Etikette
+            roles: Rollen
+            site: Website
+        redirection:
+            new:
+                success: Die Umleitung erfolgreich erstellt wurde
+            edit:
+                success: Die Umleitung wurde aktualisiert
+            site_name: Site name
+            locale: Site language
+            route_pattern: Muster umleiten
+            node_id: Knoten, auf dem die Umleitung geleitet
+            url: Url to redirect to
+            permanent: Permanent redirection
+        api_client:
+            name: Name
+            trusted: Trusted
+            key: Key
+            secret: Secret
+            new:
+                success: Der API Client erfolgreich erstellt wurde
+            edit:
+                success: Der API Client wurde aktualisiert
+    left_menu:
+        tree:
+            new_page: Neue seite
+            new_template: Neue vorlage
+            delete_node: Sind Sie sicher, um die Knoten %nodeName% löschen?
+            delete_template: Sind Sie sicher, dass die Vorlage %templateName% löschen?
+            confirm_move:
+                title: Neu ordnen Sie den Knoten?
+                text: Durch die Annahme, wird der Knoten als Kind von "%nodeName%" bewegt werden
+        dashboard:
+            title: Armaturenbrett
+        editorial:
+            title: Leitartikel
+            nodes: Seite
+            general_nodes: Global seite
+            templates: Vorlage
+            contents: Inhalts
+            error_nodes:
+                error_404: Error 404
+                error_503: Error 503
+        administration:
+            translation: Übersetzung
+            title: Administration
+            sites:
+                list: Websites
+            themes:
+                list: Themes
+            content_type:
+                list: Inhaltstyp
+            status:
+                list: Status
+            user:
+                list: Benutzer
+            api_client:
+                list: Api Clients
+            role:
+                list: Rollen
+            group:
+                list: Gruppen
+            redirection:
+                list: Redirections
+            keyword:
+                list: Keywords
+            trashcan:
+                list: Trashcan
+    block:
+        configurable_content:
+            title: Konfigurierbare Inhaltsblock
+            contentTypeId: Wählen Sie einen Inhaltstyp
+            contentId: Wählen Sie einen Inhalts
+            description: Display ausgewählte Inhalte.
+            content_template: Vorlage zu verwenden, um den Inhalt anzeigen
+            content_template_enabled:
+                title: Vorlage Nutzung
+                helper: Vorlage Nutzung
+        contact:
+            title: Kontaktblock
+            description: Zeigen Sie ein Kontaktformular.
+            recipient: Email empfängers
+            signature: Signatur der email Benachrichtigung
+        footer:
+            title: Footer block
+            description: Zeigen Sie einen Knotennamen-Liste, die eine Fußzeile Attribut.
+        menu:
+            title: Menu block
+            description: Zeigen Sie einen Knotennamen-Liste, die das Attribut-Menü haben.
+        search:
+            title: Search block
+            description: Zeigen Sie ein Suchfeld ein.
+        search_result:
+            title: Search result block
+            description: Ergebnisanzeige der Forschung.
+        tiny_mce_wysiwyg:
+            title: Rich text block
+            description: Zeigen Sie ein Rich Text Bereich.
+        sub_menu:
+            title: SubMenu Block
+            description: Zeigen Sie ein Menü.
+        content_list:
+            title: Inhaltsliste Blocken
+            description: Eine Liste der Inhalte.
+        content_list_by_keyword:
+            title: Inhaltsliste nach Stichwort Block
+            description: Eine Liste der Inhalte nach Stichworten.
+        content:
+            title: Content Block
+            description: Display a content.
+            content_template: Twig syntax error.
+        language_list:
+            title: Language choice Block
+            description: Display Dropdown Liste mit allen Sprachen der Website.
+        login:
+            title: Login Block
+            description: Zeigt eine Protokollform.
+        delete_question: Löschen Block?
+        delete_explanation: Das Entfernen ist endgültig.
+        video:
+            title: Video Block
+            description: Fügen Sie ein Youtube, Dailymotion oder Vimeo Video
+            type: Video type
+            youtube:
+                name: Youtube
+                title: Youtube block
+                description: Anzeigen Ein Youtube Video hinzufügen
+                video_id: Video id oder URL des Videos
+                autoplay: Spielen Sie das Video automatisch auf Last
+                fs: Erlauben dem Spieler, in Vollbild gehen
+                disablekb: Ermöglicht verknüpfungen
+                hl: Legt die Sprache des Spielers
+                loop: Spielen Sie das Video wieder, wenn das Ende erreicht ist
+                rel:
+                    title: Zeigt ähnlichen Videos am Ende des Videos
+                    helper: Zeigt ähnlichen Videos am Ende des Videos
+                showinfo: Zeigt Videos Informationen
+                width: WBreite des Spielers
+                height: Höhe des Spielers
+                controls: Kontrollen Display Spieler
+                theme: Kontrollen Display Spielers in Licht
+                color: Anzeige Fortschrittsbalken in weiß
+            dailymotion:
+                name: Dailymotion
+                title: Dailymotion block
+                description: Anzeige Fortschrittsbalken in der weißen Display ein Video Dailymotion
+                video_id: Video id oder URL des Videos
+                autoplay: Spielen Sie das Video automatisch auf Last
+                info: Szeigt Videos Informationen
+                background: Hintergrundfarbe der Kontrollen Elemente (Hexadecimal format)
+                foreground: Vordergrundfarbe der Kontrollen Elemente (Hexadecimal format)
+                highlight: Farbe unterstreicht die Kontrollen Elemente ' (Hexadecimal format)
+                width:  Breite des Spielers
+                height: Höhe des Spielers
+                chromeless: Breite des Spielers
+                related: Zeigt ähnlichen Videos am Ende des Videos
+                quality: Bestimmt die Qualität, die standardmäßig zur Verfügung, wenn gespielt werden muss
+                logo: Erlaubt es, die Dailymotion logo zeigen
+            vimeo:
+                name: Vimeo
+                title: Vimeo block
+                description: Display a Vimeo video
+                video_id: Video id order url des Videos
+                autoplay: Spielen Sie das Video automatisch auf Last
+                fullscreen: Erlauben dem Spieler, in Vollbild gehen
+                color: Farbe der Videosteuerung (Hexadecimal format)
+                title_video: Lassen Sie sich die Titel auf der Video
+                byline: Zeigen rechten Seite des Benutzers auf dem Video
+                loop: Spielen Sie das Video wieder, wenn das Ende erreicht ist
+                portrait: Anzeigen Porträt des Benutzers auf dem Video
+                width: Breite des Spielers
+                height: Höhe des Spielers
+                badge: Deaktiviert die Abzeichen auf der Video
+        gmap:
+            title: Gmap Block
+            description: Display a map
+        add_this:
+            title: Fügen Sie diesen Block
+            description: Zeigen eine Taste, um Inhalte zu teilen
+        audience_analysis:
+            title: Audience analysis block
+            description: Integrieren Sie ein Google Analytics oder Xiti Tag
+            tag_type: Tag type
+            google_analytics: Google Analytics
+            xiti_free: Xiti Free 7.5
+            site_id: Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)
+    element:
+        version:
+            create: Neue Version
+            display: version
+        preview: Vorschau
+        last_update:
+            at: Letzte Aktualisierung
+            by: durch
+    node:
+        version:
+            create: Neue Version
+            display: version
+        preview: Vorschau
+        configuration: CKonfigurationsseite
+        last_update:
+            at: Letzte Aktualisierung
+            by: durch
+        delete:
+            text: Dieser Vorgang ist nicht reversibel.
+            title: Möchten Sie diesen Knoten löschen?
+        blocks: Blocks
+    status:
+        none_available: Kein Status verfügbar
+    top_menu:
+        site: Site:
+        collapse_menu: Collapse menu
+        sign_out: Austragen
+        improve_security: Sie können Ihre Sicherheit weiter nach der Anmeldung durch Schließen dieses eröffnet Browser zu verbessern
+        fullscreen: Vollbild
+    areas:
+        delete_question: Möchten Sie, diesen Bereich zu löschen mögen
+        delete_explanation: Dieser Vorgang ist nicht reversibel.
+        delete_error_title: Area removal
+        delete_error_txt: Fehler beim Entfernen Bereich, bitte laden Sie die Seite
+    templates:
+        delete:
+          title: Möchten Sie diese Vorlage löschen?
+          text: Dieser Vorgang ist nicht reversibel.
+    command:
+        node:
+            success: Knoten Referenzen sind konsistent.
+            error: Knoten Verweise sind nicht konsistent.
+        empty_choices: Wählen Sie, welche Tabelle zu überprüfen.
+    global:
+        back_to_list: Zurück zur Liste
+    smart_confirm:
+        button:
+            yes: Ja
+            no: Nein
+    table:
+        search : Suche
+        content_type:
+            name: Name
+            status_label: Status etikette
+            version: Version
+            language: Sprache
+            linked_to_site: Site verlinkt
+            created_at: Erstellungsdatum
+            created_by: Autor
+            updated_at: Änderungsdatum
+            updated_by: Neueste Beitrag
+        content_types:
+            content_type_id: Content type id
+            name: Name
+            version: Version
+            status_label: Status etikette
+            linked_to_site: Site verlinkt
+        keywords:
+            label: Etikette
+        role:
+            description: Bezeichnung
+            from_status: Von status
+            to_status: Um den status
+        group:
+            name: Name
+            label: Etikette
+        redirection:
+            site_name: Site name
+            route_pattern: Routenmuster
+            locale: Schauplatz
+            redirection: Redirection
+            permanent: Permanent
+        status:
+            label: Etikette
+            published: Veröffentlicht
+            display_color: Display Color
+            initial: Anfangs
+        api_client:
+            name: Name
+            trusted: Trusted
+        websites:
+            site_id: Site id
+            name: Name
+        trashcan:
+          name: Name
+          deleted_at: zumin gelöscht
+          restore_confirm_txt: Möchten Sie dieses Element wieder herzustellen?
+          restore_confirm_title: Wiederherstellen
