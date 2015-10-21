@@ -39,7 +39,6 @@ open_orchestra_backoffice:
             draft: Brouillon
             Pending: En attente
             name: Nom
-            published: Publié
             initial: Initial
             labels: Libellés dans toutes les langues
             from_role: Rôle recquis pour partir de ce status

@@ -39,7 +39,6 @@ open_orchestra_backoffice:
             draft: Draft
             pending: Pending
             name: Name
-            published: Published
             initial: Initial
             labels: Labels in all languages
             from_role: Role needed to change the status from this one
@@ -48,7 +47,7 @@ open_orchestra_backoffice:
                 red: Red
                 orange: Orange
                 green: Green
-            display_color: Diplay color
+            display_color: Display color
             creation: The new status has been created
             success: The status has been modified
         field_option:
@@ -471,7 +470,7 @@ open_orchestra_backoffice:
     command:
         node:
             success: Nodes references are consistent.
-            error: Nodes refercences are not consistent.
+            error: Nodes references are not consistent.
         empty_choices: Choose which table to check.
     global:
         back_to_list: Back to list
@@ -508,7 +507,7 @@ open_orchestra_backoffice:
             label: Label
         redirection:
             site_name: Site name
-            route_pattern: Routte pattern
+            route_pattern: Route pattern
             locale: Locale
             redirection: Redirection
             permanent: Permanent
