@@ -1,0 +1,15 @@
+open_orchestra_role:
+    role_access_general_node: Manager die Querseiten
+    role_access_tree_node: Seiten verwalten
+    role_access_tree_template: Verwalten Seitenvorlagen
+    role_access_content_type_for_content: Inhalte verwalten
+    role_access_content_type: Verwalten von Inhaltstypen
+    role_access_redirection: Verwalten HTTP-Weiterleitungen
+    role_access_api_client: API-Zugriff verwalten
+    role_access_keyword: Stichworte verwalten (tags)
+    role_access_deleted: Verwalten Papierkorb
+    role_access_status: Verwalten Veröffentlichung Zustände
+    role_access_theme: Themen verwalten
+    role_access_group: Benutzergruppen verwalten
+    role_access_site: Webseiten verwalten
+    role_access_role: Rollen verwalten
