@@ -19,6 +19,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     protected $session;
     protected $tokenStorage;
     protected $defaultLocale;
+    protected $siteRepository;
 
     /**
      * Tests setup
@@ -32,8 +33,9 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
         $this->session = Phake::mock('Symfony\Component\HttpFoundation\Session\Session');
 
         $this->defaultLocale = 'en';
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
-        $this->contextManager = new ContextManager($this->session, $this->tokenStorage, $this->defaultLocale);
+        $this->contextManager = new ContextManager($this->session, $this->tokenStorage, $this->defaultLocale, $this->siteRepository);
     }
 
     /**
@@ -143,6 +145,28 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEmpty($this->contextManager->getAvailableSites());
     }
+
+    /**
+     * Test with no site in group
+     */
+    public function testGetAvailableSitesIfNoSiteGroup()
+    {
+        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
+
+        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        Phake::when($group)->getSite()->thenReturn(null);
+        $groups = array($group);
+
+        $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
+        Phake::when($user)->getGroups()->thenReturn($groups);
+
+        Phake::when($this->token)->getUser()->thenReturn($user);
+
+        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
+    }
+
 
     /**
      * @param array $site
