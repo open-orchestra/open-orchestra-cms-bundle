@@ -33,4 +33,3 @@ $(document).ready ->
       )
   $(document).ajaxSuccess (event, xhr, settings) ->
     redirectToLogin() if isLoginForm(xhr.responseText)
-    updateDebugBar(xhr) if xhr.getResponseHeader('X-Debug-Token-Link')?
