@@ -171,17 +171,6 @@ activateForm = (view, form) ->
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
   loadExtendView(view, 'contentTypeChange') if (elements = $("[data-prototype*='content_type_change_type']", form)) && elements.length > 0
 
-#UPDATE DEBUG BAR
-updateDebugBar = (xhr) ->
-  url = xhr.getResponseHeader('X-Debug-Token-Link')
-  if url? and $('.sf-toolbar').length
-    $.get url, (data) ->
-      toolbarData = $(data).filter('.sf-toolbarreset')
-      if toolbarData
-        btn = $('.sf-toolbar .sf-toolbarreset .hide-button');
-        $('.sf-toolbar .sf-toolbarreset').html(toolbarData.html()).append(btn)
-  return
-
 #LAUNCH SMARTADMIN NOTIFICATION
 launchNotification = (type, message) ->
   if type == 'error'
