@@ -18,6 +18,7 @@ services:
             - @session
             - @security.token_storage
             - "%kernel.default_locale%"
+            - @open_orchestra_model.repository.site
     open_orchestra_backoffice.listener.translate_value_initializer:
         class: %open_orchestra_backoffice.listener.translate_value_initializer.class%
         arguments:

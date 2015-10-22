@@ -7,6 +7,7 @@ use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -16,13 +17,15 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 class GroupSiteVoter implements VoterInterface
 {
     protected $contextManager;
+    protected $siteRepository;
 
     /**
      * @param CurrentSiteIdInterface $contextManager
      */
-    public function __construct(CurrentSiteIdInterface $contextManager)
+    public function __construct(CurrentSiteIdInterface $contextManager, SiteRepositoryInterface $siteRepository)
     {
         $this->contextManager = $contextManager;
+        $this->siteRepository = $siteRepository;
     }
 
     /**
@@ -95,11 +98,15 @@ class GroupSiteVoter implements VoterInterface
         /** @var GroupInterface $group */
         foreach ($groups as $group) {
             if (!$group->getSite() instanceof SiteInterface) {
-                continue;
+                $sites = $this->siteRepository->findByDeleted(false);
+            } else {
+                $sites = array($group->getSite());
             }
-            $siteId = $group->getSite()->getSiteId();
+
             foreach ($group->getRoles() as $role) {
-                $roles[$role][] = $siteId;
+                foreach ($sites as $site) {
+                    $roles[$role][] = $site->getSiteId();
+                }
             }
         }
 
