@@ -25,5 +25,11 @@ class OpenOrchestraWysibbExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('twig.yml');
+
+
+        $container->setParameter('open_orchestra_wysibb.config', array(
+            "buttons" => "bold,italic,underline,|,img,link,|,code,quote,quote,quote,video"
+        ));
+
     }
 }

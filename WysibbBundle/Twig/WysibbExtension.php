@@ -4,6 +4,7 @@ namespace OpenOrchestra\WysibbBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Class WysibbExtension
@@ -36,12 +37,8 @@ class WysibbExtension extends \Twig_Extension implements ContainerAwareInterface
      */
     public function wysibbInit()
     {
-        $config = array(
-            "buttons" => "bold,italic,underline,|,img,link,|,code,quote,quote,quote"
-        );
-
         return $this->getTemplating()->render('OpenOrchestraWysibbBundle:Script:init.html.twig', array(
-            'wysibb_config' => json_encode($config)
+            'wysibb_config' => json_encode($this->getWysibbConfigParameter())
             )
         );
     }
@@ -69,7 +66,7 @@ class WysibbExtension extends \Twig_Extension implements ContainerAwareInterface
     /**
      * Gets the templating service.
      *
-     * @return object The templating service
+     * @return EngineInterface
      */
     protected function getTemplating()
     {
@@ -79,12 +76,10 @@ class WysibbExtension extends \Twig_Extension implements ContainerAwareInterface
     /**
      * Get parameters from the service container
      *
-     * @param string $name
-     *
-     * @return mixed
+     * @return array
      */
-    protected function getParameter($name)
+    protected function getWysibbConfigParameter()
     {
-        return $this->container->getParameter($name);
+        return $this->container->getParameter('open_orchestra_wysibb.config');
     }
 }
