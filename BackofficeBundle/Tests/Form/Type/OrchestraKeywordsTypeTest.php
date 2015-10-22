@@ -81,7 +81,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
             'embedded' => true,
             'attr' => array(
                 'class' => 'select2',
-                'data-tags' => json_encode(array($tagLabel, $tagLabel)),
+                'data-orchestra-tags' => json_encode(array($tagLabel, $tagLabel)),
                 'data-check' => $route
         )));
     }

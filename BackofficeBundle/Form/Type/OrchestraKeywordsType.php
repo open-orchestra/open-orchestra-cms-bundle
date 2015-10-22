@@ -54,7 +54,7 @@ class OrchestraKeywordsType extends AbstractType
             'embedded' => true,
             'attr' => array(
                 'class' => 'select2',
-                'data-tags' => $this->getTags(),
+                'data-orchestra-tags' => $this->getTags(),
                 'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
         )));
     }
