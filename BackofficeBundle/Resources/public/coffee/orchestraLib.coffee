@@ -95,7 +95,7 @@ selectorExist = (selector) ->
 
 #SELECT2 ENABLED
 activateSelect2 = (element) ->
-  tags = element.data('tags')
+  tags = element.data('orchestra-tags')
   url = element.data('check')
   element.select2(
     tags: tags
