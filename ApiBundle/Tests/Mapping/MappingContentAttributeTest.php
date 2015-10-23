@@ -45,5 +45,6 @@ class MappingContentAttributeTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $mapping);
         $this->assertSame($field, $mapping[$key]['field']);
         $this->assertSame($key, $mapping[$key]['key']);
+        $this->assertSame('string', $mapping[$key]['type']);
     }
 }
