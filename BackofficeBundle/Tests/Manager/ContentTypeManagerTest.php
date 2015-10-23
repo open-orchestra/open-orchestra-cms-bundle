@@ -14,7 +14,9 @@ class ContentTypeManagerTest extends \PHPUnit_Framework_TestCase
      * @var ContenttypeManager
      */
     protected $manager;
+
     protected $contentType;
+    protected $contentTypeClass = 'OpenOrchestra\ModelBundle\Document\ContentType';
 
     /**
      * Set Up the test
@@ -23,7 +25,7 @@ class ContentTypeManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->contentType = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
 
-        $this->manager = new ContentTypeManager();
+        $this->manager = new ContentTypeManager($this->contentTypeClass);
     }
 
     /**
@@ -34,5 +36,26 @@ class ContentTypeManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->delete(array($this->contentType, $this->contentType, $this->contentType));
 
         Phake::verify($this->contentType, Phake::times(3))->setDeleted(true);
+    }
+
+    /**
+     * Test initialization
+     */
+    public function testInitializeNewContentType()
+    {
+        $contentType = $this->manager->initializeNewContentType();
+
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentTypeInterface', $contentType);
+        $this->assertSame(array(
+            'name'           => true,
+            'status_label'   => false,
+            'version'        => false,
+            'language'       => false,
+            'linked_to_site' => true,
+            'created_at'     => true,
+            'created_by'     => true,
+            'updated_at'     => false,
+            'updated_by'     => false
+        ), $contentType->getDefaultListable());
     }
 }
