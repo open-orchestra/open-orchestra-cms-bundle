@@ -18,6 +18,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $nodeTransformer;
 
     protected $authorizeEditionManager;
+    protected $authorizationChecker;
     protected $roleName = 'ROLE_NAME';
     protected $transformerManager;
     protected $encryptionManager;
@@ -70,12 +71,16 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+
         $this->nodeTransformer = new NodeTransformer(
             $this->encryptionManager,
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->authorizeEditionManager
+            $this->authorizeEditionManager,
+            $this->authorizationChecker
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);

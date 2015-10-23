@@ -16,6 +16,7 @@ services:
         class: %open_orchestra_backoffice.authorize_edition.node_version.class%
         arguments:
             - @open_orchestra_model.repository.node
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_backoffice.authorize_edition.strategy }
     open_orchestra_backoffice.authorize_edition.content_version:

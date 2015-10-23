@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -19,6 +20,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeTransformer
@@ -30,6 +32,7 @@ class NodeTransformer extends AbstractTransformer
     protected $eventDispatcher;
     protected $statusRepository;
     protected $authorizeEdition;
+    protected $authorizationChecker;
 
     /**
      * @param EncryptionManager             $encrypter
@@ -37,13 +40,15 @@ class NodeTransformer extends AbstractTransformer
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizeEditionManager       $authorizeEdition
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizeEditionManager $authorizeEdition
+        AuthorizeEditionManager $authorizeEdition,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->encrypter = $encrypter;
@@ -51,6 +56,7 @@ class NodeTransformer extends AbstractTransformer
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
         $this->authorizeEdition = $authorizeEdition;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -112,7 +118,7 @@ class NodeTransformer extends AbstractTransformer
             'language' => $node->getLanguage(),
         )));
 
-        if (NodeInterface::TYPE_ERROR !== $node->getNodeType()) {
+        if (NodeInterface::TYPE_ERROR !== $node->getNodeType() && $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE)) {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
                 'nodeId' => $nodeId
             )));

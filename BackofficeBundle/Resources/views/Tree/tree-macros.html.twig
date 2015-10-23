@@ -12,7 +12,7 @@
             >
                 <span>{{ node.name }}</span>
             </a>
-            {% if 'child' in element|keys %}
+            {% if 'child' in element|keys and (element.child is not empty or is_granted("ROLE_ACCESS_CREATE_NODE"))%}
                 <ul
                     class="node-connectedSortable"
                     data-update-order="{{ path('open_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
@@ -22,20 +22,12 @@
                     {% if element.child is not empty %}
                         {{ _self.menu_nodes(element.child, name) }}
                     {% endif %}
-                    <li class="node-unsortable">
-                        <div>
-                            {{ _self.new_node(node.nodeId) }}
-                        </div>
-                    </li>
+                    {{ _self.new_node(node.nodeId, "node-unsortable") }}
                 </ul>
             {% endif %}
         </li>
     {% else %}
-        <li>
-            <div class="ui-state-unsortable">
-                {{ _self.new_node('-') }}
-            </div>
-        </li>
+        {{ _self.new_node('-', "ui-state-unsortable") }}
     {% endfor %}
 
     {% if nodeId404 %}
@@ -48,16 +40,22 @@
 
 {% endmacro %}
 
-{% macro new_node(parentId) %}
-    <a
-        class="ajax-new"
-        href="#"
-        data-url="{{ path('open_orchestra_backoffice_node_new', {'parentId': parentId}) }}"
-        data-type="node"
-    >
-        <i class="fa fa-file"></i>
-        {{ 'open_orchestra_backoffice.left_menu.tree.new_page'|trans }}
-    </a>
+{% macro new_node(parentId, class) %}
+    {% if is_granted("ROLE_ACCESS_CREATE_NODE") %}
+        <li>
+            <div class="{{ class }}">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('open_orchestra_backoffice_node_new', {'parentId': parentId}) }}"
+                    data-type="node"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'open_orchestra_backoffice.left_menu.tree.new_page'|trans }}
+                </a>
+            </div>
+        </li>
+    {% endif %}
 {% endmacro %}
 
 {% macro error_node(nodeId, translationKey) %}

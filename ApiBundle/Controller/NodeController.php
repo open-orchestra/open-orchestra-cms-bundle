@@ -95,14 +95,14 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_NODE')")
      *
      * @return Response
      */
     public function deleteAction($nodeId)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeIdAndSiteId($nodeId, $siteId);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSite($nodeId, $siteId);
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('object_manager')->flush();
 
@@ -115,7 +115,7 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeId}/duplicate/{version}", name="open_orchestra_api_node_duplicate", defaults={"version": null})
      * @Config\Method({"POST"})
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_CREATE_NODE')")
      *
      * @return Response
      */
@@ -176,7 +176,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_NODE')")
      *
      * @return Response
      */
@@ -215,7 +215,7 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_NODE')")
      *
      * @return Response
      */

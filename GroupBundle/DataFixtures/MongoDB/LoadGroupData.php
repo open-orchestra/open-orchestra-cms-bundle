@@ -97,6 +97,9 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
             $group->addRole('ROLE_FROM_PUBLISHED_TO_DRAFT');
             $group->addRole(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE);
+            $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+            $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE);
+            $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE);
             $group->addRole(TreeFolderPanelStrategy::ROLE_ACCESS_TREE_FOLDER);
             $group->addRole(TreeTemplatePanelStrategy::ROLE_ACCESS_TREE_TEMPLATE);
             $group->addRole(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT);
