@@ -68,63 +68,53 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string      $language
+     * @param string      $id
+     * @param array       $aliasIds
+     * @param string      $pattern
+     * @param string      $exceptedPattern
+     * @param string|null $parentId
+     *
      * @dataProvider provideNodeData
      */
     public function testCreateForNode($language, $id, array $aliasIds, $pattern, $exceptedPattern, $parentId = null)
     {
         $nodeId = 'nodeId';
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node)->getLanguage()->thenReturn($language);
-        Phake::when($node)->getId()->thenReturn($id);
-        Phake::when($node)->getNodeId()->thenReturn($nodeId);
-        Phake::when($node)->getRoutePattern()->thenReturn($pattern);
-        Phake::when($node)->getParentId()->thenReturn($parentId);
+        $childrenId = 'childrenId';
+        $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
+        $children = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($children)->getNodeId()->thenReturn($childrenId);
 
-        Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion($nodeId, $language, 'siteId')
-            ->thenReturn($node);
-
-        $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($parent)->getRoutePattern()->thenReturn('/bar');
-        Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion($parentId, $language, 'siteId')
-            ->thenReturn($parent);
+        Phake::when($this->nodeRepository)->findLastVersionByType($nodeId, $language, 'siteId')->thenReturn(array($node));
+        Phake::when($this->nodeRepository)->findByParent($nodeId, 'siteId')->thenReturn(array($children));
+        Phake::when($this->nodeRepository)->findByParent($childrenId, 'siteId')->thenReturn(array());
 
         $routeDocuments = $this->manager->createForNode($node);
 
-        $this->assertCount(2, $routeDocuments);
-        Phake::verify($this->nodeRepository)->findPublishedInLastVersion($nodeId, $language, 'siteId');
-        foreach ($routeDocuments as $key => $route) {
-            $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
-            $this->assertSame($this->{'domain'. ucfirst($language)}, $route->getHost());
-            $this->assertSame(ReadSchemeableInterface::SCHEME_HTTPS, $route->getSchemes());
-            $this->assertSame(array(
-                '_locale' => $language,
-                'nodeId' => $nodeId,
-                'siteId' => 'siteId',
-                'aliasId' => $aliasIds[$key],
-            ), $route->getDefaults());
-            $this->assertSame($nodeId, $route->getNodeId());
-            $this->assertSame('siteId', $route->getSiteId());
-            $this->assertSame($language, $route->getLanguage());
-            $this->assertSame($exceptedPattern, $route->getPattern());
-        }
+        $this->verifyNodeRoutes($language, $id, $aliasIds, $exceptedPattern, $routeDocuments, $nodeId);
+        Phake::verify($this->nodeRepository)->findByParent($nodeId, 'siteId');
+        Phake::verify($this->nodeRepository)->findByParent($childrenId, 'siteId');
     }
 
     /**
-     * Test if no node is published
+     * @param string      $language
+     * @param string      $id
+     * @param array       $aliasIds
+     * @param string      $pattern
+     * @param string      $exceptedPattern
+     * @param string|null $parentId
+     *
+     * @dataProvider provideNodeData
      */
-    public function testCreateForNodeWithNoPublishedNode()
+    public function testCreateForSite($language, $id, array $aliasIds, $pattern, $exceptedPattern, $parentId = null)
     {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeId = 'nodeId';
+        $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
+        Phake::when($this->nodeRepository)->findLastVersionByType(Phake::anyParameters())->thenReturn(array($node));
 
-        Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion(Phake::anyParameters())
-            ->thenReturn(null);
+        $routeDocuments = $this->manager->createForSite($this->site);
 
-        $routes = $this->manager->createForNode($node);
-
-        $this->assertSame(array(), $routes);
+        $this->verifyNodeRoutes($language, $id, $aliasIds, $exceptedPattern, $routeDocuments, $nodeId);
     }
 
     /**
@@ -150,6 +140,24 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             array('fr', 'nodeId', array(1, 3), 'foo', '/prefixFr/bar/foo', 'parent'),
             array('en', 'nodeId', array(0, 2), 'foo', '/bar/foo', 'parent'),
         );
+    }
+
+    /**
+     * Test if no node is published
+     */
+    public function testCreateForNodeWithNoPublishedNode()
+    {
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+
+        Phake::when($this->nodeRepository)
+            ->findPublishedInLastVersion(Phake::anyParameters())
+            ->thenReturn(null);
+
+        Phake::when($this->nodeRepository)->findByParent(Phake::anyParameters())->thenReturn(array());
+
+        $routes = $this->manager->createForNode($node);
+
+        $this->assertSame(array(), $routes);
     }
 
     /**
@@ -305,5 +313,65 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($routes, $foundRoutes);
         Phake::verify($this->routeDocumentRepository)->findBySite('siteId');
+    }
+
+    /**
+     * @param string $language
+     * @param string $id
+     * @param string $pattern
+     * @param string $parentId
+     * @param string $nodeId
+     *
+     * @return mixed
+     */
+    protected function generateNode($language, $id, $pattern, $parentId, $nodeId)
+    {
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getLanguage()->thenReturn($language);
+        Phake::when($node)->getId()->thenReturn($id);
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getRoutePattern()->thenReturn($pattern);
+        Phake::when($node)->getParentId()->thenReturn($parentId);
+
+        Phake::when($this->nodeRepository)
+            ->findPublishedInLastVersion($nodeId, $language, 'siteId')
+            ->thenReturn($node);
+
+        $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($parent)->getRoutePattern()->thenReturn('/bar');
+        Phake::when($this->nodeRepository)
+            ->findPublishedInLastVersion($parentId, $language, 'siteId')
+            ->thenReturn($parent);
+
+        return $node;
+    }
+
+    /**
+     * @param string $language
+     * @param string $id
+     * @param array  $aliasIds
+     * @param string $exceptedPattern
+     * @param array  $routeDocuments
+     * @param string $nodeId
+     */
+    protected function verifyNodeRoutes($language, $id, array $aliasIds, $exceptedPattern, $routeDocuments, $nodeId)
+    {
+        $this->assertCount(2, $routeDocuments);
+        Phake::verify($this->nodeRepository)->findPublishedInLastVersion($nodeId, $language, 'siteId');
+        foreach ($routeDocuments as $key => $route) {
+            $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
+            $this->assertSame($this->{'domain' . ucfirst($language)}, $route->getHost());
+            $this->assertSame(ReadSchemeableInterface::SCHEME_HTTPS, $route->getSchemes());
+            $this->assertSame(array(
+                '_locale' => $language,
+                'nodeId' => $nodeId,
+                'siteId' => 'siteId',
+                'aliasId' => $aliasIds[$key],
+            ), $route->getDefaults());
+            $this->assertSame($nodeId, $route->getNodeId());
+            $this->assertSame('siteId', $route->getSiteId());
+            $this->assertSame($language, $route->getLanguage());
+            $this->assertSame($exceptedPattern, $route->getPattern());
+        }
     }
 }

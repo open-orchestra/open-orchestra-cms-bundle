@@ -105,9 +105,9 @@ class AreaController extends BaseController
      */
     public function deleteAreaInNodeAction($areaId, $nodeId)
     {
-        $areaContainer = $this->get('open_orchestra_model.repository.node')->find($nodeId);
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
-        $this->deleteAreaFromContainer($areaId, $areaContainer);
+        $this->deleteAreaFromContainer($areaId, $node);
 
         return array();
     }

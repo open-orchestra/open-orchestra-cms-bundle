@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use OpenOrchestra\ModelInterface\Model\RouteDocumentInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
@@ -53,7 +54,7 @@ class RouteDocumentManager
 
         $routes = array();
         foreach ($nodes as $node) {
-            $routes = array_merge($this->createForNode($node), $routes);
+            $routes = array_merge($this->generateRoutesForNode($node, $site), $routes);
         }
 
         return $routes;
@@ -76,38 +77,12 @@ class RouteDocumentManager
      */
     public function createForNode(NodeInterface $givenNode)
     {
-        $routeDocumentClass = $this->routeDocumentClass;
-        $routes = array();
         $site = $this->siteRepository->findOneBySiteId($givenNode->getSiteId());
-        $node = $this->nodeRepository->findPublishedInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
 
-        if (!$node instanceof NodeInterface) {
-            return $routes;
-        }
+        $routes = $this->generateRoutesForNode($givenNode, $site);
 
-        /** @var SiteAliasInterface $alias */
-        foreach ($site->getAliases() as $key => $alias) {
-            if ($alias->getLanguage() == $node->getLanguage()) {
-                /** @var RouteDocumentInterface $route */
-                $route = new $routeDocumentClass();
-                $route->setName($key . '_' . $node->getId());
-                $route->setHost($alias->getDomain());
-                $scheme = $node->getScheme();
-                if (is_null($scheme) || SchemeableInterface::SCHEME_DEFAULT == $scheme) {
-                    $scheme = $alias->getScheme();
-                }
-                $route->setSchemes($scheme);
-                $route->setLanguage($node->getLanguage());
-                $route->setNodeId($node->getNodeId());
-                $route->setSiteId($site->getSiteId());
-                $route->setAliasId($key);
-                $pattern = $this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage(), $site->getSiteId());
-                if ($alias->getPrefix()) {
-                    $pattern = $this->suppressDoubleSlashes('/' . $alias->getPrefix() . '/' . $pattern);
-                }
-                $route->setPattern($pattern);
-                $routes[] = $route;
-            }
+        foreach ($this->nodeRepository->findByParent($givenNode->getNodeId(), $site->getSiteId()) as $children) {
+            $routes = array_merge($this->createForNode($children), $routes);
         }
 
         return $routes;
@@ -234,5 +209,50 @@ class RouteDocumentManager
     protected function suppressDoubleSlashes($route)
     {
         return str_replace('//', '/', $route);
+    }
+
+    /**
+     * @param NodeInterface     $givenNode
+     * @param ReadSiteInterface $site
+     *
+     * @return array
+     */
+    protected function generateRoutesForNode(NodeInterface $givenNode, ReadSiteInterface $site)
+    {
+        $node = $this->nodeRepository->findPublishedInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
+        $routes = array();
+
+        if (!$node instanceof NodeInterface) {
+            return $routes;
+        }
+
+        $routeDocumentClass = $this->routeDocumentClass;
+
+        /** @var SiteAliasInterface $alias */
+        foreach ($site->getAliases() as $key => $alias) {
+            if ($alias->getLanguage() == $node->getLanguage()) {
+                /** @var RouteDocumentInterface $route */
+                $route = new $routeDocumentClass();
+                $route->setName($key . '_' . $node->getId());
+                $route->setHost($alias->getDomain());
+                $scheme = $node->getScheme();
+                if (is_null($scheme) || SchemeableInterface::SCHEME_DEFAULT == $scheme) {
+                    $scheme = $alias->getScheme();
+                }
+                $route->setSchemes($scheme);
+                $route->setLanguage($node->getLanguage());
+                $route->setNodeId($node->getNodeId());
+                $route->setSiteId($site->getSiteId());
+                $route->setAliasId($key);
+                $pattern = $this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage(), $site->getSiteId());
+                if ($alias->getPrefix()) {
+                    $pattern = $this->suppressDoubleSlashes('/' . $alias->getPrefix() . '/' . $pattern);
+                }
+                $route->setPattern($pattern);
+                $routes[] = $route;
+            }
+        }
+
+        return $routes;
     }
 }
