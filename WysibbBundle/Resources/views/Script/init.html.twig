@@ -5,11 +5,6 @@
 //<![CDATA[
     wysibb_config = {{ wysibb_config|raw }};
 //]]>
+    wysibb_config.lang = "{{ locale }}";
+    WBBLANG = {{ wysibb_translations|raw }};
 </script>
-
-{% if app.request.locale != "en" %}
-    <script type="text/javascript">
-        wysibb_config.lang = "{{ app.request.locale }}";
-    </script>
-    <script src="http://cdn.wysibb.com/lang/{{ app.request.locale }}.js"></script>
-{% endif %}

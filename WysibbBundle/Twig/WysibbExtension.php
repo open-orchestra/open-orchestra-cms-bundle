@@ -18,6 +18,8 @@ class WysibbExtension extends \Twig_Extension implements ContainerAwareInterface
      */
     protected $container;
 
+    protected $locale;
+
     /**
      * Returns a list of functions to add to the existing list.
      *
@@ -38,7 +40,9 @@ class WysibbExtension extends \Twig_Extension implements ContainerAwareInterface
     public function wysibbInit()
     {
         return $this->getTemplating()->render('OpenOrchestraWysibbBundle:Script:init.html.twig', array(
-            'wysibb_config' => json_encode($this->getWysibbConfigParameter())
+                'wysibb_config' => json_encode($this->getWysibbConfigParameter()),
+                'wysibb_translations' => json_encode($this->getWysibbTranslationsParameter()),
+                'locale' => $this->getLocale()
             )
         );
     }
@@ -74,12 +78,39 @@ class WysibbExtension extends \Twig_Extension implements ContainerAwareInterface
     }
 
     /**
-     * Get parameters from the service container
+     * Gets Wysibb config parameter from the service container
      *
      * @return array
      */
     protected function getWysibbConfigParameter()
     {
         return $this->container->getParameter('open_orchestra_wysibb.config');
+    }
+
+    /**
+     * Gets Wysibb translations parameter from the service container
+     *
+     * @return array
+     */
+    protected function getWysibbTranslationsParameter()
+    {
+        return $this->container->getParameter('open_orchestra_wysibb.translations');
+    }
+
+    /**
+     * Gets locale from master request
+     *
+     * @return string
+     */
+    protected function getLocale()
+    {
+        if (is_null($this->locale)) {
+            $requestStack = $this->container->get('request_stack');
+            $masterRequest = $requestStack->getMasterRequest();
+
+            $this->locale = $masterRequest->getLocale();
+        }
+
+        return $this->locale;
     }
 }
