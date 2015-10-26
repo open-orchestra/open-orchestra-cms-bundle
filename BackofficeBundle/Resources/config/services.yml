@@ -45,6 +45,7 @@ services:
             - @open_orchestra_backoffice.manager.block
             - @open_orchestra_backoffice.context_manager
             - %open_orchestra_model.document.node.class%
+            - %open_orchestra_model.document.area.class%
             - @event_dispatcher
     open_orchestra_backoffice.manager.site:
         class: %open_orchestra_backoffice.manager.site.class%
