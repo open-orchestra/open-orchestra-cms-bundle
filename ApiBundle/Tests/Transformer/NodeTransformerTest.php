@@ -43,6 +43,10 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->node)->getStatus()->thenReturn($status);
+        Phake::when($status)->isPublished()->thenReturn(false);
+
         $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn(array($siteAlias));

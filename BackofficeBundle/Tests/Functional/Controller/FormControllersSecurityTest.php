@@ -27,8 +27,8 @@ class FormControllersSecurityTest extends AbstractControllerTest
     public function provideApiUrl()
     {
         return array(
-            array('/admin/site/form/2'),
-            array('/admin/status/new'),
+            array('/admin/node/form/root'),
+            array('/admin/node/new/root'),
         );
     }
 }
