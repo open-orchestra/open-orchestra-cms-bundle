@@ -34,7 +34,6 @@ AdminFormView = OrchestraView.extend(
       success: (response) ->
         if viewContext.deleteButton && $('.form-disabled', response).length == 0
           originalButton = $('.submit_form', response)
-          console.log $('.submit_form', response)
           button = originalButton.clone().attr('data-clone', originalButton.attr('id')).removeAttr('id')
           footer = $('<div>')
           .append(viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', viewContext.options))
