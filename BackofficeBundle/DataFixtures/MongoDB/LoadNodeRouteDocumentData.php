@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -36,7 +37,7 @@ class LoadNodeRouteDocumentData extends AbstractFixture implements OrderedFixtur
     public function load(ObjectManager $manager)
     {
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
-        $nodes = $nodeRepository->findByNodeType();
+        $nodes = $nodeRepository->findBy(array('nodeType' => NodeInterface::TYPE_DEFAULT));
         $updateRoute = $this->container->get('open_orchestra_backoffice.manager.route_document');
 
         foreach ($nodes as $node) {
