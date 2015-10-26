@@ -47,4 +47,40 @@ class AreaControllerTest extends AbstractControllerTest
         $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
+
+    /**
+     * Test block addition on transverse node
+     */
+    public function testDuplicateBlockInTransverseNodes()
+    {
+        $this->client->request('GET', '/admin/2/homepage/en');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $this->client->request('GET', '/api/node/transverse?language=fr');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $transverseNodeFrJson = json_decode($this->client->getResponse()->getContent(), true);
+
+        $area = $transverseNodeFrJson['areas'][0];
+        $updateLink = $area['links']['_self_block'];
+        $blockCount = count($area['blocks']);
+
+        $blocksDataToSend = array();
+        for ($i = 0; $i < $blockCount; $i++) {
+            $blocksDataToSend[] = array('node_id' => 'transverse', 'block_id' => $i);
+        }
+        $blocksDataToSend[] = array('component' => 'audience_analysis');
+
+        $datas = json_encode(array('blocks' => $blocksDataToSend));
+        $this->client->request('POST', $updateLink, array(), array(), array(), $datas);
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        foreach (array('en', 'fr', 'de') as $language) {
+            $this->client->request('GET', '/api/node/transverse?language=' . $language);
+            $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+            $newTransverseNodeFrJson = json_decode($this->client->getResponse()->getContent(), true);
+
+            $newArea = $newTransverseNodeFrJson['areas'][0];
+            $this->assertCount($blockCount + 1, $newArea['blocks']);
+        }
+    }
 }
