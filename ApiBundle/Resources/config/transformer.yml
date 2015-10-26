@@ -75,6 +75,7 @@ services:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.context_manager
             - @translator
+            - @event_dispatcher
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block_collection:
