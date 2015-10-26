@@ -1,9 +1,9 @@
 open_orchestra_role:
     role_access_general_node: Gérer les pages transverses
-    role_access_tree_node: Gérer les pages
-    role_access_create_node: Créer des pages
-    role_access_update_node: Editer des pages
-    role_access_delete_node: Supprimer des pages
+    role_access_tree_node: Gérer une page
+    role_access_create_node: Créer une page
+    role_access_update_node: Editer une page
+    role_access_delete_node: Supprimer une page
     role_access_tree_template: Gérer les gabarits de pages
     role_access_content_type_for_content: Gérer les contenus
     role_access_content_type: Gérer les types de contenus
