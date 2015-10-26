@@ -17,6 +17,7 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     protected $voter;
 
     protected $contextManager;
+    protected $siteRepository;
 
     /**
      * Set up the test
@@ -24,8 +25,9 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
-        $this->voter = new GroupSiteVoter($this->contextManager);
+        $this->voter = new GroupSiteVoter($this->contextManager, $this->siteRepository);
     }
 
     /**
@@ -145,6 +147,54 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
             array(array('ROLE_ACCESS_2', 'ROLE_ACCESS_1'), VoterInterface::ACCESS_GRANTED),
             array(array('ROLE_USER'), VoterInterface::ACCESS_GRANTED, true),
             array(array('ROLE_USER', 'ROLE_ACCESS_2'), VoterInterface::ACCESS_GRANTED, true),
+        );
+    }
+
+    /**
+     * @param array  $roles
+     * @param string $accessResponse
+     *
+     * @dataProvider provideRoleAndAccessWithNoSiteInRole
+     */
+    public function testVoteWithNoSiteInRole($roles, $accessResponse)
+    {
+        $siteId1 = '1';
+        $siteId2 = '2';
+        $role1 = 'ROLE_ACCESS_1';
+        $role2 = 'ROLE_ACCESS_2';
+        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site1)->getSiteId()->thenReturn($siteId1);
+        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site2)->getSiteId()->thenReturn($siteId2);
+        Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
+
+        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        Phake::when($group1)->getRoles()->thenReturn(array($role1));
+        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        Phake::when($group2)->getRoles()->thenReturn(array($role2));
+
+        $user = Phake::mock('FOS\UserBundle\Model\GroupableInterface');
+
+        Phake::when($user)->getGroups()->thenReturn(array($group1, $group2));
+
+        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        Phake::when($token)->getUser()->thenReturn($user);
+
+        Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($siteId1);
+
+        $this->assertSame($accessResponse, $this->voter->vote($token, null, $roles));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideRoleAndAccessWithNoSiteInRole()
+    {
+        return array(
+            array(array('ROLE_ACCESS_1'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_ACCESS_2'), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_ACCESS_3'), VoterInterface::ACCESS_DENIED),
+            array(array('ROLE_USER'), VoterInterface::ACCESS_ABSTAIN),
         );
     }
 }

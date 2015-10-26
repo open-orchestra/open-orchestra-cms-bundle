@@ -6,5 +6,6 @@ services:
         class: %open_orchestra_backoffice.voter.group_site.class%
         arguments:
             - @open_orchestra_backoffice.context_manager
+            - @open_orchestra_model.repository.site
         tags:
             - { name: security.voter }

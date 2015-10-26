@@ -5,6 +5,7 @@ namespace OpenOrchestra\Backoffice\Context;
 use FOS\UserBundle\Model\GroupableInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -22,6 +23,7 @@ class ContextManager implements CurrentSiteIdInterface
     protected $tokenStorage;
     protected $currentLanguage;
     protected $defaultLocale;
+    protected $siteRepository;
 
     /**
      * Constructor
@@ -29,12 +31,19 @@ class ContextManager implements CurrentSiteIdInterface
      * @param Session                 $session
      * @param TokenStorageInterface   $tokenStorage
      * @param string                  $defaultLocale
+     * @param SiteRepositoryInterface $siteRepository
      */
-    public function __construct(Session $session, TokenStorageInterface $tokenStorage, $defaultLocale)
+    public function __construct(
+        Session $session,
+        TokenStorageInterface $tokenStorage,
+        $defaultLocale,
+        SiteRepositoryInterface $siteRepository
+    )
     {
         $this->session = $session;
         $this->tokenStorage = $tokenStorage;
         $this->defaultLocale = $defaultLocale;
+        $this->siteRepository = $siteRepository;
     }
 
     /**
@@ -93,8 +102,12 @@ class ContextManager implements CurrentSiteIdInterface
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
                 $site = $group->getSite();
-                if (!$site->isDeleted()) {
-                    $sites[] = $site;
+                if ($site == null ) {
+                    return $this->siteRepository->findByDeleted(false);
+                } else {
+                    if (!$site->isDeleted()) {
+                        $sites[] = $site;
+                    }
                 }
             }
         }
