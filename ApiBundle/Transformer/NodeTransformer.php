@@ -8,6 +8,7 @@ use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
@@ -25,14 +26,13 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Class NodeTransformer
  */
-class NodeTransformer extends AbstractTransformer
+class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $encrypter;
     protected $siteRepository;
     protected $eventDispatcher;
     protected $statusRepository;
     protected $authorizeEdition;
-    protected $authorizationChecker;
 
     /**
      * @param EncryptionManager             $encrypter
@@ -56,7 +56,7 @@ class NodeTransformer extends AbstractTransformer
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
         $this->authorizeEdition = $authorizeEdition;
-        $this->authorizationChecker = $authorizationChecker;
+        parent::__construct($authorizationChecker);
     }
 
     /**
