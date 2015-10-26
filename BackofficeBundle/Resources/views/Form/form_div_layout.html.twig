@@ -144,7 +144,7 @@
     {% spaceless %}
         <div class="form-group">
             <div class="col-lg-12">
-	            {% set label = 'open_orchestra_backoffice.form.submit' %}
+                {% set label = 'open_orchestra_backoffice.form.submit' %}
                 {% set attr = {'class': 'submit_form', 'id': 'submit' ~ form.vars.name} %}
                 {% set id = 'submit_' ~ form.vars.name %}
                 {{ block('submit_widget') }}
