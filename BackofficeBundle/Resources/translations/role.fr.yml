@@ -9,6 +9,9 @@ open_orchestra_role:
     role_access_content_type: Gérer les types de contenus
     role_access_redirection: Gérer les redirections HTTP
     role_access_api_client: Gérer les accès à l'API
+    role_access_create_api_client: Créer des accès à l'API
+    role_access_update_api_client: Editer des accès à l'API
+    role_access_delete_api_client: Supprimer des accès à l'API
     role_access_keyword: Gérer les mots-clefs (tags)
     role_access_deleted: Gérer la corbeille
     role_access_status: Gérer les états de publication
