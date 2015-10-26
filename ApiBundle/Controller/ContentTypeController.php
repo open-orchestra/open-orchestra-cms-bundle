@@ -79,7 +79,7 @@ class ContentTypeController extends BaseController
      * @Config\Route("/{contentTypeId}/delete", name="open_orchestra_api_content_type_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_CONTENT_TYPE')")
      *
      * @return Response
      */

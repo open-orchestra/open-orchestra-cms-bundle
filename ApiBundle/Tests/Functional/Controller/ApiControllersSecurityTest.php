@@ -40,6 +40,9 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/node/list/by-author'),
             array('/api/api-client'),
             array('/api/api-client/root/delete', "DELETE"),
+            array('/api/content-type'),
+            array('/api/content-type/fake-content-type-id'),
+            array('/api/content-type/fake-content-type-id/delete', "DELETE"),
         );
     }
 }

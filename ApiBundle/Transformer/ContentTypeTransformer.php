@@ -4,23 +4,27 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentTypeFacade;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class ContentTypeTransformer
  */
-class ContentTypeTransformer extends AbstractTransformer
+class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $translationChoiceManager;
 
     /**
-     * @param TranslationChoiceManager $translationChoiceManager
+     * @param TranslationChoiceManager      $translationChoiceManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    public function __construct(TranslationChoiceManager $translationChoiceManager, AuthorizationCheckerInterface $authorizationChecker)
     {
+        parent::__construct($authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
@@ -53,14 +57,20 @@ class ContentTypeTransformer extends AbstractTransformer
             'open_orchestra_api_content_type_show',
             array('contentTypeId' => $contentType->getContentTypeId())
         ));
-        $facade->addLink('_self_delete', $this->generateRoute(
-            'open_orchestra_api_content_type_delete',
-            array('contentTypeId' => $contentType->getContentTypeId())
-        ));
-        $facade->addLink('_self_form', $this->generateRoute(
-            'open_orchestra_backoffice_content_type_form',
-            array('contentTypeId' => $contentType->getContentTypeId())
-        ));
+
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE)) {
+            $facade->addLink('_self_delete', $this->generateRoute(
+                'open_orchestra_api_content_type_delete',
+                array('contentTypeId' => $contentType->getContentTypeId())
+            ));
+        }
+
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE)) {
+            $facade->addLink('_self_form', $this->generateRoute(
+                'open_orchestra_backoffice_content_type_form',
+                array('contentTypeId' => $contentType->getContentTypeId())
+            ));
+        }
 
         return $facade;
     }
