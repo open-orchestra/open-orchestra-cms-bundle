@@ -1,8 +1,6 @@
-{% if is_granted('ROLE_ACCESS_UPDATE_NODE') %}
-    <div class="widget-toolbar">
-        <span class="btn btn-primary">
-            <i class="fa fa-cog"></i>
-            {{ 'open_orchestra_backoffice.node.configuration'|trans({}, 'messages', language) }}
-        </span>
-    </div>
-{% endif %}
+<div class="widget-toolbar">
+    <span class="btn btn-primary">
+        <i class="fa fa-cog"></i>
+        {{ 'open_orchestra_backoffice.node.configuration'|trans({}, 'messages', language) }}
+    </span>
+</div>
