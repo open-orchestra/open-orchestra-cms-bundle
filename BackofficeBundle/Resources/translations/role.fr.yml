@@ -16,6 +16,9 @@ open_orchestra_role:
     role_access_update_api_client: Editer un accès à l'API
     role_access_delete_api_client: Supprimer un accès à l'API
     role_access_keyword: Gérer les mots-clefs (tags)
+    role_access_create_keyword: Créer des mots-clefs (tags)
+    role_access_update_keyword: Editer des mots-clefs (tags)
+    role_access_delete_keyword: Supprimer des mots-clefs (tags)
     role_access_deleted: Gérer la corbeille
     role_access_status: Gérer les états de publication
     role_access_theme: Gérer les thèmes

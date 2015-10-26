@@ -2,19 +2,19 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\EventSubscriber;
 
+use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
 use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * Class BlockTypeSubscriberTest
  */
-class BlockTypeSubscriberTest extends KernelTestCase
+class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
 {
     /**
      * @var FormFactoryInterface
@@ -26,7 +26,7 @@ class BlockTypeSubscriberTest extends KernelTestCase
      */
     public function setUp()
     {
-        static::bootKernel();
+        parent::setUp();
         $this->formFactory = static::$kernel->getContainer()->get('form.factory');
     }
 

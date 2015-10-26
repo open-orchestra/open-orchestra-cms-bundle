@@ -14,6 +14,7 @@ services:
             - @open_orchestra_model.helper.suppress_special_character
             - %open_orchestra_model.document.embed_keyword.class%
             - %open_orchestra_model.document.keyword.class%
+            - @security.authorization_checker
     open_orchestra_backoffice.transformer.video_url_to_id:
         class: %open_orchestra_backoffice.transformer.video_url_to_id.class%
     open_orchestra_backoffice.transformer.choice_array_to_string:

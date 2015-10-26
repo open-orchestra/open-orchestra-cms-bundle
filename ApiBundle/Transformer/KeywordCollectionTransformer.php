@@ -3,14 +3,15 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\KeywordCollectionFacade;
 
 /**
  * Class KeywordCollectionTransformer
  */
-class KeywordCollectionTransformer extends AbstractTransformer
+class KeywordCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection $keywordCollection
@@ -30,10 +31,12 @@ class KeywordCollectionTransformer extends AbstractTransformer
             array()
         ));
 
-        $facade->addLink('_self_add', $this->generateRoute(
-            'open_orchestra_backoffice_keyword_new',
-            array()
-        ));
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD)) {
+            $facade->addLink('_self_add', $this->generateRoute(
+                'open_orchestra_backoffice_keyword_new',
+                array()
+            ));
+        }
 
         return $facade;
     }

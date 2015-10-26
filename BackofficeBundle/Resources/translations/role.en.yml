@@ -16,6 +16,9 @@ open_orchestra_role:
     role_access_update_api_client: Update an API access
     role_access_delete_api_client: Delete an API access
     role_access_keyword: Manage keywords (tags)
+    role_access_create_keyword: Create keywords (tags)
+    role_access_update_keyword: Update keywords (tags)
+    role_access_delete_keyword: Delete keywords (tags)
     role_access_deleted: Manage recycle bin
     role_access_status: Manage publication statuses
     role_access_theme: Manage themes
