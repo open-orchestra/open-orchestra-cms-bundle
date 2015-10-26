@@ -107,11 +107,13 @@ class NodeTransformer extends AbstractTransformer
             'id' => $node->getId(),
         )));
 
-        $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
-            'nodeId' => $nodeId,
-            'language' => $node->getLanguage(),
-            'version' => $node->getVersion(),
-        )));
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE)) {
+            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
+                'nodeId' => $nodeId,
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+            )));
+        }
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
             'nodeId' => $nodeId,
