@@ -68,7 +68,7 @@ class UserController extends BaseController
      * @Config\Route("/{userId}/delete", name="open_orchestra_api_user_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_USER')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_USER')")
      *
      * @return Response
      */

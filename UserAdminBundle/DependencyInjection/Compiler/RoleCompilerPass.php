@@ -22,6 +22,10 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
     {
         $this->addRoles($container, array(
             AdministrationPanelStrategy::ROLE_ACCESS_USER,
+            AdministrationPanelStrategy::ROLE_ACCESS_CREATE_USER,
+            AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER,
+            AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER,
+
         ));
     }
 }
