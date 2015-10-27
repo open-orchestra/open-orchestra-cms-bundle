@@ -6,7 +6,6 @@ use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class ContentTypeSubscriberTest
