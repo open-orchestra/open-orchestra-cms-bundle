@@ -32,7 +32,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $nodeClass;
     protected $areaClass;
     protected $areaManager;
-    protected $nodeManager;
     protected $blockManager;
     protected $contextManager;
     protected $nodeRepository;
@@ -57,7 +56,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        $this->nodeManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\NodeManagerInterface');
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
