@@ -56,9 +56,8 @@ class ContentTypeController extends AbstractAdminController
      */
     public function newAction(Request $request)
     {
-        $contentTypeClass = $this->container->getParameter('open_orchestra_model.document.content_type.class');
         /** @var ContentTypeInterface $contentType */
-        $contentType = $this->get('open_orchestra_backoffice.manager.content_type')->initializeNewContentType($contentTypeClass);
+        $contentType = $this->get('open_orchestra_backoffice.manager.content_type')->initializeNewContentType();
 
         $action = $this->generateUrl('open_orchestra_backoffice_content_type_new', array());
         $form = $this->createContentTypeForm($request, array('action' => $action), $contentType);

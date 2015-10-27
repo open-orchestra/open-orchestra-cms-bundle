@@ -26,7 +26,7 @@ class ContentTypeManagerTest extends KernelTestCase
         static::bootKernel();
         $this->contentTypeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content_type');
 
-        $this->manager = new ContentTypeManager();
+        $this->manager = new ContentTypeManager(static::$kernel->getContainer()->getParameter('open_orchestra_model.document.content_type.class'));
     }
 
     /**

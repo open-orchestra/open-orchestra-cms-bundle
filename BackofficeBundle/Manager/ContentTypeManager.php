@@ -9,13 +9,22 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
  */
 class ContentTypeManager
 {
+    protected $contentTypeClass;
+
     /**
      * @param string $contentTypeClass
-     *
+     */
+    public function __construct($contentTypeClass)
+    {
+        $this->contentTypeClass = $contentTypeClass;
+    }
+
+    /**
      * @return ContentTypeInterface
      */
-    public function initializeNewContentType($contentTypeClass)
+    public function initializeNewContentType()
     {
+        $contentTypeClass = $this->contentTypeClass;
         /** @var ContentTypeInterface $contentType */
         $contentType = new $contentTypeClass();
         $contentType->setDefaultListable($this->getDefaultListableColumns());
