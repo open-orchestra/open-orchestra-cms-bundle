@@ -21,15 +21,16 @@ use OpenOrchestra\ModelBundle\Document\Area;
  */
 class NodeManager
 {
-    protected $eventDispatcher;
     protected $versionableSaver;
+    protected $statusRepository;
+    protected $eventDispatcher;
     protected $nodeRepository;
     protected $siteRepository;
-    protected $statusRepository;
     protected $contextManager;
     protected $blockManager;
     protected $areaManager;
     protected $nodeClass;
+    protected $areaClass;
 
     /**
      * Constructor
@@ -42,6 +43,7 @@ class NodeManager
      * @param BlockManager               $blockManager
      * @param ContextManager             $contextManager
      * @param string                     $nodeClass
+     * @param string                     $areaClass
      * @param EventDispatcherInterface   $eventDispatcher
      */
     public function __construct(
@@ -53,6 +55,7 @@ class NodeManager
         BlockManager $blockManager,
         ContextManager $contextManager,
         $nodeClass,
+        $areaClass,
         $eventDispatcher
     )
     {
@@ -64,6 +67,7 @@ class NodeManager
         $this->blockManager = $blockManager;
         $this->contextManager = $contextManager;
         $this->nodeClass = $nodeClass;
+        $this->areaClass = $areaClass;
         $this->eventDispatcher = $eventDispatcher;
     }
 
@@ -117,7 +121,7 @@ class NodeManager
         $node->setInMenu(false);
         $node->setVersion(1);
 
-        $area = new Area();
+        $area = new $this->areaClass();
         $area->setLabel('main');
         $area->setAreaId('main');
         $node->addArea($area);
@@ -337,5 +341,31 @@ class NodeManager
             $event = new NodeEvent($child);
             $this->eventDispatcher->dispatch(NodeEvents::PATH_UPDATED, $event);
         }
+    }
+
+    /**
+     * Create transverse node
+     *
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return NodeInterface
+     */
+    public function createTransverseNode($language, $siteId)
+    {
+        $area = new $this->areaClass();
+        $area->setLabel('main');
+        $area->setAreaId('main');
+
+        /** @var NodeInterface $node */
+        $node = new $this->nodeClass();
+        $node->setLanguage($language);
+        $node->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
+        $node->setName(NodeInterface::TRANSVERSE_NODE_ID);
+        $node->setNodeType(NodeInterface::TYPE_TRANSVERSE);
+        $node->setSiteId($siteId);
+        $node->addArea($area);
+
+        return $node;
     }
 }

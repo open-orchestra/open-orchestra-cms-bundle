@@ -30,14 +30,14 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
     protected $node;
     protected $nodeClass;
+    protected $areaClass;
     protected $areaManager;
     protected $blockManager;
     protected $contextManager;
     protected $nodeRepository;
     protected $siteRepository;
-    protected $statusRepository;
     protected $eventDispatcher;
-    protected $nodeManager;
+    protected $statusRepository;
     /**
      * Set up the test
      */
@@ -56,7 +56,6 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        $this->nodeManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\NodeManagerInterface');
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
@@ -65,10 +64,22 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn('fakeLanguage');
         $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
+        $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
 
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
-        $this->manager = new NodeManager($this->versionableSaver, $this->nodeRepository, $this->siteRepository, $this->statusRepository, $this->areaManager, $this->blockManager, $this->contextManager, $this->nodeClass, $this->eventDispatcher);
+        $this->manager = new NodeManager(
+            $this->versionableSaver,
+            $this->nodeRepository,
+            $this->siteRepository,
+            $this->statusRepository,
+            $this->areaManager,
+            $this->blockManager,
+            $this->contextManager,
+            $this->nodeClass,
+            $this->areaClass,
+            $this->eventDispatcher
+        );
     }
 
     /**
@@ -438,6 +449,42 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array(0, 'root', ''),
             array(3, 'test', '/test'),
             array(4, 'fixture', '/test/fixture'),
+        );
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @dataProvider provideLanguageAndSite
+     */
+    public function testCreateTransverseNode($language, $siteId)
+    {
+        $node = $this->manager->createTransverseNode($language, $siteId);
+
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
+        $this->assertSame($siteId, $node->getSiteId());
+        $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getNodeId());
+        $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getName());
+        $this->assertSame(NodeInterface::TYPE_TRANSVERSE, $node->getNodeType());
+        $this->assertSame(1, $node->getVersion());
+        $this->assertSame($language, $node->getLanguage());
+        $this->assertCount(1, $node->getAreas());
+        $area = $node->getAreas()->first();
+        $this->assertSame('main', $area->getLabel());
+        $this->assertSame('main', $area->getAreaId());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLanguageAndSite()
+    {
+        return array(
+            array('fr', '1'),
+            array('en', '1'),
+            array('fr', '2'),
+            array('en', '2'),
         );
     }
 }
