@@ -29,6 +29,8 @@ class FormControllersSecurityTest extends AbstractControllerTest
         return array(
             array('/admin/node/form/root'),
             array('/admin/node/new/root'),
+            array('/admin/form/root'),
+            array('/admin/new'),
         );
     }
 }

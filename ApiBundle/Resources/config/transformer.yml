@@ -188,10 +188,14 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.api_client:
         class: %open_orchestra_api.transformer.api_client.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.api_client_collection:
         class: %open_orchestra_api.transformer.api_client_collection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.datatable_translation:
