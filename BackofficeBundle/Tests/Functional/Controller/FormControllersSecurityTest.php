@@ -7,8 +7,8 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Controller;
  */
 class FormControllersSecurityTest extends AbstractControllerTest
 {
-    protected $username = 'userLog';
-    protected $password = 'userLog';
+    protected $username = 'userNoAccess';
+    protected $password = 'userNoAccess';
 
     /**
      * @param string $url
@@ -37,6 +37,8 @@ class FormControllersSecurityTest extends AbstractControllerTest
             array('/admin/site/new'),
             array('/admin/keyword/form/fake_keyword_id}'),
             array('/admin/keyword/new'),
+            array('/admin/group/new'),
+            array('/admin/group/form/groupID'),
         );
     }
 }
