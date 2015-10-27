@@ -6,23 +6,13 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ApiClientCollectionFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
 /**
  * Class ApiClientCollectionTransformer
  */
-class ApiClientCollectionTransformer extends AbstractTransformer
+class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
-    protected $authorizationChecker;
-
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-    {
-        $this->authorizationChecker = $authorizationChecker;
-    }
     /**
      * @param Collection $apiClientCollection
      *

@@ -38,6 +38,8 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/node/root/list-version'),
             array('/api/node/list/not-published-by-author'),
             array('/api/node/list/by-author'),
+            array('/api/api-client'),
+            array('/api/api-client/root/delete', "DELETE"),
         );
     }
 }
