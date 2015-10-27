@@ -19,7 +19,8 @@ open_orchestra_role:
     role_access_create_keyword: Create keywords (tags)
     role_access_update_keyword: Update keywords (tags)
     role_access_delete_keyword: Delete keywords (tags)
-    role_access_deleted: Manage recycle bin
+    role_access_deleted: Manage trash can
+    role_access_restore: Restore an entity from trash can
     role_access_status: Manage publication statuses
     role_access_theme: Manage themes
     role_access_group: Manage user groups

@@ -20,6 +20,7 @@ open_orchestra_role:
     role_access_update_keyword: Editer des mots-clefs (tags)
     role_access_delete_keyword: Supprimer des mots-clefs (tags)
     role_access_deleted: Gérer la corbeille
+    role_access_restore: Restaurer une entité depuis la corbeille
     role_access_status: Gérer les états de publication
     role_access_theme: Gérer les thèmes
     role_access_group: Gérer les groupes utilisateurs
