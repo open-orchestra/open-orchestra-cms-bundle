@@ -3,15 +3,16 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\SiteFacade;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteTransformer
  */
-class SiteTransformer extends AbstractTransformer
+class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param SiteInterface $site
@@ -49,14 +50,20 @@ class SiteTransformer extends AbstractTransformer
             'open_orchestra_api_site_show',
             array('siteId' => $site->getSiteId())
         ));
-        $facade->addLink('_self_delete', $this->generateRoute(
-            'open_orchestra_api_site_delete',
-            array('siteId' => $site->getSiteId())
-        ));
-        $facade->addLink('_self_form', $this->generateRoute(
-            'open_orchestra_backoffice_site_form',
-            array('siteId' => $site->getSiteId())
-        ));
+
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_SITE)) {
+            $facade->addLink('_self_delete', $this->generateRoute(
+                'open_orchestra_api_site_delete',
+                array('siteId' => $site->getSiteId())
+            ));
+        }
+
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_SITE)) {
+            $facade->addLink('_self_form', $this->generateRoute(
+                'open_orchestra_backoffice_site_form',
+                array('siteId' => $site->getSiteId())
+            ));
+        }
 
         return $facade;
     }

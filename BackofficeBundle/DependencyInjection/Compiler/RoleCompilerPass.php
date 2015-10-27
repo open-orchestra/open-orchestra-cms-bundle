@@ -48,6 +48,10 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
             TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_SITE,
+            AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE,
+            AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_SITE,
+            AdministrationPanelStrategy::ROLE_ACCESS_DELETE_SITE,
+
         );
 
         $this->addRoles($container, $roles);
