@@ -51,7 +51,7 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/keyword/fake_id/delete', "DELETE"),
             array('/api/keyword'),
             array('/api/trashcan/list'),
-            array('/api/trashcan/fake_id/restore'),
+            array('/api/trashcan/fake_id/restore','PUT'),
         );
     }
 }
