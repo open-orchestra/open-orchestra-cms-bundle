@@ -23,9 +23,12 @@ open_orchestra_role:
     role_access_restore: Restore an entity from trash can
     role_access_status: Manage publication statuses
     role_access_theme: Manage themes
-    role_access_group: Manage user groups
     role_access_site: Manage a web site
     role_access_create_site: Create a web site
     role_access_update_site: Update a web site
     role_access_delete_site: Delete a web site
+    role_access_group: Manage user groups
+    role_access_create_group: Create an user group
+    role_access_update_group: Update an user group
+    role_access_delete_group: Delete an user group
     role_access_role: Manage roles

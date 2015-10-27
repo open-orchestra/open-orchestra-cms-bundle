@@ -2,24 +2,29 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\GroupFacade;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
  * Class GroupTransformer
  */
-class GroupTransformer extends AbstractTransformer
+class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $translationChoiceManager;
 
     /**
      * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager)
-    {
+    public function __construct(
+        AuthorizationCheckerInterface $authorizationChecker,
+        TranslationChoiceManager $translationChoiceManager
+    ){
+        parent::__construct($authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
@@ -49,20 +54,24 @@ class GroupTransformer extends AbstractTransformer
             $facade->site = $this->getTransformer('site')->transform($site);
         }
 
-
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_group_show',
-            array('groupId' => $group->getId())
-        ));
-        $facade->addLink('_self_delete', $this->generateRoute(
-            'open_orchestra_api_group_delete',
-            array('groupId' => $group->getId())
-        ));
-        $facade->addLink('_self_form', $this->generateRoute(
-            'open_orchestra_backoffice_group_form',
-            array('groupId' => $group->getId())
-        ));
-
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
+            $facade->addLink('_self', $this->generateRoute(
+                'open_orchestra_api_group_show',
+                array('groupId' => $group->getId())
+            ));
+        }
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_GROUP)) {
+            $facade->addLink('_self_delete', $this->generateRoute(
+                'open_orchestra_api_group_delete',
+                array('groupId' => $group->getId())
+            ));
+        }
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_GROUP)) {
+            $facade->addLink('_self_form', $this->generateRoute(
+                'open_orchestra_backoffice_group_form',
+                array('groupId' => $group->getId())
+            ));
+        }
         return $facade;
     }
 

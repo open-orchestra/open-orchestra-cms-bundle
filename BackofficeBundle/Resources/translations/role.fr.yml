@@ -24,6 +24,9 @@ open_orchestra_role:
     role_access_status: Gérer les états de publication
     role_access_theme: Gérer les thèmes
     role_access_group: Gérer les groupes utilisateurs
+    role_access_create_group: Créer un groupe utilisateur
+    role_access_update_group: Modifier un groupe utilisateur
+    role_access_delete_group: Supprimer un groupe utilisateur
     role_access_site: Gérer un site
     role_access_create_site: Créer un site
     role_access_update_site: Editer un site
