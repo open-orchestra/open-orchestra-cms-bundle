@@ -186,7 +186,7 @@ launchNotification = (type, message) ->
     timeout: 4000
 
 #SMARTADMIN RESET LOCAL STORAGE OVERRIDE
-$.root_.on 'click', '[data-action="orchestraResetWidgets"]', (e) ->
+$.root_ && $.root_.on 'click', '[data-action="orchestraResetWidgets"]', (e) ->
   callbacks = {}
   callbacks.yesCallback = ->
     if localStorage
