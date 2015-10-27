@@ -56,8 +56,7 @@ NodeView = OrchestraView.extend(
           response.blocks[i] = viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView', 
             block : blockElement
           )
-        blocksPanelViewClass = appConfigurationV
-        iew.getConfiguration('node', 'showBlocksPanel')
+        blocksPanelViewClass = appConfigurationView.getConfiguration('node', 'showBlocksPanel')
         new blocksPanelViewClass(
           blocks : response.blocks
           domContainer : $('.js-widget-blockpanel', viewContext.$el))
