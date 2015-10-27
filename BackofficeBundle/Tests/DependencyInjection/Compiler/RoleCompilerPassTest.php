@@ -82,6 +82,9 @@ class RoleCompilerPassTest extends \PHPUnit_Framework_TestCase
             TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
             TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_SITE,
+            AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE,
+            AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_SITE,
+            AdministrationPanelStrategy::ROLE_ACCESS_DELETE_SITE,
         );
 
         Phake::when($this->containerBuilder)->hasDefinition(Phake::anyParameters())->thenReturn(true);

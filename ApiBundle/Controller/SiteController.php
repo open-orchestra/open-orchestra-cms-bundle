@@ -79,7 +79,7 @@ class SiteController extends BaseController
      * @Config\Route("/{siteId}/delete", name="open_orchestra_api_site_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_SITE')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_SITE')")
      *
      * @return Response
      */
