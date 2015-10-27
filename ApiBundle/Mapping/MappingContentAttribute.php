@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Mapping;
 
-use OpenOrchestra\Mapping\Annotations\Search;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;

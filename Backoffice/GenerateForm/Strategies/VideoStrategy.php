@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BaseVideoStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class VideoStrategy
