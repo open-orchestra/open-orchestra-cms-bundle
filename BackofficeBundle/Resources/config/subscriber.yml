@@ -8,6 +8,7 @@ parameters:
     open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteNodeSubscriber
     open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteContentSubscriber
     open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateRouteDocumentSubscriber
+    open_orchestra_backoffice.subscriber.add_transverse_block.class: OpenOrchestra\BackofficeBundle\EventSubscriber\AddTransverseBlockSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -74,5 +75,11 @@ services:
         arguments:
             - @object_manager
             - @open_orchestra_backoffice.manager.route_document
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.add_transverse_block:
+        class: %open_orchestra_backoffice.subscriber.add_transverse_block.class%
+        arguments:
+            - @open_orchestra_model.repository.node
         tags:
             - { name: kernel.event_subscriber }

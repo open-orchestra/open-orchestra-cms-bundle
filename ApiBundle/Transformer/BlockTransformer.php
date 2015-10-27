@@ -11,9 +11,12 @@ use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager;
+use OpenOrchestra\ModelInterface\BlockNodeEvents;
+use OpenOrchestra\ModelInterface\Event\BlockNodeEvent;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -24,21 +27,23 @@ class BlockTransformer extends AbstractTransformer
     protected $blockParameterManager;
     protected $generateFormManager;
     protected $displayBlockManager;
+    protected $currentSiteManager;
+    protected $eventDispatcher;
     protected $nodeRepository;
     protected $displayManager;
     protected $blockClass;
-    protected $currentSiteManager;
     protected $translator;
 
     /**
-     * @param DisplayBlockManager     $displayBlockManager
-     * @param DisplayManager          $displayManager
-     * @param string                  $blockClass
-     * @param BlockParameterManager   $blockParameterManager
-     * @param GenerateFormManager     $generateFormManager
-     * @param NodeRepositoryInterface $nodeRepository
-     * @param CurrentSiteIdInterface  $currentSiteManager
-     * @param TranslatorInterface     $translator
+     * @param DisplayBlockManager      $displayBlockManager
+     * @param DisplayManager           $displayManager
+     * @param string                   $blockClass
+     * @param BlockParameterManager    $blockParameterManager
+     * @param GenerateFormManager      $generateFormManager
+     * @param NodeRepositoryInterface  $nodeRepository
+     * @param CurrentSiteIdInterface   $currentSiteManager
+     * @param TranslatorInterface      $translator
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         DisplayBlockManager $displayBlockManager,
@@ -48,7 +53,8 @@ class BlockTransformer extends AbstractTransformer
         GenerateFormManager   $generateFormManager,
         NodeRepositoryInterface $nodeRepository,
         CurrentSiteIdInterface $currentSiteManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        EventDispatcherInterface $eventDispatcher
     )
     {
         $this->blockParameterManager = $blockParameterManager;
@@ -59,6 +65,7 @@ class BlockTransformer extends AbstractTransformer
         $this->blockClass = $blockClass;
         $this->currentSiteManager = $currentSiteManager;
         $this->translator = $translator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -151,6 +158,7 @@ class BlockTransformer extends AbstractTransformer
             $blockIndex = $node->getBlockIndex($blockElement);
             $block['blockId'] = $blockIndex;
             $block['nodeId'] = 0;
+            $this->eventDispatcher->dispatch(BlockNodeEvents::ADD_BLOCK_TO_NODE, new BlockNodeEvent($node, $blockElement));
         } elseif (!is_null($facade->nodeId) && !is_null($facade->blockId)) {
             $block['blockId'] = $facade->blockId;
             $block['nodeId'] = $facade->nodeId;
