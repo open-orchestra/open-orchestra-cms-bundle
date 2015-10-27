@@ -106,6 +106,13 @@ class NodeControllerTest extends AbstractControllerTest
         $this->client->request('GET', '/api/node/' . $nodeName);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
+        $node = json_decode($this->client->getResponse()->getContent());
+        $nodeId = $node->id;
+        $statusRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.status');
+        $statuses = $statusRepository->findAll();
+        $this->client->request('POST', '/api/node/' . $nodeId . '/update', array("status_id" => $statuses[0]->getId()));
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
 
         $this->client->request('DELETE', '/api/node/' . $nodeName . '/delete');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
