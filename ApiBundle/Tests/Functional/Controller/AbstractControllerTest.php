@@ -18,6 +18,8 @@ abstract class AbstractControllerTest extends WebTestCase
     protected $client;
 
     protected $currentSiteManager;
+    protected $username = 'admin';
+    protected $password = 'admin';
 
     /**
      * @var NodeRepositoryInterface
@@ -34,8 +36,8 @@ abstract class AbstractControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('Log in')->form();
-        $form['_username'] = 'admin';
-        $form['_password'] = 'admin';
+        $form['_username'] = $this->username;
+        $form['_password'] = $this->password;
 
         $this->client->submit($form);
 

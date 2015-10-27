@@ -32,7 +32,7 @@ AdminFormView = OrchestraView.extend(
       url: @options.url
       method: @method
       success: (response) ->
-        if viewContext.deleteButton && $('.form-disabled', response).length == 0
+        if viewContext.deleteButton
           originalButton = $('.submit_form', response)
           button = originalButton.clone().attr('data-clone', originalButton.attr('id')).removeAttr('id')
           footer = $('<div>')

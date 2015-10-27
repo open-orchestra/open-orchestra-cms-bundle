@@ -12,6 +12,9 @@ use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
 {
     const ROLE_ACCESS_TREE_NODE = 'ROLE_ACCESS_TREE_NODE';
+    const ROLE_ACCESS_CREATE_NODE = 'ROLE_ACCESS_CREATE_NODE';
+    const ROLE_ACCESS_UPDATE_NODE = 'ROLE_ACCESS_UPDATE_NODE';
+    const ROLE_ACCESS_DELETE_NODE = 'ROLE_ACCESS_DELETE_NODE';
 
     /**
      * @var NodeRepositoryInterface

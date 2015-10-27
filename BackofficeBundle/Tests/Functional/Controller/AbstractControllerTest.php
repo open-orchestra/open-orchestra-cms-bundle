@@ -15,6 +15,8 @@ abstract class AbstractControllerTest extends WebTestCase
      * @var Client
      */
     protected $client;
+    protected $username = 'admin';
+    protected $password = 'admin';
 
     /**
      * Set up the test
@@ -25,8 +27,8 @@ abstract class AbstractControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
 
         $form = $crawler->selectButton('Log in')->form();
-        $form['_username'] = 'admin';
-        $form['_password'] = 'admin';
+        $form['_username'] = $this->username;
+        $form['_password'] = $this->password;
 
         $this->client->submit($form);
     }

@@ -5,9 +5,10 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
@@ -19,11 +20,12 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeTransformer
  */
-class NodeTransformer extends AbstractTransformer
+class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $encrypter;
     protected $siteRepository;
@@ -37,13 +39,15 @@ class NodeTransformer extends AbstractTransformer
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizeEditionManager       $authorizeEdition
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizeEditionManager $authorizeEdition
+        AuthorizeEditionManager $authorizeEdition,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->encrypter = $encrypter;
@@ -51,6 +55,7 @@ class NodeTransformer extends AbstractTransformer
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
         $this->authorizeEdition = $authorizeEdition;
+        parent::__construct($authorizationChecker);
     }
 
     /**
@@ -101,18 +106,23 @@ class NodeTransformer extends AbstractTransformer
             'id' => $node->getId(),
         )));
 
-        $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
-            'nodeId' => $nodeId,
-            'language' => $node->getLanguage(),
-            'version' => $node->getVersion(),
-        )));
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE)) {
+            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
+                'nodeId' => $nodeId,
+                'language' => $node->getLanguage(),
+                'version' => $node->getVersion(),
+            )));
+        }
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
             'nodeId' => $nodeId,
             'language' => $node->getLanguage(),
         )));
 
-        if (NodeInterface::TYPE_ERROR !== $node->getNodeType()) {
+        if (!$node->getStatus()->isPublished() &&
+            NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
+            $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE)
+        ) {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
                 'nodeId' => $nodeId
             )));

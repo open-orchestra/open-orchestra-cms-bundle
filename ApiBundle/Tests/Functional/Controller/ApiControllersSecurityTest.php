@@ -1,0 +1,43 @@
+<?php
+
+namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
+
+/**
+ * Class ApiControllersSecurityTest
+ */
+class ApiControllersSecurityTest extends AbstractControllerTest
+{
+    protected $username = "userLog";
+    protected $password = "userLog";
+
+    /**
+     * @param string $url
+     * @param string $method
+     *
+     * @dataProvider provideApiUrl
+     */
+    public function testApi($url, $method = 'GET')
+    {
+        $this->client->request($method, $url);
+
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideApiUrl()
+    {
+        return array(
+            array('/api/node/root'),
+            array('/api/node/root/show-or-create'),
+            array('/api/node/root/delete', "DELETE"),
+            array('/api/node/root/duplicate/1', "POST"),
+            array('/api/node/root/update', "POST"),
+            array('/api/node/root/list-statuses'),
+            array('/api/node/root/list-version'),
+            array('/api/node/list/not-published-by-author'),
+            array('/api/node/list/by-author'),
+        );
+    }
+}

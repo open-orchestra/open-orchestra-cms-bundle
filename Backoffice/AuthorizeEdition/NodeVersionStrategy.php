@@ -2,8 +2,10 @@
 
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeVersionStrategy
@@ -16,11 +18,18 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
     protected $nodeRepository;
 
     /**
-     * @param NodeRepositoryInterface $nodeRepository
+     * @var AuthorizationCheckerInterface
      */
-    public function __construct(NodeRepositoryInterface $nodeRepository)
+    protected $autorizationChecker;
+
+    /**
+     * @param NodeRepositoryInterface       $nodeRepository
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function __construct(NodeRepositoryInterface $nodeRepository, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->autorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -40,6 +49,10 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
+        if (!$this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
+            return false;
+        }
+
         $lastVersionNode = $this->nodeRepository->findInLastVersion(
             $document->getNodeId(),
             $document->getLanguage(),

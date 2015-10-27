@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -52,7 +53,7 @@ class NodeController extends AbstractAdminController
      * @Config\Route("/node/new/{parentId}", name="open_orchestra_backoffice_node_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_CREATE_NODE')")
      *
      * @return Response
      */
@@ -86,11 +87,14 @@ class NodeController extends AbstractAdminController
      */
     protected function generateForm(NodeInterface $node, $url)
     {
+        $disabled = !$this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+
         $form = $this->createForm(
             'node',
             $node,
             array(
                 'action' => $url,
+                'disabled' => $disabled,
             )
         );
 

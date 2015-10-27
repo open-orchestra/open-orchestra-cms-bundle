@@ -18,6 +18,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
     protected $nodeTransformer;
 
     protected $authorizeEditionManager;
+    protected $authorizationChecker;
     protected $roleName = 'ROLE_NAME';
     protected $transformerManager;
     protected $encryptionManager;
@@ -42,6 +43,10 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->node)->getStatus()->thenReturn($status);
+        Phake::when($status)->isPublished()->thenReturn(false);
+
         $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn(array($siteAlias));
@@ -70,12 +75,16 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+
         $this->nodeTransformer = new NodeTransformer(
             $this->encryptionManager,
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->authorizeEditionManager
+            $this->authorizeEditionManager,
+            $this->authorizationChecker
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);
