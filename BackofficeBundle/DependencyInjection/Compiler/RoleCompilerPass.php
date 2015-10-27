@@ -26,6 +26,9 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
         $roles = array(
             ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
             AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
+            AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,
+            AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE,
+            AdministrationPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE,
             AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION,
             AdministrationPanelStrategy::ROLE_ACCESS_API_CLIENT,
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_API_CLIENT,

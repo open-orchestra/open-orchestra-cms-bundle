@@ -31,6 +31,8 @@ class FormControllersSecurityTest extends AbstractControllerTest
             array('/admin/node/new/root'),
             array('/admin/form/root'),
             array('/admin/new'),
+            array('/admin/content-type/form/fake-content-type-id'),
+            array('/admin/content-type/form/new'),
         );
     }
 }

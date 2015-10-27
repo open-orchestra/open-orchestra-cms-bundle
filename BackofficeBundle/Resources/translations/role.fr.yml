@@ -6,7 +6,10 @@ open_orchestra_role:
     role_access_delete_node: Supprimer une page
     role_access_tree_template: Gérer les gabarits de pages
     role_access_content_type_for_content: Gérer les contenus
-    role_access_content_type: Gérer les types de contenus
+    role_access_content_type: Gérer un type de contenu
+    role_access_create_content_type: Ajouter un type de contenu
+    role_access_update_content_type: Editer un type de contenu
+    role_access_delete_content_type: Supprimer un types de contenu
     role_access_redirection: Gérer les redirections HTTP
     role_access_api_client: Gérer un accès à l'API
     role_access_create_api_client: Créer un accès à l'API

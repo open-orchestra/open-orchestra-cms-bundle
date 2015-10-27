@@ -21,7 +21,7 @@ class ContentTypeController extends AbstractAdminController
      * @Config\Route("/content-type/form/{contentTypeId}", name="open_orchestra_backoffice_content_type_form")
      * @Config\Method({"GET", "POST", "PATCH"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
+     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_CONTENT_TYPE')")
      *
      * @return Response
      */
@@ -50,7 +50,7 @@ class ContentTypeController extends AbstractAdminController
      * @Config\Route("/content-type/new", name="open_orchestra_backoffice_content_type_new")
      * @Config\Method({"GET", "POST", "PATCH"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE')")
+     * @Config\Security("has_role('ROLE_ACCESS_CREATE_CONTENT_TYPE')")
      *
      * @return Response
      */
@@ -81,7 +81,7 @@ class ContentTypeController extends AbstractAdminController
 
     /**
      * @param Request              $request
-     * @param string               $action
+     * @param string               $option
      * @param ContentTypeInterface $contentType
      *
      * @return \Symfony\Component\Form\Form
