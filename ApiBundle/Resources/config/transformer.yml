@@ -162,10 +162,14 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.redirection:
         class: %open_orchestra_api.transformer.redirection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.redirection_collection:
         class: %open_orchestra_api.transformer.redirection_collection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.status_collection:

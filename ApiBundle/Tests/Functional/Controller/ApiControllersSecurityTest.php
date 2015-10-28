@@ -63,6 +63,9 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/content/root/list-version'),
             array('/api/content/list/not-published-by-author'),
             array('/api/content/list/by-author'),
+            array('/api/redirection'),
+            array('/api/redirection/fake-id'),
+            array('/api/redirection/fake-id/delete', "DELETE"),
         );
     }
 }

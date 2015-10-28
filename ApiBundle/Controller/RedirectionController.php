@@ -67,7 +67,7 @@ class RedirectionController extends BaseController
      * @Config\Route("/{redirectionId}/delete", name="open_orchestra_api_redirection_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_REDIRECTION')")
      *
      * @return Response
      */

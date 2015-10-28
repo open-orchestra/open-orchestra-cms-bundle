@@ -22,7 +22,7 @@ class RedirectionController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_backoffice_redirection_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
+     * @Config\Security("has_role('ROLE_ACCESS_CREATE_REDIRECTION')")
      *
      * @return Response
      */
@@ -57,7 +57,7 @@ class RedirectionController extends AbstractAdminController
      * @Config\Route("/form/{redirectionId}", name="open_orchestra_backoffice_redirection_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_REDIRECTION')")
+     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_REDIRECTION')")
      *
      * @return Response
      */
