@@ -19,7 +19,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param TranslationChoiceManager $translationChoiceManager
+     * @param TranslationChoiceManager      $translationChoiceManager
      */
     public function __construct(
         AuthorizationCheckerInterface $authorizationChecker,
@@ -73,6 +73,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 array('groupId' => $group->getId())
             ));
         }
+
         return $facade;
     }
 

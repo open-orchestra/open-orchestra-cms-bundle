@@ -49,8 +49,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, O
     }
 
     /**
-     * @param $name
-     * @param null $group
+     * @param string $name
+     * @param string|null $group
      * @return User
      */
     protected function generate($name, $group = null)
