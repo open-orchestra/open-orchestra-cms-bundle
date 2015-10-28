@@ -49,7 +49,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, O
     }
 
     /**
-     * @param string $name
+     * @param string      $name
      * @param string|null $group
      * @return User
      */
