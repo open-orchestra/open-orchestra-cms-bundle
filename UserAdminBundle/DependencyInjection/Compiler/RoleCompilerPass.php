@@ -25,7 +25,6 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_USER,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER,
-
         ));
     }
 }

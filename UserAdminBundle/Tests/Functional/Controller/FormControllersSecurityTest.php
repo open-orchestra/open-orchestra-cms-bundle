@@ -9,8 +9,8 @@ use OpenOrchestra\BackofficeBundle\Tests\Functional\Controller\AbstractControlle
  */
 class FormControllersSecurityTest extends AbstractControllerTest
 {
-    protected $username = 'userLog';
-    protected $password = 'userLog';
+    protected $username = 'userNoAccess';
+    protected $password = 'userNoAccess';
 
     /**
      * @param string $url

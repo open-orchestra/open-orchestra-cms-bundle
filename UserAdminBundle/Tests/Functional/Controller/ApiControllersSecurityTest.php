@@ -9,8 +9,8 @@ use OpenOrchestra\ApiBundle\Tests\Functional\Controller\AbstractControllerTest;
  */
 class ApiControllersSecurityTest extends AbstractControllerTest
 {
-    protected $username = "userLog";
-    protected $password = "userLog";
+    protected $username = "userNoAccess";
+    protected $password = "userNoAccess";
 
     /**
      * @param string $url

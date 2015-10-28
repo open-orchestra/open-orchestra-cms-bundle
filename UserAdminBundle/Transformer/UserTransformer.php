@@ -5,7 +5,6 @@ namespace OpenOrchestra\UserAdminBundle\Transformer;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\UserAdminBundle\Facade\UserFacade;
 use OpenOrchestra\UserBundle\Document\User;
 use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
