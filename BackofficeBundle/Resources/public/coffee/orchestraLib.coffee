@@ -98,7 +98,6 @@ activateSelect2 = (element) ->
   tags = element.data('tags')
   url = element.data('check')
   grantedNew = element.data('authorize-new')
-  console.log grantedNew
   element.select2(
     tags: tags
     createSearchChoice: (term, data) ->
