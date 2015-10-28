@@ -18,6 +18,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $translationChoiceManager;
 
     /**
+     * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TranslationChoiceManager $translationChoiceManager
      */
     public function __construct(
