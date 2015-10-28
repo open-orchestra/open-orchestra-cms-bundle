@@ -89,7 +89,7 @@ class KeywordController extends BaseController
      * @Config\Route("/{keywordId}/delete", name="open_orchestra_api_keyword_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_KEYWORD')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_KEYWORD')")
      *
      * @return Response
      */

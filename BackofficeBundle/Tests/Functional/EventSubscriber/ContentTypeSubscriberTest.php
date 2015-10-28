@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\EventSubscriber;
 
+use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * Class ContentTypeSubscriberTest
  */
-class ContentTypeSubscriberTest extends KernelTestCase
+class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
 {
     /**
      * @var FormFactoryInterface
@@ -22,8 +22,9 @@ class ContentTypeSubscriberTest extends KernelTestCase
      */
     public function setUp()
     {
-        static::bootKernel();
+        parent::setUp();
         $this->formFactory = static::$kernel->getContainer()->get('form.factory');
+
     }
 
     /**

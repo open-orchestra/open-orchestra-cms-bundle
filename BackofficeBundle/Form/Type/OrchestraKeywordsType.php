@@ -2,12 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class OrchestraKeywordsType
@@ -22,16 +24,19 @@ class OrchestraKeywordsType extends AbstractType
      * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
      * @param KeywordRepositoryInterface         $keywordRepository
      * @param RouterInterface                    $router
+     * @param AuthorizationCheckerInterface      $authorizationChecker
      */
     public function __construct(
         EmbedKeywordsToKeywordsTransformer $keywordsTransformer,
         KeywordRepositoryInterface $keywordRepository,
-        RouterInterface $router
+        RouterInterface $router,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->keywordsTransformer = $keywordsTransformer;
         $this->keywordRepository = $keywordRepository;
         $this->router = $router;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -50,11 +55,13 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $isGranted = $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD);
         $resolver->setDefaults(array(
             'embedded' => true,
             'attr' => array(
                 'class' => 'select2',
                 'data-tags' => $this->getTags(),
+                'data-authorize-new' => ($isGranted) ? "1" : "0",
                 'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
         )));
     }

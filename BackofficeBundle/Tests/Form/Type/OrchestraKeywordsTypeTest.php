@@ -23,6 +23,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
     protected $keywords;
     protected $transformer;
     protected $keywordRepository;
+    protected $authorizationChecker;
 
     /**
      * Set up the text
@@ -42,7 +43,10 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
-        $this->form = new OrchestraKeywordsType($this->transformer, $this->keywordRepository, $this->router);
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+
+        $this->form = new OrchestraKeywordsType($this->transformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
     }
 
     /**
@@ -81,6 +85,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
             'embedded' => true,
             'attr' => array(
                 'class' => 'select2',
+                'data-authorize-new' => '1',
                 'data-tags' => json_encode(array($tagLabel, $tagLabel)),
                 'data-check' => $route
         )));

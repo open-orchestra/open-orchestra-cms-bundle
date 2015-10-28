@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Controller;
 
+use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AbstractControllerTest
  */
-abstract class AbstractControllerTest extends WebTestCase
+abstract class AbstractControllerTest extends AbstractAuthentificatedTest
 {
     /**
      * @var Client

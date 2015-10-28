@@ -22,6 +22,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
     protected $keywordRepository;
     protected $embedKeywordClass;
     protected $suppressSpecialCharacter;
+    protected $authorizationChecker;
 
     /**
      * Set up the test
@@ -36,8 +37,9 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->keywordRepository)->getManager()->thenReturn($this->documentManager);
 
         $this->suppressSpecialCharacter = Phake::mock('OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface');
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
-        $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository, $this->suppressSpecialCharacter, $this->embedKeywordClass, $this->keywordClass);
+        $this->transformer = new EmbedKeywordsToKeywordsTransformer($this->keywordRepository, $this->suppressSpecialCharacter, $this->embedKeywordClass, $this->keywordClass, $this->authorizationChecker);
     }
 
     /**
@@ -128,6 +130,7 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransformWithExistingTag($tag, $tagLabel)
     {
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
         Phake::when($this->suppressSpecialCharacter)->transform($tag)->thenReturn($tagLabel);
 
         $keyword = Phake::mock('OpenOrchestra\ModelInterface\Model\KeywordInterface');
@@ -151,6 +154,9 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverseTransformWithNonExistingTag($tag, $tagLabel)
     {
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+        Phake::when($this->suppressSpecialCharacter)->transform($tag)->thenReturn($tagLabel);
+
         Phake::when($this->suppressSpecialCharacter)->transform($tag)->thenReturn($tagLabel);
 
         Phake::when($this->keywordRepository)->findOneByLabel(Phake::anyParameters())->thenReturn(null);
@@ -165,6 +171,28 @@ class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->documentManager, Phake::times(2))->persist(Phake::anyParameters());
         Phake::verify($this->documentManager, Phake::times(2))->flush(Phake::anyParameters());
         Phake::verify($this->documentManager, Phake::never())->flush();
+    }
+
+    /**
+     * @param string $tagLabel
+     *
+     * @dataProvider provideTagLabel
+     */
+    public function testReverseTransformWithNonExistingTagNoGranted($tag, $tagLabel)
+    {
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(false);
+        Phake::when($this->suppressSpecialCharacter)->transform($tag)->thenReturn($tagLabel);
+
+        Phake::when($this->suppressSpecialCharacter)->transform($tag)->thenReturn($tagLabel);
+
+        Phake::when($this->keywordRepository)->findOneByLabel(Phake::anyParameters())->thenReturn(null);
+
+        $embedKeywords = $this->transformer->reverseTransform($tag . ',' . $tag);
+
+        $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $embedKeywords);
+        $this->assertCount(0, $embedKeywords);
+        Phake::verify($this->documentManager, Phake::never())->persist(Phake::anyParameters());
+        Phake::verify($this->documentManager, Phake::never())->flush(Phake::anyParameters());
     }
 
     /**
