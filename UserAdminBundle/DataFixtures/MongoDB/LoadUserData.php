@@ -63,7 +63,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, O
         $user->setUsername($name);
         $user->setPlainPassword($name);
 
-        if ($group) { 
+        if ($group) {
             $user->addGroup($this->getReference($group));
         }
 
