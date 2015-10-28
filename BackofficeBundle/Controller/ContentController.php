@@ -20,7 +20,7 @@ class ContentController extends AbstractAdminController
      * @Config\Route("/content/form/{contentId}", name="open_orchestra_backoffice_content_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -86,7 +86,7 @@ class ContentController extends AbstractAdminController
      * @Config\Route("/content/new/{contentType}", name="open_orchestra_backoffice_content_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */

@@ -5,8 +5,11 @@ open_orchestra_role:
     role_access_update_node: Editer une page
     role_access_delete_node: Supprimer une page
     role_access_tree_template: Gérer les gabarits de pages
-    role_access_content_type_for_content: Gérer les contenus
-    role_access_content_type: Gérer les types de contenu
+    role_access_content_type_for_content: Gérer un contenu
+    role_access_create_content_type_for_content: Créer un contenu
+    role_access_update_content_type_for_content: Editer un contenu
+    role_access_delete_content_type_for_content: Supprimer un contenu
+    role_access_content_type: Gérer un type de contenu
     role_access_create_content_type: Ajouter un type de contenu
     role_access_update_content_type: Editer un type de contenu
     role_access_delete_content_type: Supprimer un types de contenu

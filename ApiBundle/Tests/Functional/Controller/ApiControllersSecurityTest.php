@@ -53,6 +53,16 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/trashcan/list'),
             array('/api/trashcan/fake_id/restore','PUT'),
             array('/api/group/groupID/delete', "DELETE"),
+            array('/api/content'),
+            array('/api/content/root'),
+            array('/api/content/root/show-or-create'),
+            array('/api/content/root/delete', 'DELETE'),
+            array('/api/content/root/duplicate', "POST"),
+            array('/api/content/root/update', 'POST'),
+            array('/api/content/root/list-statuses'),
+            array('/api/content/root/list-version'),
+            array('/api/content/list/not-published-by-author'),
+            array('/api/content/list/by-author'),
         );
     }
 }

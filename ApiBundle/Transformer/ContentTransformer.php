@@ -6,33 +6,38 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpE
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\ContentFacade;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class ContentTransformer
  */
-class ContentTransformer extends AbstractTransformer
+class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $statusRepository;
     protected $eventDispatcher;
 
     /**
-     * @param StatusRepositoryInterface $statusRepository
-     * @param EventDispatcherInterface  $eventDispatcher
+     * @param StatusRepositoryInterface     $statusRepository
+     * @param EventDispatcherInterface      $eventDispatcher
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         StatusRepositoryInterface $statusRepository,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->statusRepository = $statusRepository;
         $this->eventDispatcher = $eventDispatcher;
+        parent::__construct($authorizationChecker);
     }
 
     /**
@@ -70,26 +75,32 @@ class ContentTransformer extends AbstractTransformer
             $facade->addAttribute($contentAttribute);
         }
 
-        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
-            'contentId' => $content->getContentId(),
-            'language' => $content->getLanguage(),
-            'version' => $content->getVersion(),
-        )));
+        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)) {
+            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
+                'contentId' => $content->getContentId(),
+                'language' => $content->getLanguage(),
+                'version' => $content->getVersion(),
+            )));
+        }
 
-        $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
-            'contentId' => $content->getContentId(),
-            'language' => $content->getLanguage(),
-            'version' => $content->getVersion(),
-        )));
+        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT)) {
+            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
+                'contentId' => $content->getContentId(),
+                'language' => $content->getLanguage(),
+                'version' => $content->getVersion(),
+            )));
+        }
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
             'contentId' => $content->getContentId(),
             'language' => $content->getLanguage(),
         )));
 
-        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
-            'contentId' => $content->getId()
-        )));
+        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT)) {
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
+                'contentId' => $content->getId()
+            )));
+        }
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $content->getContentId(),
@@ -106,6 +117,7 @@ class ContentTransformer extends AbstractTransformer
         $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_content_list_status', array(
             'contentMongoId' => $content->getId()
         )));
+
         $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_content_update', array(
             'contentMongoId' => $content->getId()
         )));
