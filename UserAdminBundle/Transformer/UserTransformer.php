@@ -25,7 +25,11 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param EventDispatcherInterface $eventDispatcher
      * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, TranslationChoiceManager $translationChoiceManager, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        TranslationChoiceManager $translationChoiceManager,
+        AuthorizationCheckerInterface $authorizationChecker
+    )
     {
         parent::__construct($authorizationChecker);
         $this->eventDispatcher = $eventDispatcher;
