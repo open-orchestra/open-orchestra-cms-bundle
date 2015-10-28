@@ -147,11 +147,14 @@ services:
     open_orchestra_api.transformer.group:
         class: %open_orchestra_api.transformer.group.class%
         arguments:
+            - @security.authorization_checker
             - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group_collection:
         class: %open_orchestra_api.transformer.group_collection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.redirection:

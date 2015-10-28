@@ -1,17 +1,17 @@
 open_orchestra_role:
     role_access_general_node: Manager the transversal pages
-    role_access_tree_node: Manage a page
+    role_access_tree_node: Manage pages
     role_access_create_node: Create a page
     role_access_update_node: Update a page
     role_access_delete_node: Delete a page
     role_access_tree_template: Manage page templates
     role_access_content_type_for_content: Manage contents
-    role_access_content_type: Manage a content type
+    role_access_content_type: Manage content types
     role_access_create_content_type: Create a content type
     role_access_update_content_type: Update a content type
     role_access_delete_content_type: Delete a content type
     role_access_redirection: Manage HTTP redirections
-    role_access_api_client: Manage an API access
+    role_access_api_client: Manage API accesses
     role_access_create_api_client: Create an API access
     role_access_update_api_client: Update an API access
     role_access_delete_api_client: Delete an API access
@@ -23,9 +23,12 @@ open_orchestra_role:
     role_access_restore: Restore an entity from trash can
     role_access_status: Manage publication statuses
     role_access_theme: Manage themes
-    role_access_group: Manage user groups
-    role_access_site: Manage a web site
+    role_access_site: Manage web sites
     role_access_create_site: Create a web site
     role_access_update_site: Update a web site
     role_access_delete_site: Delete a web site
+    role_access_group: Manage user groups
+    role_access_create_group: Create an user group
+    role_access_update_group: Update an user group
+    role_access_delete_group: Delete an user group
     role_access_role: Manage roles

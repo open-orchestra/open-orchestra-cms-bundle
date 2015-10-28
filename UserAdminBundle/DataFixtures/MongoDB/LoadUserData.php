@@ -42,16 +42,18 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, O
         $this->addReference('user-userLog', $userLog);
         $manager->persist($userLog);
 
+        $userNoAccess = $this->generate('userNoAccess');
+        $manager->persist($userNoAccess);
+
         $manager->flush();
     }
 
     /**
-     * @param string $name
-     * @param string $group
-     *
+     * @param string      $name
+     * @param string|null $group
      * @return User
      */
-    protected function generate($name, $group)
+    protected function generate($name, $group = null)
     {
         $user = new User();
 
@@ -60,7 +62,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, O
         $user->setEmail($name.'@fixtures.com');
         $user->setUsername($name);
         $user->setPlainPassword($name);
-        $user->addGroup($this->getReference($group));
+
+        if ($group) {
+            $user->addGroup($this->getReference($group));
+        }
+
         $user->setEnabled(true);
 
         return $user;

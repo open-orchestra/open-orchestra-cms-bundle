@@ -67,7 +67,7 @@ class GroupController extends BaseController
      * @Config\Route("/{groupId}/delete", name="open_orchestra_api_group_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_GROUP')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_GROUP')")
      *
      * @return Response
      */

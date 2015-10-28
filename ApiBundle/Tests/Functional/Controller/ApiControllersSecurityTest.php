@@ -7,8 +7,8 @@ namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
  */
 class ApiControllersSecurityTest extends AbstractControllerTest
 {
-    protected $username = "userLog";
-    protected $password = "userLog";
+    protected $username = "userNoAccess";
+    protected $password = "userNoAccess";
 
     /**
      * @param string $url
@@ -52,6 +52,7 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/keyword'),
             array('/api/trashcan/list'),
             array('/api/trashcan/fake_id/restore','PUT'),
+            array('/api/group/groupID/delete', "DELETE"),
         );
     }
 }
