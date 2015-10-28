@@ -47,6 +47,8 @@ class TrashcanController extends BaseController
      *
      * @Config\Route("/{trashItemId}/restore", name="open_orchestra_api_trashcan_restore")
      * @Config\Method({"PUT"})
+
+     * @Config\Security("has_role('ROLE_ACCESS_RESTORE')")
      *
      * @return array|mixed
      */
