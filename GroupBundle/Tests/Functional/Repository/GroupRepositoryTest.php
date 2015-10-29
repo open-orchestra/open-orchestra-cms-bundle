@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\UserBundle\Tests\Functional\Repository;
+namespace OpenOrchestra\GroupBundle\Tests\Functional\Repository;
 
 use OpenOrchestra\Mapping\Annotations\Search;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
@@ -55,9 +55,9 @@ class GroupRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, null, null, 0 ,5 , 4),
-            array($descriptionEntity, $this->generateSearchProvider('group'), null, 0 ,5 , 4),
-            array($descriptionEntity, $this->generateSearchProvider('', 'group'), null, 0 ,5 , 4),
+            array($descriptionEntity, null, null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateSearchProvider('group'), null, 0 ,5 , 5),
+            array($descriptionEntity, $this->generateSearchProvider('', 'group'), null, 0 ,5 , 5),
             array($descriptionEntity, $this->generateSearchProvider('', 'fakeGroup'), null, 0 ,5 , 0),
             array($descriptionEntity, $this->generateSearchProvider('Demo'), null, 0 ,5 , 1),
         );
@@ -69,7 +69,7 @@ class GroupRepositoryTest extends KernelTestCase
     public function testCount()
     {
         $groups = $this->repository->count();
-        $this->assertEquals(4, $groups);
+        $this->assertEquals(5, $groups);
     }
 
     /**
@@ -93,8 +93,8 @@ class GroupRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, null, 4),
-            array($descriptionEntity, $this->generateSearchProvider('group'), 4),
+            array($descriptionEntity, null, 5),
+            array($descriptionEntity, $this->generateSearchProvider('group'), 5),
             array($descriptionEntity, $this->generateSearchProvider('Demo'), 1),
             array($descriptionEntity, $this->generateSearchProvider('', 'fakeName'), 0),
         );
