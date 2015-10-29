@@ -215,7 +215,7 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_NODE')")
+     * @Config\Security("has_role('ROLE_ACCESS_MOVE_NODE')")
      *
      * @return Response
      */
