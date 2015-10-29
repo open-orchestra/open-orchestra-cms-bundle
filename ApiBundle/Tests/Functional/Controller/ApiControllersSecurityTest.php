@@ -63,14 +63,11 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/content/root/list-version'),
             array('/api/content/list/not-published-by-author'),
             array('/api/content/list/by-author'),
-<<<<<<< HEAD
             array('/api/redirection'),
             array('/api/redirection/fake-id'),
             array('/api/redirection/fake-id/delete', "DELETE"),
-=======
             array('/api/status'),
             array('/api/status/root', 'DELETE'),
->>>>>>> add status roles
         );
     }
 }
