@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 
