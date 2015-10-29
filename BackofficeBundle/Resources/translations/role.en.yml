@@ -5,11 +5,11 @@ open_orchestra_role:
     role_access_update_node: Update a page
     role_access_delete_node: Delete a page
     role_access_tree_template: Manage page templates
-    role_access_content_type_for_content: Manage a content
+    role_access_content_type_for_content: Manage contents
     role_access_create_content_type_for_content: Create a content
     role_access_update_content_type_for_content: Update a content
     role_access_delete_content_type_for_content: Delete a content
-    role_access_content_type: Manage a content type
+    role_access_content_type: Manage content types
     role_access_create_content_type: Create a content type
     role_access_update_content_type: Update a content type
     role_access_delete_content_type: Delete a content type
