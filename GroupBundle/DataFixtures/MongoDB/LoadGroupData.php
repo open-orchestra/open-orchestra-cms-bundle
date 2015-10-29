@@ -135,6 +135,10 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_SITE);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_ROLE);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_LOG);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_REDIRECTION);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_REDIRECTION);
+            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_REDIRECTION);
         } else {
             $group->addRole($role);
         }

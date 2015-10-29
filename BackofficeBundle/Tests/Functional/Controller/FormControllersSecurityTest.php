@@ -41,6 +41,8 @@ class FormControllersSecurityTest extends AbstractControllerTest
             array('/admin/group/form/groupID'),
             array('/admin/content/form/root'),
             array('/admin/content/new/root'),
+            array('/admin/redirection/form/fake-id'),
+            array('/admin/redirection/new'),
         );
     }
 }

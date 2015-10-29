@@ -14,6 +14,9 @@ open_orchestra_role:
     role_access_update_content_type: Update a content type
     role_access_delete_content_type: Delete a content type
     role_access_redirection: Manage HTTP redirections
+    role_access_create_redirection: Create a HTTP redirection
+    role_access_update_redirection: Update a HTTP redirection
+    role_access_delete_redirection: Delete a HTTP redirection
     role_access_api_client: Manage API accesses
     role_access_create_api_client: Create an API access
     role_access_update_api_client: Update an API access
