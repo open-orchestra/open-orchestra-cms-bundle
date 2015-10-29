@@ -66,6 +66,8 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/redirection'),
             array('/api/redirection/fake-id'),
             array('/api/redirection/fake-id/delete', "DELETE"),
+            array('/api/status'),
+            array('/api/status/root/delete', 'DELETE'),
         );
     }
 }

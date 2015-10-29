@@ -14,6 +14,7 @@ use OpenOrchestra\ApiBundle\Transformer\StatusTransformer;
 class StatusTransformerTest extends \PHPUnit_Framework_TestCase
 {
     protected $authorizeStatusChangeManager;
+    protected $authorizationChecker;
     protected $transformerManager;
     protected $groupContext;
     protected $transformer;
@@ -26,6 +27,7 @@ class StatusTransformerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->authorizeStatusChangeManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager');
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->groupContext = Phake::mock('OpenOrchestra\BaseApi\Context\GroupContext');
         $this->translator = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
@@ -38,13 +40,14 @@ class StatusTransformerTest extends \PHPUnit_Framework_TestCase
 
         $statusId = 'StatusId';
 
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
         Phake::when($this->status)->getId()->thenReturn($statusId);
         Phake::when($router)->generateRoute(Phake::anyParameters())->thenReturn('route');
         Phake::when($statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
         Phake::when($transformerManager)->getGroupContext()->thenReturn($this->groupContext);
         Phake::when($transformerManager)->getRouter()->thenReturn($router);
 
-        $this->transformer = new StatusTransformer($this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager);
+        $this->transformer = new StatusTransformer($this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager, $this->authorizationChecker);
         $this->transformer->setContext($transformerManager);
     }
 

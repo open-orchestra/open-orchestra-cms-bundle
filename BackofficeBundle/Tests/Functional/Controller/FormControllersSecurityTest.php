@@ -45,6 +45,8 @@ class FormControllersSecurityTest extends AbstractControllerTest
             array('/admin/redirection/new'),
             array('/admin/theme/form/theme-id'),
             array('/admin/theme/new'),
+            array('/admin/status/form/root'),
+            array('/admin/status/new'),
         );
     }
 }
