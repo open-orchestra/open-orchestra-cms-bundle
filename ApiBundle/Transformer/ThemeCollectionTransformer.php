@@ -4,13 +4,14 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\ThemeCollectionFacade;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 
 /**
  * Class ThemeCollectionTransformer
  */
-class ThemeCollectionTransformer extends AbstractTransformer
+class ThemeCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection $themeCollection
@@ -25,15 +26,19 @@ class ThemeCollectionTransformer extends AbstractTransformer
             $facade->addTheme($this->getTransformer('theme')->transform($theme));
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_theme_list',
-            array()
-        ));
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_THEME)) {
+            $facade->addLink('_self', $this->generateRoute(
+                'open_orchestra_api_theme_list',
+                array()
+            ));
+        }
 
-        $facade->addLink('_self_add', $this->generateRoute(
-            'open_orchestra_backoffice_theme_new',
-            array()
-        ));
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_THEME)) {
+            $facade->addLink('_self_add', $this->generateRoute(
+                'open_orchestra_backoffice_theme_new',
+                array()
+            ));
+        }
 
         return $facade;
     }

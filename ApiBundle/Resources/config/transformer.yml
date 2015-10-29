@@ -131,10 +131,14 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.theme:
         class: %open_orchestra_api.transformer.theme.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.theme_collection:
         class: %open_orchestra_api.transformer.theme_collection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role:

@@ -57,7 +57,7 @@ class ThemeController extends BaseController
      * @Config\Route("/{themeId}/delete", name="open_orchestra_api_theme_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_THEME')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_THEME')")
      *
      * @return Response
      */
