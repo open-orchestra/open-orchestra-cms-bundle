@@ -2,6 +2,7 @@ tableViewLoad = (link, entityType, page) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   translatedHeader = link.data('translated-header').split(",") if link.data('translated-header') != undefined
   visibleElements = link.data('visible-elements').replace(/\s/g, '').split(",") if link.data('visible-elements') != undefined
+  displayGlobalSearch = if link.data('display-global-search') != undefined then link.data('display-global-search') else false
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
   title = link.text()
   viewClass = appConfigurationView.getConfiguration(entityType, 'showTableCollection')
@@ -15,6 +16,7 @@ tableViewLoad = (link, entityType, page) ->
     url : link.data('url')
     entityType: entityType
     domContainer: $("#content")
+    displayGlobalSearch: displayGlobalSearch
   )
 
 entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage) ->
