@@ -24,6 +24,7 @@ module.exports = {
        'web/built/openorchestrabackoffice/css/smartadminPatches/minicolors.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/logo.css',
        'web/built/openorchestrabackoffice/css/smartadminPatches/refresh.css',
+       'web/built/openorchestrabackoffice/css/smartadminPatches/notification.css',
 
        //--[ TINYMCE PATCHES ]--//
        'web/built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css'
