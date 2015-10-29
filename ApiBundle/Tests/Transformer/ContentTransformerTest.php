@@ -21,6 +21,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
     protected $transformerManager;
     protected $statusRepository;
     protected $eventDispatcher;
+    protected $authorizationChecker;
 
     /**
      * Set up the test
@@ -44,7 +45,10 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($router);
 
-        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher);
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+
+        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher, $this->authorizationChecker);
         $this->contentTransformer->setContext($this->transformerManager);
     }
 

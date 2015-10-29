@@ -104,6 +104,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.status
             - @event_dispatcher
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_attribute:
@@ -112,6 +113,8 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_collection:
         class: %open_orchestra_api.transformer.content_collection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site:

@@ -151,7 +151,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/delete", name="open_orchestra_api_content_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -172,7 +172,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentId}/duplicate", name="open_orchestra_api_content_duplicate")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */
@@ -213,7 +213,7 @@ class ContentController extends BaseController
      * @Config\Route("/{contentMongoId}/update", name="open_orchestra_api_content_update")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
+     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT')")
      *
      * @return Response
      */

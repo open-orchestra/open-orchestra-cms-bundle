@@ -5,12 +5,12 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ContentCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
 /**
  * Class ContentCollectionTransformer
  */
-class ContentCollectionTransformer extends AbstractTransformer
+class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection  $contentCollection
