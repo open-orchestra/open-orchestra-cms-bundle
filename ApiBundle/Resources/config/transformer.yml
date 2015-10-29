@@ -178,6 +178,8 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.status_collection:
         class: %open_orchestra_api.transformer.status_collection.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.field_type:
@@ -193,6 +195,7 @@ services:
             - @open_orchestra_model.repository.role
             - @open_orchestra_backoffice.manager.translation_choice
             - @translator
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy }
     open_orchestra_api.transformer.keyword:

@@ -3,21 +3,23 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\StatusFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use OpenOrchestra\BackofficeBundle\StrategyManager\authorizeStatusChangeManager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class StatusTransformer
  */
-class StatusTransformer extends AbstractTransformer
+class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $authorizeStatusChangeManager;
     protected $roleRepository;
@@ -34,12 +36,14 @@ class StatusTransformer extends AbstractTransformer
         AuthorizeStatusChangeManager $authorizeStatusChangeManager,
         RoleRepositoryInterface $roleRepository,
         TranslationChoiceManager $translationChoiceManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
         $this->roleRepository = $roleRepository;
         $this->translationChoiceManager = $translationChoiceManager;
         $this->translator = $translator;
+        parent::__construct($authorizationChecker);
     }
 
     /**
@@ -81,14 +85,19 @@ class StatusTransformer extends AbstractTransformer
             }
             $facade->fromRole = implode(',', $fromRoles);
 
-            $facade->addLink('_self_delete', $this->generateRoute(
-                'open_orchestra_api_status_delete',
-                array('statusId' => $status->getId())
-            ));
-            $facade->addLink('_self_form', $this->generateRoute(
-                'open_orchestra_backoffice_status_form',
-                array('statusId' => $status->getId())
-            ));
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS)) {
+                $facade->addLink('_self_delete', $this->generateRoute(
+                    'open_orchestra_api_status_delete',
+                    array('statusId' => $status->getId())
+                ));
+            }
+
+            if($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_STATUS)) {
+                $facade->addLink('_self_form', $this->generateRoute(
+                    'open_orchestra_backoffice_status_form',
+                    array('statusId' => $status->getId())
+                ));
+            }
         }
 
         return $facade;
