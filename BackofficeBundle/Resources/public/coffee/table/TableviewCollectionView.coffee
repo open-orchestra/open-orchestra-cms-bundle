@@ -11,6 +11,7 @@ TableviewCollectionView = OrchestraView.extend(
       'translatedHeader'
       'displayedElements'
       'visibleElements'
+      'displayGlobalSearch'
       'domContainer'
       'order'
       'title'
@@ -60,7 +61,7 @@ TableviewCollectionView = OrchestraView.extend(
       page = parseInt(@options.page) - 1
       displayStart = pageLength * page
     @options.table = $('#tableviewCollectionTable').dataTable(
-      searching: true
+      searching: @options.displayGlobalSearch
       ordering: true
       serverSide: true
       displayStart: displayStart
