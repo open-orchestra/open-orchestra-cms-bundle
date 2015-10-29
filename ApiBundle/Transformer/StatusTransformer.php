@@ -92,7 +92,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
                 ));
             }
 
-            if($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_STATUS)) {
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_STATUS)) {
                 $facade->addLink('_self_form', $this->generateRoute(
                     'open_orchestra_backoffice_status_form',
                     array('statusId' => $status->getId())
