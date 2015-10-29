@@ -30,11 +30,13 @@ TableviewAction = OrchestraView.extend(
         url: @options.element.get('links')._self_delete
         row: $(event.target).closest('tr')
       yesCallback: (params) ->
+        params.row.hide()
+        options.table.fnSettings().clearCache = true
         $.ajax
           url: params.url
           method: 'DELETE'
-        params.row.hide()
-        options.table.fnSettings().clearCache = true
+          complete: () ->
+            options.table.api().draw()
     )
 
   clickEdit: (event) ->
