@@ -39,11 +39,11 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
         TranslatorInterface $translator,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
+        parent::__construct($authorizationChecker);
         $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
         $this->roleRepository = $roleRepository;
         $this->translationChoiceManager = $translationChoiceManager;
         $this->translator = $translator;
-        parent::__construct($authorizationChecker);
     }
 
     /**
