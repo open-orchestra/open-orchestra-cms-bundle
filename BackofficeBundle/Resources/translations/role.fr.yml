@@ -29,6 +29,9 @@ open_orchestra_role:
     role_access_restore: Restaurer une entité depuis la corbeille
     role_access_status: Gérer les états de publication
     role_access_theme: Gérer les thèmes
+    role_access_create_theme: Créer un thème
+    role_access_update_theme: Modifier un thème
+    role_access_delete_theme: Supprimer un thème
     role_access_group: Gérer les groupes utilisateurs
     role_access_create_group: Créer un groupe utilisateur
     role_access_update_group: Modifier un groupe utilisateur
