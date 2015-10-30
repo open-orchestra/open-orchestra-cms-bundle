@@ -45,3 +45,6 @@ open_orchestra_role:
     role_access_update_group: Update an user group
     role_access_delete_group: Delete an user group
     role_access_role: Manage roles
+    role_access_create_role: Create a role
+    role_access_update_role: Update a role
+    role_access_delete_role: Delete a role

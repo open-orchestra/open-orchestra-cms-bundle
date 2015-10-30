@@ -3,14 +3,15 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 
 /**
  * Class RoleCollectionTransformer
  */
-class RoleCollectionTransformer extends AbstractTransformer
+class RoleCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param Collection $roleCollection
@@ -30,10 +31,12 @@ class RoleCollectionTransformer extends AbstractTransformer
             array()
         ));
 
-        $facade->addLink('_self_add', $this->generateRoute(
-            'open_orchestra_backoffice_role_new',
-            array()
-        ));
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_ROLE)) {
+            $facade->addLink('_self_add', $this->generateRoute(
+                'open_orchestra_backoffice_role_new',
+                array()
+            ));
+        }
 
         return $facade;
     }

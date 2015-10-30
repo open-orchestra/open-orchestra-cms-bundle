@@ -67,7 +67,7 @@ class RoleController extends BaseController
      * @Config\Route("/{roleId}/delete", name="open_orchestra_api_role_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_ROLE')")
+     * @Config\Security("has_role('ROLE_ACCESS_DELETE_ROLE')")
      *
      * @return Response
      */
