@@ -81,19 +81,21 @@
             </a>
         </li>
     {% endfor %}
-    <li>
-        <div class="ui-state-unsortable">
-            <a
-                class="ajax-new"
-                href="#"
-                data-url="{{ path('open_orchestra_backoffice_template_new') }}"
-                data-type="template"
-            >
-                <i class="fa fa-file"></i>
-                {{ 'open_orchestra_backoffice.left_menu.tree.new_template'|trans }}
-            </a>
-        </div>
-    </li>
+    {% if is_granted("ROLE_ACCESS_CREATE_TEMPLATE") %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('open_orchestra_backoffice_template_new') }}"
+                    data-type="template"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'open_orchestra_backoffice.left_menu.tree.new_template'|trans }}
+                </a>
+            </div>
+        </li>
+    {% endif %}
 {% endmacro %}
 
 {% macro menu_gs_templates(templates, name) %}

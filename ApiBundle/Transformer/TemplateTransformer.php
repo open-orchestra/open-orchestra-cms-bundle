@@ -4,13 +4,14 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\TemplateFacade;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class TemplateTransformer
  */
-class TemplateTransformer extends AbstractTransformer
+class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param TemplateInterface $template
@@ -42,14 +43,18 @@ class TemplateTransformer extends AbstractTransformer
             array('templateId' => $template->getTemplateId())
         ));
 
-        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
-            array('templateId' => $template->getTemplateId())
-        ));
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE)) {
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
+                array('templateId' => $template->getTemplateId())
+            ));
+        }
 
-        $facade->addLink('_self_update_areas', $this->generateRoute('open_orchestra_api_areas_update_in_template',
-            array(
-                'templateId' => $template->getTemplateId())
-        ));
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)) {
+            $facade->addLink('_self_update_areas', $this->generateRoute('open_orchestra_api_areas_update_in_template',
+                array(
+                    'templateId' => $template->getTemplateId())
+            ));
+        }
 
         return $facade;
     }

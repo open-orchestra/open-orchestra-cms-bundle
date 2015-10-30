@@ -1,13 +1,19 @@
 parameters:
     open_orchestra_backoffice.authorize_status_change_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager
     open_orchestra_backoffice.authorize_status_change.node.class: OpenOrchestra\Backoffice\AuthorizeStatusChange\Strategies\NodeStrategy
-
+    open_orchestra_backoffice.authorize_status_change.template.class: OpenOrchestra\Backoffice\AuthorizeStatusChange\Strategies\TemplateStrategy
 services:
     open_orchestra_backoffice.authorize_status_change_manager:
         class: %open_orchestra_backoffice.authorize_status_change_manager.class%
 
     open_orchestra_backoffice.authorize_status_change.node:
         class: %open_orchestra_backoffice.authorize_status_change.node.class%
+        arguments:
+            - @security.authorization_checker
+        tags:
+            - { name: open_orchestra_backoffice.authorize_status_change.strategy }
+    open_orchestra_backoffice.authorize_status_change.template:
+        class: %open_orchestra_backoffice.authorize_status_change.template.class%
         arguments:
             - @security.authorization_checker
         tags:

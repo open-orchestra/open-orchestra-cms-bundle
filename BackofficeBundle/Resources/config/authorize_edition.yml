@@ -4,6 +4,7 @@ parameters:
     open_orchestra_backoffice.authorize_edition.node_version.class: OpenOrchestra\Backoffice\AuthorizeEdition\NodeVersionStrategy
     open_orchestra_backoffice.authorize_edition.node_edition_role.class: OpenOrchestra\Backoffice\AuthorizeEdition\NodeEditionRoleStrategy
     open_orchestra_backoffice.authorize_edition.content_version.class: OpenOrchestra\Backoffice\AuthorizeEdition\ContentVersionStrategy
+    open_orchestra_backoffice.authorize_edition.area_template.class: OpenOrchestra\Backoffice\AuthorizeEdition\AreaTemplateStrategy
 
 services:
     open_orchestra_backoffice.authorize_edition.manager:
@@ -29,5 +30,12 @@ services:
         class: %open_orchestra_backoffice.authorize_edition.content_version.class%
         arguments:
             - @open_orchestra_model.repository.content
+        tags:
+            - { name: open_orchestra_backoffice.authorize_edition.strategy }
+    open_orchestra_backoffice.authorize_edition.area_template:
+        class: %open_orchestra_backoffice.authorize_edition.area_template.class%
+        arguments:
+            - @open_orchestra_model.repository.template
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_backoffice.authorize_edition.strategy }

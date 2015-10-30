@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\Form\FormInterface;
@@ -68,7 +69,7 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
-        $form = $this->generateForm($request, $actionUrl, $area);
+        $form = $this->generateForm($request, $actionUrl, $area, $template);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($template));
@@ -78,19 +79,19 @@ class AreaController extends AbstractAdminController
     }
 
     /**
-     * @param Request            $request
-     * @param string             $actionUrl
-     * @param AreaInterface      $area
-     * @param NodeInterface|null $node
+     * @param Request                $request
+     * @param string                 $actionUrl
+     * @param AreaInterface          $area
+     * @param TemplateInterface|null $template
      *
      * @return FormInterface
      */
-    protected function generateForm(Request $request, $actionUrl, $area, NodeInterface $node = null)
+    protected function generateForm(Request $request, $actionUrl, $area, TemplateInterface $template = null)
     {
         $options = array('action' => $actionUrl);
-        if ($node) {
-            $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
-            $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($editionRole, $node);
+
+        if ($template) {
+            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($template);
         }
         $form = parent::createForm('oo_area', $area, $options);
 

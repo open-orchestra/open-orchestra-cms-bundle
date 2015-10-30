@@ -6,37 +6,42 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpExceptio
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class AreaTransformer
  */
-class AreaTransformer extends AbstractTransformer
+class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     protected $nodeRepository;
     protected $areaManager;
     protected $currentSiteManager;
 
     /**
-     * @param NodeRepositoryInterface $nodeRepository
-     * @param AreaManager             $areaManager
-     * @param CurrentSiteIdInterface  $currentSiteManager
+     * @param NodeRepositoryInterface       $nodeRepository
+     * @param AreaManager                   $areaManager
+     * @param CurrentSiteIdInterface        $currentSiteManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
         NodeRepositoryInterface $nodeRepository,
         AreaManager $areaManager,
-        CurrentSiteIdInterface $currentSiteManager
+        CurrentSiteIdInterface $currentSiteManager,
+        AuthorizationCheckerInterface $authorizationChecker
     )
     {
         $this->nodeRepository = $nodeRepository;
         $this->areaManager = $areaManager;
         $this->currentSiteManager = $currentSiteManager;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -94,35 +99,42 @@ class AreaTransformer extends AbstractTransformer
                 'id' => $area->getAreaId()
             )
         );
+
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_area_form', array(
             'nodeId' => $node->getId(),
             'areaId' => $area->getAreaId(),
         )));
-        $facade->addLink('_self_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
-            'nodeId' => $node->getId(),
-            'areaId' => $area->getAreaId()
-        )));
+
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)) {
+            $facade->addLink('_self_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
+                'nodeId' => $node->getId(),
+                'areaId' => $area->getAreaId()
+            )));
+        }
+
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
             'nodeId' => $node->getId(),
             'areaId' => $area->getAreaId()
         )));
 
-        if ($parentAreaId) {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node_area',
-                array(
-                    'nodeId' => $node->getId(),
-                    'parentAreaId' => $parentAreaId,
-                    'areaId' => $area->getAreaId()
-                )
-            ));
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE)) {
+            if ($parentAreaId) {
+                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node_area',
+                    array(
+                        'nodeId' => $node->getId(),
+                        'parentAreaId' => $parentAreaId,
+                        'areaId' => $area->getAreaId()
+                    )
+                ));
 
-        } else {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node',
-                array(
-                    'nodeId' => $node->getId(),
-                    'areaId' => $area->getAreaId(),
-                )
-            ));
+            } else {
+                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node',
+                    array(
+                        'nodeId' => $node->getId(),
+                        'areaId' => $area->getAreaId(),
+                    )
+                ));
+            }
         }
 
         return $facade;
@@ -176,22 +188,24 @@ class AreaTransformer extends AbstractTransformer
             'areaId' => $area->getAreaId()
         )));
 
-        if ($parentAreaId) {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template_area',
-                array(
-                    'templateId' => $templateId,
-                    'parentAreaId' => $parentAreaId,
-                    'areaId' => $area->getAreaId()
-                )
-            ));
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE)) {
+            if ($parentAreaId) {
+                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template_area',
+                    array(
+                        'templateId' => $templateId,
+                        'parentAreaId' => $parentAreaId,
+                        'areaId' => $area->getAreaId()
+                    )
+                ));
 
-        } else {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template',
-                array(
-                    'templateId' => $templateId,
-                    'areaId' => $area->getAreaId(),
-                )
-            ));
+            } else {
+                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template',
+                    array(
+                        'templateId' => $templateId,
+                        'areaId' => $area->getAreaId(),
+                    )
+                ));
+            }
         }
 
         return $facade;
