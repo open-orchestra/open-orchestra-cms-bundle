@@ -60,7 +60,7 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $roles = new ArrayCollection();
 
-        foreach($newRoles as $newRole) {
+        foreach ($newRoles as $newRole) {
             $role = Phake::mock('OpenOrchestra\ModelInterface\Model\RoleInterface');
             Phake::when($role)->getName()->thenReturn($newRole);
             Phake::when($role)->getDescriptions()->thenReturn(Phake::mock('Doctrine\Common\Collections\Collection'));

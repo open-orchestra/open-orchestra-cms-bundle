@@ -70,8 +70,6 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array  $roles
-     * @param string $translation
-     * @param array  $expectedChoices
      *
      * @dataProvider provideRoleAndTranslation
      */

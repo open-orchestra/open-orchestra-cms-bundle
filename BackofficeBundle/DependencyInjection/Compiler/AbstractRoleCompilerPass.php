@@ -24,7 +24,7 @@ abstract class AbstractRoleCompilerPass implements CompilerPassInterface
         foreach ($roles as $role) {
             $definition->addMethodCall('addRole', array($role));
         }
-        if($container->hasParameter('open_orchestra_backoffice.collector.role.workflow_role_in_group') && $container->getParameter('open_orchestra_backoffice.collector.role.workflow_role_in_group')) {
+        if ($container->hasParameter('open_orchestra_backoffice.collector.role.workflow_role_in_group') && $container->getParameter('open_orchestra_backoffice.collector.role.workflow_role_in_group')) {
             $definition->addMethodCall('loadWorkflowRole');
         }
     }

@@ -20,21 +20,25 @@ class RoleCollector
      * @param RoleRepositoryInterface           $roleRepository
      * @param TranslatorInterface               $translator
      * @param TranslationChoiceManagerInterface $translationChoiceManager
+     * @param boolean                           $workflowRoleInGroup
      */
-    public function __construct(RoleRepositoryInterface $roleRepository, TranslatorInterface $translator, TranslationChoiceManagerInterface $translationChoiceManager)
+    public function __construct(RoleRepositoryInterface $roleRepository, TranslatorInterface $translator, TranslationChoiceManagerInterface $translationChoiceManager, $workflowRoleInGroup)
     {
         $this->roleRepository = $roleRepository;
         $this->translator = $translator;
         $this->translationChoiceManager = $translationChoiceManager;
+        if ($workflowRoleInGroup) {
+            $this->loadWorkflowRole();
+        }
     }
 
     /**
-     * @param string $role
+     * add workflow roles from repository
      */
     public function loadWorkflowRole()
     {
         $workflowRoles = $this->roleRepository->findWorkflowRole();
-        foreach($workflowRoles as $workflowRole) {
+        foreach ($workflowRoles as $workflowRole) {
             $this->addRoleWithTranslation($workflowRole->getName(), $this->translationChoiceManager->choose($workflowRole->getDescriptions()));
         }
     }
@@ -57,6 +61,7 @@ class RoleCollector
 
     /**
      * @param string $role
+     * @param string $translation
      */
     public function addRoleWithTranslation($role, $translation)
     {
