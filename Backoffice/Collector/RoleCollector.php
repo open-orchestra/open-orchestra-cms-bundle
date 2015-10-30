@@ -33,17 +33,6 @@ class RoleCollector
     }
 
     /**
-     * add workflow roles from repository
-     */
-    public function loadWorkflowRole()
-    {
-        $workflowRoles = $this->roleRepository->findWorkflowRole();
-        foreach ($workflowRoles as $workflowRole) {
-            $this->addRoleWithTranslation($workflowRole->getName(), $this->translationChoiceManager->choose($workflowRole->getDescriptions()));
-        }
-    }
-
-    /**
      * @return array
      */
     public function getRoles()
@@ -60,10 +49,21 @@ class RoleCollector
     }
 
     /**
+     * add workflow roles from repository
+     */
+    protected function loadWorkflowRole()
+    {
+        $workflowRoles = $this->roleRepository->findWorkflowRole();
+        foreach ($workflowRoles as $workflowRole) {
+            $this->addRoleWithTranslation($workflowRole->getName(), $this->translationChoiceManager->choose($workflowRole->getDescriptions()));
+        }
+    }
+
+    /**
      * @param string $role
      * @param string $translation
      */
-    public function addRoleWithTranslation($role, $translation)
+    protected function addRoleWithTranslation($role, $translation)
     {
         $this->roles[$role] = $translation;
     }
