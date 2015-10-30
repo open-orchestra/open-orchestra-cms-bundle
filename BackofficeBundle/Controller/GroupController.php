@@ -77,6 +77,6 @@ class GroupController extends AbstractAdminController
             $this->dispatchEvent(GroupEvents::GROUP_UPDATE, new GroupEvent($group));
         }
 
-        return $this->renderAdminForm($form);
+        return $this->renderAdminForm($form, array('title' => 'Group edition'));
     }
 }
