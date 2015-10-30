@@ -16,7 +16,6 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
-    protected $translator;
     protected $roleCollector;
 
     /**
@@ -24,11 +23,9 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollector');
 
-        $this->form = new OrchestraRoleChoiceType($this->roleCollector, $this->translator);
+        $this->form = new OrchestraRoleChoiceType($this->roleCollector);
     }
 
     /**
@@ -73,26 +70,20 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array  $roles
-     * @param string $translation
-     * @param array  $expectedChoices
      *
      * @dataProvider provideRoleAndTranslation
      */
-    public function testConfigureOptions(array $roles, $translation, array $expectedChoices)
+    public function testConfigureOptions(array $roles)
     {
         Phake::when($this->roleCollector)->getRoles()->thenReturn($roles);
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($translation);
 
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'choices' => $expectedChoices
+            'choices' => $roles
         ));
-        foreach ($roles as $role) {
-            Phake::verify($this->translator)->trans('open_orchestra_role.' . strtolower($role), array(), 'role');
-        }
 
     }
 
@@ -102,9 +93,9 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
     public function provideRoleAndTranslation()
     {
         return array(
-            array(array('foo'), 'bar', array('foo' => 'bar')),
-            array(array('foo', 'bar'), 'bar', array('foo' => 'bar', 'bar' => 'bar')),
-            array(array('FOO', 'BAR'), 'bar', array('FOO' => 'bar', 'BAR' => 'bar')),
+            array(array('foo' => 'bar')),
+            array(array('foo' => 'bar', 'bar' => 'bar')),
+            array(array('FOO' => 'bar', 'BAR' => 'bar')),
         );
     }
 }

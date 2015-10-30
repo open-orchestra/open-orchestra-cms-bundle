@@ -305,7 +305,6 @@ services:
         class: %open_orchestra_backoffice.type.orchestra_role_choice.class%
         arguments:
             - @open_orchestra_backoffice.collector.role
-            - @translator
         tags:
             - { name: form.type, alias: orchestra_role_choice }
     open_orchestra_backoffice.type.api_client:

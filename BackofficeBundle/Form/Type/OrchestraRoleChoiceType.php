@@ -13,16 +13,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 class OrchestraRoleChoiceType extends AbstractType
 {
     protected $roleCollector;
-    protected $translator;
 
     /**
      * @param RoleCollector       $roleCollector
-     * @param TranslatorInterface $translator
      */
-    public function __construct(RoleCollector $roleCollector, TranslatorInterface $translator)
+    public function __construct(RoleCollector $roleCollector)
     {
         $this->roleCollector = $roleCollector;
-        $this->translator = $translator;
     }
 
     /**
@@ -31,22 +28,8 @@ class OrchestraRoleChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => $this->getChoices()
+            'choices' => $this->roleCollector->getRoles()
         ));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getChoices()
-    {
-        $choices = array();
-
-        foreach ($this->roleCollector->getRoles() as $role) {
-            $choices[$role] = $this->translator->trans('open_orchestra_role.' . strtolower($role), array(), 'role');
-        }
-
-        return $choices;
     }
 
     /**

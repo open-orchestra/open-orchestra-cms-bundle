@@ -4,3 +4,8 @@ parameters:
 services:
     open_orchestra_backoffice.collector.role:
         class: %open_orchestra_backoffice.collector.role.class%
+        arguments:
+            - @open_orchestra_model.repository.role
+            - @translator
+            - @open_orchestra_backoffice.manager.translation_choice
+            - %open_orchestra_backoffice.collector.role.workflow_role_in_group%

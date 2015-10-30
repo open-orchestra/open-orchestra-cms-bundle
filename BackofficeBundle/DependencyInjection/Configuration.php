@@ -98,8 +98,16 @@ class Configuration implements ConfigurationInterface
                     "last_contents",
                     "draft_contents"
                 ))
-                ->end()
-            ->end();
+            ->end()
+            ->arrayNode('collector')
+                ->useAttributeAsKey('key')
+                ->defaultValue( array(
+                    'workflow_role_in_group' => true
+                ))
+                ->prototype('scalar')->end()
+            ->end()
+        ->end();
+
         return $treeBuilder;
     }
 
