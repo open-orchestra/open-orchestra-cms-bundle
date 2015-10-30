@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_api.transformer.node.class: OpenOrchestra\ApiBundle\Transformer\NodeTransformer
     open_orchestra_api.transformer.node_collection.class: OpenOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
+    open_orchestra_api.transformer.node_tree.class: OpenOrchestra\ApiBundle\Transformer\NodeTreeTransformer
     open_orchestra_api.transformer.template.class: OpenOrchestra\ApiBundle\Transformer\TemplateTransformer
     open_orchestra_api.transformer.area.class: OpenOrchestra\ApiBundle\Transformer\AreaTransformer
     open_orchestra_api.transformer.block.class: OpenOrchestra\ApiBundle\Transformer\BlockTransformer
@@ -50,6 +51,10 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_collection:
         class: %open_orchestra_api.transformer.node_collection.class%
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.node_tree:
+        class: %open_orchestra_api.transformer.node_tree.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.template:

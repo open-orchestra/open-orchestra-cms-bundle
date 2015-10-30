@@ -72,6 +72,9 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_backoffice_group_form',
                 array('groupId' => $group->getId())
             ));
+            $facade->addLink('_self_panel_node_tree', $this->generateRoute(
+                'open_orchestra_api_node_list_tree'
+            ));
         }
 
         return $facade;

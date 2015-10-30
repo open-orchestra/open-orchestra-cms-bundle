@@ -145,9 +145,28 @@ class NodeController extends BaseController
     public function listNodeByAuthorAction($published)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $content = $this->get('open_orchestra_model.repository.node')->findByAuthor($user->getUsername(), $published, 10);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByAuthor($user->getUsername(), $published, 10);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($content);
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
+    }
+
+    /**
+     * @param boolean|null $published
+     *
+     * @Config\Route("/list/tree", name="open_orchestra_api_node_list_tree")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     *
+     * @return FacadeInterface
+     */
+    public function listTreeNode()
+    {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
+        $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
+        $orderedNodes = $this->get('open_orchestra_display.manager.tree')->generateTree($nodes);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_tree')->transform(end($orderedNodes));
     }
 
     /**
