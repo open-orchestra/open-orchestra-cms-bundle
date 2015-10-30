@@ -32,7 +32,6 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->fakeTrans);
         Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($this->fakeTrans);
 
-        $this->collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager);
     }
 
     /**
@@ -43,11 +42,12 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddAndGetRoles(array $newRoles, array $expectedRoles)
     {
+        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
         foreach ($newRoles as $newRole) {
-            $this->collector->addRole($newRole);
+            $collector->addRole($newRole);
         }
 
-        $this->assertSame($expectedRoles, $this->collector->getRoles());
+        $this->assertSame($expectedRoles, $collector->getRoles());
     }
 
     /**
@@ -69,9 +69,9 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->roleRepository)->findWorkflowRole()->thenReturn($roles);
 
-        $this->collector->loadWorkflowRole();
+        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, true);
 
-        $this->assertSame($expectedRoles, $this->collector->getRoles());
+        $this->assertSame($expectedRoles, $collector->getRoles());
     }
 
     /**
