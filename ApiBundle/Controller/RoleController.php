@@ -41,6 +41,23 @@ class RoleController extends BaseController
     }
 
     /**
+     * @param string $type
+     *
+     * @Config\Route("/type/{type}", name="open_orchestra_api_role_list_by_type")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_ROLE')")
+     *
+     * @return FacadeInterface
+     */
+    public function listByTypeAction($type)
+    {
+        $roles = $this->get('open_orchestra_backoffice.collector.role')->getRolesByType($type);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('role_string_collection')->transform($roles, $type);
+    }
+
+    /**
      * @param Request $request
      *
      * @Config\Route("", name="open_orchestra_api_role_list")
