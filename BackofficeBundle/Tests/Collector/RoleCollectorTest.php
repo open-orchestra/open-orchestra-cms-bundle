@@ -13,11 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class RoleCollectorTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var RoleCollector
-     */
-    protected $collector;
-
     protected $roleRepository;
     protected $translator;
     protected $translationChoiceManager;
@@ -141,6 +136,35 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
             )),
+        );
+    }
+
+    /**
+     * @param array  $roles
+     * @param string $roleToCheck
+     * @param bool   $answer
+     *
+     * @dataProvider provideHasRoleData
+     */
+    public function testHasTest(array $roles, $roleToCheck, $answer)
+    {
+        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        foreach ($roles as $newRole) {
+            $collector->addRole($newRole);
+        }
+
+        $this->assertSame($answer, $collector->hasRole($roleToCheck));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideHasRoleData()
+    {
+        return array(
+            array(array('role_foo'), 'foo', false),
+            array(array('role_foo'), 'role_foo', true),
+            array(array('role_foo', 'role_bar'), 'role_foo', true),
         );
     }
 }

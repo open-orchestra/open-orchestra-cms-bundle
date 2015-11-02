@@ -85,4 +85,14 @@ class RoleCollector
 
         return $selectedRoles;
     }
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return array_key_exists($role, $this->roles);
+    }
 }
