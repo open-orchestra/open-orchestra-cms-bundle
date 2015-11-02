@@ -31,7 +31,8 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->form = Phake::mock('Symfony\Component\Form\FormBuilder');
+        $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
+
         Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
         Phake::when($this->form)->getData()->thenReturn($this->areaContainer);
 

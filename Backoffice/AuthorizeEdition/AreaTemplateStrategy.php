@@ -52,4 +52,9 @@ class AreaTemplateStrategy implements AuthorizeEditionInterface
     {
         return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
     }
+
+    public function getName()
+    {
+        return 'template';
+    }
 }
