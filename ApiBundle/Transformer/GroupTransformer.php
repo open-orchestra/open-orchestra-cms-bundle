@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
@@ -54,6 +55,9 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($site = $group->getSite()) {
             $facade->site = $this->getTransformer('site')->transform($site);
         }
+        foreach ($group->getNodeRoles() as $nodeRole) {
+            $facade->addNodeRoles($this->getTransformer('node_group_role')->transform($nodeRole));
+        }
 
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
             $facade->addLink('_self', $this->generateRoute(
@@ -72,12 +76,42 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_backoffice_group_form',
                 array('groupId' => $group->getId())
             ));
+            $facade->addLink('_self_edit', $this->generateRoute(
+                'open_orchestra_api_group_edit',
+                array('groupId' => $group->getId())
+            ));
             $facade->addLink('_self_panel_node_tree', $this->generateRoute(
+                'open_orchestra_api_group_show',
+                array('groupId' => $group->getId())
+            ));
+            $facade->addLink('_self_node_tree', $this->generateRoute(
                 'open_orchestra_api_node_list_tree'
+            ));
+            $facade->addLink('_role_list_node', $this->generateRoute(
+                'open_orchestra_api_role_list_by_type',
+                array('type' => 'node')
             ));
         }
 
         return $facade;
+    }
+
+    /**
+     * @param FacadeInterface|GroupFacade $facade
+     * @param GroupInterface|null         $group
+     *
+     * @return mixed
+     */
+    public function reverseTransform(FacadeInterface $facade, $group = null)
+    {
+        foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
+            $group->addNodeRole($this->getTransformer('node_group_role')->reverseTransform(
+                $nodeRoleFacade,
+                $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
+            ));
+        }
+
+        return $group;
     }
 
     /**

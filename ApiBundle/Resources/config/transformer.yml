@@ -22,6 +22,7 @@ parameters:
     open_orchestra_api.transformer.role_string.class: OpenOrchestra\ApiBundle\Transformer\RoleStringTransformer
     open_orchestra_api.transformer.role_string_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleStringCollectionTransformer
     open_orchestra_api.transformer.group.class: OpenOrchestra\ApiBundle\Transformer\GroupTransformer
+    open_orchestra_api.transformer.node_group_role.class: OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer
     open_orchestra_api.transformer.group_collection.class: OpenOrchestra\ApiBundle\Transformer\GroupCollectionTransformer
     open_orchestra_api.transformer.redirection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
     open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
@@ -174,6 +175,12 @@ services:
         arguments:
             - @security.authorization_checker
             - @open_orchestra_backoffice.manager.translation_choice
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.node_group_role:
+        class: %open_orchestra_api.transformer.node_group_role.class%
+        arguments:
+            - OpenOrchestra\GroupBundle\Document\NodeGroupRole
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group_collection:

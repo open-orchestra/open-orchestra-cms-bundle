@@ -4,6 +4,7 @@ namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -33,6 +34,13 @@ class Group extends BaseGroup implements GroupInterface
     protected $labels;
 
     /**
+     * @var Collection $nodeRoles
+     *
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface")
+     */
+    protected $nodeRoles;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -54,6 +62,7 @@ class Group extends BaseGroup implements GroupInterface
     protected function initCollections()
     {
         $this->labels = new ArrayCollection();
+        $this->nodeRoles = new ArrayCollection();
         $this->roles = array();
     }
 
@@ -100,7 +109,7 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getLabels()
     {
@@ -115,5 +124,43 @@ class Group extends BaseGroup implements GroupInterface
         return array(
             'getLabels'
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getNodeRoles()
+    {
+        return $this->nodeRoles;
+    }
+
+    /**
+     * @param NodeGroupRoleInterface $nodeGroupRole
+     */
+    public function addNodeRole(NodeGroupRoleInterface $nodeGroupRole)
+    {
+        if ($this->nodeRoles->contains($nodeGroupRole)) {
+            $this->nodeRoles->set($this->nodeRoles->indexOf($nodeGroupRole), $nodeGroupRole);
+        } else {
+            $this->nodeRoles->add($nodeGroupRole);
+        }
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $role
+     *
+     * @return NodeGroupRoleInterface|null
+     */
+    public function getNodeRoleByNodeAndRole($nodeId, $role)
+    {
+        /** @var NodeGroupRoleInterface $nodeRole */
+        foreach ($this->nodeRoles as $nodeRole) {
+            if ($nodeRole->getNodeId() == $nodeId && $nodeRole->getRole() == $role) {
+                return $nodeRole;
+            }
+        }
+
+        return null;
     }
 }

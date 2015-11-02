@@ -28,11 +28,6 @@ class NodeTreeTransformer extends AbstractTransformer
             }
         }
 
-        $facade->addLink('_role_list_node', $this->generateRoute(
-            'open_orchestra_api_role_list_by_type',
-            array('type' => 'node')
-        ));
-
         return $facade;
     }
 

@@ -24,7 +24,7 @@ class GroupController extends BaseController
     use HandleRequestDataTable;
 
     /**
-     * @param int $groupId
+     * @param string $groupId
      *
      * @Config\Route("/{groupId}", name="open_orchestra_api_group_show")
      * @Config\Method({"GET"})
@@ -38,6 +38,29 @@ class GroupController extends BaseController
         $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('group')->transform($group);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $groupId
+     *
+     * @Config\Route("/{groupId}", name="open_orchestra_api_group_edit")
+     * @Config\Method({"POST"})
+     *
+     * @Config\Security("has_role('ROLE_ACCESS_GROUP')")
+     *
+     * @return array
+     */
+    public function editAction(Request $request, $groupId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'OpenOrchestra\ApiBundle\Facade\GroupFacade', $request->get('_format', 'json'));
+        $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
+
+        $this->get('open_orchestra_api.transformer_manager')->get('group')->reverseTransform($facade, $group);
+
+        $this->get('object_manager')->flush();
+
+        return array();
     }
 
     /**
