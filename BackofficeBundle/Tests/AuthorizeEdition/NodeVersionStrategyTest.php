@@ -3,7 +3,9 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\AuthorizeEdition;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\NodeVersionStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
@@ -71,21 +73,26 @@ class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param int  $nodeVersion
-     * @param int  $lastNodeVersion
-     * @param bool $isGranted
-     * @param bool $editable
+     * @param int     $nodeVersion
+     * @param int     $lastNodeVersion
+     * @param string  $nodeType
+     * @param bool    $isGranted
+     * @param bool    $editable
      *
      * @dataProvider provideVersionAndEditable
      */
-    public function testIsEditable($nodeVersion, $lastNodeVersion, $isGranted, $editable)
+    public function testIsEditable($nodeVersion, $lastNodeVersion, $nodeType, $isGranted, $editable)
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getVersion()->thenReturn($nodeVersion);
 
         Phake::when($this->authorizationChecker)->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)->thenReturn($isGranted);
 
+        Phake::when($this->authorizationChecker)->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE)->thenReturn($isGranted);
+
         Phake::when($this->lastVersionNode)->getVersion()->thenReturn($lastNodeVersion);
+
+        Phake::when($node)->getNodeType()->thenReturn($nodeType);
 
         $this->assertSame($editable, $this->strategy->isEditable($node));
     }
@@ -96,10 +103,14 @@ class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
     public function provideVersionAndEditable()
     {
         return array(
-            array(1, 2, false, false),
-            array(2, 2, true, true),
-            array(3, 2, true, true),
-            array(3, 2, false, false),
+            array(1, 2, NodeInterface::TYPE_DEFAULT, false, false),
+            array(2, 2, NodeInterface::TYPE_DEFAULT, true, true),
+            array(3, 2, NodeInterface::TYPE_DEFAULT, true, true),
+            array(3, 2, NodeInterface::TYPE_DEFAULT, false, false),
+            array(1, 2, NodeInterface::TYPE_TRANSVERSE, false, false),
+            array(2, 2, NodeInterface::TYPE_TRANSVERSE, true, true),
+            array(3, 2, NodeInterface::TYPE_TRANSVERSE, true, true),
+            array(3, 2, NodeInterface::TYPE_TRANSVERSE, false, false),
         );
     }
 
