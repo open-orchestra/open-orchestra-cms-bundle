@@ -89,7 +89,7 @@ abstract class AbstractAdminController extends Controller
      */
     public function createForm($type, $data = null, array $options = array())
     {
-        if ($data) {
+        if ($data && !isset($options['disabled'])) {
             $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($data);
         }
 
