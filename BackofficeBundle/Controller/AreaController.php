@@ -88,7 +88,7 @@ class AreaController extends AbstractAdminController
         if ($node) {
             $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($node);
         }
-        $form = parent::createForm('area', $area, $options);
+        $form = parent::createForm('oo_area', $area, $options);
 
         $form->handleRequest($request);
 

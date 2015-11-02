@@ -40,7 +40,7 @@ class BlockController extends AbstractAdminController
         if ($node) {
             $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($node);
         }
-        $form = parent::createForm('block', $block, $options);
+        $form = parent::createForm('oo_block', $block, $options);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');

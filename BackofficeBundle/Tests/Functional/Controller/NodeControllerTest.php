@@ -94,9 +94,9 @@ class NodeControllerTest extends AbstractControllerTest
         $formUser = $crawler->selectButton('Save')->form();
 
         $nodeName = 'fixturetest' . time();
-        $formUser['node[name]'] = 'fixturetest' . time();
-        $formUser['node[nodeSource]'] = 'root';
-        $formUser['node[routePattern]'] = '/page-test' .time();
+        $formUser['oo_node[name]'] = 'fixturetest' . time();
+        $formUser['oo_node[nodeSource]'] = 'root';
+        $formUser['oo_node[routePattern]'] = '/page-test' .time();
 
         $this->client->submit($formUser);
         $crawler = $this->client->request('GET', '/admin/');

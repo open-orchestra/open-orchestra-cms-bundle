@@ -70,7 +70,7 @@ services:
             - %open_orchestra_model.document.area.class%
             - @translator
         tags:
-            - { name: form.type, alias: node }
+            - { name: form.type, alias: oo_node }
     # Area form type
     open_orchestra_backoffice.type.area:
         class: %open_orchestra_backoffice.type.area.class%
@@ -78,7 +78,7 @@ services:
             - %open_orchestra_model.document.area.class%
             - @translator
         tags:
-            - { name: form.type, alias: area }
+            - { name: form.type, alias: oo_area }
     # Block form type
     open_orchestra_backoffice.type.block:
         class: %open_orchestra_backoffice.type.block.class%
@@ -87,19 +87,19 @@ services:
             - %open_orchestra_backoffice.block.fixed_attributes%
             - @form.factory
         tags:
-            - { name: form.type, alias: block }
+            - { name: form.type, alias: oo_block }
     open_orchestra_backoffice.type.existing_block_choice:
         class: %open_orchestra_backoffice.type.existing_block_choice.class%
         arguments:
             - @open_orchestra_model.repository.node
         tags:
-            - { name: form.type, alias: existing_block }
+            - { name: form.type, alias: oo_existing_block }
 
     open_orchestra_backoffice.type.orchestra_block:
         class: %open_orchestra_backoffice.type.orchestra_block.class%
         arguments: [%open_orchestra.blocks%, @translator]
         tags:
-            - { name: form.type, alias: orchestra_block }
+            - { name: form.type, alias: oo_block_choice }
     # Site Form Builder
     open_orchestra_backoffice.type.site:
         class: OpenOrchestra\BackofficeBundle\Form\Type\SiteType

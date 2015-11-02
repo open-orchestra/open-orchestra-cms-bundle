@@ -47,6 +47,6 @@ class BlockChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_block';
+        return 'oo_block_choice';
     }
 }
