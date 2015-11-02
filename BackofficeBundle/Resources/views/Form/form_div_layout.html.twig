@@ -141,15 +141,17 @@
 {% endblock widget_attributes %}
 
 {% block form_end %}
-    {% spaceless %}
-        <div class="form-group">
-            <div class="col-lg-12">
-                {% set label = 'open_orchestra_backoffice.form.submit' %}
-                {% set attr = {'class': 'submit_form'} %}
-                {% set id = 'submit_' ~ form.vars.name %}
-                {{ block('submit_widget') }}
+    {% if no_submit_button is not defined or no_submit_button != true %}
+        {% spaceless %}
+            <div class="form-group">
+                <div class="col-lg-12">
+                    {% set label = 'open_orchestra_backoffice.form.submit' %}
+                    {% set attr = {'class': 'submit_form'} %}
+                    {% set id = 'submit_' ~ form.vars.name %}
+                    {{ block('submit_widget') }}
+                </div>
             </div>
-        </div>
-        {{ parent() }}
-    {% endspaceless %}
+            {{ parent() }}
+        {% endspaceless %}
+    {% endif %}
 {% endblock form_end %}
