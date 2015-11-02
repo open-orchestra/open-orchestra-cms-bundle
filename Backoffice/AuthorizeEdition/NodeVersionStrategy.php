@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -49,7 +50,11 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        if (!$this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
+        if ($document->getNodeType() === NodeInterface::TYPE_DEFAULT && !$this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
+            return false;
+        }
+
+        if ($document->getNodeType() === NodeInterface::TYPE_TRANSVERSE && !$this->autorizationChecker->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE)) {
             return false;
         }
 

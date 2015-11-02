@@ -12,6 +12,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
 {
     const ROLE_ACCESS_GENERAL_NODE = 'ROLE_ACCESS_GENERAL_NODE';
+    const ROLE_ACCESS_UPDATE_GENERAL_NODE = 'ROLE_ACCESS_UPDATE_GENERAL_NODE';
 
     /**
      * @var NodeRepositoryInterface

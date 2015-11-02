@@ -23,7 +23,7 @@ class BlockController extends BaseController
      * @Config\Route("/list/{language}", name="open_orchestra_api_block_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
      * @return FacadeInterface
      */

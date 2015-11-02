@@ -1,5 +1,6 @@
 open_orchestra_role:
     role_access_general_node: Gérer les pages transverses
+    role_access_update_general_node: Editer une page transverse
     role_access_tree_node: Gérer les pages
     role_access_create_node: Créer une page
     role_access_update_node: Editer une page
