@@ -45,3 +45,6 @@ open_orchestra_role:
     role_access_update_site: Editer un site
     role_access_delete_site: Supprimer un site
     role_access_role: Gérer les rôles
+    role_access_create_role: Créer un rôle
+    role_access_update_role: Editer un rôle
+    role_access_delete_role: Supprimer un rôle
