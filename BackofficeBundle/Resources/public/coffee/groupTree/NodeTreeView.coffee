@@ -7,7 +7,6 @@ NodeTreeView = OrchestraView.extend(
     @initializer options
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTree',
     ]
     return
 
@@ -15,8 +14,7 @@ NodeTreeView = OrchestraView.extend(
     @options = options
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     @options.formView = 'editEntityTab'
-    @options.returnButton = true if !@options.domContainer
-    @options.domContainer = @$el if !@options.domContainer
+    @options.domContainer = @$el
     if @options.nodes == undefined
       nodes = {};
       $.ajax
@@ -37,38 +35,17 @@ NodeTreeView = OrchestraView.extend(
       @options.roles = roles
 
   render: ->
-    @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTree',
-        node: @options.nodes.node
-    )
-    @formInput = @options.domContainer.find('div.form-input').last()
-    nodeId = @options.nodes.node.node_id
-    nodeGroupRoles = @options.html.node_roles.filter (element) ->
-      element.node == nodeId
-    new FormCollectionView(
-      roles: @options.roles.roles
-      domContainer: @formInput
-      nodeGroupRoles: nodeGroupRoles
+    nodeTreeElementViewClass = appConfigurationView.getConfiguration('group_tab_node_tree_element', 'editEntityTab')
+    new nodeTreeElementViewClass(
       group: @options.html
-      nodeElement: @options.nodes.node
-    )
-    @subNode = @options.domContainer.find('ul.child-node').last()
-    if @options.nodes.childs.length > 0
-      for child of @options.nodes.childs
-        @addChildToView @options.nodes.childs[child]
-    if @options.returnButton
-      @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
-          listUrl : @options.listUrl
-      )
-    $('.fa', @$el).addClass 'fa-minus-square-o'
-
-  addChildToView: (child) ->
-    new NodeTreeView(
-      html: @options.html
-      nodes: child
-      listUrl: @options.listUrl
-      domContainer: @subNode
+      nodes: @options.nodes
+      domContainer: @$el
       roles: @options.roles
     )
+    @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
+        listUrl : @options.listUrl
+    )
+    $('.fa', @$el).addClass 'fa-minus-square-o'
 
   toggleItemDisplay: (e) ->
     OpenOrchestra.toggleTreeNodeDisplay e

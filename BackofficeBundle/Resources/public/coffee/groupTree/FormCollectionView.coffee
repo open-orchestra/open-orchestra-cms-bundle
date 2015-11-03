@@ -30,3 +30,6 @@ FormCollectionView = OrchestraView.extend(
         node_roles: nodeGroupRoleData
       )
 )
+
+jQuery ->
+  appConfigurationView.setConfiguration 'group_tab_node_tree_form', 'editEntityTab', FormCollectionView

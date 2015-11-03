@@ -248,6 +248,7 @@ open_orchestra_backoffice:
             role: Rôles
             site: Site
             title: Édition de groupe
+            node_role_edition: Liste des roles par page
         redirection:
             new:
                 success: La redirection a été crée
