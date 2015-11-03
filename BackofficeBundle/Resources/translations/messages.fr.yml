@@ -247,6 +247,7 @@ open_orchestra_backoffice:
             label: Libellé
             role: Rôles
             site: Site
+            title: Édition de groupe
         redirection:
             new:
                 success: La redirection a été crée

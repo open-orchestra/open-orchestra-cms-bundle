@@ -247,6 +247,7 @@ open_orchestra_backoffice:
             label: Label
             roles: Roles
             site: Website
+            title: Group edition
         redirection:
             new:
                 success: The redirection has been successfully created
