@@ -2,12 +2,12 @@ NodeTreeElementView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTree',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTreeElement',
     ]
     return
 
   render: ->
-    @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTree',
+    @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTreeElement',
       node: @options.nodes.node
     )
     @formInput = @options.domContainer.find('div.form-input').last()
