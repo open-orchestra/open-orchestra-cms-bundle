@@ -181,6 +181,7 @@ services:
         class: %open_orchestra_api.transformer.node_group_role.class%
         arguments:
             - OpenOrchestra\GroupBundle\Document\NodeGroupRole
+            - @open_orchestra_backoffice.collector.role
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group_collection:
