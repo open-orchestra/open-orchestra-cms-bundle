@@ -69,4 +69,51 @@ class GroupTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame(array('getLabels'), $this->group->getTranslatedProperties());
     }
+
+    /**
+     * @param array  $datas
+     * @param string $node
+     * @param string $role
+     *
+     * @dataProvider provideDatasAndNode
+     */
+    public function testGetNodeRoleByNodeAndRole(array $datas, $node, $role)
+    {
+        foreach ($datas as $data) {
+            $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+            Phake::when($nodeGroupRole)->getNodeId()->thenReturn($data['nodeId']);
+            Phake::when($nodeGroupRole)->getRole()->thenReturn($data['role']);
+            $this->group->addNodeRole($nodeGroupRole);
+        }
+
+        $nodeGroupRole = $this->group->getNodeRoleByNodeAndRole($node, $role);
+
+        $this->assertSame($node, $nodeGroupRole->getNodeId());
+        $this->assertSame($role, $nodeGroupRole->getRole());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideDatasAndNode()
+    {
+        return array(
+            array(array(array('nodeId' => 'foo', 'role' => 'bar')), 'foo', 'bar'),
+            array(array(array('nodeId' => 'foo', 'role' => 'bar'), array('nodeId' => 'bar', 'role' => 'baz')), 'foo', 'bar'),
+            array(array(array('nodeId' => 'foo', 'role' => 'bar'), array('nodeId' => 'bar', 'role' => 'baz')), 'bar', 'baz'),
+        );
+    }
+
+    /**
+     * Test add node roles
+     */
+    public function testAddNodeRole()
+    {
+        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+
+        $this->group->addNodeRole($nodeGroupRole);
+        $this->group->addNodeRole($nodeGroupRole);
+
+        $this->assertCount(1, $this->group->getNodeRoles());
+    }
 }
