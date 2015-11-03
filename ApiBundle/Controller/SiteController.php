@@ -30,7 +30,7 @@ class SiteController extends BaseController
      * @Config\Route("/{siteId}", name="open_orchestra_api_site_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_SITE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_SITE')")
      *
      * @return FacadeInterface
      */
@@ -47,7 +47,7 @@ class SiteController extends BaseController
      * @Config\Route("", name="open_orchestra_api_site_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_SITE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_SITE')")
      *
      * @return FacadeInterface
      */
@@ -79,7 +79,7 @@ class SiteController extends BaseController
      * @Config\Route("/{siteId}/delete", name="open_orchestra_api_site_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_DELETE_SITE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_SITE')")
      *
      * @return Response
      */

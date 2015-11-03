@@ -29,7 +29,7 @@ class StatusController extends BaseController
      * @Config\Route("", name="open_orchestra_api_status_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_STATUS')")
+     * @Config\Security("is_granted('ROLE_ACCESS_STATUS')")
      *
      * @return FacadeInterface
      */
@@ -51,7 +51,7 @@ class StatusController extends BaseController
      * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_DELETE_STATUS')")
+     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_STATUS')")
      *
      * @return Response
      */

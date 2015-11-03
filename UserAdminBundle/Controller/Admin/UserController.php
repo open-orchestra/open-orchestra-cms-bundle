@@ -24,7 +24,7 @@ class UserController extends AbstractAdminController
      * @Config\Route("/new", name="open_orchestra_user_admin_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CREATE_USER')")
+     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_USER')")
      *
      * @return Response
      */
@@ -55,7 +55,7 @@ class UserController extends AbstractAdminController
      * @Config\Route("/form/{userId}", name="open_orchestra_user_admin_user_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_USER')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_USER')")
      *
      * @return Response
      */
@@ -82,7 +82,7 @@ class UserController extends AbstractAdminController
      * @Config\Route("/password/change/{userId}", name="open_orchestra_user_admin_user_change_password")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_USER')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_USER')")
      *
      * @return Response
      */

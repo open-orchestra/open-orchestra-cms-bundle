@@ -21,7 +21,7 @@ class BlockController extends AbstractAdminController
      * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="open_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE')")
      *
      * @return Response
      */

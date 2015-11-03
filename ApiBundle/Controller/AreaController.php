@@ -30,7 +30,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/show-in-node/{nodeId}", name="open_orchestra_api_area_show_in_node")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
@@ -50,7 +50,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/show-in-template/{templateId}", name="open_orchestra_api_area_show_in_template")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
@@ -71,7 +71,7 @@ class AreaController extends BaseController
      * @Config\Route("/{nodeId}/{areaId}/update-block", name="open_orchestra_api_area_update_block")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -99,7 +99,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="open_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -119,7 +119,7 @@ class AreaController extends BaseController
      *
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area")
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -141,7 +141,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -162,7 +162,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area")
      * @Config\Method({"POST", "DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
