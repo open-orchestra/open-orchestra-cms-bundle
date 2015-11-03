@@ -2,14 +2,15 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 
 /**
  * Class RoleStringCollectionTransformer
  */
-class RoleStringCollectionTransformer extends AbstractTransformer
+class RoleStringCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
     /**
      * @param array  $roleCollection
@@ -25,10 +26,12 @@ class RoleStringCollectionTransformer extends AbstractTransformer
             $facade->addRole($this->getTransformer('role_string')->transform($role, $translation));
         }
 
-        $facade->addLink('_self', $this->generateRoute(
-            'open_orchestra_api_role_list_by_type',
-            array('type' => $type)
-        ));
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_ROLE)) {
+            $facade->addLink('_self', $this->generateRoute(
+                'open_orchestra_api_role_list_by_type',
+                array('type' => $type)
+            ));
+        }
 
         return $facade;
     }
