@@ -31,7 +31,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}", name="open_orchestra_api_node_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
@@ -55,7 +55,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
@@ -95,7 +95,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_DELETE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_NODE')")
      *
      * @return Response
      */
@@ -115,7 +115,8 @@ class NodeController extends BaseController
      *
      * @Config\Route("/{nodeId}/duplicate/{version}", name="open_orchestra_api_node_duplicate", defaults={"version": null})
      * @Config\Method({"POST"})
-     * @Config\Security("has_role('ROLE_ACCESS_CREATE_NODE')")
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_NODE')")
      *
      * @return Response
      */
@@ -137,7 +138,7 @@ class NodeController extends BaseController
      * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author", defaults={"published": null})
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
@@ -156,7 +157,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/list-version", name="open_orchestra_api_node_list_version")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -176,7 +177,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE')")
      *
      * @return Response
      */
@@ -196,7 +197,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeMongoId}/list-statuses", name="open_orchestra_api_node_list_status")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -215,7 +216,7 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
-     * @Config\Security("has_role('ROLE_ACCESS_MOVE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_MOVE_NODE')")
      *
      * @return Response
      */

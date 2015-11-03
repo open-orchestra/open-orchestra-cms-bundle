@@ -20,7 +20,7 @@ class SiteController extends AbstractAdminController
      * @Config\Route("/site/form/{siteId}", name="open_orchestra_backoffice_site_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_UPDATE_SITE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_SITE')")
      *
      * @return Response
      */
@@ -53,7 +53,7 @@ class SiteController extends AbstractAdminController
      * @Config\Route("/site/new", name="open_orchestra_backoffice_site_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_CREATE_SITE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_SITE')")
      *
      * @return Response
      */

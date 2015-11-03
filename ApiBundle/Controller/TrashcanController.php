@@ -28,7 +28,7 @@ class TrashcanController extends BaseController
      * @Config\Route("/list", name="open_orchestra_api_trashcan_list")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_DELETED')")
+     * @Config\Security("is_granted('ROLE_ACCESS_DELETED')")
      *
      * @return Response
      */
@@ -48,7 +48,7 @@ class TrashcanController extends BaseController
      * @Config\Route("/{trashItemId}/restore", name="open_orchestra_api_trashcan_restore")
      * @Config\Method({"PUT"})
 
-     * @Config\Security("has_role('ROLE_ACCESS_RESTORE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_RESTORE')")
      *
      * @return array|mixed
      */

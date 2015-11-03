@@ -30,7 +30,7 @@ class TemplateController extends BaseController
      * @Config\Route("/{templateId}", name="open_orchestra_api_template_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
      *
      * @return FacadeInterface
      */
@@ -47,7 +47,7 @@ class TemplateController extends BaseController
      * @Config\Route("/gs/{templateId}", name="open_orchestra_api_gs_template_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
      *
      * @return FacadeInterface
      */
@@ -64,7 +64,7 @@ class TemplateController extends BaseController
      * @Config\Route("/update-area-in-template/{templateId}", name="open_orchestra_api_areas_update_in_template")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return Response
      */
@@ -81,7 +81,7 @@ class TemplateController extends BaseController
      * @Config\Route("/{templateId}/delete", name="open_orchestra_api_template_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
      *
      * @return Response
      */
