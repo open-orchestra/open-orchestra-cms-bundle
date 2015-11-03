@@ -88,7 +88,7 @@ class BlockType extends AbstractType
      */
     public function getName()
     {
-        return 'block';
+        return 'oo_block';
     }
 
 }

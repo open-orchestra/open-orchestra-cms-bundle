@@ -47,7 +47,7 @@ class BlockTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('block', $this->blockType->getName());
+        $this->assertSame('oo_block', $this->blockType->getName());
     }
 
     /**

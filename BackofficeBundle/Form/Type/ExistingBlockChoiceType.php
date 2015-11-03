@@ -56,6 +56,6 @@ class ExistingBlockChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'existing_block';
+        return 'oo_existing_block';
     }
 }

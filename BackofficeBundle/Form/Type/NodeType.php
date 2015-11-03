@@ -145,6 +145,6 @@ class NodeType extends AbstractType
      */
     public function getName()
     {
-        return 'node';
+        return 'oo_node';
     }
 }

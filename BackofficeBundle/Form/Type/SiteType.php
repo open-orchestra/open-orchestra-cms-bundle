@@ -54,7 +54,7 @@ class SiteType extends AbstractType
                 ),
                 'options' => array( 'label' => false ),
             ))
-            ->add('blocks', 'orchestra_block', array(
+            ->add('blocks', 'oo_block_choice', array(
                 'multiple' => true,
                 'label' => 'open_orchestra_backoffice.form.website.blocks',
                 'required' => false

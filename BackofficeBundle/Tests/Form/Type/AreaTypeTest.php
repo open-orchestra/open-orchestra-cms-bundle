@@ -62,6 +62,6 @@ class AreaTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('area', $this->areaType->getName());
+        $this->assertEquals('oo_area', $this->areaType->getName());
     }
 }

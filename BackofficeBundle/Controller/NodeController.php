@@ -90,7 +90,7 @@ class NodeController extends AbstractAdminController
         $disabled = !$this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
 
         $form = $this->createForm(
-            'node',
+            'oo_node',
             $node,
             array(
                 'action' => $url,

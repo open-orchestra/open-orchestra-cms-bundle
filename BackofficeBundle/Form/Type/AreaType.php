@@ -81,6 +81,6 @@ class AreaType extends AbstractType
      */
     public function getName()
     {
-        return 'area';
+        return 'oo_area';
     }
 }

@@ -40,7 +40,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $block->addAttribute('videoType', 'youtube');
         $block->addAttribute('youtubeFs', true);
 
-        $form = $this->formFactory->create('block', $block, array('csrf_protection' => false));
+        $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
 
         $form->submit(array(
             'id' => 'testId',
@@ -70,7 +70,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $block = new Block();
         $block->setComponent($component);
 
-        $form = $this->formFactory->create('block', $block, array('csrf_protection' => false));
+        $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
 
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
         $form->submit($submittedValue);

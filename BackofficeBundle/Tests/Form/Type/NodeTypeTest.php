@@ -63,6 +63,6 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('node', $this->nodeType->getName());
+        $this->assertEquals('oo_node', $this->nodeType->getName());
     }
 }
