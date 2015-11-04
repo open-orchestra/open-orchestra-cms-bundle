@@ -4,6 +4,8 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Controller;
 
 /**
  * Class HomepageControllerTest
+ *
+ * @group backofficeTest
  */
 class HomepageControllerTest extends AbstractControllerTest
 {

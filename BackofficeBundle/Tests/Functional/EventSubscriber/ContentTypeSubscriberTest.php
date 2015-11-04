@@ -9,6 +9,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * Class ContentTypeSubscriberTest
+ *
+ * @group backofficeTest
  */
 class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
 {

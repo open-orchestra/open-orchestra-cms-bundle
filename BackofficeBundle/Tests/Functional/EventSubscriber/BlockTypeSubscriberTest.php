@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * Class BlockTypeSubscriberTest
+ *
+ * @group backofficeTest
  */
 class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
 {

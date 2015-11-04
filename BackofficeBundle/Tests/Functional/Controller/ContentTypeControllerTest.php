@@ -6,6 +6,8 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeControllerTest
+ *
+ * @group backofficeTest
  */
 class ContentTypeControllerTest extends AbstractControllerTest
 {

@@ -4,6 +4,8 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Controller;
 
 /**
  * Class FormControllersSecurityTest
+ *
+ * @group backofficeTest
  */
 class FormControllersSecurityTest extends AbstractControllerTest
 {

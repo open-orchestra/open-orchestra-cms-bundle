@@ -7,6 +7,8 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class NodeControllerTest
+ *
+ * @group backofficeTest
  */
 class NodeControllerTest extends AbstractControllerTest
 {

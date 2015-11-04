@@ -8,6 +8,8 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
  * Class SiteControllerTest
+ *
+ * @group backofficeTest
  */
 class SiteControllerTest extends AbstractControllerTest
 {
