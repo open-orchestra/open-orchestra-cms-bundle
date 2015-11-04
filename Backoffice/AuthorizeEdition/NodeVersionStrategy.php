@@ -50,11 +50,10 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        if ($document->getNodeType() === NodeInterface::TYPE_DEFAULT && !$this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
-            return false;
-        }
-
-        if ($document->getNodeType() === NodeInterface::TYPE_TRANSVERSE && !$this->autorizationChecker->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE)) {
+        $isTransverse = $document->getNodeType() === NodeInterface::TYPE_TRANSVERSE;
+        if ((!$isTransverse && !$this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) ||
+            ($isTransverse && !$this->autorizationChecker->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE))
+        ) {
             return false;
         }
 
