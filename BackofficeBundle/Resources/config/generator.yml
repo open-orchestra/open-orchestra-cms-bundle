@@ -14,6 +14,9 @@ parameters:
     open_orchestra_backoffice.language_list.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LanguageListStrategy
     open_orchestra_backoffice.login.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\LoginStrategy
     open_orchestra_backoffice.audience_analysis.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AudienceAnalysisStrategy
+    open_orchestra_backoffice.gmap.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\GmapStrategy
+    open_orchestra_backoffice.add_this.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AddThisStrategy
+    open_orchestra_backoffice.video.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\VideoStrategy
 
 services:
     open_orchestra_backoffice.generate_form_manager:
@@ -78,11 +81,11 @@ services:
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.gmap:
-        class: OpenOrchestra\Backoffice\GenerateForm\Strategies\GmapStrategy
+        class: %open_orchestra_backoffice.gmap.generate_form.class%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.add_this:
-        class: OpenOrchestra\Backoffice\GenerateForm\Strategies\AddThisStrategy
+        class: %open_orchestra_backoffice.add_this.generate_form.class%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.audience_analysis:
@@ -92,6 +95,6 @@ services:
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.video:
-        class: OpenOrchestra\Backoffice\GenerateForm\Strategies\VideoStrategy
+        class: %open_orchestra_backoffice.video.generate_form.class%
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
