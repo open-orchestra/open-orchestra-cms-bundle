@@ -32,6 +32,7 @@ NodeTreeView = OrchestraView.extend(
           method: "GET"
           success: (response) ->
             currentView.options.roles = response
+            currentView.renderHead()
             currentView.renderTreeElement()
 
   renderTreeElement: ->
@@ -44,6 +45,10 @@ NodeTreeView = OrchestraView.extend(
       roles: @options.roles
     )
     $('.fa', @$el).addClass 'fa-minus-square-o'
+
+  renderHead: ->
+    for role in @options.roles.roles
+      @options.domContainer.find('.head-element').first().append '<div class="col-lg-1">' + role.description + '</div>'
 
   toggleItemDisplay: (e) ->
     OpenOrchestra.toggleTreeNodeDisplay e

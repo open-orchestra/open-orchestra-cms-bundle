@@ -249,6 +249,7 @@ open_orchestra_backoffice:
             site: Website
             title: Group edition
             node_role_edition: Node role list
+            page_list: Page list
         redirection:
             new:
                 success: The redirection has been successfully created
