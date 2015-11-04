@@ -151,12 +151,10 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param boolean|null $published
-     *
      * @Config\Route("/list/tree", name="open_orchestra_api_node_list_tree")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */

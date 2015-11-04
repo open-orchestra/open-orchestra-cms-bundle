@@ -46,7 +46,7 @@ class RoleController extends BaseController
      * @Config\Route("/type/{type}", name="open_orchestra_api_role_list_by_type")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("has_role('ROLE_ACCESS_ROLE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
      *
      * @return FacadeInterface
      */
