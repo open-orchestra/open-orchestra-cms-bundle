@@ -6,6 +6,8 @@ use OpenOrchestra\ApiBundle\Tests\Functional\Controller\AbstractControllerTest;
 
 /**
  * Class ApiControllersSecurityTest
+ *
+ * @group securityCheck
  */
 class ApiControllersSecurityTest extends AbstractControllerTest
 {

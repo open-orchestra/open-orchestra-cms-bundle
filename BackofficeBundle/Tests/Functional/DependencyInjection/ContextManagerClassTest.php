@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class ContextManagerClassTest
+ *
+ * @group integrationTest
  */
 class ContextManagerClassTest extends KernelTestCase
 {

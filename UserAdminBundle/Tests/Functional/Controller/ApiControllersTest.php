@@ -6,6 +6,8 @@ use OpenOrchestra\ApiBundle\Tests\Functional\Controller\AbstractControllerTest;
 
 /**
  * Class ApiControllersTest
+ *
+ * @group apiFunctional
  */
 class ApiControllersTest extends AbstractControllerTest
 {

@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class GroupRepositoryTest
+ *
+ * @group integrationTest
  */
 class GroupRepositoryTest extends KernelTestCase
 {

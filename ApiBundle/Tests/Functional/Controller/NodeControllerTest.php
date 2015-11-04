@@ -7,6 +7,8 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class NodeControllerTest
+ *
+ * @group apiFunctional
  */
 class NodeControllerTest extends AbstractControllerTest
 {

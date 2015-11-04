@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
  * Class AuthorizationControllersTest
+ *
+ * @group apiFunctional
  */
 class AuthorizationControllersTest extends WebTestCase
 {

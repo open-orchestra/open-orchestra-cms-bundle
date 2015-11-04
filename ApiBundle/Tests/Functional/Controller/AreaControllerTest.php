@@ -4,6 +4,8 @@ namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 /**
  * Class AreaControllerTest
+ *
+ * @group apiFunctional
  */
 class AreaControllerTest extends AbstractControllerTest
 {

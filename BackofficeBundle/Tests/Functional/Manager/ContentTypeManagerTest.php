@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class ContentTypeManagerTest
+ *
+ * @group integrationTest
  */
 class ContentTypeManagerTest extends KernelTestCase
 {
