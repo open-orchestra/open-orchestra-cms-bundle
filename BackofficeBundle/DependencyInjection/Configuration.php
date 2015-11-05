@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('key')
                 ->prototype('scalar')->end()
             ->end()
+            ->booleanNode('workflow_role_in_group')->defaultTrue()->end()
         ->end();
 
         return $treeBuilder;
