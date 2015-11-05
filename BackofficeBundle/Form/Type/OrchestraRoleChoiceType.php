@@ -13,15 +13,18 @@ use Symfony\Component\Form\AbstractType;
 class OrchestraRoleChoiceType extends AbstractType
 {
     protected $roleRepository;
+    protected $workflowRoleInGroup;
     protected $translationChoiceManager;
 
     /**
      * @param RoleRepositoryInterface  $roleRepository
      * @param TranslationChoiceManager $translationChoiceManager
+     * @param bool|true                $workflowRoleInGroup
      */
-    public function __construct(RoleRepositoryInterface $roleRepository, TranslationChoiceManager $translationChoiceManager)
+    public function __construct(RoleRepositoryInterface $roleRepository, TranslationChoiceManager $translationChoiceManager, $workflowRoleInGroup = true)
     {
         $this->roleRepository = $roleRepository;
+        $this->workflowRoleInGroup = $workflowRoleInGroup;
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
@@ -44,6 +47,12 @@ class OrchestraRoleChoiceType extends AbstractType
 
         foreach ($this->roleRepository->findAccessRole() as $role) {
             $choices[$role->getName()] = $this->translationChoiceManager->choose($role->getDescriptions());
+        }
+
+        if ($this->workflowRoleInGroup) {
+            foreach ($this->roleRepository->findWorkflowRole() as $role) {
+                $choices[$role->getName()] = $this->translationChoiceManager->choose($role->getDescriptions());
+            }
         }
 
         return $choices;

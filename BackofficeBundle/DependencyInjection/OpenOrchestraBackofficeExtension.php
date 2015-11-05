@@ -42,6 +42,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $fixedAttributes = array_merge($config['fixed_attributes'], array('component', 'submit', 'label', 'class', 'id', 'maxAge'));
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
 
+        $container->setParameter('open_orchestra_backoffice.role.workflow_role_in_group', $config['workflow_role_in_group']);
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.direction', array('h' => 'Horizontal', 'v' => 'Vertical'));
         $container->setParameter('open_orchestra_user.base_layout', 'OpenOrchestraBackofficeBundle::layout.html.twig');

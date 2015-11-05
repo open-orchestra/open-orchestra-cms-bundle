@@ -304,6 +304,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.role
             - @open_orchestra_backoffice.manager.translation_choice
+            - %open_orchestra_backoffice.role.workflow_role_in_group%
         tags:
             - { name: form.type, alias: orchestra_role_choice }
     open_orchestra_backoffice.type.api_client:
