@@ -18,7 +18,7 @@ $(document).ready ->
   $(document).ajaxError (event, jqXHR, settings) ->
     errors = {error : {message :$('#content').data('error-txt')}}
     if jqXHR.statusText != 'abort'
-      if isAccessDenied(jqXHR.responseText)
+      if isAccessDenied(jqXHR)
         redirectToLogin()
       else if jqXHR.responseJSON
         errors = jqXHR.responseJSON
@@ -32,5 +32,5 @@ $(document).ready ->
         domContainer: $('h1.page-title').parent()
       )
   $(document).ajaxSuccess (event, xhr, settings) ->
-    redirectToLogin() if isLoginForm(xhr.responseText)
+    redirectToLogin() if isLoginForm(xhr)
     updateDebugBar(xhr) if xhr.getResponseHeader('X-Debug-Token-Link')?
