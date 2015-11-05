@@ -1,19 +1,8 @@
-isAccessDenied = (text) ->
-  return @isInText(text, "client.access_denied")
+isAccessDenied = (jqXHR) ->
+  return jqXHR.status == 401
 
-isLoginForm = (html) ->
-  if @isInText(html, "_username") && @isInText(html, "_password")
-    true
-  else
-    false
-
-isInText = (text, message) ->
-  return false if typeof text == 'object' || ! text
-  nunberOccurence = text.indexOf message
-  if nunberOccurence > 0
-    true
-  else
-    false
+isLoginForm = (xhr) ->
+  return xhr.getResponseHeader('X-Form-Type') == 'login'
 
 redirectToLogin = ->
   window.location.reload()
