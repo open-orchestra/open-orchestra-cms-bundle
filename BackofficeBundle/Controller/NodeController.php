@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -87,7 +88,9 @@ class NodeController extends AbstractAdminController
      */
     protected function generateForm(NodeInterface $node, $url)
     {
-        $disabled = !$this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+        $isTransverse = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE;
+        $disabled = !(!$isTransverse && $this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) &&
+                    !($isTransverse && $this->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE));
 
         $form = $this->createForm(
             'oo_node',

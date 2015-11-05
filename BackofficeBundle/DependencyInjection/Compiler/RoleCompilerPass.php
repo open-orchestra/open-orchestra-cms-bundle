@@ -42,6 +42,7 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             AdministrationPanelStrategy::ROLE_ACCESS_DELETE_API_CLIENT,
             TreeTemplatePanelStrategy::ROLE_ACCESS_TREE_TEMPLATE,
             GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE,
+            GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD,
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_KEYWORD,
