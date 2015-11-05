@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\LogBundle\DependencyInjection\Compiler;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AbstractRoleCompilerPass;
+use OpenOrchestra\LogBundle\NavigationPanel\Strategies\LogPanelStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -21,7 +21,7 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
     public function process(ContainerBuilder $container)
     {
         $this->addRoles($container, array(
-            AdministrationPanelStrategy::ROLE_ACCESS_LOG,
+            LogPanelStrategy::ROLE_ACCESS_LOG,
         ));
     }
 }

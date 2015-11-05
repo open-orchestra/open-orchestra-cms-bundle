@@ -49,7 +49,6 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
     const ROLE_ACCESS_CREATE_SITE = 'ROLE_ACCESS_CREATE_SITE';
     const ROLE_ACCESS_UPDATE_SITE = 'ROLE_ACCESS_UPDATE_SITE';
     const ROLE_ACCESS_DELETE_SITE = 'ROLE_ACCESS_DELETE_SITE';
-    const ROLE_ACCESS_LOG = 'ROLE_ACCESS_LOG';
 
     protected $template;
 

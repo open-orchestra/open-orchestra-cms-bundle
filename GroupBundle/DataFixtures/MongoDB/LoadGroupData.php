@@ -39,11 +39,7 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
         $groupContentType = $this->generateGroup('Content type group', 'Content type group', 'Groupe pour les types de contenu', 'site2', 'groupContentType', AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE);
         $manager->persist($groupContentType);
 
-        $groupLog = $this->generateGroup('Log group', 'Log group', 'Groupe de consultation de log', 'site2', 'groupLog', AdministrationPanelStrategy::ROLE_ACCESS_LOG);
-        $manager->persist($groupLog);
-
         $manager->flush();
-
     }
 
     /**
@@ -144,7 +140,6 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_ROLE);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_ROLE);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE);
-            $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_LOG);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_REDIRECTION);
             $group->addRole(AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_REDIRECTION);
