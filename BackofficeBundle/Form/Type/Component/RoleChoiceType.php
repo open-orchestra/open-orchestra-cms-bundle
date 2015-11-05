@@ -1,16 +1,15 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\Backoffice\Collector\RoleCollector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Class OrchestraRoleChoiceType
+ * Class RoleChoiceType
  */
-class OrchestraRoleChoiceType extends AbstractType
+class RoleChoiceType extends AbstractType
 {
     protected $roleCollector;
 
@@ -39,7 +38,7 @@ class OrchestraRoleChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_role_choice';
+        return 'oo_role_choice';
     }
 
     /**

@@ -50,7 +50,7 @@ class VideoStrategy extends AbstractBlockStrategy
     protected function addYoutubeForm(FormBuilderInterface $builder)
     {
         $builder
-            ->add('youtubeVideoId', 'orchestra_video', array(
+            ->add('youtubeVideoId', 'oo_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.youtube.video_id'
             ))
             ->add('youtubeWidth', 'text', array(
@@ -115,7 +115,7 @@ class VideoStrategy extends AbstractBlockStrategy
     protected function addDailyMotionForm($builder)
     {
         $builder
-            ->add('dailymotionVideoId', 'orchestra_video', array(
+            ->add('dailymotionVideoId', 'oo_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.dailymotion.video_id',
             ))
             ->add('dailymotionWidth', 'text', array(
@@ -153,15 +153,15 @@ class VideoStrategy extends AbstractBlockStrategy
                 'label' => 'open_orchestra_backoffice.block.video.dailymotion.logo',
                 'required'  => false,
             ))
-            ->add('dailymotionBackground', 'orchestra_color_picker', array(
+            ->add('dailymotionBackground', 'oo_color_picker', array(
                 'label' => 'open_orchestra_backoffice.block.video.dailymotion.background',
                 'required'  => false,
             ))
-            ->add('dailymotionForeground', 'orchestra_color_picker', array(
+            ->add('dailymotionForeground', 'oo_color_picker', array(
                 'label' => 'open_orchestra_backoffice.block.video.dailymotion.foreground',
                 'required'  => false,
             ))
-            ->add('dailymotionHighlight', 'orchestra_color_picker', array(
+            ->add('dailymotionHighlight', 'oo_color_picker', array(
                 'label' => 'open_orchestra_backoffice.block.video.dailymotion.highlight',
                 'required'  => false,
             ))
@@ -176,7 +176,7 @@ class VideoStrategy extends AbstractBlockStrategy
     protected function addVimeoForm($builder)
     {
         $builder
-            ->add('vimeoVideoId', 'orchestra_video', array(
+            ->add('vimeoVideoId', 'oo_video', array(
                 'label' => 'open_orchestra_backoffice.block.video.vimeo.video_id',
             ))
             ->add('vimeoWidth', 'text', array(
@@ -189,7 +189,7 @@ class VideoStrategy extends AbstractBlockStrategy
                 'label' => 'open_orchestra_backoffice.block.video.vimeo.height',
                 'required'  => false,
             ))
-            ->add('vimeoColor', 'orchestra_color_picker', array(
+            ->add('vimeoColor', 'oo_color_picker', array(
                 'label' => 'open_orchestra_backoffice.block.video.vimeo.color',
                 'required'  => false,
             ))

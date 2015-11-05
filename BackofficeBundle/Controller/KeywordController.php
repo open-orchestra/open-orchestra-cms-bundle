@@ -30,7 +30,7 @@ class KeywordController extends AbstractAdminController
         $keyword = $this->get('open_orchestra_model.repository.keyword')->find($keywordId);
 
         $form = $this->createForm(
-            'keyword',
+            'oo_keyword',
             $keyword,
             array(
                 'action' => $this->generateUrl('open_orchestra_backoffice_keyword_form', array('keywordId' => $keywordId)),
@@ -59,7 +59,7 @@ class KeywordController extends AbstractAdminController
         /** @var KeywordInterface $keyword */
         $keyword = new $keywordClass();
 
-        $form = $this->createForm('keyword', $keyword, array(
+        $form = $this->createForm('oo_keyword', $keyword, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_keyword_new'),
             'method' => 'POST',
         ));

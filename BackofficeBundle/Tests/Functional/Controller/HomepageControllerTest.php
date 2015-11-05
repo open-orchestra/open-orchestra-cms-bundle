@@ -38,7 +38,7 @@ class HomepageControllerTest extends AbstractControllerTest
         $crawler = $this->client->request('GET', '/admin/template/new');
 
         $formUser = $crawler->selectButton('Save')->form();
-        $formUser['template[name]'] = 'template test ' . time();
+        $formUser['oo_template[name]'] = 'template test ' . time();
         $this->client->submit($formUser);
 
         $crawler = $this->client->request('GET', '/admin/');

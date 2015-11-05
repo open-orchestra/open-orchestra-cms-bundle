@@ -38,7 +38,7 @@ class ApiClientTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('api_client', $this->form->getName());
+        $this->assertSame('oo_api_client', $this->form->getName());
     }
 
     /**

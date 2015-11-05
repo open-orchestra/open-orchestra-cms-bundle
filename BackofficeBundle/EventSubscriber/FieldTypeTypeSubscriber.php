@@ -129,7 +129,7 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         }
 
         $form->add('options', 'collection', array(
-            'type' => 'field_option',
+            'type' => 'oo_field_option',
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,

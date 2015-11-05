@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraDateWidgetOption
+ * Class DateWidgetOptionType
  */
-class OrchestraDateWidgetOption extends AbstractType
+class DateWidgetOptionType extends AbstractType
 {
     /**
      * @param OptionsResolver $resolver
@@ -33,7 +33,7 @@ class OrchestraDateWidgetOption extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_date_widget_option';
+        return 'oo_date_widget_option';
     }
 
     /**

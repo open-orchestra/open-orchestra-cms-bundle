@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceStringToArrayTransformer;
@@ -8,9 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class OrchestraFieldChoice
+ * Class FieldChoiceType
  */
-class OrchestraFieldChoice extends AbstractType
+class FieldChoiceType extends AbstractType
 {
     protected $choiceArrayToStringTransformer;
 
@@ -53,7 +53,7 @@ class OrchestraFieldChoice extends AbstractType
      */
     public function getName()
     {
-        return "orchestra_field_choice";
+        return "oo_field_choice";
     }
 
 }

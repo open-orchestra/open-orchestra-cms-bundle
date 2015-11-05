@@ -45,7 +45,7 @@ class StatusType extends AbstractType
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.status.initial'
         ));
-        $builder->add('labels', 'translated_value_collection', array(
+        $builder->add('labels', 'oo_translated_value_collection', array(
             'label' => 'open_orchestra_backoffice.form.status.labels'
         ));
         $builder->add('displayColor', 'orchestra_color_choice', array(
@@ -63,7 +63,7 @@ class StatusType extends AbstractType
      */
     public function getName()
     {
-        return 'status';
+        return 'oo_status';
     }
 
     /**

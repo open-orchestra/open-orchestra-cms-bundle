@@ -51,7 +51,7 @@ class ContentTypeType extends AbstractType
                     'class' => 'generate-id-dest',
                 )
             ))
-            ->add('names', 'translated_value_collection', array(
+            ->add('names', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.names'
             ))
             ->add('template', 'text', array(
@@ -69,7 +69,7 @@ class ContentTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.content_type.default_display',
             ))
             ->add('fields', 'collection', array(
-                'type' => 'field_type',
+                'type' => 'oo_field_type',
                 'allow_add' => true,
                 'allow_delete' => true,
                 'label' => 'open_orchestra_backoffice.form.content_type.fields',
@@ -104,6 +104,6 @@ class ContentTypeType extends AbstractType
      */
     public function getName()
     {
-        return 'content_type';
+        return 'oo_content_type';
     }
 }

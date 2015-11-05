@@ -32,7 +32,7 @@ class GroupController extends AbstractAdminController
         /** @var GroupInterface $group */
         $group = new $groupClass();
 
-        $form = $this->createForm('group', $group, array(
+        $form = $this->createForm('oo_group', $group, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_group_new'),
             'method' => 'POST',
         ));
@@ -65,7 +65,7 @@ class GroupController extends AbstractAdminController
     {
         $group = $this->get('open_orchestra_user.repository.group')->find($groupId);
 
-        $form = $this->createForm('group', $group, array(
+        $form = $this->createForm('oo_group', $group, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_group_form', array(
                 'groupId' => $groupId,
             )))

@@ -1,15 +1,15 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class OrchestraChoicesOption
+ * Class ChoicesOptionType
  */
-class OrchestraChoicesOption extends AbstractType
+class ChoicesOptionType extends AbstractType
 {
     protected $choiceTransformer;
 
@@ -43,7 +43,7 @@ class OrchestraChoicesOption extends AbstractType
      */
     public function getName()
     {
-        return "orchestra_choices_option";
+        return "oo_choices_option";
     }
 
 }

@@ -7,9 +7,9 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraColorPicker
+ * Class ColorPicker
  */
-class OrchestraColorPickerType extends AbstractType
+class ColorPickerType extends AbstractType
 {
     /**
      * @param OptionsResolver $resolver
@@ -36,7 +36,7 @@ class OrchestraColorPickerType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_color_picker';
+        return 'oo_color_picker';
     }
 
 }

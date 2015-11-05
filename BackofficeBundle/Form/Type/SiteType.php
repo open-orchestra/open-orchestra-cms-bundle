@@ -43,7 +43,7 @@ class SiteType extends AbstractType
         ));
         $builder
             ->add('aliases', 'collection', array(
-                'type' => 'site_alias',
+                'type' => 'oo_site_alias',
                 'label' => 'open_orchestra_backoffice.form.website.aliases',
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -116,6 +116,6 @@ class SiteType extends AbstractType
      */
     public function getName()
     {
-        return 'site';
+        return 'oo_site';
     }
 }

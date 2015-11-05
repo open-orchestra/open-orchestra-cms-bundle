@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
@@ -8,9 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraContentTypeChoiceType
+ * Class ContentTypeChoiceType
  */
-class OrchestraContentTypeChoiceType extends AbstractType
+class ContentTypeChoiceType extends AbstractType
 {
     protected $contentTypeRepository;
 
@@ -55,7 +55,7 @@ class OrchestraContentTypeChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_content_type_choice';
+        return 'oo_content_type_choice';
     }
 
     /**

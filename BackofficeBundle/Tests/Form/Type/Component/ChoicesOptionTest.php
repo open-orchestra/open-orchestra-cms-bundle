@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraChoicesOption;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\ChoicesOptionType;
 use Phake;
 
 /**
- * Class OrchestraChoicesOptionTest
+ * Class ChoicesOptionTypeTest
  */
-class OrchestraChoicesOptionTest extends \PHPUnit_Framework_TestCase
+class ChoicesOptionTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
     protected $transformer;
@@ -21,7 +21,7 @@ class OrchestraChoicesOptionTest extends \PHPUnit_Framework_TestCase
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer');
-        $this->form = new OrchestraChoicesOption($this->transformer);
+        $this->form = new ChoicesOptionType($this->transformer);
     }
 
     /**
@@ -47,6 +47,6 @@ class OrchestraChoicesOptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_choices_option', $this->form->getName());
+        $this->assertEquals('oo_choices_option', $this->form->getName());
     }
 }

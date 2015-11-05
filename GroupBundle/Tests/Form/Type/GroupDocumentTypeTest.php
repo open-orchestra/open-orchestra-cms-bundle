@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
-use OpenOrchestra\GroupBundle\Form\Type\OrchestraGroupType;
+use OpenOrchestra\GroupBundle\Form\Type\GroupDocumentType;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 
 /**
- * Test OrchestraGroupTypeTest
+ * Test GroupDocumentTypeTest
  */
-class OrchestraGroupTypeTest extends \PHPUnit_Framework_TestCase
+class GroupDocumentTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraGroupType
+     * @var GroupDocumentType
      */
     protected $type;
 
@@ -26,7 +26,7 @@ class OrchestraGroupTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
 
-        $this->type = new OrchestraGroupType($this->groupClass, $this->translationChoiceManager);
+        $this->type = new GroupDocumentType($this->groupClass, $this->translationChoiceManager);
     }
 
     /**
@@ -34,7 +34,6 @@ class OrchestraGroupTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $this->assertInstanceOf('OpenOrchestra\BackofficeBundle\Form\Type\AbstractOrchestraGroupType', $this->type);
         $this->assertInstanceOf('Symfony\Component\Form\AbstractType', $this->type);
     }
 
@@ -69,6 +68,6 @@ class OrchestraGroupTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertSame('orchestra_group', $this->type->getName());
+        $this->assertSame('oo_group_document', $this->type->getName());
     }
 }

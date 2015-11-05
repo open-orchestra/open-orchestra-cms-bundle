@@ -7,9 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class OrchestraVideoType
+ * Class VideoType
  */
-class OrchestraVideoType extends AbstractType
+class VideoType extends AbstractType
 {
     protected $videoUrlTransformer;
 
@@ -37,7 +37,7 @@ class OrchestraVideoType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_video';
+        return 'oo_video';
     }
 
     /**

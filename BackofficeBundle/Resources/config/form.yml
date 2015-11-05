@@ -11,25 +11,25 @@ parameters:
     open_orchestra_backoffice.type.status.class: OpenOrchestra\BackofficeBundle\Form\Type\StatusType
     open_orchestra_backoffice.type.field_type.class: OpenOrchestra\BackofficeBundle\Form\Type\FieldTypeType
     open_orchestra_backoffice.type.field_option.class: OpenOrchestra\BackofficeBundle\Form\Type\FieldOptionType
-    open_orchestra_backoffice.type.orchestra_choices_option.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraChoicesOption
-    open_orchestra_backoffice.type.orchestra_field_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraFieldChoice
-    open_orchestra_backoffice.type.orchestra_date_widget_option.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraDateWidgetOption
+    open_orchestra_backoffice.type.choices_option.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ChoicesOptionType
+    open_orchestra_backoffice.type.field_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\FieldChoiceType
+    open_orchestra_backoffice.type.date_widget_option.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\DateWidgetOptionType
     open_orchestra_backoffice.type.translated_value.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueType
     open_orchestra_backoffice.type.translated_value_collection.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
-    open_orchestra_backoffice.type.orchestra_theme_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraThemeChoiceType
+    open_orchestra_backoffice.type.theme_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ThemeChoiceType
     open_orchestra_backoffice.type.theme.class: OpenOrchestra\BackofficeBundle\Form\Type\ThemeType
-    open_orchestra_backoffice.type.orchestra_node_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType
-    open_orchestra_backoffice.type.orchestra_site_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraSiteChoiceType
-    open_orchestra_backoffice.type.orchestra_content_type_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType
+    open_orchestra_backoffice.type.node_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\NodeChoiceType
+    open_orchestra_backoffice.type.site_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\SiteChoiceType
+    open_orchestra_backoffice.type.content_type_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentTypeChoiceType
     open_orchestra_backoffice.type.tinymce.class: OpenOrchestra\BackofficeBundle\Form\Type\TinymceType
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\BackofficeBundle\Form\Type\KeywordType
-    open_orchestra_backoffice.type.orchestra_keywords.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType
+    open_orchestra_backoffice.type.keywords_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\KeywordsChoiceType
     open_orchestra_backoffice.type.role.class: OpenOrchestra\BackofficeBundle\Form\Type\RoleType
     open_orchestra_backoffice.type.group.class: OpenOrchestra\BackofficeBundle\Form\Type\GroupType
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType
-    open_orchestra_backoffice.type.orchestra_video.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraVideoType
-    open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
-    open_orchestra_backoffice.type.orchestra_role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraRoleChoiceType
+    open_orchestra_backoffice.type.video.class: OpenOrchestra\BackofficeBundle\Form\Type\VideoType
+    open_orchestra_backoffice.type.color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\ColorPickerType
+    open_orchestra_backoffice.type.role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\RoleChoiceType
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\BackofficeBundle\Form\Type\ApiClientType
 
     open_orchestra_backoffice.tinymce:
@@ -59,7 +59,7 @@ services:
             - %open_orchestra_model.document.area.class%
             - @translator
         tags:
-            - { name: form.type, alias: template }
+            - { name: form.type, alias: oo_template }
     # Node form type
     open_orchestra_backoffice.type.node:
         class: %open_orchestra_backoffice.type.node.class%
@@ -107,13 +107,13 @@ services:
             - %open_orchestra_model.document.site.class%
             - @translator
         tags:
-            - { name: form.type, alias: site }
+            - { name: form.type, alias: oo_site }
     open_orchestra_backoffice.type.site_alias:
         class: OpenOrchestra\BackofficeBundle\Form\Type\SiteAliasType
         arguments:
             - %open_orchestra_model.document.site_alias.class%
         tags:
-            - { name: form.type, alias: site_alias }
+            - { name: form.type, alias: oo_site_alias }
     # Content Type Form Builder
     open_orchestra_backoffice.type.content_type:
         class: %open_orchestra_backoffice.type.content_type.class%
@@ -122,7 +122,7 @@ services:
             - @translator
             - @open_orchestra_backoffice.listener.translate_value_initializer
         tags:
-            - { name: form.type, alias: content_type }
+            - { name: form.type, alias: oo_content_type }
     open_orchestra_backoffice.type.field_type:
         class: %open_orchestra_backoffice.type.field_type.class%
         arguments:
@@ -132,7 +132,7 @@ services:
             - %open_orchestra_model.document.field_option.class%
             - %open_orchestra_model.document.field_type.class%
         tags:
-            - { name: form.type, alias: field_type }
+            - { name: form.type, alias: oo_field_type }
     open_orchestra_backoffice.type.field_option:
         class: %open_orchestra_backoffice.type.field_option.class%
         arguments:
@@ -140,24 +140,24 @@ services:
             - %open_orchestra_backoffice.options%
             - %open_orchestra_model.document.field_option.class%
         tags:
-            - { name: form.type, alias: field_option }
-    open_orchestra_backoffice.type.orchestra_choices_option:
-        class: %open_orchestra_backoffice.type.orchestra_choices_option.class%
+            - { name: form.type, alias: oo_field_option }
+    open_orchestra_backoffice.type.choices_option:
+        class: %open_orchestra_backoffice.type.choices_option.class%
         arguments:
             - @open_orchestra_backoffice.transformer.choices_option_to_array
         tags:
-            - { name: form.type, alias: orchestra_choices_option}
-    open_orchestra_backoffice.type.orchestra_field_choice:
-        class: %open_orchestra_backoffice.type.orchestra_field_choice.class%
+            - { name: form.type, alias: oo_choices_option}
+    open_orchestra_backoffice.type.field_choice:
+        class: %open_orchestra_backoffice.type.field_choice.class%
         arguments:
             - @open_orchestra_backoffice.transformer.choice_array_to_string
             - @open_orchestra_backoffice.transformer.choice_string_to_array
         tags:
-            - { name: form.type, alias: orchestra_field_choice}
-    open_orchestra_backoffice.type.orchestra_date_widget_option:
-        class: %open_orchestra_backoffice.type.orchestra_date_widget_option.class%
+            - { name: form.type, alias: oo_field_choice}
+    open_orchestra_backoffice.type.date_widget_option:
+        class: %open_orchestra_backoffice.type.date_widget_option.class%
         tags:
-            - { name: form.type, alias: orchestra_date_widget_option}
+            - { name: form.type, alias: oo_date_widget_option}
 
     # Status Type
     open_orchestra_backoffice.type.status:
@@ -166,7 +166,7 @@ services:
             - %open_orchestra_model.document.status.class%
             - @open_orchestra_backoffice.listener.translate_value_initializer
         tags:
-            - { name: form.type, alias: status }
+            - { name: form.type, alias: oo_status }
 
     # Content Form Builder
     open_orchestra_backoffice.type.orchestra_content:
@@ -175,7 +175,7 @@ services:
             - @open_orchestra_backoffice.subscriber.content_type
             - %open_orchestra_model.document.content.class%
         tags:
-            - {name: form.type, alias: orchestra_content}
+            - {name: form.type, alias: oo_content}
 
     # Language form field type
     open_orchestra_backoffice.type.language:
@@ -201,43 +201,43 @@ services:
             - %open_orchestra_model.document.translated_value.class%
             - %open_orchestra_base.administration_languages%
         tags:
-            - { name: form.type, alias: translated_value }
+            - { name: form.type, alias: oo_translated_value }
     open_orchestra_backoffice.type.translated_value_collection:
         class: %open_orchestra_backoffice.type.translated_value_collection.class%
         tags:
-            - { name: form.type, alias: translated_value_collection }
-    open_orchestra_backoffice.type.orchestra_theme_choice:
-        class: %open_orchestra_backoffice.type.orchestra_theme_choice.class%
+            - { name: form.type, alias: oo_translated_value_collection }
+    open_orchestra_backoffice.type.theme_choice:
+        class: %open_orchestra_backoffice.type.theme_choice.class%
         arguments:
             - @open_orchestra_model.repository.theme
         tags:
-            - { name: form.type, alias: orchestra_theme_choice}
+            - { name: form.type, alias: oo_theme_choice}
     open_orchestra_backoffice.type.theme:
         class: %open_orchestra_backoffice.type.theme.class%
         arguments:
             - %open_orchestra_model.document.theme.class%
         tags:
-            - { name: form.type, alias: theme}
-    open_orchestra_backoffice.type.orchestra_node_choice:
-        class: %open_orchestra_backoffice.type.orchestra_node_choice.class%
+            - { name: form.type, alias: oo_theme}
+    open_orchestra_backoffice.type.node_choice:
+        class: %open_orchestra_backoffice.type.node_choice.class%
         arguments:
             - @open_orchestra_model.repository.node
             - @open_orchestra_display.manager.tree
             - @open_orchestra_backoffice.context_manager
         tags:
-            - { name: form.type, alias: orchestra_node_choice}
-    open_orchestra_backoffice.type.orchestra_site_choice:
-        class: %open_orchestra_backoffice.type.orchestra_site_choice.class%
+            - { name: form.type, alias: oo_node_choice}
+    open_orchestra_backoffice.type.site_choice:
+        class: %open_orchestra_backoffice.type.site_choice.class%
         arguments:
             - @open_orchestra_model.repository.site
         tags:
-            - { name: form.type, alias: orchestra_site_choice}
-    open_orchestra_backoffice.type.orchestra_content_type_choice:
-        class: %open_orchestra_backoffice.type.orchestra_content_type_choice.class%
+            - { name: form.type, alias: oo_site_choice}
+    open_orchestra_backoffice.type.content_type_choice:
+        class: %open_orchestra_backoffice.type.content_type_choice.class%
         arguments:
             - @open_orchestra_model.repository.content_type
         tags:
-            - { name: form.type, alias: orchestra_content_type_choice}
+            - { name: form.type, alias: oo_content_type_choice}
     open_orchestra_backoffice.type.orchestra_color_choice:
         class: %open_orchestra_backoffice.type.orchestra_choice.class%
         arguments:
@@ -257,59 +257,59 @@ services:
         arguments:
             - @open_orchestra_backoffice.transformer.bbcode_to_html
         tags:
-            - { name: form.type, alias: tinymce}
+            - { name: form.type, alias: oo_tinymce}
     open_orchestra_backoffice.type.keyword:
         class: %open_orchestra_backoffice.type.keyword.class%
         tags:
-            - { name: form.type, alias: keyword}
-    open_orchestra_backoffice.type.orchestra_keywords:
-        class: %open_orchestra_backoffice.type.orchestra_keywords.class%
+            - { name: form.type, alias: oo_keyword}
+    open_orchestra_backoffice.type.keywords_choice:
+        class: %open_orchestra_backoffice.type.keywords_choice.class%
         arguments:
             - @open_orchestra_backoffice.transformer.embedkeywords_to_keywords
             - @open_orchestra_model.repository.keyword
             - @router
             - @security.authorization_checker
         tags:
-            - { name: form.type, alias: orchestra_keywords}
+            - { name: form.type, alias: oo_keywords_choice}
     open_orchestra_backoffice.type.role:
         class: %open_orchestra_backoffice.type.role.class%
         arguments:
             - @open_orchestra_backoffice.listener.translate_value_initializer
             - %open_orchestra_model.document.role.class%
         tags:
-            - { name: form.type, alias: role }
+            - { name: form.type, alias: oo_role }
     open_orchestra_backoffice.type.group:
         class: %open_orchestra_backoffice.type.group.class%
         arguments:
             - %open_orchestra_user.document.group.class%
             - @open_orchestra_backoffice.listener.translate_value_initializer
         tags:
-            - { name: form.type, alias: group }
+            - { name: form.type, alias: oo_group }
     open_orchestra_backoffice.type.redirection:
         class: %open_orchestra_backoffice.type.redirection.class%
         arguments:
             - %open_orchestra_model.document.redirection.class%
         tags:
-            - { name: form.type, alias: redirection }
-    open_orchestra_backoffice.type.orchestra_video:
-        class: %open_orchestra_backoffice.type.orchestra_video.class%
+            - { name: form.type, alias: oo_redirection }
+    open_orchestra_backoffice.type.video:
+        class: %open_orchestra_backoffice.type.video.class%
         arguments:
             - @open_orchestra_backoffice.transformer.video_url_to_id
         tags:
-            - { name: form.type, alias: orchestra_video }
-    open_orchestra_backoffice.type.orchestra_color_picker:
-        class: %open_orchestra_backoffice.type.orchestra_color_picker.class%
+            - { name: form.type, alias: oo_video }
+    open_orchestra_backoffice.type.color_picker:
+        class: %open_orchestra_backoffice.type.color_picker.class%
         tags:
-            - { name: form.type, alias: orchestra_color_picker }
-    open_orchestra_backoffice.type.orchestra_role_choice:
-        class: %open_orchestra_backoffice.type.orchestra_role_choice.class%
+            - { name: form.type, alias: oo_color_picker }
+    open_orchestra_backoffice.type.role_choice:
+        class: %open_orchestra_backoffice.type.role_choice.class%
         arguments:
             - @open_orchestra_backoffice.collector.role
         tags:
-            - { name: form.type, alias: orchestra_role_choice }
+            - { name: form.type, alias: oo_role_choice }
     open_orchestra_backoffice.type.api_client:
         class: %open_orchestra_backoffice.type.api_client.class%
         arguments:
             - %open_orchestra_api.document.api_client.class%
         tags:
-            - { name: form.type, alias: api_client }
+            - { name: form.type, alias: oo_api_client }

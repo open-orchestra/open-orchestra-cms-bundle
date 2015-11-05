@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
@@ -12,9 +12,9 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class OrchestraKeywordsType
+ * Class KeywordsChoiceType
  */
-class OrchestraKeywordsType extends AbstractType
+class KeywordsChoiceType extends AbstractType
 {
     protected $keywordsTransformer;
     protected $keywordRepository;
@@ -79,7 +79,7 @@ class OrchestraKeywordsType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_keywords';
+        return 'oo_keywords_choice';
     }
 
     /**

@@ -30,9 +30,9 @@ parameters:
                     default_value: false
         tinymce:
             label: open_orchestra_backoffice.form.field_type.custom_type.wysiwyg
-            type: tinymce
+            type: oo_tinymce
             default_value:
-                type: tinymce
+                type: oo_tinymce
                 options:
                     label: open_orchestra_backoffice.form.field_type.default_value
                     required: false
@@ -71,9 +71,9 @@ parameters:
                     default_value: false
         choice:
             label: open_orchestra_backoffice.form.field_type.custom_type.choice
-            type: orchestra_field_choice
+            type: oo_field_choice
             default_value:
-                type: orchestra_choices_option
+                type: oo_choices_option
                 options:
                     label: open_orchestra_backoffice.form.field_type.default_value
                     required: false
@@ -132,7 +132,7 @@ parameters:
 
     open_orchestra_backoffice.options:
         orchestra_default_value_choice:
-            type: orchestra_choices_option
+            type: oo_choices_option
             label: open_orchestra_backoffice.form.field_type.default_value
             required: false
         max_length:
@@ -160,7 +160,7 @@ parameters:
             label: open_orchestra_backoffice.form.orchestra_fields.expanded
             required: false
         choices:
-            type: orchestra_choices_option
+            type: oo_choices_option
             label: open_orchestra_backoffice.form.orchestra_fields.choices
             required: true
         currency:
@@ -176,7 +176,7 @@ parameters:
             label: open_orchestra_backoffice.form.orchestra_fields.date_format
             required: true
         widget:
-            type: orchestra_date_widget_option
+            type: oo_date_widget_option
             label: open_orchestra_backoffice.form.orchestra_fields.widget
             required: true
         input:

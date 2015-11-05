@@ -49,7 +49,7 @@ class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
         $attribute->setType('integer');
         $content->addAttribute($attribute);
 
-        $form = $this->formFactory->create('orchestra_content', $content, array('csrf_protection' => false));
+        $form = $this->formFactory->create('oo_content', $content, array('csrf_protection' => false));
         $this->assertSame(count($form->get('identifier')->getErrors()), $countError);
         $this->assertSame($form->get('identifier')->getData(), $fieldValue);
     }

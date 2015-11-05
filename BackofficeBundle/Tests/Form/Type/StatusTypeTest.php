@@ -16,7 +16,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
-    protected $statusClass = 'site';
+    protected $statusClass = 'status';
     protected $translateValueInitializer;
 
     /**
@@ -41,7 +41,7 @@ class StatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('status', $this->form->getName());
+        $this->assertSame('oo_status', $this->form->getName());
     }
 
     /**

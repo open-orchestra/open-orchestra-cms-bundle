@@ -67,7 +67,7 @@ class NodeChoiceSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $this->subscriber->preSetData($this->event);
 
-        Phake::verify($this->form)->add('nodeSource', 'orchestra_node_choice', array(
+        Phake::verify($this->form)->add('nodeSource', 'oo_node_choice', array(
             'required' => false,
             'mapped' => false,
             'label' => 'open_orchestra_backoffice.form.node.node_source'

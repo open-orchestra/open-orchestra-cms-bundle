@@ -25,7 +25,7 @@ class TranslatedValueCollectionTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('translated_value_collection', $this->form->getName());
+        $this->assertSame('oo_translated_value_collection', $this->form->getName());
     }
 
     /**
@@ -46,7 +46,7 @@ class TranslatedValueCollectionTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'type' => 'translated_value',
+            'type' => 'oo_translated_value',
             'allow_add' => false,
             'allow_delete' => false,
             'label_attr' => array('class' => 'translated-value'),

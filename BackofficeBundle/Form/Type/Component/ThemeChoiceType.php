@@ -1,15 +1,15 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\ModelInterface\Repository\ThemeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraThemeChoiceType
+ * Class ThemeChoiceType
  */
-class OrchestraThemeChoiceType extends AbstractType
+class ThemeChoiceType extends AbstractType
 {
     protected $themeRepository;
 
@@ -52,7 +52,7 @@ class OrchestraThemeChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_theme_choice';
+        return 'oo_theme_choice';
     }
 
     /**

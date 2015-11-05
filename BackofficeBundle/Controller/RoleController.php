@@ -32,7 +32,7 @@ class RoleController extends AbstractAdminController
         /** @var RoleInterface $role */
         $role = new $roleClass();
 
-        $form = $this->createForm('role', $role, array(
+        $form = $this->createForm('oo_role', $role, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_role_new'),
             'method' => 'POST',
         ));
@@ -64,7 +64,7 @@ class RoleController extends AbstractAdminController
     {
         $role = $this->get('open_orchestra_model.repository.role')->find($roleId);
 
-        $form = $this->createForm('role', $role, array(
+        $form = $this->createForm('oo_role', $role, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_role_form', array(
                 'roleId' => $roleId,
             )))

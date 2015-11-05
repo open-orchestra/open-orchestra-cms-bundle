@@ -46,7 +46,7 @@ class FieldOptionType extends AbstractType
      */
     public function getName()
     {
-        return 'field_option';
+        return 'oo_field_option';
     }
 
     /**

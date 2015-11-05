@@ -82,7 +82,7 @@ class NodeType extends AbstractType
                 'precision' => 2,
                 'required' => false
             ))
-            ->add('theme', 'orchestra_theme_choice', array(
+            ->add('theme', 'oo_theme_choice', array(
                 'label' => 'open_orchestra_backoffice.form.node.theme'
             ))
             ->add('inMenu', 'checkbox', array(
@@ -112,7 +112,7 @@ class NodeType extends AbstractType
             ->add('nodeId', 'hidden', array(
                 'disabled' => true
             ))
-            ->add('role', 'orchestra_role_choice', array(
+            ->add('role', 'oo_role_choice', array(
                 'label' => 'open_orchestra_backoffice.form.node.role',
                 'required' => false,
             ))

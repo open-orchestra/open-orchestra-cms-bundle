@@ -43,7 +43,7 @@ class ContentListStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('contentNodeId', 'orchestra_node_choice', array(
+        $builder->add('contentNodeId', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_list.node',
             'constraints' => new NotBlank(),
         ));
@@ -53,7 +53,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'label' => 'open_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
         ));
-        $builder->add('contentType', 'orchestra_content_type_choice', array(
+        $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_list.content_type',
             'required' => false
         ));
@@ -66,7 +66,7 @@ class ContentListStrategy extends AbstractBlockStrategy
                 ContentRepositoryInterface::CHOICE_OR => $this->translator->trans('open_orchestra_backoffice.form.content_list.choice_type_or'),
             ),
         ));
-        $builder->add('keywords', 'orchestra_keywords', array(
+        $builder->add('keywords', 'oo_keywords_choice', array(
             'embedded' => false,
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.content_list.content_keyword',
@@ -76,7 +76,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'required' => false,
             'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.helper'),
         ));
-        $builder->add('contentTemplate', 'tinymce', array(
+        $builder->add('contentTemplate', 'oo_tinymce', array(
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.content_list.content_template',
             'constraints' => new ContentTemplate(),

@@ -36,7 +36,7 @@ class TranslatedValueTypeTest extends \PHPUnit_Framework_TestCase
     public function testNameAndInstance()
     {
         $this->assertInstanceOf('Symfony\Component\Form\AbstractType', $this->form);
-        $this->assertSame('translated_value', $this->form->getName());
+        $this->assertSame('oo_translated_value', $this->form->getName());
     }
 
     /**

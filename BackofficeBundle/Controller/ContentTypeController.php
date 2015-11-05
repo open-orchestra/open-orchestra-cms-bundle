@@ -95,6 +95,6 @@ class ContentTypeController extends AbstractAdminController
         }
         $option["method"] = $method;
 
-        return $this->createForm('content_type', $contentType, $option);
+        return $this->createForm('oo_content_type', $contentType, $option);
     }
 }

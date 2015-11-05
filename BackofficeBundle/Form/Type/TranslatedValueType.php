@@ -39,7 +39,7 @@ class TranslatedValueType extends AbstractType
      */
     public function getName()
     {
-        return 'translated_value';
+        return 'oo_translated_value';
     }
 
     /**

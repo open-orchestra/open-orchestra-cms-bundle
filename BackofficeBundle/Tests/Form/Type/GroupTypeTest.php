@@ -40,7 +40,7 @@ class GroupTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('group', $this->form->getName());
+        $this->assertSame('oo_group', $this->form->getName());
     }
 
     /**

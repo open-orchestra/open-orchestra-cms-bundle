@@ -73,7 +73,7 @@ class SiteAliasType extends AbstractType
      */
     public function getName()
     {
-        return 'site_alias';
+        return 'oo_site_alias';
     }
 
 }

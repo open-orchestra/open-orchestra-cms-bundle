@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraDateWidgetOption;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\DateWidgetOptionType;
 use Phake;
 
 /**
- * Class OrchestraDateWidgetOptionTest
+ * Class DateWidgetOptionTypeTest
  */
-class OrchestraDateWidgetOptionTest extends \PHPUnit_Framework_TestCase
+class DateWidgetOptionTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
 
@@ -17,7 +17,7 @@ class OrchestraDateWidgetOptionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->form = new OrchestraDateWidgetOption();
+        $this->form = new DateWidgetOptionType();
     }
 
     /**
@@ -51,6 +51,6 @@ class OrchestraDateWidgetOptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_date_widget_option', $this->form->getName());
+        $this->assertEquals('oo_date_widget_option', $this->form->getName());
     }
 }

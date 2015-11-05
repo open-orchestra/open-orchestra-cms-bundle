@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraNodeChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\NodeChoiceType;
 
 /**
- * Class OrchestraNodeChoiceType
+ * Class NodeChoiceType
  */
-class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class NodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $orchestraNodeChoiceType;
     protected $nodeRepository;
@@ -35,7 +35,7 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
         $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
-        $this->orchestraNodeChoiceType = new OrchestraNodeChoiceType($this->nodeRepository, $this->treeManager, $currentSiteManager);
+        $this->orchestraNodeChoiceType = new NodeChoiceType($this->nodeRepository, $this->treeManager, $currentSiteManager);
     }
 
     /**
@@ -59,7 +59,7 @@ class OrchestraNodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_node_choice', $this->orchestraNodeChoiceType->getName());
+        $this->assertEquals('oo_node_choice', $this->orchestraNodeChoiceType->getName());
     }
 
     /**

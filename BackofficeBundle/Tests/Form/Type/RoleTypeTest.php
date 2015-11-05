@@ -42,7 +42,7 @@ class RoleTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('role', $this->form->getName());
+        $this->assertSame('oo_role', $this->form->getName());
     }
 
     /**

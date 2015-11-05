@@ -31,7 +31,7 @@ class ApiClientType extends AbstractType
                     'label' => 'open_orchestra_backoffice.form.api_client.trusted',
                     'required' => false
             ));
-        $builder->add('roles', 'orchestra_role_choice', array(
+        $builder->add('roles', 'oo_role_choice', array(
             'label' => 'open_orchestra_backoffice.form.group.roles',
             'multiple' => true,
             'expanded' => true,
@@ -59,6 +59,6 @@ class ApiClientType extends AbstractType
      */
     public function getName()
     {
-        return 'api_client';
+        return 'oo_api_client';
     }
 }

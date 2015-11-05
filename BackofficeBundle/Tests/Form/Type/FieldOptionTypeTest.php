@@ -42,7 +42,7 @@ class FieldOptionTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('field_option', $this->form->getName());
+        $this->assertSame('oo_field_option', $this->form->getName());
     }
 
     /**
