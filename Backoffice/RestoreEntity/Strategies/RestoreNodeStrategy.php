@@ -45,7 +45,7 @@ class RestoreNodeStrategy implements RestoreEntityInterface
      */
     public function restore($node)
     {
-        $nodes = $this->nodeRepository->findByNodeIdAndSiteId($node->getNodeId(), $node->getSiteId());
+        $nodes = $this->nodeRepository->findByNodeAndSite($node->getNodeId(), $node->getSiteId());
         /** @var NodeInterface $node */
         foreach ($nodes as $node) {
             $node->setDeleted(false);
