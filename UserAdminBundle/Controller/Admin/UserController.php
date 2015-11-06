@@ -33,7 +33,7 @@ class UserController extends AbstractAdminController
         $userClass = $this->container->getParameter('open_orchestra_user.document.user.class');
         /** @var UserInterface $user */
         $user = new $userClass();
-        $form = $this->createForm('registration_user', $user, array(
+        $form = $this->createForm('oo_registration_user', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_new'),
         ));
         $form->handleRequest($request);
@@ -90,7 +90,7 @@ class UserController extends AbstractAdminController
     {
         /* @var User $user */
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
-        $form = $this->createForm('user_change_password', $user, array(
+        $form = $this->createForm('oo_user_change_password', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $userId))
         ));
         $form->handleRequest($request);
