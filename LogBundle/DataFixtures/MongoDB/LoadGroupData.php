@@ -16,7 +16,6 @@ use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterfa
  */
 class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
 {
-
     /**
      * @param ObjectManager $manager
      */
