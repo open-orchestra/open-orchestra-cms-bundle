@@ -16,7 +16,7 @@ tabViewFormLoad = (options) ->
             entityType: options.entityType,
             listUrl: options.listUrl
           )
-          tabView.addPanel($(response).data('title'), panel.id, view, panel.isActive, i)
+          tabView.addPanel(view.options.domContainer.children('[data-title]').data('title'), panel.id, view, panel.isActive, i)
 
 getPanelsLink = (links) ->
   panels = []

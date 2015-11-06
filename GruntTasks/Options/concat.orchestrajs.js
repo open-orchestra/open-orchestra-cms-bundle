@@ -97,7 +97,10 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
         //--[ USER ]--//
-        'web/built/openorchestrauseradmin/js/user/*.js'
+        'web/built/openorchestrauseradmin/js/user/*.js',
+
+        //--[ GROUP TREE ]--//
+        'web/built/openorchestrabackoffice/js/groupTree/*.js'
     ],
     dest: 'web/built/orchestra.js'
 };

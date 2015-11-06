@@ -68,4 +68,31 @@ class RoleCollector
         $this->roles[$role] = $translation;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getRolesByType($type)
+    {
+        $selectedRoles = array();
+
+        foreach ($this->roles as $role =>  $translation) {
+            if (preg_match('/role_access_([^_]*_)?' . $type . '/i', $role)) {
+                $selectedRoles[$role] = $translation;
+            }
+        }
+
+        return $selectedRoles;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return array_key_exists($role, $this->roles);
+    }
 }

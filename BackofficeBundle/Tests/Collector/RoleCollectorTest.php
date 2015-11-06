@@ -3,6 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Collector;
 
 use OpenOrchestra\Backoffice\Collector\RoleCollector;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -11,27 +13,21 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class RoleCollectorTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var RoleCollector
-     */
-    protected $collector;
     protected $roleRepository;
     protected $translator;
     protected $translationChoiceManager;
-
     protected $fakeTrans = 'fakeTrans';
+
     /**
      * Set up the test
      */
     public function setUp()
     {
-
         $this->roleRepository = \Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         $this->translator = \Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->translationChoiceManager = \Phake::mock('OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->fakeTrans);
         Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn($this->fakeTrans);
-
     }
 
     /**
@@ -87,4 +83,88 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @param array  $newRoles
+     * @param string $type
+     * @param array  $expectedRoles
+     *
+     * @dataProvider provideRoleAndTypeAndExpected
+     */
+    public function testGetRolesByType(array $newRoles, $type, array $expectedRoles)
+    {
+        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        foreach ($newRoles as $newRole) {
+            $collector->addRole($newRole);
+        }
+
+        $this->assertSame($expectedRoles, $collector->getRolesByType($type));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideRoleAndTypeAndExpected()
+    {
+        return array(
+            array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'node', array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans)),
+            array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'template', array()),
+            array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'content', array()),
+            array(array(
+                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
+            ), 'node', array(
+                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans,
+                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE => $this->fakeTrans,
+                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE => $this->fakeTrans,
+                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE => $this->fakeTrans,
+            )),
+            array(array(
+                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
+            ), 'content', array(
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
+            )),
+        );
+    }
+
+    /**
+     * @param array  $roles
+     * @param string $roleToCheck
+     * @param bool   $answer
+     *
+     * @dataProvider provideHasRoleData
+     */
+    public function testHasTest(array $roles, $roleToCheck, $answer)
+    {
+        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        foreach ($roles as $newRole) {
+            $collector->addRole($newRole);
+        }
+
+        $this->assertSame($answer, $collector->hasRole($roleToCheck));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideHasRoleData()
+    {
+        return array(
+            array(array('role_foo'), 'foo', false),
+            array(array('role_foo'), 'role_foo', true),
+            array(array('role_foo', 'role_bar'), 'role_foo', true),
+        );
+    }
 }
