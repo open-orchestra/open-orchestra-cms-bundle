@@ -39,7 +39,7 @@ class UserType extends AbstractType
         $builder->add('email', 'email', array(
             'label' => 'open_orchestra_user.form.user.email'
         ));
-        $builder->add('groups', 'orchestra_group', array(
+        $builder->add('groups', 'oo_orchestra_group', array(
             'multiple' => true,
             'expanded' => true,
             'required' => false,
