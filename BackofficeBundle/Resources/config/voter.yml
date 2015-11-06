@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_backoffice.voter.group_site.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\GroupSiteVoter
+    open_orchestra_backoffice.voter.node_group_role.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\NodeGroupRoleVoter
 
 services:
     open_orchestra_backoffice.voter.group_site:
@@ -7,5 +8,9 @@ services:
         arguments:
             - @open_orchestra_backoffice.context_manager
             - @open_orchestra_model.repository.site
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.node_group_role:
+        class: %open_orchestra_backoffice.voter.node_group_role.class%
         tags:
             - { name: security.voter }

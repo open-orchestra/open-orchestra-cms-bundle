@@ -33,6 +33,9 @@ class NodeController extends AbstractAdminController
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->findVersionByDocumentId($id);
 
+        if (!$this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node)) {
+            $this->createAccessDeniedException();
+        }
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
