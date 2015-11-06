@@ -39,10 +39,10 @@ class GroupType extends AbstractType
             ->add('name', null, array(
                 'label' => 'open_orchestra_backoffice.form.group.name'
             ))
-            ->add('labels', 'translated_value_collection', array(
+            ->add('labels', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.group.label'
             ))
-            ->add('roles', 'orchestra_role_choice', array(
+            ->add('roles', 'oo_role_choice', array(
                 'label' => 'open_orchestra_backoffice.form.group.roles',
                 'multiple' => true,
                 'expanded' => true,
@@ -75,7 +75,7 @@ class GroupType extends AbstractType
      */
     public function getName()
     {
-        return 'group';
+        return 'oo_group';
     }
 
 }

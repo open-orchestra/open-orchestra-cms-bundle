@@ -38,7 +38,7 @@ class SiteAliasTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('site_alias', $this->form->getName());
+        $this->assertSame('oo_site_alias', $this->form->getName());
     }
 
     /**

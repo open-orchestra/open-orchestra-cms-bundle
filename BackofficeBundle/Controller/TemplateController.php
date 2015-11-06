@@ -90,7 +90,7 @@ class TemplateController extends AbstractAdminController
     protected function generateTemplateForm($template, $url)
     {
         $form = $this->createForm(
-            'template',
+            'oo_template',
             $template,
             array(
                 'action' => $url

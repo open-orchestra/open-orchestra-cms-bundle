@@ -1,18 +1,18 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraKeywordsType;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\KeywordsChoiceType;
 
 /**
- * Class OrchestraKeywordsTypeTest
+ * Class KeywordsChoiceTypeTest
  */
-class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
+class KeywordsChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraKeywordsType
+     * @var KeywordsChoiceTypeTest
      */
     protected $form;
 
@@ -46,7 +46,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->form = new OrchestraKeywordsType($this->transformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
+        $this->form = new KeywordsChoiceType($this->transformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
     }
 
     /**
@@ -54,7 +54,7 @@ class OrchestraKeywordsTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_keywords', $this->form->getName());
+        $this->assertSame('oo_keywords_choice', $this->form->getName());
     }
 
     /**

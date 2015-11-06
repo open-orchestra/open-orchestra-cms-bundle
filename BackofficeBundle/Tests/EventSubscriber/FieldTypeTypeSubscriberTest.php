@@ -104,7 +104,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->fieldType, Phake::times($timesCalled))->addOption(Phake::anyParameters());
         Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'field_option',
+            'type' => 'oo_field_option',
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,
@@ -142,7 +142,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->fieldType, Phake::times($timesCalled))->addOption(Phake::anyParameters());
         Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'field_option',
+            'type' => 'oo_field_option',
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,
@@ -215,7 +215,7 @@ class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->fieldType, Phake::times(1))->clearOptions();
 
         Phake::verify($this->form)->add('options', 'collection', array(
-            'type' => 'field_option',
+            'type' => 'oo_field_option',
             'allow_add' => false,
             'allow_delete' => false,
             'label' => false,

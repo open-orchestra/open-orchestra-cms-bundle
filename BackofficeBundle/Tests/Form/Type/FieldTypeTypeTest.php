@@ -57,7 +57,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('field_type', $this->form->getName());
+        $this->assertSame('oo_field_type', $this->form->getName());
     }
 
     /**

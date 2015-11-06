@@ -45,7 +45,7 @@ class NodeChoiceSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         if (null === $data->getId()) {
-            $form->add('nodeSource', 'orchestra_node_choice', array(
+            $form->add('nodeSource', 'oo_node_choice', array(
                 'required' => false,
                 'mapped' => false,
                 'label' => 'open_orchestra_backoffice.form.node.node_source'

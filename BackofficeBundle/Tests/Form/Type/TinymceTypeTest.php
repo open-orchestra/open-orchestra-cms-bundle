@@ -41,7 +41,7 @@ class TinymceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('tinymce', $this->form->getName());
+        $this->assertSame('oo_tinymce', $this->form->getName());
     }
 
     /**

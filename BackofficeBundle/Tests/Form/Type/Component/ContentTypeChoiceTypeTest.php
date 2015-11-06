@@ -1,15 +1,14 @@
 <?php
 
-
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraContentTypeChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentTypeChoiceType;
 
 /**
- * Class OrchestraContentTypeChoiceTypeTest
+ * Class ContentTypeChoiceTypeTest
  */
-class OrchestraContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class ContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
     protected $contentTypeRepository;
@@ -29,7 +28,7 @@ class OrchestraContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->contentType2 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
         Phake::when($this->contentType2)->getName()->thenReturn($this->contentTypeName2);
 
-        $this->form = new OrchestraContentTypeChoiceType($this->contentTypeRepository);
+        $this->form = new ContentTypeChoiceType($this->contentTypeRepository);
     }
 
     /**
@@ -53,7 +52,7 @@ class OrchestraContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_content_type_choice', $this->form->getName());
+        $this->assertEquals('oo_content_type_choice', $this->form->getName());
     }
 
     /**

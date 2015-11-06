@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -8,9 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraSiteType
+ * Class SiteChoiceType
  */
-class OrchestraSiteChoiceType extends AbstractType
+class SiteChoiceType extends AbstractType
 {
     protected $siteRepository;
 
@@ -58,7 +58,7 @@ class OrchestraSiteChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_site_choice';
+        return 'oo_site_choice';
     }
 
     /**

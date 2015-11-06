@@ -15,7 +15,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $form;
 
-    protected $siteClass = 'site';
+    protected $siteClass = 'oo_site';
     protected $translator;
 
     /**
@@ -42,7 +42,7 @@ class SiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('site', $this->form->getName());
+        $this->assertSame('oo_site', $this->form->getName());
     }
 
     /**

@@ -29,7 +29,7 @@ class StatusController extends AbstractAdminController
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
 
-        $form = $this->createForm('status', $status, array(
+        $form = $this->createForm('oo_status', $status, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_status_form', array(
                 'statusId' => $statusId,
             )))
@@ -60,7 +60,7 @@ class StatusController extends AbstractAdminController
         /** @var StatusInterface $status */
         $status = new $statusClass();
 
-        $form = $this->createForm('status', $status, array(
+        $form = $this->createForm('oo_status', $status, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_status_new'),
             'method' => 'POST',
         ));

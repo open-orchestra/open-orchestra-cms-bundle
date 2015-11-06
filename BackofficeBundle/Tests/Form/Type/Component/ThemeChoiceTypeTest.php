@@ -1,18 +1,18 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraThemeChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\ThemeChoiceType;
 
 /**
- * Class OrchestraThemeChoiceTypeTest
+ * Class ThemeChoiceTypeTest
  */
-class OrchestraThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class ThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraThemeChoiceType
+     * @var ThemeChoiceType
      */
     protected $form;
 
@@ -34,7 +34,7 @@ class OrchestraThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
         $this->themeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ThemeRepositoryInterface');
         Phake::when($this->themeRepository)->findAll()->thenReturn($themeCollection);
 
-        $this->form = new OrchestraThemeChoiceType($this->themeRepository);
+        $this->form = new ThemeChoiceType($this->themeRepository);
     }
 
     /**
@@ -50,7 +50,7 @@ class OrchestraThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_theme_choice', $this->form->getName());
+        $this->assertSame('oo_theme_choice', $this->form->getName());
     }
 
     /**

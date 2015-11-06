@@ -36,7 +36,7 @@ class KeywordTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('keyword', $this->form->getName());
+        $this->assertSame('oo_keyword', $this->form->getName());
     }
 
     /**

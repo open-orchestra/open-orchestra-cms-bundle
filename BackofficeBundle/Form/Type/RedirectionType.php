@@ -28,7 +28,7 @@ class RedirectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('siteId', 'orchestra_site_choice', array(
+        $builder->add('siteId', 'oo_site_choice', array(
             'label' => 'open_orchestra_backoffice.form.redirection.site_name',
         ));
         $builder->add('locale', 'orchestra_language',array(
@@ -37,7 +37,7 @@ class RedirectionType extends AbstractType
         $builder->add('routePattern', 'text',array(
             'label' => 'open_orchestra_backoffice.form.redirection.route_pattern',
         ));
-        $builder->add('nodeId', 'orchestra_node_choice', array(
+        $builder->add('nodeId', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.redirection.node_id',
             'required' => false,
         ));
@@ -73,7 +73,7 @@ class RedirectionType extends AbstractType
      */
     public function getName()
     {
-        return 'redirection';
+        return 'oo_redirection';
     }
 
 }

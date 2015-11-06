@@ -16,7 +16,7 @@ class TranslatedValueCollectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'type' => 'translated_value',
+            'type' => 'oo_translated_value',
             'allow_add' => false,
             'allow_delete' => false,
             'label_attr' => array('class' => 'translated-value'),
@@ -30,7 +30,7 @@ class TranslatedValueCollectionType extends AbstractType
      */
     public function getName()
     {
-        return 'translated_value_collection';
+        return 'oo_translated_value_collection';
     }
 
     /**

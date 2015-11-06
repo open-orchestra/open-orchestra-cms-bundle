@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraFieldChoice;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\FieldChoiceType;
 use Phake;
 
 /**
- * Class OrchestraFieldChoiceTest
+ * Class FieldChoiceTypeTest
  */
-class OrchestraFieldChoiceTest extends \PHPUnit_Framework_TestCase
+class FieldChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
     protected $transformerArrayToString;
@@ -23,7 +23,7 @@ class OrchestraFieldChoiceTest extends \PHPUnit_Framework_TestCase
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformerArrayToString = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer');
         $this->transformerStringToArray = Phake::mock('OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceStringToArrayTransformer');
-        $this->form = new OrchestraFieldChoice($this->transformerArrayToString, $this->transformerStringToArray);
+        $this->form = new FieldChoiceType($this->transformerArrayToString, $this->transformerStringToArray);
     }
 
     /**
@@ -65,6 +65,6 @@ class OrchestraFieldChoiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_field_choice', $this->form->getName());
+        $this->assertEquals('oo_field_choice', $this->form->getName());
     }
 }

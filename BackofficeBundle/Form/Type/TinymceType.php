@@ -36,7 +36,7 @@ class TinymceType extends AbstractType
      */
     public function getName()
     {
-        return 'tinymce';
+        return 'oo_tinymce';
     }
 
     /**

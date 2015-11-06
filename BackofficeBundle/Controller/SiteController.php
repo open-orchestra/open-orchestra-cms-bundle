@@ -29,7 +29,7 @@ class SiteController extends AbstractAdminController
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
         $form = $this->createForm(
-            'site',
+            'oo_site',
             $site,
             array(
                 'action' => $this->generateUrl('open_orchestra_backoffice_site_form', array(
@@ -64,7 +64,7 @@ class SiteController extends AbstractAdminController
         $siteAlias = new $siteAliasClass();
 
         $site->addAlias($siteAlias);
-        $form = $this->createForm('site', $site, array(
+        $form = $this->createForm('oo_site', $site, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
             'method' => 'POST',
         ));

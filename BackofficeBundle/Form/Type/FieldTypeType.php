@@ -59,7 +59,7 @@ class FieldTypeType extends AbstractType
             ->add('fieldId', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.field_id'
             ))
-            ->add('labels', 'translated_value_collection', array(
+            ->add('labels', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.labels'
             ))
             ->add('searchable', 'checkbox', array(
@@ -89,7 +89,7 @@ class FieldTypeType extends AbstractType
      */
     public function getName()
     {
-        return 'field_type';
+        return 'oo_field_type';
     }
 
     /**

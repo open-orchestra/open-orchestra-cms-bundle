@@ -43,7 +43,7 @@ class ThemeType extends AbstractType
      */
     public function getName()
     {
-        return 'theme';
+        return 'oo_theme';
     }
 
     /**

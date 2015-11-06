@@ -35,7 +35,7 @@ class ContentTypeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('content_type', $this->form->getName());
+        $this->assertSame('oo_content_type', $this->form->getName());
     }
 
     /**

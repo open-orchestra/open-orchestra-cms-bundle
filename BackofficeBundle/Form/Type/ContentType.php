@@ -35,7 +35,7 @@ class ContentType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content.name'
             ))
-            ->add('keywords', 'orchestra_keywords', array(
+            ->add('keywords', 'oo_keywords_choice', array(
                 'label' => 'open_orchestra_backoffice.form.content.keywords',
                 'required' => false
             ))
@@ -55,7 +55,7 @@ class ContentType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_content';
+        return 'oo_content';
     }
 
     /**

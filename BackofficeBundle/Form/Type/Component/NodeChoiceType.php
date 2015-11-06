@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -9,9 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
- * Class OrchestraNodeType
+ * Class NodeChoiceType
  */
-class OrchestraNodeChoiceType extends AbstractType
+class NodeChoiceType extends AbstractType
 {
     protected $nodeRepository;
     protected $treeManager;
@@ -95,7 +95,7 @@ class OrchestraNodeChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'orchestra_node_choice';
+        return 'oo_node_choice';
     }
 
     /**

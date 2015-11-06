@@ -28,7 +28,7 @@ class TinyMCEWysiwygStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('htmlContent', 'tinymce', array(
+        $builder->add('htmlContent', 'oo_tinymce', array(
             'constraints' => new NotBlank(),
         ));
     }

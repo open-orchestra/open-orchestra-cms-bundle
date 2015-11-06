@@ -1,18 +1,17 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
+namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Phake;
-use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraRoleChoiceType;
+use OpenOrchestra\BackofficeBundle\Form\Type\Component\RoleChoiceType;
 
 /**
- * Class OrchestraRoleChoiceTypeTest
+ * Class RoleChoiceTypeTest
  */
-class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class RoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraRoleChoiceType
+     * @var RoleChoiceType
      */
     protected $form;
 
@@ -25,7 +24,7 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollector');
 
-        $this->form = new OrchestraRoleChoiceType($this->roleCollector);
+        $this->form = new RoleChoiceType($this->roleCollector);
     }
 
     /**
@@ -41,7 +40,7 @@ class OrchestraRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_role_choice', $this->form->getName());
+        $this->assertSame('oo_role_choice', $this->form->getName());
     }
 
     /**

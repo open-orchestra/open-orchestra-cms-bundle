@@ -3,15 +3,15 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType;
+use OpenOrchestra\BackofficeBundle\Form\Type\ColorPickerType;
 
 /**
- * Class OrchestraColorPickerTypeTest
+ * Class ColorPickerTypeTest
  */
 class OrchestraColorPickerTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraColorPickerType
+     * @var ColorPickerType
      */
     protected $form;
 
@@ -20,7 +20,7 @@ class OrchestraColorPickerTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->form = new OrchestraColorPickerType();
+        $this->form = new ColorPickerType();
     }
 
     /**
@@ -44,7 +44,7 @@ class OrchestraColorPickerTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('orchestra_color_picker', $this->form->getName());
+        $this->assertEquals('oo_color_picker', $this->form->getName());
     }
 
     /**

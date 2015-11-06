@@ -33,7 +33,7 @@ class ContentStrategy extends AbstractBlockStrategy
             'attr' => array('help_text' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.helper'),
             'required' => false,
         ));
-        $builder->add('contentTemplate', 'tinymce', array(
+        $builder->add('contentTemplate', 'oo_tinymce', array(
             'required' => false,
             'label' => 'open_orchestra_backoffice.form.content_list.content_template',
             'constraints' => new ContentTemplate(),

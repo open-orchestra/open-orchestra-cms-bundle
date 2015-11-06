@@ -41,7 +41,7 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_content', $this->form->getName());
+        $this->assertSame('oo_content', $this->form->getName());
     }
 
     /**

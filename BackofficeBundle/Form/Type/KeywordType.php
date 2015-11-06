@@ -32,6 +32,6 @@ class KeywordType extends AbstractType
     */
     public function getName()
     {
-        return 'keyword';
+        return 'oo_keyword';
     }
 }

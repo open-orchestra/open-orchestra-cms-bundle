@@ -72,6 +72,6 @@ class TemplateType extends AbstractType
      */
     public function getName()
     {
-        return 'template';
+        return 'oo_template';
     }
 }

@@ -32,7 +32,7 @@ class RedirectionController extends AbstractAdminController
         /** @var RedirectionInterface $redirection */
         $redirection = new $redirectionClass();
 
-        $form = $this->createForm('redirection', $redirection, array(
+        $form = $this->createForm('oo_redirection', $redirection, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_new'),
             'method' => 'POST',
         ));
@@ -65,7 +65,7 @@ class RedirectionController extends AbstractAdminController
     {
         $redirection = $this->get('open_orchestra_model.repository.redirection')->find($redirectionId);
 
-        $form = $this->createForm('redirection', $redirection, array(
+        $form = $this->createForm('oo_redirection', $redirection, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_redirection_form', array(
                 'redirectionId' => $redirectionId,
             )))

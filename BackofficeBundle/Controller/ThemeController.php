@@ -29,7 +29,7 @@ class ThemeController extends AbstractAdminController
         $theme = $this->get('open_orchestra_model.repository.theme')->find($themeId);
 
         $form = $this->createForm(
-            'theme',
+            'oo_theme',
             $theme,
             array(
                 'action' => $this->generateUrl('open_orchestra_backoffice_theme_form', array(
@@ -63,7 +63,7 @@ class ThemeController extends AbstractAdminController
         $themeClass = $this->container->getParameter('open_orchestra_model.document.theme.class');
         $theme = new $themeClass();
 
-        $form = $this->createForm('theme', $theme, array(
+        $form = $this->createForm('oo_theme', $theme, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_theme_new'),
             'method' => 'POST',
         ));

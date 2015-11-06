@@ -37,7 +37,7 @@ class RoleType extends AbstractType
         $builder->add('name', null, array(
             'label' => 'open_orchestra_backoffice.form.role.name',
         ));
-        $builder->add('descriptions', 'translated_value_collection', array(
+        $builder->add('descriptions', 'oo_translated_value_collection', array(
             'label' => 'open_orchestra_backoffice.form.role.descriptions'
         ));
         $builder->add('fromStatus', 'orchestra_status', array(
@@ -73,7 +73,7 @@ class RoleType extends AbstractType
      */
     public function getName()
     {
-        return 'role';
+        return 'oo_role';
     }
 
 }

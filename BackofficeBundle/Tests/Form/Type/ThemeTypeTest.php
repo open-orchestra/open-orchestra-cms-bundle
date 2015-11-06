@@ -39,7 +39,7 @@ class ThemeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('theme', $this->form->getName());
+        $this->assertSame('oo_theme', $this->form->getName());
     }
 
     /**

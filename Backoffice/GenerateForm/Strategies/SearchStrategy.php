@@ -27,7 +27,7 @@ class SearchStrategy extends AbstractBlockStrategy
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('value');
-        $builder->add('nodeId', 'orchestra_node_choice');
+        $builder->add('nodeId', 'oo_node_choice');
         $builder->add('limit', 'integer');
     }
 
