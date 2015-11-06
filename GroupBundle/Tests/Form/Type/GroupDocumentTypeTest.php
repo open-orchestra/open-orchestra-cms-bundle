@@ -68,6 +68,6 @@ class GroupDocumentTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertSame('oo_group_document', $this->type->getName());
+        $this->assertSame('oo_orchestra_group', $this->type->getName());
     }
 }
