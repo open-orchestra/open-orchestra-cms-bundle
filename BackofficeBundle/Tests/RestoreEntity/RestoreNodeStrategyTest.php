@@ -72,12 +72,12 @@ class RestoreNodeStrategyTest extends \PHPUnit_Framework_TestCase
         $nodes->add($node);
         $nodes->add($node);
 
-        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId($nodeId, $siteId)->thenReturn($nodes);
+        Phake::when($this->nodeRepository)->findByNodeAndSite($nodeId, $siteId)->thenReturn($nodes);
 
         $this->strategy->restore($node);
 
         Phake::verify($node, Phake::times(2))->setDeleted(false);
-        Phake::verify($this->nodeRepository)->findByNodeIdAndSiteId($nodeId, $siteId);
+        Phake::verify($this->nodeRepository)->findByNodeAndSite($nodeId, $siteId);
         Phake::verify($this->eventDispatcher, Phake::times(1))->dispatch(Phake::anyParameters());
     }
 }

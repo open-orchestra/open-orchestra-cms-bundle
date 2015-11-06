@@ -430,7 +430,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $sons->add($this->node);
 
         $siteId = $this->contextManager->getCurrentSiteId();
-        Phake::when($this->nodeRepository)->findByNodeIdAndSiteId('son',$siteId)->thenReturn($sons);
+        Phake::when($this->nodeRepository)->findByNodeAndSite('son',$siteId)->thenReturn($sons);
 
         $this->manager->orderNodeChildren($orderedNode, $parentNode);
 
