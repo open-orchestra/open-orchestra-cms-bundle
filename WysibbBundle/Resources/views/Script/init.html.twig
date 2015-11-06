@@ -1,10 +1,45 @@
 <link rel="stylesheet" href="http://cdn.wysibb.com/css/default/wbbtheme.css" />
 <script src="http://cdn.wysibb.com/js/jquery.wysibb.min.js"></script>
 
+
 <script type="text/javascript">
 //<![CDATA[
     wysibb_config = {{ wysibb_config|raw }};
 //]]>
+
+    var mediaModal = function(cmd,opt,queryState) {
+        var view;
+        var txtArea;
+        var target;
+
+        view = this.options.view;
+        txtArea = this['txtArea'];
+
+        $.extend(true, view, extendView['orchestraMediaAbstractType'], extendView['orchestraWysiwygType']);
+        target = txtArea.id + '_modal';
+
+        view.WysiwygTypeModal({
+            target: target,
+            input: txtArea.id,
+            url: $('#' + target).data('url')
+        });
+
+    };
+
+    var wysibb_config = {
+        buttons: "media",
+        allButtons: {
+            media: {
+                title: 'insertMedia',
+                buttonText: "media",
+                modal: mediaModal,
+                transform: {
+                    '<img src="{SRC}" />':'[img]{SRC}[/img]'
+                }
+            }
+        }
+    };
+
     wysibb_config.lang = "{{ locale }}";
     WBBLANG = {{ wysibb_translations|raw }};
 </script>

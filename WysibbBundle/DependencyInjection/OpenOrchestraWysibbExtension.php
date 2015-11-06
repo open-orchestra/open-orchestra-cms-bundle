@@ -31,5 +31,10 @@ class OpenOrchestraWysibbExtension extends Extension
             "buttons" => "bold,italic,underline,|,img,link,|,code,quote,quote,quote,video"
         ));
 
+        $container->setParameter('open_orchestra_wysibb.translations', array(
+            "en" => array("insertMedia" => "Insert Media"),
+            "fr" => array("insertMedia" => "Insérer Media")
+        ));
+
     }
 }
