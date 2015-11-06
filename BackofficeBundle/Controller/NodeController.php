@@ -31,7 +31,7 @@ class NodeController extends AbstractAdminController
     public function formAction(Request $request, $id)
     {
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->find($id);
+        $node = $nodeRepository->findVersionByDocumentId($id);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
