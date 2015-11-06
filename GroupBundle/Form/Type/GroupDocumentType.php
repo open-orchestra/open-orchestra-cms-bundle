@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use OpenOrchestra\BackofficeBundle\Form\Type\AbstractOrchestraGroupType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -10,7 +10,7 @@ use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 /**
  * Class GroupDocumentType
  */
-class GroupDocumentType extends AbstractType
+class GroupDocumentType extends AbstractOrchestraGroupType
 {
     protected $groupClass;
     protected $translationChoiceManager;
@@ -39,14 +39,6 @@ class GroupDocumentType extends AbstractType
                 },
             )
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return 'oo_group_document';
     }
 
     /**
