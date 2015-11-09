@@ -41,10 +41,11 @@ class MappingContentAttributeTest extends \PHPUnit_Framework_TestCase
 
         $key = 'attributes.'.$fieldId.'.string_value';
         $field = 'attributes.'.$fieldId.'.stringValue';
+        $type = 'string';
 
         $this->assertCount(1, $mapping);
-        $this->assertInstanceOf('OpenOrchestra\Mapping\Annotations\Search', $mapping[$key]);
-        $this->assertSame($field, $mapping[$key]->getField());
-        $this->assertSame($key, $mapping[$key]->getKey());
+        $this->assertSame($type, $mapping[$key]['type']);
+        $this->assertSame($field, $mapping[$key]['field']);
+        $this->assertSame($key, $mapping[$key]['key']);
     }
 }
