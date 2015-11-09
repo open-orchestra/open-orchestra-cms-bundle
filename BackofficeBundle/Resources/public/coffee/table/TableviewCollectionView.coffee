@@ -61,13 +61,9 @@ TableviewCollectionView = OrchestraView.extend(
       page = parseInt(@options.page) - 1
       displayStart = pageLength * page
 
-
-
     dom = "<'dt-toolbar'"
     dom += "<'col-xs-12 col-sm-6'f>" if @options.displayGlobalSearch
-
     numberColum = if @options.displayGlobalSearch then 5 else 11
-
     dom += "<'col-sm-"+numberColum+" col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"
     dom += "t"
     dom += "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
