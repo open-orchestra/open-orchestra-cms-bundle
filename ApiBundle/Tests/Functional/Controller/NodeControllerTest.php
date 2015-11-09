@@ -44,6 +44,7 @@ class NodeControllerTest extends AbstractControllerTest
         $nodes = $this->nodeRepository->findByNodeAndSite('fixture_page_contact', '2');
         $this->undeleteNodes($nodes);
         static::$kernel->getContainer()->get('object_manager')->flush();
+        parent::tearDown();
     }
 
     /**
