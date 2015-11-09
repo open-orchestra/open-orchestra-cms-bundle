@@ -60,6 +60,11 @@ class NodeGroupRoleVoter implements VoterInterface
             return VoterInterface::ACCESS_GRANTED;
         }
 
+        foreach ($attributes as $attribute) {
+            if (!$this->supportsAttribute($attribute)) {
+                return self::ACCESS_ABSTAIN;
+            }
+        }
         /** @var GroupInterface $group */
         foreach ($user->getGroups() as $group) {
             if (!$group->getSite() instanceof ReadSiteInterface) {

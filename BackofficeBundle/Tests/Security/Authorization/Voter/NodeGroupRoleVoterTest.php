@@ -142,6 +142,7 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
             array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true, 'fakeSiteId'),
             array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false, 'fakeSiteId'),
             array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', '5640af7a02b0cf39178b4598', false, 'fakeSiteId'),
         );
     }
 
