@@ -36,7 +36,7 @@ class NodeController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $form = $this->generateForm($node, $url);
+        $form = $this->createForm('oo_node', $node, array('action' => $url));
 
         $form->handleRequest($request);
 
@@ -65,7 +65,7 @@ class NodeController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $form = $this->generateForm($node, $url);
+        $form = $this->createForm('oo_node', $node, array('action' => $url));
 
         $form->handleRequest($request);
 
@@ -78,29 +78,5 @@ class NodeController extends AbstractAdminController
         }
 
         return $this->renderAdminForm($form);
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @param string        $url
-     *
-     * @return Form
-     */
-    protected function generateForm(NodeInterface $node, $url)
-    {
-        $isTransverse = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE;
-        $disabled = !(!$isTransverse && $this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) &&
-                    !($isTransverse && $this->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE));
-
-        $form = $this->createForm(
-            'oo_node',
-            $node,
-            array(
-                'action' => $url,
-                'disabled' => $disabled,
-            )
-        );
-
-        return $form;
     }
 }
