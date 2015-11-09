@@ -45,10 +45,11 @@ class MappingContentAttribute
             foreach ($contentType->getFields() as $field) {
                 $fieldId = $field->getFieldId();
                 $key = 'attributes.'.$fieldId.'.string_value';
-                $mapping[$key] = new Search(array(
+                $mapping[$key] = array(
                     'field' => 'attributes.'.$fieldId.'.stringValue',
-                    'key' => $key
-                ));
+                    'key' => $key,
+                    'type' => 'string'
+                );
             }
         }
 
