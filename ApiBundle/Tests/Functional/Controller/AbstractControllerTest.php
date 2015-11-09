@@ -34,7 +34,7 @@ abstract class AbstractControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
 
-        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('2');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
         static::$kernel->getContainer()->set('open_orchestra_backoffice.context_manager', $this->currentSiteManager);
