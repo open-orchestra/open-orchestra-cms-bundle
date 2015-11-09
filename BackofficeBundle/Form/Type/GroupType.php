@@ -48,7 +48,7 @@ class GroupType extends AbstractType
                 'expanded' => true,
                 'required' => false,
             ))
-            ->add('site', 'orchestra_site', array(
+            ->add('site', 'oo_orchestra_site', array(
                 'label' => 'open_orchestra_backoffice.form.group.site',
                 'required' => false,
             ));

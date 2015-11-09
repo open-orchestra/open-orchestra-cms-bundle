@@ -40,12 +40,12 @@ class RoleType extends AbstractType
         $builder->add('descriptions', 'oo_translated_value_collection', array(
             'label' => 'open_orchestra_backoffice.form.role.descriptions'
         ));
-        $builder->add('fromStatus', 'orchestra_status', array(
+        $builder->add('fromStatus', 'oo_orchestra_status', array(
             'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.role.from_status',
             'required' => false,
         ));
-        $builder->add('toStatus', 'orchestra_status', array(
+        $builder->add('toStatus', 'oo_orchestra_status', array(
             'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.role.to_status',
             'required' => false,
