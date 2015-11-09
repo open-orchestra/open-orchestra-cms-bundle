@@ -222,7 +222,6 @@ TableviewCollectionView = OrchestraView.extend(
         else if $.isPlainObject(conf.data)
           $.extend(request, conf.data)
 
-        $.ajaxSetup().abortXhr()
         settings.jqXHR = $.ajax(
           type:     conf.method
           url:      conf.url
