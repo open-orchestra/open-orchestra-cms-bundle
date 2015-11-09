@@ -196,3 +196,8 @@ $.root_ && $.root_.on 'click', '[data-action="orchestraResetWidgets"]', (e) ->
       location.reload()
     return
   smartConfirm('fa-refresh', $(e.currentTarget).data('message-title'), $(e.currentTarget).data('message-text'), callbacks)
+
+#SMARTADMIN:JARVISMENU PREVENT LOAD PAGE ON EXTENDS ACCORDION MENU CALLS
+$("#left-panel nav").on("click",".collapse-sign em[class*='fa-'][class*='-square-o']", (event) ->
+   event.preventDefault()
+)
