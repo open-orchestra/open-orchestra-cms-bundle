@@ -14,9 +14,10 @@ class ApiControllersTest extends AbstractControllerTest
      *
      * @dataProvider provideApiUrl
      */
-    public function testApi($url)
+    public function testApi($url, $getParameter = '')
     {
-        $this->client->request('GET', $url);
+        $baseGetParameter = '?access_token=' . $this->getAccessToken();
+        $this->client->request('GET', $url . $baseGetParameter . $getParameter);
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('application/json', $this->client->getResponse()->headers->get('content-type'));
@@ -29,16 +30,16 @@ class ApiControllersTest extends AbstractControllerTest
     {
         return array(
             array('/api/node/root/show-or-create'),
-            array('/api/node/root/show-or-create?language=en'),
+            array('/api/node/root/show-or-create', '&language=en'),
             array('/api/node/transverse/show-or-create'),
             array('/api/node/fixture_page_community/show-or-create'),
-            array('/api/node/fixture_page_community/show-or-create?language=en'),
+            array('/api/node/fixture_page_community/show-or-create', '&language=en'),
             array('/api/node/list/not-published-by-author'),
             array('/api/node/list/by-author'),
             array('/api/content'),
             array('/api/content/list/by-author'),
             array('/api/content/list/not-published-by-author'),
-            array('/api/content?content_type=news'),
+            array('/api/content', '&content_type=news'),
             array('/api/content-type'),
             array('/api/site'),
             array('/api/theme'),

@@ -10,6 +10,25 @@ namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 class AreaControllerTest extends AbstractControllerTest
 {
     /**
+     * Set up the test
+     */
+    public function setUp()
+    {
+        $this->client = static::createClient();
+
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Log in')->form();
+        $form['_username'] = $this->username;
+        $form['_password'] = $this->password;
+
+        $this->client->submit($form);
+
+        $this->currentSiteManager = static::$kernel->getContainer()->get('open_orchestra_backoffice.context_manager');
+        $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
+    }
+
+    /**
      * test reverse transform
      */
     public function testAreaReverseTransform()

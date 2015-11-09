@@ -22,7 +22,17 @@ class NodeControllerTest extends AbstractControllerTest
      */
     public function setUp()
     {
-        parent::setUp();
+        $this->client = static::createClient();
+
+        $crawler = $this->client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Log in')->form();
+        $form['_username'] = $this->username;
+        $form['_password'] = $this->password;
+
+        $this->client->submit($form);
+
+        $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $this->statusRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.status');
     }
 
@@ -34,6 +44,7 @@ class NodeControllerTest extends AbstractControllerTest
         $nodes = $this->nodeRepository->findByNodeAndSite('fixture_page_contact', '2');
         $this->undeleteNodes($nodes);
         static::$kernel->getContainer()->get('object_manager')->flush();
+        parent::tearDown();
     }
 
     /**
