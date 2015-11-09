@@ -2,41 +2,35 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\AuthorizeEdition;
 
-use OpenOrchestra\Backoffice\AuthorizeEdition\NodeVersionStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\AuthorizeEdition\NodeEditionRoleStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
- * Test NodeVersionStrategyTest
+ * Test NodeEditionRoleStrategyTest
  */
-class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
+class NodeEditionRoleStrategyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var NodeVersionStrategy
+     * @var NodeEditionRoleStrategy
      */
     protected $strategy;
 
-    protected $repository;
-    protected $lastVersionNode;
+    protected $authorizationChecker;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->lastVersionNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        Phake::when($this->repository)
-            ->findInLastVersion(Phake::anyParameters())
-            ->thenReturn($this->lastVersionNode);
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
-        $this->strategy = new NodeVersionStrategy($this->repository);
+        $this->strategy = new NodeEditionRoleStrategy($this->authorizationChecker);
     }
 
     /**
-     * Test implementation
+     * Test instance
      */
     public function testInstance()
     {
@@ -75,42 +69,28 @@ class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param int     $nodeVersion
-     * @param int     $lastNodeVersion
-     * @param bool    $editable
+     * @param bool $isGranted
+     * @param bool $expected
      *
-     * @dataProvider provideVersionAndEditable
+     * @dataProvider provideIsGrantedAndAnswer
      */
-    public function testIsEditable($nodeVersion, $lastNodeVersion, $editable)
+    public function testIsEditable($isGranted, $expected)
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node)->getVersion()->thenReturn($nodeVersion);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
 
-        Phake::when($this->lastVersionNode)->getVersion()->thenReturn($lastNodeVersion);
-
-        $this->assertSame($editable, $this->strategy->isEditable($node));
+        $this->assertSame($expected, $this->strategy->isEditable($node));
+        Phake::verify($this->authorizationChecker)->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node);
     }
 
     /**
      * @return array
      */
-    public function provideVersionAndEditable()
+    public function provideIsGrantedAndAnswer()
     {
         return array(
-            array(1, 2, false),
-            array(2, 2, true),
-            array(3, 2, true),
+            array(true, true),
+            array(false, false),
         );
-    }
-
-    /**
-     * Test with no node
-     */
-    public function testIsEditableWithNoNode()
-    {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->repository)->findInLastVersion(Phake::anyParameters())->thenReturn(null);
-
-        $this->assertSame(true, $this->strategy->isEditable($node));
     }
 }

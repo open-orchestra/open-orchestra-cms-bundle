@@ -13,24 +13,14 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class NodeVersionStrategy implements AuthorizeEditionInterface
 {
-    /**
-     * @var NodeRepositoryInterface
-     */
     protected $nodeRepository;
 
     /**
-     * @var AuthorizationCheckerInterface
+     * @param NodeRepositoryInterface $nodeRepository
      */
-    protected $autorizationChecker;
-
-    /**
-     * @param NodeRepositoryInterface       $nodeRepository
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function __construct(NodeRepositoryInterface $nodeRepository, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(NodeRepositoryInterface $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
-        $this->autorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -40,7 +30,7 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
      */
     public function support($document)
     {
-        return $document instanceof NodeInterface;
+        return $document instanceof NodeInterface && $document->getNodeType() !== NodeInterface::TYPE_TRANSVERSE;
     }
 
     /**
@@ -50,13 +40,6 @@ class NodeVersionStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        $isTransverse = $document->getNodeType() === NodeInterface::TYPE_TRANSVERSE;
-        if ((!$isTransverse && !$this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) ||
-            ($isTransverse && !$this->autorizationChecker->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE))
-        ) {
-            return false;
-        }
-
         $lastVersionNode = $this->nodeRepository->findInLastVersion(
             $document->getNodeId(),
             $document->getLanguage(),
