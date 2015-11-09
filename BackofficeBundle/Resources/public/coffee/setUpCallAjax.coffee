@@ -8,12 +8,12 @@ $(document).ready ->
         redirectUrl = appRouter.generateUrl 'showDashboard'
         displayMenu(redirectUrl)
       else
-        xhrFifo.push({xhr:xhr, method: settings.type.toUpperCase()})
+        xhrFifo.push({xhr:xhr, method: settings.type})
         context = settings.context
         displayLoader(context.button) if context != undefined && context.button != undefined
     abortXhr: ->
       for i of xhrFifo
-        if xhrFifo[i].method != 'POST'
+        if xhrFifo[i].method.toUpperCase() == 'GET'
           xhrFifo[i].xhr.abort()
           delete xhrFifo[i]
       xhrFifo = []
