@@ -1,0 +1,12 @@
+parameters:
+    open_orchestra_user_admin.subscriber.delete_group.class: OpenOrchestra\UserAdminBundle\EventSubscriber\DeleteGroupSubscriber
+
+services:
+    open_orchestra_user_admin.subscriber.delete_group:
+        class: %open_orchestra_user_admin.subscriber.delete_group.class%
+        arguments:
+            - @object_manager
+            - @open_orchestra_user.repository.user
+        tags:
+            - { name: kernel.event_subscriber }
+    
