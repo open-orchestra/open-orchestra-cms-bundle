@@ -60,8 +60,20 @@ TableviewCollectionView = OrchestraView.extend(
     if @options.page?
       page = parseInt(@options.page) - 1
       displayStart = pageLength * page
+
+
+
+    dom = "<'dt-toolbar'"
+    dom += "<'col-xs-12 col-sm-6'f>" if @options.displayGlobalSearch
+
+    numberColum = if @options.displayGlobalSearch then 5 else 11
+
+    dom += "<'col-sm-"+numberColum+" col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"
+    dom += "t"
+    dom += "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
+
     @options.table = $('#tableviewCollectionTable').dataTable(
-      searching: @options.displayGlobalSearch
+      searching: true
       ordering: true
       serverSide: true
       displayStart: displayStart
@@ -70,9 +82,7 @@ TableviewCollectionView = OrchestraView.extend(
       processing: true
       autowidth: false
       pagingType: "input_full"
-      dom: "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-5 col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"+
-                    "t"+
-                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
+      dom: dom
       language: {
         url: appRouter.generateUrl('loadTranslationDatatable')
       }
