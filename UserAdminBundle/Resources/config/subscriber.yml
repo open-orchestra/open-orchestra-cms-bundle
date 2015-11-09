@@ -9,4 +9,3 @@ services:
             - @open_orchestra_user.repository.user
         tags:
             - { name: kernel.event_subscriber }
-    
