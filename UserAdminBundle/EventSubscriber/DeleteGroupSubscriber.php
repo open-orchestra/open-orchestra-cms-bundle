@@ -32,7 +32,7 @@ class DeleteGroupSubscriber implements EventSubscriberInterface
     public function deleteGroupReference(GroupEvent $event)
     {
         $group = $event->getGroup();
-        $users = $this->userRepository->findBy(array('groups.$id' => new \MongoId($group->getId())));
+        $users = $this->userRepository->findByGroup($group);
         foreach ($users as $user) {
             $user->removeGroup($group);
             $this->objectManager->flush($user);

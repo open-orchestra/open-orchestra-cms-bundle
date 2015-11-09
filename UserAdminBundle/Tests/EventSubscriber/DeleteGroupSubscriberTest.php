@@ -37,7 +37,7 @@ abstract class DeleteGroupSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->group = Phake::mock('FOS\UserBundle\Model\GroupInterface');
 
         Phake::when($this->event)->getGroup()->thenReturn($this->group);
-        Phake::when($userRepository)->findBy(\Phake::anyParameters())->thenReturn($this->users);
+        Phake::when($userRepository)->findByGroup(\Phake::anyParameters())->thenReturn($this->users);
 
         $this->subscriber = new DeleteGroupSubscriber($this->objectManager, $this->userRepository);
     }
