@@ -24,5 +24,6 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('form.yml');
         $loader->load('navigation_panel.yml');
         $loader->load('oauth2.yml');
+        $loader->load('subscriber.yml');
     }
 }
