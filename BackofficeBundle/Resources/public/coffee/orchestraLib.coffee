@@ -21,6 +21,11 @@ displayLoader = (element, context) ->
   selector.html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
   true
 
+# PREVENT CALLS FROM THE PAGE OF THE NAVIGATION ITEM IF CLICK ON +/- symbol
+$(document).on("click", "li a .collapse-sign", (event)->
+  event.preventDefault();
+)
+
 # REFRESH NAV MENU
 opts =
   accordion: true
