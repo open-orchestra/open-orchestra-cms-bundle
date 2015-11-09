@@ -111,12 +111,13 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
         Phake::when($nodeGroupRole)->getRole()->thenReturn($ngrRole);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($ngrIsGranted);
 
-        $group = $this->generateGroupWithSite($groupSiteId);
+        $group = $this->generateGroup($groupSiteId);
         Phake::when($group)->getNodeRoleByNodeAndRole($ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
-        $otherGroup = $this->generateGroupWithSite('otherSiteId');
+        $otherGroup = $this->generateGroup('otherSiteId');
+        $noSiteGroup = $this->generateGroup();
 
         $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
-        Phake::when($user)->getGroups()->thenReturn(array($otherGroup, $group));
+        Phake::when($user)->getGroups()->thenReturn(array($noSiteGroup, $otherGroup, $group));
         $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         Phake::when($token)->getUser()->thenReturn($user);
 
@@ -149,12 +150,15 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
      *
      * @return mixed
      */
-    protected function generateGroupWithSite($siteId)
+    protected function generateGroup($siteId = null)
     {
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\ReadSiteInterface');
         Phake::when($site)->getSiteId()->thenReturn($siteId);
         $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-        Phake::when($group)->getSite()->thenReturn($site);
+        if (!is_null($siteId)){
+            Phake::when($group)->getSite()->thenReturn($site);
+        }
+
         return $group;
     }
 }

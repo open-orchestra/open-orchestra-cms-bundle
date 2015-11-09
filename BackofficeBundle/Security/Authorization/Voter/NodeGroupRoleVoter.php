@@ -6,6 +6,7 @@ use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -61,6 +62,9 @@ class NodeGroupRoleVoter implements VoterInterface
 
         /** @var GroupInterface $group */
         foreach ($user->getGroups() as $group) {
+            if (!$group->getSite() instanceof ReadSiteInterface) {
+                continue;
+            }
             if ($group->getSite()->getSiteId() != $object->getSiteId()) {
                 continue;
             }
