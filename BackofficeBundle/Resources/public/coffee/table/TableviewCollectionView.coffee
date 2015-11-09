@@ -152,7 +152,7 @@ TableviewCollectionView = OrchestraView.extend(
   searchColumn : (event) ->
     value = $(event.target).val()
     columnIndex = $(event.target).closest("td").get(0).cellIndex
-    api = @.$el.find('table').dataTable().api()
+    api = @$el.find('table').dataTable().api()
     api.column(columnIndex+':visible').search(value).draw()
 
   clickAdd: (event) ->
@@ -222,6 +222,7 @@ TableviewCollectionView = OrchestraView.extend(
         else if $.isPlainObject(conf.data)
           $.extend(request, conf.data)
 
+        $.ajaxSetup().abortXhr()
         settings.jqXHR = $.ajax(
           type:     conf.method
           url:      conf.url
