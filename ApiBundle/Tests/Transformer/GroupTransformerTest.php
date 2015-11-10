@@ -62,10 +62,11 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param bool $right
+     * @param bool $hasSite
      *
      * @dataProvider provideRights
      */
-    public function testTransform($right)
+    public function testTransform($right, $hasSite)
     {
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($right);
 
@@ -73,6 +74,10 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($group)->getRoles()->thenReturn(array());
         Phake::when($group)->getLabels()->thenReturn(new ArrayCollection());
         Phake::when($group)->getNodeRoles()->thenReturn(array());
+        if ($hasSite) {
+            $site = Phake::mock('OpenOrchestra\ModelInterface\Model\ReadSiteInterface');
+            Phake::when($group)->getSite()->thenReturn($site);
+        }
 
         $facade = $this->transformer->transform($group);
 
@@ -82,9 +87,11 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('_self_delete', $facade->getLinks());
             $this->assertArrayHasKey('_self_form', $facade->getLinks());
             $this->assertArrayHasKey('_self_edit', $facade->getLinks());
-            $this->assertArrayHasKey('_self_panel_node_tree', $facade->getLinks());
-            $this->assertArrayHasKey('_self_node_tree', $facade->getLinks());
-            $this->assertArrayHasKey('_role_list_node', $facade->getLinks());
+            if ($hasSite) {
+                $this->assertArrayHasKey('_self_panel_node_tree', $facade->getLinks());
+                $this->assertArrayHasKey('_self_node_tree', $facade->getLinks());
+                $this->assertArrayHasKey('_role_list_node', $facade->getLinks());
+            }
         }
     }
 
@@ -94,8 +101,10 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
     public function provideRights()
     {
         return array(
-            array(true),
-            array(false)
+            array(true, true),
+            array(false, true),
+            array(true, false),
+            array(false, false),
         );
     }
 
