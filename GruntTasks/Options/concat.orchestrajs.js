@@ -91,6 +91,13 @@ module.exports = {
 
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/AbstractSearchFieldView.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/EmptySearchView.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/TableviewSearchHeader.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/TextFieldSearchView.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/DateFieldSearchView.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/NumberFieldSearchView.js',
+        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/BooleanFieldSearchView.js',
         'web/built/openorchestrabackoffice/js/table/TableviewAction.js',
         'web/built/openorchestrabackoffice/js/table/TableviewRestoreAction.js',
         'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',

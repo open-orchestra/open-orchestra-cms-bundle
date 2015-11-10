@@ -7,13 +7,13 @@ TableviewAction = OrchestraView.extend(
     @options = options
     _.bindAll this, "render"
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewActions'
     ]
     return
 
   render: ->
     @setElement $('<p />')
-    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions',
+    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewActions',
       deleted: @options.element.get('deleted')
       links: @options.element.get('links')
     )

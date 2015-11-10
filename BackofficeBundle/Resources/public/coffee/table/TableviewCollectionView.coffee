@@ -1,7 +1,6 @@
 TableviewCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
-    'keyup input.search-column': 'searchColumn'
     'draw.dt table': 'changePage'
     'processing.dt table': 'processingData'
 
@@ -9,6 +8,7 @@ TableviewCollectionView = OrchestraView.extend(
     @options = @reduceOption(options, [
       'entityType'
       'translatedHeader'
+      'inputHeader'
       'displayedElements'
       'visibleElements'
       'displayGlobalSearch'
@@ -22,16 +22,17 @@ TableviewCollectionView = OrchestraView.extend(
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
     _.bindAll this, "render"
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView'
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewActions'
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewButtonAdd'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewCollectionView'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewActions'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewButtonAdd'
     ]
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewCollectionView',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewCollectionView',
       {displayedElements: @options.translatedHeader}
     )
+
     @options.domContainer.html @$el
 
     $('.js-widget-title', @options.domContainer).text @options.title
@@ -112,6 +113,11 @@ TableviewCollectionView = OrchestraView.extend(
       	JSON.parse localStorage.getItem('DataTables_' + viewContext.options.entityType)
     )
 
+    new TableviewSearchHeader(@addOption(
+         apiTable : @options.table
+         domContainer : $('.table thead', @options.domContainer)
+    ))
+
     return
   processingData : (e, seggings, processing) ->
     if processing
@@ -156,16 +162,10 @@ TableviewCollectionView = OrchestraView.extend(
     ))
 
   renderAddButton: (viewContext, links, table) ->
-    button =  viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewButtonAdd',
+    button =  viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewButtonAdd',
       links: links
     )
     $(table).after button
-
-  searchColumn : (event) ->
-    value = $(event.target).val()
-    columnIndex = $(event.target).closest("td").get(0).cellIndex
-    api = @.$el.find('table').dataTable().api()
-    api.column(columnIndex+':visible').search(value).draw()
 
   clickAdd: (event) ->
     event.preventDefault()
