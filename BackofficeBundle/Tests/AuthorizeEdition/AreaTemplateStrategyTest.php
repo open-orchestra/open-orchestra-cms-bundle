@@ -4,6 +4,7 @@ namespace OpenOrchestra\WorkflowFunctionAdminBundle\Tests\AuthorizeStatusChange\
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\AreaTemplateStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Phake;
 
 /**
@@ -67,15 +68,17 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param bool $isGranted
-     * @param bool $editable
+     * @param StatusableInterface $document
+     * @param bool                $isGrantedUpdateTemplate
+     * @param bool                $isGrantedUpdateNode
+     * @param bool                $editable
      *
      * @dataProvider provideTestIsEditable
      */
-    public function testIsEditable($isGranted, $editable)
+    public function testIsEditable($document,$isGrantedUpdateTemplate, $isGrantedUpdateNode,$editable)
     {
-        $document = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        Phake::when($this->authorizationChecker)->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)->thenReturn($isGranted);
+        Phake::when($this->authorizationChecker)->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)->thenReturn($isGrantedUpdateTemplate);
+        Phake::when($this->authorizationChecker)->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)->thenReturn($isGrantedUpdateNode);
         $this->assertSame($editable, $this->areaTemplateStrategy->isEditable($document));
     }
 
@@ -84,9 +87,23 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function provideTestIsEditable()
     {
+        $statusableInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
+        $areaInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        $templateInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
+
         return array(
-            array(false, false),
-            array(true, true),
+            array($statusableInterface,true,true,false),
+            array($statusableInterface,true,false,false),
+            array($statusableInterface,false,true,false),
+            array($statusableInterface,false,false,false),
+            array($areaInterface,true,true,true),
+            array($areaInterface,true,false,false),
+            array($areaInterface,false,true,true),
+            array($areaInterface,false,false,false),
+            array($templateInterface,true,true,true),
+            array($templateInterface,true,false,true),
+            array($templateInterface,false,true,false),
+            array($templateInterface,false,false,false),
         );
     }
 }

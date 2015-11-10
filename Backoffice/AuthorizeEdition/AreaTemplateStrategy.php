@@ -51,14 +51,18 @@ class AreaTemplateStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
+        $return = false;
+
         if ($document instanceof TemplateInterface)
         {
-            return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
+            $return = $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
         }
         elseif ($document instanceof AreaInterface)
         {
-            return $this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+            $return = $this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
         }
+
+        return $return;
     }
 
     /**
