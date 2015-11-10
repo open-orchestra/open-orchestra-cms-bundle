@@ -35,7 +35,7 @@ class UserTypeTest extends AbstractUserTypeTest
      */
     public function testName()
     {
-        $this->assertSame('user', $this->form->getName());
+        $this->assertSame('oo_user', $this->form->getName());
     }
 
     /**

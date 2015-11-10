@@ -36,6 +36,6 @@ class RegistrationUserType extends RegistrationFormType
      */
     public function getName()
     {
-        return 'registration_user';
+        return 'oo_registration_user';
     }
 }
