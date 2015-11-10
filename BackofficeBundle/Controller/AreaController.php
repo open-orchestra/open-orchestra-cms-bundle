@@ -7,8 +7,7 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\Form\FormInterface;
@@ -79,19 +78,19 @@ class AreaController extends AbstractAdminController
     }
 
     /**
-     * @param Request                $request
-     * @param string                 $actionUrl
-     * @param AreaInterface          $area
-     * @param TemplateInterface|null $template
+     * @param Request                  $request
+     * @param string                   $actionUrl
+     * @param AreaInterface            $area
+     * @param AreaContainerInterface|null $interface
      *
      * @return FormInterface
      */
-    protected function generateForm(Request $request, $actionUrl, $area, TemplateInterface $template = null)
+    protected function generateForm(Request $request, $actionUrl, $area, AreaContainerInterface $interface = null)
     {
         $options = array('action' => $actionUrl);
 
-        if ($template) {
-            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($template);
+        if ($interface) {
+            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($interface);
         }
         $form = parent::createForm('oo_area', $area, $options);
 

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
@@ -50,9 +51,19 @@ class AreaTemplateStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
+        if ($document instanceof TemplateInterface)
+        {
+            return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
+        }
+        elseif ($document instanceof AreaInterface)
+        {
+            return $this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+        }
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'template';

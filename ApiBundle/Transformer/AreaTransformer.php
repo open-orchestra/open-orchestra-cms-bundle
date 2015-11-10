@@ -13,6 +13,7 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -105,7 +106,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId(),
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
             $facade->addLink('_self_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
                 'nodeId' => $node->getId(),
                 'areaId' => $area->getAreaId()
@@ -117,7 +118,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId()
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
             if ($parentAreaId) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node_area',
                     array(
@@ -188,7 +189,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId()
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
             if ($parentAreaId) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template_area',
                     array(
