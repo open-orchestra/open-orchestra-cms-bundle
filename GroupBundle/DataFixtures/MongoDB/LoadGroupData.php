@@ -31,17 +31,8 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
         $group2->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
         $manager->persist($group2);
 
-        $nodeGroupRole = new NodeGroupRole();
-        $nodeGroupRole->setNodeId(NodeInterface::ROOT_NODE_ID);
-        $nodeGroupRole->setRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
-        $nodeGroupRole->setGranted(true);
-        $group2->addNodeRole($nodeGroupRole);
-
-        $nodeGroupRole = new NodeGroupRole();
-        $nodeGroupRole->setNodeId('fixture_page_community');
-        $nodeGroupRole->setRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
-        $nodeGroupRole->setGranted(false);
-        $group2->addNodeRole($nodeGroupRole);
+        $group2->addNodeRole($this->generateNodeGroupRole(NodeInterface::ROOT_NODE_ID, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true));
+        $group2->addNodeRole($this->generateNodeGroupRole('fixture_page_community', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false));
 
         $group3 = $this->generateGroup('Empty group', 'Empty group', 'Groupe vide', 'site3', 'group3');
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
@@ -167,5 +158,22 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
         $this->setReference($referenceName, $group);
 
         return $group;
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $role
+     * @param bool   $granted
+     *
+     * @return NodeGroupRole
+     */
+    protected function generateNodeGroupRole($nodeId, $role, $granted)
+    {
+        $nodeGroupRole = new NodeGroupRole();
+        $nodeGroupRole->setNodeId($nodeId);
+        $nodeGroupRole->setRole($role);
+        $nodeGroupRole->setGranted($granted);
+
+        return $nodeGroupRole;
     }
 }
