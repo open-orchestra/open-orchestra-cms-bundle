@@ -7,7 +7,7 @@ OrchestraModalView = OrchestraView.extend(
     @options = @reduceOption(options, [
       'title'
       'html'
-      'footer'
+      'actionButtons'
       'domContainer'
       'entityType'
       'extendView'
