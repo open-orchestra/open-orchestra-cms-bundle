@@ -1,10 +1,10 @@
 <?php
 
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
+
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-
 
 /**
  * Class NodeEditionRoleStrategy
