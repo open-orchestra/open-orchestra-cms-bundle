@@ -11,9 +11,11 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrateg
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\GroupBundle\Document\Group;
+use OpenOrchestra\GroupBundle\Document\NodeGroupRole;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class LoadGroupData
@@ -28,6 +30,19 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
         $group2 = $this->generateGroup('Demo group', 'Demo group', 'Groupe de démo', 'site2', 'group2');
         $group2->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
         $manager->persist($group2);
+
+        $nodeGroupRole = new NodeGroupRole();
+        $nodeGroupRole->setNodeId(NodeInterface::ROOT_NODE_ID);
+        $nodeGroupRole->setRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+        $nodeGroupRole->setGranted(true);
+        $group2->addNodeRole($nodeGroupRole);
+
+        $nodeGroupRole = new NodeGroupRole();
+        $nodeGroupRole->setNodeId('fixture_page_community');
+        $nodeGroupRole->setRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+        $nodeGroupRole->setGranted(false);
+        $group2->addNodeRole($nodeGroupRole);
+
         $group3 = $this->generateGroup('Empty group', 'Empty group', 'Groupe vide', 'site3', 'group3');
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_THEME);

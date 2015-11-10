@@ -19,7 +19,6 @@ class NodeControllerTest extends AbstractControllerTest
     protected $language = 'en';
     protected $siteId = '2';
 
-
     /**
      * Set up the test
      */
@@ -93,14 +92,14 @@ class NodeControllerTest extends AbstractControllerTest
 
         $crawler = $this->client->request('GET', '/admin/node/new/fixture_page_community');
 
-        $formUser = $crawler->selectButton('Save')->form();
+        $formNode = $crawler->selectButton('Save')->form();
 
         $nodeName = 'fixturetest' . time();
-        $formUser['oo_node[name]'] = 'fixturetest' . time();
-        $formUser['oo_node[nodeSource]'] = 'root';
-        $formUser['oo_node[routePattern]'] = '/page-test' .time();
+        $formNode['oo_node[name]'] = 'fixturetest' . time();
+        $formNode['oo_node[nodeSource]'] = 'root';
+        $formNode['oo_node[routePattern]'] = '/page-test' .time();
 
-        $this->client->submit($formUser);
+        $this->client->submit($formNode);
         $crawler = $this->client->request('GET', '/admin/');
 
         $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
