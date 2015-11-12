@@ -113,12 +113,14 @@ TableviewCollectionView = OrchestraView.extend(
       	JSON.parse localStorage.getItem('DataTables_' + viewContext.options.entityType)
     )
 
-    new TableviewSearchHeader(@addOption(
+    tableviewHeaderClass = appConfigurationView.getConfiguration(@options.entity,'showTableHeader')
+    new tableviewHeaderClass(@addOption(
          apiTable : @options.table
          domContainer : $('.table thead', @options.domContainer)
     ))
 
     return
+
   processingData : (e, seggings, processing) ->
     if processing
       $('.dataTables_processing').show()

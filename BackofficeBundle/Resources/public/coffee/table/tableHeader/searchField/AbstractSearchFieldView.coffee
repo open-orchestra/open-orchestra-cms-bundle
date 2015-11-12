@@ -2,7 +2,6 @@ AbstractSearchFieldView = OrchestraView.extend(
 
   searchColumn : (event) ->
     value = $(event.target).val()
-    console.log value
     columnIndex = $(event.target).closest("td").get(0).cellIndex
     api = @options.apiTable.api()
     api.column(columnIndex+':visible').search(value).draw()
