@@ -17,7 +17,7 @@ extendView['generateId'] = {
   generateId: ->
     if @checkInputId()
       contentTypeId = @recupInput($(".generate-id-source"))
-      $('.generate-id-dest').val(contentTypeId.latinise().replace(/[^a-z0-9]/gi,'_'))
+      $('.generate-id-dest').val(contentTypeId.latinise().replace(/[^a-z0-9]/gi,'_')) if contentTypeId
     return
 
   stopGenerateId: ->
