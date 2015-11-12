@@ -42,14 +42,14 @@ class GroupType extends AbstractType
             ->add('labels', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.group.label'
             ))
+            ->add('site', 'oo_orchestra_site', array(
+                'label' => 'open_orchestra_backoffice.form.group.site',
+                'required' => false,
+            ))
             ->add('roles', 'oo_role_choice', array(
                 'label' => 'open_orchestra_backoffice.form.group.roles',
                 'multiple' => true,
                 'expanded' => true,
-                'required' => false,
-            ))
-            ->add('site', 'oo_orchestra_site', array(
-                'label' => 'open_orchestra_backoffice.form.group.site',
                 'required' => false,
             ));
 
