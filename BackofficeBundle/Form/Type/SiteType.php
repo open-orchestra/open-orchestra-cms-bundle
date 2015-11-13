@@ -59,7 +59,7 @@ class SiteType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.website.blocks',
                 'required' => false
             ))
-            ->add('theme', 'oo_orchestra_theme', array(
+            ->add('theme', 'oo_site_theme_choice', array(
                 'label' => 'open_orchestra_backoffice.form.website.theme'
             ))
             ->add('sitemap_changefreq', 'orchestra_frequence_choice', array(
