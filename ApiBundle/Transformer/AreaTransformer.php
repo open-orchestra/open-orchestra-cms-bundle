@@ -189,7 +189,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId()
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)) {
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)) {
             if ($parentAreaId) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template_area',
                     array(
