@@ -134,18 +134,24 @@ class NodeController extends BaseController
     /**
      * @param boolean|null $published
      *
-     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_not_published", defaults={"published": false})
-     * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author", defaults={"published": null})
+     * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_and_site_not_published", defaults={"published": false})
+     * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      *
      * @return FacadeInterface
      */
-    public function listNodeByAuthorAction($published)
+    public function listNodeByAuthorAndSiteIdAction($published)
     {
+        $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByAuthor($user->getUsername(), $published, 10);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByAuthorAndSiteId(
+            $user->getUsername(),
+            $siteId,
+            $published,
+            10
+            );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
     }
