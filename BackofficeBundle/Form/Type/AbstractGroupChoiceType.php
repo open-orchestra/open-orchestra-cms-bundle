@@ -5,15 +5,15 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * Class AbstractOrchestraGroupType
+ * Class AbstractGroupChoiceType
  */
-abstract class AbstractOrchestraGroupType extends AbstractType
+abstract class AbstractGroupChoiceType extends AbstractType
 {
     /**
      * {@inheritDoc}
      */
     public function getName()
     {
-        return 'oo_orchestra_group';
+        return 'oo_group_choice';
     }
 }
