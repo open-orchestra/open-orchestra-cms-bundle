@@ -762,11 +762,6 @@ $.fn.extend({
 				} // end else
 			} // end if
 		});
-
-		// prevent url load on extends accordion menu by click on collapse sign
-		$this.find(".collapse-sign").on("click", function(event) {
-					event.preventDefault();
-		});
 	} // end function
 });
 /* ~ END: CUSTOM MENU PLUGIN */
