@@ -2,17 +2,15 @@
 
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class AreaTemplateStrategy
+ * Class TemplateStrategy
  */
-class AreaTemplateStrategy implements AuthorizeEditionInterface
+class TemplateStrategy implements AuthorizeEditionInterface
 {
     /**
      * @var TemplateRepositoryInterface
@@ -41,7 +39,7 @@ class AreaTemplateStrategy implements AuthorizeEditionInterface
      */
     public function support($document)
     {
-        return ($document instanceof TemplateInterface)||($document instanceof AreaInterface);
+        return $document instanceof TemplateInterface;
     }
 
     /**
@@ -53,13 +51,8 @@ class AreaTemplateStrategy implements AuthorizeEditionInterface
     {
         $return = false;
 
-        if ($document instanceof TemplateInterface)
-        {
+        if ($document instanceof TemplateInterface) {
             $return = $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
-        }
-        elseif ($document instanceof AreaInterface)
-        {
-            $return = $this->autorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
         }
 
         return $return;

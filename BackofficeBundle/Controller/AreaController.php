@@ -78,19 +78,19 @@ class AreaController extends AbstractAdminController
     }
 
     /**
-     * @param Request                  $request
-     * @param string                   $actionUrl
-     * @param AreaInterface            $area
-     * @param AreaContainerInterface|null $interface
+     * @param Request                     $request
+     * @param string                      $actionUrl
+     * @param AreaInterface               $area
+     * @param AreaContainerInterface|null $areaContainer
      *
      * @return FormInterface
      */
-    protected function generateForm(Request $request, $actionUrl, $area, AreaContainerInterface $interface = null)
+    protected function generateForm(Request $request, $actionUrl, $area, AreaContainerInterface $areaContainer = null)
     {
         $options = array('action' => $actionUrl);
 
-        if ($interface) {
-            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($interface);
+        if ($areaContainer) {
+            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($areaContainer);
         }
         $form = parent::createForm('oo_area', $area, $options);
 

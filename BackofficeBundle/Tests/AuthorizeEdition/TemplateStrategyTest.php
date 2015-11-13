@@ -2,20 +2,19 @@
 
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Tests\AuthorizeStatusChange\Strategies;
 
-use OpenOrchestra\Backoffice\AuthorizeEdition\AreaTemplateStrategy;
+use OpenOrchestra\Backoffice\AuthorizeEdition\TemplateStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Phake;
 
 /**
- * Class AreaTemplateStrategyTest
+ * Class TemplateStrategyTest
  */
-class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
+class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var AreaTemplateStrategy
+     * @var TemplateStrategy
      */
-    protected $areaTemplateStrategy;
+    protected $templateStrategy;
     protected $templateRepository;
     protected $authorizationChecker;
 
@@ -26,8 +25,7 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
-        $this->areaTemplateStrategy = new AreaTemplateStrategy($this->templateRepository,$this->authorizationChecker);
-
+        $this->templateStrategy = new TemplateStrategy($this->templateRepository,$this->authorizationChecker);
     }
 
     /**
@@ -35,7 +33,7 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertSame($this->areaTemplateStrategy->getName(),'template');
+        $this->assertSame($this->templateStrategy->getName(),'template');
     }
 
     /**
@@ -48,7 +46,7 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testSupport($document, $expectedResult)
     {
-        $this->assertSame($this->areaTemplateStrategy->support($document),$expectedResult);
+        $this->assertSame($this->templateStrategy->support($document),$expectedResult);
     }
 
     /**
@@ -57,12 +55,10 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
     public function provideTestSupport()
     {
         $statusableInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        $areaInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $templateInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
 
         return array(
             array($statusableInterface, false),
-            array($areaInterface, true),
             array($templateInterface, true)
         );
     }
@@ -70,16 +66,14 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
     /**
      * @param StatusableInterface $document
      * @param bool                $isGrantedUpdateTemplate
-     * @param bool                $isGrantedUpdateNode
      * @param bool                $editable
      *
      * @dataProvider provideTestIsEditable
      */
-    public function testIsEditable($document,$isGrantedUpdateTemplate, $isGrantedUpdateNode,$editable)
+    public function testIsEditable($document,$isGrantedUpdateTemplate, $editable)
     {
         Phake::when($this->authorizationChecker)->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)->thenReturn($isGrantedUpdateTemplate);
-        Phake::when($this->authorizationChecker)->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE)->thenReturn($isGrantedUpdateNode);
-        $this->assertSame($editable, $this->areaTemplateStrategy->isEditable($document));
+        $this->assertSame($editable, $this->templateStrategy->isEditable($document));
     }
 
     /**
@@ -88,22 +82,13 @@ class AreaTemplateStrategyTest extends \PHPUnit_Framework_TestCase
     public function provideTestIsEditable()
     {
         $statusableInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        $areaInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $templateInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
 
         return array(
-            array($statusableInterface,true,true,false),
-            array($statusableInterface,true,false,false),
-            array($statusableInterface,false,true,false),
-            array($statusableInterface,false,false,false),
-            array($areaInterface,true,true,true),
-            array($areaInterface,true,false,false),
-            array($areaInterface,false,true,true),
-            array($areaInterface,false,false,false),
-            array($templateInterface,true,true,true),
-            array($templateInterface,true,false,true),
-            array($templateInterface,false,true,false),
-            array($templateInterface,false,false,false),
+            array($statusableInterface,true,false),
+            array($statusableInterface,false,false),
+            array($templateInterface,true,true),
+            array($templateInterface,false,false),
         );
     }
 }
