@@ -4,20 +4,10 @@ extendView['generateId'] = {
     'focusout input.generate-id-source': 'generateId'
     'blur input.generate-id-dest': 'stopGenerateId'
 
-  recupInput: (el) ->
-    for i in el
-      return i.value if i.value
-    
-  checkInputId: ->
-    if $('.generate-id-dest').val().length is 0
-      return true
-    else
-      return false
-
   generateId: ->
-    if @checkInputId()
-      contentTypeId = @recupInput($(".generate-id-source"))
-      $('.generate-id-dest').val(contentTypeId.latinise().replace(/[^a-z0-9]/gi,'_'))
+    sourceId = $(".generate-id-source").val()
+    if $('.generate-id-dest').val().length is 0 and sourceId?
+      $('.generate-id-dest').val(sourceId.latinise().replace(/[^a-z0-9]/gi,'_'))
     return
 
   stopGenerateId: ->
