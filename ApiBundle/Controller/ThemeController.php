@@ -2,11 +2,13 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\ThemeEvent;
 use OpenOrchestra\ModelInterface\ThemeEvents;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 
@@ -19,6 +21,8 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class ThemeController extends BaseController
 {
+    use HandleRequestDataTable;
+
     /**
      * @param int $themeId
      *
@@ -37,6 +41,8 @@ class ThemeController extends BaseController
     }
 
     /**
+     * @param Request $request
+     *
      * @Config\Route("", name="open_orchestra_api_theme_list")
      * @Config\Method({"GET"})
      *
@@ -44,11 +50,15 @@ class ThemeController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $themeCollection = $this->get('open_orchestra_model.repository.theme')->findAll();
+        $mapping = $this
+            ->get('open_orchestra.annotation_search_reader')
+            ->extractMapping($this->container->getParameter('open_orchestra_model.document.theme.class'));
+        $repository = $this->get('open_orchestra_model.repository.theme');
+        $collectionTransformer = $this->get('open_orchestra_api.transformer_manager')->get('theme_collection');
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('theme_collection')->transform($themeCollection);
+        return $this->handleRequestDataTable($request, $repository, $mapping, $collectionTransformer);
     }
 
     /**
