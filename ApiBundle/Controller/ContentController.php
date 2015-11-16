@@ -280,7 +280,7 @@ class ContentController extends BaseController
             $siteId,
             $published,
             10
-            );
+        );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
     }

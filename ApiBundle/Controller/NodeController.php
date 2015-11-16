@@ -151,7 +151,7 @@ class NodeController extends BaseController
             $siteId,
             $published,
             10
-            );
+        );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
     }
