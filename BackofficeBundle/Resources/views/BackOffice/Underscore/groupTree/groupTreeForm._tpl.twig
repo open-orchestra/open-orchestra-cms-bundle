@@ -1,0 +1,9 @@
+<div class="col-md-2">
+    <select class="form-control value-holder" data-role-name="<%= role.name %>">
+        <% if (node.parent_id != '-') { %>
+            <option value="inherit">{{ 'open_orchestra_backoffice.form.group.access_inherit'|trans }}</option>
+        <% } %>
+        <option value="1">{{ 'open_orchestra_backoffice.form.group.access_granted'|trans }}</option>
+        <option value="0">{{ 'open_orchestra_backoffice.form.group.access_denied'|trans }}</option>
+    </select>
+</div>

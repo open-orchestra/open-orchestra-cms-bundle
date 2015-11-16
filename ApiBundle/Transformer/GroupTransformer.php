@@ -43,7 +43,6 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
         }
-
         $facade = new GroupFacade();
 
         $facade->id = $group->getId();

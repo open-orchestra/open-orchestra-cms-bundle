@@ -329,10 +329,10 @@ class NodeManager
         $nodeId = $node->getNodeId();
         foreach ($orderedNode as $position => $childNodeId) {
             $siteId = $this->contextManager->getCurrentSiteId();
-            $childs = $this->nodeRepository->findByNodeAndSite($childNodeId, $siteId);
+            $children = $this->nodeRepository->findByNodeAndSite($childNodeId, $siteId);
             $path = $node->getPath() . '/' . $childNodeId;
             /** @var NodeInterface $child */
-            foreach ($childs as $child) {
+            foreach ($children as $child) {
                 $child->setOrder($position);
                 $child->setParentId($nodeId);
                 $child->setPath($path);

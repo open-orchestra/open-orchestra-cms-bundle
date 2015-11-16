@@ -14,7 +14,7 @@ class NodeTreeFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $collectionName = 'childs';
+    public $collectionName = 'children';
 
     /**
      * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\NodeFacade")
@@ -24,21 +24,21 @@ class NodeTreeFacade extends AbstractFacade
     /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\NodeTreeFacade>")
      */
-    protected $childs = array();
+    protected $children = array();
 
     /**
      * @param FacadeInterface $facade
      */
     public function addChild(FacadeInterface $facade)
     {
-        $this->childs[] = $facade;
+        $this->children[] = $facade;
     }
 
     /**
      * @return array
      */
-    public function getChilds()
+    public function getChildren()
     {
-        return $this->childs;
+        return $this->children;
     }
 }
