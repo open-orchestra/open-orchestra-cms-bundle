@@ -19,11 +19,9 @@
                     <td><%= entity.language %></td>
                     <td><%= entity.updated_at %></td>
                     <td class="text-center">
-                        <% if (typeof entity.links._self_form !== 'undefined') { %>
-                            <a href="#<%= generateUrl(entity) %>" class="btn btn-info btn-xs">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        <% } %>
+                        <a href="#<%= generateUrl(entity) %>" class="btn btn-info btn-xs">
+                            <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </a>
                     </td>
                 </tr>
             <% }); %>
