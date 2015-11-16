@@ -3,8 +3,8 @@
 namespace OpenOrchestra\UserAdminBundle\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use OpenOrchestra\UserBundle\Repository\UserRepository;
 use OpenOrchestra\UserBundle\GroupEvents;
 use OpenOrchestra\UserBundle\Event\GroupEvent;
 
@@ -18,9 +18,9 @@ class DeleteGroupSubscriber implements EventSubscriberInterface
 
     /**
      * @param ObjectManager  $objectManager
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(ObjectManager $objectManager, UserRepository $userRepository)
+    public function __construct(ObjectManager $objectManager, UserRepositoryInterface $userRepository)
     {
         $this->objectManager = $objectManager;
         $this->userRepository = $userRepository;

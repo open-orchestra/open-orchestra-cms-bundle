@@ -31,7 +31,7 @@ abstract class DeleteGroupSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->users->add($user0);
         $this->users->add($user1);
 
-        $userRepository = Phake::mock('OpenOrchestra\UserBundle\Repository\UserRepository');
+        $userRepository = Phake::mock('OpenOrchestra\UserBundle\Repository\UserRepositoryInterface');
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->event = Phake::mock('OpenOrchestra\UserBundle\Event\GroupEvent');
         $this->group = Phake::mock('FOS\UserBundle\Model\GroupInterface');

@@ -10,7 +10,7 @@ use OpenOrchestra\BaseApi\Manager\AccessTokenManager;
 use OpenOrchestra\BaseApi\OAuth2\Strategy\AbstractStrategy;
 use OpenOrchestra\BaseApi\Repository\AccessTokenRepositoryInterface;
 use OpenOrchestra\BaseApi\Repository\ApiClientRepositoryInterface;
-use OpenOrchestra\UserBundle\Repository\UserRepository;
+use OpenOrchestra\UserBundle\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,7 +27,7 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
 
     /**
      * @param ApiClientRepositoryInterface   $apiClientRepository
-     * @param UserRepository                 $userRepository
+     * @param UserRepositoryInterface        $userRepository
      * @param EncoderFactory                 $encoderFactory
      * @param Serializer                     $serializer
      * @param ValidatorInterface             $validator
@@ -36,7 +36,7 @@ class ResourceOwnerPasswordGrantStrategy extends AbstractStrategy
      */
     public function __construct(
         ApiClientRepositoryInterface $apiClientRepository,
-        UserRepository $userRepository,
+        UserRepositoryInterface $userRepository,
         EncoderFactory $encoderFactory,
         Serializer $serializer,
         ValidatorInterface $validator,
