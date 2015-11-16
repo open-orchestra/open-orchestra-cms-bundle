@@ -37,8 +37,7 @@ AdminFormView = OrchestraView.extend(
         actionButtons = $('<div>')
         if viewContext.deleteButton
           actionButtons.append(viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', viewContext.options))
-        actionButtons = actionButtons.prepend(button)
-        .html()
+        actionButtons = actionButtons.prepend(button).html()
         extendView = viewContext.options.extendView || []
         if extendView.indexOf('submitAdmin') == -1
           extendView.push 'submitAdmin'
