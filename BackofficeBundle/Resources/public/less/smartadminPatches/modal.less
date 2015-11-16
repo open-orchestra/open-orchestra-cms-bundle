@@ -9,7 +9,7 @@
         width: 90%;
 
         .modal-header {
-            background: white;
+            height: 60px;
 
             > button {
                 float: right;
@@ -18,7 +18,7 @@
         }
 
         .modal-content {
-            height: 90%;
+            height: 100%;
 
             > div {
                 .submit_form {
@@ -33,8 +33,7 @@
             }
 
             .modal-body {
-                background: white;
-                height: 100%;
+                height: calc(~"100% - 60px");
                 overflow-y: scroll;
                 overflow-x: hidden;
             }
