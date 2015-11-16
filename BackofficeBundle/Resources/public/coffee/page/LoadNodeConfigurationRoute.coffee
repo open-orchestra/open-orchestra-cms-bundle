@@ -1,8 +1,4 @@
 ((router) ->
-  router.addRoutePattern('showNode', 'node/show/:nodeId')
-  router.addRoutePattern('showNodeWithLanguage', 'node/show/:nodeId/:language')
-  router.addRoutePattern('showNodeWithLanguageAndVersion', 'node/show/:nodeId/:language/:version')
-
   router.nodeWithLanguageAndVersion = (nodeId, language, version) ->
     if selectorExist($('#nav-node-' + nodeId))
       @initDisplayRouteChanges '#nav-node-' + nodeId

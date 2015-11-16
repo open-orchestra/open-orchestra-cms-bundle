@@ -68,6 +68,10 @@ OrchestraBORouter = Backbone.Router.extend(
       paramsObject = _.extend(paramsObject, options)
       return paramsObject
     {}
+  route: (route, name, callBack) ->
+    Backbone.Router.prototype.route.call(this, route, name, callBack);
+    @addRoutePattern(name, route)
+    return
 )
 appRouter = new OrchestraBORouter
 jQuery ->

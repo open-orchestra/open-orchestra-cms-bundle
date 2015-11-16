@@ -1,7 +1,4 @@
 ((router) ->
-  router.addRoutePattern('showTemplate', 'template/show/:templateId')
-  router.addRoutePattern('showGSTemplate', 'gs_template/show/:templateId')
-
   router.route 'template/show/:templateId', 'showTemplate', (templateId) ->
     @initDisplayRouteChanges '#nav-template-' + templateId
     showTemplate $('#nav-template-' + templateId).data('url')

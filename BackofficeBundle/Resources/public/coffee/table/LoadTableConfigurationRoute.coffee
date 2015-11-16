@@ -1,9 +1,4 @@
 ((router) ->
-  router.addRoutePattern('listEntities', ':entityType/list(/:page)')
-  router.addRoutePattern('addEntity', ':entityType/add')
-  router.addRoutePattern('showEntity', ':entityType/edit/:entityId(/language_:language)(/version_:version)')
-  router.addRoutePattern('showEntityWithLanguageAndSourceLanguage', ':entityType/edit/:entityId/:language/source/:sourceLanguage')
-
   router.manageEntity = (entityType, entityId, language, version, sourceLanguage) ->
     @initDisplayRouteChanges '#nav-' + entityType
     entityViewLoad $('#nav-' + entityType), entityType, entityId, language, version, sourceLanguage
