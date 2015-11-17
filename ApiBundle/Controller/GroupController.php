@@ -45,7 +45,7 @@ class GroupController extends BaseController
      * @param string  $groupId
      *
      * @Config\Route("/{groupId}", name="open_orchestra_api_group_edit")
-     * @Config\Method({"POST", "GET"})
+     * @Config\Method({"POST"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_GROUP')")
      *
