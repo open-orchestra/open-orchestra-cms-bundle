@@ -16,13 +16,15 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
      * @var NodeGroupRoleVoter
      */
     protected $voter;
+    protected $nodeRepository;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->voter = new NodeGroupRoleVoter();
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->voter = new NodeGroupRoleVoter($this->nodeRepository);
     }
 
     /**
@@ -95,6 +97,8 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
      * @param string $nodeId
      * @param string $ngrNodeId
      * @param string $ngrRole
+     * @param string $ngrIsGranted
+     * @param string $groupSiteId
      *
      * @dataProvider provideResponseAndNodeData
      */
@@ -130,19 +134,93 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
     public function provideResponseAndNodeData()
     {
         return array(
-            array(VoterInterface::ACCESS_GRANTED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, true),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, false),
-            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, false),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false, 'fakeSiteId'),
-            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', '5640af7a02b0cf39178b4598', false, 'fakeSiteId'),
+            array(VoterInterface::ACCESS_GRANTED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "0"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "0"),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', '5640af7a02b0cf39178b4598', "0", 'fakeSiteId'),
+        );
+    }
+
+    /**
+     * Test Vote with inherit access
+     *
+     * @dataProvider provideResponseAndNodeDataInherit
+     */
+    /**
+     * @param int    $expectedVoterResponse
+     * @param string $nodeId
+     * @param string $ngrNodeId
+     * @param string $ngrRole
+     * @param string $ngrParentGranted
+     * @param string $groupSiteId
+     *
+     * @dataProvider provideResponseAndNodeDataInherit
+     */
+    public function testVoteInherit($expectedVoterResponse, $nodeId,  $ngrNodeId, $ngrRole, $ngrParentGranted, $groupSiteId = 'siteId')
+    {
+        $siteId = 'siteId';
+        $parentId = 'parentId';
+        $role = TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+
+        $parentNode = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
+
+        $node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getSiteId()->thenReturn($siteId);
+        Phake::when($node)->getParentId()->thenReturn($parentId);
+
+        Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($parentNode);
+
+        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        Phake::when($nodeGroupRole)->getNodeId()->thenReturn($ngrNodeId);
+        Phake::when($nodeGroupRole)->getRole()->thenReturn($ngrRole);
+        Phake::when($nodeGroupRole)->isGranted()->thenReturn("inherit");
+
+        $parentNodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        Phake::when($nodeGroupRole)->getNodeId()->thenReturn($parentId);
+        Phake::when($nodeGroupRole)->getRole()->thenReturn($ngrRole);
+        Phake::when($nodeGroupRole)->isGranted()->thenReturn($ngrParentGranted);
+
+        $group = $this->generateGroup($groupSiteId);
+        Phake::when($group)->getNodeRoleByNodeAndRole($ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
+        Phake::when($group)->getNodeRoleByNodeAndRole($parentId, $ngrRole)->thenReturn($parentNodeGroupRole);
+        $otherGroup = $this->generateGroup('otherSiteId');
+        $noSiteGroup = $this->generateGroup();
+
+        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+        Phake::when($user)->getGroups()->thenReturn(array($noSiteGroup, $otherGroup, $group));
+        $token = Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        Phake::when($token)->getUser()->thenReturn($user);
+
+        $this->assertSame($expectedVoterResponse, $this->voter->vote($token, $node, array($role)));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideResponseAndNodeDataInherit()
+    {
+        return array(
+            array(VoterInterface::ACCESS_GRANTED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "1"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "0"),
+            array(VoterInterface::ACCESS_DENIED, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, "0"),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "1", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'otherNodeId', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, "0", 'fakeSiteId'),
+            array(VoterInterface::ACCESS_ABSTAIN, 'nodeId', 'nodeId', '5640af7a02b0cf39178b4598', "0", 'fakeSiteId'),
         );
     }
 

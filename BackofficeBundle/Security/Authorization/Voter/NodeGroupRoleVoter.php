@@ -7,6 +7,7 @@ use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -15,6 +16,16 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
  */
 class NodeGroupRoleVoter implements VoterInterface
 {
+    /**
+     * @var NodeRepositoryInterface
+     */
+    protected $nodeRepository;
+
+    public function __construct(NodeRepositoryInterface $nodeRepository)
+    {
+        $this->nodeRepository = $nodeRepository;
+    }
+
     /**
      * Checks if the voter supports the given attribute.
      *
@@ -53,9 +64,11 @@ class NodeGroupRoleVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
+
         if (!$this->supportsClass($object)) {
             return self::ACCESS_ABSTAIN;
         }
+
         if (($user = $token->getUser()) instanceof UserInterface && $user->isSuperAdmin()) {
             return VoterInterface::ACCESS_GRANTED;
         }
@@ -65,6 +78,7 @@ class NodeGroupRoleVoter implements VoterInterface
                 return self::ACCESS_ABSTAIN;
             }
         }
+
         /** @var GroupInterface $group */
         foreach ($user->getGroups() as $group) {
             if (!$group->getSite() instanceof ReadSiteInterface) {
@@ -77,10 +91,7 @@ class NodeGroupRoleVoter implements VoterInterface
                 if (!$this->supportsAttribute($attribute)) {
                     continue;
                 }
-                if (
-                    ($nodeGroupRole = $group->getNodeRoleByNodeAndRole($object->getNodeId(), $attribute)) instanceof NodeGroupRoleInterface
-                    && $nodeGroupRole->isGranted()
-                ) {
+                if (true === $this->isGrantedNodeGroupRole($object, $group, $attribute)) {
                     return self::ACCESS_GRANTED;
                 }
             }
@@ -89,5 +100,27 @@ class NodeGroupRoleVoter implements VoterInterface
         }
 
         return self::ACCESS_ABSTAIN;
+    }
+
+    /**
+     * @param NodeInterface  $node
+     * @param GroupInterface $group
+     * @param string         $attribute
+     *
+     * @return boolean
+     */
+    protected function isGrantedNodeGroupRole(NodeInterface $node, GroupInterface $group, $attribute) {
+        $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $attribute);
+        if ($nodeGroupRole instanceof NodeGroupRoleInterface) {
+            if ($nodeGroupRole->isGranted() === 'inherit') {
+                $nodeParent = $this->nodeRepository->findInLastVersion($node->getParentId(), $node->getLanguage(), $node->getSiteId());
+                if ( null !== $nodeParent) {
+                    return $this->isGrantedNodeGroupRole($nodeParent, $group, $attribute);
+                }
+            } else if ($nodeGroupRole->isGranted() === "1") {
+                return true;
+            }
+        }
+        return false;
     }
 }
