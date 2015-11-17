@@ -48,6 +48,7 @@ class NodeEditionRoleStrategyTest extends \PHPUnit_Framework_TestCase
         $document = Phake::mock($document);
         if ($type) {
             Phake::when($document)->getNodeType()->thenReturn($type);
+            Phake::when($document)->getId()->thenReturn('fakeId');
         }
 
         $this->assertSame($support, $this->strategy->support($document));
