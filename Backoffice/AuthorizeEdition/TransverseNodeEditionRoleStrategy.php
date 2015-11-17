@@ -28,7 +28,7 @@ class TransverseNodeEditionRoleStrategy implements AuthorizeEditionInterface
      */
     public function support($document)
     {
-        return $document instanceof NodeInterface && $document->getNodeType() === NodeInterface::TYPE_TRANSVERSE;
+        return $document instanceof NodeInterface && $document->getNodeType() === NodeInterface::TYPE_TRANSVERSE && !is_null($document->getId());
     }
 
     /**
