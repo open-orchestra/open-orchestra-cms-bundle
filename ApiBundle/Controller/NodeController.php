@@ -150,7 +150,8 @@ class NodeController extends BaseController
             $user->getUsername(),
             $siteId,
             $published,
-            10
+            10,
+            array('updateAt' => -1)
         );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transform($nodes);
