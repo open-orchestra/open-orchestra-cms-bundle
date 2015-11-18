@@ -279,7 +279,8 @@ class ContentController extends BaseController
             $user->getUsername(),
             $siteId,
             $published,
-            10
+            10,
+            array('updatedAt' => -1)
         );
 
         return $this->get('open_orchestra_api.transformer_manager')->get('content_collection')->transform($content);
