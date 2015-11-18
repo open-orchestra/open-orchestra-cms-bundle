@@ -8,6 +8,15 @@
         height: 90%;
         width: 90%;
 
+        .modal-header {
+            height: 60px;
+
+            > button {
+                float: right;
+                margin-left: 10px;
+            }
+        }
+
         .modal-content {
             height: 100%;
 
@@ -17,22 +26,16 @@
                 }
             }
 
-            > div:last-child {
+            > div:first-child {
                 .submit_form {
                     display: block;
                 }
             }
 
             .modal-body {
-                height: calc(~"100% - 129px");
+                height: calc(~"100% - 60px");
                 overflow-y: scroll;
                 overflow-x: hidden;
-            }
-
-            .modal-footer {
-                button.submit_form {
-                    float: left;
-                }
             }
         }
     }
