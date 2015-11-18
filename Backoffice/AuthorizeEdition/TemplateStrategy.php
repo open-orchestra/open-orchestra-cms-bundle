@@ -43,19 +43,13 @@ class TemplateStrategy implements AuthorizeEditionInterface
     }
 
     /**
-     * @param TemplateInterface|mixed $document
+     * @param TemplateInterface $document
      *
      * @return bool
      */
     public function isEditable($document)
     {
-        $return = false;
-
-        if ($document instanceof TemplateInterface) {
-            $return = $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
-        }
-
-        return $return;
+        return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE,$document);
     }
 
     /**

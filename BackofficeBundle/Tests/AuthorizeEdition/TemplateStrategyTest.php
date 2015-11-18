@@ -3,7 +3,6 @@
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Tests\AuthorizeStatusChange\Strategies;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\TemplateStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use Phake;
 
 /**
@@ -46,6 +45,7 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testSupport($document, $expectedResult)
     {
+        $document = Phake::mock($document);
         $this->assertSame($this->templateStrategy->support($document),$expectedResult);
     }
 
@@ -54,25 +54,23 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function provideTestSupport()
     {
-        $statusableInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        $templateInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
-
         return array(
-            array($statusableInterface, false),
-            array($templateInterface, true)
+            array('OpenOrchestra\ModelInterface\Model\StatusableInterface', false),
+            array('OpenOrchestra\ModelInterface\Model\TemplateInterface', true)
         );
     }
 
     /**
      * @param StatusableInterface $document
-     * @param bool                $isGrantedUpdateTemplate
+     * @param bool                $isGranted
      * @param bool                $editable
      *
      * @dataProvider provideTestIsEditable
      */
-    public function testIsEditable($document,$isGrantedUpdateTemplate, $editable)
+    public function testIsEditable($document,$isGranted, $editable)
     {
-        Phake::when($this->authorizationChecker)->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)->thenReturn($isGrantedUpdateTemplate);
+        $document = Phake::mock($document);
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
         $this->assertSame($editable, $this->templateStrategy->isEditable($document));
     }
 
@@ -81,14 +79,9 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function provideTestIsEditable()
     {
-        $statusableInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusableInterface');
-        $templateInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
-
         return array(
-            array($statusableInterface,true,false),
-            array($statusableInterface,false,false),
-            array($templateInterface,true,true),
-            array($templateInterface,false,false),
+            array('OpenOrchestra\ModelInterface\Model\TemplateInterface',true,true),
+            array('OpenOrchestra\ModelInterface\Model\TemplateInterface',false,false),
         );
     }
 }
