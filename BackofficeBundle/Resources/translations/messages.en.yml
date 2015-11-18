@@ -250,6 +250,9 @@ open_orchestra_backoffice:
             title: Group edition
             node_role_edition: Node role list
             page_list: Page list
+            access_denied: Denied
+            access_granted: Granted
+            access_inherit: Inherited
         redirection:
             new:
                 success: The redirection has been successfully created

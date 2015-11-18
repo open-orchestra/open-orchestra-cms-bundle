@@ -1,0 +1,14 @@
+<li data-title="{{ 'open_orchestra_backoffice.form.group.node_role_edition'|trans }}">
+    <div class="row">
+        <div class="col-lg-3 list-page-node-name">
+            <% if ( nodes.children.length > 0 ){ %>
+                <em class="fa open"></em>
+            <% } %>
+            <%= nodes.node.name %>
+        </div>
+        <div class="col-lg-9">
+            <div class="row form-input"></div>
+        </div>
+    </div>
+    <ul class="child-node"></ul>
+</li>

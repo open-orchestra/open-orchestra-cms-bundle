@@ -29,7 +29,7 @@ class NodeGroupRole implements NodeGroupRoleInterface
     /**
      * @var bool
      *
-     * @ODM\Field(type="boolean")
+     * @ODM\Field(type="string")
      */
     protected $granted;
 

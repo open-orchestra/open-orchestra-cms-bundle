@@ -10,7 +10,7 @@ services:
             - @open_orchestra_model.repository.site
         tags:
             - { name: security.voter }
-    open_orchestra_backoffice.voter.node_group_role:
-        class: %open_orchestra_backoffice.voter.node_group_role.class%
-        tags:
-            - { name: security.voter }
+#    open_orchestra_backoffice.voter.node_group_role:
+#        class: %open_orchestra_backoffice.voter.node_group_role.class%
+#        tags:
+#            - { name: security.voter }

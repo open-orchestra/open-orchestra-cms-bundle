@@ -1,11 +1,10 @@
 NodeTreeView = OrchestraView.extend(
   events:
     'click em.fa': 'toggleItemDisplay'
-    'click i': 'clickInput'
   initialize: (options) ->
     @initializer options
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTree',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/nodeTree',
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
     ]
     return
@@ -17,7 +16,7 @@ NodeTreeView = OrchestraView.extend(
     @options.domContainer = @$el
 
   render: ->
-    @options.domContainer.html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTree')
+    @options.domContainer.html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/nodeTree')
     @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
       listUrl : @options.listUrl
     )
@@ -48,15 +47,10 @@ NodeTreeView = OrchestraView.extend(
 
   renderHead: ->
     for role in @options.roles.roles
-      @options.domContainer.find('.head-element').first().append '<div class="col-lg-1">' + role.description + '</div>'
+      @options.domContainer.find('.head-element').first().append '<div class="col-lg-2">' + role.description + '</div>'
 
   toggleItemDisplay: (e) ->
     OpenOrchestra.toggleTreeNodeDisplay e
-
-  clickInput: (e) ->
-    inputElement = $(e.target).parent().find('input')
-    checked = inputElement.prop('checked')
-    $('[value="' + inputElement.prop('value') + '"]', inputElement.closest('li').children('.child-node')).prop('checked', !checked).trigger('change')
 )
 
 jQuery ->

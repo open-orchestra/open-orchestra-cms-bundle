@@ -21,7 +21,7 @@ class NodeGroupRoleFacade extends AbstractFacade
     public $node;
 
     /**
-     * @Serializer\Type("boolean")
+     * @Serializer\Type("string")
      */
     public $isGranted;
 }

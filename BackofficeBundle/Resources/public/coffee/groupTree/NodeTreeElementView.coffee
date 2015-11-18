@@ -2,13 +2,13 @@ NodeTreeElementView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTreeElement',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/nodeTreeElement',
     ]
     return
 
   render: ->
-    @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeTreeElement',
-      node: @options.nodes.node
+    @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/nodeTreeElement',
+      nodes: @options.nodes
     )
     @formInput = @options.domContainer.find('div.form-input').last()
     nodeId = @options.nodes.node.node_id
@@ -23,9 +23,9 @@ NodeTreeElementView = OrchestraView.extend(
       nodeElement: @options.nodes.node
     )
     @subNode = @options.domContainer.find('ul.child-node').last()
-    if @options.nodes.childs.length > 0
-      for child of @options.nodes.childs
-        @addChildToView @options.nodes.childs[child]
+    if @options.nodes.children.length > 0
+      for child of @options.nodes.children
+        @addChildToView @options.nodes.children[child]
 
   addChildToView: (child) ->
     nodeTreeElementViewClass = appConfigurationView.getConfiguration('group_tab_node_tree_element', 'editEntityTab')

@@ -4,22 +4,23 @@ FormCollectionView = OrchestraView.extend(
   initialize: (options) ->
     @options = options
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTreeForm',
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/groupTreeForm',
     ]
 
   render: ->
     for role in @options.roles
-      @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTreeForm',
+      @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/groupTreeForm',
         role: role
+        node: @options.nodeElement
       )
     @setElement @options.domContainer
     if @options.nodeGroupRoles != undefined
       for nodeGroupRole in @options.nodeGroupRoles
-        $('[value="' + nodeGroupRole.name + '"]', @options.domContainer).prop('checked', nodeGroupRole.is_granted)
+        $('select[data-role-name="' + nodeGroupRole.name + '"] option[value="' + nodeGroupRole.is_granted + '"]', @options.domContainer).attr('selected','selected')
 
   changeInput: (e) ->
-    value = $(e.currentTarget).prop('checked')
-    name = $(e.currentTarget).prop('value')
+    value = $(e.currentTarget).val()
+    name = $(e.currentTarget).data('role-name')
     nodeId = @options.nodeElement.node_id
     nodeGroupRoleData = []
     nodeGroupRoleData.push({'node': nodeId, 'is_granted': value, 'name': name})
