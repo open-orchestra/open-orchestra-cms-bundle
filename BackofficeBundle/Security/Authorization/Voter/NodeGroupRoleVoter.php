@@ -64,15 +64,12 @@ class NodeGroupRoleVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-
         if (!$this->supportsClass($object)) {
             return self::ACCESS_ABSTAIN;
         }
-
         if (($user = $token->getUser()) instanceof UserInterface && $user->isSuperAdmin()) {
             return VoterInterface::ACCESS_GRANTED;
         }
-
         foreach ($attributes as $attribute) {
             if (!$this->supportsAttribute($attribute)) {
                 return self::ACCESS_ABSTAIN;
@@ -109,7 +106,8 @@ class NodeGroupRoleVoter implements VoterInterface
      *
      * @return boolean
      */
-    protected function isGrantedNodeGroupRole(NodeInterface $node, GroupInterface $group, $attribute) {
+    protected function isGrantedNodeGroupRole(NodeInterface $node, GroupInterface $group, $attribute)
+    {
         $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $attribute);
         if ($nodeGroupRole instanceof NodeGroupRoleInterface) {
             if ($nodeGroupRole->isGranted() === 'inherit') {
@@ -121,6 +119,7 @@ class NodeGroupRoleVoter implements VoterInterface
                 return true;
             }
         }
+
         return false;
     }
 }
