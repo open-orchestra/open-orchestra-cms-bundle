@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginationRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -13,17 +13,18 @@ use Symfony\Component\HttpFoundation\Request;
 trait HandleRequestDataTable
 {
     /**
-     * @param Request              $request
-     * @param DocumentRepository   $entityRepository
-     * @param array                $mappingEntity
-     * @param TransformerInterface $transformerManager
+     * @param Request                       $request
+     * @param PaginationRepositoryInterface $entityRepository
+     * @param array                         $mappingEntity
+     * @param TransformerInterface          $transformerManager
      *
      * @return \OpenOrchestra\BaseApi\Facade\FacadeInterface
      */
-    protected function handleRequestDataTable(Request $request, DocumentRepository $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
+    protected function handleRequestDataTable(Request $request, PaginationRepositoryInterface $entityRepository, $mappingEntity, TransformerInterface $transformerManager)
     {
         if ($entityId = $request->get('entityId')) {
             $element = $entityRepository->find($entityId);
+
             return $transformerManager->transform(array($element));
         }
         $configuration = PaginateFinderConfiguration::generateFromRequest($request);
