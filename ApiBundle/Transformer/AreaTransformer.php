@@ -106,7 +106,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId(),
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,$node)) {
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node)) {
             $facade->addLink('_self_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
                 'nodeId' => $node->getId(),
                 'areaId' => $area->getAreaId()
@@ -118,7 +118,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId()
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,$node)) {
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node)) {
             if ($parentAreaId) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node_area',
                     array(
@@ -189,7 +189,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
             'areaId' => $area->getAreaId()
         )));
 
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE,$template)) {
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE, $template)) {
             if ($parentAreaId) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_template_area',
                     array(

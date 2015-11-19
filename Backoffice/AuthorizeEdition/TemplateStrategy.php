@@ -49,7 +49,7 @@ class TemplateStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE,$document);
+        return $this->autorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE, $document);
     }
 
     /**

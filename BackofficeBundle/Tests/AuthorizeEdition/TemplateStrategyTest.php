@@ -24,7 +24,7 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
-        $this->templateStrategy = new TemplateStrategy($this->templateRepository,$this->authorizationChecker);
+        $this->templateStrategy = new TemplateStrategy($this->templateRepository, $this->authorizationChecker);
     }
 
     /**
@@ -32,7 +32,7 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertSame($this->templateStrategy->getName(),'template');
+        $this->assertSame($this->templateStrategy->getName(), 'template');
     }
 
     /**
@@ -46,7 +46,7 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
     public function testSupport($document, $expectedResult)
     {
         $document = Phake::mock($document);
-        $this->assertSame($this->templateStrategy->support($document),$expectedResult);
+        $this->assertSame($this->templateStrategy->support($document), $expectedResult);
     }
 
     /**
@@ -80,8 +80,8 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
     public function provideTestIsEditable()
     {
         return array(
-            array('OpenOrchestra\ModelInterface\Model\TemplateInterface',true,true),
-            array('OpenOrchestra\ModelInterface\Model\TemplateInterface',false,false),
+            array('OpenOrchestra\ModelInterface\Model\TemplateInterface', true, true),
+            array('OpenOrchestra\ModelInterface\Model\TemplateInterface', false, false),
         );
     }
 }
