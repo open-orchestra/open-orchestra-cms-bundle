@@ -40,6 +40,7 @@ class EditNodeControllerTest extends AbstractControllerTest
      */
     public function testEditRootNode($expectedMeta, $newMeta, $nodeId)
     {
+        $this->markTestSkipped('The tested service has been desactivated');
         $nodeDocument = $this->nodeRepository->findInLastVersion($nodeId, $this->language, $this->siteId);
 
         $url = '/admin/node/form/' . $nodeDocument->getId();
