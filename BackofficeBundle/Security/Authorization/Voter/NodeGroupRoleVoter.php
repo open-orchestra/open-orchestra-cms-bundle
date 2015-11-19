@@ -113,12 +113,12 @@ class NodeGroupRoleVoter implements VoterInterface
     {
         $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $attribute);
         if ($nodeGroupRole instanceof NodeGroupRoleInterface) {
-            if ($nodeGroupRole->getAccessType() === NodeGroupRoleInterface::ACCESS_INHERIT) {
+            if (NodeGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
                 $nodeParent = $this->nodeRepository->findInLastVersion($node->getParentId(), $node->getLanguage(), $node->getSiteId());
-                if ( null !== $nodeParent) {
+                if (null !== $nodeParent) {
                     return $this->isGrantedNodeGroupRole($nodeParent, $group, $attribute);
                 }
-            } else if ($nodeGroupRole->getAccessType() === NodeGroupRoleInterface::ACCESS_GRANTED) {
+            } elseif (NodeGroupRoleInterface::ACCESS_GRANTED === $nodeGroupRole->getAccessType()) {
                 return true;
             }
         }
