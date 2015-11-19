@@ -1,4 +1,4 @@
->parameters:
+parameters:
     open_orchestra_backoffice.voter.group_site.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\GroupSiteVoter
     open_orchestra_backoffice.voter.node_group_role.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\NodeGroupRoleVoter
 
