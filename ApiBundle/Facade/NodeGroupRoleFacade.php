@@ -23,5 +23,5 @@ class NodeGroupRoleFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $isGranted;
+    public $accessType;
 }

@@ -47,7 +47,7 @@ NodeTreeView = OrchestraView.extend(
 
   renderHead: ->
     for role in @options.roles.roles
-      @options.domContainer.find('.head-element').first().append '<div class="col-lg-2">' + role.description + '</div>'
+      @options.domContainer.find('.head-element').first().append '<div class="col-sm-2">' + role.description + '</div>'
 
   toggleItemDisplay: (e) ->
     OpenOrchestra.toggleTreeNodeDisplay e

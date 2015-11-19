@@ -10,6 +10,7 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPan
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\GroupBundle\Document\NodeGroupRole;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
@@ -31,8 +32,8 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
         $group2->addRole(AdministrationPanelStrategy::ROLE_ACCESS_REDIRECTION);
         $manager->persist($group2);
 
-        $group2->addNodeRole($this->generateNodeGroupRole(NodeInterface::ROOT_NODE_ID, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, true));
-        $group2->addNodeRole($this->generateNodeGroupRole('fixture_page_community', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, false));
+        $group2->addNodeRole($this->generateNodeGroupRole(NodeInterface::ROOT_NODE_ID, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, NodeGroupRoleInterface::ACCESS_GRANTED));
+        $group2->addNodeRole($this->generateNodeGroupRole('fixture_page_community', TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, NodeGroupRoleInterface::ACCESS_DENIED));
 
         $group3 = $this->generateGroup('Empty group', 'Empty group', 'Groupe vide', 'site3', 'group3');
         $group3->addRole(AdministrationPanelStrategy::ROLE_ACCESS_THEME);
@@ -163,16 +164,16 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
     /**
      * @param string $nodeId
      * @param string $role
-     * @param bool   $granted
+     * @param string $accessType
      *
      * @return NodeGroupRole
      */
-    protected function generateNodeGroupRole($nodeId, $role, $granted)
+    protected function generateNodeGroupRole($nodeId, $role, $accessType)
     {
         $nodeGroupRole = new NodeGroupRole();
         $nodeGroupRole->setNodeId($nodeId);
         $nodeGroupRole->setRole($role);
-        $nodeGroupRole->setGranted($granted);
+        $nodeGroupRole->setAccessType($accessType);
 
         return $nodeGroupRole;
     }

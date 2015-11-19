@@ -27,11 +27,11 @@ class NodeGroupRole implements NodeGroupRoleInterface
     protected $role;
 
     /**
-     * @var bool
+     * @var string
      *
      * @ODM\Field(type="string")
      */
-    protected $granted;
+    protected $accessType;
 
     /**
      * @return string
@@ -66,18 +66,18 @@ class NodeGroupRole implements NodeGroupRoleInterface
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isGranted()
+    public function getAccessType()
     {
-        return $this->granted;
+        return $this->accessType;
     }
 
     /**
-     * @param bool $granted
+     * @param string $accessType
      */
-    public function setGranted($granted)
+    public function setAccessType($accessType)
     {
-        $this->granted = $granted;
+        $this->accessType = $accessType;
     }
 }
