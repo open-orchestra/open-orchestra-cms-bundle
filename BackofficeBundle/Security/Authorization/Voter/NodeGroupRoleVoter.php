@@ -21,6 +21,9 @@ class NodeGroupRoleVoter implements VoterInterface
      */
     protected $nodeRepository;
 
+    /**
+     * @param NodeRepositoryInterface $nodeRepository
+     */
     public function __construct(NodeRepositoryInterface $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
@@ -110,12 +113,12 @@ class NodeGroupRoleVoter implements VoterInterface
     {
         $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $attribute);
         if ($nodeGroupRole instanceof NodeGroupRoleInterface) {
-            if ($nodeGroupRole->isGranted() === 'inherit') {
+            if ($nodeGroupRole->getAccessType() === NodeGroupRoleInterface::ACCESS_INHERIT) {
                 $nodeParent = $this->nodeRepository->findInLastVersion($node->getParentId(), $node->getLanguage(), $node->getSiteId());
                 if ( null !== $nodeParent) {
                     return $this->isGrantedNodeGroupRole($nodeParent, $group, $attribute);
                 }
-            } else if ($nodeGroupRole->isGranted() === "1") {
+            } else if ($nodeGroupRole->getAccessType() === NodeGroupRoleInterface::ACCESS_GRANTED) {
                 return true;
             }
         }

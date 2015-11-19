@@ -45,7 +45,7 @@ class NodeGroupRoleTransformer extends AbstractTransformer
 
         $facade->node = $nodeGroupRole->getNodeId();
         $facade->name = $nodeGroupRole->getRole();
-        $facade->isGranted = $nodeGroupRole->isGranted();
+        $facade->accessType = $nodeGroupRole->getAccessType();
 
         return $facade;
     }
@@ -69,7 +69,7 @@ class NodeGroupRoleTransformer extends AbstractTransformer
 
         $source->setNodeId($facade->node);
         $source->setRole($facade->name);
-        $source->setGranted($facade->isGranted);
+        $source->setAccessType($facade->accessType);
 
         return $source;
     }

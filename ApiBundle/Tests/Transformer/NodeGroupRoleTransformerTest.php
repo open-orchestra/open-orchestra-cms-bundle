@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer;
+use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use Phake;
 
 /**
@@ -55,23 +56,23 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $nodeId
      * @param string $role
-     * @param bool   $isGranted
+     * @param string $accessType
      *
      * @dataProvider provideTransformData
      */
-    public function testTransform($nodeId, $role, $isGranted)
+    public function testTransform($nodeId, $role, $accessType)
     {
         $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRole)->getNodeId()->thenReturn($nodeId);
         Phake::when($nodeGroupRole)->getRole()->thenReturn($role);
-        Phake::when($nodeGroupRole)->isGranted()->thenReturn($isGranted);
+        Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
 
         $facade = $this->transformer->transform($nodeGroupRole);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade', $facade);
         $this->assertSame($nodeId, $facade->node);
         $this->assertSame($role, $facade->name);
-        $this->assertSame($isGranted, $facade->isGranted);
+        $this->assertSame($accessType, $facade->accessType);
     }
 
     /**
@@ -80,48 +81,48 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
     public function provideTransformData()
     {
         return array(
-            array('foo', 'bar', true),
-            array('bar', 'foo', false),
+            array('foo', 'bar', NodeGroupRoleInterface::ACCESS_GRANTED),
+            array('bar', 'foo', NodeGroupRoleInterface::ACCESS_DENIED),
         );
     }
 
     /**
      * @param string $node
      * @param string $role
-     * @param bool   $isGranted
+     * @param string $accessType
      *
      * @dataProvider provideTransformData
      */
-    public function testReverseTransformWithNoExistingData($node, $role, $isGranted)
+    public function testReverseTransformWithNoExistingData($node, $role, $accessType)
     {
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade');
         $facade->node = $node;
         $facade->name = $role;
-        $facade->isGranted = $isGranted;
+        $facade->accessType = $accessType;
 
         $nodeGroupRole = $this->transformer->reverseTransform($facade);
 
         $this->assertInstanceOf('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface', $nodeGroupRole);
         $this->assertSame($node, $nodeGroupRole->getNodeId());
         $this->assertSame($role, $nodeGroupRole->getRole());
-        $this->assertSame($isGranted, $nodeGroupRole->isGranted());
+        $this->assertSame($accessType, $nodeGroupRole->getAccessType());
     }
 
     /**
      * @param string $node
      * @param string $role
-     * @param bool   $isGranted
+     * @param stro,g $accessType
      *
      * @dataProvider provideTransformData
      */
-    public function testReverseTransformWithExistingData($node, $role, $isGranted)
+    public function testReverseTransformWithExistingData($node, $role, $accessType)
     {
         $source = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
 
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade');
         $facade->node = $node;
         $facade->name = $role;
-        $facade->isGranted = $isGranted;
+        $facade->accessType = $accessType;
 
         $nodeGroupRole = $this->transformer->reverseTransform($facade, $source);
 
@@ -129,7 +130,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($source, $nodeGroupRole);
         Phake::verify($source)->setNodeId($node);
         Phake::verify($source)->setRole($role);
-        Phake::verify($source)->setGranted($isGranted);
+        Phake::verify($source)->setAccessType($accessType);
     }
 
     /**

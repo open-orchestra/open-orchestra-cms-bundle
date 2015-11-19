@@ -2,12 +2,15 @@
 
 namespace OpenOrchestra\BackofficeBundle\Model;
 
-
 /**
  * Interface NodeGroupRoleInterface
  */
 interface NodeGroupRoleInterface
 {
+    const ACCESS_GRANTED = "granted";
+    const ACCESS_DENIED = "denied";
+    const ACCESS_INHERIT = "inherit";
+
     /**
      * @return string
      */
@@ -19,9 +22,9 @@ interface NodeGroupRoleInterface
     public function getRole();
 
     /**
-     * @return bool
+     * @return string
      */
-    public function isGranted();
+    public function getAccessType();
 
     /**
      * @param string $nodeId
@@ -34,7 +37,7 @@ interface NodeGroupRoleInterface
     public function setRole($role);
 
     /**
-     * @param bool $granted
+     * @param string $accessType
      */
-    public function setGranted($granted);
+    public function setAccessType($accessType);
 }
