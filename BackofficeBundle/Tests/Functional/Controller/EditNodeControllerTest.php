@@ -40,6 +40,7 @@ class EditNodeControllerTest extends AbstractControllerTest
      */
     public function testEditRootNode($expectedMeta, $newMeta, $nodeId)
     {
+        $this->markTestSkipped('The tested service has been desactivated');
         $nodeDocument = $this->nodeRepository->findInLastVersion($nodeId, $this->language, $this->siteId);
 
         $url = '/admin/node/form/' . $nodeDocument->getId();
@@ -59,7 +60,7 @@ class EditNodeControllerTest extends AbstractControllerTest
     {
         return array(
             array('foo', 'foo', NodeInterface::ROOT_NODE_ID),
-            array('bar', 'bar', 'fixture_page_community'),
+            array('', 'bar', 'fixture_page_community'),
         );
     }
 }
