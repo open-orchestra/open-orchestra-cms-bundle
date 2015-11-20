@@ -18,4 +18,7 @@ DateFieldSearchView = AbstractSearchFieldView.extend(
     @insertFieldInHeader()
 )
 
-tableFieldViewConfigurator.date = DateFieldSearchView
+((tableFieldViewconfigurator) ->
+  tableFieldViewconfigurator.boolean = BooleanFieldSearchView
+  return
+) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}

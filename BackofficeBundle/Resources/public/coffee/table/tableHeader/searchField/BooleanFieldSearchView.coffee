@@ -17,4 +17,7 @@ BooleanFieldSearchView = AbstractSearchFieldView.extend(
     @insertFieldInHeader()
 )
 
-tableFieldViewConfigurator.boolean = BooleanFieldSearchView
+((tableFieldViewconfigurator) ->
+  tableFieldViewconfigurator.boolean = BooleanFieldSearchView
+  return
+) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}

@@ -11,8 +11,8 @@ TableviewSearchHeader = OrchestraView.extend(
 
   render: ->
     for type, column in @options.inputHeader
-        type = "empty" if not tableFieldViewConfigurator[type]?
-        viewClass = tableFieldViewConfigurator[type]
+        type = "empty" if not window.tableFieldViewconfigurator[type]?
+        viewClass = window.tableFieldViewconfigurator[type]
         new viewClass(@addOption(
             column : column
             apiTable : @options.apiTable
@@ -22,6 +22,7 @@ TableviewSearchHeader = OrchestraView.extend(
     @options.domContainer.append(@$el)
 )
 
-tableFieldViewConfigurator = {
-    "empty" : EmptySearchView
-}
+((tableFieldViewconfigurator) ->
+  tableFieldViewconfigurator.empty = EmptySearchView
+  return
+) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}

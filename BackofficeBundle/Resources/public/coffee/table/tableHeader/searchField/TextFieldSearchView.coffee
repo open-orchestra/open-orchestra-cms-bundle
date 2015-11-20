@@ -17,4 +17,7 @@ TextFieldSearchView = AbstractSearchFieldView.extend(
     @insertFieldInHeader()
 )
 
-tableFieldViewConfigurator.text = TextFieldSearchView
+((tableFieldViewconfigurator) ->
+  tableFieldViewconfigurator.text = TextFieldSearchView
+  return
+) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}

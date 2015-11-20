@@ -18,4 +18,7 @@ NumberFieldSearchView = AbstractSearchFieldView.extend(
     @insertFieldInHeader()
 )
 
-tableFieldViewConfigurator.number = NumberFieldSearchView
+((tableFieldViewconfigurator) ->
+  tableFieldViewconfigurator.number = NumberFieldSearchView
+  return
+) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}
