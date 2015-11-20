@@ -3,7 +3,7 @@ NodeFormView = OrchestraModalView.extend(
   onViewReady: ->
     if @options.submitted
       displayRoute = appRouter.generateUrl "showNode",
-              nodeId: $('#node_nodeId', @$el).val()
+              nodeId: $('#oo_node_nodeId', @$el).val()
       Backbone.history.loadUrl(displayRoute)
       displayMenu(displayRoute)
 
