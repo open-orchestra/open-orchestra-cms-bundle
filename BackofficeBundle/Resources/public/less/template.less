@@ -221,3 +221,25 @@ ul, li {
 .panel-block {
   margin: 10px;
 }
+
+/*##############################################DATE WIDGET*/
+.triple_date_field {
+  input, select {
+    display: inline-block;
+    margin-right: 3px;
+    width: auto;
+    &:nth-last-child(1) {
+      margin-right:0;
+    }
+  }
+  input {
+    width: calc(~"100% / 3 - 8px");
+  }
+}
+
+.ui-datepicker {
+  z-index: 2 !important;
+  &, * {
+    background-image: none !important;
+  }
+}

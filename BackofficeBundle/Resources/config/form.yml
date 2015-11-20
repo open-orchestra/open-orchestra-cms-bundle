@@ -31,6 +31,7 @@ parameters:
     open_orchestra_backoffice.type.orchestra_color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraColorPickerType
     open_orchestra_backoffice.type.orchestra_role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraRoleChoiceType
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\BackofficeBundle\Form\Type\ApiClientType
+    open_orchestra_backoffice.type.date_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\DatePickerType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -158,7 +159,6 @@ services:
         class: %open_orchestra_backoffice.type.orchestra_date_widget_option.class%
         tags:
             - { name: form.type, alias: orchestra_date_widget_option}
-
     # Status Type
     open_orchestra_backoffice.type.status:
         class: %open_orchestra_backoffice.type.status.class%
@@ -313,3 +313,7 @@ services:
             - %open_orchestra_api.document.api_client.class%
         tags:
             - { name: form.type, alias: api_client }
+    open_orchestra_backoffice.type.date_picker:
+        class: %open_orchestra_backoffice.type.date_picker.class%
+        tags:
+            - { name: form.type, alias: date_picker}
