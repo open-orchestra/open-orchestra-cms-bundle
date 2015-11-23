@@ -43,13 +43,13 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
             array('templateId' => $template->getTemplateId())
         ));
 
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE, $template)) {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
                 array('templateId' => $template->getTemplateId())
             ));
         }
 
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE)) {
+        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE, $template)) {
             $facade->addLink('_self_update_areas', $this->generateRoute('open_orchestra_api_areas_update_in_template',
                 array(
                     'templateId' => $template->getTemplateId())
