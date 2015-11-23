@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\WorkflowFunctionAdminBundle\Tests\AuthorizeStatusChange\Strategies;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\Backoffice\AuthorizeEdition\TemplateStrategy;
 use Phake;
 
@@ -61,17 +62,18 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param StatusableInterface $document
-     * @param bool                $isGranted
-     * @param bool                $editable
+     * @param bool $isGranted
+     * @param bool $editable
      *
      * @dataProvider provideTestIsEditable
      */
-    public function testIsEditable($document,$isGranted, $editable)
+    public function testIsEditable($isGranted, $editable)
     {
-        $document = Phake::mock($document);
+        $document = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
+
         $this->assertSame($editable, $this->templateStrategy->isEditable($document));
+        Phake::verify($this->authorizationChecker)->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE, $document);
     }
 
     /**
@@ -80,8 +82,8 @@ class TemplateStrategyTest extends \PHPUnit_Framework_TestCase
     public function provideTestIsEditable()
     {
         return array(
-            array('OpenOrchestra\ModelInterface\Model\TemplateInterface', true, true),
-            array('OpenOrchestra\ModelInterface\Model\TemplateInterface', false, false),
+            array(true, true),
+            array(false, false),
         );
     }
 }
