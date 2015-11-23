@@ -1,0 +1,14 @@
+{
+    "name": "open-orchestra-cms-bundle",
+    "version": "1.1.0",
+    "private": true,
+    "dependencies": {
+        "grunt": "0.4.x",
+        "grunt-cli": "~0.1",
+        "grunt-mocha": "0.4.x",
+        "chai": "2.1.x",
+        "mocha": "2.3.x",
+        "phantomjs": "1.9.x",
+        "sinon": "1.17.x"
+    }
+}

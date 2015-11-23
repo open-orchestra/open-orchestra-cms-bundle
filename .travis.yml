@@ -15,11 +15,14 @@ before_install:
   - if [ -f ~/composer/composer.phar ]; then mv ~/composer/composer.phar ./; else wget https://getcomposer.org/composer.phar; fi
   - mkdir -p ~/composer
   - cp composer.phar ~/composer/composer.phar
+  - npm install
 
 install:
   - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
 
-script: ./bin/phpunit
+script:
+  - ./bin/phpunit
+  - ./node_modules/.bin/grunt js-test
 
 addons:
   code_climate:
