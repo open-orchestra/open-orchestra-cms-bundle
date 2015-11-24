@@ -21,6 +21,8 @@ parameters:
     open_orchestra_backoffice.type.node_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\NodeChoiceType
     open_orchestra_backoffice.type.site_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\SiteChoiceType
     open_orchestra_backoffice.type.content_type_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentTypeChoiceType
+    open_orchestra_backoffice.type.content_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentChoiceType
+    open_orchestra_backoffice.type.content_list_criteria.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentListCriteriaType
     open_orchestra_backoffice.type.tinymce.class: OpenOrchestra\BackofficeBundle\Form\Type\TinymceType
     open_orchestra_backoffice.type.keyword.class: OpenOrchestra\BackofficeBundle\Form\Type\KeywordType
     open_orchestra_backoffice.type.keywords_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\KeywordsChoiceType
@@ -31,6 +33,7 @@ parameters:
     open_orchestra_backoffice.type.color_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\ColorPickerType
     open_orchestra_backoffice.type.role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\RoleChoiceType
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\BackofficeBundle\Form\Type\ApiClientType
+    open_orchestra_backoffice.type.operator_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\OperatorChoiceType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -239,6 +242,15 @@ services:
             - @open_orchestra_backoffice.context_manager
         tags:
             - { name: form.type, alias: oo_content_type_choice}
+    open_orchestra_backoffice.type.content_choice:
+        class: %open_orchestra_backoffice.type.content_choice.class%
+        arguments:
+            - @open_orchestra_model.repository.content
+            - @open_orchestra_backoffice.context_manager
+            - @open_orchestra_backoffice.transformer.reference_to_embed
+            - %open_orchestra_model.document.content.class%
+        tags:
+            - { name: form.type, alias: oo_content_choice}
     open_orchestra_backoffice.type.orchestra_color_choice:
         class: %open_orchestra_backoffice.type.orchestra_choice.class%
         arguments:
@@ -314,3 +326,7 @@ services:
             - %open_orchestra_api.document.api_client.class%
         tags:
             - { name: form.type, alias: oo_api_client }
+    open_orchestra_backoffice.type.operator_choice:
+        class: %open_orchestra_backoffice.type.operator_choice.class%
+        tags:
+            - { name: form.type, alias: oo_operator_choice}

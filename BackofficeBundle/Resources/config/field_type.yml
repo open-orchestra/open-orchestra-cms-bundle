@@ -129,6 +129,18 @@ parameters:
                     default_value: choice
                 input:
                     default_value: array
+        document:
+            label: open_orchestra_backoffice.form.field_type.custom_type.content
+            type: oo_content_choice
+            options:
+                required:
+                    default_value: false
+                content_type:
+                    default_value: choice
+                operator:
+                    default_value: choice
+                keyword:
+                    default_value: null
 
     open_orchestra_backoffice.options:
         orchestra_default_value_choice:
@@ -183,3 +195,16 @@ parameters:
             type: hidden
             label: open_orchestra_backoffice.form.orchestra_fields.date_format
             required: true
+        content_type:
+            type: oo_content_type_choice
+            label: open_orchestra_backoffice.form.orchestra_fields.content_type
+            required: false
+        operator:
+            type: oo_operator_choice
+            label: open_orchestra_backoffice.form.orchestra_fields.operator
+            required: true
+        keyword:
+            type: oo_keywords_choice
+            label: open_orchestra_backoffice.form.orchestra_fields.keyword
+            embedded: false
+            required: false

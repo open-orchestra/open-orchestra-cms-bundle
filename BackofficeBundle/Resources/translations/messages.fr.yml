@@ -81,6 +81,7 @@ open_orchestra_backoffice:
                 hidden: Champ caché
                 date: Date
                 choice: Choix
+                content: Choix d'un contenu
         website:
             success: Le site a été modifié
             creation: Le site a été créé
@@ -118,7 +119,6 @@ open_orchestra_backoffice:
             language: Langue
             linked_to_site: Lié au site courant
             keywords: Mots-clé
-            content_type: Type de contenu
             content_id: Id du contenu
         content_type:
             success: Le type de contenu a été modifié
@@ -225,6 +225,9 @@ open_orchestra_backoffice:
                 choice: Listes déroulantes
                 text: Plusieurs champs texte
                 single_text: Un champ texte
+            content_type: Type de contenu à afficher
+            operator: Type de choix
+            keyword: Mot-clé à afficher
         keyword:
             label: Libellé
             creation: Le mot-clé a été créé

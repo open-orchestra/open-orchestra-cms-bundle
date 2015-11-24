@@ -81,6 +81,7 @@ open_orchestra_backoffice:
                 hidden: Hidden
                 date: Date
                 choice: Choice
+                content: Content choice
         website:
             success: The website has been modified
             creation: The website has been created
@@ -118,7 +119,6 @@ open_orchestra_backoffice:
             language: Language
             linked_to_site: Link to the current site
             keywords: Keywords
-            content_type: Content type
             content_id: Content id
         content_type:
             success: The content type has been modified
@@ -225,6 +225,9 @@ open_orchestra_backoffice:
                 choice: Select fields
                 text: Multiple text fields
                 single_text: One text field
+            content_type: Content type to display
+            operator: Type of choice
+            keyword: Keyword to display
         keyword:
             label: Label
             creation: Keyword has been created
