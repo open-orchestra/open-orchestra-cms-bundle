@@ -1,3 +1,4 @@
 /vendor/
 /bin/
+/*/Tests/_mocha/built_sources
 composer.lock

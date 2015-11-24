@@ -1,0 +1,25 @@
+{
+    "name": "open-orchestra-cms-bundle",
+    "version": "1.1.0",
+    "main": "bower.json",
+    "dependencies": {
+        "jquery": "~2.1.1",
+        "jquery-ui": "~1.11.2",
+        "bootstrap": "~3.3.4",
+        "jquery-form": "3.51",
+        "jcrop": "~0.9.12",
+        "select2": "~3.5.1",
+        "datatables": "~1.10.2",
+        "datatables-colvis": "~1.1.2",
+        "datatables-bootstrap3" : "*",
+        "font-awesome": "4.3.0",
+        "pace": "v1.0.2",
+        "open-sans": "v1.1.0",
+        "backbone": "*",
+        "underscore": "*",
+        "jquery-minicolors": "*",
+        "backbone.wreqr": "*",
+        "lodash": ">= 3.5.0",
+        "gridstack": "0.2.3"
+    }
+}

@@ -2,9 +2,14 @@
     "name": "open-orchestra-cms-bundle",
     "version": "1.1.0",
     "private": true,
+    "scripts": {
+        "postinstall": "./node_modules/.bin/bower install"
+    },
     "dependencies": {
+        "bower": "1.6.x",
         "grunt": "0.4.x",
         "grunt-cli": "~0.1",
+        "grunt-contrib-coffee": "0.13.x",
         "grunt-mocha": "0.4.x",
         "chai": "2.1.x",
         "mocha": "2.3.x",
