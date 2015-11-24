@@ -10,4 +10,10 @@ use OpenOrchestra\Pagination\Configuration\PaginationRepositoryInterface;
 interface GroupRepositoryInterface extends PaginationRepositoryInterface
 {
 
+    /**
+     * find all groups with a site
+     *
+     * @return array
+     */
+    public function findAllWithSite();
 }
