@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
+use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
@@ -13,13 +14,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ContentTypeChoiceType extends AbstractType
 {
     protected $contentTypeRepository;
+    protected $context;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
+     * @param ContextManager                 $context
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository)
+    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $context)
     {
         $this->contentTypeRepository = $contentTypeRepository;
+        $this->context = $context;
     }
 
     /**
@@ -39,10 +43,11 @@ class ContentTypeChoiceType extends AbstractType
      */
     protected function getChoices()
     {
+        $currentLanguage = $this->context->getCurrentLocale();
         $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion();
 
-        $choices = array_map(function (ContentTypeInterface $element) {
-            return $element->getName();
+        $choices = array_map(function (ContentTypeInterface $element) use ($currentLanguage) {
+            return $element->getName($currentLanguage);
         }, $contentTypes);
 
         return $choices;

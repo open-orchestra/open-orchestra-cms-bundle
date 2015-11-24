@@ -11,24 +11,29 @@ use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentTypeChoiceType;
 class ContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $form;
-    protected $contentTypeRepository;
+    protected $context;
     protected $contentType1;
     protected $contentType2;
+    protected $locale = 'en';
     protected $contentTypeName1;
     protected $contentTypeName2;
+    protected $contentTypeRepository;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        Phake::when($this->context)->getCurrentLocale()->thenReturn($this->locale);
+
         $this->contentTypeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface');
         $this->contentType1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($this->contentType1)->getName()->thenReturn($this->contentTypeName1);
+        Phake::when($this->contentType1)->getName($this->locale)->thenReturn($this->contentTypeName1);
         $this->contentType2 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');
-        Phake::when($this->contentType2)->getName()->thenReturn($this->contentTypeName2);
+        Phake::when($this->contentType2)->getName($this->locale)->thenReturn($this->contentTypeName2);
 
-        $this->form = new ContentTypeChoiceType($this->contentTypeRepository);
+        $this->form = new ContentTypeChoiceType($this->contentTypeRepository, $this->context);
     }
 
     /**
