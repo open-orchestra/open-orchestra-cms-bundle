@@ -27,7 +27,9 @@ services:
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.content_type:
         class: %open_orchestra_log.subscriber.content_type.class%
-        arguments: [@logger]
+        arguments:
+            - @logger
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }

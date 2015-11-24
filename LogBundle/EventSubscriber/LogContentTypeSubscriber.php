@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
+use Monolog\Logger;
+use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\ContentTypeEvents;
 use OpenOrchestra\ModelInterface\Event\ContentTypeEvent;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
@@ -11,6 +13,18 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
  */
 class LogContentTypeSubscriber extends AbstractLogSubscriber
 {
+    protected $context;
+
+    /**
+     * @param Logger         $logger
+     * @param ContextManager $context
+     */
+    public function __construct(Logger $logger, ContextManager $context)
+    {
+        parent::__construct($logger);
+        $this->context = $context;
+    }
+
     /**
      * @param ContentTypeEvent $event
      */
@@ -55,7 +69,7 @@ class LogContentTypeSubscriber extends AbstractLogSubscriber
     {
         $this->logger->info($message, array(
             'content_type_id' => $contentType->getContentTypeId(),
-            'content_type_name' => $contentType->getName()
+            'content_type_name' => $contentType->getName($this->context->getCurrentLocale()),
         ));
     }
 }

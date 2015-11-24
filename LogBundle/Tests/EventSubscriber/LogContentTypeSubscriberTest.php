@@ -11,7 +11,9 @@ use OpenOrchestra\ModelInterface\ContentTypeEvents;
  */
 class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
 {
+    protected $context;
     protected $contentType;
+    protected $locale = 'en';
     protected $contentTypeEvent;
 
     /**
@@ -20,11 +22,13 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
+        $this->context = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        Phake::when($this->context)->getCurrentLocale()->thenReturn($this->locale);
         $this->contentType = Phake::mock('OpenOrchestra\ModelBundle\Document\ContentType');
         $this->contentTypeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentTypeEvent');
         Phake::when($this->contentTypeEvent)->getContentType()->thenReturn($this->contentType);
 
-        $this->subscriber = new LogContentTypeSubscriber($this->logger);
+        $this->subscriber = new LogContentTypeSubscriber($this->logger, $this->context);
     }
 
     /**
@@ -47,7 +51,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
         $this->subscriber->contentTypeCreation($this->contentTypeEvent);
         $this->assertEventLogged('open_orchestra_log.content_type.create', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
-            'content_type_name' => $this->contentType->getName(),
+            'content_type_name' => $this->contentType->getName($this->locale),
         ));
     }
 
@@ -59,7 +63,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
         $this->subscriber->contentTypeDelete($this->contentTypeEvent);
         $this->assertEventLogged('open_orchestra_log.content_type.delete', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
-            'content_type_name' => $this->contentType->getName()
+            'content_type_name' => $this->contentType->getName($this->locale)
         ));
     }
 
@@ -71,7 +75,7 @@ class LogContentTypeSubscriberTest extends LogAbstractSubscriberTest
         $this->subscriber->contentTypeUpdate($this->contentTypeEvent);
         $this->assertEventLogged('open_orchestra_log.content_type.update', array(
             'content_type_id' => $this->contentType->getContentTypeId(),
-            'content_type_name' => $this->contentType->getName()
+            'content_type_name' => $this->contentType->getName($this->locale)
         ));
     }
 }
