@@ -17,3 +17,7 @@ services:
             - @open_orchestra_model.repository.node
         tags:
             - { name: security.voter }
+    open_orchestra_backoffice.voter.statusable:
+        class: %open_orchestra_backoffice.voter.statusable.class%
+        tags:
+            - { name: security.voter }
