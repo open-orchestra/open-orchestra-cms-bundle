@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use OpenOrchestra\ModelInterface\Model\StatusableInterface;
-
 /**
  * Trait ListStatus
  */
@@ -14,7 +12,7 @@ trait ListStatus
      *
      * @return StatusCollectionFacade
      */
-    protected function listStatuses(StatusableInterface $document)
+    protected function listStatuses(\OpenOrchestra\ModelInterface\Model\StatusableInterface $document)
     {
         $transitions = $document->getStatus()->getFromRoles();
 
