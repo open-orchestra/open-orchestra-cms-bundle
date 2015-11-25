@@ -2,6 +2,7 @@ parameters:
     open_orchestra_backoffice.voter.group_site.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\GroupSiteVoter
     open_orchestra_backoffice.voter.node_group_role.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter
     open_orchestra_backoffice.voter.statusable.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\StatusableVoter
+    open_orchestra_backoffice.voter.node_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVersionVoter
 
 services:
     open_orchestra_backoffice.voter.group_site:
@@ -13,6 +14,12 @@ services:
             - { name: security.voter }
     open_orchestra_backoffice.voter.node_group_role:
         class: %open_orchestra_backoffice.voter.node_group_role.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.node_version:
+        class: %open_orchestra_backoffice.voter.node_version.class%
         arguments:
             - @open_orchestra_model.repository.node
         tags:
