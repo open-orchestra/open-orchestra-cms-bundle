@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\TemplateEvents;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +31,9 @@ class TemplateController extends AbstractAdminController
 
         $template = $templateRepository->findOneByTemplateId($templateId);
 
-        $form = $this->generateTemplateForm(
-            $template,
-            $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $templateId))
-        );
+        $form = $this->createForm('oo_template', $template, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $templateId))
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
@@ -65,7 +64,9 @@ class TemplateController extends AbstractAdminController
         $template->setSiteId($context->getCurrentSiteId());
         $template->setLanguage($context->getCurrentLocale());
 
-        $form = $this->generateTemplateForm($template, $this->generateUrl('open_orchestra_backoffice_template_new'));
+        $form = $this->createForm('oo_template', $template, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_template_new')
+        ));
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
@@ -79,24 +80,5 @@ class TemplateController extends AbstractAdminController
         }
 
         return $this->renderAdminForm($form);
-    }
-
-    /**
-     * @param $template
-     * @param $url
-     *
-     * @return Form
-     */
-    protected function generateTemplateForm($template, $url)
-    {
-        $form = $this->createForm(
-            'oo_template',
-            $template,
-            array(
-                'action' => $url
-            )
-        );
-
-        return $form;
     }
 }

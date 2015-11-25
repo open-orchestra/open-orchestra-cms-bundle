@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
@@ -40,7 +41,7 @@ class ContentController extends AbstractAdminController
                 'language' => $content->getLanguage(),
                 'version' => $content->getVersion(),
             ))
-        ));
+        ), ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT);
 
         $form->handleRequest($request);
         $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.content.success');
@@ -99,7 +100,7 @@ class ContentController extends AbstractAdminController
                 'contentType' => $contentType
             )),
             'method' => 'POST',
-        ));
+        ), ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.content.creation');

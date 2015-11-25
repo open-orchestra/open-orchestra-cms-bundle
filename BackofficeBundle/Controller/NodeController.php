@@ -7,7 +7,6 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +35,8 @@ class NodeController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $form = $this->createForm('oo_node', $node, array('action' => $url));
+        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        $form = $this->createForm('oo_node', $node, array('action' => $url), $editionRole);
 
         $form->handleRequest($request);
 
@@ -65,7 +65,8 @@ class NodeController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $form = $this->createForm('oo_node', $node, array('action' => $url));
+        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
+        $form = $this->createForm('oo_node', $node, array('action' => $url), $editionRole);
 
         $form->handleRequest($request);
 

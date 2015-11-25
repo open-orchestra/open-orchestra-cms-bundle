@@ -2,7 +2,10 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +41,8 @@ class BlockController extends AbstractAdminController
         );
 
         if ($node) {
-            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($node);
+            $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+            $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($editionRole, $node);
         }
         $form = parent::createForm('oo_block', $block, $options);
 
