@@ -45,11 +45,27 @@ class NodeVersionVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test support attributes
+     * @param bool   $supports
+     * @param string $role
+     *
+     * @dataProvider provideRoleAndSupports
      */
-    public function testSupportAttributes()
+    public function testSupportAttributes($supports, $role)
     {
-        $this->assertTrue($this->voter->supportsAttribute('foo'));
+        $this->assertSame($supports, $this->voter->supportsAttribute($role));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideRoleAndSupports()
+    {
+        return array(
+            array(true, 'ROLE_USER'),
+            array(true, 'ROLE_ACCESS'),
+            array(false, '24051'),
+            array(false, 'foo'),
+        );
     }
 
     /**

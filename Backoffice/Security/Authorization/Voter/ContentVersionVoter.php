@@ -31,7 +31,7 @@ class ContentVersionVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return true;
+        return 0 === strpos($attribute, 'ROLE_');
     }
 
     /**
@@ -60,6 +60,12 @@ class ContentVersionVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
+        foreach ($attributes as $attribute) {
+            if (!$this->supportsAttribute($attribute)) {
+                return self::ACCESS_ABSTAIN;
+            }
+        }
+
         if (!$this->supportsClass($object)) {
             return self::ACCESS_ABSTAIN;
         }

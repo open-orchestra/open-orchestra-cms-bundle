@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -19,7 +21,7 @@ class StatusableVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return true;
+        return 0 === strpos($attribute, 'ROLE_');
     }
 
     /**
@@ -31,7 +33,7 @@ class StatusableVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return is_subclass_of($class, 'OpenOrchestra\ModelInterface\Model\StatusableInterface');
+        return $class instanceof StatusableInterface && $class->getStatus() instanceof StatusInterface;
     }
 
     /**
@@ -48,6 +50,12 @@ class StatusableVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
+        foreach ($attributes as $attribute) {
+            if (!$this->supportsAttribute($attribute)) {
+                return self::ACCESS_ABSTAIN;
+            }
+        }
+
         if (!$this->supportsClass($object)) {
             return self::ACCESS_ABSTAIN;
         }

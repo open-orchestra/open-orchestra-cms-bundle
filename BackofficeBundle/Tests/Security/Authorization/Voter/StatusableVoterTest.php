@@ -37,22 +37,45 @@ class StatusableVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test support attributes
+     * @param bool   $supports
+     * @param string $role
+     *
+     * @dataProvider provideRoleAndSupports
      */
-    public function testSupportAttributes()
+    public function testSupportAttributes($supports, $role)
     {
-        $this->assertTrue($this->voter->supportsAttribute('foo'));
+        $this->assertSame($supports, $this->voter->supportsAttribute($role));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideRoleAndSupports()
+    {
+        return array(
+            array(true, 'ROLE_USER'),
+            array(true, 'ROLE_ACCESS'),
+            array(false, '24051'),
+            array(false, 'foo'),
+        );
     }
 
     /**
      * @param bool   $supports
      * @param string $class
+     * @param bool   $status
      *
      * @dataProvider provideSupportsAnsClass
      */
-    public function testSuuportClass($supports, $class)
+    public function testSuportClass($supports, $class, $status = false)
     {
-        $this->assertSame($supports, $this->voter->supportsClass($class));
+        $object = Phake::mock($class);
+        if ($status) {
+            $statusObject = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+            Phake::when($object)->getStatus()->thenReturn($statusObject);
+        }
+
+        $this->assertSame($supports, $this->voter->supportsClass($object));
     }
 
     /**
@@ -61,8 +84,10 @@ class StatusableVoterTest extends \PHPUnit_Framework_TestCase
     public function provideSupportsAnsClass()
     {
         return array(
-            array(true, 'OpenOrchestra\ModelInterface\Model\NodeInterface'),
-            array(true, 'OpenOrchestra\ModelInterface\Model\ContentInterface'),
+            array(true, 'OpenOrchestra\ModelInterface\Model\NodeInterface', true),
+            array(true, 'OpenOrchestra\ModelInterface\Model\ContentInterface', true),
+            array(false, 'OpenOrchestra\ModelInterface\Model\NodeInterface'),
+            array(false, 'OpenOrchestra\ModelInterface\Model\ContentInterface'),
             array(false, 'OpenOrchestra\ModelInterface\Model\TemplateInterface'),
             array(false, 'OpenOrchestra\ModelInterface\Model\BlockInterface'),
             array(false, 'stdClass'),
