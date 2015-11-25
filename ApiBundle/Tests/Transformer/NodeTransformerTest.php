@@ -17,7 +17,6 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $nodeTransformer;
 
-    protected $authorizeEditionManager;
     protected $authorizationChecker;
     protected $roleName = 'ROLE_NAME';
     protected $transformerManager;
@@ -38,8 +37,6 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->authorizeEditionManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager');
-
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
@@ -83,7 +80,6 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->authorizeEditionManager,
             $this->authorizationChecker
         );
 
