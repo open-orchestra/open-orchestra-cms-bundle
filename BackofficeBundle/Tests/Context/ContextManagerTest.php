@@ -117,6 +117,18 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test get current local when user haven't language
+     */
+    public function testGetCurrentLocaleWhenUserNoLanguage()
+    {
+        $user = Phake::mock('OpenOrchestra\UserBundle\Model\UserInterface');
+        Phake::when($user)->getLanguage()->thenReturn(null);
+        Phake::when($this->token)->getUser()->thenReturn($user);
+
+        $this->assertSame($this->defaultLocale, $this->contextManager->getCurrentLocale());
+    }
+
+    /**
      * Test getAvailableSites
      */
     public function testGetAvailableSites()
