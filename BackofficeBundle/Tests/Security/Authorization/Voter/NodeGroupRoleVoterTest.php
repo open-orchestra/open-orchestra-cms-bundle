@@ -4,7 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
-use OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\NodeGroupRoleVoter;
+use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 

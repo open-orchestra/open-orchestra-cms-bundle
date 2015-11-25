@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Security\Authorization\Voter;
 
-use OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\GroupSiteVoter;
+use OpenOrchestra\Backoffice\Security\Authorization\Voter\GroupSiteVoter;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
