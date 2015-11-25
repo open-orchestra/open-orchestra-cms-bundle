@@ -29,11 +29,13 @@ extendView['submitAdmin'] = {
                   html: response
                   domContainer: $('h1.page-title').parent()
                 ))
+                $(document).scrollTop 0
               200: (response) ->
                 new viewClass(viewContext.addOption(
                   html: response
                   submitted: true
                 ))
+                $(document).scrollTop 0
           false
     return
 }
