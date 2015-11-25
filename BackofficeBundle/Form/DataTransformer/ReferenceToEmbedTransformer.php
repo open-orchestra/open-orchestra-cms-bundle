@@ -42,7 +42,7 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
             $document = unserialize($document);
 
             return array(
-                str_replace('\\', ':', get_class($document)) => new \MongoId($document->getId())
+                str_replace('\\', ':', get_class($document)) => $document->getId()
             );
         }
 

@@ -41,19 +41,24 @@ class ContentChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->referenceToEmbedTransformer);
-        $builder->add(str_replace('\\', ':', $this->contentClass), 'document', array(
+        $builder->add(str_replace('\\', ':', $this->contentClass), 'choice', array(
             'label' => false,
-            'property' => 'name',
-            'class' => $this->contentClass,
             'choices' => $this->getChoices($options['content_type'], $options['operator'], $options['keyword']),
         ));
     }
 
     protected function getChoices($contentType, $operator, $keywords)
     {
-        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
+        $choices = array();
 
-        return $this->contentRepository->findByContentTypeAndKeywords($language, $contentType/*, $operator, $keywords*/);
+        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
+        $contents = $this->contentRepository->findByContentTypeAndKeywords($language, $contentType/*, $operator, $keywords*/);
+
+        foreach ($contents as $content) {
+            $choices[$content->getId()] = $content->getName();
+        }
+
+        return $choices;
     }
 
     /**
