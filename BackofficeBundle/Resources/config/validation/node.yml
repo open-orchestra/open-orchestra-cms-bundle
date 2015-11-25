@@ -1,5 +1,4 @@
 OpenOrchestra\ModelInterface\Model\NodeInterface:
     constraints:
         - OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePattern: ~
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\AuthorizeEdition: ~
         - OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNode: { groups: [restore] }
