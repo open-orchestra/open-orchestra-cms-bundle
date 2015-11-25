@@ -36,11 +36,17 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
      *
      * @return Document
      */
-    public function transform($id)
+    public function transform($document)
     {
-        $document = $this->objectManager->find($this->documentClass, $id);
+        if (!is_null($document)) {
+            $document = unserialize($document);
 
-        return $document;
+            return array(
+                str_replace('\\', ':', get_class($document)) => new \MongoId($document->getId())
+            );
+        }
+
+        return null;
     }
 
     /**
@@ -56,6 +62,6 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
 
         $document = $this->objectManager->find(str_replace(':', '\\', $documentClass), $id);
 
-        return $document;
+        return serialize($document);
     }
 }
