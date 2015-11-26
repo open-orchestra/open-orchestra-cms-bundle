@@ -248,7 +248,7 @@ services:
             - @open_orchestra_model.repository.content
             - @open_orchestra_backoffice.context_manager
             - @open_orchestra_backoffice.transformer.reference_to_embed
-            - %open_orchestra_model.document.content.class%
+            - content
         tags:
             - { name: form.type, alias: oo_content_choice}
     open_orchestra_backoffice.type.orchestra_color_choice:

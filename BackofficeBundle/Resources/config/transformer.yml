@@ -33,6 +33,6 @@ services:
     open_orchestra_backoffice.transformer.reference_to_embed:
         class: %open_orchestra_backoffice.transformer.reference_to_embed.class%
         arguments:
-            - @object_manager
+            - @open_orchestra_model.manager.content_for_embed
 
             

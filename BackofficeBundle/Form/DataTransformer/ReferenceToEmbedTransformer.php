@@ -4,45 +4,44 @@ namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ODM\MongoDB\Persisters\PersistenceBuilder;
+use OpenOrchestra\ModelBundle\Manager\DocumentForEmbedManager;
 
 /**
  * Class ReferenceToEmbedTransformer
  */
 class ReferenceToEmbedTransformer implements DataTransformerInterface
 {
-    protected $objectManager;
-    protected $documentClass;
+    protected $documentForEmbedManager;
+    protected $formTypeName;
 
     /**
      * @param ObjectManager $objectManager
+     * @param string        $contentClass
      */
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(DocumentForEmbedManager $documentForEmbedManager)
     {
-        $this->objectManager = $objectManager;
+        $this->documentForEmbedManager = $documentForEmbedManager;
     }
 
     /**
-     * @param string $documentClass
+     * @param string $documentName
      */
-    public function setDocumentClass($documentClass)
+    public function setFormTypeName($formTypeName)
     {
-        $this->documentClass = $documentClass;
+        $this->formTypeName = $formTypeName;
     }
 
     /**
-     * Take a Document Id to turn it into Embed Document
+     * Take a embed document array representation to return associative array formType id
      *
-     * @param string $id
+     * @param array $data
      *
-     * @return Document
+     * @return array
      */
-    public function transform($document)
+    public function transform($data)
     {
-        if (!is_null($document)) {
-            return array(
-                str_replace('\\', ':', $this->documentClass) => $document['_id']->{'$id'}
-            );
+        if (!is_null($data)) {
+            return array($this->formTypeName => $this->documentForEmbedManager->transform($data));
         }
 
         return null;
@@ -51,22 +50,14 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     /**
      * Take an array with document id to turn it into embed document
      *
-     * @param array $assiociatedId
+     * @param array $data
      *
-     * @return Document
+     * @return array
      */
-    public function reverseTransform($value)
+    public function reverseTransform($data)
     {
-        list($documentClass, $id) = each($value);
-        $documentClass = str_replace(':', '\\', $documentClass);
+        list($key, $id) = each($data);
 
-        $document = $this->objectManager->find($documentClass, $id);
-        $unitOfWork = $this->objectManager->getUnitOfWork();
-        $persistenceBuilder = new PersistenceBuilder($this->objectManager, $unitOfWork);
-        $mapping = array (
-            'targetDocument' => $documentClass,
-        );
-
-        return $persistenceBuilder->prepareEmbeddedDocumentValue($mapping, $document, true);
+        return $this->documentForEmbedManager->reverseTransform($id);
     }
 }

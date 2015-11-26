@@ -17,22 +17,22 @@ class ContentChoiceType extends AbstractType
 {
     protected $contentRepository;
     protected $contextManager;
-    protected $contentClass;
+    protected $formTypeName;
 
     /**
      * @param ContentRepositoryInterface  $contentRepository
      * @param ContextManager              $contextManager
      * @param ReferenceToEmbedTransformer $referenceToEmbedTransformer
-     * @param string                      $contentClass
+     * @param string                      $formTypeName
      */
-    public function __construct(ContentRepositoryInterface $contentRepository, ContextManager $contextManager, ReferenceToEmbedTransformer $referenceToEmbedTransformer, $contentClass)
+    public function __construct(ContentRepositoryInterface $contentRepository, ContextManager $contextManager, ReferenceToEmbedTransformer $referenceToEmbedTransformer, $formTypeName)
     {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         $this->referenceToEmbedTransformer = $referenceToEmbedTransformer;
-        $this->contentClass = $contentClass;
+        $this->formTypeName = $formTypeName;
 
-        $this->referenceToEmbedTransformer->setDocumentClass($this->contentClass);
+        $this->referenceToEmbedTransformer->setFormTypeName($this->formTypeName);
     }
 
     /**
@@ -42,7 +42,7 @@ class ContentChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->referenceToEmbedTransformer);
-        $builder->add(str_replace('\\', ':', $this->contentClass), 'choice', array(
+        $builder->add($this->formTypeName, 'choice', array(
             'label' => false,
             'choices' => $this->getChoices($options['content_type'], $options['operator'], $options['keyword']),
         ));
