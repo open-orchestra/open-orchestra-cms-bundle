@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,12 +54,16 @@ class NodeController extends AbstractAdminController
      * @Config\Route("/node/new/{parentId}", name="open_orchestra_backoffice_node_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_NODE')")
-     *
      * @return Response
      */
     public function newAction(Request $request, $parentId)
     {
+        $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
+
+        if (!$this->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $parentNode)) {
+            throw new AccessDeniedException();
+        }
+
         $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode($parentId);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
