@@ -41,7 +41,7 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     public function transform($data)
     {
         if (!is_null($data)) {
-            return array($this->formTypeName => $this->documentForEmbedManager->transform($data));
+            return array($this->formTypeName => $this->documentForEmbedManager->fromDbToEntity($data)->getId());
         }
 
         return null;
@@ -58,6 +58,6 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     {
         list($key, $id) = each($data);
 
-        return $this->documentForEmbedManager->reverseTransform($id);
+        return $this->documentForEmbedManager->fromEntityToDb($id);
     }
 }
