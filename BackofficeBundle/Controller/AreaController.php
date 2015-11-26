@@ -4,10 +4,12 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\Form\FormInterface;
@@ -40,7 +42,8 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
-        $form = $this->generateForm($request, $actionUrl, $area);
+        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        $form = $this->generateForm($request, $actionUrl, $area, $editionRole);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(NodeEvents::NODE_UPDATE_AREA, new NodeEvent($node));
@@ -68,7 +71,7 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
-        $form = $this->generateForm($request, $actionUrl, $area, $template);
+        $form = $this->generateForm($request, $actionUrl, $area, $template, TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_UPDATE, new TemplateEvent($template));
@@ -78,20 +81,19 @@ class AreaController extends AbstractAdminController
     }
 
     /**
-     * @param Request                     $request
-     * @param string                      $actionUrl
-     * @param AreaInterface               $area
-     * @param AreaContainerInterface|null $areaContainer
+     * @param Request                $request
+     * @param string                 $actionUrl
+     * @param AreaInterface          $area
+     * @param AreaContainerInterface $areaContainer
+     * @param string                 $role
      *
      * @return FormInterface
      */
-    protected function generateForm(Request $request, $actionUrl, $area, AreaContainerInterface $areaContainer = null)
+    protected function generateForm(Request $request, $actionUrl, $area, AreaContainerInterface $areaContainer, $role)
     {
         $options = array('action' => $actionUrl);
 
-        if ($areaContainer) {
-            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($areaContainer);
-        }
+        $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($role, $areaContainer);
         $form = parent::createForm('oo_area', $area, $options);
 
         $form->handleRequest($request);
