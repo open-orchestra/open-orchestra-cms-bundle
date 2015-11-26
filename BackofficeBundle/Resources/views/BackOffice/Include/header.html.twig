@@ -1,11 +1,13 @@
 <!-- HEADER -->
 <header id="header">
-    <div id="logo-group">
+    <div id="logo-group" class="oo-version-container">
 
         <!-- PLACE YOUR LOGO HERE -->
         <span id="logo"> <img src="{{ asset('bundles/openorchestrabackoffice/images/logo-orchestra.png') }}" alt="PHP Ochestra"> </span>
         <!-- END LOGO PLACEHOLDER -->
-        <span id="oo-version">{{ constant('\\OpenOrchestra\\BaseBundle\\OpenOrchestraBaseBundle::VERSION')|default('') }}</span>
+        <span class="oo-version-container text-nowrap"><span class="oo-version">
+            {% set extra_version = constant('\\OpenOrchestra\\BaseBundle\\OpenOrchestraBaseBundle::EXTRA_VERSION')|lower %}
+            {{ constant('\\OpenOrchestra\\BaseBundle\\OpenOrchestraBaseBundle::VERSION')|default('') }}{% if extra_version != 'stable' %}-{{ extra_version }}{% endif %}</span></span>
         <!-- Note: The activity badge color changes when clicked and resets the number to 0
         Suggestion: You may want to set a flag when this happens to tick off all checked messages / notifications -->
         {#<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge"> *21* </b> </span>#}
