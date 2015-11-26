@@ -30,5 +30,4 @@ class CreateGroupListener extends AbstractNodeGroupRoleListener
             }
         }
     }
-
 }
