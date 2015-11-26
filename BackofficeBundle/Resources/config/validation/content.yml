@@ -1,3 +1,0 @@
-OpenOrchestra\ModelInterface\Model\ContentInterface:
-    constraints:
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\AuthorizeEdition: ~

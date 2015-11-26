@@ -7,6 +7,8 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class StatusableStrategy
+ *
+ * @deprecated use the AuthorizationChecker instead, will be removed in 1.2.0
  */
 class StatusableStrategy implements AuthorizeEditionInterface
 {

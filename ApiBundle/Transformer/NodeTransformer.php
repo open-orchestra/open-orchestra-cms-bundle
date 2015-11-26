@@ -5,8 +5,8 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
@@ -31,14 +31,12 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $siteRepository;
     protected $eventDispatcher;
     protected $statusRepository;
-    protected $authorizeEdition;
 
     /**
      * @param EncryptionManager             $encrypter
      * @param SiteRepositoryInterface       $siteRepository
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
-     * @param AuthorizeEditionManager       $authorizeEdition
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
@@ -46,15 +44,12 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizeEditionManager $authorizeEdition,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+    ) {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
-        $this->authorizeEdition = $authorizeEdition;
         parent::__construct($authorizationChecker);
     }
 
@@ -100,7 +95,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
-        $facade->editable = $this->authorizeEdition->isEditable($node);
+        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
             'id' => $node->getId(),

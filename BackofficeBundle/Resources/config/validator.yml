@@ -17,12 +17,6 @@ services:
             - @open_orchestra_backoffice.generate_form_manager
         tags:
             - { name: validator.constraint_validator, alias: block_node_pattern}
-    open_orchestra_model.validator.authorize_edition:
-        class: %open_orchestra_model.validator.authorize_edition.class%
-        arguments:
-            - @open_orchestra_backoffice.authorize_edition.manager
-        tags:
-            - { name: validator.constraint_validator, alias: authorize_edition}
     open_orchestra_model.validator.restore_node:
         class: %open_orchestra_model.validator.restore_node.class%
         arguments:

@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class NodeVersionStrategy
+ *
+ * @deprecated use the AuthorizationChecker instead, will be removed in 1.2.0
  */
 class NodeVersionStrategy implements AuthorizeEditionInterface
 {

@@ -48,7 +48,6 @@ services:
             - @open_orchestra_model.repository.site
             - @open_orchestra_model.repository.status
             - @event_dispatcher
-            - @open_orchestra_backoffice.authorize_edition.manager
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}

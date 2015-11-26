@@ -7,6 +7,8 @@ use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
  * Class ContentVersionStrategy
+ *
+ * @deprecated use the AuthorizationChecker instead, will be removed in 1.2.0
  */
 class ContentVersionStrategy implements AuthorizeEditionInterface
 {

@@ -84,13 +84,14 @@ abstract class AbstractAdminController extends Controller
      * @param string|\Symfony\Component\Form\FormTypeInterface $type
      * @param null                                             $data
      * @param array                                            $options
+     * @param string|null                                      $editionRole
      *
      * @return \Symfony\Component\Form\Form
      */
-    public function createForm($type, $data = null, array $options = array())
+    public function createForm($type, $data = null, array $options = array(), $editionRole = null)
     {
-        if ($data && !isset($options['disabled'])) {
-            $options['disabled'] = !$this->get('open_orchestra_backoffice.authorize_edition.manager')->isEditable($data);
+        if (!isset($options['disabled']) && !is_null($editionRole)) {
+            $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($editionRole, $data);
         }
 
         return parent::createForm($type, $data, $options);

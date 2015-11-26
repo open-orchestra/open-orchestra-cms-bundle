@@ -6,6 +6,8 @@ use OpenOrchestra\Backoffice\AuthorizeEdition\AuthorizeEditionInterface;
 
 /**
  * Class AuthorizeEditionManager
+ *
+ * @deprecated use the AuthorizationChecker instead, will be removed in 1.2.0
  */
 class AuthorizeEditionManager
 {

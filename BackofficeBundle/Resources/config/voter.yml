@@ -1,6 +1,9 @@
 parameters:
-    open_orchestra_backoffice.voter.group_site.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\GroupSiteVoter
-    open_orchestra_backoffice.voter.node_group_role.class: OpenOrchestra\BackofficeBundle\Security\Authorization\Voter\NodeGroupRoleVoter
+    open_orchestra_backoffice.voter.group_site.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\GroupSiteVoter
+    open_orchestra_backoffice.voter.node_group_role.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter
+    open_orchestra_backoffice.voter.statusable.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\StatusableVoter
+    open_orchestra_backoffice.voter.node_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVersionVoter
+    open_orchestra_backoffice.voter.content_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVersionVoter
 
 services:
     open_orchestra_backoffice.voter.group_site:
@@ -14,5 +17,21 @@ services:
         class: %open_orchestra_backoffice.voter.node_group_role.class%
         arguments:
             - @open_orchestra_model.repository.node
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.node_version:
+        class: %open_orchestra_backoffice.voter.node_version.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.content_version:
+        class: %open_orchestra_backoffice.voter.content_version.class%
+        arguments:
+            - @open_orchestra_model.repository.content
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.statusable:
+        class: %open_orchestra_backoffice.voter.statusable.class%
         tags:
             - { name: security.voter }
