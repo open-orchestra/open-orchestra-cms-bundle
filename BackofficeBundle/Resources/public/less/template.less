@@ -16,14 +16,25 @@ ul, li {
 }
 //version open orchestra
 .oo-version {
-  position: relative;
-  top: 31px;
-  right: -5px;
   color: #BFBFBF;
   font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   text-shadow: 0 0 1px white;
+}
+// container version open orchestra
+.oo-version-container {
+  width: inherit !important;
+  height: inherit !important;
+  position: absolute;
+  left: 0;
+  top: 0;
+  //version open orchestra
+  .oo-version {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
 }
 /*################################AREAS*/
 
