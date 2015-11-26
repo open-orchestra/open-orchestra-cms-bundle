@@ -5,7 +5,6 @@
         <!-- PLACE YOUR LOGO HERE -->
         <span id="logo"> <img src="{{ asset('bundles/openorchestrabackoffice/images/logo-orchestra.png') }}" alt="PHP Ochestra"> </span>
         <!-- END LOGO PLACEHOLDER -->
-
         <span class="oo-version text-nowrap">
             {% set extra_version = constant('\\OpenOrchestra\\BaseBundle\\OpenOrchestraBaseBundle::EXTRA_VERSION')|lower %}
             {{ constant('\\OpenOrchestra\\BaseBundle\\OpenOrchestraBaseBundle::VERSION')|default('') }}{% if extra_version != 'stable' %}-{{ extra_version }}{% endif %}</span>
