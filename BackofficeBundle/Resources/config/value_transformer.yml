@@ -25,7 +25,7 @@ services:
     open_orchestra_backoffice.value_transformer.content:
         class: %open_orchestra_backoffice.value_transformer.document.class%
         arguments:
-            - getName
+            - name
         tags:
             - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.object:

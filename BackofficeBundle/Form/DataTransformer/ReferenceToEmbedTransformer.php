@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ODM\MongoDB\Persisters\PersistenceBuilder;
 
 /**
  * Class ReferenceToEmbedTransformer
@@ -39,10 +40,8 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     public function transform($document)
     {
         if (!is_null($document)) {
-            $document = unserialize($document);
-
             return array(
-                str_replace('\\', ':', get_class($document)) => $document->getId()
+                str_replace('\\', ':', $this->documentClass) => $document['_id']->{'$id'}
             );
         }
 
@@ -59,9 +58,15 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         list($documentClass, $id) = each($value);
+        $documentClass = str_replace(':', '\\', $documentClass);
 
-        $document = $this->objectManager->find(str_replace(':', '\\', $documentClass), $id);
+        $document = $this->objectManager->find($documentClass, $id);
+        $unitOfWork = $this->objectManager->getUnitOfWork();
+        $persistenceBuilder = new PersistenceBuilder($this->objectManager, $unitOfWork);
+        $mapping = array (
+            'targetDocument' => $documentClass,
+        );
 
-        return serialize($document);
+        return $persistenceBuilder->prepareEmbeddedDocumentValue($mapping, $document, true);
     }
 }

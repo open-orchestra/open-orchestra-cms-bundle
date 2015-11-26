@@ -9,14 +9,14 @@ use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerInterface;
  */
 class DocumentToHtmlStringTransformer implements ValueTransformerInterface
 {
-    protected $method;
+    protected $property;
 
     /**
-     * @param string        $method
+     * @param string $property
      */
-    public function __construct($method)
+    public function __construct($property)
     {
-        $this->method = $method;
+        $this->property = $property;
     }
 
     /**
@@ -26,10 +26,7 @@ class DocumentToHtmlStringTransformer implements ValueTransformerInterface
      */
     public function transform($data)
     {
-        $document = unserialize($data);
-        $method = $this->method;
-
-        return $document->$method();
+        return $data[$this->property];
     }
 
     /**

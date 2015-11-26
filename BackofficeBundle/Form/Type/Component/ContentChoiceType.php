@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ReferenceToEmbedTransformer;
+use Doctrine\ODM\MongoDB\Mapping\Annotations\String;
 
 /**
  * Class ContentChoiceType
