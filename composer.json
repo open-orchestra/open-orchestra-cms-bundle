@@ -19,7 +19,7 @@
         "stfalcon/tinymce-bundle": "0.3.8"
     },
     "require-dev": {
-        "open-orchestra/open-orchestra-model-bundle": "dev-master",
+        "open-orchestra/open-orchestra-model-bundle": "~1.0.0",
         "phpunit/phpunit" : "4.7.2",
         "psr/log": "1.0.0",
         "codeclimate/php-test-reporter": "dev-master",
