@@ -32,6 +32,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
     protected $node;
     protected $area;
     protected $currentSiteManager;
+    protected $authorizationChecker;
 
     /**
      * Set up the test
@@ -69,7 +70,10 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');
 
-        $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager, $this->currentSiteManager);
+        $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
+
+        $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager, $this->currentSiteManager,$this->authorizationChecker);
 
         $this->areaTransformer->setContext($this->transformerManager);
     }

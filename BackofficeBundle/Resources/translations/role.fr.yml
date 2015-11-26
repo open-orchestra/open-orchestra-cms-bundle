@@ -7,6 +7,9 @@ open_orchestra_role:
     role_access_delete_node: Supprimer une page
     role_access_move_node: Déplacer une page
     role_access_tree_template: Gérer les gabarits de pages
+    role_access_create_template: Créer un gabarit de page
+    role_access_update_template: Modifier un gabarit de page
+    role_access_delete_template: Supprimer un gabarit de page
     role_access_content_type_for_content: Gérer les contenus
     role_access_create_content_type_for_content: Créer un contenu
     role_access_update_content_type_for_content: Editer un contenu

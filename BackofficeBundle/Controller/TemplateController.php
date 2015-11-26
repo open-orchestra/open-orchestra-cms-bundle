@@ -33,7 +33,7 @@ class TemplateController extends AbstractAdminController
 
         $form = $this->createForm('oo_template', $template, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_template_form', array('templateId' => $templateId))
-        ));
+        ), TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
@@ -66,7 +66,7 @@ class TemplateController extends AbstractAdminController
 
         $form = $this->createForm('oo_template', $template, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_template_new')
-        ));
+        ), TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');

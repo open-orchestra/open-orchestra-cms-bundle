@@ -74,7 +74,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
         ) {
             $form->add('newAreas', 'collection', array(
                 'type' => 'text',
-                'allow_add' => true,
+                'allow_add' => !$form->isDisabled(),
                 'mapped' => false,
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.area.new_areas',
@@ -86,7 +86,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
             ));
         } elseif ($areaContainer instanceof AreaInterface) {
             $form->add('newAreas', 'button', array(
-                'disabled' => true,
+                'disabled' => !$form->isDisabled(),
                 'label' => $this->translator->trans('open_orchestra_backoffice.form.area.block_exists')
             ));
         }

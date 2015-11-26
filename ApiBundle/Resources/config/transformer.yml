@@ -61,6 +61,8 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.template:
         class: %open_orchestra_api.transformer.template.class%
+        arguments:
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.area:
@@ -69,6 +71,7 @@ services:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.manager.area
             - @open_orchestra_backoffice.context_manager
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block:
