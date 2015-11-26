@@ -34,5 +34,3 @@ services:
         class: %open_orchestra_backoffice.transformer.reference_to_embed.class%
         arguments:
             - @open_orchestra_model.manager.content_for_embed
-
-            
