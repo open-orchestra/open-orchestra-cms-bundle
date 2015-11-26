@@ -45,8 +45,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+    ) {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;

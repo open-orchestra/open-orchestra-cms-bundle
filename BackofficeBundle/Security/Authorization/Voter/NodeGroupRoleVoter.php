@@ -7,7 +7,7 @@ use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter as 
 /**
  * Class NodeGroupRoleVoter
  *
- * @deprecated use NodeGroupRoleVoter from Backoffice folder, will be removed in 1.1.2
+ * @deprecated use NodeGroupRoleVoter from Backoffice folder, will be removed in 1.2.0
  */
 class NodeGroupRoleVoter extends BaseNodeGroupRoleVoter
 {

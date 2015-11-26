@@ -7,7 +7,7 @@ use OpenOrchestra\Backoffice\Security\Authorization\Voter\GroupSiteVoter as Base
 /**
  * Class GroupSiteVoter
  *
- * @deprecated use GroupSiteVoter from Backoffice folder, will be removed in 1.1.2
+ * @deprecated use GroupSiteVoter from Backoffice folder, will be removed in 1.2.0
  */
 class GroupSiteVoter extends BaseGroupSiteVoter
 {
