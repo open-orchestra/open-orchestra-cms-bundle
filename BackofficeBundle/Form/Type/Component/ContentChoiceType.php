@@ -20,7 +20,7 @@ class ContentChoiceType extends AbstractType
 
     /**
      * @param ContentRepositoryInterface  $contentRepository
-     * @param CurrentSiteIdInterface              $contextManager
+     * @param CurrentSiteIdInterface      $contextManager
      * @param ReferenceToEmbedTransformer $referenceToEmbedTransformer
      * @param string                      $formTypeName
      */
@@ -47,6 +47,11 @@ class ContentChoiceType extends AbstractType
         ));
     }
 
+    /**
+     * @param string $contentType
+     * @param string $operator
+     * @param string $keywords
+     */
     protected function getChoices($contentType, $operator, $keywords)
     {
         $choices = array();

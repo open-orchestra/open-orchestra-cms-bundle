@@ -15,9 +15,9 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     protected $formTypeName;
 
     /**
-     * @param EntityDbMapper $entityDbMapper
-     * @param ObjectManager  $objectManager
-     * @param string         $documentClass
+     * @param EntityDbMapperInterface $entityDbMapper
+     * @param ObjectManager           $objectManager
+     * @param string                  $documentClass
      */
     public function __construct(EntityDbMapperInterface $entityDbMapper, ObjectManager $objectManager, $documentClass)
     {
@@ -27,7 +27,7 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param string $documentName
+     * @param string $formTypeName
      */
     public function setFormTypeName($formTypeName)
     {
@@ -39,7 +39,7 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
      *
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function transform($data)
     {

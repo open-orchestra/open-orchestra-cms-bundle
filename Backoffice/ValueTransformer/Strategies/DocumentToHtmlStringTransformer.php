@@ -37,7 +37,7 @@ class DocumentToHtmlStringTransformer implements ValueTransformerInterface
      */
     public function support($fieldType, $value)
     {
-        return $fieldType == 'document';
+        return $fieldType === 'document';
     }
 
     /**
