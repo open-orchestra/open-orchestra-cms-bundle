@@ -169,6 +169,9 @@ open_orchestra_backoffice:
             role: Rôle nécessaire pour afficher la page
             max_age: Max age pour le cache de la réponse de la page
             node_source: La page source (en cas de copie)
+            template_selection:
+                name : Sélection du gabarit
+                helper : Au moins un champ obligatoire
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
         changefreq:

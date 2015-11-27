@@ -169,6 +169,9 @@ open_orchestra_backoffice:
             role: Role needed to display the page
             max_age: Max age of the response for the page
             node_source: The source page (in case of copy)
+            template_selection:
+                name : Template selection
+                helper : One field required
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
         changefreq:

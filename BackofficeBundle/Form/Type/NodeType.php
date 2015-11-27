@@ -121,6 +121,14 @@ class NodeType extends AbstractType
                 'required' => false,
             ));
         if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
+            $builder->add('templateSelection', 'collection', array(
+                'label' => 'open_orchestra_backoffice.form.node.template_selection.name',
+                'label_attr' => array('class' => 'one-needed'),
+                'required' => false,
+                'attr' => array(
+                    'help_text' => 'open_orchestra_backoffice.form.node.template_selection.helper',
+                )
+            ));
             $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
             $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
