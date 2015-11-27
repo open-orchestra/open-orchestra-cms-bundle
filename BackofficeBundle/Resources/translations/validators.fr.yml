@@ -7,3 +7,5 @@ open_orchestra_backoffice_validators:
         restore: Vous ne pouvez pas restaurer ce noeud, vous devez restaurer son parent %nodeparent% avant
     authorize:
         edition: Ce document n'est plus modifiable
+    area:
+        unique_area_id: Les identifiants des aires doivent être unique

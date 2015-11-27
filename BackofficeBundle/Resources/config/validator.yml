@@ -3,6 +3,7 @@ parameters:
     open_orchestra_model.validator.block_node_pattern.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePatternValidator
     open_orchestra_model.validator.authorize_edition.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\AuthorizeEditionValidator
     open_orchestra_model.validator.restore_node.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNodeValidator
+    open_orchestra_model.validator.unique_area_id.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueAreaIdValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -23,3 +24,7 @@ services:
             - @open_orchestra_model.repository.node
         tags:
             - { name: validator.constraint_validator, alias: restore_node}
+    open_orchestra_model.validator.unique_area_id:
+        class: %open_orchestra_model.validator.unique_area_id.class%
+        tags:
+            - { name: validator.constraint_validator, alias: unique_area_id}
