@@ -38,6 +38,7 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->language = $template->getLanguage();
         $facade->deleted = $template->isDeleted();
         $facade->boDirection = $template->getBoDirection();
+        $facade->editable = true;
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_form',
             array('templateId' => $template->getTemplateId())
