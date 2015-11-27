@@ -25,5 +25,4 @@ abstract class AbstractNodeGroupRoleListenerTest extends \PHPUnit_Framework_Test
         Phake::when($this->container)->get('open_orchestra_backoffice.collector.role')->thenReturn($roleCollector);
         Phake::when($roleCollector)->getRolesByType(Phake::anyParameters())->thenReturn($this->nodesRoles);
     }
-
 }
