@@ -21,7 +21,7 @@ abstract class AbstractNodeGroupRoleListener extends ContainerAware
     /**
      * @return array
      */
-    public function getNodeRoles()
+    protected function getNodeRoles()
     {
         $collector = $this->container->get('open_orchestra_backoffice.collector.role');
 
@@ -52,7 +52,6 @@ abstract class AbstractNodeGroupRoleListener extends ContainerAware
      */
     protected function createNodeGroupRole($nodeId, $role, $accessType)
     {
-
         /** @var $nodeGroupRole NodeGroupRoleInterface */
         $nodeGroupRole = new $this->nodeGroupRoleClass();
         $nodeGroupRole->setNodeId($nodeId);

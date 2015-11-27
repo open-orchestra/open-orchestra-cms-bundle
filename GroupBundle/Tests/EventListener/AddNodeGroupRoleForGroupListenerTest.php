@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 
-use OpenOrchestra\GroupBundle\EventListener\CreateGroupListener;
+use OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForGroupListener;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Phake;
 
 /**
- * Class CreateGroupListenerTest
+ * Class AddNodeGroupRoleForGroupListenerTest
  */
-class CreateGroupListenerTest extends AbstractNodeGroupRoleListenerTest
+class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListenerTest
 {
     /**
-     * @var CreateGroupListener
+     * @var AddNodeGroupRoleForGroupListener
      */
     protected $listener;
     protected $nodeRepository;
@@ -25,7 +25,7 @@ class CreateGroupListenerTest extends AbstractNodeGroupRoleListenerTest
         parent::setUp();
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
         Phake::when($this->container)->get('open_orchestra_model.repository.node')->thenReturn($this->nodeRepository);
-        $this->listener = new CreateGroupListener($this->nodeGroupRoleClass);
+        $this->listener = new AddNodeGroupRoleForGroupListener($this->nodeGroupRoleClass);
         $this->listener->setContainer($this->container);
     }
 

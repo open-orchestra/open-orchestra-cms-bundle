@@ -7,9 +7,9 @@ use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
- * Class CreateGroupListener
+ * Class AddNodeGroupRoleForGroupListener
  */
-class CreateGroupListener extends AbstractNodeGroupRoleListener
+class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
 {
     /**
      * @param LifecycleEventArgs $event
