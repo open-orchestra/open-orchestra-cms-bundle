@@ -4,23 +4,26 @@ namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\ModelBundle\Manager\DocumentForEmbedManager;
+use OpenOrchestra\ModelInterface\Manager\EntityDbMapperInterface;
 
 /**
  * Class ReferenceToEmbedTransformer
  */
 class ReferenceToEmbedTransformer implements DataTransformerInterface
 {
-    protected $documentForEmbedManager;
+    protected $entityDbMapper;
     protected $formTypeName;
 
     /**
-     * @param ObjectManager $objectManager
-     * @param string        $contentClass
+     * @param EntityDbMapper $entityDbMapper
+     * @param ObjectManager  $objectManager
+     * @param string         $documentClass
      */
-    public function __construct(DocumentForEmbedManager $documentForEmbedManager)
+    public function __construct(EntityDbMapperInterface $entityDbMapper, ObjectManager $objectManager, $documentClass)
     {
-        $this->documentForEmbedManager = $documentForEmbedManager;
+        $this->entityDbMapper = $entityDbMapper;
+        $this->objectManager = $objectManager;
+        $this->documentClass = $documentClass;
     }
 
     /**
@@ -41,7 +44,7 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     public function transform($data)
     {
         if (!is_null($data)) {
-            return array($this->formTypeName => $this->documentForEmbedManager->fromDbToEntity($data)->getId());
+            return array($this->formTypeName => $this->entityDbMapper->fromDbToEntity($data)->getId());
         }
 
         return null;
@@ -57,7 +60,8 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     public function reverseTransform($data)
     {
         list($key, $id) = each($data);
+        $document = $this->objectManager->find($this->documentClass, $id);
 
-        return $this->documentForEmbedManager->fromEntityToDb($id);
+        return $this->entityDbMapper->fromEntityToDb($document);
     }
 }

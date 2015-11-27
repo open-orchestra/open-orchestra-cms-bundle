@@ -133,11 +133,11 @@ class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
 
         $fields = $container->getParameter('open_orchestra_backoffice.field_types');
         $this->assertArrayHasKey('fake_field', $fields);
-        $this->assertCount(10, $fields);
+        $this->assertCount(11, $fields);
 
         $options = $container->getParameter('open_orchestra_backoffice.options');
         $this->assertArrayHasKey('fake_option', $options);
-        $this->assertCount(14, $options);
+        $this->assertCount(17, $options);
     }
 
     /**

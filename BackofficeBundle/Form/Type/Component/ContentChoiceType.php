@@ -6,9 +6,8 @@ use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ReferenceToEmbedTransformer;
-use Doctrine\ODM\MongoDB\Mapping\Annotations\String;
 
 /**
  * Class ContentChoiceType
@@ -21,11 +20,11 @@ class ContentChoiceType extends AbstractType
 
     /**
      * @param ContentRepositoryInterface  $contentRepository
-     * @param ContextManager              $contextManager
+     * @param CurrentSiteIdInterface              $contextManager
      * @param ReferenceToEmbedTransformer $referenceToEmbedTransformer
      * @param string                      $formTypeName
      */
-    public function __construct(ContentRepositoryInterface $contentRepository, ContextManager $contextManager, ReferenceToEmbedTransformer $referenceToEmbedTransformer, $formTypeName)
+    public function __construct(ContentRepositoryInterface $contentRepository, CurrentSiteIdInterface $contextManager, ReferenceToEmbedTransformer $referenceToEmbedTransformer, $formTypeName)
     {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
@@ -53,7 +52,7 @@ class ContentChoiceType extends AbstractType
         $choices = array();
 
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
-        $contents = $this->contentRepository->findByContentTypeAndKeywords($language, $contentType/*, $operator, $keywords*/);
+        $contents = $this->contentRepository->findByContentTypeAndKeywords($language, $contentType, $operator, $keywords);
 
         foreach ($contents as $content) {
             $choices[$content->getId()] = $content->getName();
