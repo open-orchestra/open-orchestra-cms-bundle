@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\ValueTransformer\Strategies;
 
-use OpenOrchestra\Backoffice\ValueTransformer\Strategies\DocumentToHtmlStringTransformer;
+use OpenOrchestra\Backoffice\ValueTransformer\Strategies\EmbeddedEntityToHtmlStringTransformer;
 
 /**
  * Class DocumentToHtmlStringTransformerTest
  */
-class DocumentToHtmlStringTransformerTest extends AbstractTransformerTest
+class EmbeddedEntityToHtmlStringTransformerTest extends AbstractTransformerTest
 {
     protected $property = 'fakeProperty';
 
@@ -16,7 +16,7 @@ class DocumentToHtmlStringTransformerTest extends AbstractTransformerTest
      */
     public function setUp()
     {
-        $this->transformer = new DocumentToHtmlStringTransformer($this->property);
+        $this->transformer = new EmbeddedEntityToHtmlStringTransformer($this->property);
     }
 
     /**
@@ -39,7 +39,7 @@ class DocumentToHtmlStringTransformerTest extends AbstractTransformerTest
     public function provideSupport()
     {
         return array(
-            array('document', '', true),
+            array('embedded_content', '', true),
             array('', '', false),
         );
     }
@@ -49,7 +49,7 @@ class DocumentToHtmlStringTransformerTest extends AbstractTransformerTest
      */
     protected function getTransformerName()
     {
-        return 'document';
+        return 'embedded_entity';
     }
 
 }

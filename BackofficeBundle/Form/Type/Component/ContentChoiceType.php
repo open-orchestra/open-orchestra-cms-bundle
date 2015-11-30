@@ -45,10 +45,7 @@ class ContentChoiceType extends AbstractType
 
         $builder->add($this->formTypeName, 'choice', array(
             'label' => false,
-            'choices' => $this->getChoices(
-                array_key_exists('content_type', $options) ? $options['content_type'] : '',
-                array_key_exists('operator', $options) ? $options['operator'] : ReadContentRepositoryInterface::CHOICE_AND,
-                array_key_exists('keyword', $options) ? $options['keyword'] : null
+            'choices' => $this->getChoices($options['content_type'], $options['operator'], $options['keyword']
         )));
     }
 
@@ -79,8 +76,8 @@ class ContentChoiceType extends AbstractType
         $resolver->setDefaults(
             array(
                 'content_type' => '',
-                'operator' => '',
-                'keyword' => '',
+                'operator' => ReadContentRepositoryInterface::CHOICE_AND,
+                'keyword' => null,
             )
         );
     }

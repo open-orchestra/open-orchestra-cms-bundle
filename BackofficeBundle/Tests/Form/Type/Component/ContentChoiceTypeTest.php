@@ -5,6 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentChoiceType;
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 
 /**
  * Class ContentChoiceTypeTest
@@ -78,8 +79,8 @@ class ContentChoiceTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($resolver)->setDefaults(
             array(
                 'content_type' => '',
-                'operator' => '',
-                'keyword' => '',
+                'operator' => ReadContentRepositoryInterface::CHOICE_AND,
+                'keyword' => null,
             )
         );
     }
