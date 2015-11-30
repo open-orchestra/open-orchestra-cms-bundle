@@ -52,6 +52,11 @@ class TemplateFacade extends AbstractFacade
     protected $blocks = array();
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $editable;
+
+    /**
      * @param FacadeInterface $facade
      */
     public function addArea(FacadeInterface $facade)

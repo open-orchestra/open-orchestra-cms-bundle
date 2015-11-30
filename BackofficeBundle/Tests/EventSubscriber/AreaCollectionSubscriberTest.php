@@ -110,7 +110,7 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->areaContainer)->getBlocks()->thenReturn($blockArray);
         Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.add_sub')->thenReturn('Add');
-        Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.label_sub')->thenReturn('Area label');
+        Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.id_sub')->thenReturn('Area id');
         Phake::when($this->translator)->trans('open_orchestra_backoffice.form.area.remove_sub')->thenReturn('Remove');
 
 
@@ -121,10 +121,11 @@ class AreaCollectionSubscriberTest extends \PHPUnit_Framework_TestCase
             'allow_add' => true,
             'mapped' => false,
             'required' => false,
+            'error_bubbling' => false,
             'label' => 'open_orchestra_backoffice.form.area.new_areas',
             'attr' => array(
                 'data-prototype-label-add' => 'Add',
-                'data-prototype-label-new' => 'Area label',
+                'data-prototype-label-new' => 'Area id',
                 'data-prototype-label-remove' => 'Remove',
             )
         ));
