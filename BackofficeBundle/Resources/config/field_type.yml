@@ -136,9 +136,9 @@ parameters:
                 required:
                     default_value: false
                 content_type:
-                    default_value: choice
+                    default_value: null
                 operator:
-                    default_value: choice
+                    default_value: null
                 keyword:
                     default_value: null
 
