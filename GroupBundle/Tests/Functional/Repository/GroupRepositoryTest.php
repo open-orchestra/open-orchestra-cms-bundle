@@ -75,6 +75,17 @@ class GroupRepositoryTest extends KernelTestCase
     }
 
     /**
+     * find all group with site
+     *
+     * @return array
+     */
+    public function testFindAllWithSite()
+    {
+        $groups = $this->repository->findAllWithSite();
+        $this->assertCount(4, $groups);
+    }
+
+    /**
      * @param array  $descriptionEntity
      * @param array  $search
      * @param int    $count
