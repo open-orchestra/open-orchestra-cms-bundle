@@ -5,6 +5,7 @@ parameters:
     open_orchestra_backoffice.transformer.choice_array_to_string.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer
     open_orchestra_backoffice.transformer.choice_string_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceStringToArrayTransformer
     open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\BBcodeToHtmlTransformer
+    open_orchestra_backoffice.transformer.reference_to_embed.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ReferenceToEmbedTransformer
 
 services:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
@@ -29,3 +30,9 @@ services:
         class: %open_orchestra_backoffice.transformer.bbcode_to_html.class%
         arguments:
             - @open_orchestra_bbcode.parser
+    open_orchestra_backoffice.transformer.reference_to_embed:
+        class: %open_orchestra_backoffice.transformer.reference_to_embed.class%
+        arguments:
+            - @open_orchestra_model.manager.content_for_embed
+            - @object_manager
+            - %open_orchestra_model.document.content.class%

@@ -3,6 +3,7 @@ parameters:
     open_orchestra_backoffice.value_transformer.array.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\ArrayToHtmlStringTransformer
     open_orchestra_backoffice.value_transformer.integer.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\IntegerToHtmlStringTransformer
     open_orchestra_backoffice.value_transformer.null.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\NullToHtmlStringTransformer
+    open_orchestra_backoffice.value_transformer.embedded_entity.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\EmbeddedEntityToHtmlStringTransformer
     open_orchestra_backoffice.value_transformer.object.class: OpenOrchestra\Backoffice\ValueTransformer\Strategies\ObjectToHtmlStringTransformer
 
 services:
@@ -19,6 +20,12 @@ services:
                 - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.null:
         class: %open_orchestra_backoffice.value_transformer.null.class%
+        tags:
+            - { name: open_orchestra_backoffice.value_transformer.strategy }
+    open_orchestra_backoffice.value_transformer.embedded_content:
+        class: %open_orchestra_backoffice.value_transformer.embedded_entity.class%
+        arguments:
+            - name
         tags:
             - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.object:
