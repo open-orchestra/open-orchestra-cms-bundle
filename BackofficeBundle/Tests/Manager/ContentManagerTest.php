@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
-use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
+use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use Phake;
 
 /**

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
-use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
+use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
