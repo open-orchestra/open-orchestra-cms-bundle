@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ReferenceToEmbedTransformer;
+use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 
 /**
  * Class ContentChoiceType
@@ -41,10 +42,14 @@ class ContentChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->referenceToEmbedTransformer);
+
         $builder->add($this->formTypeName, 'choice', array(
             'label' => false,
-            'choices' => $this->getChoices($options['content_type'], $options['operator'], $options['keyword']),
-        ));
+            'choices' => $this->getChoices(
+                array_key_exists('content_type', $options) ? $options['content_type'] : '',
+                array_key_exists('operator', $options) ? $options['operator'] : ReadContentRepositoryInterface::CHOICE_AND,
+                array_key_exists('keyword', $options) ? $options['keyword'] : null
+        )));
     }
 
     /**

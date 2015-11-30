@@ -5,9 +5,9 @@ namespace OpenOrchestra\Backoffice\ValueTransformer\Strategies;
 use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerInterface;
 
 /**
- * Class DocumentToHtmlStringTransformer
+ * Class EmbeddedEntityToHtmlStringTransformer
  */
-class DocumentToHtmlStringTransformer implements ValueTransformerInterface
+class EmbeddedEntityToHtmlStringTransformer implements ValueTransformerInterface
 {
     protected $property;
 
@@ -37,7 +37,7 @@ class DocumentToHtmlStringTransformer implements ValueTransformerInterface
      */
     public function support($fieldType, $value)
     {
-        return $fieldType === 'document';
+        return preg_match('/embedded_.*/', $fieldType);
     }
 
     /**
@@ -45,6 +45,6 @@ class DocumentToHtmlStringTransformer implements ValueTransformerInterface
      */
     public function getName()
     {
-        return 'document';
+        return 'embedded_entity';
     }
 }

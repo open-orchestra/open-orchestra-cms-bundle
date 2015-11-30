@@ -129,7 +129,7 @@ parameters:
                     default_value: choice
                 input:
                     default_value: array
-        document:
+        embedded_content:
             label: open_orchestra_backoffice.form.field_type.custom_type.content
             type: oo_content_choice
             options:

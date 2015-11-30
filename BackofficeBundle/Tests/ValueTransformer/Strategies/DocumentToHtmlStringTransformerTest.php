@@ -53,17 +53,3 @@ class DocumentToHtmlStringTransformerTest extends AbstractTransformerTest
     }
 
 }
-
-/**
- * Class DocumentWithToString
- */
-class DocumentWithToString
-{
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return 'foo';
-    }
-}
