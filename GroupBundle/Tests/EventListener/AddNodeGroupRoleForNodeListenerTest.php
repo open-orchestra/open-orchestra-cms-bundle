@@ -63,11 +63,8 @@ class AddNodeGroupRoleForNodeListenerTest extends AbstractNodeGroupRoleListenerT
      */
     public function provideGroup()
     {
-        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
-        Phake::when($group1)->getSite()->thenReturn($site);
-        Phake::when($group2)->getSite()->thenReturn($site);
+        $group1 = $this->createMockGroup();
+        $group2 = $this->createMockGroup();
 
         return array(
            array(array($group1, $group2), 2),

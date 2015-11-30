@@ -125,7 +125,7 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
         $transformedGroup = $this->transformer->reverseTransform($facade, $group);
 
         $this->assertSame($group, $transformedGroup);
-        Phake::verify($this->transformerInterface, Phake::times(2))->reverseTransform($nodeGroupRoleFacade, null);
+        Phake::verify($this->transformerInterface, Phake::times(2))->reverseTransform($nodeGroupRoleFacade, $group);
         Phake::verify($group, Phake::times(2))->addNodeRole($nodeGroupRole);
     }
 
@@ -148,8 +148,7 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
         $transformedGroup = $this->transformer->reverseTransform($facade, $group);
 
         $this->assertSame($group, $transformedGroup);
-        Phake::verify($group, Phake::times(2))->getNodeRoleByNodeAndRole(NodeInterface::ROOT_NODE_ID, 'FOO_ROLE');
-        Phake::verify($this->transformerInterface, Phake::times(2))->reverseTransform($nodeGroupRoleFacade, $nodeGroupRole);
+        Phake::verify($this->transformerInterface, Phake::times(2))->reverseTransform($nodeGroupRoleFacade, $group);
         Phake::verify($group, Phake::times(2))->addNodeRole($nodeGroupRole);
     }
 }

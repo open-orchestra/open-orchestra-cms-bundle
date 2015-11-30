@@ -112,8 +112,8 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
             $group->addNodeRole($this->getTransformer('node_group_role')->reverseTransform(
                 $nodeRoleFacade,
-                $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
-            ));
+                $group)
+            );
         }
 
         return $group;

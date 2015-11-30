@@ -2,8 +2,10 @@
 
 namespace OpenOrchestra\GroupBundle\EventListener;
 
+use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
@@ -47,19 +49,30 @@ abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
     }
 
     /**
-     * @param string $nodeId
+     * @param NodeInterface $node
+     * @param GroupInterface $group
      * @param string $role
      * @param string $accessType
      *
      * @return NodeGroupRoleInterface
+     * @throws NodeGroupRoleNotFoundException
      */
-    protected function createNodeGroupRole($nodeId, $role, $accessType)
+    protected function createNodeGroupRole($node, $group, $role, $accessType)
     {
         /** @var $nodeGroupRole NodeGroupRoleInterface */
         $nodeGroupRole = new $this->nodeGroupRoleClass();
-        $nodeGroupRole->setNodeId($nodeId);
+        $nodeGroupRole->setNodeId($node->getNodeId());
         $nodeGroupRole->setRole($role);
         $nodeGroupRole->setAccessType($accessType);
+        $isGranted = (NodeGroupRoleInterface::ACCESS_DENIED === $accessType) ? false : true;
+        if (NodeGroupRoleInterface::ACCESS_INHERIT === $accessType) {
+            $parentNodeRole = $group->getNodeRoleByNodeAndRole($node->getParentId(), $role);
+            if (null === $parentNodeRole) {
+                throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
+            }
+            $isGranted = $parentNodeRole->isGranted();
+        }
+        $nodeGroupRole->setGranted($isGranted);
 
         return $nodeGroupRole;
     }

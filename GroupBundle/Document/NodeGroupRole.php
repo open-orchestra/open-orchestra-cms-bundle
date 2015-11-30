@@ -34,6 +34,13 @@ class NodeGroupRole implements NodeGroupRoleInterface
     protected $accessType;
 
     /**
+     * @var bool
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $granted;
+
+    /**
      * @return string
      */
     public function getNodeId()
@@ -79,5 +86,22 @@ class NodeGroupRole implements NodeGroupRoleInterface
     public function setAccessType($accessType)
     {
         $this->accessType = $accessType;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isGranted()
+    {
+        return $this->granted;
+    }
+
+    /**
+     * @param bool $granted
+     */
+    public function setGranted($granted)
+    {
+        $this->granted = $granted;
     }
 }

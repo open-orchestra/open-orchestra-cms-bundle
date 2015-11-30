@@ -19,15 +19,18 @@ class AddNodeGroupRoleForNodeListener extends AbstractNodeGroupRoleListener
         $document = $event->getDocument();
         if ($document instanceof NodeInterface) {
             $accessType = $this->getNodeAccessType($document);
+            $siteId = $document->getSiteId();
             $groups = $this->container->get('open_orchestra_user.repository.group')->findAllWithSite();
             $nodesRoles = $this->getNodeRoles();
             /** @var GroupInterface $group */
             foreach ($groups as $group) {
-                foreach ($nodesRoles as $role => $translation) {
-                    $nodeGroupRole = $this->createNodeGroupRole($document->getNodeId(), $role, $accessType);
-                    $group->addNodeRole($nodeGroupRole) ;
-                    $event->getDocumentManager()->persist($group);
-                    $event->getDocumentManager()->flush($group);
+                if ($siteId === $group->getSite()->getSiteId()) {
+                    foreach ($nodesRoles as $role => $translation) {
+                        $nodeGroupRole = $this->createNodeGroupRole($document, $group, $role, $accessType);
+                        $group->addNodeRole($nodeGroupRole);
+                        $event->getDocumentManager()->persist($group);
+                        $event->getDocumentManager()->flush($group);
+                    }
                 }
             }
         }

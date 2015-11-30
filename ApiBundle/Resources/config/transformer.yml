@@ -213,8 +213,10 @@ services:
         class: %open_orchestra_api.transformer.node_group_role.class%
         arguments:
             - %open_orchestra_api.facade.node_group_role.class%
-            - OpenOrchestra\GroupBundle\Document\NodeGroupRole
+            - %open_orchestra_group.document.node_group_role.class%
             - @open_orchestra_backoffice.collector.backoffice_role
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_backoffice.context_manager
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group_collection:

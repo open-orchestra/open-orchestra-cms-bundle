@@ -4,7 +4,8 @@ parameters:
     open_orchestra_group.type.group_choice.class: OpenOrchestra\GroupBundle\Form\Type\GroupDocumentType
     open_orchestra_group.listener.add_node_group_role_for_node.class: OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForNodeListener
     open_orchestra_group.listener.add_node_group_role_for_group.class: OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForGroupListener
-
+    open_orchestra_group.listener.update_node_group_role.class: OpenOrchestra\GroupBundle\EventListener\UpdateNodeGroupRoleListener
+    open_orchestra_group.subscriber.update_node_group_role_move_node.class: OpenOrchestra\GroupBundle\EventSubscriber\UpdateNodeGroupRoleMoveNodeSubscriber
 services:
     open_orchestra_group.type.group_choice:
         class: %open_orchestra_group.type.group_choice.class%
@@ -25,7 +26,23 @@ services:
         class: %open_orchestra_group.listener.add_node_group_role_for_group.class%
         arguments:
             - %open_orchestra_group.document.node_group_role.class%
+            - @open_orchestra_display.manager.tree
         calls:
             - [ setContainer, [ @service_container ] ]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+    open_orchestra_group.listener.update_node_group_role:
+        class: %open_orchestra_group.listener.update_node_group_role.class%
+        arguments:
+            - %open_orchestra_model.document.node.class%
+        tags:
+            - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+    open_orchestra_group.subscriber.update_node_group_role_move_node:
+        class: %open_orchestra_group.subscriber.update_node_group_role_move_node.class%
+        arguments:
+            - @open_orchestra_user.repository.group
+            - @open_orchestra_model.repository.node
+            - @open_orchestra_backoffice.collector.role
+            - @object_manager
+        tags:
+            - { name: kernel.event_subscriber }

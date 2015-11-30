@@ -3,6 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 
 use OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForGroupListener;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Phake;
 
@@ -16,6 +17,8 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
      */
     protected $listener;
     protected $nodeRepository;
+    protected $treeManager;
+    protected $group;
 
     /**
      * setUp
@@ -24,8 +27,11 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
     {
         parent::setUp();
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
         Phake::when($this->container)->get('open_orchestra_model.repository.node')->thenReturn($this->nodeRepository);
-        $this->listener = new AddNodeGroupRoleForGroupListener($this->nodeGroupRoleClass);
+
+        $this->group = $this->createMockGroup();
+        $this->listener = new AddNodeGroupRoleForGroupListener($this->nodeGroupRoleClass, $this->treeManager);
         $this->listener->setContainer($this->container);
     }
 
@@ -46,16 +52,14 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
      */
     public function testPrePersist($site, array $nodes, $countNodeGroupRole)
     {
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-
         $countNodeGroupRole = count($this->nodesRoles) * $countNodeGroupRole;
-        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($group);
-        Phake::when($group)->getSite()->thenReturn($site);
-        Phake::when($this->nodeRepository)->findLastVersionByType(Phake::anyParameters())->thenReturn($nodes);
+        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($this->group);
+        Phake::when($this->group)->getSite()->thenReturn($site);
+        Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn($nodes);
 
         $this->listener->prePersist($this->lifecycleEventArgs);
 
-        Phake::verify($group, Phake::times($countNodeGroupRole))->addNodeRole(Phake::anyParameters());
+        Phake::verify($this->group, Phake::times($countNodeGroupRole))->addNodeRole(Phake::anyParameters());
     }
 
     /**
@@ -63,15 +67,45 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
      */
     public function provideGroupAndNodes()
     {
-        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeRoot = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeChild = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
 
+        $treeNoChild = $this->createTree($nodeRoot);
+        $treeChild = $this->createTree($nodeRoot, array($nodeChild));
+
         return array(
-            array($site, array($node1, $node2), 2),
-            array($site, array($node1), 1),
-            array(null, array($node1, $node2), 0),
+            array($site, $treeChild, 2),
+            array($site, $treeNoChild, 1),
+            array(null, $treeNoChild, 0),
             array(null, array(), 0),
         );
+    }
+
+    /**
+     * @param NodeInterface $root
+     * @param array         $children
+     *
+     * @return array
+     */
+    public function createTree($root, array $children = array())
+    {
+        phake::when($root)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
+        $childTree = array();
+        foreach ($children as $child) {
+            phake::when($child)->getParenId()->thenReturn(NodeInterface::ROOT_NODE_ID);
+            $childTree[] = array(
+                'node' => $child,
+                'child' => array(),
+            );
+        }
+
+        $tree = array();
+        $tree[] = array(
+            'node' => $root,
+            'child' => $childTree
+        );
+
+        return $tree;
     }
 }
