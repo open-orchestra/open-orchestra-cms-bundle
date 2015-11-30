@@ -7,3 +7,5 @@ open_orchestra_backoffice_validators:
          restore: You can not restore this node, you should be restore her parent %nodeparent% before
     authorize:
         edition: You cannot edit this document anymore
+    area:
+        unique_area_id: areas's id have to be unique

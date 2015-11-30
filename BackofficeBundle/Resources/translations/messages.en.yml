@@ -185,7 +185,7 @@ open_orchestra_backoffice:
             existing_block: Existing block
             existing_blocks: Add an existing block
             add_sub: Add
-            label_sub: Area label
+            id_sub: Area id
             remove_sub: Remove
             block_exists: Can't add Area, area contains blocks
         block:

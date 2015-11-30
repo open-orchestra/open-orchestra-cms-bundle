@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Translation\TranslatorInterface;
 
-
 /**
  * Class AreaCollectionSubscriber
  */
@@ -77,10 +76,11 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
                 'allow_add' => !$form->isDisabled(),
                 'mapped' => false,
                 'required' => false,
+                'error_bubbling' => false,
                 'label' => 'open_orchestra_backoffice.form.area.new_areas',
                 'attr' => array(
                     'data-prototype-label-add' => $this->translator->trans('open_orchestra_backoffice.form.area.add_sub'),
-                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.area.label_sub'),
+                    'data-prototype-label-new' => $this->translator->trans('open_orchestra_backoffice.form.area.id_sub'),
                     'data-prototype-label-remove' => $this->translator->trans('open_orchestra_backoffice.form.area.remove_sub'),
                 )
             ));
