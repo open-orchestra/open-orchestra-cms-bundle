@@ -1,7 +1,8 @@
 {% macro menu_nodes(nodes, name, nodeId404, nodeId503) %}
     {% for element in nodes %}
         {% set node = element.node %}
-        {% if is_granted("ROLE_ACCESS_TREE_NODE", node) %}
+        {% if (node.nodeType != "general" and is_granted("ROLE_ACCESS_TREE_NODE", node))
+           or (node.nodeType == "general" and is_granted("ROLE_ACCESS_GENERAL_NODE")) %}
             <li data-element-id="{{ node.nodeId }}"
                 data-type="Node"
             >
