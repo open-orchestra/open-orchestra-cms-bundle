@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
-use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
+use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\ModelBundle\Document\Area;
@@ -56,7 +56,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
-        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface');
+        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
         $this->blockManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\BlockManager');
