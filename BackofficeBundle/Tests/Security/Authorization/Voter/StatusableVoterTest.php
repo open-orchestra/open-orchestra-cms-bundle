@@ -55,6 +55,8 @@ class StatusableVoterTest extends \PHPUnit_Framework_TestCase
         return array(
             array(true, 'ROLE_USER'),
             array(true, 'ROLE_ACCESS'),
+            array(false, 'ROLE_ACCESS_TREE_NODE'),
+            array(false, 'ROLE_ACCESS_CREATE_NODE'),
             array(false, '24051'),
             array(false, 'foo'),
         );
