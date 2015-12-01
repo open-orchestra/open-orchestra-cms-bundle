@@ -33,6 +33,7 @@ parameters:
     open_orchestra_backoffice.type.role_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\RoleChoiceType
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\BackofficeBundle\Form\Type\ApiClientType
     open_orchestra_backoffice.type.operator_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\OperatorChoiceType
+    open_orchestra_backoffice.type.content_search.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentSearchType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -329,3 +330,7 @@ services:
         class: %open_orchestra_backoffice.type.operator_choice.class%
         tags:
             - { name: form.type, alias: oo_operator_choice}
+    open_orchestra_backoffice.type.content_search:
+        class: %open_orchestra_backoffice.type.content_search.class%
+        tags:
+            - { name: form.type, alias: oo_content_search}

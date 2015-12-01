@@ -135,11 +135,7 @@ parameters:
             options:
                 required:
                     default_value: false
-                content_type:
-                    default_value: null
-                operator:
-                    default_value: null
-                keyword:
+                content_search:
                     default_value: null
 
     open_orchestra_backoffice.options:
@@ -195,16 +191,8 @@ parameters:
             type: hidden
             label: open_orchestra_backoffice.form.orchestra_fields.date_format
             required: true
-        content_type:
-            type: oo_content_type_choice
-            label: open_orchestra_backoffice.form.orchestra_fields.content_type
-            required: false
-        operator:
-            type: oo_operator_choice
-            label: open_orchestra_backoffice.form.orchestra_fields.operator
+        content_search:
+            type: oo_content_search
+            label: false
             required: true
-        keyword:
-            type: oo_keywords_choice
-            label: open_orchestra_backoffice.form.orchestra_fields.keyword
-            embedded: false
-            required: false
+            

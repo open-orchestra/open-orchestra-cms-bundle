@@ -53,18 +53,7 @@ class ContentListStrategy extends AbstractBlockStrategy
             'label' => 'open_orchestra_backoffice.form.content_list.nb_characters',
             'required' => false,
         ));
-        $builder->add('contentType', 'oo_content_type_choice', array(
-            'label' => 'open_orchestra_backoffice.form.content_list.content_type',
-            'required' => false
-        ));
-        $builder->add('choiceType', 'oo_operator_choice', array(
-            'label' => 'open_orchestra_backoffice.form.content_list.choice_type',
-        ));
-        $builder->add('keywords', 'oo_keywords_choice', array(
-            'embedded' => false,
-            'required' => false,
-            'label' => 'open_orchestra_backoffice.form.content_list.content_keyword',
-        ));
+        $builder->add('contentSearch', 'oo_content_type_search');
         $builder->add('contentTemplateEnabled', 'checkbox', array(
             'label' => 'open_orchestra_backoffice.form.content_list.content_template_enabled.title',
             'required' => false,

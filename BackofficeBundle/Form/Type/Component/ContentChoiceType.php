@@ -42,10 +42,9 @@ class ContentChoiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer($this->referenceToEmbedTransformer);
-
         $builder->add($this->formTypeName, 'choice', array(
             'label' => false,
-            'choices' => $this->getChoices($options['content_type'], $options['operator'], $options['keyword']
+            'choices' => $this->getChoices($options['content_search']['contentType'], $options['content_search']['choiceType'], $options['content_search']['keywords']
         )));
     }
 
@@ -75,9 +74,11 @@ class ContentChoiceType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'content_type' => '',
-                'operator' => ReadContentRepositoryInterface::CHOICE_AND,
-                'keyword' => null,
+                'content_search' => array(
+                    'contentType' => '',
+                    'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
+                    'keywords' => null,
+                )
             )
         );
     }

@@ -209,6 +209,10 @@ open_orchestra_backoffice:
             content_template_enabled:
                 title: Template usage
                 helper: Template usage
+        content_search:
+            content_type: Content type to display
+            content_keyword: Keyword to display
+            choice_type: Type of choice
         orchestra_fields:
             max_length: Max length
             required_field: Field required

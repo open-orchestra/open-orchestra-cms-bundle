@@ -209,6 +209,10 @@ open_orchestra_backoffice:
             content_template_enabled:
                 title: Usage du gabarit
                 helper: Usage du gabarit
+        content_search:
+            content_type: Type de contenu à afficher
+            content_keyword: Mot-clé à afficher
+            choice_type: Type de choix
         orchestra_fields:
             max_length: Longueur max
             required_field: Champ requis
