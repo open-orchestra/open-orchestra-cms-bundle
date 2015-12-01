@@ -78,9 +78,11 @@ class ContentChoiceTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($resolver)->setDefaults(
             array(
-                'content_type' => '',
-                'operator' => ReadContentRepositoryInterface::CHOICE_AND,
-                'keyword' => null,
+                'content_search' => array(
+                    'contentType' => '',
+                    'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
+                    'keywords' => null,
+                )
             )
         );
     }
@@ -92,11 +94,15 @@ class ContentChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
 
-        $this->form->buildForm($builder, array(
-            'content_type' => $this->contentType,
-            'operator' => $this->operator,
-            'keyword' => $this->keyword
-        ));
+        $this->form->buildForm($builder,
+            array(
+                'content_search' => array(
+                    'contentType' => $this->contentType,
+                    'choiceType' => $this->operator,
+                    'keywords' => $this->keyword,
+                )
+            )
+        );
 
         Phake::verify($builder)->add($this->formTypeName, 'choice', array(
                 'label' => false,

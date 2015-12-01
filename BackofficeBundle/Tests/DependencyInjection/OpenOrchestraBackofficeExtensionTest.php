@@ -137,7 +137,7 @@ class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
 
         $options = $container->getParameter('open_orchestra_backoffice.options');
         $this->assertArrayHasKey('fake_option', $options);
-        $this->assertCount(17, $options);
+        $this->assertCount(15, $options);
     }
 
     /**
