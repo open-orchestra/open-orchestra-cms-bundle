@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
+use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy as BaseConfigurableContentStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -19,20 +20,24 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
     protected $contentTypeRepository;
     protected $contentRepository;
     protected $router;
+    protected $context;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param ContentRepositoryInterface     $contentRepository
      * @param UrlGeneratorInterface          $router
+     * @param ContextManager                 $context
      */
     public function __construct(
         ContentTypeRepositoryInterface $contentTypeRepository,
         ContentRepositoryInterface $contentRepository,
-        $router
+        $router,
+        ContextManager $context
     ) {
         $this->contentTypeRepository = $contentTypeRepository;
         $this->contentRepository = $contentRepository;
         $this->router = $router;
+        $this->context = $context;
     }
 
     /**
@@ -55,7 +60,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
         $contentTypes = $this->contentTypeRepository->findAll();
         if (!empty($contentTypes)) {
             foreach ($contentTypes as $contentType) {
-                $choices[$contentType->getContentTypeId()] = $contentType->getName();
+                $choices[$contentType->getContentTypeId()] = $contentType->getName($this->context->getCurrentLocale());
             }
 
         }
