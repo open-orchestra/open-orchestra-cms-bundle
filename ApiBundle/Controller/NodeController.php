@@ -99,7 +99,6 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param Request $request
      * @param string $nodeId
      *
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
@@ -107,12 +106,14 @@ class NodeController extends BaseController
      *
      * @return Response
      */
-    public function deleteAction(Request $request, $nodeId)
+    public function deleteAction($nodeId)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $node = $this->findOneNode($nodeId, $request->get('language'), $siteId);
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSite($nodeId, $siteId);
+
+        $node = !empty($nodes) ? $nodes[0] : null;
+        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
+
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('object_manager')->flush();
 
