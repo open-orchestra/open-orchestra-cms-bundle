@@ -195,4 +195,3 @@ parameters:
             type: oo_content_search
             label: false
             required: true
-            
