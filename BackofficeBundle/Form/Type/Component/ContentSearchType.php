@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ContentSearchType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -40,5 +39,4 @@ class ContentSearchType extends AbstractType
     {
         return 'oo_content_search';
     }
-
 }
