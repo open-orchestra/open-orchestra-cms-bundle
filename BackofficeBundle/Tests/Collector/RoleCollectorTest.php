@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Collector;
 
 use OpenOrchestra\Backoffice\Collector\RoleCollector;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -109,6 +110,8 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'node', array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans)),
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'template', array()),
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'content', array()),
+            array(array(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE), 'node', array()),
+            array(array(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE), 'node', array()),
             array(array(
                 TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
                 TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
