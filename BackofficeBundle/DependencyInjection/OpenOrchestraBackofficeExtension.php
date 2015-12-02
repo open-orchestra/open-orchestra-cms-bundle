@@ -34,6 +34,9 @@ class OpenOrchestraBackofficeExtension extends Extension
         $fixedAttributes = array_merge($config['fixed_attributes'], $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
 
+        $fieldSearchableView = array_merge($container->getParameter('open_orchestra_backoffice.field_searchable_view'), $config['field_searchable_view']);
+        $container->setParameter('open_orchestra_backoffice.field_searchable_view', $fieldSearchableView);
+
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('generator.yml');

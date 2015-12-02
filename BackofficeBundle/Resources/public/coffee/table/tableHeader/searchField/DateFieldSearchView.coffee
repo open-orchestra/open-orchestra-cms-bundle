@@ -4,7 +4,11 @@ DateFieldSearchView = AbstractSearchFieldView.extend(
     'change input.search-column': 'searchColumn'
 
   initialize: (options) ->
-    @options = options
+    @options = @reduceOption(options, [
+      'column'
+      'domContainer'
+      'table'
+    ])
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableHeader/searchField/tableDateField'
     ]
@@ -19,6 +23,6 @@ DateFieldSearchView = AbstractSearchFieldView.extend(
 )
 
 ((tableFieldViewconfigurator) ->
-  tableFieldViewconfigurator.boolean = BooleanFieldSearchView
+  tableFieldViewconfigurator.date = DateFieldSearchView
   return
 ) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}

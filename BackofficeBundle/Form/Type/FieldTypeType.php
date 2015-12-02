@@ -28,13 +28,15 @@ class FieldTypeType extends AbstractType
      * @param array                             $fieldOptions
      * @param string                            $fieldOptionClass
      * @param string                            $fieldTypeClass
+     * @param array                             $fieldTypeSearchable
      */
     public function __construct(
         TranslatorInterface $translator,
         TranslateValueInitializerListener $translateValueInitializer,
         array $fieldOptions,
         $fieldOptionClass,
-        $fieldTypeClass
+        $fieldTypeClass,
+        array $fieldTypeSearchable
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
@@ -42,6 +44,7 @@ class FieldTypeType extends AbstractType
         $this->fieldOptions = $fieldOptions;
         $this->fieldOptionClass = $fieldOptionClass;
         $this->fieldTypeClass = $fieldTypeClass;
+        $this->fieldTypeSearchable = $fieldTypeSearchable;
     }
 
     /**
@@ -66,12 +69,17 @@ class FieldTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
             ))
+            ->add('fieldTypeSearchable', 'choice', array(
+                'choices' => $this->getChoicesViewSearchable(),
+                'label' => 'open_orchestra_backoffice.form.field_type.type_searchable',
+                'required' => false,
+            ))
             ->add('translatable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.translatable',
                 'required' => false,
             ))
             ->add('type', 'choice', array(
-                'choices' => $this->getChoices(),
+                'choices' => $this->getChoicesType(),
                 'label' => 'open_orchestra_backoffice.form.field_type.type',
                 'attr' => array(
                     'class' => 'content_type_change_type'
@@ -113,7 +121,21 @@ class FieldTypeType extends AbstractType
     /**
      * @return array
      */
-    protected function getChoices()
+    protected function getChoicesViewSearchable()
+    {
+        $choices = array();
+        foreach ($this->fieldTypeSearchable as $option)
+        {
+            $choices[$option['view']] = $this->translator->trans($option['label']);
+        }
+
+        return $choices;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChoicesType()
     {
         $choices = array();
         foreach ($this->fieldOptions as $key => $option) {

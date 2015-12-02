@@ -4,7 +4,11 @@ BooleanFieldSearchView = AbstractSearchFieldView.extend(
     'change select.search-column': 'searchColumn'
 
   initialize: (options) ->
-    @options = options
+    @options = @reduceOption(options, [
+      'column'
+      'domContainer'
+      'table'
+    ])
     @loadTemplates [
       'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableHeader/searchField/tableBooleanField'
     ]

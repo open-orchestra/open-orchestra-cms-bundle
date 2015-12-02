@@ -67,6 +67,7 @@ open_orchestra_backoffice:
             labels: Label
             default_value: Default value
             searchable: Searchable
+            type_searchable: Field's type searchable
             translatable: Translatable
             listable: Visible in BackOffice list
             type: Type

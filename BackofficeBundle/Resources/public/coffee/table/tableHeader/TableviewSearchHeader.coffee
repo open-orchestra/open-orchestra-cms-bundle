@@ -4,25 +4,30 @@ TableviewSearchHeader = OrchestraView.extend(
   className: "header-search-input"
 
   initialize: (options) ->
-    @options = options
-    @render()
+    @options = @reduceOption(options, [
+      'table'
+      'domContainer'
+      'inputHeader'
+    ])
     widgetChannel.trigger 'ready', @
+    @render()
+    @options.table.on 'column-visibility.dt', @toggleColumn
     return
 
   render: ->
-    for type, column in @options.inputHeader
-        type = "empty" if not window.tableFieldViewconfigurator[type]?
+    columnsDefs = @options.table.fnSettings().aoColumns
+    for columnDefs in columnsDefs
+        type = "empty"
+        if columnDefs.searchField? and window.tableFieldViewconfigurator[columnDefs.searchField]?
+            type = columnDefs.searchField
         viewClass = window.tableFieldViewconfigurator[type]
         new viewClass(@addOption(
-            column : column
-            apiTable : @options.apiTable
+            column : columnDefs.targets
+            table : @options.table
             domContainer : @$el
         ))
-
     @options.domContainer.append(@$el)
-)
 
-((tableFieldViewconfigurator) ->
-  tableFieldViewconfigurator.empty = EmptySearchView
-  return
-) window.tableFieldViewconfigurator = window.tableFieldViewconfigurator or {}
+  toggleColumn: (e, settings, column, state) ->
+    $('td', @$el).eq(column).toggle();
+)

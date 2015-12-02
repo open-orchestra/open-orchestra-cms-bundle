@@ -140,6 +140,7 @@
                                     'open_orchestra_backoffice.table.content_type.created_by'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.updated_at'|trans ~ ', ' ~
                                     'open_orchestra_backoffice.table.content_type.updated_by'|trans %}
+        {% set inputHeader = 'text, text, number, text, boolean, date, text, date, text' %}
         {% set visibleElement = '' %}
         {% for columnName, listable in contentType.defaultListable %}
             {% if listable %}
@@ -153,11 +154,12 @@
         {% for field in contentType.fields %}
             {% set displayedElement = displayedElement ~ ', attributes.' ~ field.fieldId ~ '.string_value' %}
             {% set translatedHeader = translatedHeader ~ ', ' ~ field.labels|trans_choose %}
+            {% set inputHeader = inputHeader ~ ', ' ~ field.fieldTypeSearchable %}
             {% if field.listable %}
                 {% if visibleElement is empty %}
                     {% set visibleElement = field.fieldId %}
                 {% else %}
-                    {% set visibleElement = visibleElement ~ ',attributes.' ~ field.fieldId ~ '.string_value' %}
+                    {% set visibleElement = visibleElement ~ ', attributes.' ~ field.fieldId ~ '.string_value' %}
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -173,7 +175,7 @@
                 data-displayed-elements="{{ displayedElement }}"
                 data-translated-header="{{ translatedHeader }}"
                 data-visible-elements="{{ visibleElement }}"
-                data-input-header = "text, boolean, date, text"
+                data-input-header="{{ inputHeader }}"
             >
                 {{ contentType.names| trans_choose }}
             </a>

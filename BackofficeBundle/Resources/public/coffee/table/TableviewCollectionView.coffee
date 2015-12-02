@@ -41,7 +41,13 @@ TableviewCollectionView = OrchestraView.extend(
     columnDefs = []
     for index, element of @options.displayedElements
       columns.push({'data' : element, 'defaultContent': ''});
-      columnDefs.push({'name' : element, 'visible': @checkDefaultVisible(element), 'targets': parseInt(index)});
+      columnDefs.push({
+          'title': @options.translatedHeader[index],
+          'name' : element,
+          'visible': true,
+          'targets': parseInt(index)
+          'searchField': if @options.inputHeader[index]? then @options.inputHeader[index] else undefined
+      });
     columns.push({'data' : 'links'})
     viewContext = @
 
@@ -65,9 +71,10 @@ TableviewCollectionView = OrchestraView.extend(
     dom = "<'dt-toolbar'"
     dom += "<'col-xs-12 col-sm-6'f>" if @options.displayGlobalSearch
     numberColum = if @options.displayGlobalSearch then 5 else 11
-    dom += "<'col-sm-"+numberColum+" col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"
+    dom += "<'col-sm-"+numberColum+" col-xs-6 hidden-xs'C'><'col-xs-12 col-sm-1 hidden-xs'l>>"
     dom += "t"
     dom += "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
+    $('#tableviewCollectionTable').on 'preInit.dt', (e, settings) ->
 
     @options.table = $('#tableviewCollectionTable').dataTable(
       searching: true
@@ -83,19 +90,25 @@ TableviewCollectionView = OrchestraView.extend(
       language: {
         url: appRouter.generateUrl('loadTranslationDatatable')
       }
-      colVis: exclude: [ viewContext.options.displayedElements.length ]
+      colVis:
+        exclude: [ viewContext.options.displayedElements.length ]
       ajax : $.fn.dataTable.pipeline(
         url : @options.url
         pages: 5
       )
-      fnServerParams: (aoData) ->
-        aoData.search = viewContext.transformerDataSearch(aoData)
-        aoData.order = viewContext.transformDataOrder(aoData)
-        delete aoData.columns
-        delete aoData.draw
+      serverParams: (data) ->
+        data.search = viewContext.transformerDataSearch(data)
+        data.order = viewContext.transformDataOrder(data)
+        delete data.columns
+        delete data.draw
       initComplete: (settings, json) ->
         $('#tableviewCollectionTable_filter label').prepend('<span class="input-group-addon"><i class="fa fa-search"></i></span>')
         viewContext.renderAddButton(viewContext, json.links, this)
+        tableviewHeaderClass = appConfigurationView.getConfiguration(viewContext.options.entity,'showTableHeader')
+        tableViewHeaderFilter = new tableviewHeaderClass(viewContext.addOption(
+            apiTable : this
+            domContainer : $('thead', this)
+        ))
       columns: columns
       columnDefs: columnDefs.concat [
         targets: -1
@@ -105,19 +118,13 @@ TableviewCollectionView = OrchestraView.extend(
           viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
       ]
       order: [@options.order]
-      bStateSave: true
-      fnStateSaveCallback: (oSettings, oData) ->
-      	localStorage.setItem 'DataTables_' + viewContext.options.entityType, JSON.stringify(oData)
-      	return
-      fnStateLoadCallback: (oSettings) ->
-      	JSON.parse localStorage.getItem('DataTables_' + viewContext.options.entityType)
+      stateSave: true
+      stateSaveCallback: (settings, data) ->
+        localStorage.setItem 'DataTables_' + viewContext.options.entityType, JSON.stringify(data)
+        return
+      stateLoadCallback: (settings) ->
+        JSON.parse localStorage.getItem('DataTables_' + viewContext.options.entityType)
     )
-
-    tableviewHeaderClass = appConfigurationView.getConfiguration(@options.entity,'showTableHeader')
-    new tableviewHeaderClass(@addOption(
-         apiTable : @options.table
-         domContainer : $('.table thead', @options.domContainer)
-    ))
 
     return
 
