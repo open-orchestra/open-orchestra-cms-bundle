@@ -1,5 +1,5 @@
 open_orchestra_role:
-    role_access_general_node: Manage transversal pages
+    role_access_tree_general_node: Manage transversal pages
     role_access_update_general_node: Update a transversal page
     role_access_tree_node: Manage pages
     role_access_create_node: Create a page

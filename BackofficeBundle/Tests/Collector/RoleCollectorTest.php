@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Collector;
 
 use OpenOrchestra\Backoffice\Collector\RoleCollector;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
@@ -108,10 +109,9 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'node', array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans)),
+            array(array(GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE), 'node', array()),
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'template', array()),
             array(array(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE), 'content', array()),
-            array(array(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE), 'node', array()),
-            array(array(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE), 'node', array()),
             array(array(
                 TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
                 TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
@@ -120,6 +120,8 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
+                GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
+                GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE,
             ), 'node', array(
                 TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE => $this->fakeTrans,
                 TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE => $this->fakeTrans,
@@ -131,13 +133,36 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
                 TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
                 TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
                 TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
+                GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
+                GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE,
+            ), 'general_node', array(
+                GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE  => $this->fakeTrans,
+                GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE  => $this->fakeTrans,
+            )),
+            array(array(
+                TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE,
+                TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
-            ), 'content', array(
+                AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
+                AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,
+            ), 'content_type_for_content', array(
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
                 ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT => $this->fakeTrans,
+            )),
+            array(array(
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT,
+                ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT,
+                AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE,
+                AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE,
+            ), 'content_type', array(
+                AdministrationPanelStrategy::ROLE_ACCESS_CONTENT_TYPE  => $this->fakeTrans,
+                AdministrationPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE  => $this->fakeTrans,
             )),
         );
     }

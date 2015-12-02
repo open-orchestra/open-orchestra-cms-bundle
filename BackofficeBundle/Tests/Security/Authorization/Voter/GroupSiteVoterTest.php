@@ -79,7 +79,7 @@ class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
     public function provideAttributeAndSupport()
     {
         return array(
-            array('ROLE_ACCESS_GENERAL_NODE', true),
+            array('ROLE_ACCESS_TREE_GENERAL_NODE', true),
             array('ROLE_ACCESS_REDIRECTION', true),
             array('ROLE_ACCESS_TREE_NODE', true),
             array('ROLE_ACCESS_CREATE_NODE', true),
