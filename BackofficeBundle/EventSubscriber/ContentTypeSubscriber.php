@@ -119,7 +119,10 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
             foreach ($contentType->getFields() as $contentTypeField) {
                 $contentTypeFieldId = $contentTypeField->getFieldId();
                 $data[$contentTypeFieldId] = isset($data[$contentTypeFieldId]) ? $data[$contentTypeFieldId] : null;
-                $value = $this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId));
+                try {
+                    $value = $this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId));
+                } catch (TransformationFailedException $e) {
+                }
 
                 $attribute = $content->getAttributeByName($contentTypeFieldId);
                 if (is_null($attribute)) {
