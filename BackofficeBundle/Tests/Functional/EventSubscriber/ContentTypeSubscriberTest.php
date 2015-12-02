@@ -50,8 +50,8 @@ class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
         $content->addAttribute($attribute);
 
         $form = $this->formFactory->create('oo_content', $content, array('csrf_protection' => false));
-        $this->assertSame(count($form->get('identifier')->getErrors()), $countError);
-        $this->assertSame($form->get('identifier')->getData(), $fieldValue);
+        $this->assertSame($countError, count($form->get('identifier')->getErrors()));
+        $this->assertSame($fieldValue, $form->get('identifier')->getData());
     }
 
     /**
@@ -67,4 +67,28 @@ class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
         );
     }
 
+    /**
+     * Test submit form with transformation on one field
+     */
+    public function testFormFieldTransformationException()
+    {
+        $content = new Content();
+        $content->setContentType('news');
+
+        $form = $this->formFactory->create('oo_content', $content, array('csrf_protection' => false));
+        $form->submit(array(
+            'name' => 'foo',
+            'keywords' => null,
+            'title' => 'foo',
+            'publish_start' => 'foo',
+            'publish_end' => '2015-12-17',
+            'image' => null,
+            'intro' => 'foo',
+            'text' => null
+        ));
+        $this->assertSame('foo', $form->get('name')->getData());
+        $this->assertCount(1, $form->get('publish_start')->getErrors());
+        $this->assertNull($form->get('publish_start')->getData());
+        $this->assertCount(2, $form->getErrors());
+    }
 }
