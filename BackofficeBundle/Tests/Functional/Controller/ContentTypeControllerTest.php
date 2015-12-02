@@ -41,4 +41,35 @@ class ContentTypeControllerTest extends AbstractControllerTest
         $contentTypes = $this->contentTypeRepository->findAll();
         $this->assertCount($contentTypeCount + 1, $contentTypes);
     }
+
+    /**
+     * Test content edition
+     */
+    public function testEditContent()
+    {
+        $url = '/admin/content/form/welcome?language=fr';
+        $crawler = $this->client->request('GET', $url);
+        $this->assertNotContains('has-error', $this->client->getResponse()->getContent());
+        $contentForm = $crawler->selectButton('Save')->form();
+        $this->client->submit($contentForm);
+        $this->assertContains('alert alert-success', $this->client->getResponse()->getContent());
+
+        $crawler = $this->client->request('GET', '/admin/content-type/form/news');
+        $form = $crawler->selectButton('Save')->form();
+        $this->client->submit($form);
+
+        $url = '/admin/content/form/welcome?language=fr';
+        $crawler = $this->client->request('GET', $url);
+        $this->assertNotContains('has-error', $this->client->getResponse()->getContent());
+    }
+
+    /**
+     * Test new content
+     */
+    public function testNewContent()
+    {
+        $url = '/admin/content/new/news';
+        $this->client->request('GET', $url);
+        $this->assertNotContains('has-error', $this->client->getResponse()->getContent());
+    }
 }

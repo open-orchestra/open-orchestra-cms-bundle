@@ -119,7 +119,7 @@ parameters:
                     required: false
                     format: yyyy-MM-dd
                     widget: single_text
-                    input: array
+                    input: string
             options:
                 required:
                     default_value: false
@@ -128,7 +128,7 @@ parameters:
                 widget:
                     default_value: choice
                 input:
-                    default_value: array
+                    default_value: string
         embedded_content:
             label: open_orchestra_backoffice.form.field_type.custom_type.content
             type: oo_content_choice
