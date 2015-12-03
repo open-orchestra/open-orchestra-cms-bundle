@@ -31,6 +31,8 @@ OrchestraBORouter = Backbone.Router.extend(
     return true
   afterRouteChanges: (selector) ->
     $('#left-panel nav li:has(a' + selector + ')').addClass 'active'
+    $('#left-panel nav li.current').removeClass 'current'
+    $('#left-panel nav li:has(>a' + selector + ')').addClass 'current'
     openMenu $("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign
     document.title = $('#left-panel nav a' + selector).attr('title') or document.title
     drawBreadCrumb()
