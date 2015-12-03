@@ -3,16 +3,19 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Facade\WidgetCollectionFacade;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
 /**
  * Class WidgetCollectionTransformer
  */
-class WidgetCollectionTransformer extends AbstractTransformer
+class WidgetCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
 {
+
     /**
-     * @param array $contentCollection
+     * @param array $widgetCollection
      *
      * @return FacadeInterface
      */
@@ -21,7 +24,10 @@ class WidgetCollectionTransformer extends AbstractTransformer
         $facade = new WidgetCollectionFacade();
 
         foreach ($widgetCollection as $widget) {
-            $facade->addWidget($this->getTransformer('widget')->transform($widget));
+            $role = $this->getWidgetRole($widget);
+            if ($this->authorizationChecker->isGranted($role)) {
+                $facade->addWidget($this->getTransformer('widget')->transform($widget));
+            }
         }
 
         return $facade;
@@ -33,5 +39,23 @@ class WidgetCollectionTransformer extends AbstractTransformer
     public function getName()
     {
         return 'widget_collection';
+    }
+
+    /**
+     * @param $widget
+     *
+     * @return null|string
+     */
+    protected function getWidgetRole($widget)
+    {
+        $role = null;
+
+        if (preg_match('/node/', $widget)) {
+            $role = TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+        } elseif (preg_match('/content/', $widget)) {
+            $role = ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT;
+        }
+
+        return $role;
     }
 }
