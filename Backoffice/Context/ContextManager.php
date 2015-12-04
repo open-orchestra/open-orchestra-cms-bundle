@@ -99,6 +99,7 @@ class ContextManager implements CurrentSiteIdInterface
     {
         $token = $this->tokenStorage->getToken();
         $sites = array();
+        $siteIds = array();
 
         if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
             foreach ($user->getGroups() as $group) {
@@ -107,8 +108,9 @@ class ContextManager implements CurrentSiteIdInterface
                 if ($site === null) {
                     return $this->siteRepository->findByDeleted(false);
                 } else {
-                    if (!$site->isDeleted() && !in_array($site->getId(), $sites)) {
-                        $sites[$site->getId()] = $site;
+                    if (!$site->isDeleted() && !in_array($site->getId(), $siteIds)) {
+                        $siteIds[] = $site->getId();
+                        $sites[] = $site;
                     }
                 }
             }
