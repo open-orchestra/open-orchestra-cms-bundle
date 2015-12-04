@@ -17,7 +17,7 @@ NumberFieldSearchView = AbstractSearchFieldView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableHeader/searchField/tableNumberField',
-            column : @options.column
+        column : @options.column
     )
     @insertFieldInHeader()
 )

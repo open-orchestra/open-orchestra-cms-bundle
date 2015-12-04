@@ -16,7 +16,7 @@ BooleanFieldSearchView = AbstractSearchFieldView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableHeader/searchField/tableBooleanField',
-            column : @options.column
+        column : @options.column
     )
     @insertFieldInHeader()
 )

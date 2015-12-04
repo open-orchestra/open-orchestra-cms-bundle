@@ -16,7 +16,7 @@ DateFieldSearchView = AbstractSearchFieldView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableHeader/searchField/tableDateField',
-            column : @options.column
+        column : @options.column
     )
     $('.datepicker', @$el).datepicker()
     @insertFieldInHeader()

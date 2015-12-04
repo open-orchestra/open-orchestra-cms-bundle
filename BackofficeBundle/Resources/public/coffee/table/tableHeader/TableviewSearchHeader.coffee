@@ -21,8 +21,9 @@ TableviewSearchHeader = OrchestraView.extend(
         if columnDefs.searchField? and window.tableFieldViewconfigurator[columnDefs.searchField]?
             type = columnDefs.searchField
         viewClass = window.tableFieldViewconfigurator[type]
+        index = if columnDefs.targets >= 0 then columnDefs.targets else columnsDefs.length
         new viewClass(@addOption(
-            column : columnDefs.targets
+            column : index
             table : @options.table
             domContainer : @$el
         ))
