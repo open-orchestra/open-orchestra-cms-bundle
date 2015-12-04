@@ -70,6 +70,7 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
             NodeEvents::NODE_CHANGE_STATUS => 'updateRouteDocument',
             RedirectionEvents::REDIRECTION_CREATE => 'createOrUpdateForRedirection',
             RedirectionEvents::REDIRECTION_UPDATE => 'createOrUpdateForRedirection',
+            RedirectionEvents::REDIRECTION_DELETE => 'createOrUpdateForRedirection',
             SiteEvents::SITE_UPDATE => 'updateRouteDocumentOnSiteUpdate',
         );
     }
@@ -81,11 +82,13 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     protected function updateRouteDocumentByType($element, $type)
     {
         $routesToClear = $this->routeDocumentManager->{'clearFor' . $type}($element);
+
         foreach ($routesToClear as $route) {
             $this->objectManager->remove($route);
         }
 
         $routes = $this->routeDocumentManager->{'createFor' . $type}($element);
+
         foreach ($routes as $routeDocument) {
             $this->objectManager->persist($routeDocument);
         }

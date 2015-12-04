@@ -75,14 +75,15 @@ class RouteDocumentManager
      *
      * @return array
      */
-    public function createForNode(NodeInterface $givenNode)
+    public function createForNode(NodeInterface $node)
     {
-        $site = $this->siteRepository->findOneBySiteId($givenNode->getSiteId());
+        $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
+        $nodes = $this->getTreeNode($node, $site);
 
-        $routes = $this->generateRoutesForNode($givenNode, $site);
+        $routes = array();
 
-        foreach ($this->nodeRepository->findByParent($givenNode->getNodeId(), $site->getSiteId()) as $children) {
-            $routes = array_merge($this->createForNode($children), $routes);
+        foreach ($nodes as $node) {
+            $routes = array_merge($this->generateRoutesForNode($node, $site), $routes);
         }
 
         return $routes;
@@ -159,8 +160,29 @@ class RouteDocumentManager
      */
     public function clearForNode(NodeInterface $node)
     {
-        return $this->routeDocumentRepository->findByNodeIdSiteIdAndLanguage($node->getNodeId(), $node->getSiteId(), $node->getLanguage());
+        $nodes = $this->getTreeNode($node);
+        $routes = array();
+
+        foreach ($nodes as $node) {
+            $routes = array_merge($this->routeDocumentRepository->findByNodeIdSiteIdAndLanguage($node->getNodeId(), $node->getSiteId(), $node->getLanguage()), $routes);
+        }
+
+        return $routes;
     }
+
+    protected function getTreeNode(NodeInterface $node, $site = null)
+    {
+        $nodes = array($node);
+        $site = (null === $site) ? $this->siteRepository->findOneBySiteId($node->getSiteId()) : $site;
+        $children = $this->nodeRepository->findByParent($node->getNodeId(), $site->getSiteId());
+
+        foreach ($children as $child) {
+            $nodes = array_merge($this->getTreeNode($child, $site), $nodes);
+        }
+
+        return $nodes;
+    }
+
 
     /**
      * @param RedirectionInterface $redirection

@@ -37,18 +37,29 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     public function updateRedirection(NodeEvent $event)
     {
         $node = $event->getNode();
+        $previousStatus = $event->getPreviousStatus();
         if ($node->getStatus()->isPublished()) {
+            $currentRoutePatterns = array($this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
             $siteId = $this->currentSiteManager->getCurrentSiteId();
             $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
             foreach ($nodes as $otherNode) {
-                if ($otherNode->getId() != $node->getId() && $otherNode->getRoutePattern() != $node->getRoutePattern()) {
+                if ($otherNode->getId() != $node->getId() && !in_array($oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage()), $currentRoutePatterns)) {
                     $this->redirectionManager->createRedirection(
-                        $this->completeRoutePattern($node->getParentId(), $otherNode->getRoutePattern(), $node->getLanguage()),
+                        $oldRoutePattern,
                         $node->getNodeId(),
+                        $node->getVersion(),
                         $node->getLanguage()
                     );
+                    array_push($currentRoutePatterns, $oldRoutePattern);
                 }
             }
+        }
+        if (!$node->getStatus()->isPublished() && $previousStatus->isPublished()) {
+            $this->redirectionManager->deleteRedirection(
+                $node->getNodeId(),
+                $node->getVersion(),
+                $node->getLanguage()
+            );
         }
     }
 
