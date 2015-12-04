@@ -2,10 +2,9 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\TemplateChoiceSubscriber;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -120,17 +119,8 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'required' => false,
             ));
-        if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
-            $builder->add('templateSelection', 'collection', array(
-                'label' => 'open_orchestra_backoffice.form.node.template_selection.name',
-                'label_attr' => array('class' => 'one-needed'),
-                'required' => false,
-                'attr' => array(
-                    'help_text' => 'open_orchestra_backoffice.form.node.template_selection.helper',
-                )
-            ));
-            $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
-            $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));
+        if(!array_key_exists('disabled', $options) || $options['disabled'] === false) {
+            $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
         }
         if (array_key_exists('disabled', $options)) {
