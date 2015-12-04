@@ -20,4 +20,7 @@ TabElementFormView = OrchestraView.extend(
     @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
         listUrl : @options.listUrl
     )
+    
+  onViewReady: ->
+    @options.tabView.addPanel(@options.domContainer.children('[data-title]').data('title'), @options.panel.id, @, @options.panel.isActive, @options.rank)
 )
