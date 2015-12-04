@@ -72,6 +72,11 @@ open_orchestra_backoffice:
             listable: Visible dans les listes du Backoffice
             type: Type
             options: Champ existant
+            field_searchable_view:
+                text: Texte
+                date: Date
+                boolean: Booléen
+                number: Nombre
             custom_type:
                 text: Ligne de texte
                 textarea: Zone de texte

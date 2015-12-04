@@ -22,14 +22,14 @@ parameters:
 
     open_orchestra_backoffice.field_searchable_view:
         text:
-          label: texte
+          label: open_orchestra_backoffice.form.field_type.field_searchable_view.text
           view: text
         date:
-          label: date
+          label: open_orchestra_backoffice.form.field_type.field_searchable_view.date
           view: date
         boolean:
-          label: booléen
+          label: open_orchestra_backoffice.form.field_type.field_searchable_view.boolean
           view: boolean
         number:
-          label: nombre
+          label: open_orchestra_backoffice.form.field_type.field_searchable_view.number
           view: number

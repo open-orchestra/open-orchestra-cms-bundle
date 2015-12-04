@@ -126,7 +126,7 @@ class FieldTypeType extends AbstractType
         $choices = array();
         foreach ($this->fieldTypeSearchable as $option)
         {
-            $choices[$option['view']] = $this->translator->trans($option['label']);
+            $choices[$option['view']] = $option['label'];
         }
 
         return $choices;
