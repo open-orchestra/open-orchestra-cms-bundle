@@ -99,15 +99,17 @@ class ContextManager implements CurrentSiteIdInterface
     {
         $token = $this->tokenStorage->getToken();
         $sites = array();
+        $siteIds = array();
 
         if ($token && ($user = $token->getUser()) instanceof GroupableInterface) {
             foreach ($user->getGroups() as $group) {
                 /** @var SiteInterface $site */
                 $site = $group->getSite();
-                if ($site == null ) {
+                if ($site === null) {
                     return $this->siteRepository->findByDeleted(false);
                 } else {
-                    if (!$site->isDeleted()) {
+                    if (!$site->isDeleted() && !in_array($site->getId(), $siteIds)) {
+                        $siteIds[] = $site->getId();
                         $sites[] = $site;
                     }
                 }
