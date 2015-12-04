@@ -141,7 +141,7 @@ open_orchestra_backoffice:
             status: Status
             boDirection: Children direction
         node:
-            success: The node has been saved
+            success: The page has been saved
             name: Page
             scheme: Scheme
             default_scheme: Default (Alias configuration)
@@ -161,7 +161,7 @@ open_orchestra_backoffice:
             in_menu: Shown in menus
             in_footer: Shown in footer
             role: Role needed to display the page
-            max_age: Max age of the response for the node
+            max_age: Max age of the response for the page
             node_source: The source page (in case of copy)
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
@@ -284,11 +284,11 @@ open_orchestra_backoffice:
         tree:
             new_page: New page
             new_template: New template
-            delete_node: Are you sure to delete the node %nodeName% ?
+            delete_node: Are you sure to delete the page %nodeName% ?
             delete_template: Are you sure to delete the template %templateName% ?
             confirm_move:
-                title: Reorder the node ?
-                text: By accepting, the node will be moved as child of "%nodeName%"
+                title: Reorder the page ?
+                text: By accepting, the page will be moved as child of "%nodeName%"
         dashboard:
             title: Dashboard
         editorial:
@@ -342,10 +342,10 @@ open_orchestra_backoffice:
             signature: Signature of the email notification
         footer:
             title: Footer block
-            description: Display a node name list that have a footer attribute.
+            description: Display a page name list that have a footer attribute.
         menu:
             title: Menu block
-            description: Display a node name list that have the attribute menu.
+            description: Display a page name list that have the attribute menu.
         search:
             title: Search block
             description: Display a search field.
@@ -462,7 +462,7 @@ open_orchestra_backoffice:
             by: by
         delete:
             text: This operation is not reversible.
-            title: Would you like delete this node ?
+            title: Would you like delete this page ?
         blocks: Blocks
     status:
         none_available: No status available

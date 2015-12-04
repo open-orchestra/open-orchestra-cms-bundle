@@ -141,11 +141,11 @@ open_orchestra_backoffice:
             status: Statut
             boDirection: Direction des fils
         node:
-            success: Le noeud a été sauvé
+            success: La page a été sauvegardée
             name: Page
             scheme: Protocol
             default_scheme: Par défaut (Configuration de l'alias)
-            node_type: Type de noeud
+            node_type: Type de page
             priority:
                 label: Importance relative par rapport aux autres pages du site (pour le sitemap)
                 helper: Importance relative par rapport aux autres pages du site (pour le sitemap)
@@ -483,8 +483,8 @@ open_orchestra_backoffice:
             text: Cette opération est définitive.
     command:
         node:
-            success: Les références des noeuds sont cohérentes.
-            error: Les références des noeuds ne sont pas cohérentes.
+            success: Les références des pages sont cohérentes.
+            error: Les références des pages ne sont pas cohérentes.
         empty_choices: Choisissez un table à vérifier.
     global:
         back_to_list: Retour à la liste
