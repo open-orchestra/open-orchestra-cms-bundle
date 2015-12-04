@@ -134,18 +134,22 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetAvailableSites()
     {
         $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site1)->getId()->thenReturn('id1');
         $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
         Phake::when($group1)->getSite()->thenReturn($site1);
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site2)->getId()->thenReturn('id2');
         $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
         Phake::when($group2)->getSite()->thenReturn($site2);
-        $groups = array($group1, $group2);
+        $group3 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        Phake::when($group3)->getSite()->thenReturn($site2);
+        $groups = array($group1, $group2, $group3);
         $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
         Phake::when($user)->getGroups()->thenReturn($groups);
 
         Phake::when($this->token)->getUser()->thenReturn($user);
 
-        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
+        $this->assertEquals(array($site1->getId() => $site1, $site2->getId() => $site2), $this->contextManager->getAvailableSites());
     }
 
     /**
