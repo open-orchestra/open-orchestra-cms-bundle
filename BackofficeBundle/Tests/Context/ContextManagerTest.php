@@ -149,7 +149,7 @@ class ContextManagerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->token)->getUser()->thenReturn($user);
 
-        $this->assertEquals(array($site1->getId() => $site1, $site2->getId() => $site2), $this->contextManager->getAvailableSites());
+        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
     }
 
     /**
