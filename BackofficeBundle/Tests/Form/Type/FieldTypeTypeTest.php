@@ -21,6 +21,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     protected $resolver;
     protected $translator;
     protected $fieldOptions;
+    protected $fieldTypeSearchable;
     protected $translateValueInitializer;
     protected $translatedLabel = 'existing option';
     protected $fieldOptionClass = 'fieldOptionClass';
@@ -39,6 +40,11 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
             )
         ));
 
+        $this->fieldTypeSearchable = array(
+            "text" => array('label' => 'text', "view" => 'text'),
+            "date" => array('label' => 'date', "view" => 'date'),
+        );
+
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->builder)->add(Phake::anyParameters())->thenReturn($this->builder);
 
@@ -49,7 +55,13 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
-        $this->form = new FieldTypeType($this->translator, $this->translateValueInitializer, $this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeClass);
+        $this->form = new FieldTypeType(
+            $this->translator,
+            $this->translateValueInitializer,
+            $this->fieldOptions, $this->fieldOptionClass,
+            $this->fieldTypeClass,
+            $this->fieldTypeSearchable
+        );
     }
 
     /**
@@ -88,7 +100,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')
@@ -105,7 +117,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->form->buildForm($this->builder, array('property_path' => null, 'prototype_data' => $closure));
 
-        Phake::verify($this->builder, Phake::times(6))->add(Phake::anyParameters());
+        Phake::verify($this->builder, Phake::times(7))->add(Phake::anyParameters());
         Phake::verify($this->builder)->addEventListener(
             FormEvents::PRE_SET_DATA,
             array($this->translateValueInitializer, 'preSetData')

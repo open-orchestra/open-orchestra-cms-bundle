@@ -134,6 +134,7 @@ services:
             - %open_orchestra_backoffice.field_types%
             - %open_orchestra_model.document.field_option.class%
             - %open_orchestra_model.document.field_type.class%
+            - %open_orchestra_backoffice.field_searchable_view%
         tags:
             - { name: form.type, alias: oo_field_type }
     open_orchestra_backoffice.type.field_option:

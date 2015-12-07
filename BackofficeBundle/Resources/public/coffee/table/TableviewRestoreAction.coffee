@@ -6,13 +6,13 @@ TableviewRestoreAction = OrchestraView.extend(
     @options = options
     _.bindAll this, "render"
     @loadTemplates [
-      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewRestoreAction'
+      'OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewRestoreAction'
     ]
     return
 
   render: ->
     @setElement $('<p />')
-    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/tableviewRestoreAction',
+    @$el.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewRestoreAction',
       links: @options.element.get('links')
     )
     @options.domContainer.html(@$el)

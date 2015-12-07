@@ -68,6 +68,7 @@ class Configuration implements ConfigurationInterface
                 ->prototype('scalar')->end()
             ->end()
             ->append($this->addFieldTypesParameter())
+            ->append($this->addFieldTypesSearchableView())
             ->arrayNode('options')
                 ->info('Array of content attributes options')
                 ->useAttributeAsKey('option_name')
@@ -110,6 +111,28 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
+
+    /**
+     * @return NodeDefinition
+     */
+    public function addFieldTypesSearchableView()
+    {
+        $builder = new TreeBuilder();
+        $fieldSearchableView = $builder->root('field_searchable_view');
+        $fieldSearchableView
+            ->info("List of field's type searchable view (for content list)")
+            ->useAttributeAsKey('searchable view_name')
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('label')->isRequired()->end()
+                    ->scalarNode('view')->isRequired()->end()
+                ->end()
+            ->end()
+        ;
+
+        return $fieldSearchableView;
+    }
+
 
     /**
      * @return NodeDefinition

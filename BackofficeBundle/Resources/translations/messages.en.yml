@@ -67,10 +67,16 @@ open_orchestra_backoffice:
             labels: Label
             default_value: Default value
             searchable: Searchable
+            type_searchable: Field's type searchable
             translatable: Translatable
             listable: Visible in BackOffice list
             type: Type
             options: Existing field
+            field_searchable_view:
+                text: Text
+                date: Date
+                boolean: Boolean
+                number: Number
             custom_type:
                 text: Text line
                 textarea: Text area

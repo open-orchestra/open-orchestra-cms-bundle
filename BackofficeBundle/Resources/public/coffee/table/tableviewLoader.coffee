@@ -1,6 +1,7 @@
 tableViewLoad = (link, entityType, page) ->
   displayedElements = link.data('displayed-elements').replace(/\s/g, '').split(",")
   translatedHeader = link.data('translated-header').split(",") if link.data('translated-header') != undefined
+  inputHeader = link.data('input-header').replace(/\s/g, '').split(",") if link.data('input-header') != undefined
   visibleElements = link.data('visible-elements').replace(/\s/g, '').split(",") if link.data('visible-elements') != undefined
   displayGlobalSearch = if link.data('display-global-search') != undefined then link.data('display-global-search') else false
   order = link.data('order').replace(/\s/g, '').split(",") if link.data('order') != undefined
@@ -10,6 +11,7 @@ tableViewLoad = (link, entityType, page) ->
     displayedElements: displayedElements
     translatedHeader: translatedHeader || displayedElements
     visibleElements: visibleElements || []
+    inputHeader: inputHeader || []
     order: order
     title: title
     page: page
