@@ -106,10 +106,10 @@ TableviewCollectionView = OrchestraView.extend(
       order: [@options.order]
       bStateSave: true
       fnStateSaveCallback: (oSettings, oData) ->
-      	localStorage.setItem 'DataTables_' + location.hash, JSON.stringify(oData)
+      	localStorage.setItem 'DataTables_' + viewContext.options.entityType, JSON.stringify(oData)
       	return
       fnStateLoadCallback: (oSettings) ->
-      	JSON.parse localStorage.getItem('DataTables_' + location.hash)
+      	JSON.parse localStorage.getItem('DataTables_' + viewContext.options.entityType)
     )
 
     return
