@@ -22,5 +22,6 @@ TabElementFormView = OrchestraView.extend(
     )
     
   onViewReady: ->
-  	@options.callback(this)
+    if @options.callback
+      @options.callback this
 )
