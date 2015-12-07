@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ApiBundle\Facade\ContentCollectionFacade;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
@@ -23,7 +24,9 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
         $facade = new ContentCollectionFacade();
 
         foreach ($contentCollection as $content) {
-            $facade->addContent($this->getTransformer('content')->transform($content));
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $content)) {
+                $facade->addContent($this->getTransformer('content')->transform($content));
+            }
         }
 
         $facade->addLink('_self', $this->generateRoute(
