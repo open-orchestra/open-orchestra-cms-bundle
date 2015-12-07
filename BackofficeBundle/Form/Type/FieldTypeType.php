@@ -124,8 +124,7 @@ class FieldTypeType extends AbstractType
     protected function getChoicesViewSearchable()
     {
         $choices = array();
-        foreach ($this->fieldTypeSearchable as $option)
-        {
+        foreach ($this->fieldTypeSearchable as $option) {
             $choices[$option['view']] = $option['label'];
         }
 
