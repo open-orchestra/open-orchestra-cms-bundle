@@ -20,4 +20,8 @@ TabElementFormView = OrchestraView.extend(
     @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
         listUrl : @options.listUrl
     )
+    
+  onViewReady: ->
+    if @options.callback
+      @options.callback this
 )

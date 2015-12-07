@@ -10,13 +10,17 @@ tabViewFormLoad = (options) ->
         url: panel.link
         method: "GET"
         success: (response) ->
+          callback = do (tabView, panel, i) ->
+            (view) ->
+              tabView.addPanel $('[data-title]', view.$el).data('title'), panel.id, view, panel.isActive, i
+              return
           elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
           view = new elementTabViewClass(
             html: response,
             entityType: options.entityType,
             listUrl: options.listUrl
+            callback: callback
           )
-          tabView.addPanel(view.options.domContainer.children('[data-title]').data('title'), panel.id, view, panel.isActive, i)
 
 getPanelsLink = (links) ->
   panels = []
