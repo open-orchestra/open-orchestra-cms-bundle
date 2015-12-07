@@ -22,5 +22,5 @@ TabElementFormView = OrchestraView.extend(
     )
     
   onViewReady: ->
-    @options.tabView.addPanel(@options.domContainer.children('[data-title]').data('title'), @options.panel.id, @, @options.panel.isActive, @options.rank)
+  	@options.callback(this)
 )
