@@ -3,16 +3,15 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class NodeCollectionTransformer
  */
-class NodeCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
+class NodeCollectionTransformer extends AbstractTransformer
 {
     /**
      * @param Collection $nodeCollection
@@ -24,9 +23,7 @@ class NodeCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade = new NodeCollectionFacade();
 
         foreach ($nodeCollection as $node) {
-            if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node)) {
-                $facade->addNode($this->getTransformer('node')->transform($node));
-            }
+            $facade->addNode($this->getTransformer('node')->transform($node));
         }
 
         return $facade;

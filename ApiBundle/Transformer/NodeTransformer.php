@@ -98,7 +98,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
 
-        if ($facade->editable) {
+        if ($facade->editable && $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE)) {
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
                 'id' => $node->getId(),
             )));

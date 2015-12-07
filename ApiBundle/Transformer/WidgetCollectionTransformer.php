@@ -11,7 +11,6 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
  */
 class WidgetCollectionTransformer extends AbstractTransformer
 {
-
     /**
      * @param array $widgetCollection
      *
