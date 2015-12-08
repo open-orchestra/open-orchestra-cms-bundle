@@ -29,4 +29,6 @@ activateOrderNode = () ->
       method: 'POST'
       data: JSON.stringify(nodeCollection)
 
-activateOrderNode()
+jQuery ->
+  activateOrderNode()
+  return
