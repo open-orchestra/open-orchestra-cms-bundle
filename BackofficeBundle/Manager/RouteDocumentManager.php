@@ -131,6 +131,16 @@ class RouteDocumentManager
     }
 
     /**
+     * @param RedirectionInterface $redirection
+     *
+     * @return array
+     */
+    public function deleteForRedirection(RedirectionInterface $redirection)
+    {
+        return $this->routeDocumentRepository->findByRedirection($redirection->getId());
+    }
+
+    /**
      * @param string|null $parentId
      * @param string|null $suffix
      * @param string      $language

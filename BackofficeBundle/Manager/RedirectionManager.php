@@ -54,7 +54,7 @@ class RedirectionManager
      * @param int    $version
      * @param string $language
      */
-    public function createRedirection($pattern, $nodeId, $version, $language)
+    public function createRedirection($pattern, $nodeId, $language)
     {
         $redirectionClass = $this->redirectionClass;
         $site = $this->siteRepository->findOneBySiteId($this->contextManager->getCurrentSiteId());
@@ -64,7 +64,6 @@ class RedirectionManager
                 /** @var RedirectionInterface $redirection */
                 $redirection = new $redirectionClass();
                 $redirection->setNodeId($nodeId);
-                $redirection->setNodeVersion($version);
                 $redirection->setLocale($language);
                 $redirection->setRoutePattern(str_replace('//', '/', '/' . $alias->getPrefix() . '/' . $pattern));
                 $redirection->setSiteId($site->getSiteId());
@@ -81,9 +80,9 @@ class RedirectionManager
      * @param int    $version
      * @param string $language
      */
-    public function deleteRedirection($nodeId, $version, $language)
+    public function deleteRedirection($nodeId, $language)
     {
-        $redirections = $this->redirectionRepository->findByNode($nodeId, $version, $language);
+        $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
         if (is_array($redirections)) {
             foreach ($redirections as $redirection) {
                 $this->documentManager->remove($redirection);

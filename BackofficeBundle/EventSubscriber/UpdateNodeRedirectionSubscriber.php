@@ -38,28 +38,29 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     {
         $node = $event->getNode();
         $previousStatus = $event->getPreviousStatus();
-        if ($node->getStatus()->isPublished()) {
-            $currentRoutePatterns = array($this->completeRoutePattern($node->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
+
+        if ($node->getStatus()->isPublished() || (!$node->getStatus()->isPublished() && $previousStatus->isPublished())) {
             $siteId = $this->currentSiteManager->getCurrentSiteId();
             $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
+            $lastNode = array_shift($nodes);
+            $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
+
+            $this->redirectionManager->deleteRedirection(
+                $node->getNodeId(),
+                $node->getLanguage()
+            );
+
             foreach ($nodes as $otherNode) {
-                if ($otherNode->getId() != $node->getId() && !in_array($oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage()), $currentRoutePatterns)) {
+                $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
+                if (!in_array($oldRoutePattern, $routePatterns)) {
                     $this->redirectionManager->createRedirection(
                         $oldRoutePattern,
                         $node->getNodeId(),
-                        $node->getVersion(),
                         $node->getLanguage()
                     );
-                    array_push($currentRoutePatterns, $oldRoutePattern);
+                    array_push($routePatterns, $oldRoutePattern);
                 }
             }
-        }
-        if (!$node->getStatus()->isPublished() && $previousStatus->isPublished()) {
-            $this->redirectionManager->deleteRedirection(
-                $node->getNodeId(),
-                $node->getVersion(),
-                $node->getLanguage()
-            );
         }
     }
 
