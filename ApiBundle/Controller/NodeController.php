@@ -138,8 +138,6 @@ class NodeController extends BaseController
      * @Config\Route("/list/by-author", name="open_orchestra_api_node_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return FacadeInterface
      */
     public function listNodeByAuthorAndSiteIdAction($published)

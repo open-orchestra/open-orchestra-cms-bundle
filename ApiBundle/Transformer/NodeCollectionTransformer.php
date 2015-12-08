@@ -4,9 +4,9 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade;
 use OpenOrchestra\ApiBundle\Facade\NodeFacade;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
  * Class NodeCollectionTransformer
