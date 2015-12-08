@@ -64,4 +64,28 @@ class ContentTypeSubscriberTest extends KernelTestCase
         );
     }
 
+    /**
+     * Test submit form with transformation on one field
+     */
+    public function testFormFieldTransformationException()
+    {
+        $content = new Content();
+        $content->setContentType('news');
+
+        $form = $this->formFactory->create('orchestra_content', $content, array('csrf_protection' => false));
+        $form->submit(array(
+            'name' => 'foo',
+            'keywords' => null,
+            'title' => 'foo',
+            'publish_start' => 'foo',
+            'publish_end' => '2015-12-17',
+            'image' => null,
+            'intro' => 'foo',
+            'text' => null
+        ));
+        $this->assertSame('foo', $form->get('name')->getData());
+        $this->assertCount(1, $form->get('publish_start')->getErrors());
+        $this->assertNull($form->get('publish_start')->getData());
+        $this->assertCount(2, $form->getErrors());
+    }
 }
