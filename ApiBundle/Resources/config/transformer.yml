@@ -39,6 +39,7 @@ parameters:
     open_orchestra_api.transformer.translation.class: OpenOrchestra\ApiBundle\Transformer\TranslationTransformer
     open_orchestra_api.transformer.widget_collection.class: OpenOrchestra\ApiBundle\Transformer\WidgetCollectionTransformer
     open_orchestra_api.transformer.widget.class: OpenOrchestra\ApiBundle\Transformer\WidgetTransformer
+    open_orchestra_api.facade.node.class: OpenOrchestra\ApiBundle\Facade\NodeFacade
 
 services:
     open_orchestra_api.transformer.node:
@@ -49,6 +50,7 @@ services:
             - @open_orchestra_model.repository.status
             - @event_dispatcher
             - @security.authorization_checker
+            - %open_orchestra_api.facade.node.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_collection:

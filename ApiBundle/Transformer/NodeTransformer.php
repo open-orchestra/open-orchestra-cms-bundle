@@ -9,7 +9,6 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrateg
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\NodeFacade;
 use OpenOrchestra\ModelInterface\Event\StatusableEvent;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
@@ -31,6 +30,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $siteRepository;
     protected $eventDispatcher;
     protected $statusRepository;
+    protected $facadeClass;
 
     /**
      * @param EncryptionManager             $encrypter
@@ -38,18 +38,24 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param string                        $facadeClass
      */
     public function __construct(
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        $facadeClass
     ) {
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
+        if (!class_exists($facadeClass)) {
+            throw new TransformerParameterTypeException();
+        }
+        $this->facadeClass = $facadeClass;
         parent::__construct($authorizationChecker);
     }
 
@@ -66,7 +72,11 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new NodeFacade();
+        $facade = new $this->facadeClass();
+
+        if (!$facade instanceof FacadeInterface) {
+            throw new TransformerParameterTypeException();
+        }
 
         foreach ($node->getAreas() as $area) {
             $facade->addArea($this->getTransformer('area')->transform($area, $node));
@@ -210,7 +220,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transformVersion($node)
     {
-        $facade = new NodeFacade();
+        $facade = new $this->facadeClass();
 
         $facade->id = $node->getId();
         $facade->nodeId = $node->getNodeId();
@@ -232,8 +242,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param NodeFacade|FacadeInterface $facade
-     * @param NodeInterface|null         $source
+     * @param FacadeInterface    $facade
+     * @param NodeInterface|null $source
      *
      * @return mixed
      * @throws StatusChangeNotGrantedHttpException
