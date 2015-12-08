@@ -98,7 +98,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
 
-        if ($facade->editable && $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE)) {
+        if ($facade->editable) {
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
                 'id' => $node->getId(),
             )));
@@ -130,11 +130,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'nodeId' => $nodeId
         )));
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
-            'nodeId' => $nodeId,
-            'version' => $node->getVersion(),
-            'language' => $node->getLanguage(),
-        )));
+        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node)) {
+            $facade->addLink('_self', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
+                'nodeId' => $nodeId,
+                'version' => $node->getVersion(),
+                'language' => $node->getLanguage(),
+            )));
+        }
 
         $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_show', array(
             'siteId' => $node->getSiteId(),

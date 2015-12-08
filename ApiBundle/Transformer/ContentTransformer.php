@@ -75,8 +75,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
 
-        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT)
-            && $this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)) {
+        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)) {
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
                 'contentId' => $content->getContentId(),
                 'language' => $content->getLanguage(),
@@ -103,11 +102,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
         }
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
-            'contentId' => $content->getContentId(),
-            'version' => $content->getVersion(),
-            'language' => $content->getLanguage(),
-        )));
+        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT)) {
+            $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
+                'contentId' => $content->getContentId(),
+                'version' => $content->getVersion(),
+                'language' => $content->getLanguage(),
+            )));
+        }
 
         $facade->addLink('_self_without_parameters', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $content->getContentId(),
