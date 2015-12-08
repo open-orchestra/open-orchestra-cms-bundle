@@ -81,7 +81,7 @@ class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
     public function provideAttributeAndSupport()
     {
         return array(
-            array('ROLE_ACCESS_GENERAL_NODE', true),
+            array('ROLE_ACCESS_TREE_GENERAL_NODE', false),
             array('ROLE_ACCESS_REDIRECTION', false),
             array('ROLE_ACCESS_TREE_NODE', true),
             array('ROLE_ACCESS_CREATE_NODE', true),

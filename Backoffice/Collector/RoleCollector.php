@@ -77,8 +77,8 @@ class RoleCollector
     {
         $selectedRoles = array();
 
-        foreach ($this->roles as $role =>  $translation) {
-            if (preg_match('/role_access_([^_]*_)?' . $type . '/i', $role)) {
+        foreach ($this->roles as $role => $translation) {
+            if (preg_match('/^role_access_([^_]*_)?' . $type . '$/i', $role)) {
                 $selectedRoles[$role] = $translation;
             }
         }

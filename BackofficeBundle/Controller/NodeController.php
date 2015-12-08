@@ -65,7 +65,7 @@ class NodeController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
+        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
         $form = $this->createForm('oo_node', $node, array('action' => $url), $editionRole);
 
         $form->handleRequest($request);

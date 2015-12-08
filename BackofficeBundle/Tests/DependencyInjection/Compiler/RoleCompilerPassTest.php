@@ -73,7 +73,7 @@ class RoleCompilerPassTest extends \PHPUnit_Framework_TestCase
             TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE,
             TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE,
             TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE,
-            GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE,
+            GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETED,
             AdministrationPanelStrategy::ROLE_ACCESS_STATUS,
