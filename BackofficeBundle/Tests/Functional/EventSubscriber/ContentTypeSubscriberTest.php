@@ -72,7 +72,7 @@ class ContentTypeSubscriberTest extends KernelTestCase
         $content = new Content();
         $content->setContentType('news');
 
-        $form = $this->formFactory->create('oo_content', $content, array('csrf_protection' => false));
+        $form = $this->formFactory->create('orchestra_content', $content, array('csrf_protection' => false));
         $form->submit(array(
             'name' => 'foo',
             'keywords' => null,
