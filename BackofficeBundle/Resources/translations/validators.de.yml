@@ -1,0 +1,12 @@
+open_orchestra_backoffice_validators:
+    form:
+        content:
+            content_template: Twig Syntaxfehler
+    node:
+         pattern: Der Block %blockLabel% müssen Parameter %Parameter% im Knoten-Muster url
+         restore: Sie können diesen Knoten nicht wiederherstellen, sollten Sie wieder herzustellen ihrer Eltern %nodeparent% vor
+    authorize:
+        edition: Sie können dieses Dokument nicht mehr bearbeiten
+    area:
+        unique_area_id: Gebiete ID eindeutig sein
+        presence_required: Sie müssen eine von ihnen zu wählen

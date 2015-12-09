@@ -9,3 +9,4 @@ open_orchestra_backoffice_validators:
         edition: Ce document n'est plus modifiable
     area:
         unique_area_id: Les identifiants des aires doivent être unique
+        presence_required: Vous devez choisir l'un d'eux
