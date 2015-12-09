@@ -42,7 +42,8 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
             if (
                 array_key_exists('templateId', $data['nodeTemplateSelection']) &&
                 0 === $formData->getAreas()->count() &&
-                0 === $formData->getBlocks()->count()
+                0 === $formData->getBlocks()->count()&&
+                '' != $data['nodeTemplateSelection']['templateId']
             ) {
                 $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
                 if (null !== $template) {
@@ -51,7 +52,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
                 }
             } elseif (
                 array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
-                !is_null($data['nodeTemplateSelection']['nodeSource'])
+                '' != $data['nodeTemplateSelection']['nodeSource']
             ) {
                 $this->nodeManager->hydrateNodeFromNodeId($formData, $data['nodeTemplateSelection']['nodeSource']);
             }
