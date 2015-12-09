@@ -9,3 +9,4 @@ open_orchestra_backoffice_validators:
         edition: You cannot edit this document anymore
     area:
         unique_area_id: areas's id have to be unique
+        presence_required: You need to choose one of them

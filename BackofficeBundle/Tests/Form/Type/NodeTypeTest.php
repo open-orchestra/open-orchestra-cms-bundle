@@ -41,7 +41,7 @@ class NodeTypeTest extends \PHPUnit_Framework_TestCase
         Phake::verify($formBuilderMock, Phake::times(15))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**

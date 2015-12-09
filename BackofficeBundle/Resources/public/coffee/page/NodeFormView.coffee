@@ -6,7 +6,6 @@ NodeFormView = OrchestraModalView.extend(
               nodeId: $('#oo_node_nodeId', @$el).val()
       Backbone.history.loadUrl(displayRoute)
       displayMenu(displayRoute)
-
 )
 
 jQuery ->
