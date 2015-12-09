@@ -37,25 +37,24 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
 
         if (
             array_key_exists('nodeTemplateSelection', $data) &&
-            array_key_exists('templateId', $data['nodeTemplateSelection']) &&
-            null === $formData->getId() &&
-            0 === $formData->getAreas()->count() &&
-            0 === $formData->getBlocks()->count()
+            null === $formData->getId()
         ) {
-            $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
-            if (null !== $template) {
-                $formData->setAreas($template->getAreas());
-                $formData->setBlocks($template->getBlocks());
+            if (
+                array_key_exists('templateId', $data['nodeTemplateSelection']) &&
+                0 === $formData->getAreas()->count() &&
+                0 === $formData->getBlocks()->count()
+            ) {
+                $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
+                if (null !== $template) {
+                    $formData->setAreas($template->getAreas());
+                    $formData->setBlocks($template->getBlocks());
+                }
+            } elseif (
+                array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
+                !is_null($data['nodeTemplateSelection']['nodeSource'])
+            ) {
+                $this->nodeManager->hydrateNodeFromNodeId($formData, $data['nodeTemplateSelection']['nodeSource']);
             }
-        }
-
-        if (
-            array_key_exists('nodeTemplateSelection', $data) &&
-            array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
-            is_null($formData->getId()) &&
-            !is_null($data['nodeTemplateSelection']['nodeSource'])
-        ) {
-            $this->nodeManager->hydrateNodeFromNodeId($formData, $data['nodeTemplateSelection']['nodeSource']);
         }
     }
 
@@ -84,7 +83,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
                 'label' => 'open_orchestra_backoffice.form.node.node_source',
             ));
             $form->get('nodeTemplateSelection')->add('templateId', 'choice', array(
-                'choices' => $this->getChoices(),
+                'choices' => $this->getTemplateChoices(),
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.node.template_id'
             ));
@@ -106,7 +105,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
      *
      * @return array
      */
-    protected function getChoices()
+    protected function getTemplateChoices()
     {
         $templates = $this->templateRepository->findByDeleted(false);
         $templatesChoices = array();

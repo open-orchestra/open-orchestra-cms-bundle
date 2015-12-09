@@ -119,7 +119,7 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'required' => false,
             ));
-        if(!array_key_exists('disabled', $options) || $options['disabled'] === false) {
+        if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
         }
