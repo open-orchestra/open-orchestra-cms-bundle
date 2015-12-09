@@ -9,8 +9,7 @@ TableviewSearchHeader = OrchestraView.extend(
       'domContainer'
       'inputHeader'
     ])
-    widgetChannel.trigger 'ready', @
-    @render()
+    @doRender()
     @options.table.on 'column-visibility.dt', @toggleColumn
     return
 
