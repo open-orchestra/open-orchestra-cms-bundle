@@ -46,8 +46,11 @@ displayMenu = (route) ->
 
       # create the jarvis menu
       $("#left-panel nav ul").jarvismenu $("#left-panel nav").data('opts')
-      
-      # tag selected path 
+
+      # activate order node
+      activateOrderNode()
+
+      # tag selected path
       $("#left-panel nav li:has(a[href=\"" + selectedPath + "\"])").addClass "active"
       
       # open selected path
