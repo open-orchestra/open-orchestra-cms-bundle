@@ -16,6 +16,8 @@ class NodeControllerTest extends AbstractControllerTest
      * @var NodeRepositoryInterface
      */
     protected $nodeRepository;
+    protected $redirectionRepository;
+    protected $routeDocumentRepository;
     protected $language = 'en';
     protected $siteId = '2';
 
@@ -27,6 +29,8 @@ class NodeControllerTest extends AbstractControllerTest
         parent::setUp();
 
         $this->nodeRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
+        $this->redirectionRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.redirection');
+        $this->routeDocumentRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.route_document');
     }
 
     /**
@@ -103,6 +107,12 @@ class NodeControllerTest extends AbstractControllerTest
         $crawler = $this->client->request('GET', '/admin/');
 
         $this->assertEquals($nbLink + 2, $crawler->filter('a')->count());
+
+        $this->redirectionRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.redirection');
+        $this->routeDocumentRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.route_document');
+
+        $this->assertEquals(1, count($this->redirectionRepository->findAll()));
+        $this->assertEquals(62, count($this->routeDocumentRepository->findAll()));
 
         $this->client->request('GET', '/api/node/' . $nodeName);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
