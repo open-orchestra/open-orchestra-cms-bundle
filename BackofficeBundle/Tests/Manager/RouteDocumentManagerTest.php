@@ -165,33 +165,29 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
      * @param string $siteId
      * @param string $language
      *
-     * @dataProvider provideClearNodeData
+     * @dataProvider provideNodeData
      */
-    public function testClearForNode($nodeId, $siteId, $language)
+    public function testClearForNode($language, $id, array $aliasIds, $pattern, $exceptedPattern, $parentId = null)
     {
-        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($node)->getLanguage()->thenReturn($language);
-        Phake::when($node)->getSiteId()->thenReturn($siteId);
-        Phake::when($node)->getNodeId()->thenReturn($nodeId);
 
-        $routeDocuments = new ArrayCollection();
-        Phake::when($this->routeDocumentRepository)->findByNodeIdSiteIdAndLanguage(Phake::anyParameters())->thenReturn($routeDocuments);
+        $nodeId = 'nodeId';
+        $childrenId = 'childrenId';
+        $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
+        $children = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($children)->getNodeId()->thenReturn($childrenId);
 
-        $routes = $this->manager->clearForNode($node);
+        Phake::when($this->nodeRepository)->findLastVersionByType($nodeId, $language, 'siteId')->thenReturn(array($node));
+        Phake::when($this->nodeRepository)->findByParent($nodeId, 'siteId')->thenReturn(array($children));
+        Phake::when($this->nodeRepository)->findByParent($childrenId, 'siteId')->thenReturn(array());
 
-        $this->assertSame($routeDocuments, $routes);
-        Phake::verify($this->routeDocumentRepository)->findByNodeIdSiteIdAndLanguage($nodeId, $siteId, $language);
-    }
+        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
+        $routes = array($route);
+        Phake::when($this->routeDocumentRepository)->findByNodeIdSiteIdAndLanguage(Phake::anyParameters())->thenReturn($routes);
 
-    /**
-     * @return array
-     */
-    public function provideClearNodeData()
-    {
-        return array(
-            array('root', '2', 'fr'),
-            array('foo', 'bar', 'en'),
-        );
+        $routeDocuments = $this->manager->clearForNode($node);
+        Phake::verify($this->nodeRepository)->findByParent($nodeId, 'siteId');
+        Phake::verify($this->nodeRepository)->findByParent($childrenId, 'siteId');
+        $this->assertCount(2, $routeDocuments);
     }
 
     /**
@@ -313,6 +309,18 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($routes, $foundRoutes);
         Phake::verify($this->routeDocumentRepository)->findBySite('siteId');
+    }
+
+    /**
+     * Test clear deleteForRedirection
+     */
+    public function testDeleteForRedirection()
+    {
+        $id = 'fakeId';
+        $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
+        Phake::when($redirection)->getId()->thenReturn($id);
+        $this->manager->deleteForRedirection($redirection);;
+        Phake::verify($this->routeDocumentRepository)->findByRedirection($id);
     }
 
     /**

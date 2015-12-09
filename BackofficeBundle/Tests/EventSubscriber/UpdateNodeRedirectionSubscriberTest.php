@@ -43,6 +43,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->node)->getRoutePattern()->thenReturn($this->routePattern);
         $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
+        Phake::when($this->nodeEvent)->getPreviousStatus()->thenReturn($this->status);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->redirectionManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\RedirectionManager');
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');

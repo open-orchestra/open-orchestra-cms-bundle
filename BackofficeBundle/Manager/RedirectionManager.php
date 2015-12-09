@@ -83,7 +83,7 @@ class RedirectionManager
     public function deleteRedirection($nodeId, $language)
     {
         $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
-        if (is_array($redirections)) {
+        if (count($redirections) > 0) {
             foreach ($redirections as $redirection) {
                 $this->documentManager->remove($redirection);
                 $this->documentManager->flush($redirection);

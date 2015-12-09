@@ -42,23 +42,24 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         if ($node->getStatus()->isPublished() || (!$node->getStatus()->isPublished() && $previousStatus->isPublished())) {
             $siteId = $this->currentSiteManager->getCurrentSiteId();
             $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
-            $lastNode = array_shift($nodes);
-            $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
-
             $this->redirectionManager->deleteRedirection(
                 $node->getNodeId(),
                 $node->getLanguage()
             );
+            if(count($nodes) > 0) {
+                $lastNode = array_shift($nodes);
+                $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
 
-            foreach ($nodes as $otherNode) {
-                $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
-                if (!in_array($oldRoutePattern, $routePatterns)) {
-                    $this->redirectionManager->createRedirection(
-                        $oldRoutePattern,
-                        $node->getNodeId(),
-                        $node->getLanguage()
-                    );
-                    array_push($routePatterns, $oldRoutePattern);
+                foreach ($nodes as $otherNode) {
+                    $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
+                    if (!in_array($oldRoutePattern, $routePatterns)) {
+                        $this->redirectionManager->createRedirection(
+                            $oldRoutePattern,
+                            $node->getNodeId(),
+                            $node->getLanguage()
+                        );
+                        array_push($routePatterns, $oldRoutePattern);
+                    }
                 }
             }
         }
