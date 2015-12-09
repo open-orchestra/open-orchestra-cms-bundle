@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\DatatableTranslationFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -17,8 +16,13 @@ class DatatableTranslationTransformer extends AbstractTransformer
      */
     protected $translator;
 
-    public function __construct(TranslatorInterface $translator)
+    /**
+     * @param string              $facadeClass
+     * @param TranslatorInterface $translator
+     */
+    public function __construct($facadeClass, TranslatorInterface $translator)
     {
+        parent::__construct($facadeClass);
         $this->translator = $translator;
     }
 
@@ -30,7 +34,7 @@ class DatatableTranslationTransformer extends AbstractTransformer
     public function transform($domain)
     {
         $keyTranslation = "open_orchestra_datatable";
-        $facade = new DatatableTranslationFacade();
+        $facade = $this->newFacade();
 
         $facade->sProcessing = $this->translator->trans($keyTranslation.'.processing', array(), $domain);
         $facade->sSearch = $this->translator->trans($keyTranslation.'.search', array(), $domain);

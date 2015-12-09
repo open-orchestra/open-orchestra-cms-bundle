@@ -33,27 +33,26 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $facadeClass;
 
     /**
+     * @param string                        $facadeClass
      * @param EncryptionManager             $encrypter
      * @param SiteRepositoryInterface       $siteRepository
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
-     * @param string                        $facadeClass
      */
     public function __construct(
+        $facadeClass,
         EncryptionManager $encrypter,
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker,
-        $facadeClass
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
-        $this->facadeClass = $facadeClass;
-        parent::__construct($authorizationChecker);
     }
 
     /**
@@ -69,11 +68,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new $this->facadeClass();
-
-        if (!$facade instanceof FacadeInterface) {
-            throw new TransformerParameterTypeException();
-        }
+        $facade = $this->newFacade();
 
         foreach ($node->getAreas() as $area) {
             $facade->addArea($this->getTransformer('area')->transform($area, $node));
@@ -217,7 +212,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transformVersion($node)
     {
-        $facade = new $this->facadeClass();
+        $facade = $this->newFacade();
 
         $facade->id = $node->getId();
         $facade->nodeId = $node->getNodeId();

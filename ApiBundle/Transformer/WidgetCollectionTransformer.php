@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\WidgetCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
@@ -18,7 +17,7 @@ class WidgetCollectionTransformer extends AbstractTransformer
      */
     public function transform($widgetCollection)
     {
-        $facade = new WidgetCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($widgetCollection as $widget) {
             $facade->addWidget($this->getTransformer('widget')->transform($widget));

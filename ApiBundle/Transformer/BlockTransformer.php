@@ -35,6 +35,7 @@ class BlockTransformer extends AbstractTransformer
     protected $translator;
 
     /**
+     * @param string                   $facadeClass
      * @param DisplayBlockManager      $displayBlockManager
      * @param DisplayManager           $displayManager
      * @param string                   $blockClass
@@ -46,6 +47,7 @@ class BlockTransformer extends AbstractTransformer
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
+        $facadeClass,
         DisplayBlockManager $displayBlockManager,
         DisplayManager $displayManager,
         $blockClass,
@@ -57,6 +59,7 @@ class BlockTransformer extends AbstractTransformer
         EventDispatcherInterface $eventDispatcher
     )
     {
+        parent::__construct($facadeClass);
         $this->blockParameterManager = $blockParameterManager;
         $this->generateFormManager = $generateFormManager;
         $this->displayBlockManager = $displayBlockManager;
@@ -95,7 +98,7 @@ class BlockTransformer extends AbstractTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new BlockFacade();
+        $facade = $this->newFacade();
 
         $facade->method = $isInside ? BlockFacade::GENERATE : BlockFacade::LOAD;
         $facade->component = $block->getComponent();

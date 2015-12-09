@@ -19,6 +19,7 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
 
     protected $authorizationChecker;
     protected $roleName = 'ROLE_NAME';
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\NodeFacade';
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
@@ -80,7 +81,8 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->authorizationChecker
+            $this->authorizationChecker,
+            $this->facadeClass
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);

@@ -6,7 +6,7 @@ use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
- * Class ContentTypeCollection
+ * Class ContentTypeCollectionFacade
  */
 class ContentTypeCollectionFacade extends PaginateCollectionFacade
 {

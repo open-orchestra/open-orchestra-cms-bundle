@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
@@ -27,22 +26,24 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $currentSiteManager;
 
     /**
+     * @param string                        $facadeClass
      * @param NodeRepositoryInterface       $nodeRepository
      * @param AreaManager                   $areaManager
      * @param CurrentSiteIdInterface        $currentSiteManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
+        $facadeClass,
         NodeRepositoryInterface $nodeRepository,
         AreaManager $areaManager,
         CurrentSiteIdInterface $currentSiteManager,
         AuthorizationCheckerInterface $authorizationChecker
     )
     {
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->nodeRepository = $nodeRepository;
         $this->areaManager = $areaManager;
         $this->currentSiteManager = $currentSiteManager;
-        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -57,7 +58,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($area, NodeInterface $node = null, $parentAreaId = null)
     {
-        $facade = new AreaFacade();
+        $facade = $this->newFacade();
 
         if (!$area instanceof AreaInterface) {
             throw new TransformerParameterTypeException();
@@ -150,7 +151,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transformFromTemplate($area, TemplateInterface $template = null, $parentAreaId = null)
     {
-        $facade = new AreaFacade();
+        $facade = $this->newFacade();
 
         $templateId = null;
         if ($template instanceof TemplateInterface) {
@@ -213,7 +214,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param AreaFacade|FacadeInterface $facade
+     * @param FacadeInterface            $facade
      * @param AreaInterface|null         $source
      * @param NodeInterface|null         $node
      *

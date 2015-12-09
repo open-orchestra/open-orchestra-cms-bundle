@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\ApiBundle\Facade\FieldTypeFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 
@@ -17,10 +16,12 @@ class FieldTypeTransformer extends AbstractTransformer
     protected $translationChoiceManager;
 
     /**
+     * @param string                   $facadeClass
      * @param TranslationChoiceManager $translationChoiceManager
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager)
+    public function __construct($facadeClass, TranslationChoiceManager $translationChoiceManager)
     {
+        parent::__construct($facadeClass);
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
@@ -37,7 +38,7 @@ class FieldTypeTransformer extends AbstractTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new FieldTypeFacade();
+        $facade = $this->newFacade();
 
         $facade->fieldId = $fieldType->getFieldId();
         $facade->label = $this->translationChoiceManager->choose($fieldType->getLabels());

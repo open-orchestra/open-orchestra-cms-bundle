@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\ApiClientFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -27,7 +26,7 @@ class ApiClientTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new ApiClientFacade();
+        $facade = $this->newFacade();
         $facade->id = $apiClient->getId();
         $facade->name = $apiClient->getName();
         $facade->trusted = $apiClient->isTrusted();

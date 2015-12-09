@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\KeywordCollectionFacade;
 
 /**
  * Class KeywordCollectionTransformer
@@ -20,7 +19,7 @@ class KeywordCollectionTransformer extends AbstractSecurityCheckerAwareTransform
      */
     public function transform($keywordCollection)
     {
-        $facade = new KeywordCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($keywordCollection as $keyword) {
             $facade->addKeyword($this->getTransformer('keyword')->transform($keyword));

@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\ContentFacade;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -25,11 +24,13 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $eventDispatcher;
 
     /**
+     * @param string                        $facadeClass
      * @param StatusRepositoryInterface     $statusRepository
      * @param EventDispatcherInterface      $eventDispatcher
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
+        $facadeClass,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
         AuthorizationCheckerInterface $authorizationChecker
@@ -37,7 +38,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         $this->statusRepository = $statusRepository;
         $this->eventDispatcher = $eventDispatcher;
-        parent::__construct($authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
     }
 
     /**
@@ -53,7 +54,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new ContentFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $content->getContentId();
         $facade->contentType = $content->getContentType();
@@ -126,7 +127,7 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param ContentFacade|FacadeInterface $facade
+     * @param FacadeInterface $facade
      * @param ContentInterface|null         $source
      *
      * @return mixed

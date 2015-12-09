@@ -6,7 +6,6 @@ use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\SiteFacade;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
@@ -27,7 +26,7 @@ class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new SiteFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $site->getId();
         $facade->siteId = $site->getSiteId();

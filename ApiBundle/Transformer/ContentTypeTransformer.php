@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\ContentTypeFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -19,12 +18,16 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $translationChoiceManager;
 
     /**
+     * @param string                        $facadeClass
      * @param TranslationChoiceManager      $translationChoiceManager
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager, AuthorizationCheckerInterface $authorizationChecker)
-    {
-        parent::__construct($authorizationChecker);
+    public function __construct(
+        $facadeClass,
+        TranslationChoiceManager $translationChoiceManager,
+        AuthorizationCheckerInterface $authorizationChecker
+    ) {
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
@@ -41,7 +44,7 @@ class ContentTypeTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new ContentTypeFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $contentType->getId();
         $facade->contentTypeId = $contentType->getContentTypeId();

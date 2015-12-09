@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Facade\TranslationFacade;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -19,7 +18,7 @@ class TranslationTransformer extends AbstractTransformer
      */
     public function transform($catalog, $locale = null)
     {
-        $facade = new TranslationFacade();
+        $facade = $this->newFacade();
 
         $facade->locale = $locale;
         $facade->catalog = $catalog;

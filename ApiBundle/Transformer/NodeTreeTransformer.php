@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\NodeTreeFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
@@ -18,7 +17,7 @@ class NodeTreeTransformer extends AbstractTransformer
      */
     public function transform($nodeCollection)
     {
-        $facade = new NodeTreeFacade();
+        $facade = $this->newFacade();
 
         $facade->node = $this->getTransformer('node')->transform($nodeCollection['node']);
 

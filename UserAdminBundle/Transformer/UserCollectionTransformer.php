@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\UserAdminBundle\Facade\UserCollectionFacade;
 
 /**
  * Class UserCollectionTransformer
@@ -20,7 +19,7 @@ class UserCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($mixed)
     {
-        $facade = new UserCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($mixed as $user) {
             $facade->addUser($this->getTransformer('user')->transform($user));

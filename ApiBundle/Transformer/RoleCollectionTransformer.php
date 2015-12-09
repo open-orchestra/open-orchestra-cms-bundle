@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 
 /**
  * Class RoleCollectionTransformer
@@ -20,7 +19,7 @@ class RoleCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($roleCollection)
     {
-        $facade = new RoleCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($roleCollection as $role) {
             $facade->addRole($this->getTransformer('role')->transform($role));

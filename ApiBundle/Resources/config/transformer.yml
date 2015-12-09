@@ -44,31 +44,37 @@ services:
     open_orchestra_api.transformer.node:
         class: %open_orchestra_api.transformer.node.class%
         arguments:
+            - %open_orchestra_api.facade.node.class%
             - @open_orchestra_base.manager.encryption
             - @open_orchestra_model.repository.site
             - @open_orchestra_model.repository.status
             - @event_dispatcher
             - @security.authorization_checker
-            - %open_orchestra_api.facade.node.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_collection:
         class: %open_orchestra_api.transformer.node_collection.class%
+        arguments:
+            - %open_orchestra_api.facade.node_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_tree:
         class: %open_orchestra_api.transformer.node_tree.class%
+        arguments:
+            - %open_orchestra_api.facade.node_tree.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.template:
         class: %open_orchestra_api.transformer.template.class%
         arguments:
+            - %open_orchestra_api.facade.template.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.area:
         class: %open_orchestra_api.transformer.area.class%
         arguments:
+            - %open_orchestra_api.facade.area.class%
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.manager.area
             - @open_orchestra_backoffice.context_manager
@@ -78,6 +84,7 @@ services:
     open_orchestra_api.transformer.block:
         class: %open_orchestra_api.transformer.block.class%
         arguments:
+            - %open_orchestra_api.facade.block.class%
             - @open_orchestra_backoffice.display_block_manager
             - @open_orchestra_backoffice.display_icon_manager
             - %open_orchestra_model.document.block.class%
@@ -91,15 +98,20 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block_collection:
         class: %open_orchestra_api.transformer.block_collection.class%
+        arguments:
+            - %open_orchestra_api.facade.block_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.ui_model:
         class: %open_orchestra_api.transformer.ui_model.class%
+        arguments:
+            - %open_orchestra_api.facade.ui_model.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_type:
         class: %open_orchestra_api.transformer.content_type.class%
         arguments:
+            - %open_orchestra_api.facade.content_type.class%
             - @open_orchestra_backoffice.manager.translation_choice
             - @security.authorization_checker
         tags:
@@ -107,12 +119,14 @@ services:
     open_orchestra_api.transformer.content_type_collection:
         class: %open_orchestra_api.transformer.content_type_collection.class%
         arguments:
+            - %open_orchestra_api.facade.content_type_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content:
         class: %open_orchestra_api.transformer.content.class%
         arguments:
+            - %open_orchestra_api.facade.content.class%
             - @open_orchestra_model.repository.status
             - @event_dispatcher
             - @security.authorization_checker
@@ -120,41 +134,49 @@ services:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_attribute:
         class: %open_orchestra_api.transformer.content_attribute.class%
+        arguments:
+            - %open_orchestra_api.facade.content_attribute.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.content_collection:
         class: %open_orchestra_api.transformer.content_collection.class%
         arguments:
+            - %open_orchestra_api.facade.content_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site:
         class: %open_orchestra_api.transformer.site.class%
         arguments:
+            - %open_orchestra_api.facade.site.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.site_collection:
         class: %open_orchestra_api.transformer.site_collection.class%
         arguments:
+            - %open_orchestra_api.facade.site_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.theme:
         class: %open_orchestra_api.transformer.theme.class%
         arguments:
+            - %open_orchestra_api.facade.theme.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.theme_collection:
         class: %open_orchestra_api.transformer.theme_collection.class%
         arguments:
+            - %open_orchestra_api.facade.theme_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role:
         class: %open_orchestra_api.transformer.role.class%
         arguments:
+            - %open_orchestra_api.facade.role.class%
             - @open_orchestra_backoffice.manager.translation_choice
             - @security.authorization_checker
         tags:
@@ -162,22 +184,27 @@ services:
     open_orchestra_api.transformer.role_collection:
         class: %open_orchestra_api.transformer.role_collection.class%
         arguments:
+            - %open_orchestra_api.facade.role_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role_string:
         class: %open_orchestra_api.transformer.role_string.class%
+        arguments:
+            - %open_orchestra_api.facade.role_string.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.role_string_collection:
         class: %open_orchestra_api.transformer.role_string_collection.class%
         arguments:
+            - %open_orchestra_api.facade.role_string_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group:
         class: %open_orchestra_api.transformer.group.class%
         arguments:
+            - %open_orchestra_api.facade.group.class%
             - @security.authorization_checker
             - @open_orchestra_backoffice.manager.translation_choice
         tags:
@@ -185,6 +212,7 @@ services:
     open_orchestra_api.transformer.node_group_role:
         class: %open_orchestra_api.transformer.node_group_role.class%
         arguments:
+            - %open_orchestra_api.facade.node_group_role.class%
             - OpenOrchestra\GroupBundle\Document\NodeGroupRole
             - @open_orchestra_backoffice.collector.role
         tags:
@@ -192,36 +220,42 @@ services:
     open_orchestra_api.transformer.group_collection:
         class: %open_orchestra_api.transformer.group_collection.class%
         arguments:
+            - %open_orchestra_api.facade.group_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.redirection:
         class: %open_orchestra_api.transformer.redirection.class%
         arguments:
+            - %open_orchestra_api.facade.redirection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.redirection_collection:
         class: %open_orchestra_api.transformer.redirection_collection.class%
         arguments:
+            - %open_orchestra_api.facade.redirection_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.status_collection:
         class: %open_orchestra_api.transformer.status_collection.class%
         arguments:
+            - %open_orchestra_api.facade.status_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.field_type:
         class: %open_orchestra_api.transformer.field_type.class%
         arguments:
+            - %open_orchestra_api.facade.field_type.class%
             - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: open_orchestra_api.transformer.strategy }
     open_orchestra_api.transformer.status:
         class: %open_orchestra_api.transformer.status.class%
         arguments:
+            - %open_orchestra_api.facade.status.class%
             - @open_orchestra_backoffice.authorize_status_change_manager
             - @open_orchestra_model.repository.role
             - @open_orchestra_backoffice.manager.translation_choice
@@ -232,56 +266,72 @@ services:
     open_orchestra_api.transformer.keyword:
         class: %open_orchestra_api.transformer.keyword.class%
         arguments:
+            - %open_orchestra_api.facade.keyword.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.keyword_collection:
         class: %open_orchestra_api.transformer.keyword_collection.class%
         arguments:
+            - %open_orchestra_api.facade.keyword_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.link:
         class: %open_orchestra_api.transformer.link.class%
+        arguments:
+            - %open_orchestra_api.facade.link.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.api_client:
         class: %open_orchestra_api.transformer.api_client.class%
         arguments:
+            - %open_orchestra_api.facade.api_client.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.api_client_collection:
         class: %open_orchestra_api.transformer.api_client_collection.class%
         arguments:
+            - %open_orchestra_api.facade.api_client_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.datatable_translation:
         class: %open_orchestra_api.transformer.datatable_translation.class%
         arguments:
+            - %open_orchestra_api.facade.datatable_translation.class%
             - @translator
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.trash_item:
         class: %open_orchestra_api.transformer.trash_item.class%
         arguments:
+          - %open_orchestra_api.facade.trash_item.class%
           - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.trash_item_collection:
         class: %open_orchestra_api.transformer.trash_item_collection.class%
+        arguments:
+            - %open_orchestra_api.facade.trash_item_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.translation:
         class: %open_orchestra_api.transformer.translation.class%
+        arguments:
+            - %open_orchestra_api.facade.translation.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.widget_collection:
         class: %open_orchestra_api.transformer.widget_collection.class%
+        arguments:
+            - %open_orchestra_api.facade.widget_collection.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.widget:
         class: %open_orchestra_api.transformer.widget.class%
+        arguments:
+            - %open_orchestra_api.facade.widget.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}

@@ -3,8 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\TrashItemFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 
@@ -16,7 +16,7 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param mixed $trashItem
      *
-     * @return TrashItemFacade
+     * @return FacadeInterface
      * @throws TransformerParameterTypeException
      */
     public function transform($trashItem)
@@ -25,7 +25,7 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new TrashItemFacade();
+        $facade = $this->newFacade();
         $facade->id = $trashItem->getId();
         $facade->deletedAt = $trashItem->getDeletedAt();
         $facade->name = $trashItem->getName();

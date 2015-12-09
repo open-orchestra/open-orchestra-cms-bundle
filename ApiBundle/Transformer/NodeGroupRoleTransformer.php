@@ -19,11 +19,13 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     protected $collector;
 
     /**
+     * @param string        $facadeClass
      * @param string        $nodeRoleGroupClass
      * @param RoleCollector $collector
      */
-    public function __construct($nodeRoleGroupClass, RoleCollector $collector)
+    public function __construct($facadeClass, $nodeRoleGroupClass, RoleCollector $collector)
     {
+        parent::__construct($facadeClass);
         $this->nodeRoleGroupClass = $nodeRoleGroupClass;
         $this->collector = $collector;
     }
@@ -31,7 +33,7 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     /**
      * @param NodeGroupRoleInterface $nodeGroupRole
      *
-     * @return NodeGroupRoleFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -41,7 +43,7 @@ class NodeGroupRoleTransformer extends AbstractTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new NodeGroupRoleFacade();
+        $facade = $this->newFacade();
 
         $facade->node = $nodeGroupRole->getNodeId();
         $facade->name = $nodeGroupRole->getRole();
@@ -51,8 +53,8 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface|NodeGroupRoleFacade $facade
-     * @param NodeGroupRoleInterface|null         $source
+     * @param FacadeInterface             $facade
+     * @param NodeGroupRoleInterface|null $source
      *
      * @throws RoleNotFoundHttpException
      * @return mixed

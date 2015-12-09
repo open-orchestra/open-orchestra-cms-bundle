@@ -5,7 +5,6 @@ namespace OpenOrchestra\UserAdminBundle\Transformer;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\UserAdminBundle\Facade\UserFacade;
 use OpenOrchestra\UserBundle\Document\User;
 use OpenOrchestra\UserAdminBundle\UserFacadeEvents;
 use OpenOrchestra\UserAdminBundle\Event\UserFacadeEvent;
@@ -22,16 +21,17 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $translationChoiceManager;
 
     /**
+     * @param string                   $facadeClass
      * @param EventDispatcherInterface $eventDispatcher
      * @param TranslationChoiceManager $translationChoiceManager
      */
     public function __construct(
+        $facadeClass,
         EventDispatcherInterface $eventDispatcher,
         TranslationChoiceManager $translationChoiceManager,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
-        parent::__construct($authorizationChecker);
+    ) {
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->eventDispatcher = $eventDispatcher;
         $this->translationChoiceManager = $translationChoiceManager;
     }
@@ -43,7 +43,7 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($mixed)
     {
-        $facade = new UserFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $mixed->getId();
         $facade->username = $mixed->getUsername();
