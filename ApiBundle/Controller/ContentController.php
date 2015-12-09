@@ -267,8 +267,6 @@ class ContentController extends BaseController
      * @Config\Route("/list/by-author", name="open_orchestra_api_content_list_author_and_site", defaults={"published": null})
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT')")
-     *
      * @return FacadeInterface
      */
     public function listContentByAuthorAndSiteIdAction($published)
