@@ -52,9 +52,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
-        if (!class_exists($facadeClass)) {
-            throw new TransformerParameterTypeException();
-        }
         $this->facadeClass = $facadeClass;
         parent::__construct($authorizationChecker);
     }
