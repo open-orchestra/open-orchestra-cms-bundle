@@ -7,8 +7,6 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy as B
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -17,16 +15,6 @@ use Symfony\Component\Validator\Constraints\Type;
  */
 class ContentListStrategy extends AbstractBlockStrategy
 {
-    protected $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     /**
      * @param BlockInterface $block
      *
