@@ -180,10 +180,18 @@ class RouteDocumentManager
         return $routes;
     }
 
+    /**
+     * @param NodeInterface      $node
+     * @param SiteInterface|null $site
+     *
+     * @return Collection
+     */
     protected function getTreeNode(NodeInterface $node, $site = null)
     {
         $nodes = array($node);
-        $site = (null === $site) ? $this->siteRepository->findOneBySiteId($node->getSiteId()) : $site;
+        if (null === $site) {
+            $site = $this->siteRepository->findOneBySiteId($node->getSiteId());
+        }
         $children = $this->nodeRepository->findByParent($node->getNodeId(), $site->getSiteId());
 
         foreach ($children as $child) {
