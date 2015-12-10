@@ -14,13 +14,14 @@ class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
      * @var ContentAttributeTransformer
      */
     protected $transformer;
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\ContentAttributeFacade';
 
     /**
      * set Up
      */
     public function setUp()
     {
-        $this->transformer = new ContentAttributeTransformer();
+        $this->transformer = new ContentAttributeTransformer($this->facadeClass);
     }
 
     /**

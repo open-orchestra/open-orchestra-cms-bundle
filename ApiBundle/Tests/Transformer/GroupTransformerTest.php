@@ -17,6 +17,7 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $transformer;
 
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\GroupFacade';
     protected $router;
     protected $context;
     protected $transformerInterface;
@@ -39,7 +40,7 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->context)->getRouter()->thenReturn($this->router);
         Phake::when($this->context)->get(Phake::anyParameters())->thenReturn($this->transformerInterface);
 
-        $this->transformer = new GroupTransformer($this->authorizationChecker, $this->translationChoiceManager);
+        $this->transformer = new GroupTransformer($this->facadeClass, $this->authorizationChecker, $this->translationChoiceManager);
         $this->transformer->setContext($this->context);
     }
 

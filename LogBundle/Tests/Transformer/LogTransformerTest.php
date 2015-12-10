@@ -17,6 +17,7 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
 
     protected $log;
     protected $translator;
+    protected $facadeClass = 'OpenOrchestra\LogBundle\Facade\LogFacade';
 
     /**
      * Set up the test
@@ -25,7 +26,7 @@ class LogTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->log = Phake::mock('OpenOrchestra\LogBundle\Model\LogInterface');
-        $this->transformer = new LogTransformer($this->translator);
+        $this->transformer = new LogTransformer($this->facadeClass, $this->translator);
     }
 
     /**

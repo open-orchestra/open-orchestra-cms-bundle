@@ -17,9 +17,9 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $nodeTransformer;
 
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\NodeFacade';
     protected $authorizationChecker;
     protected $roleName = 'ROLE_NAME';
-    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\NodeFacade';
     protected $transformerManager;
     protected $encryptionManager;
     protected $statusRepository;
@@ -77,12 +77,12 @@ class NodeTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
         $this->nodeTransformer = new NodeTransformer(
+            $this->facadeClass,
             $this->encryptionManager,
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->authorizationChecker,
-            $this->facadeClass
+            $this->authorizationChecker
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);

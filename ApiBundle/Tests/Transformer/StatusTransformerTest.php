@@ -13,6 +13,7 @@ use OpenOrchestra\ApiBundle\Transformer\StatusTransformer;
  */
 class StatusTransformerTest extends \PHPUnit_Framework_TestCase
 {
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\StatusFacade';
     protected $authorizeStatusChangeManager;
     protected $authorizationChecker;
     protected $transformerManager;
@@ -47,7 +48,7 @@ class StatusTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($transformerManager)->getGroupContext()->thenReturn($this->groupContext);
         Phake::when($transformerManager)->getRouter()->thenReturn($router);
 
-        $this->transformer = new StatusTransformer($this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager, $this->authorizationChecker);
+        $this->transformer = new StatusTransformer($this->facadeClass, $this->authorizeStatusChangeManager, $roleRepository, $this->translator, $translationChoiceManager, $this->authorizationChecker);
         $this->transformer->setContext($transformerManager);
     }
 
