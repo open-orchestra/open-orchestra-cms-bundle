@@ -37,16 +37,28 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     public function updateRedirection(NodeEvent $event)
     {
         $node = $event->getNode();
-        if ($node->getStatus()->isPublished()) {
+        $previousStatus = $event->getPreviousStatus();
+        if ($node->getStatus()->isPublished() || (!$node->getStatus()->isPublished() && $previousStatus->isPublished())) {
             $siteId = $this->currentSiteManager->getCurrentSiteId();
             $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
-            foreach ($nodes as $otherNode) {
-                if ($otherNode->getId() != $node->getId() && $otherNode->getRoutePattern() != $node->getRoutePattern()) {
-                    $this->redirectionManager->createRedirection(
-                        $this->completeRoutePattern($node->getParentId(), $otherNode->getRoutePattern(), $node->getLanguage()),
-                        $node->getNodeId(),
-                        $node->getLanguage()
-                    );
+            $this->redirectionManager->deleteRedirection(
+                $node->getNodeId(),
+                $node->getLanguage()
+            );
+            if (count($nodes) > 0) {
+                $lastNode = array_shift($nodes);
+                $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
+
+                foreach ($nodes as $otherNode) {
+                    $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
+                    if (!in_array($oldRoutePattern, $routePatterns)) {
+                        $this->redirectionManager->createRedirection(
+                            $oldRoutePattern,
+                            $node->getNodeId(),
+                            $node->getLanguage()
+                        );
+                        array_push($routePatterns, $oldRoutePattern);
+                    }
                 }
             }
         }
