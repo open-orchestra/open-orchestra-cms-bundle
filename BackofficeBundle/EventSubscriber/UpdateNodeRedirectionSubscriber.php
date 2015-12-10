@@ -38,7 +38,6 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     {
         $node = $event->getNode();
         $previousStatus = $event->getPreviousStatus();
-
         if ($node->getStatus()->isPublished() || (!$node->getStatus()->isPublished() && $previousStatus->isPublished())) {
             $siteId = $this->currentSiteManager->getCurrentSiteId();
             $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
@@ -46,7 +45,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
                 $node->getNodeId(),
                 $node->getLanguage()
             );
-            if(count($nodes) > 0) {
+            if (count($nodes) > 0) {
                 $lastNode = array_shift($nodes);
                 $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
 
