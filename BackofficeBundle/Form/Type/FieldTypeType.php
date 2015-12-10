@@ -8,7 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelBundle\Document\FieldType;
 
 /**
@@ -20,10 +19,8 @@ class FieldTypeType extends AbstractType
     protected $fieldOptionClass;
     protected $fieldTypeClass;
     protected $fieldOptions;
-    protected $translator;
 
     /**
-     * @param TranslatorInterface               $translator
      * @param TranslateValueInitializerListener $translateValueInitializer
      * @param array                             $fieldOptions
      * @param string                            $fieldOptionClass
@@ -31,7 +28,6 @@ class FieldTypeType extends AbstractType
      * @param array                             $fieldTypeSearchable
      */
     public function __construct(
-        TranslatorInterface $translator,
         TranslateValueInitializerListener $translateValueInitializer,
         array $fieldOptions,
         $fieldOptionClass,
@@ -40,7 +36,6 @@ class FieldTypeType extends AbstractType
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
-        $this->translator = $translator;
         $this->fieldOptions = $fieldOptions;
         $this->fieldOptionClass = $fieldOptionClass;
         $this->fieldTypeClass = $fieldTypeClass;
@@ -107,7 +102,7 @@ class FieldTypeType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
-            'label' => $this->translator->trans('open_orchestra_backoffice.form.field_type.label'),
+            'label' => 'open_orchestra_backoffice.form.field_type.label',
             'prototype_data' => function(){
                 $default = each($this->fieldOptions);
                 $fieldType = new FieldType();
@@ -138,7 +133,7 @@ class FieldTypeType extends AbstractType
     {
         $choices = array();
         foreach ($this->fieldOptions as $key => $option) {
-            $choices[$key] = $this->translator->trans($option['label']);
+            $choices[$key] = $option['label'];
         }
         asort($choices);
 

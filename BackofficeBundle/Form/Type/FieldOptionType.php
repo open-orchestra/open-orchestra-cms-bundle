@@ -6,7 +6,6 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class FieldOptionType
@@ -18,14 +17,12 @@ class FieldOptionType extends AbstractType
     protected $options;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param array               $options
-     * @param string              $fieldOptionClass
+     * @param array  $options
+     * @param string $fieldOptionClass
      */
-    public function __construct(TranslatorInterface $translator, array $options, $fieldOptionClass)
+    public function __construct(array $options, $fieldOptionClass)
     {
         $this->fieldOptionClass = $fieldOptionClass;
-        $this->translator = $translator;
         $this->options = $options;
     }
 
@@ -56,7 +53,7 @@ class FieldOptionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->fieldOptionClass,
-            'label' => $this->translator->trans('open_orchestra_backoffice.form.field_option.label'),
+            'label' => 'open_orchestra_backoffice.form.field_option.label',
         ));
     }
 }

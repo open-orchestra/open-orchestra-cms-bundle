@@ -87,7 +87,7 @@ class AreaCollectionSubscriber implements EventSubscriberInterface
         } elseif ($areaContainer instanceof AreaInterface) {
             $form->add('newAreas', 'button', array(
                 'disabled' => !$form->isDisabled(),
-                'label' => $this->translator->trans('open_orchestra_backoffice.form.area.block_exists')
+                'label' => 'open_orchestra_backoffice.form.area.block_exists'
             ));
         }
     }
