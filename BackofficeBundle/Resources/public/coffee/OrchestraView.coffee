@@ -9,6 +9,10 @@ OrchestraView = Backbone.View.extend(
       $.extend(true, @, extendView[@extendView[i]])
     Backbone.View.apply @, arguments
 
+  doRender: ->
+    @render()
+    widgetChannel.trigger 'ready', @
+
   loadTemplates: (templates) ->
     @compiledTemplates = {}
     currentView = @
@@ -34,8 +38,7 @@ OrchestraView = Backbone.View.extend(
       ready = false if templateData is false
       return
     if ready
-      @render()
-      widgetChannel.trigger 'ready', @
+      @doRender()
     return
 
   onOrchestraViewReady: ->

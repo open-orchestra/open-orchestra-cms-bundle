@@ -8,8 +8,7 @@ EmptySearchView = OrchestraView.extend(
       'domContainer'
       'table'
     ])
-    @render()
-    widgetChannel.trigger 'ready', @
+    @doRender()
     return
 
   render: ->
