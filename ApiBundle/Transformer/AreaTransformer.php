@@ -214,9 +214,9 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param FacadeInterface            $facade
-     * @param AreaInterface|null         $source
-     * @param NodeInterface|null         $node
+     * @param FacadeInterface    $facade
+     * @param AreaInterface|null $source
+     * @param NodeInterface|null $node
      *
      * @return mixed|AreaInterface
      */

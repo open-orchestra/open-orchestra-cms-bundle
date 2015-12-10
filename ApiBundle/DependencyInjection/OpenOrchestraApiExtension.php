@@ -22,8 +22,8 @@ class OpenOrchestraApiExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        foreach ($config['transformer'] as $transformerName => $transformer ) {
-            $container->setParameter('open_orchestra_api.facade.' . $transformerName .'.class', $transformer['facade']);
+        foreach ($config['facades'] as $transformer => $facade ) {
+            $container->setParameter('open_orchestra_api.facade.' . $transformer .'.class', $facade);
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

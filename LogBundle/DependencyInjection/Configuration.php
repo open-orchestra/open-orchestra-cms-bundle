@@ -6,11 +6,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
- *
- * To learn more see {
- * @link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class
- * }
+ * Class Configuration
  */
 class Configuration implements ConfigurationInterface
 {
@@ -23,21 +19,11 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('open_orchestra_log');
 
         $rootNode->children()
-            ->arrayNode('transformer')
+            ->arrayNode('facades')
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->arrayNode('log')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('facade')->defaultValue('OpenOrchestra\LogBundle\Facade\LogFacade')->end()
-                        ->end()
-                    ->end()
-                    ->arrayNode('log_collection')
-                        ->addDefaultsIfNotSet()
-                        ->children()
-                            ->scalarNode('facade')->defaultValue('OpenOrchestra\LogBundle\Facade\LogCollectionFacade')->end()
-                        ->end()
-                    ->end()
+                    ->scalarNode('log')->defaultValue('OpenOrchestra\LogBundle\Facade\LogFacade')->end()
+                    ->scalarNode('log_collection')->defaultValue('OpenOrchestra\LogBundle\Facade\LogCollectionFacade')->end()
                 ->end()
             ->end()
         ->end();
