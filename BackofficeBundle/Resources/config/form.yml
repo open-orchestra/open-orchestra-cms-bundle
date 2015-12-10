@@ -5,6 +5,8 @@ parameters:
     open_orchestra_backoffice.type.block.class: OpenOrchestra\BackofficeBundle\Form\Type\BlockType
     open_orchestra_backoffice.type.existing_block_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
     open_orchestra_backoffice.type.orchestra_block.class: OpenOrchestra\BackofficeBundle\Form\Type\BlockChoiceType
+    open_orchestra_backoffice.type.site.class: OpenOrchestra\BackofficeBundle\Form\Type\SiteType
+    open_orchestra_backoffice.type.site_alias.class: OpenOrchestra\BackofficeBundle\Form\Type\SiteAliasType
     open_orchestra_backoffice.type.orchestra_content.class : OpenOrchestra\BackofficeBundle\Form\Type\ContentType
     open_orchestra_backoffice.type.content_type.class: OpenOrchestra\BackofficeBundle\Form\Type\ContentTypeType
     open_orchestra_backoffice.type.orchestra_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType
@@ -100,19 +102,20 @@ services:
 
     open_orchestra_backoffice.type.orchestra_block:
         class: %open_orchestra_backoffice.type.orchestra_block.class%
-        arguments: [%open_orchestra.blocks%, @translator]
+        arguments:
+            - %open_orchestra.blocks%
         tags:
             - { name: form.type, alias: oo_block_choice }
     # Site Form Builder
     open_orchestra_backoffice.type.site:
-        class: OpenOrchestra\BackofficeBundle\Form\Type\SiteType
+        class: %open_orchestra_backoffice.type.site.class%
         arguments:
             - %open_orchestra_model.document.site.class%
             - @translator
         tags:
             - { name: form.type, alias: oo_site }
     open_orchestra_backoffice.type.site_alias:
-        class: OpenOrchestra\BackofficeBundle\Form\Type\SiteAliasType
+        class: %open_orchestra_backoffice.type.site_alias.class%
         arguments:
             - %open_orchestra_model.document.site_alias.class%
         tags:
@@ -129,7 +132,6 @@ services:
     open_orchestra_backoffice.type.field_type:
         class: %open_orchestra_backoffice.type.field_type.class%
         arguments:
-            - @translator
             - @open_orchestra_backoffice.listener.translate_value_initializer
             - %open_orchestra_backoffice.field_types%
             - %open_orchestra_model.document.field_option.class%
@@ -140,7 +142,6 @@ services:
     open_orchestra_backoffice.type.field_option:
         class: %open_orchestra_backoffice.type.field_option.class%
         arguments:
-            - @translator
             - %open_orchestra_backoffice.options%
             - %open_orchestra_model.document.field_option.class%
         tags:

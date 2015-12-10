@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,10 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BlockChoiceType extends AbstractType
 {
     /**
-     * @param array               $choices
-     * @param TranslatorInterface $translator
+     * @param array $choices
      */
-    public function __construct(array $choices, TranslatorInterface $translator)
+    public function __construct(array $choices)
     {
         foreach ($choices as $choice) {
             $this->choices[$choice] = 'open_orchestra_backoffice.block.' . $choice . '.title';

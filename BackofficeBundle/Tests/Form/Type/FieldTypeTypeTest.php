@@ -19,11 +19,9 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
     protected $builder;
     protected $resolver;
-    protected $translator;
     protected $fieldOptions;
     protected $fieldTypeSearchable;
     protected $translateValueInitializer;
-    protected $translatedLabel = 'existing option';
     protected $fieldOptionClass = 'fieldOptionClass';
     protected $fieldTypeClass = 'fieldTypeClass';
 
@@ -50,13 +48,9 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->translatedLabel);
-
         $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
 
         $this->form = new FieldTypeType(
-            $this->translator,
             $this->translateValueInitializer,
             $this->fieldOptions, $this->fieldOptionClass,
             $this->fieldTypeClass,
@@ -81,7 +75,7 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->resolver)->setDefaults(array(
             'data_class' => $this->fieldTypeClass,
-            'label' => $this->translatedLabel,
+            'label' => 'open_orchestra_backoffice.form.field_type.label',
             'prototype_data' => function(){
                 $default = each($this->fieldOptions);
                 $fieldType = new FieldType();
@@ -90,7 +84,6 @@ class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
                 return $fieldType;
             }
         ));
-        Phake::verify($this->translator)->trans('open_orchestra_backoffice.form.field_type.label');
     }
 
     /**

@@ -13,19 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AudienceAnalysisStrategy extends AbstractBlockStrategy
 {
-    protected $choices;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->choices = array(
-            'google_analytics' => $translator->trans('open_orchestra_backoffice.block.audience_analysis.google_analytics'),
-            'xiti_free' => $translator->trans('open_orchestra_backoffice.block.audience_analysis.xiti_free')
-        );
-    }
-
     /**
      * @param BlockInterface $block
      *
@@ -44,7 +31,7 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
     {
         $builder
             ->add('tag_type', 'choice', array(
-                'choices' => $this->choices,
+                'choices' => $this->getChoices(),
                 'label' => 'open_orchestra_backoffice.block.audience_analysis.tag_type',
                 'constraints' => new NotBlank(),
             ))
@@ -61,5 +48,16 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
     public function getName()
     {
         return 'audience_analysis';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChoices()
+    {
+        return array(
+            'google_analytics' => 'open_orchestra_backoffice.block.audience_analysis.google_analytics',
+            'xiti_free' => 'open_orchestra_backoffice.block.audience_analysis.xiti_free'
+        );
     }
 }

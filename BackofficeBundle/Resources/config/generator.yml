@@ -65,8 +65,6 @@ services:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.content_lis.generate_form:
         class: %open_orchestra_backoffice.content_list.generate_form.class%
-        arguments:
-            - @translator
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.content.generate_form:
@@ -91,8 +89,6 @@ services:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.audience_analysis:
         class: %open_orchestra_backoffice.audience_analysis.generate_form.class%
-        arguments:
-            - @translator
         tags:
             - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.generate_form.video:
