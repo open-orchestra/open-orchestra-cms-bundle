@@ -27,6 +27,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     protected $siteAliasEn;
     protected $siteAliasFr;
     protected $site;
+    protected $siteId = 'fakeSiteId';
 
     /**
      * Set up the test
@@ -55,7 +56,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         ));
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn($siteAliases);
-        Phake::when($this->site)->getSiteId()->thenReturn('siteId');
+        Phake::when($this->site)->getSiteId()->thenReturn($this->siteId);
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($this->site);
 
@@ -85,15 +86,15 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         $children = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($children)->getNodeId()->thenReturn($childrenId);
 
-        Phake::when($this->nodeRepository)->findLastVersionByType($nodeId, $language, 'siteId')->thenReturn(array($node));
-        Phake::when($this->nodeRepository)->findByParent($nodeId, 'siteId')->thenReturn(array($children));
-        Phake::when($this->nodeRepository)->findByParent($childrenId, 'siteId')->thenReturn(array());
+        Phake::when($this->nodeRepository)->findLastVersionByType($nodeId, $language, $this->siteId)->thenReturn(array($node));
+        Phake::when($this->nodeRepository)->findByParent($nodeId, $this->siteId)->thenReturn(array($children));
+        Phake::when($this->nodeRepository)->findByParent($childrenId, $this->siteId)->thenReturn(array());
 
         $routeDocuments = $this->manager->createForNode($node);
 
         $this->verifyNodeRoutes($language, $id, $aliasIds, $exceptedPattern, $routeDocuments, $nodeId);
-        Phake::verify($this->nodeRepository)->findByParent($nodeId, 'siteId');
-        Phake::verify($this->nodeRepository)->findByParent($childrenId, 'siteId');
+        Phake::verify($this->nodeRepository)->findByParent($nodeId, $this->siteId);
+        Phake::verify($this->nodeRepository)->findByParent($childrenId, $this->siteId);
     }
 
     /**
@@ -161,32 +162,34 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $nodeId
-     * @param string $siteId
-     * @param string $language
+     * @param string      $language
+     * @param string      $id
+     * @param array       $aliasIds
+     * @param string      $pattern
+     * @param string      $exceptedPattern
+     * @param string|null $parentId
      *
      * @dataProvider provideNodeData
      */
     public function testClearForNode($language, $id, array $aliasIds, $pattern, $exceptedPattern, $parentId = null)
     {
-
         $nodeId = 'nodeId';
         $childrenId = 'childrenId';
         $node = $this->generateNode($language, $id, $pattern, $parentId, $nodeId);
         $children = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($children)->getNodeId()->thenReturn($childrenId);
 
-        Phake::when($this->nodeRepository)->findLastVersionByType($nodeId, $language, 'siteId')->thenReturn(array($node));
-        Phake::when($this->nodeRepository)->findByParent($nodeId, 'siteId')->thenReturn(array($children));
-        Phake::when($this->nodeRepository)->findByParent($childrenId, 'siteId')->thenReturn(array());
+        Phake::when($this->nodeRepository)->findLastVersionByType($nodeId, $language, $this->siteId)->thenReturn(array($node));
+        Phake::when($this->nodeRepository)->findByParent($nodeId, $this->siteId)->thenReturn(array($children));
+        Phake::when($this->nodeRepository)->findByParent($childrenId, $this->siteId)->thenReturn(array());
 
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         $routes = array($route);
         Phake::when($this->routeDocumentRepository)->findByNodeIdSiteIdAndLanguage(Phake::anyParameters())->thenReturn($routes);
 
         $routeDocuments = $this->manager->clearForNode($node);
-        Phake::verify($this->nodeRepository)->findByParent($nodeId, 'siteId');
-        Phake::verify($this->nodeRepository)->findByParent($childrenId, 'siteId');
+        Phake::verify($this->nodeRepository)->findByParent($nodeId, $this->siteId);
+        Phake::verify($this->nodeRepository)->findByParent($childrenId, $this->siteId);
         $this->assertCount(2, $routeDocuments);
     }
 
@@ -203,7 +206,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     {
         $mongoNodeId = 'mongoNodeId';
         $nodeId = 'nodeId';
-        $siteId = 'siteId';
+        $siteId = $this->siteId;
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn($mongoNodeId);
         Phake::when($node)->getNodeId()->thenReturn($nodeId);
@@ -258,12 +261,10 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateRedirectionToUrl($locale, $id, $aliasIds, $permanent, $pattern, $url)
     {
-        $siteId = 'siteId';
-
         $redirection = Phake::mock('OpenOrchestra\ModelInterface\Model\RedirectionInterface');
         Phake::when($redirection)->getId()->thenReturn($id);
         Phake::when($redirection)->isPermanent()->thenReturn($permanent);
-        Phake::when($redirection)->getSiteId()->thenReturn($siteId);
+        Phake::when($redirection)->getSiteId()->thenReturn($this->siteId);
         Phake::when($redirection)->getRoutePattern()->thenReturn($pattern);
         Phake::when($redirection)->getUrl()->thenReturn($url);
         Phake::when($redirection)->getLocale()->thenReturn($locale);
@@ -280,7 +281,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
                 'permanent' => $permanent,
             ), $route->getDefaults());
         }
-        Phake::verify($this->siteRepository)->findOneBySiteId($siteId);
+        Phake::verify($this->siteRepository)->findOneBySiteId($this->siteId);
         Phake::verify($this->nodeRepository, Phake::never())->findPublishedInLastVersion(Phake::anyParameters());
 
     }
@@ -308,7 +309,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         $foundRoutes = $this->manager->clearForSite($this->site);
 
         $this->assertSame($routes, $foundRoutes);
-        Phake::verify($this->routeDocumentRepository)->findBySite('siteId');
+        Phake::verify($this->routeDocumentRepository)->findBySite($this->siteId);
     }
 
     /**
@@ -342,13 +343,13 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
         Phake::when($node)->getParentId()->thenReturn($parentId);
 
         Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion($nodeId, $language, 'siteId')
+            ->findPublishedInLastVersion($nodeId, $language, $this->siteId)
             ->thenReturn($node);
 
         $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn('/bar');
         Phake::when($this->nodeRepository)
-            ->findPublishedInLastVersion($parentId, $language, 'siteId')
+            ->findPublishedInLastVersion($parentId, $language, $this->siteId)
             ->thenReturn($parent);
 
         return $node;
@@ -365,7 +366,7 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
     protected function verifyNodeRoutes($language, $id, array $aliasIds, $exceptedPattern, $routeDocuments, $nodeId)
     {
         $this->assertCount(2, $routeDocuments);
-        Phake::verify($this->nodeRepository)->findPublishedInLastVersion($nodeId, $language, 'siteId');
+        Phake::verify($this->nodeRepository)->findPublishedInLastVersion($nodeId, $language, $this->siteId);
         foreach ($routeDocuments as $key => $route) {
             $this->assertSame($aliasIds[$key] . '_' . $id, $route->getName());
             $this->assertSame($this->{'domain' . ucfirst($language)}, $route->getHost());
@@ -373,11 +374,11 @@ class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
             $this->assertSame(array(
                 '_locale' => $language,
                 'nodeId' => $nodeId,
-                'siteId' => 'siteId',
+                'siteId' => $this->siteId,
                 'aliasId' => $aliasIds[$key],
             ), $route->getDefaults());
             $this->assertSame($nodeId, $route->getNodeId());
-            $this->assertSame('siteId', $route->getSiteId());
+            $this->assertSame($this->siteId, $route->getSiteId());
             $this->assertSame($language, $route->getLanguage());
             $this->assertSame($exceptedPattern, $route->getPattern());
         }

@@ -22,6 +22,7 @@ class RedirectionManagerTest extends \PHPUnit_Framework_TestCase
     protected $siteAlias3;
     protected $siteId = ';';
     protected $siteRepository;
+    protected $redirectionRepository;
     protected $contextManager;
     protected $documentManager;
     protected $localeEn = 'en';
@@ -75,6 +76,9 @@ class RedirectionManagerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * test createRedirection
+     */
     public function testCreateRedirection()
     {
         $nodeId = 'nodeId';
@@ -88,6 +92,9 @@ class RedirectionManagerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->eventDispatcher, Phake::times(2))->dispatch(Phake::anyParameters());
     }
 
+    /**
+     * test deleteRedirection
+     */
     public function testDeleteRedirection()
     {
         $this->manager->deleteRedirection('fakeNodeId', 'fakeLanguage');

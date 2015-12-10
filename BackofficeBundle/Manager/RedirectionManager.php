@@ -51,7 +51,6 @@ class RedirectionManager
     /**
      * @param string $pattern
      * @param string $nodeId
-     * @param int    $version
      * @param string $language
      */
     public function createRedirection($pattern, $nodeId, $language)
@@ -77,18 +76,15 @@ class RedirectionManager
 
     /**
      * @param string $nodeId
-     * @param int    $version
      * @param string $language
      */
     public function deleteRedirection($nodeId, $language)
     {
         $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
-        if (count($redirections) > 0) {
-            foreach ($redirections as $redirection) {
-                $this->documentManager->remove($redirection);
-                $this->documentManager->flush($redirection);
-                $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_DELETE, new RedirectionEvent($redirection));
-            }
+        foreach ($redirections as $redirection) {
+            $this->documentManager->remove($redirection);
+            $this->documentManager->flush($redirection);
+            $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_DELETE, new RedirectionEvent($redirection));
         }
     }
 }
