@@ -7,8 +7,8 @@ activateOrderNode = () ->
     beforeStop: (event, ui)->
       smartConfirm(
         'fa-sort-amount-asc',
-        $(this).data('confirm-title') + ' "' + $(event.toElement).text() + '"',
-        $(event.toElement).parent().parent().parent().data('confirm-text'),
+        $(this).data('confirm-title') + ' "' + $(event.originalEvent.target).text() + '"',
+        $(event.originalEvent.target).parent().parent().parent().data('confirm-text'),
         callBackParams:
           sortableElement: $(this)
         noCallback: (params) ->

@@ -293,7 +293,7 @@ open_orchestra_backoffice:
         tree:
             new_page: Nouvelle page
             new_template: Nouveau gabarit
-            delete_node: Etes vous sûr de supprimer le noeud %nodeId% ?
+            delete_node: Etes vous sûr de supprimer le noeud %nodeName% ?
             delete_template: Etes vous sûr de supprimer le gabarit %templateName% ?
             confirm_move:
                 title: Déplacement de la page ?
