@@ -10,12 +10,16 @@ tabViewFormLoad = (options) ->
         url: panel.link
         method: "GET"
         success: (response) ->
+          elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
+          elementTabViewClass::onViewReady = ->
+          	if !@options.submitted
+              @options.callback this
+            return
           callback = do (tabView, panel, i) ->
             (view) ->
               tabView.addPanel $('[data-title]', view.$el).data('title'), panel.id, view, panel.isActive, i
               return
-          elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
-          view = new elementTabViewClass(
+          new elementTabViewClass(
             html: response,
             entityType: options.entityType,
             listUrl: options.listUrl
