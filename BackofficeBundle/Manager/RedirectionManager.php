@@ -64,7 +64,7 @@ class RedirectionManager
                 $redirection = new $redirectionClass();
                 $redirection->setNodeId($nodeId);
                 $redirection->setLocale($language);
-                $redirection->setRoutePattern(str_replace('//', '/', '/' . $alias->getPrefix() . '/' . $pattern));
+                $redirection->setRoutePattern(preg_replace('#///|//#', '/', '/' . $alias->getPrefix() . '/' . $pattern));
                 $redirection->setSiteId($site->getSiteId());
                 $redirection->setSiteName($site->getName());
                 $this->documentManager->persist($redirection);
