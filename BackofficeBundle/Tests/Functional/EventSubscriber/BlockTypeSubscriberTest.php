@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
@@ -106,6 +107,11 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
             )),
             array(ContentListStrategy::CONTENT_LIST, array(
                 'contentNodeId' => 'news',
+                'contentTemplateEnabled' => true,
+            )),
+            array(ConfigurableContentStrategy::CONFIGURABLE_CONTENT, array(
+                'contentTypeId' => 'car',
+                'contentId' => 'car1',
                 'contentTemplateEnabled' => true,
             ))
         );
