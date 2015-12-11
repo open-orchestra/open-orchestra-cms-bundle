@@ -12,7 +12,7 @@ tabViewFormLoad = (options) ->
         success: (response) ->
           elementTabViewClass = appConfigurationView.getConfiguration(options.entityType+'_tab_'+panel.id, 'editEntityTab')
           elementTabViewClass::onViewReady = ->
-          	if !@options.submitted
+            if !@options.submitted
               @options.callback this
             return
           callback = do (tabView, panel, i) ->
