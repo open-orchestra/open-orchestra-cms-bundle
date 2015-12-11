@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade;
 use OpenOrchestra\Backoffice\Collector\RoleCollector;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
