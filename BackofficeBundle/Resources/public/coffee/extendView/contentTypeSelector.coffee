@@ -12,9 +12,9 @@ extendView['contentTypeSelector'] = {
       data:
         content_type: target.val()
       success: (response) ->
-        $("#block_contentId").find("option").remove()
+        $("#oo_block_contentId").find("option").remove()
         $.each response.contents, (index, item) ->
-          $("#block_contentId").append new Option(item["name"], item["id"])
+          $("#oo_block_contentId").append new Option(item["name"], item["id"])
           return
         return
     return
