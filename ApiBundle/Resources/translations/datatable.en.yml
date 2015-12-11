@@ -10,6 +10,8 @@ open_orchestra_datatable:
     processing: Processing...
     search: ""
     zero_records: No matching records found
+    buttons:
+      colvis: Columns display
     paginate:
         first: First
         last: Last

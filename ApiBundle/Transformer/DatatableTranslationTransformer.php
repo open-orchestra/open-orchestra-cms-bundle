@@ -41,6 +41,7 @@ class DatatableTranslationTransformer extends AbstractTransformer
         $facade->sInfoPostFix= $this->translator->trans($keyTranslation.'.info_post_fix', array(), $domain);
         $facade->sLoadingRecords = $this->translator->trans($keyTranslation.'.loading_records', array(), $domain);
         $facade->sZeroRecords = $this->translator->trans($keyTranslation.'.zero_records', array(), $domain);
+        $facade->buttons['colvis'] = $this->translator->trans($keyTranslation.'.buttons.colvis', array(), $domain);
         $facade->oPaginate["sFirst"] = $this->translator->trans($keyTranslation.'.paginate.first', array(), $domain);
         $facade->oPaginate["sLast"] = $this->translator->trans($keyTranslation.'.paginate.last', array(), $domain);
         $facade->oPaginate["sNext"] = $this->translator->trans($keyTranslation.'.paginate.next', array(), $domain);

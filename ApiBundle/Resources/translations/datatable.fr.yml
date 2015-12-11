@@ -10,6 +10,8 @@ open_orchestra_datatable:
     processing: Traitement en cours...
     search: ""
     zero_records: Aucun élément à afficher
+    buttons:
+        colvis: Affichage des colonnes
     paginate:
         first: Premier
         last: Dernier

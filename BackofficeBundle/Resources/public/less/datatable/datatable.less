@@ -1,0 +1,40 @@
+.dataTables_wrapper {
+
+  overflow-x: auto;
+
+  .dt-buttons {
+    float: right;
+  }
+
+  .dataTables_processing {
+      font-size: 1.5em;
+      height: auto;
+  }
+
+}
+
+.dt-button-collection {
+
+  li.buttons-columnVisibility a:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    transform: translate(0,0);
+    content: "\f00d";
+    margin-right: 13px;
+  }
+
+  li.buttons-columnVisibility.active a:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    transform: translate(0, 0);
+    content: "\f00c";
+    margin-right: 10px;
+  }
+
+}
