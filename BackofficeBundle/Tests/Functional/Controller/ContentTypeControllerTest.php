@@ -34,7 +34,7 @@ class ContentTypeControllerTest extends AbstractControllerTest
         $contentTypes = $this->contentTypeRepository->findAll();
         $contentTypeCount = count($contentTypes);
 
-        $crawler = $this->client->request('GET', '/admin/content-type/form/car');
+        $crawler = $this->client->request('GET', '/admin/content-type/form/news');
         $form = $crawler->selectButton('Save')->form();
         $this->client->submit($form);
 
