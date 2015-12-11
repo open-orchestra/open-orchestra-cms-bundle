@@ -1,0 +1,4 @@
+open_orchestra_log:
+    facades:
+        log:            FacadeClass
+        log_collection: FacadeClass

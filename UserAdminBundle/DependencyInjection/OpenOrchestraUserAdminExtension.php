@@ -22,7 +22,7 @@ class OpenOrchestraUserAdminExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        foreach ($config['facades'] as $transformer => $facade ) {
+        foreach ($config['facades'] as $transformer => $facade) {
             $container->setParameter('open_orchestra_user_admin.facade.' . $transformer .'.class', $facade);
         }
 
