@@ -31,12 +31,12 @@ TableviewAction = OrchestraView.extend(
         row: $(event.target).closest('tr')
       yesCallback: (params) ->
         params.row.hide()
-        OpenOrchestraDataTableChannel.trigger 'clearCache', options.tableId
+        OpenOrchestra.DataTable.Channel.trigger 'clearCache', options.tableId
         $.ajax
           url: params.url
           method: 'DELETE'
           complete: () ->
-            OpenOrchestraDataTableChannel.trigger 'draw', options.tableId
+            OpenOrchestra.DataTable.Channel.trigger 'draw', options.tableId
     )
 
   clickEdit: (event) ->
@@ -62,7 +62,7 @@ TableviewAction = OrchestraView.extend(
       method: "GET"
       success: (response) ->
         options = viewContext.addOption(html: response, domContainer: $('#content'))
-        OpenOrchestraDataTableChannel.trigger 'clearCache', options.tableId
+        OpenOrchestra.DataTable.Channel.trigger 'clearCache', options.tableId
         if panels
           tabViewFormLoad(options)
         else

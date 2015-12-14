@@ -1,5 +1,3 @@
-OpenOrchestraDataTableChannel = new (Backbone.Wreqr.EventAggregator)
-
 ###*
 * @class DataTableView
 ###
@@ -41,7 +39,7 @@ class DataTableView extends OrchestraView
     @options = options
     @api = null
     @settings = {}
-    OpenOrchestraDataTableChannel.bind 'draw', @draw, @
+    OpenOrchestra.DataTable.Channel.bind 'draw', @draw, @
 
   ###*
   * @return {this}
@@ -63,7 +61,7 @@ class DataTableView extends OrchestraView
 
     if(settings.serverSide? and true == settings.serverSide)
         $.extend true, settings, @getServerSideSettings(settings)
-        OpenOrchestraDataTableChannel.bind 'clearCache', @clearCache, @
+        OpenOrchestra.DataTable.Channel.bind 'clearCache', @clearCache, @
 
     if(settings.stateSave? and true == settings.stateSave)
         $.extend true, settings, @getStateSaveSettings(settings)
@@ -110,7 +108,7 @@ class DataTableView extends OrchestraView
     )
 
   ###*
-  * @param {Object] datatable settings
+  * @param {Object} settings DataTable settings
   *
   * @return array
   ###
@@ -128,7 +126,7 @@ class DataTableView extends OrchestraView
 
   ###*
   * Defaults settings dom
-  * @param {Object] datatable settings
+  * @param {Object} settings DataTable settings
   *
   * @return string
   ###
@@ -144,7 +142,7 @@ class DataTableView extends OrchestraView
 
   ###*
   * Defaults settings when state save is enabled
-  * @param {objects] datatable settings
+  * @param {Object} settings DataTable settings
   *
   * @return {Object}
   ###
@@ -162,7 +160,7 @@ class DataTableView extends OrchestraView
 
   ###*
   * Defaults settings when serverSide is enabled
-  * @param {objects] datatable settings
+  * @param {Object} settings DataTable settings
   *
   * @return {Object}
   ###

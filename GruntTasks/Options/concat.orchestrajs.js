@@ -98,6 +98,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/dataTable/header/searchField/DateFieldSearchView.js',
         'web/built/openorchestrabackoffice/js/dataTable/header/searchField/NumberFieldSearchView.js',
         'web/built/openorchestrabackoffice/js/dataTable/header/searchField/BooleanFieldSearchView.js',
+        'web/built/openorchestrabackoffice/js/dataTable/DataTableChannel.js',
         'web/built/openorchestrabackoffice/js/dataTable/DataTableView.js',
 
         //--[ TABLEVIEW ]--//

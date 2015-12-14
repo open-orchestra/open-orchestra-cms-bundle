@@ -32,7 +32,10 @@ class EmptySearchView extends AbstractSearchFieldView
     return @
 
 
-((tableFieldViewConfigurator) ->
-  tableFieldViewConfigurator.empty = EmptySearchView
+(($, OpenOrchestra, DataTable, ViewFieldConfigurator) ->
+  ViewFieldConfigurator.empty = EmptySearchView
   return
-) window.tableFieldViewConfigurator = window.tableFieldViewConfigurator or {}
+) jQuery,
+  window.OpenOrchestra = window.OpenOrchestra or {} ,
+  window.OpenOrchestra.DataTable = window.OpenOrchestra.DataTable or {} ,
+  window.OpenOrchestra.DataTable.ViewFieldConfigurator = window.OpenOrchestra.DataTable.ViewFieldConfigurator or {}

@@ -29,11 +29,12 @@ class DataTableViewSearchHeader extends OrchestraView
   ###
   render: ->
     columnsDefs = @options.api.settings()[0].aoColumns
+    viewField = window.OpenOrchestra.DataTable.ViewFieldConfigurator
     for columnDefs in columnsDefs
         type = "empty"
-        if columnDefs.searchField? and window.tableFieldViewConfigurator[columnDefs.searchField]?
+        if columnDefs.searchField? and viewField[columnDefs.searchField]?
             type = columnDefs.searchField
-        viewClass = window.tableFieldViewConfigurator[type]
+        viewClass = viewField[type]
         index = if columnDefs.targets >= 0 then columnDefs.targets else columnsDefs.length - 1
         new viewClass(@addOption(
             columnIndex : index

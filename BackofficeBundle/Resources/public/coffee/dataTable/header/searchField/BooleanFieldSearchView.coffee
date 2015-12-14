@@ -35,7 +35,10 @@ class BooleanFieldSearchView extends AbstractSearchFieldView
 
     return @
 
-((tableFieldViewConfigurator) ->
-  tableFieldViewConfigurator.boolean = BooleanFieldSearchView
+(($, OpenOrchestra, DataTable, ViewFieldConfigurator) ->
+  ViewFieldConfigurator.boolean = BooleanFieldSearchView
   return
-) window.tableFieldViewConfigurator = window.tableFieldViewConfigurator or {}
+) jQuery,
+  window.OpenOrchestra = window.OpenOrchestra or {} ,
+  window.OpenOrchestra.DataTable = window.OpenOrchestra.DataTable or {} ,
+  window.OpenOrchestra.DataTable.ViewFieldConfigurator = window.OpenOrchestra.DataTable.ViewFieldConfigurator or {}

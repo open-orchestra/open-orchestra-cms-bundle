@@ -20,4 +20,3 @@ class AbstractSearchFieldView extends OrchestraView
           @$el.insertBefore($(td))
           return
     @options.domContainer.append(@$el)
-
