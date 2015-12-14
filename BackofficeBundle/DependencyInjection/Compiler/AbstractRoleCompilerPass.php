@@ -26,20 +26,5 @@ abstract class AbstractRoleCompilerPass implements CompilerPassInterface
         foreach ($roles as $role) {
             $definition->addMethodCall('addRole', array($role));
         }
-
-        $this->addRoleHierarchieSuperAdmin($container, $roles);
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param array $roles
-     */
-    protected function addRoleHierarchieSuperAdmin(ContainerBuilder $container, array $roles)
-    {
-        $rolesHierarchy = $container->getParameter('security.role_hierarchy.roles');
-        if (isset($rolesHierarchy[UserInterface::ROLE_SUPER_ADMIN])) {
-            $rolesHierarchy[UserInterface::ROLE_SUPER_ADMIN] = array_merge($rolesHierarchy["ROLE_SUPER_ADMIN"], $roles);
-            $container->setParameter('security.role_hierarchy.roles', $rolesHierarchy);
-        }
     }
 }
