@@ -40,6 +40,7 @@ class DataTableView extends OrchestraView
     @api = null
     @settings = {}
     OpenOrchestra.DataTable.Channel.bind 'draw', @draw, @
+    @loadTemplates ['OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/processing']
 
   ###*
   * @return {this}
@@ -87,7 +88,9 @@ class DataTableView extends OrchestraView
   ###
   processingData : (e, settings, processing) ->
     message = settings.oLanguage.sProcessing
-    domProcessing = $("<div class='dataTables_processing'><i class='fa fa-cog fa-spin'></i> "+message+"</div>")
+    domProcessing = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/processing',
+        message : message
+    );
     if processing
       $('.dataTables_wrapper', @$el).append(domProcessing) if $('.dataTables_processing', @$el).length == 0
       $('.dataTables_processing', @$e).show()

@@ -72,7 +72,7 @@ TableviewCollectionView = OrchestraView.extend(
         initComplete: (settings, json) ->
           viewContext.renderAddButton(viewContext, json.links, this)
     );
-    table = datatable.render().el
+    table = datatable.$el
     $('.tableviewCollectionTable', @options.domContainer).html table
     return
 
