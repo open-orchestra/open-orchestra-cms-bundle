@@ -91,15 +91,9 @@ module.exports = {
 
         //--[ DATATABLE ]--//
         'web/built/openorchestrabackoffice/js/dataTable/plugins/InputFullPagination.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/DataTableViewSearchHeader.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/AbstractSearchFieldView.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/EmptySearchView.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/TextFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/DateFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/NumberFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/BooleanFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/dataTable/DataTableChannel.js',
-        'web/built/openorchestrabackoffice/js/dataTable/DataTableView.js',
+        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/*.js',
+        'web/built/openorchestrabackoffice/js/dataTable/header/*.js',
+        'web/built/openorchestrabackoffice/js/dataTable/*.js',
 
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
