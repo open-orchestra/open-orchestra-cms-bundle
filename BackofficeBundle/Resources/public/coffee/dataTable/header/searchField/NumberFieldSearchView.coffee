@@ -38,10 +38,10 @@ class NumberFieldSearchView extends AbstractSearchFieldView
 
     return @
 
-(($, OpenOrchestra, DataTable, ViewFieldConfigurator) ->
-  ViewFieldConfigurator.number = NumberFieldSearchView
+(($, OpenOrchestra) ->
+  OpenOrchestra.DataTable = {} if not OpenOrchestra.DataTable?
+  OpenOrchestra.DataTable.ViewFieldConfigurator = {} if not OpenOrchestra.DataTable.ViewFieldConfigurator?
+  OpenOrchestra.DataTable.ViewFieldConfigurator.number = NumberFieldSearchView
   return
 ) jQuery,
-  window.OpenOrchestra = window.OpenOrchestra or {} ,
-  window.OpenOrchestra.DataTable = window.OpenOrchestra.DataTable or {} ,
-  window.OpenOrchestra.DataTable.ViewFieldConfigurator = window.OpenOrchestra.DataTable.ViewFieldConfigurator or {}
+  window.OpenOrchestra = window.OpenOrchestra or {}

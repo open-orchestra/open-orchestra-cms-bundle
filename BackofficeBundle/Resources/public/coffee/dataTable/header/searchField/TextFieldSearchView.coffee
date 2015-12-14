@@ -37,10 +37,10 @@ class TextFieldSearchView extends AbstractSearchFieldView
 
     return @
 
-(($, OpenOrchestra, DataTable, ViewFieldConfigurator) ->
-  ViewFieldConfigurator.text = TextFieldSearchView
+(($, OpenOrchestra) ->
+  OpenOrchestra.DataTable = {} if not OpenOrchestra.DataTable?
+  OpenOrchestra.DataTable.ViewFieldConfigurator = {} if not OpenOrchestra.DataTable.ViewFieldConfigurator?
+  OpenOrchestra.DataTable.ViewFieldConfigurator.text = TextFieldSearchView
   return
 ) jQuery,
-  window.OpenOrchestra = window.OpenOrchestra or {} ,
-  window.OpenOrchestra.DataTable = window.OpenOrchestra.DataTable or {} ,
-  window.OpenOrchestra.DataTable.ViewFieldConfigurator = window.OpenOrchestra.DataTable.ViewFieldConfigurator or {}
+  window.OpenOrchestra = window.OpenOrchestra or {}

@@ -36,10 +36,10 @@ class DateFieldSearchView extends AbstractSearchFieldView
     return @
 
 
-(($, OpenOrchestra, DataTable, ViewFieldConfigurator) ->
-  ViewFieldConfigurator.date = DateFieldSearchView
+(($, OpenOrchestra) ->
+  OpenOrchestra.DataTable = {} if not OpenOrchestra.DataTable?
+  OpenOrchestra.DataTable.ViewFieldConfigurator = {} if not OpenOrchestra.DataTable.ViewFieldConfigurator?
+  OpenOrchestra.DataTable.ViewFieldConfigurator.date = DateFieldSearchView
   return
 ) jQuery,
-  window.OpenOrchestra = window.OpenOrchestra or {} ,
-  window.OpenOrchestra.DataTable = window.OpenOrchestra.DataTable or {} ,
-  window.OpenOrchestra.DataTable.ViewFieldConfigurator = window.OpenOrchestra.DataTable.ViewFieldConfigurator or {}
+  window.OpenOrchestra = window.OpenOrchestra or {}
