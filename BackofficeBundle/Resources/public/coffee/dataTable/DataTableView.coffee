@@ -90,7 +90,7 @@ class DataTableView extends OrchestraView
     message = settings.oLanguage.sProcessing
     domProcessing = @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/processing',
         message : message
-    );
+    )
     if processing
       $('.dataTables_wrapper', @$el).append(domProcessing) if $('.dataTables_processing', @$el).length == 0
       $('.dataTables_processing', @$e).show()
