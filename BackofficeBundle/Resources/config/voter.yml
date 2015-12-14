@@ -4,6 +4,7 @@ parameters:
     open_orchestra_backoffice.voter.statusable.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\StatusableVoter
     open_orchestra_backoffice.voter.node_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVersionVoter
     open_orchestra_backoffice.voter.content_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVersionVoter
+    security.access.role_hierarchy_voter.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\RoleHierarchyVoter
 
 services:
     open_orchestra_backoffice.voter.group_site:
