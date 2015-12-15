@@ -111,9 +111,9 @@ parameters:
                     required: true
         date:
             label: open_orchestra_backoffice.form.field_type.custom_type.date
-            type: date
+            type: date_picker
             default_value:
-                type: date
+                type: date_picker
                 options:
                     label: open_orchestra_backoffice.form.field_type.default_value
                     required: false

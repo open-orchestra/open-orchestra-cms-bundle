@@ -135,6 +135,16 @@ activateOrchestraNodeChoice = (element) ->
         term.text.replace regExp, ''
     )
 
+#DATEPICKER ENABLED
+activateDatePicker = (element) ->
+  dataDateFormat = element.data('dateformat');
+  console.log dataDateFormat
+  element.datepicker(
+    dateFormat : dataDateFormat,
+    prevText : '<i class="fa fa-chevron-left"></i>',
+    nextText : '<i class="fa fa-chevron-right"></i>',
+  )
+
 #COLORPICKER ENABLED
 activateColorPicker = (element) ->
   element.minicolors()
@@ -162,6 +172,8 @@ activateHidden = (hidden) ->
 activateForm = (view, form) ->
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
   activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
+  $(".datepicker", form).each ->
+    activateDatePicker $(@)
   activateColorPicker(elements) if (elements = $(".colorpicker", view.el)) && elements.length > 0
   activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0
   activateTinyMce(view, elements) if (elements = $("textarea.tinymce", form)) && elements.length > 0
