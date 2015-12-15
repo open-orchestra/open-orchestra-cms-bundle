@@ -30,13 +30,8 @@ opts =
 $("#left-panel nav").data({opts : opts})
 
 displayMenu = (route, refresh) ->
-  selectedPath = undefined
-  if typeof route isnt "undefined"
-    selectedPath = "#" + route
-  else if typeof refresh isnt "undefined"
-    selectedPath = "#" + refresh
-  else
-    selectedPath = "#" + Backbone.history.fragment
+  selectedPath = "#" + (route || Backbone.history.fragment)
+  refresh = refresh || (typeof route == "undefined")
   $.ajax
     url: $("#left-panel nav").data("url")
     type: "GET"
@@ -58,7 +53,7 @@ displayMenu = (route, refresh) ->
       # open selected path
       openMenu($("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign)
 
-      if typeof route isnt "undefined"
+      if not refresh
         Backbone.history.navigate route,
           trigger: true
 

@@ -3,7 +3,7 @@ ContentTypeFormView = FullPageFormView.extend(
   onViewReady: ->
     if @options.submitted
       displayRoute = appRouter.generateUrl('listEntities', entityType: @options.entityType)
-      displayMenu(undefined, displayRoute)
+      displayMenu(displayRoute, true)
 )
 
 jQuery ->
