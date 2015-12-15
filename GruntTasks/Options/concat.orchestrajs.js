@@ -89,15 +89,14 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/tab/TabElementFormView.js',
         'web/built/openorchestrabackoffice/js/tab/tabViewFormLoader.js',
 
+        //--[ DATATABLE ]--//
+        'web/built/openorchestrabackoffice/js/dataTable/plugins/InputFullPagination.js',
+        'web/built/openorchestrabackoffice/js/dataTable/header/searchField/*.js',
+        'web/built/openorchestrabackoffice/js/dataTable/header/*.js',
+        'web/built/openorchestrabackoffice/js/dataTable/*.js',
+
         //--[ TABLEVIEW ]--//
         'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/TableviewSearchHeader.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/AbstractSearchFieldView.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/EmptySearchView.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/TextFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/DateFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/NumberFieldSearchView.js',
-        'web/built/openorchestrabackoffice/js/table/tableHeader/searchField/BooleanFieldSearchView.js',
         'web/built/openorchestrabackoffice/js/table/TableviewAction.js',
         'web/built/openorchestrabackoffice/js/table/TableviewRestoreAction.js',
         'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',

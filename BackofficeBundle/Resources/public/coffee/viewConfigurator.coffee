@@ -11,7 +11,8 @@ OrchestraViewConfigurator = ->
     'addRestoreButtonAction': TableviewRestoreAction
     'addConfigurationButton': PageConfigurationButtonView
     'showTableCollection': TableviewCollectionView
-    'showTableHeader': TableviewSearchHeader
+    'showTableHeader': DataTableViewSearchHeader
+    'addDataTable': DataTableView
     'showAdminForm': AdminFormView
     'showBlocksPanel': BlocksPanelView
     'showNode': NodeView

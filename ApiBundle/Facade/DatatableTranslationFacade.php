@@ -75,4 +75,8 @@ class DatatableTranslationFacade
      */
     public $oPaginate = array();
 
+    /**
+     * @Serializer\Type("array<string,string>")
+     */
+    public $buttons = array();
 }

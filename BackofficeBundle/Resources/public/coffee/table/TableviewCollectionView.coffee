@@ -2,7 +2,6 @@ TableviewCollectionView = OrchestraView.extend(
   events:
     'click a.ajax-add': 'clickAdd'
     'draw.dt table': 'changePage'
-    'processing.dt table': 'processingData'
 
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -44,120 +43,44 @@ TableviewCollectionView = OrchestraView.extend(
       columnDefs.push({
           'title': @options.translatedHeader[index],
           'name' : element,
-          'visible': true,
+          'visible': @checkDefaultVisible(element),
+          'activateColvis': true,
           'targets': parseInt(index)
           'searchField': if @options.inputHeader[index]? then @options.inputHeader[index] else undefined
       });
     columns.push({'data' : 'links'})
-    viewContext = @
-
-    $.fn.dataTable.Api.register('clearPipeline()', ->
-      return this.iterator( 'table', (settings) ->
-        settings.clearCache = true;
-      );
-    );
-    $.fn.dataTable.pipeline = @dataTablePipeline
-    $.extend( $.fn.dataTableExt.oStdClasses, {
-      "sWrapper": "dataTables_wrapper form-inline",
-      "sFilterInput": "form-control",
-      "sLengthSelect": "form-control"
-    } );
-    displayStart = 0
-    pageLength = 10
-    if @options.page?
-      page = parseInt(@options.page) - 1
-      displayStart = pageLength * page
-
-    dom = "<'dt-toolbar'"
-    dom += "<'col-xs-12 col-sm-6'f>" if @options.displayGlobalSearch
-    numberColum = if @options.displayGlobalSearch then 5 else 11
-    dom += "<'col-sm-"+numberColum+" col-xs-6 hidden-xs'C><'col-xs-12 col-sm-1 hidden-xs'l>>"
-    dom += "t"
-    dom += "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>"
-    $('#tableviewCollectionTable').on 'preInit.dt', (e, settings) ->
-
-    @options.table = $('#tableviewCollectionTable').dataTable(
-      searching: true
-      ordering: true
-      serverSide: true
-      displayStart: displayStart
-      pageLength: pageLength
-      orderCellsTop: true
-      processing: true
-      autowidth: false
-      pagingType: "input_full"
-      dom: dom
-      language: {
-        url: appRouter.generateUrl('loadTranslationDatatable')
-      }
-      colVis:
-        exclude: [ viewContext.options.displayedElements.length ]
-      ajax : $.fn.dataTable.pipeline(
-        url : @options.url
-        pages: 5
-      )
-      serverParams: (data) ->
-        data.search = viewContext.transformerDataSearch(data)
-        data.order = viewContext.transformDataOrder(data)
-        delete data.columns
-        delete data.draw
-      initComplete: (settings, json) ->
-        $('#tableviewCollectionTable_filter label').prepend('<span class="input-group-addon"><i class="fa fa-search"></i></span>')
-        viewContext.renderAddButton(viewContext, json.links, this)
-        tableviewHeaderClass = appConfigurationView.getConfiguration(viewContext.options.entity,'showTableHeader')
-        tableViewHeaderFilter = new tableviewHeaderClass(viewContext.addOption(
-            apiTable : this
-            domContainer : $('thead', this)
-        ))
-      columns: columns
-      columnDefs: columnDefs.concat [
+    columnDefs.push(
         targets: -1
         data: 'links'
         orderable: false
         createdCell : (td, cellData, rowData, row, col) ->
           viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
-      ]
-      order: [@options.order]
-      stateSave: true
-      stateSaveCallback: (settings, data) ->
-        localStorage.setItem 'DataTables_' + viewContext.options.entityType, JSON.stringify(data)
-        return
-      stateLoadCallback: (settings) ->
-        JSON.parse localStorage.getItem('DataTables_' + viewContext.options.entityType)
     )
+    viewContext = @
 
-    return
-
-  processingData : (e, seggings, processing) ->
-    if processing
-      $('.dataTables_processing').show()
-    else
-      $('.dataTables_processing').hide()
+    datatableViewClass = appConfigurationView.getConfiguration(@options.entityType,'addDataTable')
+    datatable = new datatableViewClass(
+        url: @options.url
+        page: if @options.page? then parseInt(@options.page) - 1 else 0
+        columns: columns
+        columnDefs: columnDefs
+        globalSearch: @options.displayGlobalSearch
+        tableId: @options.entityType
+        tableClassName: 'table table-striped table-bordered table-hover smart-form'
+        language:
+          url: appRouter.generateUrl('loadTranslationDatatable')
+        initComplete: (settings, json) ->
+          viewContext.renderAddButton(viewContext, json.links, this)
+    );
+    table = datatable.$el
+    $('.tableviewCollectionTable', @options.domContainer).html table
     return
 
   checkDefaultVisible : (name) ->
     return @options.visibleElements.indexOf(name) >= 0
 
-  transformerDataSearch : (data) ->
-    search =
-      columns : {}
-    for column in data.columns
-      if column.searchable = true and column.search.value != '' and column.name != ''
-        name = column.name
-        search.columns[name] = column.search.value
-    if data.search.value != ''
-      search['global'] = data.search.value
-    return search
+  renderColumnActions : (viewContext, td, cellData, rowData, row, col) ->
 
-  transformDataOrder: (data) ->
-    for order in data.order
-      if data.columns[order.column]? and data.columns[order.column].orderable = true
-          name = data.columns[order.column].name if data.columns[order.column]?
-          dir = order.dir
-          return name: name, dir:dir
-    return null
-
-  renderColumnActions : (viewContext, td, cellData, rowData) ->
     elementModel = new TableviewModel
     elementModel.set rowData
 
@@ -167,6 +90,7 @@ TableviewCollectionView = OrchestraView.extend(
 
     new tableActionViewClass(viewContext.addOption(
       element: elementModel
+      tableId: @options.entityType
       domContainer : $(td)
     ))
 
@@ -194,77 +118,11 @@ TableviewCollectionView = OrchestraView.extend(
         ))
 
   changePage : (event) ->
-    api = $(event.target).dataTable().api()
+    api = $(event.target).DataTable()
     page = api.page.info().page + 1
     url = appRouter.generateUrl('listEntities', entityType: @options.entityType, page: page)
     Backbone.history.navigate(url)
 
-  dataTablePipeline : (opts) ->
-    conf = $.extend(
-      pages: 5
-      method: 'GET'
-    , opts );
-
-    cacheLower = -1
-    cacheUpper = null
-    cacheLastRequest = null
-    cacheLastJson = null
-    return (request, drawCallback, settings) ->
-      ajax = false
-      requestStart  = request.start
-      drawStart     = request.start
-      requestLength = request.length
-      requestEnd    = requestStart + requestLength
-
-      if settings.clearCache
-          ajax = true
-          settings.clearCache = false
-      else if cacheLower < 0 or requestStart < cacheLower or requestEnd > cacheUpper or
-        JSON.stringify(request.order)   != JSON.stringify(cacheLastRequest.order) or
-        JSON.stringify(request.columns) != JSON.stringify(cacheLastRequest.columns) or
-        JSON.stringify(request.search)  != JSON.stringify(cacheLastRequest.search)
-          ajax = true
-
-      cacheLastRequest = $.extend( true, {}, request)
-
-      if ajax
-        if requestStart < cacheLower
-          requestStart = requestStart - (requestLength*(conf.pages-1))
-          requestStart = 0 if requestStart < 0
-
-        cacheLower = requestStart
-        cacheUpper = requestStart + (requestLength * conf.pages)
-        request.start = requestStart;
-        request.length = requestLength*conf.pages;
-
-        if $.isFunction(conf.data)
-          d = conf.data(request)
-          $.extend(request, d) if d
-        else if $.isPlainObject(conf.data)
-          $.extend(request, conf.data)
-
-        settings.jqXHR = $.ajax(
-          type:     conf.method
-          url:      conf.url
-          data:     request
-          dataType: "json"
-          cache:    false,
-          success:  (json) ->
-            cacheLastJson = $.extend(true, {}, json)
-            data = json[json.collection_name]
-            data.splice(0, drawStart-cacheLower) if cacheLower != drawStart
-            data.splice(requestLength, data.length)
-            settings.sAjaxDataProp = json.collection_name
-            drawCallback(json)
-        )
-      else
-        json = $.extend(true, {}, cacheLastJson)
-        json.draw = request.draw
-        data = json[json.collection_name]
-        data.splice(0, requestStart-cacheLower)
-        data.splice(requestLength, data.length);
-        settings.sAjaxDataProp = json.collection_name
-        drawCallback(json)
 )
 
 ((router) ->

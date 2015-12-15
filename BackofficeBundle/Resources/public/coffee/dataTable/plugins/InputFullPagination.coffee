@@ -1,4 +1,4 @@
-# DataTable Pagination
+# DataTable Pagination input full
 $.extend $.fn.dataTableExt.oPagination, 'input_full':
   'fnInit': (settings, pagingElement, drawCallback) ->
     lang = settings.oLanguage.oPaginate
@@ -18,7 +18,7 @@ $.extend $.fn.dataTableExt.oPagination, 'input_full':
       e.preventDefault()
       startPage = (parseInt($('a', this).text(), 10) - 1)
       if startPage >= 0
-        settings._iDisplayStart = startPage * paging.iLength
+        settings._iDisplayStart = startPage * paging.length
         drawCallback settings
       return
     insertLinkPage = (number, i, cssClass) ->
@@ -27,24 +27,24 @@ $.extend $.fn.dataTableExt.oPagination, 'input_full':
       link.insertBefore($('li:last', domP[i])[0])
 
     listLength = 5
-    paging = settings.oInstance.fnPagingInfo()
+    paging = settings.oInstance.api().table().page.info()
     domP = settings.aanFeatures.p
     i = undefined
     j = undefined
     start = undefined
     end = undefined
     half = Math.floor(listLength / 2)
-    if paging.iTotalPages < listLength
+    if paging.pages < listLength
       start = 1
-      end = paging.iTotalPages
-    else if paging.iPage <= half
+      end = paging.pages
+    else if paging.page <= half
       start = 1
       end = listLength
-    else if paging.iPage >= paging.iTotalPages - half
-      start = paging.iTotalPages - listLength + 1
-      end = paging.iTotalPages
+    else if paging.page >= paging.pages - half
+      start = paging.pages - listLength + 1
+      end = paging.pages
     else
-      start = paging.iPage - half + 1
+      start = paging.page - half + 1
       end = start + listLength - 1
 
     i = 0
@@ -58,31 +58,31 @@ $.extend $.fn.dataTableExt.oPagination, 'input_full':
         insertLinkPage('1', i)
         insertLinkPage('...', i, 'disabled')
       while j <= end
-        if start + half + 1 == j && j != paging.iTotalPages
+        if start + half + 1 == j && j != paging.pages
           liInput = $('<li></li>')
           input = $('<input type="integer" value='+j+'>')
           input.keyup (e) ->
             e.preventDefault()
             startPage = (parseInt($(this).val()) - 1)
             if startPage > 0
-              settings._iDisplayStart = startPage * paging.iLength
+              settings._iDisplayStart = startPage * paging.length
               drawCallback settings
             return
           liInput.html(input)
           liInput.insertBefore($('li:last', domP[i])[0])
         else
-          cssClass = if j == paging.iPage + 1 then 'active' else ''
+          cssClass = if j == paging.page + 1 then 'active' else ''
           insertLinkPage(j, i, cssClass)
         j++
-      if j < paging.iTotalPages + 1
+      if j < paging.pages + 1
         insertLinkPage('...', i, 'disabled')
-        insertLinkPage(paging.iTotalPages, i)
+        insertLinkPage(paging.pages, i)
       # Add / remove disabled classes from the static elements
-      if paging.iPage == 0
+      if paging.page == 0
         $('li:first', domP[i]).addClass 'disabled'
       else
         $('li:first', domP[i]).removeClass 'disabled'
-      if paging.iPage == paging.iTotalPages - 1 or paging.iTotalPages == 0
+      if paging.page == paging.pages - 1 or paging.pages == 0
         $('li:last', domP[i]).addClass 'disabled'
       else
         $('li:last', domP[i]).removeClass 'disabled'
