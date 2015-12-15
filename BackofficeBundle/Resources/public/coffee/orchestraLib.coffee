@@ -29,10 +29,12 @@ opts =
   openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
 $("#left-panel nav").data({opts : opts})
 
-displayMenu = (route) ->
+displayMenu = (route, refresh) ->
   selectedPath = undefined
   if typeof route isnt "undefined"
     selectedPath = "#" + route
+  else if typeof refresh isnt "undefined"
+    selectedPath = "#" + refresh
   else
     selectedPath = "#" + Backbone.history.fragment
   $.ajax
