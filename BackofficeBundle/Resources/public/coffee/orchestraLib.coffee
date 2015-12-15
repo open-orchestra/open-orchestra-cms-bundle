@@ -31,7 +31,7 @@ $("#left-panel nav").data({opts : opts})
 
 displayMenu = (route, refresh) ->
   selectedPath = "#" + (route || Backbone.history.fragment)
-  refresh = refresh || route?
+  refresh = refresh || (typeof route == "undefined")
   $.ajax
     url: $("#left-panel nav").data("url")
     type: "GET"
