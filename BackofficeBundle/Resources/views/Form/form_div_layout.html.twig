@@ -164,3 +164,16 @@
         {% endspaceless %}
     {% endif %}
 {% endblock form_end %}
+{% block oo_date_picker_widget %}
+    {% spaceless %}
+    {% if form.vars.widget == 'single_text' %}
+    	<div class="input-group">
+        {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' datepicker')|trim, 'data-dateformat': form.vars.format|default('yyyy-mm-dd')|lower }) %}
+    {% endif %}
+    {{ block('date_widget') }}
+    {% if form.vars.widget == 'single_text' %}
+			<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+    {% endif %}
+    {% endspaceless %}
+{% endblock oo_date_picker_widget %}
