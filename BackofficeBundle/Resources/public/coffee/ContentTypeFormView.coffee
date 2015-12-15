@@ -1,8 +1,10 @@
 ContentTypeFormView = FullPageFormView.extend(
 
   onViewReady: ->
-    displayMenu() if @options.submitted
-
+    if @options.submitted
+      displayRoute = appRouter.generateUrl('listEntities', entityType: @options.entityType)
+      Backbone.history.loadUrl(displayRoute)
+      displayMenu(displayRoute)
 )
 
 jQuery ->
