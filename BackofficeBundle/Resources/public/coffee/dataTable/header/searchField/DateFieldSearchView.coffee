@@ -1,5 +1,5 @@
 ###*
-* @class DateFieldSearchView
+ * @class DateFieldSearchView
 ###
 class DateFieldSearchView extends AbstractSearchFieldView
 
@@ -7,13 +7,13 @@ class DateFieldSearchView extends AbstractSearchFieldView
     'change input.search-column': 'searchColumn'
 
   ###*
-  * required options
-  * {
-  *   column: {integer} column index
-  *   api: {object} DataTable api
-  *   domContainer: {object} jquery element
-  * }
-  * @param {Object} options
+   * required options
+   * {
+   *   column: {integer} column index
+   *   api: {object} DataTable api
+   *   domContainer: {object} jquery element
+   * }
+   * @param {Object} options
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -24,7 +24,7 @@ class DateFieldSearchView extends AbstractSearchFieldView
     @loadTemplates ['OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/dateField']
 
   ###*
-  * @return {this}
+   * @return {this}
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/dateField',

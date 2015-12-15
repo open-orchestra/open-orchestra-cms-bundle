@@ -1,5 +1,5 @@
 ###*
-* @class DataTableView
+ * @class DataTableView
 ###
 class DataTableView extends OrchestraView
 
@@ -24,16 +24,16 @@ class DataTableView extends OrchestraView
       tableClassName: ''
 
   ###*
-  * required options
-  * {
-  *   columns: {object}
-  *   columnDefs: {object}
-  *   tableId : {string}
-  * }
-  * if serverSide is activate (by default it is enabled),
-  * you should also give url option
-  *
-  * @param {Object} options
+   * required options
+   * {
+   *   columns: {object}
+   *   columnDefs: {object}
+   *   tableId : {string}
+   * }
+   * if serverSide is activate (by default it is enabled),
+   * you should also give url option
+   *
+   * @param {Object} options
   ###
   initialize : (options) ->
     @options = options
@@ -43,7 +43,7 @@ class DataTableView extends OrchestraView
     @loadTemplates ['OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/processing']
 
   ###*
-  * @return {this}
+   * @return {this}
   ###
   render: ->
     settings = $.extend true, {}, @defaultSettings, @options
@@ -82,9 +82,9 @@ class DataTableView extends OrchestraView
     return @
 
   ###*
-  * @param {object} e jquery event
-  * @param {Object} settings DataTable settings
-  * @param {boolean} processing
+   * @param {object} e jquery event
+   * @param {Object} settings DataTable settings
+   * @param {boolean} processing
   ###
   processingData : (e, settings, processing) ->
     message = settings.oLanguage.sProcessing
@@ -98,9 +98,9 @@ class DataTableView extends OrchestraView
       $('.dataTables_processing', @$el).hide()
 
   ###*
-  * @param {object} e jquery event
-  * @param {Object} settings DataTable settings
-  * @param {object} json DataTable data retrieved from server
+   * @param {object} e jquery event
+   * @param {Object} settings DataTable settings
+   * @param {object} json DataTable data retrieved from server
   ###
   initComplete: (e, settings, json) ->
     api = $(e.target).DataTable()
@@ -111,9 +111,9 @@ class DataTableView extends OrchestraView
     )
 
   ###*
-  * @param {Object} settings DataTable settings
-  *
-  * @return array
+   * @param {Object} settings DataTable settings
+   *
+   * @return array
   ###
   getButtonsSettings: (settings) ->
     columns = []
@@ -128,10 +128,10 @@ class DataTableView extends OrchestraView
     return buttonsSettings;
 
   ###*
-  * Defaults settings dom
-  * @param {Object} settings DataTable settings
-  *
-  * @return string
+   * Defaults settings dom
+   * @param {Object} settings DataTable settings
+   *
+   * @return string
   ###
   getDomSettings: (settings) ->
     dom = "<'row dt-toolbar'"
@@ -144,10 +144,10 @@ class DataTableView extends OrchestraView
     return dom
 
   ###*
-  * Defaults settings when state save is enabled
-  * @param {Object} settings DataTable settings
-  *
-  * @return {Object}
+   * Defaults settings when state save is enabled
+   * @param {Object} settings DataTable settings
+   *
+   * @return {Object}
   ###
   getStateSaveSettings: (settings) ->
     stateSaveSettings = {}
@@ -162,10 +162,10 @@ class DataTableView extends OrchestraView
     return stateSaveSettings
 
   ###*
-  * Defaults settings when serverSide is enabled
-  * @param {Object} settings DataTable settings
-  *
-  * @return {Object}
+   * Defaults settings when serverSide is enabled
+   * @param {Object} settings DataTable settings
+   *
+   * @return {Object}
   ###
   getServerSideSettings: (settings) ->
     viewContext = @
@@ -188,7 +188,7 @@ class DataTableView extends OrchestraView
     return serverSideSettings
 
   ###*
-  * @param {object} data
+   * @param {object} data
   ###
   transformerDataSearch: (data) ->
     search =
@@ -203,7 +203,7 @@ class DataTableView extends OrchestraView
     return search
 
   ###*
-  * @param {object} data
+   * @param {object} data
   ###
   transformDataOrder: (data) ->
     for order in data.order
@@ -214,14 +214,14 @@ class DataTableView extends OrchestraView
 
     return null
 
-  ###
-  * @param {string} tableId
+  ###*
+   * @param {string} tableId
   ###
   draw: (tableId) ->
     if tableId == @options.tableId and @api?
         @api.draw()
 
-  ###
+  ###*
   * @param {string} tableId
   ###
   clearCache: (tableId) ->
@@ -229,7 +229,7 @@ class DataTableView extends OrchestraView
       @api.settings()[0].clearCache = true
 
   ###*
-  * @param {object} opts
+   * @param {object} opts
   ###
   dataTablePipeline : (opts) ->
     conf = $.extend(

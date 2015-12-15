@@ -1,18 +1,18 @@
 ###*
-* @class EmptySearchView
+ * @class EmptySearchView
 ###
 class EmptySearchView extends AbstractSearchFieldView
 
   tagName: "td"
 
   ###*
-  * required options
-  * {
-  *   column: {integer} column index
-  *   api: {object} DataTable api
-  *   domContainer: {object} jquery element
-  * }
-  * @param {Object} options
+   * required options
+   * {
+   *   column: {integer} column index
+   *   api: {object} DataTable api
+   *   domContainer: {object} jquery element
+   * }
+   * @param {Object} options
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -23,7 +23,7 @@ class EmptySearchView extends AbstractSearchFieldView
     @doRender()
 
   ###*
-  * @return {this}
+   * @return {this}
   ###
   render: ->
     @$el.attr('data-column', @options.columnIndex)

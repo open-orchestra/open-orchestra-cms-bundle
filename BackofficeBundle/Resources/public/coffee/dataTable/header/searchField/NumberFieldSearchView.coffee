@@ -1,5 +1,5 @@
 ###*
-* @class NumberFieldSearchView
+ * @class NumberFieldSearchView
 ###
 class NumberFieldSearchView extends AbstractSearchFieldView
 
@@ -8,13 +8,13 @@ class NumberFieldSearchView extends AbstractSearchFieldView
     'keyup input.search-column': 'searchColumn'
 
   ###*
-  * required options
-  * {
-  *   column: {integer} column index
-  *   api: {object} DataTable api
-  *   domContainer: {object} jquery element
-  * }
-  * @param {Object} options
+   * required options
+   * {
+   *   column: {integer} column index
+   *   api: {object} DataTable api
+   *   domContainer: {object} jquery element
+   * }
+   * @param {Object} options
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -27,7 +27,7 @@ class NumberFieldSearchView extends AbstractSearchFieldView
     ]
 
   ###*
-  * @return {this}
+   * @return {this}
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/numberField',

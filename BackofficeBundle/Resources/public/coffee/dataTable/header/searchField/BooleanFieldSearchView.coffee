@@ -1,5 +1,5 @@
 ###*
-* @class BooleanFieldSearchView
+ * @class BooleanFieldSearchView
 ###
 class BooleanFieldSearchView extends AbstractSearchFieldView
 
@@ -7,13 +7,13 @@ class BooleanFieldSearchView extends AbstractSearchFieldView
     'change select.search-column': 'searchColumn'
 
   ###*
-  * required options
-  * {
-  *   api: {object} DataTable api
-  *   domContainer: {object} jquery element
-  *   column: {integer} column index
-  * }
-  * @param {Object} options
+   * required options
+   * {
+   *   api: {object} DataTable api
+   *   domContainer: {object} jquery element
+   *   column: {integer} column index
+   * }
+   * @param {Object} options
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -24,7 +24,7 @@ class BooleanFieldSearchView extends AbstractSearchFieldView
     @loadTemplates ['OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/booleanField']
 
   ###*
-  * @return {this}
+   * @return {this}
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/datatable/header/booleanField',

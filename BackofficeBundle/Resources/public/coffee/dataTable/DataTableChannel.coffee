@@ -1,8 +1,8 @@
 ###*
-* @channel DataTable
-* Event available
-*  - clearCache(tableId) clearCache of DataTable
-*  - draw(tableId)
+ * @channel DataTable
+ * Event available
+ *  - clearCache(tableId) clearCache of DataTable
+ *  - draw(tableId)
 ###
 (($, OpenOrchestra) ->
   OpenOrchestra.DataTable = {} if not OpenOrchestra.DataTable?

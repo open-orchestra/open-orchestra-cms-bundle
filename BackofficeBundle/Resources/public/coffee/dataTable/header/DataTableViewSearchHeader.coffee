@@ -1,5 +1,5 @@
 ###*
-* @class DataTableViewSearchHeader
+ * @class DataTableViewSearchHeader
 ###
 class DataTableViewSearchHeader extends OrchestraView
 
@@ -8,12 +8,12 @@ class DataTableViewSearchHeader extends OrchestraView
   className: "header-search-input"
 
   ###*
-  * required options
-  * {
-  *   api: {object} DataTable api
-  *   domContainer: {object} jquery element
-  * }
-  * @param {Object} options
+   * required options
+   * {
+   *   api: {object} DataTable api
+   *   domContainer: {object} jquery element
+   * }
+   * @param {Object} options
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -25,7 +25,7 @@ class DataTableViewSearchHeader extends OrchestraView
     @options.api.on 'stateLoadParams.dt', @restoreSearchStateSave
 
   ###*
-  * @return {this}
+   * @return {this}
   ###
   render: ->
     columnsDefs = @options.api.settings()[0].aoColumns
@@ -46,10 +46,10 @@ class DataTableViewSearchHeader extends OrchestraView
     return @
 
   ###*
-  * @param {object} e jquery event
-  * @param {Object} settings DataTable settings
-  * @param {integer} column column index
-  * @param {boolean} state column visibility
+   * @param {object} e jquery event
+   * @param {Object} settings DataTable settings
+   * @param {integer} column column index
+   * @param {boolean} state column visibility
   ###
   toggleColumn: (e, settings, column, state) ->
     $('td', @$el).eq(column).toggle();

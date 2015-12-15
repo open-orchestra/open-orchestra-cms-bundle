@@ -1,17 +1,17 @@
 ###*
-* @class AbstractSearchFieldView
+ * @class AbstractSearchFieldView
 ###
 class AbstractSearchFieldView extends OrchestraView
 
   ###*
-  * @param {object} event jquery event
+   * @param {object} event jquery event
   ###
   searchColumn : (event) ->
     value = $(event.target).val()
     @options.api.column(@options.columnIndex).search(value).draw()
 
   ###*
-  * Insert field in DataTable header
+   * Insert field in DataTable header
   ###
   insertFieldInHeader : () ->
     @$el.hide() if false == @options.api.column(@options.columnIndex).visible()
