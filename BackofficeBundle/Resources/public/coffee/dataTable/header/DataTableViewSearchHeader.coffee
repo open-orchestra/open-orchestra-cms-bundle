@@ -22,7 +22,6 @@ class DataTableViewSearchHeader extends OrchestraView
     ])
     @doRender()
     @options.api.on 'column-visibility.dt', @toggleColumn
-    @options.api.on 'stateLoadParams.dt', @restoreSearchStateSave
 
   ###*
    * @return {this}
