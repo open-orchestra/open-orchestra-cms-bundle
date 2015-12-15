@@ -16,6 +16,7 @@ parameters:
     open_orchestra_backoffice.type.choices_option.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ChoicesOptionType
     open_orchestra_backoffice.type.field_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\FieldChoiceType
     open_orchestra_backoffice.type.date_widget_option.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\DateWidgetOptionType
+    open_orchestra_backoffice.type.date_picker.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\DatePickerType
     open_orchestra_backoffice.type.translated_value.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueType
     open_orchestra_backoffice.type.translated_value_collection.class: OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType
     open_orchestra_backoffice.type.theme_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ThemeChoiceType
@@ -163,6 +164,10 @@ services:
         class: %open_orchestra_backoffice.type.date_widget_option.class%
         tags:
             - { name: form.type, alias: oo_date_widget_option}
+    open_orchestra_backoffice.type.date_picker:
+        class: %open_orchestra_backoffice.type.date_picker.class%
+        tags:
+            - { name: form.type, alias: oo_date_picker}
 
     # Status Type
     open_orchestra_backoffice.type.status:
