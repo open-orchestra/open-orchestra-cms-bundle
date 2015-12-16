@@ -158,6 +158,19 @@ $(document).on 'click', '.configuration-change', (e) ->
 activateHidden = (hidden) ->
   hidden.addClass('focusable').attr('type', 'text')
 
+#ACTIVATE DATEPICKER
+activateDatepicker = (elements) ->
+  if $.fn.datepicker
+    elements.each ->
+      $this = $(this)
+      dataDateFormat = $this.data('dateformat') or 'dd.mm.yy'
+      $this.datepicker
+        dateFormat: dataDateFormat
+        prevText: '<i class="fa fa-chevron-left"></i>'
+        nextText: '<i class="fa fa-chevron-right"></i>'
+      $this = null
+      return
+
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
@@ -166,6 +179,7 @@ activateForm = (view, form) ->
   activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0
   activateTinyMce(view, elements) if (elements = $("textarea.tinymce", form)) && elements.length > 0
   activateHidden(elements) if (elements = $("input[type='hidden'][required='required']", form)) && elements.length > 0
+  activateDatepicker(elements) if (elements = $(".datepicker", form)) && elements.length > 0
   $("[data-prototype]", form).each ->
     PO.formPrototypes.addPrototype $(@)
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
