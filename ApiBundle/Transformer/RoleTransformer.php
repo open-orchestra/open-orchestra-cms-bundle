@@ -3,9 +3,9 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\RoleFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -18,18 +18,23 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $translationChoiceManager;
 
     /**
+     * @param string $facadeClass
      * @param TranslationChoiceManager $translationChoiceManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(TranslationChoiceManager $translationChoiceManager, AuthorizationCheckerInterface $authorizationChecker)
-    {
-        parent::__construct($authorizationChecker);
+    public function __construct(
+        $facadeClass,
+        TranslationChoiceManager $translationChoiceManager,
+        AuthorizationCheckerInterface $authorizationChecker
+    ){
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
      * @param RoleInterface $role
      *
-     * @return RoleFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -39,7 +44,7 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new RoleFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $role->getId();
         $facade->name = $role->getName();

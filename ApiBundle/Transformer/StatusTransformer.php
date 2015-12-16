@@ -7,7 +7,6 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrat
 use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\StatusFacade;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
@@ -27,19 +26,21 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $translator;
 
     /**
+     * @param string                        $facadeClass
      * @param AuthorizeStatusChangeManager  $authorizeStatusChangeManager
      * @param RoleRepositoryInterface       $roleRepository
      * @param TranslationChoiceManager      $translationChoiceManager
      * @param TranslatorInterface           $translator
      */
     public function __construct(
+        $facadeClass,
         AuthorizeStatusChangeManager $authorizeStatusChangeManager,
         RoleRepositoryInterface $roleRepository,
         TranslationChoiceManager $translationChoiceManager,
         TranslatorInterface $translator,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
-        parent::__construct($authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->authorizeStatusChangeManager = $authorizeStatusChangeManager;
         $this->roleRepository = $roleRepository;
         $this->translationChoiceManager = $translationChoiceManager;
@@ -50,7 +51,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param StatusInterface          $status
      * @param StatusableInterface|null $document
      *
-     * @return FacadeInterface|StatusFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -60,7 +61,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new StatusFacade();
+        $facade = $this->newFacade();
 
         $facade->published = $status->isPublished();
         $facade->initial = $status->isInitial();

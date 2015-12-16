@@ -3,8 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\KeywordFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
@@ -16,7 +16,7 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param KeywordInterface $keyword
      *
-     * @return KeywordFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -26,7 +26,7 @@ class KeywordTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new KeywordFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $keyword->getId();
         $facade->label = $keyword->getLabel();

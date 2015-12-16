@@ -6,7 +6,6 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrat
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\ApiBundle\Facade\GroupCollectionFacade;
 
 /**
  * Class GroupCollectionTransformer
@@ -20,7 +19,7 @@ class GroupCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($groupCollection)
     {
-        $facade = new GroupCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($groupCollection as $group) {
             $facade->addGroup($this->getTransformer('group')->transform($group));

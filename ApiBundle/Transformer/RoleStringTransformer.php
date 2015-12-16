@@ -3,9 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\RoleFacade;
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
-use OpenOrchestra\ModelInterface\Model\RoleInterface;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -17,13 +15,13 @@ class RoleStringTransformer extends AbstractTransformer
      * @param string $role
      * @param string $translation
      *
-     * @return RoleFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
     public function transform($role, $translation = null)
     {
-        $facade = new RoleFacade();
+        $facade = $this->newFacade();
 
         $facade->name = $role;
         $facade->description = $translation;

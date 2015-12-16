@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\RedirectionCollectionFacade;
 
 /**
  * Class RedirectionCollectionTransformer
@@ -20,7 +19,7 @@ class RedirectionCollectionTransformer extends AbstractSecurityCheckerAwareTrans
      */
     public function transform($redirectionCollection)
     {
-        $facade = new RedirectionCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($redirectionCollection as $redirection) {
             $facade->addRedirection($this->getTransformer('redirection')->transform($redirection));

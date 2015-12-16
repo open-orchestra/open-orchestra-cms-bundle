@@ -3,8 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\TemplateFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 
@@ -16,7 +16,7 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param TemplateInterface $template
      *
-     * @return TemplateFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -26,7 +26,7 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new TemplateFacade();
+        $facade = $this->newFacade();
         foreach ($template->getAreas() as $area) {
             $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $template));
         }

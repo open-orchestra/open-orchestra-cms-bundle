@@ -18,6 +18,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $areaTransformer;
 
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\AreaFacade';
     protected $currentNodeId = 'currentNodeId';
     protected $nodeMongoId = 'nodeMongoId';
     protected $transformerManager;
@@ -73,7 +74,7 @@ class AreaTransformerTest extends \PHPUnit_Framework_TestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->areaTransformer = new AreaTransformer($this->nodeRepository, $this->areaManager, $this->currentSiteManager,$this->authorizationChecker);
+        $this->areaTransformer = new AreaTransformer($this->facadeClass, $this->nodeRepository, $this->areaManager, $this->currentSiteManager,$this->authorizationChecker);
 
         $this->areaTransformer->setContext($this->transformerManager);
     }

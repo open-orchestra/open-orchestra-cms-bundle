@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\ThemeCollectionFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 
 /**
@@ -20,7 +19,7 @@ class ThemeCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($themeCollection)
     {
-        $facade = new ThemeCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($themeCollection as $theme) {
             $facade->addTheme($this->getTransformer('theme')->transform($theme));

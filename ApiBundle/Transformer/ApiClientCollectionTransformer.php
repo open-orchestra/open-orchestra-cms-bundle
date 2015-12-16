@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ApiBundle\Facade\ApiClientCollectionFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -20,7 +19,7 @@ class ApiClientCollectionTransformer extends AbstractSecurityCheckerAwareTransfo
      */
     public function transform($apiClientCollection)
     {
-        $facade = new ApiClientCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($apiClientCollection as $apiClient) {
             $facade->addApiClient($this->getTransformer('api_client')->transform($apiClient));

@@ -11,6 +11,7 @@ use OpenOrchestra\ApiBundle\Transformer\BlockTransformer;
  */
 class BlockTransformerTest extends \PHPUnit_Framework_TestCase
 {
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\BlockFacade';
     protected $blockParameterManager;
     protected $generateFormManager;
     protected $displayBlockManager;
@@ -56,6 +57,7 @@ class BlockTransformerTest extends \PHPUnit_Framework_TestCase
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
 
         $this->blockTransformer = new BlockTransformer(
+            $this->facadeClass,
             $this->displayBlockManager,
             $this->displayIconManager,
             $this->blockClass,

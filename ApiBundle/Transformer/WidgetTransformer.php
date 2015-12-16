@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Facade\WidgetFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
 /**
@@ -14,12 +14,10 @@ class WidgetTransformer extends AbstractTransformer
      * @param string $widget
      *
      * @return FacadeInterface
-     *
-     * @throws TransformerParameterTypeException
      */
     public function transform($widget)
     {
-        $facade = new WidgetFacade();
+        $facade = $this->newFacade();
 
         $facade->type = $widget;
 

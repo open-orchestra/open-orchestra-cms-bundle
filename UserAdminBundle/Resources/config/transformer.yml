@@ -6,6 +6,7 @@ services:
     open_orchestra_user_admin.transformer.user:
         class: %open_orchestra_user_admin.transformer.user.class%
         arguments:
+            - %open_orchestra_user_admin.facade.user.class%
             - @event_dispatcher
             - @open_orchestra_backoffice.manager.translation_choice
             - @security.authorization_checker
@@ -14,6 +15,7 @@ services:
     open_orchestra_user_admin.transformer.user_collection:
         class: %open_orchestra_user_admin.transformer.user_collection.class%
         arguments:
+            - %open_orchestra_user_admin.facade.user_collection.class%
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}

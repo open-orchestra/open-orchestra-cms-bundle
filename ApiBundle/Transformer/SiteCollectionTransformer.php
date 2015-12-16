@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\SiteCollectionFacade;
 
 /**
  * Class SiteCollectionTransformer
@@ -20,7 +19,7 @@ class SiteCollectionTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function transform($siteCollection)
     {
-        $facade = new SiteCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($siteCollection as $site) {
             $facade->addSite($this->getTransformer('site')->transform($site));

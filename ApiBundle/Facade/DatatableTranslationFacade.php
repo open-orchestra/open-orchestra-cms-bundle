@@ -3,11 +3,12 @@
 namespace OpenOrchestra\ApiBundle\Facade;
 
 use JMS\Serializer\Annotation as Serializer;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 
 /**
  * Class DatatableTranslationFacade
  */
-class DatatableTranslationFacade
+class DatatableTranslationFacade implements FacadeInterface
 {
     /**
      * @Serializer\Type("string")

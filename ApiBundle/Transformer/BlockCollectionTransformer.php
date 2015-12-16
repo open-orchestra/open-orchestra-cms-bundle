@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\ApiBundle\Facade\BlockCollectionFacade;
 
 /**
  * Class BlockCollectionTransformer
@@ -21,7 +20,7 @@ class BlockCollectionTransformer extends AbstractTransformer
      */
     public function transform($blockCollection, $generateMixed = null, $nodeId = null)
     {
-        $facade = new BlockCollectionFacade();
+        $facade = $this->newFacade();
 
         if (null !== $generateMixed) {
             foreach($generateMixed as $block) {

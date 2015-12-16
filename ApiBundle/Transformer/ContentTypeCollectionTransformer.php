@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ApiBundle\Facade\ContentTypeCollectionFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -20,7 +19,7 @@ class ContentTypeCollectionTransformer extends AbstractSecurityCheckerAwareTrans
      */
     public function transform($contentTypeCollection)
     {
-        $facade = new ContentTypeCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($contentTypeCollection as $contentType) {
             $facade->addContentType($this->getTransformer('content_type')->transform($contentType));

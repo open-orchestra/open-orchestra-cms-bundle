@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ApiBundle\Facade\ContentCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 
@@ -20,7 +19,7 @@ class ContentCollectionTransformer extends AbstractSecurityCheckerAwareTransform
      */
     public function transform($contentCollection, $contentType = null)
     {
-        $facade = new ContentCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($contentCollection as $content) {
             $facade->addContent($this->getTransformer('content')->transform($content));

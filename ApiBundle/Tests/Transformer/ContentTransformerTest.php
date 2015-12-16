@@ -18,6 +18,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $contentTransformer;
 
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\ContentFacade';
     protected $transformerManager;
     protected $statusRepository;
     protected $eventDispatcher;
@@ -48,7 +49,7 @@ class ContentTransformerTest extends \PHPUnit_Framework_TestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->contentTransformer = new ContentTransformer($this->statusRepository, $this->eventDispatcher, $this->authorizationChecker);
+        $this->contentTransformer = new ContentTransformer($this->facadeClass, $this->statusRepository, $this->eventDispatcher, $this->authorizationChecker);
         $this->contentTransformer->setContext($this->transformerManager);
     }
 

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\ThemeFacade;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
@@ -16,7 +16,7 @@ class ThemeTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param ThemeInterface $theme
      *
-     * @return ThemeFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -26,7 +26,7 @@ class ThemeTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new ThemeFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $theme->getId();
         $facade->name = $theme->getName();

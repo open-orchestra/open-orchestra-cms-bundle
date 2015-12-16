@@ -8,7 +8,6 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\GroupFacade;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
@@ -20,21 +19,23 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $translationChoiceManager;
 
     /**
+     * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TranslationChoiceManager      $translationChoiceManager
      */
     public function __construct(
+        $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
         TranslationChoiceManager $translationChoiceManager
     ){
-        parent::__construct($authorizationChecker);
+        parent::__construct($facadeClass, $authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
     }
 
     /**
      * @param GroupInterface $group
      *
-     * @return GroupFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -44,7 +45,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new GroupFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $group->getId();
         $facade->name = $group->getName();
@@ -101,8 +102,8 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     }
 
     /**
-     * @param FacadeInterface|GroupFacade $facade
-     * @param GroupInterface|null         $group
+     * @param FacadeInterface     $facade
+     * @param GroupInterface|null $group
      *
      * @return mixed
      */

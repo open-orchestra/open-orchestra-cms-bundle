@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
@@ -18,11 +17,11 @@ class StatusCollectionTransformer extends AbstractSecurityCheckerAwareTransforme
      * @param Collection               $statusCollection
      * @param StatusableInterface|null $document
      *
-     * @return FacadeInterface|StatusCollectionFacade
+     * @return FacadeInterface
      */
     public function transform($statusCollection, $document = null)
     {
-        $facade = new StatusCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($statusCollection as $status) {
             $facade->addStatus($this->getTransformer('status')->transform($status, $document));

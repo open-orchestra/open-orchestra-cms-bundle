@@ -1,0 +1,4 @@
+open_orchestra_user_admin:
+    facades:
+        user:             FacadeClass
+        user_collection:  FacadeClass

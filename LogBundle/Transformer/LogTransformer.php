@@ -4,7 +4,6 @@ namespace OpenOrchestra\LogBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\LogBundle\Facade\LogFacade;
 use OpenOrchestra\LogBundle\Model\LogInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -16,10 +15,12 @@ class LogTransformer extends AbstractTransformer
     protected $translator;
 
     /**
+     * @param string              $facadeClass
      * @param TranslatorInterface $translator
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct($facadeClass, TranslatorInterface $translator)
     {
+        parent::__construct($facadeClass);
         $this->translator = $translator;
     }
 
@@ -30,7 +31,7 @@ class LogTransformer extends AbstractTransformer
      */
     public function transform($mixed)
     {
-        $facade = new LogFacade();
+        $facade = $this->newFacade();
 
         $extra = array(
             'user_ip' => '0.0.0.0',

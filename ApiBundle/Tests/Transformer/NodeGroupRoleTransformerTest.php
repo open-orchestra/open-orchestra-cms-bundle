@@ -16,6 +16,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      */
     protected $transformer;
 
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade';
     protected $context;
     protected $roleCollector;
     protected $nodeGroupRoleClass;
@@ -32,7 +33,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->context = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
 
-        $this->transformer = new NodeGroupRoleTransformer($this->nodeGroupRoleClass, $this->roleCollector);
+        $this->transformer = new NodeGroupRoleTransformer($this->facadeClass, $this->nodeGroupRoleClass, $this->roleCollector);
         $this->transformer->setContext($this->context);
     }
 

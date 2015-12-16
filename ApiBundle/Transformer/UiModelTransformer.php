@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\ApiBundle\Facade\UiModelFacade;
 
 /**
  * Class UiModelTransformer
@@ -18,7 +17,7 @@ class UiModelTransformer extends AbstractTransformer
      */
     public function transform($uiModel)
     {
-        $facade = new UiModelFacade();
+        $facade = $this->newFacade();
 
         if (array_key_exists('label', $uiModel)) {
             $facade->label = $uiModel['label'];

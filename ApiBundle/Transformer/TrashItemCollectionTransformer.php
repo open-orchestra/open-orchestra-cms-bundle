@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\ApiBundle\Facade\TrashItemCollectionFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 
@@ -19,7 +18,7 @@ class TrashItemCollectionTransformer extends AbstractTransformer
      */
     public function transform($trashItemCollection)
     {
-        $facade = new TrashItemCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($trashItemCollection as $trashItem) {
             $facade->addElement($this->getTransformer('trash_item')->transform($trashItem));

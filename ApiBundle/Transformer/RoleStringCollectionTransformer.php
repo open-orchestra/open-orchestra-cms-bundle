@@ -5,7 +5,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade;
 
 /**
  * Class RoleStringCollectionTransformer
@@ -20,7 +19,7 @@ class RoleStringCollectionTransformer extends AbstractSecurityCheckerAwareTransf
      */
     public function transform($roleCollection, $type = null)
     {
-        $facade = new RoleCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($roleCollection as $role => $translation) {
             $facade->addRole($this->getTransformer('role_string')->transform($role, $translation));

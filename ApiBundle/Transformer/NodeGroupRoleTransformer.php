@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade;
 use OpenOrchestra\Backoffice\Collector\RoleCollector;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -19,11 +18,13 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     protected $collector;
 
     /**
+     * @param string        $facadeClass
      * @param string        $nodeRoleGroupClass
      * @param RoleCollector $collector
      */
-    public function __construct($nodeRoleGroupClass, RoleCollector $collector)
+    public function __construct($facadeClass, $nodeRoleGroupClass, RoleCollector $collector)
     {
+        parent::__construct($facadeClass);
         $this->nodeRoleGroupClass = $nodeRoleGroupClass;
         $this->collector = $collector;
     }
@@ -31,7 +32,7 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     /**
      * @param NodeGroupRoleInterface $nodeGroupRole
      *
-     * @return NodeGroupRoleFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -41,7 +42,7 @@ class NodeGroupRoleTransformer extends AbstractTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new NodeGroupRoleFacade();
+        $facade = $this->newFacade();
 
         $facade->node = $nodeGroupRole->getNodeId();
         $facade->name = $nodeGroupRole->getRole();
@@ -51,8 +52,8 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface|NodeGroupRoleFacade $facade
-     * @param NodeGroupRoleInterface|null         $source
+     * @param FacadeInterface             $facade
+     * @param NodeGroupRoleInterface|null $source
      *
      * @throws RoleNotFoundHttpException
      * @return mixed

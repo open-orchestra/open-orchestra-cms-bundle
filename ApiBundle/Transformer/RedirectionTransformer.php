@@ -3,8 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\RedirectionFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 
@@ -16,7 +16,7 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
     /**
      * @param RedirectionInterface $redirection
      *
-     * @return RedirectionFacade
+     * @return FacadeInterface
      *
      * @throws TransformerParameterTypeException
      */
@@ -26,7 +26,7 @@ class RedirectionTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new TransformerParameterTypeException();
         }
 
-        $facade = new RedirectionFacade();
+        $facade = $this->newFacade();
 
         $facade->id = $redirection->getId();
         $facade->siteName = $redirection->getSiteName();

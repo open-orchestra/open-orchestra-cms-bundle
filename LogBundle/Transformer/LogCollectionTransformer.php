@@ -5,7 +5,6 @@ namespace OpenOrchestra\LogBundle\Transformer;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
-use OpenOrchestra\LogBundle\Facade\LogCollectionFacade;
 
 /**
  * Class LogCollectionTransformer
@@ -19,7 +18,7 @@ class LogCollectionTransformer extends AbstractTransformer
      */
     public function transform($mixed)
     {
-        $facade = new LogCollectionFacade();
+        $facade = $this->newFacade();
 
         foreach ($mixed as $log) {
             $facade->addLog($this->getTransformer('log')->transform($log));
