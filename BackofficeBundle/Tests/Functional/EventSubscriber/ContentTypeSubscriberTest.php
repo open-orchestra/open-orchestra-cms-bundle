@@ -74,6 +74,8 @@ class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
     {
         $content = new Content();
         $content->setContentType('news');
+        $content->setSiteId('2');
+        $content->setLanguage('fr');
 
         $form = $this->formFactory->create('oo_content', $content, array('csrf_protection' => false));
         $form->submit(array(
@@ -89,6 +91,6 @@ class ContentTypeSubscriberTest extends AbstractAuthentificatedTest
         $this->assertSame('foo', $form->get('name')->getData());
         $this->assertCount(1, $form->get('publish_start')->getErrors());
         $this->assertNull($form->get('publish_start')->getData());
-        $this->assertCount(2, $form->getErrors());
+        $this->assertCount(1, $form->getErrors(true));
     }
 }

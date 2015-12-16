@@ -1,5 +1,18 @@
 {% extends 'BraincraftedBootstrapBundle:Form:bootstrap.html.twig' %}
 
+{% block form %}
+    {% spaceless %}
+        {% if false == form.vars.valid %}
+            <div class="alert alert-danger">
+                There are errors in the form
+            </div>
+        {% endif %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% endspaceless %}
+{% endblock form %}
+
 {% block checkbox_widget %}
     {% spaceless %}
         <div class="smart-form">
