@@ -57,8 +57,6 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return FacadeInterface
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
@@ -70,7 +68,7 @@ class NodeController extends BaseController
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
         if (!$errorNode && $node) {
             if ($node->getNodeType() === NodeInterface::TYPE_TRANSVERSE) {
-                $this->denyAccessUnlessGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE);
+                $this->denyAccessUnlessGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE);
             } else {
                 $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node);
             }
@@ -134,7 +132,7 @@ class NodeController extends BaseController
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId);
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $node);
+        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node);
         /** @var NodeInterface $node */
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));

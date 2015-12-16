@@ -23,8 +23,6 @@ class NodeController extends AbstractAdminController
      * @Config\Route("/node/form/{id}", name="open_orchestra_backoffice_node_form")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return Response
      */
     public function formAction(Request $request, $id)
@@ -60,16 +58,15 @@ class NodeController extends AbstractAdminController
     {
         $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
 
-        $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
+        $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
         $this->denyAccessUnlessGranted($creationRole, $parentNode);
 
         $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode($parentId);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
-        
-        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
-        $form = $this->createForm('oo_node', $node, array('action' => $url), $editionRole);
+
+        $form = $this->createForm('oo_node', $node, array('action' => $url));
 
         $form->handleRequest($request);
 

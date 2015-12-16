@@ -2,7 +2,7 @@
     {% for element in nodes %}
         {% set node = element.node %}
         {% if (node.nodeType != "general" and is_granted("ROLE_ACCESS_TREE_NODE", node))
-           or (node.nodeType == "general" and is_granted("ROLE_ACCESS_GENERAL_NODE")) %}
+           or (node.nodeType == "general" and is_granted("ROLE_ACCESS_TREE_GENERAL_NODE")) %}
             <li data-element-id="{{ node.nodeId }}"
                 data-type="Node"
             >
