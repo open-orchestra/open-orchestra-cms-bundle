@@ -9,7 +9,7 @@ use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 /**
  * Class RoleCollector
  */
-class RoleCollector
+class RoleCollector implements RoleCollectorInterface
 {
     protected $roles = array();
     protected $roleRepository;

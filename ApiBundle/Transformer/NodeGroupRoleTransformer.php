@@ -4,7 +4,7 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\Backoffice\Collector\RoleCollector;
+use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
@@ -18,11 +18,11 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     protected $collector;
 
     /**
-     * @param string        $facadeClass
-     * @param string        $nodeRoleGroupClass
-     * @param RoleCollector $collector
+     * @param string                 $facadeClass
+     * @param string                 $nodeRoleGroupClass
+     * @param RoleCollectorInterface $collector
      */
-    public function __construct($facadeClass, $nodeRoleGroupClass, RoleCollector $collector)
+    public function __construct($facadeClass, $nodeRoleGroupClass, RoleCollectorInterface $collector)
     {
         parent::__construct($facadeClass);
         $this->nodeRoleGroupClass = $nodeRoleGroupClass;

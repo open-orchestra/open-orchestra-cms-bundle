@@ -33,6 +33,16 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test instance
+     */
+    public function testInstance()
+    {
+        $this->assertInstanceOf(
+            'OpenOrchestra\Backoffice\Collector\RoleCollectorInterface',
+            new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false)
+        );
+    }
+    /**
      * @param array $newRoles
      * @param array $expectedRoles
      *
