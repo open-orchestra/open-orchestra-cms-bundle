@@ -76,32 +76,34 @@ class ContentTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addAttribute($contentAttribute);
         }
 
-        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)) {
-            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
-                'contentId' => $content->getContentId(),
-                'language' => $content->getLanguage(),
-                'version' => $content->getVersion(),
-            )));
-        }
+        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT)) {
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT)) {
+                $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_content_form', array(
+                    'contentId' => $content->getContentId(),
+                    'language' => $content->getLanguage(),
+                    'version' => $content->getVersion(),
+                )));
+            }
 
-        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT)) {
-            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
-                'contentId' => $content->getContentId(),
-                'language' => $content->getLanguage(),
-                'version' => $content->getVersion(),
-            )));
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT)) {
+                $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_content_duplicate', array(
+                    'contentId' => $content->getContentId(),
+                    'language' => $content->getLanguage(),
+                    'version' => $content->getVersion(),
+                )));
+            }
+
+            if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT)) {
+                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
+                    'contentId' => $content->getId()
+                )));
+            }
         }
 
         $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_content_list_version', array(
             'contentId' => $content->getContentId(),
             'language' => $content->getLanguage(),
         )));
-
-        if ($this->authorizationChecker->isGranted(ContentTypeForContentPanelStrategy::ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT)) {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_content_delete', array(
-                'contentId' => $content->getId()
-            )));
-        }
 
         $facade->addLink('_self', $this->generateRoute('open_orchestra_api_content_show_or_create', array(
             'contentId' => $content->getContentId(),
