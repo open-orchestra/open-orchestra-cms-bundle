@@ -4,7 +4,7 @@
     {% spaceless %}
         {% if false == form.vars.valid %}
             <div class="alert alert-danger">
-                There are errors in the form
+                {{ 'open_orchestra_backoffice.form.global_error'|trans }}
             </div>
         {% endif %}
         {{ form_start(form) }}
