@@ -43,7 +43,7 @@ class NodeController extends BaseController
         $siteId = $currentSiteManager->getCurrentSiteId();
         /** @var NodeInterface $node */
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
@@ -67,11 +67,7 @@ class NodeController extends BaseController
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
         if (!$errorNode && $node) {
-            if ($node->getNodeType() === NodeInterface::TYPE_TRANSVERSE) {
-                $this->denyAccessUnlessGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE);
-            } else {
-                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node);
-            }
+            $this->denyAccessUnlessGranted($this->getAccessRole($node));
         }
         if (!$node) {
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
@@ -132,12 +128,37 @@ class NodeController extends BaseController
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId);
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node);
-        /** @var NodeInterface $node */
+
+        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();
+    }
+
+    /**
+     * @param  NodeInterface $node
+     * @return string
+     */
+    protected function getAccessRole($node) {
+        if( NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+    }
+
+    /**
+     * @param  NodeInterface $node
+     * @return string
+     */
+    protected function getEditionRole($node) {
+        if( NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 
     /**
