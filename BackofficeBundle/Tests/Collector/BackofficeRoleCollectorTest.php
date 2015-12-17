@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Collector;
 
-use OpenOrchestra\Backoffice\Collector\RoleCollector;
+use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
@@ -11,9 +11,9 @@ use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class RoleCollectorTest
+ * Class BackofficeRoleCollectorTest
  */
-class RoleCollectorTest extends \PHPUnit_Framework_TestCase
+class BackofficeRoleCollectorTest extends \PHPUnit_Framework_TestCase
 {
     protected $roleRepository;
     protected $translator;
@@ -39,7 +39,7 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'OpenOrchestra\Backoffice\Collector\RoleCollectorInterface',
-            new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false)
+            new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false)
         );
     }
     /**
@@ -50,7 +50,7 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddAndGetRoles(array $newRoles, array $expectedRoles)
     {
-        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
         foreach ($newRoles as $newRole) {
             $collector->addRole($newRole);
         }
@@ -77,7 +77,7 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->roleRepository)->findWorkflowRole()->thenReturn($roles);
 
-        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, true);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, true);
 
         $this->assertSame($expectedRoles, $collector->getRoles());
     }
@@ -104,7 +104,7 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetRolesByType(array $newRoles, $type, array $expectedRoles)
     {
-        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
         foreach ($newRoles as $newRole) {
             $collector->addRole($newRole);
         }
@@ -186,7 +186,7 @@ class RoleCollectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasTest(array $roles, $roleToCheck, $answer)
     {
-        $collector = new RoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
+        $collector = new BackofficeRoleCollector($this->roleRepository, $this->translator, $this->translationChoiceManager, false);
         foreach ($roles as $newRole) {
             $collector->addRole($newRole);
         }

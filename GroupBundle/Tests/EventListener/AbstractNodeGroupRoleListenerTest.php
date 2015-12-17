@@ -21,8 +21,8 @@ abstract class AbstractNodeGroupRoleListenerTest extends \PHPUnit_Framework_Test
     {
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        $roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollector');
-        Phake::when($this->container)->get('open_orchestra_backoffice.collector.role')->thenReturn($roleCollector);
+        $roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector');
+        Phake::when($this->container)->get('open_orchestra_backoffice.collector.backoffice_role')->thenReturn($roleCollector);
         Phake::when($roleCollector)->getRolesByType(Phake::anyParameters())->thenReturn($this->nodesRoles);
     }
 }
