@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_backoffice.collector.backoffice_role.class: OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector
+    open_orchestra_backoffice.collector.front_role.class: OpenOrchestra\Backoffice\Collector\FrontRoleCollector
 
 services:
     open_orchestra_backoffice.collector.backoffice_role:
@@ -9,3 +10,7 @@ services:
             - @translator
             - @open_orchestra_backoffice.manager.translation_choice
             - %open_orchestra_backoffice.collector.backoffice_role.workflow_role_in_group%
+    open_orchestra_backoffice.collector.front_role:
+        class: %open_orchestra_backoffice.collector.front_role.class%
+        arguments:
+            - @translator
