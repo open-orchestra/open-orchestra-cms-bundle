@@ -1,54 +1,54 @@
 open_orchestra_role:
-    role_access_tree_general_node: Gérer les pages transverses
+    role_access_tree_general_node: Accéder aux pages transverses
     role_access_update_general_node: Editer une page transverse
-    role_access_tree_node: Gérer les pages
+    role_access_tree_node: Accéder aux pages
     role_access_create_node: Créer une page
     role_access_update_node: Editer une page
     role_access_delete_node: Supprimer une page
     role_access_move_node: Déplacer une page
-    role_access_tree_template: Gérer les gabarits de pages
+    role_access_tree_template: Accéder aux gabarits de pages
     role_access_create_template: Créer un gabarit de page
     role_access_update_template: Modifier un gabarit de page
     role_access_delete_template: Supprimer un gabarit de page
-    role_access_content_type_for_content: Gérer les contenus
+    role_access_content_type_for_content: Accéder aux contenus
     role_access_create_content_type_for_content: Créer un contenu
     role_access_update_content_type_for_content: Editer un contenu
     role_access_delete_content_type_for_content: Supprimer un contenu
-    role_access_content_type: Gérer les types de contenu
+    role_access_content_type: Accéder aux types de contenu
     role_access_create_content_type: Ajouter un type de contenu
     role_access_update_content_type: Editer un type de contenu
     role_access_delete_content_type: Supprimer un types de contenu
-    role_access_redirection: Gérer les redirections HTTP
+    role_access_redirection: Accéder aux redirections HTTP
     role_access_create_redirection: Créer une redirection HTTP
     role_access_update_redirection: Editer une redirection HTTP
     role_access_delete_redirection: Supprimer une redirection HTTP
-    role_access_api_client: Gérer les accès à l'API
+    role_access_api_client: Accéder aux accès à l'API
     role_access_create_api_client: Créer un accès à l'API
     role_access_update_api_client: Editer un accès à l'API
     role_access_delete_api_client: Supprimer un accès à l'API
-    role_access_keyword: Gérer les mots-clefs (tags)
+    role_access_keyword: Accéder aux mots-clefs (tags)
     role_access_create_keyword: Créer des mots-clefs (tags)
     role_access_update_keyword: Editer des mots-clefs (tags)
     role_access_delete_keyword: Supprimer des mots-clefs (tags)
-    role_access_deleted: Gérer la corbeille
+    role_access_deleted: Accéder à la corbeille
     role_access_restore: Restaurer une entité depuis la corbeille
-    role_access_status: Gérer les états de publication
+    role_access_status: Accéder aux états de publication
     role_access_create_status: Créer un état de publication
     role_access_update_status: Editer un état de publication
     role_access_delete_status: Supprimer un état de publication
-    role_access_theme: Gérer les thèmes
+    role_access_theme: Accéder aux thèmes
     role_access_create_theme: Créer un thème
     role_access_update_theme: Modifier un thème
     role_access_delete_theme: Supprimer un thème
-    role_access_group: Gérer les groupes utilisateurs
+    role_access_group: Accéder aux groupes utilisateurs
     role_access_create_group: Créer un groupe utilisateur
     role_access_update_group: Modifier un groupe utilisateur
     role_access_delete_group: Supprimer un groupe utilisateur
-    role_access_site: Gérer les sites
+    role_access_site: Accéder aux sites
     role_access_create_site: Créer un site
     role_access_update_site: Editer un site
     role_access_delete_site: Supprimer un site
-    role_access_role: Gérer les rôles
+    role_access_role: Accéder aux rôles
     role_access_create_role: Créer un rôle
     role_access_update_role: Editer un rôle
     role_access_delete_role: Supprimer un rôle

@@ -1,5 +1,5 @@
 open_orchestra_role:
-    role_access_user: Manage a user
+    role_access_user: Access users
     role_access_create_user: Create a user
     role_access_update_user: Update a user
     role_access_delete_user: Delete a user
