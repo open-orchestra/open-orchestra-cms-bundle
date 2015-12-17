@@ -1,4 +1,6 @@
 open_orchestra_backoffice:
+    form:
+        global_error: There are errors in the form
     modal:
         close: Close
     scheme:
