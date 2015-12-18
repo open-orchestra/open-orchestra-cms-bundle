@@ -3,6 +3,8 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\HandleRequestDataTable;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\DeleteStatusNotGrantedHttpException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\StatusEvent;
 use OpenOrchestra\ModelInterface\StatusEvents;
@@ -51,13 +53,16 @@ class StatusController extends BaseController
      * @Config\Route("/{statusId}/delete", name="open_orchestra_api_status_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_STATUS')")
-     *
      * @return Response
+     *
+     * @throws DeleteStatusNotGrantedHttpException
      */
     public function deleteAction($statusId)
     {
         $status = $this->get('open_orchestra_model.repository.status')->find($statusId);
+        if (!$this->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)) {
+            throw new DeleteStatusNotGrantedHttpException();
+        }
         $this->get('event_dispatcher')->dispatch(StatusEvents::STATUS_DELETE, new StatusEvent($status));
         $this->get('object_manager')->remove($status);
         $this->get('object_manager')->flush();

@@ -86,7 +86,7 @@ class StatusTransformer extends AbstractSecurityCheckerAwareTransformer
             }
             $facade->fromRole = implode(',', $fromRoles);
 
-            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS)) {
+            if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_STATUS, $status)) {
                 $facade->addLink('_self_delete', $this->generateRoute(
                     'open_orchestra_api_status_delete',
                     array('statusId' => $status->getId())
