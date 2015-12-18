@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Collector;
 
-use FOS\UserBundle\Model\UserInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**

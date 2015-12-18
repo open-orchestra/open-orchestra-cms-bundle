@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Collector;
 
-use FOS\UserBundle\Model\UserInterface;
 use OpenOrchestra\Backoffice\Collector\FrontRoleCollector;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use Phake;
 
 /**
