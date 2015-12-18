@@ -1,4 +1,5 @@
 open_orchestra_role:
+    role_user: Role d'un utilisateur connecté
     role_access_tree_general_node: Accéder aux pages transverses
     role_access_update_general_node: Editer une page transverse
     role_access_tree_node: Accéder aux pages

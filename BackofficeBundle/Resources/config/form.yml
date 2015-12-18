@@ -328,6 +328,13 @@ services:
             - oo_role_choice
         tags:
             - { name: form.type, alias: oo_role_choice }
+    open_orchestra_backoffice.type.front_role_choice:
+        class: %open_orchestra_backoffice.type.role_choice.class%
+        arguments:
+            - @open_orchestra_backoffice.collector.front_role
+            - oo_front_role_choice
+        tags:
+            - { name: form.type, alias: oo_front_role_choice }
     open_orchestra_backoffice.type.api_client:
         class: %open_orchestra_backoffice.type.api_client.class%
         arguments:

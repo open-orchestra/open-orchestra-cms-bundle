@@ -111,7 +111,7 @@ class NodeType extends AbstractType
             ->add('nodeId', 'hidden', array(
                 'disabled' => true
             ))
-            ->add('role', 'oo_role_choice', array(
+            ->add('role', 'oo_front_role_choice', array(
                 'label' => 'open_orchestra_backoffice.form.node.role',
                 'required' => false,
             ))
