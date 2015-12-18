@@ -132,7 +132,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends \PHPUnit_Framework_TestC
      * @param string  $accessType
      * @param bool    $accessNode
      * @param bool    $accessParent
-     * @param string    $accessChildType
+     * @param string  $accessChildType
      * @param bool    $accessChild
      * @param integer $countUpdateNode
      * @param integer $countUpdateChild

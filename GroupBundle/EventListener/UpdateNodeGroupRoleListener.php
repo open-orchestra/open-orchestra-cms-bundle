@@ -14,7 +14,6 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
  */
 class UpdateNodeGroupRoleListener
 {
-
     protected $nodeClass;
 
     /**
@@ -34,7 +33,7 @@ class UpdateNodeGroupRoleListener
     {
         $document = $event->getDocument();
         $uow = $event->getDocumentManager()->getUnitOfWork();
-         if (
+        if (
             $document instanceof NodeGroupRoleInterface &&
             $event->hasChangedField("accessType")
         ) {

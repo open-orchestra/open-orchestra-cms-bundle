@@ -12,7 +12,6 @@ use OpenOrchestra\DisplayBundle\Manager\TreeManager;
  */
 class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
 {
-
     protected $treeManager;
 
     /**
@@ -23,7 +22,6 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
     {
         parent::__construct($nodeGroupRoleClass);
         $this->treeManager = $treeManager;
-
     }
 
     /**

@@ -94,5 +94,4 @@ class UpdateNodeGroupRoleListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(method_exists($this->listener, 'preUpdate'));
     }
-
 }

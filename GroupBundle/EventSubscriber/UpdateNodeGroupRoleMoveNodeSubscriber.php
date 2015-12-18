@@ -51,7 +51,6 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
         $node = $event->getNode();
         $nodeRole = $this->roleCollector->getRolesByType('node');
         $this->updateNodeGroupRoleTree($node, $nodeRole, $groups);
-
     }
 
     /**
@@ -98,5 +97,4 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
             NodeEvents::PATH_UPDATED => 'updateAccessNodeGroupRole',
         );
     }
-
 }

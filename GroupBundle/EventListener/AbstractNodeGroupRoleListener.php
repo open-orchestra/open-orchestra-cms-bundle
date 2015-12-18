@@ -49,10 +49,10 @@ abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
     }
 
     /**
-     * @param NodeInterface $node
+     * @param NodeInterface  $node
      * @param GroupInterface $group
-     * @param string $role
-     * @param string $accessType
+     * @param string         $role
+     * @param string         $accessType
      *
      * @return NodeGroupRoleInterface
      * @throws NodeGroupRoleNotFoundException
