@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_backoffice.usage_finder.status.class: OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder
+
+services:
+    open_orchestra_backoffice.usage_finder.status:
+        class: %open_orchestra_backoffice.usage_finder.status.class%
+        calls:
+            - ['addRepository', [@open_orchestra_model.repository.node]]
+            - ['addRepository', [@open_orchestra_model.repository.content]]
+            - ['addRepository', [@open_orchestra_model.repository.role]]
