@@ -325,6 +325,7 @@ services:
         class: %open_orchestra_backoffice.type.role_choice.class%
         arguments:
             - @open_orchestra_backoffice.collector.backoffice_role
+            - oo_role_choice
         tags:
             - { name: form.type, alias: oo_role_choice }
     open_orchestra_backoffice.type.api_client:

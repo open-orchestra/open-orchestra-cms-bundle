@@ -24,7 +24,7 @@ class RoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
 
-        $this->form = new RoleChoiceType($this->roleCollector);
+        $this->form = new RoleChoiceType($this->roleCollector, 'oo_role_choice');
     }
 
     /**

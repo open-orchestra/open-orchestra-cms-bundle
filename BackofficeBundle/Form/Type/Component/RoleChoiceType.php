@@ -12,13 +12,16 @@ use Symfony\Component\Form\AbstractType;
 class RoleChoiceType extends AbstractType
 {
     protected $roleCollector;
+    protected $name;
 
     /**
      * @param RoleCollectorInterface $roleCollector
+     * @param string                 $name
      */
-    public function __construct(RoleCollectorInterface $roleCollector)
+    public function __construct(RoleCollectorInterface $roleCollector, $name)
     {
         $this->roleCollector = $roleCollector;
+        $this->name = $name;
     }
 
     /**
@@ -38,7 +41,7 @@ class RoleChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'oo_role_choice';
+        return $this->name;
     }
 
     /**
