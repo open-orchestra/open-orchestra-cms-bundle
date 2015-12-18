@@ -33,7 +33,6 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends \PHPUnit_Framework_TestC
      */
     public function setUp()
     {
-
         $this->groupRepository = Phake::mock('OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface');
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector');
