@@ -1,9 +1,27 @@
 .js-widget-title {
     margin-left: 10px;
+    display: block !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 27px;
+
+    .tooltip-inner {
+        white-space: initial;
+    }
 }
 
-.jarviswidget > header {
-    line-height: 30px;
+.jarviswidget {
+    > header {
+        height: auto;
+        min-height: 34px;
+        line-height: 30px;
+    }
+    > header:after {
+        content: '';
+        clear: both;
+        display: block;
+    }
 }
 
 .jarviswidget .widget-body {

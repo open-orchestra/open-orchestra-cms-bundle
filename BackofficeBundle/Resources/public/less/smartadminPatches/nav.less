@@ -16,5 +16,38 @@ nav {
         }
       }
     }
+    > li > a b {
+      position: absolute !important;
+      right: 10px;
+      top: 10px;
+    }
   }
+}
+
+#left-panel nav ul li {
+  > a {
+    b.collapse-sign {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+    }
+
+    span {
+      display: block;
+      margin-right: 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    span.menu-item-parent{
+      display: inline-block;
+      overflow: initial;
+    }
+  }
+}
+
+ol.breadcrumb {
+  white-space: nowrap;
+  overflow-x: auto;
+  position: absolute;
 }
