@@ -263,9 +263,11 @@ open_orchestra_backoffice:
             name: Name
             label: Label
             roles: Roles
+            role_helper: Roles page by page are not taken into account if general right is not enabled
             site: Website
             title: Group edition
             node_role_edition: Node role list
+            node_role_no_site: The group must be linked to a site to manage roles page by page
             page_list: Page list
             access_denied: Denied
             access_granted: Granted

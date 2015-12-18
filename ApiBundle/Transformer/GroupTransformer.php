@@ -82,11 +82,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_edit',
                 array('groupId' => $group->getId())
             ));
+            $facade->addLink('_self_panel_node_tree', $this->generateRoute(
+                'open_orchestra_api_group_show',
+                array('groupId' => $group->getId())
+            ));
             if ($group->getSite() instanceof ReadSiteInterface) {
-                $facade->addLink('_self_panel_node_tree', $this->generateRoute(
-                    'open_orchestra_api_group_show',
-                    array('groupId' => $group->getId())
-                ));
                 $facade->addLink('_self_node_tree', $this->generateRoute(
                     'open_orchestra_api_node_list_tree',
                     array('siteId' => $group->getSite()->getSiteId())

@@ -20,7 +20,7 @@ tabViewFormLoad = (options) ->
               tabView.addPanel $('[data-title]', view.$el).data('title'), panel.id, view, panel.isActive, i
               return
           new elementTabViewClass(
-            html: response,
+            response: response,
             entityType: options.entityType,
             listUrl: options.listUrl
             callback: callback
