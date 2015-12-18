@@ -3,7 +3,8 @@
 namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\Collector\RoleCollector;
+use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
+use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
@@ -27,13 +28,13 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
     /**
      * @param GroupRepositoryInterface $groupRepository
      * @param NodeRepositoryInterface  $nodeRepository
-     * @param RoleCollector            $roleCollector
+     * @param BackofficeRoleCollector  $roleCollector
      * @param ObjectManager            $objectManager
      */
     public function __construct(
         GroupRepositoryInterface $groupRepository,
         NodeRepositoryInterface $nodeRepository,
-        RoleCollector $roleCollector,
+        BackofficeRoleCollector $roleCollector,
         ObjectManager $objectManager
     ) {
         $this->groupRepository = $groupRepository;
