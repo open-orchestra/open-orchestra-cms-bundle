@@ -5,6 +5,9 @@ open_orchestra_backoffice:
         - fakeBlocks
     fixed_attributes:
         - fake_attribute
+    front_roles:
+        - role_foo
+        - role_bar
     available_color:
         fake_color : fake_translation_color
     dashboard_widgets:

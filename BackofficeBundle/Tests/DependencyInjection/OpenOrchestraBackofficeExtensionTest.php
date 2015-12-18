@@ -99,6 +99,8 @@ class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
             "never"   => "open_orchestra_backoffice.form.changefreq.never",
         );
         $this->assertEquals($choice_frequence, $container->getParameter('open_orchestra_backoffice.choice.frequence'));
+
+        $this->assertEmpty($container->getDefinition('open_orchestra_backoffice.collector.front_role')->getMethodCalls());
    }
 
     /**
@@ -138,6 +140,11 @@ class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
         $options = $container->getParameter('open_orchestra_backoffice.options');
         $this->assertArrayHasKey('fake_option', $options);
         $this->assertCount(15, $options);
+
+        $this->assertSame(array(
+            array('addRole', array('role_foo')),
+            array('addRole', array('role_bar')),
+        ), $container->getDefinition('open_orchestra_backoffice.collector.front_role')->getMethodCalls());
     }
 
     /**

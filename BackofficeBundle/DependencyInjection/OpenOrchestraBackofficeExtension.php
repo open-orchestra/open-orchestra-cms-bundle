@@ -70,6 +70,10 @@ class OpenOrchestraBackofficeExtension extends Extension
             $loader->load('test_services.yml');
         }
 
+        if (isset($config['front_roles'])) {
+            $this->addFrontRoles($config['front_roles'], $container);
+        }
+
         $container->setParameter('open_orchestra_backoffice.dashboard_widgets', $config['dashboard_widgets']);
         $container->setParameter('open_orchestra_backoffice.choice.available_color', $config['available_color']);
     }
@@ -118,5 +122,17 @@ class OpenOrchestraBackofficeExtension extends Extension
         );
 
         $container->setParameter('open_orchestra_backoffice.options', $options);
+    }
+
+    /**
+     * @param array            $frontRoles
+     * @param ContainerBuilder $container
+     */
+    protected function addFrontRoles(array $frontRoles, ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('open_orchestra_backoffice.collector.front_role');
+        foreach ($frontRoles as $frontRole) {
+            $definition->addMethodCall('addRole', array($frontRole));
+        }
     }
 }
