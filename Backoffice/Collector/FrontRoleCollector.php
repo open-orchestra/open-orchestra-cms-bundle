@@ -19,6 +19,11 @@ class FrontRoleCollector implements RoleCollectorInterface
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+        $this->roles[UserInterface::ROLE_DEFAULT] = $this->translator->trans(
+            'open_orchestra_role.' . strtolower(UserInterface::ROLE_DEFAULT),
+            array(),
+            'role'
+        );
     }
 
     /**
@@ -26,12 +31,6 @@ class FrontRoleCollector implements RoleCollectorInterface
      */
     public function getRoles()
     {
-        $this->roles[UserInterface::ROLE_DEFAULT] = $this->translator->trans(
-            'open_orchestra_role.' . strtolower(UserInterface::ROLE_DEFAULT),
-            array(),
-            'role'
-        );
-
         return $this->roles;
     }
 
