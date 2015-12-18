@@ -57,6 +57,7 @@
     <body class="desktop-detected fixed-header fixed-navigation pace-done fixed-ribbon">
 {% endblock %}
     <div id="assets-version" class="hidden-info">{{ asset_version('/') }}</div>
+    <div id="oo-environment" class="hidden-info">{{ app.environment }}</div>
 
     {% block content %}
     {% endblock %}
