@@ -41,7 +41,6 @@ class NodeController extends BaseController
         $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
-        /** @var NodeInterface $node */
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
         $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
@@ -138,30 +137,6 @@ class NodeController extends BaseController
     }
 
     /**
-     * @param  NodeInterface $node
-     * @return string
-     */
-    protected function getAccessRole($node) {
-        if( NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
-            return GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
-    }
-
-    /**
-     * @param  NodeInterface $node
-     * @return string
-     */
-    protected function getEditionRole($node) {
-        if( NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
-            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
-    }
-
-    /**
      * @param boolean|null $published
      *
      * @Config\Route("/list/not-published-by-author", name="open_orchestra_api_node_list_author_and_site_not_published", defaults={"published": false})
@@ -220,10 +195,11 @@ class NodeController extends BaseController
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $node = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
+        $node = !empty($nodes) ? $nodes[0] : null;
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($nodes);
     }
 
     /**
@@ -310,5 +286,33 @@ class NodeController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
 
         return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getAccessRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getEditionRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 }
