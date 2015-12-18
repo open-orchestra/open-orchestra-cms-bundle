@@ -30,7 +30,7 @@ class OpenOrchestraBackofficeExtension extends Extension
         $container->setParameter('open_orchestra_backoffice.orchestra_choice.front_language', $config['front_languages']);
         $container->setParameter('open_orchestra_user.base_layout', 'OpenOrchestraBackofficeBundle::layout.html.twig');
         $container->setParameter('open_orchestra_user.form_template', 'OpenOrchestraBackofficeBundle::form.html.twig');
-        $container->setParameter('open_orchestra_backoffice.collector.role.workflow_role_in_group', $config['collector']['workflow_role_in_group']);
+        $container->setParameter('open_orchestra_backoffice.collector.backoffice_role.workflow_role_in_group', $config['collector']['workflow_role_in_group']);
         $fixedAttributes = array_merge($config['fixed_attributes'], $container->getParameter('open_orchestra_backoffice.block.fixed_attributes'));
         $container->setParameter('open_orchestra_backoffice.block.fixed_attributes', $fixedAttributes);
 
@@ -68,6 +68,10 @@ class OpenOrchestraBackofficeExtension extends Extension
 
         if ('test' == $container->getParameter('kernel.environment')) {
             $loader->load('test_services.yml');
+        }
+
+        if (isset($config['front_roles'])) {
+            $this->addFrontRoles($config['front_roles'], $container);
         }
 
         $container->setParameter('open_orchestra_backoffice.dashboard_widgets', $config['dashboard_widgets']);
@@ -118,5 +122,17 @@ class OpenOrchestraBackofficeExtension extends Extension
         );
 
         $container->setParameter('open_orchestra_backoffice.options', $options);
+    }
+
+    /**
+     * @param array            $frontRoles
+     * @param ContainerBuilder $container
+     */
+    protected function addFrontRoles(array $frontRoles, ContainerBuilder $container)
+    {
+        $definition = $container->getDefinition('open_orchestra_backoffice.collector.front_role');
+        foreach ($frontRoles as $frontRole) {
+            $definition->addMethodCall('addRole', array($frontRole));
+        }
     }
 }

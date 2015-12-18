@@ -7,9 +7,9 @@ use Symfony\Component\Translation\TranslatorInterface;
 use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 
 /**
- * Class RoleCollector
+ * Class BackofficeRoleCollector
  */
-class RoleCollector
+class BackofficeRoleCollector implements RoleCollectorInterface
 {
     protected $roles = array();
     protected $roleRepository;

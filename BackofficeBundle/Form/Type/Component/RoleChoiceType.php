@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
-use OpenOrchestra\Backoffice\Collector\RoleCollector;
+use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
@@ -12,13 +12,16 @@ use Symfony\Component\Form\AbstractType;
 class RoleChoiceType extends AbstractType
 {
     protected $roleCollector;
+    protected $name;
 
     /**
-     * @param RoleCollector       $roleCollector
+     * @param RoleCollectorInterface $roleCollector
+     * @param string                 $name
      */
-    public function __construct(RoleCollector $roleCollector)
+    public function __construct(RoleCollectorInterface $roleCollector, $name)
     {
         $this->roleCollector = $roleCollector;
+        $this->name = $name;
     }
 
     /**
@@ -38,7 +41,7 @@ class RoleChoiceType extends AbstractType
      */
     public function getName()
     {
-        return 'oo_role_choice';
+        return $this->name;
     }
 
     /**

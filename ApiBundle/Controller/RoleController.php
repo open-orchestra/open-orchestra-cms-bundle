@@ -52,7 +52,7 @@ class RoleController extends BaseController
      */
     public function listByTypeAction($type)
     {
-        $roles = $this->get('open_orchestra_backoffice.collector.role')->getRolesByType($type);
+        $roles = $this->get('open_orchestra_backoffice.collector.backoffice_role')->getRolesByType($type);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('role_string_collection')->transform($roles, $type);
     }

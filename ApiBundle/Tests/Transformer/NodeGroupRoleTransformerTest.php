@@ -26,7 +26,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollector');
+        $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
         Phake::when($this->roleCollector)->hasRole(Phake::anyParameters())->thenReturn(true);
 
         $this->nodeGroupRoleClass = 'OpenOrchestra\GroupBundle\Document\NodeGroupRole';

@@ -1,6 +1,4 @@
 open_orchestra_backoffice:
-    form:
-        global_error: There are errors in the form
     modal:
         close: Close
     scheme:
@@ -31,6 +29,7 @@ open_orchestra_backoffice:
         submit: Save
         edit: Edit
         delete: Delete
+        global_error: There are errors in the form
         delete_confirm:
             title: Delete this element?
             text: The removal will be final

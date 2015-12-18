@@ -1,4 +1,5 @@
 open_orchestra_role:
+    role_user: Role of a connected user
     role_access_tree_general_node: Access transversal pages
     role_access_update_general_node: Update a transversal page
     role_access_tree_node: Access pages

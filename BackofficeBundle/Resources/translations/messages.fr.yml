@@ -1,6 +1,4 @@
 open_orchestra_backoffice:
-    form:
-        global_error: Le formulaire contient des erreurs
     modal:
         close: Fermer
     scheme:
@@ -31,6 +29,7 @@ open_orchestra_backoffice:
         submit: Sauvegarder
         edit: Editer
         delete: Supprimer
+        global_error: Le formulaire contient des erreurs
         delete_confirm:
             title: Supprimer cet élément ?
             text: La suppression sera définitive
