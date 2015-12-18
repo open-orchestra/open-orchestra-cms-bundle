@@ -43,7 +43,7 @@ services:
         arguments:
             - @open_orchestra_user.repository.group
             - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.collector.role
+            - @open_orchestra_backoffice.collector.backoffice_role
             - @object_manager
         tags:
             - { name: kernel.event_subscriber }
