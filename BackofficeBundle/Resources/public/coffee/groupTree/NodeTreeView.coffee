@@ -17,10 +17,8 @@ NodeTreeView = OrchestraView.extend(
     @options.domContainer = @$el
 
   render: ->
-    console.log @options.response.site
     if typeof @options.response.site != 'undefined'
         @options.domContainer.html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/nodeTree')
-
         currentView = @
         $.ajax
           url: currentView.options.response.links._self_node_tree
