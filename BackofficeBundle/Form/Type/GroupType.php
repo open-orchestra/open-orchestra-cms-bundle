@@ -51,6 +51,7 @@ class GroupType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
+                'attr' => array('help_text' => 'open_orchestra_backoffice.form.group.role_helper'),
             ));
 
         if (array_key_exists('disabled', $options)) {
