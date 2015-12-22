@@ -165,7 +165,33 @@ activateDatepicker = (elements) ->
   if $.fn.datepicker
     elements.each ->
       $this = $(this)
-      dataDateFormat = $this.data('dateformat') or 'dd.mm.yy'
+
+      dataDateFormat = $this.data('dateformat') or 'yyyy-mm-dd'
+      convertFormatDay =
+        'EEEE' : 'DD'
+        'EE' : 'D'
+        'E' : 'D'
+        'D' : 'o'
+      convertFormatMonth =
+        'MMMM' : 'MM'
+        'MMM' : 'M'
+        'MM' : 'mm'
+        'M' : 'm'
+      convertFormatYear =
+        'Y' : 'yy'
+        'yyyy': 'yy'
+        'y' : 'yy'
+
+      convertFormat = (formats, dateFormat) ->
+        for format of formats
+            dateReplace = dateFormat.replace(new RegExp(format, 'g'), formats[format]);
+            return dateReplace if dateReplace != dateFormat
+        return dateFormat
+
+      dataDateFormat = convertFormat(convertFormatYear,dataDateFormat);
+      dataDateFormat = convertFormat(convertFormatMonth,dataDateFormat);
+      dataDateFormat = convertFormat(convertFormatDay,dataDateFormat);
+
       $this.datepicker
         dateFormat: dataDateFormat
         prevText: '<i class="fa fa-chevron-left"></i>'
