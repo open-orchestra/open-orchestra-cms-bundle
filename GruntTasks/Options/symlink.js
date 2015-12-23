@@ -134,5 +134,17 @@ module.exports = {
     jquery_ui: {
         src: 'bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
         dest: 'web/css/images/ui-icons_222222_256x240.png'
+    },
+    jquery_ui_bg_flat: {
+        src: 'bower_components/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png',
+        dest: 'web/css/images/ui-bg_flat_75_ffffff_40x100.png'
+    },
+    jquery_ui_bg_highlight: {
+        src: 'bower_components/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png',
+        dest: 'web/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png'
+    },
+    jquery_ui_bg_glass: {
+        src: 'bower_components/jquery-ui/themes/base/images/ui-bg_glass_75_dadada_1x400.png',
+        dest: 'web/css/images/ui-bg_glass_75_dadada_1x400.png'
     }
 };
