@@ -11,7 +11,7 @@ renderPageTitle = ->
 
 # ADD CUSTOM JARVIS WIDGET
 addCustomJarvisWidget = (widget) ->
-  $(widget).insertBefore($(".js-widget-title"))
+  $(widget).insertAfter($(".js-widget-title"))
   return
 
 # DISPLAY LOADER
