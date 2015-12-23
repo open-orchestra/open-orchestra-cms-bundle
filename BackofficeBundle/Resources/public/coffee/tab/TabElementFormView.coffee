@@ -17,7 +17,6 @@ TabElementFormView = OrchestraView.extend(
     @options.domContainer = @$el if !@options.submitted
 
   render: ->
-    console.log @options.response
     @options.domContainer.html @options.response
     @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/backToList',
         listUrl : @options.listUrl
