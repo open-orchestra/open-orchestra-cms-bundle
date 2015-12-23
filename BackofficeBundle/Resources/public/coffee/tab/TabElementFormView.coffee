@@ -13,6 +13,7 @@ TabElementFormView = OrchestraView.extend(
     @options = options
     @options.listUrl = appRouter.generateUrl('listEntities', entityType: options.entityType) if options.listUrl == undefined
     @options.formView = 'editEntityTab'
+    @options.response = @options.html if true == @options.submitted
     @options.domContainer = @$el if !@options.submitted
 
   render: ->
