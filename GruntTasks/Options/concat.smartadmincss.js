@@ -3,10 +3,10 @@ module.exports = {
 
         //--[ SMARTADMIN ]--//
 //        'bower_components/bootstrap/dist/css/bootstrap.css',
-       'bower_components/open-sans/css/open-sans.css',
-       'bower_components/jquery-minicolors/jquery.minicolors.css',
+       'vendor/bower_components/open-sans/css/open-sans.css',
+       'vendor/bower_components/jquery-minicolors/jquery.minicolors.css',
        'web/bundles/openorchestrabackoffice/smartadmin/css/bootstrap.css',
-       'bower_components/font-awesome/css/font-awesome.css',
+       'vendor/bower_components/font-awesome/css/font-awesome.css',
        'web/bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production-plugins.css',
        'web/bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production.css',
        'web/bundles/openorchestrabackoffice/smartadmin/css/smartadmin-skins.css',
