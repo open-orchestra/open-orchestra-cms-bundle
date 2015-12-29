@@ -59,7 +59,7 @@ class EditNodeControllerTest extends AbstractControllerTest
     {
         return array(
             array('foo', 'foo', NodeInterface::ROOT_NODE_ID),
-            array('', 'bar', 'fixture_page_community'),
+            array('', 'bar', 'fixture_page_news'),
         );
     }
 }
