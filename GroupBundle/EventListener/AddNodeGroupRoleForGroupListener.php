@@ -23,7 +23,7 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
             $nodesRoles = $this->getNodeRoles();
             foreach ($nodes as $node) {
                 $accessType = $this->getNodeAccessType($node);
-                foreach ($nodesRoles as $role) {
+                foreach ($nodesRoles as $role => $translation) {
                     $nodeGroupRole = $this->createNodeGroupRole($node->getNodeId(), $role, $accessType);
                     $document->addNodeRole($nodeGroupRole);
                 }
