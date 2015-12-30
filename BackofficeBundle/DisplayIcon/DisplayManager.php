@@ -2,13 +2,16 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class DisplayIconManager
  */
-class DisplayManager extends ContainerAware
+class DisplayManager implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     protected $strategies = array();
 
     /**
