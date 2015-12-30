@@ -1,6 +1,6 @@
 <nav data-url="{{ path('open_orchestra_backoffice_menu') }}">
     <ul>
-        {% for rootMenuWeights in strategies[navigation_panel.root_menu] %}
+        {% for rootMenuWeights in strategies[constant('OpenOrchestra\\Backoffice\\NavigationPanel\\Strategies\\AbstractNavigationPanelStrategy::ROOT_MENU')] %}
             {% for rootMenu in rootMenuWeights %}
                 <li>
                     {{ rootMenu.show|raw }}

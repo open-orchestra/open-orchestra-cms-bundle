@@ -23,19 +23,6 @@ class NavigationPanelExtension extends \Twig_Extension implements ContainerAware
     }
 
     /**
-     * @return array
-     */
-    public function getGlobals()
-    {
-        return array(
-            'navigation_panel' =>
-                array(
-                    'root_menu' => AbstractNavigationPanelStrategy::ROOT_MENU
-                )
-        );
-    }
-
-    /**
      * @return string
      */
     public function displayNavigationPanel()
