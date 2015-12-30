@@ -3,11 +3,14 @@
 namespace OpenOrchestra\GroupBundle\EventListener;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-abstract class AbstractNodeGroupRoleListener extends ContainerAware
+abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     protected $nodeGroupRoleClass;
 
     /**
