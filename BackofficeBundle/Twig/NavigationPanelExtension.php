@@ -3,15 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AbstractNavigationPanelStrategy;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class NavigationPanelExtension
  */
 class NavigationPanelExtension extends \Twig_Extension implements ContainerAwareInterface
 {
-    protected $container;
+    use ContainerAwareTrait;
 
     /**
      * @return array
@@ -20,19 +19,6 @@ class NavigationPanelExtension extends \Twig_Extension implements ContainerAware
     {
         return array(
             new \Twig_SimpleFunction('navigation_panel', array($this, 'displayNavigationPanel'), array('is_safe' => array('html'))),
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function getGlobals()
-    {
-        return array(
-            'navigation_panel' =>
-                array(
-                    'root_menu' => AbstractNavigationPanelStrategy::ROOT_MENU
-                )
         );
     }
 
@@ -52,17 +38,5 @@ class NavigationPanelExtension extends \Twig_Extension implements ContainerAware
     public function getName()
     {
         return 'navigation_panel';
-    }
-
-     /**
-     * Sets the Container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 }
