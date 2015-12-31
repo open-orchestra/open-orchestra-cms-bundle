@@ -121,10 +121,10 @@ class NodeControllerTest extends AbstractControllerTest
         $statuses = $statusRepository->findAll();
 
         $this->assertEquals(1, count($this->redirectionRepository->findAll()));
-        $this->assertEquals(62, count($this->routeDocumentRepository->findAll()));
+        $routeDocumentCount = count($this->routeDocumentRepository->findAll());
 
-        $this->changeNodeStatusWithRouteRedirectionTest($nodeId, $statuses[1], 1, 62);
-        $this->changeNodeStatusWithRouteRedirectionTest($nodeId, $statuses[2], 1, 65);
+        $this->changeNodeStatusWithRouteRedirectionTest($nodeId, $statuses[1], 1, $routeDocumentCount);
+        $this->changeNodeStatusWithRouteRedirectionTest($nodeId, $statuses[2], 1, $routeDocumentCount + 3);
 
         $this->client->request('POST', '/api/node/' . $nodeName . '/duplicate/1?language=' . $node->language, array());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -135,10 +135,10 @@ class NodeControllerTest extends AbstractControllerTest
         $this->documentManager->persist($newNode);
         $this->documentManager->flush($newNode);
 
-        $this->changeNodeStatusWithRouteRedirectionTest($newNode->getId(), $statuses[1], 1, 65);
-        $this->changeNodeStatusWithRouteRedirectionTest($newNode->getId(), $statuses[2], 4, 74);
-        $this->changeNodeStatusWithRouteRedirectionTest($newNode->getId(), $statuses[0], 1, 65);
-        $this->changeNodeStatusWithRouteRedirectionTest($nodeId, $statuses[0], 1, 62);
+        $this->changeNodeStatusWithRouteRedirectionTest($newNode->getId(), $statuses[1], 1, $routeDocumentCount + 3);
+        $this->changeNodeStatusWithRouteRedirectionTest($newNode->getId(), $statuses[2], 4, $routeDocumentCount + 12);
+        $this->changeNodeStatusWithRouteRedirectionTest($newNode->getId(), $statuses[0], 1, $routeDocumentCount + 3);
+        $this->changeNodeStatusWithRouteRedirectionTest($nodeId, $statuses[0], 1, $routeDocumentCount);
 
         $this->client->request('DELETE', '/api/node/' . $nodeName . '/delete');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -152,7 +152,8 @@ class NodeControllerTest extends AbstractControllerTest
      * @param int             $redirectionNumber
      * @param int             $routeNumber
      */
-    protected function changeNodeStatusWithRouteRedirectionTest($nodeId, StatusInterface $status, $redirectionNumber, $routeNumber) {
+    protected function changeNodeStatusWithRouteRedirectionTest($nodeId, StatusInterface $status, $redirectionNumber, $routeNumber)
+    {
         $this->client->request('POST', '/api/node/' . $nodeId . '/update',
             array(), array(), array(), '{"status_id": "'. $status->getId() .'"}');
 
