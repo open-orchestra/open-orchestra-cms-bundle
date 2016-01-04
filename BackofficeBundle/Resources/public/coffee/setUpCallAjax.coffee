@@ -8,12 +8,14 @@ $(document).ready ->
         redirectUrl = appRouter.generateUrl 'showDashboard'
         displayMenu(redirectUrl)
       else
-        xhrFifo.push(xhr)
+        xhrFifo.push({xhr:xhr, method: settings.type})
         context = settings.context
         displayLoader(context.button) if context != undefined && context.button != undefined
     abortXhr: ->
       for i of xhrFifo
-        xhrFifo[i].abort()
+        if xhrFifo[i].method.toUpperCase() == 'GET'
+          xhrFifo[i].xhr.abort()
+          delete xhrFifo[i]
       xhrFifo = []
   $(document).ajaxError (event, jqXHR, settings) ->
     errors = {error : {message :$('#content').data('error-txt')}}
