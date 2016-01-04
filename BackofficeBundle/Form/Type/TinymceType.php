@@ -28,7 +28,7 @@ class TinymceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->bbCodeTransformer);
+//        $builder->addModelTransformer($this->bbCodeTransformer);
     }
 
     /**

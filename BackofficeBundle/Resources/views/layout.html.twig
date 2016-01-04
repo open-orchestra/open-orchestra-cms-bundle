@@ -73,7 +73,8 @@
         </script>
     {% endif %}
 
-    {{ tinymce_init() }}
+    {#{{ tinymce_init() }}#}
+
 
     {% block javascripts %}
         {% if app.debug %}
@@ -86,6 +87,8 @@
             {% endjavascripts %}
         {% endif %}
     {% endblock %}
+
+    {{ wysibb_init() }}
 
     <script>
         $(document).ready(function() {

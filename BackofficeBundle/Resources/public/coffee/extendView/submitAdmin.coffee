@@ -12,7 +12,9 @@ extendView['submitAdmin'] = {
       $('#' + clone).click()
     else
       if $("textarea.tinymce", form).length > 0
-        tinymce.triggerSave()
+        $('textarea.tinymce').each ->
+          $(@).sync()
+      #  tinymce.triggerSave()
       if !form.hasClass('HTML5validation')
         form.addClass('HTML5validation')
         form.submit ->

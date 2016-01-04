@@ -205,13 +205,15 @@ activateForm = (view, form) ->
   activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
   activateColorPicker(elements) if (elements = $(".colorpicker", view.el)) && elements.length > 0
   activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0
-  activateTinyMce(view, elements) if (elements = $("textarea.tinymce", form)) && elements.length > 0
+#  activateTinyMce(view, elements) if (elements = $("textarea.tinymce", form)) && elements.length > 0
   activateHidden(elements) if (elements = $("input[type='hidden'][required='required']", form)) && elements.length > 0
   activateDatepicker(elements) if (elements = $(".datepicker", form)) && elements.length > 0
   $("[data-prototype]", form).each ->
     PO.formPrototypes.addPrototype $(@)
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
   loadExtendView(view, 'contentTypeChange') if (elements = $("[data-prototype*='content_type_change_type']", form)) && elements.length > 0
+  wysibb_config['view'] = view
+  $('textarea.tinymce').wysibb wysibb_config
 
 #LAUNCH SMARTADMIN NOTIFICATION
 launchNotification = (type, message) ->

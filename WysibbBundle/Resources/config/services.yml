@@ -1,0 +1,4 @@
+services:
+#    open_orchestra_wysibb.example:
+#        class: OpenOrchestra\WysibbBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
