@@ -65,12 +65,13 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(NodeEvents::NODE_CHANGE_STATUS, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_RESTORE, $this->subscriber->getSubscribedEvents());
     }
 
     /**
      * Test with no previous node
      */
-    public function testUpdateRedirectionWithNoPerviousNode()
+    public function testUpdateRedirectionWithNoPreviousNode()
     {
         Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
             ->thenReturn(array($this->node));
@@ -83,7 +84,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * Test with no previous node with same pattern
      */
-    public function testUpdateRedirectionWithPerviousNodeAndSamePattern()
+    public function testUpdateRedirectionWithPreviousNodeAndSamePattern()
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->getId()->thenReturn('other');
@@ -100,7 +101,7 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
     /**
      * Test with no previous node with different pattern
      */
-    public function testUpdateRedirectionWithPerviousNodeAndDifferentPattern()
+    public function testUpdateRedirectionWithPreviousNodeAndDifferentPattern()
     {
         Phake::when($this->status)->isPublished()->thenReturn(true);
         $oldPattern = 'oldPattern';
@@ -122,5 +123,15 @@ class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->subscriber->updateRedirection($this->nodeEvent);
 
         Phake::verify($this->redirectionManager)->createRedirection($oldPattern . '/' . $oldPattern, $this->nodeId, $this->language);
+    }
+
+    /**
+     * Test update redirection routes
+     */
+    public function testUpdateRedirectionRoutes()
+    {
+        $this->subscriber->updateRedirectionRoutes($this->nodeEvent);
+
+        Phake::verify($this->redirectionManager)->updateRedirection($this->nodeId, $this->language);
     }
 }
