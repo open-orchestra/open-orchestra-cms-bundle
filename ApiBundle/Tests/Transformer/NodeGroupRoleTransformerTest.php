@@ -91,6 +91,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($nodeId, $facade->node);
         $this->assertSame($role, $facade->name);
         $this->assertSame($accessType, $facade->accessType);
+
     }
 
     /**
@@ -99,8 +100,8 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
     public function provideTransformData()
     {
         return array(
-            array('foo', 'bar', NodeGroupRoleInterface::ACCESS_GRANTED, true),
-            array('bar', 'foo', NodeGroupRoleInterface::ACCESS_DENIED, false),
+            array('foo', 'bar', NodeGroupRoleInterface::ACCESS_GRANTED),
+            array('bar', 'foo', NodeGroupRoleInterface::ACCESS_DENIED),
         );
     }
 
@@ -110,7 +111,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      * @param string $accessType
      * @param bool   $granted
      *
-     * @dataProvider provideTransformData
+     * @dataProvider provideReverseTransformData
      */
     public function testReverseTransformContextWithNoExistingData($node, $role, $accessType, $granted)
     {
@@ -128,6 +129,17 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($role, $nodeGroupRole->getRole());
         $this->assertSame($accessType, $nodeGroupRole->getAccessType());
         $this->assertSame($granted, $nodeGroupRole->isGranted());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideReverseTransformData()
+    {
+        return array(
+            array('foo', 'bar', NodeGroupRoleInterface::ACCESS_GRANTED, true),
+            array('bar', 'foo', NodeGroupRoleInterface::ACCESS_DENIED, false),
+        );
     }
 
     /**
