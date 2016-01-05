@@ -37,11 +37,12 @@ do ->
       if !@templates[language][templateName]
         templateLoader = this
         filename = appRouter.generateUrl('loadUnderscoreTemplate')
-        jQuery.get filename, {
+        jqXHR = jQuery.get filename, {
           'language': language
           'templateId': templateName
         }, (tpl) ->
-          templateLoader.addTemplate templateName, language, tpl
+          if 200 == jqXHR.code
+            templateLoader.addTemplate templateName, language, tpl
           templateLoader.storeTemplates()
           view.onTemplateLoaded templateName, tpl
           return
