@@ -55,6 +55,8 @@ class UpdateNodeGroupRoleListener
                         $nodeGroupRole->setGranted($document->isGranted());
                     }
                 }
+                $meta = $event->getDocumentManager()->getClassMetadata(get_class($group));
+                $uow->recomputeSingleDocumentChangeSet($meta, $group);
             }
         }
     }
