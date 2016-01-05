@@ -87,4 +87,16 @@ class RedirectionManager
             $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_DELETE, new RedirectionEvent($redirection));
         }
     }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     */
+    public function updateRedirection($nodeId, $language)
+    {
+        $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
+        foreach ($redirections as $redirection) {
+            $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_UPDATE, new RedirectionEvent($redirection));
+        }
+    }
 }

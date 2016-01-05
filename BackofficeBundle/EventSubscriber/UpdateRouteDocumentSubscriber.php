@@ -56,6 +56,19 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
         $this->objectManager->flush();
     }
 
+    /**
+     * @param NodeEvent $event
+     */
+    public function deleteRouteDocument(NodeEvent $event)
+    {
+        $routesToClear = $this->routeDocumentManager->clearForNode($event->getNode());
+
+        foreach ($routesToClear as $route) {
+            $this->objectManager->remove($route);
+        }
+
+        $this->objectManager->flush();
+    }
 
     /**
      * @param NodeEvent $event
@@ -82,6 +95,8 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     {
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRouteDocument',
+            NodeEvents::NODE_RESTORE => 'updateRouteDocument',
+            NodeEvents::NODE_DELETE => 'deleteRouteDocument',
             RedirectionEvents::REDIRECTION_CREATE => 'createOrUpdateForRedirection',
             RedirectionEvents::REDIRECTION_UPDATE => 'createOrUpdateForRedirection',
             RedirectionEvents::REDIRECTION_DELETE => 'deleteForRedirection',
