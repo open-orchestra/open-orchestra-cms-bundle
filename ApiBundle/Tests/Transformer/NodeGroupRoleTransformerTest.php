@@ -51,7 +51,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInterface()
     {
-        $this->assertInstanceOf('OpenOrchestra\BaseApi\Transformer\TransformerWithContextInterface', $this->transformer);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupContextInterface', $this->transformer);
     }
 
     /**

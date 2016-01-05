@@ -33,7 +33,7 @@ class GroupTransformerTest extends \PHPUnit_Framework_TestCase
         $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
         Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn('foo');
 
-        $this->transformerInterface = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerWithContextInterface');
+        $this->transformerInterface = Phake::mock('OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupContextInterface');
         Phake::when($this->transformerInterface)->transform(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\BaseApi\Facade\FacadeInterface'));
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
         $this->context = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');

@@ -4,7 +4,6 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\TransformerWithContextInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
@@ -112,9 +111,9 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $group = null)
     {
+        $transformer = $this->getTransformer('node_group_role');
         foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
-            $transformer = $this->getTransformer('node_group_role');
-            if (!$transformer instanceof TransformerWithContextInterface) {
+            if (!$transformer instanceof TransformerWithGroupContextInterface) {
                 throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithContextInterface");
             }
             $group->addNodeRole($transformer->reverseTransformWithContext(
