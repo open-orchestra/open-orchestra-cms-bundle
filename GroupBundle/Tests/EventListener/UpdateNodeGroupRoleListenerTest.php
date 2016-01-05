@@ -41,6 +41,8 @@ class UpdateNodeGroupRoleListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->uow)->getParentAssociation($nodeGroupRole)->thenReturn(array(array(), $this->group));
         Phake::when($this->group)->getSite()->thenReturn($site);
         Phake::when($this->documentManager)->getRepository(Phake::anyParameters())->thenReturn($nodeRepository);
+        $metadata = Phake::mock('Doctrine\ODM\MongoDB\Mapping\ClassMetadata');
+        Phake::when($this->documentManager)->getClassMetadata(Phake::anyParameters())->thenReturn($metadata);
         Phake::when($nodeRepository)->findByParent(Phake::anyParameters())->thenReturn(array($childNode));
         Phake::when($this->lifecycleEventArgs)->hasChangedField(Phake::anyParameters())->thenReturn(true);
 
