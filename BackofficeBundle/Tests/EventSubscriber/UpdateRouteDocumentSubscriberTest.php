@@ -59,6 +59,8 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(RedirectionEvents::REDIRECTION_CREATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(RedirectionEvents::REDIRECTION_UPDATE, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(SiteEvents::SITE_UPDATE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_RESTORE, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(NodeEvents::NODE_DELETE, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -143,6 +145,24 @@ class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->routeDocumentManager)->deleteForRedirection(Phake::anyParameters())->thenReturn(array($route, $route));
 
         $this->subscriber->deleteForRedirection($event);
+
+        Phake::verify($this->objectManager, Phake::times(2))->remove($route);
+        Phake::verify($this->objectManager)->flush();
+    }
+
+    /**
+     * Test on deleteRouteDocument
+     */
+    public function testDeleteRouteDocument()
+    {
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $event = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
+        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
+
+        Phake::when($event)->getNode()->thenReturn($node);
+        Phake::when($this->routeDocumentManager)->clearForNode(Phake::anyParameters())->thenReturn(array($route, $route));
+
+        $this->subscriber->deleteRouteDocument($event);
 
         Phake::verify($this->objectManager, Phake::times(2))->remove($route);
         Phake::verify($this->objectManager)->flush();

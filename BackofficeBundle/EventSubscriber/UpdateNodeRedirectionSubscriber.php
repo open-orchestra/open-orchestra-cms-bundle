@@ -65,12 +65,25 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param NodeEvent $event
+     */
+    public function updateRedirectionRoutes(NodeEvent $event)
+    {
+        $node = $event->getNode();
+        $this->redirectionManager->updateRedirection(
+            $node->getNodeId(),
+            $node->getLanguage()
+        );
+    }
+
+    /**
      * @return array The event names to listen to
      */
     public static function getSubscribedEvents()
     {
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRedirection',
+            NodeEvents::NODE_RESTORE => 'updateRedirectionRoutes',
         );
     }
 

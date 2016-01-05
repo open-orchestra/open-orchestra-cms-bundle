@@ -103,4 +103,14 @@ class RedirectionManagerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->documentManager, Phake::times(3))->flush(Phake::anyParameters());
         Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
     }
+
+    /**
+     * test updateRedirection
+     */
+    public function testUpdateRedirection()
+    {
+        $this->manager->updateRedirection('fakeNodeId', 'fakeLanguage');
+
+        Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
+    }
 }
