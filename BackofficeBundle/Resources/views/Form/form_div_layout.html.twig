@@ -170,6 +170,7 @@
                     {% set label = 'open_orchestra_backoffice.form.submit' %}
                     {% set attr = {'class': 'submit_form'} %}
                     {% set id = 'submit_' ~ form.vars.name %}
+                    {{ block('form_legend') }}
                     {{ block('submit_widget') }}
                 </div>
             </div>
@@ -190,3 +191,11 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_date_picker_widget %}
+{% block form_legend %}
+    <div class="form-group form-legend">
+        <div class="col-lg-12">
+            <p>* {{ 'open_orchestra_backoffice.form.orchestra_fields.required_field' | trans }}</p>
+            <p>** {{ 'open_orchestra_backoffice.form.node.template_selection.helper' | trans }}</p>
+        </div>
+    </div>
+{% endblock form_legend %}
