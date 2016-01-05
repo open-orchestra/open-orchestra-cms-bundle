@@ -102,8 +102,7 @@ class NodeController extends BaseController
     public function deleteAction($nodeId)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSite($nodeId, $siteId);
-
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSiteSortedByVersion($nodeId, $siteId);
         $node = !empty($nodes) ? $nodes[0] : null;
         $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
 
@@ -126,11 +125,9 @@ class NodeController extends BaseController
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $node = $this->findOneNode($nodeId, $language, $siteId);
-
-        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
 
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
+        $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();

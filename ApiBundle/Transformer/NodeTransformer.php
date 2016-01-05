@@ -107,6 +107,12 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
         }
 
+        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
+            'nodeId' => $nodeId,
+            'language' => $node->getLanguage(),
+        )));
+
+
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
         )));
@@ -142,13 +148,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'nodeMongoId' => $node->getId()
             )));
 
-            if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE)) {
+            if ($this->authorizationChecker->isGranted($editionRole)) {
                 $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
                     'nodeId' => $nodeId,
                     'language' => $node->getLanguage(),
                     'version' => $node->getVersion(),
                 )));
-            }
+            } 
 
             $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
                 'nodeId' => $nodeId,
