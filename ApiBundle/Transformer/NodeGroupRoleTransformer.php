@@ -9,13 +9,14 @@ use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\TransformerWithContextInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class NodeGroupRoleTransformer
  */
-class NodeGroupRoleTransformer extends AbstractTransformer
+class NodeGroupRoleTransformer extends AbstractTransformer implements TransformerWithContextInterface
 {
     protected $nodeRoleGroupClass;
     protected $collector;
@@ -66,21 +67,21 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface     $nodeRoleFacade
-     * @param GroupInterface|null $group
+     * @param FacadeInterface             $nodeRoleFacade
+     * @param NodeGroupRoleInterface|null $source
+     * @param GroupInterface|null         $group
      *
      * @throws RoleNotFoundHttpException
      * @throws TransformerParameterTypeException
      *
      * @return null|NodeGroupRoleInterface
      */
-    public function reverseTransform(FacadeInterface $nodeRoleFacade, $group = null)
+    public function reverseTransformWithContext($group, FacadeInterface $nodeRoleFacade, $source = null)
     {
         if (!$group instanceof GroupInterface) {
             throw new TransformerParameterTypeException();
         }
 
-        $source = $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name);
         if (!$source instanceof NodeGroupRoleInterface) {
             $source = new $this->nodeRoleGroupClass();
         }
