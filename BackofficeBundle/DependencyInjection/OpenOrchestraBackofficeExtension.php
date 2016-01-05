@@ -124,15 +124,12 @@ class OpenOrchestraBackofficeExtension extends Extension
             ContactStrategy::CONTACT,
         );
 
-        $blocks = $config['blocks'];
-        if (empty($blocks)) {
-            $blocks = $blockType;
-        }
         $blocksAlreadySet = array();
         if ($container->hasParameter('open_orchestra.blocks')) {
             $blocksAlreadySet = $container->getParameter('open_orchestra.blocks');
         }
-        $blocks = array_merge($blocksAlreadySet, $blocks);
+
+        $blocks = array_merge($config['blocks'], $blockType, $blocksAlreadySet);
         $container->setParameter('open_orchestra.blocks', $blocks);
     }
 
