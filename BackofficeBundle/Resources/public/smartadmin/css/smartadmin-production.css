@@ -7660,7 +7660,7 @@ div.wijmo-wijmenu .wijmo-wijmenu-child .wijmo-wijmenu-text {
   -o-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px);
 }
-.pace.pace-activity {
+.pace .pace-activity {
   display: block;
   position: fixed;
   z-index: 2000;
