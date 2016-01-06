@@ -198,8 +198,8 @@
 {% block form_legend %}
     <div class="help-block">
         <p>* {{ 'open_orchestra_backoffice.form.orchestra_fields.required_field' | trans }}</p>
-        {% if template_selection_helper is defined and template_selection_helper == true %}
-            <p>** {{ 'open_orchestra_backoffice.form.node.template_selection.helper' | trans }}</p>
+        {% if form_legend_helper is defined and form_legend_helper is not empty %}
+            <p>** {{ form_legend_helper | trans }}</p>
         {% endif %}
     </div>
 {% endblock form_legend %}

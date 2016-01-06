@@ -137,7 +137,7 @@ class NodeType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['template_selection_helper'] = true;
+        $view->vars['form_legend_helper'] = "open_orchestra_backoffice.form.node.template_selection.helper";
     }
 
     /**
