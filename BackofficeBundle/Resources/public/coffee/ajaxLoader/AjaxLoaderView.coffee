@@ -14,18 +14,14 @@ class OpenOrchestra.AjaxLoader.AjaxLoaderView extends Backbone.View
   className: 'oo-ajax-loader'
 
   ###*
-   * required options
-   * {
-   *  listenElement : {object} Jquery Element
-   * }
-   * @param {Object} options
+   * @param {Object} listenElement
   ###
-  initialize: (options) ->
+  initialize: (listenElement) ->
     viewContext = @
     @hideLoader(@);
-    options.listenElement.bind 'ajaxStart', ->
+    listenElement.bind 'ajaxStart', ->
         viewContext.showLoader(viewContext)
-    options.listenElement.bind 'ajaxStop', ->
+    listenElement.bind 'ajaxStop', ->
         viewContext.hideLoader(viewContext)
 
   ###*
@@ -48,7 +44,5 @@ class OpenOrchestra.AjaxLoader.AjaxLoaderView extends Backbone.View
 
 
 jQuery ->
-  ajaxLoaderView = new OpenOrchestra.AjaxLoader.AjaxLoaderView(
-    listenElement: $(document)
-  )
+  ajaxLoaderView = new OpenOrchestra.AjaxLoader.AjaxLoaderView($(document))
   $('body').append(ajaxLoaderView.render().$el);
