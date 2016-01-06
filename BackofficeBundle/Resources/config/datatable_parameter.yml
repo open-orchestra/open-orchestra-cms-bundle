@@ -36,7 +36,7 @@ parameters:
           title : open_orchestra_backoffice.table.content_type.updated_by
           activateColvis : true
           searchField : text
-    open_orchestra_backoffice.navigation_panel.trashcan.parameters :          
+    open_orchestra_backoffice.navigation_panel.trashcan.parameters :
         name :
           title : open_orchestra_backoffice.table.trashcan.name
           visible : true
@@ -47,7 +47,7 @@ parameters:
           visible : true
           activateColvis : true
           searchField : date
-    open_orchestra_backoffice.navigation_panel.content_types.parameters :          
+    open_orchestra_backoffice.navigation_panel.content_types.parameters :
         content_type_id :
           title : open_orchestra_backoffice.table.content_types.content_type_id
           visible : true
@@ -117,7 +117,7 @@ parameters:
           visible : true
           activateColvis : true
           searchField : boolean
-    open_orchestra_backoffice.navigation_panel.api_client.parameters : 
+    open_orchestra_backoffice.navigation_panel.api_client.parameters :
         name :
           title : open_orchestra_backoffice.table.api_client.name
           visible : true

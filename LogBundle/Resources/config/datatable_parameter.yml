@@ -1,5 +1,5 @@
 parameters:
-    open_orchestra_log.navigation_panel.log.parameters :          
+    open_orchestra_log.navigation_panel.log.parameters :
         date_time :
           title : open_orchestra_log.table.log.date_time
           visible : true
