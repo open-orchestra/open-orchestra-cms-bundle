@@ -6,10 +6,7 @@ TableviewCollectionView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
       'entityType'
-      'translatedHeader'
-      'inputHeader'
-      'displayedElements'
-      'visibleElements'
+      'datatableParameterName'
       'displayGlobalSearch'
       'domContainer'
       'order'
@@ -28,26 +25,22 @@ TableviewCollectionView = OrchestraView.extend(
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewCollectionView',
-      {displayedElements: @options.translatedHeader}
-    )
+    if !dataTableConfigurator.dataTableParameters
+      @listenToOnce(dataTableConfigurator, 'dataTableParameters_loaded', @createDatatable)
+    else
+      @createDatatable()
 
+  createDatatable: ->
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewCollectionView')
     @options.domContainer.html @$el
-
-    $('.js-widget-title', @options.domContainer).text @options.title
+    $('.js-widget-title', @options.domContainer).text @options.datatableParameterName
 
     columns = []
     columnDefs = []
-    for index, element of @options.displayedElements
-      columns.push({'data' : element, 'defaultContent': ''});
-      columnDefs.push({
-          'title': @options.translatedHeader[index],
-          'name' : element,
-          'visible': @checkDefaultVisible(element),
-          'activateColvis': true,
-          'targets': parseInt(index)
-          'searchField': if @options.inputHeader[index]? then @options.inputHeader[index] else undefined
-      });
+    for index, element of dataTableConfigurator.getDataTableParameters(@options.entityType)
+      columns.push({'data' : index, 'defaultContent': ''});
+      columnDefs.push($.extend(element, 
+        targets: columnDefs.length));
     columns.push({'data' : 'links'})
     columnDefs.push(
         targets: -1
@@ -75,9 +68,6 @@ TableviewCollectionView = OrchestraView.extend(
     table = datatable.$el
     $('.tableviewCollectionTable', @options.domContainer).html table
     return
-
-  checkDefaultVisible : (name) ->
-    return @options.visibleElements.indexOf(name) >= 0
 
   renderColumnActions : (viewContext, td, cellData, rowData, row, col) ->
 

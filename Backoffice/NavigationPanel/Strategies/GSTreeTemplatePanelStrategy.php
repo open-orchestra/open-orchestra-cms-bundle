@@ -23,7 +23,7 @@ class GSTreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
-        parent::__construct('GStemplates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent);
+        parent::__construct('GStemplates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent, array(), null);
         $this->templateRepository = $templateRepository;
     }
 

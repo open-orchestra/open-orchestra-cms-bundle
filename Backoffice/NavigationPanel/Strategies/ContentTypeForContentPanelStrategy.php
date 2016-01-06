@@ -4,6 +4,8 @@ namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class ContentTypeForContentPanel
@@ -15,27 +17,57 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
     const ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_UPDATE_CONTENT_TYPE_FOR_CONTENT';
     const ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_DELETE_CONTENT_TYPE_FOR_CONTENT';
 
-    /**
-     * @var ContentTypeRepositoryInterface
-     */
-    protected $contentTypeRepository;
-
-    /**
-     * @var ContextManager
-     */
-    protected $contextManager;
+    protected $contentTypes;
+    protected $datatableParameterNames;
 
     /**
      * @param ContentTypeRepositoryInterface $contentTypeRepository
      * @param ContextManager                 $contextManager
      * @param string                         $parent
      * @param int                            $weight
+     * @param array                          $defaultDataParameter
+     * @param TranslatorInterface            $translator
+     * @param TranslationChoiceManager       $translationChoiceManager
      */
-    public function __construct(ContentTypeRepositoryInterface $contentTypeRepository, ContextManager $contextManager, $parent, $weight)
+    public function __construct(
+        ContentTypeRepositoryInterface $contentTypeRepository,
+        ContextManager $contextManager,
+        $parent,
+        $weight,
+        $defaultDataParameter,
+        TranslatorInterface $translator,
+        TranslationChoiceManager $translationChoiceManager)
     {
-        parent::__construct('content_type_for_content', self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $weight, $parent);
-        $this->contentTypeRepository = $contentTypeRepository;
-        $this->contextManager = $contextManager;
+        $dataParameter = array();
+
+        $defaultDataParameter = $this->preFormatDatatableParameter($defaultDataParameter, $translator);
+
+        $this->contentTypes = $contentTypeRepository->findAllNotDeletedInLastVersion($contextManager->getCurrentLocale());
+
+        foreach ($this->contentTypes as $contentType) {
+            $contentTypeId = 'contents_' . $contentType->getContentTypeId();
+            $this->datatableParameterNames[$contentType->getContentTypeId()] = $contentTypeId;
+            $fields = $contentType->getFields();
+            $dataParameter[$contentTypeId] = $defaultDataParameter;
+            foreach ($dataParameter[$contentTypeId] as $name => $field) {
+                $dataParameter[$contentTypeId][$name]['visible'] = false;
+                if (in_array($name, $contentType->getDefaultListable())) {
+                    $dataParameter[$contentTypeId][$name]['visible'] = true;
+                }
+            }
+            foreach ($fields as $field) {
+                $fieldId = $field->getFieldId();
+                $dataParameter[$contentTypeId][$fieldId] = array(
+                    'name' => 'attributes.' . $fieldId,
+                    'title' => $translationChoiceManager->choose($field->getLabels()),
+                    'visible' => $field->getListable(),
+                    'activateColvis' => true,
+                    'searchField' => $field->getFieldTypeSearchable(),
+                );
+            }
+        }
+
+        parent::__construct('content_type_for_content', self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $weight, $parent, $dataParameter, null);
     }
 
     /**
@@ -43,13 +75,20 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function show()
     {
-        $contentTypes = $this->contentTypeRepository->findAllNotDeletedInLastVersion($this->contextManager->getCurrentLocale());
-
         return $this->render(
             'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/contents.html.twig',
             array(
-                'contentTypes' => $contentTypes,
+                'contentTypes' => $this->contentTypes,
+                'datatableParameterNames' => $this->datatableParameterNames,
             )
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getDatatableParameter()
+    {
+        return $this->datatableParameter;
     }
 }

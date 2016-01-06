@@ -6,6 +6,8 @@ services:
             - ROLE_ACCESS_LOG
             - 365
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_log.navigation_panel.log.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
         calls:

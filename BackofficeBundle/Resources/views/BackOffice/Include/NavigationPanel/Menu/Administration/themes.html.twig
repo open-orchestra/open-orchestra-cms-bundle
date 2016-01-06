@@ -3,9 +3,7 @@
         id="nav-themes"
         data-url="{{ path('open_orchestra_api_theme_list') }}"
         data-add="{{ path('open_orchestra_backoffice_theme_new') }}"
-        data-displayed-elements="name"
-        data-visible-elements="name"
-        data-input-header = "text"
+        data-datatable-parameter-name="{{ datatableParameterName }}"
         title="{{ 'open_orchestra_backoffice.left_menu.administration.themes.list'|trans }}"
         >
     {{ 'open_orchestra_backoffice.left_menu.administration.themes.list'|trans }}

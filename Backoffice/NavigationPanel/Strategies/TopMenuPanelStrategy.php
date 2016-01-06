@@ -13,7 +13,7 @@ class TopMenuPanelStrategy extends AdministrationPanelStrategy
      */
     public function __construct($name, $weight = 0)
     {
-        parent::__construct($name, null, $weight, self::ROOT_MENU);
+        parent::__construct($name, null, $weight, self::ROOT_MENU, array(), null);
     }
 
     /**

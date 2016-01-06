@@ -553,3 +553,5 @@ open_orchestra_backoffice:
           deleted_at: Supprimé le
           restore_confirm_txt: Vous voulez vous restaurer cette élément ?
           restore_confirm_title: Restaurer
+        themes:
+          name: Nom

@@ -3,10 +3,7 @@
         id="nav-redirection"
         data-url="{{ path('open_orchestra_api_redirection_list') }}"
         data-add="{{ path('open_orchestra_backoffice_redirection_new') }}"
-        data-displayed-elements="site_name, route_pattern, locale, redirection, permanent"
-        data-input-header = "text, text, text, text, boolean"
-        data-visible-elements="site_name, route_pattern, locale, redirection, permanent"
-        data-translated-header="{{'open_orchestra_backoffice.table.redirection.site_name'|trans }},{{'open_orchestra_backoffice.table.redirection.route_pattern'|trans }},{{'open_orchestra_backoffice.table.redirection.locale'|trans }},{{'open_orchestra_backoffice.table.redirection.redirection'|trans }},{{'open_orchestra_backoffice.table.redirection.permanent'|trans }}"
+        data-datatable-parameter-name="{{ datatableParameterName }}"
         title="{{ 'open_orchestra_backoffice.left_menu.administration.redirection.list'|trans }}"
         >
     {{ 'open_orchestra_backoffice.left_menu.administration.redirection.list'|trans }}

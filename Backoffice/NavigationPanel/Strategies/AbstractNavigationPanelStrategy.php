@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 use OpenOrchestra\Backoffice\NavigationPanel\NavigationPanelInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class AbstractNavigationPanelStrategy
@@ -23,17 +24,25 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     protected $role = null;
 
     /**
-     * @param string $name
-     * @param string $role
-     * @param int    $weight
-     * @param string $parent
+     * @param string                   $name
+     * @param string                   $role
+     * @param int                      $weight
+     * @param string                   $parent
+     * @param array                    $datatableParameter
+     * @param TranslatorInterface|null $translator
      */
-    public function __construct($name, $role, $weight, $parent)
+    public function __construct($name, $role, $weight, $parent, $datatableParameter, $translator)
     {
         $this->name = $name;
         $this->role = $role;
         $this->weight = $weight;
         $this->parent = $parent;
+
+        if (!is_null($translator)) {
+            $datatableParameter = $this->preFormatDatatableParameter($datatableParameter, $translator);
+        }
+        $this->datatableParameter = $datatableParameter;
+        $this->translator = $translator;
     }
 
     /**
@@ -42,6 +51,14 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDatatableParameter()
+    {
+        return array($this->name => $this->datatableParameter);
     }
 
     /**
@@ -91,5 +108,22 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     protected function render($view, array $parameters = array())
     {
         return $this->templating->render($view, $parameters);
+    }
+
+    /**
+     * @param array                    $datatableParameter
+     * @param TranslatorInterface $translator
+     *
+     * @return array
+     */
+    protected function preFormatDatatableParameter($datatableParameter, TranslatorInterface $translator)
+    {
+        foreach ($datatableParameter as $name => &$parameters) {
+            $parameters['name'] = $name;
+            if (array_key_exists('title', $parameters) && $translator) {
+                $parameters['title'] = $translator->trans($parameters['title']);
+            }
+        }
+        return $datatableParameter;
     }
 }

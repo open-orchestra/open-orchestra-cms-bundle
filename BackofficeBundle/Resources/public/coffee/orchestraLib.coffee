@@ -29,9 +29,23 @@ opts =
   openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
 $("#left-panel nav").data({opts : opts})
 
+#EXTEND JARVISMENU TO ADD DATATABLE PARAMETERS
+oldJarvisMenu = $.fn.jarvismenu
+$.fn.extend jarvismenu: (options) ->
+  el = this
+  $.ajax
+    url: $('#left-panel nav').data('datatable-parameter')
+    type: 'GET'
+    success: (response) ->
+      window.dataTableConfigurator.setDataTableParameters(response)
+      oldJarvisMenu.bind(el) options
+      return
+  return
+
 displayMenu = (route, refresh) ->
   selectedPath = "#" + (route || Backbone.history.fragment)
   refresh = refresh || (typeof route == "undefined")
+
   $.ajax
     url: $("#left-panel nav").data("url")
     type: "GET"
