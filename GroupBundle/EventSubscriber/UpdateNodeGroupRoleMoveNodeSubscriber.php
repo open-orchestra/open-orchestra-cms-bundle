@@ -61,7 +61,8 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
      *
      * @throws NodeGroupRoleNotFoundException
      */
-    protected function updateNodeGroupRoleTree(NodeInterface $node, array $nodeRole, array $groups) {
+    protected function updateNodeGroupRoleTree(NodeInterface $node, array $nodeRole, array $groups)
+    {
         /** @var GroupInterface $group */
         foreach ($groups as $group) {
             if ($node->getSiteId() === $group->getSite()->getSiteId()) {
