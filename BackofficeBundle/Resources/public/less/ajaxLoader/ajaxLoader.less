@@ -1,0 +1,23 @@
+.oo-ajax-loader {
+  display: block;
+  position: fixed;
+  z-index: 2000;
+  top: 63px;
+  right: 40px;
+  width: 14px;
+  height: 14px;
+  border: solid 2px transparent;
+  border-top-color: #29d;
+  border-left-color: #29d;
+  border-radius: 10px;
+  animation: oo-loader-spinner 400ms linear infinite;
+}
+
+@keyframes oo-loader-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

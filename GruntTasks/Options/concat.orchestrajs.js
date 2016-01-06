@@ -24,6 +24,9 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/DisplayApiErrorView.js',
         'web/built/openorchestrabackoffice/js/generateId.js',
 
+        //--[ AJAX LOADER ]--//
+        'web/built/openorchestrabackoffice/js/ajaxLoader/AjaxLoaderView.js',
+
         //--[ BACKBONE ROUTER ]--//
         'web/built/openorchestrabackoffice/js/backboneRouter.js',
         'web/built/openorchestrabackoffice/js/page/LoadNodeConfigurationRoute.js',
