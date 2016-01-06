@@ -37,6 +37,29 @@ do ->
       if !@templates[language][templateName]
         templateLoader = this
         filename = appRouter.generateUrl('loadUnderscoreTemplate')
+        console.log('before')
+        #jQuery.ajax({
+        #  method: "GET"
+        #  url: filename
+        #  data: { 'language': language,'templateId': templateName }
+        #  success: (tpl, textStatus, xhr)->
+        #      console.log("success")
+        #      console.log(tpl)
+        #      console.log(xhr)
+        #      console.log(xhr.status)
+        #      setInterval(
+        #        -> console.log("----------------PAUSE---------------")
+        #      ,1000)
+        #      if 200 == xhr.status
+        #        templateLoader.addTemplate templateName, language, tpl
+        #        templateLoader.storeTemplates()
+        #      view.onTemplateLoaded templateName, tpl
+        #      return
+        #})
+
+
+        console.log("after")
+
         jqXHR = jQuery.get filename, {
           'language': language
           'templateId': templateName
