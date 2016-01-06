@@ -10,6 +10,7 @@ use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
+use UnexpectedValueException;
 
 /**
  * Class GroupTransformer
@@ -106,14 +107,21 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param GroupInterface|null $group
      *
      * @return mixed
+     * @throws
      */
     public function reverseTransform(FacadeInterface $facade, $group = null)
     {
+        $transformer = $this->getTransformer('node_group_role');
+        if (!$transformer instanceof TransformerWithGroupInterface) {
+            throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithContextInterface");
+        }
         foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
-            $group->addNodeRole($this->getTransformer('node_group_role')->reverseTransform(
+            $group->addNodeRole($transformer->reverseTransformWithGroup(
+                $group,
                 $nodeRoleFacade,
                 $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
-            ));
+                )
+            );
         }
 
         return $group;

@@ -40,4 +40,14 @@ interface NodeGroupRoleInterface
      * @param string $accessType
      */
     public function setAccessType($accessType);
+
+    /**
+     * @return bool
+     */
+    public function isGranted();
+
+    /**
+     * @param $granted
+     */
+    public function setGranted($granted);
 }

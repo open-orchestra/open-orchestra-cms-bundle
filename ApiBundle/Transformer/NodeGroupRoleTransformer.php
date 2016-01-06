@@ -5,28 +5,42 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
+use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
  * Class NodeGroupRoleTransformer
  */
-class NodeGroupRoleTransformer extends AbstractTransformer
+class NodeGroupRoleTransformer extends AbstractTransformer implements TransformerWithGroupInterface
 {
     protected $nodeRoleGroupClass;
     protected $collector;
+    protected $nodeRepository;
+    protected $currentSiteManager;
 
     /**
-     * @param string                 $facadeClass
-     * @param string                 $nodeRoleGroupClass
-     * @param RoleCollectorInterface $collector
+     * @param string                  $facadeClass
+     * @param string                  $nodeRoleGroupClass
+     * @param RoleCollectorInterface  $collector
+     * @param NodeRepositoryInterface $nodeRepository
+     * @param CurrentSiteIdInterface  $currentSiteManager
      */
-    public function __construct($facadeClass, $nodeRoleGroupClass, RoleCollectorInterface $collector)
-    {
+    public function __construct(
+        $facadeClass,
+        $nodeRoleGroupClass,
+        RoleCollectorInterface $collector,
+        NodeRepositoryInterface $nodeRepository,
+        CurrentSiteIdInterface $currentSiteManager
+    ) {
         parent::__construct($facadeClass);
         $this->nodeRoleGroupClass = $nodeRoleGroupClass;
         $this->collector = $collector;
+        $this->nodeRepository = $nodeRepository;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -52,25 +66,39 @@ class NodeGroupRoleTransformer extends AbstractTransformer
     }
 
     /**
-     * @param FacadeInterface             $facade
+     * @param GroupInterface              $group
+     * @param FacadeInterface             $nodeRoleFacade
      * @param NodeGroupRoleInterface|null $source
      *
      * @throws RoleNotFoundHttpException
-     * @return mixed
+     * @throws TransformerParameterTypeException
+     *
+     * @return null|NodeGroupRoleInterface
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransformWithGroup(GroupInterface $group, FacadeInterface $nodeRoleFacade, $source = null)
     {
         if (!$source instanceof NodeGroupRoleInterface) {
             $source = new $this->nodeRoleGroupClass();
         }
 
-        if (!$this->collector->hasRole($facade->name)) {
+        if (!$this->collector->hasRole($nodeRoleFacade->name)) {
             throw new RoleNotFoundHttpException();
         }
 
-        $source->setNodeId($facade->node);
-        $source->setRole($facade->name);
-        $source->setAccessType($facade->accessType);
+        $source->setNodeId($nodeRoleFacade->node);
+        $source->setRole($nodeRoleFacade->name);
+        $source->setAccessType($nodeRoleFacade->accessType);
+
+        if (NodeGroupRoleInterface::ACCESS_INHERIT === $nodeRoleFacade->accessType) {
+            $siteId = $this->currentSiteManager->getCurrentSiteId();
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+            $node = $this->nodeRepository->findInLastVersion($nodeRoleFacade->node, $language, $siteId);
+            $parentAccess = $group->getNodeRoleByNodeAndRole($node->getParentId(), $nodeRoleFacade->name);
+            $source->setGranted($parentAccess->isGranted());
+        } else {
+            $isGranted = (NodeGroupRoleInterface::ACCESS_GRANTED === $nodeRoleFacade->accessType) ? true : false;
+            $source->setGranted($isGranted);
+        }
 
         return $source;
     }
