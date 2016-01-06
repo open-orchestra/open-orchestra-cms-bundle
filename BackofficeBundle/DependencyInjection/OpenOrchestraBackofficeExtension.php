@@ -2,6 +2,19 @@
 
 namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -85,11 +98,28 @@ class OpenOrchestraBackofficeExtension extends Extension
      */
     protected function updateBlockParameter(ContainerBuilder $container, $config)
     {
+        $blockType = array(
+            FooterStrategy::FOOTER,
+            LanguageListStrategy::LANGUAGE_LIST,
+            MenuStrategy::MENU,
+            SubMenuStrategy::SUBMENU,
+            ContentListStrategy::CONTENT_LIST,
+            ContentStrategy::CONTENT,
+            ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
+            TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
+            VideoStrategy::VIDEO,
+            GmapStrategy::GMAP,
+            AddThisStrategy::ADDTHIS,
+            AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
+            ContactStrategy::CONTACT,
+        );
+
         $blocksAlreadySet = array();
         if ($container->hasParameter('open_orchestra.blocks')) {
             $blocksAlreadySet = $container->getParameter('open_orchestra.blocks');
         }
-        $blocks = array_merge($blocksAlreadySet, $config['blocks']);
+
+        $blocks = array_merge($config['blocks'], $blockType, $blocksAlreadySet);
         $container->setParameter('open_orchestra.blocks', $blocks);
     }
 

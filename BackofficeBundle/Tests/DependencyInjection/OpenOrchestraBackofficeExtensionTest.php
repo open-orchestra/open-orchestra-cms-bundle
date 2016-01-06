@@ -25,6 +25,22 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
  */
 class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
 {
+    protected $defaultBlocks = array(
+        FooterStrategy::FOOTER,
+        LanguageListStrategy::LANGUAGE_LIST,
+        MenuStrategy::MENU,
+        SubMenuStrategy::SUBMENU,
+        ContentListStrategy::CONTENT_LIST,
+        ContentStrategy::CONTENT,
+        ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
+        TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
+        VideoStrategy::VIDEO,
+        GmapStrategy::GMAP,
+        AddThisStrategy::ADDTHIS,
+        AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
+        ContactStrategy::CONTACT,
+    );
+
     /**
      * Test default config
      */
@@ -66,22 +82,7 @@ class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals($defaultColor, $container->getParameter('open_orchestra_backoffice.choice.available_color'));
 
-        $blocks = array(
-            FooterStrategy::FOOTER,
-            LanguageListStrategy::LANGUAGE_LIST,
-            MenuStrategy::MENU,
-            SubMenuStrategy::SUBMENU,
-            ContentListStrategy::CONTENT_LIST,
-            ContentStrategy::CONTENT,
-            ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
-            TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
-            VideoStrategy::VIDEO,
-            GmapStrategy::GMAP,
-            AddThisStrategy::ADDTHIS,
-            AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
-            ContactStrategy::CONTACT,
-        );
-        $this->assertEquals($blocks, $container->getParameter('open_orchestra.blocks'));
+        $this->assertEquals($this->defaultBlocks, $container->getParameter('open_orchestra.blocks'));
 
         $direction = array(
             "h" => "Horizontal",
@@ -113,7 +114,7 @@ class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
         $defaultLanguage = array('fake_language' => 'fake_translation_language',);
         $this->assertEquals($defaultLanguage, $container->getParameter('open_orchestra_backoffice.orchestra_choice.front_language'));
 
-        $blocks = array("fakeBlocks");
+        $blocks = array_merge(array("fakeBlocks"), $this->defaultBlocks);
         $this->assertEquals($blocks, $container->getParameter('open_orchestra.blocks'));
 
         $fixedAttributes = array(

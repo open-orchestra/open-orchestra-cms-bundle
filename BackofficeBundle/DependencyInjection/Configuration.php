@@ -4,19 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -47,21 +34,6 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('blocks')
                 ->info('Set the available block types for this application')
                 ->prototype('scalar')->end()
-                ->defaultValue(array(
-                    FooterStrategy::FOOTER,
-                    LanguageListStrategy::LANGUAGE_LIST,
-                    MenuStrategy::MENU,
-                    SubMenuStrategy::SUBMENU,
-                    ContentListStrategy::CONTENT_LIST,
-                    ContentStrategy::CONTENT,
-                    ConfigurableContentStrategy::CONFIGURABLE_CONTENT,
-                    TinyMCEWysiwygStrategy::TINYMCEWYSIWYG,
-                    VideoStrategy::VIDEO,
-                    GmapStrategy::GMAP,
-                    AddThisStrategy::ADDTHIS,
-                    AudienceAnalysisStrategy::AUDIENCE_ANALYSIS,
-                    ContactStrategy::CONTACT,
-                ))
             ->end()
             ->arrayNode('fixed_attributes')
                 ->info('Add the global block attributes')
