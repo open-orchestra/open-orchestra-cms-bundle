@@ -64,13 +64,6 @@
 
 <!--================================================== -->
 
-    {% if app.debug %}
-        <script type="text/javascript">
-            // fix conflict with pace and web toolbar ajax
-            XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest);
-        </script>
-    {% endif %}
-
     {{ tinymce_init() }}
 
     {% block javascripts %}
