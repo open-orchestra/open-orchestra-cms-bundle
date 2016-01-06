@@ -31,7 +31,7 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
      * @param array                    $datatableParameter
      * @param TranslatorInterface|null $translator
      */
-    public function __construct($name, $role, $weight, $parent, $datatableParameter, $translator)
+    public function __construct($name, $role, $weight, $parent, array $datatableParameter, $translator)
     {
         $this->name = $name;
         $this->role = $role;
@@ -111,12 +111,12 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     }
 
     /**
-     * @param array                    $datatableParameter
+     * @param array               $datatableParameter
      * @param TranslatorInterface $translator
      *
      * @return array
      */
-    protected function preFormatDatatableParameter($datatableParameter, TranslatorInterface $translator)
+    protected function preFormatDatatableParameter(array $datatableParameter, TranslatorInterface $translator)
     {
         foreach ($datatableParameter as $name => &$parameters) {
             $parameters['name'] = $name;
@@ -124,6 +124,7 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
                 $parameters['title'] = $translator->trans($parameters['title']);
             }
         }
+
         return $datatableParameter;
     }
 }

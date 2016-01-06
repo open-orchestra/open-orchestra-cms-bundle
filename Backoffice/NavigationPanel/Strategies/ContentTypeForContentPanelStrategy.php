@@ -25,7 +25,7 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
      * @param ContextManager                 $contextManager
      * @param string                         $parent
      * @param int                            $weight
-     * @param array                          $defaultDataParameter
+     * @param array                          $defaultDatatableParameter
      * @param TranslatorInterface            $translator
      * @param TranslationChoiceManager       $translationChoiceManager
      */
@@ -34,38 +34,14 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
         ContextManager $contextManager,
         $parent,
         $weight,
-        $defaultDataParameter,
+        array $defaultDatatableParameter,
         TranslatorInterface $translator,
-        TranslationChoiceManager $translationChoiceManager)
+        TranslationChoiceManager $translationChoiceManager
+    )
     {
-        $dataParameter = array();
-
-        $defaultDataParameter = $this->preFormatDatatableParameter($defaultDataParameter, $translator);
-
+        $defaultDatatableParameter = $this->preFormatDatatableParameter($defaultDatatableParameter, $translator);
         $this->contentTypes = $contentTypeRepository->findAllNotDeletedInLastVersion($contextManager->getCurrentLocale());
-
-        foreach ($this->contentTypes as $contentType) {
-            $contentTypeId = 'contents_' . $contentType->getContentTypeId();
-            $this->datatableParameterNames[$contentType->getContentTypeId()] = $contentTypeId;
-            $fields = $contentType->getFields();
-            $dataParameter[$contentTypeId] = $defaultDataParameter;
-            foreach ($dataParameter[$contentTypeId] as $name => $field) {
-                $dataParameter[$contentTypeId][$name]['visible'] = false;
-                if (in_array($name, $contentType->getDefaultListable())) {
-                    $dataParameter[$contentTypeId][$name]['visible'] = true;
-                }
-            }
-            foreach ($fields as $field) {
-                $fieldId = $field->getFieldId();
-                $dataParameter[$contentTypeId][$fieldId] = array(
-                    'name' => 'attributes.' . $fieldId,
-                    'title' => $translationChoiceManager->choose($field->getLabels()),
-                    'visible' => $field->getListable(),
-                    'activateColvis' => true,
-                    'searchField' => $field->getFieldTypeSearchable(),
-                );
-            }
-        }
+        $dataParameter = $this->formatDatatableParameter($defaultDatatableParameter, $translationChoiceManager);
 
         parent::__construct('content_type_for_content', self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $weight, $parent, $dataParameter, null);
     }
@@ -90,5 +66,39 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
     public function getDatatableParameter()
     {
         return $this->datatableParameter;
+    }
+
+    /**
+     * @param array                    $defaultDatatableParameter
+     * @param TranslationChoiceManager $translationChoiceManager
+     */
+    protected function formatDatatableParameter(array $defaultDatatableParameter, TranslationChoiceManager $translationChoiceManager)
+    {
+        $dataParameter = array();
+
+        foreach ($this->contentTypes as $contentType) {
+            $contentTypeId = 'contents_' . $contentType->getContentTypeId();
+            $this->datatableParameterNames[$contentType->getContentTypeId()] = $contentTypeId;
+            $fields = $contentType->getFields();
+            $dataParameter[$contentTypeId] = $defaultDatatableParameter;
+            foreach ($dataParameter[$contentTypeId] as $name => $field) {
+                $dataParameter[$contentTypeId][$name]['visible'] = false;
+                if (in_array($name, $contentType->getDefaultListable())) {
+                    $dataParameter[$contentTypeId][$name]['visible'] = true;
+                }
+            }
+            foreach ($fields as $field) {
+                $fieldId = $field->getFieldId();
+                $dataParameter[$contentTypeId][$fieldId] = array(
+                    'name' => 'attributes.' . $fieldId,
+                    'title' => $translationChoiceManager->choose($field->getLabels()),
+                    'visible' => $field->getListable() ? true : false,
+                    'activateColvis' => true,
+                    'searchField' => $field->getFieldTypeSearchable(),
+                );
+            }
+        }
+
+        return $dataParameter;
     }
 }
