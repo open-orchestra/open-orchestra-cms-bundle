@@ -7,9 +7,9 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 
 /**
- * Interface TransformerWithGroupContextInterface
+ * Interface TransformerWithGroupInterface
  */
-interface TransformerWithGroupContextInterface extends TransformerInterface
+interface TransformerWithGroupInterface extends TransformerInterface
 {
     /**
      * @param GroupInterface  $group
@@ -18,5 +18,5 @@ interface TransformerWithGroupContextInterface extends TransformerInterface
      *
      * @return mixed
      */
-    public function reverseTransformWithContext(GroupInterface $group, FacadeInterface $facade, $source = null);
+    public function reverseTransformWithGroup(GroupInterface $group, FacadeInterface $facade, $source = null);
 }

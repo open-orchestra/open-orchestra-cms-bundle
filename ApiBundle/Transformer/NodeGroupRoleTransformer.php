@@ -15,7 +15,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 /**
  * Class NodeGroupRoleTransformer
  */
-class NodeGroupRoleTransformer extends AbstractTransformer implements TransformerWithGroupContextInterface
+class NodeGroupRoleTransformer extends AbstractTransformer implements TransformerWithGroupInterface
 {
     protected $nodeRoleGroupClass;
     protected $collector;
@@ -75,12 +75,8 @@ class NodeGroupRoleTransformer extends AbstractTransformer implements Transforme
      *
      * @return null|NodeGroupRoleInterface
      */
-    public function reverseTransformWithContext(GroupInterface $group, FacadeInterface $nodeRoleFacade, $source = null)
+    public function reverseTransformWithGroup(GroupInterface $group, FacadeInterface $nodeRoleFacade, $source = null)
     {
-        if (!$group instanceof GroupInterface) {
-            throw new TransformerParameterTypeException();
-        }
-
         if (!$source instanceof NodeGroupRoleInterface) {
             $source = new $this->nodeRoleGroupClass();
         }

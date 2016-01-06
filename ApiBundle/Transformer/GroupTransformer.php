@@ -113,10 +113,10 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         $transformer = $this->getTransformer('node_group_role');
         foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
-            if (!$transformer instanceof TransformerWithGroupContextInterface) {
+            if (!$transformer instanceof TransformerWithGroupInterface) {
                 throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithContextInterface");
             }
-            $group->addNodeRole($transformer->reverseTransformWithContext(
+            $group->addNodeRole($transformer->reverseTransformWithGroup(
                 $group,
                 $nodeRoleFacade,
                 $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)

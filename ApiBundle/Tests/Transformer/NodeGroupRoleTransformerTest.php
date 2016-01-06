@@ -51,7 +51,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInterface()
     {
-        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupContextInterface', $this->transformer);
+        $this->assertInstanceOf('OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupInterface', $this->transformer);
     }
 
     /**
@@ -113,7 +113,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideReverseTransformData
      */
-    public function testReverseTransformContextWithNoExistingData($node, $role, $accessType, $granted)
+    public function testReverseTransformGroupWithNoExistingData($node, $role, $accessType, $granted)
     {
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade');
         $facade->node = $node;
@@ -122,7 +122,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
         $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
         Phake::when($group)->getNodeRoleByNodeAndRole($facade->node, $facade->name)->thenReturn(null);
 
-        $nodeGroupRole = $this->transformer->reverseTransformWithContext($group, $facade);
+        $nodeGroupRole = $this->transformer->reverseTransformWithGroup($group, $facade);
 
         $this->assertInstanceOf('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface', $nodeGroupRole);
         $this->assertSame($node, $nodeGroupRole->getNodeId());
@@ -151,7 +151,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideTransformDataWithAccessType
      */
-    public function testReverseTransformContextWitAccessType($nodeId, $role, $accessType, $expectedAccess, $parentAccess)
+    public function testReverseTransformGroupWitAccessType($nodeId, $role, $accessType, $expectedAccess, $parentAccess)
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $source = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
@@ -169,7 +169,7 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
         Phake::when($group)->getNodeRoleByNodeAndRole($node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($parentAccess);
 
-        $nodeGroupRole = $this->transformer->reverseTransformWithContext($group, $facade, $source);
+        $nodeGroupRole = $this->transformer->reverseTransformWithGroup($group, $facade, $source);
 
         $this->assertInstanceOf('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface', $nodeGroupRole);
         $this->assertSame($source, $nodeGroupRole);
@@ -205,6 +205,6 @@ class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException');
 
-        $this->transformer->reverseTransformWithContext($group, $facade);
+        $this->transformer->reverseTransformWithGroup($group, $facade);
     }
 }
