@@ -85,10 +85,6 @@ module.exports = {
         src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
         dest: 'web/fonts/glyphicons-halflings-regular.woff2'
     },
-    pace_js: {
-        src: 'bower_components/pace/pace.min.js',
-        dest: 'web/js/pace.min.js'
-    },
     jcrop_gif: {
         src: 'bower_components/jcrop/css/Jcrop.gif',
         dest: 'web/img/jcrop/Jcrop.gif'
