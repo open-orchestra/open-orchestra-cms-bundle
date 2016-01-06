@@ -1,40 +1,54 @@
 ###*
+ * @namespace OpenOrchestra:AjaxLoader
+###
+window.OpenOrchestra or= {}
+window.OpenOrchestra.AjaxLoader or= {}
+
+###*
  * @class AjaxLoaderView
 ###
-class AjaxLoaderView extends Backbone.View
+class OpenOrchestra.AjaxLoader.AjaxLoaderView extends Backbone.View
 
   tagName : 'div'
-  className: 'pace'
+
+  className: 'oo-ajax-loader'
+
+  ###*
+   * required options
+   * {
+   *  listenElement : {object} Jquery Element
+   * }
+   * @param {Object} options
+  ###
+  initialize: (options) ->
+    viewContext = @
+    @hideLoader(@);
+    options.listenElement.bind 'ajaxStart', ->
+        viewContext.showLoader(viewContext)
+    options.listenElement.bind 'ajaxStop', ->
+        viewContext.hideLoader(viewContext)
 
   ###*
    * @return {this}
   ###
   render: ->
-    console.log @el
-    console.log @$el
-    @$el.append('<div class="pace-activity"></div>');
-    _this = @
-    $(document).bind 'ajaxStart', {$loader: @$el } , _this.showLoader
-    $(document).bind 'ajaxStop',  {$loader: @$el } , _this.hideLoader
-
     return @
 
   ###*
    * Show loader
   ###
-  showLoader : (event) ->
-    console.log event
-    event.data.$loader.show()
+  showLoader : (viewContext) ->
+    viewContext.$el.show()
 
   ###*
    * Hide loader
   ###
-  hideLoader : (event) ->
-    console.log event
-    event.data.$loader.hide()
+  hideLoader : (viewContext) ->
+    viewContext.$el.hide()
+
 
 jQuery ->
-  ajaxLoaderView = new AjaxLoaderView()
-  console.log "loader"
-  console .log ajaxLoaderView.render().$el
+  ajaxLoaderView = new OpenOrchestra.AjaxLoader.AjaxLoaderView(
+    listenElement: $(document)
+  )
   $('body').append(ajaxLoaderView.render().$el);
