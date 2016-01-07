@@ -37,8 +37,7 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
         array $defaultDatatableParameter,
         TranslatorInterface $translator,
         TranslationChoiceManager $translationChoiceManager
-    )
-    {
+    ) {
         $defaultDatatableParameter = $this->preFormatDatatableParameter($defaultDatatableParameter, $translator);
         $this->contentTypes = $contentTypeRepository->findAllNotDeletedInLastVersion($contextManager->getCurrentLocale());
         $dataParameter = $this->formatDatatableParameter($defaultDatatableParameter, $translationChoiceManager);

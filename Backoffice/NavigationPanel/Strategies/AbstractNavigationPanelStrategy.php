@@ -31,14 +31,14 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
      * @param array                    $datatableParameter
      * @param TranslatorInterface|null $translator
      */
-    public function __construct($name, $role, $weight, $parent, array $datatableParameter, $translator)
+    public function __construct($name, $role, $weight, $parent, array $datatableParameter = array(), $translator = null)
     {
         $this->name = $name;
         $this->role = $role;
         $this->weight = $weight;
         $this->parent = $parent;
 
-        if (!is_null($translator)) {
+        if ($translator instanceof TranslatorInterface) {
             $datatableParameter = $this->preFormatDatatableParameter($datatableParameter, $translator);
         }
         $this->datatableParameter = $datatableParameter;

@@ -36,7 +36,7 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
-        parent::__construct('generale_node', self::ROLE_ACCESS_TREE_GENERAL_NODE, $weight, $parent, array(), null);
+        parent::__construct('generale_node', self::ROLE_ACCESS_TREE_GENERAL_NODE, $weight, $parent);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }

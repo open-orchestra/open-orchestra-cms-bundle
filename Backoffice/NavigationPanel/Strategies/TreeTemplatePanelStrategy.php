@@ -26,7 +26,7 @@ class TreeTemplatePanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(TemplateRepositoryInterface $templateRepository, $parent, $weight)
     {
-        parent::__construct('templates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent, array(), null);
+        parent::__construct('templates', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent);
         $this->templateRepository = $templateRepository;
     }
 
