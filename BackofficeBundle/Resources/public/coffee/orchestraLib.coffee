@@ -30,17 +30,18 @@ opts =
 $("#left-panel nav").data({opts : opts})
 
 #EXTEND JARVISMENU TO ADD DATATABLE PARAMETERS
-oldJarvisMenu = $.fn.jarvismenu
-$.fn.extend jarvismenu: (options) ->
-  el = this
-  $.ajax
-    url: $('#left-panel nav').data('datatable-parameter')
-    type: 'GET'
-    success: (response) ->
-      window.dataTableConfigurator.setDataTableParameters(response)
-      oldJarvisMenu.bind(el) options
-      return
-  return
+if $('#left-panel nav').length > 0
+  oldJarvisMenu = $.fn.jarvismenu
+  $.fn.extend jarvismenu: (options) ->
+    el = this
+    $.ajax
+      url: $('#left-panel nav').data('datatable-parameter')
+      type: 'GET'
+      success: (response) ->
+        window.dataTableConfigurator.setDataTableParameters(response)
+        oldJarvisMenu.bind(el) options
+        return
+    return
 
 displayMenu = (route, refresh) ->
   selectedPath = "#" + (route || Backbone.history.fragment)
