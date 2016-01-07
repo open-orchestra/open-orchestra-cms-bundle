@@ -38,8 +38,9 @@ TableviewCollectionView = OrchestraView.extend(
     columns = []
     columnDefs = []
     for index, element of dataTableConfigurator.getDataTableParameters(@options.entityType)
-      columns.push({'data' : index, 'defaultContent': ''});
-      columnDefs.push($.extend(element,
+      columns.push({'data' : element.name, 'defaultContent': ''});
+      columnDefs.push($.extend({}
+        element,
         targets: columnDefs.length));
     columns.push({'data' : 'links'})
     columnDefs.push(

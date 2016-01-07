@@ -22,6 +22,8 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     protected $parent;
     protected $weight = 0;
     protected $role = null;
+    protected $datatableParameter;
+    protected $translator = null;
 
     /**
      * @param string                   $name
@@ -37,12 +39,8 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
         $this->role = $role;
         $this->weight = $weight;
         $this->parent = $parent;
-
-        if ($translator instanceof TranslatorInterface) {
-            $datatableParameter = $this->preFormatDatatableParameter($datatableParameter, $translator);
-        }
-        $this->datatableParameter = $datatableParameter;
         $this->translator = $translator;
+        $this->datatableParameter = $datatableParameter;
     }
 
     /**
@@ -58,6 +56,10 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
      */
     public function getDatatableParameter()
     {
+        if ($this->translator instanceof TranslatorInterface) {
+            $this->datatableParameter = $this->preFormatDatatableParameter($this->datatableParameter, $this->translator);
+        }
+
         return array($this->name => $this->datatableParameter);
     }
 
@@ -118,10 +120,9 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
      */
     protected function preFormatDatatableParameter(array $datatableParameter, TranslatorInterface $translator)
     {
-        foreach ($datatableParameter as $name => &$parameters) {
-            $parameters['name'] = $name;
-            if (array_key_exists('title', $parameters) && $translator) {
-                $parameters['title'] = $translator->trans($parameters['title']);
+        foreach ($datatableParameter as $index => $parameters) {
+            foreach ($parameters as $name => $parameter) {
+                $datatableParameter[$index][$name] = $translator->trans($parameter);
             }
         }
 
