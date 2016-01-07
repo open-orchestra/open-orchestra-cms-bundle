@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -10,7 +11,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class FieldTypeTypeSubscriberTest
  */
-class FieldTypeTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var FieldTypeTypeSubscriber

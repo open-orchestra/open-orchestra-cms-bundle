@@ -3,12 +3,13 @@
 namespace OpenOrchestra\Backoffice\Tests\AuthorizeEdition;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\ContentVersionStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test ContentVersionStrategyTest
  */
-class ContentVersionStrategyTest extends \PHPUnit_Framework_TestCase
+class ContentVersionStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentVersionStrategy

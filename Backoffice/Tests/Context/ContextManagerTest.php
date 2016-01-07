@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackOffice\Tests\Context;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 
 /**
  * Unit tests of contextManager
  */
-class ContextManagerTest extends \PHPUnit_Framework_TestCase
+class ContextManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var ContextManager

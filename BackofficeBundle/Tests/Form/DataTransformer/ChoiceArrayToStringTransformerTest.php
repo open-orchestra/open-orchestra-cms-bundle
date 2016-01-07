@@ -3,11 +3,12 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class ChoiceArrayToStringTransformerTest
  */
-class ChoiceArrayToStringTransformerTest extends \PHPUnit_Framework_TestCase
+class ChoiceArrayToStringTransformerTest extends AbstractBaseTestCase
 {
     protected $transformer;
 

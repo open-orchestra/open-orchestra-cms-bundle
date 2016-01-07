@@ -3,11 +3,12 @@
 namespace OpenOrchestra\Backoffice\Tests\Generator;
 
 use OpenOrchestra\Backoffice\Generator\BlockGenerator;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class BlockGeneratorTest
  */
-class BlockGeneratorTest extends \PHPUnit_Framework_TestCase
+class BlockGeneratorTest extends AbstractBaseTestCase
 {
     /**
      * @var BlockGenerator

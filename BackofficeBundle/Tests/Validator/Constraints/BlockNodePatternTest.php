@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePattern;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class BlockNodePatternTest
  */
-class BlockNodePatternTest extends \PHPUnit_Framework_TestCase
+class BlockNodePatternTest extends AbstractBaseTestCase
 {
     /**
      * @var BlockNodePattern

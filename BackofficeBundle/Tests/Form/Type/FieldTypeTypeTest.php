@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\FieldTypeType;
 use Symfony\Component\Form\FormEvents;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelBundle\Document\FieldType;
 /**
  * Class FieldTypeTypeTest
  */
-class FieldTypeTypeTest extends \PHPUnit_Framework_TestCase
+class FieldTypeTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var FieldTypeType

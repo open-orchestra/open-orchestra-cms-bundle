@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\UserBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\GroupType;
 
 /**
  * Class GroupTypeTest
  */
-class GroupTypeTest extends \PHPUnit_Framework_TestCase
+class GroupTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupType

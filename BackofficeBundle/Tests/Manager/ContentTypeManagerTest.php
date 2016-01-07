@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class ContentTypeManagerTest
  */
-class ContentTypeManagerTest extends \PHPUnit_Framework_TestCase
+class ContentTypeManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var ContenttypeManager

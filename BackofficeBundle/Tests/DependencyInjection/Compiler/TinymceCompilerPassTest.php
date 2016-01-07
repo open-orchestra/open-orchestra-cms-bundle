@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\DependencyInjection\Compiler;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\TinymceCompilerPass;
 
 /**
  * Class TinymceCompilerPassTest
  */
-class TinymceCompilerPassTest extends \PHPUnit_Framework_TestCase
+class TinymceCompilerPassTest extends AbstractBaseTestCase
 {
     /**
      * @var TinymceCompilerPass

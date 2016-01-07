@@ -3,12 +3,13 @@
 namespace OpenOrchestra\Backoffice\Tests\UsageFinder;
 
 use OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test StatusUsageFinderTest
  */
-class StatusUsageFinderTest extends \PHPUnit_Framework_TestCase
+class StatusUsageFinderTest extends AbstractBaseTestCase
 {
     /**
      * @var StatusUsageFinder

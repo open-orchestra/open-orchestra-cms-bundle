@@ -2,16 +2,16 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\OperatorChoiceType;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * Class OperatorChoiceTypeTest
  */
-class OperatorChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class OperatorChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $form;
 

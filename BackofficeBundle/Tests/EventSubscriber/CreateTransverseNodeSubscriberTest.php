@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\CreateTransverseNodeSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use Phake;
@@ -10,7 +11,7 @@ use Phake;
 /**
  * Class CreateTransverseNodeSubscriberTest
  */
-class CreateTransverseNodeSubscriberTest extends \PHPUnit_Framework_TestCase
+class CreateTransverseNodeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var CreateTransverseNodeSubscriber

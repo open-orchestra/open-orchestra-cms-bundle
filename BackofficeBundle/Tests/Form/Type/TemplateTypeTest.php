@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\TemplateType;
 
 /**
  * Description of TemplateTypeTest
  */
-class TemplateTypeTest extends \PHPUnit_Framework_TestCase
+class TemplateTypeTest extends AbstractBaseTestCase
 {
     protected $formBuilder;
     protected $templateType;

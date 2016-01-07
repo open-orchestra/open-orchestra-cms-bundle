@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class ContentTemplateTest
  */
-class ContentTemplateTest extends \PHPUnit_Framework_TestCase
+class ContentTemplateTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentTemplate

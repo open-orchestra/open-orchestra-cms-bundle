@@ -2,18 +2,17 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Functional\Repository;
 
-use OpenOrchestra\Mapping\Annotations\Search;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\UserBundle\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class UserRepositoryTest
  *
  * @group integrationTest
  */
-class UserRepositoryTest extends KernelTestCase
+class UserRepositoryTest extends AbstractKernelTestCase
 {
     /**
      * @var UserRepository

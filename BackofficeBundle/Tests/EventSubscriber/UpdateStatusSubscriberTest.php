@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateStatusSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\StatusEvents;
 use Phake;
 
 /**
  * Test UpdateStatusSubscriberTest
  */
-class UpdateStatusSubscriberTest extends \PHPUnit_Framework_TestCase
+class UpdateStatusSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var UpdateStatusSubscriber

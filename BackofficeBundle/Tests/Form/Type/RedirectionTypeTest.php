@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\UserBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\RedirectionType;
 
 /**
  * Class RedirectionTypeTest
  */
-class RedirectionTypeTest extends \PHPUnit_Framework_TestCase
+class RedirectionTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var RedirectionType

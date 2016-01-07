@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\ApiClientType;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class UserTypeTest
  */
-class ApiClientTypeTest extends \PHPUnit_Framework_TestCase
+class ApiClientTypeTest extends AbstractBaseTestCase
 {
     protected $builder;
     protected $resolver;

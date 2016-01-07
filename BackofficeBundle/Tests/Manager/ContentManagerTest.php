@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use Phake;
 
 /**
  * Class ContentManagerTest
  */
-class ContentManagerTest extends \PHPUnit_Framework_TestCase
+class ContentManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentManager

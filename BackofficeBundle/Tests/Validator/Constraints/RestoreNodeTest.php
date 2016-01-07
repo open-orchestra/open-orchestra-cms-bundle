@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNode;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class RestoreNodeTest
  */
-class RestoreNodeTest extends \PHPUnit_Framework_TestCase
+class RestoreNodeTest extends AbstractBaseTestCase
 {
     /**
      * @var RestoreNode

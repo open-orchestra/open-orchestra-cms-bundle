@@ -3,15 +3,15 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class ContentTypeManagerTest
  *
  * @group integrationTest
  */
-class ContentTypeManagerTest extends KernelTestCase
+class ContentTypeManagerTest extends AbstractKernelTestCase
 {
     /**
      * @var ContentTypeManager

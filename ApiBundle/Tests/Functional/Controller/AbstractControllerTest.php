@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractWebTestCase;
 use Phake;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class AbstractControllerTest
  */
-abstract class AbstractControllerTest extends WebTestCase
+abstract class AbstractControllerTest extends AbstractWebTestCase
 {
     /**
      * @var Client

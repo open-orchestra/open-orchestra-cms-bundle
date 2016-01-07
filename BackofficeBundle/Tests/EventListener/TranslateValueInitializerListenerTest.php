@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
 
 /**
  * Class TranslateValueInitializerListenerTest
  */
-class TranslateValueInitializerListenerTest extends \PHPUnit_Framework_TestCase
+class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
 {
     /**
      * @var TranslateValueInitializerListener

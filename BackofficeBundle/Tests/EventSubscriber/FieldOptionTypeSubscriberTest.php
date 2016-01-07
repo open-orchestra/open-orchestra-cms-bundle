@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldOptionTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -9,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class FieldOptionTypeSubscriberTest
  */
-class FieldOptionTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class FieldOptionTypeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var FieldOptionTypeSubscriber

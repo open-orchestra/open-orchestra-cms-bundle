@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ReferenceToEmbedTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class ReferenceToEmbedTransformerTest
  */
-class ReferenceToEmbedTransformerTest extends \PHPUnit_Framework_TestCase
+class ReferenceToEmbedTransformerTest extends AbstractBaseTestCase
 {
     protected $transformer;
     protected $documentClass = 'OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer\FakeDocument';

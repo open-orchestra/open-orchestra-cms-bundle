@@ -3,13 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\Collector;
 
 use OpenOrchestra\Backoffice\Collector\FrontRoleCollector;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 use Phake;
 
 /**
  * Test FrontRoleCollectorTest
  */
-class FrontRoleCollectorTest extends \PHPUnit_Framework_TestCase
+class FrontRoleCollectorTest extends AbstractBaseTestCase
 {
     /**
      * @var FrontRoleCollector

@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteContentSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\ContentEvents;
 use phake;
 
 /**
  * Class DeleteContentSubscriberTest
  */
-class DeleteContentSubscriberTest extends \PHPUnit_Framework_TestCase
+class DeleteContentSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var DeleteContentSubscriber

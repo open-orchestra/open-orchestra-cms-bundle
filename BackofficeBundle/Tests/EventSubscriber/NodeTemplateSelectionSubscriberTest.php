@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
@@ -10,7 +11,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class NodeTemplateSelectionSubscriberTest
  */
-class NodeTemplateSelectionSubscriberTest extends \PHPUnit_Framework_TestCase
+class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeTemplateSelectionSubscriber

@@ -3,15 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\AuthorizeEdition;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\NodeVersionStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
  * Test NodeVersionStrategyTest
  */
-class NodeVersionStrategyTest extends \PHPUnit_Framework_TestCase
+class NodeVersionStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeVersionStrategy

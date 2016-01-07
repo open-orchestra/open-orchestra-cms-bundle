@@ -3,13 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer;
-use OpenOrchestra\BackofficeBundle\Form\DataTransformer\SuppressSpecialCharacterTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class ChoicesOptionToArrayTransformerTest
  */
-class ChoicesOptionToArrayTransformerTest extends \PHPUnit_Framework_TestCase
+class ChoicesOptionToArrayTransformerTest extends AbstractBaseTestCase
 {
     protected $suppressSpecialCharacterHelper;
     protected $transformer;

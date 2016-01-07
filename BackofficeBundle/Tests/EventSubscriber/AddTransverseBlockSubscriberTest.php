@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddTransverseBlockSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\BlockNodeEvents;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
@@ -11,7 +12,7 @@ use Phake;
 /**
  * Class AddTransverseBlockSubscriberTest
  */
-class AddTransverseBlockSubscriberTest extends \PHPUnit_Framework_TestCase
+class AddTransverseBlockSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var AddTransverseBlockSubscriber

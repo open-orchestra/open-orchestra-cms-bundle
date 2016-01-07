@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\LogBundle\Tests\Processor;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\LogBundle\Processor\LogUserProcessor;
 
 /**
  * Class LogUserProcessorTest
  */
-class LogUserProcessorTest extends \PHPUnit_Framework_TestCase
+class LogUserProcessorTest extends AbstractBaseTestCase
 {
     /**
      * @var LogUserProcessor

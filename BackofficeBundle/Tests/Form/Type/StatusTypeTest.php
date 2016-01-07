@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\StatusType;
 use Symfony\Component\Form\FormEvents;
@@ -9,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class StatusTypeTest
  */
-class StatusTypeTest extends \PHPUnit_Framework_TestCase
+class StatusTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var StatusType

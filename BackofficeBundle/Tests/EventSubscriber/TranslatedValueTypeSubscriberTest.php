@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\TranslatedValueTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -9,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class TranslatedValueTypeSubscriberTest
  */
-class TranslatedValueTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class TranslatedValueTypeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var TranslatedValueTypeSubscriber

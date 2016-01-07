@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\BlockToArrayTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test BlockToArrayTransformerTest
  */
-class BlockToArrayTransformerTest extends \PHPUnit_Framework_TestCase
+class BlockToArrayTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var BlockToArrayTransformer

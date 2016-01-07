@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 /**
  * Class UpdateChildNodePathSubscriberTest
  */
-class UpdateChildNodePathSubscriberTest extends \PHPUnit_Framework_TestCase
+class UpdateChildNodePathSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var UpdateChildNodePathSubscriber

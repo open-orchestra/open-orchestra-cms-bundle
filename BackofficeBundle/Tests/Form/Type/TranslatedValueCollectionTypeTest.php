@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\TranslatedValueCollectionType;
 
 /**
  * Class TranslatedValueCollectionTypeTest
  */
-class TranslatedValueCollectionTypeTest extends \PHPUnit_Framework_TestCase
+class TranslatedValueCollectionTypeTest extends AbstractBaseTestCase
 {
     protected $form;
 

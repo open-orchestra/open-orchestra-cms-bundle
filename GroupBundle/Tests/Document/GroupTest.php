@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\Document;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\Document\Group;
 use Phake;
 
 /**
  * Class GroupTest
  */
-class GroupTest extends \PHPUnit_Framework_TestCase
+class GroupTest extends AbstractBaseTestCase
 {
     /**
      * @var Group

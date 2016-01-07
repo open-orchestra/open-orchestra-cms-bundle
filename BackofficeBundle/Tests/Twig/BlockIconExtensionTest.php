@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Twig;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Twig\BlockIconExtension;
 
 /**
  * Class BlockIconExtensionTest
  */
-class BlockIconExtensionTest extends \PHPUnit_Framework_TestCase
+class BlockIconExtensionTest extends AbstractBaseTestCase
 {
     protected $twig;
     protected $iconManager;

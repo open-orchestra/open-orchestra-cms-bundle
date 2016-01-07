@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Command;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Command\OrchestraGenerateBlockCommand;
 use Symfony\Component\Console\Application;
@@ -9,7 +10,7 @@ use Symfony\Component\Console\Application;
 /**
  * Class OrchestraGenerateBlockCommandTest
  */
-class OrchestraGenerateBlockCommandTest extends \PHPUnit_Framework_TestCase
+class OrchestraGenerateBlockCommandTest extends AbstractBaseTestCase
 {
     /**
      * @var OrchestraGenerateBlockCommand

@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\StrategyManager;
 
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeEditionManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test AuthorizeEditionManagerTest
  */
-class AuthorizeEditionManagerTest extends \PHPUnit_Framework_TestCase
+class AuthorizeEditionManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var AuthorizeEditionManager

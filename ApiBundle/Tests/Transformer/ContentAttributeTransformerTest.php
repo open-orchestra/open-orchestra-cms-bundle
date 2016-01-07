@@ -3,12 +3,13 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\ApiBundle\Transformer\ContentAttributeTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class ContentAttributeTransformerTest
  */
-class ContentAttributeTransformerTest extends \PHPUnit_Framework_TestCase
+class ContentAttributeTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentAttributeTransformer

@@ -4,13 +4,14 @@ namespace OpenOrchestra\Backoffice\Tests\AuthorizeEdition;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\TransverseNodeEditionRoleStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
  * Test TransverseNodeEditionRoleStrategyTest
  */
-class TransverseNodeEditionRoleStrategyTest extends \PHPUnit_Framework_TestCase
+class TransverseNodeEditionRoleStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var TransverseNodeEditionRoleStrategy

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\NodeTransformer;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 /**
  * Class NodeTransformerTest
  */
-class NodeTransformerTest extends \PHPUnit_Framework_TestCase
+class NodeTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeTransformer

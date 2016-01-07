@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -10,7 +11,7 @@ use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 /**
  * Class TranslationChoiceManagerTest
  */
-class TranslationChoiceManagerTest extends \PHPUnit_Framework_TestCase
+class TranslationChoiceManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var TranslationChoiceManager

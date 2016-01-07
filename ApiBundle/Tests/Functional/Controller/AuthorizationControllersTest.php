@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
  *
  * @group apiFunctional
  */
-class AuthorizationControllersTest extends WebTestCase
+class AuthorizationControllersTest extends AbstractWebTestCase
 {
     /**
      * @var Client

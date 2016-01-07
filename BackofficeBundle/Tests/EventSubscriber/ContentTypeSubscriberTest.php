@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * Class ContentTypeSubscriberTest
  */
-class ContentTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class ContentTypeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentTypeSubscriber

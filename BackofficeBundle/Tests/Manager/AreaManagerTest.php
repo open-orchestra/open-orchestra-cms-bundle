@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
@@ -12,7 +13,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 /**
  * Class AreaManagerTest
  */
-class AreaManagerTest extends \PHPUnit_Framework_TestCase
+class AreaManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var AreaManager

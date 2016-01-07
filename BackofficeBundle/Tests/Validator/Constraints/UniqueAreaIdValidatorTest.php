@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueAreaIdValidator;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class UniqueAreaIdValidatorTest
  */
-class UniqueAreaIdValidatorTest extends \PHPUnit_Framework_TestCase
+class UniqueAreaIdValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var UniqueAreaIdValidator

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\LogBundle\Tests\Transformer;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\LogBundle\Transformer\LogTransformer;
 
 /**
  * Class LogTransformerTest
  */
-class LogTransformerTest extends \PHPUnit_Framework_TestCase
+class LogTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var LogTransformer

@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
-use OpenOrchestra\ModelInterface\BlockNodeEvents;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\BlockTransformer;
 
 /**
  * Class BlockTransformerTest
  */
-class BlockTransformerTest extends \PHPUnit_Framework_TestCase
+class BlockTransformerTest extends AbstractBaseTestCase
 {
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\BlockFacade';
     protected $blockParameterManager;

@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\StrategyManager;
 
 use OpenOrchestra\BackofficeBundle\StrategyManager\RestoreEntityManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class RestoreEntityManagerTest
  */
-class RestoreEntityManagerTest extends \PHPUnit_Framework_TestCase
+class RestoreEntityManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var RestoreEntityManager

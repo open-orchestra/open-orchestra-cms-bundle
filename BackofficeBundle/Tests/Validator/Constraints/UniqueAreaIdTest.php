@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueAreaId;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class UniqueAreaIdTest
  */
-class UniqueAreaIdTest extends \PHPUnit_Framework_TestCase
+class UniqueAreaIdTest extends AbstractBaseTestCase
 {
     protected $constraint;
 

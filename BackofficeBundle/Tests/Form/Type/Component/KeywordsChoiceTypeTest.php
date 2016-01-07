@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\KeywordsChoiceType;
 
 /**
  * Class KeywordsChoiceTypeTest
  */
-class KeywordsChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class KeywordsChoiceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var KeywordsChoiceTypeTest

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVersionVoter;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
@@ -10,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 /**
  * Test NodeVersionVoterTest
  */
-class NodeVersionVoterTest extends \PHPUnit_Framework_TestCase
+class NodeVersionVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeVersionVoter

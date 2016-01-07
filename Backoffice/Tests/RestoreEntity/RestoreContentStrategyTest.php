@@ -4,12 +4,13 @@ namespace OpenOrchestra\Backoffice\Tests\RestoreEntity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\RestoreEntity\Strategies\RestoreContentStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class RestoreContentStrategyTest
  */
-class RestoreContentStrategyTest extends \PHPUnit_Framework_TestCase
+class RestoreContentStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var RestoreContentStrategy

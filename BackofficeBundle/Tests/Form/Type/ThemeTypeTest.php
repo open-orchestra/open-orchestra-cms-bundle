@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\ThemeType;
 
 /**
  * Class ThemeTypeTest
  */
-class ThemeTypeTest extends \PHPUnit_Framework_TestCase
+class ThemeTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var ThemeType
