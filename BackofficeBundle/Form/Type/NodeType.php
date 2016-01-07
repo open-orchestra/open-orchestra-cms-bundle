@@ -8,6 +8,8 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscrib
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -126,6 +128,16 @@ class NodeType extends AbstractType
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['form_legend_helper'] = "open_orchestra_backoffice.form.node.template_selection.helper";
     }
 
     /**

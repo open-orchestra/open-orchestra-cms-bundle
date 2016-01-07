@@ -163,6 +163,11 @@
 {% endblock widget_attributes %}
 
 {% block form_end %}
+    <div class="form-group">
+        <div class="col-lg-12">
+            {{ block('form_legend') }}
+        </div>
+    </div>
     {% if no_submit_button is not defined or no_submit_button != true %}
         {% spaceless %}
             <div class="form-group">
@@ -190,3 +195,11 @@
         {% endif %}
     {% endspaceless %}
 {% endblock oo_date_picker_widget %}
+{% block form_legend %}
+    <div class="help-block">
+        <p>* {{ 'open_orchestra_backoffice.form.orchestra_fields.required_field' | trans }}</p>
+        {% if form_legend_helper is defined and form_legend_helper is not empty %}
+            <p>** {{ form_legend_helper | trans }}</p>
+        {% endif %}
+    </div>
+{% endblock form_legend %}
