@@ -20,6 +20,11 @@ interface NavigationPanelInterface
     public function show();
 
     /**
+     * @return array
+     */
+    public function getDatatableParameter();
+
+    /**
      * @return string
      */
     public function getName();

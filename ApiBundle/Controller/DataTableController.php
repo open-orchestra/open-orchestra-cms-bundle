@@ -26,4 +26,16 @@ class DataTableController extends BaseController
     {
         return $this->get('open_orchestra_api.transformer_manager')->get('datatable_translation')->transform("datatable");
     }
+
+    /**
+     * @config\Route("/parameter", name="open_orchestra_api_datatable_parameter")
+     * @Config\Method({"GET"})
+     *
+     * @return Response
+     */
+    public function datatableParameterAction()
+    {
+        return $this->get('open_orchestra_backoffice.navigation_panel_manager')->getDatatableParameter();
+    }
+
 }

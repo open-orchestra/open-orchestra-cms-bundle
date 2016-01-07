@@ -6,6 +6,8 @@ services:
             - ROLE_ACCESS_USER
             - 395
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_user_admin.navigation_panel.user.parameters%
+            - @translator
         calls:
             - [ setTemplate, ['OpenOrchestraUserAdminBundle:AdministrationPanel:user.html.twig'] ]
         tags:

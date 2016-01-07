@@ -44,4 +44,21 @@ class NavigationPanelManager
             'strategies' => $this->strategies
         ));
     }
+
+    /**
+     * @return array
+     */
+    public function getDatatableParameter()
+    {
+        $dataParameter = array();
+        foreach ($this->strategies as $weightedStrategies) {
+            foreach ($weightedStrategies as $namedStrategies) {
+                foreach ($namedStrategies as $strategy) {
+                    $dataParameter = array_merge($dataParameter, $strategy->getDatatableParameter());
+                }
+            }
+        }
+
+        return $dataParameter;
+    }
 }

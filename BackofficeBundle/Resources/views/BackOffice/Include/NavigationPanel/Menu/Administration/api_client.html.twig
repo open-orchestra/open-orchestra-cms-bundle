@@ -3,10 +3,7 @@
         id="nav-api_client"
         data-url="{{ path('open_orchestra_api_api_client_list') }}"
         data-add="{{ path('open_orchestra_backoffice_api_client_new') }}"
-        data-displayed-elements="name, trusted"
-        data-visible-elements="name, trusted"
-        data-input-header = "text, boolean"
-        data-translated-header="{{'open_orchestra_backoffice.table.api_client.name'|trans }},{{'open_orchestra_backoffice.table.api_client.trusted'|trans }}"
+        data-datatable-parameter-name="{{ datatableParameterName }}"
         title="{{ 'open_orchestra_backoffice.left_menu.administration.api_client.list'|trans }}"
         >
     {{ 'open_orchestra_backoffice.left_menu.administration.api_client.list'|trans }}

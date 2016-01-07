@@ -1,0 +1,208 @@
+parameters:
+    open_orchestra_backoffice.navigation_panel.content_type.parameters :
+        -
+          name : name
+          title : open_orchestra_backoffice.table.content_type.name
+          activateColvis : true
+          searchField : text
+        -
+          name : status_label
+          title : open_orchestra_backoffice.table.content_type.status_label
+          activateColvis : true
+          searchField : text
+        -
+          name : version
+          title : open_orchestra_backoffice.table.content_type.version
+          activateColvis : true
+          searchField : number
+        -
+          name : language
+          title : open_orchestra_backoffice.table.content_type.language
+          activateColvis : true
+          searchField : text
+        -
+          name : linked_to_site
+          title : open_orchestra_backoffice.table.content_type.linked_to_site
+          activateColvis : true
+          searchField : boolean
+        -
+          name : created_at
+          title : open_orchestra_backoffice.table.content_type.created_at
+          activateColvis : true
+          searchField : date
+        -
+          name : created_by
+          title : open_orchestra_backoffice.table.content_type.created_by
+          activateColvis : true
+          searchField : text
+        -
+          name : updated_at
+          title : open_orchestra_backoffice.table.content_type.updated_at
+          activateColvis : true
+          searchField : date
+        -
+          name : updated_by
+          title : open_orchestra_backoffice.table.content_type.updated_by
+          activateColvis : true
+          searchField : text
+    open_orchestra_backoffice.navigation_panel.trashcan.parameters :
+        -
+          name : name
+          title : open_orchestra_backoffice.table.trashcan.name
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : deleted_at
+          updated_by : name
+          title : open_orchestra_backoffice.table.trashcan.deleted_at
+          visible : true
+          activateColvis : true
+          searchField : date
+    open_orchestra_backoffice.navigation_panel.content_types.parameters :
+        -
+          name : content_type_id
+          title : open_orchestra_backoffice.table.content_types.content_type_id
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : name
+          title : open_orchestra_backoffice.table.content_types.name
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : version
+          title : open_orchestra_backoffice.table.content_types.version
+          visible : true
+          activateColvis : true
+          searchField : number
+        -
+          name : linked_to_site
+          title : open_orchestra_backoffice.table.content_types.linked_to_site
+          visible : true
+          activateColvis : true
+          searchField : boolean
+    open_orchestra_backoffice.navigation_panel.keywords.parameters :
+        -
+          name : label
+          title : open_orchestra_backoffice.table.keywords.label
+          visible : true
+          activateColvis : true
+          searchField : text
+    open_orchestra_backoffice.navigation_panel.websites.parameters :
+        -
+          name : site_id
+          title : open_orchestra_backoffice.table.websites.site_id
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : name
+          title : open_orchestra_backoffice.table.websites.name
+          visible : true
+          activateColvis : true
+          searchField : text
+    open_orchestra_backoffice.navigation_panel.themes.parameters :
+        -
+          name : name
+          title : open_orchestra_backoffice.table.themes.name
+          visible : true
+          activateColvis : true
+          searchField : text
+    open_orchestra_backoffice.navigation_panel.redirection.parameters :
+        -
+          name : site_name
+          title : open_orchestra_backoffice.table.redirection.site_name
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : route_pattern
+          title : open_orchestra_backoffice.table.redirection.route_pattern
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : locale
+          title : open_orchestra_backoffice.table.redirection.locale
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : redirection
+          title : open_orchestra_backoffice.table.redirection.redirection
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : permanent
+          title : open_orchestra_backoffice.table.redirection.permanent
+          visible : true
+          activateColvis : true
+          searchField : boolean
+    open_orchestra_backoffice.navigation_panel.api_client.parameters :
+        -
+          name : name
+          title : open_orchestra_backoffice.table.api_client.name
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : trusted
+          title : open_orchestra_backoffice.table.api_client.trusted
+          visible : true
+          activateColvis : true
+          searchField : boolean
+    open_orchestra_backoffice.navigation_panel.status.parameters :
+        -
+          name : label
+          title : open_orchestra_backoffice.table.status.label
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : published
+          title : open_orchestra_backoffice.table.status.published
+          visible : true
+          activateColvis : true
+          searchField : boolean
+        -
+          name : display_color
+          title : open_orchestra_backoffice.table.status.display_color
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : initial
+          title : open_orchestra_backoffice.table.status.initial
+          visible : true
+          activateColvis : true
+          searchField : boolean
+    open_orchestra_backoffice.navigation_panel.role.parameters :
+        -
+          name : description
+          title : open_orchestra_backoffice.table.role.description
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : from_status
+          title : open_orchestra_backoffice.table.role.from_status
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : to_status
+          title : open_orchestra_backoffice.table.role.to_status
+          visible : true
+          activateColvis : true
+          searchField : text
+    open_orchestra_backoffice.navigation_panel.group.parameters :
+        -
+          name : label
+          title : open_orchestra_backoffice.table.group.label
+          visible : true
+          activateColvis : true
+          searchField : text

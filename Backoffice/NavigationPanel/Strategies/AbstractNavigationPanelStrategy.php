@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
 use OpenOrchestra\Backoffice\NavigationPanel\NavigationPanelInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class AbstractNavigationPanelStrategy
@@ -21,19 +22,25 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     protected $parent;
     protected $weight = 0;
     protected $role = null;
+    protected $datatableParameter;
+    protected $translator = null;
 
     /**
-     * @param string $name
-     * @param string $role
-     * @param int    $weight
-     * @param string $parent
+     * @param string                   $name
+     * @param string                   $role
+     * @param int                      $weight
+     * @param string                   $parent
+     * @param array                    $datatableParameter
+     * @param TranslatorInterface|null $translator
      */
-    public function __construct($name, $role, $weight, $parent)
+    public function __construct($name, $role, $weight, $parent, array $datatableParameter = array(), $translator = null)
     {
         $this->name = $name;
         $this->role = $role;
         $this->weight = $weight;
         $this->parent = $parent;
+        $this->translator = $translator;
+        $this->datatableParameter = $datatableParameter;
     }
 
     /**
@@ -42,6 +49,18 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDatatableParameter()
+    {
+        if ($this->translator instanceof TranslatorInterface) {
+            $this->datatableParameter = $this->preFormatDatatableParameter($this->datatableParameter, $this->translator);
+        }
+
+        return array($this->name => $this->datatableParameter);
     }
 
     /**
@@ -91,5 +110,22 @@ abstract class AbstractNavigationPanelStrategy implements NavigationPanelInterfa
     protected function render($view, array $parameters = array())
     {
         return $this->templating->render($view, $parameters);
+    }
+
+    /**
+     * @param array               $datatableParameter
+     * @param TranslatorInterface $translator
+     *
+     * @return array
+     */
+    protected function preFormatDatatableParameter(array $datatableParameter, TranslatorInterface $translator)
+    {
+        foreach ($datatableParameter as $index => $parameters) {
+            foreach ($parameters as $name => $parameter) {
+                $datatableParameter[$index][$name] = $translator->trans($parameter);
+            }
+        }
+
+        return $datatableParameter;
     }
 }

@@ -128,41 +128,8 @@
     </li>
 {% endmacro %}
 
-{% macro menu_content_types_for_content(contentTypes, name) %}
-    {% for contentType in contentTypes %}
-        {% set displayedElement = 'name, status_label, version, language, linked_to_site, created_at, created_by, updated_at, updated_by' %}
-        {% set translatedHeader = 'open_orchestra_backoffice.table.content_type.name'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.status_label'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.version'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.language'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.linked_to_site'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.created_at'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.created_by'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.updated_at'|trans ~ ', ' ~
-                                    'open_orchestra_backoffice.table.content_type.updated_by'|trans %}
-        {% set inputHeader = 'text, text, number, text, boolean, date, text, date, text' %}
-        {% set visibleElement = '' %}
-        {% for columnName, listable in contentType.defaultListable %}
-            {% if listable %}
-                {% if visibleElement is empty %}
-                    {% set visibleElement = columnName %}
-                {% else %}
-                    {% set visibleElement = visibleElement ~ ', ' ~ columnName %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-        {% for field in contentType.fields %}
-            {% set displayedElement = displayedElement ~ ', attributes.' ~ field.fieldId ~ '.string_value' %}
-            {% set translatedHeader = translatedHeader ~ ', ' ~ field.labels|trans_choose %}
-            {% set inputHeader = inputHeader ~ ', ' ~ field.fieldTypeSearchable %}
-            {% if field.listable %}
-                {% if visibleElement is empty %}
-                    {% set visibleElement = field.fieldId %}
-                {% else %}
-                    {% set visibleElement = visibleElement ~ ', attributes.' ~ field.fieldId ~ '.string_value' %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
+{% macro menu_content_types_for_content(contentTypes, datatableParameterNames) %}
+    {% for key, contentType in contentTypes %}
         <li
             data-element-id="{{ contentType.contentTypeId }}"
             data-type="ContentType"
@@ -172,10 +139,7 @@
                 href="#contents_{{contentType.contentTypeId}}/list"
                 data-url="{{ path('open_orchestra_api_content_list', {'content_type': contentType.contentTypeId}) }}"
                 data-add="{{ path('open_orchestra_backoffice_content_new', {'contentType': contentType.contentTypeId}) }}"
-                data-displayed-elements="{{ displayedElement }}"
-                data-translated-header="{{ translatedHeader }}"
-                data-visible-elements="{{ visibleElement }}"
-                data-input-header="{{ inputHeader }}"
+		        data-datatable-parameter-name="{{ datatableParameterNames[loop.index0] }}"
             >
                 {{ contentType.names| trans_choose }}
             </a>

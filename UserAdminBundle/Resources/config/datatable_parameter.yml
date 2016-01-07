@@ -1,0 +1,14 @@
+parameters:
+    open_orchestra_user_admin.navigation_panel.user.parameters :
+        -
+          name : username
+          title : open_orchestra_user_admin.table.username
+          visible : true
+          activateColvis : true
+          searchField : date
+        -
+          name : groups
+          title : open_orchestra_user_admin.table.groups
+          visible : true
+          activateColvis : true
+          searchField : date

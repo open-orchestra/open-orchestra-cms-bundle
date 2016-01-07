@@ -1,0 +1,32 @@
+parameters:
+    open_orchestra_log.navigation_panel.log.parameters :
+        -
+          name : date_time
+          title : open_orchestra_log.table.log.date_time
+          visible : true
+          activateColvis : true
+          searchField : date
+        -
+          name : user_ip
+          title : open_orchestra_log.table.log.user_ip
+          visible : true
+          activateColvis : true
+          searchField : date
+        -
+          name : user_name
+          title : open_orchestra_log.table.log.user_name
+          visible : true
+          activateColvis : true
+          searchField : text
+        -
+          name : site_name
+          title : open_orchestra_log.table.log.site_name
+          visible : true
+          activateColvis : true
+          searchField : date
+        -
+          name : message
+          title : open_orchestra_log.table.log.message
+          visible : true
+          activateColvis : true
+          searchField : text

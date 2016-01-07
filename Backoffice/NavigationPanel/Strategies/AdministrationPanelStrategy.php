@@ -57,7 +57,7 @@ class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function show()
     {
-        return $this->render($this->getTemplate());
+        return $this->render($this->getTemplate(), array('datatableParameterName' => $this->name));
     }
 
     /**

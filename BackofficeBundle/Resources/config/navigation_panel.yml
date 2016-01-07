@@ -76,6 +76,9 @@ services:
             - @open_orchestra_backoffice.context_manager
             - %open_orchestra_backoffice.navigation_panel.menu.editorial%
             - 240
+            - %open_orchestra_backoffice.navigation_panel.content_type.parameters%
+            - @translator
+            - @open_orchestra_backoffice.manager.translation_choice
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.trashcan:
@@ -85,12 +88,12 @@ services:
             - ROLE_ACCESS_DELETED
             - 250
             - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - %open_orchestra_backoffice.navigation_panel.trashcan.parameters%
+            - @translator
         calls:
             - [ setTemplate, [OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/trashcan.html.twig] ]
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
-
-
     open_orchestra_backoffice.navigation_panel.administration:
         class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
         arguments:
@@ -106,6 +109,8 @@ services:
             - ROLE_ACCESS_CONTENT_TYPE
             - 310
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.content_types.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.keywords:
@@ -115,6 +120,8 @@ services:
             - ROLE_ACCESS_KEYWORD
             - 320
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.keywords.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.websites:
@@ -124,6 +131,8 @@ services:
             - ROLE_ACCESS_SITE
             - 330
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.websites.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.themes:
@@ -133,6 +142,8 @@ services:
             - ROLE_ACCESS_THEME
             - 340
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.themes.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.redirection:
@@ -142,6 +153,8 @@ services:
             - ROLE_ACCESS_REDIRECTION
             - 350
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.redirection.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.api_client:
@@ -151,6 +164,8 @@ services:
             - ROLE_ACCESS_API_CLIENT
             - 360
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.api_client.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.status:
@@ -160,6 +175,8 @@ services:
             - ROLE_ACCESS_STATUS
             - 370
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.status.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.role:
@@ -169,6 +186,8 @@ services:
             - ROLE_ACCESS_ROLE
             - 380
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.role.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.group:
@@ -178,5 +197,7 @@ services:
             - ROLE_ACCESS_GROUP
             - 390
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - %open_orchestra_backoffice.navigation_panel.group.parameters%
+            - @translator
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }

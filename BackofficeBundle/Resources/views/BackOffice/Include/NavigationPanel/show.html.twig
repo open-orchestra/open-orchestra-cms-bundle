@@ -1,4 +1,4 @@
-<nav data-url="{{ path('open_orchestra_backoffice_menu') }}">
+<nav data-url="{{ path('open_orchestra_backoffice_menu') }}" data-datatable-parameter="{{ path('open_orchestra_api_datatable_parameter') }}" >
     <ul>
         {% for rootMenuWeights in strategies[constant('OpenOrchestra\\Backoffice\\NavigationPanel\\Strategies\\AbstractNavigationPanelStrategy::ROOT_MENU')] %}
             {% for rootMenu in rootMenuWeights %}

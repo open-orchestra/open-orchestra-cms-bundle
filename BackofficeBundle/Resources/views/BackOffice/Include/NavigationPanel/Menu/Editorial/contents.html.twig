@@ -3,5 +3,5 @@
 {% set name = 'open_orchestra_backoffice.left_menu.editorial.contents'|trans %}
 
 {% block menu %}
-    {{ macros.menu_content_types_for_content(contentTypes) }}
+    {{ macros.menu_content_types_for_content(contentTypes, datatableParameterNames) }}
 {% endblock %}
