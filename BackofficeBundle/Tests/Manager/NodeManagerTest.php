@@ -323,6 +323,42 @@ class NodeManagerTest extends AbstractBaseTestCase
     }
 
     /**
+     * Test getNewNodeOrder
+     *
+     * @param array $nodes
+     * @param int   $count
+     *
+     * @dataProvider provideNodeSortedChildren
+     */
+    public function testGetNewNodeOrder($nodes, $count)
+    {
+        Phake::when($this->nodeRepository)->findByParentSortedByOrder(Phake::anyParameters())->thenReturn($nodes);
+
+        $node = $this->manager->initializeNewNode('fakeParentId');
+
+        $this->assertEquals($count, $node->getOrder());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeSortedChildren()
+    {
+        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node1)->getOrder()->thenReturn(1);
+
+        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node2)->getOrder()->thenReturn(4);
+
+        return array(
+            array(array($node1, $node2), 2),
+            array(array($node2, $node1), 5),
+            array(array(), 0),
+            array(null, 0),
+        );
+    }
+
+    /**
      * @param bool $areaConsistency
      * @param bool $blockConsistency
      *

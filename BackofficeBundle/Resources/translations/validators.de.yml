@@ -5,6 +5,7 @@ open_orchestra_backoffice_validators:
     node:
          pattern: Der Block %blockLabel% müssen Parameter %Parameter% im Knoten-Muster url
          restore: Sie können diesen Knoten nicht wiederherstellen, sollten Sie wieder herzustellen ihrer Eltern %nodeparent% vor
+         unique_node_order: Die Seite Standort muss eindeutig sein
     authorize:
         edition: Sie können dieses Dokument nicht mehr bearbeiten
     area:

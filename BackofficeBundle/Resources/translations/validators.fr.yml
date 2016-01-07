@@ -5,6 +5,7 @@ open_orchestra_backoffice_validators:
     node:
         pattern: Le bloc %blockLabel% nécessite le paramètre %parameter% dans la pattern de l'url du node
         restore: Vous ne pouvez pas restaurer ce noeud, vous devez restaurer son parent %nodeparent% avant
+        unique_node_order: L'emplacement de la page doit être unique
     authorize:
         edition: Ce document n'est plus modifiable
     area:

@@ -3,3 +3,4 @@ OpenOrchestra\ModelInterface\Model\NodeInterface:
         - OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePattern: ~
         - OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNode: { groups: [restore] }
         - OpenOrchestra\BackofficeBundle\Validator\Constraints\CheckAreaPresence: ~
+        - OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueNodeOrder: ~
