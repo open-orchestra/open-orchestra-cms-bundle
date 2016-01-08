@@ -215,11 +215,17 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
      * @param NodeInterface|null $node
      *
      * @return mixed|AreaInterface
+     *
+     * @throws TransformerParameterTypeException
      */
     public function reverseTransform(FacadeInterface $facade, $source = null, NodeInterface $node = null)
     {
         $blocks = $facade->getBlocks();
         $blockDocument = array();
+
+        if (!$source instanceof AreaInterface) {
+            throw new TransformerParameterTypeException();
+        }
 
         foreach ($blocks as $position => $blockFacade) {
             $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
