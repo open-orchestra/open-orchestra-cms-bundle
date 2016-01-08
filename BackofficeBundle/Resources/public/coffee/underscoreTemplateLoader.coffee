@@ -42,10 +42,11 @@ do ->
           url: filename
           data: { 'language': language,'templateId': templateName }
           success: (tpl, textStatus, xhr) ->
+            if 200 == xhr.status
               templateLoader.addTemplate templateName, language, tpl
               templateLoader.storeTemplates
-              view.onTemplateLoaded templateName, tpl
-              return
+            view.onTemplateLoaded templateName, tpl
+            return
         }
       else
         view.onTemplateLoaded templateName, @templates[language][templateName]
