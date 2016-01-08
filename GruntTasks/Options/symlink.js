@@ -2,91 +2,91 @@ module.exports = {
 
     //--[ BOWER COMPONENTS ]--//
     open_sans_fonts_bold: {
-        src: 'bower_components/open-sans/fonts/bold',
+        src: 'vendor/bower_components/open-sans/fonts/bold',
         dest: 'web/fonts/bold'
     },
     open_sans_fonts_bold_italic: {
-        src: 'bower_components/open-sans/fonts/bold-italic',
+        src: 'vendor/bower_components/open-sans/fonts/bold-italic',
         dest: 'web/fonts/bold-italic'
     },
     open_sans_fonts_extrabold: {
-        src: 'bower_components/open-sans/fonts/extrabold',
+        src: 'vendor/bower_components/open-sans/fonts/extrabold',
         dest: 'web/fonts/extrabold'
     },
     open_sans_fonts_extrabold_italic: {
-        src: 'bower_components/open-sans/fonts/extrabold-italic',
+        src: 'vendor/bower_components/open-sans/fonts/extrabold-italic',
         dest: 'web/fonts/extrabold-italic'
     },
     open_sans_fonts_italic: {
-        src: 'bower_components/open-sans/fonts/italic',
+        src: 'vendor/bower_components/open-sans/fonts/italic',
         dest: 'web/fonts/italic'
     },
     open_sans_fonts_light: {
-        src: 'bower_components/open-sans/fonts/light',
+        src: 'vendor/bower_components/open-sans/fonts/light',
         dest: 'web/fonts/light'
     },
     open_sans_fonts_light_italic: {
-        src: 'bower_components/open-sans/fonts/light-italic',
+        src: 'vendor/bower_components/open-sans/fonts/light-italic',
         dest: 'web/fonts/light-italic'
     },
     open_sans_fonts_regular: {
-        src: 'bower_components/open-sans/fonts/regular',
+        src: 'vendor/bower_components/open-sans/fonts/regular',
         dest: 'web/fonts/regular'
     },
     open_sans_fonts_semibold: {
-        src: 'bower_components/open-sans/fonts/semibold',
+        src: 'vendor/bower_components/open-sans/fonts/semibold',
         dest: 'web/fonts/semibold'
     },
     open_sans_fonts_semibold_italic: {
-        src: 'bower_components/open-sans/fonts/semibold-italic',
+        src: 'vendor/bower_components/open-sans/fonts/semibold-italic',
         dest: 'web/fonts/semibold-italic'
     },
     fontawesome_font_otf: {
-        src: 'bower_components/font-awesome/fonts/FontAwesome.otf',
+        src: 'vendor/bower_components/font-awesome/fonts/FontAwesome.otf',
         dest: 'web/fonts/FontAwesome.otf'
     },
     fontawesome_font_eot: {
-        src: 'bower_components/font-awesome/fonts/fontawesome-webfont.eot',
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.eot',
         dest: 'web/fonts/fontawesome-webfont.eot'
     },
     fontawesome_font_svg: {
-        src: 'bower_components/font-awesome/fonts/fontawesome-webfont.svg',
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.svg',
         dest: 'web/fonts/fontawesome-webfont.svg'
     },
     fontawesome_font_ttf: {
-        src: 'bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.ttf',
         dest: 'web/fonts/fontawesome-webfont.ttf'
     },
     fontawesome_font_woff: {
-        src: 'bower_components/font-awesome/fonts/fontawesome-webfont.woff',
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.woff',
         dest: 'web/fonts/fontawesome-webfont.woff'
     },
     fontawesome_font_woff2: {
-        src: 'bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
+        src: 'vendor/bower_components/font-awesome/fonts/fontawesome-webfont.woff2',
         dest: 'web/fonts/fontawesome-webfont.woff2'
     },
     bootstrap_font_eot: {
-        src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot',
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.eot',
         dest: 'web/fonts/glyphicons-halflings-regular.eot'
     },
     bootstrap_font_svg: {
-        src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg',
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.svg',
         dest: 'web/fonts/glyphicons-halflings-regular.svg'
     },
     bootstrap_font_ttf: {
-        src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
         dest: 'web/fonts/glyphicons-halflings-regular.ttf'
     },
     bootstrap_font_woff: {
-        src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
         dest: 'web/fonts/glyphicons-halflings-regular.woff'
     },
     bootstrap_font_woff2: {
-        src: 'bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
+        src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
         dest: 'web/fonts/glyphicons-halflings-regular.woff2'
     },
     jcrop_gif: {
-        src: 'bower_components/jcrop/css/Jcrop.gif',
+        src: 'vendor/bower_components/Jcrop/css/Jcrop.gif',
         dest: 'web/img/jcrop/Jcrop.gif'
     },
 
@@ -120,7 +120,7 @@ module.exports = {
         dest: 'web/img/flags/flags.png'
     },
     jquery_minicolors: {
-        src: 'bower_components/jquery-minicolors/jquery.minicolors.png',
+        src: 'vendor/bower_components/jquery-minicolors/jquery.minicolors.png',
         dest: 'web/css/images/jquery.minicolors.png'
     },
     select2_gif: {
@@ -128,19 +128,19 @@ module.exports = {
         dest: 'web/img/select2-spinner.gif'
     },
     jquery_ui: {
-        src: 'bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-icons_222222_256x240.png',
         dest: 'web/css/images/ui-icons_222222_256x240.png'
     },
     jquery_ui_bg_flat: {
-        src: 'bower_components/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png',
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_flat_75_ffffff_40x100.png',
         dest: 'web/css/images/ui-bg_flat_75_ffffff_40x100.png'
     },
     jquery_ui_bg_highlight: {
-        src: 'bower_components/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png',
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png',
         dest: 'web/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png'
     },
     jquery_ui_bg_glass: {
-        src: 'bower_components/jquery-ui/themes/base/images/ui-bg_glass_75_dadada_1x400.png',
+        src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_glass_75_dadada_1x400.png',
         dest: 'web/css/images/ui-bg_glass_75_dadada_1x400.png'
     }
 };
