@@ -269,6 +269,7 @@ class NodeManager
         $node->setLanguage($language);
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
+        $node->setOrder($this->getNewNodeOrder($parentId, $siteId));
 
         $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
@@ -318,6 +319,22 @@ class NodeManager
                 }
             }
         }
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     *
+     * @return int
+     */
+    protected function getNewNodeOrder($parentId, $siteId)
+    {
+        $greatestOrderNode = $this->nodeRepository->findOneByParentWithGreatestOrder($parentId, $siteId);
+        if (null === $greatestOrderNode) {
+            return 0;
+        }
+
+        return $greatestOrderNode->getOrder() + 1;
     }
 
     /**

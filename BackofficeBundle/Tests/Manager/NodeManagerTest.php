@@ -289,6 +289,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals('fakeNameTheme', $node->getTheme());
         $this->assertEquals('fake keyword', $node->getMetaKeywords());
         $this->assertEquals('fake description', $node->getMetaDescription());
+        $this->assertEquals(0, $node->getOrder());
         $this->assertEquals($status, $node->getStatus());
         $this->assertEquals(true, $node->getMetaIndex());
         $this->assertEquals(true, $node->getMetaFollow());
@@ -318,6 +319,41 @@ class NodeManagerTest extends AbstractBaseTestCase
             array($parentNode0, null),
             array($parentNode1, EmbedStatus::createFromStatus($status)),
             array(null, EmbedStatus::createFromStatus($status)),
+        );
+    }
+
+    /**
+     * Test getNewNodeOrder
+     *
+     * @param NodeInterface|null $node
+     * @param int                $expectedOrder
+     *
+     * @dataProvider provideGreatestOrderedNode
+     */
+    public function testGetNewNodeOrder($node, $expectedOrder)
+    {
+        Phake::when($this->nodeRepository)->findOneByParentWithGreatestOrder(Phake::anyParameters())->thenReturn($node);
+
+        $node = $this->manager->initializeNewNode('fakeParentId');
+
+        $this->assertEquals($expectedOrder, $node->getOrder());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGreatestOrderedNode()
+    {
+        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node1)->getOrder()->thenReturn(1);
+
+        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node2)->getOrder()->thenReturn(4);
+
+        return array(
+            array($node1, 2),
+            array($node2, 5),
+            array(null, 0),
         );
     }
 
