@@ -32,7 +32,7 @@ class UniqueNodeOrderValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $result = $this->repository->findByParentAndOrderAndNotNode(
+        $result = $this->repository->hasOtherNodeWithSameParentAndOrder(
             $value->getParentId(),
             $value->getOrder(),
             $value->getNodeId(),

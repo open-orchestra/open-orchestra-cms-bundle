@@ -3,13 +3,14 @@
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
 use Phake;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueNodeOrder;
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueNodeOrderValidator;
 
 /**
  * Class UniqueNodeOrderValidatorTest
  */
-class UniqueNodeOrderValidatorTest extends \PHPUnit_Framework_TestCase
+class UniqueNodeOrderValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var UniqueNodeOrderValidator
@@ -57,7 +58,7 @@ class UniqueNodeOrderValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddViolationOrNot($hasNodes, $violationTimes)
     {
-        Phake::when($this->nodeRepository)->findByParentAndOrderAndNotNode(Phake::anyParameters())->thenReturn($hasNodes);
+        Phake::when($this->nodeRepository)->hasOtherNodeWithSameParentAndOrder(Phake::anyParameters())->thenReturn($hasNodes);
 
         $this->validator->validate($this->node, $this->constraint);
 
