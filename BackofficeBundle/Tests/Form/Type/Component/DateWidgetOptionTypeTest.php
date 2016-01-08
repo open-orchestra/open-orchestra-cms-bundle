@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\DateWidgetOptionType;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class DateWidgetOptionTypeTest
  */
-class DateWidgetOptionTypeTest extends \PHPUnit_Framework_TestCase
+class DateWidgetOptionTypeTest extends AbstractBaseTestCase
 {
     protected $form;
 

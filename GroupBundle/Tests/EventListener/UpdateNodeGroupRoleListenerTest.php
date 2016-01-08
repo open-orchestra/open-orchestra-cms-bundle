@@ -3,13 +3,14 @@
 namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\EventListener\UpdateNodeGroupRoleListener;
 use Phake;
 
 /**
  * Class UpdateNodeGroupRoleListenerTest
  */
-class UpdateNodeGroupRoleListenerTest extends \PHPUnit_Framework_TestCase
+class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
 {
     protected $listener;
     protected $lifecycleEventArgs;

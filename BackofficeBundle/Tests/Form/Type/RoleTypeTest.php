@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\RoleType;
 use Symfony\Component\Form\FormEvents;
@@ -9,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class RoleTypeTest
  */
-class RoleTypeTest extends \PHPUnit_Framework_TestCase
+class RoleTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var RoleType

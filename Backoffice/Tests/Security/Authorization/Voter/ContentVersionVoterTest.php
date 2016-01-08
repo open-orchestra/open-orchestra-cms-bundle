@@ -3,14 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVersionVoter;
-use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * Test ContentVersionVoterTest
  */
-class ContentVersionVoterTest extends \PHPUnit_Framework_TestCase
+class ContentVersionVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentVersionVoter

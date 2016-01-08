@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\BlockType;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test BlockTypeTest
  */
-class BlockTypeTest extends \PHPUnit_Framework_TestCase
+class BlockTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var BlockType

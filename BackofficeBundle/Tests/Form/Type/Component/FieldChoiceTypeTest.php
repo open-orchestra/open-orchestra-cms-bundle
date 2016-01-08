@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\FieldChoiceType;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class FieldChoiceTypeTest
  */
-class FieldChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class FieldChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $form;
     protected $transformerArrayToString;

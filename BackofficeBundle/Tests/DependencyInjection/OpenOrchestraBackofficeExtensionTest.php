@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BaseApiBundle\DependencyInjection;
 
 use OpenOrchestra\BackofficeBundle\DependencyInjection\OpenOrchestraBackofficeExtension;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -23,7 +24,7 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy;
 /**
  * Class OpenOrchestraBackofficeExtensionTest
  */
-class OpenOrchestraBackofficeExtensionTest extends \PHPUnit_Framework_TestCase
+class OpenOrchestraBackofficeExtensionTest extends AbstractBaseTestCase
 {
     protected $defaultBlocks = array(
         FooterStrategy::FOOTER,

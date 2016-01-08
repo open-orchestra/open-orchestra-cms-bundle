@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\SiteManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class SiteManagerTest
  */
-class SiteManagerTest extends \PHPUnit_Framework_TestCase
+class SiteManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var SiteManager

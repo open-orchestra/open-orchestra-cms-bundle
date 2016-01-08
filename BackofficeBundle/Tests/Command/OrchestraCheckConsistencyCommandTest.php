@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Command;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Command\OrchestraCheckConsistencyCommand;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -10,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 /**
  * Class OrchestraCheckConsistencyCommandTest
  */
-class OrchestraCheckConsistencyCommandTest extends \PHPUnit_Framework_TestCase
+class OrchestraCheckConsistencyCommandTest extends AbstractBaseTestCase
 {
     protected $trans;
     protected $kernel;

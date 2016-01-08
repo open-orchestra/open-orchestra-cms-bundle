@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\WebSiteSubscriber;
 use Symfony\Component\Form\FormEvents;
@@ -9,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 /**
  * Class WebSiteSubscriberTest
  */
-class WebSiteSubscriberTest extends \PHPUnit_Framework_TestCase
+class WebSiteSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var WebSiteSubscriber

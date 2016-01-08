@@ -3,12 +3,12 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\DatePickerType;
-use Phake;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class DatePickerTypeTest
  */
-class DatePickerTypeTest extends \PHPUnit_Framework_TestCase
+class DatePickerTypeTest extends AbstractBaseTestCase
 {
     protected $form;
 

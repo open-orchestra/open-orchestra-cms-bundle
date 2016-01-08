@@ -3,11 +3,12 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class VideoUrlToIdTransformerTest
  */
-class VideoUrlToIdTransformerTest extends \PHPUnit_Framework_TestCase
+class VideoUrlToIdTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var VideoUrlToIdTransformer

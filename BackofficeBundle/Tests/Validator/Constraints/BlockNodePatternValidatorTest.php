@@ -2,16 +2,15 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePatternValidator;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class BlockNodePatternValidatorTest
  */
-class BlockNodePatternValidatorTest extends \PHPUnit_Framework_TestCase
+class BlockNodePatternValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var BlockNodePatternValidator

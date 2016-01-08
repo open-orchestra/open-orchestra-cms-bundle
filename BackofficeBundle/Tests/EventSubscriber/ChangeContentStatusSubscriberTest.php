@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\ChangeContentStatusSubscriber;
 use OpenOrchestra\ModelInterface\ContentEvents;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelInterface\ContentEvents;
 /**
  * Class ChangeNodeContentSubscriberTest
  */
-class ChangeContentStatusSubscriberTest extends \PHPUnit_Framework_TestCase
+class ChangeContentStatusSubscriberTest extends AbstractBaseTestCase
 {
     protected $cacheableManager;
     protected $tagManager;

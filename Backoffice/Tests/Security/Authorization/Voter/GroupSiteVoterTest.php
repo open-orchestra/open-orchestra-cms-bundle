@@ -3,13 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\GroupSiteVoter;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * Test GroupSiteVoterTest
  */
-class GroupSiteVoterTest extends \PHPUnit_Framework_TestCase
+class GroupSiteVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupSiteVoter

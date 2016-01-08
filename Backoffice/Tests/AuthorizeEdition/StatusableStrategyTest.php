@@ -3,12 +3,13 @@
 namespace OpenOrchestra\Backoffice\Tests\AuthorizeEdition;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\StatusableStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test StatusableStrategyTest
  */
-class StatusableStrategyTest extends \PHPUnit_Framework_TestCase
+class StatusableStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var StatusableStrategy

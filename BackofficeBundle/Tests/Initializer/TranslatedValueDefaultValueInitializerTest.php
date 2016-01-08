@@ -4,12 +4,13 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Initializer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BackofficeBundle\Initializer\TranslatedValueDefaultValueInitializer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Test TranslatedValueDefaultValueInitializerTest
  */
-class TranslatedValueDefaultValueInitializerTest extends \PHPUnit_Framework_TestCase
+class TranslatedValueDefaultValueInitializerTest extends AbstractBaseTestCase
 {
     /**
      * @var TranslatedValueDefaultValueInitializer

@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\StrategyManager;
 
 use OpenOrchestra\BackofficeBundle\StrategyManager\AuthorizeStatusChangeManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test AuthorizeStatusChangeManagerTest
  */
-class AuthorizeStatusChangeManagerTest extends \PHPUnit_Framework_TestCase
+class AuthorizeStatusChangeManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var AuthorizeStatusChangeManager

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\RoleChoiceType;
 
 /**
  * Class RoleChoiceTypeTest
  */
-class RoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class RoleChoiceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var RoleChoiceType

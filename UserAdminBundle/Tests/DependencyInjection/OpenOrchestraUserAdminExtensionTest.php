@@ -4,11 +4,12 @@ use OpenOrchestra\UserAdminBundle\DependencyInjection\OpenOrchestraUserAdminExte
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class OpenOrchestraUserAdminExtensionTest
  */
-class OpenOrchestraUserAdminExtensionTest extends \PHPUnit_Framework_TestCase
+class OpenOrchestraUserAdminExtensionTest extends AbstractBaseTestCase
 {
     /**
      * @var ContainerBuilder

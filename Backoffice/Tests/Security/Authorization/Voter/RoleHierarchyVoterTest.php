@@ -3,13 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\RoleHierarchyVoter;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * Test RoleHierarchyVoterTest
  */
-class RoleHierarchyVoterTest extends \PHPUnit_Framework_TestCase
+class RoleHierarchyVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var RoleHierarchyVoter

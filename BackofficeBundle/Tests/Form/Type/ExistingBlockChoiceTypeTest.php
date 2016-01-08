@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType;
 
 /**
  * Class ExistingBlockChoiceTypeTest
  */
-class ExistingBlockChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class ExistingBlockChoiceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var ExistingBlockChoiceType

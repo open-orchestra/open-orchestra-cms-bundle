@@ -2,12 +2,13 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class AbstractUserTypeTest
  */
-abstract class AbstractUserTypeTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractUserTypeTest extends AbstractBaseTestCase
 {
     protected $builder;
     protected $resolver;

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\StrategyManager;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 
 /**
  * Class GenerateFormManagerTest
  */
-class GenerateFormManagerTest extends \PHPUnit_Framework_TestCase
+class GenerateFormManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var GenerateFormManager

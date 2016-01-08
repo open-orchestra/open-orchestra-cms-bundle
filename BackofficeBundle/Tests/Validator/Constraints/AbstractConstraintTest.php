@@ -2,12 +2,13 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class AbstractConstraintTest
  */
-abstract class AbstractConstraintTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractConstraintTest extends AbstractBaseTestCase
 {
     protected $constraint;
 

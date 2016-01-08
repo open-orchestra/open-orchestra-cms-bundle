@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
 
 /**
  * Test RedirectionManagerTest
  */
-class RedirectionManagerTest extends \PHPUnit_Framework_TestCase
+class RedirectionManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var RedirectionManager

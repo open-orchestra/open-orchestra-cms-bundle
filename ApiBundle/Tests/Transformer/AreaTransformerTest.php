@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
@@ -11,7 +12,7 @@ use OpenOrchestra\ApiBundle\Transformer\AreaTransformer;
 /**
  * Class AreaTransformerTest
  */
-class AreaTransformerTest extends \PHPUnit_Framework_TestCase
+class AreaTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var AreaTransformer

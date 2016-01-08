@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentSearchType;
 
 /**
  * Class ContentSearchTypeTest
  */
-class ContentSearchTypeTest extends \PHPUnit_Framework_TestCase
+class ContentSearchTypeTest extends AbstractBaseTestCase
 {
     protected $form;
 

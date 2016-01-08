@@ -2,10 +2,12 @@
 
 namespace OpenOrchestra\Backoffice\Tests\ValueTransformer\Strategies;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+
 /**
  * Class AbstractTransformerTest
  */
-abstract class AbstractTransformerTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTransformerTest extends AbstractBaseTestCase
 {
     public $transformer;
 

@@ -3,15 +3,15 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\BaseApi\Context\GroupContext;
 use OpenOrchestra\BackofficeBundle\StrategyManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\StatusTransformer;
 
 /**
  * Class StatusTransformerTest
  */
-class StatusTransformerTest extends \PHPUnit_Framework_TestCase
+class StatusTransformerTest extends AbstractBaseTestCase
 {
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\StatusFacade';
     protected $authorizeStatusChangeManager;

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\NodeChoiceType;
 
 /**
  * Class NodeChoiceType
  */
-class NodeChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class NodeChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $orchestraNodeChoiceType;
     protected $nodeRepository;

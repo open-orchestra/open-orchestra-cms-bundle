@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Manager\BlockManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 /**
  * Class BlockManagerTest
  */
-class BlockManagerTest extends \PHPUnit_Framework_TestCase
+class BlockManagerTest extends AbstractBaseTestCase
 {
     protected $manager;
     protected $nodeRepository;

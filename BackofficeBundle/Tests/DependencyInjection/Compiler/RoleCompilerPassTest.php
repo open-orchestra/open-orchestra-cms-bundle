@@ -5,17 +5,16 @@ namespace OpenOrchestra\BackofficeBundle\Tests\DependencyInjection\Compiler;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GSTreeTemplatePanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TopMenuPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RoleCompilerPass;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class RoleCompilerPassTest
  */
-class RoleCompilerPassTest extends \PHPUnit_Framework_TestCase
+class RoleCompilerPassTest extends AbstractBaseTestCase
 {
     /**
      * @var RoleCompilerPass

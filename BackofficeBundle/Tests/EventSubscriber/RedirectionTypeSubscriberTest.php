@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\RedirectionTypeSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Form\FormEvents;
 
 /**
  * Test RedirectionTypeSubscriberTest
  */
-class RedirectionTypeSubscriberTest extends \PHPUnit_Framework_TestCase
+class RedirectionTypeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var RedirectionTypeSubscriber

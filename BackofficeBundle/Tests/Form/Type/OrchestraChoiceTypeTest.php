@@ -3,12 +3,13 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\Form\Type\OrchestraChoiceType;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Description of OrchestraChoiceTypeTest
  */
-class OrchestraChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class OrchestraChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $name;
     protected $choices;

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\SiteType;
 
 /**
  * Class SiteTypeTest
  */
-class SiteTypeTest extends \PHPUnit_Framework_TestCase
+class SiteTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var SiteType

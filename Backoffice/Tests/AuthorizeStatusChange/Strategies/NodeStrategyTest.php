@@ -3,13 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\AuthorizeStatusChange\Strategies;
 
 use OpenOrchestra\Backoffice\AuthorizeStatusChange\Strategies\NodeStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Phake;
 
 /**
  * Class NodeStrategyTest
  */
-class NodeStrategyTest extends \PHPUnit_Framework_TestCase
+class NodeStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeStrategy

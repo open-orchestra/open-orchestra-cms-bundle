@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use DateTime;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\ContentTransformer;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
@@ -11,7 +12,7 @@ use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 /**
  * Class ContentTransformerTest
  */
-class ContentTransformerTest extends \PHPUnit_Framework_TestCase
+class ContentTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentTransformer

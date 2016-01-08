@@ -2,12 +2,13 @@
 
 namespace OpenOrchestra\LogBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class LogAbstractSubscriberTest
  */
-abstract class LogAbstractSubscriberTest extends \PHPUnit_Framework_TestCase
+abstract class LogAbstractSubscriberTest extends AbstractBaseTestCase
 {
     protected $logger;
     protected $subscriber;

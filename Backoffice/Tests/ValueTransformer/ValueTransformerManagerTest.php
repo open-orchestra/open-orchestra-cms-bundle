@@ -3,12 +3,13 @@
 namespace OpenOrchestra\Backoffice\Tests\ValueTransformer;
 
 use OpenOrchestra\Backoffice\ValueTransformer\ValueTransformerManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class ValueTransformerManagerTest
  */
-class ValueTransformerManagerTest extends \PHPUnit_Framework_TestCase
+class ValueTransformerManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var ValueTransformerManager

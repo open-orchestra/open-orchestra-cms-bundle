@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\TinymceType;
 
 /**
  * Class TinymceTypeTest
  */
-class TinymceTypeTest extends \PHPUnit_Framework_TestCase
+class TinymceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var TinymceType

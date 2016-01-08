@@ -7,13 +7,14 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrat
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class BackofficeRoleCollectorTest
  */
-class BackofficeRoleCollectorTest extends \PHPUnit_Framework_TestCase
+class BackofficeRoleCollectorTest extends AbstractBaseTestCase
 {
     protected $roleRepository;
     protected $translator;

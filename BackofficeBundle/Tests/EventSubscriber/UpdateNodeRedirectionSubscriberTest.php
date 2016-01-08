@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 /**
  * Test UpdateNodeRedirectionSubscriberTest
  */
-class UpdateNodeRedirectionSubscriberTest extends \PHPUnit_Framework_TestCase
+class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var UpdateNodeRedirectionSubscriber

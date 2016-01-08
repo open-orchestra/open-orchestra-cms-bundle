@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSchemeableInterface;
 use Phake;
@@ -11,7 +12,7 @@ use Phake;
 /**
  * Test RouteDocumentManagerTest
  */
-class RouteDocumentManagerTest extends \PHPUnit_Framework_TestCase
+class RouteDocumentManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var RouteDocumentManager

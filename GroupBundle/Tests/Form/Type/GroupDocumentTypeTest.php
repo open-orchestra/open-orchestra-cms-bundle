@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\Form\Type\GroupDocumentType;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
@@ -9,7 +10,7 @@ use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 /**
  * Test GroupDocumentTypeTest
  */
-class GroupDocumentTypeTest extends \PHPUnit_Framework_TestCase
+class GroupDocumentTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupDocumentType

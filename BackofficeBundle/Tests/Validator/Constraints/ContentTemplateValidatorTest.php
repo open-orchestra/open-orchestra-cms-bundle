@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplateValidator;
 
 /**
  * Class ContentTemplateValidatorTest
  */
-class ContentTemplateValidatorTest extends \PHPUnit_Framework_TestCase
+class ContentTemplateValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var ContentTemplateValidator

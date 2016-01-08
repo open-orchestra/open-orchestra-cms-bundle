@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentTypeChoiceType;
 
 /**
  * Class ContentTypeChoiceTypeTest
  */
-class ContentTypeChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class ContentTypeChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $form;
     protected $context;

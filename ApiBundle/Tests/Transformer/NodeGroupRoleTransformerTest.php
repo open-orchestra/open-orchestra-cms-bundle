@@ -4,12 +4,13 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Test NodeGroupRoleTransformerTest
  */
-class NodeGroupRoleTransformerTest extends \PHPUnit_Framework_TestCase
+class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeGroupRoleTransformer

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\BBcodeToHtmlTrandformerTest;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\BBcodeToHtmlTransformer;
 
 /**
  * Class BBcodeToHtmlTransformerTest
  */
-class BBcodeToHtmlTransformerTest extends \PHPUnit_Framework_TestCase
+class BBcodeToHtmlTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var BBcodeToHtmlTrandformer

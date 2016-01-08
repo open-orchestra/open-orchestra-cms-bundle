@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
@@ -16,7 +17,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 /**
  * Class NodeManagerTest
  */
-class NodeManagerTest extends \PHPUnit_Framework_TestCase
+class NodeManagerTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeManager

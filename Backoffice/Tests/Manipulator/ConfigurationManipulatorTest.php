@@ -3,11 +3,12 @@
 namespace OpenOrchestra\Backoffice\Tests\Manipulator;
 
 use OpenOrchestra\Backoffice\Manipulator\BackofficeDisplayConfigurationManipulator;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class ConfigurationManipulatorTest
  */
-class ConfigurationManipulatorTest extends \PHPUnit_Framework_TestCase
+class ConfigurationManipulatorTest extends AbstractBaseTestCase
 {
     /**
      * @var BackofficeDisplayConfigurationManipulator

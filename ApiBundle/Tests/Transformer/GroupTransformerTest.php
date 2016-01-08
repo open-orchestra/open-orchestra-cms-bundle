@@ -4,13 +4,14 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ApiBundle\Transformer\GroupTransformer;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
  * Test GroupTransformerTest
  */
-class GroupTransformerTest extends \PHPUnit_Framework_TestCase
+class GroupTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupTransformer

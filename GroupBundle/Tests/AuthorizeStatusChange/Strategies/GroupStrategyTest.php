@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\AuthorizeStatusChange\Strategies;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\AuthorizeStatusChange\Strategies\GroupStrategy;
 use Phake;
 
 /**
  * Test GroupStrategyTest
  */
-class GroupStrategyTest extends \PHPUnit_Framework_TestCase
+class GroupStrategyTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupStrategy

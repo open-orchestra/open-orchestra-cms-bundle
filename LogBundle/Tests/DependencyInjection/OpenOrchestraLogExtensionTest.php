@@ -4,11 +4,12 @@ use OpenOrchestra\LogBundle\DependencyInjection\OpenOrchestraLogExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Class OpenOrchestraLogExtensionTest
  */
-class OpenOrchestraLogExtensionTest extends \PHPUnit_Framework_TestCase
+class OpenOrchestraLogExtensionTest extends AbstractBaseTestCase
 {
     /**
      * @var ContainerBuilder

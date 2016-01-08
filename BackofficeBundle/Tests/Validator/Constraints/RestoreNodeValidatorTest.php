@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNodeValidator;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
  * Class RestoreNodeValidatorTest
  */
-class RestoreNodeValidatorTest extends \PHPUnit_Framework_TestCase
+class RestoreNodeValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var RestoreNodeValidator

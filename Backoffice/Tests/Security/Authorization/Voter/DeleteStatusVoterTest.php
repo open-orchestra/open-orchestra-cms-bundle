@@ -4,13 +4,14 @@ namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\DeleteStatusVoter;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * Test DeleteStatusVoterTest
  */
-class DeleteStatusVoterTest extends \PHPUnit_Framework_TestCase
+class DeleteStatusVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var DeleteStatusVoter

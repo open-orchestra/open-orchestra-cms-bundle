@@ -3,13 +3,14 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\StatusableVoter;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * Test StatusableVoterTest
  */
-class StatusableVoterTest extends \PHPUnit_Framework_TestCase
+class StatusableVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var StatusableVoter

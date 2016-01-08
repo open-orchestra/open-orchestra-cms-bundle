@@ -3,9 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Tests\Mapping;
 
 use OpenOrchestra\ApiBundle\Mapping\MappingContentAttribute;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
-class MappingContentAttributeTest extends \PHPUnit_Framework_TestCase
+class MappingContentAttributeTest extends AbstractBaseTestCase
 {
     /**
      * @var MappingContentAttribute

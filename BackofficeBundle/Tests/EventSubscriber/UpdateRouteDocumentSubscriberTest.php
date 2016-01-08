@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateRouteDocumentSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
 use OpenOrchestra\ModelInterface\SiteEvents;
@@ -11,7 +12,7 @@ use Phake;
 /**
  * Test UpdateRouteDocumentSubscriberTest
  */
-class UpdateRouteDocumentSubscriberTest extends \PHPUnit_Framework_TestCase
+class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var UpdateRouteDocumentSubscriber

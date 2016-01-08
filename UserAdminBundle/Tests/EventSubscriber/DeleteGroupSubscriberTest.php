@@ -2,16 +2,16 @@
 
 namespace OpenOrchestra\UserAdminBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\UserAdminBundle\EventSubscriber\DeleteGroupSubscriber;
 use OpenOrchestra\UserBundle\GroupEvents;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Phake;
 
 /**
  * Class DeleteGroupSubscriberTest
  */
-abstract class DeleteGroupSubscriberTest extends \PHPUnit_Framework_TestCase
+abstract class DeleteGroupSubscriberTest extends AbstractBaseTestCase
 {
 
     protected $objectManager;

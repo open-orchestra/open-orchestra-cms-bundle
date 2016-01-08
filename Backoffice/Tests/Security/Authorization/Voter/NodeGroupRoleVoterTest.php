@@ -5,13 +5,14 @@ namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * Test NodeGroupRoleVoterTest
  */
-class NodeGroupRoleVoterTest extends \PHPUnit_Framework_TestCase
+class NodeGroupRoleVoterTest extends AbstractBaseTestCase
 {
     /**
      * @var NodeGroupRoleVoter

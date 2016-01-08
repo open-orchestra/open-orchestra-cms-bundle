@@ -3,12 +3,13 @@
 namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
  * Class AbstractNodeGroupRoleListenerTest
  */
-abstract class AbstractNodeGroupRoleListenerTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
 {
     protected $lifecycleEventArgs;
     protected $container;

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\EventSubscriber\UpdateNodeGroupRoleMoveNodeSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use Phake;
@@ -10,7 +11,7 @@ use Phake;
 /**
  * Class UpdateNodeGroupRoleMoveNodeSubscriberTest
  */
-class UpdateNodeGroupRoleMoveNodeSubscriberTest extends \PHPUnit_Framework_TestCase
+class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
 {
     protected $groupRepository;
     protected $nodeRepository;

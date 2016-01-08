@@ -3,13 +3,14 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteNodeSubscriber;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use phake;
 
 /**
  * Class DeleteNodeSubscriberTest
  */
-class DeleteNodeSubscriberTest extends \PHPUnit_Framework_TestCase
+class DeleteNodeSubscriberTest extends AbstractBaseTestCase
 {
     /**
      * @var DeleteNodeSubscriber

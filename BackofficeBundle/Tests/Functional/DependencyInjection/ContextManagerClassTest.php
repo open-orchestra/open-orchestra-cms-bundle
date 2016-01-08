@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\DependencyInjection;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 
 /**
  * Class ContextManagerClassTest
  *
  * @group integrationTest
  */
-class ContextManagerClassTest extends KernelTestCase
+class ContextManagerClassTest extends AbstractKernelTestCase
 {
     /**
      * @param string $classExpected

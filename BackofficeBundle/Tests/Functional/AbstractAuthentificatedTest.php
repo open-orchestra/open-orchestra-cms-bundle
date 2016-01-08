@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
  * Class AbstractAuthentificatedTest
  */
-abstract class AbstractAuthentificatedTest extends WebTestCase
+abstract class AbstractAuthentificatedTest extends AbstractWebTestCase
 {
     /**
      * @var Client

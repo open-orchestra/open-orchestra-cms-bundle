@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 use OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface;
 /**
  * Class EmbedKeywordsToKeywordsTransformerTest
  */
-class EmbedKeywordsToKeywordsTransformerTest extends \PHPUnit_Framework_TestCase
+class EmbedKeywordsToKeywordsTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var EmbedKeywordsToKeywordsTransformer

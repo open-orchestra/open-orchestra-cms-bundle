@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentChoiceType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 /**
  * Class ContentChoiceTypeTest
  */
-class ContentChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class ContentChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $form;
     protected $formTypeName = 'fakeFormTypeName';

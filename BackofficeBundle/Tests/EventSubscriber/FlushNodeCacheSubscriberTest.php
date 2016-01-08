@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\FlushNodeCacheSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 /**
  * Class FlushNodeCacheSubscriberTest
  */
-class FlushNodeCacheSubscriberTest extends \PHPUnit_Framework_TestCase
+class FlushNodeCacheSubscriberTest extends AbstractBaseTestCase
 {
     protected $cacheableManager;
     protected $tagManager;
