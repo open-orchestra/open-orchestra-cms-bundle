@@ -4,13 +4,14 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\BaseApi\Transformer\TransformerInterface;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 
 /**
  * Interface AreaTransformerInterface
  */
-interface AreaTransformerInterface extends TransformerInterface
+interface TransformerWithTemplateContextInterface extends TransformerInterface
 {
     /**
      * @param AreaInterface          $area
@@ -19,5 +20,5 @@ interface AreaTransformerInterface extends TransformerInterface
      *
      * @return FacadeInterface
      */
-    public function transformFromTemplate($area, TemplateInterface $template = null, $parentAreaId = null);
+    public function transformFromTemplate(AreaInterface $area, TemplateInterface $template = null, $parentAreaId = null);
 }
