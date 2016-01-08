@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * Class AreaTransformer
  */
-class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
+class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements AreaTransformerInterface
 {
     protected $nodeRepository;
     protected $areaManager;
