@@ -329,13 +329,12 @@ class NodeManager
      */
     protected function getNewNodeOrder($parentId, $siteId)
     {
-        $parentNodes = $this->nodeRepository->findByParentSortedByOrder($parentId, $siteId);
-        if (empty($parentNodes)) {
+        $greatestOrderNode = $this->nodeRepository->findOneByParentWithGreatestOrder($parentId, $siteId);
+        if (null === $greatestOrderNode) {
             return 0;
         }
-        $lastNode = array_shift($parentNodes);
 
-        return $lastNode->getOrder() + 1;
+        return $greatestOrderNode->getOrder() + 1;
     }
 
     /**

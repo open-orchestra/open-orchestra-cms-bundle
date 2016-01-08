@@ -8,7 +8,6 @@ use OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueNodeOrderValidato
 
 /**
  * Class UniqueNodeOrderValidatorTest
- * @group tibo
  */
 class UniqueNodeOrderValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,14 +50,14 @@ class UniqueNodeOrderValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $nodes
-     * @param int   $violationTimes
+     * @param bool $hasNodes
+     * @param int  $violationTimes
      *
-     * @dataProvider provideNodesAndCount
+     * @dataProvider provideHasNodesAndCount
      */
-    public function testAddViolationOrNot($nodes, $violationTimes)
+    public function testAddViolationOrNot($hasNodes, $violationTimes)
     {
-        Phake::when($this->nodeRepository)->findByParentAndOrderAndNotNode(Phake::anyParameters())->thenReturn($nodes);
+        Phake::when($this->nodeRepository)->findByParentAndOrderAndNotNode(Phake::anyParameters())->thenReturn($hasNodes);
 
         $this->validator->validate($this->node, $this->constraint);
 
@@ -68,13 +67,11 @@ class UniqueNodeOrderValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideNodesAndCount()
+    public function provideHasNodesAndCount()
     {
         return array(
-            array(array('node','node2'), 1),
-            array(array('node'), 1),
-            array(array(), 0),
-            array(null, 0),
+            array(true, 1),
+            array(false, 0),
         );
     }
 }

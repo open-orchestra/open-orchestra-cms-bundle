@@ -39,7 +39,7 @@ class UniqueNodeOrderValidator extends ConstraintValidator
             $value->getSiteId()
         );
 
-        if (!empty($result)) {
+        if (true === $result) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }
