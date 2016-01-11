@@ -18,14 +18,17 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
     protected $subscriber;
 
     protected $node;
+    protected $otherNode;
     protected $status;
     protected $id = 'id';
     protected $nodeEvent;
     protected $nodeRepository;
     protected $language = 'fr';
     protected $nodeId = 'nodeId';
+    protected $siteId = 'fakeSiteId';
     protected $redirectionManager;
     protected $routePattern = 'route_pattern';
+    protected $otherRoutePattern = 'other_route_pattern';
     protected $currentSiteManager;
 
     /**
@@ -42,9 +45,18 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->node)->getParentId()->thenReturn($this->nodeId);
         Phake::when($this->node)->getLanguage()->thenReturn($this->language);
         Phake::when($this->node)->getRoutePattern()->thenReturn($this->routePattern);
+        Phake::when($this->node)->getSiteId()->thenReturn($this->siteId);
+        $this->otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($this->otherNode)->getId()->thenReturn($this->id);
+        Phake::when($this->otherNode)->getNodeId()->thenReturn($this->nodeId);
+        Phake::when($this->otherNode)->getParentId()->thenReturn(null);
+        Phake::when($this->otherNode)->getLanguage()->thenReturn($this->language);
+        Phake::when($this->otherNode)->getRoutePattern()->thenReturn($this->otherRoutePattern);
         $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
         Phake::when($this->nodeEvent)->getPreviousStatus()->thenReturn($this->status);
+        $this->siteAliasEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
+        Phake::when($this->siteAliasEvent)->getSiteId()->thenReturn($this->siteId);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->redirectionManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\RedirectionManager');
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
@@ -134,5 +146,44 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->updateRedirectionRoutes($this->nodeEvent);
 
         Phake::verify($this->redirectionManager)->updateRedirection($this->nodeId, $this->language);
+    }
+
+    /**
+     * Test update site alias
+     */
+    public function testUpdateRedirectionOnSiteAliasUpdate()
+    {
+        Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())
+        ->thenReturn(array($this->node));
+        Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
+        ->thenReturn(array($this->node, $this->otherNode));
+
+        $this->subscriber->updateRedirectionOnSiteAliasUpdate($this->siteAliasEvent);
+
+        Phake::verify($this->redirectionManager)->deleteRedirection($this->nodeId, $this->language);
+        Phake::verify($this->redirectionManager)->createRedirection(
+            $this->otherRoutePattern,
+            $this->nodeId,
+            $this->language
+        );
+
+/*        $siteId = $node->getSiteId();
+        $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
+        if (count($nodes) > 0) {
+            $lastNode = array_shift($nodes);
+            $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
+
+            foreach ($nodes as $otherNode) {
+                $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
+                if (!in_array($oldRoutePattern, $routePatterns)) {
+                    $this->redirectionManager->createRedirection(
+                        $oldRoutePattern,
+                        $node->getNodeId(),
+                        $node->getLanguage()
+                        );
+                    array_push($routePatterns, $oldRoutePattern);
+                }
+            }
+        }*/
     }
 }

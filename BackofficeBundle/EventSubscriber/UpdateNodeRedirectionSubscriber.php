@@ -5,9 +5,11 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Event\SiteAliasEvent;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
+use OpenOrchestra\ModelInterface\SiteAliasEvents;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -41,7 +43,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         $node = $event->getNode();
         $previousStatus = $event->getPreviousStatus();
         if ($node->getStatus()->isPublished() || (!$node->getStatus()->isPublished() && $previousStatus->isPublished())) {
-            $this->generateRouteForNode($node);
+            $this->generateRedirectionForNode($node);
         }
     }
 
@@ -58,15 +60,29 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeEvent $event
+     * @param SiteAliasEvent $event
      */
-    public function updateRedirectionOnSiteUpdate(SiteEvent $event)
+    public function updateRedirectionOnSiteAliasUpdate(SiteAliasEvent $event)
     {
-        $siteId = $event->getSite()->getCurrentSiteId();
+        $siteId = $event->getSiteId();
         $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
         foreach ($nodes as $node) {
-            $siteId = $this->currentSiteManager->getCurrentSiteId();
-            $this->generateRouteForNode($node);
+            $this->generateRedirectionForNode($node);
+        }
+    }
+
+    /**
+     * @param SiteAliasEvent $event
+     */
+    public function deleteRedirectionOnSiteDelete(SiteEvent $event)
+    {
+        $siteId = $event->getSiteId();
+        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
+        foreach ($nodes as $node) {
+            $this->redirectionManager->deleteRedirection(
+                $node->getNodeId(),
+                $node->getLanguage()
+            );
         }
     }
 
@@ -78,7 +94,8 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRedirection',
             NodeEvents::NODE_RESTORE => 'updateRedirectionRoutes',
-            SiteEvents::SITE_UPDATE => 'updateRedirectionOnSiteUpdate',
+            SiteAliasEvents::SITEALIAS_UPDATE => 'updateRedirectionOnSiteAliasUpdate',
+            SiteEvents::SITE_DELETE => 'deleteRedirectionOnSiteDelete',
         );
     }
 
@@ -106,15 +123,14 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     /**
      * @param NodeInterface $node
      */
-
-    protected function generateRouteForNode(NodeInterface $node)
+    protected function generateRedirectionForNode(NodeInterface $node)
     {
-        $siteId = $node->getSiteId();
-        $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
         $this->redirectionManager->deleteRedirection(
             $node->getNodeId(),
             $node->getLanguage()
-            );
+        );
+        $siteId = $node->getSiteId();
+        $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
         if (count($nodes) > 0) {
             $lastNode = array_shift($nodes);
             $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
