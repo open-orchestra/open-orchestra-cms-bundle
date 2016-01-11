@@ -148,6 +148,7 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->deleteRouteDocumentOnSiteDelete($event);
 
         Phake::verify($this->objectManager)->remove($route);
+        Phake::verify($this->objectManager)->flush();
     }
 
     /**

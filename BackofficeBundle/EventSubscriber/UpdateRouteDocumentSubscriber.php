@@ -96,6 +96,8 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
         foreach ($routesToClear as $route) {
             $this->objectManager->remove($route);
         }
+
+        $this->objectManager->flush();
     }
 
     /**
