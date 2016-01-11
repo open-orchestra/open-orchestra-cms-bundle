@@ -145,10 +145,9 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
         $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
         Phake::when($this->routeDocumentManager)->clearForSite(Phake::anyParameters())->thenReturn(array($route));
 
-        $this->subscriber->updateRouteDocumentOnSiteUpdate($event);
+        $this->subscriber->deleteRouteDocumentOnSiteDelete($event);
 
         Phake::verify($this->objectManager)->remove($route);
-        Phake::verify($this->objectManager)->flush();
     }
 
     /**

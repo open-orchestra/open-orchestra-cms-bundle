@@ -55,7 +55,7 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
         $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
         Phake::when($this->nodeEvent)->getPreviousStatus()->thenReturn($this->status);
-        $this->siteAliasEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
+        $this->siteAliasEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteAliasEvent');
         Phake::when($this->siteAliasEvent)->getSiteId()->thenReturn($this->siteId);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->redirectionManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\RedirectionManager');
@@ -166,24 +166,5 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
             $this->nodeId,
             $this->language
         );
-
-/*        $siteId = $node->getSiteId();
-        $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
-        if (count($nodes) > 0) {
-            $lastNode = array_shift($nodes);
-            $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
-
-            foreach ($nodes as $otherNode) {
-                $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
-                if (!in_array($oldRoutePattern, $routePatterns)) {
-                    $this->redirectionManager->createRedirection(
-                        $oldRoutePattern,
-                        $node->getNodeId(),
-                        $node->getLanguage()
-                        );
-                    array_push($routePatterns, $oldRoutePattern);
-                }
-            }
-        }*/
     }
 }
