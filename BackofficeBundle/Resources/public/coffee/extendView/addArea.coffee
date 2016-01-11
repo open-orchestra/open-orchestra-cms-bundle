@@ -17,7 +17,6 @@ extendView['addArea'] = {
       editable: @options.editable
       domContainer: @areaContainer
     )
-    console.log @options.configuration
     @areaContainer.addClass (if @options.configuration.get("bo_direction") is "h" then "bo-row" else "bo-column")
     return
 }
