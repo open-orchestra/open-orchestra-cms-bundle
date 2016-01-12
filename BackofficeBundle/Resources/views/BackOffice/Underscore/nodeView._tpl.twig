@@ -6,12 +6,14 @@
     </ul>
     <div id="preview"></div>
     <span id="entity-duplicate" data-text="{{ ('open_orchestra_backoffice.node.version.create') | trans({}, 'messages', language) }}"></span>
-    <div id="additionalContent" class="smart-form">
-        <label class="select">
-            <select id="version-selectbox"/>
-            <i></i>
-        </label>
-    </div>
+    <% if (typeof(node.attributes.links._self_version) !== "undefined") { %>
+        <div id="additionalContent" class="smart-form">
+            <label class="select">
+                <select id="version-selectbox"></select>
+                <i></i>
+            </label>
+        </div>
+    <% } %>
     <div role="container">
         <div class="ui-model bg-color-blueLight">
             <div class="toolbar">
