@@ -12,7 +12,7 @@
             >
                 <span>{{ node.name }}</span>
             </a>
-            {% if 'child' in element|keys %}
+            {% if 'child' in element|keys and node.nodeType != constant('TYPE_TRANSVERSE', node) %}
                 <ul
                     class="node-connectedSortable"
                     data-update-order="{{ path('open_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
