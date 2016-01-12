@@ -43,7 +43,7 @@ class FieldTypeTransformer extends AbstractTransformer
         $facade->fieldId = $fieldType->getFieldId();
         $facade->label = $this->translationChoiceManager->choose($fieldType->getLabels());
         $facade->defaultValue = $fieldType->getDefaultValue();
-        $facade->searchable = $fieldType->getSearchable();
+        $facade->searchable = $fieldType->isSearchable();
         $facade->listable = $fieldType->getListable();
         $facade->type = $fieldType->getType();
 
