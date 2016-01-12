@@ -14,7 +14,7 @@
             </a>
             {% if 'child' in element|keys
                and (element.child is not empty or is_granted("ROLE_ACCESS_CREATE_NODE"))
-               and node.nodeId != constant('TRANSVERSE_NODE_ID', node)
+               and node.nodeType != constant('TYPE_TRANSVERSE', node)
             %}
                 <ul
                     {% if is_granted("ROLE_ACCESS_MOVE_NODE") %} class="node-connectedSortable" {% endif %}
