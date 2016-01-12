@@ -90,6 +90,7 @@ class AddTransverseBlockSubscriberTest extends AbstractBaseTestCase
         Phake::when($node)->getNodeType()->thenReturn(NodeInterface::TYPE_TRANSVERSE);
         Phake::when($node)->getSiteId()->thenReturn($siteId);
         Phake::when($node)->getId()->thenReturn('mongoId');
+        Phake::when($node)->getNodeId()->thenReturn('nodeId');
 
         $event = Phake::mock('OpenOrchestra\ModelInterface\Event\BlockNodeEvent');
         Phake::when($event)->getBlock()->thenReturn($block);
@@ -103,11 +104,11 @@ class AddTransverseBlockSubscriberTest extends AbstractBaseTestCase
         Phake::when($otherNode)->getBlockIndex(Phake::anyParameters())->thenReturn($blockIndex);
 
         $otherNodes = array($otherNode, $node, $otherNode);
-        Phake::when($this->nodeRepository)->findByNodeTypeAndSite(Phake::anyParameters())->thenReturn($otherNodes);
+        Phake::when($this->nodeRepository)->findByNodeIdAndNodeTypeAndSite(Phake::anyParameters())->thenReturn($otherNodes);
 
         $this->subscriber->addTransverseBlock($event);
 
-        Phake::verify($this->nodeRepository)->findByNodeTypeAndSite(NodeInterface::TYPE_TRANSVERSE, $siteId);
+        Phake::verify($this->nodeRepository)->findByNodeIdAndNodeTypeAndSite('nodeId', NodeInterface::TYPE_TRANSVERSE, $siteId);
         Phake::verify($node, Phake::never())->addBlock(Phake::anyParameters());
         Phake::verify($otherNode, Phake::times(2))->addBlock(Phake::anyParameters());
         Phake::verify($area, Phake::times(2))->addBlock(array('nodeId' => 0, 'blockId' => $blockIndex));
