@@ -4,7 +4,6 @@
             <i class="fa fa-eye"></i> {{ 'open_orchestra_backoffice.node.preview'|trans({}, 'messages', language) }} <i class="fa fa-caret-down"></i>
         </button>
         <ul class="dropdown-menu pull-right">
-            <% if (previewLinks.length > 0 ) { %>
                 <% _.each(previewLinks, function(previewLink) { %>
                     <li>
                         <a href="<%= previewLink.link %>" target="_blank">
@@ -12,9 +11,6 @@
                         </a>
                     </li>
                 <% }); %>
-            <% } else { %>
-                <li>test failed</li>
-            <% } %>
         </ul>
     </div>
 </div>
