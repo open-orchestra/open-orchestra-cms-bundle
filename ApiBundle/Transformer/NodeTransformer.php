@@ -106,28 +106,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
         }
 
-        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE)) {
-            $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
-                'nodeId' => $nodeId,
-                'language' => $node->getLanguage(),
-                'version' => $node->getVersion(),
-            )));
-        }
-
-        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
-            'nodeId' => $nodeId,
-            'language' => $node->getLanguage(),
-        )));
-
-        if (!$node->getStatus()->isPublished() &&
-            NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
-            $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE)
-        ) {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
-                'nodeId' => $nodeId
-            )));
-        }
-
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
         )));
@@ -142,19 +120,19 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'siteId' => $node->getSiteId(),
         )));
 
-        if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
-            /** @var SiteAliasInterface $alias */
-            $encryptedId = $this->encrypter->encrypt($node->getId());
-            foreach ($site->getAliases() as $aliasId => $alias) {
-                if ($alias->getLanguage() == $node->getLanguage()) {
-                    $facade->addPreviewLink(
-                        $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $nodeId)
-                    );
+        if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+            if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
+                /** @var SiteAliasInterface $alias */
+                $encryptedId = $this->encrypter->encrypt($node->getId());
+                foreach ($site->getAliases() as $aliasId => $alias) {
+                    if ($alias->getLanguage() == $node->getLanguage()) {
+                        $facade->addPreviewLink(
+                            $this->getPreviewLink($node->getScheme(), $alias, $encryptedId, $aliasId, $nodeId)
+                        );
+                    }
                 }
             }
-        }
 
-        if (NodeInterface::TRANSVERSE_NODE_ID !== $nodeId) {
             $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
                 'nodeMongoId' => $node->getId()
             )));
@@ -162,6 +140,28 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
                 'nodeMongoId' => $node->getId()
             )));
+
+            if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE)) {
+                $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
+                    'nodeId' => $nodeId,
+                    'language' => $node->getLanguage(),
+                    'version' => $node->getVersion(),
+                )));
+            }
+
+            $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
+                'nodeId' => $nodeId,
+                'language' => $node->getLanguage(),
+            )));
+
+            if (!$node->getStatus()->isPublished() &&
+                NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
+                $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE)
+            ) {
+                $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
+                    'nodeId' => $nodeId
+                )));
+            }
         }
 
         $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list', array(
