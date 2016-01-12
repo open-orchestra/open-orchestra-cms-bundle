@@ -121,7 +121,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         )));
 
         if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
-
             if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
                 /** @var SiteAliasInterface $alias */
                 $encryptedId = $this->encrypter->encrypt($node->getId());
