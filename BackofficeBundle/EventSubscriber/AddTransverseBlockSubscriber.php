@@ -35,7 +35,11 @@ class AddTransverseBlockSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $nodes = $this->nodeRepository->findByNodeTypeAndSite(NodeInterface::TYPE_TRANSVERSE, $node->getSiteId());
+        $nodes = $this->nodeRepository->findByNodeIdAndNodeTypeAndSite(
+            $node->getNodeId(),
+            NodeInterface::TYPE_TRANSVERSE,
+            $node->getSiteId()
+        );
         /** @var NodeInterface $transverseNode */
         foreach ($nodes as $transverseNode) {
             if ($transverseNode->getId() == $node->getId()) {
