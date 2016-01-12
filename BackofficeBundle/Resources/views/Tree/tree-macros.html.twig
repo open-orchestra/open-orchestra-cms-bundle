@@ -12,7 +12,10 @@
             >
                 <span>{{ node.name }}</span>
             </a>
-            {% if 'child' in element|keys and (element.child is not empty or is_granted("ROLE_ACCESS_CREATE_NODE"))%}
+            {% if 'child' in element|keys
+               and (element.child is not empty or is_granted("ROLE_ACCESS_CREATE_NODE"))
+               and node.nodeId != constant('TRANSVERSE_NODE_ID', node)
+            %}
                 <ul
                     {% if is_granted("ROLE_ACCESS_MOVE_NODE") %} class="node-connectedSortable" {% endif %}
                     data-update-order="{{ path('open_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
