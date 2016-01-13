@@ -171,7 +171,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
             $node->getLanguage()
         );
 
-        $nodes = $this->nodeRepository->findByParentId($node->getNodeId(), $node->getSiteId());
+        $nodes = $this->nodeRepository->findByParent($node->getNodeId(), $node->getSiteId());
         foreach ($nodes as $node) {
             $this->deleteRedirectionForNodeTree($node);
         }
