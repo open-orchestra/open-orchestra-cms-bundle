@@ -4,4 +4,5 @@ widgetChannel.bind 'ready', (view) ->
     new viewClass(
       previewLinks: view.options.node.get('preview_links')
       entityType: view.options.entityType
+      widget_index: 3
     )
