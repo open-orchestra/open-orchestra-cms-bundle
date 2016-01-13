@@ -29,7 +29,7 @@ class SiteController extends AbstractAdminController
     public function formAction(Request $request, $siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $aliases = $site->getAliases()->toArray();
+        $oldAliases = $site->getAliases()->toArray();
         $form = $this->createForm(
             'oo_site',
             $site,
@@ -43,10 +43,7 @@ class SiteController extends AbstractAdminController
         $form->handleRequest($request);
         $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.website.success');
         if ($this->handleForm($form, $message)) {
-            if($site->getAliases()->toArray() !== $aliases) {
-                $this->dispatchEvent(SiteAliasEvents::SITEALIAS_UPDATE, new SiteAliasEvent($site));
-            }
-            $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site));
+            $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site, $oldAliases));
         }
 
         return $this->renderAdminForm($form);

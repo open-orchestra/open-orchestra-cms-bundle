@@ -6,6 +6,7 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Test UpdateNodeRedirectionSubscriberTest
@@ -19,12 +20,15 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
 
     protected $node;
     protected $otherNode;
+    protected $site;
     protected $status;
     protected $id = 'id';
     protected $nodeEvent;
+    protected $siteEvent;
     protected $nodeRepository;
     protected $language = 'fr';
     protected $nodeId = 'nodeId';
+    protected $otherNodeId = 'other_nodeId';
     protected $siteId = 'fakeSiteId';
     protected $redirectionManager;
     protected $routePattern = 'route_pattern';
@@ -36,6 +40,11 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
+        $aliases = new ArrayCollection();
+        $aliases->add('fakeAliases');
+        $oldAliases = new ArrayCollection();
+        $oldAliases->add('fakeOldAliases');
+
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->status)->isPublished()->thenReturn(false);
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
@@ -48,15 +57,20 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->node)->getSiteId()->thenReturn($this->siteId);
         $this->otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getId()->thenReturn($this->id);
-        Phake::when($this->otherNode)->getNodeId()->thenReturn($this->nodeId);
+        Phake::when($this->otherNode)->getNodeId()->thenReturn($this->otherNodeId);
         Phake::when($this->otherNode)->getParentId()->thenReturn(null);
         Phake::when($this->otherNode)->getLanguage()->thenReturn($this->language);
         Phake::when($this->otherNode)->getRoutePattern()->thenReturn($this->otherRoutePattern);
+        Phake::when($this->otherNode)->getSiteId()->thenReturn($this->siteId);
         $this->nodeEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\NodeEvent');
         Phake::when($this->nodeEvent)->getNode()->thenReturn($this->node);
         Phake::when($this->nodeEvent)->getPreviousStatus()->thenReturn($this->status);
-        $this->siteAliasEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteAliasEvent');
-        Phake::when($this->siteAliasEvent)->getSiteId()->thenReturn($this->siteId);
+        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($this->site)->getAliases()->thenReturn($aliases);
+        Phake::when($this->site)->getSiteId()->thenReturn($this->siteId);
+        $this->siteEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteEvent');
+        Phake::when($this->siteEvent)->getSite()->thenReturn($this->site);
+        Phake::when($this->siteEvent)->getOldAliases()->thenReturn($oldAliases);
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->redirectionManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\RedirectionManager');
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
@@ -151,14 +165,14 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
     /**
      * Test update site alias
      */
-    public function testUpdateRedirectionOnSiteAliasUpdate()
+    public function testUpdateRedirectionOnSiteUpdate()
     {
         Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())
         ->thenReturn(array($this->node));
         Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
         ->thenReturn(array($this->node, $this->otherNode));
 
-        $this->subscriber->updateRedirectionOnSiteAliasUpdate($this->siteAliasEvent);
+        $this->subscriber->updateRedirectionOnSiteUpdate($this->siteEvent);
 
         Phake::verify($this->redirectionManager)->deleteRedirection($this->nodeId, $this->language);
         Phake::verify($this->redirectionManager)->createRedirection(
@@ -166,5 +180,22 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
             $this->nodeId,
             $this->language
         );
+    }
+
+    /**
+     * Test delete node
+     */
+    public function testUpdateRedirectionRoutesOnNodeDelete()
+    {
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($this->nodeId, $this->siteId)
+        ->thenReturn(array($this->otherNode));
+
+        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($this->otherNodeId, $this->siteId)
+        ->thenReturn(array());
+
+        $this->subscriber->updateRedirectionRoutesOnNodeDelete($this->nodeEvent);
+
+        Phake::verify($this->redirectionManager)->deleteRedirection($this->nodeId, $this->language);
+        Phake::verify($this->redirectionManager)->deleteRedirection($this->otherNodeId, $this->language);
     }
 }

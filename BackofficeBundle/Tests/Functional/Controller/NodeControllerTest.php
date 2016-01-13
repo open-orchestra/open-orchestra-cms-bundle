@@ -142,6 +142,9 @@ class NodeControllerTest extends AbstractControllerTest
 
         $this->client->request('DELETE', '/api/node/' . $nodeName . '/delete');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $this->assertEquals(1, count($this->redirectionRepository->findAll()));
+        $this->assertEquals($routeDocumentCount, count($this->routeDocumentRepository->findAll()));
     }
 
     /**

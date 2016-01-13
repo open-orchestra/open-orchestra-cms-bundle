@@ -5,11 +5,9 @@ namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Event\SiteAliasEvent;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
-use OpenOrchestra\ModelInterface\SiteAliasEvents;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -60,23 +58,36 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param SiteAliasEvent $event
+     * @param NodeEvent $event
      */
-    public function updateRedirectionOnSiteAliasUpdate(SiteAliasEvent $event)
+    public function updateRedirectionRoutesOnNodeDelete(NodeEvent $event)
     {
-        $siteId = $event->getSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
-        foreach ($nodes as $node) {
-            $this->generateRedirectionForNode($node);
+        $node = $event->getNode();
+        $this->deleteRedirectionForNodeTree($node);
+    }
+
+    /**
+     * @param SiteEvent $event
+     */
+    public function updateRedirectionOnSiteUpdate(SiteEvent $event)
+    {
+        $site = $event->getSite();
+        if ($site->getAliases()->toArray() !== $event->getOldAliases()->toArray()) {
+            $siteId = $site->getSiteId();
+            $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
+            foreach ($nodes as $node) {
+                $this->generateRedirectionForNode($node);
+            }
         }
     }
 
     /**
-     * @param SiteAliasEvent $event
+     * @param SiteEvent $event
      */
     public function deleteRedirectionOnSiteDelete(SiteEvent $event)
     {
-        $siteId = $event->getSiteId();
+        $site = $event->getSite();
+        $siteId = $site->getSiteId();
         $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
         foreach ($nodes as $node) {
             $this->redirectionManager->deleteRedirection(
@@ -94,7 +105,8 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         return array(
             NodeEvents::NODE_CHANGE_STATUS => 'updateRedirection',
             NodeEvents::NODE_RESTORE => 'updateRedirectionRoutes',
-            SiteAliasEvents::SITEALIAS_UPDATE => 'updateRedirectionOnSiteAliasUpdate',
+            NodeEvents::NODE_DELETE => 'updateRedirectionRoutesOnNodeDelete',
+            SiteEvents::SITE_UPDATE => 'updateRedirectionOnSiteUpdate',
             SiteEvents::SITE_DELETE => 'deleteRedirectionOnSiteDelete',
         );
     }
@@ -146,6 +158,22 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
                     array_push($routePatterns, $oldRoutePattern);
                 }
             }
+        }
+    }
+
+    /**
+     * @param NodeEvent $event
+     */
+    protected function deleteRedirectionForNodeTree(NodeInterface $node)
+    {
+        $this->redirectionManager->deleteRedirection(
+            $node->getNodeId(),
+            $node->getLanguage()
+        );
+
+        $nodes = $this->nodeRepository->findByParentId($node->getNodeId(), $node->getSiteId());
+        foreach ($nodes as $node) {
+            $this->deleteRedirectionForNodeTree($node);
         }
     }
 }
