@@ -3,7 +3,9 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
+use OpenOrchestra\ModelInterface\Event\SiteAliasEvent;
 use OpenOrchestra\ModelInterface\SiteEvents;
+use OpenOrchestra\ModelInterface\SiteAliasEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +29,7 @@ class SiteController extends AbstractAdminController
     public function formAction(Request $request, $siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-
+        $oldAliases = $site->getAliases()->toArray();
         $form = $this->createForm(
             'oo_site',
             $site,
@@ -41,7 +43,7 @@ class SiteController extends AbstractAdminController
         $form->handleRequest($request);
         $message =  $this->get('translator')->trans('open_orchestra_backoffice.form.website.success');
         if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site));
+            $this->dispatchEvent(SiteEvents::SITE_UPDATE, new SiteEvent($site, $oldAliases));
         }
 
         return $this->renderAdminForm($form);

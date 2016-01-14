@@ -134,6 +134,24 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
     }
 
     /**
+     * Test on site delete
+     */
+    public function testDeleteRouteDocumentOnSiteDelete()
+    {
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $event = Phake::mock('OpenOrchestra\ModelInterface\Event\SiteEvent');
+        Phake::when($event)->getSite()->thenReturn($site);
+
+        $route = Phake::mock('OpenOrchestra\ModelInterface\Model\RouteDocumentInterface');
+        Phake::when($this->routeDocumentManager)->clearForSite(Phake::anyParameters())->thenReturn(array($route));
+
+        $this->subscriber->deleteRouteDocumentOnSiteDelete($event);
+
+        Phake::verify($this->objectManager)->remove($route);
+        Phake::verify($this->objectManager)->flush();
+    }
+
+    /**
      * Test on deleteForRedirection
      */
     public function testDeleteForRedirection()

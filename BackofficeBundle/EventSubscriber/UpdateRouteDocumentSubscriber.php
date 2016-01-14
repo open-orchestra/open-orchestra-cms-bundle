@@ -87,6 +87,20 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param SiteEvent $event
+     */
+    public function deleteRouteDocumentOnSiteDelete(SiteEvent $event)
+    {
+        $routesToClear = $this->routeDocumentManager->clearForSite($event->getSite());
+
+        foreach ($routesToClear as $route) {
+            $this->objectManager->remove($route);
+        }
+
+        $this->objectManager->flush();
+    }
+
+    /**
      * Returns an array of event names this subscriber wants to listen to.
      *
      * @return array The event names to listen to
@@ -101,6 +115,7 @@ class UpdateRouteDocumentSubscriber implements EventSubscriberInterface
             RedirectionEvents::REDIRECTION_UPDATE => 'createOrUpdateForRedirection',
             RedirectionEvents::REDIRECTION_DELETE => 'deleteForRedirection',
             SiteEvents::SITE_UPDATE => 'updateRouteDocumentOnSiteUpdate',
+            SiteEvents::SITE_DELETE => 'deleteRouteDocumentOnSiteDelete',
         );
     }
 
