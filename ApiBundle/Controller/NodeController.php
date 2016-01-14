@@ -175,7 +175,6 @@ class NodeController extends BaseController
         $orderedNodes = $this->get('open_orchestra_display.manager.tree')->generateTree($nodes);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node_tree')->transform(end($orderedNodes));
-
     }
 
     /**
