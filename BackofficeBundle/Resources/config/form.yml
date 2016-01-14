@@ -75,6 +75,7 @@ services:
             - @open_orchestra_backoffice.manager.node
             - %open_orchestra_model.document.area.class%
             - @translator
+            - @open_orchestra_backoffice.listener.node_theme_selection
         tags:
             - { name: form.type, alias: oo_node }
     # Area form type

@@ -117,6 +117,7 @@ open_orchestra_backoffice:
             creation: Le thème a été crée
             name: Nom
             default: par defaut
+            site_theme: Par défaut (Configuration du site)
         content:
             transformation_error: Impossible de charger la valeur de ce champ (le type ne correspond pas)
             success: Le contenu a été modifié

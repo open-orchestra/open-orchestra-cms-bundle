@@ -2,8 +2,13 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\InheritThemeToThemeTransformer;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\ThemeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -12,13 +17,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ThemeChoiceType extends AbstractType
 {
     protected $themeRepository;
-
+    protected $defaultChoice;
     /**
      * @param ThemeRepositoryInterface $themeRepository
      */
     public function __construct(ThemeRepositoryInterface $themeRepository)
     {
         $this->themeRepository = $themeRepository;
+        $this->defaultChoice = array(NodeInterface::THEME_DEFAULT => "open_orchestra_backoffice.form.theme.site_theme");
     }
 
     /**
@@ -36,7 +42,7 @@ class ThemeChoiceType extends AbstractType
      */
     protected function getChoices()
     {
-        $choices = array();
+        $choices = $this->defaultChoice;
 
         foreach ($this->themeRepository->findAll() as $theme) {
             $choices[$theme->getName()] = $theme->getName();

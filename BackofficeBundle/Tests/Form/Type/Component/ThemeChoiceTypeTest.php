@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ThemeChoiceType;
 
@@ -88,7 +89,10 @@ class ThemeChoiceTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolver);
 
         Phake::verify($resolver)->setDefaults(array(
-            'choices' => array($this->themeName => $this->themeName)
+            'choices' => array(
+                NodeInterface::THEME_DEFAULT => "open_orchestra_backoffice.form.theme.site_theme",
+                $this->themeName => $this->themeName
+            )
         ));
     }
 }

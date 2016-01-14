@@ -89,6 +89,11 @@ class NodeFacade extends DeletedFacade
     public $theme;
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $defaultTheme;
+
+    /**
      * @Serializer\Type("integer")
      */
     public $version;

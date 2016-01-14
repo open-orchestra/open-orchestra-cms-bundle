@@ -2,12 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\BackofficeBundle\EventListener\NodeThemeSelectionListener;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +27,7 @@ class NodeType extends AbstractType
     protected $nodeManager;
     protected $templateRepository;
     protected $schemeChoices;
+    protected $nodeThemeSelection;
 
     /**
      * @param string                      $nodeClass
@@ -32,9 +35,16 @@ class NodeType extends AbstractType
      * @param NodeManager                 $nodeManager
      * @param string                      $areaClass
      * @param TranslatorInterface         $translator
+     * @param NodeThemeSelectionListener  $nodeThemeSelection
      */
-    public function __construct($nodeClass, TemplateRepositoryInterface $templateRepository, NodeManager $nodeManager, $areaClass, TranslatorInterface $translator)
-    {
+    public function __construct(
+        $nodeClass,
+        TemplateRepositoryInterface $templateRepository,
+        NodeManager $nodeManager,
+        $areaClass,
+        TranslatorInterface $translator,
+        NodeThemeSelectionListener $nodeThemeSelection
+    ) {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
@@ -47,6 +57,7 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
             SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
+        $this->nodeThemeSelection = $nodeThemeSelection;
     }
 
     /**
@@ -121,6 +132,10 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'required' => false,
             ));
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->nodeThemeSelection, 'preSetData'));
+        $builder->addEventListener(FormEvents::SUBMIT, array($this->nodeThemeSelection, 'submit'));
+
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
