@@ -187,10 +187,10 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateRedirectionRoutesOnNodeDelete()
     {
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($this->nodeId, $this->siteId)
+        Phake::when($this->nodeRepository)->findByParent($this->nodeId, $this->siteId)
         ->thenReturn(array($this->otherNode));
 
-        Phake::when($this->nodeRepository)->findByParentIdAndSiteId($this->otherNodeId, $this->siteId)
+        Phake::when($this->nodeRepository)->findByParent($this->otherNodeId, $this->siteId)
         ->thenReturn(array());
 
         $this->subscriber->updateRedirectionRoutesOnNodeDelete($this->nodeEvent);
