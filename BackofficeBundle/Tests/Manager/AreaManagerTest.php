@@ -411,45 +411,4 @@ class AreaManagerTest extends AbstractBaseTestCase
             array($node3, $node2),
         );
     }
-
-    /**
-     * test updateAreasFromContainer
-     */
-    public function testUpdateAreasFromContainer()
-    {
-        $x = 1;
-        $y = 2;
-        $width = 3;
-        $height = 4;
-
-        $newAreas = array(
-            'area-0' => array('x' => $x, 'y' => $y, 'width' => $width, 'height' => $height),
-            'undefined' => array('x' => 0, 'y' => 0, 'width' => 0, 'height' => 0),
-        );
-
-        $area0 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area0)->getAreaId()->thenReturn('area-0');
-
-        $area1 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area1)->getAreaId()->thenReturn('toDelete');
-
-        $areas = new ArrayCollection();
-        $areas->add($area0);
-        $areas->add($area1);
-
-        $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
-        Phake::when($areaContainer)->getAreas()->thenReturn($areas);
-
-        $result = $this->manager->updateAreasFromContainer($newAreas, $areaContainer)->getAreas();
-
-        Phake::verify($area0)->setGridX($x);
-        Phake::verify($area0)->setGridY($y);
-        Phake::verify($area0)->setGridWidth($width);
-        Phake::verify($area0)->setGridHeight($height);
-
-        $this->assertTrue(!array_key_exists(1, $result));
-        $this->assertEquals('area-1', $result[2]->getAreaId());
-        $this->assertEquals('Area #1', $result[2]->getLabel());
-
-    }
 }

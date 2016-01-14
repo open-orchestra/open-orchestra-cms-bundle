@@ -166,10 +166,6 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         $facade->boDirection = $area->getBoDirection();
-        $facade->gridX = intval($area->getGridX());
-        $facade->gridY = intval($area->getGridY());
-        $facade->gridWidth = intval($area->getGridWidth());
-        $facade->gridHeight = intval($area->getGridHeight());
 
         $facade->uiModel = $this->getTransformer('ui_model')->transform(
             array(
