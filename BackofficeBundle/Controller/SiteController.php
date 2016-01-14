@@ -29,7 +29,7 @@ class SiteController extends AbstractAdminController
     public function formAction(Request $request, $siteId)
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $oldAliases = $site->getAliases()->toArray();
+        $oldAliases = $site->getAliases();
         $form = $this->createForm(
             'oo_site',
             $site,
