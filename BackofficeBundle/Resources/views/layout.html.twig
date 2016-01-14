@@ -12,11 +12,27 @@
 
         {% block stylesheets %}
             {% if app.debug %}
-                {% stylesheets 'css/all.css' filter='cssrewrite' %}
+                {% stylesheets
+                    'css/presmartadmin.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production-plugins.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-skins.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-rtl.css'
+                    'css/postsmartadmin.css'
+                    filter='cssrewrite'
+                %}
                     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% else %}
-                {% stylesheets 'css/all.min.css' filter='cssrewrite' %}
+                {% stylesheets
+                    'css/presmartadmin.min.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production-plugins.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-skins.css'
+                    'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-rtl.css'
+                    'css/postsmartadmin.min.css'
+                    filter='cssrewrite'
+                %}
                     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
                 {% endstylesheets %}
             {% endif %}
