@@ -15,6 +15,7 @@ StatusView = OrchestraView.extend(
       statuses: @options.statuses
       statusChangeLink: @options.currentStatus.self_status_change
     )
+    @$el.attr('data-widget-index', @options.widget_index)
     addCustomJarvisWidget(@$el)
     return
 

@@ -18,6 +18,7 @@ extendView['commonPage'] = {
     pageConfigurationButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addConfigurationButton')
     new pageConfigurationButtonViewClass(@addOption(
       viewContainer: @
+      widget_index: 2
     ))
 
 }
