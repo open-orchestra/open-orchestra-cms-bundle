@@ -11,7 +11,6 @@ parameters:
     open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\BackofficeBundle\Manager\RedirectionManager
     open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager
     open_orchestra_backoffice.listener.node_theme_selection.class: OpenOrchestra\BackofficeBundle\EventListener\NodeThemeSelectionListener
-    open_orchestra_backoffice.listener.update_site_nodes_theme.class: OpenOrchestra\BackofficeBundle\EventListener\UpdateSiteNodesThemeListener
 
 services:
     open_orchestra_backoffice.context_manager:
@@ -87,10 +86,3 @@ services:
         class: %open_orchestra_backoffice.listener.node_theme_selection.class%
         arguments:
             - @open_orchestra_model.repository.site
-    open_orchestra_backoffice.listener.update_site_nodes_theme:
-        class: %open_orchestra_backoffice.listener.update_site_nodes_theme.class%
-        arguments:
-            - %open_orchestra_model.document.node.class%
-        tags:
-            - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-            - { name: doctrine_mongodb.odm.event_listener, event: postFlush }
