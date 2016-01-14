@@ -19,7 +19,6 @@ OrchestraBORouter = Backbone.Router.extend(
       return
     return
   initDisplayRouteChanges: (selector) ->
-    $.ajaxSetup().abortXhr()
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
     $('#left-panel nav li.active').removeClass 'active'
     link = $('#left-panel nav li a' + selector)
