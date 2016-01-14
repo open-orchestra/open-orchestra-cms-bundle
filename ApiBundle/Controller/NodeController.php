@@ -168,9 +168,14 @@ class NodeController extends BaseController
     public function listTreeNode($siteId)
     {
         $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
-        $orderedNodes = $this->get('open_orchestra_display.manager.tree')->generateTree($nodes);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_tree')->transform(end($orderedNodes));
+        if(!empty($nodes)) {
+            $orderedNodes = $this->get('open_orchestra_display.manager.tree')->generateTree($nodes);
+
+            return $this->get('open_orchestra_api.transformer_manager')->get('node_tree')->transform(end($orderedNodes));
+        }
+
+        return array();
     }
 
     /**
