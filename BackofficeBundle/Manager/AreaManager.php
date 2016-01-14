@@ -45,50 +45,6 @@ class AreaManager
     }
 
     /**
-     * Update areas from an AreaCollections
-     *
-     * @param array                 $newAreas
-     * @param AreaContainerInterface $areaContainer
-     *
-     * @return AreaContainerInterface
-     */
-    public function updateAreasFromContainer($newAreas, AreaContainerInterface $areaContainer)
-    {
-        $areas = $areaContainer->getAreas();
-        $rank = -1;
-        foreach ($areas as $key => $area) {
-            $areaId = $area->getAreaId();
-            if (array_key_exists($areaId, $newAreas)) {
-                $areas[$key]->setGridX($newAreas[$areaId]['x']);
-                $areas[$key]->setGridY($newAreas[$areaId]['y']);
-                $areas[$key]->setGridWidth($newAreas[$areaId]['width']);
-                $areas[$key]->setGridHeight($newAreas[$areaId]['height']);
-                if(preg_match('/^area-(\d+)$/', $areaId, $matches)) {
-                    $rank = max($rank, $matches[1]);
-                }
-                unset($newAreas[$areaId]);
-            }
-            else {
-                unset($areas[$key]);
-            }
-        }
-        foreach ($newAreas as $key => $area) {
-            $rank++;
-            $newArea = new $this->areaClass();
-            $newArea->setAreaId('area-' . $rank);
-            $newArea->setLabel('Area #' . $rank);
-            $newArea->setGridX(intval($area['x']));
-            $newArea->setGridY($area['y']);
-            $newArea->setGridWidth($area['width']);
-            $newArea->setGridHeight($area['height']);
-            $areas[] = $newArea;
-        }
-        $areaContainer->setAreas($areas);
-
-        return $areaContainer;
-    }
-
-    /**
      * @param array         $oldBlocks
      * @param array         $newBlocks
      * @param string        $areaId

@@ -17,7 +17,6 @@ OrchestraViewConfigurator = ->
     'showBlocksPanel': BlocksPanelView
     'showNode': NodeView
     'showTemplate': TemplateView
-    'showGSTemplate': GSTemplateView
     'showLanguage': LanguageView
     'showDuplicate': DuplicateView
     'showPreviewLinks': PreviewLinkView

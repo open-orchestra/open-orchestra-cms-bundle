@@ -42,23 +42,6 @@ class TemplateController extends BaseController
     }
 
     /**
-     * @param string $templateId
-     *
-     * @Config\Route("/gs/{templateId}", name="open_orchestra_api_gs_template_show")
-     * @Config\Method({"GET"})
-     *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
-     *
-     * @return FacadeInterface
-     */
-    public function showGSAction($templateId)
-    {
-        $template = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('template')->transform($template);
-    }
-
-    /**
      * @param string|null $templateId
      *
      * @Config\Route("/update-area-in-template/{templateId}", name="open_orchestra_api_areas_update_in_template")

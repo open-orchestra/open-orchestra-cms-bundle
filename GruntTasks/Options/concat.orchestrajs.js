@@ -72,12 +72,10 @@ module.exports = {
         //--[ PAGE ]--//
         'web/built/openorchestrabackoffice/js/page/makeSortable.js',
         'web/built/openorchestrabackoffice/js/page/AreaView.js',
-        'web/built/openorchestrabackoffice/js/page/GSAreaView.js',
         'web/built/openorchestrabackoffice/js/page/BlockView.js',
         'web/built/openorchestrabackoffice/js/page/NodeView.js',
         'web/built/openorchestrabackoffice/js/page/NodeFormView.js',
         'web/built/openorchestrabackoffice/js/page/TemplateView.js',
-        'web/built/openorchestrabackoffice/js/page/GSTemplateView.js',
         'web/built/openorchestrabackoffice/js/page/TemplateFormView.js',
         'web/built/openorchestrabackoffice/js/page/SubElementFormView.js',
         'web/built/openorchestrabackoffice/js/page/showNode.js',

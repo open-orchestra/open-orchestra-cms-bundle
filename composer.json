@@ -74,8 +74,6 @@
         "underscore": "*",
         "jquery-minicolors": "*",
         "backbone.wreqr": "*",
-        "lodash": ">= 3.5.0",
-        "gridstack": "0.2.3",
         "flow.js": "~2.9.0"
       }
     }
