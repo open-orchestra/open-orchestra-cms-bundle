@@ -85,10 +85,6 @@ module.exports = {
         src: 'vendor/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2',
         dest: 'web/fonts/glyphicons-halflings-regular.woff2'
     },
-    jcrop_gif: {
-        src: 'vendor/bower_components/Jcrop/css/Jcrop.gif',
-        dest: 'web/img/jcrop/Jcrop.gif'
-    },
 
     //--[ SMARTADMIN ASSETS ]--//
     smartadmin_bg: {

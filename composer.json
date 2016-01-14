@@ -66,15 +66,13 @@
         "jquery-ui": "~1.11.2",
         "bootstrap": "~3.3.4",
         "jquery-form": "3.51",
-        "Jcrop": "~0.9.12",
         "select2": "3.5.2",
         "font-awesome": "4.3.0",
         "open-sans": "v1.1.0",
         "backbone": "*",
         "underscore": "*",
         "jquery-minicolors": "*",
-        "backbone.wreqr": "*",
-        "flow.js": "~2.9.0"
+        "backbone.wreqr": "*"
       }
     }
 }
