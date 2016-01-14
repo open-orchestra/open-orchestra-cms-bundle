@@ -59,7 +59,6 @@ GSTemplateView = OrchestraView.extend(
         height: item.height
       }
     )
-    $.ajaxSetup().abortXhr()
     $.ajax
       url: @options.template.get('links')._self_update_areas
       method: 'POST'
