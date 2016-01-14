@@ -163,6 +163,7 @@ open_orchestra_backoffice:
             role: Role needed to display the page
             max_age: Max age of the response for the node
             node_source: The source page (in case of copy)
+            boDirection: Children direction
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
         changefreq:

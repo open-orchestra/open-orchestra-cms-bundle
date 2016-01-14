@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\BackofficeBundle\EventSubscriber\BoDirectionChildrenSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeChoiceSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AddSubmitButtonSubscriber;
@@ -121,6 +122,8 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'required' => false,
             ));
+
+        $builder->addEventSubscriber(new BoDirectionChildrenSubscriber());
         if(!array_key_exists('disabled', $options) || $options['disabled'] === false){
             $builder->addEventSubscriber(new NodeChoiceSubscriber($this->nodeManager));
             $builder->addEventSubscriber(new TemplateChoiceSubscriber($this->templateRepository));

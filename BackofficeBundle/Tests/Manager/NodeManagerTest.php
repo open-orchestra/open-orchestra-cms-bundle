@@ -80,6 +80,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
         $version = 1;
+        $boDirection = 'h';
 
         $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
@@ -88,6 +89,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $node0 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node0)->getAreas()->thenReturn(array($area));
         Phake::when($node0)->getBlocks()->thenReturn(array($block));
+        Phake::when($node0)->getBoDirection()->thenReturn($boDirection);
         $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
 
@@ -101,6 +103,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($this->versionableSaver)->saveDuplicated($node0);
         Phake::verify($newNode)->addBlock($block);
         Phake::verify($newNode)->addArea($area);
+        Phake::verify($newNode)->setBoDirection($boDirection);
     }
 
     /**
@@ -218,15 +221,18 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $blocks = new ArrayCollection();
         $blocks->add($block);
         $oldNodeId = 'oldNodeId';
+        $boDirection = 'v';
         $oldNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($oldNode)->getAreas()->thenReturn($areas);
         Phake::when($oldNode)->getBlocks()->thenReturn($blocks);
+        Phake::when($oldNode)->getBoDirection()->thenReturn($boDirection);
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($oldNode);
 
         $this->manager->hydrateNodeFromNodeId($newNode, $oldNodeId);
 
         Phake::verify($newNode)->addBlock($block);
         Phake::verify($newNode)->addArea($area);
+        Phake::verify($newNode)->setBoDirection($boDirection);
     }
 
     /**

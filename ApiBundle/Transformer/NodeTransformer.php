@@ -95,6 +95,7 @@ class NodeTransformer extends AbstractTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
+        $facade->boDirection = $node->getBoDirection();
         $facade->editable = $this->authorizeEdition->isEditable($node);
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(

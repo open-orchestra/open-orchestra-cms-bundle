@@ -39,6 +39,7 @@ class TemplateChoiceSubscriber implements EventSubscriberInterface
         ) {
             $template = $this->templateRepository->findOneByTemplateId($data['templateId']);
             if (null !== $template) {
+                $templateChoiceContainer->setBoDirection($template->getBoDirection());
                 $templateChoiceContainer->setAreas($template->getAreas());
                 $templateChoiceContainer->setBlocks($template->getBlocks());
             }
