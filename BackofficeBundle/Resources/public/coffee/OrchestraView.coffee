@@ -94,4 +94,5 @@ OrchestraView = Backbone.View.extend(
       self_duplicate: element.get('links')._self_duplicate
       path: path.duplicate
     ) if element.get('links')._self_duplicate
+
 )

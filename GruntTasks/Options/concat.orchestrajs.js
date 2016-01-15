@@ -46,6 +46,7 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/extendView/contentTypeChange.js',
 
         //--[ WIDGETS ]--//
+        'web/built/openorchestrabackoffice/js/widget/AbstractConcurrancyCounter.js',
         'web/built/openorchestrabackoffice/js/widget/widgetChannel.js',
         'web/built/openorchestrabackoffice/js/widget/duplicateChannel.js',
         'web/built/openorchestrabackoffice/js/widget/DuplicateView.js',

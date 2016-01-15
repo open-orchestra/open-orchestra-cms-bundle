@@ -1,7 +1,6 @@
-StatusView = OrchestraView.extend(
+StatusView = AbstractConcurrancyCounter.extend(
   events:
     'click .change-status': 'changeStatus'
-  extendView : [ 'concurrency' ]
 
   initialize: (options) ->
     @options = options

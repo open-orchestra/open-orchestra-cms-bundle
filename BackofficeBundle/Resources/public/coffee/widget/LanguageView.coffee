@@ -1,7 +1,6 @@
-LanguageView = OrchestraView.extend(
+LanguageView = AbstractConcurrancyCounter.extend(
   events:
     'click a.change-language': 'changeLanguage'
-  extendView : [ 'concurrency' ]
 
   initialize: (options) ->
     @options = options
