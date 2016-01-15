@@ -1,4 +1,6 @@
 PreviewLinkView = OrchestraView.extend(
+  extendView : [ 'concurrency' ]
+
   initialize: (options) ->
     @previewLinks = options.previewLinks
     @widget_index = options.widget_index

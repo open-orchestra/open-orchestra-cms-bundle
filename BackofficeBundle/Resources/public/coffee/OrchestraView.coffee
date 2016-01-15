@@ -94,16 +94,4 @@ OrchestraView = Backbone.View.extend(
       self_duplicate: element.get('links')._self_duplicate
       path: path.duplicate
     ) if element.get('links')._self_duplicate
-
-  addConcurrency: ->
-    if typeof @currentRankView == 'undefined'
-      @oldRender = @render
-      @currentRankView = 0
-    else
-      @currentRankView = @currentRankView + 1
-    @render = () ->
-        if @currentRankView == @::currentRankView
-          @oldRender.apply this, arguments
-        return
-    return
 )

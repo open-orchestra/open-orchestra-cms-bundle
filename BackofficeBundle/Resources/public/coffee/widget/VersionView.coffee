@@ -1,5 +1,6 @@
 VersionView = OrchestraView.extend(
   tagName: "option"
+  extendView : [ 'concurrency' ]
 
   initialize: (options) ->
     @options = options

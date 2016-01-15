@@ -1,6 +1,7 @@
 DuplicateView = OrchestraView.extend(
   events:
     'click': 'duplicateElement'
+  extendView : [ 'concurrency' ]
 
   initialize: (options) ->
     @options = options
