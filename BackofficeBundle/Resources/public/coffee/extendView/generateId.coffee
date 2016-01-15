@@ -5,12 +5,12 @@ extendView['generateId'] = {
     'blur input.generate-id-dest': 'stopGenerateId'
 
   generateId: ->
-    sourceId = $(".generate-id-source").val()
-    if $('.generate-id-dest').val().length is 0 and sourceId?
-      $('.generate-id-dest').val(sourceId.latinise().replace(/[^a-z0-9]/gi,'_'))
+    sourceId = $(".generate-id-source", @$el).val()
+    if $('.generate-id-dest', @$el).val().length is 0 and sourceId?
+      $('.generate-id-dest', @$el).val(sourceId.latinise().replace(/[^a-z0-9]/gi,'_'))
     return
 
   stopGenerateId: ->
-    $('.generate-id-source').unbind()
+    $('.generate-id-source', @$el).unbind()
     return
 }
