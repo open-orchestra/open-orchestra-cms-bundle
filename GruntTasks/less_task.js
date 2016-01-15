@@ -1,8 +1,5 @@
 module.exports = function(grunt) {
-  grunt.registerTask('less:discovering', 'This is a function', function() {
-    // LESS Files management
-    // Source LESS files are located inside : bundles/[bundle]/less/
-    // Destination CSS files are located inside : built/[bundle]/css/
+  grunt.registerTask('less:discovering', 'Open Orchestra task to find and compile less files', function() {
     var mappingFileLess = grunt.file.expandMapping(
       ['*/less/*.less', '*/less/*/*.less'],
       'web/built/',
@@ -20,7 +17,7 @@ module.exports = function(grunt) {
     });
 
     var lessConfig = {
-      bundles: {
+      compile: {
         files: filesLess
       }
     };

@@ -1,8 +1,5 @@
 module.exports = function(grunt) {
-  grunt.registerTask('coffee:discovering', 'This is a function', function() {
-    // COFFEE Files management
-    // Source COFFEE files are located inside : bundles/[bundle]/coffee/
-    // Destination JS files are located inside : built/[bundle]/js/
+  grunt.registerTask('coffee:discovering', 'Open Orchestra task to find and compile coffee scripts', function() {
     var mappingFileCoffee = grunt.file.expandMapping(
       ['*/coffee/*.coffee', '*/coffee/*/*.coffee', '*/coffee/*/*/*.coffee', '*/coffee/*/*/*/*.coffee'],
       'web/built/',
@@ -20,7 +17,7 @@ module.exports = function(grunt) {
     });
 
     var coffeeConfig = {
-      compileBare: {
+      compile: {
         options: {
           bare: true
         },
