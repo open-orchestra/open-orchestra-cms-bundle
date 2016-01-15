@@ -33,11 +33,11 @@ TableviewCollectionView = OrchestraView.extend(
   createDatatable: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/table/tableviewCollectionView')
     @options.domContainer.html @$el
-    $('.js-widget-title', @options.domContainer).text @options.datatableParameterName
+    $('.js-widget-title', @options.domContainer).text @options.title
 
     columns = []
     columnDefs = []
-    for index, element of dataTableConfigurator.getDataTableParameters(@options.entityType)
+    for index, element of dataTableConfigurator.getDataTableParameters(@options.datatableParameterName)
       columns.push({'data' : element.name, 'defaultContent': ''});
       columnDefs.push($.extend({}
         element,
