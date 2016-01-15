@@ -117,7 +117,7 @@ AreaView = OrchestraView.extend(
         refreshUl params.areaView.options.domContainer
         $.ajax
           url: params.areaView.options.area.get("links")._self_delete
-          method: "POST"
+          method: "DELETE"
           message: params.message
         return
     )

@@ -120,6 +120,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area")
      *
      * @Config\Security("has_role('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Method({"DELETE"})
      *
      * @return Response
      */
@@ -127,7 +128,7 @@ class AreaController extends BaseController
     {
         $nodeRepository= $this->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
-        $areaContainer = $nodeRepository->findAreaByAreaId($node, $areaId);
+        $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
