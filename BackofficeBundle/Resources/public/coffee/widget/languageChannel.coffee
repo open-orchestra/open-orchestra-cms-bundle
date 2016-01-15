@@ -8,6 +8,7 @@ widgetChannel.bind 'ready', (view) ->
         site.set response
         for language of site.get('languages')
           viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showLanguage')
+          viewClass.prototype.addConcurrency()
           new viewClass(
               language: site.get('languages')[language]
               domContainer: view.$el.find('#entity-languages')
