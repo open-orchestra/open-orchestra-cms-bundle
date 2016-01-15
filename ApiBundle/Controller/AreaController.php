@@ -120,7 +120,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area")
      *
      * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     * @Config\Method({"POST", "DELETE"})
+     * @Config\Method({"DELETE"})
      *
      * @return Response
      */
