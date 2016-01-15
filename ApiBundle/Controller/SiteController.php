@@ -67,7 +67,7 @@ class SiteController extends BaseController
             ->get('open_orchestra.annotation_search_reader')
             ->extractMapping($this->container->getParameter('open_orchestra_model.document.site.class'));
         $configuration->setDescriptionEntity($mapping);
-        $siteCollection = $repository->findForPaginate($configuration);
+        $siteCollection = $repository->findByDeletedForPaginate(false, $configuration);
         $recordsTotal = $repository->countByDeleted(false);
         $recordsFiltered = $repository->countWithSearchFilterByDeleted(false, $configuration);
 
