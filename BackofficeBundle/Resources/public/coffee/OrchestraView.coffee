@@ -101,13 +101,9 @@ OrchestraView = Backbone.View.extend(
       @currentRankView = 0
     else
       @currentRankView = @currentRankView + 1
-    @render = ((rank) ->
-      ->
-        #console.log(@currentRankView)
-        #console.log(rank)
-        if @currentRankView == rank
+    @render = () ->
+        if @currentRankView == @::currentRankView
           @oldRender.apply this, arguments
         return
-    )(@currentRankView)
     return
 )
