@@ -1,0 +1,38 @@
+{#==[ PRE SMARTADMIN CSS ]=================================== #}
+
+{% if app.debug %}
+    {% stylesheets 'css/presmartadmin.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% else %}
+    {% stylesheets 'css/presmartadmin.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endif %}
+
+{#==[ SMARTADMIN CSS ]======================================= #}
+
+{% stylesheets 'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production-plugins.css' filter='cssrewrite' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-production.css' filter='cssrewrite' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-skins.css' filter='cssrewrite' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets 'bundles/openorchestrabackoffice/smartadmin/css/smartadmin-rtl.css' filter='cssrewrite' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{#==[ POST SMARTADMIN CSS ]================================== #}
+
+{% if app.debug %}
+    {% stylesheets 'css/postsmartadmin.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% else %}
+    {% stylesheets 'css/postsmartadmin.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endif %}
