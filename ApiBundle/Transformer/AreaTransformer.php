@@ -15,11 +15,12 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use UnexpectedValueException;
 
 /**
  * Class AreaTransformer
  */
-class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
+class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements TransformerWithTemplateContextInterface
 {
     protected $nodeRepository;
     protected $areaManager;
@@ -149,7 +150,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
      *
      * @return FacadeInterface
      */
-    public function transformFromTemplate($area, TemplateInterface $template = null, $parentAreaId = null)
+    public function transformFromTemplate(AreaInterface $area, TemplateInterface $template = null, $parentAreaId = null)
     {
         $facade = $this->newFacade();
 
@@ -215,11 +216,17 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param NodeInterface|null $node
      *
      * @return mixed|AreaInterface
+     *
+     * @throws UnexpectedValueException
      */
     public function reverseTransform(FacadeInterface $facade, $source = null, NodeInterface $node = null)
     {
         $blocks = $facade->getBlocks();
         $blockDocument = array();
+
+        if (!$source instanceof AreaInterface) {
+            throw new UnexpectedValueException("Area Transformer must be an instance of AreaInterface");
+        }
 
         foreach ($blocks as $position => $blockFacade) {
             $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
