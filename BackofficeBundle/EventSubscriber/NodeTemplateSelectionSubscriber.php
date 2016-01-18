@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -47,14 +48,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
             ) {
                 $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
                 if (null !== $template) {
-                    foreach($template->getAreas() as $area) {
-                        $newArea = clone $area;
-                        foreach($area->getAreas() as $sub) {
-                            $newSubArea = clone $sub;
-                            $newArea->addArea($newSubArea);
-                        }
-                        $formData->addArea($newArea);
-                    }
+                    $this->hydrateAreaFromTemplate($formData, $template->getAreas());
                 }
             } elseif (
                 array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
@@ -121,5 +115,23 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
         }
 
         return $templatesChoices;
+    }
+
+    /**
+     * @param $formData
+     * @param $areas
+     */
+    /**
+     * @param AreaContainerInterface $areaContainer
+     * @param Collection $areas
+     */
+    protected function hydrateAreaFromTemplate(AreaContainerInterface $areaContainer, $areas) {
+        foreach($areas as $area) {
+            $newArea = clone $area;
+            if (!empty($area->getAreas())) {
+                $this->hydrateAreaFromTemplate($newArea, $area->getAreas());
+            }
+            $areaContainer->addArea($newArea);
+        }
     }
 }
