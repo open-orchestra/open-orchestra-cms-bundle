@@ -119,9 +119,10 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
 
     /**
      * @param AreaContainerInterface $areaContainer
-     * @param Collection $areas
+     * @param Collection             $areas
      */
-    protected function hydrateAreaFromTemplate(AreaContainerInterface $areaContainer, $areas) {
+    protected function hydrateAreaFromTemplate(AreaContainerInterface $areaContainer, $areas)
+    {
         foreach($areas as $area) {
             $newArea = clone $area;
             if (!empty($area->getAreas())) {
