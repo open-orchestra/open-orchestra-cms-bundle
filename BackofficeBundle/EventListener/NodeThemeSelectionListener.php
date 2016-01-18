@@ -40,9 +40,9 @@ class NodeThemeSelectionListener
             $theme = $site->getTheme()->getName();
 
             $data->setTheme($theme);
-            $data->setThemeSiteDefault(true);
+            $data->setDefaultSiteTheme(true);
         } else {
-            $data->setThemeSiteDefault(false);
+            $data->setDefaultSiteTheme(false);
         }
         $event->setData($data);
     }
@@ -55,7 +55,7 @@ class NodeThemeSelectionListener
         /* @var $document NodeInterface */
         $document = $event->getData();
         if ($document instanceof NodeInterface) {
-            if ($document->isThemeSiteDefault()) {
+            if ($document->hasDefaultSiteTheme()) {
                 $document->setTheme(NodeInterface::THEME_DEFAULT);
             }
         }

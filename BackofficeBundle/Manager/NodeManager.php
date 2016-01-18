@@ -271,7 +271,7 @@ class NodeManager
         $node->setParentId($parentId);
         $node->setOrder($this->getNewNodeOrder($parentId, $siteId));
         $node->setTheme(NodeInterface::THEME_DEFAULT);
-        $node->setThemeSiteDefault(true);
+        $node->setDefaultSiteTheme(true);
 
         $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
