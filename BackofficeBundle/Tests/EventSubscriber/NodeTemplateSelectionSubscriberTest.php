@@ -169,8 +169,7 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->preSubmit($this->event);
 
-        Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setAreas((null !== $template)? $template->getAreas() : '');
-        Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->setBlocks((null !== $template)? $template->getBlocks() : '');
+        Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->addArea(Phake::anyParameters());
     }
 
     /**
@@ -196,8 +195,7 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->preSubmit($this->event);
 
-        Phake::verify($templateChoiceContainer, Phake::never())->setAreas(Phake::anyParameters());
-        Phake::verify($templateChoiceContainer, Phake::never())->setBlocks(Phake::anyParameters());
+        Phake::verify($templateChoiceContainer, Phake::never())->addArea(Phake::anyParameters());
     }
 
     /**
@@ -207,12 +205,12 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
      */
     public function getDataTemplate()
     {
-        $areas = Phake::mock('Doctrine\Common\Collections\Collection');
-        $blocks = Phake::mock('Doctrine\Common\Collections\Collection');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getAreas()->thenReturn(array());
+        $areas = array($area);
 
         $template = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($template)->getAreas()->thenReturn($areas);
-        Phake::when($template)->getBlocks()->thenReturn($blocks);
 
         return array(
             array(array('nodeTemplateSelection' => array('templateId' => 1)), $template),
