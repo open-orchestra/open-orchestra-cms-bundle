@@ -47,8 +47,14 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
             ) {
                 $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
                 if (null !== $template) {
-                    $formData->setAreas($template->getAreas());
-                    $formData->setBlocks($template->getBlocks());
+                    foreach($template->getAreas() as $area) {
+                        $newArea = clone $area;
+                        foreach($area->getAreas() as $sub) {
+                            $newSubArea = clone $sub;
+                            $newArea->addArea($newSubArea);
+                        }
+                        $formData->addArea($newArea);
+                    }
                 }
             } elseif (
                 array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
