@@ -118,10 +118,6 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param $formData
-     * @param $areas
-     */
-    /**
      * @param AreaContainerInterface $areaContainer
      * @param Collection $areas
      */
