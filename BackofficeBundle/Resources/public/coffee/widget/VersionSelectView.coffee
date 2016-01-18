@@ -1,4 +1,4 @@
-VersionSelectView = OrchestraView.extend(
+VersionSelectView = AbstractConcurrancyCounter.extend(
   tagName: "select"
 
   events:

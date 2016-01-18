@@ -1,4 +1,4 @@
-VersionView = OrchestraView.extend(
+VersionView = AbstractConcurrancyCounter.extend(
   tagName: "option"
 
   initialize: (options) ->

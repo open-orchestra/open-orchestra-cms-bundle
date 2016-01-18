@@ -1,4 +1,4 @@
-PreviewLinkView = OrchestraView.extend(
+PreviewLinkView = AbstractConcurrancyCounter.extend(
   initialize: (options) ->
     @previewLinks = options.previewLinks
     @widget_index = options.widget_index

@@ -1,4 +1,4 @@
-LanguageView = OrchestraView.extend(
+LanguageView = AbstractConcurrancyCounter.extend(
   events:
     'click a.change-language': 'changeLanguage'
 
