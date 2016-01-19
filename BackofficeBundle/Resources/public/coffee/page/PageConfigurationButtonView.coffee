@@ -17,7 +17,7 @@ PageConfigurationButtonView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageConfigurationButton')
     @$el.attr('data-widget-index', @options.widget_index)
-    addCustomJarvisWidget(@$el, @options.viewContainer)
+    addCustomJarvisWidget(@$el, @options.viewContainer.$el)
     return
 
   configurationPage: () ->

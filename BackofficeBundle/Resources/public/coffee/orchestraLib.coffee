@@ -11,10 +11,7 @@ renderPageTitle = ->
 
 # ADD CUSTOM JARVIS WIDGET
 addCustomJarvisWidget = (newWidget, container) ->
-  if typeof container == 'undefined'
-    jarvisToolBar = $('.js-widget-title').parent()
-  else
-    jarvisToolBar = $('.js-widget-title', container).parent()
+  jarvisToolbar = $('.js-widget-title', container).parent()
   if $(newWidget).attr('data-widget-index')?
     indexWidget = $(newWidget).attr('data-widget-index')
     for widget in $(jarvisToolbar).children('.widget-toolbar')
