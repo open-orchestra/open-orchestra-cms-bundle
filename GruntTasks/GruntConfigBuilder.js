@@ -45,7 +45,7 @@ module.exports = {
   buildFromFile: function(keys, filepath) {
     if (keys.length == 0) {
 
-      return require(filepath);
+      return require(process.cwd() + '/' + filepath);
     } else {
       var subArray = {};
       var index = keys[0];
