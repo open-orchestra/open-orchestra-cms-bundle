@@ -1,13 +1,11 @@
 module.exports = {
   merge: null,
   glob: null,
-  grunt: null,
 
   init: function(grunt, appConfig) {
     this.merge = require('merge');
     this.glob = require('glob');
     require('load-grunt-tasks')(grunt);
-    this.grunt = grunt;
 
     var config = {
       pkg: grunt.file.readJSON('package.json'),
@@ -47,7 +45,7 @@ module.exports = {
   buildFromFile: function(keys, filepath) {
     if (keys.length == 0) {
 
-      return require(this.grunt.file.findup(filepath));
+      return require(process.cwd() + '/' + filepath);
     } else {
       var subArray = {};
       var index = keys[0];
