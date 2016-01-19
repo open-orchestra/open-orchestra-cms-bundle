@@ -9,6 +9,7 @@ widgetChannel.bind 'ready', (view) ->
       success: (response) ->
         viewClass = appConfigurationView.getConfiguration(view.options.entityType, 'showStatus')
         new viewClass(
+          domContainer: view.$el
           statuses: response.statuses
           currentStatus: view.options.multiStatus
           entityType: view.options.entityType

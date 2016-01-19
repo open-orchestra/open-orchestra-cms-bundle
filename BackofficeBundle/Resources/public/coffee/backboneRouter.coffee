@@ -73,6 +73,19 @@ OrchestraBORouter = Backbone.Router.extend(
     Backbone.Router.prototype.route.call(this, route, name, callBack);
     @addRoutePattern(name, route)
     return
+  extractParameters: () ->
+    Router = this
+    fragment = Backbone.history.fragment
+    routes = _.pairs(Router.routePatterns)
+    route = null
+    matched = _.find(routes, (handler) ->
+      return false if handler[0] == 'showHome'
+      route = if _.isRegExp(handler[1]) then handler[1] else Router._routeToRegExp(handler[1])
+      route.test fragment
+    )
+    if matched
+      return this._extractParameters(route, fragment)
+    return {}
 )
 appRouter = new OrchestraBORouter
 jQuery ->

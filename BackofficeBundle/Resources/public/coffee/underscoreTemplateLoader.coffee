@@ -44,7 +44,7 @@ do ->
           success: (tpl, textStatus, xhr) ->
             if 200 == xhr.status
               templateLoader.addTemplate templateName, language, tpl
-              templateLoader.storeTemplates
+              templateLoader.storeTemplates()
             view.onTemplateLoaded templateName, tpl
             return
         }
