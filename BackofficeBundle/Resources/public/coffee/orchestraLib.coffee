@@ -10,8 +10,11 @@ renderPageTitle = ->
   $('#title-functionnality').text('> ' + $('.breadcrumb li:last').text())
 
 # ADD CUSTOM JARVIS WIDGET
-addCustomJarvisWidget = (newWidget) ->
-  jarvisToolbar = $(".js-widget-title").parent()
+addCustomJarvisWidget = (newWidget, container) ->
+  if typeof container == 'undefined'
+    jarvisToolBar = $('.js-widget-title').parent()
+  else
+    jarvisToolBar = $('.js-widget-title', container).parent()
   if $(newWidget).attr('data-widget-index')?
     indexWidget = $(newWidget).attr('data-widget-index')
     for widget in $(jarvisToolbar).children('.widget-toolbar')
