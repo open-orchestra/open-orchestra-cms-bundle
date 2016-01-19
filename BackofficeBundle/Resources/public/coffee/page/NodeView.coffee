@@ -29,19 +29,20 @@ NodeView = OrchestraView.extend(
     return
 
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
-      node: @options.node
-    )
-    @options.domContainer.html @$el
-    $('.js-widget-title', @$el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
-      element: @options.node
-    )
-    @addAreasToView(@options.node.get('areas'))
-    @addConfigurationButton()
-    if !@options.editable
-      $('.js-widget-blockpanel', @$el).hide()
-    else
-      @addListBlockToView()
+    if Backbone.history.decodeFragment(Backbone.history.fragment) == @options.node.attributes.node_id
+      @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
+        node: @options.node
+      )
+      @options.domContainer.html @$el
+      $('.js-widget-title', @$el).html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle',
+        element: @options.node
+      )
+      @addAreasToView(@options.node.get('areas'))
+      @addConfigurationButton()
+      if !@options.editable
+        $('.js-widget-blockpanel', @$el).hide()
+      else
+        @addListBlockToView()
     return
 
   addListBlockToView: ->
