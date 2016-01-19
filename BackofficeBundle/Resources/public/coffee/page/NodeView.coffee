@@ -29,7 +29,7 @@ NodeView = OrchestraView.extend(
     return
 
   render: ->
-    if Backbone.history.decodeFragment(Backbone.history.fragment) == @options.node.attributes.node_id
+    if appRouter.extractParameters()[0] == @options.node.attributes.node_id
       @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
         node: @options.node
       )
