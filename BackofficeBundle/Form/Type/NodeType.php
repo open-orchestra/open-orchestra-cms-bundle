@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventListener\NodeThemeSelectionListener;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeThemeSelectionSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscriber;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,28 +26,29 @@ class NodeType extends AbstractType
     protected $nodeClass;
     protected $nodeManager;
     protected $templateRepository;
+    protected $siteRepository;
     protected $schemeChoices;
-    protected $nodeThemeSelection;
 
     /**
      * @param string                      $nodeClass
      * @param TemplateRepositoryInterface $templateRepository
+     * @param SiteRepositoryInterface     $siteRepository
      * @param NodeManager                 $nodeManager
      * @param string                      $areaClass
      * @param TranslatorInterface         $translator
-     * @param NodeThemeSelectionListener  $nodeThemeSelection
      */
     public function __construct(
         $nodeClass,
         TemplateRepositoryInterface $templateRepository,
+        SiteRepositoryInterface $siteRepository,
         NodeManager $nodeManager,
         $areaClass,
-        TranslatorInterface $translator,
-        NodeThemeSelectionListener $nodeThemeSelection
+        TranslatorInterface $translator
     ) {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
+        $this->siteRepository = $siteRepository;
         $this->areaClass = $areaClass;
         $this->translator = $translator;
         $this->schemeChoices = array(
@@ -57,7 +58,6 @@ class NodeType extends AbstractType
             SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
             SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
-        $this->nodeThemeSelection = $nodeThemeSelection;
     }
 
     /**
@@ -132,12 +132,9 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'required' => false,
             ));
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->nodeThemeSelection, 'preSetData'));
-        $builder->addEventListener(FormEvents::SUBMIT, array($this->nodeThemeSelection, 'submit'));
-
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
+            $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
         }
         if (array_key_exists('disabled', $options)) {

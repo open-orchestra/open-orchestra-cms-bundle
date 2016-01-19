@@ -1,16 +1,18 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\EventListener;
+namespace OpenOrchestra\BackofficeBundle\EventSubscriber;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 /**
- * Class NodeThemeSelectionListener
+ * Class NodeThemeSelectionSubscriber
  */
-class NodeThemeSelectionListener
+class NodeThemeSelectionSubscriber implements EventSubscriberInterface
 {
     /**
      * @var SiteRepositoryInterface
@@ -59,5 +61,16 @@ class NodeThemeSelectionListener
                 $document->setTheme(NodeInterface::THEME_DEFAULT);
             }
         }
+    }
+
+    /**
+     * @return array The event names to listen to
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            FormEvents::SUBMIT => 'submit',
+            FormEvents::PRE_SET_DATA => 'preSetData'
+        );
     }
 }

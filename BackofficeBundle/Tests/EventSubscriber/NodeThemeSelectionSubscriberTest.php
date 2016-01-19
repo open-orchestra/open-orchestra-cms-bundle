@@ -1,22 +1,22 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
+namespace OpenOrchestra\BackofficeBundle\Tests\EventSubscriber;
 
 use Phake;
 use OpenOrchestra\ModelBundle\Document\Site;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\BackofficeBundle\EventListener\NodeThemeSelectionListener;
+use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeThemeSelectionSubscriber;
 
 /**
- * Class NodeThemeSelectionListenerTest
+ * Class NodeThemeSelectionSubscriberTest
  */
-class NodeThemeSelectionListenerTest extends AbstractBaseTestCase
+class NodeThemeSelectionSubscriberTest extends AbstractBaseTestCase
 {
     /**
-     * @var NodeThemeSelectionListener
+     * @var NodeThemeSelectionSubscriber
      */
-    protected $listener;
+    protected $subscriber;
 
     protected $siteRepository;
     protected $event;
@@ -33,7 +33,7 @@ class NodeThemeSelectionListenerTest extends AbstractBaseTestCase
 
         Phake::when($this->event)->getData()->thenReturn($this->object);
 
-        $this->listener = new NodeThemeSelectionListener($this->siteRepository);
+        $this->subscriber = new NodeThemeSelectionSubscriber($this->siteRepository);
     }
 
     /**
@@ -41,8 +41,8 @@ class NodeThemeSelectionListenerTest extends AbstractBaseTestCase
      */
     public function testCallable()
     {
-        $this->assertTrue(is_callable(array($this->listener, 'preSetData')));
-        $this->assertTrue(is_callable(array($this->listener, 'submit')));
+        $this->assertTrue(is_callable(array($this->subscriber, 'preSetData')));
+        $this->assertTrue(is_callable(array($this->subscriber, 'submit')));
     }
 
     /**
@@ -57,7 +57,7 @@ class NodeThemeSelectionListenerTest extends AbstractBaseTestCase
         Phake::when($this->object)->getTheme()->thenReturn($nodeTheme);
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
 
-        $this->listener->submit($this->event);
+        $this->subscriber->submit($this->event);
 
         Phake::verify($this->object, Phake::times($callTimes))->setTheme("SiteFakeTheme");
         Phake::verify($this->object, Phake::times($callTimes))->setDefaultSiteTheme(true);
@@ -91,7 +91,7 @@ class NodeThemeSelectionListenerTest extends AbstractBaseTestCase
     {
         Phake::when($this->object)->hasDefaultSiteTheme()->thenReturn($hasDefaultThemeSite);
 
-        $this->listener->preSetData($this->event);
+        $this->subscriber->preSetData($this->event);
 
         Phake::verify($this->object, Phake::times($callTimes))->setTheme(NodeInterface::THEME_DEFAULT);
     }
