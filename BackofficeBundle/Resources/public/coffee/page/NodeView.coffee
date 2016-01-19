@@ -29,7 +29,8 @@ NodeView = OrchestraView.extend(
     return
 
   render: ->
-    if appRouter.extractParameters()[0] == @options.node.attributes.node_id
+    parameters = appRouter.extractParameters()
+    if parameters.length > 0  and parameters[0] == @options.node.attributes.node_id
       @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
         node: @options.node
       )
