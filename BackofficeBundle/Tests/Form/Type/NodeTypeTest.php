@@ -14,6 +14,7 @@ class NodeTypeTest extends AbstractBaseTestCase
     protected $nodeType;
     protected $nodeManager;
     protected $templateRepository;
+    protected $siteRepository;
     protected $nodeClass = 'nodeClass';
     protected $areaClass = 'areaClass';
     protected $translator;
@@ -24,9 +25,17 @@ class NodeTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
+        $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->nodeType = new NodeType($this->nodeClass, $this->templateRepository, $this->nodeManager, $this->areaClass, $this->translator);
+        $this->nodeType = new NodeType(
+            $this->nodeClass,
+            $this->templateRepository,
+            $this->siteRepository,
+            $this->nodeManager,
+            $this->areaClass,
+            $this->translator
+        );
     }
 
     /**
@@ -42,7 +51,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::verify($formBuilderMock, Phake::times(15))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(3))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**

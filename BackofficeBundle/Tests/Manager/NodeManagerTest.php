@@ -286,7 +286,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertInstanceOf($this->nodeClass, $node);
         $this->assertEquals('fakeSiteId', $node->getSiteId());
         $this->assertEquals('fakeLanguage', $node->getLanguage());
-        $this->assertEquals('fakeNameTheme', $node->getTheme());
+        $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
+        $this->assertTrue($node->hasDefaultSiteTheme());
         $this->assertEquals('fake keyword', $node->getMetaKeywords());
         $this->assertEquals('fake description', $node->getMetaDescription());
         $this->assertEquals(0, $node->getOrder());

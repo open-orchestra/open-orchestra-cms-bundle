@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
+use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeThemeSelectionSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscriber;
+use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,20 +26,29 @@ class NodeType extends AbstractType
     protected $nodeClass;
     protected $nodeManager;
     protected $templateRepository;
+    protected $siteRepository;
     protected $schemeChoices;
 
     /**
      * @param string                      $nodeClass
      * @param TemplateRepositoryInterface $templateRepository
+     * @param SiteRepositoryInterface     $siteRepository
      * @param NodeManager                 $nodeManager
      * @param string                      $areaClass
      * @param TranslatorInterface         $translator
      */
-    public function __construct($nodeClass, TemplateRepositoryInterface $templateRepository, NodeManager $nodeManager, $areaClass, TranslatorInterface $translator)
-    {
+    public function __construct(
+        $nodeClass,
+        TemplateRepositoryInterface $templateRepository,
+        SiteRepositoryInterface $siteRepository,
+        NodeManager $nodeManager,
+        $areaClass,
+        TranslatorInterface $translator
+    ) {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
+        $this->siteRepository = $siteRepository;
         $this->areaClass = $areaClass;
         $this->translator = $translator;
         $this->schemeChoices = array(
@@ -123,6 +134,7 @@ class NodeType extends AbstractType
             ));
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
+            $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));
             $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
         }
         if (array_key_exists('disabled', $options)) {

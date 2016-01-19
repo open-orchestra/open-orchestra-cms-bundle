@@ -270,6 +270,8 @@ class NodeManager
         $node->setMaxAge(NodeInterface::MAX_AGE);
         $node->setParentId($parentId);
         $node->setOrder($this->getNewNodeOrder($parentId, $siteId));
+        $node->setTheme(NodeInterface::THEME_DEFAULT);
+        $node->setDefaultSiteTheme(true);
 
         $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
         $node->setStatus($this->getEditableStatus($parentNode));
@@ -287,9 +289,6 @@ class NodeManager
             $node->setMetaDescription($site->getMetaDescription());
             $node->setMetaIndex($site->getMetaIndex());
             $node->setMetaFollow($site->getMetaFollow());
-            if ($theme = $site->getTheme()) {
-                $node->setTheme($theme->getName());
-            }
         }
 
         return $node;

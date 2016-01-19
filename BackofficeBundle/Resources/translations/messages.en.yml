@@ -117,6 +117,7 @@ open_orchestra_backoffice:
             creation: The theme has been created
             name: Name
             default: by default
+            site_theme: Default (Site configuration)
         content:
             transformation_error: Unable to load the value of this field (the type does not match)
             success: The content has been modified

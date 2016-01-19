@@ -72,6 +72,7 @@ services:
         arguments:
             - %open_orchestra_model.document.node.class%
             - @open_orchestra_model.repository.template
+            - @open_orchestra_model.repository.site
             - @open_orchestra_backoffice.manager.node
             - %open_orchestra_model.document.area.class%
             - @translator
