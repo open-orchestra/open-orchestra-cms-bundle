@@ -1,3 +1,5 @@
 open_orchestra_api:
     status:
         change_not_granted: You cannot apply this status due to some right limitation
+    node:
+        duplicate_not_granted: You cannot duplicate this page due to some right limitation

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\DuplicateNodeNotGrantedHttpException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
@@ -14,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class NodeController
@@ -120,6 +122,8 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      *
      * @return Response
+     *
+     * @throws DuplicateNodeNotGrantedHttpException
      */
     public function duplicateAction(Request $request, $nodeId, $version = null)
     {
@@ -127,7 +131,11 @@ class NodeController extends BaseController
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
 
         $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
-        $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
+        try{
+            $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
+        } catch(AccessDeniedException $exception) {
+            throw new DuplicateNodeNotGrantedHttpException();
+        }
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();
