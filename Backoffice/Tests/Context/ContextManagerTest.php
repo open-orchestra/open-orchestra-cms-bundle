@@ -184,6 +184,23 @@ class ContextManagerTest extends AbstractBaseTestCase
         $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
     }
 
+    /**
+     * Test with an user super admin
+     */
+    public function testGetAvailableSitesWithSuperAdmin()
+    {
+        $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
+
+        $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
+        Phake::when($user)->isSuperAdmin()->thenReturn(true);
+
+        Phake::when($this->token)->getUser()->thenReturn($user);
+
+        $this->assertEquals(array($site1, $site2), $this->contextManager->getAvailableSites());
+    }
+
 
     /**
      * @param array $site
