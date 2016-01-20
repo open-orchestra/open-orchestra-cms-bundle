@@ -6,6 +6,7 @@ use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeEdition
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayIconCompilerPass;
+use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\FieldToElasticaTypeCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\GenerateFormCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\NavigationPanelCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RestoreEntityCompilerPass;
@@ -41,5 +42,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new AuthorizeEditionCompilerPass());
         $container->addCompilerPass(new RestoreEntityCompilerPass());
         $container->addCompilerPass(new RoleCompilerPass());
+        $container->addCompilerPass(new FieldToElasticaTypeCompilerPass());
     }
 }
