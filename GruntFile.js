@@ -33,5 +33,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['coffee', 'mocha'] );
+    grunt.registerTask('js-test', ['coffee', 'mocha'] );
+    grunt.registerTask('default', 'js-test' );
 };
