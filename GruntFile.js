@@ -8,7 +8,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: './',
             src: [
-                '*Bundle/Resources/public/coffee/**/*.coffee'
+                '*Bundle/Resources/public/coffee/!**!/!*.coffee'
             ],
             dest: './',
             ext: '.js',
@@ -21,18 +21,22 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-mocha');
-    grunt.config('mocha', {
-        test: {
-            src: [
-                '*/Tests/_mocha/**/*.html'
-            ],
+    grunt.loadNpmTasks('grunt-js-test');
+    var patternPath = '.'+__dirname.replace(process.cwd(), '')+'/';
+    grunt.initConfig({
+        'js-test': {
             options: {
-                run: true
+                referenceTags: true,
+                coverage: false,
+                pattern: patternPath+'BackofficeBundle/Tests/_mocha/OrchestraBORouter/OrchestraBORouter-test.js',
+                deps: [
+                    "vendor/bower_components/jquery/dist/jquery.js",
+                    "vendor/bower_components/underscore/underscore.js",
+                    "vendor/bower_components/backbone/backbone.js"
+                ]
             }
         }
     });
+    grunt.registerTask('default', ['js-test']);
 
-    grunt.registerTask('js-test', ['coffee', 'mocha'] );
-    grunt.registerTask('default', 'js-test' );
 };

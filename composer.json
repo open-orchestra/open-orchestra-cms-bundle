@@ -53,16 +53,12 @@
         "grunt-contrib-concat": "~0.3",
         "grunt-contrib-watch": "~0.4",
         "grunt-contrib-clean": "~0.5",
+        "grunt-js-test": "1.5.x",
         "grunt-commands": "~0.1",
         "coffee-script": "~1.9.1",
         "load-grunt-tasks": "~3.2.0",
         "glob": "~5.0.10",
-        "merge": "*",
-        "grunt-mocha": "0.4.x",
-        "chai": "2.1.x",
-        "mocha": "2.3.x",
-        "phantomjs": "1.9.x",
-        "sinon": "1.17.x"
+        "merge": "*"
       },
       "expose-npm-packages": true,
       "require-bower": {
