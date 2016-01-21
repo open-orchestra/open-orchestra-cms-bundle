@@ -3,9 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
-use OpenOrchestra\ModelInterface\Event\SiteAliasEvent;
 use OpenOrchestra\ModelInterface\SiteEvents;
-use OpenOrchestra\ModelInterface\SiteAliasEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
