@@ -28,7 +28,7 @@ module.exports = function(grunt) {
                 '*/Tests/_mocha/**/*.html'
             ],
             options: {
-                run: true,
+                run: true
             }
         }
     });
