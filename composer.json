@@ -57,7 +57,12 @@
         "coffee-script": "~1.9.1",
         "load-grunt-tasks": "~3.2.0",
         "glob": "~5.0.10",
-        "merge": "*"
+        "merge": "*",
+        "grunt-mocha": "0.4.x",
+        "chai": "2.1.x",
+        "mocha": "2.3.x",
+        "phantomjs": "1.9.x",
+        "sinon": "1.17.x"
       },
       "expose-npm-packages": true,
       "require-bower": {

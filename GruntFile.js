@@ -20,22 +20,18 @@ module.exports = function(grunt) {
             }
         }
     });
-    
+
     grunt.loadNpmTasks('grunt-mocha');
     grunt.config('mocha', {
         test: {
             src: [
-                '*/Tests/_mocha/**/*.htm'
+                '*/Tests/_mocha/**/*.html'
             ],
             options: {
                 run: true,
             }
         }
     });
-    
-    grunt.registerTask('default', function() {
-        grunt.log.writeln('Nothing to do by default.');
-    });
-    
-    grunt.registerTask('js-test', ['coffee', 'mocha']);
+
+    grunt.registerTask('default', ['coffee', 'mocha'] );
 };
