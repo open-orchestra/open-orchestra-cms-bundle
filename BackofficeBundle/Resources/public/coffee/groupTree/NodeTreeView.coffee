@@ -31,7 +31,7 @@ NodeTreeView = OrchestraView.extend(
               success: (response) ->
                 currentView.options.roles = response
                 currentView.renderHead()
-                if currentView.options.nodes.length > 0
+                if not _.isEmpty(currentView.options.nodes)
                   currentView.renderTreeElement()
     else
       @options.domContainer.html @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/messageNoSite')

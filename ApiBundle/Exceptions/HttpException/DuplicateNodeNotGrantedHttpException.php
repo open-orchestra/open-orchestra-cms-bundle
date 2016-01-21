@@ -12,7 +12,7 @@ class DuplicateNodeNotGrantedHttpException extends ApiException
     const DEVELOPER_MESSAGE  = 'open_orchestra_api.node.duplicate_not_granted';
     const HUMAN_MESSAGE      = 'open_orchestra_api.node.duplicate_not_granted';
     const STATUS_CODE        = '403';
-    const ERROR_CODE         = 'x';
+    const ERROR_CODE         = 'duplicate_not_granted';
 
     /**
      * Constructor

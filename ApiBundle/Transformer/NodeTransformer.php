@@ -107,12 +107,6 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             )));
         }
 
-        $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
-            'nodeId' => $nodeId,
-            'language' => $node->getLanguage(),
-        )));
-
-
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
         )));
@@ -154,7 +148,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                     'language' => $node->getLanguage(),
                     'version' => $node->getVersion(),
                 )));
-            } 
+            }
 
             $facade->addLink('_self_version', $this->generateRoute('open_orchestra_api_node_list_version', array(
                 'nodeId' => $nodeId,

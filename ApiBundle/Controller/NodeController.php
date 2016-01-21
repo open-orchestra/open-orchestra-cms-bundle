@@ -129,13 +129,14 @@ class NodeController extends BaseController
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-
-        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
+        $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
+        $newNode = $nodeManager->duplicateNode($nodeId, $siteId, $language, $version, false);
         try{
             $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
         } catch(AccessDeniedException $exception) {
             throw new DuplicateNodeNotGrantedHttpException();
         }
+        $nodeManager->saveDuplicatedNode($newNode);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();
