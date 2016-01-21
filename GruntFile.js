@@ -37,6 +37,7 @@ module.exports = function(grunt) {
             }
         }
     });
+    grunt.registerTask('js-test', ['coffee']);
     grunt.registerTask('default', ['js-test']);
 
 };
