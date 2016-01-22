@@ -8,21 +8,20 @@ module.exports = function(grunt) {
         },
         files: {
             expand: true,
-            cwd: './',
+            cwd: __dirname+'/',
             src: [
                 '*Bundle/Resources/public/coffee/**/*.coffee'
             ],
-            dest: './',
+            dest: __dirname+'/',
             ext: '.js',
             rename: function(dest, src) {
-                return src.replace(
+                return dest+src.replace(
                     /^([^\/]*)\/Resources\/public\/coffee\//,
                     '$1/Tests/_mocha/built_sources/js/'
                 );
             }
         }
     });
-
 
     var patternPath = '.'+__dirname.replace(process.cwd(), '')+'/';
     grunt.config('js-test', {
@@ -40,5 +39,4 @@ module.exports = function(grunt) {
     );
     grunt.registerTask('test', ['coffee', 'js-test']);
     grunt.registerTask('default', ['test']);
-
 };
