@@ -17,7 +17,7 @@
         "open-orchestra/open-orchestra-model-interface": "*",
         "braincrafted/bootstrap-bundle": "2.1.2",
         "stfalcon/tinymce-bundle": "0.3.8",
-        "koala-framework/composer-extra-assets": "*"
+        "koala-framework/composer-extra-assets": "2.0.x"
     },
     "require-dev": {
         "open-orchestra/open-orchestra-model-bundle": "dev-master",
