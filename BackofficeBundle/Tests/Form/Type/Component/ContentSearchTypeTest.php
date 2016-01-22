@@ -18,7 +18,8 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->form = new ContentSearchType();
+        $transformer = Phake::mock('OpenOrchestra\Transformer\LuceneToBddTransformerInterface');
+        $this->form = new ContentSearchType($transformer);
     }
 
     /**
@@ -46,7 +47,7 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array());
 
-        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->add(Phake::anyParameters());
     }
 
 }
