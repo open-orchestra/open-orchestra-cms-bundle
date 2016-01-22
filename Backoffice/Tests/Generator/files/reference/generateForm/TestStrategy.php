@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
 use OpenOrchestra\Backoffice\GenerateForm\Strategies\AbstractBlockStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 

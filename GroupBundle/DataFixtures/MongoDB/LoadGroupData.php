@@ -10,13 +10,10 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPan
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\GroupBundle\Document\Group;
-use OpenOrchestra\GroupBundle\Document\NodeGroupRole;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class LoadGroupData

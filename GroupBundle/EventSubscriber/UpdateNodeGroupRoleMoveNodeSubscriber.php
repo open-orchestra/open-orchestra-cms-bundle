@@ -4,7 +4,6 @@ namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
-use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
 use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
 use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;

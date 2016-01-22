@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
 use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
