@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-js-test');
+
     grunt.config('coffee', {
         options: {
             bare: true
@@ -8,7 +10,7 @@ module.exports = function(grunt) {
             expand: true,
             cwd: './',
             src: [
-                '*Bundle/Resources/public/coffee/!**!/!*.coffee'
+                '*Bundle/Resources/public/coffee/**/*.coffee'
             ],
             dest: './',
             ext: '.js',
@@ -21,10 +23,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-js-test');
+
     var patternPath = '.'+__dirname.replace(process.cwd(), '')+'/';
-    grunt.initConfig({
-        'js-test': {
+    grunt.config('js-test', {
             options: {
                 referenceTags: true,
                 coverage: false,
@@ -36,8 +37,8 @@ module.exports = function(grunt) {
                 ]
             }
         }
-    });
-    grunt.registerTask('js-test', ['coffee']);
-    grunt.registerTask('default', ['js-test']);
+    );
+    grunt.registerTask('test', ['coffee', 'js-test']);
+    grunt.registerTask('default', ['test']);
 
 };
