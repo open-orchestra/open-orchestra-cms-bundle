@@ -21,7 +21,7 @@ install:
 
 script:
   - ./bin/phpunit
-  - ./node_modules/.bin/grunt js-test
+  - ./node_modules/.bin/grunt test
 
 addons:
   code_climate:
