@@ -19,27 +19,28 @@ class FieldTypeType extends AbstractType
     protected $fieldOptionClass;
     protected $fieldTypeClass;
     protected $fieldOptions;
+    protected $fieldTypeParameters;
 
     /**
      * @param TranslateValueInitializerListener $translateValueInitializer
      * @param array                             $fieldOptions
      * @param string                            $fieldOptionClass
      * @param string                            $fieldTypeClass
-     * @param array                             $fieldTypeSearchable
+     * @param array                             $fieldTypeParameters
      */
     public function __construct(
         TranslateValueInitializerListener $translateValueInitializer,
         array $fieldOptions,
         $fieldOptionClass,
         $fieldTypeClass,
-        array $fieldTypeSearchable
+        array $fieldTypeParameters
     )
     {
         $this->translateValueInitializer = $translateValueInitializer;
         $this->fieldOptions = $fieldOptions;
         $this->fieldOptionClass = $fieldOptionClass;
         $this->fieldTypeClass = $fieldTypeClass;
-        $this->fieldTypeSearchable = $fieldTypeSearchable;
+        $this->fieldTypeParameters = $fieldTypeParameters;
     }
 
     /**
@@ -64,11 +65,6 @@ class FieldTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
             ))
-            ->add('fieldTypeSearchable', 'choice', array(
-                'choices' => $this->getChoicesViewSearchable(),
-                'label' => 'open_orchestra_backoffice.form.field_type.type_searchable',
-                'required' => false,
-            ))
             ->add('translatable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.translatable',
                 'required' => false,
@@ -84,7 +80,7 @@ class FieldTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.field_type.listable',
                 'required' => false,
             ));
-        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass));
+        $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeParameters));
     }
 
     /**
@@ -111,19 +107,6 @@ class FieldTypeType extends AbstractType
                 return $fieldType;
             }
         ));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getChoicesViewSearchable()
-    {
-        $choices = array();
-        foreach ($this->fieldTypeSearchable as $option) {
-            $choices[$option['view']] = $option['label'];
-        }
-
-        return $choices;
     }
 
     /**

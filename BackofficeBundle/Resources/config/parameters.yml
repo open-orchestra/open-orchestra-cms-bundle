@@ -19,17 +19,3 @@ parameters:
         monthly : open_orchestra_backoffice.form.changefreq.monthly
         yearly  : open_orchestra_backoffice.form.changefreq.yearly
         never   : open_orchestra_backoffice.form.changefreq.never
-
-    open_orchestra_backoffice.field_searchable_view:
-        text:
-          label: open_orchestra_backoffice.form.field_type.field_searchable_view.text
-          view: text
-        date:
-          label: open_orchestra_backoffice.form.field_type.field_searchable_view.date
-          view: date
-        boolean:
-          label: open_orchestra_backoffice.form.field_type.field_searchable_view.boolean
-          view: boolean
-        number:
-          label: open_orchestra_backoffice.form.field_type.field_searchable_view.number
-          view: number

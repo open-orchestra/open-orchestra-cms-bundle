@@ -16,16 +16,18 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
 {
     protected $options = array();
     protected $fieldOptionClass;
+    protected $fieldTypeParameters;
 
     /**
      * @param array  $options
      * @param string $fieldOptionClass
      */
-    public function __construct(array $options, $fieldOptionClass)
+    public function __construct(array $options, $fieldOptionClass, array $fieldTypeParameters)
     {
         $this->options = $options;
         $this->fieldOptionClass = $fieldOptionClass;
-    }
+        $this->fieldTypeParameters = $fieldTypeParameters;
+   }
 
     /**
      * @param FormEvent $event
@@ -57,6 +59,15 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
         if ($data instanceof FieldTypeInterface) {
             $this->checkFieldType($data, $type, $form);
             $this->addDefaultValueField($data, $type, $form);
+        }
+
+        foreach ($this->fieldTypeParameters as $fieldTypeParameters) {
+            if (array_key_exists('type', $this->options[$type]) &&
+                array_key_exists('search', $this->options[$type]) &&
+                $fieldTypeParameters['type'] == $data->getType()) {
+                $data->setFieldTypeSearchable($fieldTypeParameters['search']);
+                break;
+            }
         }
     }
 

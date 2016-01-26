@@ -23,6 +23,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
     protected $options;
     protected $fieldType;
     protected $fieldOptionClass;
+    protected $fieldTypeSearchable;
 
     /**
      * Set up the test
@@ -36,6 +37,10 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->event)->getForm()->thenReturn($this->form);
         Phake::when($this->event)->getData()->thenReturn($this->fieldType);
 
+        $this->fieldTypeSearchable = array(
+            "text" => array("search" => 'text'),
+            "date" => array("search" => 'date'),
+        );
 
         $this->options = array(
             'text' => array(
@@ -61,7 +66,7 @@ class FieldTypeTypeSubscriberTest extends AbstractBaseTestCase
             )
         );
 
-        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass);
+        $this->subscriber = new FieldTypeTypeSubscriber($this->options, $this->fieldOptionClass, $this->fieldTypeSearchable);
     }
 
     /**
