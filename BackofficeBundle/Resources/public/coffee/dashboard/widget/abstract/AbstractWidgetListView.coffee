@@ -23,6 +23,11 @@ AbstractWidgetListView = OrchestraView.extend(
         collectionName = response.collection_name
         entities = response[collectionName]
         generateUrl = currentView.generateUrl
+        _.each entities, (row, row_key, list) ->
+          _.each row, (value, value_key) ->
+            list[row_key][value_key] = if value.length > 20 then value.substr(0, 17) + '...' else value
+            return
+          return
         data = _.extend({entities: entities}, { generateUrl })
         $('.widget-body', currentView.$el).html currentView.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/widget/listItemView', data)
 
