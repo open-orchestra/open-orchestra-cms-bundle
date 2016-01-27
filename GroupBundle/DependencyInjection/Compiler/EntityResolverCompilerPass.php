@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
@@ -19,7 +20,10 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
         $resourcePath = '.';
 
         foreach ($container->getResources() as $resource) {
-            $resourcePath = $resource->getResource();
+            if (!$resource instanceof FileResource) {
+                continue;
+            }
+            $resourcePath = (string) $resource;
             if (is_string($resourcePath)) {
                 if (strpos($resourcePath, 'open-orchestra-cms-bundle')
                     && strpos($resourcePath, 'GroupBundle')
