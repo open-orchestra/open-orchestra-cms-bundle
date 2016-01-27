@@ -163,4 +163,15 @@ class Group extends BaseGroup implements GroupInterface
 
         return null;
     }
+
+    /**
+     * @param string $nodeId
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasNodeRoleByNodeAndRole($nodeId, $role)
+    {
+        return null !== $this->getNodeRoleByNodeAndRole($nodeId, $role);
+    }
 }

@@ -36,6 +36,7 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
         $parentNodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
         phake::when($parentNodeGroupRole)->isGranted()->thenReturn(true);
         phake::when($group)->getNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn($parentNodeGroupRole);
+        phake::when($group)->hasNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn(false);
 
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($group)->getSite()->thenReturn($site);
