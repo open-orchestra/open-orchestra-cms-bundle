@@ -4,7 +4,7 @@ TemplateFormView = OrchestraModalView.extend(
     if @options.submitted
       displayRoute = appRouter.generateUrl "showTemplate",
         templateId: $('#oo_template_templateId', @$el).val()
-      displayMenu(displayRoute)
+      refreshMenu(displayRoute)
 
 )
 
