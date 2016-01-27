@@ -105,7 +105,7 @@ class NodeController extends BaseController
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSiteSortedByVersion($nodeId, $siteId);
-        $node = !empty($nodes) ? $nodes[0] : null;
+        $node = array_shift($nodes);
         $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
 
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
