@@ -23,10 +23,10 @@ extendView['deleteTree'] = {
           method: 'DELETE'
           success: (response) ->
             if redirectUrl != undefined
-              displayMenu(redirectUrl)
+              refreshMenu(redirectUrl)
             else
               redirectUrl = appRouter.generateUrl 'showDashboard'
-              displayMenu(redirectUrl)
+              refreshMenu(redirectUrl)
             return
       noCallback: ->
         $("#OrchestraBOModal").modal "show"

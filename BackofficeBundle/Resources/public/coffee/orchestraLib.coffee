@@ -36,17 +36,23 @@ opts =
   openedSign: "<em class=\"fa fa-minus-square-o\"></em>"
 $("#left-panel nav").data({opts : opts})
 
-#EXTEND JARVISMENU TO ADD DATATABLE PARAMETERS
+#ADD DATATABLE PARAMETERS
 if $('#left-panel nav').length > 0
-  oldJarvisMenu = $.fn.jarvismenu
-  $.fn.extend jarvismenu: (options) ->
-    el = this
+  $.ajax
+    url: $('#left-panel nav').data('datatable-parameter')
+    type: 'GET'
+    success: (response) ->
+      window.dataTableConfigurator.setDataTableParameters(response)
+      return
+
+refreshMenu = (route, refresh) ->
+  if $('#left-panel nav').length > 0
     $.ajax
       url: $('#left-panel nav').data('datatable-parameter')
       type: 'GET'
       success: (response) ->
         window.dataTableConfigurator.setDataTableParameters(response)
-        oldJarvisMenu.bind(el) options
+        displayMenu(route, refresh)
         return
     return
 

@@ -36,7 +36,7 @@ TableviewRestoreAction = OrchestraView.extend(
             options.table.fnSettings().clearCache = true
             displayRoute = appRouter.generateUrl "listEntities",
               entityType: options.entityType
-            displayMenu(displayRoute)
+            refreshMenu(displayRoute)
     )
 
 )
