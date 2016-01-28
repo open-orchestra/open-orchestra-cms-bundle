@@ -62,4 +62,12 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
      * @return NodeGroupRoleInterface|null
      */
     public function getNodeRoleByNodeAndRole($nodeId, $role);
+
+    /**
+     * @param string $nodeId
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasNodeRoleByNodeAndRole($nodeId, $role);
 }
