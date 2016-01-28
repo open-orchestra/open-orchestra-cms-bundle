@@ -142,7 +142,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'nodeMongoId' => $node->getId()
             )));
 
-            if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE)) {
+            if ($this->authorizationChecker->isGranted($editionRole)) {
                 $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(
                     'nodeId' => $nodeId,
                     'language' => $node->getLanguage(),
@@ -154,9 +154,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'nodeId' => $nodeId,
                 'language' => $node->getLanguage(),
             )));
-
+            
             if (NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
-                $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE)
+                $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
             ) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_node_delete', array(
                     'nodeId' => $nodeId

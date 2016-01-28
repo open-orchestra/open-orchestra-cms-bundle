@@ -3,6 +3,9 @@
 namespace OpenOrchestra\ApiBundle\Controller;
 
 use OpenOrchestra\ApiBundle\Controller\ControllerTrait\ListStatus;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\DuplicateNodeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -12,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class NodeController
@@ -31,8 +35,6 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}", name="open_orchestra_api_node_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return FacadeInterface
      */
     public function showAction(Request $request, $nodeId)
@@ -42,6 +44,7 @@ class NodeController extends BaseController
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
@@ -55,8 +58,6 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/show-or-create-error", name="open_orchestra_api_node_show_or_create_error", defaults={"errorNode" = true})
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return FacadeInterface
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
@@ -66,11 +67,14 @@ class NodeController extends BaseController
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-
+        if (!$errorNode && $node) {
+            $this->denyAccessUnlessGranted($this->getAccessRole($node));
+        }
         if (!$node) {
             $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
 
             if ($oldNode) {
+                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $oldNode);
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
             } elseif ($errorNode) {
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
@@ -95,14 +99,15 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/delete", name="open_orchestra_api_node_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETE_NODE')")
-     *
      * @return Response
      */
     public function deleteAction($nodeId)
     {
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSite($nodeId, $siteId);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndSiteSortedByVersion($nodeId, $siteId);
+        $node = array_shift($nodes);
+        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node);
+
         $this->get('open_orchestra_backoffice.manager.node')->deleteTree($nodes);
         $this->get('object_manager')->flush();
 
@@ -116,16 +121,22 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/duplicate/{version}", name="open_orchestra_api_node_duplicate", defaults={"version": null})
      * @Config\Method({"POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_CREATE_NODE')")
-     *
      * @return Response
+     *
+     * @throws DuplicateNodeNotGrantedHttpException
      */
     public function duplicateAction(Request $request, $nodeId, $version = null)
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        /** @var NodeInterface $node */
-        $newNode = $this->get('open_orchestra_backoffice.manager.node')->duplicateNode($nodeId, $siteId, $language, $version);
+        $nodeManager = $this->get('open_orchestra_backoffice.manager.node');
+        $newNode = $nodeManager->duplicateNode($nodeId, $siteId, $language, $version, false);
+        try{
+            $this->denyAccessUnlessGranted($this->getEditionRole($newNode), $newNode);
+        } catch(AccessDeniedException $exception) {
+            throw new DuplicateNodeNotGrantedHttpException();
+        }
+        $nodeManager->saveDuplicatedNode($newNode);
         $this->dispatchEvent(NodeEvents::NODE_DUPLICATE, new NodeEvent($newNode));
 
         return array();
@@ -184,17 +195,17 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeId}/list-version", name="open_orchestra_api_node_list_version")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return Response
      */
     public function listVersionAction(Request $request, $nodeId)
     {
         $language = $request->get('language');
         $siteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
-        $node = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
+        $nodes = $this->get('open_orchestra_model.repository.node')->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
+        $node = !empty($nodes) ? $nodes[0] : null;
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($node);
+        return $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->transformVersions($nodes);
     }
 
     /**
@@ -230,7 +241,11 @@ class NodeController extends BaseController
      */
     public function listStatusesForNodeAction($nodeMongoId)
     {
+        /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
+        if (!$node->getNodeType() === NodeInterface::TYPE_ERROR) {
+            $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node);
+        }
 
         return $this->listStatuses($node);
     }
@@ -243,19 +258,17 @@ class NodeController extends BaseController
      * @Config\Method({"POST"})
      * @Api\Serialize()
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_MOVE_NODE')")
-     *
      * @return Response
      */
     public function updateChildrenOrderAction(Request $request, $nodeId)
     {
+        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($nodeId);
+        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_NODE, $node);
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade',
             $request->get('_format', 'json')
         );
-
-        $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($nodeId);
 
         $orderedNode = $this->get('open_orchestra_api.transformer_manager')->get('node_collection')->reverseTransformOrder($facade);
 
@@ -279,5 +292,33 @@ class NodeController extends BaseController
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
 
         return $node;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getAccessRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getEditionRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 }

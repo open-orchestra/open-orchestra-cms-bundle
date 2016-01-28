@@ -21,7 +21,9 @@ class StatusableVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return 0 === strpos($attribute, 'ROLE_');
+        return 0 === strpos($attribute, 'ROLE_')
+        && false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE')
+        && false === strpos($attribute, 'ROLE_ACCESS_CREATE_NODE');
     }
 
     /**

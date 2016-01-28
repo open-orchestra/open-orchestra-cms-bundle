@@ -111,6 +111,9 @@ class NodeGroupRoleVoter implements VoterInterface
      */
     protected function isGrantedNodeGroupRole(NodeInterface $node, GroupInterface $group, $attribute)
     {
+        if ($node->getNodeType() === NodeInterface::TYPE_TRANSVERSE || $node->getNodeType() === NodeInterface::TYPE_ERROR) {
+            return true;
+        }
         $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $attribute);
         if ($nodeGroupRole instanceof NodeGroupRoleInterface) {
             if (NodeGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {

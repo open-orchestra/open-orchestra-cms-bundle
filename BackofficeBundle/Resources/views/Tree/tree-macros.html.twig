@@ -1,36 +1,39 @@
 {% macro menu_nodes(nodes, name, nodeId404, nodeId503) %}
     {% for element in nodes %}
         {% set node = element.node %}
-        <li data-element-id="{{ node.nodeId }}"
-            data-type="Node"
-        >
-            <a
-                id="nav-node-{{ node.nodeId }}"
-                data-url="{{ path('open_orchestra_api_node_show_or_create', {'nodeId': node.nodeId}) }}"
-                data-node="{{ node.nodeId }}"
-                href="#node/show/{{ node.nodeId }}"
+        {% if (node.nodeType != "general" and is_granted("ROLE_ACCESS_TREE_NODE", node))
+           or (node.nodeType == "general" and is_granted("ROLE_ACCESS_TREE_GENERAL_NODE")) %}
+            <li data-element-id="{{ node.nodeId }}"
+                data-type="Node"
             >
-                <span>{{ node.name }}</span>
-            </a>
-            {% if 'child' in element|keys
-               and (element.child is not empty or is_granted("ROLE_ACCESS_CREATE_NODE"))
-               and node.nodeType != constant('TYPE_TRANSVERSE', node)
-            %}
-                <ul
-                    {% if is_granted("ROLE_ACCESS_MOVE_NODE") %} class="node-connectedSortable" {% endif %}
-                    data-update-order="{{ path('open_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
-                    data-confirm-title="{{ 'open_orchestra_backoffice.left_menu.tree.confirm_move.title'|trans }}"
-                    data-confirm-text="{{ 'open_orchestra_backoffice.left_menu.tree.confirm_move.text'|trans({'%nodeName%': node.name}) }}"
+                <a
+                    id="nav-node-{{ node.nodeId }}"
+                    data-url="{{ path('open_orchestra_api_node_show_or_create', {'nodeId': node.nodeId}) }}"
+                    data-node="{{ node.nodeId }}"
+                    href="#node/show/{{ node.nodeId }}"
                 >
-                    {% if element.child is not empty %}
-                        {{ _self.menu_nodes(element.child, name) }}
-                    {% endif %}
-                    {{ _self.new_node(node.nodeId, "node-unsortable") }}
-                </ul>
-            {% endif %}
-        </li>
+                    <span>{{ node.name }}</span>
+                </a>
+                {% if 'child' in element|keys
+                   and (element.child is not empty or is_granted("ROLE_ACCESS_CREATE_NODE", node))
+                   and node.nodeType != constant('TYPE_TRANSVERSE', node)
+                %}
+                    <ul
+                        {% if is_granted("ROLE_ACCESS_MOVE_NODE", node) %} class="node-connectedSortable" {% endif %}
+                        data-update-order="{{ path('open_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
+                        data-confirm-title="{{ 'open_orchestra_backoffice.left_menu.tree.confirm_move.title'|trans }}"
+                        data-confirm-text="{{ 'open_orchestra_backoffice.left_menu.tree.confirm_move.text'|trans({'%nodeName%': node.name}) }}"
+                    >
+                        {% if element.child is not empty %}
+                            {{ _self.menu_nodes(element.child, name) }}
+                        {% endif %}
+                        {{ _self.new_node(node.nodeId, "node-unsortable", node) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
     {% else %}
-        {{ _self.new_node('-', "ui-state-unsortable") }}
+        {{ _self.new_node('-', "ui-state-unsortable", null) }}
     {% endfor %}
 
     {% if nodeId404 %}
@@ -43,8 +46,8 @@
 
 {% endmacro %}
 
-{% macro new_node(parentId, class) %}
-    {% if is_granted("ROLE_ACCESS_CREATE_NODE") %}
+{% macro new_node(parentId, class, node) %}
+    {% if is_granted("ROLE_ACCESS_CREATE_NODE", node) %}
         <li>
             <div class="{{ class }}">
                 <a

@@ -73,14 +73,15 @@ class NodeManager
     /**
      * Duplicate a node
      *
-     * @param string   $nodeId
-     * @param string   $siteId
-     * @param string   $language
-     * @param int|null $version
+     * @param string    $nodeId
+     * @param string    $siteId
+     * @param string    $language
+     * @param int|null  $version
+     * @param bool|true $save
      *
      * @return NodeInterface
      */
-    public function duplicateNode($nodeId, $siteId, $language, $version = null)
+    public function duplicateNode($nodeId, $siteId, $language, $version = null, $save = true)
     {
         $node = $this->nodeRepository->findVersion($nodeId, $language, $siteId, $version);
         $lastNode = $this->nodeRepository->findInLastVersion($nodeId, $language, $siteId);
@@ -95,9 +96,19 @@ class NodeManager
         $this->duplicateBlockAndArea($node, $newNode);
         $this->updateBlockReferences($node, $newNode);
 
-        $this->versionableSaver->saveDuplicated($newNode);
+        if (true === $save) {
+            $this->saveDuplicatedNode($newNode);
+        }
 
         return $newNode;
+    }
+
+    /**
+     * @param NodeInterface $newNode
+     */
+    public function saveDuplicatedNode(NodeInterface $newNode)
+    {
+        $this->versionableSaver->saveDuplicated($newNode);
     }
 
     /**

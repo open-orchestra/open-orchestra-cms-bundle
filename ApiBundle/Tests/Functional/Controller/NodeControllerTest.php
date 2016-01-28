@@ -43,6 +43,7 @@ class NodeControllerTest extends AbstractControllerTest
     {
         $nodes = $this->nodeRepository->findByNodeAndSite('fixture_page_contact', '2');
         $this->undeleteNodes($nodes);
+        $this->republishNodes($nodes);
         static::$kernel->getContainer()->get('object_manager')->flush();
         parent::tearDown();
     }
@@ -52,6 +53,10 @@ class NodeControllerTest extends AbstractControllerTest
      */
     public function testDeleteAction()
     {
+        $node = $this->nodeRepository->findPublishedInLastVersion('fixture_page_contact','fr','2');
+        $node->getStatus()->setPublished(false);
+        static::$kernel->getContainer()->get('object_manager')->flush();
+
         $crawler = $this->client->request('GET', '/admin/');
         $nbLink = $crawler->filter('a')->count();
 
@@ -69,6 +74,16 @@ class NodeControllerTest extends AbstractControllerTest
     {
         foreach ($nodes as $node) {
             $node->setDeleted(false);
+        }
+    }
+
+    /**
+     * @param array $nodes
+     */
+    protected function republishNodes($nodes)
+    {
+        foreach ($nodes as $node) {
+            $node->getStatus()->setPublished(true);
         }
     }
 
