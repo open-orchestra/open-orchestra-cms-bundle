@@ -13,11 +13,11 @@
                 <td class="text-center" colspan="12" >{{ ('open_orchestra_backoffice.dashboard.widget.list.no_entities')|trans }}</td>
             </tr>
         <% } else { %>
-            <% _.each(entities, function(entity) { %>
+            <% _.each(entities, function(entity, key) { %>
                 <tr>
-                    <td><%= entity.name %></td>
-                    <td><%= entity.language %></td>
-                    <td><%= entity.updated_at %></td>
+                    <td><%= truncateEntities[key].name %></td>
+                    <td><%= truncateEntities[key].language %></td>
+                    <td><%= truncateEntities[key].updated_at %></td>
                     <td class="text-center">
                         <% if (typeof entity.links._self_form !== 'undefined') { %>
                             <a href="#<%= generateUrl(entity) %>" class="btn btn-info btn-xs">
