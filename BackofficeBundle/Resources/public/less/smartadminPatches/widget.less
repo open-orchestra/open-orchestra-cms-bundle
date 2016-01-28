@@ -1,10 +1,10 @@
 .js-widget-title {
     margin-left: 10px;
     display: inline-block;
-    max-width: 90%;
-    max-width: ~"calc(100% - 20px)";
+    max-width: ~"calc(100% - 40px)";
     overflow: hidden;
     text-overflow: ellipsis;
+    vertical-align: bottom;
     white-space: nowrap;
     .tooltip-inner {
         white-space: initial;
@@ -14,7 +14,6 @@
 .jarviswidget {
     > header {
         height: auto;
-        min-height: 34px;
         line-height: 30px;
     }
     > header:after {
@@ -26,6 +25,9 @@
 
 .jarviswidget .widget-body {
     padding-top: 1px;
+    #entity-languages {
+        margin-right: 185px;
+    }
 }
 
 .jarviswidget-color-blueDark .nav-tabs li:not(.active) a {
