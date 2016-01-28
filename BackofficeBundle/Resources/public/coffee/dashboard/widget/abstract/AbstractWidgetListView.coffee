@@ -22,13 +22,14 @@ AbstractWidgetListView = OrchestraView.extend(
       success: (response) ->
         collectionName = response.collection_name
         entities = response[collectionName]
+        truncateEntities = $.extend(true, {}, entities)
         generateUrl = currentView.generateUrl
-        _.each entities, (row, row_key, list) ->
+        _.each truncateEntities, (row, row_key) ->
           _.each row, (value, value_key) ->
-            list[row_key][value_key] = if value.length > 20 then value.substr(0, 17) + '...' else value
+            truncateEntities[row_key][value_key] = if typeof value == 'string' and value.length > 20 then value.substr(0, 17) + '...' else value
             return
           return
-        data = _.extend({entities: entities}, { generateUrl })
+        data = _.extend({entities: entities, truncateEntities: truncateEntities}, { generateUrl })
         $('.widget-body', currentView.$el).html currentView.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/widget/listItemView', data)
 
   generateUrl: (entity) ->
