@@ -41,6 +41,13 @@ class Group extends BaseGroup implements GroupInterface
     protected $nodeRoles;
 
     /**
+     * @var Collection $mediaFolderRoles
+     *
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Media\Model\MediaFolderGroupRoleInterface")
+     */
+    protected $mediaFolderRoles;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -63,6 +70,7 @@ class Group extends BaseGroup implements GroupInterface
     {
         $this->labels = new ArrayCollection();
         $this->nodeRoles = new ArrayCollection();
+        $this->mediaFolderRoles = new ArrayCollection();
         $this->roles = array();
     }
 
@@ -173,5 +181,43 @@ class Group extends BaseGroup implements GroupInterface
     public function hasNodeRoleByNodeAndRole($nodeId, $role)
     {
         return null !== $this->getNodeRoleByNodeAndRole($nodeId, $role);
+    }
+
+    /**
+     * @return array
+     */
+    public function getMediaFolderRoles()
+    {
+        return $this->mediaFolderRoles;
+    }
+
+    /**
+     * @param MediaFolderGroupRoleInterface $mediaFolderGroupRole
+     */
+    public function addMediaFolderRole(MediaFolderGroupRoleInterface $mediaFolderGroupRole)
+    {
+        if ($this->mediaFolderRoles->contains($mediaFolderGroupRole)) {
+            $this->mediaFolderRoles->set($this->mediaFolderRoles->indexOf($mediaFolderGroupRole), $mediaFolderGroupRole);
+        } else {
+            $this->mediaFolderRoles->add($mediaFolderGroupRole);
+        }
+    }
+
+    /**
+     * @param string $folderId
+     * @param string $role
+     *
+     * @return MediaFolderGroupRoleInterface|null
+     */
+    public function getMediaFolderRoleByMediaFolderAndRole($folderId, $role)
+    {
+        /** @var MediaFolderGroupRoleInterface $mediaFolderRole */
+        foreach ($this->mediaFolderRoles as $mediaFolderRole) {
+            if ($mediaFolderRole->getFolderId() == $folderId && $mediaFolderRole->getRole() == $role) {
+                return $mediaFolderRole;
+            }
+        }
+
+        return null;
     }
 }
