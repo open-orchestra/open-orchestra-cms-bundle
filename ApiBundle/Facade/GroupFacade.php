@@ -37,6 +37,11 @@ class GroupFacade extends AbstractFacade
     protected $nodeRoles = array();
 
     /**
+     * @Serializer\Type("array<OpenOrchestra\MediaAdminBundle\Facade\MediaFolderGroupRoleFacade>")
+     */
+    protected $mediaFolderRoles = array();
+
+    /**
      * @param string $role
      */
     public function addRole($role)
@@ -58,5 +63,21 @@ class GroupFacade extends AbstractFacade
     public function getNodeRoles()
     {
         return $this->nodeRoles;
+    }
+
+    /**
+     * @param FacadeInterface $facade
+     */
+    public function addMediaFolderRoles(FacadeInterface $facade)
+    {
+        $this->mediaFolderRoles[] = $facade;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMediaFolderRoles()
+    {
+        return $this->mediaFolderRoles;
     }
 }
