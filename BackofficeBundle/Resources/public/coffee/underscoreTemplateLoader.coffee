@@ -9,14 +9,17 @@ do ->
       if !@templates[language][templateName]
         self = this
         filename = appRouter.generateUrl('loadUnderscoreTemplate')
-        jQuery.get filename, {
-          'language': language
-          'templateId': templateName
-        }, (tpl) ->
-          self.addTemplate templateName, language, tpl
-          self.saveLocalTemplates()
-          view.onTemplateLoaded templateName, tpl
-          return
+        jQuery.ajax {
+          method: "GET"
+          url: filename
+          data: { 'language': language,'templateId': templateName }
+          success: (tpl, textStatus, xhr) ->
+            if 200 == xhr.status
+              templateLoader.addTemplate templateName, language, tpl
+              templateLoader.saveLocalTemplates()
+            view.onTemplateLoaded templateName, tpl
+            return
+        }
       else
         view.onTemplateLoaded templateName, @templates[language][templateName]
       return
