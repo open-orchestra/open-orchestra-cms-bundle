@@ -108,7 +108,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 ));
                 $facade->addLink('_role_list_media_folder', $this->generateRoute(
                     'open_orchestra_api_role_list_by_type',
-                    array('type' => 'media_folder')
+                    array('type' => 'media|media_folder')
                 ));
             }
         }
