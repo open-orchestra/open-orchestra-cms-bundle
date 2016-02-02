@@ -86,7 +86,7 @@ module.exports = {
   },
   jcrop_gif: {
     src: 'vendor/bower_components/Jcrop/css/Jcrop.gif',
-    dest: 'web/img/jcrop/Jcrop.gif'
+    dest: 'web/css/Jcrop.gif'
   },
 
   //--[ SMARTADMIN ASSETS ]--//

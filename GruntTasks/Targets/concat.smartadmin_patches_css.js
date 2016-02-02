@@ -17,7 +17,10 @@ module.exports = {
     'web/built/openorchestrabackoffice/css/smartadminPatches/ribbon.css',
 
     //--[ TINYMCE PATCHES ]--//
-    'web/built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css'
+    'web/built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css',
+
+    //--[ JCROP OVERRIDE ]--//
+    'vendor/bower_components/Jcrop/css/jquery.Jcrop.css'
   ],
   dest: 'web/built/smartadminpatches.css'
 };
