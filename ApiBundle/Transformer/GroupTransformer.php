@@ -146,7 +146,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             $group->addMediaFolderRole($mediaFolderTransformer->reverseTransformWithGroup(
                 $group,
                 $mediaFolderRoleFacade,
-                $group->getNodeRoleByNodeAndRole($mediaFolderRoleFacade->folder, $mediaFolderRoleFacade->name)
+                $group->getMediaFolderRoleByMediaFolderAndRole($mediaFolderRoleFacade->folder, $mediaFolderRoleFacade->name)
                 )
             );
         }
