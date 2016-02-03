@@ -141,7 +141,7 @@ open_orchestra_backoffice:
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition
-                helper: Optionnel. Tempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type. Format : MonBundle:monTemplate.html.twig
+                helper: Utilisation avancée.\nTempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig
         template:
             success: Le gabarit a été sauvé
             name: Nom

@@ -145,11 +145,8 @@
 {% block form_help %}
     {% spaceless %}
         {% if attr.help_text is defined and attr.help_text is not empty %}
-            {% set help_text = attr.help_text %}
-        {% endif %}
-        {% set help_text = help_text|default('') %}
-        {% if help_text is not empty %}
-            <i class='icon-prepend fa fa-question-circle helper-block' rel="tooltip" data-placement="top" data-original-title="{{ help_text|trans({}, translation_domain) }}"></i>
+            {% set help_text = attr.help_text|trans({}, translation_domain)|raw %}
+            <i class='icon-prepend fa fa-question-circle helper-block' rel="tooltip" data-placement="top" data-original-title="{{ help_text }}"></i>
         {% endif %}
     {% endspaceless %}
 {% endblock form_help %}

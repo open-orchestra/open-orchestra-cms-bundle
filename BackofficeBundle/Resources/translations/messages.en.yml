@@ -141,7 +141,7 @@ open_orchestra_backoffice:
             keywords: Keywords
             template:
                 label: Edit form custom template
-                helper: Optionnal. Alternative template used to render the edit form of the contents of this type. Format : MyBundle::myTemplate.html.twig
+                helper: Advanced usage only.\nAlternate template to render the current content form.\nUse the Symfony2 format:\nMyBundle::myTemplate.html.twig
         template:
             success: The template has been saved
             name: Name
