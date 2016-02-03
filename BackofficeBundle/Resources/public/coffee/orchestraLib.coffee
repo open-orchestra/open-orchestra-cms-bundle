@@ -171,6 +171,8 @@ activateColorPicker = (element) ->
 
 #HELPER ENABLED
 activateHelper = (element) ->
+  title = element.attr('data-original-title').split('\\n').join('\n')
+  element.attr 'data-original-title', title
   element.tooltip()
 
 #LOAD EXTEND VIEW
