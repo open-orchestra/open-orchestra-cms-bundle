@@ -45,7 +45,11 @@ class BlockTypeSubscriber extends AbstractModulableTypeSubscriber
             $data->setLabel($data->getComponent() . ' #' . ($this->blockPosition + 1));
         }
 
-        $newForm = $this->formFactory->create($this->generateFormManager->createForm($data));
+        $newForm = $this->formFactory->create(
+            $this->generateFormManager->createForm($data),
+            null,
+            array('disabled' => $form->isDisabled())
+        );
 
         foreach ($newForm->all() as $newFormChild) {
             $form->add($newFormChild);
