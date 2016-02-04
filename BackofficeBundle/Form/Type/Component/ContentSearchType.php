@@ -4,7 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\Transformer\LuceneToBddTransformerInterface;
+use OpenOrchestra\Transformer\LuceneToBddTransformer;
 
 /**
  * Class ContentSearchType
@@ -14,12 +14,11 @@ class ContentSearchType extends AbstractType
     protected $transformer;
 
     /**
-     * @param LuceneToBddTransformerInterface $transformer
+     * @param string $transformerClass
      */
-    public function __construct(LuceneToBddTransformerInterface $transformer)
+    public function __construct($transformerClass)
     {
-        $this->transformer = $transformer;
-        $this->transformer->setField('keywords');
+        $this->transformerClass = $transformerClass;
     }
 
     /**
@@ -28,16 +27,18 @@ class ContentSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $transformerClass = $this->transformerClass;
+        $transformer = new $transformerClass('keywords');
 
-        $builder->addModelTransformer($this->transformer);
+        $builder->addModelTransformer($transformer);
 
         $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
             'required' => false
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
-            'attr' => array(
-                'class' => 'select2-lucene',
+            'new_attr' => array(
+                'class' => 'select-lucene',
             ),
             'embedded' => false,
             'required' => false,

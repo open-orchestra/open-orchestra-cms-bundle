@@ -20,7 +20,10 @@ module.exports = {
     'web/built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css',
 
     //--[ JCROP OVERRIDE ]--//
-    'vendor/bower_components/Jcrop/css/jquery.Jcrop.css'
+    'vendor/bower_components/Jcrop/css/jquery.Jcrop.css',
+
+    //--[ TOKENINPUT PATCHES ]--//
+    'web/built/openorchestrabackoffice/css/tokenInputPatches/token.css',
   ],
   dest: 'web/built/smartadminpatches.css'
 };

@@ -5,7 +5,9 @@ module.exports = {
     'web/bundles/openorchestrabackoffice/smartadmin/css/bootstrap.css',
     'vendor/bower_components/font-awesome/css/font-awesome.css',
     'vendor/bower_components/datatables.net-bs/css/dataTables.bootstrap.css',
-    'vendor/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.css'
+    'vendor/bower_components/datatables.net-buttons-bs/js/buttons.bootstrap.css',
+    'vendor/bower_components/jquery-tokeninput/styles/token-input.css',
+    'vendor/bower_components/jquery-tokeninput/styles/token-input-facebook.css',
   ],
   dest: 'web/built/lib.css'
 };

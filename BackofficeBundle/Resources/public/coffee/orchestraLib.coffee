@@ -151,7 +151,69 @@ activateSelect2 = (element) ->
       container.parent().addClass('bg-color-red').attr('style', 'border-color:#a90329!important') if term.isNew
       term.text
   )
+#TOKENINPUT ENABLED
+activateToken = (element) ->
+  testLuceneExpression = (obj) ->
+    testedString = obj.val()
+    getBalancedBracketsRegExp = new RegExp(/\([^\(\)]*\)/)
+    getBracketRegExp = new RegExp(/(\(|\))/)
+    getAdjacentOperatorsRegExp = new RegExp(/(\+ \+|- -|\+ -|- \+)/)
+    isEndingWithOperatorRegExp = new RegExp(/(\+|-)$/)
+    isLuceneExpression = !getAdjacentOperatorsRegExp.test(testedString) and !isEndingWithOperatorRegExp.test(testedString)
+    while getBalancedBracketsRegExp.test(testedString)
+      testedString = testedString.replace(getBalancedBracketsRegExp, '')
+    isLuceneExpression = !getBracketRegExp.test(testedString) and isLuceneExpression
+    addClass = if isLuceneExpression then 'operator-ok' else 'operator'
+    removeClass = if isLuceneExpression then 'operator' else 'operator-ok'
+    obj.prev().children('.operator, .operator-ok').removeClass(removeClass).addClass addClass
+    return
 
+  formatTags = (tags) ->
+    tags = tags or []
+    for i of tags
+      tags[i] =
+        value: tags[i]
+        type: 'tag'
+    tags
+
+  tags = formatTags(element.data('tags'))
+  prepopulatedTags = formatTags(element.val().split(' '))
+  tags = tags.concat([
+    {
+      value: '('
+      type: 'operator'
+    }
+    {
+      value: ')'
+      type: 'operator'
+    }
+    {
+      value: '+'
+      type: 'operator'
+    }
+    {
+      value: '-'
+      type: 'operator'
+    }
+  ])
+  element.tokenInput tags,
+    allowFreeTagging: true
+    onAdd: (item) ->
+      testLuceneExpression $(this)
+      return
+    onDelete: (item) ->
+      testLuceneExpression $(this)
+      return
+    prePopulate: prepopulatedTags
+    propertyToSearch: 'value'
+    theme: 'facebook'
+    tokenFormatter: (item) ->
+      item.type = item.type or 'new'
+      '<li class="' + item.type + '">' + item.value + '</li>'
+    tokenDelimiter: ' '
+    tokenValue: 'value'
+    zindex: 100002
+  return
 #NODE CHOICE ENABLED
 activateOrchestraNodeChoice = (element) ->
   regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g')
@@ -232,6 +294,7 @@ activateDatepicker = (elements) ->
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
+  activateToken(elements) if (elements = $(".select-lucene", form)) && elements.length > 0
   activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
   activateColorPicker(elements) if (elements = $(".colorpicker", view.el)) && elements.length > 0
   activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0
