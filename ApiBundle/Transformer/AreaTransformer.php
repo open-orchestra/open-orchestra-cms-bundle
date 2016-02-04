@@ -248,36 +248,6 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
     }
 
     /**
-     * @param AreaInterface              $area
-     * @param TemplateFlexInterface|null $template
-     * @param string|null                $parentAreaId
-     *
-     * @return FacadeInterface
-     */
-    public function transformFromFlexTemplate(AreaInterface $area, TemplateFlexInterface $template = null, $parentAreaId = null)
-    {
-        $facade = $this->newFacade();
-
-        $facade->label = $area->getLabel();
-        $facade->areaId = $area->getAreaId();
-        $facade->classes = $area->getHtmlClass();
-        foreach ($area->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area')->transformFromFlexTemplate($subArea, $template, $area->getAreaId()));
-        }
-
-        $facade->boDirection = $area->getBoDirection();
-
-        $facade->uiModel = $this->getTransformer('ui_model')->transform(
-            array(
-                'label' => $area->getLabel(),
-                'class' => $area->getHtmlClass(),
-                'id' => $area->getAreaId()
-            )
-        );
-
-        return $facade;
-    }
-    /**
      * @return string
      */
     public function getName()

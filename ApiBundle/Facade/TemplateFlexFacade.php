@@ -37,11 +37,6 @@ class TemplateFlexFacade extends AbstractFacade
     protected $areas = array();
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
-     */
-    protected $blocks = array();
-
-    /**
      * @Serializer\Type("boolean")
      */
     public $editable;
