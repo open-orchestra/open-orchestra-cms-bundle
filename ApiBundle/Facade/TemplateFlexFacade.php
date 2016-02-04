@@ -61,19 +61,4 @@ class TemplateFlexFacade extends AbstractFacade
     {
         return $this->areas;
     }
-
-    /**
-     * @param FacadeInterface $facade
-     */
-    public function addBlock(FacadeInterface $facade)
-    {
-        $this->blocks[] = $facade;
-    }
-    /**
-     * @return array
-     */
-    public function getBlocks()
-    {
-        return $this->blocks;
-    }
 }

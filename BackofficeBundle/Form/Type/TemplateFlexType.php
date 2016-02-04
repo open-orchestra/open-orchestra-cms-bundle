@@ -14,18 +14,15 @@ class TemplateFlexType extends AbstractType
 {
     protected $templateClass;
     protected $areaClass;
-    protected $translator;
 
     /**
      * @param string              $templateClass
      * @param string              $areaClass
-     * @param TranslatorInterface $translator
      */
-    public function __construct($templateClass, $areaClass, TranslatorInterface $translator)
+    public function __construct($templateClass, $areaClass)
     {
         $this->templateClass = $templateClass;
         $this->areaClass = $areaClass;
-        $this->translator = $translator;
     }
 
     /**

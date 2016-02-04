@@ -73,7 +73,6 @@ services:
         arguments:
             - %open_orchestra_model.document.template_flex.class%
             - %open_orchestra_model.document.area.class%
-            - @translator
         tags:
             - { name: form.type, alias: oo_template_flex }
     # Node form type
