@@ -41,7 +41,6 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addArea($('.template-flex-container', @$el), @options.template.get('areas'))
-    #@addAreasToView()
     return
 
   ###*

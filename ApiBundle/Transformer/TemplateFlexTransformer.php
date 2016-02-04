@@ -27,7 +27,7 @@ class TemplateFlexTransformer extends AbstractSecurityCheckerAwareTransformer
 
         $facade = $this->newFacade();
         foreach ($template->getAreas() as $area) {
-            $facade->addArea($this->getTransformer('area')->transformFromFlexTemplate($area, $template));
+            $facade->addArea($this->getTransformer('area_flex')->transformFromFlexTemplate($area, $template));
         }
 
         $facade->id = $template->getId();
