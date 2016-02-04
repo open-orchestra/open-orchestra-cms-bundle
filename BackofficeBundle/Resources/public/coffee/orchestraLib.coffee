@@ -168,34 +168,23 @@ activateToken = (element) ->
     obj.prev().children('.operator, .operator-ok').removeClass(removeClass).addClass addClass
     return
 
-  formatTags = (tags) ->
-    tags = tags or []
-    for i of tags
-      tags[i] =
-        value: tags[i]
-        type: 'tag'
-    tags
+  formatTags = (tags, type) ->
+    result = $.extend([], tags)
+    for i of result
+      result[i] =
+        value: result[i]
+        type: type
+    result
 
-  tags = formatTags(element.data('tags'))
-  prepopulatedTags = formatTags(element.val().split(' '))
-  tags = tags.concat([
-    {
-      value: '('
-      type: 'operator'
-    }
-    {
-      value: ')'
-      type: 'operator'
-    }
-    {
-      value: '+'
-      type: 'operator'
-    }
-    {
-      value: '-'
-      type: 'operator'
-    }
-  ])
+  operator = ['(', ')', '+', '-']
+  noSpaceBefore = new RegExp(/([^ ])(\+|-|\(|\))/)
+  noSpaceAfter = new RegExp(/(\+|-|\(|\))([^ ])/)
+  tags = formatTags(element.data('tags'), 'tag')
+  prepopulatedTags = element.val()
+  .replace(noSpaceBefore, '$1 $2')
+  .replace(noSpaceAfter, '$1 $2')
+  .split(' ')
+  tags = tags.concat(formatTags(operator, 'operator'))
   element.tokenInput tags,
     allowFreeTagging: true
     onAdd: (item) ->
@@ -204,7 +193,6 @@ activateToken = (element) ->
     onDelete: (item) ->
       testLuceneExpression $(this)
       return
-    prePopulate: prepopulatedTags
     propertyToSearch: 'value'
     theme: 'facebook'
     tokenFormatter: (item) ->
@@ -213,6 +201,11 @@ activateToken = (element) ->
     tokenDelimiter: ' '
     tokenValue: 'value'
     zindex: 100002
+  for i of prepopulatedTags
+    type = if operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
+    element.tokenInput "add", 
+      value: prepopulatedTags[i]
+      type: type
   return
 #NODE CHOICE ENABLED
 activateOrchestraNodeChoice = (element) ->
