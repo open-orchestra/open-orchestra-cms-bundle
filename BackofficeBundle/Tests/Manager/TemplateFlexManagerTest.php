@@ -24,7 +24,7 @@ class TemplateFlexManagerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $templateFlexClass = 'OpenOrchestra\ModelBundle\Document\TemplateFlex';
-        $areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
+        $areaClass = 'OpenOrchestra\ModelBundle\Document\AreaFlex';
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
