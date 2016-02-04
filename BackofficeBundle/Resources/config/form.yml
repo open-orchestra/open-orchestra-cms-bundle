@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_backoffice.type.template.class: OpenOrchestra\BackofficeBundle\Form\Type\TemplateType
+    open_orchestra_backoffice.type.template_flex.class: OpenOrchestra\BackofficeBundle\Form\Type\TemplateFlexType
     open_orchestra_backoffice.type.node.class: OpenOrchestra\BackofficeBundle\Form\Type\NodeType
     open_orchestra_backoffice.type.area.class: OpenOrchestra\BackofficeBundle\Form\Type\AreaType
     open_orchestra_backoffice.type.block.class: OpenOrchestra\BackofficeBundle\Form\Type\BlockType
@@ -66,6 +67,15 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: oo_template }
+    # Template Flex form type
+    open_orchestra_backoffice.type.template_flex:
+        class: %open_orchestra_backoffice.type.template_flex.class%
+        arguments:
+            - %open_orchestra_model.document.template_flex.class%
+            - %open_orchestra_model.document.area.class%
+            - @translator
+        tags:
+            - { name: form.type, alias: oo_template_flex }
     # Node form type
     open_orchestra_backoffice.type.node:
         class: %open_orchestra_backoffice.type.node.class%

@@ -86,6 +86,14 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
     'web/built/openorchestrabackoffice/js/page/FieldOptionDefaultValueView.js',
 
+    //--[ AREA FLEX ]--//
+    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexView.js',
+
+    //--[ TEMPLATE FLEX ]--//
+      'web/built/openorchestrabackoffice/js/templateFlex/TemplateFlexRouter.js',
+      'web/built/openorchestrabackoffice/js/templateFlex/TemplateFlexFormView.js',
+      'web/built/openorchestrabackoffice/js/templateFlex/TemplateFlexView.js',
+
     //--[ TAB ]--//
     'web/built/openorchestrabackoffice/js/tab/TabView.js',
     'web/built/openorchestrabackoffice/js/tab/TabElementFormView.js',

@@ -81,4 +81,46 @@ class TemplateController extends AbstractAdminController
 
         return $this->renderAdminForm($form);
     }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/template_flex/new", name="open_orchestra_backoffice_template_flex_new")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
+     *
+     * @return Response
+     */
+    public function newActionFlex(Request $request)
+    {
+        $templateClass = $this->container->getParameter('open_orchestra_model.document.template.class');
+        $areaClass = $this->container->getParameter('open_orchestra_model.document.area.class');
+
+        $parentArea = new $areaClass();
+        $parentArea->setAreaId('node');
+        $parentArea->setLabel('Node');
+
+        $context = $this->get('open_orchestra_backoffice.context_manager');
+        $template = new $templateClass();
+        $template->setSiteId($context->getCurrentSiteId());
+        $template->addArea($parentArea);
+
+        $form = $this->createForm('oo_template_flex', $template, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_template_new')
+        ), TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE);
+
+        $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
+
+        if ($this->handleForm($form, $message, $template)) {
+            $this->dispatchEvent(TemplateEvents::TEMPLATE_CREATE, new TemplateEvent($template));
+
+            return $this->redirect($this->generateUrl('open_orchestra_backoffice_template_form', array(
+                'templateId' => $template->getTemplateId()
+            )));
+        }
+
+        return $this->renderAdminForm($form);
+    }
 }

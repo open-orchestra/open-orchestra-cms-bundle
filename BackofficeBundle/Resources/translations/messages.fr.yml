@@ -309,6 +309,7 @@ open_orchestra_backoffice:
             nodes: Pages
             general_nodes: Pages générales
             templates: Gabarits
+            templates_flex: Gabarits Flex
             contents: Contenus
             error_nodes:
                 error_404: Erreur 404

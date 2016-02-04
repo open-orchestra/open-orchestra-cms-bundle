@@ -6,6 +6,7 @@ OrchestraViewConfigurator = ->
     'editEntityTab': TabElementFormView
     'showTab': TabView
     'addArea': AreaView
+    'addAreaFlex': OpenOrchestra.AreaFlex.AreaFlexView
     'addBlock': BlockView
     'addButtonAction': TableviewAction
     'addRestoreButtonAction': TableviewRestoreAction
@@ -17,6 +18,7 @@ OrchestraViewConfigurator = ->
     'showBlocksPanel': BlocksPanelView
     'showNode': NodeView
     'showTemplate': TemplateView
+    'showTemplateFlex': OpenOrchestra.TemplateFlex.TemplateFlexView
     'showLanguage': LanguageView
     'showDuplicate': DuplicateView
     'showPreviewLinks': PreviewLinkView
