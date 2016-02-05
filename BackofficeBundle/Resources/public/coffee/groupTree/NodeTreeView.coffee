@@ -56,7 +56,7 @@ NodeTreeView = OrchestraView.extend(
       @options.domContainer.find('.head-element').first().append '<div class="col-sm-2">' + role.description + '</div>'
 
   toggleItemDisplay: (e) ->
-    OpenOrchestra.toggleTreeNodeDisplay(e, '.child-node')
+    OpenOrchestra.toggleTreeNodeDisplay e
 )
 
 jQuery ->

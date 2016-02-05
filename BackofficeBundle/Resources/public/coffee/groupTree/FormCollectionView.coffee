@@ -11,7 +11,7 @@ FormCollectionView = OrchestraView.extend(
     for role in @options.roles
       @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/groupTreeForm',
         role: role
-        node: @options.nodeElement
+        document: @options.nodeElement
       )
     @setElement @options.domContainer
     if @options.nodeGroupRoles != undefined
