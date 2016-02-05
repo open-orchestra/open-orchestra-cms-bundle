@@ -8,7 +8,6 @@ window.OpenOrchestra.TemplateFlex or= {}
  * @class TemplateFlexView
 ###
 class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
-  extendView : ['addArea' ]
 
   ###*
    * required options
@@ -55,4 +54,5 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
       new areaViewClass(
         area: areaModel
         domContainer: container
+        toolbarContainer: $('.toolbar-container', @$el)
       )

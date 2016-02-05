@@ -491,6 +491,9 @@ open_orchestra_backoffice:
         delete_explanation: Cette opération est non réversible.
         delete_error_title: Suppression de zone
         delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page
+        edit_column_label: Editer la colonne
+        edit_row_label: Editer la ligne
+        new_row_label: Ligne
     templates:
         delete:
             title: Souhaitez-vous supprimer ce gabarit ?
