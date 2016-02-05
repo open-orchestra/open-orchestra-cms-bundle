@@ -27,22 +27,19 @@ class ContentSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformerClass = $this->transformerClass;
-        $transformer = new $transformerClass('keywords');
-
-        $builder->addModelTransformer($transformer);
-
         $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
             'required' => false
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
+            'embedded' => false,
+            'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
+            'name' => 'keywords',
             'new_attr' => array(
                 'class' => 'select-lucene',
             ),
-            'embedded' => false,
             'required' => false,
-            'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
+            'transformerClass' => $this->transformerClass,
         ));
     }
 

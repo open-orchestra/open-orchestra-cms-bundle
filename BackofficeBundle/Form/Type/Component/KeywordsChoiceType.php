@@ -49,6 +49,11 @@ class KeywordsChoiceType extends AbstractType
         if ($options['embedded']) {
             $builder->addModelTransformer($this->keywordsTransformer);
         }
+        if(!is_null($options['transformerClass'])) {
+            $transformerClass = $options['transformerClass'];
+            $transformer = new $transformerClass($options['name']);
+            $builder->addModelTransformer($transformer);
+        }
     }
 
     /**
@@ -57,19 +62,20 @@ class KeywordsChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $isGranted = $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD);
-        $attr = function(Options $options) {
-            $default = array(
-                'class' => 'select2',
-                'data-tags' => $this->getTags(),
-                'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
-            );
-            return array_replace($default, $options['new_attr']);
-        };
 
         $resolver->setDefaults(array(
+            'attr' => function(Options $options) use ($isGranted) {
+                $default = array(
+                    'class' => 'select2',
+                    'data-tags' => $this->getTags(),
+                    'data-authorize-new' => ($isGranted) ? "true" : "false",
+                );
+                return array_replace($default, $options['new_attr']);
+            },
             'embedded' => true,
-            'attr' => $attr,
-            'new_attr' => array('data-authorize-new' => ($isGranted) ? "1" : "0")
+            'name' => '',
+            'new_attr' => array(),
+            'transformerClass' => null,
         ));
     }
 

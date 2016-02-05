@@ -157,15 +157,16 @@ activateToken = (element) ->
     testedString = obj.val()
     getBalancedBracketsRegExp = new RegExp(/\([^\(\)]*\)/)
     getBracketRegExp = new RegExp(/(\(|\))/)
-    getAdjacentOperatorsRegExp = new RegExp(/(\+ \+|- -|\+ -|- \+)/)
+    getAdjacentOperatorsRegExp = new RegExp(/(\+ \+|- -|\+ -|- \+|\(\))/)
     isEndingWithOperatorRegExp = new RegExp(/(\+|-)$/)
     isLuceneExpression = !getAdjacentOperatorsRegExp.test(testedString) and !isEndingWithOperatorRegExp.test(testedString)
-    while getBalancedBracketsRegExp.test(testedString)
+    while isLuceneExpression and getBalancedBracketsRegExp.test(testedString)
       testedString = testedString.replace(getBalancedBracketsRegExp, '')
     isLuceneExpression = !getBracketRegExp.test(testedString) and isLuceneExpression
     addClass = if isLuceneExpression then 'operator-ok' else 'operator'
     removeClass = if isLuceneExpression then 'operator' else 'operator-ok'
-    obj.prev().children('.operator, .operator-ok').removeClass(removeClass).addClass addClass
+    $('.token-input-list-facebook .operator, .token-input-list-facebook .operator-ok', obj.parent())
+    .removeClass(removeClass).addClass addClass
     return
 
   formatTags = (tags, type) ->
@@ -177,16 +178,17 @@ activateToken = (element) ->
     result
 
   operator = ['(', ')', '+', '-']
-  noSpaceBefore = new RegExp(/([^ ])(\+|-|\(|\))/)
-  noSpaceAfter = new RegExp(/(\+|-|\(|\))([^ ])/)
+  noSpaceBeforeRegExp = new RegExp(/([^ ])(\+|-|\(|\))/)
+  noSpaceAfterRegExp = new RegExp(/(\+|-|\(|\))([^ ])/)
+  isEmptyRegExp = new RegExp(/^ *$/)
   tags = formatTags(element.data('tags'), 'tag')
   prepopulatedTags = element.val()
-  .replace(noSpaceBefore, '$1 $2')
-  .replace(noSpaceAfter, '$1 $2')
+  .replace(noSpaceBeforeRegExp, '$1 $2')
+  .replace(noSpaceAfterRegExp, '$1 $2')
   .split(' ')
   tags = tags.concat(formatTags(operator, 'operator'))
   element.tokenInput tags,
-    allowFreeTagging: true
+    allowFreeTagging: element.data('authorize-new')
     onAdd: (item) ->
       testLuceneExpression $(this)
       return
@@ -202,10 +204,23 @@ activateToken = (element) ->
     tokenValue: 'value'
     zindex: 100002
   for i of prepopulatedTags
-    type = if operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
-    element.tokenInput "add", 
-      value: prepopulatedTags[i]
-      type: type
+    prepopulatedTags[i] = prepopulatedTags[i].trim()
+  	if !isEmptyRegExp.test(prepopulatedTags[i])
+      type = if operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
+      element.tokenInput "add", 
+        value: prepopulatedTags[i]
+        type: type
+  ul = $('<ul class="operator-list">')
+  for i of operator
+    click = ((operator) ->
+      ->
+        element.tokenInput 'add',
+          value: operator
+          type: 'operator'
+        return
+    )(operator[i])
+    $('<li>').html(operator[i]).on('click', click).appendTo ul
+  element.before ul
   return
 #NODE CHOICE ENABLED
 activateOrchestraNodeChoice = (element) ->
