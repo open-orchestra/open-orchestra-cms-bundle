@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @ODM\EmbeddedDocument
  */
-class NodeGroupRole implements NodeGroupRoleInterface
+class NodeGroupRole extends AbstractGroupRole implements NodeGroupRoleInterface
 {
     /**
      * @var string
@@ -18,27 +18,6 @@ class NodeGroupRole implements NodeGroupRoleInterface
      * @ODM\Field(type="string")
      */
     protected $nodeId;
-
-    /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $role;
-
-    /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $accessType;
-
-    /**
-     * @var bool
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $granted;
 
     /**
      * @return string
@@ -54,54 +33,5 @@ class NodeGroupRole implements NodeGroupRoleInterface
     public function setNodeId($nodeId)
     {
         $this->nodeId = $nodeId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAccessType()
-    {
-        return $this->accessType;
-    }
-
-    /**
-     * @param string $accessType
-     */
-    public function setAccessType($accessType)
-    {
-        $this->accessType = $accessType;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function isGranted()
-    {
-        return $this->granted;
-    }
-
-    /**
-     * @param bool $granted
-     */
-    public function setGranted($granted)
-    {
-        $this->granted = $granted;
     }
 }

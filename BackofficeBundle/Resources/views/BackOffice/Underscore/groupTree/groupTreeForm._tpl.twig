@@ -1,14 +1,14 @@
 <div class="col-sm-2">
     <select class="form-control value-holder" data-role-name="<%= role.name %>">
-        <% if (node.parent_id != '-') { %>
-            <option value="{{ constant('OpenOrchestra\\BackofficeBundle\\Model\\NodeGroupRoleInterface::ACCESS_INHERIT') }}">
+        <% if (document.parent_id != '-') { %>
+            <option value="{{ constant('OpenOrchestra\\BackofficeBundle\\Model\\GroupRoleInterface::ACCESS_INHERIT') }}">
                 {{ 'open_orchestra_backoffice.form.group.access_inherit'|trans }}
             </option>
         <% } %>
-        <option value="{{ constant('OpenOrchestra\\BackofficeBundle\\Model\\NodeGroupRoleInterface::ACCESS_GRANTED') }}">
+        <option value="{{ constant('OpenOrchestra\\BackofficeBundle\\Model\\GroupRoleInterface::ACCESS_GRANTED') }}">
             {{ 'open_orchestra_backoffice.form.group.access_granted'|trans }}
         </option>
-        <option value="{{ constant('OpenOrchestra\\BackofficeBundle\\Model\\NodeGroupRoleInterface::ACCESS_DENIED') }}">
+        <option value="{{ constant('OpenOrchestra\\BackofficeBundle\\Model\\GroupRoleInterface::ACCESS_DENIED') }}">
             {{ 'open_orchestra_backoffice.form.group.access_denied'|trans }}
         </option>
     </select>

@@ -22,7 +22,7 @@ NodeTreeElementView = OrchestraView.extend(
       group: @options.group
       nodeElement: @options.nodes.node
     )
-    @subNode = @options.domContainer.find('ul.child-node').last()
+    @subNode = @options.domContainer.find('ul.child-document').last()
     if @options.nodes.children.length > 0
       for child of @options.nodes.children
         @addChildToView @options.nodes.children[child]
