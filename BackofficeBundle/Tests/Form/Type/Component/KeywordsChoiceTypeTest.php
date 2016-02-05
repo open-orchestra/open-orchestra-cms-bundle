@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\KeywordsChoiceType;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * Class KeywordsChoiceTypeTest
@@ -74,6 +75,7 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     public function testConfigureOptions($tagLabel)
     {
         $route = 'path';
+        $isGranted = 1;
         Phake::when($this->router)->generate(Phake::anyParameters())->thenReturn($route);
         Phake::when($this->keyword1)->getLabel()->thenReturn($tagLabel);
         Phake::when($this->keyword2)->getLabel()->thenReturn($tagLabel);
@@ -83,13 +85,17 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
+            'attr' => function(Options $options) use ($isGranted, $tagLabel) {
+                $default = array(
+                    'class' => 'select2',
+                    'data-tags' => json_encode(array($tagLabel, $tagLabel)),
+                    'data-authorize-new' => ($isGranted) ? "true" : "false",
+                );
+                return array_replace($default, $options['new_attr']);
+            },
             'embedded' => true,
-            'attr' => array(
-                'class' => 'select2',
-                'data-authorize-new' => '1',
-                'data-tags' => json_encode(array($tagLabel, $tagLabel)),
-                'data-check' => $route
-        )));
+            'new_attr' => array(),
+        ));
     }
 
     /**
