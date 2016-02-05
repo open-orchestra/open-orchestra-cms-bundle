@@ -178,14 +178,9 @@ activateToken = (element) ->
     result
 
   operator = ['(', ')', '+', '-']
-  noSpaceBeforeRegExp = new RegExp(/([^ ])(\+|-|\(|\))/)
-  noSpaceAfterRegExp = new RegExp(/(\+|-|\(|\))([^ ])/)
-  isEmptyRegExp = new RegExp(/^ *$/)
+  findOperatorRegExp = new RegExp(/(\+|-|\(|\))/g)
   tags = formatTags(element.data('tags'), 'tag')
-  prepopulatedTags = element.val()
-  .replace(noSpaceBeforeRegExp, '$1 $2')
-  .replace(noSpaceAfterRegExp, '$1 $2')
-  .split(' ')
+  prepopulatedTags = element.val().replace(findOperatorRegExp, ' $1 ').split(' ')
   tags = tags.concat(formatTags(operator, 'operator'))
   element.tokenInput tags,
     allowFreeTagging: element.data('authorize-new')
@@ -205,9 +200,9 @@ activateToken = (element) ->
     zindex: 100002
   for i of prepopulatedTags
     prepopulatedTags[i] = prepopulatedTags[i].trim()
-  	if !isEmptyRegExp.test(prepopulatedTags[i])
+    if prepopulatedTags[i] != ''
       type = if operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
-      element.tokenInput "add", 
+      element.tokenInput 'add',
         value: prepopulatedTags[i]
         type: type
   ul = $('<ul class="operator-list">')
