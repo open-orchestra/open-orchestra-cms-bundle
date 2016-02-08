@@ -39,20 +39,19 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     )
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    @addArea($('.template-flex-container', @$el), @options.template.get('areas'))
+    @addArea($('.template-flex-container', @$el), @options.template.get('area'))
     return
 
   ###*
    * @param {Object} container Jquery selector
    * @param {Object} areas List of areas to add in container
   ###
-  addArea: (container, areas) ->
-    for name, area of areas
-      areaModel = new Area
-      areaModel.set area
-      areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addAreaFlex')
-      new areaViewClass(
-        area: areaModel
-        domContainer: container
-        toolbarContainer: $('.toolbar-container', @$el)
-      )
+  addArea: (container, area) ->
+    areaModel = new Area
+    areaModel.set area
+    areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addAreaFlex')
+    new areaViewClass(
+      area: areaModel
+      domContainer: container
+      toolbarContainer: $('.toolbar-container', @$el)
+    )

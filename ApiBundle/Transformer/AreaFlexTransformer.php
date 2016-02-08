@@ -24,8 +24,7 @@ class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implem
     public function __construct(
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+    ) {
         parent::__construct($facadeClass, $authorizationChecker);
     }
 
@@ -42,6 +41,7 @@ class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implem
 
         $facade->label = $area->getLabel();
         $facade->areaId = $area->getAreaId();
+        $facade->areaType = $area->getAreaType();
         foreach ($area->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area_flex')->transformFromFlexTemplate($subArea, $template, $area->getAreaId()));
         }

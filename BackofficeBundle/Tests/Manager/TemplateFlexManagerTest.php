@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
 
 use OpenOrchestra\BackofficeBundle\Manager\TemplateFlexManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use Phake;
 
 /**
@@ -44,10 +45,10 @@ class TemplateFlexManagerTest extends AbstractBaseTestCase
         $template = $this->manager->initializeNewTemplateFlex();
 
         $this->assertEquals($template->getSiteId(), $this->siteId);
-        $this->assertCount(1, $template->getAreas());
 
-        $area = $template->getAreas()[0];
-        $this->assertEquals($area->getLabel(), TemplateFlexManager::DEFAULT_AREA_LABEL);
-        $this->assertEquals($area->getAreaId(), TemplateFlexManager::DEFAULT_AREA_ID);
+        $area = $template->getArea();
+        $this->assertEquals($area->getLabel(), AreaFlexInterface::ROOT_AREA_LABEL);
+        $this->assertEquals($area->getAreaId(), AreaFlexInterface::ROOT_AREA_ID);
+        $this->assertEquals($area->getAreaType(), AreaFlexInterface::TYPE_ROOT);
     }
 }
