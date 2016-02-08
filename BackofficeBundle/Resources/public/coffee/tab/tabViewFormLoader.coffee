@@ -3,7 +3,7 @@ tabViewFormLoad = (options) ->
   @panels = getPanelsLink(@options.element.get('links'))
   tabViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showTab')
   @tabView = new tabViewClass(@options)
-  viewContext = @
+  loaderContext = @
   for panel, i in panels
     if panel.id == 'form' and @options.response
       this.generatePanelView(@options.response, i)
@@ -13,7 +13,7 @@ tabViewFormLoad = (options) ->
           url: panel.link
           method: "GET"
           success: (response) ->
-            viewContext.generatePanelView(response, i)
+            loaderContext.generatePanelView(response, i)
 
 generatePanelView = (response, position) ->
   elementTabViewClass = appConfigurationView.getConfiguration(@options.entityType + '_tab_' + @panels[position].id, 'editEntityTab')
