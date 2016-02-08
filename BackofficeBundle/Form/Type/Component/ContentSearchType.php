@@ -4,7 +4,6 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\Transformer\LuceneToBddTransformer;
 
 /**
  * Class ContentSearchType
