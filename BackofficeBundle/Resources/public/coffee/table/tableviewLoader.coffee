@@ -79,7 +79,7 @@ entityViewLoad = (link, entityType, entityId, language, version, sourceLanguage)
               element: element
               domContainer: $('#content')
             if panels
-              tabViewFormLoad(options)
+              tabViewFormLoad($.extend(options, {response: response}))
             else
               viewClass = appConfigurationView.getConfiguration(entityType, 'editEntity')
               new viewClass(options)
