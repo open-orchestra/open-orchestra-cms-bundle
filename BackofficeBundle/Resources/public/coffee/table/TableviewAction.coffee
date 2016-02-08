@@ -64,7 +64,7 @@ TableviewAction = OrchestraView.extend(
         options = viewContext.addOption(html: response, domContainer: $('#content'))
         OpenOrchestra.DataTable.Channel.trigger 'clearCache', options.tableId
         if panels
-          tabViewFormLoad(options)
+          tabViewFormLoad($.extend(options, {response: response}))
         else
           viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'editEntity')
           new viewClass(options)
