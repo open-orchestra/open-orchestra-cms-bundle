@@ -110,10 +110,10 @@
             data-type="Template"
         >
             <a
-                    id="nav-template-{{ template.templateId }}"
-                    href="#template-flex/show/{{ template.templateId }}"
-                    data-url="{{ path('open_orchestra_api_template_flex_show', {'templateId': template.templateId}) }}"
-                    data-template="{{ template.templateId }}"
+                id="nav-template-{{ template.templateId }}"
+                href="#template-flex/show/{{ template.templateId }}"
+                data-url="{{ path('open_orchestra_api_template_flex_show', {'templateId': template.templateId}) }}"
+                data-template="{{ template.templateId }}"
             >
                 <span>{{ template.name }}</span>
             </a>
@@ -123,10 +123,10 @@
         <li>
             <div class="ui-state-unsortable">
                 <a
-                        class="ajax-new"
-                        href="#"
-                        data-url="{{ path('open_orchestra_backoffice_template_flex_new') }}"
-                        data-type="template-flex"
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('open_orchestra_backoffice_template_flex_new') }}"
+                    data-type="template-flex"
                 >
                     <i class="fa fa-file"></i>
                     {{ 'open_orchestra_backoffice.left_menu.tree.new_template'|trans }}
