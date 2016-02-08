@@ -221,4 +221,15 @@ class Group extends BaseGroup implements GroupInterface
 
         return null;
     }
+
+    /**
+     * @param string $folderId
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasMediaFolderRoleByByMediaFolderAndRole($folderId, $role)
+    {
+        return null !== $this->getMediaFolderRoleByMediaFolderAndRole($folderId, $role);
+    }
 }
