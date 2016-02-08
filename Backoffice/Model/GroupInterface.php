@@ -89,4 +89,12 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
      * @return MediaFolderGroupRoleInterface|null
      */
     public function getMediaFolderRoleByMediaFolderAndRole($folderId, $role);
+
+    /**
+     * @param string $folderId
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasMediaFolderRoleByByMediaFolderAndRole($folderId, $role);
 }
