@@ -153,21 +153,24 @@ activateSelect2 = (element) ->
   )
 #TOKENINPUT ENABLED
 activateToken = (element) ->
-  testLuceneExpression = (obj) ->
-    testedString = obj.val()
-    getBalancedBracketsRegExp = new RegExp(/\([^\(\)]*\)/)
-    getBracketRegExp = new RegExp(/(\(|\))/)
-    getAdjacentOperatorsRegExp = new RegExp(/(\+ \+|- -|\+ -|- \+|\(\))/)
-    isEndingWithOperatorRegExp = new RegExp(/(\+|-)$/)
-    isLuceneExpression = !getAdjacentOperatorsRegExp.test(testedString) and !isEndingWithOperatorRegExp.test(testedString)
-    while isLuceneExpression and getBalancedBracketsRegExp.test(testedString)
-      testedString = testedString.replace(getBalancedBracketsRegExp, '')
-    isLuceneExpression = !getBracketRegExp.test(testedString) and isLuceneExpression
-    addClass = if isLuceneExpression then 'operator-ok' else 'operator'
-    removeClass = if isLuceneExpression then 'operator' else 'operator-ok'
+  applicateSqlCss = (obj) ->
+    isSqlExpression = testSqlExpression 
+      text: obj.val()
+    addClass = if isSqlExpression then 'operator-ok' else 'operator'
+    removeClass = if isSqlExpression then 'operator' else 'operator-ok'
     $('.token-input-list-facebook .operator, .token-input-list-facebook .operator-ok', obj.parent())
     .removeClass(removeClass).addClass addClass
-    return
+  
+  testSqlExpression = (testedString) ->
+    isSqlExpression = true
+    getBalancedBracketsRegExp = new RegExp(/\( ([^\(\)]*) \)/)
+    testSqlExpressionRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+?( OR (?=.)| AND (?=.)){0,1})+$/)
+    if getBalancedBracketsRegExp.test(testedString.text)
+      subTestedString = getBalancedBracketsRegExp.exec(testedString.text)
+      testedString.text = testedString.text.replace(subTestedString[0], '#')
+      isSqlExpression = testSqlExpressionRegExp.test(subTestedString[1]) and testSqlExpression(testedString)
+    isSqlExpression = isSqlExpression && testSqlExpressionRegExp.test(testedString.text)
+    return isSqlExpression
 
   formatTags = (tags, type) ->
     result = $.extend([], tags)
@@ -177,18 +180,21 @@ activateToken = (element) ->
         type: type
     result
 
-  operator = ['(', ')', '+', '-']
-  findOperatorRegExp = new RegExp(/(\+|-|\(|\))/g)
+  operator = ['(', ')', 'AND', 'OR', 'NOT']
+  operatorRegExp = [new RegExp(/(\()/g), new RegExp(/(\))/g), new RegExp(/(AND)/g), new RegExp(/(OR)/g), new RegExp(/(NOT)/g)]
   tags = formatTags(element.data('tags'), 'tag')
-  prepopulatedTags = element.val().replace(findOperatorRegExp, ' $1 ').split(' ')
   tags = tags.concat(formatTags(operator, 'operator'))
+  prepopulatedTags = element.val()
+  for i of operatorRegExp
+  	prepopulatedTags = prepopulatedTags.replace(operatorRegExp[i], ' $1 ')
+  prepopulatedTags = prepopulatedTags.split(' ')
   element.tokenInput tags,
     allowFreeTagging: element.data('authorize-new')
     onAdd: (item) ->
-      testLuceneExpression $(this)
+      applicateSqlCss $(this)
       return
     onDelete: (item) ->
-      testLuceneExpression $(this)
+      applicateSqlCss $(this)
       return
     propertyToSearch: 'value'
     theme: 'facebook'

@@ -18,7 +18,7 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->form = new ContentSearchType('OpenOrchestra\Transformer\LuceneToBddTransformer');
+        $this->form = new ContentSearchType('OpenOrchestra\Transformer\SqlToBddTransformer');
     }
 
     /**
