@@ -22,12 +22,11 @@ class AreaFlexTransformer extends AbstractTransformer
      */
     public function transform($area)
     {
-        $facade = $this->newFacade();
-
         if (!$area instanceof AreaFlexInterface) {
             throw new TransformerParameterTypeException();
         }
 
+        $facade = $this->newFacade();
         $facade->label = $area->getLabel();
         $facade->areaId = $area->getAreaId();
         $facade->areaType = $area->getAreaType();
