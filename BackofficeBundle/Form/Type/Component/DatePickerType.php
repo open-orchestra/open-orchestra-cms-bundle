@@ -21,12 +21,13 @@ class DatePickerType extends DateType
         parent::finishView($view, $form, $options);
         $view->vars['format'] = $options['format'];
     }
+
     /**
-     * Returns the name of this type.
+     * Returns the name of the bloc prefix.
      *
-     * @return string The name of this type
+     * @return string The name of the bloc prefix
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'oo_date_picker';
     }
