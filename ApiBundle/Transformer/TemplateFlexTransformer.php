@@ -4,13 +4,13 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
 
 /**
  * Class TemplateFlexTransformer
  */
-class TemplateFlexTransformer extends AbstractSecurityCheckerAwareTransformer
+class TemplateFlexTransformer extends AbstractTransformer
 {
     /**
      * @param TemplateFlexInterface $template
@@ -26,7 +26,7 @@ class TemplateFlexTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         $facade = $this->newFacade();
-        $facade->area = $this->getTransformer('area_flex')->transformFromFlexTemplate($template->getArea(), $template);
+        $facade->area = $this->getTransformer('area_flex')->transform($template->getArea());
         $facade->id = $template->getId();
         $facade->name = $template->getName();
         $facade->siteId = $template->getSiteId();
@@ -44,5 +44,4 @@ class TemplateFlexTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         return 'template_flex';
     }
-
 }

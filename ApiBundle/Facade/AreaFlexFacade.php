@@ -38,12 +38,4 @@ class AreaFlexFacade extends AbstractFacade
     {
         $this->areas[] = $facade;
     }
-
-    /**
-     * @return array
-     */
-    public function getAreas()
-    {
-        return $this->areas;
-    }
 }

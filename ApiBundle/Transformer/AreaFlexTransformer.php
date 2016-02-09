@@ -2,48 +2,37 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
-use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Class AreaTransformer
  */
-class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implements TransformerWithTemplateFlexContextInterface
+class AreaFlexTransformer extends AbstractTransformer
 {
-    protected $nodeRepository;
-    protected $areaManager;
-    protected $currentSiteManager;
-
     /**
-     * @param string                        $facadeClass
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function __construct(
-        $facadeClass,
-        AuthorizationCheckerInterface $authorizationChecker
-    ) {
-        parent::__construct($facadeClass, $authorizationChecker);
-    }
-
-    /**
-     * @param AreaFlexInterface          $area
-     * @param TemplateFlexInterface|null $template
-     * @param string|null                $parentAreaId
+     * @param AreaFlexInterface $area
      *
      * @return FacadeInterface
+     *
+     * @throws TransformerParameterTypeException
+     * @throws \OpenOrchestra\BaseApi\Exceptions\HttpException\FacadeClassNotSetException
      */
-    public function transformFromFlexTemplate(AreaFlexInterface $area, TemplateFlexInterface $template = null, $parentAreaId = null)
+    public function transform($area)
     {
         $facade = $this->newFacade();
+
+        if (!$area instanceof AreaFlexInterface) {
+            throw new TransformerParameterTypeException();
+        }
 
         $facade->label = $area->getLabel();
         $facade->areaId = $area->getAreaId();
         $facade->areaType = $area->getAreaType();
         foreach ($area->getAreas() as $subArea) {
-            $facade->addArea($this->getTransformer('area_flex')->transformFromFlexTemplate($subArea, $template, $area->getAreaId()));
+            $facade->addArea($this->getTransformer('area_flex')->transform($subArea));
         }
 
         return $facade;
