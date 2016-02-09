@@ -153,6 +153,10 @@ activateSelect2 = (element) ->
   )
 #TOKENINPUT ENABLED
 activateToken = (element) ->
+  isAndBooleanRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( AND (?=.)){0,1})+$/)
+  isOrBooleanRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( OR (?=.)){0,1})+$/)
+  getBalancedBracketsRegExp = new RegExp(/\( ([^\(\)]*) \)/)
+
   applicateSqlCss = (obj) ->
     isSqlExpression = testSqlExpression 
       text: obj.val()
@@ -163,13 +167,12 @@ activateToken = (element) ->
   
   testSqlExpression = (testedString) ->
     isSqlExpression = true
-    getBalancedBracketsRegExp = new RegExp(/\( ([^\(\)]*) \)/)
-    testSqlExpressionRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+?( OR (?=.)| AND (?=.)){0,1})+$/)
     if getBalancedBracketsRegExp.test(testedString.text)
       subTestedString = getBalancedBracketsRegExp.exec(testedString.text)
       testedString.text = testedString.text.replace(subTestedString[0], '#')
-      isSqlExpression = testSqlExpressionRegExp.test(subTestedString[1]) and testSqlExpression(testedString)
-    isSqlExpression = isSqlExpression && testSqlExpressionRegExp.test(testedString.text)
+      isSqlExpression = testSqlExpression(testedString) and (isAndBooleanRegExp.test(subTestedString[1]) or isOrBooleanRegExp.test(subTestedString[1]))
+    else
+      isSqlExpression = isSqlExpression and (isAndBooleanRegExp.test(testedString.text) or isOrBooleanRegExp.test(testedString.text))
     return isSqlExpression
 
   formatTags = (tags, type) ->
@@ -181,13 +184,9 @@ activateToken = (element) ->
     result
 
   operator = ['(', ')', 'AND', 'OR', 'NOT']
-  operatorRegExp = [new RegExp(/(\()/g), new RegExp(/(\))/g), new RegExp(/(AND)/g), new RegExp(/(OR)/g), new RegExp(/(NOT)/g)]
   tags = formatTags(element.data('tags'), 'tag')
   tags = tags.concat(formatTags(operator, 'operator'))
-  prepopulatedTags = element.val()
-  for i of operatorRegExp
-  	prepopulatedTags = prepopulatedTags.replace(operatorRegExp[i], ' $1 ')
-  prepopulatedTags = prepopulatedTags.split(' ')
+  prepopulatedTags = element.val().split(' ')
   element.tokenInput tags,
     allowFreeTagging: element.data('authorize-new')
     onAdd: (item) ->
@@ -218,6 +217,7 @@ activateToken = (element) ->
         element.tokenInput 'add',
           value: operator
           type: 'operator'
+        $('#token-input-' + element.attr('id')).focus()
         return
     )(operator[i])
     $('<li>').html(operator[i]).on('click', click).appendTo ul
@@ -303,7 +303,7 @@ activateDatepicker = (elements) ->
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
-  activateToken(elements) if (elements = $(".select-lucene", form)) && elements.length > 0
+  activateToken(elements) if (elements = $(".select-boolean", form)) && elements.length > 0
   activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
   activateColorPicker(elements) if (elements = $(".colorpicker", view.el)) && elements.length > 0
   activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0

@@ -358,6 +358,6 @@ services:
     open_orchestra_backoffice.type.content_search:
         class: %open_orchestra_backoffice.type.content_search.class%
         arguments:
-            - %open_orchestra.transformer.sql_to_bdd.class%
+            - %open_orchestra.transformer.boolean_to_bdd.class%
         tags:
             - { name: form.type, alias: oo_content_search}

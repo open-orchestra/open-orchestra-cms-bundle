@@ -38,7 +38,7 @@ class ContentSearchType extends AbstractType
             'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
             'new_attr' => array(
-                'class' => 'select-lucene',
+                'class' => 'select-boolean',
             ),
             'required' => false,
         ));
