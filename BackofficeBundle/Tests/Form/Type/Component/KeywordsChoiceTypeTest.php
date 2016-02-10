@@ -94,7 +94,9 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
                 return array_replace($default, $options['new_attr']);
             },
             'embedded' => true,
+            'name' => '',
             'new_attr' => array(),
+            'transformerClass' => null,
         ));
     }
 
@@ -114,7 +116,7 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
      */
     public function testBuildForm()
     {
-        $this->form->buildForm($this->builder, array('embedded' => true));
+        $this->form->buildForm($this->builder, array('embedded' => true, 'transformerClass' => null));
 
         Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
