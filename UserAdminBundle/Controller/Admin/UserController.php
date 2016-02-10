@@ -63,7 +63,8 @@ class UserController extends AbstractAdminController
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
         $form = $this->createForm('oo_user', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $userId))
+            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $userId)),
+            'attr' => array('data-user-id' => $userId)
         ));
         $form->handleRequest($request);
         $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
