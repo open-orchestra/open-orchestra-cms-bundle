@@ -1,4 +1,4 @@
-NAME<?php
+<?php
 
 namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
 
