@@ -309,6 +309,7 @@ open_orchestra_backoffice:
             nodes: Pages
             general_nodes: Global pages
             templates: Templates
+            templates_flex: Templates Flex
             contents: Contents
             error_nodes:
                 error_404: Error 404
@@ -490,6 +491,9 @@ open_orchestra_backoffice:
         delete_explanation: This operation is not reversible.
         delete_error_title: Area removal
         delete_error_txt: Error while removing area, please reload the page
+        edit_column_label: Edit column
+        edit_row_label: Edit Row
+        new_row_label: Row
     templates:
         delete:
           title: Would you like delete this template ?

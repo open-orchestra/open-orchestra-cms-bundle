@@ -104,6 +104,38 @@
     {% endif %}
 {% endmacro %}
 
+{% macro menu_templates_flex(templates, name) %}
+    {% for template in templates %}
+        <li data-element-id="{{ template.templateId }}"
+            data-type="Template"
+        >
+            <a
+                id="nav-template-{{ template.templateId }}"
+                href="#template-flex/show/{{ template.templateId }}"
+                data-url="{{ path('open_orchestra_api_template_flex_show', {'templateId': template.templateId}) }}"
+                data-template="{{ template.templateId }}"
+            >
+                <span>{{ template.name }}</span>
+            </a>
+        </li>
+    {% endfor %}
+    {% if is_granted("ROLE_ACCESS_CREATE_TEMPLATE") %}
+        <li>
+            <div class="ui-state-unsortable">
+                <a
+                    class="ajax-new"
+                    href="#"
+                    data-url="{{ path('open_orchestra_backoffice_template_flex_new') }}"
+                    data-type="template-flex"
+                >
+                    <i class="fa fa-file"></i>
+                    {{ 'open_orchestra_backoffice.left_menu.tree.new_template'|trans }}
+                </a>
+            </div>
+        </li>
+    {% endif %}
+{% endmacro %}
+
 {% macro menu_content_types_for_content(contentTypes, datatableParameterNames) %}
     {% for key, contentType in contentTypes %}
         <li

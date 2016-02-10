@@ -3,7 +3,9 @@ parameters:
     open_orchestra_api.transformer.node_collection.class: OpenOrchestra\ApiBundle\Transformer\NodeCollectionTransformer
     open_orchestra_api.transformer.node_tree.class: OpenOrchestra\ApiBundle\Transformer\NodeTreeTransformer
     open_orchestra_api.transformer.template.class: OpenOrchestra\ApiBundle\Transformer\TemplateTransformer
+    open_orchestra_api.transformer.template_flex.class: OpenOrchestra\ApiBundle\Transformer\TemplateFlexTransformer
     open_orchestra_api.transformer.area.class: OpenOrchestra\ApiBundle\Transformer\AreaTransformer
+    open_orchestra_api.transformer.area_flex.class: OpenOrchestra\ApiBundle\Transformer\AreaFlexTransformer
     open_orchestra_api.transformer.block.class: OpenOrchestra\ApiBundle\Transformer\BlockTransformer
     open_orchestra_api.transformer.block_collection.class: OpenOrchestra\ApiBundle\Transformer\BlockCollectionTransformer
     open_orchestra_api.transformer.ui_model.class: OpenOrchestra\ApiBundle\Transformer\UiModelTransformer
@@ -71,6 +73,13 @@ services:
             - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.template_flex:
+        class: %open_orchestra_api.transformer.template_flex.class%
+        arguments:
+            - %open_orchestra_api.facade.template_flex.class%
+            - @security.authorization_checker
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.area:
         class: %open_orchestra_api.transformer.area.class%
         arguments:
@@ -79,6 +88,12 @@ services:
             - @open_orchestra_backoffice.manager.area
             - @open_orchestra_backoffice.context_manager
             - @security.authorization_checker
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.area_flex:
+        class: %open_orchestra_api.transformer.area_flex.class%
+        arguments:
+            - %open_orchestra_api.facade.area_flex.class%
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block:

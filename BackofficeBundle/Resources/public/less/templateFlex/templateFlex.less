@@ -1,0 +1,48 @@
+#template_flex_model {
+
+  #jarviswidget-fullscreen-mode {
+    .toolbar-container {
+      min-height: 64px;
+    }
+    .area-toolbar.fixed {
+      top: 35px;
+    }
+  }
+
+  .template-flex-container {
+    .area {
+      &.active {
+        border: 1px solid;
+      }
+      .area-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100px;
+        padding: 5px;
+        .area-action {
+          margin: auto;
+          display: none;
+        }
+
+      }
+
+    }
+  }
+
+  .area-toolbar {
+    margin-bottom: 10px;
+    position: static;
+    background: white;
+    &.fixed {
+      position: fixed;
+      top: 89px;
+      z-index: 2;
+    }
+    .label-btn-groups {
+      float: left;
+      padding: 6px 12px 6px 0;
+    }
+
+  }
+
+}

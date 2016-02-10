@@ -7,6 +7,7 @@ parameters:
     open_orchestra_backoffice.navigation_panel.top_menu.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TopMenuPanelStrategy
     open_orchestra_backoffice.navigation_panel.node.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy
     open_orchestra_backoffice.navigation_panel.template.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy
+    open_orchestra_backoffice.navigation_panel.template_flex.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy
     open_orchestra_backoffice.navigation_panel.content_type.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy
     open_orchestra_backoffice.navigation_panel.general_node.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy
     open_orchestra_backoffice.navigation_panel.administration.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy
@@ -58,6 +59,14 @@ services:
             - @open_orchestra_model.repository.template
             - %open_orchestra_backoffice.navigation_panel.menu.editorial%
             - 230
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.template_flex:
+        class: %open_orchestra_backoffice.navigation_panel.template_flex.class%
+        arguments:
+            - @open_orchestra_model.repository.template_flex
+            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
+            - 232
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.content_type:
