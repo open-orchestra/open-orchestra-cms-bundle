@@ -18,7 +18,7 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseSubMenuStrategy::SUBMENU == $block;
+        return BaseSubMenuStrategy::NAME == $block;
     }
 
     /**

@@ -18,7 +18,7 @@ class GmapStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseGmapStrategy::GMAP === $block;
+        return BaseGmapStrategy::NAME === $block;
     }
 
     /**

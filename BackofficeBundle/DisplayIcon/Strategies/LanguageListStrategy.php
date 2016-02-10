@@ -18,7 +18,7 @@ class LanguageListStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseLanguageListStrategy::LANGUAGE_LIST == $block;
+        return BaseLanguageListStrategy::NAME == $block;
     }
 
     /**

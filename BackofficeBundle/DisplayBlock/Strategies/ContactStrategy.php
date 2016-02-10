@@ -21,7 +21,7 @@ class ContactStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseContactStrategy::CONTACT == $block->getComponent();
+        return BaseContactStrategy::NAME == $block->getComponent();
     }
 
     /**

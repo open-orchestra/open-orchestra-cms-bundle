@@ -18,7 +18,7 @@ class ContentStrategy implements BlockParameterInterface
      */
     public function support(BlockInterface $block)
     {
-        return BaseContentStrategy::CONTENT == $block->getComponent();
+        return BaseContentStrategy::NAME == $block->getComponent();
     }
 
     /**

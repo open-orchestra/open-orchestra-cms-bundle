@@ -18,7 +18,7 @@ class MenuStrategy  extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseMenuStrategy::MENU === $block->getComponent();
+        return BaseMenuStrategy::NAME === $block->getComponent();
     }
 
     /**

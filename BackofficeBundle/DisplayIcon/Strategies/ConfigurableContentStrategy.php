@@ -18,7 +18,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseConfigurableContentStrategy::CONFIGURABLE_CONTENT == $block;
+        return BaseConfigurableContentStrategy::NAME == $block;
     }
 
     /**

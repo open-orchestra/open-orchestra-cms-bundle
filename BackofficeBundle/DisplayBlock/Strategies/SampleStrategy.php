@@ -21,7 +21,7 @@ class SampleStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseSampleStrategy::SAMPLE == $block->getComponent();
+        return BaseSampleStrategy::NAME == $block->getComponent();
     }
 
     /**

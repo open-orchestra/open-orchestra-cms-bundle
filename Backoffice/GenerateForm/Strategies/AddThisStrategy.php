@@ -19,7 +19,7 @@ class AddThisStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseAddThisStrategy::ADDTHIS === $block->getComponent();
+        return BaseAddThisStrategy::NAME === $block->getComponent();
     }
 
     /**

@@ -21,7 +21,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseFooterStrategy::FOOTER == $block->getComponent();
+        return BaseFooterStrategy::NAME == $block->getComponent();
     }
 
     /**

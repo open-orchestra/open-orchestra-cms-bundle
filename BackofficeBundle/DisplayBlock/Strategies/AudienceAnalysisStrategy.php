@@ -21,7 +21,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseAudienceAnalysisStrategy::AUDIENCE_ANALYSIS == $block->getComponent();
+        return BaseAudienceAnalysisStrategy::NAME == $block->getComponent();
     }
 
     /**

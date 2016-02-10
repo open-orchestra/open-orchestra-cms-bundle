@@ -18,7 +18,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseAudienceAnalysisStrategy::AUDIENCE_ANALYSIS == $block;
+        return BaseAudienceAnalysisStrategy::NAME == $block;
     }
 
     /**

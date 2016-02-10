@@ -45,7 +45,7 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseContentListStrategy::CONTENT_LIST === $block->getComponent();
+        return BaseContentListStrategy::NAME === $block->getComponent();
     }
 
     /**

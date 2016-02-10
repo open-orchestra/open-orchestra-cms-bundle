@@ -21,7 +21,7 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseTinyMCEWysiwygStrategy::TINYMCEWYSIWYG == $block->getComponent();
+        return BaseTinyMCEWysiwygStrategy::NAME == $block->getComponent();
     }
 
     /**

@@ -18,7 +18,7 @@ class ContactStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseContactStrategy::CONTACT == $block;
+        return BaseContactStrategy::NAME == $block;
     }
 
     /**

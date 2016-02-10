@@ -18,7 +18,7 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseTinyMCEWysiwygStrategy::TINYMCEWYSIWYG == $block;
+        return BaseTinyMCEWysiwygStrategy::NAME == $block;
     }
 
     /**

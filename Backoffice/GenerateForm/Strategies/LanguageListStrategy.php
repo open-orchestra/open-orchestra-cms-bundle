@@ -18,7 +18,7 @@ class LanguageListStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseLanguageListStrategy::LANGUAGE_LIST === $block->getComponent();
+        return BaseLanguageListStrategy::NAME === $block->getComponent();
     }
 
     /**
