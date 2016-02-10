@@ -130,10 +130,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithContextInterface");
         }
         foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
-            $group->addNodeRole($transformer->reverseTransformWithGroup(
-                $group,
-                $nodeRoleFacade,
-                $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
+            $group->addNodeRole(
+                $transformer->reverseTransformWithGroup(
+                    $group,
+                    $nodeRoleFacade,
+                    $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
                 )
             );
         }
@@ -143,10 +144,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new UnexpectedValueException("Media Folder Group Role Transformer must be an instance of TransformerWithContextInterface");
         }
         foreach ($facade->getMediaFolderRoles() as $mediaFolderRoleFacade) {
-            $group->addMediaFolderRole($mediaFolderTransformer->reverseTransformWithGroup(
-                $group,
-                $mediaFolderRoleFacade,
-                $group->getMediaFolderRoleByMediaFolderAndRole($mediaFolderRoleFacade->folder, $mediaFolderRoleFacade->name)
+            $group->addMediaFolderRole(
+                $mediaFolderTransformer->reverseTransformWithGroup(
+                    $group,
+                    $mediaFolderRoleFacade,
+                    $group->getMediaFolderRoleByMediaFolderAndRole($mediaFolderRoleFacade->folder, $mediaFolderRoleFacade->name)
                 )
             );
         }
