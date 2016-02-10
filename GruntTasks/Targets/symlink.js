@@ -141,5 +141,9 @@ module.exports = {
   jquery_ui_bg_glass: {
     src: 'vendor/bower_components/jquery-ui/themes/base/images/ui-bg_glass_75_dadada_1x400.png',
     dest: 'web/css/images/ui-bg_glass_75_dadada_1x400.png'
+  },
+  column_icons: {
+    src: 'web/bundles/openorchestrabackoffice/images/column-icons.svg',
+    dest: 'web/images/column-icons.svg'
   }
 };

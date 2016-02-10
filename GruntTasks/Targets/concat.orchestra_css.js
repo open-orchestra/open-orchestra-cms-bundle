@@ -14,7 +14,8 @@ module.exports = {
     'web/built/openorchestrabackoffice/css/tab.css',
     'web/built/openorchestrabackoffice/css/groupTreePanel.css',
     'web/built/openorchestrabackoffice/css/ajaxLoader/ajaxLoader.css',
-    'web/built/openorchestrabackoffice/css/templateFlex/templateFlex.css'
+    'web/built/openorchestrabackoffice/css/templateFlex/templateFlex.css',
+    'web/built/openorchestrabackoffice/css/templateFlex/areaFlex.css'
   ],
   dest: 'web/built/orchestra.css'
 };

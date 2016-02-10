@@ -31,7 +31,7 @@ class TemplateFlexFacade extends AbstractFacade
     public $deleted;
 
     /**
-     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFlexFacade")
      */
     public $area;
 

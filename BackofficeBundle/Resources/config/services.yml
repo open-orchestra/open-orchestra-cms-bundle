@@ -11,6 +11,7 @@ parameters:
     open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\BackofficeBundle\Manager\RedirectionManager
     open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager
     open_orchestra_backoffice.manager.template_flex.class: OpenOrchestra\BackofficeBundle\Manager\TemplateFlexManager
+    open_orchestra_backoffice.manager.area_flex.class: OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager
 
 services:
     open_orchestra_backoffice.context_manager:
@@ -87,4 +88,8 @@ services:
         arguments:
             - @open_orchestra_backoffice.context_manager
             - %open_orchestra_model.document.template_flex.class%
+            - @open_orchestra_backoffice.manager.area_flex
+    open_orchestra_backoffice.manager.area_flex:
+        class: %open_orchestra_backoffice.manager.area_flex.class%
+        arguments:
             - %open_orchestra_model.document.area_flex.class%

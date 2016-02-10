@@ -11,3 +11,5 @@ open_orchestra_backoffice_validators:
     area:
         unique_area_id: Les identifiants des aires doivent être unique
         presence_required: Vous devez choisir l'un d'eux
+    area_flex:
+        row_layout: La disposition des colonnes est incorrecte

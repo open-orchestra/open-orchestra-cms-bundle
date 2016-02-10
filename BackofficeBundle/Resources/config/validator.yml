@@ -1,10 +1,10 @@
 parameters:
     open_orchestra_model.validatorcontent_template.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplateValidator
     open_orchestra_model.validator.block_node_pattern.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePatternValidator
-    open_orchestra_model.validator.authorize_edition.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\AuthorizeEditionValidator
     open_orchestra_model.validator.restore_node.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNodeValidator
     open_orchestra_model.validator.unique_area_id.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueAreaIdValidator
     open_orchestra_model.validator.unique_node_order.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueNodeOrderValidator
+    open_orchestra_model.validator.area_flex_row_layout.class: OpenOrchestra\BackofficeBundle\Validator\Constraints\AreaFlexRowLayoutValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -35,3 +35,7 @@ services:
             - @open_orchestra_model.repository.node
         tags:
             - { name: validator.constraint_validator, alias: unique_node_order}
+    open_orchestra_model.validator.area_flex_row_layout:
+        class: %open_orchestra_model.validator.area_flex_row_layout.class%
+        tags:
+            - { name: validator.constraint_validator, alias: area_flex_row_layout}

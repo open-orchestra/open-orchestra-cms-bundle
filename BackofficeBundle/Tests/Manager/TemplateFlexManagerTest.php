@@ -17,6 +17,7 @@ class TemplateFlexManagerTest extends AbstractBaseTestCase
      */
     protected $manager;
     protected $contextManager;
+    protected $areaManager;
     protected $siteId = 'fakeSiteId';
 
     /**
@@ -25,15 +26,22 @@ class TemplateFlexManagerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $templateFlexClass = 'OpenOrchestra\ModelBundle\Document\TemplateFlex';
-        $areaClass = 'OpenOrchestra\ModelBundle\Document\AreaFlex';
+        $areaFlexClass = 'OpenOrchestra\ModelBundle\Document\AreaFlex';
+
+        $rootAreaClass = new $areaFlexClass();
+        $rootAreaClass->setAreaType(AreaFlexInterface::TYPE_ROOT);
+        $rootAreaClass->setAreaId(AreaFlexInterface::ROOT_AREA_ID);
+        $rootAreaClass->setLabel(AreaFlexInterface::ROOT_AREA_LABEL);
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
+        $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager');
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
+        Phake::when($this->areaManager)->initializeNewAreaRoot()->thenReturn($rootAreaClass);
 
         $this->manager = new TemplateFlexManager(
             $this->contextManager,
             $templateFlexClass,
-            $areaClass
+            $this->areaManager
         );
     }
 
@@ -44,6 +52,7 @@ class TemplateFlexManagerTest extends AbstractBaseTestCase
     {
         $template = $this->manager->initializeNewTemplateFlex();
 
+        Phake::verify($this->areaManager)->initializeNewAreaRoot();
         $this->assertEquals($template->getSiteId(), $this->siteId);
 
         $area = $template->getArea();

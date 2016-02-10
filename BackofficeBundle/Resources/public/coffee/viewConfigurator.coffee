@@ -7,6 +7,7 @@ OrchestraViewConfigurator = ->
     'showTab': TabView
     'addArea': AreaView
     'addAreaFlex': OpenOrchestra.AreaFlex.AreaFlexView
+    'showAreaFlexToolbar': OpenOrchestra.AreaFlex.AreaFlexToolbarView
     'addBlock': BlockView
     'addButtonAction': TableviewAction
     'addRestoreButtonAction': TableviewRestoreAction

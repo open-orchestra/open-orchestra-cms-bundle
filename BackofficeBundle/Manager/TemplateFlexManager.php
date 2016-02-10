@@ -13,20 +13,20 @@ class TemplateFlexManager
 {
     protected $contextManager;
     protected $templateFlexClass;
-    protected $areaFlexClass;
+    protected $areaManager;
 
     /**
      * Constructor
      *
-     * @param ContextManager $contextManager
-     * @param string         $templateFlexClass
-     * @param string         $areaFlexClass
+     * @param ContextManager  $contextManager
+     * @param string          $templateFlexClass
+     * @param AreaFlexManager $areaManager
      */
-    public function __construct(ContextManager $contextManager, $templateFlexClass, $areaFlexClass)
+    public function __construct(ContextManager $contextManager, $templateFlexClass, AreaFlexManager $areaManager)
     {
         $this->contextManager = $contextManager;
         $this->templateFlexClass = $templateFlexClass;
-        $this->areaFlexClass = $areaFlexClass;
+        $this->areaManager = $areaManager;
     }
 
     /**
@@ -34,14 +34,11 @@ class TemplateFlexManager
      */
     public function initializeNewTemplateFlex()
     {
-        $defaultArea = new $this->areaFlexClass();
-        $defaultArea->setAreaType(AreaFlexInterface::TYPE_ROOT);
-        $defaultArea->setAreaId(AreaFlexInterface::ROOT_AREA_ID);
-        $defaultArea->setLabel(AreaFlexInterface::ROOT_AREA_LABEL);
+        $rootArea = $this->areaManager->initializeNewAreaRoot();
 
         $template = new $this->templateFlexClass();
         $template->setSiteId($this->contextManager->getCurrentSiteId());
-        $template->setArea($defaultArea);
+        $template->setArea($rootArea);
 
         return $template;
     }

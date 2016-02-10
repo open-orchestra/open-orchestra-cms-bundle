@@ -9,6 +9,11 @@ window.OpenOrchestra.AreaFlex or= {}
 ###
 class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
+  extendView: ['OpenOrchestra.AreaFlex.AddRow']
+
+  events:
+    'click .add-row-action': 'showFormAddRow'
+
   ###*
    * @param {Object} options
   ###
@@ -32,6 +37,9 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     $(window).bind 'scroll', () ->
       context.updateToolbarPosition(context.$el)
 
+  ###*
+   * @param {Object} el Jquery element
+  ###
   updateToolbarPosition: (el)->
     el.removeClass("fixed")
     if $(window).scrollTop() > el.offset().top - el.height()

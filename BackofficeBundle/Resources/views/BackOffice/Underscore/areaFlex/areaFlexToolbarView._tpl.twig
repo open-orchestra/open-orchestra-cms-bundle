@@ -1,7 +1,7 @@
 <div class="area-toolbar">
     <div class="row">
         <div class="col col-lg-9">
-            <p><%= area.get('label') %></p>
+            <p><%= area.get('area_id') %></p>
         </div>
     </div>
     <div class="btn-toolbar">
@@ -29,8 +29,8 @@
                 <span class="glyphicon glyphicon-trash"></span>
             </button>
         </div>
-        <div class="btn-group add-row-action">
-            <button type="button" class="btn btn-default">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default add-row-action">
                 <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
             </button>
         </div>

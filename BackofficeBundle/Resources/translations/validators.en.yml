@@ -11,3 +11,5 @@ open_orchestra_backoffice_validators:
     area:
         unique_area_id: areas's id have to be unique
         presence_required: You need to choose one of them
+    area_flex:
+        row_layout: The column layout is incorrect
