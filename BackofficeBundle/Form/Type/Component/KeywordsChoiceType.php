@@ -49,6 +49,12 @@ class KeywordsChoiceType extends AbstractType
         if ($options['embedded']) {
             $builder->addModelTransformer($this->keywordsTransformer);
         }
+        if (!is_null($options['transformerClass'])) {
+            $transformerClass = $options['transformerClass'];
+            $transformer = new $transformerClass($options['name']);
+            $builder->addModelTransformer($transformer);
+        }
+
     }
 
     /**
@@ -68,7 +74,9 @@ class KeywordsChoiceType extends AbstractType
                 return array_replace($default, $options['new_attr']);
             },
             'embedded' => true,
+            'name' => '',
             'new_attr' => array(),
+            'transformerClass' => null,
         ));
     }
 
