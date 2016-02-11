@@ -4,12 +4,26 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 
 /**
  * Class ContentSearchType
  */
 class ContentSearchType extends AbstractType
 {
+    protected $transformer;
+
+    /**
+     * @param string $transformerClass
+     */
+    public function __construct($transformerClass)
+    {
+        $this->transformerClass = $transformerClass;
+        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+            throw new NotAllowedClassNameException();
+        }
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -20,13 +34,16 @@ class ContentSearchType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
             'required' => false
         ));
-        $builder->add('choiceType', 'oo_operator_choice', array(
-            'label' => 'open_orchestra_backoffice.form.content_search.choice_type',
-        ));
         $builder->add('keywords', 'oo_keywords_choice', array(
             'embedded' => false,
-            'required' => false,
+            'transformerClass' => $this->transformerClass,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
+            'name' => 'keywords',
+            'new_attr' => array(
+                'class' => 'select-boolean',
+            ),
+            'required' => false,
+
         ));
     }
 

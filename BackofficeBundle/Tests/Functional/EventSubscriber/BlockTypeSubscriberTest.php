@@ -109,11 +109,62 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                 'contentNodeId' => 'news',
                 'contentTemplateEnabled' => true,
             )),
+            array(ContentListStrategy::CONTENT_LIST, array(
+                'contentNodeId' => 'news',
+                'contentTemplateEnabled' => true,
+            )),
             array(ConfigurableContentStrategy::CONFIGURABLE_CONTENT, array(
                 'contentTypeId' => 'car',
                 'contentId' => 'car1',
                 'contentTemplateEnabled' => true,
             ))
+        );
+    }
+
+    /**
+     * @param string $component
+     * @param array  $value
+     *
+     * @dataProvider provideComponentAndDataAndTransformedValue
+     */
+    public function testMultipleBlockWithDataTransformation($component, $value, $transformedValue)
+    {
+        $block = new Block();
+        $block->setComponent($component);
+
+        $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
+
+        $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
+        $form->submit($submittedValue);
+
+        $this->assertTrue($form->isSynchronized());
+        /** @var BlockInterface $data */
+        $data = $form->getConfig()->getData();
+        $this->assertBlock($data);
+        foreach ($transformedValue as $key => $receivedData) {
+            $this->assertSame($receivedData, $data->getAttribute($key));
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function provideComponentAndDataAndTransformedValue()
+    {
+        return array(
+                array(ContentListStrategy::CONTENT_LIST, array(
+                        'contentNodeId' => 'news',
+                        'contentTemplateEnabled' => true,
+                        'contentSearch' => array(
+                                'keywords' => 'Lorem AND Ipsum',
+                            )
+                ), array(
+                        'contentNodeId' => 'news',
+                        'contentTemplateEnabled' => true,
+                        'contentSearch' => array(
+                                'keywords' => '{"$and":[{"keywords":{"$eq":"Lorem"}},{"keywords":{"$eq":"Ipsum"}}]}'
+                            )
+                    )),
         );
     }
 

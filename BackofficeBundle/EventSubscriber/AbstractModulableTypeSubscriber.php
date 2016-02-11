@@ -41,7 +41,7 @@ abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterfa
      */
     protected function transformData($value, FormInterface $form)
     {
-        if (is_array($value) && !is_null($form->getConfig()->getOption('type'))) {
+        if (is_array($value) && (!is_null($form->getConfig()->getOption('type')) || $form->count() > 0)) {
             $tmpValue = null;
             $children = null;
             foreach ($value as $key => $element) {
@@ -49,7 +49,7 @@ abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterfa
                     $children = $form->get($key);
                 }
                 if ($children instanceof FormInterface) {
-                    $tmpValue[] = $this->transformData($element, $children);
+                    $tmpValue[$key] = $this->transformData($element, $children);
                 } else {
                     $tmpValue[] = $element;
                 }

@@ -11,7 +11,8 @@ module.exports = {
     'vendor/bower_components/jquery-form/jquery.form.js',
     'vendor/bower_components/lodash/lodash.js',
     'vendor/bower_components/gridstack/src/gridstack.js',
-    'web/bundles/openorchestrabackoffice/js/latinise.js'
+    'web/bundles/openorchestrabackoffice/js/latinise.js',
+    'vendor/bower_components/jquery-tokeninput/build/jquery.tokeninput.min.js'
   ],
   dest: 'web/built/lib.js'
 };

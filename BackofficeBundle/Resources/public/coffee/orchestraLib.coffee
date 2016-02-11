@@ -151,7 +151,78 @@ activateSelect2 = (element) ->
       container.parent().addClass('bg-color-red').attr('style', 'border-color:#a90329!important') if term.isNew
       term.text
   )
+#TOKENINPUT ENABLED
+activateToken = (element) ->
+  isAndBooleanRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( AND (?=.)){0,1})+$/)
+  isOrBooleanRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( OR (?=.)){0,1})+$/)
+  getBalancedBracketsRegExp = new RegExp(/\( ([^\(\)]*) \)/)
 
+  applicateSqlCss = (obj) ->
+    isSqlExpression = testSqlExpression 
+      text: obj.val()
+    addClass = if isSqlExpression then 'operator-ok' else 'operator'
+    removeClass = if isSqlExpression then 'operator' else 'operator-ok'
+    $('.token-input-list-facebook .operator, .token-input-list-facebook .operator-ok', obj.parent())
+    .removeClass(removeClass).addClass addClass
+  
+  testSqlExpression = (testedString) ->
+    isSqlExpression = true
+    if getBalancedBracketsRegExp.test(testedString.text)
+      subTestedString = getBalancedBracketsRegExp.exec(testedString.text)
+      testedString.text = testedString.text.replace(subTestedString[0], '#')
+      isSqlExpression = testSqlExpression(testedString) and (isAndBooleanRegExp.test(subTestedString[1]) or isOrBooleanRegExp.test(subTestedString[1]))
+    else
+      isSqlExpression = isSqlExpression and (isAndBooleanRegExp.test(testedString.text) or isOrBooleanRegExp.test(testedString.text))
+    return isSqlExpression
+
+  formatTags = (tags, type) ->
+    result = $.extend([], tags)
+    for i of result
+      result[i] =
+        value: result[i]
+        type: type
+    result
+
+  operator = ['(', ')', 'AND', 'OR', 'NOT']
+  tags = formatTags(element.data('tags'), 'tag')
+  tags = tags.concat(formatTags(operator, 'operator'))
+  prepopulatedTags = element.val().split(' ')
+  element.tokenInput tags,
+    allowFreeTagging: element.data('authorize-new')
+    onAdd: (item) ->
+      applicateSqlCss $(this)
+      return
+    onDelete: (item) ->
+      applicateSqlCss $(this)
+      return
+    propertyToSearch: 'value'
+    theme: 'facebook'
+    tokenFormatter: (item) ->
+      item.type = item.type or 'new'
+      '<li class="' + item.type + '">' + item.value + '</li>'
+    tokenDelimiter: ' '
+    tokenValue: 'value'
+    zindex: 100002
+  for i of prepopulatedTags
+    prepopulatedTags[i] = prepopulatedTags[i].trim()
+    if prepopulatedTags[i] != ''
+      type = if operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
+      element.tokenInput 'add',
+        value: prepopulatedTags[i]
+        type: type
+  ul = $('<ul class="operator-list">')
+  for i of operator
+    click = ((operator) ->
+      ->
+        element.tokenInput 'add',
+          value: operator
+          type: 'operator'
+        $('#token-input-' + element.attr('id')).focus()
+        return
+    )(operator[i])
+    $('<li>').html(operator[i]).on('click', click).appendTo ul
+  element.before ul
+  return
 #NODE CHOICE ENABLED
 activateOrchestraNodeChoice = (element) ->
   regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g')
@@ -232,6 +303,7 @@ activateDatepicker = (elements) ->
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
+  activateToken(elements) if (elements = $(".select-boolean", form)) && elements.length > 0
   activateOrchestraNodeChoice(elements) if (elements = $(".orchestra-node-choice", form)) && elements.length > 0
   activateColorPicker(elements) if (elements = $(".colorpicker", view.el)) && elements.length > 0
   activateHelper(elements) if (elements = $(".helper-block", form)) && elements.length > 0

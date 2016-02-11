@@ -10,6 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\OptionsResolver\Options;
+use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 
 /**
  * Class KeywordsChoiceType
@@ -48,6 +50,15 @@ class KeywordsChoiceType extends AbstractType
         if ($options['embedded']) {
             $builder->addModelTransformer($this->keywordsTransformer);
         }
+        if (!is_null($options['transformerClass'])) {
+            if(!is_string($options['transformerClass']) || !is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+                throw new NotAllowedClassNameException();
+            }
+            $transformerClass = $options['transformerClass'];
+            $transformer = new $transformerClass($options['name']);
+            $builder->addModelTransformer($transformer);
+        }
+
     }
 
     /**
@@ -56,14 +67,21 @@ class KeywordsChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $isGranted = $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD);
+
         $resolver->setDefaults(array(
+            'attr' => function(Options $options) use ($isGranted) {
+                $default = array(
+                    'class' => 'select2',
+                    'data-tags' => $this->getTags(),
+                    'data-authorize-new' => ($isGranted) ? "true" : "false",
+                );
+                return array_replace($default, $options['new_attr']);
+            },
             'embedded' => true,
-            'attr' => array(
-                'class' => 'select2',
-                'data-tags' => $this->getTags(),
-                'data-authorize-new' => ($isGranted) ? "1" : "0",
-                'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
-        )));
+            'name' => '',
+            'new_attr' => array(),
+            'transformerClass' => null,
+        ));
     }
 
     /**
