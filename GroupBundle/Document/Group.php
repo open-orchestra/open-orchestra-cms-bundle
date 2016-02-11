@@ -4,7 +4,6 @@ namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -34,18 +33,12 @@ class Group extends BaseGroup implements GroupInterface
     protected $labels;
 
     /**
-     * @var Collection $nodeRoles
+     * @var Collection $documentRoles
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface")
      */
-    protected $nodeRoles;
+    protected $documentRoles;
 
-    /**
-     * @var Collection $mediaFolderRoles
-     *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Media\Model\MediaFolderGroupRoleInterface")
-     */
-    protected $mediaFolderRoles;
 
     /**
      * Constructor
@@ -69,8 +62,7 @@ class Group extends BaseGroup implements GroupInterface
     protected function initCollections()
     {
         $this->labels = new ArrayCollection();
-        $this->nodeRoles = new ArrayCollection();
-        $this->mediaFolderRoles = new ArrayCollection();
+        $this->documentRoles = new ArrayCollection();
         $this->roles = array();
     }
 
@@ -137,35 +129,36 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @return array
      */
-    public function getNodeRoles()
+    public function getDocumentRoles()
     {
-        return $this->nodeRoles;
+        return $this->documentRoles;
     }
 
     /**
-     * @param NodeGroupRoleInterface $nodeGroupRole
+     * @param DocumentGroupRoleInterface $documentGroupRole
      */
-    public function addNodeRole(NodeGroupRoleInterface $nodeGroupRole)
+    public function addDocumentRole(DocumentGroupRoleInterface $documentGroupRole)
     {
-        if ($this->nodeRoles->contains($nodeGroupRole)) {
-            $this->nodeRoles->set($this->nodeRoles->indexOf($nodeGroupRole), $nodeGroupRole);
+        if ($this->documentRoles->contains($documentGroupRole)) {
+            $this->documentRoles->set($this->documentRoles->indexOf($documentGroupRole), $documentGroupRole);
         } else {
-            $this->nodeRoles->add($nodeGroupRole);
+            $this->documentRoles->add($documentGroupRole);
         }
     }
 
     /**
-     * @param string $nodeId
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
-     * @return NodeGroupRoleInterface|null
+     * @return DocumentGroupRoleInterface|null
      */
-    public function getNodeRoleByNodeAndRole($nodeId, $role)
+    public function getDocumentRoleByTypeAndIdAndRole($type, $id, $role)
     {
-        /** @var NodeGroupRoleInterface $nodeRole */
-        foreach ($this->nodeRoles as $nodeRole) {
-            if ($nodeRole->getNodeId() == $nodeId && $nodeRole->getRole() == $role) {
-                return $nodeRole;
+        /** @var DocumentGroupRoleInterface $documentRole */
+        foreach ($this->documentRoles as $documentRole) {
+            if ($documentRole->getType() == $type && $documentRole->getId() == $id && $documentRole->getRole() == $role) {
+                return $documentRole;
             }
         }
 
@@ -173,62 +166,14 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @param string $nodeId
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
      * @return boolean
      */
-    public function hasNodeRoleByNodeAndRole($nodeId, $role)
+    public function hasDocumentRoleByTypeAndIdAndRole($type, $id, $role)
     {
-        return null !== $this->getNodeRoleByNodeAndRole($nodeId, $role);
-    }
-
-    /**
-     * @return array
-     */
-    public function getMediaFolderRoles()
-    {
-        return $this->mediaFolderRoles;
-    }
-
-    /**
-     * @param MediaFolderGroupRoleInterface $mediaFolderGroupRole
-     */
-    public function addMediaFolderRole(MediaFolderGroupRoleInterface $mediaFolderGroupRole)
-    {
-        if ($this->mediaFolderRoles->contains($mediaFolderGroupRole)) {
-            $this->mediaFolderRoles->set($this->mediaFolderRoles->indexOf($mediaFolderGroupRole), $mediaFolderGroupRole);
-        } else {
-            $this->mediaFolderRoles->add($mediaFolderGroupRole);
-        }
-    }
-
-    /**
-     * @param string $folderId
-     * @param string $role
-     *
-     * @return MediaFolderGroupRoleInterface|null
-     */
-    public function getMediaFolderRoleByMediaFolderAndRole($folderId, $role)
-    {
-        /** @var MediaFolderGroupRoleInterface $mediaFolderRole */
-        foreach ($this->mediaFolderRoles as $mediaFolderRole) {
-            if ($mediaFolderRole->getFolderId() == $folderId && $mediaFolderRole->getRole() == $role) {
-                return $mediaFolderRole;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $folderId
-     * @param string $role
-     *
-     * @return boolean
-     */
-    public function hasMediaFolderRoleByByMediaFolderAndRole($folderId, $role)
-    {
-        return null !== $this->getMediaFolderRoleByMediaFolderAndRole($folderId, $role);
+        return null !== $this->getDocumentRoleByTypeAndIdAndRole($type, $id, $role);
     }
 }

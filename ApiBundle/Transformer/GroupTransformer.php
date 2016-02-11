@@ -58,12 +58,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($site = $group->getSite()) {
             $facade->site = $this->getTransformer('site')->transform($site);
         }
-        foreach ($group->getNodeRoles() as $nodeRole) {
-            $facade->addNodeRoles($this->getTransformer('node_group_role')->transform($nodeRole));
+
+        foreach ($group->getDocumentRoles() as $documentRoles) {
+            $facade->addDocumentRoles($this->getTransformer('document_group_role')->transform($documentRoles));
         }
-        foreach ($group->getMediaFolderRoles() as $mediaFolderRole) {
-            $facade->addMediaFolderRoles($this->getTransformer('media_folder_group_role')->transform($mediaFolderRole));
-        }
+
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
             $facade->addLink('_self', $this->generateRoute(
                 'open_orchestra_api_group_show',
@@ -85,6 +84,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_edit',
                 array('groupId' => $group->getId())
             ));
+
             $facade->addLink('_self_panel_node_tree', $this->generateRoute(
                 'open_orchestra_api_group_show',
                 array('groupId' => $group->getId())
@@ -93,6 +93,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_show',
                 array('groupId' => $group->getId())
             ));
+
             if ($group->getSite() instanceof ReadSiteInterface) {
                 $facade->addLink('_self_node_tree', $this->generateRoute(
                     'open_orchestra_api_node_list_tree',
@@ -125,30 +126,17 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $group = null)
     {
-        $transformer = $this->getTransformer('node_group_role');
+        $transformer = $this->getTransformer('document_group_role');
         if (!$transformer instanceof TransformerWithGroupInterface) {
-            throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithContextInterface");
+            throw new UnexpectedValueException("Document Group Role Transformer must be an instance of TransformerWithContextInterface");
         }
-        foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
-            $group->addNodeRole(
+        foreach ($facade->getDocumentRoles() as $documentRoleFacade) {
+            $source = $group->getDocumentRoleByTypeAndIdAndRole($documentRoleFacade->type, $documentRoleFacade->id, $documentRoleFacade->name);
+            $group->addDocumentRole(
                 $transformer->reverseTransformWithGroup(
                     $group,
-                    $nodeRoleFacade,
-                    $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
-                )
-            );
-        }
-
-        $mediaFolderTransformer = $this->getTransformer('media_folder_group_role');
-        if (!$mediaFolderTransformer instanceof TransformerWithGroupInterface) {
-            throw new UnexpectedValueException("Media Folder Group Role Transformer must be an instance of TransformerWithContextInterface");
-        }
-        foreach ($facade->getMediaFolderRoles() as $mediaFolderRoleFacade) {
-            $group->addMediaFolderRole(
-                $mediaFolderTransformer->reverseTransformWithGroup(
-                    $group,
-                    $mediaFolderRoleFacade,
-                    $group->getMediaFolderRoleByMediaFolderAndRole($mediaFolderRoleFacade->folder, $mediaFolderRoleFacade->name)
+                    $documentRoleFacade,
+                    $source
                 )
             );
         }

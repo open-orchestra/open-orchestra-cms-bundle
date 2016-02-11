@@ -49,52 +49,28 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
     /**
      * @return array
      */
-    public function getNodeRoles();
+    public function getDocumentRoles();
 
     /**
-     * @param NodeGroupRoleInterface $nodeGroupRole
+     * @param DocumentGroupRoleInterface $documentGroupRole
      */
-    public function addNodeRole(NodeGroupRoleInterface $nodeGroupRole);
+    public function addDocumentRole(DocumentGroupRoleInterface $documentGroupRole);
 
     /**
-     * @param string $nodeId
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
-     * @return NodeGroupRoleInterface|null
+     * @return DocumentGroupRoleInterface|null
      */
-    public function getNodeRoleByNodeAndRole($nodeId, $role);
+    public function getDocumentRoleByTypeAndIdAndRole($type, $id, $role);
 
     /**
-     * @param string $nodeId
-     * @param string $role
-     *
-     * @return boolean
-     */
-    public function hasNodeRoleByNodeAndRole($nodeId, $role);
-
-    /**
-     * @return array
-     */
-    public function getMediaFolderRoles();
-
-    /**
-     * @param MediaFolderGroupRoleInterface $mediaFolderGroupRole
-     */
-    public function addMediaFolderRole(MediaFolderGroupRoleInterface $mediaFolderGroupRole);
-
-    /**
-     * @param string $folderId
-     * @param string $role
-     *
-     * @return MediaFolderGroupRoleInterface|null
-     */
-    public function getMediaFolderRoleByMediaFolderAndRole($folderId, $role);
-
-    /**
-     * @param string $folderId
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
      * @return boolean
      */
-    public function hasMediaFolderRoleByByMediaFolderAndRole($folderId, $role);
+    public function hasDocumentRoleByTypeAndIdAndRole($type, $id, $role);
 }

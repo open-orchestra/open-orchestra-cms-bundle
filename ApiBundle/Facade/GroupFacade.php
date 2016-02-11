@@ -32,14 +32,9 @@ class GroupFacade extends AbstractFacade
     public $site;
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\DocumentGroupRoleFacade>")
      */
-    protected $nodeRoles = array();
-
-    /**
-     * @Serializer\Type("array<OpenOrchestra\MediaAdminBundle\Facade\MediaFolderGroupRoleFacade>")
-     */
-    protected $mediaFolderRoles = array();
+    protected $documentRoles = array();
 
     /**
      * @param string $role
@@ -52,32 +47,16 @@ class GroupFacade extends AbstractFacade
     /**
      * @param FacadeInterface $facade
      */
-    public function addNodeRoles(FacadeInterface $facade)
+    public function addDocumentRoles(FacadeInterface $facade)
     {
-        $this->nodeRoles[] = $facade;
+        $this->documentRoles[] = $facade;
     }
 
     /**
      * @return array
      */
-    public function getNodeRoles()
+    public function getDocumentRoles()
     {
-        return $this->nodeRoles;
-    }
-
-    /**
-     * @param FacadeInterface $facade
-     */
-    public function addMediaFolderRoles(FacadeInterface $facade)
-    {
-        $this->mediaFolderRoles[] = $facade;
-    }
-
-    /**
-     * @return array
-     */
-    public function getMediaFolderRoles()
-    {
-        return $this->mediaFolderRoles;
+        return $this->documentRoles;
     }
 }
