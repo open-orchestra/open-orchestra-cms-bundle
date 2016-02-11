@@ -49,7 +49,7 @@ class KeywordsChoiceType extends AbstractType
         if ($options['embedded']) {
             $builder->addModelTransformer($this->keywordsTransformer);
         }
-        if (!is_null($options['transformerClass'])) {
+        if (!is_null($options['transformerClass']) && is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
             $transformerClass = $options['transformerClass'];
             $transformer = new $transformerClass($options['name']);
             $builder->addModelTransformer($transformer);
