@@ -146,6 +146,9 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         }
     }
 
+    /**
+     * @return array
+     */
     public function provideComponentAndDataAndTransformedValue()
     {
         return array(

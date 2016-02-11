@@ -11,6 +11,7 @@ use OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsT
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\OptionsResolver\Options;
+use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 
 /**
  * Class KeywordsChoiceType
@@ -49,7 +50,10 @@ class KeywordsChoiceType extends AbstractType
         if ($options['embedded']) {
             $builder->addModelTransformer($this->keywordsTransformer);
         }
-        if (!is_null($options['transformerClass']) && is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+        if (!is_null($options['transformerClass'])) {
+            if(!is_string($options['transformerClass']) || !is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+                throw new NotAllowedClassNameException();
+            }
             $transformerClass = $options['transformerClass'];
             $transformer = new $transformerClass($options['name']);
             $builder->addModelTransformer($transformer);

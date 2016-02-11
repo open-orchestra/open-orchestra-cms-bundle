@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 
 /**
  * Class ContentSearchType
@@ -18,6 +19,9 @@ class ContentSearchType extends AbstractType
     public function __construct($transformerClass)
     {
         $this->transformerClass = $transformerClass;
+        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+            throw new NotAllowedClassNameException();
+        }
     }
 
     /**

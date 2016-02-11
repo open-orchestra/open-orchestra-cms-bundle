@@ -120,4 +120,14 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
 
         Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
+
+    /**
+     * Test Exception transformer
+     */
+    public function testExceptionReverseTransform()
+    {
+        $this->setExpectedException('OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException');
+
+        $this->form->buildForm($this->builder, array('embedded' => true, 'transformerClass' => 'phakeTransformer'));
+    }
 }
