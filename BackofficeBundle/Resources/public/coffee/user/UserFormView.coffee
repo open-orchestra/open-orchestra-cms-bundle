@@ -1,12 +1,13 @@
 ###*
- * @namespace OpenOrchestra
+ * @namespace OpenOrchestra:User
 ###
 window.OpenOrchestra or= {}
+window.OpenOrchestra.User or= {}
 
 ###*
  * @class UserFormView
 ###
-class OpenOrchestra.UserFormView extends FullPageFormView
+class OpenOrchestra.User.UserFormView extends FullPageFormView
 
   ###*
    * On view ready
@@ -14,13 +15,11 @@ class OpenOrchestra.UserFormView extends FullPageFormView
   onViewReady: ->
     success = $('.alert-success', @$el).length > 0
     if @options.submitted && success
-      entityId = $('#oo_user', @$el).first().data('user-id')
       parameters =
         'entityType': @options.entityType
-        'entityId': entityId
+        'entityId': $('#oo_user_id', @$el).val()
       redirectUrl = appRouter.generateUrl('showEntity', parameters)
-      Backbone.history.navigate redirectUrl,
-        trigger: true
+      refreshMenu(redirectUrl)
 
 jQuery ->
-  appConfigurationView.setConfiguration('user', 'editEntity', OpenOrchestra.UserFormView)
+  appConfigurationView.setConfiguration('user', 'editEntity', OpenOrchestra.User.UserFormView)

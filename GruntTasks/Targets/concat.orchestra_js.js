@@ -22,7 +22,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/FlashBagView.js',
     'web/built/openorchestrabackoffice/js/DisplayApiErrorView.js',
     'web/built/openorchestrabackoffice/js/generateId.js',
-    'web/built/openorchestrabackoffice/js/UserFormView.js',
 
     //--[ AJAX LOADER ]--//
     'web/built/openorchestrabackoffice/js/ajaxLoader/AjaxLoaderView.js',
@@ -116,6 +115,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
     //--[ USER ]--//
+    'web/built/openorchestrabackoffice/js/user/UserFormView.js',
     'web/built/openorchestrauseradmin/js/user/*.js',
 
     //--[ GROUP TREE ]--//

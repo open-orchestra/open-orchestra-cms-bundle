@@ -48,6 +48,9 @@ class UserType extends AbstractType
             'choices' => $this->getLanguages(),
             'label' => 'open_orchestra_user.form.user.language'
         ));
+        $builder->add('id', 'hidden', array(
+            'disabled' => true
+        ));
 
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
