@@ -148,7 +148,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function provideComponentAndDataAndTransformedValue()
     {
         return array(
-                array(ContentListStrategy::CONTENT_LIST, array(
+                array(ContentListStrategy::NAME, array(
                         'contentNodeId' => 'news',
                         'contentTemplateEnabled' => true,
                         'contentSearch' => array(
