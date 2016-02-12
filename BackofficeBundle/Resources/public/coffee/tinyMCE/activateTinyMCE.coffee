@@ -2,7 +2,15 @@
 
 callback_tinymce_init = null
 
+tinymce_button_linkmanager = null
+
 doCallBack = (editor, view) ->
+  tinymce_button_linkmanager = (editor) ->
+    target = editor.id + '_modal'
+    view.WysiwygTypeModal
+      target: target
+      input: editor.id
+      url: $('#' + target).data('url')
 
 initParameter = () ->
 

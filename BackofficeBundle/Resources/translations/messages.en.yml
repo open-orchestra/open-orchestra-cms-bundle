@@ -35,6 +35,7 @@ open_orchestra_backoffice:
             text: The removal will be final
         add: Add
         select: Select
+        internal_link: Internal link
         status:
             published: Published
             draft: Draft

@@ -46,6 +46,11 @@ parameters:
         tinymce_jquery: false
         include_jquery: false
         selector: .tinymce
+        tinymce_buttons:
+            linkmanager:
+                title: open_orchestra_backoffice.form.internal_link
+                image: "asset[bundles/openorchestrabackoffice/images/link.png]"
+                icon: false
         theme:
             simple:
                 theme: modern
@@ -55,10 +60,11 @@ parameters:
                     - searchreplace wordcount visualblocks visualchars code fullscreen
                     - insertdatetime media nonbreaking save table contextmenu directionality
                     - emoticons template paste textcolor orchestra_bbcode
-                toolbar1: undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link
+                toolbar1: undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link linkmanager
                 toolbar2: forecolor backcolor
                 menubar: false
                 height: 200
+        use_callback_tinymce_init: true
 
 services:
     # Template form type
