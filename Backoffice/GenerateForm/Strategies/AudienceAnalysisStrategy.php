@@ -19,7 +19,7 @@ class AudienceAnalysisStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseAudienceAnalysisStrategy::AUDIENCE_ANALYSIS === $block->getComponent();
+        return BaseAudienceAnalysisStrategy::NAME === $block->getComponent();
     }
 
     /**

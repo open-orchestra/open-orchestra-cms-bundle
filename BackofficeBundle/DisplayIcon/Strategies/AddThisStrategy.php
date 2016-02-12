@@ -18,7 +18,7 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseAddThisStrategy::ADDTHIS === $block;
+        return BaseAddThisStrategy::NAME === $block;
     }
 
     /**

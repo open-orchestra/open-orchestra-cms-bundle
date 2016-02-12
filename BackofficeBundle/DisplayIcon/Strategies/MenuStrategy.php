@@ -18,7 +18,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseMenuStrategy::MENU == $block;
+        return BaseMenuStrategy::NAME == $block;
     }
 
     /**

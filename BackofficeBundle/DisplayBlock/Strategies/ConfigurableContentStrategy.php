@@ -32,7 +32,7 @@ class ConfigurableContentStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseConfigurableContentStrategy::CONFIGURABLE_CONTENT == $block->getComponent();
+        return BaseConfigurableContentStrategy::NAME == $block->getComponent();
     }
 
     /**

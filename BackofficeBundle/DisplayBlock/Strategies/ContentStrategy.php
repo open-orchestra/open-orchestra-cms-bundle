@@ -21,7 +21,7 @@ class ContentStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseContentStrategy::CONTENT == $block->getComponent();
+        return BaseContentStrategy::NAME == $block->getComponent();
     }
 
     /**

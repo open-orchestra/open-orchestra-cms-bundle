@@ -18,7 +18,7 @@ class SampleStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseSampleStrategy::SAMPLE === $block->getComponent();
+        return BaseSampleStrategy::NAME === $block->getComponent();
     }
 
     /**

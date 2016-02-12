@@ -18,7 +18,7 @@ class FooterStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseFooterStrategy::FOOTER === $block->getComponent();
+        return BaseFooterStrategy::NAME === $block->getComponent();
     }
 
     /**

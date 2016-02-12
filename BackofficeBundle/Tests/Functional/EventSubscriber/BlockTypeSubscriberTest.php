@@ -39,7 +39,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function testVideoBlock()
     {
         $block = new Block();
-        $block->setComponent(VideoStrategy::VIDEO);
+        $block->setComponent(VideoStrategy::NAME);
         $block->addAttribute('videoType', 'youtube');
         $block->addAttribute('youtubeFs', true);
 
@@ -93,27 +93,23 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function provideComponentAndData()
     {
         return array(
-            array(SampleStrategy::SAMPLE, array(
+            array(SampleStrategy::NAME, array(
                 'title' => 'title',
                 'news' => 'news',
                 'author' => 'author',
                 'multipleChoice' => array('foo', 'none'),
             )),
-            array(GalleryStrategy::GALLERY, array(
+            array(GalleryStrategy::NAME, array(
                 'pictures' => array(
                     'media1',
                     'media2'
                 )
             )),
-            array(ContentListStrategy::CONTENT_LIST, array(
+            array(ContentListStrategy::NAME, array(
                 'contentNodeId' => 'news',
                 'contentTemplateEnabled' => true,
             )),
-            array(ContentListStrategy::CONTENT_LIST, array(
-                'contentNodeId' => 'news',
-                'contentTemplateEnabled' => true,
-            )),
-            array(ConfigurableContentStrategy::CONFIGURABLE_CONTENT, array(
+            array(ConfigurableContentStrategy::NAME, array(
                 'contentTypeId' => 'car',
                 'contentId' => 'car1',
                 'contentTemplateEnabled' => true,

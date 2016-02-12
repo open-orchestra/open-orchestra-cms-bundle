@@ -18,7 +18,7 @@ class VideoStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BasevideoStrategy::VIDEO === $block;
+        return BasevideoStrategy::NAME === $block;
     }
 
     /**

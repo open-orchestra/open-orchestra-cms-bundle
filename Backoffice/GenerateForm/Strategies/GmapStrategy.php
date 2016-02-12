@@ -19,7 +19,7 @@ class GmapStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseGmapStrategy::GMAP === $block->getComponent();
+        return BaseGmapStrategy::NAME === $block->getComponent();
     }
 
     /**

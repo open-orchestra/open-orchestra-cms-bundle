@@ -18,7 +18,7 @@ class ContactStrategy implements BlockParameterInterface
      */
     public function support(BlockInterface $block)
     {
-        return BaseContactStrategy::CONTACT == $block->getComponent();
+        return BaseContactStrategy::NAME == $block->getComponent();
     }
 
     /**

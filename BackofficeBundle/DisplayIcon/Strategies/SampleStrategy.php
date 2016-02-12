@@ -18,7 +18,7 @@ class SampleStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseSampleStrategy::SAMPLE == $block;
+        return BaseSampleStrategy::NAME == $block;
     }
 
     /**

@@ -21,7 +21,7 @@ class VideoStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BasevideoStrategy::VIDEO === $block->getComponent();
+        return BasevideoStrategy::NAME === $block->getComponent();
     }
 
     /**

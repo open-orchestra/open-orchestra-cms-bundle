@@ -21,7 +21,7 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseSubMenuStrategy::SUBMENU == $block->getComponent();
+        return BaseSubMenuStrategy::NAME == $block->getComponent();
     }
 
     /**

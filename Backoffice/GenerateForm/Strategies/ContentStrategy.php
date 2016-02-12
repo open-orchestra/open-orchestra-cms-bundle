@@ -19,7 +19,7 @@ class ContentStrategy extends AbstractBlockStrategy
      */
     public function support(BlockInterface $block)
     {
-        return BaseContentStrategy::CONTENT === $block->getComponent();
+        return BaseContentStrategy::NAME === $block->getComponent();
     }
 
     /**

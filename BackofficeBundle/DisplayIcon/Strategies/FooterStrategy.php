@@ -18,7 +18,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseFooterStrategy::FOOTER == $block;
+        return BaseFooterStrategy::NAME == $block;
     }
 
     /**

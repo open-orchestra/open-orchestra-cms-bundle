@@ -18,7 +18,7 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseContentListStrategy::CONTENT_LIST === $block;
+        return BaseContentListStrategy::NAME === $block;
     }
 
     /**
