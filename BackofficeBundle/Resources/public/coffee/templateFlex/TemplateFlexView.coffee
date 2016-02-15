@@ -49,7 +49,7 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
   addArea: (container, area) ->
     areaModel = new Area
     areaModel.set area
-    areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addAreaFlex')
+    areaViewClass = appConfigurationView.getConfiguration('template-flex', 'addAreaFlex')
     new areaViewClass(
       area: areaModel
       domContainer: container

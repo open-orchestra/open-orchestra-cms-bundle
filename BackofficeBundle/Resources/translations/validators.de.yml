@@ -11,3 +11,5 @@ open_orchestra_backoffice_validators:
     area:
         unique_area_id: Gebiete ID eindeutig sein
         presence_required: Sie müssen eine von ihnen zu wählen
+    area_flex:
+        row_layout: Die Spalten-Layout ist falsch

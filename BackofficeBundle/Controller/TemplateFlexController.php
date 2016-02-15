@@ -3,6 +3,8 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\ModelInterface\Event\TemplateFlexEvent;
+use OpenOrchestra\ModelInterface\TemplateFlexEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +40,7 @@ class TemplateFlexController extends AbstractAdminController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
 
         if ($this->handleForm($form, $message)) {
-            //$this->dispatchEvent(TemplateEvents::TEMPLATE_UPDATE, new TemplateEvent($template));
+            $this->dispatchEvent(TemplateFlexEvents::TEMPLATE_FLEX_UPDATE, new TemplateFlexEvent($template));
         }
 
         return $this->renderAdminForm($form);
@@ -67,7 +69,7 @@ class TemplateFlexController extends AbstractAdminController
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
 
         if ($this->handleForm($form, $message, $template)) {
-            //$this->dispatchEvent(TemplateEvents::TEMPLATE_CREATE, new TemplateEvent($template));
+            $this->dispatchEvent(TemplateFlexEvents::TEMPLATE_FLEX_CREATE, new TemplateFlexEvent($template));
 
             return $this->redirect($this->generateUrl('open_orchestra_backoffice_template_flex_form', array(
                 'templateId' => $template->getTemplateId()

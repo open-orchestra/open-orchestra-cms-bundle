@@ -199,6 +199,14 @@ open_orchestra_backoffice:
             id_sub: Area id
             remove_sub: Remove
             block_exists: Can't add Area, area contains blocks
+        area_flex:
+            new_row_title: New row
+            column_layout:
+                label: Column Layout
+                helper: Column layout: 10%, auto, 100px
+            layout:
+                select_layout: Select an option
+                manually: Or specify manually
         block:
             success: The block has been modified
             label: Block label

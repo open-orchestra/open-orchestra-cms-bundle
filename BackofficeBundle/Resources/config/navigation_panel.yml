@@ -18,7 +18,6 @@ services:
         arguments:
             - @templating
 
-
     open_orchestra_backoffice.navigation_panel.dashboard:
         class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
         arguments:

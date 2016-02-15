@@ -88,6 +88,8 @@ module.exports = {
 
     //--[ AREA FLEX ]--//
     'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexChannel.js',
+    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexAddRowExtendView.js',
+    'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexFormRowView.js',
     'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexView.js',
     'web/built/openorchestrabackoffice/js/areaFlex/AreaFlexToolbarView.js',
 

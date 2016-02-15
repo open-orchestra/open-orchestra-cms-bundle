@@ -184,6 +184,14 @@ open_orchestra_backoffice:
             monthly: Mensuel
             yearly: Annuel
             never: Jamais
+        area_flex:
+            new_row_title: Nouvelle ligne
+            column_layout:
+                label: Réparition des colonnes
+                helper: Répartition des colonnes: 10%, auto, 100px
+            layout:
+                select_layout: Sélectionner une option
+                manually: Ou le spécifier manuellement
         area:
             success: La zone a été modifiée
             bo_direction: Direction des enfants

@@ -1,10 +1,14 @@
-<div class="area">
-    <header class="text-center"><%= area.get('label') %></header>
-    <div class="area-container">
+<div class="area-flex">
+    <% if ('column' === area.get('area_type')) { %>
+        <header class="text-center"><%= area.get('area_id') %></header>
+    <% }  %>
+    <div class="area-container area-<%= area.get('area_type') %>">
+    </div>
+    <% if ('row' !== area.get('area_type')) { %>
         <div class="area-action">
-            <button type="button" class="btn btn-default">
+            <button type="button" class="add-row btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
             </button>
         </div>
-    </div>
+    <% }  %>
 </div>

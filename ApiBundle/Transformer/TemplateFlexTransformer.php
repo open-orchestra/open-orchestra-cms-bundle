@@ -26,7 +26,7 @@ class TemplateFlexTransformer extends AbstractTransformer
         }
 
         $facade = $this->newFacade();
-        $facade->area = $this->getTransformer('area_flex')->transform($template->getArea());
+        $facade->area = $this->getTransformer('area_flex')->transformFromTemplateFlex($template->getArea(), $template);
         $facade->id = $template->getId();
         $facade->name = $template->getName();
         $facade->siteId = $template->getSiteId();
