@@ -49,9 +49,9 @@ class LogTemplateFlexSubscriber extends AbstractLogSubscriber
     }
 
     /**
-     * @param TemplateEvent $event
+     * @param TemplateFlexEvent $event
      */
-    public function templateAreaUpdate(TemplateEvent $event)
+    public function templateAreaUpdate(TemplateFlexEvent $event)
     {
         $template = $event->getTemplate();
         $this->logger->info('open_orchestra_log.template_flex.area.update', array(

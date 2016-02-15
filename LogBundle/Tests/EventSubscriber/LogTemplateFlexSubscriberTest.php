@@ -36,6 +36,8 @@ class LogTemplateFlexSubscriberTest extends LogAbstractSubscriberTest
             array(TemplateFlexEvents::TEMPLATE_FLEX_CREATE),
             array(TemplateFlexEvents::TEMPLATE_FLEX_DELETE),
             array(TemplateFlexEvents::TEMPLATE_FLEX_UPDATE),
+            array(TemplateFlexEvents::TEMPLATE_FLEX_AREA_DELETE),
+            array(TemplateFlexEvents::TEMPLATE_FLEX_AREA_UPDATE),
         );
     }
 
@@ -70,6 +72,30 @@ class LogTemplateFlexSubscriberTest extends LogAbstractSubscriberTest
     {
         $this->subscriber->templateUpdate($this->templateEvent);
         $this->assertEventLogged('open_orchestra_log.template_flex.update', array(
+            'template_id' => $this->template->getTemplateId(),
+            'template_name' => $this->template->getName()
+        ));
+    }
+
+    /**
+     * Test TemplateAreaDelete
+     */
+    public function testTemplateAreaDelete()
+    {
+        $this->subscriber->templateAreaDelete($this->templateEvent);
+        $this->assertEventLogged('open_orchestra_log.template_flex.area.delete', array(
+            'template_id' => $this->template->getTemplateId(),
+            'template_name' => $this->template->getName()
+        ));
+    }
+
+    /**
+     * Test templateAreaUpdate
+     */
+    public function testTemplateAreaUpdate()
+    {
+        $this->subscriber->templateAreaUpdate($this->templateEvent);
+        $this->assertEventLogged('open_orchestra_log.template_flex.area.update', array(
             'template_id' => $this->template->getTemplateId(),
             'template_name' => $this->template->getName()
         ));
