@@ -71,6 +71,9 @@ class AreaFlexRowLayoutValidatorTest extends AbstractBaseTestCase
             array('1/3px', 1),
             array('10%, 100px, e', 1),
             array('', 1),
+            array('1', 0),
+            array('1, 100', 0),
+            array(' 1, 1/5', 1),
         );
     }
 }
