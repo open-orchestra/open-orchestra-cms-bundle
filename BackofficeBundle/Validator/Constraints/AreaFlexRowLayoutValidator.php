@@ -34,7 +34,7 @@ class AreaFlexRowLayoutValidator extends ConstraintValidator
      */
     protected function validateColumnWidth($columnWidth)
     {
-        $regex = "/^auto$|^\\d+px$|^\\d+%$|^\\d+$/";
+        $regex = "/^auto$|^\\d+(px|%)?$/";
 
         return 1 === preg_match_all($regex, $columnWidth);
     }
