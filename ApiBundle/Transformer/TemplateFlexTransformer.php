@@ -34,6 +34,13 @@ class TemplateFlexTransformer extends AbstractTransformer
         $facade->deleted = $template->isDeleted();
         $facade->editable = false;
 
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_flex_form',
+            array('templateId' => $template->getTemplateId())
+        ));
+        $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
+            array('templateId' => $template->getTemplateId())
+        ));
+
         return $facade;
     }
 
