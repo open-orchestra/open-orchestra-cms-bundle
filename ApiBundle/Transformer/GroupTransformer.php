@@ -61,7 +61,9 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         foreach ($group->getNodeRoles() as $nodeRole) {
             $facade->addNodeRoles($this->getTransformer('node_group_role')->transform($nodeRole));
         }
-
+        foreach ($group->getMediaFolderRoles() as $mediaFolderRole) {
+            $facade->addMediaFolderRoles($this->getTransformer('media_folder_group_role')->transform($mediaFolderRole));
+        }
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {
             $facade->addLink('_self', $this->generateRoute(
                 'open_orchestra_api_group_show',
@@ -87,6 +89,10 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_show',
                 array('groupId' => $group->getId())
             ));
+            $facade->addLink('_self_panel_media_folder_tree', $this->generateRoute(
+                'open_orchestra_api_group_show',
+                array('groupId' => $group->getId())
+            ));
             if ($group->getSite() instanceof ReadSiteInterface) {
                 $facade->addLink('_self_node_tree', $this->generateRoute(
                     'open_orchestra_api_node_list_tree',
@@ -95,6 +101,14 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 $facade->addLink('_role_list_node', $this->generateRoute(
                     'open_orchestra_api_role_list_by_type',
                     array('type' => 'node')
+                ));
+                $facade->addLink('_self_folder_tree', $this->generateRoute(
+                    'open_orchestra_api_folder_list_tree',
+                    array('siteId' => $group->getSite()->getSiteId())
+                ));
+                $facade->addLink('_role_list_media_folder', $this->generateRoute(
+                    'open_orchestra_api_role_list_by_type',
+                    array('type' => 'media|media_folder')
                 ));
             }
         }
@@ -116,10 +130,25 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithContextInterface");
         }
         foreach ($facade->getNodeRoles() as $nodeRoleFacade) {
-            $group->addNodeRole($transformer->reverseTransformWithGroup(
-                $group,
-                $nodeRoleFacade,
-                $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
+            $group->addNodeRole(
+                $transformer->reverseTransformWithGroup(
+                    $group,
+                    $nodeRoleFacade,
+                    $group->getNodeRoleByNodeAndRole($nodeRoleFacade->node, $nodeRoleFacade->name)
+                )
+            );
+        }
+
+        $mediaFolderTransformer = $this->getTransformer('media_folder_group_role');
+        if (!$mediaFolderTransformer instanceof TransformerWithGroupInterface) {
+            throw new UnexpectedValueException("Media Folder Group Role Transformer must be an instance of TransformerWithContextInterface");
+        }
+        foreach ($facade->getMediaFolderRoles() as $mediaFolderRoleFacade) {
+            $group->addMediaFolderRole(
+                $mediaFolderTransformer->reverseTransformWithGroup(
+                    $group,
+                    $mediaFolderRoleFacade,
+                    $group->getMediaFolderRoleByMediaFolderAndRole($mediaFolderRoleFacade->folder, $mediaFolderRoleFacade->name)
                 )
             );
         }

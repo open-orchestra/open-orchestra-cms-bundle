@@ -4,6 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
+use OpenOrchestra\Media\Model\MediaFolderGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
@@ -70,4 +71,30 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
      * @return boolean
      */
     public function hasNodeRoleByNodeAndRole($nodeId, $role);
+
+    /**
+     * @return array
+     */
+    public function getMediaFolderRoles();
+
+    /**
+     * @param MediaFolderGroupRoleInterface $mediaFolderGroupRole
+     */
+    public function addMediaFolderRole(MediaFolderGroupRoleInterface $mediaFolderGroupRole);
+
+    /**
+     * @param string $folderId
+     * @param string $role
+     *
+     * @return MediaFolderGroupRoleInterface|null
+     */
+    public function getMediaFolderRoleByMediaFolderAndRole($folderId, $role);
+
+    /**
+     * @param string $folderId
+     * @param string $role
+     *
+     * @return boolean
+     */
+    public function hasMediaFolderRoleByByMediaFolderAndRole($folderId, $role);
 }
