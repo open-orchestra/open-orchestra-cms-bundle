@@ -23,12 +23,12 @@ FormCollectionView = OrchestraView.extend(
     name = $(e.currentTarget).data('role-name')
     nodeId = @options.nodeElement.node_id
     nodeGroupRoleData = []
-    nodeGroupRoleData.push({'node': nodeId, 'access_type': value, 'name': name})
+    nodeGroupRoleData.push({'document': nodeId, 'type':'node', 'access_type': value, 'name': name})
     $.ajax
       url: @options.group.links._self_edit
       method: 'POST'
       data: JSON.stringify(
-        node_roles: nodeGroupRoleData
+        document_roles: nodeGroupRoleData
       )
 )
 

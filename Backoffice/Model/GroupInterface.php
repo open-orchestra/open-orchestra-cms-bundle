@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\Model;
 
 use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
-use OpenOrchestra\Media\Model\MediaFolderGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
@@ -73,4 +72,5 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
      * @return boolean
      */
     public function hasDocumentRoleByTypeAndIdAndRole($type, $id, $role);
+
 }

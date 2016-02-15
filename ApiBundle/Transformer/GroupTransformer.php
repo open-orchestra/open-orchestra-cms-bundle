@@ -4,8 +4,11 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
+use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
+use OpenOrchestra\GroupBundle\GroupFacadeEvents;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
@@ -17,20 +20,24 @@ use UnexpectedValueException;
  */
 class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
 {
+    protected $eventDispatcher;
     protected $translationChoiceManager;
 
     /**
      * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TranslationChoiceManager      $translationChoiceManager
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         $facadeClass,
         AuthorizationCheckerInterface $authorizationChecker,
-        TranslationChoiceManager $translationChoiceManager
+        TranslationChoiceManager $translationChoiceManager,
+        EventDispatcherInterface $eventDispatcher
     ){
         parent::__construct($facadeClass, $authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -58,7 +65,6 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($site = $group->getSite()) {
             $facade->site = $this->getTransformer('site')->transform($site);
         }
-
         foreach ($group->getDocumentRoles() as $documentRoles) {
             $facade->addDocumentRoles($this->getTransformer('document_group_role')->transform($documentRoles));
         }
@@ -84,16 +90,10 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                 'open_orchestra_api_group_edit',
                 array('groupId' => $group->getId())
             ));
-
             $facade->addLink('_self_panel_node_tree', $this->generateRoute(
                 'open_orchestra_api_group_show',
                 array('groupId' => $group->getId())
             ));
-            $facade->addLink('_self_panel_media_folder_tree', $this->generateRoute(
-                'open_orchestra_api_group_show',
-                array('groupId' => $group->getId())
-            ));
-
             if ($group->getSite() instanceof ReadSiteInterface) {
                 $facade->addLink('_self_node_tree', $this->generateRoute(
                     'open_orchestra_api_node_list_tree',
@@ -103,15 +103,11 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
                     'open_orchestra_api_role_list_by_type',
                     array('type' => 'node')
                 ));
-                $facade->addLink('_self_folder_tree', $this->generateRoute(
-                    'open_orchestra_api_folder_list_tree',
-                    array('siteId' => $group->getSite()->getSiteId())
-                ));
-                $facade->addLink('_role_list_media_folder', $this->generateRoute(
-                    'open_orchestra_api_role_list_by_type',
-                    array('type' => 'media|media_folder')
-                ));
             }
+            $this->eventDispatcher->dispatch(
+                GroupFacadeEvents::POST_GROUP_TRANSFORMATION,
+                new GroupFacadeEvent($group, $facade)
+            );
         }
 
         return $facade;
@@ -126,20 +122,26 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      */
     public function reverseTransform(FacadeInterface $facade, $group = null)
     {
-        $transformer = $this->getTransformer('document_group_role');
+        $transformer = $this->getTransformer('node_group_role');
         if (!$transformer instanceof TransformerWithGroupInterface) {
             throw new UnexpectedValueException("Document Group Role Transformer must be an instance of TransformerWithContextInterface");
         }
         foreach ($facade->getDocumentRoles() as $documentRoleFacade) {
-            $source = $group->getDocumentRoleByTypeAndIdAndRole($documentRoleFacade->type, $documentRoleFacade->id, $documentRoleFacade->name);
-            $group->addDocumentRole(
-                $transformer->reverseTransformWithGroup(
-                    $group,
-                    $documentRoleFacade,
-                    $source
-                )
-            );
+            if ('node' === $documentRoleFacade->type) {
+                $source = $group->getDocumentRoleByTypeAndIdAndRole(
+                    $documentRoleFacade->type,
+                    $documentRoleFacade->document,
+                    $documentRoleFacade->name
+                );
+                $documentGroupRole = $transformer->reverseTransformWithGroup($group, $documentRoleFacade, $source);
+                $group->addDocumentRole($documentGroupRole);
+            }
         }
+
+        $this->eventDispatcher->dispatch(
+            GroupFacadeEvents::POST_GROUP_REVERSE_TRANSFORMATION,
+            new GroupFacadeEvent($group, $facade)
+        );
 
         return $group;
     }

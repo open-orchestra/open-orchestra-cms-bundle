@@ -82,14 +82,24 @@ class DocumentGroupRoleTransformer extends AbstractTransformer implements Transf
         $source->setAccessType($documentRoleFacade->accessType);
 
         if (DocumentGroupRoleInterface::ACCESS_INHERIT === $documentRoleFacade->accessType) {
-            /*parent->isGranted()?*/
-            $source->setGranted(true);
+            $source->setGranted($this->isParentGranted($group, $documentRoleFacade));
         } else {
             $isGranted = (DocumentGroupRoleInterface::ACCESS_GRANTED === $documentRoleFacade->accessType) ? true : false;
             $source->setGranted($isGranted);
         }
 
         return $source;
+    }
+
+    /**
+     * @param GroupInterface  $group
+     * @param FacadeInterface $facade
+     *
+     * @return bool
+     */
+    protected function isParentGranted(GroupInterface $group, FacadeInterface $facade)
+    {
+        return false;
     }
 
     /**
