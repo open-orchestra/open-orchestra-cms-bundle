@@ -2,15 +2,16 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
+use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
 
 /**
  * Class AreaTransformer
  */
-class AreaFlexTransformer extends AbstractTransformer implements TransformerWithTemplateFlexContextInterface
+class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implements TransformerWithTemplateFlexContextInterface
 {
     /**
      * @param AreaFlexInterface     $area
@@ -28,11 +29,12 @@ class AreaFlexTransformer extends AbstractTransformer implements TransformerWith
         foreach ($area->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area_flex')->transformFromTemplateFlex($subArea, $template));
         }
-
-        $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_new_row_area_flex',array(
-            'templateId' => $template->getTemplateId(),
-            'areaParentId' => $area->getAreaId(),
-        )));
+        if ($this->authorizationChecker->isGranted(TreeTemplateFlexPanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE_FLEX, $template)) {
+            $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_new_row_area_flex', array(
+                'templateId' => $template->getTemplateId(),
+                'areaParentId' => $area->getAreaId(),
+            )));
+        }
 
         return $facade;
     }

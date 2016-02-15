@@ -11,6 +11,10 @@ open_orchestra_role:
     role_access_create_template: Create a page template
     role_access_update_template: Update a page template
     role_access_delete_template: Delete a page template
+    role_access_tree_template_flex: Access page templates flex
+    role_access_create_template_flex: Create a page template flex
+    role_access_update_template_flex: Update a page template flex
+    role_access_delete_template_flex: Delete a page template flex
     role_access_content_type_for_content: Access contents
     role_access_create_content_type_for_content: Create a content
     role_access_update_content_type_for_content: Update a content

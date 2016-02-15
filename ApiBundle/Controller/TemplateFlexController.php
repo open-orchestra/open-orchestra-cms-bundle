@@ -29,7 +29,7 @@ class TemplateFlexController extends BaseController
      * @Config\Route("/{templateId}", name="open_orchestra_api_template_flex_show")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE_FLEX')")
      *
      * @return FacadeInterface
      */
@@ -46,7 +46,7 @@ class TemplateFlexController extends BaseController
      * @Config\Route("/{templateId}/delete", name="open_orchestra_api_template_delete")
      * @Config\Method({"DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE_FLEX')")
      *
      * @return Response
      */

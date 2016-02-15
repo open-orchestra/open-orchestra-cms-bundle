@@ -29,10 +29,12 @@
                 <span class="glyphicon glyphicon-trash"></span>
             </button>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-default add-row-action">
-                <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
-            </button>
-        </div>
+        <% if ("undefined" !== typeof(area.get('links')._self_form_new_row)) { %>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default add-row-action">
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
+                </button>
+            </div>
+        <% } %>
     </div>
 </div>
