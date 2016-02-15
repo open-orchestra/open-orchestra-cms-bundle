@@ -4,11 +4,15 @@
     <% }  %>
     <div class="area-container area-<%= area.get('area_type') %>">
     </div>
-    <% if ('row' !== area.get('area_type')) { %>
+    <% if (
+        'row' !== area.get('area_type') &&
+        "undefined" !== typeof(area.get('links')._self_form_new_row)
+       ) {
+    %>
         <div class="area-action">
             <button type="button" class="add-row btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
             </button>
         </div>
-    <% }  %>
+    <% } %>
 </div>

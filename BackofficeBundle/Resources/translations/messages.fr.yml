@@ -506,6 +506,10 @@ open_orchestra_backoffice:
         delete:
             title: Souhaitez-vous supprimer ce gabarit ?
             text: Cette opération est définitive.
+    templates_flex:
+        delete:
+            title: Souhaitez-vous supprimer ce gabarit ?
+            text: Cette opération est définitive.
     command:
         node:
             success: Les références des pages sont cohérentes.

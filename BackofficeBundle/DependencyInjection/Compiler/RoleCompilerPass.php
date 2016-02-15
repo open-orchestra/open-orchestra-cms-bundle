@@ -7,6 +7,7 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPan
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -44,6 +45,10 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE,
             TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE,
             TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE,
+            TreeTemplateFlexPanelStrategy::ROLE_ACCESS_TREE_TEMPLATE_FLEX,
+            TreeTemplateFlexPanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE_FLEX,
+            TreeTemplateFlexPanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE_FLEX,
+            TreeTemplateFlexPanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE_FLEX,
             GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
             GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD,

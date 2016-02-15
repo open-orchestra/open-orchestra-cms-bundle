@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\TemplateFlexEvent;
 use OpenOrchestra\ModelInterface\TemplateFlexEvents;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ class TemplateFlexController extends AbstractAdminController
      * @Config\Route("/template_flex/form/{templateId}", name="open_orchestra_backoffice_template_flex_form", defaults={"templateId" = 0})
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE_FLEX')")
      *
      * @return Response
      */
@@ -34,7 +34,7 @@ class TemplateFlexController extends AbstractAdminController
 
         $form = $this->createForm('oo_template_flex', $template, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_template_flex_form', array('templateId' => $templateId))
-        ), TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
+        ), TreeTemplateFlexPanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE_FLEX);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');
@@ -52,7 +52,7 @@ class TemplateFlexController extends AbstractAdminController
      * @Config\Route("/template_flex/new", name="open_orchestra_backoffice_template_flex_new")
      * @Config\Method({"GET", "POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE_FLEX')")
      *
      * @return Response
      */
@@ -63,7 +63,7 @@ class TemplateFlexController extends AbstractAdminController
 
         $form = $this->createForm('oo_template_flex', $template, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_template_flex_new')
-        ), TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE);
+        ), TreeTemplateFlexPanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE_FLEX);
 
         $form->handleRequest($request);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.template.success');

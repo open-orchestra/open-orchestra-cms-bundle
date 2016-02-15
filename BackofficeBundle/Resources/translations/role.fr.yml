@@ -11,6 +11,10 @@ open_orchestra_role:
     role_access_create_template: Créer un gabarit de page
     role_access_update_template: Modifier un gabarit de page
     role_access_delete_template: Supprimer un gabarit de page
+    role_access_tree_template_flex: Accéder aux gabarits de pages
+    role_access_create_template_flex: Créer un gabarit de page
+    role_access_update_template_flex: Modifier un gabarit de page
+    role_access_delete_template_flex: Supprimer un gabarit de page
     role_access_content_type_for_content: Accéder aux contenus
     role_access_create_content_type_for_content: Créer un contenu
     role_access_update_content_type_for_content: Editer un contenu

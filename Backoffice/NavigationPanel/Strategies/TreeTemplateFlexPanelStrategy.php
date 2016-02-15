@@ -9,10 +9,10 @@ use OpenOrchestra\ModelInterface\Repository\TemplateFlexRepositoryInterface;
  */
 class TreeTemplateFlexPanelStrategy extends AbstractNavigationPanelStrategy
 {
-    const ROLE_ACCESS_TREE_TEMPLATE = 'ROLE_ACCESS_TREE_TEMPLATE';
-    const ROLE_ACCESS_CREATE_TEMPLATE = 'ROLE_ACCESS_CREATE_TEMPLATE';
-    const ROLE_ACCESS_UPDATE_TEMPLATE = 'ROLE_ACCESS_UPDATE_TEMPLATE';
-    const ROLE_ACCESS_DELETE_TEMPLATE = 'ROLE_ACCESS_DELETE_TEMPLATE';
+    const ROLE_ACCESS_TREE_TEMPLATE_FLEX = 'ROLE_ACCESS_TREE_TEMPLATE_FLEX';
+    const ROLE_ACCESS_CREATE_TEMPLATE_FLEX = 'ROLE_ACCESS_CREATE_TEMPLATE_FLEX';
+    const ROLE_ACCESS_UPDATE_TEMPLATE_FLEX = 'ROLE_ACCESS_UPDATE_TEMPLATE_FLEX';
+    const ROLE_ACCESS_DELETE_TEMPLATE_FLEX = 'ROLE_ACCESS_DELETE_TEMPLATE_FLEX';
 
     /**
      * @var TemplateFlexRepositoryInterface
@@ -26,7 +26,7 @@ class TreeTemplateFlexPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(TemplateFlexRepositoryInterface $templateRepository, $parent, $weight)
     {
-        parent::__construct('templates_flex', self::ROLE_ACCESS_TREE_TEMPLATE, $weight, $parent);
+        parent::__construct('templates_flex', self::ROLE_ACCESS_TREE_TEMPLATE_FLEX, $weight, $parent);
         $this->templateRepository = $templateRepository;
     }
 

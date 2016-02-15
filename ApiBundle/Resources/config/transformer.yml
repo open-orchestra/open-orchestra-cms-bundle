@@ -94,6 +94,7 @@ services:
         class: %open_orchestra_api.transformer.area_flex.class%
         arguments:
             - %open_orchestra_api.facade.area_flex.class%
+            - @security.authorization_checker
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.block:

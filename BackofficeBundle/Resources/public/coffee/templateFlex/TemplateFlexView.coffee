@@ -40,6 +40,7 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addArea($('.template-flex-container', @$el), @options.template.get('area'))
+    @addConfigurationButton()
     return
 
   ###*
@@ -49,9 +50,19 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
   addArea: (container, area) ->
     areaModel = new Area
     areaModel.set area
-    areaViewClass = appConfigurationView.getConfiguration('template-flex', 'addAreaFlex')
+    areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addAreaFlex')
     new areaViewClass(
       area: areaModel
       domContainer: container
       toolbarContainer: $('.toolbar-container', @$el)
     )
+
+  ###*
+   * Add button configuration page
+  ###
+  addConfigurationButton: () ->
+    pageConfigurationButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addConfigurationButton')
+    new pageConfigurationButtonViewClass(@addOption(
+      viewContainer: @
+      widget_index: 2
+    ))
