@@ -42,6 +42,10 @@ class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implem
                     'templateId' => $template->getTemplateId(),
                     'areaId' => $area->getAreaId(),
                 )));
+                $facade->addLink('_self_delete_column', $this->generateRoute('open_orchestra_api_area_flex_delete_in_template', array(
+                    'templateId' => $template->getTemplateId(),
+                    'areaId' => $area->getAreaId(),
+                )));
             }
         }
 

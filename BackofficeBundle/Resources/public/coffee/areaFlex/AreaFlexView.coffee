@@ -86,7 +86,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
       @$el.addClass('active')
       viewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAreaFlexToolbar')
       new viewClass(
-        area: @options.area
+        areaView: @
         domContainer: @options.toolbarContainer
       )
     else

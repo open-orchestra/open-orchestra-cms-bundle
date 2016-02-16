@@ -14,16 +14,18 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   events:
     'click .add-row-action': 'showFormAddRow'
     'click .edit-column': 'showFormColumn'
+    'click .delete-column': 'deleteColumn'
 
   ###*
    * @param {Object} options
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
-      'area'
+      'areaView'
       'domContainer'
     ])
-    @options.entityType = 'area-flex'
+    @options.area = @options.areaView.options.area
+    @options.entityType = @options.areaView.options.entityType
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaFlexToolbarView"
     ]
@@ -53,8 +55,29 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###*
    * @param {Object} el Jquery element
   ###
-  updateToolbarPosition: (el)->
+  updateToolbarPosition: (el) ->
     el.removeClass("fixed")
     if $(window).scrollTop() > el.offset().top - el.height()
       el.addClass("fixed")
       el.width(el.parent().width())
+
+  ###*
+   * Delete column
+  ###
+  deleteColumn: (event) ->
+    event.stopImmediatePropagation()
+    button = $(event.target)
+    smartConfirm(
+      'fa-trash-o',
+      button.data('delete-confirm-question'),
+      button.data('delete-confirm-explanation'),
+      callBackParams:
+        areaToolbarView: @
+        message: button.data('delete-error-txt')
+      yesCallback: (params) ->
+        params.areaToolbarView.options.areaView.remove()
+        $.ajax
+          url: params.areaToolbarView.options.area.get("links")._self_delete_column
+          method: "DELETE"
+          message: params.message
+    )
