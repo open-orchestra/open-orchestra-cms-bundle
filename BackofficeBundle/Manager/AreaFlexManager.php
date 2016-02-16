@@ -22,19 +22,35 @@ class AreaFlexManager
     }
 
     /**
+     * @param  AreaFlexInterface $areaParent
+     *
      * @return AreaFlexInterface
      */
-    public function initializeNewAreaRow()
+    public function initializeNewAreaRow(AreaFlexInterface $areaParent)
     {
-        return $this->initializeNewArea(AreaFlexInterface::TYPE_ROW);
+        $area = $this->initializeNewArea(AreaFlexInterface::TYPE_ROW);
+
+        $lastAreaId = $this->getChildLastId($areaParent) + 1;
+        $areaId = $areaParent->getAreaId().'_'.AreaFlexInterface::TYPE_ROW.'_'.$lastAreaId;
+        $area->setAreaId($areaId);
+
+        return $area;
     }
 
     /**
+     * @param  AreaFlexInterface $areaParent
+     *
      * @return AreaFlexInterface
      */
-    public function initializeNewAreaColumn()
+    public function initializeNewAreaColumn(AreaFlexInterface $areaParent)
     {
-        return $this->initializeNewArea(AreaFlexInterface::TYPE_COLUMN);
+        $area = $this->initializeNewArea(AreaFlexInterface::TYPE_COLUMN);
+
+        $lastAreaId = $this->getChildLastId($areaParent) + 1;
+        $areaId = $areaParent->getAreaId().'_'.AreaFlexInterface::TYPE_COLUMN.'_'.$lastAreaId;
+        $area->setAreaId($areaId);
+
+        return $area;
     }
 
     /**
@@ -48,6 +64,25 @@ class AreaFlexManager
         $area->setLabel(AreaFlexInterface::ROOT_AREA_LABEL);
 
         return $area;
+    }
+
+    /**
+     * @param AreaFlexInterface $area
+     *
+     * @return int
+     */
+    protected function getChildLastId(AreaFlexInterface $area)
+    {
+        $id = 0;
+        foreach ($area->getAreas() as $subArea) {
+            $areaIdExplode = explode('_', $subArea->getAreaId());
+            $idSubArea = (int) end($areaIdExplode);
+            if ($idSubArea > $id) {
+                $id = $idSubArea;
+            }
+        }
+
+        return $id;
     }
 
     /**

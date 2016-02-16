@@ -33,7 +33,7 @@ class AreaFlexController extends AbstractAdminController
 
         $areaManager = $this->get('open_orchestra_backoffice.manager.area_flex');
         /** @var AreaFlexInterface $areaRow */
-        $areaRow = $areaManager->initializeNewAreaRow();
+        $areaRow = $areaManager->initializeNewAreaRow($areaParent);
         $areaParent->addArea($areaRow);
 
         $form = $this->createForm(AreaFlexRowType::class, $areaRow, array(

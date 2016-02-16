@@ -26,7 +26,7 @@ class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
     {
 
         $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager');
-        Phake::when($this->areaManager)->initializeNewAreaColumn()->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface'));
+        Phake::when($this->areaManager)->initializeNewAreaColumn(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface'));
 
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
         $this->rowArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface');

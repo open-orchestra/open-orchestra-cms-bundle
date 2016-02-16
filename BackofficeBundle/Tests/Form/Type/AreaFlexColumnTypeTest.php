@@ -35,7 +35,7 @@ class AreaFlexColumnTypeTest extends AbstractBaseTestCase
 
         $this->areaType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(4))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(3))->add(Phake::anyParameters());
     }
 
     /**

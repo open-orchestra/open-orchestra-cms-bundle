@@ -32,10 +32,6 @@ abstract class AbstractAreaFlexType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('areaId', TextType::class, array(
-            'label' => 'open_orchestra_backoffice.form.area_flex.area_id'
-        ));
-
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

@@ -36,7 +36,7 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
 
         $this->areaType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(1))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }

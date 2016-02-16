@@ -42,12 +42,13 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
    * Show form edit column
   ###
   showFormColumn: ->
-    console.log('show')
     adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
-    new adminFormViewClass(
-      url: @options.area.get("links")._self_form_column
-      entityType: @options.entityType
-    )
+    url = @options.area.get("links")._self_form_column
+    if url?
+      new adminFormViewClass(
+        url: url
+        entityType: @options.entityType
+      )
 
   ###*
    * @param {Object} el Jquery element

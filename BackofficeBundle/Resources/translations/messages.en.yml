@@ -203,7 +203,6 @@ open_orchestra_backoffice:
             success: The area has been modified
             html_class: Html class for the area
             label: Area label
-            area_id: The area id
             new_row_title: New row
             edit_column_title: Edit column
             width: Area width
