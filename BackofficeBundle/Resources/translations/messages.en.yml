@@ -506,6 +506,7 @@ open_orchestra_backoffice:
         delete_error_txt: Error while removing area, please reload the page
     areas_flex:
         delete_column_question: Would you like to delete this column
+        delete_row_question: Would you like to delete this row
         delete_explanation: This operation is not reversible.
         delete_error_txt: Error while removing area, please reload the page
         edit_column_label: Edit column

@@ -15,6 +15,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     'click .add-row-action': 'showFormAddRow'
     'click .edit-column': 'showFormColumn'
     'click .delete-column': 'deleteColumn'
+    'click .delete-row': 'deleteRow'
 
   ###*
    * @param {Object} options
@@ -63,21 +64,43 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
   ###*
    * Delete column
+   * @param {object} event Jquery event
   ###
   deleteColumn: (event) ->
+    url = @options.area.get("links")._self_delete_column
+    @deleteArea(event, url) if url
+
+  ###*
+   * Delete row
+   * @param {object} event Jquery event
+  ###
+  deleteRow: (event) ->
+    url = @options.area.get("links")._self_delete_row
+    @deleteArea(event, url) if url
+
+  ###*
+   * Delete area
+   * @param {object} event Jquery event
+   * @param {string} url
+  ###
+  deleteArea: (event, url) ->
     event.stopImmediatePropagation()
     button = $(event.target)
+    console.log(button)
     smartConfirm(
       'fa-trash-o',
-      button.data('delete-confirm-question'),
-      button.data('delete-confirm-explanation'),
+      button.attr('data-delete-confirm-question'),
+      button.attr('data-delete-confirm-explanation'),
       callBackParams:
         areaToolbarView: @
-        message: button.data('delete-error-txt')
+        url: url
+        message: button.attr('data-delete-error-txt')
       yesCallback: (params) ->
-        params.areaToolbarView.options.areaView.remove()
         $.ajax
-          url: params.areaToolbarView.options.area.get("links")._self_delete_column
+          url: url
           method: "DELETE"
           message: params.message
+          success: () ->
+            Backbone.history.loadUrl(Backbone.history.fragment);
     )
+

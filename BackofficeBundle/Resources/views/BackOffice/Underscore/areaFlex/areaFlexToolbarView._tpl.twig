@@ -29,7 +29,11 @@
             <button type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-cog"></span>
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default delete-row"
+                    data-delete-confirm-question="{{ 'open_orchestra_backoffice.areas_flex.delete_row_question'|trans }}"
+                    data-delete-confirm-explanation="{{ 'open_orchestra_backoffice.areas_flex.delete_explanation'|trans }}"
+                    data-delete-error-txt="{{ 'open_orchestra_backoffice.areas_flex.delete_error_txt'|trans }}"
+            >
                 <span class="glyphicon glyphicon-trash"></span>
             </button>
         </div>
