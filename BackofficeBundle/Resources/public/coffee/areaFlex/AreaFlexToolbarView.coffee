@@ -22,11 +22,10 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
-      'areaView'
+      'area'
       'domContainer'
     ])
-    @options.area = @options.areaView.options.area
-    @options.entityType = @options.areaView.options.entityType
+    @options.entityType = 'area-flex'
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaFlexToolbarView"
     ]
@@ -84,7 +83,6 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
    * @param {string} url
   ###
   deleteArea: (event, url) ->
-    event.stopImmediatePropagation()
     button = $(event.target)
     console.log(button)
     smartConfirm(
@@ -92,7 +90,6 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
       button.attr('data-delete-confirm-question'),
       button.attr('data-delete-confirm-explanation'),
       callBackParams:
-        areaToolbarView: @
         url: url
         message: button.attr('data-delete-error-txt')
       yesCallback: (params) ->
