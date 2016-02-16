@@ -5,8 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaFlexRowSubscriber;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ColumnLayoutRowType;
 use OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -14,22 +12,19 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class AreaFlexType
  */
-class AreaFlexType extends AbstractType
+class AreaFlexRowType extends AbstractAreaFlexType
 {
     protected $areaFlexManager;
-    protected $translator;
-    protected $areaClass;
 
     /**
      * @param string              $areaClass
-     * @param AreaFlexManager     $areaFlexManager
      * @param TranslatorInterface $translator
+     * @param AreaFlexManager     $areaFlexManager
      */
-    public function __construct($areaClass, AreaFlexManager $areaFlexManager, TranslatorInterface $translator)
+    public function __construct($areaClass, TranslatorInterface $translator, AreaFlexManager $areaFlexManager)
     {
-        $this->areaClass = $areaClass;
+        parent::__construct($areaClass, $translator);
         $this->areaFlexManager = $areaFlexManager;
-        $this->translator = $translator;
     }
 
     /**
@@ -38,7 +33,7 @@ class AreaFlexType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('areaId', TextType::class);
+        parent::buildForm($builder, $options);
         $builder->add('columnLayout', ColumnLayoutRowType::class, array(
             'label' => 'open_orchestra_backoffice.form.area_flex.column_layout.label',
             'mapped' => false,
@@ -48,10 +43,6 @@ class AreaFlexType extends AbstractType
         ));
 
         $builder->addEventSubscriber(new AreaFlexRowSubscriber($this->areaFlexManager));
-
-        if (array_key_exists('disabled', $options)) {
-            $builder->setAttribute('disabled', $options['disabled']);
-        }
     }
 
     /**
@@ -59,9 +50,10 @@ class AreaFlexType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => $this->areaClass,
-            'attr' => array('data-title' => $this->translator->trans('open_orchestra_backoffice.form.area_flex.new_row_title'))
-        ));
+        parent::configureOptions($resolver);
+        $resolver->setDefault(
+            'attr',
+            array('data-title' => $this->translator->trans('open_orchestra_backoffice.form.area_flex.new_row_title'))
+        );
     }
 }

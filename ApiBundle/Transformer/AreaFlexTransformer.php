@@ -26,6 +26,8 @@ class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implem
         $facade->areaId = $area->getAreaId();
         $facade->areaType = $area->getAreaType();
         $facade->width = $area->getWidth();
+        $facade->label = $area->getLabel();
+
         foreach ($area->getAreas() as $subArea) {
             $facade->addArea($this->getTransformer('area_flex')->transformFromTemplateFlex($subArea, $template));
         }
@@ -34,6 +36,13 @@ class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implem
                 'templateId' => $template->getTemplateId(),
                 'areaParentId' => $area->getAreaId(),
             )));
+
+            if (AreaFlexInterface::TYPE_COLUMN === $area->getAreaType()) {
+                $facade->addLink('_self_form_column', $this->generateRoute('open_orchestra_backoffice_area_flex_form_column', array(
+                    'templateId' => $template->getTemplateId(),
+                    'areaId' => $area->getAreaId(),
+                )));
+            }
         }
 
         return $facade;

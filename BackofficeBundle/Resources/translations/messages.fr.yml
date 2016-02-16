@@ -185,7 +185,13 @@ open_orchestra_backoffice:
             yearly: Annuel
             never: Jamais
         area_flex:
+            success: La zone a été modifiée
+            area_id: Id de la zone
             new_row_title: Nouvelle ligne
+            new_row_title: Editer la colonne
+            html_class: Classe html pour la zone
+            label: Libellé de la zone
+            width: Taille de la zone
             column_layout:
                 label: Réparition des colonnes
                 helper: Répartition des colonnes: 10%, auto, 100px
