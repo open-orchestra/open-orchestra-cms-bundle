@@ -38,7 +38,9 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     @updateToolbarPosition(@$el)
     $(window).bind 'scroll', () ->
       context.updateToolbarPosition(context.$el)
-
+  ###*
+   * Show form edit column
+  ###
   showFormColumn: ->
     console.log('show')
     adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')

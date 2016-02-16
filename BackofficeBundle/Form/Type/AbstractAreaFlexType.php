@@ -48,5 +48,4 @@ abstract class AbstractAreaFlexType extends AbstractType
     {
         $resolver->setDefault('data_class', $this->areaClass);
     }
-
 }

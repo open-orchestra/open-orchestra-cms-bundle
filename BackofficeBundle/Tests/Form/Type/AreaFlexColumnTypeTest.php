@@ -50,9 +50,7 @@ class AreaFlexColumnTypeTest extends AbstractBaseTestCase
         $this->areaType->configureOptions($resolverMock);
 
         Phake::verify($this->translator, Phake::times(1))->trans(Phake::anyParameters());
-        Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => $this->areaClass,
-            'attr' => array('data-title' => $translation),
-        ));
+        Phake::verify($resolverMock)->setDefault('data_class', $this->areaClass);
+        Phake::verify($resolverMock)->setDefault('attr', array('data-title' => $translation));
     }
 }
