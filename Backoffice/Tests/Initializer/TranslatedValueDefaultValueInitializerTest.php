@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Initializer;
+namespace OpenOrchestra\Backoffice\Tests\Initializer;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\BackofficeBundle\Initializer\TranslatedValueDefaultValueInitializer;
+use OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 

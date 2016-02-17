@@ -35,7 +35,7 @@ class TranslateValueInitializerListenerTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->fieldTypeClass = 'OpenOrchestra\ModelBundle\Document\FieldType';
-        $this->translatedValueDefaultValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\Initializer\TranslatedValueDefaultValueInitializer');
+        $this->translatedValueDefaultValueInitializer = Phake::mock('OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer');
         $this->names = new ArrayCollection();
         $this->fields = new ArrayCollection();
         $this->object = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface');

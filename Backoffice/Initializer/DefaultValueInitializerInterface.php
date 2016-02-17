@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Initializer;
+namespace OpenOrchestra\Backoffice\Initializer;
 
 use Doctrine\Common\Collections\Collection;
 
