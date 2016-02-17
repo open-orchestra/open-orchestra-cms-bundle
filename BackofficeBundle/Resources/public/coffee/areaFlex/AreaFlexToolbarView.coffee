@@ -16,6 +16,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     'click .edit-column': 'showFormColumn'
     'click .delete-column': 'deleteColumn'
     'click .delete-row': 'deleteRow'
+    'click .edit-row': 'showFormRow'
 
   ###*
    * @param {Object} options
@@ -40,6 +41,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     @updateToolbarPosition(@$el)
     $(window).bind 'scroll', () ->
       context.updateToolbarPosition(context.$el)
+
   ###*
    * Show form edit column
   ###
@@ -51,6 +53,14 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
         url: url
         entityType: @options.entityType
       )
+
+  ###*
+   * Show form edit row
+  ###
+  showFormRow: ->
+    url = @options.area.get("links")._self_form_row
+    if url?
+      @showFormWithSelectLayout(url)
 
   ###*
    * @param {Object} el Jquery element
@@ -67,7 +77,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   deleteColumn: (event) ->
     url = @options.area.get("links")._self_delete_column
-    @deleteArea(event, url) if url
+    @deleteArea(event, url) if url?
 
   ###*
    * Delete row
@@ -75,7 +85,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   deleteRow: (event) ->
     url = @options.area.get("links")._self_delete_row
-    @deleteArea(event, url) if url
+    @deleteArea(event, url) if url?
 
   ###*
    * Delete area

@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\AreaFlexRowSubscriber;
-use OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType;
 use OpenOrchestra\Backoffice\Manager\AreaFlexManager;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,13 +33,6 @@ class AreaFlexRowType extends AbstractAreaFlexType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('columnLayout', ColumnLayoutRowType::class, array(
-            'label' => 'open_orchestra_backoffice.form.area_flex.column_layout.label',
-            'mapped' => false,
-            'attr' => array(
-                'help_text' => 'open_orchestra_backoffice.form.area_flex.column_layout.helper',
-            ),
-        ));
 
         $builder->addEventSubscriber(new AreaFlexRowSubscriber($this->areaFlexManager));
     }

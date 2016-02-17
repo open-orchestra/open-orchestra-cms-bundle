@@ -56,6 +56,35 @@ class AreaFlexController extends AbstractAdminController
      * @param string  $templateId
      * @param string  $areaId
      *
+     * @Config\Route("/area_flex/row/{templateId}/{areaId}", name="open_orchestra_backoffice_area_flex_form_row")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function formTemplateAreaRowAction(Request $request, $templateId, $areaId)
+    {
+        $template = $this->get('open_orchestra_model.repository.template_flex')->findOneByTemplateId($templateId);
+        $area = $this->get('open_orchestra_model.repository.template_flex')->findAreaInTemplateByAreaId($template, $areaId);
+        $form = $this->createForm(AreaFlexRowType::class, $area, array(
+            'action' => $this->generateUrl('open_orchestra_backoffice_area_flex_form_row', array(
+                'templateId' => $templateId,
+                'areaId' => $areaId,
+            ))
+        ));
+        $form->handleRequest($request);
+        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area_flex.success');
+        if ($this->handleForm($form, $message)) {
+            $this->dispatchEvent(TemplateFlexEvents::TEMPLATE_FLEX_AREA_UPDATE, new TemplateFlexEvent($template));
+        }
+
+        return $this->renderAdminForm($form);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $templateId
+     * @param string  $areaId
+     *
      * @Config\Route("/area_flex/column/{templateId}/{areaId}", name="open_orchestra_backoffice_area_flex_form_column")
      * @Config\Method({"GET", "POST"})
      *
