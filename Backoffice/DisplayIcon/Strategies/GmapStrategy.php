@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy as BaseSubMenuStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy as BaseGmapStrategy;
 
 /**
- * Class SubMenuIconStrategy
+ * Class GmapStrategy
  */
-class SubMenuStrategy extends AbstractStrategy
+class GmapStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +18,7 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseSubMenuStrategy::NAME == $block;
+        return BaseGmapStrategy::NAME === $block;
     }
 
     /**
@@ -28,7 +28,7 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/SubMenu:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Gmap:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +38,6 @@ class SubMenuStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'sub_menu';
+        return 'gmap';
     }
 }

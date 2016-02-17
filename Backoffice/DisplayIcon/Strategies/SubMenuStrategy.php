@@ -1,11 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
+
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SubMenuStrategy as BaseSubMenuStrategy;
 
 /**
- * Class SearchResultIconStrategy
+ * Class SubMenuIconStrategy
  */
-class SearchResultStrategy extends AbstractStrategy
+class SubMenuStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -16,7 +18,7 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return $this->getName() == $block;
+        return BaseSubMenuStrategy::NAME == $block;
     }
 
     /**
@@ -26,7 +28,7 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/SearchResult:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/SubMenu:showIcon.html.twig');
     }
 
     /**
@@ -36,6 +38,6 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'search_result';
+        return 'sub_menu';
     }
 }

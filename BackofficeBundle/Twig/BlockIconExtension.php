@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Twig;
 
-use OpenOrchestra\BackOfficeBundle\DisplayIcon\DisplayManager;
+use OpenOrchestra\Backoffice\DisplayIcon\DisplayManager;
 
 /**
  * Class BlockIconExtension

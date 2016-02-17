@@ -58,7 +58,7 @@ class BlockGeneratorTest extends AbstractBaseTestCase
             $frontDisplayDir,
             'OpenOrchestra\DisplayBundle',
             $displayIconDir,
-            'OpenOrchestra\BackofficeBundle',
+            'OpenOrchestra\Backoffice',
             $backofficeDisplayDir,
             'OpenOrchestra\BackofficeBundle');
 

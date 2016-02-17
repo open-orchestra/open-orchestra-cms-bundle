@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy as BaseSampleStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy as BaseLanguageListStrategy;
 
 /**
- * Class SampleIconStrategy
+ * Class LanguageListIconStrategy
  */
-class SampleStrategy extends AbstractStrategy
+class LanguageListStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +18,7 @@ class SampleStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseSampleStrategy::NAME == $block;
+        return BaseLanguageListStrategy::NAME == $block;
     }
 
     /**
@@ -28,7 +28,7 @@ class SampleStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Sample:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/LanguageList:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +38,6 @@ class SampleStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'sample';
+        return 'language_list';
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy as BaseAddThisStrategy;
 
 /**
- * Class FooterIconStrategy
+ * Class AddThisStrategy
  */
-class FooterStrategy extends AbstractStrategy
+class AddThisStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +18,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseFooterStrategy::NAME == $block;
+        return BaseAddThisStrategy::NAME === $block;
     }
 
     /**
@@ -28,7 +28,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Footer:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/AddThis:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +38,6 @@ class FooterStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'add_this';
     }
 }

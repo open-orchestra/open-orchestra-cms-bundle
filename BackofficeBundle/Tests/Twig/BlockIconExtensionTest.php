@@ -19,7 +19,7 @@ class BlockIconExtensionTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->iconManager = Phake::mock('OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
+        $this->iconManager = Phake::mock('OpenOrchestra\Backoffice\DisplayIcon\DisplayManager');
 
         $this->twig = new BlockIconExtension($this->iconManager);
     }

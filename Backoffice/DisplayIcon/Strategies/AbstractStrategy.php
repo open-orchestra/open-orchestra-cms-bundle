@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayInterface;
-use OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager;
+use OpenOrchestra\Backoffice\DisplayIcon\DisplayInterface;
+use OpenOrchestra\Backoffice\DisplayIcon\DisplayManager;
 
 /**
  * Class AbstractStrategy
