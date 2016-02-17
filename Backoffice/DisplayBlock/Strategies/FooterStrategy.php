@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BasevideoStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class VideoStrategy
+ * Class FooterStrategy
  */
-class VideoStrategy extends AbstractStrategy
+class FooterStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class VideoStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BasevideoStrategy::NAME === $block->getComponent();
+        return BaseFooterStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,8 +34,11 @@ class VideoStrategy extends AbstractStrategy
     public function show(ReadBlockInterface $block)
     {
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/Video:show.html.twig',
-            array('attributes' => $block->getAttributes())
+            'OpenOrchestraBackofficeBundle:Block/Footer:show.html.twig',
+            array(
+                'id' => $block->getId(),
+                'class' => $block->getClass()
+            )
         );
     }
 
@@ -46,6 +49,6 @@ class VideoStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'video';
+        return 'footer';
     }
 }

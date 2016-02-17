@@ -18,7 +18,7 @@ class ConfigurationManipulatorTest extends AbstractBaseTestCase
     protected $file;
     protected $baseDir;
     protected $blockName = 'test';
-    protected $blockNamespace = 'OpenOrchestra\BackofficeBundle';
+    protected $blockNamespace = 'OpenOrchestra\Backoffice';
 
     /**
      * Set up the test

@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy as BaseContactStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy as BaseLanguageListStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ContactStrategy
+ * Class LanguageListeStrategy
  */
-class ContactStrategy extends AbstractStrategy
+class LanguageListStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class ContactStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseContactStrategy::NAME == $block->getComponent();
+        return BaseLanguageListStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,10 +34,10 @@ class ContactStrategy extends AbstractStrategy
     public function show(ReadBlockInterface $block)
     {
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/Contact:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/LanguageList:show.html.twig',
             array(
-                'id' => $block->getId(),
                 'class' => $block->getClass(),
+                'id' => $block->getId()
             )
         );
     }
@@ -49,6 +49,6 @@ class ContactStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'contact';
+        return 'language_list';
     }
 }

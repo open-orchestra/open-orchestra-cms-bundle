@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy as BaseLanguageListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy as BaseMenuStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class LanguageListeStrategy
+ * Class MenuStrategy
  */
-class LanguageListStrategy extends AbstractStrategy
+class MenuStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class LanguageListStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseLanguageListStrategy::NAME == $block->getComponent();
+        return BaseMenuStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,10 +34,10 @@ class LanguageListStrategy extends AbstractStrategy
     public function show(ReadBlockInterface $block)
     {
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/LanguageList:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/Menu:show.html.twig',
             array(
-                'class' => $block->getClass(),
-                'id' => $block->getId()
+                'id' => $block->getId(),
+                'class' => $block->getClass()
             )
         );
     }
@@ -49,6 +49,6 @@ class LanguageListStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'language_list';
+        return 'menu';
     }
 }

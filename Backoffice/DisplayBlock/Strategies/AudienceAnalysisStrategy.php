@@ -1,18 +1,17 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy as BaseAudienceAnalysisStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class LoginStrategy
+ * Class AudienceAnalysisStrategy
  */
-class LoginStrategy extends AbstractStrategy
+class AudienceAnalysisStrategy extends AbstractStrategy
 {
-    const LOGIN = 'login';
-
     /**
      * Check if the strategy support this block
      *
@@ -22,7 +21,7 @@ class LoginStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return self::LOGIN == $block->getComponent();
+        return BaseAudienceAnalysisStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,7 +33,10 @@ class LoginStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Login:show.html.twig');
+        return $this->render(
+            'OpenOrchestraBackofficeBundle:Block/AudienceAnalysis:show.html.twig',
+            array('attributes' => $block->getAttributes())
+        );
     }
 
     /**
@@ -44,6 +46,6 @@ class LoginStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'login';
+        return 'audience_analysis';
     }
 }

@@ -1,17 +1,18 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy as BaseMenuStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class MenuStrategy
+ * Class LoginStrategy
  */
-class MenuStrategy extends AbstractStrategy
+class LoginStrategy extends AbstractStrategy
 {
+    const LOGIN = 'login';
+
     /**
      * Check if the strategy support this block
      *
@@ -21,7 +22,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseMenuStrategy::NAME == $block->getComponent();
+        return self::LOGIN == $block->getComponent();
     }
 
     /**
@@ -33,13 +34,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/Menu:show.html.twig',
-            array(
-                'id' => $block->getId(),
-                'class' => $block->getClass()
-            )
-        );
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Login:show.html.twig');
     }
 
     /**
@@ -49,6 +44,6 @@ class MenuStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'menu';
+        return 'login';
     }
 }

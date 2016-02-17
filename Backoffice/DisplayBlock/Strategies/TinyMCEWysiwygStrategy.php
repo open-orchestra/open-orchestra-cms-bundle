@@ -1,18 +1,17 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy as BaseTinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SearchResultStrategy
+ * Class TinyMCEWysiwygStrategy
  */
-class SearchResultStrategy extends AbstractStrategy
+class TinyMCEWysiwygStrategy extends AbstractStrategy
 {
-    const SEARCH_RESULT = 'search_result';
-
     /**
      * Check if the strategy support this block
      *
@@ -22,7 +21,7 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return self::SEARCH_RESULT == $block->getComponent();
+        return BaseTinyMCEWysiwygStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,15 +33,11 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
+        $htmlContent = $block->getAttribute('htmlContent');
+
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/SearchResult:show.html.twig',
-            array(
-                'nodeId' => $block->getAttribute('nodeId'),
-                'nbdoc' => $block->getAttribute('nbdoc'),
-                'fielddisplayed' => implode(', ', $block->getAttribute('fielddisplayed')),
-                'nbfacet' => count($block->getAttribute('facets')),
-                'nbfilter' => count($block->getAttribute('filter'))
-            )
+            'OpenOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
+            array('htmlContent' => strip_tags($htmlContent))
         );
     }
 
@@ -53,6 +48,6 @@ class SearchResultStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'search_result';
+        return 'TinyMCEWysiwyg';
     }
 }

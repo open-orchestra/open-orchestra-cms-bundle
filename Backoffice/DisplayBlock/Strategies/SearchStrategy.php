@@ -1,17 +1,18 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy as BaseTinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class TinyMCEWysiwygStrategy
+ * Class SearchStrategy
  */
-class TinyMCEWysiwygStrategy extends AbstractStrategy
+class SearchStrategy extends AbstractStrategy
 {
+    const SEARCH = 'search';
+
     /**
      * Check if the strategy support this block
      *
@@ -21,7 +22,7 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseTinyMCEWysiwygStrategy::NAME == $block->getComponent();
+        return self::SEARCH == $block->getComponent();
     }
 
     /**
@@ -33,11 +34,15 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        $htmlContent = $block->getAttribute('htmlContent');
+        $value = $block->getAttribute('value');
+        $limit = $block->getAttribute('limit');
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/TinyMCEWysiwyg:show.html.twig',
-            array('htmlContent' => strip_tags($htmlContent))
+            'OpenOrchestraBackofficeBundle:Block/Search:show.html.twig',
+            array(
+                'value' => $value,
+                'limit' => $limit
+            )
         );
     }
 
@@ -48,6 +53,6 @@ class TinyMCEWysiwygStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'TinyMCEWysiwyg';
+        return 'search';
     }
 }
