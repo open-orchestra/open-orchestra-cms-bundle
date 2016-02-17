@@ -2,12 +2,10 @@
 
 namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\Backoffice\DisplayIcon\Strategies\AbstractStrategy;
-
 /**
- * Class TestStrategy
+ * Class LoginIconStrategy
  */
-class TestStrategy extends AbstractStrategy
+class LoginStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +16,7 @@ class TestStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return false;
+        return $this->getName() == $block;
     }
 
     /**
@@ -28,7 +26,7 @@ class TestStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Test:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Login:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +36,6 @@ class TestStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'test';
+        return 'login';
     }
 }

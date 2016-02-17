@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon;
+namespace OpenOrchestra\Backoffice\DisplayIcon;
 
 /**
  * Interface DisplayIconInterface

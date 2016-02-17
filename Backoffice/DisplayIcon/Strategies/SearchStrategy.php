@@ -1,13 +1,11 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
-
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy as BaseContactStrategy;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
 /**
- * Class ContactIconStrategy
+ * Class SearchIconStrategy
  */
-class ContactStrategy extends AbstractStrategy
+class SearchStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +16,7 @@ class ContactStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseContactStrategy::NAME == $block;
+        return $this->getName() == $block;
     }
 
     /**
@@ -28,7 +26,7 @@ class ContactStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Contact:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Search:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +36,6 @@ class ContactStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'contact';
+        return 'search';
     }
 }

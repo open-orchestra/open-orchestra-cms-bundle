@@ -88,7 +88,7 @@ class ConfigurationManipulatorTest extends AbstractBaseTestCase
     {
         return array(
             array('OpenOrchestra\Backoffice\Manipulator\FrontDisplayConfigurationManipulator', 'OpenOrchestra\DisplayBundle', 'front.yml'),
-            array('OpenOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator', 'OpenOrchestra\BackofficeBundle', 'icon.yml'),
+            array('OpenOrchestra\Backoffice\Manipulator\BackofficeIconConfigurationManipulator', 'OpenOrchestra\Backoffice', 'icon.yml'),
             array('OpenOrchestra\Backoffice\Manipulator\GenerateFormConfigurationManipulator', 'OpenOrchestra\Backoffice', 'generator.yml'),
         );
     }

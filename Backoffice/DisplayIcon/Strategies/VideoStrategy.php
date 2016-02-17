@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BasevideoStrategy;
 
 /**
- * Class ContentIconStrategy
+ * Class VideoStrategy
  */
-class ContentStrategy extends AbstractStrategy
+class VideoStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +18,7 @@ class ContentStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseContentStrategy::NAME == $block;
+        return BasevideoStrategy::NAME === $block;
     }
 
     /**
@@ -28,7 +28,7 @@ class ContentStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Content:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Video:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +38,6 @@ class ContentStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'content';
+        return 'video';
     }
 }

@@ -36,7 +36,7 @@ class BlockTransformerTest extends AbstractBaseTestCase
 
         $this->blockClass = 'OpenOrchestra\ModelBundle\Document\Block';
         $this->displayBlockManager = Phake::mock('OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockManager');
-        $this->displayIconManager = Phake::mock('OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager');
+        $this->displayIconManager = Phake::mock('OpenOrchestra\Backoffice\DisplayIcon\DisplayManager');
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $this->blockFacade = Phake::mock('OpenOrchestra\ApiBundle\Facade\BlockFacade');
         $this->blockParameterManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager');

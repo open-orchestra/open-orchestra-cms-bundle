@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\MenuStrategy as BaseMenuStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy as BaseSampleStrategy;
 
 /**
- * Class MenuIconStrategy
+ * Class SampleIconStrategy
  */
-class MenuStrategy extends AbstractStrategy
+class SampleStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +18,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseMenuStrategy::NAME == $block;
+        return BaseSampleStrategy::NAME == $block;
     }
 
     /**
@@ -28,7 +28,7 @@ class MenuStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Menu:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Sample:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +38,6 @@ class MenuStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'menu';
+        return 'sample';
     }
 }

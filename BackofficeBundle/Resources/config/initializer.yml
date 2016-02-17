@@ -1,5 +1,5 @@
 parameters:
-    open_orchestra_backoffice.initializer.translated_value.class: OpenOrchestra\BackofficeBundle\Initializer\TranslatedValueDefaultValueInitializer
+    open_orchestra_backoffice.initializer.translated_value.class: OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer
 
 services:
     open_orchestra_backoffice.initializer.translated_value:

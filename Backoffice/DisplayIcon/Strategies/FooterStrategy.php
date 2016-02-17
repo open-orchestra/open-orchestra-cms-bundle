@@ -1,11 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
+
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
 
 /**
- * Class SearchIconStrategy
+ * Class FooterIconStrategy
  */
-class SearchStrategy extends AbstractStrategy
+class FooterStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -16,7 +18,7 @@ class SearchStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return $this->getName() == $block;
+        return BaseFooterStrategy::NAME == $block;
     }
 
     /**
@@ -26,7 +28,7 @@ class SearchStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Search:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Footer:showIcon.html.twig');
     }
 
     /**
@@ -36,6 +38,6 @@ class SearchStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'search';
+        return 'footer';
     }
 }

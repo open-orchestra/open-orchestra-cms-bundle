@@ -1,13 +1,11 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
-
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy as BaseAddThisStrategy;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
 /**
- * Class AddThisStrategy
+ * Class SearchResultIconStrategy
  */
-class AddThisStrategy extends AbstractStrategy
+class SearchResultStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -18,7 +16,7 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return BaseAddThisStrategy::NAME === $block;
+        return $this->getName() == $block;
     }
 
     /**
@@ -28,7 +26,7 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/AddThis:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/SearchResult:showIcon.html.twig');
     }
 
     /**
@@ -38,6 +36,6 @@ class AddThisStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'add_this';
+        return 'search_result';
     }
 }

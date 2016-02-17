@@ -1,22 +1,22 @@
 parameters:
-    open_orchestra_backoffice.display_icon_manager.class: OpenOrchestra\BackofficeBundle\DisplayIcon\DisplayManager
-    open_orchestra_backoffice.display_icon.contact.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\ContactStrategy
-    open_orchestra_backoffice.display_icon.footer.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\FooterStrategy
-    open_orchestra_backoffice.display_icon.menu.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\MenuStrategy
-    open_orchestra_backoffice.display_icon.sample.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\SampleStrategy
-    open_orchestra_backoffice.display_icon.tiny_mce_wysiwyg.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\TinyMCEWysiwygStrategy
-    open_orchestra_backoffice.display_icon.configurable_content.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\ConfigurableContentStrategy
-    open_orchestra_backoffice.display_icon.search.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\SearchStrategy
-    open_orchestra_backoffice.display_icon.search_result.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\SearchResultStrategy
-    open_orchestra_backoffice.display_icon.login.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\LoginStrategy
-    open_orchestra_backoffice.display_icon.sub_menu.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\SubMenuStrategy
-    open_orchestra_backoffice.display_icon.content_list.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\ContentListStrategy
-    open_orchestra_backoffice.display_icon.content.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\ContentStrategy
-    open_orchestra_backoffice.display_icon.language_list.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\LanguageListStrategy
-    open_orchestra_backoffice.display_icon.audience_analysis.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AudienceAnalysisStrategy
-    open_orchestra_backoffice.display_icon.gmap.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\GmapStrategy
-    open_orchestra_backoffice.display_icon.add_this.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AddThisStrategy
-    open_orchestra_backoffice.display_icon.video.class: OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\VideoStrategy
+    open_orchestra_backoffice.display_icon_manager.class: OpenOrchestra\Backoffice\DisplayIcon\DisplayManager
+    open_orchestra_backoffice.display_icon.contact.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\ContactStrategy
+    open_orchestra_backoffice.display_icon.footer.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\FooterStrategy
+    open_orchestra_backoffice.display_icon.menu.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\MenuStrategy
+    open_orchestra_backoffice.display_icon.sample.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\SampleStrategy
+    open_orchestra_backoffice.display_icon.tiny_mce_wysiwyg.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\TinyMCEWysiwygStrategy
+    open_orchestra_backoffice.display_icon.configurable_content.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\ConfigurableContentStrategy
+    open_orchestra_backoffice.display_icon.search.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\SearchStrategy
+    open_orchestra_backoffice.display_icon.search_result.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\SearchResultStrategy
+    open_orchestra_backoffice.display_icon.login.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\LoginStrategy
+    open_orchestra_backoffice.display_icon.sub_menu.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\SubMenuStrategy
+    open_orchestra_backoffice.display_icon.content_list.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\ContentListStrategy
+    open_orchestra_backoffice.display_icon.content.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\ContentStrategy
+    open_orchestra_backoffice.display_icon.language_list.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\LanguageListStrategy
+    open_orchestra_backoffice.display_icon.audience_analysis.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\AudienceAnalysisStrategy
+    open_orchestra_backoffice.display_icon.gmap.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\GmapStrategy
+    open_orchestra_backoffice.display_icon.add_this.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\AddThisStrategy
+    open_orchestra_backoffice.display_icon.video.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\VideoStrategy
 
 services:
     open_orchestra_backoffice.display_icon_manager:

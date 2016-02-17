@@ -1,11 +1,13 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
+
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy as BaseContactStrategy;
 
 /**
- * Class LoginIconStrategy
+ * Class ContactIconStrategy
  */
-class LoginStrategy extends AbstractStrategy
+class ContactStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -16,7 +18,7 @@ class LoginStrategy extends AbstractStrategy
      */
     public function support($block)
     {
-        return $this->getName() == $block;
+        return BaseContactStrategy::NAME == $block;
     }
 
     /**
@@ -26,7 +28,7 @@ class LoginStrategy extends AbstractStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:Block/Login:showIcon.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:Block/Contact:showIcon.html.twig');
     }
 
     /**
@@ -36,6 +38,6 @@ class LoginStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'login';
+        return 'contact';
     }
 }
