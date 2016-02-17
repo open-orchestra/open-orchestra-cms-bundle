@@ -5,8 +5,8 @@ namespace OpenOrchestra\GroupBundle\EventListener;
 use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface

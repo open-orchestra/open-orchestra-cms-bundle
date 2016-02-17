@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Repository;
 
-use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
+use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 

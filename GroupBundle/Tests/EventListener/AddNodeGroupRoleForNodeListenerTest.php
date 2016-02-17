@@ -24,7 +24,7 @@ class AddNodeGroupRoleForNodeListenerTest extends AbstractNodeGroupRoleListenerT
     {
         parent::setUp();
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $this->groupRepository = Phake::mock('OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface');
+        $this->groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');
         Phake::when($this->container)->get('open_orchestra_user.repository.group')->thenReturn($this->groupRepository);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
 

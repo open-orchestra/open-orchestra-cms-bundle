@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\Tests\Security\Authorization\Voter;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeGroupRoleVoter;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
@@ -58,7 +58,7 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
             array(false, 'class'),
             array(false, 'string'),
             array(false, 'Symfony\Component\Security\Core\Authorization\Voter\VoterInterface'),
-            array(false, 'OpenOrchestra\BackofficeBundle\Model\GroupInterface'),
+            array(false, 'OpenOrchestra\Backoffice\Model\GroupInterface'),
             array(false, 'OpenOrchestra\ModelInterface\Model\NodeInterface'),
             array(true, 'OpenOrchestra\ModelBundle\Document\Node'),
             array(false, 'OpenOrchestra\ModelInterface\Model\ReadNodeInterface'),
@@ -112,7 +112,7 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
         Phake::when($node)->getNodeId()->thenReturn($nodeId);
         Phake::when($node)->getSiteId()->thenReturn($siteId);
 
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($ngrAccessType);
 
         $group = $this->generateGroup($groupSiteId);
@@ -178,10 +178,10 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
 
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($parentNode);
 
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn(NodeGroupRoleInterface::ACCESS_INHERIT);
 
-        $parentNodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $parentNodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($parentNodeGroupRole)->getAccessType()->thenReturn($ngrParentAccessType);
 
         $group = $this->generateGroup($groupSiteId);
@@ -227,7 +227,7 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
     {
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\ReadSiteInterface');
         Phake::when($site)->getSiteId()->thenReturn($siteId);
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         if (!is_null($siteId)){
             Phake::when($group)->getSite()->thenReturn($site);
         }

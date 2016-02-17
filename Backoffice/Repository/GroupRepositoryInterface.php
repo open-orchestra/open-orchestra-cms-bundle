@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Repository;
+namespace OpenOrchestra\Backoffice\Repository;
 
 use OpenOrchestra\Pagination\Configuration\PaginationRepositoryInterface;
 

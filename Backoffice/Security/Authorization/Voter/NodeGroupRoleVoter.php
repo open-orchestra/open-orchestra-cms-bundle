@@ -3,8 +3,8 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use FOS\UserBundle\Model\UserInterface;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;

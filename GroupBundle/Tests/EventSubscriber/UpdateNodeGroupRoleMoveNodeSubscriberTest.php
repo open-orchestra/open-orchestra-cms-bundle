@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\EventSubscriber;
 
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\EventSubscriber\UpdateNodeGroupRoleMoveNodeSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -34,7 +34,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->groupRepository = Phake::mock('OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface');
+        $this->groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector');
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
@@ -57,7 +57,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
 
         Phake::when($this->nodeEvent)->getNode()->thenReturn($node);
 
-        $this->group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $this->group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getSiteId()->thenReturn($this->fakeSiteId);
         Phake::when($this->group)->getSite()->thenReturn($site);
@@ -73,12 +73,12 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateAccessNodeGroupRoleWithNoChild($accessType, $accessNode, $accessParent, $countUpdate)
     {
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($accessNode);
         Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
-        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($accessParent);
         Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
 
@@ -99,7 +99,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateAccessNodeGroupRoleWithException()
     {
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn(NodeGroupRoleInterface::ACCESS_INHERIT);
         Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
@@ -155,18 +155,18 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         Phake::when($child)->getParentId()->thenReturn($this->fakeNodeId);
         Phake::when($child)->getSiteId()->thenReturn($this->fakeSiteId);
 
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($accessNode);
         Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
-        $nodeGroupChild = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupChild = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupChild)->getAccessType()->thenReturn($accessChildType);
         Phake::when($nodeGroupChild)->getNodeId()->thenReturn($fakeChildId);
         Phake::when($nodeGroupChild)->isGranted()->thenReturn($accessChild);
         Phake::when($this->group)->getNodeRoleByNodeAndRole($fakeChildId, $this->role)->thenReturn($nodeGroupChild);
 
-        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($accessParent);
         Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
 

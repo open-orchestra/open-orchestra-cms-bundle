@@ -59,7 +59,7 @@ class GroupSiteVoterTest extends AbstractBaseTestCase
             array('class'),
             array('string'),
             array('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface'),
-            array('OpenOrchestra\BackofficeBundle\Model\GroupInterface'),
+            array('OpenOrchestra\Backoffice\Model\GroupInterface'),
         );
     }
 
@@ -110,10 +110,10 @@ class GroupSiteVoterTest extends AbstractBaseTestCase
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site2)->getSiteId()->thenReturn($siteId2);
 
-        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group1 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group1)->getSite()->thenReturn($site1);
         Phake::when($group1)->getRoles()->thenReturn(array($role1));
-        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group2 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group2)->getSite()->thenReturn($site2);
         Phake::when($group2)->getRoles()->thenReturn(array($role2));
 
@@ -172,9 +172,9 @@ class GroupSiteVoterTest extends AbstractBaseTestCase
         Phake::when($site2)->getSiteId()->thenReturn($siteId2);
         Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
 
-        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group1 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group1)->getRoles()->thenReturn(array($role1));
-        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group2 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group2)->getRoles()->thenReturn(array($role2));
 
         $user = Phake::mock('FOS\UserBundle\Model\GroupableInterface');

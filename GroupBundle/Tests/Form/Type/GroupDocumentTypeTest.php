@@ -5,7 +5,7 @@ namespace OpenOrchestra\GroupBundle\Tests\Form\Type;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\Form\Type\GroupDocumentType;
 use Phake;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 
 /**
  * Test GroupDocumentTypeTest

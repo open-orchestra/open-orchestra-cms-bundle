@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
@@ -32,8 +32,8 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
      * @return GroupInterface
      */
     protected function createMockGroup(){
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-        $parentNodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        $parentNodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         phake::when($parentNodeGroupRole)->isGranted()->thenReturn(true);
         phake::when($group)->getNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn($parentNodeGroupRole);
         phake::when($group)->hasNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn(false);

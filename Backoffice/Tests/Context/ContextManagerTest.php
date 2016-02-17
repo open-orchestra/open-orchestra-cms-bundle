@@ -136,13 +136,13 @@ class ContextManagerTest extends AbstractBaseTestCase
     {
         $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site1)->getId()->thenReturn('id1');
-        $group1 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group1 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group1)->getSite()->thenReturn($site1);
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site2)->getId()->thenReturn('id2');
-        $group2 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group2 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group2)->getSite()->thenReturn($site2);
-        $group3 = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group3 = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group3)->getSite()->thenReturn($site2);
         $groups = array($group1, $group2, $group3);
         $user = Phake::mock('OpenOrchestra\UserBundle\Document\User');
@@ -172,7 +172,7 @@ class ContextManagerTest extends AbstractBaseTestCase
         $site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->siteRepository)->findByDeleted(false)->thenReturn(array($site1, $site2));
 
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group)->getSite()->thenReturn(null);
         $groups = array($group);
 

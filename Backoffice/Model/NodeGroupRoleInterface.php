@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Model;
+namespace OpenOrchestra\Backoffice\Model;
 
 /**
  * Interface NodeGroupRoleInterface
