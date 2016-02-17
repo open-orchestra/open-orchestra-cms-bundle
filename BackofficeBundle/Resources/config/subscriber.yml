@@ -1,15 +1,15 @@
 parameters:
-    open_orchestra_backoffice.subscriber.update_child_node_path.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateChildNodePathSubscriber
-    open_orchestra_backoffice.subscriber.update_node_redirection.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateNodeRedirectionSubscriber
-    open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\BackofficeBundle\EventSubscriber\FlushNodeCacheSubscriber
-    open_orchestra_backoffice.subscriber.change_content_status.class: OpenOrchestra\BackofficeBundle\EventSubscriber\ChangeContentStatusSubscriber
-    open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber
-    open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateStatusSubscriber
-    open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteNodeSubscriber
-    open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\BackofficeBundle\EventSubscriber\DeleteContentSubscriber
-    open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\BackofficeBundle\EventSubscriber\UpdateRouteDocumentSubscriber
-    open_orchestra_backoffice.subscriber.add_transverse_block.class: OpenOrchestra\BackofficeBundle\EventSubscriber\AddTransverseBlockSubscriber
-    open_orchestra_backoffice.subscriber.create_transverse_node.class: OpenOrchestra\BackofficeBundle\EventSubscriber\CreateTransverseNodeSubscriber
+    open_orchestra_backoffice.subscriber.update_child_node_path.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateChildNodePathSubscriber
+    open_orchestra_backoffice.subscriber.update_node_redirection.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateNodeRedirectionSubscriber
+    open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
+    open_orchestra_backoffice.subscriber.change_content_status.class: OpenOrchestra\Backoffice\EventSubscriber\ChangeContentStatusSubscriber
+    open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
+    open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
+    open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
+    open_orchestra_backoffice.subscriber.delete_content.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteContentSubscriber
+    open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
+    open_orchestra_backoffice.subscriber.add_transverse_block.class: OpenOrchestra\Backoffice\EventSubscriber\AddTransverseBlockSubscriber
+    open_orchestra_backoffice.subscriber.create_transverse_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateTransverseNodeSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:

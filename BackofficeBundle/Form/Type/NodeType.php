@@ -2,10 +2,10 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeThemeSelectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
 use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\NodeTemplateSelectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;

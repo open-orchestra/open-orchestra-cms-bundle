@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\HtmlElementTransformer;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
