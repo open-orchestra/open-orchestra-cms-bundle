@@ -20,7 +20,7 @@ class LogGroupSubscriberTest extends LogAbstractSubscriberTest
     public function setUp()
     {
         parent::setUp();
-        $this->group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $this->group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         $this->groupEvent = Phake::mock('OpenOrchestra\UserBundle\Event\GroupEvent');
         Phake::when($this->groupEvent)->getGroup()->thenReturn($this->group);
 

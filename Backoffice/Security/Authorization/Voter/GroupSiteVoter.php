@@ -4,7 +4,7 @@ namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\UserInterface;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;

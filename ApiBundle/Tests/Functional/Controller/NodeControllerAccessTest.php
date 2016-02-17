@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
 
 /**

@@ -81,7 +81,7 @@ class GroupTest extends AbstractBaseTestCase
     public function testGetNodeRoleByNodeAndRole(array $datas, $node, $role)
     {
         foreach ($datas as $data) {
-            $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+            $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
             Phake::when($nodeGroupRole)->getNodeId()->thenReturn($data['nodeId']);
             Phake::when($nodeGroupRole)->getRole()->thenReturn($data['role']);
             $this->group->addNodeRole($nodeGroupRole);
@@ -110,7 +110,7 @@ class GroupTest extends AbstractBaseTestCase
      */
     public function testAddNodeRole()
     {
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
 
         $this->group->addNodeRole($nodeGroupRole);
         $this->group->addNodeRole($nodeGroupRole);

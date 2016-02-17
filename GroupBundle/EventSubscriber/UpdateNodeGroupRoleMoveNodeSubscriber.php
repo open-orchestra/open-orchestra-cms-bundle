@@ -4,8 +4,8 @@ namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
 use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;

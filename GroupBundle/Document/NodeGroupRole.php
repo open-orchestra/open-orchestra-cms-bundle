@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Document;
 
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**

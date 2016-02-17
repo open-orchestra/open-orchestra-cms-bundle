@@ -3,8 +3,8 @@
 namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
-use OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -36,7 +36,7 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @var Collection $nodeRoles
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface")
      */
     protected $nodeRoles;
 

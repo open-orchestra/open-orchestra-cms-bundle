@@ -72,7 +72,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
     {
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($right);
 
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         Phake::when($group)->getRoles()->thenReturn(array());
         Phake::when($group)->getLabels()->thenReturn(new ArrayCollection());
         Phake::when($group)->getNodeRoles()->thenReturn(array());
@@ -115,8 +115,8 @@ class GroupTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransform()
     {
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($group)->getNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn($nodeGroupRole);
         Phake::when($this->transformerInterface)->reverseTransformWithGroup(Phake::anyParameters())->thenReturn($nodeGroupRole);
 
@@ -136,8 +136,8 @@ class GroupTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransformWithExistingElement()
     {
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
-        $nodeGroupRole = Phake::mock('OpenOrchestra\BackofficeBundle\Model\NodeGroupRoleInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
         Phake::when($group)->getNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn($nodeGroupRole);
         Phake::when($this->transformerInterface)->reverseTransformWithGroup(Phake::anyParameters())->thenReturn($nodeGroupRole);
 
@@ -161,7 +161,7 @@ class GroupTransformerTest extends AbstractBaseTestCase
     {
         $transformerInterface = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
         Phake::when($this->context)->get(Phake::anyParameters())->thenReturn($transformerInterface);
-        $group = Phake::mock('OpenOrchestra\BackofficeBundle\Model\GroupInterface');
+        $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
 
         $nodeGroupRoleFacade = Phake::mock('OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade');
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\GroupFacade');
