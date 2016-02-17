@@ -51,7 +51,7 @@ class KeywordsChoiceType extends AbstractType
             $builder->addModelTransformer($this->keywordsTransformer);
         }
         if (!is_null($options['transformerClass'])) {
-            if(!is_string($options['transformerClass']) || !is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+            if(!is_string($options['transformerClass']) || !is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface')) {
                 throw new NotAllowedClassNameException();
             }
             $transformerClass = $options['transformerClass'];

@@ -19,7 +19,7 @@ class ContentSearchType extends AbstractType
     public function __construct($transformerClass)
     {
         $this->transformerClass = $transformerClass;
-        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer')) {
+        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface')) {
             throw new NotAllowedClassNameException();
         }
     }
