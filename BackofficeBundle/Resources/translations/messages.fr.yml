@@ -505,7 +505,7 @@ open_orchestra_backoffice:
         delete_error_title: Suppression de zone
         delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page
     areas_flex:
-        delete_column_question: Souhaitez-vous supprimer cette colonne
+        delete_column_question: Souhaitez-vous supprimer cette colonne ?
         delete_row_question: Souhaitez-vous supprimer cette ligne
         delete_explanation: Cette opération est non réversible.
         delete_error_txt: Erreur durant la suppression de la zone, veuillez recharger la page

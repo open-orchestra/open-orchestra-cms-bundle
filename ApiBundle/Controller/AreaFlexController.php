@@ -25,7 +25,7 @@ class AreaFlexController extends BaseController
      *
      * @Config\Route("/{areaId}/delete-in-template/{parentId}/{templateId}", name="open_orchestra_api_area_flex_column_delete_in_template")
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_flex_row_delete_in_template")
-     * @Config\Method({"POST", "DELETE", "GET"})
+     * @Config\Method({>"DELETE"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_TEMPLATE_FLEX')")
      *

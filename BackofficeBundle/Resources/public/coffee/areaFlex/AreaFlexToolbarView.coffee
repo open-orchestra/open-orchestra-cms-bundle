@@ -84,7 +84,6 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   deleteArea: (event, url) ->
     button = $(event.target)
-    console.log(button)
     smartConfirm(
       'fa-trash-o',
       button.attr('data-delete-confirm-question'),
