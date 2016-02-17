@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
+use OpenOrchestra\Backoffice\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormBuilderInterface;

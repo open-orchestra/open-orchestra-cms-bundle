@@ -1,11 +1,11 @@
 parameters:
-    open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
-    open_orchestra_backoffice.transformer.video_url_to_id.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\VideoUrlToIdTransformer
-    open_orchestra_backoffice.transformer.choices_option_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoicesOptionToArrayTransformer
-    open_orchestra_backoffice.transformer.choice_array_to_string.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceArrayToStringTransformer
-    open_orchestra_backoffice.transformer.choice_string_to_array.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ChoiceStringToArrayTransformer
-    open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\BBcodeToHtmlTransformer
-    open_orchestra_backoffice.transformer.reference_to_embed.class: OpenOrchestra\BackofficeBundle\Form\DataTransformer\ReferenceToEmbedTransformer
+    open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: OpenOrchestra\Backoffice\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
+    open_orchestra_backoffice.transformer.video_url_to_id.class: OpenOrchestra\Backoffice\Form\DataTransformer\VideoUrlToIdTransformer
+    open_orchestra_backoffice.transformer.choices_option_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\ChoicesOptionToArrayTransformer
+    open_orchestra_backoffice.transformer.choice_array_to_string.class: OpenOrchestra\Backoffice\Form\DataTransformer\ChoiceArrayToStringTransformer
+    open_orchestra_backoffice.transformer.choice_string_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\ChoiceStringToArrayTransformer
+    open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\Backoffice\Form\DataTransformer\BBcodeToHtmlTransformer
+    open_orchestra_backoffice.transformer.reference_to_embed.class: OpenOrchestra\Backoffice\Form\DataTransformer\ReferenceToEmbedTransformer
 
 services:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords:

@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexColumnType;
+use OpenOrchestra\Backoffice\Form\Type\AreaFlexColumnType;
 use OpenOrchestra\ModelInterface\Event\TemplateFlexEvent;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use OpenOrchestra\ModelInterface\TemplateFlexEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexRowType;
+use OpenOrchestra\Backoffice\Form\Type\AreaFlexRowType;
 
 /**
  * Class AreaFlexController

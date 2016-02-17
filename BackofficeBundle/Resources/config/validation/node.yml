@@ -1,6 +1,6 @@
 OpenOrchestra\ModelInterface\Model\NodeInterface:
     constraints:
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\BlockNodePattern: ~
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\RestoreNode: { groups: [restore] }
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\CheckAreaPresence: ~
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueNodeOrder: ~
+        - OpenOrchestra\Backoffice\Validator\Constraints\BlockNodePattern: ~
+        - OpenOrchestra\Backoffice\Validator\Constraints\RestoreNode: { groups: [restore] }
+        - OpenOrchestra\Backoffice\Validator\Constraints\CheckAreaPresence: ~
+        - OpenOrchestra\Backoffice\Validator\Constraints\UniqueNodeOrder: ~

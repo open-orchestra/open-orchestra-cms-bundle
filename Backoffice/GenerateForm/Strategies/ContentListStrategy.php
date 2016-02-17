@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
-use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
+use OpenOrchestra\Backoffice\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy as BaseContentListStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

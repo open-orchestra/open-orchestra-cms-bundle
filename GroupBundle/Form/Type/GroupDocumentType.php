@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\AbstractGroupChoiceType;
+use OpenOrchestra\Backoffice\Form\Type\AbstractGroupChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;

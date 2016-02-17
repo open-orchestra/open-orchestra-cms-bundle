@@ -1,3 +1,3 @@
 OpenOrchestra\ModelInterface\Model\AreaContainerInterface:
     constraints:
-        - OpenOrchestra\BackofficeBundle\Validator\Constraints\UniqueAreaId: ~
+        - OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaId: ~

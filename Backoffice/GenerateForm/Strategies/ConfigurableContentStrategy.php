@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\GenerateForm\Strategies;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
-use OpenOrchestra\BackofficeBundle\Validator\Constraints\ContentTemplate;
+use OpenOrchestra\Backoffice\Validator\Constraints\ContentTemplate;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy as BaseConfigurableContentStrategy;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
