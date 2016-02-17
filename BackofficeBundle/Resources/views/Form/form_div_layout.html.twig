@@ -241,11 +241,12 @@
         	<i class="fa fa-refresh"></i>
         </span>
 	{% endset %}
-    {% set attr = form.children.contentSearch.vars|merge({ 'label': form.children.contentSearch.vars.label|trans ~ refresh }) %}
+    {% set attr_content_search = form.children.contentSearch.vars|merge({ 'label': form.children.contentSearch.vars.label|trans ~ refresh }) %}
+    {% set attr_site = form.children.site.vars|merge({ 'label': form.children.site.vars.label|trans ~ refresh }) %}
     {% spaceless %}
       {{ form_row(form.children.nodeId) }}
-      {{ form_row(form.children.contentSearch, attr) }}
-      {{ form_row(form.children.siteId) }}
+      {{ form_row(form.children.contentSearch, attr_content_search) }}
+      {{ form_row(form.children.site, attr_site) }}
       {{ form_row(form.children.query) }}
     {% endspaceless %}
 {% endblock %}

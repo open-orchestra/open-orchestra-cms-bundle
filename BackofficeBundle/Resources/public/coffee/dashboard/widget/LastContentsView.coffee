@@ -8,4 +8,4 @@ LastContentsView = AbstractWidgetContentListView.extend(
 )
 
 jQuery ->
-  appConfigurationView.setConfiguration 'dashboard_widgets', 'last_contents', LastContentsView
+  appConfigurationView.setConfiguration 'dashboard_widgets', 'last_contents', 'LastContentsView'

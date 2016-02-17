@@ -7,7 +7,7 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer;
+use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface;
 
 /**
  * Class ContentSearchSubscriber
@@ -23,7 +23,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
      * @param CurrentSiteIdInterface               $contextManager
      * @param ConditionFromBooleanToBddTransformer $conditionFromBooleanToBddTransformer
      */
-    public function __construct(ContentRepositoryInterface $contentRepository, CurrentSiteIdInterface $contextManager, ConditionFromBooleanToBddTransformer $conditionFromBooleanToBddTransformer)
+    public function __construct(ContentRepositoryInterface $contentRepository, CurrentSiteIdInterface $contextManager, ConditionFromBooleanToBddTransformerInterface $conditionFromBooleanToBddTransformer)
     {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
@@ -44,9 +44,6 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                 $condition = json_decode($this->conditionFromBooleanToBddTransformer->reverseTransform($data['keywords']), true);
             }
             $form->add('contentId', 'choice', array(
-                    'attr' => array(
-                        'class' => 'content-filter',
-                    ),
                     'label' => false,
                     'required' => false,
                     'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition)
@@ -72,13 +69,11 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     protected function getChoices($contentType, $choiceType, $condition)
     {
         $choices = array();
-        if($contentType != '' || !is_null( $condition)) {
-            $language = $this->contextManager->getCurrentSiteDefaultLanguage();
-            $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition);
+        $language = $this->contextManager->getCurrentSiteDefaultLanguage();
+        $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition);
 
-            foreach ($contents as $content) {
-                $choices[$content->getId()] = $content->getName();
-            }
+        foreach ($contents as $content) {
+            $choices[$content->getId()] = $content->getName();
         }
 
         return $choices;

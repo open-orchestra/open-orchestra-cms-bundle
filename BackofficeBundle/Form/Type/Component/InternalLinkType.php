@@ -18,13 +18,13 @@ class InternalLinkType extends AbstractType
     {
         $builder->add('nodeId', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.node',
-            'required' => false,
         ));
         $builder->add('contentSearch', 'oo_content_search', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.content',
             'content_selector' => true,
+            'required' => false,
         ));
-        $builder->add('siteId', 'oo_site_choice', array(
+        $builder->add('site', 'oo_site_site_alias', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.site',
             'required' => false,
         ));
@@ -32,7 +32,6 @@ class InternalLinkType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.internal_link.query',
             'required' => false,
         ));
-        ///site_alias: Site alias
     }
 
     /**

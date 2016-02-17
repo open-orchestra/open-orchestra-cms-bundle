@@ -1,6 +1,7 @@
 InternalLinkFormView = OrchestraView.extend(
   events:
     'click .modalClose': 'closeModal'
+    'hidden.bs.modal': 'closedModal'
   initialize: (options) ->
     @options = @reduceOption(options, [
       'selector'
@@ -40,13 +41,11 @@ InternalLinkFormView = OrchestraView.extend(
         activateForm(@, $('form', @$el))
     return
 
-  closeModal: (response) ->
-    hide = ((element) ->
-      ->
-        element.remove()
-        return
-    )(@$el)
-    @$el.modal 'hide', hide
+  closeModal: (event) ->
+    @$el.addClass('fade').modal 'hide'
+
+  closedModal: (event) ->
+    @$el.remove()
 )
 
 

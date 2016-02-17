@@ -8,4 +8,4 @@ LastNodesView = AbstractWidgetNodeListView.extend(
 )
 
 jQuery ->
-  appConfigurationView.setConfiguration 'dashboard_widgets', 'last_nodes', LastNodesView
+  appConfigurationView.setConfiguration 'dashboard_widgets', 'last_nodes', 'LastNodesView'

@@ -42,6 +42,7 @@ parameters:
     open_orchestra_backoffice.type.operator_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\OperatorChoiceType
     open_orchestra_backoffice.type.content_search.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentSearchType
     open_orchestra_backoffice.type.internal_link.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\InternalLinkType
+    open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\SiteSiteAliasType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -49,9 +50,9 @@ parameters:
         selector: .tinymce
         tinymce_buttons:
             linkmanager:
-                title: open_orchestra_backoffice.form.internal_link.title
-                image: "asset[bundles/openorchestrabackoffice/images/link.png]"
-                icon: false
+                title: open_orchestra_backoffice.internal_link
+                image: false
+                icon: internallink
         theme:
             simple:
                 theme: modern
@@ -396,3 +397,10 @@ services:
         class: %open_orchestra_backoffice.type.internal_link.class%
         tags:
             - { name: form.type, alias: oo_internal_link}
+    open_orchestra_backoffice.type.site_site_alias:
+        class: %open_orchestra_backoffice.type.site_site_alias.class%
+        arguments:
+            - @open_orchestra_model.repository.site
+            - @open_orchestra_backoffice.subscriber.site
+        tags:
+            - { name: form.type, alias: oo_site_site_alias}

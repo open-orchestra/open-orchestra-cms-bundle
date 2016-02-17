@@ -308,10 +308,9 @@ open_orchestra_backoffice:
             edit:
                 success: Le client d'API a été mis à jour
         internal_link:
-            title: Lien interne
             node: Page
             site: Site
-            site_alias: Site alias
+            site_alias: Alias de site
             content: Contenu
             query: Chaîne de requête
             filter: Filtrer les contenus

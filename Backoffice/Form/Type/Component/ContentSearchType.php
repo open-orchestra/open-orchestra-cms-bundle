@@ -14,6 +14,7 @@ use OpenOrchestra\BackofficeBundle\EventSubscriber\ContentSearchSubscriber;
 class ContentSearchType extends AbstractType
 {
     protected $transformer;
+    protected $contentSearchSubscriber;
 
     /**
      * @param string                  $transformerClass
