@@ -34,7 +34,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->groupRepository = Phake::mock('OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface');
+        $this->groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector');
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');

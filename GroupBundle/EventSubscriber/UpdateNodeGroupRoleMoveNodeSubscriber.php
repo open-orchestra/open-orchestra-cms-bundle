@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
-use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
+use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

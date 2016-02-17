@@ -4,7 +4,7 @@ namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
-use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
+use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 
 /**
  * Class NodeControllerAccessTest
