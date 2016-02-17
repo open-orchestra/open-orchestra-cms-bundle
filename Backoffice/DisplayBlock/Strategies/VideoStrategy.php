@@ -1,18 +1,17 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy as BasevideoStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class SearchStrategy
+ * Class VideoStrategy
  */
-class SearchStrategy extends AbstractStrategy
+class VideoStrategy extends AbstractStrategy
 {
-    const SEARCH = 'search';
-
     /**
      * Check if the strategy support this block
      *
@@ -22,7 +21,7 @@ class SearchStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return self::SEARCH == $block->getComponent();
+        return BasevideoStrategy::NAME === $block->getComponent();
     }
 
     /**
@@ -34,15 +33,9 @@ class SearchStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        $value = $block->getAttribute('value');
-        $limit = $block->getAttribute('limit');
-
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/Search:show.html.twig',
-            array(
-                'value' => $value,
-                'limit' => $limit
-            )
+            'OpenOrchestraBackofficeBundle:Block/Video:show.html.twig',
+            array('attributes' => $block->getAttributes())
         );
     }
 
@@ -53,6 +46,6 @@ class SearchStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'search';
+        return 'video';
     }
 }

@@ -1,21 +1,21 @@
 parameters:
-    open_orchestra_backoffice.display.contact.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContactStrategy
-    open_orchestra_backoffice.display.footer.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\FooterStrategy
-    open_orchestra_backoffice.display.menu.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\MenuStrategy
-    open_orchestra_backoffice.display.sample.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SampleStrategy
-    open_orchestra_backoffice.display.tiny_mce_wysiwyg.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
-    open_orchestra_backoffice.display.configurable_content.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ConfigurableContentStrategy
-    open_orchestra_backoffice.display.search.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchStrategy
-    open_orchestra_backoffice.display.search_result.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SearchResultStrategy
-    open_orchestra_backoffice.display.login.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\LoginStrategy
-    open_orchestra_backoffice.display.sub_menu.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\SubMenuStrategy
-    open_orchestra_backoffice.display.content_list.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentListStrategy
-    open_orchestra_backoffice.display.content.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\ContentStrategy
-    open_orchestra_backoffice.display.language_list.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\LanguageListStrategy
-    open_orchestra_backoffice.display.audience_analysis.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy
-    open_orchestra_backoffice.display.gmap.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\GmapStrategy
-    open_orchestra_backoffice.display.add_this.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\AddThisStrategy
-    open_orchestra_backoffice.display.video.class: OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies\VideoStrategy
+    open_orchestra_backoffice.display.contact.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContactStrategy
+    open_orchestra_backoffice.display.footer.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\FooterStrategy
+    open_orchestra_backoffice.display.menu.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\MenuStrategy
+    open_orchestra_backoffice.display.sample.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SampleStrategy
+    open_orchestra_backoffice.display.tiny_mce_wysiwyg.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
+    open_orchestra_backoffice.display.configurable_content.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ConfigurableContentStrategy
+    open_orchestra_backoffice.display.search.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SearchStrategy
+    open_orchestra_backoffice.display.search_result.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SearchResultStrategy
+    open_orchestra_backoffice.display.login.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\LoginStrategy
+    open_orchestra_backoffice.display.sub_menu.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SubMenuStrategy
+    open_orchestra_backoffice.display.content_list.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContentListStrategy
+    open_orchestra_backoffice.display.content.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContentStrategy
+    open_orchestra_backoffice.display.language_list.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\LanguageListStrategy
+    open_orchestra_backoffice.display.audience_analysis.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\AudienceAnalysisStrategy
+    open_orchestra_backoffice.display.gmap.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\GmapStrategy
+    open_orchestra_backoffice.display.add_this.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\AddThisStrategy
+    open_orchestra_backoffice.display.video.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\VideoStrategy
 
 services:
     open_orchestra_backoffice.display_block_manager:

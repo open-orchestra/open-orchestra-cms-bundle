@@ -60,7 +60,7 @@ class BlockGeneratorTest extends AbstractBaseTestCase
             $displayIconDir,
             'OpenOrchestra\Backoffice',
             $backofficeDisplayDir,
-            'OpenOrchestra\BackofficeBundle');
+            'OpenOrchestra\Backoffice');
 
         $this->assertFileEquals($referenceDir . '/backofficeDisplayBlock/TestStrategy.php', $this->rootDir . '/' . $backofficeDisplayDir . '/TestStrategy.php');
         $this->assertFileEquals($referenceDir . '/frontDisplayBlock/TestStrategy.php', $this->rootDir . '/' . $frontDisplayDir . '/TestStrategy.php');

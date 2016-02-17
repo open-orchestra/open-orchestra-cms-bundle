@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AudienceAnalysisStrategy as BaseAudienceAnalysisStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class AudienceAnalysisStrategy
+ * Class ContentStrategy
  */
-class AudienceAnalysisStrategy extends AbstractStrategy
+class ContentStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseAudienceAnalysisStrategy::NAME == $block->getComponent();
+        return BaseContentStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,8 +34,12 @@ class AudienceAnalysisStrategy extends AbstractStrategy
     public function show(ReadBlockInterface $block)
     {
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/AudienceAnalysis:show.html.twig',
-            array('attributes' => $block->getAttributes())
+            'OpenOrchestraBackofficeBundle:Block/Content:show.html.twig',
+            array(
+                'id' => $block->getId(),
+                'class' => $block->getClass(),
+                'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
+            )
         );
     }
 
@@ -46,6 +50,6 @@ class AudienceAnalysisStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'audience_analysis';
+        return 'content';
     }
 }

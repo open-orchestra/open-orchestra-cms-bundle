@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy as BaseFooterStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContactStrategy as BaseContactStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class FooterStrategy
+ * Class ContactStrategy
  */
-class FooterStrategy extends AbstractStrategy
+class ContactStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class FooterStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseFooterStrategy::NAME == $block->getComponent();
+        return BaseContactStrategy::NAME == $block->getComponent();
     }
 
     /**
@@ -34,10 +34,10 @@ class FooterStrategy extends AbstractStrategy
     public function show(ReadBlockInterface $block)
     {
         return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/Footer:show.html.twig',
+            'OpenOrchestraBackofficeBundle:Block/Contact:show.html.twig',
             array(
                 'id' => $block->getId(),
-                'class' => $block->getClass()
+                'class' => $block->getClass(),
             )
         );
     }
@@ -49,6 +49,6 @@ class FooterStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'footer';
+        return 'contact';
     }
 }

@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayBlock\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayBlock\Strategies;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AbstractStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentStrategy as BaseContentStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy as BaseAddThisStrategy;
 use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ContentStrategy
+ * Class AddThisStrategy
  */
-class ContentStrategy extends AbstractStrategy
+class AddThisStrategy extends AbstractStrategy
 {
     /**
      * Check if the strategy support this block
@@ -21,7 +21,7 @@ class ContentStrategy extends AbstractStrategy
      */
     public function support(ReadBlockInterface $block)
     {
-        return BaseContentStrategy::NAME == $block->getComponent();
+        return BaseAddThisStrategy::NAME === $block->getComponent();
     }
 
     /**
@@ -33,14 +33,12 @@ class ContentStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
-        return $this->render(
-            'OpenOrchestraBackofficeBundle:Block/Content:show.html.twig',
-            array(
-                'id' => $block->getId(),
-                'class' => $block->getClass(),
-                'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
-            )
+        $parameters = array(
+            'pubid' => $block->getAttribute('pubid'),
+            'addThisClass' => $block->getAttribute('addThisClass')
         );
+
+        return $this->render('OpenOrchestraBackofficeBundle:Block/AddThis:show.html.twig', $parameters);
     }
 
     /**
@@ -50,6 +48,6 @@ class ContentStrategy extends AbstractStrategy
      */
     public function getName()
     {
-        return 'content';
+        return 'add_this';
     }
 }
