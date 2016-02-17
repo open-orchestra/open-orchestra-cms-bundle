@@ -2,8 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\Transformer\HtmlIdTransformer;
-use OpenOrchestra\BackofficeBundle\Transformer\HtmlClassTransformer;
+use OpenOrchestra\BackofficeBundle\Form\DataTransformer\HtmlElementTransformer;
 use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,23 +33,20 @@ class AreaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $htmlClassTransformer = new HtmlClassTransformer($options['data']);
-        $htmlIdTransformer = new HtmlIdTransformer($options['data']);
-
         $builder->add('label', 'text', array(
             'label' => 'open_orchestra_backoffice.form.area.label',
             'required' => false,
         ));
         $builder->add(
             $builder->create('areaId', 'text', array('label' => 'open_orchestra_backoffice.form.area.area_id'))
-                ->addViewTransformer($htmlIdTransformer)
+                ->addViewTransformer(new HtmlElementTransformer())
         );
         $builder->add(
             $builder->create('htmlClass', 'text', array(
                 'required' => false,
                 'label' => 'open_orchestra_backoffice.form.area.html_class'
             ))
-                ->addViewTransformer($htmlClassTransformer)
+                ->addViewTransformer(new HtmlElementTransformer())
         );
         $builder->add('boDirection', 'choice', array(
             'choices' => array('v' => 'vertical', 'h' => 'horizontal'),

@@ -1,18 +1,19 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Transformer;
+namespace OpenOrchestra\BackofficeBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**
- * Class HtmlIdTransformer
+ * Class HtmlElementTransformer
  */
-class HtmlIdTransformer implements DataTransformerInterface
+class HtmlElementTransformer implements DataTransformerInterface
 {
     /**
      * Transforms a normalized html id to a view html id
      *
      * @param string $normData
+     *
      * @return string
      */
     public function transform($normData)
@@ -29,13 +30,5 @@ class HtmlIdTransformer implements DataTransformerInterface
     public function reverseTransform($viewData)
     {
         return preg_replace('/["\'<> ]/', '-', $viewData);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'html_id';
     }
 }
