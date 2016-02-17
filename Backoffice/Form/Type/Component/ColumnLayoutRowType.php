@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
-use OpenOrchestra\BackofficeBundle\Validator\Constraints\AreaFlexRowLayout;
+use OpenOrchestra\Backoffice\Validator\Constraints\AreaFlexRowLayout;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
