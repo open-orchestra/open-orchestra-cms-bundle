@@ -2,18 +2,18 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexType;
+use OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexRowType;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class AreaFlexTypeTest
+ * Class AreaFlexRowTypeTest
  */
-class AreaFlexTypeTest extends AbstractBaseTestCase
+class AreaFlexRowTypeTest extends AbstractBaseTestCase
 {
     protected $areaClass = 'OpenOrchestra\ModelBundle\Document\AreaFlex';
     protected $translator;
-    /** @var  AreaFlexType */
+    /** @var  AreaFlexRowType */
     protected $areaType;
 
     /**
@@ -23,7 +23,7 @@ class AreaFlexTypeTest extends AbstractBaseTestCase
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $areaFlexManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager');
-        $this->areaType = new AreaFlexType($this->areaClass, $areaFlexManager, $this->translator);
+        $this->areaType = new AreaFlexRowType($this->areaClass, $this->translator, $areaFlexManager);
     }
 
     /**
@@ -36,7 +36,7 @@ class AreaFlexTypeTest extends AbstractBaseTestCase
 
         $this->areaType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(1))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }
@@ -53,9 +53,7 @@ class AreaFlexTypeTest extends AbstractBaseTestCase
         $this->areaType->configureOptions($resolverMock);
 
         Phake::verify($this->translator, Phake::times(1))->trans(Phake::anyParameters());
-        Phake::verify($resolverMock)->setDefaults(array(
-            'data_class' => $this->areaClass,
-            'attr' => array('data-title' => $translation),
-        ));
+        Phake::verify($resolverMock)->setDefault('data_class', $this->areaClass);
+        Phake::verify($resolverMock)->setDefault('attr', array('data-title' => $translation));
     }
 }

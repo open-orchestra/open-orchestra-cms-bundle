@@ -13,6 +13,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
   events:
     'click .add-row-action': 'showFormAddRow'
+    'click .edit-column': 'showFormColumn'
 
   ###*
    * @param {Object} options
@@ -22,6 +23,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
       'area'
       'domContainer'
     ])
+    @options.entityType = 'area-flex'
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaFlexToolbarView"
     ]
@@ -36,6 +38,17 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     @updateToolbarPosition(@$el)
     $(window).bind 'scroll', () ->
       context.updateToolbarPosition(context.$el)
+  ###*
+   * Show form edit column
+  ###
+  showFormColumn: ->
+    adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
+    url = @options.area.get("links")._self_form_column
+    if url?
+      new adminFormViewClass(
+        url: url
+        entityType: @options.entityType
+      )
 
   ###*
    * @param {Object} el Jquery element

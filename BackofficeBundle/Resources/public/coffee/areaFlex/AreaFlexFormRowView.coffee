@@ -17,7 +17,7 @@ class OpenOrchestra.AreaFlex.AreaFlexFormRowView extends OrchestraModalView
   ###
   selectOptionLayout: (event) ->
     layout = $(event.target).attr('data-layout')
-    input = $('#area_flex_columnLayout_layout', @$el)
+    input = $('#area_flex_row_columnLayout_layout', @$el)
     if (input.length > 0)
       input.val(layout)
 

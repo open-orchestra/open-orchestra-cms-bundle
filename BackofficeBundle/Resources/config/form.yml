@@ -3,7 +3,8 @@ parameters:
     open_orchestra_backoffice.type.template_flex.class: OpenOrchestra\BackofficeBundle\Form\Type\TemplateFlexType
     open_orchestra_backoffice.type.node.class: OpenOrchestra\BackofficeBundle\Form\Type\NodeType
     open_orchestra_backoffice.type.area.class: OpenOrchestra\BackofficeBundle\Form\Type\AreaType
-    open_orchestra_backoffice.type.area_flex.class: OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexType
+    open_orchestra_backoffice.type.area_flex_row.class: OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexRowType
+    open_orchestra_backoffice.type.area_flex_column.class: OpenOrchestra\BackofficeBundle\Form\Type\AreaFlexColumnType
     open_orchestra_backoffice.type.column_layout_row.class: OpenOrchestra\BackofficeBundle\Form\Type\Component\ColumnLayoutRowType
     open_orchestra_backoffice.type.block.class: OpenOrchestra\BackofficeBundle\Form\Type\BlockType
     open_orchestra_backoffice.type.existing_block_choice.class: OpenOrchestra\BackofficeBundle\Form\Type\ExistingBlockChoiceType
@@ -97,12 +98,20 @@ services:
             - @translator
         tags:
             - { name: form.type, alias: oo_area }
-    # Area flex form type
-    open_orchestra_backoffice.type.area_flex:
-        class: %open_orchestra_backoffice.type.area_flex.class%
+    # Area flex row form type
+    open_orchestra_backoffice.type.area_flex_row:
+        class: %open_orchestra_backoffice.type.area_flex_row.class%
         arguments:
             - %open_orchestra_model.document.area_flex.class%
+            - @translator
             - @open_orchestra_backoffice.manager.area_flex
+        tags:
+            - { name: form.type}
+    # Area flex column form type
+    open_orchestra_backoffice.type.area_flex_column:
+        class: %open_orchestra_backoffice.type.area_flex_column.class%
+        arguments:
+            - %open_orchestra_model.document.area_flex.class%
             - @translator
         tags:
             - { name: form.type}

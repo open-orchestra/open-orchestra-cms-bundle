@@ -37,8 +37,8 @@ class AreaFlexRowSubscriber implements EventSubscriberInterface
             foreach ($columnsLayout as $key => $columnWidth) {
                 $columnWidth = trim($columnWidth);
                 /** @var AreaFlexInterface $column */
-                $column = $this->areaManager->initializeNewAreaColumn();
-                $column->setAreaId($data['areaId'].'_column_'.$key);
+                $column = $this->areaManager->initializeNewAreaColumn($area);
+                $column->setLabel($column->getAreaId());
                 $column->setWidth($columnWidth);
                 $area->addArea($column);
             }
