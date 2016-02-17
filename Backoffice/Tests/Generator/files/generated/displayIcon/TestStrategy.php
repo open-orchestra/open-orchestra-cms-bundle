@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies;
+namespace OpenOrchestra\Backoffice\DisplayIcon\Strategies;
 
-use OpenOrchestra\BackofficeBundle\DisplayIcon\Strategies\AbstractStrategy;
+use OpenOrchestra\Backoffice\DisplayIcon\Strategies\AbstractStrategy;
 
 /**
  * Class TestStrategy
