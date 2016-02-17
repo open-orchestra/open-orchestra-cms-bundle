@@ -48,10 +48,12 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   showFormColumn: ->
     adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
     url = @options.area.get("links")._self_form_column
+    title = @$el.attr('data-title-edit-column')
     if url?
       new adminFormViewClass(
         url: url
         entityType: @options.entityType
+        title: title
       )
 
   ###*
@@ -59,8 +61,9 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   showFormRow: ->
     url = @options.area.get("links")._self_form_row
+    title = @$el.attr('data-title-edit-row')
     if url?
-      @showFormWithSelectLayout(url)
+      @showFormWithSelectLayout(url, title)
 
   ###*
    * @param {Object} el Jquery element

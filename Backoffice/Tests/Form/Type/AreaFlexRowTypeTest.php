@@ -12,7 +12,6 @@ use Phake;
 class AreaFlexRowTypeTest extends AbstractBaseTestCase
 {
     protected $areaClass = 'OpenOrchestra\ModelBundle\Document\AreaFlex';
-    protected $translator;
     /** @var  AreaFlexRowType */
     protected $areaType;
 
@@ -21,9 +20,8 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $areaFlexManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaFlexManager');
-        $this->areaType = new AreaFlexRowType($this->areaClass, $this->translator, $areaFlexManager);
+        $areaFlexManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager');
+        $this->areaType = new AreaFlexRowType($this->areaClass, $areaFlexManager);
     }
 
     /**
@@ -45,13 +43,8 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
     public function testConfigureOptions()
     {
         $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-        $translation = 'fakeTranslation';
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($translation);
-
         $this->areaType->configureOptions($resolverMock);
 
-        Phake::verify($this->translator, Phake::times(1))->trans(Phake::anyParameters());
         Phake::verify($resolverMock)->setDefault('data_class', $this->areaClass);
-        Phake::verify($resolverMock)->setDefault('attr', array('data-title' => $translation));
     }
 }

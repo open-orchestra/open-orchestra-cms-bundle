@@ -187,6 +187,7 @@ open_orchestra_backoffice:
         area_flex:
             success: La zone a été modifiée
             new_row_title: Nouvelle ligne
+            edit_row_title: Editer la ligne
             new_row_title: Editer la colonne
             html_class: Classe html pour la zone
             label: Libellé de la zone

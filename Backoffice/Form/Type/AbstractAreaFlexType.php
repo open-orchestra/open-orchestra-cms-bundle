@@ -3,27 +3,22 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class AbstractAreaFlexType
  */
 abstract class AbstractAreaFlexType extends AbstractType
 {
-    protected $translator;
     protected $areaClass;
 
     /**
-     * @param string              $areaClass
-     * @param TranslatorInterface $translator
+     * @param string $areaClass
      */
-    public function __construct($areaClass, TranslatorInterface $translator)
+    public function __construct($areaClass)
     {
         $this->areaClass = $areaClass;
-        $this->translator = $translator;
     }
 
     /**

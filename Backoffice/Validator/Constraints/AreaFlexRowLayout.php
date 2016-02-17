@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class AreaFlexRowLayout extends Constraint
 {
-    public $message = 'open_orchestra_backoffice_validators.form.area_flex.row_layout';
+    public $message = 'open_orchestra_backoffice_validators.area_flex.row_layout';
 
     /**
      * @return string

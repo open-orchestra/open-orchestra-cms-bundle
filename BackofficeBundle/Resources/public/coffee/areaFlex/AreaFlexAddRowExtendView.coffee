@@ -1,4 +1,10 @@
 extendView = extendView || {}
+###*
+ * Extend view for show form Area
+ * Required option view
+ * {string} entityType
+ * {object} area
+###
 extendView['OpenOrchestra.AreaFlex.AddRow'] = {
 
     ###*
@@ -6,16 +12,20 @@ extendView['OpenOrchestra.AreaFlex.AddRow'] = {
     ###
     showFormAddRow: () ->
       url = @options.area.get("links")._self_form_new_row
-      @showFormWithSelectLayout(url)
+      title = @$el.attr('data-title-new-row')
+      @showFormWithSelectLayout(url, title)
 
     ###*
      * Show modal for form with selected layout
+     * @param {string} url
+     * @param {string} title
     ###
-    showFormWithSelectLayout: (url) ->
+    showFormWithSelectLayout: (url, title) ->
       adminFormViewClass = appConfigurationView.setConfiguration(@options.entityType, 'showOrchestraModal', OpenOrchestra.AreaFlex.AreaFlexFormRowView)
       adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
       new adminFormViewClass(
         url: url
         entityType: @options.entityType
+        title: title
       )
 }
