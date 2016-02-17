@@ -35,7 +35,6 @@ open_orchestra_backoffice:
             text: The removal will be final
         add: Add
         select: Select
-        internal_link: Internal link
         status:
             published: Published
             draft: Draft
@@ -308,6 +307,14 @@ open_orchestra_backoffice:
                 success: The API client has been successfully created
             edit:
                 success: The API client has been updated
+        internal_link:
+            title: Internal link
+            node: Page
+            site: Site
+            site_alias: Site alias
+            content: Content
+            query: Query string
+            filter: Content filter
     left_menu:
         tree:
             new_page: New page

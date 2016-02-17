@@ -8,4 +8,4 @@ DraftContentsView = AbstractWidgetContentListView.extend(
 )
 
 jQuery ->
-  appConfigurationView.setConfiguration 'dashboard_widgets', 'draft_contents', 'DraftContentsView'
+  appConfigurationView.setConfiguration 'dashboard_widgets', 'draft_contents', DraftContentsView

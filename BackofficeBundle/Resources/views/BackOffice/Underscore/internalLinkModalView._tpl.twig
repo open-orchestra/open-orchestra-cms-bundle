@@ -1,0 +1,22 @@
+<div
+    class="modal fade internalModalContainer divMessageBox"
+    tabindex="-1" role="dialog"
+    aria-labelledby="" aria-hidden="true"
+    data-backdrop="static"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-default modalClose" data-dismiss="modal">
+                    {{ ('open_orchestra_backoffice.modal.close') | trans() }}
+                </button>
+                <h4 class="modal-title">
+                    {{ 'open_orchestra_backoffice.form.internal_link.title'|trans }}
+                </h4>
+            </div>
+            <div class="modal-body">
+            	<%= body %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,4 +8,4 @@ DraftNodesView = AbstractWidgetNodeListView.extend(
 )
 
 jQuery ->
-  appConfigurationView.setConfiguration 'dashboard_widgets', 'draft_nodes', 'DraftNodesView'
+  appConfigurationView.setConfiguration 'dashboard_widgets', 'draft_nodes', DraftNodesView

@@ -3,46 +3,44 @@
     height: 100%;
 }
 
-#OrchestraBOModal {
-    .modal-dialog {
-        height: 90%;
-        width: 90%;
+.modal-dialog {
+    height: 90%;
+    width: 90%;
 
-        .modal-header {
-            height: 60px;
+    .modal-header {
+        height: 60px;
 
-            > button {
-                float: right;
-                margin-left: 10px;
-            }
+        > button {
+            float: right;
+            margin-left: 10px;
+        }
 
-            > h4#OrchestraBOModalLabel {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+        > h4#OrchestraBOModalLabel {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .modal-content {
+        height: 100%;
+
+        > div {
+            .submit_form {
+                display: none;
             }
         }
 
-        .modal-content {
-            height: 100%;
-
-            > div {
-                .submit_form {
-                    display: none;
-                }
+        > div:first-child {
+            .submit_form {
+                display: block;
             }
+        }
 
-            > div:first-child {
-                .submit_form {
-                    display: block;
-                }
-            }
-
-            .modal-body {
-                height: calc(~"100% - 60px");
-                overflow-y: scroll;
-                overflow-x: hidden;
-            }
+        .modal-body {
+            height: calc(~"100% - 60px");
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
     }
 }

@@ -122,7 +122,10 @@ module.exports = {
     'web/built/openorchestrauseradmin/js/user/*.js',
 
     //--[ GROUP TREE ]--//
-    'web/built/openorchestrabackoffice/js/groupTree/*.js'
+    'web/built/openorchestrabackoffice/js/groupTree/*.js',
+
+    //--[ INTERNAL LINK ]--//
+    'web/built/openorchestrabackoffice/js/InternalLinkFormView.js'
   ],
   dest: 'web/built/orchestra.js'
 };

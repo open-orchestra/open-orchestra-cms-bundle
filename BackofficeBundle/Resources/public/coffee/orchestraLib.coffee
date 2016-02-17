@@ -151,6 +151,7 @@ activateSelect2 = (element) ->
       container.parent().addClass('bg-color-red').attr('style', 'border-color:#a90329!important') if term.isNew
       term.text
   )
+
 #TOKENINPUT ENABLED
 activateToken = (element) ->
   isAndBooleanRegExp = new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( AND (?=.)){0,1})+$/)
@@ -223,6 +224,7 @@ activateToken = (element) ->
     $('<li>').html(operator[i]).on('click', click).appendTo ul
   element.before ul
   return
+
 #NODE CHOICE ENABLED
 activateOrchestraNodeChoice = (element) ->
   regExp = new RegExp('((\u2502|\u251C|\u2514)+)', 'g')
@@ -245,17 +247,6 @@ activateHelper = (element) ->
   title = element.attr('data-original-title').split('\\n').join('\n')
   element.attr 'data-original-title', title
   element.tooltip()
-
-#LOAD EXTEND VIEW
-loadExtendView = (view, extendViewName) ->
-  $.extend true, view, extendView[extendViewName]
-  view.delegateEvents()
-
-#CONFIGURATION LISTENER
-$(document).on 'click', '.configuration-change', (e) ->
-  target = $(e.currentTarget)
-  url = target.data('url')
-  window.location = url + '#' + Backbone.history.fragment
 
 #ACTIVATE HTML5 VALIDATION FOR HIDDEN
 activateHidden = (hidden) ->
@@ -300,6 +291,21 @@ activateDatepicker = (elements) ->
       $this = null
       return
 
+#ACTIVATE CONTENT FILTER
+ajaxRefreshForm = (elements, view, form) ->
+  elements.on 'click', ->
+      form.ajaxSubmit
+        method: 'POST'
+        context: view
+        success: (response) ->
+          old = @$el
+          html = @$el.clone()
+          $('form', html).replaceWith(response)
+          @setElement html
+          old.replaceWith @$el
+          activateForm(@, $('form', @$el))
+    return
+
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
   activateSelect2(elements) if (elements = $(".select2", form)) && elements.length > 0
@@ -310,10 +316,23 @@ activateForm = (view, form) ->
   activateTinyMce(view, elements) if (elements = $("textarea.tinymce", form)) && elements.length > 0
   activateHidden(elements) if (elements = $("input[type='hidden'][required='required']", form)) && elements.length > 0
   activateDatepicker(elements) if (elements = $(".datepicker", form)) && elements.length > 0
+  ajaxRefreshForm(elements, view, form) if (elements = $(".refresh-form", form)) && elements.length > 0
   $("[data-prototype]", form).each ->
     PO.formPrototypes.addPrototype $(@), view
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
   loadExtendView(view, 'contentTypeChange') if (elements = $("[data-prototype*='content_type_change_type']", form)) && elements.length > 0
+
+
+#LOAD EXTEND VIEW
+loadExtendView = (view, extendViewName) ->
+  $.extend true, view, extendView[extendViewName]
+  view.delegateEvents()
+
+#CONFIGURATION LISTENER
+$(document).on 'click', '.configuration-change', (e) ->
+  target = $(e.currentTarget)
+  url = target.data('url')
+  window.location = url + '#' + Backbone.history.fragment
 
 #LAUNCH SMARTADMIN NOTIFICATION
 launchNotification = (type, message) ->

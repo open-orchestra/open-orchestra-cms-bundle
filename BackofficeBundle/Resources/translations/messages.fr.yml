@@ -35,7 +35,6 @@ open_orchestra_backoffice:
             text: La suppression sera définitive
         add: Ajouter
         select: Sélectionner
-        internal_link: Lien interne
         status:
             published: Publié
             draft: Brouillon
@@ -308,6 +307,14 @@ open_orchestra_backoffice:
                 success: Le client d'API a été créé
             edit:
                 success: Le client d'API a été mis à jour
+        internal_link:
+            title: Lien interne
+            node: Page
+            site: Site
+            site_alias: Site alias
+            content: Contenu
+            query: Chaîne de requête
+            filter: Filtrer les contenus
     left_menu:
         tree:
             new_page: Nouvelle page

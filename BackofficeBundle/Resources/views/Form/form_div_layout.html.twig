@@ -228,5 +228,24 @@
 {% endblock form_legend %}
 
 {% block oo_tinymce_widget %}
-    {{ block('textarea_widget') }}
+      {{ block('textarea_widget') }}
+      <div
+          id="modal_internal_link_{{ id }}"
+          data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
+      ></div>
+{% endblock %}
+
+{% block oo_internal_link_widget %}
+	{% set refresh %}
+        <span rel="tooltip" class="btn btn-ribbon refresh-form">
+        	<i class="fa fa-refresh"></i>
+        </span>
+	{% endset %}
+    {% set attr = form.children.contentSearch.vars|merge({ 'label': form.children.contentSearch.vars.label|trans ~ refresh }) %}
+    {% spaceless %}
+      {{ form_row(form.children.nodeId) }}
+      {{ form_row(form.children.contentSearch, attr) }}
+      {{ form_row(form.children.siteId) }}
+      {{ form_row(form.children.query) }}
+    {% endspaceless %}
 {% endblock %}
