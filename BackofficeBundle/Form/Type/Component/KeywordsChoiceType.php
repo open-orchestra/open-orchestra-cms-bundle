@@ -55,7 +55,8 @@ class KeywordsChoiceType extends AbstractType
                 throw new NotAllowedClassNameException();
             }
             $transformerClass = $options['transformerClass'];
-            $transformer = new $transformerClass($options['name']);
+            $transformer = new $transformerClass();
+            $transformer->setField($options['name']);
             $builder->addModelTransformer($transformer);
         }
 
