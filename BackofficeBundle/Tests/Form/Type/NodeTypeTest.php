@@ -26,7 +26,7 @@ class NodeTypeTest extends AbstractBaseTestCase
     {
         $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
-        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         $this->nodeType = new NodeType(
             $this->nodeClass,

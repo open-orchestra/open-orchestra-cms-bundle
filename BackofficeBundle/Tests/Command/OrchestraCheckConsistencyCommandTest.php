@@ -24,7 +24,7 @@ class OrchestraCheckConsistencyCommandTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
 
         $this->trans = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->trans)->trans('open_orchestra_backoffice.command.node.success')->thenReturn('success');

@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;

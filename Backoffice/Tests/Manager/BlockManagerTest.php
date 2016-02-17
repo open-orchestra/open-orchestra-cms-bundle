@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\BackofficeBundle\Manager\BlockManager;
+use OpenOrchestra\Backoffice\Manager\BlockManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
-use OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager;
+use OpenOrchestra\Backoffice\Manager\AreaFlexManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use Phake;

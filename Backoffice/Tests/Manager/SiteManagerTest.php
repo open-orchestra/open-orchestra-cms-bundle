@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
-use OpenOrchestra\BackofficeBundle\Manager\SiteManager;
+use OpenOrchestra\Backoffice\Manager\SiteManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 

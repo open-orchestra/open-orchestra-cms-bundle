@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager;
+use OpenOrchestra\Backoffice\Manager\RouteDocumentManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSchemeableInterface;

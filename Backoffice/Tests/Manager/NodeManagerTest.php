@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
-use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\EmbedStatus;
@@ -59,8 +59,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         $this->versionableSaver = Phake::mock('OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface');
         Phake::when($this->siteRepository)->findOneBySiteId(Phake::anyParameters())->thenReturn($site);
-        $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
-        $this->blockManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\BlockManager');
+        $this->areaManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaManager');
+        $this->blockManager = Phake::mock('OpenOrchestra\Backoffice\Manager\BlockManager');
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn('fakeSiteId');
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn('fakeLanguage');

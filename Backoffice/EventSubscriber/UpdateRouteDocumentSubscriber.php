@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager;
+use OpenOrchestra\Backoffice\Manager\RouteDocumentManager;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;

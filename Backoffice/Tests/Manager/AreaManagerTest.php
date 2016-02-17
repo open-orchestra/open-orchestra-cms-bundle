@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
+use OpenOrchestra\Backoffice\Manager\AreaManager;
 use OpenOrchestra\ModelBundle\Document\Area;
 use Phake;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

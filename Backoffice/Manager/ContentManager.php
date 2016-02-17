@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;

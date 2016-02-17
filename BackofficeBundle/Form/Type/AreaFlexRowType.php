@@ -4,7 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\AreaFlexRowSubscriber;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ColumnLayoutRowType;
-use OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager;
+use OpenOrchestra\Backoffice\Manager\AreaFlexManager;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;

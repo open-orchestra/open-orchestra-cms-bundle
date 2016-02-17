@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
-use OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager;
+use OpenOrchestra\Backoffice\Manager\ContentTypeManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 

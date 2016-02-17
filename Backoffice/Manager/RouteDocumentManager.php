@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\Backoffice\Manager;
 
 use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

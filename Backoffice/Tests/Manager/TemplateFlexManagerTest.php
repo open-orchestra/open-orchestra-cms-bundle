@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
-use OpenOrchestra\BackofficeBundle\Manager\TemplateFlexManager;
+use OpenOrchestra\Backoffice\Manager\TemplateFlexManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use Phake;
@@ -34,7 +34,7 @@ class TemplateFlexManagerTest extends AbstractBaseTestCase
         $rootAreaClass->setLabel(AreaFlexInterface::ROOT_AREA_LABEL);
 
         $this->contextManager = Phake::mock('OpenOrchestra\Backoffice\Context\ContextManager');
-        $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager');
+        $this->areaManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaFlexManager');
         Phake::when($this->contextManager)->getCurrentSiteId()->thenReturn($this->siteId);
         Phake::when($this->areaManager)->initializeNewAreaRoot()->thenReturn($rootAreaClass);
 

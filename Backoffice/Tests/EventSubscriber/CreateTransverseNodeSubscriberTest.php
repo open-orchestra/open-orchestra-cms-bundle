@@ -29,7 +29,7 @@ class CreateTransverseNodeSubscriberTest extends AbstractBaseTestCase
     {
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->nodeManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\NodeManager');
+        $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
 
         $this->subscriber = new CreateTransverseNodeSubscriber($this->nodeRepository, $this->nodeManager, $this->objectManager);
     }

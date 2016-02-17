@@ -2,16 +2,16 @@ parameters:
     open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\ContextManager
     open_orchestra_backoffice.listener.translate_value_initializer.class: OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener
     open_orchestra_backoffice.manager.translation_choice.class: OpenOrchestra\Backoffice\Manager\TranslationChoiceManager
-    open_orchestra_backoffice.manager.area.class: OpenOrchestra\BackofficeBundle\Manager\AreaManager
-    open_orchestra_backoffice.manager.node.class: OpenOrchestra\BackofficeBundle\Manager\NodeManager
-    open_orchestra_backoffice.manager.site.class: OpenOrchestra\BackofficeBundle\Manager\SiteManager
-    open_orchestra_backoffice.manager.content.class: OpenOrchestra\BackofficeBundle\Manager\ContentManager
-    open_orchestra_backoffice.manager.content_type.class: OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager
-    open_orchestra_backoffice.manager.block.class: OpenOrchestra\BackofficeBundle\Manager\BlockManager
-    open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\BackofficeBundle\Manager\RedirectionManager
-    open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager
-    open_orchestra_backoffice.manager.template_flex.class: OpenOrchestra\BackofficeBundle\Manager\TemplateFlexManager
-    open_orchestra_backoffice.manager.area_flex.class: OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager
+    open_orchestra_backoffice.manager.area.class: OpenOrchestra\Backoffice\Manager\AreaManager
+    open_orchestra_backoffice.manager.node.class: OpenOrchestra\Backoffice\Manager\NodeManager
+    open_orchestra_backoffice.manager.site.class: OpenOrchestra\Backoffice\Manager\SiteManager
+    open_orchestra_backoffice.manager.content.class: OpenOrchestra\Backoffice\Manager\ContentManager
+    open_orchestra_backoffice.manager.content_type.class: OpenOrchestra\Backoffice\Manager\ContentTypeManager
+    open_orchestra_backoffice.manager.block.class: OpenOrchestra\Backoffice\Manager\BlockManager
+    open_orchestra_backoffice.manager.redirection.class: OpenOrchestra\Backoffice\Manager\RedirectionManager
+    open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\Backoffice\Manager\RouteDocumentManager
+    open_orchestra_backoffice.manager.template_flex.class: OpenOrchestra\Backoffice\Manager\TemplateFlexManager
+    open_orchestra_backoffice.manager.area_flex.class: OpenOrchestra\Backoffice\Manager\AreaFlexManager
 
 services:
     open_orchestra_backoffice.context_manager:
