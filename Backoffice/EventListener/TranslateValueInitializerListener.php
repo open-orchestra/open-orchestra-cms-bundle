@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\EventListener;
+namespace OpenOrchestra\Backoffice\EventListener;
 
 use OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;

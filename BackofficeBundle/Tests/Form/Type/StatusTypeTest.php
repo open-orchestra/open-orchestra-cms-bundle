@@ -25,7 +25,7 @@ class StatusTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
         $this->form = new StatusType($this->statusClass, $this->translateValueInitializer);
     }
 

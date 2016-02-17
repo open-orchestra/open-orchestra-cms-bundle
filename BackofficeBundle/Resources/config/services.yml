@@ -1,6 +1,6 @@
 parameters:
     open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\ContextManager
-    open_orchestra_backoffice.listener.translate_value_initializer.class: OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener
+    open_orchestra_backoffice.listener.translate_value_initializer.class: OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener
     open_orchestra_backoffice.manager.translation_choice.class: OpenOrchestra\Backoffice\Manager\TranslationChoiceManager
     open_orchestra_backoffice.manager.area.class: OpenOrchestra\BackofficeBundle\Manager\AreaManager
     open_orchestra_backoffice.manager.node.class: OpenOrchestra\BackofficeBundle\Manager\NodeManager
