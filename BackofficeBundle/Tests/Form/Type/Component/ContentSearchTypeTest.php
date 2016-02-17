@@ -5,7 +5,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Form\Type\Component;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ContentSearchType;
-use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformer;
+use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface;
 
 /**
  * Class ContentSearchTypeTest
@@ -52,7 +52,13 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
 
 }
 
-class PhakeClass extends ConditionFromBooleanToBddTransformer {
+class PhakeClass implements ConditionFromBooleanToBddTransformerInterface {
+
+   protected $field;
+
+   public function setField($field){
+       $this->field = $field;
+   }
 
    public function transform($value){
    }
