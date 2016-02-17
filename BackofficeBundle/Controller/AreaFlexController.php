@@ -63,21 +63,9 @@ class AreaFlexController extends AbstractAdminController
      */
     public function formTemplateAreaRowAction(Request $request, $templateId, $areaId)
     {
-        $template = $this->get('open_orchestra_model.repository.template_flex')->findOneByTemplateId($templateId);
-        $area = $this->get('open_orchestra_model.repository.template_flex')->findAreaInTemplateByAreaId($template, $areaId);
-        $form = $this->createForm(AreaFlexRowType::class, $area, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_area_flex_form_row', array(
-                'templateId' => $templateId,
-                'areaId' => $areaId,
-            ))
-        ));
-        $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area_flex.success');
-        if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(TemplateFlexEvents::TEMPLATE_FLEX_AREA_UPDATE, new TemplateFlexEvent($template));
-        }
+        $url = 'open_orchestra_backoffice_area_flex_form_row';
 
-        return $this->renderAdminForm($form);
+        return $this->handleFormTemplateArea($request, $templateId, $areaId, $url, AreaFlexRowType::class);
     }
 
     /**
@@ -92,11 +80,27 @@ class AreaFlexController extends AbstractAdminController
      */
     public function formTemplateAreaColumnAction(Request $request, $templateId, $areaId)
     {
+        $url = 'open_orchestra_backoffice_area_flex_form_column';
+
+        return $this->handleFormTemplateArea($request, $templateId, $areaId, $url, AreaFlexColumnType::class);
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $templateId
+     * @param string  $areaId
+     * @param string  $url
+     * @param string $formAreaType
+     *
+     * @return Response
+     */
+    protected function handleFormTemplateArea(Request $request, $templateId, $areaId, $url, $formAreaType)
+    {
         $template = $this->get('open_orchestra_model.repository.template_flex')->findOneByTemplateId($templateId);
         $area = $this->get('open_orchestra_model.repository.template_flex')->findAreaInTemplateByAreaId($template, $areaId);
 
-        $form = $this->createForm(AreaFlexColumnType::class, $area, array(
-            'action' => $this->generateUrl('open_orchestra_backoffice_area_flex_form_column', array(
+        $form = $this->createForm($formAreaType, $area, array(
+            'action' => $this->generateUrl($url, array(
                 'templateId' => $templateId,
                 'areaId' => $areaId,
             ))
