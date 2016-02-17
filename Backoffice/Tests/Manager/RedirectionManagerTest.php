@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
+use OpenOrchestra\Backoffice\Manager\RedirectionManager;
 
 /**
  * Test RedirectionManagerTest

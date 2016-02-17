@@ -6,7 +6,7 @@ use OpenOrchestra\ApiBundle\Exceptions\HttpException\AreaTransformerHttpExceptio
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\BackofficeBundle\Manager\AreaManager;
+use OpenOrchestra\Backoffice\Manager\AreaManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

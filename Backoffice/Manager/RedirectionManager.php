@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\Backoffice\Manager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;

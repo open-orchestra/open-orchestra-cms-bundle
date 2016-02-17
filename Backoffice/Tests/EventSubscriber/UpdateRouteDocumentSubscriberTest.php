@@ -38,7 +38,7 @@ class UpdateRouteDocumentSubscriberTest extends AbstractBaseTestCase
 
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
 
-        $this->routeDocumentManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\RouteDocumentManager');
+        $this->routeDocumentManager = Phake::mock('OpenOrchestra\Backoffice\Manager\RouteDocumentManager');
 
         $this->subscriber = new UpdateRouteDocumentSubscriber($this->objectManager, $this->routeDocumentManager);
     }

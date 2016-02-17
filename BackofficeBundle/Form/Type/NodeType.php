@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
-use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;

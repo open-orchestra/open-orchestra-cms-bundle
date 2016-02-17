@@ -22,7 +22,7 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $areaFlexManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager');
+        $areaFlexManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaFlexManager');
         $this->areaType = new AreaFlexRowType($this->areaClass, $this->translator, $areaFlexManager);
     }
 

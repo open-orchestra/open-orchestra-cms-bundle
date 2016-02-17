@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager;
+use OpenOrchestra\Backoffice\Manager\AreaFlexManager;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;

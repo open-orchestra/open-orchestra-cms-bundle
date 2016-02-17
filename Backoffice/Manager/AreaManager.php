@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Manager;
+namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\BackofficeBundle\StrategyManager\BlockParameterManager;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;

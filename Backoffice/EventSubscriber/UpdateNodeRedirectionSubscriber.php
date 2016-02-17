@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\BackofficeBundle\Manager\RedirectionManager;
+use OpenOrchestra\Backoffice\Manager\RedirectionManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\SiteEvent;

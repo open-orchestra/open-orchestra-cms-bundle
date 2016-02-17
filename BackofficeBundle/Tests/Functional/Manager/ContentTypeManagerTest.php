@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\Functional\Manager;
 
-use OpenOrchestra\BackofficeBundle\Manager\ContentTypeManager;
+use OpenOrchestra\Backoffice\Manager\ContentTypeManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\Manager;
+namespace OpenOrchestra\Backoffice\Tests\Manager;
 
-use OpenOrchestra\BackofficeBundle\Manager\ContentManager;
+use OpenOrchestra\Backoffice\Manager\ContentManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use Phake;

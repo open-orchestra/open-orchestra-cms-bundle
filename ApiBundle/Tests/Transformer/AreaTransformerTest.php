@@ -67,7 +67,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
         Phake::when($this->transformerManager)->get(Phake::anyParameters())->thenReturn($this->transformer);
         Phake::when($this->transformerManager)->getRouter()->thenReturn($this->router);
 
-        $this->areaManager = Phake::mock('OpenOrchestra\BackofficeBundle\Manager\AreaManager');
+        $this->areaManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaManager');
 
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');

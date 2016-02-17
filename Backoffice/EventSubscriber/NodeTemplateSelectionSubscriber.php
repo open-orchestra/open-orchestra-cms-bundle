@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-use OpenOrchestra\BackofficeBundle\Manager\NodeManager;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
