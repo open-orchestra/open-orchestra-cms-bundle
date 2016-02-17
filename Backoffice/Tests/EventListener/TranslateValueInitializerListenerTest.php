@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
+namespace OpenOrchestra\Backoffice\Tests\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener;
+use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 
 /**
  * Class TranslateValueInitializerListenerTest

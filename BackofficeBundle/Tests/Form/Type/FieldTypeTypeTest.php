@@ -49,7 +49,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
 
         $this->resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->translateValueInitializer = Phake::mock('OpenOrchestra\BackofficeBundle\EventListener\TranslateValueInitializerListener');
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
 
         $this->form = new FieldTypeType(
             $this->translateValueInitializer,
