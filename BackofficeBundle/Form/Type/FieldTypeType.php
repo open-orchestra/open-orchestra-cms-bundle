@@ -3,7 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
 use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\FieldTypeTypeSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\FieldTypeTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;

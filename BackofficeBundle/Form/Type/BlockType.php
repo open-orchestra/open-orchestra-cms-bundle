@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\BlockTypeSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\BlockTypeSubscriber;
 use OpenOrchestra\BackofficeBundle\Form\DataTransformer\BlockToArrayTransformer;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use Symfony\Component\Form\AbstractType;

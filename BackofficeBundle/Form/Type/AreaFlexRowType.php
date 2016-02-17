@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Form\Type;
 
-use OpenOrchestra\BackofficeBundle\EventSubscriber\AreaFlexRowSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\AreaFlexRowSubscriber;
 use OpenOrchestra\BackofficeBundle\Form\Type\Component\ColumnLayoutRowType;
 use OpenOrchestra\BackofficeBundle\Manager\AreaFlexManager;
 use Symfony\Component\Form\FormBuilderInterface;

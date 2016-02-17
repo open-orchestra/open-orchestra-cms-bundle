@@ -24,7 +24,7 @@ class ContentTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->contentTypeSubscriber = Phake::mock('OpenOrchestra\BackofficeBundle\EventSubscriber\ContentTypeSubscriber');
+        $this->contentTypeSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber');
 
         $this->form = new ContentType($this->contentTypeSubscriber, $this->contentClass);
     }
