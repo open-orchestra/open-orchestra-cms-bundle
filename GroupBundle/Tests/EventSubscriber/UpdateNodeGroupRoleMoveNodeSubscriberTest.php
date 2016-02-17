@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\EventSubscriber;
 
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\EventSubscriber\UpdateNodeGroupRoleMoveNodeSubscriber;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -73,14 +73,14 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateAccessNodeGroupRoleWithNoChild($accessType, $accessNode, $accessParent, $countUpdate)
     {
-        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($accessNode);
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
-        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($accessParent);
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
 
         $groups = array($this->group);
 
@@ -99,11 +99,11 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateAccessNodeGroupRoleWithException()
     {
-        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
-        Phake::when($nodeGroupRole)->getAccessType()->thenReturn(NodeGroupRoleInterface::ACCESS_INHERIT);
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
+        Phake::when($nodeGroupRole)->getAccessType()->thenReturn(DocumentGroupRoleInterface::ACCESS_INHERIT);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeParentId, $this->role)->thenReturn(null);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($this->fakeParentId, $this->role)->thenReturn(null);
 
         $groups = array($this->group);
 
@@ -119,12 +119,12 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
     public function provideAccessNodeNoChild()
     {
         return array(
-            array(NodeGroupRoleInterface::ACCESS_INHERIT, true, true, 0),
-            array(NodeGroupRoleInterface::ACCESS_DENIED, true, true, 0),
-            array(NodeGroupRoleInterface::ACCESS_GRANTED, true, true, 0),
-            array(NodeGroupRoleInterface::ACCESS_INHERIT, false, false, 0),
-            array(NodeGroupRoleInterface::ACCESS_INHERIT, true, false, 1),
-            array(NodeGroupRoleInterface::ACCESS_INHERIT, false, true, 1),
+            array(DocumentGroupRoleInterface::ACCESS_INHERIT, true, true, 0),
+            array(DocumentGroupRoleInterface::ACCESS_DENIED, true, true, 0),
+            array(DocumentGroupRoleInterface::ACCESS_GRANTED, true, true, 0),
+            array(DocumentGroupRoleInterface::ACCESS_INHERIT, false, false, 0),
+            array(DocumentGroupRoleInterface::ACCESS_INHERIT, true, false, 1),
+            array(DocumentGroupRoleInterface::ACCESS_INHERIT, false, true, 1),
         );
     }
 
@@ -155,20 +155,20 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         Phake::when($child)->getParentId()->thenReturn($this->fakeNodeId);
         Phake::when($child)->getSiteId()->thenReturn($this->fakeSiteId);
 
-        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($accessNode);
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
-        $nodeGroupChild = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $nodeGroupChild = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
         Phake::when($nodeGroupChild)->getAccessType()->thenReturn($accessChildType);
         Phake::when($nodeGroupChild)->getNodeId()->thenReturn($fakeChildId);
         Phake::when($nodeGroupChild)->isGranted()->thenReturn($accessChild);
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($fakeChildId, $this->role)->thenReturn($nodeGroupChild);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($fakeChildId, $this->role)->thenReturn($nodeGroupChild);
 
-        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($accessParent);
-        Phake::when($this->group)->getNodeRoleByNodeAndRole($this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
+        Phake::when($this->group)->getNodeRoleByIdAndRole($this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
 
         $groups = array($this->group);
 
@@ -190,9 +190,9 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
      */
     public function provideAccessNodeWithChild()
     {
-        $inherit = NodeGroupRoleInterface::ACCESS_INHERIT;
-        $granted = NodeGroupRoleInterface::ACCESS_GRANTED;
-        $denied = NodeGroupRoleInterface::ACCESS_DENIED;
+        $inherit = DocumentGroupRoleInterface::ACCESS_INHERIT;
+        $granted = DocumentGroupRoleInterface::ACCESS_GRANTED;
+        $denied = DocumentGroupRoleInterface::ACCESS_DENIED;
 
         return array(
             array($inherit, true, true, $inherit, true, 0, 0),

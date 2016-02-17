@@ -14,7 +14,6 @@ NodeTreeElementView = OrchestraView.extend(
     nodeId = @options.nodes.node.node_id
     nodeGroupRoles = @options.group.document_roles.filter (element) ->
       element.document == nodeId
-      element.type == 'node'
     formCollectionViewClass = appConfigurationView.getConfiguration('group_tab_node_tree_form', 'editEntityTab')
     new formCollectionViewClass(
       roles: @options.roles.roles

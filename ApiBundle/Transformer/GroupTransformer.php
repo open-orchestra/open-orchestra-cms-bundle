@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
+use OpenOrchestra\BackofficeBundle\Model\DocumentGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
 use OpenOrchestra\GroupBundle\GroupFacadeEvents;
@@ -127,9 +128,8 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
             throw new UnexpectedValueException("Document Group Role Transformer must be an instance of TransformerWithContextInterface");
         }
         foreach ($facade->getDocumentRoles() as $documentRoleFacade) {
-            if ('node' === $documentRoleFacade->type) {
-                $source = $group->getDocumentRoleByTypeAndIdAndRole(
-                    $documentRoleFacade->type,
+            if (DocumentGroupRoleInterface::TYPE_NODE === $documentRoleFacade->type) {
+                $source = $group->getNodeRoleByIdAndRole(
                     $documentRoleFacade->document,
                     $documentRoleFacade->name
                 );

@@ -10,6 +10,7 @@ interface DocumentGroupRoleInterface
     const ACCESS_GRANTED = "granted";
     const ACCESS_DENIED = "denied";
     const ACCESS_INHERIT = "inherit";
+    const TYPE_NODE = 'node';
 
     /**
      * @return string

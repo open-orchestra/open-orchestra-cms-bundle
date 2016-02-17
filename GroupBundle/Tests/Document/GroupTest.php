@@ -73,24 +73,27 @@ class GroupTest extends AbstractBaseTestCase
 
     /**
      * @param array  $datas
-     * @param string $node
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
      * @dataProvider provideDatasAndNode
      */
-    public function testGetNodeRoleByNodeAndRole(array $datas, $node, $role)
+    public function getDocumentRoleByTypeAndIdAndRole(array $datas, $type, $id, $role)
     {
         foreach ($datas as $data) {
-            $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
-            Phake::when($nodeGroupRole)->getNodeId()->thenReturn($data['nodeId']);
-            Phake::when($nodeGroupRole)->getRole()->thenReturn($data['role']);
-            $this->group->addNodeRole($nodeGroupRole);
+            $documentGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
+            Phake::when($documentGroupRole)->getType()->thenReturn($data['type']);
+            Phake::when($documentGroupRole)->getId()->thenReturn($data['id']);
+            Phake::when($documentGroupRole)->getRole()->thenReturn($data['role']);
+            $this->group->addDocumentRole($documentGroupRole);
         }
 
-        $nodeGroupRole = $this->group->getNodeRoleByNodeAndRole($node, $role);
+        $documentGroupRole = $this->group->getDocumentRoleByTypeAndIdAndRole($type, $id, $role);
 
-        $this->assertSame($node, $nodeGroupRole->getNodeId());
-        $this->assertSame($role, $nodeGroupRole->getRole());
+        $this->assertSame($type, $documentGroupRole->getType());
+        $this->assertSame($id, $documentGroupRole->getId());
+        $this->assertSame($role, $documentGroupRole->getRole());
     }
 
     /**
@@ -99,22 +102,21 @@ class GroupTest extends AbstractBaseTestCase
     public function provideDatasAndNode()
     {
         return array(
-            array(array(array('nodeId' => 'foo', 'role' => 'bar')), 'foo', 'bar'),
-            array(array(array('nodeId' => 'foo', 'role' => 'bar'), array('nodeId' => 'bar', 'role' => 'baz')), 'foo', 'bar'),
-            array(array(array('nodeId' => 'foo', 'role' => 'bar'), array('nodeId' => 'bar', 'role' => 'baz')), 'bar', 'baz'),
+            array(array(array('type' => 'foo', 'id' => 'bar', 'role' => 'baz')), 'foo', 'bar', 'baz'),
+            array(array(array('type' => 'foo', 'id' => 'bar', 'role' => 'baz'), array('type' => 'bar', 'id' => 'baz', 'role' => 'qux')), 'type', 'foo', 'bar'),
+            array(array(array('type' => 'foo', 'id' => 'bar', 'role' => 'baz'), array('type' => 'bar', 'id' => 'baz', 'role' => 'qux')), 'bar', 'baz', 'qux'),
         );
     }
 
     /**
      * Test add node roles
      */
-    public function testAddNodeRole()
+    public function addDocumentRole()
     {
-        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $documentGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
+        $this->group->addDocumentRole($documentGroupRole);
+        $this->group->addDocumentRole($documentGroupRole);
 
-        $this->group->addNodeRole($nodeGroupRole);
-        $this->group->addNodeRole($nodeGroupRole);
-
-        $this->assertCount(1, $this->group->getNodeRoles());
+        $this->assertCount(1, $this->group->getDocumentRoles());
     }
 }

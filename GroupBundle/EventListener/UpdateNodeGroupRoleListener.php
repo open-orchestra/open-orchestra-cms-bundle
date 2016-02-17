@@ -3,8 +3,8 @@
 namespace OpenOrchestra\GroupBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
+use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -34,7 +34,8 @@ class UpdateNodeGroupRoleListener
         $document = $event->getDocument();
         $uow = $event->getDocumentManager()->getUnitOfWork();
         if (
-            $document instanceof NodeGroupRoleInterface &&
+            $document instanceof DocumentGroupRoleInterface &&
+            DocumentGroupRoleInterface::TYPE_NODE === $document->getType() &&
             $event->hasChangedField("accessType")
         ) {
             $parentAssociation = $uow->getParentAssociation($document);
@@ -44,14 +45,14 @@ class UpdateNodeGroupRoleListener
                 $uow->initializeObject($site);
                 /** @var NodeRepositoryInterface $nodeRepository */
                 $nodeRepository = $event->getDocumentManager()->getRepository($this->nodeClass);
-                $nodes = $nodeRepository->findByParent($document->getNodeId(), $site->getSiteId());
+                $nodes = $nodeRepository->findByParent($document->getId(), $site->getSiteId());
                 /** @var $node NodeInterface */
                 foreach ($nodes as $node) {
                     $role = $document->getRole();
-                    $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $role);
+                    $nodeGroupRole = $group->getNodeRoleByIdAndRole($node->getNodeId(), $role);
                     if ($nodeGroupRole === null) {
                         throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
-                    } else if (NodeGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
+                    } else if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
                         $nodeGroupRole->setGranted($document->isGranted());
                     }
                 }

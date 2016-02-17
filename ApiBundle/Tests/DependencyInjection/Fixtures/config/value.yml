@@ -11,6 +11,7 @@ open_orchestra_api:
         content_type:             FacadeClass
         content_type_collection:  FacadeClass
         datatable_translation:    FacadeClass
+        document_group_role:      FacadeClass
         field_type:               FacadeClass
         group:                    FacadeClass
         group_collection:         FacadeClass
@@ -19,7 +20,6 @@ open_orchestra_api:
         link:                     FacadeClass
         node:                     FacadeClass
         node_collection:          FacadeClass
-        node_group_role:          FacadeClass
         node_tree:                FacadeClass
         redirection:              FacadeClass
         redirection_collection:   FacadeClass

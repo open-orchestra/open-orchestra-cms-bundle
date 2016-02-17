@@ -50,7 +50,7 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
             $accessType = $this->getNodeAccessType($node);
             foreach ($nodesRoles as $role => $translation) {
                 $nodeGroupRole = $this->createNodeGroupRole($node, $group, $role, $accessType);
-                $group->addNodeRole($nodeGroupRole);
+                $group->addDocumentRole($nodeGroupRole);
             }
             if (array_key_exists('child', $element) && ! empty($element['child'])) {
                 $this->createNodeGroupRoleForTree($element['child'], $group);

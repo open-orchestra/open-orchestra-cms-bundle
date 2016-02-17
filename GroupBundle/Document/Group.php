@@ -3,6 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
@@ -163,6 +164,17 @@ class Group extends BaseGroup implements GroupInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string $id
+     * @param string $role
+     *
+     * @return DocumentGroupRoleInterface|null
+     */
+    public function getNodeRoleByIdAndRole($id, $role)
+    {
+        return $this->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $id, $role);
     }
 
     /**

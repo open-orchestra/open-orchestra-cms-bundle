@@ -1,6 +1,5 @@
 parameters:
     open_orchestra_user.document.group.class: OpenOrchestra\GroupBundle\Document\Group
-    open_orchestra_group.document.node_group_role.class: OpenOrchestra\GroupBundle\Document\NodeGroupRole
     open_orchestra_group.document.document_group_role.class: OpenOrchestra\GroupBundle\Document\DocumentGroupRole
     open_orchestra_group.type.group_choice.class: OpenOrchestra\GroupBundle\Form\Type\GroupDocumentType
     open_orchestra_group.listener.add_node_group_role_for_node.class: OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForNodeListener
@@ -19,7 +18,7 @@ services:
     open_orchestra_group.listener.add_node_group_role_for_node:
         class: %open_orchestra_group.listener.add_node_group_role_for_node.class%
         arguments:
-            - %open_orchestra_group.document.node_group_role.class%
+            - %open_orchestra_group.document.document_group_role.class%
         calls:
             - [ setContainer, [ @service_container ] ]
         tags:
@@ -27,7 +26,7 @@ services:
     open_orchestra_group.listener.add_node_group_role_for_group:
         class: %open_orchestra_group.listener.add_node_group_role_for_group.class%
         arguments:
-            - %open_orchestra_group.document.node_group_role.class%
+            - %open_orchestra_group.document.document_group_role.class%
             - @open_orchestra_display.manager.tree
         calls:
             - [ setContainer, [ @service_container ] ]

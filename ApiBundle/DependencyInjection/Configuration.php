@@ -46,7 +46,6 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('role_string')->defaultValue('OpenOrchestra\ApiBundle\Facade\RoleFacade')->end()
                     ->scalarNode('role_string_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\RoleCollectionFacade')->end()
                     ->scalarNode('group')->defaultValue('OpenOrchestra\ApiBundle\Facade\GroupFacade')->end()
-                    ->scalarNode('node_group_role')->defaultValue('OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade')->end()
                     ->scalarNode('document_group_role')->defaultValue('OpenOrchestra\ApiBundle\Facade\DocumentGroupRoleFacade')->end()
                     ->scalarNode('group_collection')->defaultValue('OpenOrchestra\ApiBundle\Facade\GroupCollectionFacade')->end()
                     ->scalarNode('redirection')->defaultValue('OpenOrchestra\ApiBundle\Facade\RedirectionFacade')->end()

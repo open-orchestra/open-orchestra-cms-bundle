@@ -3,8 +3,8 @@
 namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use FOS\UserBundle\Model\UserInterface;
+use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
@@ -114,14 +114,14 @@ class NodeGroupRoleVoter implements VoterInterface
         if ($node->getNodeType() === NodeInterface::TYPE_TRANSVERSE || $node->getNodeType() === NodeInterface::TYPE_ERROR) {
             return true;
         }
-        $nodeGroupRole = $group->getNodeRoleByNodeAndRole($node->getNodeId(), $attribute);
-        if ($nodeGroupRole instanceof NodeGroupRoleInterface) {
-            if (NodeGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
+        $nodeGroupRole = $group->getNodeRoleByIdAndRole($node->getNodeId(), $attribute);
+        if ($nodeGroupRole instanceof DocumentGroupRoleInterface) {
+            if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
                 $nodeParent = $this->nodeRepository->findInLastVersion($node->getParentId(), $node->getLanguage(), $node->getSiteId());
                 if (null !== $nodeParent) {
                     return $this->isGrantedNodeGroupRole($nodeParent, $group, $attribute);
                 }
-            } elseif (NodeGroupRoleInterface::ACCESS_GRANTED === $nodeGroupRole->getAccessType()) {
+            } elseif (DocumentGroupRoleInterface::ACCESS_GRANTED === $nodeGroupRole->getAccessType()) {
                 return true;
             }
         }

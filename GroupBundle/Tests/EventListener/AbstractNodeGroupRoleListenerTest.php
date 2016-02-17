@@ -14,7 +14,7 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
     protected $lifecycleEventArgs;
     protected $container;
     protected $nodesRoles = array("access_node", "access_update_node");
-    protected $nodeGroupRoleClass = 'OpenOrchestra\GroupBundle\Document\NodeGroupRole';
+    protected $nodeGroupRoleClass = 'OpenOrchestra\GroupBundle\Document\DocumentGroupRole';
 
     /**
      * setUp
@@ -33,10 +33,10 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
      */
     protected function createMockGroup(){
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        $parentNodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface');
+        $parentNodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
         phake::when($parentNodeGroupRole)->isGranted()->thenReturn(true);
-        phake::when($group)->getNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn($parentNodeGroupRole);
-        phake::when($group)->hasNodeRoleByNodeAndRole(Phake::anyParameters())->thenReturn(false);
+        phake::when($group)->getNodeRoleByIdAndRole(Phake::anyParameters())->thenReturn($parentNodeGroupRole);
+        phake::when($group)->hasDocumentRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn(false);
 
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($group)->getSite()->thenReturn($site);

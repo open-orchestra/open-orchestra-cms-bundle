@@ -2,15 +2,10 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException;
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
-use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use OpenOrchestra\GroupBundle\Document\DocumentGroupRole;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
@@ -53,7 +48,7 @@ class NodeGroupRoleTransformer extends DocumentGroupRoleTransformer
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         $node = $this->nodeRepository->findInLastVersion($facade->document, $language, $siteId);
-        $parentAccess = $group->getDocumentRoleByTypeAndIdAndRole('node', $node->getParentId(), $facade->name);
+        $parentAccess = $group->getNodeRoleByIdAndRole($node->getParentId(), $facade->name);
         return $parentAccess->isGranted();
     }
 
