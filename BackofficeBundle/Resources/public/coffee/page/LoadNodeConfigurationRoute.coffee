@@ -14,6 +14,7 @@
   router.route 'node/show/:nodeId/:language', 'showNodeWithLanguage', (nodeId, language) ->
     @nodeWithLanguageAndVersion nodeId, language
     return
+
   router.route 'node/show/:nodeId/:language/:version', 'showNodeWithLanguageAndVersion', (nodeId, language, version) ->
     @nodeWithLanguageAndVersion nodeId, language, version
     return
