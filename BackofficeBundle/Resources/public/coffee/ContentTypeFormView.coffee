@@ -1,12 +1,29 @@
-ContentTypeFormView = FullPageFormView.extend(
+###*
+ * @namespace OpenOrchestra
+###
+window.OpenOrchestra or= {}
+
+###*
+ * @class ContentTypeFormView
+###
+class OpenOrchestra.ContentTypeFormView extends FullPageFormView
+
   events:
     'change .content_type_change_type': 'changeContentTypeChange'
 
+  ###*
+   * Rebuild the menu if the form is submitted
+  ###
   onViewReady: ->
     if @options.submitted
       displayRoute = appRouter.generateUrl('listEntities', entityType: @options.entityType)
       refreshMenu(displayRoute, true)
 
+  ###*
+   * Refresh a field form setting when the type is changed
+   *
+   * @param {Object} event
+  ###
   changeContentTypeChange: (event) ->
     event.preventDefault()
     target = $(event.currentTarget)
@@ -38,7 +55,7 @@ ContentTypeFormView = FullPageFormView.extend(
         if $('#' + defaultValueId).hasClass('tinymce')
             tinymce.editors = []
             activateTinyMce(defaultValueView, $('#' + defaultValueId))
-)
+
 
 jQuery ->
-  appConfigurationView.setConfiguration('content_types', 'editEntity', ContentTypeFormView)
+  appConfigurationView.setConfiguration('content_types', 'editEntity', OpenOrchestra.ContentTypeFormView)
