@@ -3,8 +3,14 @@
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
+<<<<<<< HEAD
 use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
+=======
+use OpenOrchestra\BackofficeBundle\Model\ModelGroupRoleInterface;
+use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+>>>>>>> mv node type constant in NodeInterface
 
 /**
  * Class NodeControllerAccessTest
@@ -75,7 +81,7 @@ class NodeControllerAccessTest extends AbstractControllerTest
             json_encode(array('model_roles' => array(
                 array(
                     'document' => $nodeId,
-                    'type' => ModelGroupRoleInterface::TYPE_NODE,
+                    'type' => NodeInterface::GROUP_ROLE_TYPE,
                     'access_type' => $accessType,
                     'name' => $role
                 )

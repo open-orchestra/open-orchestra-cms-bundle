@@ -5,6 +5,7 @@ namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\EventListener\UpdateNodeGroupRoleListener;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
@@ -38,7 +39,7 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
         $nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->nodeGroupRoleChild = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
 
-        Phake::when($nodeGroupRole)->getType()->thenReturn(ModelGroupRoleInterface::TYPE_NODE);
+        Phake::when($nodeGroupRole)->getType()->thenReturn(NodeInterface::GROUP_ROLE_TYPE);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($nodeGroupRole);
         Phake::when($this->uow)->getParentAssociation($nodeGroupRole)->thenReturn(array(array(), $this->group));
         Phake::when($this->group)->getSite()->thenReturn($site);

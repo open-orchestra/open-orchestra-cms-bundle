@@ -3,10 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
-use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
@@ -49,7 +49,7 @@ class NodeGroupRoleTransformer extends ModelGroupRoleTransformer
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         $node = $this->nodeRepository->findInLastVersion($facade->document, $language, $siteId);
-        $parentAccess = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name);
+        $parentAccess = $group->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $facade->name);
         return $parentAccess->isGranted();
     }
 

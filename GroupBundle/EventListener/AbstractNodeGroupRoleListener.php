@@ -61,13 +61,13 @@ abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
     {
         /** @var $nodeGroupRole ModelGroupRoleInterface */
         $nodeGroupRole = new $this->nodeGroupRoleClass();
-        $nodeGroupRole->setType(ModelGroupRoleInterface::TYPE_NODE);
+        $nodeGroupRole->setType(NodeInterface::GROUP_ROLE_TYPE);
         $nodeGroupRole->setId($node->getNodeId());
         $nodeGroupRole->setRole($role);
         $nodeGroupRole->setAccessType($accessType);
         $isGranted = (ModelGroupRoleInterface::ACCESS_DENIED === $accessType) ? false : true;
         if (ModelGroupRoleInterface::ACCESS_INHERIT === $accessType) {
-            $parentNodeRole = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getParentId(), $role);
+            $parentNodeRole = $group->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $role);
             if (null === $parentNodeRole) {
                 throw new NodeGroupRoleNotFoundException($role, $node->getParentId(), $group->getName());
             }

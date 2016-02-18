@@ -35,7 +35,7 @@ class UpdateNodeGroupRoleListener
         $uow = $event->getDocumentManager()->getUnitOfWork();
         if (
             $document instanceof ModelGroupRoleInterface &&
-            ModelGroupRoleInterface::TYPE_NODE === $document->getType() &&
+            NodeInterface::GROUP_ROLE_TYPE === $document->getType() &&
             $event->hasChangedField("accessType")
         ) {
             $parentAssociation = $uow->getParentAssociation($document);
@@ -49,7 +49,7 @@ class UpdateNodeGroupRoleListener
                 /** @var $node NodeInterface */
                 foreach ($nodes as $node) {
                     $role = $document->getRole();
-                    $nodeGroupRole = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
+                    $nodeGroupRole = $group->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $role);
                     if ($nodeGroupRole === null) {
                         throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                     } else if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {

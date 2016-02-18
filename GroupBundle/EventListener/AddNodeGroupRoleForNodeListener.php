@@ -3,7 +3,6 @@
 namespace OpenOrchestra\GroupBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
@@ -27,7 +26,7 @@ class AddNodeGroupRoleForNodeListener extends AbstractNodeGroupRoleListener
             foreach ($groups as $group) {
                 if ($siteId === $group->getSite()->getSiteId()) {
                     foreach ($nodesRoles as $role => $translation) {
-                        if (false === $group->hasModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $document->getNodeId(), $role)) {
+                        if (false === $group->hasModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $document->getNodeId(), $role)) {
                             $nodeGroupRole = $this->createNodeGroupRole($document, $group, $role, $accessType);
                             $group->addModelRole($nodeGroupRole);
                             $event->getDocumentManager()->persist($group);

@@ -5,6 +5,7 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 use OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer;
 use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 
 /**
@@ -79,23 +80,23 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
         $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
 
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade');
-        $facade->type = ModelGroupRoleInterface::TYPE_NODE;
+        $facade->type = NodeInterface::GROUP_ROLE_TYPE;
         $facade->document = $nodeId;
         $facade->name = $role;
         $facade->accessType = $accessType;
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $facade->document, $facade->name)->thenReturn($source);
+        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $facade->document, $facade->name)->thenReturn($source);
 
         Phake::when($node)->getParentId()->thenReturn('fakeId');
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($node);
-        Phake::when($group)->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
+        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($parentAccess);
 
         $nodeGroupRole = $this->transformer->reverseTransformWithGroup($group, $facade, $source);
 
         $this->assertInstanceOf('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface', $nodeGroupRole);
         $this->assertSame($source, $nodeGroupRole);
-        Phake::verify($source)->setType(ModelGroupRoleInterface::TYPE_NODE);
+        Phake::verify($source)->setType(NodeInterface::GROUP_ROLE_TYPE);
         Phake::verify($source)->setId($nodeId);
         Phake::verify($source)->setRole($role);
         Phake::verify($source)->setAccessType($accessType);

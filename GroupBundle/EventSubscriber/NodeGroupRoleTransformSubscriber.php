@@ -4,9 +4,9 @@ namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer;
 use OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupInterface;
-use OpenOrchestra\BackofficeBundle\Model\ModelGroupRoleInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
 use OpenOrchestra\GroupBundle\GroupFacadeEvents;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -70,7 +70,7 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
             throw new UnexpectedValueException("Document Group Role Transformer must be an instance of TransformerWithGroupInterface");
         }
         foreach ($facade->getModelRoles() as $modelGroupRoleFacade) {
-            if (ModelGroupRoleInterface::TYPE_NODE === $modelGroupRoleFacade->type) {
+            if (NodeInterface::GROUP_ROLE_TYPE === $modelGroupRoleFacade->type) {
                 $source = $group->getModelRoleByTypeAndIdAndRole(
                     $modelGroupRoleFacade->type,
                     $modelGroupRoleFacade->document,
