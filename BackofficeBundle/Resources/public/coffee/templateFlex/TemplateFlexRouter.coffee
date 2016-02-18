@@ -7,10 +7,10 @@
    * show template
   ###
   router.route 'template-flex/show/:templateId', 'showTemplateFlex', (templateId) ->
-    @initDisplayRouteChanges '#nav-template-' + templateId
+    @initDisplayRouteChanges '#nav-template-flex-' + templateId
     $.ajax
       type: "GET"
-      url: $('#nav-template-' + templateId).data('url')
+      url: $('#nav-template-flex-' + templateId).data('url')
       success: (response) ->
         template = new TemplateModel
         template.set response
