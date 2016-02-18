@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
-
 use OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType;
 use OpenOrchestra\Backoffice\Manager\AreaFlexManager;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;

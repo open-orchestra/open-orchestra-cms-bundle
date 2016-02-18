@@ -5,7 +5,7 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.AreaFlex or= {}
 
 ###*
- * @class AreaFlexView
+ * @class AreaFlexToolbarView
 ###
 class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
@@ -46,6 +46,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
    * Show form edit column
   ###
   showFormColumn: ->
+    adminFormViewClass = appConfigurationView.setConfiguration(@options.entityType, 'showOrchestraModal', OpenOrchestra.AreaFlex.AreaFlexFormView)
     adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
     url = @options.area.get("links")._self_form_column
     title = @$el.attr('data-title-edit-column')

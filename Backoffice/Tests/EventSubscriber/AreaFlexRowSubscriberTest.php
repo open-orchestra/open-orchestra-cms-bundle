@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-
 use OpenOrchestra\Backoffice\EventSubscriber\AreaFlexRowSubscriber;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType;

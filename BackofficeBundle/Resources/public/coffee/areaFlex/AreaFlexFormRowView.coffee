@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.AreaFlex or= {}
 
 ###*
- * @class AreaFlexView
+ * @class AreaFlexFormRowView
 ###
-class OpenOrchestra.AreaFlex.AreaFlexFormRowView extends OrchestraModalView
+class OpenOrchestra.AreaFlex.AreaFlexFormRowView extends OpenOrchestra.AreaFlex.AreaFlexFormView
 
   events:
     'click ul.list-inline li': 'selectOptionLayout'
@@ -20,11 +20,3 @@ class OpenOrchestra.AreaFlex.AreaFlexFormRowView extends OrchestraModalView
     input = $('#area_flex_row_columnLayout_layout', @$el)
     if (input.length > 0)
       input.val(layout)
-
-  ###*
-   * Refresh route when form is submitted
-  ###
-  onViewReady: ->
-    if @options.submitted
-      displayRoute = Backbone.history.fragment
-      Backbone.history.loadUrl(displayRoute)
