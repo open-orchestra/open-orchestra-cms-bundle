@@ -3,7 +3,7 @@
 namespace OpenOrchestra\GroupBundle\Event;
 
 use OpenOrchestra\ApiBundle\Facade\GroupFacade;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

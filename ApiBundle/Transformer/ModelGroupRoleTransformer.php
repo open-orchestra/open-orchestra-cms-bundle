@@ -5,8 +5,8 @@ namespace OpenOrchestra\ApiBundle\Transformer;
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\RoleNotFoundHttpException;
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
-use OpenOrchestra\BackofficeBundle\Model\ModelGroupRoleInterface;
-use OpenOrchestra\BackofficeBundle\Model\GroupInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
 

@@ -3,14 +3,9 @@
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
-<<<<<<< HEAD
 use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
-=======
-use OpenOrchestra\BackofficeBundle\Model\ModelGroupRoleInterface;
-use OpenOrchestra\BackofficeBundle\Repository\GroupRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
->>>>>>> mv node type constant in NodeInterface
 
 /**
  * Class NodeControllerAccessTest
