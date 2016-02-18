@@ -6,6 +6,7 @@ parameters:
     open_orchestra_group.listener.add_node_group_role_for_group.class: OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForGroupListener
     open_orchestra_group.listener.update_node_group_role.class: OpenOrchestra\GroupBundle\EventListener\UpdateNodeGroupRoleListener
     open_orchestra_group.subscriber.update_node_group_role_move_node.class: OpenOrchestra\GroupBundle\EventSubscriber\UpdateNodeGroupRoleMoveNodeSubscriber
+    open_orchestra_group.subscriber.node_group_role_transform.class: OpenOrchestra\GroupBundle\EventSubscriber\NodeGroupRoleTransformSubscriber
 
 services:
     open_orchestra_group.type.group_choice:
@@ -45,5 +46,12 @@ services:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.collector.backoffice_role
             - @object_manager
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_group.subscriber.node_group_role_transform:
+        class: %open_orchestra_group.subscriber.node_group_role_transform.class%
+        arguments:
+            - @router
+            - @open_orchestra_api.transformer.node_group_role
         tags:
             - { name: kernel.event_subscriber }
