@@ -1,12 +1,12 @@
 <?php
 
-namespace OpenOrchestra\BackofficeBundle\Form\Type\Component;
+namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\BackofficeBundle\EventSubscriber\SiteSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber;
 
 /**
  * Class SiteSiteAliasType
