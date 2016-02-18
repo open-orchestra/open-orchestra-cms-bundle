@@ -10,7 +10,6 @@ parameters:
     open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
     open_orchestra_backoffice.subscriber.add_transverse_block.class: OpenOrchestra\Backoffice\EventSubscriber\AddTransverseBlockSubscriber
     open_orchestra_backoffice.subscriber.create_transverse_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateTransverseNodeSubscriber
-    open_orchestra_backoffice.subscriber.content_search.class: OpenOrchestra\BackofficeBundle\EventSubscriber\ContentSearchSubscriber
     open_orchestra_backoffice.subscriber.site.class: OpenOrchestra\BackofficeBundle\EventSubscriber\SiteSubscriber
 
 services:
@@ -94,14 +93,8 @@ services:
             - @object_manager
         tags:
             - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.content_search:
-        class: %open_orchestra_backoffice.subscriber.content_search.class% 
-        arguments:
-            - @open_orchestra_model.repository.content
-            - @open_orchestra_backoffice.context_manager
-            - @open_orchestra.transformer.boolean_to_bdd
     open_orchestra_backoffice.subscriber.site:
-        class: %open_orchestra_backoffice.subscriber.site.class% 
+        class: %open_orchestra_backoffice.subscriber.site.class%
         arguments:
             - @open_orchestra_model.repository.site
             - @open_orchestra_backoffice.context_manager

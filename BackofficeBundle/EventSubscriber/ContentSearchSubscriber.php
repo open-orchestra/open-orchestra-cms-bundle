@@ -16,19 +16,25 @@ class ContentSearchSubscriber implements EventSubscriberInterface
 {
     protected $contentRepository;
     protected $contextManager;
-    protected $conditionFromBooleanToBddTransformer;
+    protected $transformer;
+    protected $attributes;
 
     /**
-     * @param ContentRepositoryInterface           $contentRepository
-     * @param CurrentSiteIdInterface               $contextManager
-     * @param ConditionFromBooleanToBddTransformer $conditionFromBooleanToBddTransformer
+     * @param ContentRepositoryInterface                    $contentRepository
+     * @param CurrentSiteIdInterface                        $contextManager
+     * @param ConditionFromBooleanToBddTransformerInterface $transformer
+     * @param array                                         $attributes
      */
-    public function __construct(ContentRepositoryInterface $contentRepository, CurrentSiteIdInterface $contextManager, ConditionFromBooleanToBddTransformerInterface $conditionFromBooleanToBddTransformer)
-    {
+    public function __construct(
+        ContentRepositoryInterface $contentRepository,
+        CurrentSiteIdInterface $contextManager,
+        ConditionFromBooleanToBddTransformerInterface $transformer,
+        array $attributes
+    ) {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
-        $this->conditionFromBooleanToBddTransformer = $conditionFromBooleanToBddTransformer;
-        $this->conditionFromBooleanToBddTransformer->setField('keywords');
+        $this->transformer = $transformer;
+        $this->attributes = $attributes;
     }
 
     /**
@@ -41,12 +47,13 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         if (!is_null($data) && ($data['contentType'] != '' || $data['keywords'] != '')) {
             $condition = null;
             if ($data['keywords'] != '') {
-                $condition = json_decode($this->conditionFromBooleanToBddTransformer->reverseTransform($data['keywords']), true);
+                $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
             }
             $form->add('contentId', 'choice', array(
                     'label' => false,
                     'required' => false,
-                    'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition)
+                    'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
+                    'attr' => $this->attributes,
             ));
         }
     }

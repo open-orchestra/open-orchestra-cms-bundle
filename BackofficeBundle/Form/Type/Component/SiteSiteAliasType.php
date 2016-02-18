@@ -35,6 +35,10 @@ class SiteSiteAliasType extends AbstractType
         $builder->add('siteId', 'choice', array(
             'label' => false,
             'choices' => $this->getChoices(),
+            'attr' => array(
+                'class' => 'to-tinyMce',
+                'data-key' => 'site'
+            ),
             'required' => false,
         ));
 

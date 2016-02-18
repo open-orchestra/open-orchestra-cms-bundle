@@ -294,15 +294,12 @@ activateDatepicker = (elements) ->
 #ACTIVATE CONTENT FILTER
 ajaxRefreshForm = (elements, view, form) ->
   elements.on 'click', ->
+      $('form', view.$el).replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
       form.ajaxSubmit
         method: 'POST'
         context: view
         success: (response) ->
-          old = @$el
-          html = @$el.clone()
-          $('form', html).replaceWith(response)
-          @setElement html
-          old.replaceWith @$el
+          $('.spin', @$el).replaceWith(response)
           activateForm(@, $('form', @$el))
     return
 

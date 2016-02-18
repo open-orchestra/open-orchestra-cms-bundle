@@ -308,6 +308,7 @@ open_orchestra_backoffice:
             edit:
                 success: The API client has been updated
         internal_link:
+            label: Label
             node: Page
             site: Site
             site_alias: Site alias

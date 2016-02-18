@@ -389,8 +389,9 @@ services:
     open_orchestra_backoffice.type.content_search:
         class: %open_orchestra_backoffice.type.content_search.class%
         arguments:
+            - @open_orchestra_model.repository.content
+            - @open_orchestra_backoffice.context_manager
             - %open_orchestra.transformer.boolean_to_bdd.class%
-            - @open_orchestra_backoffice.subscriber.content_search
         tags:
             - { name: form.type, alias: oo_content_search}
     open_orchestra_backoffice.type.internal_link:

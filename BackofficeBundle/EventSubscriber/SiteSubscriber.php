@@ -32,8 +32,12 @@ class SiteSubscriber implements EventSubscriberInterface
         if (!is_null($data) && $data['siteId'] != '') {
             $form->add('siteAlias', 'choice', array(
                     'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
+                    'attr' => array(
+                        'class' => 'to-tinyMce',
+                        'data-key' => 'site-alias'
+                    ),
+                    'choices' => $this->getChoices($data['siteId']),
                     'required' => false,
-                    'choices' => $this->getChoices($data['siteId'])
             ));
         }
     }
