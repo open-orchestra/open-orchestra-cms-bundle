@@ -63,8 +63,8 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($site = $group->getSite()) {
             $facade->site = $this->getTransformer('site')->transform($site);
         }
-        foreach ($group->getDocumentRoles() as $documentRoles) {
-            $facade->addDocumentRoles($this->getTransformer('document_group_role')->transform($documentRoles));
+        foreach ($group->getModelRoles() as $modelRoles) {
+            $facade->addModelRoles($this->getTransformer('model_group_role')->transform($modelRoles));
         }
 
         if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_GROUP)) {

@@ -3,9 +3,9 @@
 namespace OpenOrchestra\BackofficeBundle\Model;
 
 /**
- * Interface DocumentGroupRoleInterface
+ * Interface ModelGroupRoleInterface
  */
-interface DocumentGroupRoleInterface
+interface ModelGroupRoleInterface
 {
     const ACCESS_GRANTED = "granted";
     const ACCESS_DENIED = "denied";

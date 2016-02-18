@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer;
-use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
@@ -17,7 +17,7 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
      */
     protected $transformer;
 
-    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\DocumentGroupRoleFacade';
+    protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade';
     protected $context;
     protected $roleCollector;
     protected $nodeGroupRoleClass;
@@ -32,7 +32,7 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
         Phake::when($this->roleCollector)->hasRole(Phake::anyParameters())->thenReturn(true);
 
-        $this->nodeGroupRoleClass = 'OpenOrchestra\GroupBundle\Document\DocumentGroupRole';
+        $this->nodeGroupRoleClass = 'OpenOrchestra\GroupBundle\Document\ModelGroupRole';
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->context = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerManager');
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
@@ -75,27 +75,27 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
     public function testReverseTransformGroupWitAccessType($nodeId, $role, $accessType, $expectedAccess, $parentAccess)
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $source = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
-        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
+        $source = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
+        $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
 
-        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\DocumentGroupRoleFacade');
-        $facade->type = DocumentGroupRoleInterface::TYPE_NODE;
+        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade');
+        $facade->type = ModelGroupRoleInterface::TYPE_NODE;
         $facade->document = $nodeId;
         $facade->name = $role;
         $facade->accessType = $accessType;
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $facade->document, $facade->name)->thenReturn($source);
+        Phake::when($group)->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $facade->document, $facade->name)->thenReturn($source);
 
         Phake::when($node)->getParentId()->thenReturn('fakeId');
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($node);
-        Phake::when($group)->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
+        Phake::when($group)->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($parentAccess);
 
         $nodeGroupRole = $this->transformer->reverseTransformWithGroup($group, $facade, $source);
 
-        $this->assertInstanceOf('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface', $nodeGroupRole);
+        $this->assertInstanceOf('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface', $nodeGroupRole);
         $this->assertSame($source, $nodeGroupRole);
-        Phake::verify($source)->setType(DocumentGroupRoleInterface::TYPE_NODE);
+        Phake::verify($source)->setType(ModelGroupRoleInterface::TYPE_NODE);
         Phake::verify($source)->setId($nodeId);
         Phake::verify($source)->setRole($role);
         Phake::verify($source)->setAccessType($accessType);
@@ -108,12 +108,12 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
     public function provideTransformDataWithAccessType()
     {
         return array(
-            array('foo', 'bar', DocumentGroupRoleInterface::ACCESS_GRANTED, true, true),
-            array('foo', 'bar', DocumentGroupRoleInterface::ACCESS_GRANTED, true, false),
-            array('bar', 'foo', DocumentGroupRoleInterface::ACCESS_DENIED, false, true),
-            array('bar', 'foo', DocumentGroupRoleInterface::ACCESS_DENIED, false, false),
-            array('bar', 'foo', DocumentGroupRoleInterface::ACCESS_INHERIT, false, false),
-            array('bar', 'foo', DocumentGroupRoleInterface::ACCESS_INHERIT, true, true),
+            array('foo', 'bar', ModelGroupRoleInterface::ACCESS_GRANTED, true, true),
+            array('foo', 'bar', ModelGroupRoleInterface::ACCESS_GRANTED, true, false),
+            array('bar', 'foo', ModelGroupRoleInterface::ACCESS_DENIED, false, true),
+            array('bar', 'foo', ModelGroupRoleInterface::ACCESS_DENIED, false, false),
+            array('bar', 'foo', ModelGroupRoleInterface::ACCESS_INHERIT, false, false),
+            array('bar', 'foo', ModelGroupRoleInterface::ACCESS_INHERIT, true, true),
         );
     }
 }

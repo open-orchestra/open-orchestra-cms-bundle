@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\GroupBundle\Tests\EventListener;
 
-use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\GroupBundle\EventListener\UpdateNodeGroupRoleListener;
 use Phake;
@@ -31,14 +31,14 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
 
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
         Phake::when($this->documentManager)->getUnitOfWork()->thenReturn($this->uow);
-        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
+        $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         $childNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $this->group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         $nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->nodeGroupRoleChild = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
+        $this->nodeGroupRoleChild = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
 
-        Phake::when($nodeGroupRole)->getType()->thenReturn(DocumentGroupRoleInterface::TYPE_NODE);
+        Phake::when($nodeGroupRole)->getType()->thenReturn(ModelGroupRoleInterface::TYPE_NODE);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($nodeGroupRole);
         Phake::when($this->uow)->getParentAssociation($nodeGroupRole)->thenReturn(array(array(), $this->group));
         Phake::when($this->group)->getSite()->thenReturn($site);
@@ -60,7 +60,7 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
     public function testPreUpdate($childAccessType, $countUpdateChildGroupRole)
     {
         Phake::when($this->nodeGroupRoleChild)->getAccessType()->thenReturn($childAccessType);
-        Phake::when($this->group)->getDocumentRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn($this->nodeGroupRoleChild);
+        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn($this->nodeGroupRoleChild);
 
         $this->listener->preUpdate($this->lifecycleEventArgs);
 
@@ -73,9 +73,9 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
     public function provideNodeGroupRoleAccess()
     {
         return array(
-            array(DocumentGroupRoleInterface::ACCESS_DENIED, 0),
-            array(DocumentGroupRoleInterface::ACCESS_GRANTED, 0),
-            array(DocumentGroupRoleInterface::ACCESS_INHERIT, 1),
+            array(ModelGroupRoleInterface::ACCESS_DENIED, 0),
+            array(ModelGroupRoleInterface::ACCESS_GRANTED, 0),
+            array(ModelGroupRoleInterface::ACCESS_INHERIT, 1),
         );
     }
 
@@ -84,7 +84,7 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
      */
     public function testPreUpdateException()
     {
-        Phake::when($this->group)->getDocumentRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn(null);
         $this->setExpectedException('OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException');
 
         $this->listener->preUpdate($this->lifecycleEventArgs);

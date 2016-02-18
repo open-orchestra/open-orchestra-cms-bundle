@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\GroupBundle\Document;
 
-use OpenOrchestra\BackofficeBundle\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\BackofficeBundle\Model\ModelGroupRoleInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * Class DocumentGroupRole
+ * Class ModelGroupRole
  *
  * @ODM\EmbeddedDocument
  */
-class DocumentGroupRole implements DocumentGroupRoleInterface
+class ModelGroupRole implements ModelGroupRoleInterface
 {
     /**
      * @var string

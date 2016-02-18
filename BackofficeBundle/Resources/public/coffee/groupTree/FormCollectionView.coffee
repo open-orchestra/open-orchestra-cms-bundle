@@ -28,7 +28,7 @@ FormCollectionView = OrchestraView.extend(
       url: @options.group.links._self_edit
       method: 'POST'
       data: JSON.stringify(
-        document_roles: nodeGroupRoleData
+        model_roles: nodeGroupRoleData
       )
 )
 

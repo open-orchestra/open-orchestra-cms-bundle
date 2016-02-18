@@ -79,21 +79,21 @@ class GroupTest extends AbstractBaseTestCase
      *
      * @dataProvider provideDatasAndNode
      */
-    public function getDocumentRoleByTypeAndIdAndRole(array $datas, $type, $id, $role)
+    public function getModelRoleByTypeAndIdAndRole(array $datas, $type, $id, $role)
     {
         foreach ($datas as $data) {
-            $documentGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
-            Phake::when($documentGroupRole)->getType()->thenReturn($data['type']);
-            Phake::when($documentGroupRole)->getId()->thenReturn($data['id']);
-            Phake::when($documentGroupRole)->getRole()->thenReturn($data['role']);
-            $this->group->addDocumentRole($documentGroupRole);
+            $modelGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
+            Phake::when($modelGroupRole)->getType()->thenReturn($data['type']);
+            Phake::when($modelGroupRole)->getId()->thenReturn($data['id']);
+            Phake::when($modelGroupRole)->getRole()->thenReturn($data['role']);
+            $this->group->addModelRole($modelGroupRole);
         }
 
-        $documentGroupRole = $this->group->getDocumentRoleByTypeAndIdAndRole($type, $id, $role);
+        $modelGroupRole = $this->group->getModelRoleByTypeAndIdAndRole($type, $id, $role);
 
-        $this->assertSame($type, $documentGroupRole->getType());
-        $this->assertSame($id, $documentGroupRole->getId());
-        $this->assertSame($role, $documentGroupRole->getRole());
+        $this->assertSame($type, $modelGroupRole->getType());
+        $this->assertSame($id, $modelGroupRole->getId());
+        $this->assertSame($role, $modelGroupRole->getRole());
     }
 
     /**
@@ -111,12 +111,13 @@ class GroupTest extends AbstractBaseTestCase
     /**
      * Test add node roles
      */
-    public function addDocumentRole()
+    public function addModelRole()
     {
-        $documentGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface');
-        $this->group->addDocumentRole($documentGroupRole);
-        $this->group->addDocumentRole($documentGroupRole);
+        $modelGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
 
-        $this->assertCount(1, $this->group->getDocumentRoles());
+        $this->group->addModelRole($modelGroupRole);
+        $this->group->addModelRole($modelGroupRole);
+
+        $this->assertCount(1, $this->group->getModelRoles());
     }
 }

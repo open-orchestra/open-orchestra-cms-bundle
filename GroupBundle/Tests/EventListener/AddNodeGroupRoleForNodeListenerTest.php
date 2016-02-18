@@ -66,7 +66,7 @@ class AddNodeGroupRoleForNodeListenerTest extends AbstractNodeGroupRoleListenerT
         $group1 = $this->createMockGroup();
         $group2 = $this->createMockGroup();
         $group3 = $this->createMockGroup();
-        Phake::when($group3)->hasDocumentRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn(true);
+        Phake::when($group3)->hasModelRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn(true);
 
         return array(
            array(array($group1, $group2), 2),

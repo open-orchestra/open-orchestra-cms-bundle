@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Functional\Controller;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
-use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 
 /**
@@ -47,13 +47,13 @@ class NodeControllerAccessTest extends AbstractControllerTest
         $nodeId = 'fixture_page_community';
         $groupName = 'Demo group';
 
-        $this->updateDocumentGroupRole($groupName, $nodeId, DocumentGroupRoleInterface::ACCESS_DENIED, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+        $this->updateModelGroupRole($groupName, $nodeId, ModelGroupRoleInterface::ACCESS_DENIED, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
 
         $this->client->request('POST', '/api/node/' . $nodeId . '/duplicate?language=fr');
         $this->assertSame(403, $this->client->getResponse()->getStatusCode());
         $this->assertContains('open_orchestra_api.node.duplicate_not_granted', $this->client->getResponse()->getContent());
 
-        $this->updateDocumentGroupRole($groupName, $nodeId, DocumentGroupRoleInterface::ACCESS_INHERIT, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
+        $this->updateModelGroupRole($groupName, $nodeId, ModelGroupRoleInterface::ACCESS_INHERIT, TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
     }
 
     /**
@@ -62,7 +62,7 @@ class NodeControllerAccessTest extends AbstractControllerTest
      * @param string $accessType
      * @param string $role
      */
-    protected function updateDocumentGroupRole($groupName, $nodeId, $accessType, $role)
+    protected function updateModelGroupRole($groupName, $nodeId, $accessType, $role)
     {
         $group = $this->groupRepository->findOneBy(array('name' => $groupName));
         $groupId = $group->getId();
@@ -72,10 +72,10 @@ class NodeControllerAccessTest extends AbstractControllerTest
             array(),
             array(),
             array(),
-            json_encode(array('document_roles' => array(
+            json_encode(array('model_roles' => array(
                 array(
                     'document' => $nodeId,
-                    'type' => DocumentGroupRoleInterface::TYPE_NODE,
+                    'type' => ModelGroupRoleInterface::TYPE_NODE,
                     'access_type' => $accessType,
                     'name' => $role
                 )

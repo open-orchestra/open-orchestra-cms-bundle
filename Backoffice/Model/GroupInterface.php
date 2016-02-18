@@ -48,21 +48,21 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
     /**
      * @return array
      */
-    public function getDocumentRoles();
+    public function getModelRoles();
 
     /**
-     * @param DocumentGroupRoleInterface $documentGroupRole
+     * @param ModelGroupRoleInterface $modelGroupRole
      */
-    public function addDocumentRole(DocumentGroupRoleInterface $documentGroupRole);
+    public function addModelRole(ModelGroupRoleInterface $modelGroupRole);
 
     /**
      * @param string $type
      * @param string $id
      * @param string $role
      *
-     * @return DocumentGroupRoleInterface|null
+     * @return ModelGroupRoleInterface|null
      */
-    public function getDocumentRoleByTypeAndIdAndRole($type, $id, $role);
+    public function getModelRoleByTypeAndIdAndRole($type, $id, $role);
 
     /**
      * @param string $type
@@ -71,6 +71,6 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
      *
      * @return boolean
      */
-    public function hasDocumentRoleByTypeAndIdAndRole($type, $id, $role);
+    public function hasModelRoleByTypeAndIdAndRole($type, $id, $role);
 
 }

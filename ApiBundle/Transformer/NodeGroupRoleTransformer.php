@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\Backoffice\Collector\RoleCollectorInterface;
-use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
@@ -12,28 +12,28 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 /**
  * Class NodeGroupRoleTransformer
  */
-class NodeGroupRoleTransformer extends DocumentGroupRoleTransformer
+class NodeGroupRoleTransformer extends ModelGroupRoleTransformer
 {
-    protected $documentGroupRoleClass;
+    protected $modelGroupRoleClass;
     protected $collector;
     protected $nodeRepository;
     protected $currentSiteManager;
 
     /**
      * @param string                  $facadeClass
-     * @param string                  $documentGroupRoleClass
+     * @param string                  $modelGroupRoleClass
      * @param RoleCollectorInterface  $collector
      * @param NodeRepositoryInterface $nodeRepository
      * @param CurrentSiteIdInterface  $currentSiteManager
      */
     public function __construct(
         $facadeClass,
-        $documentGroupRoleClass,
+        $modelGroupRoleClass,
         RoleCollectorInterface $collector,
         NodeRepositoryInterface $nodeRepository,
         CurrentSiteIdInterface $currentSiteManager
     ) {
-        parent::__construct($facadeClass, $documentGroupRoleClass, $collector);
+        parent::__construct($facadeClass, $modelGroupRoleClass, $collector);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }
@@ -49,7 +49,7 @@ class NodeGroupRoleTransformer extends DocumentGroupRoleTransformer
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         $node = $this->nodeRepository->findInLastVersion($facade->document, $language, $siteId);
-        $parentAccess = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name);
+        $parentAccess = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name);
         return $parentAccess->isGranted();
     }
 

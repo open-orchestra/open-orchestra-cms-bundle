@@ -3,7 +3,7 @@
 namespace OpenOrchestra\GroupBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
-use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -34,8 +34,8 @@ class UpdateNodeGroupRoleListener
         $document = $event->getDocument();
         $uow = $event->getDocumentManager()->getUnitOfWork();
         if (
-            $document instanceof DocumentGroupRoleInterface &&
-            DocumentGroupRoleInterface::TYPE_NODE === $document->getType() &&
+            $document instanceof ModelGroupRoleInterface &&
+            ModelGroupRoleInterface::TYPE_NODE === $document->getType() &&
             $event->hasChangedField("accessType")
         ) {
             $parentAssociation = $uow->getParentAssociation($document);
@@ -49,10 +49,10 @@ class UpdateNodeGroupRoleListener
                 /** @var $node NodeInterface */
                 foreach ($nodes as $node) {
                     $role = $document->getRole();
-                    $nodeGroupRole = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
+                    $nodeGroupRole = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
                     if ($nodeGroupRole === null) {
                         throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
-                    } else if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
+                    } else if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
                         $nodeGroupRole->setGranted($document->isGranted());
                     }
                 }

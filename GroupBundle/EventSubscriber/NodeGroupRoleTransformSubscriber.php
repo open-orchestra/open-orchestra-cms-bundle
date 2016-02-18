@@ -4,7 +4,7 @@ namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer;
 use OpenOrchestra\ApiBundle\Transformer\TransformerWithGroupInterface;
-use OpenOrchestra\BackofficeBundle\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\BackofficeBundle\Model\ModelGroupRoleInterface;
 use OpenOrchestra\GroupBundle\Event\GroupFacadeEvent;
 use OpenOrchestra\GroupBundle\GroupFacadeEvents;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
@@ -59,6 +59,7 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
 
     /**
      * @param GroupFacadeEvent $event
+     *
      * @throws UnexpectedValueException
      */
     public function postGroupReverseTransformation(GroupFacadeEvent $event)
@@ -68,15 +69,15 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
         if (!$this->transformer instanceof TransformerWithGroupInterface) {
             throw new UnexpectedValueException("Document Group Role Transformer must be an instance of TransformerWithGroupInterface");
         }
-        foreach ($facade->getDocumentRoles() as $documentRoleFacade) {
-            if (DocumentGroupRoleInterface::TYPE_NODE === $documentRoleFacade->type) {
-                $source = $group->getDocumentRoleByTypeAndIdAndRole(
-                    $documentRoleFacade->type,
-                    $documentRoleFacade->document,
-                    $documentRoleFacade->name
+        foreach ($facade->getModelRoles() as $modelGroupRoleFacade) {
+            if (ModelGroupRoleInterface::TYPE_NODE === $modelGroupRoleFacade->type) {
+                $source = $group->getModelRoleByTypeAndIdAndRole(
+                    $modelGroupRoleFacade->type,
+                    $modelGroupRoleFacade->document,
+                    $modelGroupRoleFacade->name
                 );
-                $documentGroupRole = $this->transformer->reverseTransformWithGroup($group, $documentRoleFacade, $source);
-                $group->addDocumentRole($documentGroupRole);
+                $modelGroupRole = $this->transformer->reverseTransformWithGroup($group, $modelGroupRoleFacade, $source);
+                $group->addModelRole($modelGroupRole);
             }
         }
     }

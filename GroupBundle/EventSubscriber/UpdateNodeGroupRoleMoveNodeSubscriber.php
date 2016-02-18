@@ -4,7 +4,7 @@ namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector;
-use OpenOrchestra\Backoffice\Model\DocumentGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface;
 use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
@@ -66,9 +66,9 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
         foreach ($groups as $group) {
             if ($node->getSiteId() === $group->getSite()->getSiteId()) {
                 foreach ($nodeRole as $role => $translation) {
-                    $nodeGroupRole = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
-                    if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
-                        $nodeGroupRoleParent = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getParentId(), $role);
+                    $nodeGroupRole = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
+                    if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
+                        $nodeGroupRoleParent = $group->getModelRoleByTypeAndIdAndRole(ModelGroupRoleInterface::TYPE_NODE, $node->getParentId(), $role);
                         if ($nodeGroupRoleParent === null) {
                             throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                         }
