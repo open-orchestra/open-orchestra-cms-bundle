@@ -65,14 +65,6 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
     public function getDocumentRoleByTypeAndIdAndRole($type, $id, $role);
 
     /**
-     * @param string $id
-     * @param string $role
-     *
-     * @return DocumentGroupRoleInterface|null
-     */
-    public function getNodeRoleByIdAndRole($id, $role);
-
-    /**
      * @param string $type
      * @param string $id
      * @param string $role

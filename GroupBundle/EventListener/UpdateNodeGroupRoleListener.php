@@ -49,7 +49,7 @@ class UpdateNodeGroupRoleListener
                 /** @var $node NodeInterface */
                 foreach ($nodes as $node) {
                     $role = $document->getRole();
-                    $nodeGroupRole = $group->getNodeRoleByIdAndRole($node->getNodeId(), $role);
+                    $nodeGroupRole = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
                     if ($nodeGroupRole === null) {
                         throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                     } else if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {

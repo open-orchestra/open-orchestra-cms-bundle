@@ -167,17 +167,6 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @param string $id
-     * @param string $role
-     *
-     * @return DocumentGroupRoleInterface|null
-     */
-    public function getNodeRoleByIdAndRole($id, $role)
-    {
-        return $this->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $id, $role);
-    }
-
-    /**
      * @param string $type
      * @param string $id
      * @param string $role

@@ -84,11 +84,11 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
         $facade->name = $role;
         $facade->accessType = $accessType;
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getNodeRoleByIdAndRole($facade->document, $facade->name)->thenReturn($source);
+        Phake::when($group)->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $facade->document, $facade->name)->thenReturn($source);
 
         Phake::when($node)->getParentId()->thenReturn('fakeId');
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($node);
-        Phake::when($group)->getNodeRoleByIdAndRole($node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
+        Phake::when($group)->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($parentAccess);
 
         $nodeGroupRole = $this->transformer->reverseTransformWithGroup($group, $facade, $source);

@@ -66,9 +66,9 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
         foreach ($groups as $group) {
             if ($node->getSiteId() === $group->getSite()->getSiteId()) {
                 foreach ($nodeRole as $role => $translation) {
-                    $nodeGroupRole = $group->getNodeRoleByIdAndRole($node->getNodeId(), $role);
+                    $nodeGroupRole = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $role);
                     if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
-                        $nodeGroupRoleParent = $group->getNodeRoleByIdAndRole($node->getParentId(), $role);
+                        $nodeGroupRoleParent = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getParentId(), $role);
                         if ($nodeGroupRoleParent === null) {
                             throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                         }

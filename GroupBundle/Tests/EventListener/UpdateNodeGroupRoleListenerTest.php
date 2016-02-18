@@ -60,7 +60,7 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
     public function testPreUpdate($childAccessType, $countUpdateChildGroupRole)
     {
         Phake::when($this->nodeGroupRoleChild)->getAccessType()->thenReturn($childAccessType);
-        Phake::when($this->group)->getNodeRoleByIdAndRole(Phake::anyParameters())->thenReturn($this->nodeGroupRoleChild);
+        Phake::when($this->group)->getDocumentRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn($this->nodeGroupRoleChild);
 
         $this->listener->preUpdate($this->lifecycleEventArgs);
 
@@ -84,7 +84,7 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
      */
     public function testPreUpdateException()
     {
-        Phake::when($this->group)->getNodeRoleByIdAndRole(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->group)->getDocumentRoleByTypeAndIdAndRole(Phake::anyParameters())->thenReturn(null);
         $this->setExpectedException('OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException');
 
         $this->listener->preUpdate($this->lifecycleEventArgs);

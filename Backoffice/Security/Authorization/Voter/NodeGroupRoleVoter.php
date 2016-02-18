@@ -114,7 +114,7 @@ class NodeGroupRoleVoter implements VoterInterface
         if ($node->getNodeType() === NodeInterface::TYPE_TRANSVERSE || $node->getNodeType() === NodeInterface::TYPE_ERROR) {
             return true;
         }
-        $nodeGroupRole = $group->getNodeRoleByIdAndRole($node->getNodeId(), $attribute);
+        $nodeGroupRole = $group->getDocumentRoleByTypeAndIdAndRole(DocumentGroupRoleInterface::TYPE_NODE, $node->getNodeId(), $attribute);
         if ($nodeGroupRole instanceof DocumentGroupRoleInterface) {
             if (DocumentGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
                 $nodeParent = $this->nodeRepository->findInLastVersion($node->getParentId(), $node->getLanguage(), $node->getSiteId());

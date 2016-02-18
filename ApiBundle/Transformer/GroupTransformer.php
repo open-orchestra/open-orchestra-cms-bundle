@@ -28,7 +28,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
      * @param string                        $facadeClass
      * @param AuthorizationCheckerInterface $authorizationChecker
      * @param TranslationChoiceManager      $translationChoiceManager
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param EventDispatcherInterface      $eventDispatcher
      */
     public function __construct(
         $facadeClass,
@@ -129,7 +129,8 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         }
         foreach ($facade->getDocumentRoles() as $documentRoleFacade) {
             if (DocumentGroupRoleInterface::TYPE_NODE === $documentRoleFacade->type) {
-                $source = $group->getNodeRoleByIdAndRole(
+                $source = $group->getDocumentRoleByTypeAndIdAndRole(
+                    $documentRoleFacade->type,
                     $documentRoleFacade->document,
                     $documentRoleFacade->name
                 );
