@@ -21,9 +21,9 @@ class AreaFlexController extends BaseController
     /**
      * @param string      $areaId
      * @param string      $templateId
-     * @param string|null $parentId
+     * @param string|null $areaParentId
      *
-     * @Config\Route("/{areaId}/delete-in-template/{parentId}/{templateId}", name="open_orchestra_api_area_flex_column_delete_in_template")
+     * @Config\Route("/{areaId}/delete-in-template/{areaParentId}/{templateId}", name="open_orchestra_api_area_flex_column_delete_in_template")
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_flex_row_delete_in_template")
      * @Config\Method({"DELETE"})
      *
@@ -31,13 +31,13 @@ class AreaFlexController extends BaseController
      *
      * @return Response
      */
-    public function deleteAreaInTemplateAction($areaId, $templateId, $parentId = null)
+    public function deleteAreaInTemplateAction($areaId, $templateId, $areaParentId = null)
     {
         $template = $this->get('open_orchestra_model.repository.template_flex')->findOneByTemplateId($templateId);
         $rootArea = $template->getArea();
         $removedArea = $areaId;
-        if (null !== $parentId) {
-            $parentArea = $this->get('open_orchestra_model.repository.template_flex')->findAreaInTemplateByAreaId($template, $parentId);
+        if (null !== $areaParentId) {
+            $parentArea = $this->get('open_orchestra_model.repository.template_flex')->findAreaInTemplateByAreaId($template, $areaParentId);
             if (1 === count($parentArea->getAreas())) {
                 $removedArea = $parentArea->getAreaId();
             }
