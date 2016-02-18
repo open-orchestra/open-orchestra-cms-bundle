@@ -317,7 +317,6 @@ activateForm = (view, form) ->
   $("[data-prototype]", form).each ->
     PO.formPrototypes.addPrototype $(@), view
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
-  loadExtendView(view, 'contentTypeChange') if (elements = $("[data-prototype*='content_type_change_type']", form)) && elements.length > 0
 
 
 #LOAD EXTEND VIEW
