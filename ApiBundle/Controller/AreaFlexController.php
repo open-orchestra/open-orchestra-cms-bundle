@@ -23,7 +23,7 @@ class AreaFlexController extends BaseController
      * @param string      $templateId
      * @param string|null $areaParentId
      *
-     * @Config\Route("/{areaId}/delete-in-template/{areaParentId}/{templateId}", name="open_orchestra_api_area_flex_column_delete_in_template")
+     * @Config\Route("/{areaId}/delete-in-template/{templateId}/{areaParentId}", name="open_orchestra_api_area_flex_column_delete_in_template")
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_flex_row_delete_in_template")
      * @Config\Method({"DELETE"})
      *
