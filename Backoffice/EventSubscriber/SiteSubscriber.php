@@ -66,5 +66,4 @@ class SiteSubscriber implements EventSubscriberInterface
 
         return $choices;
     }
-
 }
