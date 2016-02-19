@@ -55,9 +55,9 @@ class ModelGroupRoleTransformer extends AbstractTransformer implements Transform
     }
 
     /**
-     * @param GroupInterface                  $group
-     * @param FacadeInterface                 $modelGroupRoleFacade
-     * @param ModelGroupRoleInterface|null    $source
+     * @param GroupInterface               $group
+     * @param FacadeInterface              $modelGroupRoleFacade
+     * @param ModelGroupRoleInterface|null $source
      *
      * @throws RoleNotFoundHttpException
      * @throws TransformerParameterTypeException

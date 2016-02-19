@@ -21,7 +21,7 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
     protected $transformer;
 
     /**
-     * @param UrlGeneratorInterface $router
+     * @param UrlGeneratorInterface    $router
      * @param NodeGroupRoleTransformer $transformer
      */
     public function __construct(UrlGeneratorInterface $router, NodeGroupRoleTransformer $transformer)
