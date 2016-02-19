@@ -12,8 +12,8 @@ NodeTreeElementView = OrchestraView.extend(
     )
     @formInput = @options.domContainer.find('div.form-input').last()
     nodeId = @options.nodes.node.node_id
-    nodeGroupRoles = @options.group.node_roles.filter (element) ->
-      element.node == nodeId
+    nodeGroupRoles = @options.group.model_roles.filter (element) ->
+      element.model_id == nodeId
     formCollectionViewClass = appConfigurationView.getConfiguration('group_tab_node_tree_form', 'editEntityTab')
     new formCollectionViewClass(
       roles: @options.roles.roles
@@ -22,7 +22,7 @@ NodeTreeElementView = OrchestraView.extend(
       group: @options.group
       nodeElement: @options.nodes.node
     )
-    @subNode = @options.domContainer.find('ul.child-node').last()
+    @subNode = @options.domContainer.find('ul.child-document').last()
     if @options.nodes.children.length > 0
       for child of @options.nodes.children
         @addChildToView @options.nodes.children[child]

@@ -3,7 +3,7 @@
     switcher = $(e.currentTarget)
     switcher.toggleClass 'open'
     nodeElement = switcher.closest('li')
-    container = nodeElement.children('.child-node').first()
+    container = nodeElement.children('.child-document').first()
     if !switcher.hasClass('open')
       switcher.addClass 'fa-plus-square-o'
       switcher.removeClass 'fa-minus-square-o'

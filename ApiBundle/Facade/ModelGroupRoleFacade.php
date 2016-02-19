@@ -6,10 +6,15 @@ use JMS\Serializer\Annotation as Serializer;
 use OpenOrchestra\BaseApi\Facade\AbstractFacade;
 
 /**
- * Class NodeGroupRoleFacade
+ * Class ModelGroupRoleFacade
  */
-class NodeGroupRoleFacade extends AbstractFacade
+class ModelGroupRoleFacade extends AbstractFacade
 {
+    /**
+     * @Serializer\Type("string")
+     */
+    public $type;
+
     /**
      * @Serializer\Type("string")
      */
@@ -18,7 +23,7 @@ class NodeGroupRoleFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $node;
+    public $modelId;
 
     /**
      * @Serializer\Type("string")

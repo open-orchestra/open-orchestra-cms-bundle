@@ -1,2 +1,2 @@
 resolve_target_documents:
-    OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface: OpenOrchestra\GroupBundle\Document\NodeGroupRole
+    OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface: OpenOrchestra\GroupBundle\Document\ModelGroupRole

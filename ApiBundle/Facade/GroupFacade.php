@@ -32,9 +32,9 @@ class GroupFacade extends AbstractFacade
     public $site;
 
     /**
-     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\NodeGroupRoleFacade>")
+     * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade>")
      */
-    protected $nodeRoles = array();
+    protected $modelRoles = array();
 
     /**
      * @param string $role
@@ -47,16 +47,16 @@ class GroupFacade extends AbstractFacade
     /**
      * @param FacadeInterface $facade
      */
-    public function addNodeRoles(FacadeInterface $facade)
+    public function addModelRoles(FacadeInterface $facade)
     {
-        $this->nodeRoles[] = $facade;
+        $this->modelRoles[] = $facade;
     }
 
     /**
      * @return array
      */
-    public function getNodeRoles()
+    public function getModelRoles()
     {
-        return $this->nodeRoles;
+        return $this->modelRoles;
     }
 }

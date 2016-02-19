@@ -6,7 +6,7 @@ use OpenOrchestra\GroupBundle\Exception\NodeGroupRoleNotFoundException;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
@@ -40,9 +40,9 @@ abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
      */
     protected function getNodeAccessType(NodeInterface $node)
     {
-        $accessType = NodeGroupRoleInterface::ACCESS_INHERIT;
+        $accessType = ModelGroupRoleInterface::ACCESS_INHERIT;
         if (NodeInterface::ROOT_NODE_ID === $node->getNodeId()) {
-            $accessType = NodeGroupRoleInterface::ACCESS_GRANTED;
+            $accessType = ModelGroupRoleInterface::ACCESS_GRANTED;
         }
 
         return $accessType;
@@ -54,21 +54,22 @@ abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
      * @param string         $role
      * @param string         $accessType
      *
-     * @return NodeGroupRoleInterface
+     * @return ModelGroupRoleInterface
      * @throws NodeGroupRoleNotFoundException
      */
     protected function createNodeGroupRole($node, $group, $role, $accessType)
     {
-        /** @var $nodeGroupRole NodeGroupRoleInterface */
+        /** @var $nodeGroupRole ModelGroupRoleInterface */
         $nodeGroupRole = new $this->nodeGroupRoleClass();
-        $nodeGroupRole->setNodeId($node->getNodeId());
+        $nodeGroupRole->setType(NodeInterface::GROUP_ROLE_TYPE);
+        $nodeGroupRole->setId($node->getNodeId());
         $nodeGroupRole->setRole($role);
         $nodeGroupRole->setAccessType($accessType);
-        $isGranted = (NodeGroupRoleInterface::ACCESS_DENIED === $accessType) ? false : true;
-        if (NodeGroupRoleInterface::ACCESS_INHERIT === $accessType) {
-            $parentNodeRole = $group->getNodeRoleByNodeAndRole($node->getParentId(), $role);
+        $isGranted = (ModelGroupRoleInterface::ACCESS_DENIED === $accessType) ? false : true;
+        if (ModelGroupRoleInterface::ACCESS_INHERIT === $accessType) {
+            $parentNodeRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $role);
             if (null === $parentNodeRole) {
-                throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
+                throw new NodeGroupRoleNotFoundException($role, $node->getParentId(), $group->getName());
             }
             $isGranted = $parentNodeRole->isGranted();
         }

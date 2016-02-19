@@ -17,9 +17,9 @@ open_orchestra_api:
         keyword:                  FacadeClass
         keyword_collection:       FacadeClass
         link:                     FacadeClass
+        model_group_role:         FacadeClass
         node:                     FacadeClass
         node_collection:          FacadeClass
-        node_group_role:          FacadeClass
         node_tree:                FacadeClass
         redirection:              FacadeClass
         redirection_collection:   FacadeClass

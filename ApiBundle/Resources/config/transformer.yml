@@ -25,6 +25,7 @@ parameters:
     open_orchestra_api.transformer.role_string_collection.class: OpenOrchestra\ApiBundle\Transformer\RoleStringCollectionTransformer
     open_orchestra_api.transformer.group.class: OpenOrchestra\ApiBundle\Transformer\GroupTransformer
     open_orchestra_api.transformer.node_group_role.class: OpenOrchestra\ApiBundle\Transformer\NodeGroupRoleTransformer
+    open_orchestra_api.transformer.model_group_role.class: OpenOrchestra\ApiBundle\Transformer\ModelGroupRoleTransformer
     open_orchestra_api.transformer.group_collection.class: OpenOrchestra\ApiBundle\Transformer\GroupCollectionTransformer
     open_orchestra_api.transformer.redirection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionTransformer
     open_orchestra_api.transformer.redirection_collection.class: OpenOrchestra\ApiBundle\Transformer\RedirectionCollectionTransformer
@@ -223,16 +224,25 @@ services:
             - %open_orchestra_api.facade.group.class%
             - @security.authorization_checker
             - @open_orchestra_backoffice.manager.translation_choice
+            - @event_dispatcher
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.node_group_role:
         class: %open_orchestra_api.transformer.node_group_role.class%
         arguments:
-            - %open_orchestra_api.facade.node_group_role.class%
-            - %open_orchestra_group.document.node_group_role.class%
+            - %open_orchestra_api.facade.model_group_role.class%
+            - %open_orchestra_group.document.model_group_role.class%
             - @open_orchestra_backoffice.collector.backoffice_role
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.context_manager
+        tags:
+            - { name: open_orchestra_api.transformer.strategy}
+    open_orchestra_api.transformer.model_group_role:
+        class: %open_orchestra_api.transformer.model_group_role.class%
+        arguments:
+            - %open_orchestra_api.facade.model_group_role.class%
+            - %open_orchestra_group.document.model_group_role.class%
+            - @open_orchestra_backoffice.collector.backoffice_role
         tags:
             - { name: open_orchestra_api.transformer.strategy}
     open_orchestra_api.transformer.group_collection:

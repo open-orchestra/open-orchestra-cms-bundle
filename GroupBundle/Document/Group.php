@@ -3,8 +3,8 @@
 namespace OpenOrchestra\GroupBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
+use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
-use OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -34,11 +34,12 @@ class Group extends BaseGroup implements GroupInterface
     protected $labels;
 
     /**
-     * @var Collection $nodeRoles
+     * @var Collection $modelRoles
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\NodeGroupRoleInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface")
      */
-    protected $nodeRoles;
+    protected $modelRoles;
+
 
     /**
      * Constructor
@@ -62,7 +63,7 @@ class Group extends BaseGroup implements GroupInterface
     protected function initCollections()
     {
         $this->labels = new ArrayCollection();
-        $this->nodeRoles = new ArrayCollection();
+        $this->modelRoles = new ArrayCollection();
         $this->roles = array();
     }
 
@@ -129,35 +130,36 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @return array
      */
-    public function getNodeRoles()
+    public function getModelGroupRoles()
     {
-        return $this->nodeRoles;
+        return $this->modelRoles;
     }
 
     /**
-     * @param NodeGroupRoleInterface $nodeGroupRole
+     * @param ModelGroupRoleInterface $modelGroupRole
      */
-    public function addNodeRole(NodeGroupRoleInterface $nodeGroupRole)
+    public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole)
     {
-        if ($this->nodeRoles->contains($nodeGroupRole)) {
-            $this->nodeRoles->set($this->nodeRoles->indexOf($nodeGroupRole), $nodeGroupRole);
+        if ($this->modelRoles->contains($modelGroupRole)) {
+            $this->modelRoles->set($this->modelRoles->indexOf($modelGroupRole), $modelGroupRole);
         } else {
-            $this->nodeRoles->add($nodeGroupRole);
+            $this->modelRoles->add($modelGroupRole);
         }
     }
 
     /**
-     * @param string $nodeId
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
-     * @return NodeGroupRoleInterface|null
+     * @return ModelGroupRoleInterface|null
      */
-    public function getNodeRoleByNodeAndRole($nodeId, $role)
+    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
-        /** @var NodeGroupRoleInterface $nodeRole */
-        foreach ($this->nodeRoles as $nodeRole) {
-            if ($nodeRole->getNodeId() == $nodeId && $nodeRole->getRole() == $role) {
-                return $nodeRole;
+        /** @var ModelGroupRoleInterface $modelRole */
+        foreach ($this->modelRoles as $modelRole) {
+            if ($modelRole->getType() == $type && $modelRole->getId() == $id && $modelRole->getRole() == $role) {
+                return $modelRole;
             }
         }
 
@@ -165,13 +167,14 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
-     * @param string $nodeId
+     * @param string $type
+     * @param string $id
      * @param string $role
      *
      * @return boolean
      */
-    public function hasNodeRoleByNodeAndRole($nodeId, $role)
+    public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
-        return null !== $this->getNodeRoleByNodeAndRole($nodeId, $role);
+        return null !== $this->getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
     }
 }
