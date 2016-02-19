@@ -1,9 +1,21 @@
-InternalLinkFormView = OrchestraView.extend(
+###*
+ * @namespace OpenOrchestra:InternalLinkFormView
+###
+window.OpenOrchestra or= {}
+
+###*
+ * @class InternalLinkFormView
+###
+class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
+
   events:
     'click .modalClose': 'closeModal'
     'hidden.bs.modal': 'closedModal'
     'click button[data-clone]': 'sendToTiny'
 
+  ###*
+   * @param {object} options
+  ###
   initialize: (options) ->
     @options = @reduceOption(options, [
       'selector'
@@ -16,6 +28,9 @@ InternalLinkFormView = OrchestraView.extend(
     ]
     return
 
+  ###*
+   * Spin and render ajax call
+  ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/internalLinkModalView',
       body: '<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>'
@@ -37,12 +52,21 @@ InternalLinkFormView = OrchestraView.extend(
         activateForm(@, $('form', @$el))
     return
 
+  ###*
+   * @param {object} event
+  ###
   closeModal: (event) ->
     @$el.modal 'hide'
 
+  ###*
+   * @param {object} event
+  ###
   closedModal: (event) ->
     @$el.remove()
 
+  ###*
+   * @param {object} event
+  ###
   sendToTiny: (event) ->
     if $('.label-tinyMce', this.$el).val() != ''
       @closeModal()
@@ -52,7 +76,6 @@ InternalLinkFormView = OrchestraView.extend(
         link.attr('data-' + element.data('key'), element.val())
       div = $('<div>').append(link)
       tinymce.get(@options.editor.id).insertContent(div.html())
-)
 
 jQuery ->
-  appConfigurationView.setConfiguration 'internalLink', 'showForm', InternalLinkFormView
+  appConfigurationView.setConfiguration 'internalLink', 'showForm', OpenOrchestra.InternalLinkFormView
