@@ -59,5 +59,4 @@ class InternalLinkType extends AbstractType
     {
         return "oo_internal_link";
     }
-
 }

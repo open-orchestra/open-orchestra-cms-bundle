@@ -50,10 +50,10 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                 $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
             }
             $form->add('contentId', 'choice', array(
-                    'label' => false,
-                    'required' => false,
-                    'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
-                    'attr' => $this->attributes,
+                'label' => false,
+                'required' => false,
+                'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
+                'attr' => $this->attributes,
             ));
         }
     }
