@@ -45,10 +45,8 @@ class ModelGroupRoleTransformer extends AbstractTransformer implements Transform
         if (!$modelGroupRole instanceof ModelGroupRoleInterface) {
             throw new TransformerParameterTypeException();
         }
-
         $facade = $this->newFacade();
-
-        $facade->document = $modelGroupRole->getId();
+        $facade->modelId = $modelGroupRole->getId();
         $facade->type = $modelGroupRole->getType();
         $facade->name = $modelGroupRole->getRole();
         $facade->accessType = $modelGroupRole->getAccessType();
@@ -71,16 +69,13 @@ class ModelGroupRoleTransformer extends AbstractTransformer implements Transform
         if (!$source instanceof ModelGroupRoleInterface) {
             $source = new $this->modelGroupRoleClass();
         }
-
         if (!$this->collector->hasRole($modelGroupRoleFacade->name)) {
             throw new RoleNotFoundHttpException();
         }
-
         $source->setType($modelGroupRoleFacade->type);
-        $source->setId($modelGroupRoleFacade->document);
+        $source->setId($modelGroupRoleFacade->modelId);
         $source->setRole($modelGroupRoleFacade->name);
         $source->setAccessType($modelGroupRoleFacade->accessType);
-
         if (ModelGroupRoleInterface::ACCESS_INHERIT === $modelGroupRoleFacade->accessType) {
             $source->setGranted($this->isParentGranted($group, $modelGroupRoleFacade));
         } else {

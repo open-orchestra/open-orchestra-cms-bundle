@@ -59,11 +59,11 @@ class NodeControllerAccessTest extends AbstractControllerTest
 
     /**
      * @param string $groupName
-     * @param string $nodeId
+     * @param string $modelId
      * @param string $accessType
      * @param string $role
      */
-    protected function updateModelGroupRole($groupName, $nodeId, $accessType, $role)
+    protected function updateModelGroupRole($groupName, $modelId, $accessType, $role)
     {
         $group = $this->groupRepository->findOneBy(array('name' => $groupName));
         $groupId = $group->getId();
@@ -75,7 +75,7 @@ class NodeControllerAccessTest extends AbstractControllerTest
             array(),
             json_encode(array('model_roles' => array(
                 array(
-                    'document' => $nodeId,
+                    'model_id' => $modelId,
                     'type' => NodeInterface::GROUP_ROLE_TYPE,
                     'access_type' => $accessType,
                     'name' => $role

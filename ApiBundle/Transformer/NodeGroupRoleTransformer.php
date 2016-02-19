@@ -48,7 +48,7 @@ class NodeGroupRoleTransformer extends ModelGroupRoleTransformer
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        $node = $this->nodeRepository->findInLastVersion($facade->document, $language, $siteId);
+        $node = $this->nodeRepository->findInLastVersion($facade->modelId, $language, $siteId);
         $parentAccess = $group->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $facade->name);
         return $parentAccess->isGranted();
     }

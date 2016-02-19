@@ -22,6 +22,7 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
 
     /**
      * @param UrlGeneratorInterface $router
+     * @param NodeGroupRoleTransformer $transformer
      */
     public function __construct(UrlGeneratorInterface $router, NodeGroupRoleTransformer $transformer)
     {
@@ -67,13 +68,13 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
         $facade = $event->getGroupFacade();
         $group = $event->getGroup();
         if (!$this->transformer instanceof TransformerWithGroupInterface) {
-            throw new UnexpectedValueException("Document Group Role Transformer must be an instance of TransformerWithGroupInterface");
+            throw new UnexpectedValueException("Node Group Role Transformer must be an instance of TransformerWithGroupInterface");
         }
         foreach ($facade->getModelRoles() as $modelGroupRoleFacade) {
             if (NodeInterface::GROUP_ROLE_TYPE === $modelGroupRoleFacade->type) {
                 $source = $group->getModelRoleByTypeAndIdAndRole(
                     $modelGroupRoleFacade->type,
-                    $modelGroupRoleFacade->document,
+                    $modelGroupRoleFacade->modelId,
                     $modelGroupRoleFacade->name
                 );
                 $modelGroupRole = $this->transformer->reverseTransformWithGroup($group, $modelGroupRoleFacade, $source);

@@ -86,7 +86,7 @@ class ModelGroupRoleTransformerTest extends AbstractBaseTestCase
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade', $facade);
         $this->assertSame($type, $facade->type);
-        $this->assertSame($id, $facade->document);
+        $this->assertSame($id, $facade->modelId);
         $this->assertSame($role, $facade->name);
         $this->assertSame($accessType, $facade->accessType);
 
@@ -116,7 +116,7 @@ class ModelGroupRoleTransformerTest extends AbstractBaseTestCase
     {
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade');
         $facade->type = $type;
-        $facade->document = $id;
+        $facade->modelId = $id;
         $facade->name = $role;
         $facade->accessType = $accessType;
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');

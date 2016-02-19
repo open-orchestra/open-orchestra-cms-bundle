@@ -23,7 +23,7 @@ class ModelGroupRoleFacade extends AbstractFacade
     /**
      * @Serializer\Type("string")
      */
-    public $document;
+    public $modelId;
 
     /**
      * @Serializer\Type("string")

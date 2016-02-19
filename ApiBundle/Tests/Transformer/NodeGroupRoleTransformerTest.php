@@ -81,11 +81,11 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
 
         $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\ModelGroupRoleFacade');
         $facade->type = NodeInterface::GROUP_ROLE_TYPE;
-        $facade->document = $nodeId;
+        $facade->modelId = $nodeId;
         $facade->name = $role;
         $facade->accessType = $accessType;
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $facade->document, $facade->name)->thenReturn($source);
+        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $facade->modelId, $facade->name)->thenReturn($source);
 
         Phake::when($node)->getParentId()->thenReturn('fakeId');
         Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($node);

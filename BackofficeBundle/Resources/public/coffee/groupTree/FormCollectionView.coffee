@@ -11,7 +11,7 @@ FormCollectionView = OrchestraView.extend(
     for role in @options.roles
       @options.domContainer.append @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/groupTree/groupTreeForm',
         role: role
-        document: @options.nodeElement
+        element: @options.nodeElement
       )
     @setElement @options.domContainer
     if @options.nodeGroupRoles != undefined
@@ -23,7 +23,7 @@ FormCollectionView = OrchestraView.extend(
     name = $(e.currentTarget).data('role-name')
     nodeId = @options.nodeElement.node_id
     nodeGroupRoleData = []
-    nodeGroupRoleData.push({'document': nodeId, 'type':'node', 'access_type': value, 'name': name})
+    nodeGroupRoleData.push({'model_id': nodeId, 'type':'node', 'access_type': value, 'name': name})
     $.ajax
       url: @options.group.links._self_edit
       method: 'POST'
