@@ -65,18 +65,19 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
    * @param {object} event
   ###
   sendToTiny: (event) ->
-  inputText = $('.label-tinyMce', @$el)
-  inputText.parent().removeClass 'has-error'
-  if inputText.val() != ''
-    @closeModal()
-    link = $('<a>').html($('.label-tinyMce', @$el).val())
-    _.each $('.to-tinyMce', @$el), (element, key) ->
-      element = $(element)
-      link.attr 'data-' + element.data('key'), element.val()
-    div = $('<div>').append(link)
-    tinymce.get(@options.editor.id).insertContent div.html()
-  else
-    inputText.parent().addClass 'has-error'
+    inputText = $('.label-tinyMce', @$el)
+    inputText.parent().removeClass 'has-error'
+    if inputText.val() != ''
+      @closeModal()
+      link = $('<a>').html($('.label-tinyMce', @$el).val())
+      _.each $('.to-tinyMce', @$el), (element, key) ->
+        element = $(element)
+        link.attr 'data-' + element.data('key'), element.val()
+      div = $('<div>').append(link)
+      tinymce.get(@options.editor.id).insertContent div.html()
+    else
+      inputText.parent().addClass 'has-error'
+      inputText.focus()
 
 jQuery ->
   appConfigurationView.setConfiguration 'internalLink', 'showForm', OpenOrchestra.InternalLinkFormView
