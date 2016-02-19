@@ -15,8 +15,9 @@ interface TransformerWithTemplateFlexContextInterface
     /**
      * @param AreaFlexInterface     $area
      * @param TemplateFlexInterface $template
+     * @param string|null           $parentAreaId
      *
      * @return FacadeInterface
      */
-    public function transformFromTemplateFlex(AreaFlexInterface $area, TemplateFlexInterface $template);
+    public function transformFromTemplateFlex(AreaFlexInterface $area, TemplateFlexInterface $template,  $parentAreaId = null);
 }
