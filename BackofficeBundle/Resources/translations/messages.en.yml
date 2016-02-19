@@ -204,6 +204,7 @@ open_orchestra_backoffice:
             html_class: Html class for the area
             label: Area label
             new_row_title: New row
+            edit_row_title: Edit row
             edit_column_title: Edit column
             width: Area width
             column_layout:

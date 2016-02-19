@@ -1,4 +1,6 @@
-<div class="area-flex">
+<div class="area-flex"
+     data-title-new-row = "{{ 'open_orchestra_backoffice.form.area_flex.new_row_title'|trans() }}"
+>
     <% if ('column' === area.get('area_type')) { %>
         <header class="text-center"><%= area.get('label') %></header>
     <% }  %>

@@ -5,7 +5,7 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.AreaFlex or= {}
 
 ###*
- * @class AreaFlexView
+ * @class AreaFlexToolbarView
 ###
 class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
@@ -16,6 +16,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     'click .edit-column': 'showFormColumn'
     'click .delete-column': 'deleteColumn'
     'click .delete-row': 'deleteRow'
+    'click .edit-row': 'showFormRow'
 
   ###*
    * @param {Object} options
@@ -40,17 +41,30 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     @updateToolbarPosition(@$el)
     $(window).bind 'scroll', () ->
       context.updateToolbarPosition(context.$el)
+
   ###*
    * Show form edit column
   ###
   showFormColumn: ->
+    adminFormViewClass = appConfigurationView.setConfiguration(@options.entityType, 'showOrchestraModal', OpenOrchestra.AreaFlex.AreaFlexFormView)
     adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
     url = @options.area.get("links")._self_form_column
+    title = @$el.attr('data-title-edit-column')
     if url?
       new adminFormViewClass(
         url: url
         entityType: @options.entityType
+        title: title
       )
+
+  ###*
+   * Show form edit row
+  ###
+  showFormRow: ->
+    url = @options.area.get("links")._self_form_row
+    title = @$el.attr('data-title-edit-row')
+    if url?
+      @showFormWithSelectLayout(url, title)
 
   ###*
    * @param {Object} el Jquery element
@@ -67,7 +81,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   deleteColumn: (event) ->
     url = @options.area.get("links")._self_delete_column
-    @deleteArea(event, url) if url
+    @deleteArea(event, url) if url?
 
   ###*
    * Delete row
@@ -75,7 +89,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   deleteRow: (event) ->
     url = @options.area.get("links")._self_delete_row
-    @deleteArea(event, url) if url
+    @deleteArea(event, url) if url?
 
   ###*
    * Delete area

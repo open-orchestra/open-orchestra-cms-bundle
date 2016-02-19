@@ -45,7 +45,7 @@ class AreaFlexRowLayoutTest extends AbstractBaseTestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_backoffice_validators.form.area_flex.row_layout', $this->constraint->message);
+        $this->assertSame('open_orchestra_backoffice_validators.area_flex.row_layout', $this->constraint->message);
     }
 
     /**

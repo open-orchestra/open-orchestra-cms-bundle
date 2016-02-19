@@ -39,7 +39,8 @@ class FormControllersTest extends AbstractControllerTest
             array('/admin/redirection/new'),
             array('/admin/template_flex/new'),
             array('/admin/area_flex/row/new/template_home_flex/root'),
-            array('/admin/area_flex/column/template_home_flex/content'),
+            array('/admin/area_flex/column/template_home_flex/root_row_2_column_1'),
+            array('/admin/area_flex/row/template_home_flex/root_row_2'),
         );
     }
 }

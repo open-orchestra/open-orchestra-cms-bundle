@@ -1,4 +1,9 @@
-<div class="area-toolbar">
+<div
+    class="area-toolbar"
+    data-title-new-row = "{{ 'open_orchestra_backoffice.form.area_flex.new_row_title'|trans() }}"
+    data-title-edit-row = "{{ 'open_orchestra_backoffice.form.area_flex.edit_row_title'|trans() }}"
+    data-title-edit-column = "{{ 'open_orchestra_backoffice.form.area_flex.edit_column_title'|trans() }}"
+>
     <div class="row">
         <div class="col col-lg-9">
             <p><%= area.get('label') %></p>
@@ -26,7 +31,7 @@
             <button type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-align-justify"></span>
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default edit-row">
                 <span class="glyphicon glyphicon-cog"></span>
             </button>
             <button type="button" class="btn btn-default delete-row"
