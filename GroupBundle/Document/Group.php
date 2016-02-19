@@ -130,7 +130,7 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @return array
      */
-    public function getModelRoles()
+    public function getModelGroupRoles()
     {
         return $this->modelRoles;
     }
@@ -138,7 +138,7 @@ class Group extends BaseGroup implements GroupInterface
     /**
      * @param ModelGroupRoleInterface $modelGroupRole
      */
-    public function addModelRole(ModelGroupRoleInterface $modelGroupRole)
+    public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole)
     {
         if ($this->modelRoles->contains($modelGroupRole)) {
             $this->modelRoles->set($this->modelRoles->indexOf($modelGroupRole), $modelGroupRole);
@@ -154,7 +154,7 @@ class Group extends BaseGroup implements GroupInterface
      *
      * @return ModelGroupRoleInterface|null
      */
-    public function getModelRoleByTypeAndIdAndRole($type, $id, $role)
+    public function getModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
         /** @var ModelGroupRoleInterface $modelRole */
         foreach ($this->modelRoles as $modelRole) {
@@ -173,8 +173,8 @@ class Group extends BaseGroup implements GroupInterface
      *
      * @return boolean
      */
-    public function hasModelRoleByTypeAndIdAndRole($type, $id, $role)
+    public function hasModelGroupRoleByTypeAndIdAndRole($type, $id, $role)
     {
-        return null !== $this->getModelRoleByTypeAndIdAndRole($type, $id, $role);
+        return null !== $this->getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
     }
 }

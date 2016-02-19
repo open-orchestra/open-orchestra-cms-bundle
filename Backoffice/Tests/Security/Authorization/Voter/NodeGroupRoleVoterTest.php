@@ -117,7 +117,7 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($ngrAccessType);
 
         $group = $this->generateGroup($groupSiteId);
-        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
+        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
         $otherGroup = $this->generateGroup('otherSiteId');
         $noSiteGroup = $this->generateGroup();
 
@@ -186,8 +186,8 @@ class NodeGroupRoleVoterTest extends AbstractBaseTestCase
         Phake::when($parentNodeGroupRole)->getAccessType()->thenReturn($ngrParentAccessType);
 
         $group = $this->generateGroup($groupSiteId);
-        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
-        Phake::when($group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $parentId, $ngrRole)->thenReturn($parentNodeGroupRole);
+        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $ngrNodeId, $ngrRole)->thenReturn($nodeGroupRole);
+        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $parentId, $ngrRole)->thenReturn($parentNodeGroupRole);
         $otherGroup = $this->generateGroup('otherSiteId');
         $noSiteGroup = $this->generateGroup();
 

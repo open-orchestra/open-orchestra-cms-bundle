@@ -77,11 +77,11 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($accessNode);
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
         $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($accessParent);
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
 
         $groups = array($this->group);
 
@@ -102,9 +102,9 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
     {
         $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn(ModelGroupRoleInterface::ACCESS_INHERIT);
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeParentId, $this->role)->thenReturn(null);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeParentId, $this->role)->thenReturn(null);
 
         $groups = array($this->group);
 
@@ -159,17 +159,17 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
         Phake::when($nodeGroupRole)->isGranted()->thenReturn($accessNode);
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeNodeId, $this->role)->thenReturn($nodeGroupRole);
 
         $nodeGroupChild = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupChild)->getAccessType()->thenReturn($accessChildType);
         Phake::when($nodeGroupChild)->getNodeId()->thenReturn($fakeChildId);
         Phake::when($nodeGroupChild)->isGranted()->thenReturn($accessChild);
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $fakeChildId, $this->role)->thenReturn($nodeGroupChild);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $fakeChildId, $this->role)->thenReturn($nodeGroupChild);
 
         $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($accessParent);
-        Phake::when($this->group)->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
+        Phake::when($this->group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $this->fakeParentId, $this->role)->thenReturn($nodeGroupRoleParent);
 
         $groups = array($this->group);
 

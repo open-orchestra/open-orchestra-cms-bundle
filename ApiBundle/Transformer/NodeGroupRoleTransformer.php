@@ -44,12 +44,12 @@ class NodeGroupRoleTransformer extends ModelGroupRoleTransformer
      *
      * @return bool
      */
-    protected function isParentGranted(GroupInterface $group, FacadeInterface $facade)
+    protected function isParentAccessGranted(GroupInterface $group, FacadeInterface $facade)
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         $node = $this->nodeRepository->findInLastVersion($facade->modelId, $language, $siteId);
-        $parentAccess = $group->getModelRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $facade->name);
+        $parentAccess = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $facade->name);
         return $parentAccess->isGranted();
     }
 

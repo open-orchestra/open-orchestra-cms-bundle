@@ -79,17 +79,17 @@ class GroupTest extends AbstractBaseTestCase
      *
      * @dataProvider provideDatasAndNode
      */
-    public function getModelRoleByTypeAndIdAndRole(array $datas, $type, $id, $role)
+    public function getModelGroupRoleByTypeAndIdAndRole(array $datas, $type, $id, $role)
     {
         foreach ($datas as $data) {
             $modelGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
             Phake::when($modelGroupRole)->getType()->thenReturn($data['type']);
             Phake::when($modelGroupRole)->getId()->thenReturn($data['id']);
             Phake::when($modelGroupRole)->getRole()->thenReturn($data['role']);
-            $this->group->addModelRole($modelGroupRole);
+            $this->group->addModelGroupRole($modelGroupRole);
         }
 
-        $modelGroupRole = $this->group->getModelRoleByTypeAndIdAndRole($type, $id, $role);
+        $modelGroupRole = $this->group->getModelGroupRoleByTypeAndIdAndRole($type, $id, $role);
 
         $this->assertSame($type, $modelGroupRole->getType());
         $this->assertSame($id, $modelGroupRole->getId());
@@ -111,13 +111,13 @@ class GroupTest extends AbstractBaseTestCase
     /**
      * Test add node roles
      */
-    public function addModelRole()
+    public function addModelGroupRole()
     {
         $modelGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
 
-        $this->group->addModelRole($modelGroupRole);
-        $this->group->addModelRole($modelGroupRole);
+        $this->group->addModelGroupRole($modelGroupRole);
+        $this->group->addModelGroupRole($modelGroupRole);
 
-        $this->assertCount(1, $this->group->getModelRoles());
+        $this->assertCount(1, $this->group->getModelGroupRoles());
     }
 }

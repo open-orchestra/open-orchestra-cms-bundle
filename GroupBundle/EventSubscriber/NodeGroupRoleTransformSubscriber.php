@@ -33,7 +33,7 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
     /**
      * @param GroupFacadeEvent $event
      */
-    public function postGroupTransformation(GroupFacadeEvent $event)
+    public function postGroupTransform(GroupFacadeEvent $event)
     {
         $facade = $event->getGroupFacade();
         $group = $event->getGroup();
@@ -63,7 +63,7 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
      *
      * @throws UnexpectedValueException
      */
-    public function postGroupReverseTransformation(GroupFacadeEvent $event)
+    public function postGroupReverseTransform(GroupFacadeEvent $event)
     {
         $facade = $event->getGroupFacade();
         $group = $event->getGroup();
@@ -72,13 +72,13 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
         }
         foreach ($facade->getModelRoles() as $modelGroupRoleFacade) {
             if (NodeInterface::GROUP_ROLE_TYPE === $modelGroupRoleFacade->type) {
-                $source = $group->getModelRoleByTypeAndIdAndRole(
+                $source = $group->getModelGroupRoleByTypeAndIdAndRole(
                     $modelGroupRoleFacade->type,
                     $modelGroupRoleFacade->modelId,
                     $modelGroupRoleFacade->name
                 );
                 $modelGroupRole = $this->transformer->reverseTransformWithGroup($group, $modelGroupRoleFacade, $source);
-                $group->addModelRole($modelGroupRole);
+                $group->addModelGroupRole($modelGroupRole);
             }
         }
     }
@@ -89,8 +89,8 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            GroupFacadeEvents::POST_GROUP_TRANSFORMATION => 'postGroupTransformation',
-            GroupFacadeEvents::POST_GROUP_REVERSE_TRANSFORMATION => 'postGroupReverseTransformation'
+            GroupFacadeEvents::POST_GROUP_TRANSFORMATION => 'postGroupTransform',
+            GroupFacadeEvents::POST_GROUP_REVERSE_TRANSFORMATION => 'postGroupReverseTransform'
         );
     }
 }

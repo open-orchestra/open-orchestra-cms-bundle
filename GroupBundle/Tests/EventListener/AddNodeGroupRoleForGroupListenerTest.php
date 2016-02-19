@@ -59,7 +59,7 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
 
         $this->listener->prePersist($this->lifecycleEventArgs);
 
-        Phake::verify($this->group, Phake::times($countNodeGroupRole))->addModelRole(Phake::anyParameters());
+        Phake::verify($this->group, Phake::times($countNodeGroupRole))->addModelGroupRole(Phake::anyParameters());
     }
 
     /**

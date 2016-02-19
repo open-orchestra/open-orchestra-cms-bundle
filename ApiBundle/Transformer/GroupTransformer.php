@@ -63,7 +63,7 @@ class GroupTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($site = $group->getSite()) {
             $facade->site = $this->getTransformer('site')->transform($site);
         }
-        foreach ($group->getModelRoles() as $modelRoles) {
+        foreach ($group->getModelGroupRoles() as $modelRoles) {
             $facade->addModelRoles($this->getTransformer('model_group_role')->transform($modelRoles));
         }
 

@@ -77,7 +77,7 @@ class ModelGroupRoleTransformer extends AbstractTransformer implements Transform
         $source->setRole($modelGroupRoleFacade->name);
         $source->setAccessType($modelGroupRoleFacade->accessType);
         if (ModelGroupRoleInterface::ACCESS_INHERIT === $modelGroupRoleFacade->accessType) {
-            $source->setGranted($this->isParentGranted($group, $modelGroupRoleFacade));
+            $source->setGranted($this->isParentAccessGranted($group, $modelGroupRoleFacade));
         } else {
             $isGranted = (ModelGroupRoleInterface::ACCESS_GRANTED === $modelGroupRoleFacade->accessType) ? true : false;
             $source->setGranted($isGranted);
@@ -92,7 +92,7 @@ class ModelGroupRoleTransformer extends AbstractTransformer implements Transform
      *
      * @return bool
      */
-    protected function isParentGranted(GroupInterface $group, FacadeInterface $facade)
+    protected function isParentAccessGranted(GroupInterface $group, FacadeInterface $facade)
     {
         return false;
     }
