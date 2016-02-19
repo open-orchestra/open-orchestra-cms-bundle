@@ -73,12 +73,8 @@ activateTinyMce = (view, textarea) ->
 
     callback_tinymce_init = (editor) ->
       tinymce_button_linkmanager = (editor) ->
-        selector = '#modal_internal_link_' + editor.id
         internalLinkFormViewClass = appConfigurationView.getConfiguration('internalLink', 'showForm')
-        new internalLinkFormViewClass(
-          selector: selector
-          editor: editor
-        )
+        new internalLinkFormViewClass($.extend($('#modal_internal_link_' + editor.id).data(), editor: editor))
       textarea.each ->
         if $(this).data('required')
           $(this).attr('required', 'required')

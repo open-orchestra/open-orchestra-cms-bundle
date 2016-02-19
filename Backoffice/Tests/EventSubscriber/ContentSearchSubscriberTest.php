@@ -113,13 +113,13 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
-                    'label' => false,
-                    'required' => false,
-                    'choices' => array(
-                        $this->contentId1 => $this->contentName1,
-                        $this->contentId2 => $this->contentName2,
-                   ),
-                    'attr' => $this->attributes,
-            ));
+            'label' => false,
+            'required' => false,
+            'choices' => array(
+                $this->contentId1 => $this->contentName1,
+                $this->contentId2 => $this->contentName2,
+           ),
+            'attr' => $this->attributes,
+        ));
     }
 }
