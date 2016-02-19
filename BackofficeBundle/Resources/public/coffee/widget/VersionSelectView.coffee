@@ -34,7 +34,7 @@ VersionSelectView = OrchestraView.extend(
 
   changeVersion: (event) ->
     event.preventDefault()
-    version = $(@el).val() # IE9 fix: event.currentTarget.value is empty on IE9
+    version = @$el.val() # IE9 fix: event.currentTarget.value is empty on IE9
     displayLoader()
     redirectUrl = appRouter.generateUrl(@options.currentVersion.path, appRouter.addParametersToRoute(
       version: version
