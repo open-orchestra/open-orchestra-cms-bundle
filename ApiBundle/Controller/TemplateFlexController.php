@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\TemplateFlexEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
-use OpenOrchestra\ApiBundle\Controller\ControllerTrait\AreaContainer;
 
 /**
  * Class TemplateFlexController
@@ -21,8 +20,6 @@ use OpenOrchestra\ApiBundle\Controller\ControllerTrait\AreaContainer;
  */
 class TemplateFlexController extends BaseController
 {
-    use AreaContainer;
-
     /**
      * @param string $templateId
      *
@@ -43,7 +40,7 @@ class TemplateFlexController extends BaseController
     /**
      * @param string $templateId
      *
-     * @Config\Route("/{templateId}/delete", name="open_orchestra_api_template_delete")
+     * @Config\Route("/{templateId}/delete", name="open_orchestra_api_template_flex_delete")
      * @Config\Method({"DELETE"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE_FLEX')")
@@ -60,4 +57,5 @@ class TemplateFlexController extends BaseController
 
         return array();
     }
+
 }

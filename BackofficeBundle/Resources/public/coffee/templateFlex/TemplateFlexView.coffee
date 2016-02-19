@@ -28,6 +28,8 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateFlex/templateFlexView"
     ]
+    OpenOrchestra.AreaFlex.Channel.bind 'activateSortableAreaRow', @showOverlaySortableArea, @
+    OpenOrchestra.AreaFlex.Channel.bind 'disableSortableArea', @hideOverlaySortableArea, @
     return
 
   ###*
@@ -66,3 +68,11 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
       viewContainer: @
       widget_index: 2
     ))
+
+  hideOverlaySortableArea: () ->
+    if $('.overlay-sortable', @$el).length > 0
+      $('.overlay-sortable', @$el).remove()
+
+  showOverlaySortableArea: () ->
+    if $('.overlay-sortable', @$el).length == 0
+      $('.template-flex-container',@$el).prepend($('<div/>', { 'class': 'overlay-sortable'}))
