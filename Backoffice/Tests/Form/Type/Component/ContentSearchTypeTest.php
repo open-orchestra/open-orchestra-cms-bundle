@@ -13,13 +13,22 @@ use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface;
 class ContentSearchTypeTest extends AbstractBaseTestCase
 {
     protected $form;
+    protected $contentRepository;
+    protected $contextManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->form = new ContentSearchType('OpenOrchestra\Backoffice\Tests\Form\Type\Component\PhakeClass');
+        $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
+        $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+
+        $this->form = new ContentSearchType(
+            $this->contentRepository,
+            $this->contextManager,
+            'OpenOrchestra\Backoffice\Tests\Form\Type\Component\PhakeClass'
+        );
     }
 
     /**
@@ -45,9 +54,13 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
     {
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
 
-        $this->form->buildForm($builder, array());
+        $this->form->buildForm($builder, array(
+            'content_selector' => true,
+            'content_attr' => array()
+        ));
 
-        Phake::verify($builder, Phake::times(2))->add(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
+        Phake::verify($builder)->addEventSubscriber(Phake::anyParameters());
     }
 
 }

@@ -41,11 +41,18 @@ parameters:
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\Backoffice\Form\Type\ApiClientType
     open_orchestra_backoffice.type.operator_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\OperatorChoiceType
     open_orchestra_backoffice.type.content_search.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentSearchType
+    open_orchestra_backoffice.type.internal_link.class: OpenOrchestra\Backoffice\Form\Type\Component\InternalLinkType
+    open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
         include_jquery: false
         selector: .tinymce
+        tinymce_buttons:
+            linkmanager:
+                title: open_orchestra_backoffice.internal_link
+                image: false
+                icon: internallink
         theme:
             simple:
                 theme: modern
@@ -55,10 +62,11 @@ parameters:
                     - searchreplace wordcount visualblocks visualchars code fullscreen
                     - insertdatetime media nonbreaking save table contextmenu directionality
                     - emoticons template paste textcolor orchestra_bbcode
-                toolbar1: undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link
+                toolbar1: undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link linkmanager
                 toolbar2: forecolor backcolor
                 menubar: false
                 height: 200
+        use_callback_tinymce_init: true
 
 services:
     # Template form type
@@ -287,7 +295,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.content
             - @open_orchestra_backoffice.context_manager
-            - @open_orchestra_backoffice.transformer.reference_to_embed
+            - @open_orchestra_model.manager.content_for_embed
             - content
         tags:
             - { name: form.type, alias: oo_content_choice}
@@ -381,6 +389,19 @@ services:
     open_orchestra_backoffice.type.content_search:
         class: %open_orchestra_backoffice.type.content_search.class%
         arguments:
+            - @open_orchestra_model.repository.content
+            - @open_orchestra_backoffice.context_manager
             - %open_orchestra.transformer.boolean_to_bdd.class%
         tags:
             - { name: form.type, alias: oo_content_search}
+    open_orchestra_backoffice.type.internal_link:
+        class: %open_orchestra_backoffice.type.internal_link.class%
+        tags:
+            - { name: form.type, alias: oo_internal_link}
+    open_orchestra_backoffice.type.site_site_alias:
+        class: %open_orchestra_backoffice.type.site_site_alias.class%
+        arguments:
+            - @open_orchestra_model.repository.site
+            - @open_orchestra_backoffice.subscriber.site
+        tags:
+            - { name: form.type, alias: oo_site_site_alias}

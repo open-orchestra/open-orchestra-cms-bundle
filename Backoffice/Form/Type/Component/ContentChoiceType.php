@@ -17,6 +17,7 @@ class ContentChoiceType extends AbstractType
 {
     protected $contentRepository;
     protected $contextManager;
+    protected $referenceToEmbedTransformer;
     protected $formTypeName;
 
     /**

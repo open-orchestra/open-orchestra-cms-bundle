@@ -16,13 +16,13 @@ class ContentChoiceTypeTest extends AbstractBaseTestCase
     protected $form;
     protected $formTypeName = 'fakeFormTypeName';
     protected $contentType = 'fakeContentType';
-    protected $operator = 'fakeOperator';
     protected $keyword = 'fakeKeyword';
     protected $language = 'fakeLanguage';
     protected $contentId0 = 'fakeContentId0';
     protected $contentName0 = 'fakeContentName0';
     protected $contentId1 = 'fakeContentId1';
     protected $contentName1 = 'fakeContentName1';
+    protected $choiceType = 'fakeChoiceType';
 
     /**
      * Set up the test
@@ -42,7 +42,7 @@ class ContentChoiceTypeTest extends AbstractBaseTestCase
         $contents->add($content1);
 
         $contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
-        Phake::when($contentRepository)->findByContentTypeAndKeywords($this->language, $this->contentType, $this->operator, $this->keyword)->thenReturn($contents);
+        Phake::when($contentRepository)->findByContentTypeAndKeywords($this->language, $this->contentType, $this->choiceType, $this->keyword)->thenReturn($contents);
 
         $contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($this->language);
@@ -99,7 +99,7 @@ class ContentChoiceTypeTest extends AbstractBaseTestCase
             array(
                 'content_search' => array(
                     'contentType' => $this->contentType,
-                    'choiceType' => $this->operator,
+                    'choiceType' => $this->choiceType,
                     'keywords' => $this->keyword,
                 )
             )

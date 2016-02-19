@@ -307,6 +307,14 @@ open_orchestra_backoffice:
                 success: The API client has been successfully created
             edit:
                 success: The API client has been updated
+        internal_link:
+            label: Label
+            node: Page
+            site: Site
+            site_alias: Site alias
+            content: Content
+            query: Query string
+            filter: Content filter
     left_menu:
         tree:
             new_page: New page
