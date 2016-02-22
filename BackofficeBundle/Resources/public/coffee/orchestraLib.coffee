@@ -332,12 +332,17 @@ $(document).on 'click', '.configuration-change', (e) ->
 
 #LAUNCH SMARTADMIN NOTIFICATION
 launchNotification = (type, message) ->
-  if type == 'error'
-    color = "#C26565"
-    iconClass = "times"
-  else
-    color = "#826430"
-    iconClass = type
+  iconClass = type
+  color = '#305d8c'
+  switch type
+    when 'error'
+      color = "#C26565"
+      iconClass = "times"
+    when 'warning'
+      color = "#826430"
+    when 'success'
+      color = "#356635"
+      iconClass = 'check'
   $.smallBox
     title: '<i class="fa-fw fa fa-' + iconClass + '"></i>'
     content: message
