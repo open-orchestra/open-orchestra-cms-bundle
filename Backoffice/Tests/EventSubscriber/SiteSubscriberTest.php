@@ -87,8 +87,8 @@ class SiteSubscriberTest extends AbstractBaseTestCase
             ),
             'required' => false,
             'choices' => array(
-                        $this->siteDomain1 => $this->siteDomain1,
-                        $this->siteDomain2 => $this->siteDomain2,
+                        0 => $this->siteDomain1,
+                        1 => $this->siteDomain2,
                    ),
             'required' => false,
         ));
