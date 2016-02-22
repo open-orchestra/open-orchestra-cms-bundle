@@ -18,6 +18,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     'click .delete-row': 'deleteRow'
     'click .edit-row': 'showFormRow'
     'click .move-row': 'activateMoveRow'
+    'click .move-column': 'activateMoveColumn'
 
   ###*
    * @param {Object} options
@@ -49,8 +50,16 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
   ###
   activateMoveRow: ->
     rowAreaView = @options.areaView.options.parentAreaView
-    rowContainerAreaId = @options.areaView.options.parentAreaView.options.parentAreaView.options.area.get('area_id')
-    OpenOrchestra.AreaFlex.Channel.trigger 'activateSortableAreaRow', rowContainerAreaId, rowAreaView
+    containerAreaId = @options.areaView.options.parentAreaView.options.parentAreaView.options.area.get('area_id')
+    OpenOrchestra.AreaFlex.Channel.trigger 'activateSortableArea', containerAreaId, rowAreaView
+
+  ###*
+   * Activate sortable on column
+  ###
+  activateMoveColumn: ->
+    columnAreaView = @options.areaView
+    containerAreaId = @options.areaView.options.parentAreaView.options.area.get('area_id')
+    OpenOrchestra.AreaFlex.Channel.trigger 'activateSortableArea', containerAreaId, columnAreaView
 
   ###*
    * Show form edit column

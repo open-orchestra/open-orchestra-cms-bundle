@@ -28,7 +28,7 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateFlex/templateFlexView"
     ]
-    OpenOrchestra.AreaFlex.Channel.bind 'activateSortableAreaRow', @showOverlaySortableArea, @
+    OpenOrchestra.AreaFlex.Channel.bind 'activateSortableArea', @showOverlaySortableArea, @
     OpenOrchestra.AreaFlex.Channel.bind 'disableSortableArea', @hideOverlaySortableArea, @
     return
 

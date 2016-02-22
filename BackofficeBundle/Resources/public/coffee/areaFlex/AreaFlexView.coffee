@@ -31,7 +31,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
     ]
     @options.entityType = 'area-flex'
     OpenOrchestra.AreaFlex.Channel.bind 'activateEditArea', @activateEditArea, @
-    OpenOrchestra.AreaFlex.Channel.bind 'activateSortableAreaRow', @activateSortableAreaRow, @
+    OpenOrchestra.AreaFlex.Channel.bind 'activateSortableArea', @activateSortableArea, @
     return
 
   ###*
@@ -59,14 +59,32 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
   ###*
    * activate sortable in area
    *
+   * @param {string} containerAreaId
+   * @param {object} areaViewSortable
+  ###
+  activateSortableArea: (containerAreaId, areaViewSortable) ->
+    @destroySortable()
+    if containerAreaId == @options.area.get('area_id')
+      sortableContainer = @$el.children('.area-container')
+      sortableContainer.children().addClass('blocked')
+      areaViewSortable.$el.removeClass('blocked')
+      sortableContainer.sortable({
+        cursor: 'move'
+        tolerance: 'pointer'
+        cancel: '.blocked'
+      })
+
+  ###*
+   * activate sortable in area
+   *
    * @param {string} rowContainerAreaId
    * @param {object} rowAreaView
   ###
-  activateSortableAreaRow: (rowContainerAreaId, rowAreaView) ->
+  activateSortableAreaColumn: (rowContainerAreaId, columnAreaView) ->
     if rowContainerAreaId == @options.area.get('area_id')
       sortableContainer = @$el.children('.area-container')
       sortableContainer.children().addClass('blocked')
-      rowAreaView.$el.removeClass('blocked')
+      columnAreaView.$el.removeClass('blocked')
       sortableContainer.sortable({
         cancel: '.blocked'
       })
@@ -76,12 +94,18 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
   ###
   stopSortArea: (event)->
     event.stopPropagation()
+    @destroySortable()
+    @updateOrderChildrenAreas()
+
+  ###*
+   * Destroy sortable area
+  ###
+  destroySortable: () ->
     if @$el.children('.area-container').hasClass('ui-sortable')
-       @$el.children('.area-container').sortable('destroy')
+      @$el.children('.area-container').sortable('destroy')
     OpenOrchestra.AreaFlex.Channel.trigger 'disableSortableArea'
     @$el.children('.area-container').children().removeClass('blocked')
     @$el.children('.area-container').children().css('z-index', '')
-    @updateOrderChildrenAreas()
 
   ###*
    * Update order children areas
@@ -96,11 +120,12 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
       subArea.order = $('.area-flex[data-area-id="'+area.area_id+'"]', @$el).index()
       data.areas.push(subArea)
     url = @options.area.get('links')._self_move_area
+    console.log data
     if url?
       $.ajax
-        url: url
-        method: 'POST'
-        data: JSON.stringify(data)
+         url: url
+         method: 'POST'
+         data: JSON.stringify(data)
 
   ###*
    * Add sub areas
