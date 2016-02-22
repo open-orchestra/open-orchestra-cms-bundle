@@ -15,7 +15,6 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
     'click': 'triggerEditArea'
     'click .add-row': 'showFormAddRow'
     'sortstop .area-container': 'stopSortArea'
-    'sortremove .area-container': 'removeSortArea'
 
   ###*
    * @param {Object} options
