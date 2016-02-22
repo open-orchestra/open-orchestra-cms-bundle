@@ -57,5 +57,4 @@ class TemplateFlexController extends BaseController
 
         return array();
     }
-
 }

@@ -92,6 +92,8 @@ class AreaFlexTransformer extends AbstractSecurityCheckerAwareTransformer implem
             $newOrderSubAreas[$order] = $subArea;
         }
         ksort($newOrderSubAreas);
+        var_dump(count($newOrderSubAreas));
+        var_dump(new ArrayCollection($newOrderSubAreas));
         $source->setAreas(new ArrayCollection($newOrderSubAreas));
 
         return $source;

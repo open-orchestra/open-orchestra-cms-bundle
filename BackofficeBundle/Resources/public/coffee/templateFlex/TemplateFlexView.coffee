@@ -69,10 +69,16 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
       widget_index: 2
     ))
 
+  ###*
+   * Hide overlay on area
+  ###
   hideOverlaySortableArea: () ->
     if $('.overlay-sortable', @$el).length > 0
       $('.overlay-sortable', @$el).remove()
 
+  ###*
+   * Show overlay on area
+  ###
   showOverlaySortableArea: () ->
     if $('.overlay-sortable', @$el).length == 0
       $('.template-flex-container',@$el).prepend($('<div/>', { 'class': 'overlay-sortable'}))
