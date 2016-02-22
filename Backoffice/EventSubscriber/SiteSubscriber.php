@@ -59,9 +59,8 @@ class SiteSubscriber implements EventSubscriberInterface
     {
         $choices = array();
         $site = $this->siteRepository->findOneBySiteId($siteId);
-        $aliases = $site->getAliases();
-        foreach ($aliases as $alias) {
-            $choices[$alias->getDomain()] = $alias->getDomain();
+        foreach ($site->getAliases() as $aliasId => $alias) {
+            $choices[$aliasId] = $alias->getDomain();
         }
 
         return $choices;
