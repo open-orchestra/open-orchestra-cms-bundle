@@ -199,6 +199,7 @@ activateToken = (element) ->
     propertyToSearch: 'value'
     theme: 'facebook'
     tokenFormatter: (item) ->
+      item = _.findWhere(tags, value: item.value) or item
       item.type = item.type or 'new'
       '<li class="' + item.type + '">' + item.value + '</li>'
     tokenDelimiter: ' '
@@ -222,7 +223,7 @@ activateToken = (element) ->
         return
     )(operator[i])
     $('<li>').html(operator[i]).on('click', click).appendTo ul
-  element.before ul
+  element.parent().append ul
   return
 
 #NODE CHOICE ENABLED
