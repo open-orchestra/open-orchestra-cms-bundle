@@ -4,6 +4,8 @@
        data-restore-confirm-txt = "{{ 'open_orchestra_backoffice.table.trashcan.restore_confirm_txt'|trans() }}""
        data-restore-confirm-title = "{{ 'open_orchestra_backoffice.table.trashcan.restore_confirm_title'|trans() }}""
     >
+<% } else { %>
+    <a href="#" class="btn disabled btn-default btn-xs ajax-restore" title="{{ 'open_orchestra_backoffice.form.edit'|trans() }}">
+<% } %>
         <span class="fa fa-undo fa-lg" aria-hidden="true"></span>
     </a>
-<% } %>
