@@ -70,8 +70,6 @@ parameters:
                     label: open_orchestra_backoffice.form.field_type.default_value
                     required: false
             options:
-                max_length:
-                    default_value: 50
                 required:
                     default_value: false
         choice:
