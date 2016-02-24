@@ -59,6 +59,7 @@ class StatusableVoterTest extends AbstractBaseTestCase
             array(false, 'ROLE_ACCESS_TREE_NODE'),
             array(false, 'ROLE_ACCESS_CREATE_NODE'),
             array(false, 'ROLE_ACCESS_DELETE_NODE'),
+            array(false, 'ROLE_ACCESS_MOVE_NODE'),
             array(false, '24051'),
             array(false, 'foo'),
         );
