@@ -183,12 +183,14 @@ class NodeManager
         foreach ($nodes as $node) {
             if (!$node->isDeleted()) {
                 $node->setDeleted(true);
+                $node->setOrder(NodeInterface::DELETED_ORDER);
                 $nodePath = $node->getPath();
                 $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($node));
                 $subNodes = $this->nodeRepository->findByIncludedPathAndSiteId($nodePath, $siteId);
                 foreach ($subNodes as $subNode) {
                     if (!$subNode->isDeleted()) {
                         $subNode->setDeleted(true);
+                        $subNode->setOrder(NodeInterface::DELETED_ORDER);
                         $this->eventDispatcher->dispatch(NodeEvents::NODE_DELETE, new NodeEvent($subNode));
                     }
                 }
