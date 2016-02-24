@@ -14,6 +14,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
   events:
     'click': 'triggerEditArea'
     'click .add-row': 'showFormAddRow'
+    'sortstop .area-container': 'stopSortArea'
 
   ###*
    * @param {Object} options
@@ -21,6 +22,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
   initialize: (options) ->
     @options = @reduceOption(options, [
       'area'
+      'parentAreaView'
       'domContainer'
       'toolbarContainer'
     ])
@@ -29,6 +31,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
     ]
     @options.entityType = 'area-flex'
     OpenOrchestra.AreaFlex.Channel.bind 'activateEditArea', @activateEditArea, @
+    OpenOrchestra.AreaFlex.Channel.bind 'activateSortableAreaRow', @activateSortableAreaRow, @
     return
 
   ###*
@@ -51,6 +54,53 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
       area.css('flex', width)
     else
       area.css('flex-basis', width)
+      area.css('flex-shrink', 1)
+
+  ###*
+   * activate sortable in area
+   *
+   * @param {string} rowContainerAreaId
+   * @param {object} rowAreaView
+  ###
+  activateSortableAreaRow: (rowContainerAreaId, rowAreaView) ->
+    if rowContainerAreaId == @options.area.get('area_id')
+      sortableContainer = @$el.children('.area-container')
+      sortableContainer.children().addClass('blocked')
+      rowAreaView.$el.removeClass('blocked')
+      sortableContainer.sortable({
+        cancel: '.blocked'
+      })
+
+  ###*
+   * Stop sortable area
+  ###
+  stopSortArea: (event)->
+    event.stopPropagation()
+    if @$el.children('.area-container').hasClass('ui-sortable')
+       @$el.children('.area-container').sortable('destroy')
+    OpenOrchestra.AreaFlex.Channel.trigger 'disableSortableArea'
+    @$el.children('.area-container').children().removeClass('blocked')
+    @$el.children('.area-container').children().css('z-index', '')
+    @updateOrderChildrenAreas()
+
+  ###*
+   * Update order children areas
+  ###
+  updateOrderChildrenAreas: () ->
+    data = {}
+    data.area_id = @options.area.get('area_id')
+    data.areas = []
+    for area in @options.area.get('areas')
+      subArea = {}
+      subArea.area_id = area.area_id
+      subArea.order = $('.area-flex[data-area-id="'+area.area_id+'"]', @$el).index()
+      data.areas.push(subArea)
+    url = @options.area.get('links')._self_move_area
+    if url?
+      $.ajax
+        url: url
+        method: 'POST'
+        data: JSON.stringify(data)
 
   ###*
    * Add sub areas
@@ -65,6 +115,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
       areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addAreaFlex')
       new areaViewClass(
         area: areaModel
+        parentAreaView: @
         domContainer: container
         toolbarContainer: @options.toolbarContainer
       )
@@ -87,6 +138,7 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
       viewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAreaFlexToolbar')
       new viewClass(
         area: @options.area
+        areaView: @
         domContainer: @options.toolbarContainer
       )
     else

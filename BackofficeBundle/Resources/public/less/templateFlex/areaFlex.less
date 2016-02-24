@@ -21,16 +21,27 @@
       }
     }
   }
+
   .area-container.area-column {
     flex-direction: column;
+    background-color: lightgrey;
   }
   .area-action {
     text-align: center;
     display: none;
     margin: 10px auto;
   }
-}
 
+  .ui-sortable-handle {
+    z-index: 2;
+  }
+  .ui-sortable-handle.blocked .area-flex {
+    opacity: 0.9;
+  }
+  .ui-sortable-handle:not(.blocked) {
+    border: 2px solid orange;
+  }
+}
 
 /* form area */
 form #area_flex_row {

@@ -3,10 +3,12 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\ApiBundle\Facade\AreaFlexFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
+use UnexpectedValueException;
 
 /**
  * Class TemplateFlexTransformer
@@ -40,7 +42,7 @@ class TemplateFlexTransformer extends AbstractSecurityCheckerAwareTransformer
         ));
 
         if ($this->authorizationChecker->isGranted(TreeTemplateFlexPanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE_FLEX, $template)) {
-            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
+            $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_flex_delete',
                 array('templateId' => $template->getTemplateId())
             ));
         }

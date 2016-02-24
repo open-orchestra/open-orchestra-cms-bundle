@@ -32,6 +32,11 @@ class AreaFlexFacade extends AbstractFacade
     public $width;
 
     /**
+     * @Serializer\Type("integer")
+     */
+    public $order;
+
+    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\AreaFlexFacade>")
      */
     protected $areas = array();
@@ -42,5 +47,13 @@ class AreaFlexFacade extends AbstractFacade
     public function addArea(FacadeInterface $facade)
     {
         $this->areas[] = $facade;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAreas()
+    {
+        return $this->areas;
     }
 }
