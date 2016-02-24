@@ -213,6 +213,8 @@ class NodeManagerTest extends AbstractBaseTestCase
 
         Phake::verify($node, Phake::times(1))->setDeleted(true);
         Phake::verify($subNode, Phake::times(2))->setDeleted(true);
+        Phake::verify($node, Phake::times(1))->setOrder(NodeInterface::DELETED_ORDER);
+        Phake::verify($subNode, Phake::times(2))->setOrder(NodeInterface::DELETED_ORDER);
         Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
     }
 
