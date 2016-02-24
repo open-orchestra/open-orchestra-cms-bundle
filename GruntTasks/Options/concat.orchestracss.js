@@ -1,6 +1,7 @@
 module.exports = {
     src: [
         'web/built/openorchestrabackoffice/css/openorchestra.css',
+        'web/built/openorchestrabackoffice/css/contentTypeForm.css',
         'web/built/openorchestrabackoffice/css/template.css',
         'web/built/openorchestrabackoffice/css/blocksPanel.css',
         'web/built/openorchestrabackoffice/css/blocksIcon.css',
