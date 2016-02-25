@@ -2,7 +2,7 @@
  * @channel AreaFlex
  * Event available
  *  - activateEditArea(areaId) enable edition of an area
- *  - activateSortableAreaRow(areaRowId) enable sortable area in a row
+ *  - activateSortableArea(containerAreaId, areaViewSortable) enable sortable area in a container
  *  - disableSortableArea() disable sortable in area
 ###
 (($, OpenOrchestra) ->
