@@ -2,28 +2,27 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
-use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class SiteSiteAliasType
  */
 class SiteSiteAliasType extends AbstractType
 {
-    protected $siteSubscriber;
     protected $siteRepository;
 
     /**
      * @param SiteRepositoryInterface $siteRepository
-     * @param SiteSubscriber $siteSubscriber
      */
-    public function __construct(SiteRepositoryInterface $siteRepository, SiteSubscriber $siteSubscriber)
+    public function __construct(SiteRepositoryInterface $siteRepository)
     {
         $this->siteRepository = $siteRepository;
-        $this->siteSubscriber = $siteSubscriber;
     }
 
     /**
@@ -32,9 +31,8 @@ class SiteSiteAliasType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('siteId', 'choice', array(
+        $builder->add('siteId', 'oo_site_choice', array(
             'label' => false,
-            'choices' => $this->getChoices(),
             'attr' => array(
                 'class' => 'to-tinyMce',
                 'data-key' => 'site'
@@ -42,24 +40,36 @@ class SiteSiteAliasType extends AbstractType
             'required' => false,
         ));
 
-        $builder->addEventSubscriber($this->siteSubscriber);
+        if ($options['refresh']) {
+            $builder->addEventSubscriber(
+                new SiteSubscriber(
+                    $this->siteRepository,
+                    $options['attr']
+            ));
+        }
     }
 
     /**
-     * @return array
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
      */
-    protected function getChoices()
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $sites = $this->siteRepository->findByDeleted(false);
+        $view->vars['refresh'] = $options['refresh'];
+    }
 
-        $choices = array();
-
-        /** @var SiteInterface $site */
-        foreach ($sites as $site) {
-            $choices[$site->getSiteId()] = $site->getName();
-        }
-
-        return $choices;
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'refresh' => false,
+                'attr' => array()
+            )
+        );
     }
 
     /**

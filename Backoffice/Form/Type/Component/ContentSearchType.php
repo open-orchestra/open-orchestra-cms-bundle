@@ -9,6 +9,8 @@ use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentSearchSubscriber;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class ContentSearchType
@@ -61,7 +63,7 @@ class ContentSearchType extends AbstractType
             'required' => false,
 
         ));
-        if ($options['content_selector']) {
+        if ($options['refresh']) {
             $transformerClass = $this->transformerClass;
             $transformer = new $transformerClass();
             $transformer->setField('keywords');
@@ -70,9 +72,19 @@ class ContentSearchType extends AbstractType
                     $this->contentRepository,
                     $this->contextManager,
                     $transformer,
-                    $options['content_attr']
+                    $options['attr']
             ));
         }
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['refresh'] = $options['refresh'];
     }
 
     /**
@@ -82,8 +94,8 @@ class ContentSearchType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-                'content_selector' => false,
-                'content_attr' => array()
+                'refresh' => false,
+                'attr' => array()
             )
         );
     }

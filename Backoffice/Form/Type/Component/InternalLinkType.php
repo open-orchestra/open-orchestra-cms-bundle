@@ -25,22 +25,27 @@ class InternalLinkType extends AbstractType
         $builder->add('nodeId', 'oo_node_choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.node',
             'attr' => array(
-                'class' => 'to-tinyMce',
+                'class' => 'to-tinyMce orchestra-node-choice',
                 'data-key' => 'id'
             ),
         ));
         $builder->add('contentSearch', 'oo_content_search', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.content',
-            'content_selector' => true,
+            'refresh' => true,
             'required' => false,
-            'content_attr' => array(
+            'attr' => array(
                 'class' => 'to-tinyMce',
-                'data-key' => 'content'
+                'data-key' => 'contentId'
             ),
         ));
         $builder->add('site', 'oo_site_site_alias', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.site',
+            'refresh' => true,
             'required' => false,
+            'attr' => array(
+                'class' => 'to-tinyMce',
+                'data-key' => 'aliasId'
+            ),
         ));
         $builder->add('query', 'text', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.query',

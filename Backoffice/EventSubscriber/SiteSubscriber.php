@@ -16,10 +16,12 @@ class SiteSubscriber implements EventSubscriberInterface
 
     /**
      * @param SiteRepositoryInterface $siteRepository
+     * @param array                   $attributes
      */
-    public function __construct(SiteRepositoryInterface $siteRepository)
+    public function __construct(SiteRepositoryInterface $siteRepository, array $attributes)
     {
         $this->siteRepository = $siteRepository;
+        $this->attributes = $attributes;
     }
 
     /**
@@ -30,12 +32,9 @@ class SiteSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
         if (!is_null($data) && $data['siteId'] != '') {
-            $form->add('siteAlias', 'choice', array(
+            $form->add('aliasId', 'choice', array(
                 'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-                'attr' => array(
-                    'class' => 'to-tinyMce',
-                    'data-key' => 'site-alias'
-                ),
+                'attr' => $this->attributes,
                 'choices' => $this->getChoices($data['siteId']),
                 'required' => false,
             ));
@@ -59,9 +58,8 @@ class SiteSubscriber implements EventSubscriberInterface
     {
         $choices = array();
         $site = $this->siteRepository->findOneBySiteId($siteId);
-        $aliases = $site->getAliases();
-        foreach ($aliases as $alias) {
-            $choices[$alias->getDomain()] = $alias->getDomain();
+        foreach ($site->getAliases() as $aliasId => $alias) {
+            $choices[$aliasId] = $alias->getDomain();
         }
 
         return $choices;

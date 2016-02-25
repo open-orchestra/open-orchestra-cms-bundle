@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormEvents;
 class SiteSubscriberTest extends AbstractBaseTestCase
 {
     protected $subscriber;
+    protected $attributes;
     protected $siteRepository;
     protected $siteDomain1 = 'fakeSiteDomain1';
     protected $siteDomain2 = 'fakeSiteDomain2';
@@ -36,12 +37,15 @@ class SiteSubscriberTest extends AbstractBaseTestCase
 
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
+        $this->attributes = array(
+            'fakeAttributes' => 'fakeAttributes'
+        );
 
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
         Phake::when($this->event)->getData()->thenReturn(array('siteId' => 'fakeSiteId'));
 
-        $this->subscriber = new SiteSubscriber($this->siteRepository);
+        $this->subscriber = new SiteSubscriber($this->siteRepository, $this->attributes);
     }
 
     /**
@@ -79,16 +83,12 @@ class SiteSubscriberTest extends AbstractBaseTestCase
     {
         $this->subscriber->preSubmit($this->event);
 
-        Phake::verify($this->form)->add('siteAlias', 'choice', array(
+        Phake::verify($this->form)->add('aliasId', 'choice', array(
             'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-            'attr' => array(
-                'class' => 'to-tinyMce',
-                'data-key' => 'site-alias'
-            ),
-            'required' => false,
+            'attr' => $this->attributes,
             'choices' => array(
-                        $this->siteDomain1 => $this->siteDomain1,
-                        $this->siteDomain2 => $this->siteDomain2,
+                        0 => $this->siteDomain1,
+                        1 => $this->siteDomain2,
                    ),
             'required' => false,
         ));

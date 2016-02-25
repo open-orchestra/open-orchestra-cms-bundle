@@ -55,8 +55,8 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
         $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
 
         $this->form->buildForm($builder, array(
-            'content_selector' => true,
-            'content_attr' => array()
+            'refresh' => true,
+            'attr' => array()
         ));
 
         Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());
