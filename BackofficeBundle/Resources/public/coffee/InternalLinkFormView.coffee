@@ -69,10 +69,12 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
     inputText.parent().removeClass 'has-error'
     if inputText.val() != ''
       @closeModal()
-      link = $('<a>').html($('.label-tinyMce', @$el).val())
+      link = $('<a href="#">').html($('.label-tinyMce', @$el).val())
+      options = {}
       _.each $('.to-tinyMce', @$el), (element, key) ->
         element = $(element)
-        link.attr 'data-' + element.data('key'), element.val()
+        options[element.data('key')] = element.val()
+      link.attr 'data-options', JSON.stringify(options)
       div = $('<div>').append(link)
       tinymce.get(@options.editor.id).insertContent div.html()
     else
