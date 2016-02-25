@@ -36,3 +36,8 @@
         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endif %}
+<!--[if lte IE 9]>
+    {% stylesheets 'built/openorchestrabackoffice/css/ie9Patches/smartadmin.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+<![endif]-->
