@@ -26,7 +26,6 @@ class SiteSiteAliasTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
-        $siteSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\SiteSubscriber');
 
         $site1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site1)->getSiteId()->thenReturn($this->idSite1);
@@ -39,7 +38,7 @@ class SiteSiteAliasTypeTest extends AbstractBaseTestCase
             $site2
         ));
 
-        $this->form = new SiteSiteAliasType($siteRepository, $siteSubscriber);
+        $this->form = new SiteSiteAliasType($siteRepository);
     }
 
     /**
@@ -67,20 +66,12 @@ class SiteSiteAliasTypeTest extends AbstractBaseTestCase
         Phake::when($builder)->add(Phake::anyParameters())->thenReturn($builder);
         Phake::when($builder)->addEventSubscriber(Phake::anyParameters())->thenReturn($builder);
 
-        $this->form->buildForm($builder, array());
-
-        Phake::verify($builder)->add('siteId', 'choice', array(
-            'label' => false,
-            'choices' => array(
-                $this->idSite1 => $this->nameSite1,
-                $this->idSite2 => $this->nameSite2,
-            ),
-            'attr' => array(
-                'class' => 'to-tinyMce',
-                'data-key' => 'site'
-            ),
-            'required' => false,
+        $this->form->buildForm($builder, array(
+            'refresh' => true,
+            'attr' => array()
         ));
+
+        Phake::verify($builder, Phake::times(1))->add(Phake::anyParameters());
         Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
     }
 }

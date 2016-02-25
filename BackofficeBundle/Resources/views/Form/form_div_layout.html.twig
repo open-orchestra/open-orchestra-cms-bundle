@@ -101,6 +101,7 @@
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
         {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
         {% set label_col = label_col|default(bootstrap_get_label_col()) %}
+      	{% set refreshIcon = '' %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
             {% set label_col = attr.label_col %}
@@ -114,6 +115,16 @@
         {% if attr.style is defined and attr.style is not empty %}
             {% set style = attr.style %}
         {% endif %}
+        {% if refresh is defined and refresh %}
+        	{% set refreshIcon %}
+                <div class="col-{{ col_size }}-1">
+                    <span rel="tooltip" class="btn btn-ribbon refresh-form">
+                    	<i class="fa fa-refresh"></i>
+                    </span>
+                </div>
+                {% set widget_col = widget_col - 1 %}
+        	{% endset %}
+        {% endif %}
 
         {% if label is sameas(false) %}
             {% set widget_col = widget_col + label_col %}
@@ -122,6 +133,7 @@
         <div class="form-group{% if form.vars.errors|length > 0 %} has-error{% endif %}">
             {% if style == 'horizontal' %}
                 {{ form_label(form) }}
+                {{ refreshIcon }}
                 <div class="col-{{ col_size }}-{{ widget_col }}">
                     {{ block('form_help') }}
                     {{ block('form_input_group') }}
@@ -233,21 +245,4 @@
           id="modal_internal_link_{{ id }}"
           data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
       ></div>
-{% endblock %}
-
-{% block oo_internal_link_widget %}
-	{% set refresh %}
-        <span rel="tooltip" class="btn btn-ribbon refresh-form">
-        	<i class="fa fa-refresh"></i>
-        </span>
-	{% endset %}
-    {% set attr_content_search = form.children.contentSearch.vars|merge({ 'label': form.children.contentSearch.vars.label|trans ~ refresh }) %}
-    {% set attr_site = form.children.site.vars|merge({ 'label': form.children.site.vars.label|trans ~ refresh }) %}
-    {% spaceless %}
-      {{ form_row(form.children.label) }}
-      {{ form_row(form.children.nodeId) }}
-      {{ form_row(form.children.contentSearch, attr_content_search) }}
-      {{ form_row(form.children.site, attr_site) }}
-      {{ form_row(form.children.query) }}
-    {% endspaceless %}
 {% endblock %}

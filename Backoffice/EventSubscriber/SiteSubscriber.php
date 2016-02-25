@@ -16,10 +16,12 @@ class SiteSubscriber implements EventSubscriberInterface
 
     /**
      * @param SiteRepositoryInterface $siteRepository
+     * @param array                   $attributes
      */
-    public function __construct(SiteRepositoryInterface $siteRepository)
+    public function __construct(SiteRepositoryInterface $siteRepository, array $attributes)
     {
         $this->siteRepository = $siteRepository;
+        $this->attributes = $attributes;
     }
 
     /**
@@ -32,10 +34,7 @@ class SiteSubscriber implements EventSubscriberInterface
         if (!is_null($data) && $data['siteId'] != '') {
             $form->add('aliasId', 'choice', array(
                 'label' => 'open_orchestra_backoffice.form.internal_link.site_alias',
-                'attr' => array(
-                    'class' => 'to-tinyMce',
-                    'data-key' => 'site-alias'
-                ),
+                'attr' => $this->attributes,
                 'choices' => $this->getChoices($data['siteId']),
                 'required' => false,
             ));
