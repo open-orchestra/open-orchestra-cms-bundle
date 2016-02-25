@@ -120,7 +120,6 @@ class OpenOrchestra.AreaFlex.AreaFlexView extends OrchestraView
       subArea.order = $('.area-flex[data-area-id="'+area.area_id+'"]', @$el).index()
       data.areas.push(subArea)
     url = @options.area.get('links')._self_move_area
-    console.log data
     if url?
       $.ajax
          url: url
