@@ -54,7 +54,6 @@ parameters:
           searchField : text
         -
           name : deleted_at
-          updated_by : name
           title : open_orchestra_backoffice.table.trashcan.deleted_at
           visible : true
           activateColvis : true
@@ -98,6 +97,7 @@ parameters:
           visible : true
           activateColvis : true
           searchField : text
+          orderable: false
         -
           name : name
           title : open_orchestra_backoffice.table.websites.name

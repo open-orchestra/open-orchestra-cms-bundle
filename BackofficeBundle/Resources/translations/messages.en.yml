@@ -68,6 +68,11 @@ open_orchestra_backoffice:
             labels: Label
             default_value: Default value
             searchable: Searchable
+            orderable: Orderable
+            orderDirection: Order direction
+            order_direction_choice:
+              asc: Ascending
+              desc: Descending
             type_searchable: Field's type searchable
             translatable: Translatable
             listable: Visible in BackOffice list

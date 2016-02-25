@@ -70,6 +70,12 @@ class DataTableView extends OrchestraView
     if(not settings.dom?)
       settings.dom = @getDomSettings(settings);
 
+    if(not settings.order?)
+      settings.order = @getOrderSettings(settings)
+
+    if settings.order? and settings.order.length == 0 and @options.ordering?
+      settings.ordering = false
+
     table = $("<table></table>")
     table.addClass(settings.tableClassName)
     table.attr('id', 'dt-' + settings.tableId)
@@ -126,6 +132,18 @@ class DataTableView extends OrchestraView
     ]
 
     return buttonsSettings;
+
+  ###*
+   * @param {Object} settings DataTable settings
+   *
+   * @return array
+  ###
+  getOrderSettings: (settings) ->
+    order = []
+    for column in settings.columnDefs
+      if true == column.orderable and column.orderDirection
+        order.push [column.targets, column.orderDirection]
+    return order
 
   ###*
    * Defaults settings dom
@@ -189,25 +207,28 @@ class DataTableView extends OrchestraView
 
   ###*
    * @param {object} data
+   *
+   * @return {object}
   ###
   transformerDataSearch: (data) ->
     search =
     columns : {}
     for column in data.columns
-      if column.searchable = true and column.search.value != '' and column.name != ''
+      if column.searchable == true and column.search.value != '' and column.name != ''
         name = column.name
         search.columns[name] = column.search.value
     if data.search.value != ''
       search['global'] = data.search.value
-
     return search
 
   ###*
    * @param {object} data
+   *
+   * @return {object}
   ###
   transformDataOrder: (data) ->
     for order in data.order
-      if data.columns[order.column]? and data.columns[order.column].orderable = true
+      if data.columns[order.column]? and data.columns[order.column].orderable == true
           name = data.columns[order.column].name if data.columns[order.column]?
           dir = order.dir
           return name: name, dir:dir

@@ -68,6 +68,11 @@ open_orchestra_backoffice:
             labels: Libellé
             default_value: Valeur par défaut
             searchable: Recherchable
+            orderable: Ordonnable
+            orderDirection: Direction de l'ordre
+            order_direction_choice:
+              asc: Croissant
+              desc: Décroissant
             type_searchable: Type de champ de recherche
             translatable: Traduisible
             listable: Visible dans les listes du Backoffice
