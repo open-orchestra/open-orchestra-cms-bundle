@@ -71,7 +71,7 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
       @closeModal()
       link = $('<a href="#">').html($('.label-tinyMce', @$el).val())
       options = {}
-      _.each $('.to-tinyMce', @$el), (element, key) ->
+      _.each $('.to-tinyMce[data-key]', @$el), (element, key) ->
         element = $(element)
         options[element.data('key')] = element.val()
       link.attr 'data-options', JSON.stringify(options)
