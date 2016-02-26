@@ -19,11 +19,11 @@ TabView = OrchestraView.extend(
     $('.js-widget-title', @options.domContainer).html @options.title
 
 
-  addPanel: (title, id, view, active, position) ->
+  addPanel: (title, id, view, active, badge, position) ->
     if @$tabNav? and @$tabContent?
-      @createPanel(title, id, view, active, position)
+      @createPanel(title, id, view, active, badge, position)
     else
-      @options.panels.push {title: title, id: id, view: view, active: active, position: position}
+      @options.panels.push {title: title, id: id, view: view, active: active, badge, position: position}
 
   insertTabNavPosition : (tab, position) ->
     for li in  @$tabNav.children('li')
@@ -32,10 +32,15 @@ TabView = OrchestraView.extend(
         return
     @$tabNav.append(tab)
 
-  createPanel : (title, id, view, active, position) ->
+  createPanel : (title, id, view, active, badge, position) ->
     id = 'tab-'+id
 
     a = $('<a>').attr('href', '#' + id).attr('data-toggle', 'tab').text(title);
+
+    if badge != null
+      span = $('<span>').addClass('badge').text(badge);
+      a.append(span);
+
     if position?
       @insertTabNavPosition($('<li>').attr('tab-position', position).append(a), position)
     else

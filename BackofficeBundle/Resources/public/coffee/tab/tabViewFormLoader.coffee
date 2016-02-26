@@ -25,7 +25,7 @@ generatePanelView = (response, position) ->
 
   callback = ((tabView, panel, position) ->
     (view) ->
-      tabView.addPanel $('[data-title]', view.$el).data('title'), panel.id, view, panel.isActive, position
+      tabView.addPanel $('[data-title]', view.$el).data('title'), panel.id, view, panel.isActive, $('[data-badge]', view.$el).data('badge'), position
       return
   )(@tabView, @panels[position], position)
   new elementTabViewClass(
