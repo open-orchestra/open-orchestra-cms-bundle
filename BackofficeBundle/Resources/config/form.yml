@@ -65,6 +65,7 @@ parameters:
                 toolbar1: undo redo | styleselect bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link linkmanager
                 menubar: false
                 height: 200
+                contextmenu: link inserttable | cell row column deletetable
         use_callback_tinymce_init: true
 
 services:
