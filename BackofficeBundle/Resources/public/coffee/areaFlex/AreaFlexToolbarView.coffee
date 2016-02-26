@@ -9,6 +9,9 @@ window.OpenOrchestra.AreaFlex or= {}
 ###
 class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
+  AREA_TYPE_ROW: 'row'
+  AREA_TYPE_ROOT: 'root'
+
   extendView: ['OpenOrchestra.AreaFlex.AddRow']
 
   events:
@@ -61,13 +64,13 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
    * @param {object} areaView
   ###
   addBreadcrumb : (areaView) ->
-    if areaView.options.area.get('area_type')? and areaView.options.area.get('area_type') != 'row'
+    if areaView.options.area.get('area_type')? and areaView.options.area.get('area_type') != @AREA_TYPE_ROW
       $('.area-breadcrumb', @$el).prepend(
         @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaBreadcrumbToolbar',
           area: areaView.options.area
         )
       )
-    if areaView.options.area.get('area_type')? and areaView.options.area.get('area_type') != 'root'
+    if areaView.options.area.get('area_type')? and areaView.options.area.get('area_type') != @AREA_TYPE_ROOT
       @addBreadcrumb(areaView.options.parentAreaView)
 
   ###*
