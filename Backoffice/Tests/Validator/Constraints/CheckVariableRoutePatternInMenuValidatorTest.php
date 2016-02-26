@@ -46,10 +46,10 @@ class CheckVariableRoutePatternInMenuValidatorTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param $inMenu
-     * @param $inFooter
-     * @param $routePattern
-     * @param $violationTimes
+     * @param bool   $inMenu
+     * @param bool   $inFooter
+     * @param string $routePattern
+     * @param int    $violationTimes
      *
      * @dataProvider provideNodeAttributesAndCount
      */
