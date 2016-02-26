@@ -9,12 +9,10 @@ TableviewCollectionView = OrchestraView.extend(
       'datatableParameterName'
       'displayGlobalSearch'
       'domContainer'
-      'order'
       'title'
       'url'
       'page'
     ])
-    @options.order = [ 0, 'asc' ] if @options.order == undefined
     @addUrl = appRouter.generateUrl('addEntity', entityType: @options.entityType)
     _.bindAll this, "render"
     @loadTemplates [
@@ -37,11 +35,14 @@ TableviewCollectionView = OrchestraView.extend(
 
     columns = []
     columnDefs = []
-    for index, element of dataTableConfigurator.getDataTableParameters(@options.datatableParameterName)
+    columnsParamaters = dataTableConfigurator.getDataTableParameters(@options.datatableParameterName)
+    for index, element of columnsParamaters.column_parameter
       columns.push({'data' : element.name, 'defaultContent': ''});
-      columnDefs.push($.extend({}
+      defs = $.extend({}
         element,
-        targets: columnDefs.length));
+        targets: columnDefs.length
+      )
+      columnDefs.push(defs);
     columns.push({'data' : 'links'})
     columnDefs.push(
         targets: -1
@@ -51,7 +52,6 @@ TableviewCollectionView = OrchestraView.extend(
           viewContext.renderColumnActions(viewContext, td, cellData, rowData, row, col)
     )
     viewContext = @
-
     datatableViewClass = appConfigurationView.getConfiguration(@options.entityType,'addDataTable')
     datatable = new datatableViewClass(
         url: @options.url

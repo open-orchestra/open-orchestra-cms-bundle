@@ -35,7 +35,9 @@ class DataTableController extends BaseController
      */
     public function datatableParameterAction()
     {
-        return $this->get('open_orchestra_backoffice.navigation_panel_manager')->getDatatableParameter();
+        $dataTableCollectionParameter = $this->get('open_orchestra_backoffice.navigation_panel_manager')->getDatatableParameter();
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('datatable_collection_parameter')->transform($dataTableCollectionParameter);
     }
 
 }

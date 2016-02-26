@@ -90,6 +90,8 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
                     'visible' => $field->getListable() === true,
                     'activateColvis' => true,
                     'searchField' => $field->getFieldTypeSearchable(),
+                    'orderable' => $field->isOrderable(),
+                    'orderDirection' => $field->getOrderDirection(),
                 );
             }
         }

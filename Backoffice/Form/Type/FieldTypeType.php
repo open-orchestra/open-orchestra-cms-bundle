@@ -65,6 +65,15 @@ class FieldTypeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
             ))
+            ->add('orderable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.orderable',
+                'required' => false,
+            ))
+            ->add('orderDirection', 'choice', array(
+                'choices' => $this->getChoicesOrder(),
+                'label' => 'open_orchestra_backoffice.form.field_type.orderDirection',
+                'required' => false,
+            ))
             ->add('translatable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.translatable',
                 'required' => false,
@@ -121,5 +130,16 @@ class FieldTypeType extends AbstractType
         asort($choices);
 
         return $choices;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChoicesOrder()
+    {
+       return array(
+           "asc" => 'open_orchestra_backoffice.form.field_type.order_direction_choice.asc',
+           "desc" => 'open_orchestra_backoffice.form.field_type.order_direction_choice.desc'
+       );
     }
 }

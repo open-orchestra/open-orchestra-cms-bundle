@@ -4,8 +4,8 @@ DataTableConfigurator = Backbone.Model.extend(
     @trigger 'dataTableParameters_loaded'
     return
   getDataTableParameters: (type) ->
-    if @dataTableParameters[type]
-      return @dataTableParameters[type]
+    if @dataTableParameters.entity_parameter and @dataTableParameters.entity_parameter[type]
+      return @dataTableParameters.entity_parameter[type]
     []
 )
 
