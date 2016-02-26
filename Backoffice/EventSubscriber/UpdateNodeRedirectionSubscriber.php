@@ -74,7 +74,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
         $site = $event->getSite();
         if ($site->getAliases()->toArray() !== $event->getOldAliases()->toArray()) {
             $siteId = $site->getSiteId();
-            $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
+            $nodes = $this->nodeRepository->findLastVersionByType($siteId);
             foreach ($nodes as $node) {
                 $this->generateRedirectionForNode($node);
             }

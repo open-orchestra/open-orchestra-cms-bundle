@@ -12,7 +12,6 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
  */
 class NodeCollectionTransformer extends AbstractTransformer
 {
-
     /**
      * @param Collection $nodeCollection
      *

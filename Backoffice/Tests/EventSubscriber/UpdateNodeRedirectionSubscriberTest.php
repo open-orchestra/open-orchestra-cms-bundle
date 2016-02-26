@@ -167,7 +167,7 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
      */
     public function testUpdateRedirectionOnSiteUpdate()
     {
-        Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findLastVersionByType(Phake::anyParameters())
         ->thenReturn(array($this->node));
         Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
         ->thenReturn(array($this->node, $this->otherNode));
