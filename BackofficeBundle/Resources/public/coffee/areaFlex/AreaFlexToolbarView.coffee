@@ -9,6 +9,9 @@ window.OpenOrchestra.AreaFlex or= {}
 ###
 class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
 
+  AREA_TYPE_ROW: 'row'
+  AREA_TYPE_ROOT: 'root'
+
   extendView: ['OpenOrchestra.AreaFlex.AddRow']
 
   events:
@@ -19,6 +22,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     'click .edit-row': 'showFormRow'
     'click .move-row': 'activateMoveRow'
     'click .move-column': 'activateMoveColumn'
+    'click .area-breadcrumb li' : 'triggerEditArea'
 
   ###*
    * @param {Object} options
@@ -32,6 +36,7 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     @options.entityType = 'area-flex'
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaFlexToolbarView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaBreadcrumbToolbar"
     ]
 
   ###*
@@ -42,8 +47,31 @@ class OpenOrchestra.AreaFlex.AreaFlexToolbarView extends OrchestraView
     @options.domContainer.html(@$el)
     context = @
     @updateToolbarPosition(@$el)
+    @addBreadcrumb(@options.areaView)
     $(window).bind 'scroll', () ->
       context.updateToolbarPosition(context.$el)
+
+  ###*
+   * Activate edit area when click on breadcrumb
+   * @param {object} event
+  ###
+  triggerEditArea: (event) ->
+    areaId = $(event.target).attr('data-area-id')
+    OpenOrchestra.AreaFlex.Channel.trigger 'activateEditArea', areaId if areaId?
+
+  ###*
+   * Add breadcrumb on toolbar
+   * @param {object} areaView
+  ###
+  addBreadcrumb : (areaView) ->
+    if areaView.options.area.get('area_type')? and areaView.options.area.get('area_type') != @AREA_TYPE_ROW
+      $('.area-breadcrumb', @$el).prepend(
+        @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaFlex/areaBreadcrumbToolbar',
+          area: areaView.options.area
+        )
+      )
+    if areaView.options.area.get('area_type')? and areaView.options.area.get('area_type') != @AREA_TYPE_ROOT
+      @addBreadcrumb(areaView.options.parentAreaView)
 
   ###*
    * Activate sortable on row

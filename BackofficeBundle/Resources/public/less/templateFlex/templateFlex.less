@@ -2,7 +2,7 @@
 
   #jarviswidget-fullscreen-mode {
     .toolbar-container {
-      min-height: 64px;
+      min-height: 80px;
     }
     .area-toolbar.fixed {
       top: 35px;
@@ -12,6 +12,10 @@
   .template-flex-container {
     padding: 3px;
     position: relative;
+
+    &>.area-flex:not(.active):hover {
+      cursor: pointer;
+    }
   }
 
   .overlay-sortable {
@@ -34,6 +38,19 @@
     .label-btn-groups {
       float: left;
       padding: 6px 12px 6px 0;
+    }
+
+    .area-breadcrumb {
+      background-color: #FFFFFF;
+      padding-left: 0;
+
+      li:last-child {
+        color: #999999;
+      }
+      li:not(:last-of-type):hover{
+        cursor: pointer;
+        font-weight: bold;
+      }
     }
   }
 }
