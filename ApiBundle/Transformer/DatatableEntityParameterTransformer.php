@@ -10,7 +10,6 @@ use OpenOrchestra\BaseApi\Transformer\AbstractTransformer;
  */
 class DatatableEntityParameterTransformer extends AbstractTransformer
 {
-
     /**
      * @param array $dataTableEntityParameter
      *
