@@ -36,7 +36,7 @@ class UpdateNodeCurrentlyPublishedFlagSubscriber implements EventSubscriberInter
         $node = $event->getNode();
 
         if ($node->getStatus()->isPublished()) {
-            $lastPublishedNode = $this->nodeRepository->findPublishedInLastVersion($node->getNodeId(), $node->getLanguage(), $node->getSiteId());
+            $lastPublishedNode = $this->nodeRepository->findOneCurrentlyPublished($node->getNodeId(), $node->getLanguage(), $node->getSiteId());
             if (!($lastPublishedNode instanceof NodeInterface) || $lastPublishedNode->getVersion() <= $node->getVersion()) {
                 $this->updatePublishedFlag($node);
             }
@@ -66,7 +66,7 @@ class UpdateNodeCurrentlyPublishedFlagSubscriber implements EventSubscriberInter
      */
     protected function updatePublishedFlag(NodeInterface $node)
     {
-        $publishedNodes = $this->nodeRepository->findCurrentlyPublished($node->getNodeId(), $node->getLanguage(), $node->getSiteId());
+        $publishedNodes = $this->nodeRepository->findAllCurrentlyPublishedByNode($node->getNodeId(), $node->getLanguage(), $node->getSiteId());
         /** @var NodeInterface $publishedNode */
         foreach ($publishedNodes as $publishedNode) {
             $publishedNode->setCurrentlyPublished(false);

@@ -142,7 +142,7 @@ class UpdateNodeRedirectionSubscriberTest extends AbstractBaseTestCase
         $parent = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($parent)->getRoutePattern()->thenReturn($oldPattern);
 
-        Phake::when($this->nodeRepository)->findPublishedInLastVersion(Phake::anyParameters())
+        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())
             ->thenReturn($parent);
         Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())
             ->thenReturn(array($this->node, $node));

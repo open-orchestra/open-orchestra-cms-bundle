@@ -123,7 +123,7 @@ class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
             return $suffix;
         }
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $parent = $this->nodeRepository->findPublishedInLastVersion($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findOneCurrentlyPublished($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
             return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));

@@ -32,7 +32,7 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
     public function setUp()
     {
         $this->nodeRepository = Phake::mock(NodeRepositoryInterface::CLASS);
-        Phake::when($this->nodeRepository)->findCurrentlyPublished(Phake::anyParameters())->thenReturn(array());
+        Phake::when($this->nodeRepository)->findAllCurrentlyPublishedByNode(Phake::anyParameters())->thenReturn(array());
 
         $this->objectManager = Phake::mock(ObjectManager::CLASS);
         $this->event = Phake::mock(NodeEvent::CLASS);
@@ -82,7 +82,7 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
 
         $lastPublishedNode = Phake::mock(NodeInterface::CLASS);
         Phake::when($lastPublishedNode)->getVersion()->thenReturn($lastPublishedNodeVersion);
-        Phake::when($this->nodeRepository)->findPublishedInLastVersion(Phake::anyParameters())->thenReturn($lastPublishedNode);
+        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($lastPublishedNode);
         Phake::when($this->nodeRepository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters())->thenReturn($lastPublishedNode);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
@@ -90,11 +90,11 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
         $wrongPublishedNode = Phake::mock(NodeInterface::CLASS);
-        Phake::when($this->nodeRepository)->findCurrentlyPublished(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
+        Phake::when($this->nodeRepository)->findAllCurrentlyPublishedByNode(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->nodeRepository, Phake::times($repositoryCall))->findPublishedInLastVersion(Phake::anyParameters());
+        Phake::verify($this->nodeRepository, Phake::times($repositoryCall))->findOneCurrentlyPublished(Phake::anyParameters());
         Phake::verify($this->nodeRepository, Phake::times($lastPublishedCall))->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
         Phake::verify($this->objectManager, Phake::times($managerCall))->flush($node);
         Phake::verify($this->objectManager, Phake::times($lastPublishedCall))->flush($lastPublishedNode);
@@ -137,7 +137,7 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->nodeRepository)->findPublishedInLastVersion(Phake::anyParameters());
+        Phake::verify($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters());
         Phake::verify($node)->setCurrentlyPublished(true);
         Phake::verify($this->objectManager)->flush($node);
     }
@@ -157,11 +157,11 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
         $wrongPublishedNode = Phake::mock(NodeInterface::CLASS);
-        Phake::when($this->nodeRepository)->findCurrentlyPublished(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
+        Phake::when($this->nodeRepository)->findAllCurrentlyPublishedByNode(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->nodeRepository, Phake::never())->findPublishedInLastVersion(Phake::anyParameters());
+        Phake::verify($this->nodeRepository, Phake::never())->findOneCurrentlyPublished(Phake::anyParameters());
         Phake::verify($this->nodeRepository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
         Phake::verify($node)->setCurrentlyPublished(false);
         Phake::verify($this->objectManager)->flush($node);

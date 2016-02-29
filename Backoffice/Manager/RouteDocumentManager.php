@@ -154,7 +154,7 @@ class RouteDocumentManager
             return $suffix;
         }
 
-        $parent = $this->nodeRepository->findPublishedInLastVersion($parentId, $language, $siteId);
+        $parent = $this->nodeRepository->findOneCurrentlyPublished($parentId, $language, $siteId);
 
         if ($parent instanceof NodeInterface) {
             return $this->suppressDoubleSlashes($this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language, $siteId));
@@ -213,7 +213,7 @@ class RouteDocumentManager
             return null;
         }
 
-        $node = $this->nodeRepository->findPublishedInLastVersion(
+        $node = $this->nodeRepository->findOneCurrentlyPublished(
             $redirection->getNodeId(),
             $redirection->getLocale(),
             $redirection->getSiteId()
@@ -259,7 +259,7 @@ class RouteDocumentManager
      */
     protected function generateRoutesForNode(NodeInterface $givenNode, ReadSiteInterface $site)
     {
-        $node = $this->nodeRepository->findPublishedInLastVersion($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
+        $node = $this->nodeRepository->findOneCurrentlyPublished($givenNode->getNodeId(), $givenNode->getLanguage(), $site->getSiteId());
         $routes = array();
 
         if (!$node instanceof NodeInterface) {
