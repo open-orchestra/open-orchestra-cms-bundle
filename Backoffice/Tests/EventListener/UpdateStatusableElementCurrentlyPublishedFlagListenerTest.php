@@ -1,28 +1,28 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
+namespace OpenOrchestra\Backoffice\Tests\EventListener;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\EventSubscriber\UpdateNodeCurrentlyPublishedFlagSubscriber;
+use OpenOrchestra\Backoffice\EventListener\UpdateStatusableElementCurrentlyPublishedFlagListener;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
-use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusableRepositoryInterface;
 use Phake;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Test UpdateNodeCurrentlyPublishedFlagSubscriberTest
+ * Test UpdateStatusableElementCurrentlyPublishedFlagListenerTest
  */
-class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_TestCase
+class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var UpdateNodeCurrentlyPublishedFlagSubscriber
+     * @var UpdateStatusableElementCurrentlyPublishedFlagListener
      */
     protected $subscriber;
 
-    protected $nodeRepository;
+    protected $repository;
     protected $objectManager;
     protected $event;
 
@@ -31,13 +31,13 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
      */
     public function setUp()
     {
-        $this->nodeRepository = Phake::mock(NodeRepositoryInterface::CLASS);
-        Phake::when($this->nodeRepository)->findAllCurrentlyPublishedByNode(Phake::anyParameters())->thenReturn(array());
+        $this->repository = Phake::mock(StatusableRepositoryInterface::CLASS);
+        Phake::when($this->repository)->findAllCurrentlyPublishedByElementId(Phake::anyParameters())->thenReturn(array());
 
         $this->objectManager = Phake::mock(ObjectManager::CLASS);
         $this->event = Phake::mock(NodeEvent::CLASS);
 
-        $this->subscriber = new UpdateNodeCurrentlyPublishedFlagSubscriber($this->nodeRepository, $this->objectManager);
+        $this->subscriber = new UpdateStatusableElementCurrentlyPublishedFlagListener($this->repository, $this->objectManager);
     }
 
     /**
@@ -45,18 +45,7 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
      */
     public function testInstance()
     {
-        $this->assertInstanceOf(EventSubscriberInterface::CLASS, $this->subscriber);
-    }
-
-    /**
-     * Test subscribed events
-     */
-    public function testSubscribedEvent()
-    {
-        $this->assertSame(array(
-            NodeEvents::NODE_CHANGE_STATUS => array('updateFlag', 100)),
-            $this->subscriber->getSubscribedEvents()
-        );
+        $this->assertNotInstanceOf(EventSubscriberInterface::CLASS, $this->subscriber);
     }
 
     /**
@@ -74,28 +63,28 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
     {
         $status = Phake::mock(StatusInterface::CLASS);
         Phake::when($status)->isPublished()->thenReturn($statusPublished);
-        $node = Phake::mock(NodeInterface::CLASS);
+        $node = Phake::mock(StatusableInterface::CLASS);
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getVersion()->thenReturn($nodeVersion);
         Phake::when($node)->isCurrentlyPublished()->thenReturn($publishedFlag);
-        Phake::when($this->event)->getNode()->thenReturn($node);
+        Phake::when($this->event)->getStatusableElement()->thenReturn($node);
 
-        $lastPublishedNode = Phake::mock(NodeInterface::CLASS);
+        $lastPublishedNode = Phake::mock(StatusableInterface::CLASS);
         Phake::when($lastPublishedNode)->getVersion()->thenReturn($lastPublishedNodeVersion);
-        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($lastPublishedNode);
-        Phake::when($this->nodeRepository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters())->thenReturn($lastPublishedNode);
+        Phake::when($this->repository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($lastPublishedNode);
+        Phake::when($this->repository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters())->thenReturn($lastPublishedNode);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
         Phake::when($previousStatus)->isPublished()->thenReturn($previousStatusPublished);
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
-        $wrongPublishedNode = Phake::mock(NodeInterface::CLASS);
-        Phake::when($this->nodeRepository)->findAllCurrentlyPublishedByNode(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
+        $wrongPublishedNode = Phake::mock(StatusableInterface::CLASS);
+        Phake::when($this->repository)->findAllCurrentlyPublishedByElementId(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->nodeRepository, Phake::times($repositoryCall))->findOneCurrentlyPublished(Phake::anyParameters());
-        Phake::verify($this->nodeRepository, Phake::times($lastPublishedCall))->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
+        Phake::verify($this->repository, Phake::times($repositoryCall))->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->repository, Phake::times($lastPublishedCall))->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
         Phake::verify($this->objectManager, Phake::times($managerCall))->flush($node);
         Phake::verify($this->objectManager, Phake::times($lastPublishedCall))->flush($lastPublishedNode);
         if ($statusPublished && $nodeVersion >= $lastPublishedNodeVersion) {
@@ -110,11 +99,11 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
     public function provideUpdateFlagData()
     {
         return array(
-            'nothing published' => array(0, 0, 0, false, 4, false, 2, false),
-            'publish newer node' => array(1, 1, 0, true, 2, false, 1, false),
-            'publish older node' => array(1, 0, 0, true, 1, false, 2, false),
-            'unpublish older node' => array(0, 0, 0, false, 1, false, 2, true),
-            'unpublish last node' => array(0, 0, 1, false, 2, true, 1, true),
+            'no element published' => array(0, 0, 0, false, 4, false, 2, false),
+            'publish newer element' => array(1, 1, 0, true, 2, false, 1, false),
+            'publish older element' => array(1, 0, 0, true, 1, false, 2, false),
+            'unpublish older element' => array(0, 0, 0, false, 1, false, 2, true),
+            'unpublish last element' => array(0, 0, 1, false, 2, true, 1, true),
         );
     }
 
@@ -125,11 +114,11 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
     {
         $status = Phake::mock(StatusInterface::CLASS);
         Phake::when($status)->isPublished()->thenReturn(true);
-        $node = Phake::mock(NodeInterface::CLASS);
+        $node = Phake::mock(StatusableInterface::CLASS);
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getVersion()->thenReturn(1);
         Phake::when($node)->isCurrentlyPublished()->thenReturn(false);
-        Phake::when($this->event)->getNode()->thenReturn($node);
+        Phake::when($this->event)->getStatusableElement()->thenReturn($node);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
         Phake::when($previousStatus)->isPublished()->thenReturn(false);
@@ -137,32 +126,35 @@ class UpdateNodeCurrentlyPublishedFlagSubscriberTest extends \PHPUnit_Framework_
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->repository)->findOneCurrentlyPublished(Phake::anyParameters());
         Phake::verify($node)->setCurrentlyPublished(true);
         Phake::verify($this->objectManager)->flush($node);
     }
 
+    /**
+     * Test unpublish with no other published elements
+     */
     public function testUpdateFlagWhenUnpblishNodeAndNoOtherPublishedNode()
     {
         $status = Phake::mock(StatusInterface::CLASS);
         Phake::when($status)->isPublished()->thenReturn(false);
-        $node = Phake::mock(NodeInterface::CLASS);
+        $node = Phake::mock(StatusableInterface::CLASS);
         Phake::when($node)->getStatus()->thenReturn($status);
         Phake::when($node)->getVersion()->thenReturn(2);
         Phake::when($node)->isCurrentlyPublished()->thenReturn(true);
-        Phake::when($this->event)->getNode()->thenReturn($node);
+        Phake::when($this->event)->getStatusableElement()->thenReturn($node);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
         Phake::when($previousStatus)->isPublished()->thenReturn(true);
         Phake::when($this->event)->getPreviousStatus()->thenReturn($previousStatus);
 
-        $wrongPublishedNode = Phake::mock(NodeInterface::CLASS);
-        Phake::when($this->nodeRepository)->findAllCurrentlyPublishedByNode(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
+        $wrongPublishedNode = Phake::mock(StatusableInterface::CLASS);
+        Phake::when($this->repository)->findAllCurrentlyPublishedByElementId(Phake::anyParameters())->thenReturn(array($wrongPublishedNode, $wrongPublishedNode));
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->nodeRepository, Phake::never())->findOneCurrentlyPublished(Phake::anyParameters());
-        Phake::verify($this->nodeRepository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
+        Phake::verify($this->repository, Phake::never())->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->repository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
         Phake::verify($node)->setCurrentlyPublished(false);
         Phake::verify($this->objectManager)->flush($node);
     }
