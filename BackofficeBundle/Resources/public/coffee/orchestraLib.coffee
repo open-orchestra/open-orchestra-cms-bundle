@@ -77,7 +77,7 @@ displayMenu = (route, refresh) ->
 
       # tag selected path
       $("#left-panel nav li:has(a[href=\"" + selectedPath + "\"])").addClass "active"
-      
+
       # open selected path
       openMenu($("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign)
 
