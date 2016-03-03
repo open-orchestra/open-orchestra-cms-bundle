@@ -94,6 +94,9 @@ open_orchestra_backoffice:
                 date: Date
                 choice: Choice
                 content: Content choice
+                swchoff:
+                    on: ON
+                    off: OFF
         website:
             success: The website has been modified
             creation: The website has been created
