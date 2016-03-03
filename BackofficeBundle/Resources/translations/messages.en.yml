@@ -35,6 +35,9 @@ open_orchestra_backoffice:
             text: The removal will be final
         add: Add
         select: Select
+        swchoff:
+            on: ON
+            off: OFF
         status:
             published: Published
             draft: Draft
@@ -94,9 +97,6 @@ open_orchestra_backoffice:
                 date: Date
                 choice: Choice
                 content: Content choice
-                swchoff:
-                    on: ON
-                    off: OFF
         website:
             success: The website has been modified
             creation: The website has been created
