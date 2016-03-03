@@ -2,22 +2,33 @@
     <ul>
         {% for rootMenuWeights in strategies[navigation_panel.root_menu] %}
             {% for rootMenu in rootMenuWeights %}
-                <li>
-                    {{ rootMenu.show|raw }}
-                    {% if strategies[rootMenu.name] is defined %}
+
+                {% set treeRootMenu = '' %}
+                {% if strategies[rootMenu.name] is defined %}
+                    {% for subMenuWeights in strategies[rootMenu.name] %}
+                        {% for subMenu in subMenuWeights %}
+                            {% if is_granted(subMenu.getRole) %}
+                                {% set treeRootMenu = treeRootMenu ~ ' <li>' %}
+                                {% set treeRootMenu = treeRootMenu ~ subMenu.show %}
+                                {% set treeRootMenu = treeRootMenu ~ ' </li>' %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if not strategies[rootMenu.name] is defined  %}
+                    <li>
+                        {{ rootMenu.show|raw }}
+                    </li>
+                {% elseif not treeRootMenu is empty %}
+                    <li>
+                        {{ rootMenu.show|raw }}
                         <ul>
-                            {% for subMenuWeights in strategies[rootMenu.name] %}
-                                {% for subMenu in subMenuWeights %}
-                                    {% if is_granted(subMenu.getRole) %}
-                                        <li>
-                                            {{ subMenu.show|raw }}
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
+                            {{ treeRootMenu|raw }}
                         </ul>
-                    {% endif %}
-                </li>
+                    </li>
+                {% endif %}
+
             {% endfor %}
         {% endfor %}
     </ul>
