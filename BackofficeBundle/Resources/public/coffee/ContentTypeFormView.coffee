@@ -59,3 +59,4 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
 
 jQuery ->
   appConfigurationView.setConfiguration('content_types', 'editEntity', OpenOrchestra.ContentTypeFormView)
+  appConfigurationView.setConfiguration('content_types', 'addEntity', OpenOrchestra.ContentTypeFormView)
