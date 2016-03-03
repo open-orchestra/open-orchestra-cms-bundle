@@ -40,6 +40,7 @@ class OrchestraCheckConsistencyCommandTest extends AbstractBaseTestCase
 
         $this->kernel = Phake::mock('Symfony\Component\HttpKernel\Kernel');
         Phake::when($this->kernel)->getContainer()->thenReturn($this->container);
+        Phake::when($this->kernel)->getBundles()->thenReturn(array());
     }
 
     /**
