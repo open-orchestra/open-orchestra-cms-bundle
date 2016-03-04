@@ -3,24 +3,22 @@
         {% for rootMenuWeights in strategies[navigation_panel.root_menu] %}
             {% for rootMenu in rootMenuWeights %}
 
-                {% set treeRootMenu = '' %}
-                {% if strategies[rootMenu.name] is defined %}
-                    {% for subMenuWeights in strategies[rootMenu.name] %}
-                        {% for subMenu in subMenuWeights %}
-                            {% if is_granted(subMenu.getRole) %}
-                                {% set treeRootMenu = treeRootMenu ~ ' <li>' %}
-                                {% set treeRootMenu = treeRootMenu ~ subMenu.show %}
-                                {% set treeRootMenu = treeRootMenu ~ ' </li>' %}
-                            {% endif %}
+                {% set treeRootMenu %}{% if strategies[rootMenu.name] is defined %}
+                        {% for subMenuWeights in strategies[rootMenu.name] %}
+                            {% for subMenu in subMenuWeights %}
+                                {% if is_granted(subMenu.getRole) %}
+                                    <li>
+                                        {{ subMenu.show|raw }}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                {% endif %}
-
+                    {% endif %}{% endset %}
                 {% if not strategies[rootMenu.name] is defined  %}
                     <li>
                         {{ rootMenu.show|raw }}
                     </li>
-                {% elseif not treeRootMenu is empty %}
+                {% elseif not treeRootMenu|trim is empty %}
                     <li>
                         {{ rootMenu.show|raw }}
                         <ul>
