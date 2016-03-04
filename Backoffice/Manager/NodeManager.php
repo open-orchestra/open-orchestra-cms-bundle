@@ -90,8 +90,10 @@ class NodeManager
         if ($status === null) {
             $status = $this->statusRepository->findOneByInitial();
         }
+        /** @var NodeInterface $newNode */
         $newNode = clone $node;
         $newNode->setStatus($status);
+        $newNode->setCurrentlyPublished($status->isPublished());
         $newNode->setVersion($lastNodeVersion + 1);
         $this->duplicateBlockAndArea($node, $newNode);
         $this->updateBlockReferences($node, $newNode);

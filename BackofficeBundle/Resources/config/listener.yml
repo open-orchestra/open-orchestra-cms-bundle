@@ -1,0 +1,18 @@
+parameters:
+    open_orchestra_backoffice.subscriber.update_statusable_element_currently_published.class: OpenOrchestra\Backoffice\EventListener\UpdateStatusableElementCurrentlyPublishedFlagListener
+
+services:
+    open_orchestra_backoffice.listener.update_node_currently_published:
+        class: %open_orchestra_backoffice.subscriber.update_statusable_element_currently_published.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+            - @object_manager
+        tags:
+            - { name: kernel.event_listener, event: node.status, priority: 100, method: updateFlag}
+    open_orchestra_backoffice.listener.update_content_currently_published:
+        class: %open_orchestra_backoffice.subscriber.update_statusable_element_currently_published.class%
+        arguments:
+            - @open_orchestra_model.repository.content
+            - @object_manager
+        tags:
+            - { name: kernel.event_listener, event: content.status, priority: 100, method: updateFlag}

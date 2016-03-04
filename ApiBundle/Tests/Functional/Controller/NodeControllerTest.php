@@ -53,7 +53,7 @@ class NodeControllerTest extends AbstractControllerTest
      */
     public function testDeleteAction()
     {
-        $node = $this->nodeRepository->findPublishedInLastVersion('fixture_page_contact','fr','2');
+        $node = $this->nodeRepository->findOneCurrentlyPublished('fixture_page_contact','fr','2');
         $node->getStatus()->setPublished(false);
         static::$kernel->getContainer()->get('object_manager')->flush();
 
@@ -176,7 +176,7 @@ class NodeControllerTest extends AbstractControllerTest
 
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $newNode = $this->nodeRepository->findPublishedInLastVersion('root', 'fr', '2');
+        $newNode = $this->nodeRepository->findOneCurrentlyPublished('root', 'fr', '2');
         $this->assertEquals($publishedVersion, $newNode->getVersion());
     }
 
