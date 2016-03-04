@@ -2,22 +2,34 @@
     <ul>
         {% for rootMenuWeights in strategies[navigation_panel.root_menu] %}
             {% for rootMenu in rootMenuWeights %}
-                <li>
-                    {{ rootMenu.show|raw }}
+
+                {% set treeRootMenu %}
                     {% if strategies[rootMenu.name] is defined %}
-                        <ul>
-                            {% for subMenuWeights in strategies[rootMenu.name] %}
-                                {% for subMenu in subMenuWeights %}
-                                    {% if is_granted(subMenu.getRole) %}
-                                        <li>
-                                            {{ subMenu.show|raw }}
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
+                        {% for subMenuWeights in strategies[rootMenu.name] %}
+                            {% for subMenu in subMenuWeights %}
+                                {% if is_granted(subMenu.getRole) %}
+                                    <li>
+                                        {{ subMenu.show|raw }}
+                                    </li>
+                                {% endif %}
                             {% endfor %}
-                        </ul>
+                        {% endfor %}
                     {% endif %}
-                </li>
+                {% endset %}
+
+                {% if not strategies[rootMenu.name] is defined  %}
+                    <li>
+                        {{ rootMenu.show|raw }}
+                    </li>
+                {% elseif not treeRootMenu|trim is empty %}
+                    <li>
+                        {{ rootMenu.show|raw }}
+                        <ul>
+                            {{ treeRootMenu|raw }}
+                        </ul>
+                    </li>
+                {% endif %}
+
             {% endfor %}
         {% endfor %}
     </ul>
