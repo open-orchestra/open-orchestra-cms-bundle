@@ -3,7 +3,8 @@
         {% for rootMenuWeights in strategies[navigation_panel.root_menu] %}
             {% for rootMenu in rootMenuWeights %}
 
-                {% set treeRootMenu %}{% if strategies[rootMenu.name] is defined %}
+                {% set treeRootMenu %}
+                    {% if strategies[rootMenu.name] is defined %}
                         {% for subMenuWeights in strategies[rootMenu.name] %}
                             {% for subMenu in subMenuWeights %}
                                 {% if is_granted(subMenu.getRole) %}
@@ -13,7 +14,9 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
-                    {% endif %}{% endset %}
+                    {% endif %}
+                {% endset %}
+
                 {% if not strategies[rootMenu.name] is defined  %}
                     <li>
                         {{ rootMenu.show|raw }}
