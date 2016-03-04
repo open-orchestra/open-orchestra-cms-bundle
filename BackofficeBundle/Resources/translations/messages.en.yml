@@ -35,6 +35,9 @@ open_orchestra_backoffice:
             text: The removal will be final
         add: Add
         select: Select
+        swchoff:
+            on: ON
+            off: OFF
         status:
             published: Published
             draft: Draft

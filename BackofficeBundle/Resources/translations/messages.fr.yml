@@ -35,6 +35,9 @@ open_orchestra_backoffice:
             text: La suppression sera définitive
         add: Ajouter
         select: Sélectionner
+        swchoff:
+            on: OUI
+            off: NON
         status:
             published: Publié
             draft: Brouillon
