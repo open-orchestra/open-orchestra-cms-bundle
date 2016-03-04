@@ -71,7 +71,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
 
         $lastPublishedNode = Phake::mock(StatusableInterface::CLASS);
         Phake::when($lastPublishedNode)->getVersion()->thenReturn($lastPublishedNodeVersion);
-        Phake::when($this->repository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn($lastPublishedNode);
+        Phake::when($this->repository)->findOneCurrentlyPublishedByElement(Phake::anyParameters())->thenReturn($lastPublishedNode);
         Phake::when($this->repository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters())->thenReturn($lastPublishedNode);
 
         $previousStatus = Phake::mock(StatusInterface::CLASS);
@@ -83,7 +83,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->repository, Phake::times($repositoryCall))->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->repository, Phake::times($repositoryCall))->findOneCurrentlyPublishedByElement(Phake::anyParameters());
         Phake::verify($this->repository, Phake::times($lastPublishedCall))->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
         Phake::verify($this->objectManager, Phake::times($managerCall))->flush($node);
         Phake::verify($this->objectManager, Phake::times($lastPublishedCall))->flush($lastPublishedNode);
@@ -126,7 +126,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->repository)->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->repository)->findOneCurrentlyPublishedByElement(Phake::anyParameters());
         Phake::verify($node)->setCurrentlyPublished(true);
         Phake::verify($this->objectManager)->flush($node);
     }
@@ -153,7 +153,7 @@ class UpdateStatusableElementCurrentlyPublishedFlagListenerTest extends \PHPUnit
 
         $this->subscriber->updateFlag($this->event);
 
-        Phake::verify($this->repository, Phake::never())->findOneCurrentlyPublished(Phake::anyParameters());
+        Phake::verify($this->repository, Phake::never())->findOneCurrentlyPublishedByElement(Phake::anyParameters());
         Phake::verify($this->repository)->findPublishedInLastVersionWithoutFlag(Phake::anyParameters());
         Phake::verify($node)->setCurrentlyPublished(false);
         Phake::verify($this->objectManager)->flush($node);
