@@ -9,12 +9,11 @@ use OpenOrchestra\GroupBundle\Document\Group;
 use OpenOrchestra\LogBundle\NavigationPanel\Strategies\LogPanelStrategy;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
-use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
  * Class LoadUserData
  */
-class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
+class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager
