@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Class LoadRedirectionRouteDocumentData
  */
-class LoadRedirectionRouteDocumentData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface, ContainerAwareInterface
+class LoadRedirectionRouteDocumentData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface, ContainerAwareInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @var ContainerInterface

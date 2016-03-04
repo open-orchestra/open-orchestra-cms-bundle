@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Class LoadNodeRouteDocumentData
  */
-class LoadNodeRouteDocumentData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface, ContainerAwareInterface
+class LoadNodeRouteDocumentData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface, ContainerAwareInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @var ContainerInterface
