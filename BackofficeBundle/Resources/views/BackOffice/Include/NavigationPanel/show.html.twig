@@ -17,7 +17,7 @@
                     {% endif %}
                 {% endset %}
 
-                {% if not strategies[rootMenu.name] is defined  %}
+                {% if not strategies[rootMenu.name] is defined or (hasFunctionality is defined and hasFunctionality) %}
                     <li>
                         {{ rootMenu.show|raw }}
                     </li>
