@@ -2,7 +2,6 @@ module.exports = {
   src: [
     //--[ MAIN ]--//
     'web/built/openorchestrabackoffice/js/orchestraLib.js',
-    'web/built/openorchestrabackoffice/js/tinyMCE/activateTinyMCE.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/bbcode2htmlConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/html2bbcodeConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/loadHtml2bbcodeInternalLink.js',
@@ -125,7 +124,21 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/groupTree/*.js',
 
     //--[ INTERNAL LINK ]--//
-    'web/built/openorchestrabackoffice/js/InternalLinkFormView.js'
+    'web/built/openorchestrabackoffice/js/InternalLinkFormView.js',
+    
+    //--[ FORM BEHAVIOR ]--//
+    'web/built/openorchestrabackoffice/js/formBehavior/AbstractFormBehavior.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/FormLibraryBehavior.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/ColorPicker.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/DatePicker.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/Helper.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/Hidden.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/OrchestraNodeChoice.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/RefreshForm.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/Select2.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/TinyMCE.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/Token.js'
+    
   ],
   dest: 'web/built/orchestra.js'
 };
