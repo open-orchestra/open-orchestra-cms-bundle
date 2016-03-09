@@ -20,8 +20,10 @@ services:
         class: %open_orchestra_backoffice.transformer.video_url_to_id.class%
     open_orchestra_backoffice.transformer.choice_array_to_string:
         class: %open_orchestra_backoffice.transformer.choice_array_to_string.class%
+        deprecated: ~
     open_orchestra_backoffice.transformer.choice_string_to_array:
         class: %open_orchestra_backoffice.transformer.choice_string_to_array.class%
+        deprecated: ~
     open_orchestra_backoffice.transformer.choices_option_to_array:
         class: %open_orchestra_backoffice.transformer.choices_option_to_array.class%
         arguments:
