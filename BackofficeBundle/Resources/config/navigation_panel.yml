@@ -11,22 +11,19 @@ parameters:
     open_orchestra_backoffice.navigation_panel.content_type.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy
     open_orchestra_backoffice.navigation_panel.general_node.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy
     open_orchestra_backoffice.navigation_panel.administration.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy
-
 services:
     open_orchestra_backoffice.navigation_panel_manager:
         class: %open_orchestra_backoffice.navigation_panel_manager.class%
         arguments:
             - @templating
-
     open_orchestra_backoffice.navigation_panel.dashboard:
         class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
         arguments:
             - %open_orchestra_backoffice.navigation_panel.menu.dashboard%
             - 100
+            - true
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
-
-
     open_orchestra_backoffice.navigation_panel.editorial:
         class: %open_orchestra_backoffice.navigation_panel.top_menu.class%
         arguments:

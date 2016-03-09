@@ -7,13 +7,16 @@ namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
  */
 class TopMenuPanelStrategy extends AdministrationPanelStrategy
 {
+    protected $hasFunctionality;
+
     /**
      * @param string $name
      * @param int    $weight
      */
-    public function __construct($name, $weight = 0)
+    public function __construct($name, $weight = 0, $hasFunctionality = false)
     {
         parent::__construct($name, null, $weight, self::ROOT_MENU);
+        $this->hasFunctionality = $hasFunctionality;
     }
 
     /**
@@ -21,6 +24,6 @@ class TopMenuPanelStrategy extends AdministrationPanelStrategy
      */
     public function show()
     {
-        return $this->render('OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/' . $this->name . '.html.twig');
+        return $this->render('OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/' . $this->name . '.html.twig', array('hasFunctionality' => $this->hasFunctionality));
     }
 }
