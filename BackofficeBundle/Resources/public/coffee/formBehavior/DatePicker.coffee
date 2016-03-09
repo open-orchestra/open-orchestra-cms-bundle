@@ -44,7 +44,12 @@ class OpenOrchestra.FormBehavior.DatePicker extends OpenOrchestra.FormBehavior.A
           prevText: '<i class="fa fa-chevron-left"></i>'
           nextText: '<i class="fa fa-chevron-right"></i>'
 
-  convertFormat = (formats, dateFormat) ->
+  ###*
+   * convertFormat
+   * @param {Array} formats
+   * @param {dateFormat} view
+  ###
+  convertFormat: (formats, dateFormat) ->
     for format of formats
       dateReplace = dateFormat.replace(new RegExp(format, 'g'), formats[format]);
       return dateReplace if dateReplace != dateFormat
