@@ -3,9 +3,12 @@
 namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.1.0 and will be removed in 1.2.0', E_USER_DEPRECATED);
 
 /**
  * Class ChoiceStringToArrayTransformer
+ *
+ * @deprecated will be removed in 1.2.0
  */
 class ChoiceStringToArrayTransformer implements DataTransformerInterface
 {

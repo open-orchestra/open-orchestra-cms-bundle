@@ -12,8 +12,6 @@ use Phake;
 class FieldChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $form;
-    protected $transformerArrayToString;
-    protected $transformerStringToArray;
     protected $builder;
 
     /**
@@ -22,9 +20,7 @@ class FieldChoiceTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformerArrayToString = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ChoiceArrayToStringTransformer');
-        $this->transformerStringToArray = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ChoiceStringToArrayTransformer');
-        $this->form = new FieldChoiceType($this->transformerArrayToString, $this->transformerStringToArray);
+        $this->form = new FieldChoiceType();
     }
 
     /**
@@ -35,10 +31,8 @@ class FieldChoiceTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array('multiple' => $multiple));
 
-        if ($multiple) {
-            Phake::verify($this->builder)->addModelTransformer($this->transformerStringToArray);
-        } else {
-            Phake::verify($this->builder)->addModelTransformer($this->transformerArrayToString);
+        if (false === $multiple) {
+            Phake::verify($this->builder)->addEventListener(Phake::anyParameters());
         }
     }
 
