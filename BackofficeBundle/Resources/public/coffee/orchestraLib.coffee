@@ -181,7 +181,7 @@ activateForm = (view, form) ->
   activateHidden(elements) if (elements = $("input[type='hidden'][required='required']", form)) && elements.length > 0
   activateDatepicker(elements) if (elements = $(".datepicker", form)) && elements.length > 0
   $("[data-prototype]", form).each ->
-    PO.formPrototypes.addPrototype $(@)
+    PO.formPrototypes.addPrototype $(@), view
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
 
 #UPDATE DEBUG BAR
