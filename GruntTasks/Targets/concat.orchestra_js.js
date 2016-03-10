@@ -2,6 +2,7 @@ module.exports = {
   src: [
     //--[ MAIN ]--//
     'web/built/openorchestrabackoffice/js/orchestraLib.js',
+    'web/built/openorchestrabackoffice/js/tinyMCE/tinyMceConf.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/bbcode2htmlConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/html2bbcodeConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/loadHtml2bbcodeInternalLink.js',
@@ -136,7 +137,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/formBehavior/OrchestraNodeChoice.js',
     'web/built/openorchestrabackoffice/js/formBehavior/RefreshForm.js',
     'web/built/openorchestrabackoffice/js/formBehavior/Select2.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/TinyMCE.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/TinyMce.js',
     'web/built/openorchestrabackoffice/js/formBehavior/Token.js'
     
   ],

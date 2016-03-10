@@ -35,9 +35,6 @@ class OpenOrchestra.FormBehavior.TinyMce extends OpenOrchestra.FormBehavior.Abst
       elements.filter('[required="required"]').data('required', true)
 
       window.callback_tinymce_init = (editor) ->
-        tinymce_button_linkmanager = (editor) ->
-          internalLinkFormViewClass = appConfigurationView.getConfiguration('internalLink', 'showForm')
-          new internalLinkFormViewClass($.extend($('#modal_internal_link_' + editor.id).data(), editor: editor))
         elements.each ->
           if $(this).data('required')
             $(this).attr('required', 'required')
