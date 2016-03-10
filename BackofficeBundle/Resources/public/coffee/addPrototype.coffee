@@ -3,7 +3,7 @@ PO.formPrototypes =
   addButtonContainer: "<li class=\"prototype-add-container\"></li>"
   addButton: "<button class=\"btn btn-success prototype-add\">__label__</button>"
   removeButton: "<button class=\"btn btn-warning prototype-remove\">__label__</button>"
-  addPrototype: (collectionHolder) ->
+  addPrototype: (collectionHolder, view) ->
     settings = {}
     prototype = collectionHolder.data("prototype")
     settings.limit = collectionHolder.data("limit")
@@ -14,6 +14,7 @@ PO.formPrototypes =
     settings.removeButton = $(@removeButton.replace(/__label__/g, collectionHolder.data("prototype-label-remove")))
     settings.addButtonContainer = $(@addButtonContainer).append(settings.addButton)
     settings.callback = collectionHolder.data("prototype-callback-add")
+    settings.view = view
     new PO.formPrototype(collectionHolder, settings)
     return
 
@@ -95,6 +96,7 @@ PO.formPrototype:: =
 
     @createRemoveButton newPrototype
     # increase the index with one for the next item
+    activateForm(@settings.view, newPrototype)
     @toogleAddButton()
     return
 
