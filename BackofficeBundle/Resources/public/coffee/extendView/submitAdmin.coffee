@@ -22,6 +22,8 @@ extendView['submitAdmin'] = {
               button: viewContext.button
             statusCode:
               201: (response) ->
+                displayRoute = appRouter.generateUrl('listEntities', entityType: viewContext.options.entityType)
+                refreshMenu(displayRoute, true)
                 displayRoute = $("#nav-" + viewContext.options.entityType).attr('href')
                 Backbone.history.navigate(displayRoute, {trigger: true})
                 viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showFlashBag')
