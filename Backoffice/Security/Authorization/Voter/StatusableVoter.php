@@ -25,7 +25,7 @@ class StatusableVoter implements VoterInterface
         && false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE')
         && false === strpos($attribute, 'ROLE_ACCESS_CREATE_NODE')
         && false === strpos($attribute, 'ROLE_ACCESS_DELETE_NODE')
-        && false === strpos($attribute, 'ROLE_ACCESS_MOVE_NODE');
+        && false === strpos($attribute, 'ROLE_ACCESS_MOVE_TREE');
     }
 
     /**

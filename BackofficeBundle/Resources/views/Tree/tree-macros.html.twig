@@ -19,7 +19,7 @@
                    and node.nodeType != constant('TYPE_TRANSVERSE', node)
                 %}
                     <ul
-                        {% if is_granted("ROLE_ACCESS_MOVE_NODE", node) %} class="node-connectedSortable" {% endif %}
+                        {% if is_granted("ROLE_ACCESS_MOVE_TREE") %} class="node-connectedSortable" {% endif %}
                         data-update-order="{{ path('open_orchestra_api_node_update_children_order', {'nodeId': node.nodeId}) }}"
                         data-confirm-title="{{ 'open_orchestra_backoffice.left_menu.tree.confirm_move.title'|trans }}"
                         data-confirm-text="{{ 'open_orchestra_backoffice.left_menu.tree.confirm_move.text'|trans({'%nodeName%': node.name}) }}"

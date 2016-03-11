@@ -61,7 +61,7 @@ abstract class AbstractLoadGroupData extends AbstractFixture implements OrderedF
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE);
-            $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_NODE);
+            $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_TREE);
             $group->addRole(TreeTemplatePanelStrategy::ROLE_ACCESS_TREE_TEMPLATE);
             $group->addRole(TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE);
             $group->addRole(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE);
