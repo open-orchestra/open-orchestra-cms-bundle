@@ -58,8 +58,12 @@ class NodeController extends AbstractAdminController
     {
         $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
 
-        $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
-        $this->denyAccessUnlessGranted($creationRole, $parentNode);
+        if (null !== $parentNode) {
+            $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
+            $this->denyAccessUnlessGranted($creationRole, $parentNode);
+        } else {
+            $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE);
+        }
 
         $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode($parentId);
 
