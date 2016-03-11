@@ -132,13 +132,13 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/formBehavior/FormLibraryBehavior.js',
     'web/built/openorchestrabackoffice/js/formBehavior/ColorPicker.js',
     'web/built/openorchestrabackoffice/js/formBehavior/DatePicker.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/Helper.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/Hidden.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/OrchestraNodeChoice.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/HelpText.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/NodeChoice.js',
     'web/built/openorchestrabackoffice/js/formBehavior/RefreshForm.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/Select2.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/TinyMce.js',
-    'web/built/openorchestrabackoffice/js/formBehavior/Token.js'
+    'web/built/openorchestrabackoffice/js/formBehavior/RichText.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/TagCondition.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/TagCreator.js',
+    'web/built/openorchestrabackoffice/js/formBehavior/ValidateHidden.js',
     
   ],
   dest: 'web/built/orchestra.js'

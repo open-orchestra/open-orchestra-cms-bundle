@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.FormBehavior or= {}
 
 ###*
- * @class Select2
+ * @class TagCreator
 ###
-class OpenOrchestra.FormBehavior.Select2 extends OpenOrchestra.FormBehavior.AbstractFormBehavior
+class OpenOrchestra.FormBehavior.TagCreator extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
   ###*
    * activateBehaviorOnElements
@@ -48,4 +48,4 @@ class OpenOrchestra.FormBehavior.Select2 extends OpenOrchestra.FormBehavior.Abst
       )
 
 jQuery ->
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Select2(".select2"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.TagCreator(".select2"))

@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.FormBehavior or= {}
 
 ###*
- * @class OrchestraNodeChoice
+ * @class NodeChoice
 ###
-class OpenOrchestra.FormBehavior.OrchestraNodeChoice extends OpenOrchestra.FormBehavior.AbstractFormBehavior
+class OpenOrchestra.FormBehavior.NodeChoice extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
   ###*
    * activateBehaviorOnElements
@@ -30,4 +30,4 @@ class OpenOrchestra.FormBehavior.OrchestraNodeChoice extends OpenOrchestra.FormB
         )
 
 jQuery ->
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.OrchestraNodeChoice(".orchestra-node-choice"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.NodeChoice(".orchestra-node-choice"))

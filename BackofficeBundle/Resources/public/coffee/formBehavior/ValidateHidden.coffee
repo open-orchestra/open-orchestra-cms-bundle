@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.FormBehavior or= {}
 
 ###*
- * @class Hidden
+ * @class ValidateHidden
 ###
-class OpenOrchestra.FormBehavior.Hidden extends OpenOrchestra.FormBehavior.AbstractFormBehavior
+class OpenOrchestra.FormBehavior.ValidateHidden extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
   ###*
    * activateBehaviorOnElements
@@ -19,4 +19,4 @@ class OpenOrchestra.FormBehavior.Hidden extends OpenOrchestra.FormBehavior.Abstr
     elements.addClass('focusable').attr('type', 'text')
 
 jQuery ->
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Hidden("input[type='hidden'][required='required']"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.ValidateHidden("input[type='hidden'][required='required']"))

@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.FormBehavior or= {}
 
 ###*
- * @class TinyMce
+ * @class RichText
 ###
-class OpenOrchestra.FormBehavior.TinyMce extends OpenOrchestra.FormBehavior.AbstractFormBehavior
+class OpenOrchestra.FormBehavior.RichText extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
   ###*
    * activateBehaviorOnElements
@@ -49,4 +49,4 @@ class OpenOrchestra.FormBehavior.TinyMce extends OpenOrchestra.FormBehavior.Abst
       initTinyMCE()
 
 jQuery ->
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.TinyMce("textarea.tinymce"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.RichText("textarea.tinymce"))

@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.FormBehavior or= {}
 
 ###*
- * @class Token
+ * @class TagCondition
 ###
-class OpenOrchestra.FormBehavior.Token extends OpenOrchestra.FormBehavior.AbstractFormBehavior
+class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
   isAndBooleanRegExp: new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( AND (?=.)){0,1})+$/)
   isOrBooleanRegExp: new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( OR (?=.)){0,1})+$/)
@@ -104,4 +104,4 @@ class OpenOrchestra.FormBehavior.Token extends OpenOrchestra.FormBehavior.Abstra
     result
 
 jQuery ->
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Token(".select-boolean"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.TagCondition(".select-boolean"))

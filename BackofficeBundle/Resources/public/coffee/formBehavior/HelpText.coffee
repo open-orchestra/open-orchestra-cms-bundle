@@ -5,9 +5,9 @@ window.OpenOrchestra or= {}
 window.OpenOrchestra.FormBehavior or= {}
 
 ###*
- * @class Helper
+ * @class HelpText
 ###
-class OpenOrchestra.FormBehavior.Helper extends OpenOrchestra.FormBehavior.AbstractFormBehavior
+class OpenOrchestra.FormBehavior.HelpText extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
   ###*
    * activateBehaviorOnElements
@@ -23,4 +23,4 @@ class OpenOrchestra.FormBehavior.Helper extends OpenOrchestra.FormBehavior.Abstr
       element.tooltip()
 
 jQuery ->
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Helper(".helper-block"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.HelpText(".helper-block"))
