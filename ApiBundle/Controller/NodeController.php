@@ -263,7 +263,7 @@ class NodeController extends BaseController
     public function updateChildrenOrderAction(Request $request, $nodeId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($nodeId);
-        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_NODE, $node);
+        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_MOVE_TREE);
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\NodeCollectionFacade',

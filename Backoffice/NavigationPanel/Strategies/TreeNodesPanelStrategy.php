@@ -15,7 +15,7 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
     const ROLE_ACCESS_CREATE_NODE = 'ROLE_ACCESS_CREATE_NODE';
     const ROLE_ACCESS_UPDATE_NODE = 'ROLE_ACCESS_UPDATE_NODE';
     const ROLE_ACCESS_DELETE_NODE = 'ROLE_ACCESS_DELETE_NODE';
-    const ROLE_ACCESS_MOVE_NODE = 'ROLE_ACCESS_MOVE_NODE';
+    const ROLE_ACCESS_MOVE_TREE = 'ROLE_ACCESS_MOVE_TREE';
 
     /**
      * @var NodeRepositoryInterface
