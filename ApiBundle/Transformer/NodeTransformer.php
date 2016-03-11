@@ -154,7 +154,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'nodeId' => $nodeId,
                 'language' => $node->getLanguage(),
             )));
-            
+
             if (NodeInterface::TYPE_ERROR !== $node->getNodeType() &&
                 $this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_DELETE_NODE, $node)
             ) {
@@ -164,9 +164,11 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             }
         }
 
-        $facade->addLink('_block_list', $this->generateRoute('open_orchestra_api_block_list', array(
-            'language' => $node->getLanguage(),
-        )));
+        $routeName = 'open_orchestra_api_block_list_without_transverse';
+        if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+            $routeName = 'open_orchestra_api_block_list_with_transverse';
+        }
+        $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
 
         return $facade;
     }

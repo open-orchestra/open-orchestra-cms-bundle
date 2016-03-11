@@ -20,14 +20,41 @@ class BlockController extends BaseController
     /**
      * @param string $language
      *
-     * @Config\Route("/list/{language}", name="open_orchestra_api_block_list")
+     * @Config\Route("/list/with-transverse/{language}", name="open_orchestra_api_block_list_with_transverse")
      * @Config\Method({"GET"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
      * @return FacadeInterface
      */
-    public function listBlockAction($language)
+    public function listBlockWithTransverseAction($language)
+    {
+        return $this->listBlock($language, true);
+    }
+
+    /**
+     * @param string $language
+     * @param bool   $withTransverseBlocks
+     *
+     * @Config\Route("/list/without-transverse/{language}", name="open_orchestra_api_block_list_without_transverse")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
+     *
+     * @return FacadeInterface
+     */
+    public function listBlockWithoutTransverseAction($language)
+    {
+        return $this->listBlock($language, false);
+    }
+
+    /**
+     * @param string $language
+     * @param bool   $withTransverseBlocks
+     *
+     * @return FacadeInterface
+     */
+    protected function listBlock($language, $withTransverseBlocks)
     {
         $currentSiteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);
@@ -45,14 +72,21 @@ class BlockController extends BaseController
             $blocks[$key]->setComponent($block);
         }
 
-        $node = $this->get('open_orchestra_model.repository.node')
-            ->findInLastVersion(
-                NodeInterface::TRANSVERSE_NODE_ID,
-                $language,
-                $currentSiteId
-            );
+        $node = $this->get('open_orchestra_model.repository.node')->findInLastVersion(
+            NodeInterface::TRANSVERSE_NODE_ID,
+            $language,
+            $currentSiteId
+        );
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform($node->getBlocks(), $blocks, $node->getNodeId());
+        $transverseBlocks = array();
+        if ($withTransverseBlocks) {
+            $transverseBlocks = $node->getBlocks();
+        }
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('block_collection')->transform(
+            $transverseBlocks,
+            $blocks,
+            $node->getNodeId()
+        );
     }
-
 }
