@@ -123,9 +123,8 @@ selectorExist = (selector) ->
 
 #ACTIVATE FORM JS
 activateForm = (view, form) ->
-  try
+  if typeof OpenOrchestra != 'undefined' and typeof OpenOrchestra.FormBehavior != 'undefined' and typeof OpenOrchestra.FormBehavior.formBehaviorLibrary != 'undefined'
     OpenOrchestra.FormBehavior.formBehaviorLibrary.activateBehaviors view, form
-  catch e  
   $("[data-prototype]", form).each ->
     PO.formPrototypes.addPrototype $(@), view
   loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
