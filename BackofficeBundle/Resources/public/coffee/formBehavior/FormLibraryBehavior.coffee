@@ -26,4 +26,5 @@ class OpenOrchestra.FormBehavior.FormBehaviorLibrary
     for formBehavior in @formBehaviors
       formBehavior.activateBehavior(view, form)
 
-formBehaviorLibrary = new OpenOrchestra.FormBehavior.FormBehaviorLibrary()
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary = new OpenOrchestra.FormBehavior.FormBehaviorLibrary()

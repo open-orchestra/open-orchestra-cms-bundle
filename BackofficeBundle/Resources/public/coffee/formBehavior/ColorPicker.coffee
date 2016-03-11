@@ -20,4 +20,5 @@ class OpenOrchestra.FormBehavior.ColorPicker extends OpenOrchestra.FormBehavior.
       element = $(element)
       element.minicolors()
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.ColorPicker(".colorpicker"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.ColorPicker(".colorpicker"))

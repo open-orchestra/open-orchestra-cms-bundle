@@ -48,4 +48,5 @@ class OpenOrchestra.FormBehavior.TinyMce extends OpenOrchestra.FormBehavior.Abst
     else
       initTinyMCE()
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.TinyMce("textarea.tinymce"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.TinyMce("textarea.tinymce"))

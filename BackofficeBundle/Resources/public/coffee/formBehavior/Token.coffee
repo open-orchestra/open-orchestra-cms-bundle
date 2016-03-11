@@ -103,4 +103,5 @@ class OpenOrchestra.FormBehavior.Token extends OpenOrchestra.FormBehavior.Abstra
         type: type
     result
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Token(".select-boolean"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Token(".select-boolean"))

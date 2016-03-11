@@ -18,4 +18,5 @@ class OpenOrchestra.FormBehavior.Hidden extends OpenOrchestra.FormBehavior.Abstr
   activateBehaviorOnElements: (elements, view, form) ->
     elements.addClass('focusable').attr('type', 'text')
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Hidden("input[type='hidden'][required='required']"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Hidden("input[type='hidden'][required='required']"))

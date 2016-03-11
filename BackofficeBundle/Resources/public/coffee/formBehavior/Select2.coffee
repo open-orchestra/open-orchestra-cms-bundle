@@ -47,4 +47,5 @@ class OpenOrchestra.FormBehavior.Select2 extends OpenOrchestra.FormBehavior.Abst
           term.text
       )
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Select2(".select2"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Select2(".select2"))

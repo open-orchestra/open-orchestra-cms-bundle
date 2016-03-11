@@ -25,4 +25,5 @@ class OpenOrchestra.FormBehavior.RefreshForm extends OpenOrchestra.FormBehavior.
           $('.spin', @$el).replaceWith(response)
           activateForm(@, $('form', @$el))
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.RefreshForm(".refresh-form"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.RefreshForm(".refresh-form"))

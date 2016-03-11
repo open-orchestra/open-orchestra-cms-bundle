@@ -22,4 +22,5 @@ class OpenOrchestra.FormBehavior.Helper extends OpenOrchestra.FormBehavior.Abstr
       element.attr 'data-original-title', title
       element.tooltip()
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Helper(".helper-block"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.Helper(".helper-block"))

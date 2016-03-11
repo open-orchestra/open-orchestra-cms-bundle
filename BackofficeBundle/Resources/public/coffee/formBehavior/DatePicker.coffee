@@ -55,4 +55,5 @@ class OpenOrchestra.FormBehavior.DatePicker extends OpenOrchestra.FormBehavior.A
       return dateReplace if dateReplace != dateFormat
     return dateFormat
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.DatePicker(".datepicker"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.DatePicker(".datepicker"))

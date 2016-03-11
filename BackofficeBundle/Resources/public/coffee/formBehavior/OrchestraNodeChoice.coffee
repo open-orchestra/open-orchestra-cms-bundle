@@ -29,4 +29,5 @@ class OpenOrchestra.FormBehavior.OrchestraNodeChoice extends OpenOrchestra.FormB
             term.text.replace regExp, ''
         )
 
-formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.OrchestraNodeChoice(".orchestra-node-choice"))
+jQuery ->
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.OrchestraNodeChoice(".orchestra-node-choice"))
