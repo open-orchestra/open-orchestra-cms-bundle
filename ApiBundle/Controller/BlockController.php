@@ -19,16 +19,42 @@ class BlockController extends BaseController
 {
     /**
      * @param string $language
-     * @param bool   $withTransverseBlocks
      *
-     * @Config\Route("/list/{language}/{withTransverseBlocks}", name="open_orchestra_api_block_list")
+     * @Config\Route("/list/with-transverse/{language}", name="open_orchestra_api_block_list_with_transverse")
      * @Config\Method({"GET"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
      * @return FacadeInterface
      */
-    public function listBlockAction($language, $withTransverseBlocks)
+    public function listBlockWithTransverseAction($language)
+    {
+        return $this->listBlock($language, true);
+    }
+
+    /**
+     * @param string $language
+     * @param bool   $withTransverseBlocks
+     *
+     * @Config\Route("/list/without-transverse/{language}", name="open_orchestra_api_block_list_without_transverse")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
+     *
+     * @return FacadeInterface
+     */
+    public function listBlockWithoutTransverseAction($language)
+    {
+        return $this->listBlock($language, false);
+    }
+
+    /**
+     * @param string $language
+     * @param bool   $withTransverseBlocks
+     *
+     * @return FacadeInterface
+     */
+    protected function listBlock($language, $withTransverseBlocks)
     {
         $currentSiteId = $this->get('open_orchestra_backoffice.context_manager')->getCurrentSiteId();
         $currentSite = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($currentSiteId);

@@ -164,14 +164,11 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             }
         }
 
-        $withTransverseBlocks = '0';
+        $routeName = 'open_orchestra_api_block_list_without_transverse';
         if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
-            $withTransverseBlocks = '1';
+            $routeName = 'open_orchestra_api_block_list_with_transverse';
         }
-        $facade->addLink('_block_list', $this->generateRoute(
-            'open_orchestra_api_block_list',
-            array('language' => $node->getLanguage(), 'withTransverseBlocks' => $withTransverseBlocks)
-        ));
+        $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
 
         return $facade;
     }
