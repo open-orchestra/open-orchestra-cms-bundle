@@ -1,37 +1,3 @@
-/*#################################GENERAL*/
-//Background
-.bg-orchestra-blue {
-    background-color: #005796;
-}
-
-.bg-orchestra-orange {
-    background-color: #e5590c;
-}
-//lists
-ul, li {
-  list-style-type: none;
-  margin: 0;
-  border: 0;
-  padding: 0;
-}
-//version open orchestra
-.oo-version {
-  color: #BFBFBF;
-  font-size: 11px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-shadow: 0 0 1px white;
-}
-//version container
-.oo-version-container{
-  position: relative;
-  .oo-version {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
-}
-
 // content after ribbon element
 #content:after {
   visibility: hidden;
@@ -41,78 +7,94 @@ ul, li {
   clear: both;
   height: 0;
 }
-/*################################AREAS*/
 
-.area-leaf > div > ul,.ui-model-areas  {
-  border-radius: 10px;
-  margin: 5px;
-  -webkit-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  min-height: 100px;
-  min-width: 100px;
-  display: flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -webkit-flex;
-}
-.area-leaf > div > ul {
-  border: solid 1px #d3d3d3;
-  background: white;
-}
-.ui-model-areas .ui-model-areas{
-  border: solid 1px #d3d3d3;
-  background: #a9a9a9;
+/****AREAS****/
 
-}
-.bo-column {
-  flex-direction: column;
-  -webkit-flex-direction: column;
-  -moz-flex-direction: column;
-  -ms-flex-direction: column;
-}
-.bo-row {
-  flex-direction: row;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  -moz-flex-direction: row;
-  &>li.area-leaf{
+.ui-model {
+
+  // first level
+  .ui-model-areas {
     display: flex;
-    flex-direction: column;
-    &>div.area-content{
-      display: flex;
+
+    & > li {
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
+
+    .area-leaf {
+      .area-content {
+        min-height: 100px;
+        background: white;
+        border-radius: 10px;
+      }
+    }
+
+    // toolbar area
+    .area-toolbar {
+      height: 20px;
+    }
+
+    // toolbar content
+    .area-content {
+      flex: 1 1 auto;
+      margin: 5px;
+
+      .ui-model-blocks {
+        display: flex;
+        flex: 1 1 auto;
+
+        // node context
+        .ui-model-block {
+          margin: 10px;
+          color: white;
+          border-radius: 10px;
+
+          .block-content {
+            .preview{
+              margin-top: 10px;
+            }
+            padding: 10px;
+            border-radius: 10px;
+          }
+        }
+
+      }
+    }
+
+    // nested area
+    .ui-model-areas {
+      border: solid 1px #d3d3d3;
+      background: #a9a9a9;
+      border-radius: 10px;
+
+      .area-left {
+        flex: 1 !important;
+      }
+    }
+
+  }
+
+  .bo-row {
+    flex-direction: row;
+  }
+  .bo-column {
+    flex-direction: column;
+  }
+
+}
+
+/**** Hack IE 11 ****/
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .ui-model  .ui-model-areas > li {
+    flex-basis: auto;
+    min-width: 10%;
+    max-width: 100%;
   }
 }
-.bo-column>li,.bo-row>li {
-  word-break: break-all;
-  min-width: 10px;
-}
-.ui-model-areas.bo-column>li,.bo-row>li {
-  flex: 1;
-}
-.ui-model-blocks.bo-column>li {
-  flex: unset;
-}
 
+/**** Toolbar area ****/
 
-/*################################BLOCKS*/
-
-.ui-model-block {
-  margin: 10px;
-  color: white;
-  border-radius: 10px;
-  .block-content {
-    .preview{
-      margin-top: 10px;
-    }
-    padding: 10px;
-    border-radius: 10px;
-  }
-}
-/*################################TOOLBARS*/
 //Hide area toolbar button
 .hide-areas {
   display:none;
@@ -131,7 +113,7 @@ ul, li {
     cursor:pointer;
   }
 }
-//Area toolbar
+
 .ui-model {
   .area-toolbar {
     &.toolbar-container {
@@ -227,7 +209,8 @@ ul, li {
   }
 }
 
-/*##############################################RIGHT MENU*/
+/**** Right Menu ****/
+
 .scroll {
   overflow-y:scroll;
   overflow-x: hidden;
