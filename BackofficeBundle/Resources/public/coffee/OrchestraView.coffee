@@ -54,6 +54,12 @@ OrchestraView = Backbone.View.extend(
   onViewReady: ->
     return
 
+  onElementCreated: ->
+    return
+
+  onFormError: ->
+    return
+
   renderTemplate: (templateName, parameters) ->
     @compiledTemplates[templateName](parameters)
 

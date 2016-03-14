@@ -12,12 +12,11 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     'change .content_type_change_type': 'changeContentTypeChange'
 
   ###*
-   * Rebuild the menu if the form is submitted
+   * Refresh the navigation when a content type is created
   ###
-  onViewReady: ->
-    if @options.submitted
-      displayRoute = appRouter.generateUrl('listEntities', entityType: @options.entityType)
-      refreshMenu(displayRoute, true)
+  onElementCreated: ->
+    displayRoute = appRouter.generateUrl('listEntities', entityType: @options.entityType)
+    refreshMenu(displayRoute, true)
 
   ###*
    * Refresh a field form setting when the type is changed

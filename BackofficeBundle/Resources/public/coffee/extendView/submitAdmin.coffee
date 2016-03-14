@@ -22,6 +22,8 @@ extendView['submitAdmin'] = {
               button: viewContext.button
             statusCode:
               201: (response) ->
+                widgetChannel.trigger 'element-created', viewContext
+
                 displayRoute = $("#nav-" + viewContext.options.entityType).attr('href')
                 Backbone.history.navigate(displayRoute, {trigger: true})
                 viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, 'showFlashBag')
@@ -31,6 +33,8 @@ extendView['submitAdmin'] = {
                 ))
                 $(document).scrollTop 0
               200: (response) ->
+                widgetChannel.trigger 'form-error', viewContext
+
                 new viewClass(viewContext.addOption(
                   html: response
                   submitted: true
