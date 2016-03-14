@@ -49,22 +49,6 @@ services:
             - 220
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.template:
-        class: %open_orchestra_backoffice.navigation_panel.template.class%
-        arguments:
-            - @open_orchestra_model.repository.template
-            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
-            - 230
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.template_flex:
-        class: %open_orchestra_backoffice.navigation_panel.template_flex.class%
-        arguments:
-            - @open_orchestra_model.repository.template_flex
-            - %open_orchestra_backoffice.navigation_panel.menu.editorial%
-            - 232
-        tags:
-            - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.content_type:
         class: %open_orchestra_backoffice.navigation_panel.content_type.class%
         arguments:
@@ -129,6 +113,22 @@ services:
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
             - %open_orchestra_backoffice.navigation_panel.websites.parameters%
             - @translator
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.template:
+        class: %open_orchestra_backoffice.navigation_panel.template.class%
+        arguments:
+            - @open_orchestra_model.repository.template
+            - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - 334
+        tags:
+            - { name: open_orchestra_backoffice.navigation_panel.strategy }
+    open_orchestra_backoffice.navigation_panel.template_flex:
+        class: %open_orchestra_backoffice.navigation_panel.template_flex.class%
+        arguments:
+            - @open_orchestra_model.repository.template_flex
+            - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - 336
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
     open_orchestra_backoffice.navigation_panel.themes:
