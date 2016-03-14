@@ -36,7 +36,7 @@ parameters:
     open_orchestra_backoffice.type.group.class: OpenOrchestra\Backoffice\Form\Type\GroupType
     open_orchestra_backoffice.type.redirection.class: OpenOrchestra\Backoffice\Form\Type\RedirectionType
     open_orchestra_backoffice.type.video.class: OpenOrchestra\Backoffice\Form\Type\VideoType
-    open_orchestra_backoffice.type.color_picker.class: OpenOrchestra\Backoffice\Form\Type\ColorPickerType
+    open_orchestra_backoffice.type.color_picker.class: OpenOrchestra\Backoffice\Form\Type\Component\ColorPickerType
     open_orchestra_backoffice.type.role_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\RoleChoiceType
     open_orchestra_backoffice.type.api_client.class: OpenOrchestra\Backoffice\Form\Type\ApiClientType
     open_orchestra_backoffice.type.operator_choice.class: OpenOrchestra\Backoffice\Form\Type\Component\OperatorChoiceType
