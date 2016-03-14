@@ -48,12 +48,14 @@ class UpdateNodeGroupRoleListener
                 $nodes = $nodeRepository->findByParent($document->getId(), $site->getSiteId());
                 /** @var $node NodeInterface */
                 foreach ($nodes as $node) {
-                    $role = $document->getRole();
-                    $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $role);
-                    if ($nodeGroupRole === null) {
-                        throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
-                    } else if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
-                        $nodeGroupRole->setGranted($document->isGranted());
+                    if (NodeInterface::TYPE_DEFAULT === $node->getNodeType()) {
+                        $role = $document->getRole();
+                        $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $role);
+                        if ($nodeGroupRole === null) {
+                            throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
+                        } else if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
+                            $nodeGroupRole->setGranted($document->isGranted());
+                        }
                     }
                 }
                 $meta = $event->getDocumentManager()->getClassMetadata(get_class($group));
