@@ -53,9 +53,8 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
 
         widgetChannel.trigger 'ready', defaultValueView
         if $('#' + defaultValueId).hasClass('tinymce')
-            tinymce.editors = []
-            activateTinyMce(defaultValueView, $('#' + defaultValueId))
-
+          tinymce.editors = []
+          activateForm(defaultValueView, formGroupDefaultValue)
 
 jQuery ->
   appConfigurationView.setConfiguration('content_types', 'editEntity', OpenOrchestra.ContentTypeFormView)
