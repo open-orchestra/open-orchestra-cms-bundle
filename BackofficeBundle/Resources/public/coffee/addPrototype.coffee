@@ -35,7 +35,7 @@ PO.formPrototype = (collectionHolder, settings) ->
     return
 
   @toogleAddButton()
-
+  @maxIndex = @getIndex()
   if @getIndex() == 0 && @settings.required
     @addPrototype()
 
@@ -88,7 +88,8 @@ PO.formPrototype:: =
 
   addPrototype: ->
     newPrototype = @settings.prototype.clone()
-    newPrototype.html newPrototype.html().replace(/__name__/g, @getIndex())
+    newPrototype.html newPrototype.html().replace(/__name__/g, @maxIndex)
+    @maxIndex++
 
     # Display the input in the page before the add button
     @settings.addButtonContainer.before newPrototype
