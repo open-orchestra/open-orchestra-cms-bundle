@@ -10,7 +10,7 @@
     <tbody>
         <% if (_.isEmpty(entities)) { %>
             <tr>
-                <td class="text-center" colspan="12" >{{ ('open_orchestra_backoffice.dashboard.widget.list.no_entities')|trans }}</td>
+                <td class="text-center" colspan="4" >{{ ('open_orchestra_backoffice.dashboard.widget.list.no_entities')|trans }}</td>
             </tr>
         <% } else { %>
             <% _.each(entities, function(entity, key) { %>
