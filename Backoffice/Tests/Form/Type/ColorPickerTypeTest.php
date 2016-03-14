@@ -4,7 +4,7 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\Form\Type\ColorPickerType;
+use OpenOrchestra\Backoffice\Form\Type\Component\ColorPickerType;
 
 /**
  * Class ColorPickerTypeTest
