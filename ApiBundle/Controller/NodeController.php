@@ -176,7 +176,7 @@ class NodeController extends BaseController
      *
      * @return FacadeInterface
      */
-    public function listTreeNode($siteId)
+    public function listTreeNodeAction($siteId)
     {
         $nodes = $this->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
         if (empty($nodes)) {

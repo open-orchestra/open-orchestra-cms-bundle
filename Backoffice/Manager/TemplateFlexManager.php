@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\Backoffice\Context\ContextManager;
-use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
 
 /**

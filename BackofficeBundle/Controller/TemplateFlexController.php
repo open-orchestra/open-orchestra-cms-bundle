@@ -56,7 +56,7 @@ class TemplateFlexController extends AbstractAdminController
      *
      * @return Response
      */
-    public function newActionFlex(Request $request)
+    public function newTemplateFlexAction(Request $request)
     {
         $templateManager = $this->container->get('open_orchestra_backoffice.manager.template_flex');
         $template = $templateManager->initializeNewTemplateFlex();

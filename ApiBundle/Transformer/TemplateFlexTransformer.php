@@ -3,12 +3,10 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
-use OpenOrchestra\ApiBundle\Facade\AreaFlexFacade;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
-use UnexpectedValueException;
 
 /**
  * Class TemplateFlexTransformer

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\LogBundle\EventSubscriber;
 
-use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateFlexEvent;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
 use OpenOrchestra\ModelInterface\TemplateFlexEvents;
