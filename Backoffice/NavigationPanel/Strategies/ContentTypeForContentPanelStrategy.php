@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Backoffice\Context\ContextManager;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
@@ -83,15 +84,17 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
                 $parameter['visible'] = in_array($name, $defaultListable) && $defaultListable[$name];
             }
             $fields = $contentType->getFields();
+            /** @var FieldTypeInterface $field */
             foreach ($fields as $field) {
                 $dataParameter[$contentTypeId][] = array(
-                    'name' => 'attributes.' . $field->getFieldId() . '.string_value',
-                    'title' => $this->translationChoiceManager->choose($field->getLabels()),
-                    'visible' => $field->getListable() === true,
+                    'name'           => 'attributes.' . $field->getFieldId() . '.string_value',
+                    'title'          => $this->translationChoiceManager->choose($field->getLabels()),
+                    'visible'        => $field->getListable() === true,
                     'activateColvis' => true,
-                    'searchField' => $field->getFieldTypeSearchable(),
-                    'orderable' => $field->isOrderable(),
+                    'orderable'      => $field->isOrderable(),
                     'orderDirection' => $field->getOrderDirection(),
+                    'searchField'    => false !== $field->isSearchable()? $field->getFieldTypeSearchable(): false,
+                    'searchable'     => $field->isSearchable(),
                 );
             }
         }
