@@ -6,6 +6,9 @@ parameters:
           visible : true
           activateColvis : true
           searchField : date
+          orderable: true
+          orderDirection: asc
+
         -
           name : user_ip
           title : open_orchestra_log.table.log.user_ip
