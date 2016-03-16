@@ -3,9 +3,9 @@
 namespace OpenOrchestra\Backoffice\Validator\Constraints;
 
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class RoleStatusesValidator
