@@ -17,6 +17,7 @@ class RoleTypeSubscriber implements EventSubscriberInterface
 {
     protected $roleRepository;
     protected $statusRepository;
+    protected $translator;
 
     /**
      * @param RoleRepositoryInterface   $roleRepository
