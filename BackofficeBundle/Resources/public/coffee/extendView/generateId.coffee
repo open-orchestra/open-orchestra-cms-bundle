@@ -6,7 +6,7 @@ extendView['generateId'] = {
 
   generateId: ->
     sourceId = $(".generate-id-source", @$el).val()
-    if $('.generate-id-dest', @$el).val().length is 0 and sourceId?
+    if $('.generate-id-dest', @$el).length > 0 and $('.generate-id-dest', @$el).val().length is 0 and sourceId?
       $('.generate-id-dest', @$el).val(sourceId.latinise().replace(/[^a-z0-9]/gi,'_'))
     return
 

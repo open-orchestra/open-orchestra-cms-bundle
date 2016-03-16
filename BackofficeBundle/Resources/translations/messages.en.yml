@@ -278,6 +278,7 @@ open_orchestra_backoffice:
             descriptions: Descriptions
             from_status: Status from
             to_status: Status destination
+            duplicate_statuses: A role with same from and to status already exists 
         group:
             new:
                 success: The group has been successfully created
