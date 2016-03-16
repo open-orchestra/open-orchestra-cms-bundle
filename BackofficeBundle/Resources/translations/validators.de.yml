@@ -13,3 +13,5 @@ open_orchestra_backoffice_validators:
         presence_required: Sie müssen eine von ihnen zu wählen
     area_flex:
         row_layout: Die Spalten-Layout ist falsch
+    role:
+        duplicate_statuses: Eine Rolle ist bereits mit dieser Status

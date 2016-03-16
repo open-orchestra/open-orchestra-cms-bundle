@@ -278,7 +278,6 @@ open_orchestra_backoffice:
             descriptions: Descriptions
             from_status: Statut de provenance
             to_status: Statut de destination
-            duplicate_statuses: Un rôle ayant le même statu de provenance et de destination existe déjà. 
         group:
             new:
                 success: Le groupe a été créé

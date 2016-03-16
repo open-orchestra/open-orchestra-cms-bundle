@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
-use OpenOrchestra\Backoffice\EventSubscriber\RoleTypeSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
@@ -15,18 +14,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class RoleType extends AbstractType
 {
     protected $translateValueInitializer;
-    protected $roleTypeSubscriber;
     protected $roleClass;
 
     /**
      * @param TranslateValueInitializerListener $translateValueInitializer
-     * @param RoleTypeSubscriber                $roleTypeSubscriber
      * @param string                            $roleClass
      */
-    public function __construct(TranslateValueInitializerListener $translateValueInitializer, RoleTypeSubscriber $roleTypeSubscriber, $roleClass)
+    public function __construct(TranslateValueInitializerListener $translateValueInitializer, $roleClass)
     {
         $this->translateValueInitializer = $translateValueInitializer;
-        $this->roleTypeSubscriber = $roleTypeSubscriber;
         $this->roleClass = $roleClass;
     }
 
@@ -47,19 +43,17 @@ class RoleType extends AbstractType
         $builder->add('fromStatus', 'oo_status_choice', array(
             'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.role.from_status',
-            'required' => true,
+            'required' => false,
         ));
         $builder->add('toStatus', 'oo_status_choice', array(
             'embedded' => false,
             'label' => 'open_orchestra_backoffice.form.role.to_status',
-            'required' => true,
+            'required' => false,
         ));
 
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
-
-        $builder->addEventSubscriber($this->roleTypeSubscriber);
     }
 
     /**

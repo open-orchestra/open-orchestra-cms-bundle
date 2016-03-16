@@ -14,3 +14,5 @@ open_orchestra_backoffice_validators:
         presence_required: Vous devez choisir l'un d'eux
     area_flex:
         row_layout: La disposition des colonnes est incorrecte
+    role:
+        duplicate_statuses: Un rôle existe déjà avec ce statut de provenance et ce statut de destination
