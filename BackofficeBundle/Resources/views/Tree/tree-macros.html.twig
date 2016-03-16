@@ -47,7 +47,7 @@
 {% endmacro %}
 
 {% macro new_node(parentId, class, node) %}
-    {% if is_granted("ROLE_ACCESS_CREATE_NODE", node) %}
+    {% if is_granted("ROLE_ACCESS_CREATE_NODE", node) or (parentId == '-' and node is null and is_granted("ROLE_ACCESS_CREATE_SITE")) %}
         <li>
             <div class="{{ class }}">
                 <a

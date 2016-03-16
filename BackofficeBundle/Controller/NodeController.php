@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
@@ -62,7 +63,7 @@ class NodeController extends AbstractAdminController
             $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
             $this->denyAccessUnlessGranted($creationRole, $parentNode);
         } else {
-            $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE);
+            $this->denyAccessUnlessGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE);
         }
 
         $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode($parentId);
