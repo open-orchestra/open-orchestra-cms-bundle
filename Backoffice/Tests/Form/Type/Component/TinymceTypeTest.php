@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Form\Type;
+namespace OpenOrchestra\Backoffice\Tests\Form\Type\Component;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\Form\Type\TinymceType;
+use OpenOrchestra\Backoffice\Form\Type\Component\TinymceType;
 
 /**
  * Class TinymceTypeTest
@@ -52,7 +52,7 @@ class TinymceTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array());
 
-        Phake::verify($this->builder)->addModelTransformer($this->transformer);
+        Phake::verify($this->builder)->addViewTransformer($this->transformer);
     }
 
     /**

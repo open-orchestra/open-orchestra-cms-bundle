@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\Form\Type;
+namespace OpenOrchestra\Backoffice\Tests\Form\Type\Component;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
