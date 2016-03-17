@@ -16,7 +16,7 @@ class IndexSiteAliasSubscriber implements EventSubscriberInterface
     protected $objectManager;
 
     /**
-     * @param ObjectManager           $objectManager
+     * @param ObjectManager $objectManager
      */
     public function __construct(ObjectManager $objectManager)
     {
@@ -30,7 +30,7 @@ class IndexSiteAliasSubscriber implements EventSubscriberInterface
     {
         $site = $event->getSite();
         $aliases = $site->getAliases();
-        foreach($aliases as $key => $alias) {
+        foreach ($aliases as $key => $alias) {
             if (strpos($key, SiteInterface::PREFIX_SITE_ALIAS) === false) {
                 $site->removeAlias($alias);
                 $site->addAlias($alias);

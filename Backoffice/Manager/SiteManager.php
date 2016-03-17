@@ -15,6 +15,7 @@ class SiteManager
      * Constructor
      *
      * @param string $siteClass
+     * @param string $siteAliasClass
      */
     public function __construct($siteClass, $siteAliasClass)
     {
