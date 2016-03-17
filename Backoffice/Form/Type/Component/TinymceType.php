@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Form\Type;
+namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +28,7 @@ class TinymceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->bbCodeTransformer);
+        $builder->addViewTransformer($this->bbCodeTransformer);
     }
 
     /**
