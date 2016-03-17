@@ -35,9 +35,9 @@ class OpenOrchestra.FormBehavior.DatePicker extends OpenOrchestra.FormBehavior.A
         element = $(element)
 
         dataDateFormat = element.data('dateformat') or 'yyyy-mm-dd'
-        dataDateFormat = @convertFormat(@convertFormatYear, @dataDateFormat);
-        dataDateFormat = @convertFormat(@convertFormatMonth, @dataDateFormat);
-        dataDateFormat = @convertFormat(@convertFormatDay, @dataDateFormat);
+        dataDateFormat = @convertFormat(@convertFormatYear, dataDateFormat);
+        dataDateFormat = @convertFormat(@convertFormatMonth, dataDateFormat);
+        dataDateFormat = @convertFormat(@convertFormatDay, dataDateFormat);
 
         element.datepicker
           dateFormat: dataDateFormat
