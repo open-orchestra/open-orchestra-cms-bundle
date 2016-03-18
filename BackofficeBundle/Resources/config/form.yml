@@ -43,6 +43,7 @@ parameters:
     open_orchestra_backoffice.type.content_search.class: OpenOrchestra\Backoffice\Form\Type\Component\ContentSearchType
     open_orchestra_backoffice.type.internal_link.class: OpenOrchestra\Backoffice\Form\Type\Component\InternalLinkType
     open_orchestra_backoffice.type.site_site_alias.class: OpenOrchestra\Backoffice\Form\Type\Component\SiteSiteAliasType
+    open_orchestra_backoffice.type.default_listable_checkbox.class: OpenOrchestra\Backoffice\Form\Type\Component\DefaultListableCheckboxType
 
     open_orchestra_backoffice.tinymce:
         tinymce_jquery: false
@@ -401,3 +402,7 @@ services:
             - @open_orchestra_model.repository.site
         tags:
             - { name: form.type, alias: oo_site_site_alias}
+    open_orchestra_backoffice.type.default_listable_checkbox:
+        class: %open_orchestra_backoffice.type.default_listable_checkbox.class%
+        tags:
+            - { name: form.type, alias: oo_default_listable_checkbox}

@@ -145,6 +145,16 @@ open_orchestra_backoffice:
             status: Status
             linked_to_site: Link to the current site
             default_display: Visible by default in BackOffice list
+            default_listable_label:
+              name: Name
+              status_label: Status label
+              version: Version
+              language: Language
+              linked_to_site: Linked to site
+              created_at: Create at
+              created_by: Created by
+              updated_at: Updated at
+              updated_by: Updated by
             fields: Fields
             keywords: Keywords
             template:
