@@ -1,5 +1,4 @@
 <?php
-
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Manager\RedirectionManager;
@@ -11,9 +10,12 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\SiteEvents;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+@trigger_error('The '.__NAMESPACE__.'\UpdateNodeRedirectionSubscriber class is deprecated since version 1.1.0 and will be removed in 1.2.0', E_USER_DEPRECATED);
 
 /**
  * Class UpdateNodeRedirectionSubscriber
+ *
+ * @deprecated will be removed in 1.2.0
  */
 class UpdateNodeRedirectionSubscriber implements EventSubscriberInterface
 {
