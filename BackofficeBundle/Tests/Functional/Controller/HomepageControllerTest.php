@@ -16,7 +16,7 @@ class HomepageControllerTest extends AbstractControllerTest
     {
         $crawler = $this->client->request('GET', '/admin/');
 
-        $this->assertEquals(1, $crawler->filter('html:contains("Editorial")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Contribution")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Administration")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Orchestra ?")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Content")')->count());
