@@ -36,7 +36,7 @@ class ArrayToHtmlStringTransformer implements ValueTransformerInterface
      */
     public function support($fieldType, $value)
     {
-        return gettype($value) == 'array' && $fieldType == 'choice';
+        return gettype($value) == 'array' && ($fieldType == 'choice' || $fieldType == 'orchestra_media');
     }
 
     /**
