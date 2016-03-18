@@ -11,12 +11,12 @@ open_orchestra_backoffice:
         de: Deutsch
     error_txt: Impossible de terminer votre opération
     clear_local_storage:
-        tooltip: '*Attention ! Ceci réitinialisera tous les settings de widgets.*'
+        tooltip: '*Attention ! Ceci réinitialisera tous les settings de widgets.*'
         title: Purger le Local Storage
         text: Voulez-vous REINITIALISER toutes vos configurations de widgets sauvegardées et purger votre Local Storage ?
     dashboard:
         last_node_title: Mes dernières pages
-        last_content_title: Mes dernièrs contenus
+        last_content_title: Mes derniers contenus
         node_draft_title: Mes pages non publiées
         content_draft_title: Mes contenus non publiés
         widget:
@@ -46,8 +46,8 @@ open_orchestra_backoffice:
             published: Publié
             initial: Initial
             labels: Libellés dans toutes les langues
-            from_role: Rôle recquis pour partir de ce status
-            to_role: Rôle recquis pour arriver sur ce status
+            from_role: Rôle requis pour partir de ce statut
+            to_role: Rôle requis pour arriver sur ce statut
             color:
                 red: Rouge
                 orange: Orange
@@ -151,7 +151,7 @@ open_orchestra_backoffice:
                 label: Template personnalisé de formulaire d'édition
                 helper: Utilisation avancée.\nTempate alternatif utilisé pour afficher le formulaire d'édition des contenus de ce type.\nFormat : MyBundle::myTemplate.html.twig
         template:
-            success: Le gabarit a été sauvé
+            success: Le gabarit a été sauvegardé
             name: Nom
             language: Langue
             status: Statut
@@ -335,9 +335,9 @@ open_orchestra_backoffice:
         dashboard:
             title: Tableau de bord
         editorial:
-            title: Editorial
+            title: Contribution
             nodes: Pages
-            general_nodes: Pages générales
+            general_nodes: Page générale
             templates: Gabarits
             templates_flex: Gabarits Flex
             contents: Contenus
@@ -552,7 +552,7 @@ open_orchestra_backoffice:
         search : Rechercher
         content_type:
             name: Nom
-            status_label: Status
+            status_label: Statut
             version: Version
             language: Langue
             linked_to_site: Liaison au site
@@ -564,14 +564,14 @@ open_orchestra_backoffice:
             content_type_id: Clef
             name: Nom
             version: Version
-            status_label: Status
+            status_label: Statut
             linked_to_site: Liaison au site
         keywords:
             label: Etiquette
         role:
             description: Description
-            from_status: Depuis le status
-            to_status: Vers le status
+            from_status: Depuis le statut
+            to_status: Vers le statut
         group:
             name: Nom
             label: Libellé
