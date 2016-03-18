@@ -111,6 +111,9 @@ parameters:
         role_access_restore :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_deleted
+        role_access_deleted_trashcan :
+            category: open_orchestra_backoffice.left_menu.editorial.title
+            label: open_orchestra_role.label_access_deleted
         role_access_status :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_status

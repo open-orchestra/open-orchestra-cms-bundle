@@ -1,0 +1,20 @@
+<% if (typeof links._self_restore !== 'undefined') { %>
+    <a href="#" class="btn btn-success btn-xs ajax-restore"
+       data-restore-confirm-txt = "{{ 'open_orchestra_backoffice.table.trashcan.restore_confirm_txt'|trans() }}"
+       data-restore-confirm-title = "{{ 'open_orchestra_backoffice.table.trashcan.restore_confirm_title'|trans() }}"
+    >
+<% } else { %>
+    <a href="#" class="btn disabled btn-default btn-xs ajax-restore">
+<% } %>
+        <span class="fa fa-undo fa-lg" aria-hidden="true"></span>
+    </a>
+<% if (typeof links._self_delete !== 'undefined') { %>
+    <a href="#" class="btn btn-danger btn-xs ajax-delete"
+       data-delete-confirm-txt = "{{ 'open_orchestra_backoffice.table.trashcan.delete_confirm_txt'|trans() }}"
+       data-delete-confirm-title = "{{ 'open_orchestra_backoffice.table.trashcan.delete_confirm_title'|trans() }}"
+    >
+<% } else { %>
+    <a href="#" class="btn disabled btn-default btn-xs ajax-delete">
+<% } %>
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </a>

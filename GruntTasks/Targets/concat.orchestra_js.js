@@ -114,7 +114,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
     'web/built/openorchestrabackoffice/js/table/TableChannel.js',
     'web/built/openorchestrabackoffice/js/table/TableviewAction.js',
-    'web/built/openorchestrabackoffice/js/table/TableviewRestoreAction.js',
+    'web/built/openorchestrabackoffice/js/table/TableviewTrashcanButtonAction.js',
     'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',
     'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
 
