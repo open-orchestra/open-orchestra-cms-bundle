@@ -36,8 +36,8 @@ open_orchestra_backoffice:
         add: Add
         select: Select
         swchoff:
-            on: ON
-            off: OFF
+            on: YES
+            off: NO
         status:
             published: Published
             draft: Draft
@@ -335,9 +335,9 @@ open_orchestra_backoffice:
         dashboard:
             title: Dashboard
         editorial:
-            title: Editorial
+            title: Contribution
             nodes: Pages
-            general_nodes: Global pages
+            general_nodes: Global page
             templates: Templates
             templates_flex: Templates Flex
             contents: Contents
