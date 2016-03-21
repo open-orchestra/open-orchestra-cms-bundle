@@ -7,7 +7,7 @@ parameters:
           activateColvis : true
           searchField : date
           orderable: true
-          orderDirection: asc
+          orderDirection: desc
 
         -
           name : user_ip
