@@ -31,7 +31,7 @@ open_orchestra_backoffice:
         delete: Delete
         global_error: There are errors in the form
         delete_confirm:
-            title: Delete this element ?
+            title: Delete this element?
             text: The removal will be final
         add: Add
         select: Select
@@ -327,10 +327,10 @@ open_orchestra_backoffice:
         tree:
             new_page: New page
             new_template: New template
-            delete_node: Are you sure to delete the page %nodeName% ?
-            delete_template: Are you sure to delete the template %templateName% ?
+            delete_node: Are you sure to delete the page %nodeName%?
+            delete_template: Are you sure to delete the template %templateName%?
             confirm_move:
-                title: Reorder the page ?
+                title: Reorder the page?
                 text: By accepting, the page will be moved as child of "%nodeName%"
         dashboard:
             title: Dashboard
@@ -418,7 +418,7 @@ open_orchestra_backoffice:
         login:
             title: Login Block
             description: Display a log form.
-        delete_question: Delete this block ?
+        delete_question: Delete this block?
         delete_explanation: The removal will be final.
         video:
             title: Video Block
@@ -506,7 +506,7 @@ open_orchestra_backoffice:
             by: by
         delete:
             text: This operation is not reversible.
-            title: Would you like delete this page ?
+            title: Would you like delete this page?
         blocks: Blocks
     status:
         none_available: No status available
@@ -517,13 +517,13 @@ open_orchestra_backoffice:
         improve_security: You can improve your security further after logging out by closing this opened browser
         fullscreen: Full screen
     areas:
-        delete_question: Would you like to delete this area ?
+        delete_question: Would you like to delete this area?
         delete_explanation: This operation is not reversible.
         delete_error_title: Area removal
         delete_error_txt: Error while removing area, please reload the page
     areas_flex:
-        delete_column_question: Would you like to delete this column ?
-        delete_row_question: Would you like to delete this row ?
+        delete_column_question: Would you like to delete this column?
+        delete_row_question: Would you like to delete this row?
         delete_explanation: This operation is not reversible.
         delete_error_txt: Error while removing area, please reload the page
         edit_column_label: Edit column
@@ -531,11 +531,11 @@ open_orchestra_backoffice:
         new_row_label: Row
     templates:
         delete:
-          title: Would you like delete this template ?
+          title: Would you like delete this template?
           text: This operation is not reversible.
     templates_flex:
         delete:
-          title: Would you like delete this template ?
+          title: Would you like delete this template?
           text: This operation is not reversible.
     command:
         node:
@@ -595,7 +595,7 @@ open_orchestra_backoffice:
         trashcan:
           name: Name
           deleted_at: Deleted at
-          restore_confirm_txt: Would you like to restore this element ?
+          restore_confirm_txt: Would you like to restore this element?
           restore_confirm_title: Restore
         themes:
           name: Name
