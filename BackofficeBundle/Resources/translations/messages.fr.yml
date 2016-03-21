@@ -146,6 +146,16 @@ open_orchestra_backoffice:
             fields: Champs
             linked_to_site: Lié au site courant
             default_display: Visible par défaut dans les listes du Backoffice
+            default_listable_label:
+                name: Nom
+                status_label: Label du statut
+                version: Version
+                language: Langue
+                linked_to_site: Lié au site courant
+                created_at: Créé le
+                created_by: Créé par
+                updated_at: Mise à jour le
+                updated_by: Mise à jour par
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition
