@@ -151,7 +151,7 @@ open_orchestra_backoffice:
               version: Version
               language: Language
               linked_to_site: Linked to site
-              created_at: Create at
+              created_at: Created at
               created_by: Created by
               updated_at: Updated at
               updated_by: Updated by
