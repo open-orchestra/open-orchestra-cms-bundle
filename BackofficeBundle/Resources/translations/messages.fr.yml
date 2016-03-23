@@ -195,6 +195,7 @@ open_orchestra_backoffice:
             template_selection:
                 name : Sélection du gabarit
                 helper : Au moins un champ obligatoire
+            boDirection: Direction des fils
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
         changefreq:

@@ -240,6 +240,7 @@ class NodeManager
      */
     protected function duplicateBlockAndArea(NodeInterface $node, NodeInterface $newNode)
     {
+        $newNode->setBoDirection($node->getBoDirection());
         $this->duplicateArea($node, $newNode);
         foreach ($node->getBlocks() as $block) {
             $newBlock = clone $block;
