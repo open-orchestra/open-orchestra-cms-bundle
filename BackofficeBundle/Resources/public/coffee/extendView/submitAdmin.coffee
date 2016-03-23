@@ -31,7 +31,6 @@ extendView['submitAdmin'] = {
                   html: response
                   domContainer: $('h1.page-title').parent()
                 ))
-                location.reload 1 if viewContext.options.entityType == 'websites'
                 $(document).scrollTop 0
               200: (response) ->
                 widgetChannel.trigger 'form-error', viewContext
