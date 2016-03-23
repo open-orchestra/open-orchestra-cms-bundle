@@ -15,6 +15,7 @@
   // first level
   .ui-model-areas {
     display: flex;
+    flex-basis: 100%;
 
     & > li {
       flex: 1;
@@ -39,10 +40,11 @@
     .area-content {
       flex: 1 1 auto;
       margin: 5px;
+      display: flex;
 
       .ui-model-blocks {
         display: flex;
-        flex: 1 1 auto;
+        flex: 1 1 100%;
 
         // node context
         .ui-model-block {
