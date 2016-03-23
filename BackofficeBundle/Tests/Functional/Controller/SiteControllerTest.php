@@ -52,7 +52,11 @@ class SiteControllerTest extends AbstractControllerTest
 
         $crawler = $this->client->request('GET', '/admin/site/form/' . $this->siteId);
         $form = $crawler->selectButton('Save')->form();
-        $form['oo_site[aliases][0][language]'] = 'en';
+        foreach($form->all() as $key => $value){
+            if (preg_match('/^oo_site\[aliases\]\[.*\]\[language\]$/', $key)) {
+                $form[$key] = 'en';
+            }
+        }
         $this->client->submit($form);
 
         $this->assertNodeCount(1, 'fr');
@@ -85,9 +89,17 @@ class SiteControllerTest extends AbstractControllerTest
         $form = $crawler->selectButton('Save')->form();
         $form['oo_site[siteId]'] = $this->siteId;
         $form['oo_site[name]'] = $this->siteId . 'domain';
-        $form['oo_site[aliases][0][domain]'] = $this->siteId . 'name';
-        $form['oo_site[aliases][0][language]'] = 'fr';
-        $form['oo_site[aliases][0][main]'] = true;
+        foreach($form->all() as $key => $value){
+            if (preg_match('/^oo_site\[aliases\]\[.*\]\[domain\]$/', $key)) {
+                $form[$key] = $this->siteId . 'name';
+            }
+            if (preg_match('/^oo_site\[aliases\]\[.*\]\[language\]$/', $key)) {
+                $form[$key] = 'fr';
+            }
+            if (preg_match('/^oo_site\[aliases\]\[.*\]\[main\]$/', $key)) {
+                $form[$key] = true;
+            }
+        }
 
         $this->client->submit($form);
     }
