@@ -67,5 +67,4 @@ class CreateRootNodeSubscriber implements EventSubscriberInterface
             SiteEvents::SITE_CREATE => 'createRootNode',
         );
     }
-
 }
