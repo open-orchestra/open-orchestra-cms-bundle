@@ -155,6 +155,7 @@ services:
         arguments:
             - %open_orchestra_model.document.site.class%
             - @translator
+            - @open_orchestra_model.repository.template
         tags:
             - { name: form.type, alias: oo_site }
     open_orchestra_backoffice.type.site_alias:

@@ -28,9 +28,9 @@ class SiteManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test initializeNewNode
+     * Test initializeNewSite
      */
-    public function testInitializeNewNode()
+    public function testInitializeNewSite()
     {
         $site = $this->manager->initializeNewSite();
 

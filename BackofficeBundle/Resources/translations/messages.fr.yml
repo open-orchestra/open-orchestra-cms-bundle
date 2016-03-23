@@ -117,6 +117,9 @@ open_orchestra_backoffice:
             index: Meta index
             follow: Meta follow
             robots_txt: Informations contenues dans le fichier robots.txt
+            template_node_root:
+                label: Temlate de la page d'accueil
+                helper: Template utilisé pour la génération de la page d'accueil de votre site.
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
                 helper: Fréquence de modification indicative (pour le sitemap)
@@ -506,6 +509,7 @@ open_orchestra_backoffice:
             at: Dernière mise à jour
             by: par
     node:
+        root_name: Page d'accueil
         version:
             create: Nouvelle version
             display: version

@@ -272,22 +272,24 @@ class NodeManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test initializeNewNode
+     * Test initializeNode
      *
+     * @param string               $language
+     * @param string               $siteId
      * @param NodeInterface|null   $parentNode
      * @param StatusInterface|null $status
      *
      * @dataProvider provideParentNode
      */
-    public function testInitializeNewNode(NodeInterface $parentNode = null, $status = null)
+    public function testInitializeNode($language, $siteId, NodeInterface $parentNode = null, $status = null)
     {
         Phake::when($this->nodeRepository)->findVersion(Phake::anyParameters())->thenReturn($parentNode);
         Phake::when($this->statusRepository)->findOneByEditable()->thenReturn($status);
-        $node = $this->manager->initializeNewNode('fakeParentId');
+        $node = $this->manager->initializeNode('fakeParentId', $language, $siteId);
 
         $this->assertInstanceOf($this->nodeClass, $node);
-        $this->assertEquals('fakeSiteId', $node->getSiteId());
-        $this->assertEquals('fakeLanguage', $node->getLanguage());
+        $this->assertEquals($siteId, $node->getSiteId());
+        $this->assertEquals($language, $node->getLanguage());
         $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
         $this->assertTrue($node->hasDefaultSiteTheme());
         $this->assertEquals('fake keyword', $node->getMetaKeywords());
@@ -319,9 +321,9 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($status)->getFromRoles()->thenReturn(array());
 
         return array(
-            array($parentNode0, null),
-            array($parentNode1, EmbedStatus::createFromStatus($status)),
-            array(null, EmbedStatus::createFromStatus($status)),
+            array('fake_language', 'fake_site_Id', $parentNode0, null),
+            array('fake_language2', 'fake_site_Id2', $parentNode1, EmbedStatus::createFromStatus($status)),
+            array('fake_language3', 'fake_site_Id3', null, EmbedStatus::createFromStatus($status)),
         );
     }
 

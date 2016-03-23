@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
@@ -59,14 +58,13 @@ class NodeController extends AbstractAdminController
     {
         $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
 
-        if (null !== $parentNode) {
-            $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
-            $this->denyAccessUnlessGranted($creationRole, $parentNode);
-        } else {
-            $this->denyAccessUnlessGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_SITE);
-        }
+        $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
+        $this->denyAccessUnlessGranted($creationRole, $parentNode);
 
-        $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNewNode($parentId);
+        $contextManager = $this->get('open_orchestra_backoffice.context_manager');
+        $language = $contextManager->getCurrentSiteDefaultLanguage();
+        $siteId = $contextManager->getCurrentSiteId();
+        $node = $this->get('open_orchestra_backoffice.manager.node')->initializeNode($parentId, $language, $siteId);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_new', array('parentId' => $parentId));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');

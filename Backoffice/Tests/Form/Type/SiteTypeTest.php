@@ -25,9 +25,10 @@ class SiteTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $repositoryTemplate = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
 
-        $this->form = new SiteType($this->siteClass, $this->translator);
+        $this->form = new SiteType($this->siteClass, $this->translator, $repositoryTemplate);
     }
 
     /**
@@ -59,7 +60,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
         Phake::verify($builder, Phake::times(12))->add(Phake::anyParameters());
         Phake::verify($this->translator, Phake::times(3))->trans(Phake::anyParameters());
-        Phake::verify($builder, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($builder, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
