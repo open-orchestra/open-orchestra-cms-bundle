@@ -6,6 +6,7 @@ use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\BoDirectionChildrenSubscriber;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
@@ -132,6 +133,7 @@ class NodeType extends AbstractType
                 'label' => 'open_orchestra_backoffice.form.node.max_age',
                 'required' => false,
             ));
+        $builder->addEventSubscriber(new BoDirectionChildrenSubscriber());
         if (!array_key_exists('disabled', $options) || $options['disabled'] === false) {
             $builder->addEventSubscriber(new NodeTemplateSelectionSubscriber($this->nodeManager,$this->templateRepository));
             $builder->addEventSubscriber(new NodeThemeSelectionSubscriber($this->siteRepository));

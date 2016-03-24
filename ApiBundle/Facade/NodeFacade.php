@@ -119,6 +119,11 @@ class NodeFacade extends DeletedFacade
     protected $previewLinks = array();
 
     /**
+     * @Serializer\Type("string")
+     */
+    public $boDirection;
+
+    /**
      * @param FacadeInterface $facade
      */
     public function addArea(FacadeInterface $facade)

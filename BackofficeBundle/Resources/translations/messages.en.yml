@@ -195,6 +195,7 @@ open_orchestra_backoffice:
             template_selection:
                 name : Template selection
                 helper : One field required
+            boDirection: Children direction
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
         changefreq:

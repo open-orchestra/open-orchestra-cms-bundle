@@ -98,6 +98,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->updatedBy = $node->getUpdatedBy();
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
+        $facade->boDirection = $node->getBoDirection();
         $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
 
