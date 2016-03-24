@@ -1,0 +1,5 @@
+parameters:
+    open_orchestra_log.role:
+        role_access_log :
+            category: open_orchestra_backoffice.left_menu.administration.title
+            label: open_orchestra_role.label_access_log

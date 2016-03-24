@@ -25,7 +25,7 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
     {
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
 
-        $this->form = new RoleChoiceType($this->roleCollector, 'oo_role_choice');
+        $this->form = new RoleChoiceType($this->roleCollector, 'oo_role_choice', array ('role_test' => array('category' => 'role_test_category', 'label' => 'role_test_label')));
     }
 
     /**
@@ -97,5 +97,25 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
             array(array('foo' => 'bar', 'bar' => 'bar')),
             array(array('FOO' => 'bar', 'BAR' => 'bar')),
         );
+    }
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        Phake::when($this->roleCollector)->getRoles()->thenReturn(array('ROLE_TEST' => 'label'));
+
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+
+        $this->form->buildView($formView, $formInterface, array());
+        $this->assertEquals($formView->vars['rolesOrdered'], array (
+            'role_test_category' => array (
+                'role_test_label' => array (
+                    0 => 0,
+                ),
+            ),
+        ));
     }
 }

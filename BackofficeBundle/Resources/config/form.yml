@@ -361,6 +361,7 @@ services:
         arguments:
             - @open_orchestra_backoffice.collector.backoffice_role
             - oo_role_choice
+            - %open_orchestra_backoffice.role%
         tags:
             - { name: form.type, alias: oo_role_choice }
     open_orchestra_backoffice.type.front_role_choice:
