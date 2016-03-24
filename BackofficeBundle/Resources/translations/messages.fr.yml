@@ -118,8 +118,8 @@ open_orchestra_backoffice:
             follow: Meta follow
             robots_txt: Informations contenues dans le fichier robots.txt
             template_node_root:
-                label: Temlate de la page d'accueil
-                helper: Template utilisé pour la génération de la page d'accueil de votre site.
+                label: Gabarit de la page d'accueil
+                helper: Gabarit utilisé pour la génération de la page d'accueil de votre site.
             changefreq:
                 title: Fréquence de modification indicative (pour le sitemap)
                 helper: Fréquence de modification indicative (pour le sitemap)

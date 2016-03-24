@@ -61,7 +61,7 @@ class CreateNodeRootSubscriberTest extends \PHPUnit_Framework_TestCase
     {
         $template = Phake::mock('OpenOrchestra\ModelInterface\Model\TemplateInterface');
         Phake::when($this->repositoryTemplate)->findOneByTemplateId(Phake::anyParameters())->thenReturn($template);
-        Phake::when($this->siteEvent)->getTemplateIdNodeHome()->thenReturn($fakeTemplateId);
+        Phake::when($this->siteEvent)->getRootNodeTemplateId()->thenReturn($fakeTemplateId);
 
         $this->subscriber->createRootNode($this->siteEvent);
 

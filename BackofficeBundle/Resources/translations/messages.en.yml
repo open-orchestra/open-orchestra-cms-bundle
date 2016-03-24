@@ -119,7 +119,7 @@ open_orchestra_backoffice:
             robots_txt: Informations contained in the robots.txt file
             template_node_root:
                 label: Homepage template
-                helper: Template used to create homepage of your site.
+                helper: Template used to create the homepage of your site.
             changefreq:
                 title: Indicative periodicity of change (for the sitemap)
                 helper: Indicative periodicity of change (for the sitemap)

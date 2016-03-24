@@ -15,6 +15,8 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class CreateRootNodeSubscriber implements EventSubscriberInterface
 {
+    const ROOT_NODE_PATTERN = '/';
+
     protected $nodeManager;
     protected $repositoryTemplate;
     protected $objectManager;
@@ -31,8 +33,7 @@ class CreateRootNodeSubscriber implements EventSubscriberInterface
         TemplateRepositoryInterface $repositoryTemplate,
         ObjectManager $objectManager,
         TranslatorInterface $translator
-    )
-    {
+    ){
         $this->nodeManager = $nodeManager;
         $this->repositoryTemplate = $repositoryTemplate;
         $this->objectManager = $objectManager;
@@ -44,15 +45,14 @@ class CreateRootNodeSubscriber implements EventSubscriberInterface
      */
     public function createRootNode(SiteEvent $siteEvent)
     {
-        $templateId = $siteEvent->getTemplateIdNodeHome();
+        $templateId = $siteEvent->getRootNodeTemplateId();
         $site = $siteEvent->getSite();
         if (null !== $templateId && null !== $site) {
             $language = $site->getDefaultLanguage();
             $template = $this->repositoryTemplate->findOneByTemplateId($templateId);
             $name = $this->translator->trans('open_orchestra_backoffice.node.root_name');
-            $routePattern = '/';
 
-            $node = $this->nodeManager->createRootNode($site->getSiteId(), $language, $name, $routePattern, $template);
+            $node = $this->nodeManager->createRootNode($site->getSiteId(), $language, $name, self::ROOT_NODE_PATTERN, $template);
             $this->objectManager->persist($node);
             $this->objectManager->flush();
         }
