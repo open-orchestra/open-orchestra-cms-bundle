@@ -48,7 +48,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
             ) {
                 $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
                 if (null !== $template) {
-                    $this->hydrateAreaFromTemplate($formData, $template->getAreas());
+                    $this->nodeManager->hydrateAreaFromTemplate($formData, $template->getAreas());
                 }
             } elseif (
                 array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&
@@ -115,20 +115,5 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
         }
 
         return $templatesChoices;
-    }
-
-    /**
-     * @param AreaContainerInterface $areaContainer
-     * @param Collection             $sourceAreas
-     */
-    protected function hydrateAreaFromTemplate(AreaContainerInterface $areaContainer, $sourceAreas)
-    {
-        foreach($sourceAreas as $area) {
-            $newArea = clone $area;
-            if (!empty($area->getAreas())) {
-                $this->hydrateAreaFromTemplate($newArea, $area->getAreas());
-            }
-            $areaContainer->addArea($newArea);
-        }
     }
 }

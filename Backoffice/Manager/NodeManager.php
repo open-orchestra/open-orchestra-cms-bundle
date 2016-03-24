@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Manager;
 
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
@@ -122,13 +123,11 @@ class NodeManager
      */
     public function createNewErrorNode($nodeId, $siteId, $language)
     {
-        $node = $this->initializeNewNode(NodeInterface::ROOT_NODE_ID);
+        $node = $this->initializeNode(NodeInterface::ROOT_NODE_ID, $language, $siteId);
         $node->setNodeId($nodeId);
         $node->setNodeType(ReadNodeInterface::TYPE_ERROR);
-        $node->setSiteId($siteId);
         $node->setRoutePattern($nodeId);
         $node->setName($nodeId);
-        $node->setLanguage($language);
         $node->setInFooter(false);
         $node->setInMenu(false);
         $node->setVersion(1);
@@ -219,6 +218,21 @@ class NodeManager
     }
 
     /**
+     * @param AreaContainerInterface $areaContainer
+     * @param Collection             $sourceAreas
+     */
+    public function hydrateAreaFromTemplate(AreaContainerInterface $areaContainer, $sourceAreas)
+    {
+        foreach($sourceAreas as $area) {
+            $newArea = clone $area;
+            if (!empty($area->getAreas())) {
+                $this->hydrateAreaFromTemplate($newArea, $area->getAreas());
+            }
+            $areaContainer->addArea($newArea);
+        }
+    }
+
+    /**
      * @param NodeInterface $node
      * @param NodeInterface $newNode
      *
@@ -269,15 +283,85 @@ class NodeManager
     }
 
     /**
-     * @param string $parentId
+     * @param string            $siteId
+     * @param string            $language
+     * @param string            $name
+     * @param string            $routePattern
+     * @param TemplateInterface $template
      *
      * @return NodeInterface
      */
+    public function createRootNode($siteId, $language, $name, $routePattern, TemplateInterface $template)
+    {
+        $node = $this->initializeNode(NodeInterface::ROOT_PARENT_ID, $siteId, $language);
+        $node->setSiteId($siteId);
+        $node->setTemplateId($template->getTemplateId());
+        $node->setRoutePattern($routePattern);
+        $node->setName($name);
+        $node->setVersion(1);
+        $node->setInMenu(true);
+        $node->setInFooter(true);
+        $node->setLanguage($language);
+
+        $this->hydrateAreaFromTemplate($node, $template->getAreas());
+
+        return $node;
+    }
+
+    /**
+     * @param string $parentId
+     *
+     * @return NodeInterface
+     *
+     * @depraceted use initializeNode, will be removed in 1.2.0
+     */
     public function initializeNewNode($parentId)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::initializeNode method instead.', E_USER_DEPRECATED);
+
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
         $siteId = $this->contextManager->getCurrentSiteId();
 
+        /** @var NodeInterface $node */
+        $node = new $this->nodeClass();
+        $node->setSiteId($siteId);
+        $node->setLanguage($language);
+        $node->setMaxAge(NodeInterface::MAX_AGE);
+        $node->setParentId($parentId);
+        $node->setOrder($this->getNewNodeOrder($parentId, $siteId));
+        $node->setTheme(NodeInterface::THEME_DEFAULT);
+        $node->setDefaultSiteTheme(true);
+
+        $parentNode = $this->nodeRepository->findVersion($parentId, $language, $siteId);
+        $node->setStatus($this->getEditableStatus($parentNode));
+        $nodeType = NodeInterface::TYPE_DEFAULT;
+        if ($parentNode instanceof NodeInterface) {
+            $nodeType = $parentNode->getNodeType();
+        } else {
+            $node->setNodeId(NodeInterface::ROOT_NODE_ID);
+        }
+        $node->setNodeType($nodeType);
+
+        $site = $this->siteRepository->findOneBySiteId($siteId);
+        if ($site) {
+            $node->setMetaKeywords($site->getMetaKeywords());
+            $node->setMetaDescription($site->getMetaDescription());
+            $node->setMetaIndex($site->getMetaIndex());
+            $node->setMetaFollow($site->getMetaFollow());
+        }
+
+        return $node;
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return NodeInterface
+     */
+    public function initializeNode($parentId, $language, $siteId)
+    {
         /** @var NodeInterface $node */
         $node = new $this->nodeClass();
         $node->setSiteId($siteId);
@@ -336,22 +420,6 @@ class NodeManager
     }
 
     /**
-     * @param string $parentId
-     * @param string $siteId
-     *
-     * @return int
-     */
-    protected function getNewNodeOrder($parentId, $siteId)
-    {
-        $greatestOrderNode = $this->nodeRepository->findOneByParentWithGreatestOrder($parentId, $siteId);
-        if (null === $greatestOrderNode) {
-            return 0;
-        }
-
-        return $greatestOrderNode->getOrder() + 1;
-    }
-
-    /**
      * @param array         $orderedNode
      * @param NodeInterface $node
      */
@@ -397,5 +465,21 @@ class NodeManager
         $node->addArea($area);
 
         return $node;
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     *
+     * @return int
+     */
+    protected function getNewNodeOrder($parentId, $siteId)
+    {
+        $greatestOrderNode = $this->nodeRepository->findOneByParentWithGreatestOrder($parentId, $siteId);
+        if (null === $greatestOrderNode) {
+            return 0;
+        }
+
+        return $greatestOrderNode->getOrder() + 1;
     }
 }

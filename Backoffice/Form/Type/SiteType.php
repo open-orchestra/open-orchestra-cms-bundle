@@ -2,7 +2,9 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\EventSubscriber\WebSiteNodeTemplateSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber;
+use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,15 +17,18 @@ class SiteType extends AbstractType
 {
     protected $siteClass;
     protected $translator;
+    protected $templateRepository;
 
     /**
-     * @param string              $siteClass
-     * @param TranslatorInterface $translator
+     * @param string                      $siteClass
+     * @param TranslatorInterface         $translator
+     * @param TemplateRepositoryInterface $templateRepository
      */
-    public function __construct($siteClass, TranslatorInterface $translator)
+    public function __construct($siteClass, TranslatorInterface $translator, TemplateRepositoryInterface $templateRepository)
     {
         $this->siteClass = $siteClass;
         $this->translator = $translator;
+        $this->templateRepository = $templateRepository;
     }
 
     /**
@@ -94,6 +99,7 @@ class SiteType extends AbstractType
             ))
             ;
         $builder->addEventSubscriber(new WebSiteSubscriber());
+        $builder->addEventSubscriber(new WebSiteNodeTemplateSubscriber($this->templateRepository));
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

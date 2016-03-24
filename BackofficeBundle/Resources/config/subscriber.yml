@@ -10,6 +10,7 @@ parameters:
     open_orchestra_backoffice.subscriber.update_route_document.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRouteDocumentSubscriber
     open_orchestra_backoffice.subscriber.add_transverse_block.class: OpenOrchestra\Backoffice\EventSubscriber\AddTransverseBlockSubscriber
     open_orchestra_backoffice.subscriber.create_transverse_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateTransverseNodeSubscriber
+    open_orchestra_backoffice.subscriber.create_root_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateRootNodeSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -90,5 +91,14 @@ services:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.manager.node
             - @object_manager
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.create_root_node:
+        class: %open_orchestra_backoffice.subscriber.create_root_node.class%
+        arguments:
+            - @open_orchestra_backoffice.manager.node
+            - @open_orchestra_model.repository.template
+            - @object_manager
+            - @translator
         tags:
             - { name: kernel.event_subscriber }

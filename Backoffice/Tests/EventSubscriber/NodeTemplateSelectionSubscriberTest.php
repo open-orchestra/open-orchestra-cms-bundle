@@ -169,7 +169,7 @@ class NodeTemplateSelectionSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->preSubmit($this->event);
 
-        Phake::verify($templateChoiceContainer, Phake::times((null === $template)? 0: 1))->addArea(Phake::anyParameters());
+        Phake::verify($this->nodeManager, Phake::times((null === $template)? 0: 1))->hydrateAreaFromTemplate(Phake::anyParameters());
     }
 
     /**
