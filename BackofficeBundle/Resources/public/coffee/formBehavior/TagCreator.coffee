@@ -20,7 +20,6 @@ class OpenOrchestra.FormBehavior.TagCreator extends OpenOrchestra.FormBehavior.A
       element = $(element)
       tags = elements.data('tags')
       url = elements.data('check')
-      console.log url
       grantedNew = elements.data('authorize-new')
       elements.select2(
         tags: tags
