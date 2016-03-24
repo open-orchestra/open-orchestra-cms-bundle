@@ -73,7 +73,7 @@ class UpdateRedirectionNodeSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NodeEvent $event
+     * @param NodeInterface $node
      */
     protected function deleteRedirectionForNodeTree(NodeInterface $node)
     {
