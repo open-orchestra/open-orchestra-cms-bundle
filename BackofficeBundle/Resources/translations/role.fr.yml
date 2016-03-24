@@ -57,17 +57,17 @@ open_orchestra_role:
     role_access_create_theme: Créer
     role_access_update_theme: Modifier
     role_access_delete_theme: Supprimer
-    role_access_group: Accéder aux groupes utilisateurs
     label_access_group: Groupe utilisateurs
+    role_access_group: Accéder
     role_access_create_group: Créer
     role_access_update_group: Modifier
     role_access_delete_group: Supprimer
-    role_access_site: Accéder aux sites
     label_access_site: Site
+    role_access_site: Accéder
     role_access_create_site: Créer
     role_access_update_site: Editer
     role_access_delete_site: Supprimer
-    role_access_role: Rôle
+    label_access_role: Rôle
     role_access_role: Accéder
     role_access_create_role: Créer
     role_access_update_role: Editer
