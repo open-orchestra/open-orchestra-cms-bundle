@@ -23,5 +23,13 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
         $this->addRoles($container, array(
             LogPanelStrategy::ROLE_ACCESS_LOG,
         ));
+
+        if ($container->hasParameter('open_orchestra_backoffice.role')) {
+            $param = $container->getParameter('open_orchestra_backoffice.role');
+            if ($container->hasParameter('open_orchestra_log.role')) {
+                $param = array_merge_recursive($param, $container->getParameter('open_orchestra_log.role'));
+            }
+            $container->setParameter('open_orchestra_backoffice.role', $param);
+        }
     }
 }

@@ -26,5 +26,13 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_USER,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETE_USER,
         ));
+
+        if ($container->hasParameter('open_orchestra_backoffice.role')) {
+            $param = $container->getParameter('open_orchestra_backoffice.role');
+            if ($container->hasParameter('open_orchestra_user.role')) {
+                $param = array_merge_recursive($param, $container->getParameter('open_orchestra_user.role'));
+            }
+            $container->setParameter('open_orchestra_backoffice.role', $param);
+        }
     }
 }

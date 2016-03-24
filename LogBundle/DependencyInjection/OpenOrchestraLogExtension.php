@@ -32,5 +32,6 @@ class OpenOrchestraLogExtension extends Extension
         $loader->load('processor.yml');
         $loader->load('transformer.yml');
         $loader->load('datatable_parameter.yml');
+        $loader->load('role_parameter.yml');
     }
 }

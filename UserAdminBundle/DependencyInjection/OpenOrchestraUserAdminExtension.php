@@ -33,5 +33,6 @@ class OpenOrchestraUserAdminExtension extends Extension
         $loader->load('oauth2.yml');
         $loader->load('subscriber.yml');
         $loader->load('datatable_parameter.yml');
+        $loader->load('role_parameter.yml');
     }
 }

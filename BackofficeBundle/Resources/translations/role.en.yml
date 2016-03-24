@@ -1,59 +1,74 @@
 open_orchestra_role:
     role_user: Role of a connected user
-    role_access_tree_general_node: Access transversal pages
-    role_access_update_general_node: Update a transversal page
-    role_access_tree_node: Access pages
-    role_access_create_node: Create a page
-    role_access_update_node: Update a page
-    role_access_delete_node: Delete a page
-    role_access_move_tree: Move a page
-    role_access_tree_template: Access page templates
-    role_access_create_template: Create a page template
-    role_access_update_template: Update a page template
-    role_access_delete_template: Delete a page template
-    role_access_tree_template_flex: Access page templates flex
-    role_access_create_template_flex: Create a page template flex
-    role_access_update_template_flex: Update a page template flex
-    role_access_delete_template_flex: Delete a page template flex
-    role_access_content_type_for_content: Access contents
-    role_access_create_content_type_for_content: Create a content
-    role_access_update_content_type_for_content: Update a content
-    role_access_delete_content_type_for_content: Delete a content
-    role_access_content_type: Access content types
-    role_access_create_content_type: Create a content type
-    role_access_update_content_type: Update a content type
-    role_access_delete_content_type: Delete a content type
-    role_access_redirection: Access HTTP redirections
-    role_access_create_redirection: Create a HTTP redirection
-    role_access_update_redirection: Update a HTTP redirection
-    role_access_delete_redirection: Delete a HTTP redirection
-    role_access_api_client: Access API accesses
-    role_access_create_api_client: Create an API access
-    role_access_update_api_client: Update an API access
-    role_access_delete_api_client: Delete an API access
-    role_access_keyword: Access keywords (tags)
-    role_access_create_keyword: Create keywords (tags)
-    role_access_update_keyword: Update keywords (tags)
-    role_access_delete_keyword: Delete keywords (tags)
-    role_access_deleted: Access trash can
-    role_access_restore: Restore an entity from trash can
-    role_access_status: Access publication statuses
-    role_access_create_status: Create a publication status
-    role_access_update_status: Upddate a publication status
-    role_access_delete_status: Delete a publication status
-    role_access_theme: Access themes
-    role_access_create_theme: Create a theme
-    role_access_update_theme: Update a theme
-    role_access_delete_theme: Delete a theme
-    role_access_site: Access web sites
-    role_access_create_site: Create a web site
-    role_access_update_site: Update a web site
-    role_access_delete_site: Delete a web site
-    role_access_group: Access user groups
-    role_access_create_group: Create an user group
-    role_access_update_group: Update an user group
-    role_access_delete_group: Delete an user group
-    role_access_role: Access roles
-    role_access_create_role: Create a role
-    role_access_update_role: Update a role
-    role_access_delete_role: Delete a role
+    label_access_general_node: Transversal page
+    role_access_tree_general_node: Access
+    role_access_update_general_node: Update
+    label_access_node: Page
+    role_access_tree_node: Access
+    role_access_create_node: Create
+    role_access_update_node: Update
+    role_access_delete_node: Delete
+    role_access_move_tree: Move
+    label_access_template: Page template
+    role_access_tree_template: Access
+    role_access_create_template: Create
+    role_access_update_template: Update
+    role_access_delete_template: Delete
+    label_access_template_flex: Page template flex
+    role_access_tree_template_flex: Access
+    role_access_create_template_flex: Create
+    role_access_update_template_flex: Update
+    role_access_delete_template_flex: Delete
+    label_access_for_content: Content
+    role_access_content_type_for_content: Access
+    role_access_create_content_type_for_content: Create
+    role_access_update_content_type_for_content: Update
+    role_access_delete_content_type_for_content: Delete
+    label_access_content_type: Content type
+    role_access_content_type: Access
+    role_access_create_content_type: Create
+    role_access_update_content_type: Update
+    role_access_delete_content_type: Delete
+    label_access_redirection: HTTP redirection
+    role_access_redirection: Access
+    role_access_create_redirection: Create
+    role_access_update_redirection: Update
+    role_access_delete_redirection: Delete
+    label_access_api_client: API
+    role_access_api_client: Access
+    role_access_create_api_client: Create
+    role_access_update_api_client: Update
+    role_access_delete_api_client: Delete
+    label_access_keyword: Keywords (tags)
+    role_access_keyword: Access
+    role_access_create_keyword: Create
+    role_access_update_keyword: Update
+    role_access_delete_keyword: Delete
+    label_access_deleted: Trash can
+    role_access_deleted: Access
+    role_access_restore: Restore
+    label_access_status: Publication status
+    role_access_status: Access
+    role_access_create_status: Create
+    role_access_update_status: Upddate
+    role_access_delete_status: Delete
+    label_access_theme: Theme
+    role_access_theme: Access
+    role_access_create_theme: Create
+    role_access_update_theme: Update
+    role_access_delete_theme: Delete
+    label_access_site: Web sites
+    role_access_site: Access
+    role_access_create_site: Create
+    role_access_update_site: Update
+    role_access_delete_site: Delete
+    label_access_group: User group
+    role_access_group: Access
+    role_access_create_group: Create
+    role_access_update_group: Update
+    role_access_delete_group: Delete
+    label_access_role: Role
+    role_access_role: Access
+    role_access_create_role: Create
+    role_access_update_role: Update
+    role_access_delete_role: Delete

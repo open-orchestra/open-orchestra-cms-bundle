@@ -246,3 +246,31 @@
           data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
       ></div>
 {% endblock %}
+{% block oo_role_choice_widget %}
+    <div class="container-fluid">
+	{% for category, parameters in form.vars.parameters %}
+		<h4>{{ category|trans }}</h4>
+        <div class="role-table">
+        {% for label, ranks in parameters %}
+            <div class="role-row">
+                <div class="role-cell">
+	        		<div class="role-title">
+    		            {{ label|trans({}, 'role') }}
+	                </div>
+                </div>
+	        {% for rank in ranks %}
+	        	<div class="role-cell role-forms">
+	        		<div class="role-label">
+	        	        {{ form_label(form[rank]) }}
+	        	    </div>
+	        	    <div class="role-form">
+	        	        {{ form_widget(form[rank]) }}
+	        	    </div>
+	            </div>
+	        {% endfor %}
+	        </div>
+	    {% endfor %}
+	    </div>
+	{% endfor %}
+	</div>
+{% endblock %}
