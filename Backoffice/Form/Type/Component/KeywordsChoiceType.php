@@ -21,6 +21,7 @@ class KeywordsChoiceType extends AbstractType
     protected $keywordsTransformer;
     protected $keywordRepository;
     protected $router;
+    protected $authorizationChecker;
 
     /**
      * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
@@ -44,6 +45,12 @@ class KeywordsChoiceType extends AbstractType
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     */
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @throws NotAllowedClassNameException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -75,6 +82,7 @@ class KeywordsChoiceType extends AbstractType
                     'class' => 'select2',
                     'data-tags' => $this->getTags(),
                     'data-authorize-new' => ($isGranted) ? "true" : "false",
+                    'data-check' => $this->router->generate('open_orchestra_api_check_keyword', array()),
                 );
                 return array_replace($default, $options['new_attr']);
             },
