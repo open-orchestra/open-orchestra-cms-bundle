@@ -85,11 +85,12 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
         $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
-            'attr' => function(Options $options) use ($isGranted, $tagLabel) {
+            'attr' => function(Options $options) use ($isGranted, $tagLabel, $route) {
                 $default = array(
                     'class' => 'select2',
                     'data-tags' => json_encode(array($tagLabel, $tagLabel)),
                     'data-authorize-new' => ($isGranted) ? "true" : "false",
+                    'data-check' => $route ,
                 );
                 return array_replace($default, $options['new_attr']);
             },

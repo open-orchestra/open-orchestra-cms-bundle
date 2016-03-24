@@ -19,12 +19,14 @@ class ContentSearchType extends AbstractType
 {
     protected $contentRepository;
     protected $contextManager;
-    protected $transformer;
+    protected $transformerClass;
 
     /**
      * @param ContentRepositoryInterface $contentRepository
      * @param CurrentSiteIdInterface     $contextManager
      * @param string                     $transformerClass
+     *
+     * @throws NotAllowedClassNameException
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
