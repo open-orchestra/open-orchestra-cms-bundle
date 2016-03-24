@@ -121,7 +121,11 @@ module.exports = {
     //--[ USER ]--//
     'web/built/openorchestrabackoffice/js/user/UserFormView.js',
     'web/built/openorchestrauseradmin/js/user/*.js',
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> refraich page after site creation
     //--[ CONTENT TYPE ]--//
     'web/built/openorchestrabackoffice/js/contentType/TableviewCollectionView.js',
     'web/built/openorchestrabackoffice/js/contentType/TableViewAction.js',
