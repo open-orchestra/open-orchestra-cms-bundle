@@ -112,6 +112,7 @@ module.exports = {
 
     //--[ TABLEVIEW ]--//
     'web/built/openorchestrabackoffice/js/table/TableOrchestraPagination.js',
+    'web/built/openorchestrabackoffice/js/table/TableChannel.js',
     'web/built/openorchestrabackoffice/js/table/TableviewAction.js',
     'web/built/openorchestrabackoffice/js/table/TableviewRestoreAction.js',
     'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',
@@ -120,6 +121,9 @@ module.exports = {
     //--[ USER ]--//
     'web/built/openorchestrabackoffice/js/user/UserFormView.js',
     'web/built/openorchestrauseradmin/js/user/*.js',
+
+    //--[ CONTENT TYPE ]--//
+    'web/built/openorchestrabackoffice/js/contentType/TableViewAction.js',
 
     //--[ GROUP TREE ]--//
     'web/built/openorchestrabackoffice/js/groupTree/*.js',
