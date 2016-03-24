@@ -53,6 +53,7 @@ services:
         class: %open_orchestra_backoffice.manager.site.class%
         arguments:
             - %open_orchestra_model.document.site.class%
+            - %open_orchestra_model.document.site_alias.class%
     open_orchestra_backoffice.manager.content_type:
         class: %open_orchestra_backoffice.manager.content_type.class%
         arguments:
@@ -75,6 +76,7 @@ services:
             - @object_manager
             - @event_dispatcher
             - @open_orchestra_model.repository.site
+            - @open_orchestra_model.repository.node
             - @open_orchestra_model.repository.redirection
     open_orchestra_backoffice.manager.route_document:
         class: %open_orchestra_backoffice.manager.route_document.class%

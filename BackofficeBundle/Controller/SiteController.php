@@ -60,10 +60,6 @@ class SiteController extends AbstractAdminController
     public function newAction(Request $request)
     {
         $site = $this->get('open_orchestra_backoffice.manager.site')->initializeNewSite();
-        $siteAliasClass = $this->container->getParameter('open_orchestra_model.document.site_alias.class');
-        $siteAlias = new $siteAliasClass();
-
-        $site->addAlias($siteAlias);
         $form = $this->createForm('oo_site', $site, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_site_new'),
             'method' => 'POST',

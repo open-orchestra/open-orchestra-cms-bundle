@@ -6,10 +6,12 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Event\RedirectionEvent;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelInterface\RedirectionEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\RedirectionRepositoryInterface;
 
 /**
@@ -22,6 +24,7 @@ class RedirectionManager
     protected $eventDispatcher;
     protected $contextManager;
     protected $siteRepository;
+    protected $nodeRepository;
     protected $redirectionRepository;
 
     /**
@@ -30,6 +33,7 @@ class RedirectionManager
      * @param DocumentManager                $documentManager
      * @param EventDispatcherInterface       $eventDispatcher
      * @param SiteRepositoryInterface        $siteRepository
+     * @param NodeRepositoryInterface        $nodeRepository
      * @param RedirectionRepositoryInterface $siteRepository
      */
     public function __construct(
@@ -38,6 +42,7 @@ class RedirectionManager
         DocumentManager $documentManager,
         EventDispatcherInterface $eventDispatcher,
         SiteRepositoryInterface $siteRepository,
+        NodeRepositoryInterface $nodeRepository,
         RedirectionRepositoryInterface $redirectionRepository
     ){
         $this->redirectionClass = $redirectionClass;
@@ -45,6 +50,7 @@ class RedirectionManager
         $this->documentManager = $documentManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->siteRepository = $siteRepository;
+        $this->nodeRepository = $nodeRepository;
         $this->redirectionRepository = $redirectionRepository;
     }
 
@@ -97,6 +103,56 @@ class RedirectionManager
         $redirections = $this->redirectionRepository->findByNode($nodeId, $language);
         foreach ($redirections as $redirection) {
             $this->eventDispatcher->dispatch(RedirectionEvents::REDIRECTION_UPDATE, new RedirectionEvent($redirection));
+        }
+    }
+
+    /**
+     * @param string|null $parentId
+     * @param string|null $suffix
+     *
+     * @return string|null
+     */
+    protected function completeRoutePattern($parentId = null, $suffix = null, $language)
+    {
+        if (is_null($parentId) || '-' == $parentId || '' == $parentId) {
+            return $suffix;
+        }
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $parent = $this->nodeRepository->findOneCurrentlyPublished($parentId, $language, $siteId);
+
+        if ($parent instanceof NodeInterface) {
+            return str_replace('//', '/', $this->completeRoutePattern($parent->getParentId(), $parent->getRoutePattern() . '/' . $suffix, $language));
+        }
+
+        return $suffix;
+    }
+
+    /**
+     * @param NodeInterface $node
+     */
+    public function generateRedirectionForNode(NodeInterface $node)
+    {
+        $this->deleteRedirection(
+            $node->getNodeId(),
+            $node->getLanguage()
+            );
+        $siteId = $node->getSiteId();
+        $nodes = $this->nodeRepository->findPublishedSortedByVersion($node->getNodeId(), $node->getLanguage(), $siteId);
+        if (count($nodes) > 0) {
+            $lastNode = array_shift($nodes);
+            $routePatterns = array($this->completeRoutePattern($lastNode->getParentId(), $node->getRoutePattern(), $node->getLanguage()));
+
+            foreach ($nodes as $otherNode) {
+                $oldRoutePattern = $this->completeRoutePattern($otherNode->getParentId(), $otherNode->getRoutePattern(), $otherNode->getLanguage());
+                if (!in_array($oldRoutePattern, $routePatterns)) {
+                    $this->createRedirection(
+                        $oldRoutePattern,
+                        $node->getNodeId(),
+                        $node->getLanguage()
+                        );
+                    array_push($routePatterns, $oldRoutePattern);
+                }
+            }
         }
     }
 }

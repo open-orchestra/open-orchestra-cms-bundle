@@ -21,13 +21,19 @@ class RedirectionManagerTest extends AbstractBaseTestCase
     protected $siteAlias1;
     protected $siteAlias2;
     protected $siteAlias3;
-    protected $siteId = ';';
+    protected $siteId = 'fakeSiteId';
     protected $siteRepository;
+    protected $nodeRepository;
+    protected $nodeSource;
     protected $redirectionRepository;
     protected $contextManager;
     protected $documentManager;
     protected $localeEn = 'en';
     protected $localeFr = 'fr';
+    protected $nodeId = 'fakeNodeId';
+    protected $nodeRoutePattern = 'fakeRoutePattern';
+    protected $otherNodeRoutePattern = 'otherFakeRoutePattern';
+
     protected $eventDispatcher;
     protected $redirectionClass;
 
@@ -64,6 +70,25 @@ class RedirectionManagerTest extends AbstractBaseTestCase
         $this->redirectionRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\RedirectionRepositoryInterface');
         Phake::when($this->redirectionRepository)->findByNode(Phake::anyParameters())->thenReturn($redirections);
 
+        $this->nodeSource = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($this->nodeSource)->getNodeId()->thenReturn($this->nodeId);
+        Phake::when($this->nodeSource)->getLanguage()->thenReturn($this->localeFr);
+        Phake::when($this->nodeSource)->getSideId()->thenReturn($this->siteId);
+        Phake::when($this->nodeSource)->getRoutePattern()->thenReturn($this->nodeRoutePattern);
+
+        $nodeCopy = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($nodeCopy)->getNodeId()->thenReturn($this->nodeId);
+        Phake::when($nodeCopy)->getLanguage()->thenReturn($this->localeFr);
+        Phake::when($nodeCopy)->getSideId()->thenReturn($this->siteId);
+        Phake::when($nodeCopy)->getRoutePattern()->thenReturn($this->otherNodeRoutePattern);
+
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        Phake::when($this->nodeRepository)->findPublishedSortedByVersion(Phake::anyParameters())->thenReturn(array(
+            $this->nodeSource,
+            $nodeCopy
+        ));
+        Phake::when($this->nodeRepository)->findOneCurrentlyPublished(Phake::anyParameters())->thenReturn(null);
+
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
 
@@ -73,6 +98,7 @@ class RedirectionManagerTest extends AbstractBaseTestCase
             $this->documentManager,
             $this->eventDispatcher,
             $this->siteRepository,
+            $this->nodeRepository,
             $this->redirectionRepository
         );
     }
@@ -113,5 +139,12 @@ class RedirectionManagerTest extends AbstractBaseTestCase
         $this->manager->updateRedirection('fakeNodeId', 'fakeLanguage');
 
         Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());
+    }
+
+    public function testGenerateRedirectionForNode() {
+        $this->manager->generateRedirectionForNode($this->nodeSource);
+        Phake::verify($this->documentManager, Phake::times(2))->persist(Phake::anyParameters());
+        Phake::verify($this->documentManager, Phake::times(5))->flush(Phake::anyParameters());
+        Phake::verify($this->eventDispatcher, Phake::times(5))->dispatch(Phake::anyParameters());
     }
 }
