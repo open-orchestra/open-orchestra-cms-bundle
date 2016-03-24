@@ -37,6 +37,7 @@ TableviewAction = OrchestraView.extend(
           method: 'DELETE'
           complete: () ->
             OpenOrchestra.DataTable.Channel.trigger 'draw', options.tableId
+            OpenOrchestra.Table.Channel.trigger 'removeEntity', options.tableId
     )
 
   clickEdit: (event) ->
