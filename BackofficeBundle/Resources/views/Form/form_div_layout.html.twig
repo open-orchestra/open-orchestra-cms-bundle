@@ -248,7 +248,7 @@
 {% endblock %}
 {% block oo_role_choice_widget %}
     <div class="container-fluid">
-    {% for category, parameters in form.vars.parameters %}
+    {% for category, parameters in form.vars.rolesOrdered %}
         <h4>{{ category|trans }}</h4>
         <div class="role-table">
         {% for label, ranks in parameters %}

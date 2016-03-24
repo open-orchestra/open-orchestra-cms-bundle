@@ -15,17 +15,18 @@ class RoleChoiceType extends AbstractType
 {
     protected $roleCollector;
     protected $name;
-    protected $parameters;
+    protected $rolesClassification;
 
     /**
      * @param RoleCollectorInterface $roleCollector
      * @param string                 $name
+     * @param array                  $rolesClassification
      */
-    public function __construct(RoleCollectorInterface $roleCollector, $name, $parameters)
+    public function __construct(RoleCollectorInterface $roleCollector, $name, $rolesClassification)
     {
         $this->roleCollector = $roleCollector;
         $this->name = $name;
-        $this->parameters = $parameters;
+        $this->rolesClassification = $rolesClassification;
     }
 
     /**
@@ -35,12 +36,14 @@ class RoleChoiceType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $parameters = array();
+        $rolesOrdered = array();
         $choices = $this->roleCollector->getRoles();
-        foreach($this->parameters as $key => $parameter) {
-            $parameters[$parameter['category']][$parameter['label']][] = array_search(strtoupper($key), array_keys($choices));
+        foreach($this->rolesClassification as $key => $classification) {
+            if(($rank = array_search(strtoupper($key), array_keys($choices))) !== false) {
+                $rolesOrdered[$classification['category']][$classification['label']][] = $rank;
+            }
         }
-        $view->vars['parameters'] = $parameters;
+        $view->vars['rolesOrdered'] = $rolesOrdered;
     }
 
     /**

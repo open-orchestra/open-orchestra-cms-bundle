@@ -1,27 +1,30 @@
 .role-table {
     border-collapse: collapse;
-	display: table;
-	.role-row {
-		display: table-row;
-	    .role-cell {
-		    display: table-cell;
-		    min-width: 170px;
-			.role-title {
-			    position: relative;
-			    top: -5px;
-			}
-			.role-label {
-			    float: left;
-			    margin-top: -3px;
-			}
-			.role-form {
-			    float: right;
-				margin-right: 12px;
-			    margin-top: -3px;
-			}
-	    }
-		.role-forms {
-		    border: 1px solid #000;
-		}
-	}
+    display: table;
+    table-layout: fixed;
+    .role-row {
+        display: table-row;
+        .role-cell {
+            display: table-cell;
+            .role-title {
+                position: relative;
+                top: -5px;
+                min-width: 170px;
+            }
+            .role-label {
+                float: left;
+                margin-top: -3px;
+                min-width: 87px;
+            }
+            .role-form {
+                float: right;
+                margin-right: 12px;
+                margin-top: -3px;
+                min-width: 61px;
+            }
+        }
+        .role-forms {
+            border: 1px solid #000;
+        }
+    }
 }
