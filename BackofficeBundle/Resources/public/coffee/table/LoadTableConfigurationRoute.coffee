@@ -6,7 +6,8 @@
 
   router.route ':entityType/list(/:page)', 'listEntities', (entityType, page) ->
     @initDisplayRouteChanges '#nav-' + entityType
-    tableViewLoad $('#nav-' + entityType), entityType, page
+    jQuery ->
+      tableViewLoad $('#nav-' + entityType), entityType, page
     return
 
   router.route ':entityType/add', 'addEntity', (entityType) ->
