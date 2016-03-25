@@ -125,6 +125,9 @@ module.exports = {
     //--[ CONTENT TYPE ]--//
     'web/built/openorchestrabackoffice/js/contentType/TableviewCollectionView.js',
 
+    //--[ WEBSITE ]--//
+    'web/built/openorchestrabackoffice/js/webSite/WebSiteFormView.js',
+
     //--[ GROUP TREE ]--//
     'web/built/openorchestrabackoffice/js/groupTree/*.js',
 
