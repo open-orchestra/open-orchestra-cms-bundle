@@ -123,7 +123,7 @@ module.exports = {
     'web/built/openorchestrauseradmin/js/user/*.js',
 
     //--[ CONTENT TYPE ]--//
-    'web/built/openorchestrabackoffice/js/contentType/TableViewAction.js',
+    'web/built/openorchestrabackoffice/js/contentType/TableviewCollectionView.js',
 
     //--[ GROUP TREE ]--//
     'web/built/openorchestrabackoffice/js/groupTree/*.js',
