@@ -124,7 +124,6 @@ module.exports = {
 
     //--[ CONTENT TYPE ]--//
     'web/built/openorchestrabackoffice/js/contentType/TableviewCollectionView.js',
-    'web/built/openorchestrabackoffice/js/contentType/TableViewAction.js',
 
     //--[ WEBSITE ]--//
     'web/built/openorchestrabackoffice/js/webSite/WebSiteFormView.js',
