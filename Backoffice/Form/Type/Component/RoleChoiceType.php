@@ -22,7 +22,7 @@ class RoleChoiceType extends AbstractType
      * @param string                 $name
      * @param array                  $rolesClassification
      */
-    public function __construct(RoleCollectorInterface $roleCollector, $name, array $rolesClassification)
+    public function __construct(RoleCollectorInterface $roleCollector, $name, array $rolesClassification = array())
     {
         $this->roleCollector = $roleCollector;
         $this->name = $name;
