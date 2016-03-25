@@ -7,7 +7,7 @@ use OpenOrchestra\ModelInterface\Repository\TemplateFlexRepositoryInterface;
 /**
  * Class TreeTemplateFlexPanelStrategy
  */
-class TreeTemplateFlexPanelStrategy extends AbstractNavigationPanelStrategy
+class TreeTemplateFlexPanelStrategy extends AbstractNavigationStrategy
 {
     const ROLE_ACCESS_TREE_TEMPLATE_FLEX = 'ROLE_ACCESS_TREE_TEMPLATE_FLEX';
     const ROLE_ACCESS_CREATE_TEMPLATE_FLEX = 'ROLE_ACCESS_CREATE_TEMPLATE_FLEX';
@@ -26,7 +26,7 @@ class TreeTemplateFlexPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(TemplateFlexRepositoryInterface $templateRepository, $parent, $weight)
     {
-        parent::__construct('templates_flex', self::ROLE_ACCESS_TREE_TEMPLATE_FLEX, $weight, $parent);
+        parent::__construct('templates_flex', $weight, $parent, self::ROLE_ACCESS_TREE_TEMPLATE_FLEX);
         $this->templateRepository = $templateRepository;
     }
 

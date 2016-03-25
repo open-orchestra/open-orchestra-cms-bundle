@@ -5,7 +5,7 @@ namespace OpenOrchestra\Backoffice\NavigationPanel\Strategies;
 /**
  * Class AdministrationPanelStrategy
  */
-class AdministrationPanelStrategy extends AbstractNavigationPanelStrategy
+class AdministrationPanelStrategy extends AbstractNavigationStrategy
 {
     const ROLE_ACCESS_CONTENT_TYPE = 'ROLE_ACCESS_CONTENT_TYPE';
     const ROLE_ACCESS_CREATE_CONTENT_TYPE = 'ROLE_ACCESS_CREATE_CONTENT_TYPE';

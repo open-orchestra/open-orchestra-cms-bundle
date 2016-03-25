@@ -11,7 +11,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class ContentTypeForContentPanel
  */
-class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
+class ContentTypeForContentPanelStrategy extends AbstractNavigationStrategy
 {
     const ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT';
     const ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT = 'ROLE_ACCESS_CREATE_CONTENT_TYPE_FOR_CONTENT';
@@ -42,7 +42,7 @@ class ContentTypeForContentPanelStrategy extends AbstractNavigationPanelStrategy
         $this->contentTypes = $contentTypeRepository->findAllNotDeletedInLastVersion($contextManager->getCurrentLocale());
         $this->translationChoiceManager = $translationChoiceManager;
 
-        parent::__construct('content_type_for_content', self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $weight, $parent, $dataParameter, $translator);
+        parent::__construct('content_type_for_content', $weight, $parent, self::ROLE_ACCESS_CONTENT_TYPE_FOR_CONTENT, $dataParameter, $translator);
     }
 
     /**

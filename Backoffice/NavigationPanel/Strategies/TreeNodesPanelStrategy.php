@@ -9,7 +9,7 @@ use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 /**
  * Class TreeNodesPanel
  */
-class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
+class TreeNodesPanelStrategy extends AbstractNavigationStrategy
 {
     const ROLE_ACCESS_TREE_NODE = 'ROLE_ACCESS_TREE_NODE';
     const ROLE_ACCESS_CREATE_NODE = 'ROLE_ACCESS_CREATE_NODE';
@@ -38,7 +38,7 @@ class TreeNodesPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
-        parent::__construct('nodes', self::ROLE_ACCESS_TREE_NODE, $weight, $parent);
+        parent::__construct('nodes', $weight, $parent);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }

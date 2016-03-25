@@ -9,7 +9,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 /**
  * Class GeneralNodesPanel
  */
-class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
+class GeneralNodesPanelStrategy extends AbstractNavigationStrategy
 {
     /**
      *  @deprecated use the ROLE_ACCESS_TREE_GENERAL_NODE instead, will be removed in 1.2.0
@@ -36,7 +36,7 @@ class GeneralNodesPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct(NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager, $parent, $weight)
     {
-        parent::__construct('generale_node', self::ROLE_ACCESS_TREE_GENERAL_NODE, $weight, $parent);
+        parent::__construct('generale_node', $weight, $parent, self::ROLE_ACCESS_TREE_GENERAL_NODE);
         $this->nodeRepository = $nodeRepository;
         $this->currentSiteManager = $currentSiteManager;
     }

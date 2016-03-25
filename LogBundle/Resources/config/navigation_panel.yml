@@ -3,9 +3,9 @@ services:
         class: %open_orchestra_backoffice.navigation_panel.administration.class%
         arguments:
             - logs
-            - ROLE_ACCESS_LOG
             - 365
             - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - ROLE_ACCESS_LOG
             - %open_orchestra_log.navigation_panel.log.parameters%
             - @translator
         tags:
