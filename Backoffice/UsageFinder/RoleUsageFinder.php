@@ -10,14 +10,14 @@ use OpenOrchestra\ModelInterface\Repository\RoleableElementRepositoryInterface;
  */
 class RoleUsageFinder
 {
-    protected $RoleableElementRepositories = array();
+    protected $roleableElementRepositories = array();
 
     /**
      * @param RoleableElementRepositoryInterface $repository
      */
     public function addRepository(RoleableElementRepositoryInterface $repository)
     {
-        $this->RoleableElementRepositories[] = $repository;
+        $this->roleableElementRepositories[] = $repository;
     }
 
     /**
@@ -28,7 +28,7 @@ class RoleUsageFinder
     public function hasUsage(RoleInterface $Role)
     {
         /** @var RoleableElementRepositoryInterface $repository */
-        foreach ($this->RoleableElementRepositories as $repository) {
+        foreach ($this->roleableElementRepositories as $repository) {
             if ($repository->hasElementWithRole($Role)) {
                 return true;
             }
