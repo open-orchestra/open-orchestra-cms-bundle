@@ -56,7 +56,7 @@ class RoleTransformer extends AbstractSecurityCheckerAwareTransformer
             'open_orchestra_api_role_show',
             array('roleId' => $role->getId())
         ));
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE)) {
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE, $role)) {
             $facade->addLink('_self_delete', $this->generateRoute(
                 'open_orchestra_api_role_delete',
                 array('roleId' => $role->getId())

@@ -32,7 +32,7 @@ class DeleteRoleVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return AdministrationPanelStrategy::ROLE_ACCESS_DELETE_Role == $attribute;
+        return AdministrationPanelStrategy::ROLE_ACCESS_DELETE_ROLE == $attribute;
     }
 
     /**

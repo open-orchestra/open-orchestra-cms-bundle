@@ -11,6 +11,3 @@ services:
             - ['addRepository', [@open_orchestra_model.repository.role]]
     open_orchestra_backoffice.usage_finder.role:
         class: %open_orchestra_backoffice.usage_finder.role.class%
-        calls:
-            - ['addRepository', [@open_orchestra_model.repository.user]]
-            - ['addRepository', [@open_orchestra_workflow_function.repository.workflow_function]]
