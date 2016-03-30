@@ -1,5 +1,6 @@
 parameters:
     open_orchestra_backoffice.usage_finder.status.class: OpenOrchestra\Backoffice\UsageFinder\StatusUsageFinder
+    open_orchestra_backoffice.usage_finder.role.class: OpenOrchestra\Backoffice\UsageFinder\RoleUsageFinder
 
 services:
     open_orchestra_backoffice.usage_finder.status:
@@ -8,3 +9,5 @@ services:
             - ['addRepository', [@open_orchestra_model.repository.node]]
             - ['addRepository', [@open_orchestra_model.repository.content]]
             - ['addRepository', [@open_orchestra_model.repository.role]]
+    open_orchestra_backoffice.usage_finder.role:
+        class: %open_orchestra_backoffice.usage_finder.role.class%

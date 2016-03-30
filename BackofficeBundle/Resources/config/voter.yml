@@ -5,6 +5,7 @@ parameters:
     open_orchestra_backoffice.voter.node_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\NodeVersionVoter
     open_orchestra_backoffice.voter.content_version.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\ContentVersionVoter
     open_orchestra_backoffice.voter.delete_status.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\DeleteStatusVoter
+    open_orchestra_backoffice.voter.delete_role.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\DeleteRoleVoter
     security.access.role_hierarchy_voter.class: OpenOrchestra\Backoffice\Security\Authorization\Voter\RoleHierarchyVoter
 
 services:
@@ -41,5 +42,11 @@ services:
         class: %open_orchestra_backoffice.voter.delete_status.class%
         arguments:
             - @open_orchestra_backoffice.usage_finder.status
+        tags:
+            - { name: security.voter }
+    open_orchestra_backoffice.voter.delete_role:
+        class: %open_orchestra_backoffice.voter.delete_role.class%
+        arguments:
+            - @open_orchestra_backoffice.usage_finder.role
         tags:
             - { name: security.voter }
