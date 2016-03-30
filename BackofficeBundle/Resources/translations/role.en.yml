@@ -50,7 +50,7 @@ open_orchestra_role:
     label_access_status: Publication status
     role_access_status: Access
     role_access_create_status: Create
-    role_access_update_status: Upddate
+    role_access_update_status: Update
     role_access_delete_status: Delete
     label_access_theme: Theme
     role_access_theme: Access
