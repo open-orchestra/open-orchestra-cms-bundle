@@ -134,6 +134,9 @@ module.exports = {
     //--[ INTERNAL LINK ]--//
     'web/built/openorchestrabackoffice/js/InternalLinkFormView.js',
     
+    //--[ BUTTON RIBBON ]--//
+    'web/built/openorchestrabackoffice/js/ribbonButton/RibbonFormButtonView.js',
+
     //--[ FORM BEHAVIOR ]--//
     'web/built/openorchestrabackoffice/js/formBehavior/AbstractFormBehavior.js',
     'web/built/openorchestrabackoffice/js/formBehavior/FormLibraryBehavior.js',

@@ -3,6 +3,8 @@ widgetChannel = new (Backbone.Wreqr.EventAggregator)
 widgetChannel.bind 'ready', (view) ->
   view.onOrchestraViewReady()
   view.onViewReady()
+  window.ribbonFormButtonView.setFocusedView view
+
 
 widgetChannel.bind 'element-created', (view) ->
   view.onElementCreated()
