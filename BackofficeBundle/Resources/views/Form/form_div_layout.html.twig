@@ -101,7 +101,7 @@
         {% set col_size = col_size|default(bootstrap_get_col_size()) %}
         {% set widget_col = widget_col|default(bootstrap_get_widget_col()) %}
         {% set label_col = label_col|default(bootstrap_get_label_col()) %}
-      	{% set refreshIcon = '' %}
+        {% set refreshIcon = '' %}
 
         {% if attr.label_col is defined and attr.label_col is not empty %}
             {% set label_col = attr.label_col %}
@@ -116,14 +116,14 @@
             {% set style = attr.style %}
         {% endif %}
         {% if refresh is defined and refresh %}
-        	{% set refreshIcon %}
+            {% set refreshIcon %}
                 <div class="col-{{ col_size }}-1">
                     <span rel="tooltip" class="btn btn-ribbon refresh-form">
-                    	<i class="fa fa-refresh"></i>
+                        <i class="fa fa-refresh"></i>
                     </span>
                 </div>
                 {% set widget_col = widget_col - 1 %}
-        	{% endset %}
+            {% endset %}
         {% endif %}
 
         {% if label is sameas(false) %}
@@ -259,14 +259,14 @@
                         {{ label|trans({}, 'role') }}
                     </div>
                 </div>
-				<div class="btn-group" data-toggle="buttons">
-	            {% for rank in ranks %}
-    	            <div class="role-cell btn btn-default{% if form[rank].vars.checked %} active{% endif %}">
-						<input type="checkbox" name="{{ form[rank].vars.full_name }}" value="{{ form[rank].vars.value }}" {% if form[rank].vars.checked %} checked="checked"{% endif %} />
-						{{ form[rank].vars.label }}
-        	        </div>
+                <div class="btn-group" data-toggle="buttons">
+                {% for rank in ranks %}
+                    <div class="role-cell btn btn-default{% if form[rank].vars.checked %} active{% endif %}">
+                        <input type="checkbox" name="{{ form[rank].vars.full_name }}" value="{{ form[rank].vars.value }}" {% if form[rank].vars.checked %} checked="checked"{% endif %} />
+                        {{ form[rank].vars.label }}
+                    </div>
                 {% endfor %}
-	            </div>
+                </div>
             </div>
         {% endfor %}
         </div>
