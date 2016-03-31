@@ -75,8 +75,6 @@ class AreaType extends AbstractType
         foreach($areas as $area) {
             $view->vars['areas'][] = $area->getAreaId();
         }
-        $view->vars['value'] = '';
-        var_dump($view->vars);
     }
 
     /**
