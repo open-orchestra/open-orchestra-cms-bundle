@@ -125,6 +125,7 @@ class AreaCollectionSubscriberTest extends AbstractBaseTestCase
             'error_bubbling' => false,
             'label' => 'open_orchestra_backoffice.form.area.new_areas',
             'attr' => array(
+                'class' => 'always-empty',
                 'data-prototype-label-add' => 'Add',
                 'data-prototype-label-new' => 'Area id',
                 'data-prototype-label-remove' => 'Remove',
