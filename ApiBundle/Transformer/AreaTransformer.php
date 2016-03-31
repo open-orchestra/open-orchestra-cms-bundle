@@ -16,6 +16,7 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use UnexpectedValueException;
+use OpenOrchestra\Backoffice\Manager\NodeManager;
 
 /**
  * Class AreaTransformer
@@ -25,6 +26,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
     protected $nodeRepository;
     protected $areaManager;
     protected $currentSiteManager;
+    protected $nodeManager;
 
     /**
      * @param string                        $facadeClass
@@ -38,13 +40,14 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
         NodeRepositoryInterface $nodeRepository,
         AreaManager $areaManager,
         CurrentSiteIdInterface $currentSiteManager,
-        AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+        AuthorizationCheckerInterface $authorizationChecker,
+        NodeManager $nodeManager
+    ){
         parent::__construct($facadeClass, $authorizationChecker);
         $this->nodeRepository = $nodeRepository;
         $this->areaManager = $areaManager;
         $this->currentSiteManager = $currentSiteManager;
+        $this->nodeManager = $nodeManager;
     }
 
     /**
@@ -234,14 +237,24 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
             $block = $node->getBlock($blockArray['blockId']);
             if ($blockArray['nodeId'] !== 0) {
                 $siteId = $this->currentSiteManager->getCurrentSiteId();
-                $blockNode = $this->nodeRepository->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $siteId);
+                $blockNode = $this->nodeRepository
+                    ->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $siteId);
                 $block = $blockNode->getBlock($blockArray['blockId']);
             }
             $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));
         }
 
-        $this->areaManager->deleteAreaFromBlock($source->getBlocks(), $blockDocument, $source->getAreaId(), $node);
+        $this->areaManager
+            ->deleteAreaFromBlock($source->getBlocks(), $blockDocument, $source->getAreaId(), $node);
         $source->setBlocks($blockDocument);
+
+        if ($node->getNodeType() != NodeInterface::TYPE_TRANSVERSE) {
+            $usedBlocked = $this->nodeManager->getBlocksUsedInternally($node);
+
+            $blocks = $node->getBlocks();
+            
+            var_dump('Check les blocks'); exit();
+        }
 
         return $source;
     }

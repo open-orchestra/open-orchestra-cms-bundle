@@ -15,6 +15,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
  * Class NodeManager
@@ -57,8 +58,7 @@ class NodeManager
         $nodeClass,
         $areaClass,
         $eventDispatcher
-    )
-    {
+    ){
         $this->versionableSaver =  $versionableSaver;
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
@@ -482,5 +482,40 @@ class NodeManager
         }
 
         return $greatestOrderNode->getOrder() + 1;
+    }
+
+    /**
+     * Get the list of blocks created in $node and used inside it
+     *
+     * @param NodeInterface $node
+     *
+     * @return array
+     */
+    public function getBlocksUsedInternally(NodeInterface $node)
+    {
+        return $this->getBlocksUsedInArea($node->getAreas());
+    }
+
+    /**
+     * Get the list of blocks used in $areas and owned by the node
+     *
+     * @param AreaInterface $areas
+     *
+     * @return array
+     */
+    protected function getBlocksUsedInArea($areas)
+    {
+        $usedBlocks = array();
+
+        foreach ($areas as $area) {
+            foreach ($area->getBlocks() as $reference) {
+                if ($reference['nodeId'] == '0') {
+                    $usedBlocks[] = $reference['blockId'];
+                }
+            }
+            $usedBlocks = array_merge($usedBlocks, $this->getBlocksUsedInArea($area->getAreas()));
+        }
+
+        return $usedBlocks;
     }
 }
