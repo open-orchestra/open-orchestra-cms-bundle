@@ -8,6 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class TemplateAreaType
@@ -58,6 +60,23 @@ class AreaType extends AbstractType
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $areaContainer = $view->vars['value'];
+        $areas = $areaContainer->getAreas();
+        $view->vars['areas'] = array();
+        foreach($areas as $area) {
+            $view->vars['areas'][] = $area->getAreaId();
+        }
+        $view->vars['value'] = '';
+        var_dump($view->vars);
     }
 
     /**

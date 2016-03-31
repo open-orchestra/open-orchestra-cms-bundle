@@ -30,6 +30,8 @@ PO.formPrototype = (collectionHolder, settings) ->
     prototype = self.createRemoveButton($(this))
     if prototype.find(".alert-error").length is 0
       prototype.addClass("old").removeClass("new")
+      if prototype.parent().hasClass('always-empty')
+      	prototype.remove()
     else
       prototype.addClass "error"
     return
