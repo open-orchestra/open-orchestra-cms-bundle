@@ -5,6 +5,7 @@ TemplateFormView = OrchestraModalView.extend(
       displayRoute = appRouter.generateUrl "showTemplate",
         templateId: $('#oo_template_templateId', @$el).val()
       refreshMenu(displayRoute)
+      Backbone.history.loadUrl(Backbone.history.fragment);
 
 )
 
