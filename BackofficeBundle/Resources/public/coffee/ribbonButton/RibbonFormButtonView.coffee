@@ -9,26 +9,26 @@ window.OpenOrchestra.RibbonButton or= {}
 ###
 class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
 
-  className : 'ribbon-form-button'
 
   ###*
    * set focused view
   ###
-  setFocusedView: (view) ->
-    @$el.html('')
+  setFocusedView: (view, container) ->
+    @container = if typeof container == 'undefined' then $('.ribbon-form-button') else container
+    @container.html('')
     viewContext = this
     $('.btn-in-ribbon', view.$el).each ->
       viewContext.cloneButton $(this)
       return
     return
 
-  ###*
+  ###*$
    * Method call to clone and move button
   ###
   cloneButton: (button) ->
-    button = button.clone().attr('data-clone', button.attr('id')).removeAttr('id')
+    clonedButton = button.clone().attr('data-clone', button.attr('id')).removeAttr('id')
     button.hide()
-    @$el.append(button)
+    @container.append(clonedButton)
 
 jQuery ->
   appConfigurationView.setConfiguration('ribbon-form-button', 'createRibbonFormButton', OpenOrchestra.RibbonButton.RibbonFormButtonView)
