@@ -12,12 +12,12 @@ open_orchestra_role:
     label_access_template: Gabarit de page
     role_access_tree_template: Accéder
     role_access_create_template: Créer
-    role_access_update_template: Modifier
+    role_access_update_template: Editer
     role_access_delete_template: Supprimer
     label_access_template_flex: Gabarit de page
     role_access_tree_template_flex: Accéder
     role_access_create_template_flex: Créer
-    role_access_update_template_flex: Modifier
+    role_access_update_template_flex: Editer
     role_access_delete_template_flex: Supprimer
     label_access_for_content: Contenu
     role_access_content_type_for_content: Accéder
@@ -26,7 +26,7 @@ open_orchestra_role:
     role_access_delete_content_type_for_content: Supprimer
     label_access_content_type: Type de contenu
     role_access_content_type: Accéder
-    role_access_create_content_type: Ajouter
+    role_access_create_content_type: Créer
     role_access_update_content_type: Editer
     role_access_delete_content_type: Supprimer
     label_access_redirection: Redirection HTTP
@@ -55,12 +55,12 @@ open_orchestra_role:
     label_access_theme: Thème
     role_access_theme: Accéder
     role_access_create_theme: Créer
-    role_access_update_theme: Modifier
+    role_access_update_theme: Editer
     role_access_delete_theme: Supprimer
     label_access_group: Groupe utilisateurs
     role_access_group: Accéder
     role_access_create_group: Créer
-    role_access_update_group: Modifier
+    role_access_update_group: Editer
     role_access_delete_group: Supprimer
     label_access_site: Site
     role_access_site: Accéder

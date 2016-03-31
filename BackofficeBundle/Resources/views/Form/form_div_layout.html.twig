@@ -246,6 +246,7 @@
           data-url="{{ path('open_orchestra_backoffice_internal_link_form') }}"
       ></div>
 {% endblock %}
+
 {% block oo_role_choice_widget %}
     <div class="container-fluid">
     {% for category, parameters in form.vars.rolesOrdered %}
@@ -258,16 +259,14 @@
                         {{ label|trans({}, 'role') }}
                     </div>
                 </div>
-            {% for rank in ranks %}
-                <div class="role-cell role-forms">
-                    <div class="role-label">
-                        {{ form_label(form[rank]) }}
+                <div class="btn-group" data-toggle="buttons">
+                {% for rank in ranks %}
+                    <div class="role-cell btn btn-default{% if form[rank].vars.checked %} active{% endif %}">
+                        <input type="checkbox" name="{{ form[rank].vars.full_name }}" value="{{ form[rank].vars.value }}" {% if form[rank].vars.checked %} checked="checked"{% endif %} />
+                        {{ form[rank].vars.label }}
                     </div>
-                    <div class="role-form">
-                        {{ form_widget(form[rank]) }}
-                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
             </div>
         {% endfor %}
         </div>
