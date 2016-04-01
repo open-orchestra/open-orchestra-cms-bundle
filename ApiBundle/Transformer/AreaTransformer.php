@@ -250,7 +250,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
 
         $this->nodeManager->removeUnusedBlocks($node);
 
-         return $source;
+        return $source;
     }
 
     /**

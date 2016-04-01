@@ -15,7 +15,6 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
  * Class NodeManager
@@ -407,7 +406,9 @@ class NodeManager
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);
-                    $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
+                    if ($block instanceof AreaContainerInterface) {
+                        $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
+                    }
                     continue;
                 }
                 $block = $node->getBlock($areaBlock['blockId']);
