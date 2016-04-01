@@ -14,7 +14,7 @@ class UniqueAreaIdValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param AreaInterface              $value      The value that should be validated
+     * @param AreaInterface           $value      The value that should be validated
      * @param UniqueAreaId|Constraint $constraint The constraint for the validation
      *
      * @api

@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class NodeType
@@ -36,6 +38,7 @@ class NodeType extends AbstractAreaContainerType
      * @param NodeManager                 $nodeManager
      * @param string                      $areaClass
      * @param TranslatorInterface         $translator
+     * @param ObjectManager               $objectManager
      */
     public function __construct(
         $nodeClass,
@@ -43,12 +46,14 @@ class NodeType extends AbstractAreaContainerType
         SiteRepositoryInterface $siteRepository,
         NodeManager $nodeManager,
         $areaClass,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        ObjectManager $objectManager
     ) {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
         $this->siteRepository = $siteRepository;
+        $this->areaContainerRepository =
         $this->areaClass = $areaClass;
         $this->translator = $translator;
         $this->schemeChoices = array(
@@ -58,6 +63,7 @@ class NodeType extends AbstractAreaContainerType
             SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
             SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
+        $this->setObjectManager($objectManager);
     }
 
     /**
