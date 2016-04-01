@@ -34,6 +34,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
      * @param AreaManager                   $areaManager
      * @param CurrentSiteIdInterface        $currentSiteManager
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param NodeManager                   $nodeManager
      */
     public function __construct(
         $facadeClass,
