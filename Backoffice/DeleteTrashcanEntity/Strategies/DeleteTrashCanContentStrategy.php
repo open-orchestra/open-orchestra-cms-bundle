@@ -4,10 +4,8 @@ namespace OpenOrchestra\Backoffice\DeleteTrashcanEntity\Strategies;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\Backoffice\DeleteTrashcanEntity\DeleteTrashCanEntityInterface;
-use OpenOrchestra\ModelBundle\Document\TrashItem;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
-use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -76,7 +76,7 @@ class TrashcanController extends BaseController
      * @param $trashItemId
      *
      * @Config\Route("/{trashItemId}/delete", name="open_orchestra_api_trashcan_delete")
-     * @Config\Method({"DELETE", "GET"})
+     * @Config\Method({"DELETE"})
 
      * @Config\Security("is_granted('ROLE_ACCESS_DELETED_TRASHCAN')")
      *
