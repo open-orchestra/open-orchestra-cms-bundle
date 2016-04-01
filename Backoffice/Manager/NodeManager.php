@@ -15,6 +15,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Class NodeManager
@@ -57,8 +58,7 @@ class NodeManager
         $nodeClass,
         $areaClass,
         $eventDispatcher
-    )
-    {
+    ){
         $this->versionableSaver =  $versionableSaver;
         $this->nodeRepository = $nodeRepository;
         $this->siteRepository = $siteRepository;
@@ -407,7 +407,9 @@ class NodeManager
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);
-                    $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
+                    if ($block instanceof BlockInterface) {
+                        $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
+                    }
                     continue;
                 }
                 $block = $node->getBlock($areaBlock['blockId']);
@@ -482,5 +484,21 @@ class NodeManager
         }
 
         return $greatestOrderNode->getOrder() + 1;
+    }
+
+    /**
+     * Remove unused blocks present in $node
+     *
+     * @param NodeInterface $node
+     */
+    public function removeUnusedBlocks(NodeInterface $node)
+    {
+        $blocks = $node->getBlocks();
+
+        foreach ($blocks as $index => $block) {
+            if (count($block->getAreas()) == 0) {
+                $node->removeBlockWithKey($index);
+            }
+        }
     }
 }

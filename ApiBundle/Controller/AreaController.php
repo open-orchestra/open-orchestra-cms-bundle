@@ -81,9 +81,14 @@ class AreaController extends BaseController
         $node = $nodeRepository->find($nodeId);
         $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
-        $facade = $this->get('jms_serializer')->deserialize($request->getContent(), 'OpenOrchestra\ApiBundle\Facade\AreaFacade', $request->get('_format', 'json'));
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\AreaFacade',
+            $request->get('_format', 'json')
+        );
 
-        $this->get('open_orchestra_api.transformer_manager')->get('area')->reverseTransform($facade, $area, $node);
+        $this->get('open_orchestra_api.transformer_manager')
+            ->get('area')->reverseTransform($facade, $area, $node);
 
         $this->get('object_manager')->flush();
 
