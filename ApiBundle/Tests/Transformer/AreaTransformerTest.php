@@ -35,6 +35,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
     protected $area;
     protected $currentSiteManager;
     protected $authorizationChecker;
+    protected $nodeManager;
 
     /**
      * Set up the test
@@ -75,7 +76,16 @@ class AreaTransformerTest extends AbstractBaseTestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->areaTransformer = new AreaTransformer($this->facadeClass, $this->nodeRepository, $this->areaManager, $this->currentSiteManager,$this->authorizationChecker);
+        $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
+
+        $this->areaTransformer = new AreaTransformer(
+            $this->facadeClass,
+            $this->nodeRepository,
+            $this->areaManager,
+            $this->currentSiteManager,
+            $this->authorizationChecker,
+            $this->nodeManager
+        );
 
         $this->areaTransformer->setContext($this->transformerManager);
     }
