@@ -17,11 +17,11 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
   setFocusedView: (view, container) ->
     @container = if typeof container == 'undefined' then $('.ribbon-form-button') else container
     @container.html('')
-    view.setElement(@container)
     viewContext = this
     $('.btn-in-ribbon', view.$el).each ->
       viewContext.cloneButton $(this)
       return
+    this.setElement @container
     return
 
   ###*$
@@ -33,7 +33,9 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
     @container.append(clonedButton)
 
   clickClone: (event) ->
-    console.log("omar")
+    event.preventDefault
+    console.log("test event")
+    console.debug(event)
 
 jQuery ->
   appConfigurationView.setConfiguration('ribbon-form-button', 'createRibbonFormButton', OpenOrchestra.RibbonButton.RibbonFormButtonView)
