@@ -9,7 +9,6 @@ use OpenOrchestra\Backoffice\EventSubscriber\NodeTemplateSelectionSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\BoDirectionChildrenSubscriber;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -20,7 +19,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * Class NodeType
  */
-class NodeType extends AbstractType
+class NodeType extends AbstractAreaContainerType
 {
     protected $areaClass;
     protected $translator;
@@ -152,12 +151,7 @@ class NodeType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['form_legend_helper'] = "open_orchestra_backoffice.form.node.template_selection.helper";
-        $areaContainer = $view->vars['value'];
-        $areas = $areaContainer->getAreas();
-        $view->vars['areas'] = array();
-        foreach($areas as $area) {
-            $view->vars['areas'][] = $area->getAreaId();
-        }
+        $this->buildAreaListView($view, $form, $options);
     }
 
     /**

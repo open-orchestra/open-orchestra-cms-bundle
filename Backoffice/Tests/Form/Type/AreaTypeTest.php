@@ -65,4 +65,22 @@ class AreaTypeTest extends AbstractBaseTestCase
     {
         $this->assertEquals('oo_area', $this->areaType->getName());
     }
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $areaId = 'fakeAreaId';
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getAreaId()->thenReturn($areaId);
+        $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
+        $formView->vars['value'] = $areaContainer;
+
+        $this->areaType->buildView($formView, $formInterface, array());
+        $this->assertEquals($formView->vars['areas'], array($areaId, $areaId));
+    }
 }

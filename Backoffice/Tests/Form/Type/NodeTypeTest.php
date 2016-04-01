@@ -75,4 +75,23 @@ class NodeTypeTest extends AbstractBaseTestCase
     {
         $this->assertEquals('oo_node', $this->nodeType->getName());
     }
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $areaId = 'fakeAreaId';
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getAreaId()->thenReturn($areaId);
+        $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
+        $formView->vars['value'] = $areaContainer;
+
+        $this->nodeType->buildView($formView, $formInterface, array());
+        $this->assertEquals($formView->vars['areas'], array($areaId, $areaId));
+        $this->assertEquals($formView->vars['form_legend_helper'], "open_orchestra_backoffice.form.node.template_selection.helper");
+    }
 }

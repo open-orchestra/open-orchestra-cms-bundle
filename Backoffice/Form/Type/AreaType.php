@@ -4,7 +4,6 @@ namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\Form\DataTransformer\HtmlElementTransformer;
 use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -14,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * Class TemplateAreaType
  */
-class AreaType extends AbstractType
+class AreaType extends AbstractAreaContainerType
 {
     protected $areaClass;
     protected $translator;
@@ -69,12 +68,7 @@ class AreaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $areaContainer = $view->vars['value'];
-        $areas = $areaContainer->getAreas();
-        $view->vars['areas'] = array();
-        foreach($areas as $area) {
-            $view->vars['areas'][] = $area->getAreaId();
-        }
+        $this->buildAreaListView($view, $form, $options);
     }
 
     /**
