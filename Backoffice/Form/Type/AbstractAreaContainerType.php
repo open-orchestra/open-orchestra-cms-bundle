@@ -32,7 +32,6 @@ abstract class AbstractAreaContainerType extends AbstractType
     public function buildAreaListView(FormView $view, FormInterface $form, array $options)
     {
         $areaContainer = $view->vars['value'];
-        var_dump($areaContainer);
         $this->objectManager->refresh($areaContainer);
         $view->vars['areas'] = array();
         $areas = $areaContainer->getAreas();

@@ -14,14 +14,16 @@ class AreaTypeTest extends AbstractBaseTestCase
     protected $areaType;
     protected $areaClass = 'areaClass';
     protected $translator;
+    protected $objectManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->areaType = new AreaType($this->areaClass, $this->translator);
+        $this->areaType = new AreaType($this->areaClass, $this->translator, $this->objectManager);
     }
 
     /**
@@ -77,6 +79,7 @@ class AreaTypeTest extends AbstractBaseTestCase
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getAreaId()->thenReturn($areaId);
         $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($this->objectManager)->refresh($areaContainer)->thenReturn($areaContainer);
         Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
         $formView->vars['value'] = $areaContainer;
 

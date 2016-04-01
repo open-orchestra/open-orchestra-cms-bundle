@@ -18,12 +18,14 @@ class NodeTypeTest extends AbstractBaseTestCase
     protected $nodeClass = 'nodeClass';
     protected $areaClass = 'areaClass';
     protected $translator;
+    protected $objectManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->templateRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
@@ -34,7 +36,8 @@ class NodeTypeTest extends AbstractBaseTestCase
             $this->siteRepository,
             $this->nodeManager,
             $this->areaClass,
-            $this->translator
+            $this->translator,
+            $this->objectManager
         );
     }
 
@@ -87,6 +90,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getAreaId()->thenReturn($areaId);
         $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($this->objectManager)->refresh($areaContainer)->thenReturn($areaContainer);
         Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
         $formView->vars['value'] = $areaContainer;
 

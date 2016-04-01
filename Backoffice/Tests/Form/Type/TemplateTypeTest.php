@@ -17,17 +17,19 @@ class TemplateTypeTest extends AbstractBaseTestCase
     protected $areaClass = 'areaClass';
     protected $templateClass = 'templateClass';
     protected $translator;
+    protected $objectManager;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
+        $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $this->formBuilder = Phake::mock('Symfony\Component\Form\FormBuilder');
         Phake::when($this->formBuilder)->addModelTransformer(Phake::anyParameters())->thenReturn($this->formBuilder);
         Phake::when($this->formBuilder)->add(Phake::anyParameters())->thenReturn($this->formBuilder);
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        $this->templateType = new TemplateType($this->templateClass, $this->areaClass, $this->translator);
+        $this->templateType = new TemplateType($this->templateClass, $this->areaClass, $this->translator, $this->objectManager);
     }
 
     /**
@@ -75,6 +77,7 @@ class TemplateTypeTest extends AbstractBaseTestCase
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getAreaId()->thenReturn($areaId);
         $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($this->objectManager)->refresh($areaContainer)->thenReturn($areaContainer);
         Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
         $formView->vars['value'] = $areaContainer;
 
