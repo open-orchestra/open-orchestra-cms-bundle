@@ -485,37 +485,18 @@ class NodeManager
     }
 
     /**
-     * Get the list of blocks created in $node and used inside it
+     * Remove unused blocks present in $node
      *
      * @param NodeInterface $node
-     *
-     * @return array
      */
-    public function getBlocksUsedInternally(NodeInterface $node)
+    public function removeUnusedBlocks(NodeInterface $node)
     {
-        return $this->getBlocksUsedInArea($node->getAreas());
-    }
+        $blocks = $node->getBlocks();
 
-    /**
-     * Get the list of blocks used in $areas and owned by the node
-     *
-     * @param AreaInterface $areas
-     *
-     * @return array
-     */
-    protected function getBlocksUsedInArea($areas)
-    {
-        $usedBlocks = array();
-
-        foreach ($areas as $area) {
-            foreach ($area->getBlocks() as $reference) {
-                if ($reference['nodeId'] == '0') {
-                    $usedBlocks[] = $reference['blockId'];
-                }
+        foreach ($blocks as $index => $block) {
+            if (count($block->getAreas()) == 0) {
+                $node->removeBlockWithKey($index);
             }
-            $usedBlocks = array_merge($usedBlocks, $this->getBlocksUsedInArea($area->getAreas()));
         }
-
-        return $usedBlocks;
     }
 }
