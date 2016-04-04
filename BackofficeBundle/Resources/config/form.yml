@@ -72,7 +72,6 @@ services:
             - %open_orchestra_model.document.template.class%
             - %open_orchestra_model.document.area.class%
             - @translator
-            - @object_manager
         tags:
             - { name: form.type, alias: oo_template }
     # Template Flex form type
@@ -93,7 +92,6 @@ services:
             - @open_orchestra_backoffice.manager.node
             - %open_orchestra_model.document.area.class%
             - @translator
-            - @object_manager
         tags:
             - { name: form.type, alias: oo_node }
     # Area form type
@@ -102,7 +100,6 @@ services:
         arguments:
             - %open_orchestra_model.document.area.class%
             - @translator
-            - @object_manager
         tags:
             - { name: form.type, alias: oo_area }
     # Area flex row form type
