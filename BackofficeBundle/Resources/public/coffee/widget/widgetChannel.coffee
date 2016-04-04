@@ -4,7 +4,6 @@ widgetChannel.bind 'ready', (view) ->
   view.onOrchestraViewReady()
   view.onViewReady()
 
-
 widgetChannel.bind 'element-created', (view) ->
   view.onElementCreated()
 
