@@ -49,7 +49,6 @@ class NodeType extends AbstractAreaContainerType
         $this->nodeManager = $nodeManager;
         $this->templateRepository = $templateRepository;
         $this->siteRepository = $siteRepository;
-        $this->areaContainerRepository =
         $this->areaClass = $areaClass;
         $this->translator = $translator;
         $this->schemeChoices = array(
