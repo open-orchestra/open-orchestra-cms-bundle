@@ -28,8 +28,10 @@ PO.formPrototype = (collectionHolder, settings) ->
   @collectionHolder.children().each () ->
     prototype = $(this)
     prototype = self.createRemoveButton($(this))
-    if prototype.find(".alert-error").length is 0
+    if prototype.find(".alert-error").length is 0 and prototype.parents('.has-error').length is 0
       prototype.addClass("old").removeClass("new")
+      if prototype.parent().hasClass('always-empty')
+      	prototype.remove()
     else
       prototype.addClass "error"
     return

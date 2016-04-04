@@ -3,15 +3,16 @@
 namespace OpenOrchestra\Backoffice\Form\Type;
 
 use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Class TemplateType
  */
-class TemplateType extends AbstractType
+class TemplateType extends AbstractAreaContainerType
 {
     protected $templateClass;
     protected $areaClass;
@@ -22,8 +23,11 @@ class TemplateType extends AbstractType
      * @param string              $areaClass
      * @param TranslatorInterface $translator
      */
-    public function __construct($templateClass, $areaClass, TranslatorInterface $translator)
-    {
+    public function __construct(
+        $templateClass,
+        $areaClass,
+        TranslatorInterface $translator
+    ) {
         $this->templateClass = $templateClass;
         $this->areaClass = $areaClass;
         $this->translator = $translator;
@@ -53,6 +57,16 @@ class TemplateType extends AbstractType
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
+    }
+
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $this->buildAreaListView($view, $form, $options);
     }
 
     /**

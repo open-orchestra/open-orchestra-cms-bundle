@@ -63,4 +63,33 @@ class TemplateTypeTest extends AbstractBaseTestCase
     {
         $this->assertEquals('oo_template', $this->templateType->getName());
     }
+
+    /**
+     * test buildView
+     */
+    public function testBuildView()
+    {
+        $areaId = 'fakeAreaId';
+        $errorFormInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($errorFormInterface)->getData()->thenReturn(array($areaId));
+
+        $error = Phake::mock('Symfony\Component\Form\FormError');
+        Phake::when($error)->getOrigin()->thenReturn($errorFormInterface);
+
+        $newAreasInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($newAreasInterface)->getErrors()->thenReturn(array($error));
+
+        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($formInterface)->get('newAreas')->thenReturn($newAreasInterface);
+
+        $formView = Phake::mock('Symfony\Component\Form\FormView');
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($area)->getAreaId()->thenReturn($areaId);
+        $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
+        Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
+        $formView->vars['value'] = $areaContainer;
+
+        $this->templateType->buildView($formView, $formInterface, array());
+        $this->assertEquals(array_values($formView->vars['areas']), array($areaId));
+    }
 }
