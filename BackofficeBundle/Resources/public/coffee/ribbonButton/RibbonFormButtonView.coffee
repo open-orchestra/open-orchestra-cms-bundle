@@ -1,6 +1,3 @@
-###*
- * @namespace OpenOrchestra:TemplateFlex
-###
 window.OpenOrchestra or= {}
 window.OpenOrchestra.RibbonButton or= {}
 
