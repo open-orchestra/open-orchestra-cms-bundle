@@ -11,6 +11,9 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
   events:
     'click [data-clone]': 'clickClone'
 
+  constructor: ->
+    @buttonsList = []
+
   ###*
    * set focused view
   ###
@@ -28,14 +31,16 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
    * Method call to clone and move button
   ###
   cloneButton: (button) ->
+    button.uniqueId();
     clonedButton = button.clone().attr('data-clone', button.attr('id')).removeAttr('id')
+    @buttonsList[button.attr('id')] = button
     button.hide()
     @container.append(clonedButton)
 
   clickClone: (event) ->
-    event.preventDefault
-    console.log("test event")
-    console.debug(event)
+    event.preventDefault()
+    key = $(event.currentTarget).data('clone')
+    @buttonsList[key][0].click()
 
 jQuery ->
   appConfigurationView.setConfiguration('ribbon-form-button', 'createRibbonFormButton', OpenOrchestra.RibbonButton.RibbonFormButtonView)
