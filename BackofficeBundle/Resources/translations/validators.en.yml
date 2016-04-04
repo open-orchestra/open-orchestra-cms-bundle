@@ -16,3 +16,6 @@ open_orchestra_backoffice_validators:
         row_layout: The column layout is incorrect
     role:
         duplicate_statuses: A role already exists with these from and to statuses
+    website:
+        exists_main_alias: An alias must be principal
+        
