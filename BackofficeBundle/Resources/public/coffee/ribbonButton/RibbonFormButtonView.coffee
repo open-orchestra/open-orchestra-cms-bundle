@@ -27,7 +27,7 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
     this.setElement @container
     return
 
-  ###*$
+  ###*
    * Method call to clone and move button
   ###
   cloneButton: (button) ->
@@ -41,6 +41,10 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
     event.preventDefault()
     key = $(event.currentTarget).data('clone')
     @buttonsList[key][0].click()
+
+  resetAll: (container) ->
+    @container = if typeof container == 'undefined' then $('.ribbon-form-button') else container
+    @container.html('')
 
 jQuery ->
   appConfigurationView.setConfiguration('ribbon-form-button', 'createRibbonFormButton', OpenOrchestra.RibbonButton.RibbonFormButtonView)

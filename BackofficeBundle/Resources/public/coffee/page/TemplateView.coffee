@@ -22,7 +22,6 @@ TemplateView = OrchestraView.extend(
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addConfigurationButton()
     @addAreasToView(@options.template.get('areas'))
-    window.ribbonFormButtonView.setFocusedView @
     return
 
 )
