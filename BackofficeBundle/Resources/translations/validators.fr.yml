@@ -18,4 +18,3 @@ open_orchestra_backoffice_validators:
         duplicate_statuses: Un rôle existe déjà avec ce statut de provenance et ce statut de destination
     website:
         exists_main_alias: Un alias doit être principal
-        
