@@ -54,7 +54,7 @@ class CheckMainAliasPresenceValidatorTest extends AbstractBaseTestCase
      *
      * @dataProvider provideCountAndViolation
      */
-    public function testAddViolationOrNot($aliases, $violationTimes)
+    public function testAddViolationOrNot(array $aliases, $violationTimes)
     {
         Phake::when($this->site)->getAliases()->thenReturn($aliases);
         $this->validator->validate($this->site, $this->constraint);

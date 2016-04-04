@@ -7,6 +7,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
 
+/**
+ * Class CheckMainAliasPresenceValidator
+ */
 class CheckMainAliasPresenceValidator extends ConstraintValidator
 {
     /**
