@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\StrategyManager;
 
-use OpenOrchestra\BackofficeBundle\StrategyManager\DeleteTrashcanEntityManager;
+use OpenOrchestra\BackofficeBundle\StrategyManager\RemoveTrashcanEntityManager;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class DeleteTrashcanEntityManagerTest
+ * Class RemoveTrashcanEntityManagerTest
  */
-class DeleteTrashcanEntityManagerTest extends AbstractBaseTestCase
+class RemoveTrashcanEntityManagerTest extends AbstractBaseTestCase
 {
     /**
-     * @var DeleteTrashcanEntityManager
+     * @var RemoveTrashcanEntityManager
      */
     protected $manager;
     protected $strategy1;
@@ -23,15 +23,15 @@ class DeleteTrashcanEntityManagerTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->strategy1 = Phake::mock('OpenOrchestra\Backoffice\DeleteTrashcanEntity\DeleteTrashCanEntityInterface');
+        $this->strategy1 = Phake::mock('OpenOrchestra\Backoffice\RemoveTrashcanEntity\RemoveTrashCanEntityInterface');
         Phake::when($this->strategy1)->getName()->thenReturn('strategy1');
         Phake::when($this->strategy1)->support(Phake::anyParameters())->thenReturn(true);
 
-        $this->strategy2 = Phake::mock('OpenOrchestra\Backoffice\DeleteTrashcanEntity\DeleteTrashCanEntityInterface');
+        $this->strategy2 = Phake::mock('OpenOrchestra\Backoffice\RemoveTrashcanEntity\RemoveTrashCanEntityInterface');
         Phake::when($this->strategy2)->getName()->thenReturn('strategy2');
         Phake::when($this->strategy2)->support(Phake::anyParameters())->thenReturn(false);
 
-        $this->manager = new DeleteTrashcanEntityManager();
+        $this->manager = new RemoveTrashcanEntityManager();
         $this->manager->addStrategy($this->strategy2);
         $this->manager->addStrategy($this->strategy1);
     }
@@ -39,7 +39,7 @@ class DeleteTrashcanEntityManagerTest extends AbstractBaseTestCase
     /**
      * Test restore
      */
-    public function testDelete()
+    public function testRemove()
     {
         $entity = Phake::mock('OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface');
         $this->manager->delete($entity);
@@ -47,7 +47,7 @@ class DeleteTrashcanEntityManagerTest extends AbstractBaseTestCase
         Phake::verify($this->strategy1)->support(Phake::anyParameters());
         Phake::verify($this->strategy2)->support(Phake::anyParameters());
 
-        phake::verify($this->strategy1)->delete(Phake::anyParameters());
-        phake::verify($this->strategy2, Phake::never())->delete(Phake::anyParameters());
+        phake::verify($this->strategy1)->remove(Phake::anyParameters());
+        phake::verify($this->strategy2, Phake::never())->remove(Phake::anyParameters());
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\DeleteTrashcanEntity\Strategies;
+namespace OpenOrchestra\Backoffice\RemoveTrashcanEntity\Strategies;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\Backoffice\DeleteTrashcanEntity\DeleteTrashCanEntityInterface;
+use OpenOrchestra\Backoffice\RemoveTrashcanEntity\RemoveTrashCanEntityInterface;
 use OpenOrchestra\ModelInterface\Event\TrashcanEvent;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -11,9 +11,9 @@ use OpenOrchestra\ModelInterface\TrashcanEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class DeleteTrashCanContentStrategy
+ * Class RemoveTrashCanContentStrategy
  */
-class DeleteTrashCanContentStrategy implements DeleteTrashCanEntityInterface
+class RemoveTrashCanContentStrategy implements RemoveTrashCanEntityInterface
 {
     protected $eventDispatcher;
     protected $contentRepository;
@@ -28,8 +28,7 @@ class DeleteTrashCanContentStrategy implements DeleteTrashCanEntityInterface
         ContentRepositoryInterface $contentRepository,
         EventDispatcherInterface $eventDispatcher,
         ObjectManager $objectManager
-    )
-    {
+    ){
         $this->eventDispatcher = $eventDispatcher;
         $this->contentRepository = $contentRepository;
         $this->objectManager = $objectManager;
@@ -49,12 +48,12 @@ class DeleteTrashCanContentStrategy implements DeleteTrashCanEntityInterface
     /**
      * @param mixed $entity
      */
-    public function delete($entity)
+    public function remove($entity)
     {
         $contents = $this->contentRepository->findByContentId($entity->getContentId());
         foreach ($contents as $content) {
             $this->objectManager->remove($content);
-            $this->eventDispatcher->dispatch(TrashcanEvents::TRASHCAN_DELETE_ENTITY, new TrashcanEvent($content));
+            $this->eventDispatcher->dispatch(TrashcanEvents::TRASHCAN_REMOVE_ENTITY, new TrashcanEvent($content));
         }
         $this->objectManager->flush();
     }
@@ -64,6 +63,6 @@ class DeleteTrashCanContentStrategy implements DeleteTrashCanEntityInterface
      */
     public function getName()
     {
-        return 'delete_trashcan_content';
+        return 'remove_trashcan_content';
     }
 }

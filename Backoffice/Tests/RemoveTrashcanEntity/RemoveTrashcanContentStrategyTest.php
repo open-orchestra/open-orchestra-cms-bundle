@@ -1,19 +1,18 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\RestoreEntity;
+namespace OpenOrchestra\Backoffice\Tests\RemoveTrashcanEntity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\Backoffice\DeleteTrashcanEntity\Strategies\DeleteTrashCanContentStrategy;
+use OpenOrchestra\Backoffice\RemoveTrashcanEntity\Strategies\RemoveTrashCanContentStrategy;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class DeleteTrashcanContentStrategyTest
+ * Class RemoveTrashcanContentStrategyTest
  */
-class DeleteTrashcanContentStrategyTest extends AbstractBaseTestCase
+class RemoveTrashcanContentStrategyTest extends AbstractBaseTestCase
 {
     /**
-     * @var DeleteTrashCanContentStrategy
+     * @var RemoveTrashCanContentStrategy
      */
     protected $strategy;
 
@@ -30,7 +29,7 @@ class DeleteTrashcanContentStrategyTest extends AbstractBaseTestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
 
-        $this->strategy = new DeleteTrashCanContentStrategy($this->contentRepository, $this->eventDispatcher, $this->objectManager);
+        $this->strategy = new RemoveTrashCanContentStrategy($this->contentRepository, $this->eventDispatcher, $this->objectManager);
     }
 
     /**
@@ -62,9 +61,9 @@ class DeleteTrashcanContentStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test Delete
+     * Test remove
      */
-    public function testDelete()
+    public function testRemove()
     {
         $contentDe = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         $contentFr = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
@@ -73,7 +72,7 @@ class DeleteTrashcanContentStrategyTest extends AbstractBaseTestCase
 
         Phake::when($this->contentRepository)->findByContentId(Phake::anyParameters())->thenReturn($contents);
 
-        $this->strategy->delete($contentFr);
+        $this->strategy->remove($contentFr);
         foreach ($contents as $content) {
             Phake::verify($this->objectManager)->remove($content);
         }

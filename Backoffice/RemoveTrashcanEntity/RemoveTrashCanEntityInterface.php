@@ -1,12 +1,11 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\DeleteTrashcanEntity;
-
+namespace OpenOrchestra\Backoffice\RemoveTrashcanEntity;
 
 /**
- * Interface DeleteTrashCanEntityInterface
+ * Interface RemoveTrashCanEntityInterface
  */
-interface DeleteTrashCanEntityInterface
+interface RemoveTrashCanEntityInterface
 {
     /**
      * @param mixed $entity
@@ -18,7 +17,7 @@ interface DeleteTrashCanEntityInterface
     /**
      * @param mixed $entity
      */
-    public function delete($entity);
+    public function remove($entity);
 
     /**
      * @return string

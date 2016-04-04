@@ -57,7 +57,7 @@ class RoleCompilerPass extends AbstractRoleCompilerPass
             AdministrationPanelStrategy::ROLE_ACCESS_DELETE_KEYWORD,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETED,
             AdministrationPanelStrategy::ROLE_ACCESS_RESTORE,
-            AdministrationPanelStrategy::ROLE_ACCESS_DELETED_TRASHCAN,
+            AdministrationPanelStrategy::ROLE_ACCESS_REMOVED_TRASHCAN,
             AdministrationPanelStrategy::ROLE_ACCESS_STATUS,
             AdministrationPanelStrategy::ROLE_ACCESS_CREATE_STATUS,
             AdministrationPanelStrategy::ROLE_ACCESS_UPDATE_STATUS,

@@ -7,9 +7,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Class DeleteTrashcanEntityCompilerPass
+ * Class RemoveTrashcanEntityCompilerPass
  */
-class DeleteTrashcanEntityCompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
+class RemoveTrashcanEntityCompilerPass extends AbstractTaggedCompiler implements CompilerPassInterface
 {
     /**
      * You can modify the container here before it is dumped to PHP code.
@@ -20,8 +20,8 @@ class DeleteTrashcanEntityCompilerPass extends AbstractTaggedCompiler implements
      */
     public function process(ContainerBuilder $container)
     {
-        $managerName = 'open_orchestra_backoffice.delete_trashcan_entity.manager';
-        $tagName = 'open_orchestra_backoffice.delete_trashcan_entity.strategy';
+        $managerName = 'open_orchestra_backoffice.remove_trashcan_entity.manager';
+        $tagName = 'open_orchestra_backoffice.remove_trashcan_entity.strategy';
 
         $this->addStrategyToManager($container, $managerName, $tagName);
     }

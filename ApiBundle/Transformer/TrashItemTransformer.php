@@ -38,9 +38,9 @@ class TrashItemTransformer extends AbstractSecurityCheckerAwareTransformer
             ));
         }
 
-        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_DELETED_TRASHCAN)) {
-            $facade->addLink('_self_delete',  $this->generateRoute(
-                'open_orchestra_api_trashcan_delete',
+        if ($this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_REMOVED_TRASHCAN)) {
+            $facade->addLink('_self_remove',  $this->generateRoute(
+                'open_orchestra_api_trashcan_remove',
                 array('trashItemId' => $trashItem->getId())
             ));
         }

@@ -10,7 +10,7 @@ window.OpenOrchestra.Table or= {}
 class OpenOrchestra.Table.TableviewTrashcanButtonAction extends OrchestraView
   events:
     'click a.ajax-restore': 'clickRestore'
-    'click a.ajax-delete': 'clickDelete'
+    'click a.ajax-remove': 'clickRemove'
 
   ###*
    * @param {Object} options
@@ -63,15 +63,15 @@ class OpenOrchestra.Table.TableviewTrashcanButtonAction extends OrchestraView
   ###*
    * @param {Object} event
   ###
-  clickDelete: (event) ->
+  clickRemove: (event) ->
     event.preventDefault()
     options = @options
     smartConfirm(
       'fa-trash-o',
-      $(event.currentTarget).data('delete-confirm-title'),
-      $(event.currentTarget).data('delete-confirm-txt')
+      $(event.currentTarget).data('remove-confirm-title'),
+      $(event.currentTarget).data('remove-confirm-txt')
       callBackParams:
-        url: @options.element.get('links')._self_delete
+        url: @options.element.get('links')._self_remove
         row: $(event.target).closest('tr')
       yesCallback: (params) ->
         OpenOrchestra.DataTable.Channel.trigger 'clearCache', options.tableId

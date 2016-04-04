@@ -1,19 +1,18 @@
 <?php
 
-namespace OpenOrchestra\Backoffice\Tests\RestoreEntity;
+namespace OpenOrchestra\Backoffice\Tests\RemoveTrashcanEntity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\Backoffice\DeleteTrashcanEntity\Strategies\DeleteTrashCanNodeStrategy;
+use OpenOrchestra\Backoffice\RemoveTrashcanEntity\Strategies\RemoveTrashCanNodeStrategy;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class DeleteTrashcanContentStrategyTest
+ * Class RemoveTrashcanNodeStrategyTest
  */
-class DeleteTrashcanNodeStrategyTest extends AbstractBaseTestCase
+class RemoveTrashcanNodeStrategyTest extends AbstractBaseTestCase
 {
     /**
-     * @var DeleteTrashCanNodeStrategy
+     * @var RemoveTrashCanNodeStrategy
      */
     protected $strategy;
 
@@ -32,7 +31,7 @@ class DeleteTrashcanNodeStrategyTest extends AbstractBaseTestCase
         $this->eventDispatcher = Phake::mock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->objectManager = Phake::mock('Doctrine\Common\Persistence\ObjectManager');
 
-        $this->strategy = new DeleteTrashCanNodeStrategy($this->nodeRepository, $this->trashItemRepository, $this->eventDispatcher, $this->objectManager);
+        $this->strategy = new RemoveTrashCanNodeStrategy($this->nodeRepository, $this->trashItemRepository, $this->eventDispatcher, $this->objectManager);
     }
 
     /**
@@ -64,14 +63,14 @@ class DeleteTrashcanNodeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test delete
+     * Test remove
      */
     public function testDeleteOnlyOneNode()
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn(array());
 
-        $this->strategy->delete($node);
+        $this->strategy->remove($node);
 
         Phake::verify($this->objectManager)->remove($node);
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
@@ -79,9 +78,9 @@ class DeleteTrashcanNodeStrategyTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test delete
+     * Test remove
      */
-    public function testDeleteWithSubNode()
+    public function testRemoveWithSubNode()
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($node)->isDeleted()->thenReturn(true);
@@ -96,7 +95,7 @@ class DeleteTrashcanNodeStrategyTest extends AbstractBaseTestCase
         Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn(array($node));
         Phake::when($this->nodeRepository)->findByIncludedPathAndSiteId(Phake::anyParameters())->thenReturn(array($node, $subNode1, $subNode2));
 
-        $this->strategy->delete($node);
+        $this->strategy->remove($node);
 
         Phake::verify($this->objectManager, Phake::times(6))->remove(Phake::anyParameters());
         Phake::verify($this->eventDispatcher, Phake::times(3))->dispatch(Phake::anyParameters());

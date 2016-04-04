@@ -47,7 +47,7 @@ open_orchestra_role:
     label_access_deleted: Corbeille
     role_access_deleted: Accéder
     role_access_restore: Restaurer
-    role_access_deleted_trashcan: Supprimer
+    role_access_removed_trashcan: Supprimer
     label_access_status: Etat de publication
     role_access_status: Accéder
     role_access_create_status: Créer

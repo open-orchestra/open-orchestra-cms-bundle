@@ -75,14 +75,14 @@ class TrashcanController extends BaseController
     /**
      * @param $trashItemId
      *
-     * @Config\Route("/{trashItemId}/delete", name="open_orchestra_api_trashcan_delete")
+     * @Config\Route("/{trashItemId}/remove", name="open_orchestra_api_trashcan_remove")
      * @Config\Method({"DELETE"})
 
-     * @Config\Security("is_granted('ROLE_ACCESS_DELETED_TRASHCAN')")
+     * @Config\Security("is_granted('ROLE_ACCESS_REMOVED_TRASHCAN')")
      *
      * @return array|mixed
      */
-    public function deleteAction($trashItemId)
+    public function removeAction($trashItemId)
     {
         /* @var TrashItemInterface $trashItem */
         $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
@@ -93,7 +93,7 @@ class TrashcanController extends BaseController
             $om->remove($trashItem);
             $om->flush($trashItem);
 
-            $this->get('open_orchestra_backoffice.delete_trashcan_entity.manager')->delete($entity);
+            $this->get('open_orchestra_backoffice.remove_trashcan_entity.manager')->remove($entity);
 
             return array();
         }

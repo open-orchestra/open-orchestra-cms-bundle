@@ -17,7 +17,7 @@ class DeleteNodeSubscriber extends AbstractDeleteSubscriber
     public function addNodeTrashCan(NodeEvent $event)
     {
         $node = $event->getNode();
-        $name = $node->getName() . " (".$node->getLanguage()." - v".$node->getVersion().")";
+        $name = $node->getName() . " (".$node->getLanguage()." - #".$node->getVersion().")";
         $type = NodeInterface::TRASH_ITEM_TYPE;
         $this->createTrashItem($node, $name, $type);
     }

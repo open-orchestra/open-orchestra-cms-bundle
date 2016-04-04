@@ -610,9 +610,9 @@ open_orchestra_backoffice:
         trashcan:
           name: Nom
           deleted_at: Supprimé le
-          restore_confirm_txt: Vous voulez vous restaurer cette élément ?
+          restore_confirm_txt: Vous voulez vous restaurer cet élément ?
           restore_confirm_title: Restaurer
-          delete_confirm_txt: Vous voulez vous supprimer cette élément définitivement?
-          delete_confirm_title: Suppression définitive
+          remove_confirm_txt: Vous voulez vous supprimer cet élément définitivement?
+          remove_confirm_title: Suppression définitive
         themes:
           name: Nom
