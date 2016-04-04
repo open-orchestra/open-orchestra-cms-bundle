@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
-use OpenOrchestra\Backoffice\Validator\Constraints\TrashcanDeleteNode;
+use OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveNode;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class TrashcanDeleteNodeTest
+ * Class TrashcanRemoveNodeTest
  */
-class TrashcanDeleteNodeTest extends AbstractBaseTestCase
+class TrashcanRemoveNodeTest extends AbstractBaseTestCase
 {
     /**
-     * @var TrashcanDeleteNode
+     * @var TrashcanRemoveNode
      */
     protected $constraint;
 
@@ -21,7 +21,7 @@ class TrashcanDeleteNodeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->constraint = new TrashcanDeleteNode();
+        $this->constraint = new TrashcanRemoveNode();
     }
 
     /**
@@ -45,7 +45,7 @@ class TrashcanDeleteNodeTest extends AbstractBaseTestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_backoffice_validators.trashitem.delete_node_date', $this->constraint->message);
+        $this->assertSame('open_orchestra_backoffice_validators.trashitem.remove_node_date', $this->constraint->message);
     }
 
     /**
@@ -53,6 +53,6 @@ class TrashcanDeleteNodeTest extends AbstractBaseTestCase
      */
     public function testValidateBy()
     {
-        $this->assertSame('delete_node_date', $this->constraint->validatedBy());
+        $this->assertSame('remove_node_date', $this->constraint->validatedBy());
     }
 }

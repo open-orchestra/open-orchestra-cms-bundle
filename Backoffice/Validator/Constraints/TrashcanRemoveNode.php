@@ -5,18 +5,18 @@ namespace OpenOrchestra\Backoffice\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class TrashcanDeleteNode
+ * Class TrashcanRemoveNode
  */
-class TrashcanDeleteNode extends Constraint
+class TrashcanRemoveNode extends Constraint
 {
-    public $message = 'open_orchestra_backoffice_validators.trashitem.delete_node_date';
+    public $message = 'open_orchestra_backoffice_validators.trashitem.remove_node_date';
 
     /**
      * @return string
      */
     public function validatedBy()
     {
-        return 'delete_node_date';
+        return 'remove_node_date';
     }
 
     /**

@@ -19,4 +19,4 @@ open_orchestra_backoffice_validators:
     website:
         exists_main_alias: An alias must be principal
     trashitem:
-        delete_node_date: You must wait 7 days to permanently delete a page
+        remove_node_date: You must wait 7 days to permanently delete a page

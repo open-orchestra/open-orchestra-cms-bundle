@@ -18,4 +18,4 @@ open_orchestra_backoffice_validators:
     website:
         exists_main_alias: Ein Alias muss haupt sein
     trashitem:
-        delete_node_date: Sie müssen 7 Tage warten, um dauerhaft eine Seite löschen
+        remove_node_date: Sie müssen 7 Tage warten, um dauerhaft eine Seite löschen

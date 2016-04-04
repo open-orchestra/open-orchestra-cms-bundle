@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
-use OpenOrchestra\Backoffice\Validator\Constraints\TrashcanDeleteNodeValidator;
+use OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveNodeValidator;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class TrashcanDeleteNodeValidatorTest
+ * Class TrashcanRemoveNodeValidatorTest
  */
-class TrashcanDeleteNodeValidatorTest extends AbstractBaseTestCase
+class TrashcanRemoveNodeValidatorTest extends AbstractBaseTestCase
 {
     /**
-     * @var TrashcanDeleteNodeValidator
+     * @var TrashcanRemoveNodeValidator
      */
     protected $validator;
     protected $context;
@@ -35,7 +35,7 @@ class TrashcanDeleteNodeValidatorTest extends AbstractBaseTestCase
 
         $this->trashItem = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
 
-        $this->validator = new TrashcanDeleteNodeValidator();
+        $this->validator = new TrashcanRemoveNodeValidator();
         $this->validator->initialize($this->context);
     }
 

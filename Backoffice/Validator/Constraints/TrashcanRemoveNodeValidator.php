@@ -9,9 +9,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Datetime;
 
 /**
- * Class TrashcanDeleteNodeValidator
+ * Class TrashcanRemoveNodeValidator
  */
-class TrashcanDeleteNodeValidator extends ConstraintValidator
+class TrashcanRemoveNodeValidator extends ConstraintValidator
 {
     /**
      * @param TrashItemInterface $trashItem

@@ -42,7 +42,7 @@ class RemoveTrashcanEntityManagerTest extends AbstractBaseTestCase
     public function testRemove()
     {
         $entity = Phake::mock('OpenOrchestra\ModelInterface\Model\SoftDeleteableInterface');
-        $this->manager->delete($entity);
+        $this->manager->remove($entity);
 
         Phake::verify($this->strategy1)->support(Phake::anyParameters());
         Phake::verify($this->strategy2)->support(Phake::anyParameters());

@@ -86,7 +86,7 @@ class TrashcanController extends BaseController
     {
         /* @var TrashItemInterface $trashItem */
         $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
-        if ($this->isValid($trashItem, 'delete')) {
+        if ($this->isValid($trashItem, 'remove')) {
             /* @var $entity SoftDeleteableInterface */
             $entity = $trashItem->getEntity();
             $om = $this->get('object_manager');

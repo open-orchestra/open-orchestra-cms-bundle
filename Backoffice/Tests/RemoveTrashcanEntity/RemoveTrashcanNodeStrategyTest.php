@@ -65,7 +65,7 @@ class RemoveTrashcanNodeStrategyTest extends AbstractBaseTestCase
     /**
      * Test remove
      */
-    public function testDeleteOnlyOneNode()
+    public function testRemoveOnlyOneNode()
     {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn(array());
