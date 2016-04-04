@@ -85,17 +85,27 @@ class NodeTypeTest extends AbstractBaseTestCase
     public function testBuildView()
     {
         $areaId = 'fakeAreaId';
+        $errorFormInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($errorFormInterface)->getData()->thenReturn(array($areaId));
+
+        $error = Phake::mock('Symfony\Component\Form\FormError');
+        Phake::when($error)->getOrigin()->thenReturn($errorFormInterface);
+
+        $newAreasInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($newAreasInterface)->getErrors()->thenReturn(array($error));
+
         $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($formInterface)->get('newAreas')->thenReturn($newAreasInterface);
+
         $formView = Phake::mock('Symfony\Component\Form\FormView');
         $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         Phake::when($area)->getAreaId()->thenReturn($areaId);
         $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
-        Phake::when($this->objectManager)->refresh($areaContainer)->thenReturn($areaContainer);
         Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
         $formView->vars['value'] = $areaContainer;
 
         $this->nodeType->buildView($formView, $formInterface, array());
-        $this->assertEquals($formView->vars['areas'], array($areaId, $areaId));
+        $this->assertEquals(array_values($formView->vars['areas']), array($areaId));
         $this->assertEquals($formView->vars['form_legend_helper'], "open_orchestra_backoffice.form.node.template_selection.helper");
     }
 }
