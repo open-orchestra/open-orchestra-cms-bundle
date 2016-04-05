@@ -612,5 +612,7 @@ open_orchestra_backoffice:
           deleted_at: Deleted at
           restore_confirm_txt: Would you like to restore this element?
           restore_confirm_title: Restore
+          remove_confirm_txt: Would you like to remove this element permanently?
+          remove_confirm_title: Permanent removal
         themes:
           name: Name

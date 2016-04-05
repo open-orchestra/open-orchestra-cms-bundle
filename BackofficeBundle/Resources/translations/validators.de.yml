@@ -17,3 +17,5 @@ open_orchestra_backoffice_validators:
         duplicate_statuses: Eine Rolle ist bereits mit dieser Status
     website:
         exists_main_alias: Ein Alias muss haupt sein
+    trashitem:
+        remove_node_date: Sie müssen 7 Tage warten, um dauerhaft eine Seite löschen

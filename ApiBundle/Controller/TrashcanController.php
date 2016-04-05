@@ -58,12 +58,42 @@ class TrashcanController extends BaseController
         $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
         /* @var $entity SoftDeleteableInterface */
         $entity = $trashItem->getEntity();
-        $dm = $this->get('object_manager');
+        $om = $this->get('object_manager');
 
         if ($this->isValid($entity, 'restore')) {
             $this->get('open_orchestra_backoffice.restore_entity.manager')->restore($entity);
-            $dm->remove($trashItem);
-            $dm->flush();
+            $om->remove($trashItem);
+            $om->flush();
+
+            return array();
+        }
+
+        return $this->getViolations();
+    }
+
+
+    /**
+     * @param $trashItemId
+     *
+     * @Config\Route("/{trashItemId}/remove", name="open_orchestra_api_trashcan_remove")
+     * @Config\Method({"DELETE"})
+
+     * @Config\Security("is_granted('ROLE_ACCESS_REMOVED_TRASHCAN')")
+     *
+     * @return array|mixed
+     */
+    public function removeAction($trashItemId)
+    {
+        /* @var TrashItemInterface $trashItem */
+        $trashItem = $this->get('open_orchestra_model.repository.trash_item')->find($trashItemId);
+        if ($this->isValid($trashItem, 'remove')) {
+            /* @var $entity SoftDeleteableInterface */
+            $entity = $trashItem->getEntity();
+            $om = $this->get('object_manager');
+            $om->remove($trashItem);
+            $om->flush($trashItem);
+
+            $this->get('open_orchestra_backoffice.remove_trashcan_entity.manager')->remove($entity);
 
             return array();
         }

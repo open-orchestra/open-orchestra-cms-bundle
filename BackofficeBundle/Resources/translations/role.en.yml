@@ -47,6 +47,7 @@ open_orchestra_role:
     label_access_deleted: Trash can
     role_access_deleted: Access
     role_access_restore: Restore
+    role_access_removed_trashcan: Delete
     label_access_status: Publication status
     role_access_status: Access
     role_access_create_status: Create
