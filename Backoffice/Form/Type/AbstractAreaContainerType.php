@@ -19,19 +19,21 @@ abstract class AbstractAreaContainerType extends AbstractType
     public function buildAreaListView(FormView $view, FormInterface $form, array $options)
     {
         $areaContainer = $view->vars['value'];
-        $errors = $form->get('newAreas')->getErrors();
-        $erroredValues = array();
-        foreach ($errors as $error) {
-            $erroredValues = array_merge($erroredValues, $error->getOrigin()->getData());
-        }
-        $view->vars['areas'] = array();
-        $areas = $areaContainer->getAreas();
-        foreach ($areas as $area) {
-            $view->vars['areas'][] = $area->getAreaId();
-        }
-        foreach ($erroredValues as $erroredValue) {
-            if (false !== ($key = array_search($erroredValue, $view->vars['areas']))) {
-                unset($view->vars['areas'][$key]);
+        if ($form->has('newAreas')) {
+            $errors = $form->get('newAreas')->getErrors();
+            $erroredValues = array();
+            foreach ($errors as $error) {
+                $erroredValues = array_merge($erroredValues, $error->getOrigin()->getData());
+            }
+            $view->vars['areas'] = array();
+            $areas = $areaContainer->getAreas();
+            foreach ($areas as $area) {
+                $view->vars['areas'][] = $area->getAreaId();
+            }
+            foreach ($erroredValues as $erroredValue) {
+                if (false !== ($key = array_search($erroredValue, $view->vars['areas']))) {
+                    unset($view->vars['areas'][$key]);
+                }
             }
         }
     }
