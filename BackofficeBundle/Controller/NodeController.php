@@ -33,7 +33,7 @@ class NodeController extends AbstractAdminController
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        $editionRole = $this->getEditionRole($node);
         $form = $this->createForm('oo_node', $node, array('action' => $url), $editionRole);
 
         $form->handleRequest($request);
@@ -58,8 +58,7 @@ class NodeController extends AbstractAdminController
     {
         $parentNode = $this->get('open_orchestra_model.repository.node')->findOneByNodeId($parentId);
 
-        $creationRole = $parentNode->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE;
-        $this->denyAccessUnlessGranted($creationRole, $parentNode);
+        $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $parentNode);
 
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
         $language = $contextManager->getCurrentSiteDefaultLanguage();
@@ -82,5 +81,21 @@ class NodeController extends AbstractAdminController
         }
 
         return $this->renderAdminForm($form);
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getEditionRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 }

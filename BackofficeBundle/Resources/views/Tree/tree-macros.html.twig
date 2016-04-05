@@ -67,11 +67,13 @@
 {% endmacro %}
 
 {% macro error_node(nodeId, translationKey) %}
+    {% if is_granted("ROLE_ACCESS_ERROR_NODE") %}
         <li data-element-id="{{ nodeId }}" data-type="Node">
             <a id="nav-node-{{ nodeId }}" data-url="{{ path('open_orchestra_api_node_show_or_create_error', {'nodeId': nodeId}) }}" data-node="{{ nodeId }}" href="#node/show/{{ nodeId }}">
                 <span>{{ ('open_orchestra_backoffice.left_menu.editorial.error_nodes.' ~ translationKey)|trans }}</span>
             </a>
         </li>
+    {% endif %}
 {% endmacro %}
 
 {% macro menu_templates(templates, name) %}

@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\ApiBundle\Controller;
 
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\BaseApiBundle\Controller\Annotation as Api;
@@ -30,14 +32,13 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/show-in-node/{nodeId}", name="open_orchestra_api_area_show_in_node")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return FacadeInterface
      */
     public function showInNodeAction($areaId, $nodeId)
     {
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
         $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
@@ -50,7 +51,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/show-in-template/{templateId}", name="open_orchestra_api_area_show_in_template")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_TREE_GENERAL_NODE')")
      *
      * @return FacadeInterface
      */
@@ -71,14 +72,13 @@ class AreaController extends BaseController
      * @Config\Route("/{nodeId}/{areaId}/update-block", name="open_orchestra_api_area_update_block")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return Response
      */
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
         $nodeRepository = $this->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
         $area = $nodeRepository->findAreaByAreaId($node, $areaId);
 
         $facade = $this->get('jms_serializer')->deserialize(
@@ -104,13 +104,12 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-node/{nodeId}", name="open_orchestra_api_area_delete_in_node")
      * @Config\Method({"POST", "DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return Response
      */
     public function deleteAreaInNodeAction($areaId, $nodeId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $node);
 
@@ -124,7 +123,6 @@ class AreaController extends BaseController
      *
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/node/{nodeId}", name="open_orchestra_api_area_delete_in_node_area")
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
      * @Config\Method({"DELETE"})
      *
      * @return Response
@@ -133,6 +131,7 @@ class AreaController extends BaseController
     {
         $nodeRepository= $this->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
         $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
@@ -147,7 +146,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-template/{templateId}", name="open_orchestra_api_area_delete_in_template")
      * @Config\Method({"POST", "DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
      * @return Response
      */
@@ -168,7 +167,7 @@ class AreaController extends BaseController
      * @Config\Route("/{areaId}/delete-in-area/{parentAreaId}/template/{templateId}", name="open_orchestra_api_area_delete_in_template_area")
      * @Config\Method({"POST", "DELETE"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
      * @return Response
      */
@@ -193,5 +192,33 @@ class AreaController extends BaseController
     {
         $this->get('open_orchestra_backoffice.manager.area')->deleteAreaFromContainer($areaContainer, $areaId);
         $this->get('object_manager')->flush();
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getAccessRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getEditionRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 }

@@ -9,6 +9,10 @@ open_orchestra_role:
     role_access_update_node: Update
     role_access_delete_node: Delete
     role_access_move_tree: Move
+    label_access_error_node: Error pages
+    role_access_error_node: Access
+    role_access_create_error_node: Create
+    role_access_update_error_node: Update
     label_access_template: Page template
     role_access_tree_template: Access
     role_access_create_template: Create
