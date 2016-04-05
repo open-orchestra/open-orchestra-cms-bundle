@@ -83,8 +83,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
             $otherNode = $node;
             $isInside = true;
             if (0 !== $block['nodeId'] && $node->getNodeId() != $block['nodeId']) {
-                $siteId = $this->currentSiteManager->getCurrentSiteId();
-                $otherNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $siteId);
+                $otherNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
                 $isInside = false;
             }
             $facade->addBlock($this->getTransformer('block')->transform(
