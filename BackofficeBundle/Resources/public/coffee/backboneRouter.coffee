@@ -36,7 +36,7 @@ OrchestraBORouter = Backbone.Router.extend(
     return true
 
   afterRouteChanges: (selector) ->
-    window.ribbonFormButtonView.resetAll()
+    window.ribbonFormButtonView.resetAll('.ribbon-form-button')
     $('#left-panel nav li:has(a' + selector + ')').addClass 'active'
     $('#left-panel nav li.current').removeClass 'current'
     $('#left-panel nav li:has(>a' + selector + ')').addClass 'current'
