@@ -18,23 +18,27 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     protected $contextManager;
     protected $transformer;
     protected $attributes;
+    protected $required;
 
     /**
      * @param ContentRepositoryInterface                    $contentRepository
      * @param CurrentSiteIdInterface                        $contextManager
      * @param ConditionFromBooleanToBddTransformerInterface $transformer
      * @param array                                         $attributes
+     * @param boolean                                       $required
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
         CurrentSiteIdInterface $contextManager,
         ConditionFromBooleanToBddTransformerInterface $transformer,
-        array $attributes
+        array $attributes,
+        $required
     ) {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         $this->transformer = $transformer;
         $this->attributes = $attributes;
+        $this->required = $required;
     }
 
     /**
@@ -44,17 +48,26 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $event->getData();
-        if (!is_null($data) && ($data['contentType'] != '' || $data['keywords'] != '')) {
-            $condition = null;
-            if ($data['keywords'] != '') {
-                $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
+        if (!is_null($data)) {
+            if ($data['contentType'] != '' || $data['keywords'] != '') {
+                $condition = null;
+                if ($data['keywords'] != '') {
+                    $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
+                }
+                $form->add('contentId', 'choice', array(
+                    'label' => false,
+                    'required' => $this->required,
+                    'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
+                    'attr' => $this->attributes,
+                ));
+            } elseif ($data['contentId'] != '') {
+                $form->add('contentId', 'choice', array(
+                    'label' => false,
+                    'required' => $this->required,
+                    'choices' => $this->getChoice($data['contentId']),
+                    'attr' => $this->attributes,
+                ));
             }
-            $form->add('contentId', 'choice', array(
-                'label' => false,
-                'required' => false,
-                'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
-                'attr' => $this->attributes,
-            ));
         }
     }
 
@@ -86,4 +99,15 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         return $choices;
     }
 
+    /**
+     * @param string $contentId
+     */
+    protected function getChoice($contentId)
+    {
+        $choices = array();
+        $content = $this->contentRepository->find($contentId);
+        $choices[$content->getId()] = $content->getName();
+
+        return $choices;
+    }
 }

@@ -28,7 +28,6 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     target = $(event.currentTarget)
     form = target.parents('form')
     url = form.attr('action')
-    url = url + '?no_save=1'
     optionId = target.attr('id').replace(/type$/g, 'options')
     defaultValueId = target.attr('id').replace(/type$/g, 'default_value')
     defaultValueField = $('#' + defaultValueId)
