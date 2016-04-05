@@ -82,6 +82,7 @@ class AreaTypeTest extends AbstractBaseTestCase
         Phake::when($newAreasInterface)->getErrors()->thenReturn(array($error));
 
         $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($formInterface)->has('newAreas')->thenReturn(true);
         Phake::when($formInterface)->get('newAreas')->thenReturn($newAreasInterface);
 
         $formView = Phake::mock('Symfony\Component\Form\FormView');
