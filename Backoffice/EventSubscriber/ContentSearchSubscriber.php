@@ -44,10 +44,11 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     /**
      * @param FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
+    public function postSetData(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData();
+        $addDefault = $this->required;
         if (!is_null($data)) {
             if ($data['contentType'] != '' || $data['keywords'] != '') {
                 $condition = null;
@@ -60,6 +61,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                     'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
                     'attr' => $this->attributes,
                 ));
+                $addDefault = false;
             } elseif ($data['contentId'] != '') {
                 $form->add('contentId', 'choice', array(
                     'label' => false,
@@ -67,7 +69,17 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                     'choices' => $this->getChoice($data['contentId']),
                     'attr' => $this->attributes,
                 ));
+                $addDefault = false;
             }
+        }
+        if ($addDefault) {
+            $form->add('contentId', 'hidden', array(
+                'required' => $this->required,
+            ));
+            $form->add('help-text', 'button', array(
+                'disabled' => true,
+                'label' => 'open_orchestra_backoffice.form.content_search.use'
+            ));
         }
     }
 
@@ -77,7 +89,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            FormEvents::PRE_SUBMIT => 'preSubmit',
+            FormEvents::POST_SET_DATA => 'postSetData',
         );
     }
 
