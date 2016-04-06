@@ -49,14 +49,17 @@ class ContentSearchType extends AbstractType
     {
         $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
+            'mapped' => false,
             'required' => false
         ));
         $builder->add('choiceType', 'oo_operator_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.choice_type',
+            'mapped' => false,
             'required' => false
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
             'embedded' => false,
+            'mapped' => false,
             'transformerClass' => $this->transformerClass,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
             'name' => 'keywords',
