@@ -55,6 +55,7 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
    * @param {string} container
   ###
   resetAll: (container) ->
+    console.log("test reset")
     @container = container
     $(@container).html('')
 
