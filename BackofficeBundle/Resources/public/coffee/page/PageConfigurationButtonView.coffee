@@ -17,7 +17,7 @@ PageConfigurationButtonView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageConfigurationButton')
     @$el.attr('data-widget-index', @options.widget_index)
-    window.ribbonFormButtonView.setFocusedView(@, '.ribbon-form-button')
+    OpenOrchestra.RibbonButton.RibbonFormButtonView.ribbonButton.setFocusedView(@, '.ribbon-form-button')
     return
 
   configurationPage: () ->

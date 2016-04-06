@@ -21,7 +21,6 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
   ###
   setFocusedView: (view, container) ->
     @container = container
-    console.log($(container))
     $(@container).html('')
     viewContext = this
     $('.btn-in-ribbon', view.$el).each ->
@@ -55,11 +54,8 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
    * @param {string} container
   ###
   resetAll: (container) ->
-    console.log("test reset")
     @container = container
     $(@container).html('')
 
 jQuery ->
   appConfigurationView.setConfiguration('ribbon-form-button', 'createRibbonFormButton', OpenOrchestra.RibbonButton.RibbonFormButtonView)
-  ribbonFormButtonViewClass = appConfigurationView.getConfiguration('ribbon-form-button', 'createRibbonFormButton')
-  window.ribbonFormButtonView = new ribbonFormButtonViewClass()

@@ -87,7 +87,7 @@ TableviewCollectionView = OrchestraView.extend(
       links: links
     )
     $(table).after button
-    window.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
+    OpenOrchestra.RibbonButton.RibbonFormButtonView.ribbonButton.setFocusedView @, '.ribbon-form-button'
 
   clickAdd: (event) ->
     event.preventDefault()
