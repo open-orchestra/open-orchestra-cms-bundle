@@ -9,7 +9,7 @@ OrchestraBORouter = Backbone.Router.extend(
     @generateRoutePatterns()
     jQuery ->
       ribbonFormButtonViewClass = appConfigurationView.getConfiguration('ribbon-form-button', 'createRibbonFormButton')
-      OpenOrchestra.RibbonButton.RibbonFormButtonView.ribbonButton = new ribbonFormButtonViewClass()
+      OpenOrchestra.RibbonButton.ribbonFormButtonView = new ribbonFormButtonViewClass()
     return
 
   showHome: ->
@@ -39,7 +39,7 @@ OrchestraBORouter = Backbone.Router.extend(
     return true
 
   afterRouteChanges: (selector) ->
-    #OpenOrchestra.RibbonButton.RibbonFormButtonView.ribbonButton.resetAll('.ribbon-form-button')
+    OpenOrchestra.RibbonButton.ribbonFormButtonView.resetAll('.ribbon-form-button')
     $('#left-panel nav li:has(a' + selector + ')').addClass 'active'
     $('#left-panel nav li.current').removeClass 'current'
     $('#left-panel nav li:has(>a' + selector + ')').addClass 'current'
@@ -100,10 +100,6 @@ OrchestraBORouter = Backbone.Router.extend(
     if matched
       return this._extractParameters(route, fragment)
     return {}
-
-  startRibbonFormButtonView: ->
-    new @ribbonFormButtonViewClass()
-    return
 )
 
 appRouter = new OrchestraBORouter
@@ -111,5 +107,4 @@ appRouter = new OrchestraBORouter
 jQuery ->
   if window.location.pathname.indexOf('login') == -1
     Backbone.history.start()
-    #OpenOrchestra.RibbonButton.RibbonFormButtonView.ribbonButton = appRouter.startRibbonFormButtonView()
   return
