@@ -102,6 +102,7 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
     {
         return array(
             array(FormEvents::PRE_SUBMIT),
+            array(FormEvents::POST_SET_DATA),
         );
     }
 
