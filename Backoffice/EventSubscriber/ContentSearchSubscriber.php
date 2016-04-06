@@ -47,6 +47,25 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     public function postSetData(FormEvent $event)
     {
         $form = $event->getForm();
+        if ('PATCH' !== $form->getParent()->getConfig()->getMethod()) {
+            $this->addFormType($event);
+        }
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function preSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+        if ('PATCH' === $form->getParent()->getConfig()->getMethod()) {
+            $this->addFormType($event);
+        }
+    }
+
+    protected function addFormType(FormEvent $event)
+    {
+        $form = $event->getForm();
         $data = $event->getData();
         $addDefault = $this->required;
         if (!is_null($data)) {
@@ -62,7 +81,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                     'attr' => $this->attributes,
                 ));
                 $addDefault = false;
-            } elseif ($data['contentId'] != '') {
+            } elseif (array_key_exists('contentId', $data) && $data['contentId'] != '') {
                 $form->add('contentId', 'choice', array(
                     'label' => false,
                     'required' => $this->required,
@@ -90,6 +109,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::PRE_SUBMIT => 'preSubmit',
         );
     }
 
