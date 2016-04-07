@@ -42,16 +42,15 @@ abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterfa
     protected function transformData($value, FormInterface $form)
     {
         if (is_array($value) && (!is_null($form->getConfig()->getOption('type')) || $form->count() > 0)) {
-            $tmpValue = null;
             $children = null;
             foreach ($value as $key => $element) {
                 if ($form->has($key)) {
                     $children = $form->get($key);
                 }
                 if ($children instanceof FormInterface) {
-                    $tmpValue[$key] = $this->transformData($element, $children);
+                    $value[$key] = $this->transformData($element, $children);
                 } else {
-                    $tmpValue[] = $element;
+                    $value[$key] = $element;
                 }
             }
             foreach (array_keys($form->all()) as $key) {
@@ -59,9 +58,6 @@ abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterfa
                     $form->remove($key);
                 }
             }
-
-
-            return $tmpValue;
 
         }
         $viewTransformers = $form->getConfig()->getViewTransformers();

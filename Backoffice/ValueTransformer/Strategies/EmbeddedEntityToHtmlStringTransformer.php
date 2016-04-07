@@ -26,7 +26,7 @@ class EmbeddedEntityToHtmlStringTransformer implements ValueTransformerInterface
      */
     public function transform($data)
     {
-        return $data[$this->property];
+        return array_key_exists($this->property, $data) ? $data[$this->property] : '';
     }
 
     /**

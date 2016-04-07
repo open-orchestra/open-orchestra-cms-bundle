@@ -289,7 +289,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.content
             - @open_orchestra_backoffice.context_manager
-            - @open_orchestra_model.manager.content_for_embed
+            - @open_orchestra_backoffice.transformer.reference_to_embed
             - content
         tags:
             - { name: form.type, alias: oo_content_choice}
