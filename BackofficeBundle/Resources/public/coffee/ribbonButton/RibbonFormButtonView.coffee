@@ -21,7 +21,7 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
   ###
   setFocusedView: (view, container) ->
     @container = container
-    $(@container).html('')
+    @resetAll(container)
     viewContext = this
     $('.btn-in-ribbon', view.$el).each ->
       viewContext.cloneButton $(this)
