@@ -34,12 +34,12 @@ OrchestraBORouter = Backbone.Router.extend(
     if link.length == 0
       Backbone.history.navigate('', {trigger: true})
       return false
+    OpenOrchestra.RibbonButton.ribbonFormButtonView.resetAll('.ribbon-form-button')
     @afterRouteChanges(selector)
     displayLoader()
     return true
 
   afterRouteChanges: (selector) ->
-    OpenOrchestra.RibbonButton.ribbonFormButtonView.resetAll('.ribbon-form-button')
     $('#left-panel nav li:has(a' + selector + ')').addClass 'active'
     $('#left-panel nav li.current').removeClass 'current'
     $('#left-panel nav li:has(>a' + selector + ')').addClass 'current'
