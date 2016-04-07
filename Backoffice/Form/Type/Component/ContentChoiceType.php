@@ -47,7 +47,6 @@ class ContentChoiceType extends AbstractType
             'label' => false,
             'choices' => $this->getChoices($options['content_search']['contentType'], $options['content_search']['choiceType'], $options['content_search']['keywords']
         )));
-        $builder->add('toto', 'hidden');
     }
 
     /**
