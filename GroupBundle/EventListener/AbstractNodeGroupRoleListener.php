@@ -30,7 +30,7 @@ abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface
     {
         $collector = $this->container->get('open_orchestra_backoffice.collector.backoffice_role');
 
-        return $collector->getRolesByType('node');
+        return $collector->getRolesByType('(?<!error_)node');
     }
 
     /**
