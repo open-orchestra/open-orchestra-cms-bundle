@@ -158,7 +158,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
 
     /**
      * Add $contentTypeField to $form with value $fieldValue
-     * 
+     *
      * @param FieldTypeInterface $contentTypeField
      * @param FormInterface      $form
      */
@@ -186,9 +186,9 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
 
     /**
      * Get $contentTypeField options from conf and complete it with $contentTypeField setted values
-     * 
+     *
      * @param FieldTypeInterface $contentTypeField
-     * 
+     *
      * @return array
      */
     protected function getFieldOptions(FieldTypeInterface $contentTypeField)
