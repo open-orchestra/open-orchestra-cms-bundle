@@ -61,6 +61,7 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
     {
         list($key, $id) = each($data);
         $document = $this->objectManager->find($this->documentClass, $id);
+
         return $this->entityDbMapper->fromEntityToDb($document) ;
     }
 }
