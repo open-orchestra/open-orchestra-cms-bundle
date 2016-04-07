@@ -1,7 +1,14 @@
-{% extends 'OpenOrchestraBackofficeBundle:Tree:tree.html.twig' %}
-
-{% set name = 'open_orchestra_backoffice.left_menu.editorial.general_nodes'|trans %}
-
-{% block menu %}
-    {{ macros.menu_nodes(tree_formatter(nodes)) }}
-{% endblock %}
+{% if not nodeTransverse is null %}
+    <li data-element-id="{{ nodeTransverse.nodeId }}"
+        data-type="Node"
+    >
+        <a
+                id="nav-node-{{ nodeTransverse.nodeId }}"
+                data-url="{{ path('open_orchestra_api_node_show_or_create', {'nodeId': nodeTransverse.nodeId}) }}"
+                data-node="{{ nodeTransverse.nodeId }}"
+                href="#node/show/{{ nodeTransverse.nodeId }}"
+        >
+            <span>{{ nodeTransverse.name }}</span>
+        </a>
+    </li>
+{% endif %}

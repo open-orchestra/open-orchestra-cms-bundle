@@ -47,12 +47,24 @@ class GeneralNodesPanelStrategy extends AbstractNavigationStrategy
     public function show()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $nodes = $this->nodeRepository->findLastVersionByType($siteId, NodeInterface::TYPE_TRANSVERSE);
+        $language = $this->currentSiteManager->getCurrentLocale();
+
+        $node = null;
+        $nodesTransverse = $this->nodeRepository->findByNodeAndSite(NodeInterface::TRANSVERSE_NODE_ID, $siteId);
+        if (!empty($nodesTransverse)) {
+            $node = current($nodesTransverse);
+            foreach ($nodesTransverse as $nodeTransverse) {
+                if ($language === $nodeTransverse->getLanguage()) {
+                    $node = $nodeTransverse;
+                    break;
+                }
+            }
+        }
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/generalNodes.html.twig',
             array(
-                'nodes' => $nodes
+                'nodeTransverse' => $node
             )
         );
     }
