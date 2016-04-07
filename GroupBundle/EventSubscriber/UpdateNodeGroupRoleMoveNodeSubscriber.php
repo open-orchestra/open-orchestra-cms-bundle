@@ -49,7 +49,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
     {
         $groups = $this->groupRepository->findAllWithSite();
         $node = $event->getNode();
-        $nodeRole = $this->roleCollector->getRolesByType('node');
+        $nodeRole = $this->roleCollector->getRolesByType('(?<!error_)node');
         $this->updateNodeGroupRoleTree($node, $nodeRole, $groups);
     }
 
