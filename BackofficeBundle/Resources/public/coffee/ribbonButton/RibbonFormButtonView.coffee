@@ -20,25 +20,24 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
    * @param {String} container
   ###
   setFocusedView: (view, container) ->
-    @container = container
     @resetAll(container)
     viewContext = this
     $('.btn-in-ribbon', view.$el).each ->
-      viewContext.cloneButton $(this)
+      viewContext.cloneButton $(this), container
       return
-    @setElement @container
+    @setElement container
     return
 
   ###*
    * Method call to clone and move button
    * @param {Object} button
   ###
-  cloneButton: (button) ->
+  cloneButton: (button, container) ->
     button.uniqueId();
     clonedButton = button.clone().attr('data-clone', button.attr('id')).removeAttr('id')
     @buttonsList[button.attr('id')] = button
     button.hide()
-    $(@container).append(clonedButton)
+    $(container).append(clonedButton)
 
   ###*
    * Method call to click on original button
@@ -54,8 +53,7 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
    * @param {string} container
   ###
   resetAll: (container) ->
-    @container = container
-    $(@container).html('')
+    $(container).html('')
 
 jQuery ->
   appConfigurationView.setConfiguration('ribbon-form-button', 'createRibbonFormButton', OpenOrchestra.RibbonButton.RibbonFormButtonView)
