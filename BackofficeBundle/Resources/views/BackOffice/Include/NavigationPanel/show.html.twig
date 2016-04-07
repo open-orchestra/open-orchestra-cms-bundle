@@ -7,10 +7,8 @@
                     {% if strategies[rootMenu.name] is defined %}
                         {% for subMenuWeights in strategies[rootMenu.name] %}
                             {% for subMenu in subMenuWeights %}
-                                {% if is_granted(subMenu.getRole) %}
-                                    <li>
-                                        {{ subMenu.show|raw }}
-                                    </li>
+                                {% if subMenu.getRole is null or is_granted(subMenu.getRole) %}
+                                    {{ subMenu.show|raw }}
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
