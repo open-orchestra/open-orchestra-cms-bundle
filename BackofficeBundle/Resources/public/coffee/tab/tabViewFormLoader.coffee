@@ -21,6 +21,7 @@ generatePanelView = (response, position) ->
   elementTabViewClass::onViewReady = ->
     if !@options.submitted
       @options.callback this
+      OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
     return
 
   callback = ((tabView, panel, position) ->
@@ -42,3 +43,6 @@ getPanelsLink = (links) ->
     if infos = key.match(/^_self_panel_(.*)/)
       panels.push {link:links[key], isActive:false, id:infos[1]}
   return panels
+
+#jQuery ->
+ # OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
