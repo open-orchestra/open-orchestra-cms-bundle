@@ -38,7 +38,8 @@ class NodeGroupRoleVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return (bool) preg_match('/^ROLE_ACCESS_[^_]+_NODE$/', $attribute);
+        return (bool) preg_match('/^ROLE_ACCESS_[^_]+_NODE$/', $attribute) &&
+               false === strpos($attribute, 'ERROR_NODE');
     }
 
     /**

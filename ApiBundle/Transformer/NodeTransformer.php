@@ -99,14 +99,13 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->createdAt = $node->getCreatedAt();
         $facade->updatedAt = $node->getUpdatedAt();
         $facade->boDirection = $node->getBoDirection();
-        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        $editionRole = $this->getEditionRole($node);
+
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
 
-        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE)) {
-            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
+        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
                 'id' => $node->getId(),
             )));
-        }
 
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
@@ -260,6 +259,22 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         return $source;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
+    protected function getEditionRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 
     /**

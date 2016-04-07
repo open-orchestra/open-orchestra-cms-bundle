@@ -21,6 +21,15 @@ parameters:
         role_access_move_tree :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_node
+        role_access_error_node:
+            category: open_orchestra_backoffice.left_menu.editorial.title
+            label: open_orchestra_role.label_access_error_node
+        role_access_create_error_node:
+            category: open_orchestra_backoffice.left_menu.editorial.title
+            label: open_orchestra_role.label_access_error_node
+        role_access_update_error_node:
+            category: open_orchestra_backoffice.left_menu.editorial.title
+            label: open_orchestra_role.label_access_error_node
         role_access_tree_template :
             category: open_orchestra_backoffice.left_menu.editorial.title
             label: open_orchestra_role.label_access_template

@@ -21,11 +21,13 @@ class StatusableVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return 0 === strpos($attribute, 'ROLE_')
-        && false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE')
-        && false === strpos($attribute, 'ROLE_ACCESS_CREATE_NODE')
-        && false === strpos($attribute, 'ROLE_ACCESS_DELETE_NODE')
-        && false === strpos($attribute, 'ROLE_ACCESS_MOVE_TREE');
+        return 0 === strpos($attribute, 'ROLE_') &&
+               false === strpos($attribute, 'ROLE_ACCESS_MOVE_TREE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_DELETE_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_CREATE_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_ERROR_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_CREATE_ERROR_NODE');
     }
 
     /**

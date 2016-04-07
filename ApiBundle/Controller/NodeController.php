@@ -67,7 +67,7 @@ class NodeController extends BaseController
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-        if (!$errorNode && $node) {
+        if ($node) {
             $this->denyAccessUnlessGranted($this->getAccessRole($node));
         }
         if (!$node) {
@@ -77,6 +77,7 @@ class NodeController extends BaseController
                 $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $oldNode);
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
             } elseif ($errorNode) {
+                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_ERROR_NODE);
                 $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
             }
 
@@ -215,7 +216,7 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE')")
      *
      * @return Response
      */
@@ -235,17 +236,13 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeMongoId}/list-statuses", name="open_orchestra_api_node_list_status")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_TREE_NODE')")
-     *
      * @return Response
      */
     public function listStatusesForNodeAction($nodeMongoId)
     {
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
-        if (!$node->getNodeType() === NodeInterface::TYPE_ERROR) {
-            $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE, $node);
-        }
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         return $this->listStatuses($node);
     }
@@ -303,6 +300,8 @@ class NodeController extends BaseController
     {
         if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
             return GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
+        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
         }
 
         return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
@@ -317,6 +316,8 @@ class NodeController extends BaseController
     {
         if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
             return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
         }
 
         return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;

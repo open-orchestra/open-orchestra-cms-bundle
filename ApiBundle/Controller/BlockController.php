@@ -23,7 +23,7 @@ class BlockController extends BaseController
      * @Config\Route("/list/with-transverse/{language}", name="open_orchestra_api_block_list_with_transverse")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE')")
      *
      * @return FacadeInterface
      */
@@ -34,12 +34,11 @@ class BlockController extends BaseController
 
     /**
      * @param string $language
-     * @param bool   $withTransverseBlocks
      *
      * @Config\Route("/list/without-transverse/{language}", name="open_orchestra_api_block_list_without_transverse")
      * @Config\Method({"GET"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE')")
      *
      * @return FacadeInterface
      */
