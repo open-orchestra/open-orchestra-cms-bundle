@@ -15,8 +15,15 @@ NodeTreeElementView = OrchestraView.extend(
     nodeGroupRoles = @options.group.model_roles.filter (element) ->
       element.model_id == nodeId
     formCollectionViewClass = appConfigurationView.getConfiguration('group_tab_node_tree_form', 'editEntityTab')
+    roles = @options.roles.roles
+
+    if nodeId == 'root'
+      # A root node can't be deleted
+      roles = @options.roles.roles.filter (element) ->
+        element.name != "ROLE_ACCESS_DELETE_NODE"
+
     new formCollectionViewClass(
-      roles: @options.roles.roles
+      roles: roles
       domContainer: @formInput
       nodeGroupRoles: nodeGroupRoles
       group: @options.group
