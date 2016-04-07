@@ -43,6 +43,3 @@ getPanelsLink = (links) ->
     if infos = key.match(/^_self_panel_(.*)/)
       panels.push {link:links[key], isActive:false, id:infos[1]}
   return panels
-
-#jQuery ->
- # OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
