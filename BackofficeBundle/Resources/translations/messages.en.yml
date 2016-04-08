@@ -505,7 +505,7 @@ open_orchestra_backoffice:
         version:
             create: New version
             display: version
-            updated: Last update
+            updated: updated
         preview: Preview
         last_update:
             at: Last update
