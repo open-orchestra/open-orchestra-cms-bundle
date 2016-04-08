@@ -56,6 +56,7 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
 
         $this->form->buildForm($builder, array(
             'refresh' => true,
+            'required' => true,
             'attr' => array()
         ));
 

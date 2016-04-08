@@ -67,33 +67,31 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $data = $event->getData();
-        $addDefault = $this->required;
+        $choices = array();
         if (!is_null($data)) {
             if ($data['contentType'] != '' || $data['keywords'] != '') {
                 $condition = null;
                 if ($data['keywords'] != '') {
                     $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
                 }
-                $form->add('contentId', 'choice', array(
-                    'label' => false,
-                    'required' => $this->required,
-                    'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
-                    'attr' => $this->attributes,
-                ));
-                $addDefault = false;
-            } elseif (array_key_exists('contentId', $data) && $data['contentId'] != '') {
-                $form->add('contentId', 'choice', array(
-                    'label' => false,
-                    'required' => $this->required,
-                    'choices' => $this->getChoice($data['contentId']),
-                    'attr' => $this->attributes,
-                ));
-                $addDefault = false;
+                $choices = array_merge($choices, $this->getChoices($data['contentType'], $data['choiceType'], $condition));
+            }
+            if (array_key_exists('contentId', $data) && $data['contentId'] != '') {
+                $choices = array_merge($choices, $this->getChoice($data['contentId']));
             }
         }
-        if ($addDefault) {
+        if(count($choices) > 0) {
+            $form->add('contentId', 'choice', array(
+                'label' => false,
+                'empty_value' => '        ',
+                'required' => $this->required,
+                'choices' => $choices,
+                'attr' => $this->attributes,
+            ));
+        } else {
             $form->add('contentId', 'hidden', array(
                 'required' => $this->required,
+                'error_mapping' => 'help-text',
             ));
             $form->add('help-text', 'button', array(
                 'disabled' => true,
