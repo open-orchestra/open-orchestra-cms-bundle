@@ -3,7 +3,6 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Manager\NodeManager;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;

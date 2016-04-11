@@ -7,7 +7,6 @@ use OpenOrchestra\Backoffice\EventListener\UpdateStatusableElementCurrentlyPubli
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\Repository\StatusableRepositoryInterface;
 use Phake;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
