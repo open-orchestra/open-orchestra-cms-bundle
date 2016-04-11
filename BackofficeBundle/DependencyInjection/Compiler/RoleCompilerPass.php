@@ -7,7 +7,6 @@ use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPan
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
