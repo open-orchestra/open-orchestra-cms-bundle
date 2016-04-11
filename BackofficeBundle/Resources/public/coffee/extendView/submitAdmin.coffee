@@ -39,6 +39,9 @@ extendView['submitAdmin'] = {
                   html: response
                   submitted: true
                 ))
+                if $('.tab-content .submit_form.btn-in-ribbon',@.$el).length > 0
+                  $('.tab-content .submit_form.btn-in-ribbon',@.$el).removeClass('btn-in-ribbon')
+                  OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
                 $(document).scrollTop 0
           false
     return
