@@ -7,9 +7,9 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
- * Class GeneralNodesPanel
+ * Class TransverseNodePanelStrategy
  */
-class GeneralNodesPanelStrategy extends AbstractNavigationStrategy
+class TransverseNodePanelStrategy extends AbstractNavigationStrategy
 {
     /**
      *  @deprecated use the ROLE_ACCESS_TREE_GENERAL_NODE instead, will be removed in 1.2.0
@@ -62,7 +62,7 @@ class GeneralNodesPanelStrategy extends AbstractNavigationStrategy
         }
 
         return $this->render(
-            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/generalNodes.html.twig',
+            'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/transverseNode.html.twig',
             array(
                 'nodeTransverse' => $node
             )

@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\GroupBundle\Document\Group;
@@ -55,8 +55,8 @@ abstract class AbstractLoadGroupData extends AbstractFixture implements OrderedF
         $group->addLabel($frLabel);
 
         if (is_null($role)) {
-            $group->addRole(GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE);
-            $group->addRole(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE);
+            $group->addRole(TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE);
+            $group->addRole(TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE);
             $group->addRole(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE);

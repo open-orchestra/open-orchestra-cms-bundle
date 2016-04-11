@@ -4,7 +4,7 @@ namespace OpenOrchestra\BackofficeBundle\Tests\DependencyInjection\Compiler;
 
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RoleCompilerPass;
@@ -72,7 +72,7 @@ class RoleCompilerPassTest extends AbstractBaseTestCase
             TreeTemplatePanelStrategy::ROLE_ACCESS_CREATE_TEMPLATE,
             TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE,
             TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE,
-            GeneralNodesPanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
+            TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE,
             AdministrationPanelStrategy::ROLE_ACCESS_KEYWORD,
             AdministrationPanelStrategy::ROLE_ACCESS_DELETED,
             AdministrationPanelStrategy::ROLE_ACCESS_STATUS,

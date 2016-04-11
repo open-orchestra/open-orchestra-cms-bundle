@@ -3,7 +3,7 @@
 namespace OpenOrchestra\Backoffice\Tests\AuthorizeEdition;
 
 use OpenOrchestra\Backoffice\AuthorizeEdition\TransverseNodeEditionRoleStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
@@ -82,7 +82,7 @@ class TransverseNodeEditionRoleStrategyTest extends AbstractBaseTestCase
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn($isGranted);
 
         $this->assertSame($expected, $this->strategy->isEditable($node));
-        Phake::verify($this->authorizationChecker)->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE, $node);
+        Phake::verify($this->authorizationChecker)->isGranted(TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE, $node);
     }
 
     /**
