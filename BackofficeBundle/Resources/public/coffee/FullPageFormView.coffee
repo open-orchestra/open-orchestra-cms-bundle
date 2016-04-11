@@ -25,5 +25,6 @@ FullPageFormView = OrchestraView.extend(
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/fullPageFormView', @options)
     @options.domContainer.html @$el
     $('.js-widget-title', @options.domContainer).html @options.title
+    OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
     return
 )

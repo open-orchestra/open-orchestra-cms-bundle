@@ -41,6 +41,8 @@ TabView = OrchestraView.extend(
     else
       @$tabNav.append($('<li>').attr('tab-position', position).append(a));
 
+    $('.submit_form.btn-in-ribbon',view.$el).removeClass('btn-in-ribbon')
+    
     content = $('<div>').attr('id',id).addClass('tab-pane').html(view.$el)
     @$tabContent.append(content)
 

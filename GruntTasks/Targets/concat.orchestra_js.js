@@ -27,6 +27,9 @@ module.exports = {
     //--[ AJAX LOADER ]--//
     'web/built/openorchestrabackoffice/js/ajaxLoader/AjaxLoaderView.js',
 
+    //--[ BUTTON RIBBON ]--//
+    'web/built/openorchestrabackoffice/js/ribbonButton/RibbonFormButtonView.js',
+
     //--[ BACKBONE ROUTER ]--//
     'web/built/openorchestrabackoffice/js/backboneRouter.js',
     'web/built/openorchestrabackoffice/js/page/LoadNodeConfigurationRoute.js',
@@ -133,7 +136,7 @@ module.exports = {
 
     //--[ INTERNAL LINK ]--//
     'web/built/openorchestrabackoffice/js/InternalLinkFormView.js',
-    
+
     //--[ FORM BEHAVIOR ]--//
     'web/built/openorchestrabackoffice/js/formBehavior/AbstractFormBehavior.js',
     'web/built/openorchestrabackoffice/js/formBehavior/FormLibraryBehavior.js',

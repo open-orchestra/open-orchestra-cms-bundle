@@ -7,6 +7,9 @@ OrchestraBORouter = Backbone.Router.extend(
 
   initialize: ->
     @generateRoutePatterns()
+    jQuery ->
+      ribbonFormButtonViewClass = appConfigurationView.getConfiguration('ribbon-form-button', 'createRibbonFormButton')
+      OpenOrchestra.RibbonButton.ribbonFormButtonView = new ribbonFormButtonViewClass()
     return
 
   showHome: ->
@@ -31,6 +34,7 @@ OrchestraBORouter = Backbone.Router.extend(
     if link.length == 0
       Backbone.history.navigate('', {trigger: true})
       return false
+    OpenOrchestra.RibbonButton.ribbonFormButtonView.resetAll('.ribbon-form-button')
     @afterRouteChanges(selector)
     displayLoader()
     return true

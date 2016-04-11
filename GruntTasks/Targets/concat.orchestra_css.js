@@ -10,6 +10,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/css/blocksIcon.css',
     'web/built/openorchestrabackoffice/css/loginPage.css',
     'web/built/openorchestrabackoffice/css/editTable.css',
+    'web/built/openorchestrabackoffice/css/ribbonButtons.css',
     'web/built/openorchestrabackoffice/css/node.css',
     'web/built/openorchestrabackoffice/css/gridstack.css',
     'web/built/openorchestrabackoffice/css/tab.css',

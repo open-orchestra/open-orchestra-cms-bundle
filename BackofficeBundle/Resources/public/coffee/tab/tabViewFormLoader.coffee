@@ -26,6 +26,7 @@ generatePanelView = (response, position) ->
   callback = ((tabView, panel, position) ->
     (view) ->
       tabView.addPanel $('[data-title]', view.$el).data('title'), panel.id, view, panel.isActive, position
+      OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
       return
   )(@tabView, @panels[position], position)
   new elementTabViewClass(
