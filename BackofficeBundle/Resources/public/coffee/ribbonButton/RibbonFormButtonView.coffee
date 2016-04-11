@@ -31,6 +31,7 @@ class OpenOrchestra.RibbonButton.RibbonFormButtonView extends OrchestraView
   ###*
    * Method call to clone and move button
    * @param {Object} button
+   * @param {String} container
   ###
   cloneButton: (button, container) ->
     button.uniqueId();
