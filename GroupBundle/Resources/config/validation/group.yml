@@ -1,4 +1,3 @@
 OpenOrchestra\GroupBundle\Document\Group:
     constraints:
         - Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique: name
-
