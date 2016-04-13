@@ -1,14 +1,14 @@
-{% if not nodeTransverse is null %}
-    <li data-element-id="{{ nodeTransverse.nodeId }}"
+{% if not transverseNode is null %}
+    <li data-element-id="{{ transverseNode.nodeId }}"
         data-type="Node"
     >
         <a
-            id="nav-node-{{ nodeTransverse.nodeId }}"
-            data-url="{{ path('open_orchestra_api_node_show_or_create', {'nodeId': nodeTransverse.nodeId}) }}"
-            data-node="{{ nodeTransverse.nodeId }}"
-            href="#node/show/{{ nodeTransverse.nodeId }}"
+            id="nav-node-{{ transverseNode.nodeId }}"
+            data-url="{{ path('open_orchestra_api_node_show_or_create', {'nodeId': transverseNode.nodeId}) }}"
+            data-node="{{ transverseNode.nodeId }}"
+            href="#node/show/{{ transverseNode.nodeId }}"
         >
-            <span>{{ nodeTransverse.name }}</span>
+            <span>{{ transverseNode.name }}</span>
         </a>
     </li>
 {% endif %}

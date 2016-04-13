@@ -50,12 +50,12 @@ class TransverseNodePanelStrategy extends AbstractNavigationStrategy
         $language = $this->currentSiteManager->getCurrentLocale();
 
         $node = null;
-        $nodesTransverse = $this->nodeRepository->findByNodeAndSite(NodeInterface::TRANSVERSE_NODE_ID, $siteId);
-        if (!empty($nodesTransverse)) {
-            $node = current($nodesTransverse);
-            foreach ($nodesTransverse as $nodeTransverse) {
-                if ($language === $nodeTransverse->getLanguage()) {
-                    $node = $nodeTransverse;
+        $transverseNodes = $this->nodeRepository->findByNodeAndSite(NodeInterface::TRANSVERSE_NODE_ID, $siteId);
+        if (!empty($transverseNodes)) {
+            $node = current($transverseNodes);
+            foreach ($transverseNodes as $transverseNode) {
+                if ($language === $transverseNode->getLanguage()) {
+                    $node = $transverseNode;
                     break;
                 }
             }
@@ -64,7 +64,7 @@ class TransverseNodePanelStrategy extends AbstractNavigationStrategy
         return $this->render(
             'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/transverseNode.html.twig',
             array(
-                'nodeTransverse' => $node
+                'transverseNode' => $node
             )
         );
     }
