@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\AuthorizeEdition;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -40,6 +40,6 @@ class TransverseNodeEditionRoleStrategy implements AuthorizeEditionInterface
      */
     public function isEditable($document)
     {
-        return $this->authorizationChecker->isGranted(GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE, $document);
+        return $this->authorizationChecker->isGranted(TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE, $document);
     }
 }

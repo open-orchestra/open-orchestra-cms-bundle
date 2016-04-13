@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
@@ -91,7 +91,7 @@ class NodeController extends AbstractAdminController
     protected function getEditionRole(NodeInterface $node)
     {
         if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
-            return GeneralNodesPanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
+            return TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
         } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
             return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
         }

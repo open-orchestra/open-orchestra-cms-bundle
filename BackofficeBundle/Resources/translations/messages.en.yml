@@ -351,7 +351,6 @@ open_orchestra_backoffice:
         editorial:
             title: Contribution
             nodes: Pages
-            general_nodes: Global page
             templates: Templates
             templates_flex: Templates Flex
             contents: Contents

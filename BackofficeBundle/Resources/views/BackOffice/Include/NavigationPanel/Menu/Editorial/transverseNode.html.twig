@@ -1,0 +1,14 @@
+{% if not transverseNode is null %}
+    <li data-element-id="{{ transverseNode.nodeId }}"
+        data-type="Node"
+    >
+        <a
+            id="nav-node-{{ transverseNode.nodeId }}"
+            data-url="{{ path('open_orchestra_api_node_show_or_create', {'nodeId': transverseNode.nodeId}) }}"
+            data-node="{{ transverseNode.nodeId }}"
+            href="#node/show/{{ transverseNode.nodeId }}"
+        >
+            <span>{{ transverseNode.name }}</span>
+        </a>
+    </li>
+{% endif %}

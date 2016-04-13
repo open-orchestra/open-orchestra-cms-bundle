@@ -9,7 +9,7 @@ parameters:
     open_orchestra_backoffice.navigation_panel.template.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy
     open_orchestra_backoffice.navigation_panel.template_flex.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplateFlexPanelStrategy
     open_orchestra_backoffice.navigation_panel.content_type.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\ContentTypeForContentPanelStrategy
-    open_orchestra_backoffice.navigation_panel.general_node.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\GeneralNodesPanelStrategy
+    open_orchestra_backoffice.navigation_panel.transverse_node.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy
     open_orchestra_backoffice.navigation_panel.administration.class: OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy
 
 services:
@@ -41,8 +41,8 @@ services:
             - 210
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
-    open_orchestra_backoffice.navigation_panel.general_node:
-        class: %open_orchestra_backoffice.navigation_panel.general_node.class%
+    open_orchestra_backoffice.navigation_panel.transverse_node:
+        class: %open_orchestra_backoffice.navigation_panel.transverse_node.class%
         arguments:
             - @open_orchestra_model.repository.node
             - @open_orchestra_backoffice.context_manager
