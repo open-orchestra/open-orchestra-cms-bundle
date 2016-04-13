@@ -301,6 +301,7 @@ open_orchestra_backoffice:
             label: Libellé
             role: Rôles
             role_helper: Les rôles page par page ne sont pas pris en compte si le droit général correspondant n'est pas activé
+            role_front_title: Front Office
             site: Site
             title: Édition de groupe
             node_role_edition: Liste des rôles par page

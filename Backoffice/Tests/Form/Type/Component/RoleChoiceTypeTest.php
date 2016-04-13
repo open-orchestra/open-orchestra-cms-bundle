@@ -17,6 +17,7 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
     protected $form;
 
     protected $roleCollector;
+    protected $roleCollector2;
 
     /**
      * Set up the test
@@ -24,8 +25,9 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
+        $this->roleCollector2 = Phake::mock('OpenOrchestra\Backoffice\Collector\RoleCollectorInterface');
 
-        $this->form = new RoleChoiceType($this->roleCollector, 'oo_role_choice', array ('role_test' => array('category' => 'role_test_category', 'label' => 'role_test_label')));
+        $this->form = new RoleChoiceType(array($this->roleCollector, $this->roleCollector2), 'oo_role_choice', array ('role_test' => array('category' => 'role_test_category', 'label' => 'role_test_label')));
     }
 
     /**
@@ -70,12 +72,15 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
 
     /**
      * @param array  $roles
+     * @param array  $rolesCollector1
+     * @param array  $rolesCollector2
      *
      * @dataProvider provideRoleAndTranslation
      */
-    public function testConfigureOptions(array $roles)
+    public function testConfigureOptions(array $roles, $rolesCollector1, $rolesCollector2)
     {
-        Phake::when($this->roleCollector)->getRoles()->thenReturn($roles);
+        Phake::when($this->roleCollector)->getRoles()->thenReturn($rolesCollector1);
+        Phake::when($this->roleCollector2)->getRoles()->thenReturn($rolesCollector2);
 
         $resolver = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
@@ -93,9 +98,10 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
     public function provideRoleAndTranslation()
     {
         return array(
-            array(array('foo' => 'bar')),
-            array(array('foo' => 'bar', 'bar' => 'bar')),
-            array(array('FOO' => 'bar', 'BAR' => 'bar')),
+            array(array('foo' => 'bar'), array('foo' => 'bar'), array()),
+            array(array('foo' => 'bar', 'bar' => 'bar'), array('foo' => 'bar', 'bar' => 'bar'), array()),
+            array(array('FOO' => 'bar', 'BAR' => 'bar'), array('FOO' => 'bar', 'BAR' => 'bar'), array()),
+            array(array('FOO' => 'bar', 'BAR' => 'bar'), array('FOO' => 'bar'), array('BAR' => 'bar')),
         );
     }
 
@@ -105,6 +111,7 @@ class RoleChoiceTypeTest extends AbstractBaseTestCase
     public function testBuildView()
     {
         Phake::when($this->roleCollector)->getRoles()->thenReturn(array('ROLE_TEST' => 'label'));
+        Phake::when($this->roleCollector2)->getRoles()->thenReturn(array());
 
         $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
         $formView = Phake::mock('Symfony\Component\Form\FormView');

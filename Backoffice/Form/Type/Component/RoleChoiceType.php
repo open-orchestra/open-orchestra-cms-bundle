@@ -13,18 +13,18 @@ use Symfony\Component\Form\FormInterface;
  */
 class RoleChoiceType extends AbstractType
 {
-    protected $roleCollector;
+    protected $roleCollectors;
     protected $name;
     protected $rolesClassification;
 
     /**
-     * @param RoleCollectorInterface $roleCollector
-     * @param string                 $name
-     * @param array                  $rolesClassification
+     * @param array  $roleCollectors
+     * @param string $name
+     * @param array  $rolesClassification
      */
-    public function __construct(RoleCollectorInterface $roleCollector, $name, array $rolesClassification = array())
+    public function __construct(array $roleCollectors, $name, array $rolesClassification = array())
     {
-        $this->roleCollector = $roleCollector;
+        $this->roleCollectors = $roleCollectors;
         $this->name = $name;
         $this->rolesClassification = $rolesClassification;
     }
@@ -37,7 +37,7 @@ class RoleChoiceType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $rolesOrdered = array();
-        $choices = $this->roleCollector->getRoles();
+        $choices = $this->getRolesInRoleCollectors();
         foreach($this->rolesClassification as $key => $classification) {
             if(($rank = array_search(strtoupper($key), array_keys($choices))) !== false) {
                 $rolesOrdered[$classification['category']][$classification['label']][] = $rank;
@@ -52,7 +52,7 @@ class RoleChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'choices' => $this->roleCollector->getRoles(),
+            'choices' => $this->getRolesInRoleCollectors(),
         ));
     }
 
@@ -72,5 +72,18 @@ class RoleChoiceType extends AbstractType
     public function getParent()
     {
         return 'choice';
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRolesInRoleCollectors()
+    {
+        $roles = array();
+        foreach ($this->roleCollectors as $roleCollector) {
+            $roles = array_merge($roles, $roleCollector->getRoles());
+        }
+
+        return $roles;
     }
 }
