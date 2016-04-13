@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
+use OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\Backoffice\EventSubscriber\ChangeContentStatusSubscriber;
 use OpenOrchestra\ModelInterface\ContentEvents;
 
 /**
- * Class ChangeNodeContentSubscriberTest
+ * Class ContentUpdateCacheSubscriber
  */
-class ChangeContentStatusSubscriberTest extends AbstractBaseTestCase
+class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
 {
     protected $cacheableManager;
     protected $tagManager;
@@ -18,6 +18,7 @@ class ChangeContentStatusSubscriberTest extends AbstractBaseTestCase
     protected $content;
     protected $contentId = 'contentId';
     protected $contentIdTag = 'contentIdTag';
+    protected $subscriber;
 
     /**
      * Set up the test
@@ -34,7 +35,7 @@ class ChangeContentStatusSubscriberTest extends AbstractBaseTestCase
         $this->contentEvent = Phake::mock('OpenOrchestra\ModelInterface\Event\ContentEvent');
         Phake::when($this->contentEvent)->getContent()->thenReturn($this->content);
 
-        $this->subscriber = new ChangeContentStatusSubscriber($this->cacheableManager, $this->tagManager);
+        $this->subscriber = new ContentUpdateCacheSubscriber($this->cacheableManager, $this->tagManager);
     }
 
     /**
@@ -62,16 +63,50 @@ class ChangeContentStatusSubscriberTest extends AbstractBaseTestCase
     {
         return array(
             array(ContentEvents::CONTENT_CHANGE_STATUS),
+            array(ContentEvents::CONTENT_DELETE),
         );
     }
 
     /**
-     * Test nodeChangeStatus
+     * @param int  $countInvalidate
+     * @param bool $isPublished
+     *
+     * @dataProvider provideCountInvalidateAndStatus
      */
-    public function testContentChangeStatus()
+    public function testContentChangeStatus($countInvalidate, $isPublished)
     {
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->isPublished()->thenReturn($isPublished);
+        Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($status);
         $this->subscriber->contentChangeStatus($this->contentEvent);
 
-        Phake::verify($this->cacheableManager)->invalidateTags(array($this->contentIdTag));
+        Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCountInvalidateAndStatus()
+    {
+        return array(
+            "status not published status" => array(0, false),
+            "status is published status" =>  array(1, true)
+        );
+    }
+
+    /**
+     * @param int  $countInvalidate
+     * @param bool $isPublished
+     *
+     * @dataProvider provideCountInvalidateAndStatus
+     */
+    public function testDeleteContent($countInvalidate, $isPublished)
+    {
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($status)->isPublished()->thenReturn($isPublished);
+        Phake::when($this->content)->getStatus()->thenReturn($status);
+        $this->subscriber->deleteContentPublished($this->contentEvent);
+
+        Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
     }
 }
