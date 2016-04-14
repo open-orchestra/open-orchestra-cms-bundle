@@ -107,7 +107,7 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($isPublished);
         Phake::when($this->content)->getStatus()->thenReturn($status);
-        $this->subscriber->invalidateCacheOnDeleteContentPublished($this->contentEvent);
+        $this->subscriber->invalidateCacheOnDeletePublishedContent($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
     }

@@ -43,7 +43,7 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
    /**
      * @param ContentEvent $event
      */
-    public function invalidateCacheOnDeleteContentPublished(ContentEvent $event)
+    public function invalidateCacheOnDeletePublishedContent(ContentEvent $event)
     {
         $content = $event->getContent();
         $status = $content->getStatus();
@@ -74,7 +74,7 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     {
         return array(
             ContentEvents::CONTENT_CHANGE_STATUS => 'invalidateCacheOnStatusChanged',
-            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeleteContentPublished'
+            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeletePublishedContent'
         );
     }
 }
