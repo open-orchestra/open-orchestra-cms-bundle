@@ -18,9 +18,9 @@ class RoleChoiceType extends AbstractType
     protected $rolesClassification;
 
     /**
-     * @param array  $roleCollectors
-     * @param string $name
-     * @param array  $rolesClassification
+     * @param array<RoleCollectorInterface> $roleCollectors
+     * @param string                        $name
+     * @param array                         $rolesClassification
      */
     public function __construct(array $roleCollectors, $name, array $rolesClassification = array())
     {
