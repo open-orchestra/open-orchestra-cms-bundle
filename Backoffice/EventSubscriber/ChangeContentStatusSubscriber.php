@@ -8,8 +8,12 @@ use OpenOrchestra\ModelInterface\Event\ContentEvent;
 use OpenOrchestra\DisplayBundle\Manager\CacheableManager;
 use OpenOrchestra\BaseBundle\Manager\TagManager;
 
+@trigger_error('The '.__NAMESPACE__.'\ChangeContentStatusSubscriber class is deprecated since version 1.1.0 and will be removed in 1.2.0, it is replace by ContentUpdateCacheSubscriber', E_USER_DEPRECATED);
+
 /**
  * Class ChangeContentStatusSubscriber
+ *
+ * @deprecated ChangeContentStatusSubscriber is deprecated in 1.1.0 and will be removed in 1.2.0, it is replace by ContentUpdateCacheSubscriber
  */
 class ChangeContentStatusSubscriber implements EventSubscriberInterface
 {

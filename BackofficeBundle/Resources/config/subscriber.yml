@@ -5,6 +5,8 @@ parameters:
     open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
     open_orchestra_backoffice.subscriber.block_menu_cache.class: OpenOrchestra\Backoffice\EventSubscriber\BlockMenuCacheSubscriber
     open_orchestra_backoffice.subscriber.change_content_status.class: OpenOrchestra\Backoffice\EventSubscriber\ChangeContentStatusSubscriber
+    open_orchestra_backoffice.subscriber.content_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
+    open_orchestra_backoffice.subscriber.content_type_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
     open_orchestra_backoffice.subscriber.update_status.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateStatusSubscriber
     open_orchestra_backoffice.subscriber.delete_node.class: OpenOrchestra\Backoffice\EventSubscriber\DeleteNodeSubscriber
@@ -54,8 +56,15 @@ services:
             - @open_orchestra_base.manager.tag
         tags:
             - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.change_content_status:
-        class: %open_orchestra_backoffice.subscriber.change_content_status.class%
+    open_orchestra_backoffice.subscriber.content_update_cache:
+        class: %open_orchestra_backoffice.subscriber.content_update_cache.class%
+        arguments:
+            - @open_orchestra_display.manager.cacheable
+            - @open_orchestra_base.manager.tag
+        tags:
+            - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.content_type_update_cache:
+        class: %open_orchestra_backoffice.subscriber.content_type_update_cache.class%
         arguments:
             - @open_orchestra_display.manager.cacheable
             - @open_orchestra_base.manager.tag
