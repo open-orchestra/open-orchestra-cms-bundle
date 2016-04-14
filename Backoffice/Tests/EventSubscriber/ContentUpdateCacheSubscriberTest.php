@@ -18,6 +18,8 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
     protected $content;
     protected $contentId = 'contentId';
     protected $contentIdTag = 'contentIdTag';
+
+    /** @var ContentUpdateCacheSubscriber */
     protected $subscriber;
 
     /**
@@ -78,7 +80,7 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($isPublished);
         Phake::when($this->contentEvent)->getPreviousStatus()->thenReturn($status);
-        $this->subscriber->contentChangeStatus($this->contentEvent);
+        $this->subscriber->invalidateCacheOnStatusChanged($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
     }
@@ -105,7 +107,7 @@ class ContentUpdateCacheSubscriberTest extends AbstractBaseTestCase
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($isPublished);
         Phake::when($this->content)->getStatus()->thenReturn($status);
-        $this->subscriber->deleteContentPublished($this->contentEvent);
+        $this->subscriber->invalidateCacheOnDeleteContentPublished($this->contentEvent);
 
         Phake::verify($this->cacheableManager, Phake::times($countInvalidate))->invalidateTags(array($this->contentIdTag));
     }

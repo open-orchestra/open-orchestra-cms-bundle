@@ -31,7 +31,7 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     /**
      * @param ContentEvent $event
      */
-    public function contentChangeStatus(ContentEvent $event)
+    public function invalidateCacheOnStatusChanged(ContentEvent $event)
     {
         $content = $event->getContent();
         $previousStatus = $event->getPreviousStatus();
@@ -43,7 +43,7 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
    /**
      * @param ContentEvent $event
      */
-    public function deleteContentPublished(ContentEvent $event)
+    public function invalidateCacheOnDeleteContentPublished(ContentEvent $event)
     {
         $content = $event->getContent();
         $status = $content->getStatus();
@@ -73,8 +73,8 @@ class ContentUpdateCacheSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ContentEvents::CONTENT_CHANGE_STATUS => 'contentChangeStatus',
-            ContentEvents::CONTENT_DELETE => 'deleteContentPublished'
+            ContentEvents::CONTENT_CHANGE_STATUS => 'invalidateCacheOnStatusChanged',
+            ContentEvents::CONTENT_DELETE => 'invalidateCacheOnDeleteContentPublished'
         );
     }
 }

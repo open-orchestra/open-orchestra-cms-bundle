@@ -38,7 +38,6 @@ class ChangeContentStatusSubscriber implements EventSubscriberInterface
     public function contentChangeStatus(ContentEvent $event)
     {
         $content = $event->getContent();
-        dump($event->getPreviousStatus());
 
         $this->cacheableManager->invalidateTags(
             array(
