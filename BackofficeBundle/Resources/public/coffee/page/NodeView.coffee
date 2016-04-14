@@ -31,7 +31,6 @@ NodeView = OrchestraView.extend(
     return
 
   render: ->
-    console.log(@options.configuration)
     parameters = appRouter.extractParameters()
     if parameters.length > 0  and parameters[0] == @options.node.attributes.node_id
       @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/nodeView',
@@ -42,7 +41,7 @@ NodeView = OrchestraView.extend(
         element: @options.node
       )
       @addAreasToView(@options.node.get('areas'))
-      if @options.configuration.get('links')._self_form
+      if @options.configuration.get('links')._self_form?
         @addConfigurationButton()
       if !@options.editable
         $('.js-widget-blockpanel', @$el).hide()

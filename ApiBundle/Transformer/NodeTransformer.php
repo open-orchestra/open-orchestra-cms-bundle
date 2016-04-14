@@ -102,9 +102,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $editionRole = $this->getEditionRole($node);
 
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
-
         
-
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
         )));
