@@ -15,7 +15,8 @@ class UserFacadeEvent extends Event
     protected $user;
 
     /**
-     * @param UserFacade $userFacade
+     * @param UserFacade    $userFacade
+     * @param UserInterface $user
      */
     public function __construct(UserFacade $userFacade, UserInterface $user)
     {
