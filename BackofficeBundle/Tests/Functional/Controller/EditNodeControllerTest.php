@@ -46,11 +46,9 @@ class EditNodeControllerTest extends AbstractControllerTest
         $crawler = $this->client->request('GET', $url);
         $formNode = $crawler->selectButton('Save')->form();
         $formNode['oo_node[metaKeywords]'] = $newMeta;
-        var_dump($formNode['oo_node[metaKeywords]']);
         $crawler = $this->client->submit($formNode);
         $this->assertContains('alert alert-success', $this->client->getResponse()->getContent());
         $formNode = $crawler->selectButton('Save')->form();
-        var_dump($formNode['oo_node[metaKeywords]']);
         $this->assertSame($expectedMeta, $formNode['oo_node[metaKeywords]']->getValue());
     }
 
