@@ -10,6 +10,7 @@ OrchestraBORouter = Backbone.Router.extend(
     jQuery ->
       ribbonFormButtonViewClass = appConfigurationView.getConfiguration('ribbon-form-button', 'createRibbonFormButton')
       OpenOrchestra.RibbonButton.ribbonFormButtonView = new ribbonFormButtonViewClass()
+      OpenOrchestra.RibbonButton.ribbonFormButtonModalView = new ribbonFormButtonViewClass()
     return
 
   showHome: ->
