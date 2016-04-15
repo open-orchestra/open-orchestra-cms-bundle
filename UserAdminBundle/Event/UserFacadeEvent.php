@@ -3,6 +3,7 @@
 namespace OpenOrchestra\UserAdminBundle\Event;
 
 use OpenOrchestra\UserAdminBundle\Facade\UserFacade;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -11,13 +12,15 @@ use Symfony\Component\EventDispatcher\Event;
 class UserFacadeEvent extends Event
 {
     protected $userFacade;
+    protected $user;
 
     /**
      * @param UserFacade $userFacade
      */
-    public function __construct(UserFacade $userFacade)
+    public function __construct(UserFacade $userFacade, UserInterface $user)
     {
         $this->userFacade = $userFacade;
+        $this->user = $user;
     }
 
     /**
@@ -26,5 +29,13 @@ class UserFacadeEvent extends Event
     public function getUserFacade()
     {
         return $this->userFacade;
+    }
+
+    /**
+     * @return UserInterface
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

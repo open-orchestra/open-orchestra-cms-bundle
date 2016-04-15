@@ -80,7 +80,7 @@ class UserTransformer extends AbstractSecurityCheckerAwareTransformer
         }
         $this->eventDispatcher->dispatch(
             UserFacadeEvents::POST_USER_TRANSFORMATION,
-            new UserFacadeEvent($facade)
+            new UserFacadeEvent($facade, $mixed)
         );
 
         return $facade;
