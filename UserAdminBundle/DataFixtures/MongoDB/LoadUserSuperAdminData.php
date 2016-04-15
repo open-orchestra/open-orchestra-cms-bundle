@@ -4,21 +4,20 @@ namespace OpenOrchestra\UserAdminBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
-use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
- * Class LoadUserAdminData
+ * Class LoadUserSuperAdminData
  */
-class LoadUserAdminData extends AbstractLoadUserData implements OrchestraFunctionalFixturesInterface, OrchestraProductionFixturesInterface
+class LoadUserSuperAdminData extends AbstractLoadUserData implements OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $admin = $this->generate('admin', 'group2');
-        $this->addReference('user-admin', $admin);
-        $manager->persist($admin);
+        $adminUser = $this->getReference('user-admin');
+        $adminUser->setSuperAdmin(true);
+        $manager->persist($adminUser);
 
         $manager->flush();
     }
@@ -30,6 +29,6 @@ class LoadUserAdminData extends AbstractLoadUserData implements OrchestraFunctio
      */
     function getOrder()
     {
-        return 710;
+        return 720;
     }
 }
