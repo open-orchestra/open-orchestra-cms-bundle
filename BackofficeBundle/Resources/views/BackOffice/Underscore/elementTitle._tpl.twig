@@ -10,6 +10,7 @@
 ">
     <%= element.get('name') %>
     <% if (element.get('version')) { %>
-        ({{ 'open_orchestra_backoffice.element.version.display' | trans({}, 'messages', language) }} : #<%= element.get('version') %>)
+        ({{ 'open_orchestra_backoffice.element.version.display' | trans({}, 'messages', language) }} : #<%= element.get('version') %>,
+         {{ 'open_orchestra_backoffice.element.version.updated' | trans({}, 'messages', language) }} : <%= element.get('updated_at') %>)
     <% } %>
 </span>
