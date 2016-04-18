@@ -57,16 +57,23 @@ class ContentSearchSubscriber implements EventSubscriberInterface
      */
     public function preSubmit(FormEvent $event)
     {
-        $form = $event->getForm();
-        if ('PATCH' === $form->getParent()->getConfig()->getMethod()) {
-            $this->addFormType($event);
-        }
+        $this->addFormType($event);
     }
 
+    /**
+     * @param FormEvent $event
+     */
     protected function addFormType(FormEvent $event)
     {
         $form = $event->getForm();
         $data = $event->getData();
+        $event->setData($data);
+        if ($form->has('contentId')) {
+            $form->remove('contentId');
+        }
+        if ($form->has('help-text')) {
+            $form->remove('help-text');
+        }
         $choices = array();
         if (!is_null($data)) {
             if ($data['contentType'] != '' || $data['keywords'] != '') {
