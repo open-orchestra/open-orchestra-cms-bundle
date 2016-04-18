@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\UserAdminBundle\Form\Type;
 
+use OpenOrchestra\UserAdminBundle\EventSubscriber\UserGroupsSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -39,11 +40,6 @@ class UserType extends AbstractType
         $builder->add('email', 'email', array(
             'label' => 'open_orchestra_user.form.user.email'
         ));
-        $builder->add('groups', 'oo_group_choice', array(
-            'multiple' => true,
-            'expanded' => true,
-            'required' => false,
-        ));
         $builder->add('language', 'choice', array(
             'choices' => $this->getLanguages(),
             'label' => 'open_orchestra_user.form.user.language'
@@ -51,6 +47,7 @@ class UserType extends AbstractType
         $builder->add('id', 'hidden', array(
             'disabled' => true
         ));
+        $builder->addEventSubscriber(new UserGroupsSubscriber());
 
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);

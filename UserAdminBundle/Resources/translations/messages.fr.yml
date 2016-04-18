@@ -11,5 +11,6 @@ open_orchestra_user_admin:
         groups: Groupes
     form:
         title: Formulaire
+        super_admin_help_text: Cet utilisateur est super admin, il est donc impossible de sélectionner des droits car il possède déjà tous les accès.
     password:
         title: Formulaire Mot de passe
