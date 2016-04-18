@@ -26,7 +26,9 @@
     "open-orchestra/open-orchestra-mongo-libs": "1.1.*@dev",
     "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
     "innocead/captcha-bundle": "dev-master",
-    "friendsofsymfony/user-bundle": "2.0.*@dev"
+    "friendsofsymfony/user-bundle": "2.0.*@dev",
+    "solution/mongo-odm-aggregation-bundle": "dev-master",
+    "solution/pipeline-builder": "dev-master"
   },
   "require-dev": {
     "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
