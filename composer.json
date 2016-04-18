@@ -19,7 +19,8 @@
     "koala-framework/composer-extra-assets": "2.0.x",
 
     "open-orchestra/open-orchestra-bbcode-bundle": "1.1.*@dev",
-    "innocead/captcha-bundle": "dev-master"
+    "innocead/captcha-bundle": "dev-master",
+    "friendsofsymfony/user-bundle": "2.0.*@dev"
   },
   "require-dev": {
     "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
