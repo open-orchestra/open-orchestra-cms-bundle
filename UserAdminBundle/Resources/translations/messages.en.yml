@@ -11,6 +11,6 @@ open_orchestra_user_admin:
         groups: Groups
     form:
         title: Form
-        super_admin_help_text: This user is super admin, so it is impossible to select rights because it has all the access.
+        super_admin_help_text: This user is super admin, so it is impossible to select rights because he already has all the access.
     password:
         title: Password Form
