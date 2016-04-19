@@ -16,19 +16,7 @@
     "open-orchestra/open-orchestra-model-interface": "1.1.*@dev",
     "braincrafted/bootstrap-bundle": "2.1.2",
     "stfalcon/tinymce-bundle": "0.3.8",
-    "koala-framework/composer-extra-assets": "2.0.x",
-
-    "open-orchestra/open-orchestra-bbcode-bundle": "1.1.*@dev",
-    "open-orchestra/open-orchestra-libs": "1.1.*@dev",
-    "open-orchestra/open-orchestra-base-api-bundle": "1.1.*@dev",
-    "open-orchestra/open-orchestra-model-interface": "1.1.*@dev",
-    "open-orchestra/open-orchestra-user-bundle": "1.1.*@dev",
-    "open-orchestra/open-orchestra-mongo-libs": "1.1.*@dev",
-    "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
-    "innocead/captcha-bundle": "dev-master",
-    "friendsofsymfony/user-bundle": "2.0.*@dev",
-    "solution/mongo-odm-aggregation-bundle": "dev-master",
-    "solution/pipeline-builder": "dev-master"
+    "koala-framework/composer-extra-assets": "2.0.x"
   },
   "require-dev": {
     "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
