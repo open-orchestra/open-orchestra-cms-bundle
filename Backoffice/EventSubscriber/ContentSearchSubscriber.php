@@ -87,10 +87,10 @@ class ContentSearchSubscriber implements EventSubscriberInterface
                 $choices = array_merge($choices, $this->getChoice($data['contentId']));
             }
         }
-        if(count($choices) > 0) {
+        if (count($choices) > 0) {
             $form->add('contentId', 'choice', array(
                 'label' => false,
-                'empty_value' => '        ',
+                'empty_value' => ' ',
                 'required' => $this->required,
                 'choices' => $choices,
                 'attr' => $this->attributes,
@@ -122,6 +122,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
      * @param string $contentType
      * @param string $operator
      * @param string $keywords
+     *
+     * @return array
      */
     protected function getChoices($contentType, $choiceType, $condition)
     {
@@ -138,6 +140,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $contentId
+     *
+     * @return array
      */
     protected function getChoice($contentId)
     {
