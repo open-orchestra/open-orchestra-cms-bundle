@@ -32,7 +32,7 @@ services:
         calls:
             - [ setContainer, [ @service_container ] ]
         tags:
-            - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+            - { name: doctrine_mongodb.odm.event_subscriber }
     open_orchestra_group.listener.update_node_group_role:
         class: %open_orchestra_group.listener.update_node_group_role.class%
         arguments:
