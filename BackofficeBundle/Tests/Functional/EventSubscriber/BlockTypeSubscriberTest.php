@@ -115,7 +115,6 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                     'contentType' => 'car',
                     'keywords' => '',
                     'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
-                    'contentId' => '5715f30b02b0cf96068b459a',
                 ),
                 'contentTemplateEnabled' => true,
             ))
