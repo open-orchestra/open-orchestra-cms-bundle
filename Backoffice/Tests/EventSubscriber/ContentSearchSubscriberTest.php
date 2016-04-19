@@ -122,7 +122,7 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
             'label' => false,
-            'empty_value' => '        ',
+            'empty_value' => '',
             'required' => true,
             'choices' => array(
                 $this->contentId1 => $this->contentName1,
@@ -147,7 +147,7 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
             'label' => false,
-            'empty_value' => '        ',
+            'empty_value' => '',
             'required' => true,
             'choices' => array(
                 $this->contentId1 => $this->contentName1,
