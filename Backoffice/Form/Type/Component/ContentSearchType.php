@@ -49,10 +49,11 @@ class ContentSearchType extends AbstractType
     {
         $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
-            'required' => false
+            'required' => !$options['refresh'] && $options['required']
         ));
         $builder->add('choiceType', 'oo_operator_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.choice_type',
+            'required' => !$options['refresh'] && $options['required']
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
             'embedded' => false,
@@ -62,9 +63,9 @@ class ContentSearchType extends AbstractType
             'new_attr' => array(
                 'class' => 'select-boolean',
             ),
-            'required' => false,
-
+            'required' => !$options['refresh'] && $options['required'],
         ));
+
         if ($options['refresh']) {
             $transformerClass = $this->transformerClass;
             $transformer = new $transformerClass();
@@ -74,7 +75,8 @@ class ContentSearchType extends AbstractType
                     $this->contentRepository,
                     $this->contextManager,
                     $transformer,
-                    $options['attr']
+                    $options['attr'],
+                    $options['required']
             ));
         }
     }

@@ -18,23 +18,38 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     protected $contextManager;
     protected $transformer;
     protected $attributes;
+    protected $required;
 
     /**
      * @param ContentRepositoryInterface                    $contentRepository
      * @param CurrentSiteIdInterface                        $contextManager
      * @param ConditionFromBooleanToBddTransformerInterface $transformer
      * @param array                                         $attributes
+     * @param boolean                                       $required
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
         CurrentSiteIdInterface $contextManager,
         ConditionFromBooleanToBddTransformerInterface $transformer,
-        array $attributes
+        array $attributes,
+        $required
     ) {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         $this->transformer = $transformer;
         $this->attributes = $attributes;
+        $this->required = $required;
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function postSetData(FormEvent $event)
+    {
+        $form = $event->getForm();
+        if ('PATCH' !== $form->getParent()->getConfig()->getMethod()) {
+            $this->addFormType($event);
+        }
     }
 
     /**
@@ -42,18 +57,52 @@ class ContentSearchSubscriber implements EventSubscriberInterface
      */
     public function preSubmit(FormEvent $event)
     {
+        $this->addFormType($event);
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    protected function addFormType(FormEvent $event)
+    {
         $form = $event->getForm();
         $data = $event->getData();
-        if (!is_null($data) && ($data['contentType'] != '' || $data['keywords'] != '')) {
-            $condition = null;
-            if ($data['keywords'] != '') {
-                $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
+        $event->setData($data);
+        if ($form->has('contentId')) {
+            $form->remove('contentId');
+        }
+        if ($form->has('help-text')) {
+            $form->remove('help-text');
+        }
+        $choices = array();
+        if (!is_null($data)) {
+            if ($data['contentType'] != '' || $data['keywords'] != '') {
+                $condition = null;
+                if ($data['keywords'] != '') {
+                    $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
+                }
+                $choices = array_merge($choices, $this->getChoices($data['contentType'], $data['choiceType'], $condition));
             }
+            if (array_key_exists('contentId', $data) && $data['contentId'] != '') {
+                $choices = array_merge($choices, $this->getChoice($data['contentId']));
+            }
+        }
+        if (count($choices) > 0) {
             $form->add('contentId', 'choice', array(
                 'label' => false,
-                'required' => false,
-                'choices' => $this->getChoices($data['contentType'], $data['choiceType'], $condition),
+                'empty_value' => ' ',
+                'required' => $this->required,
+                'choices' => $choices,
                 'attr' => $this->attributes,
+            ));
+        } else {
+            $form->add('contentId', 'hidden', array(
+                'required' => $this->required,
+                'error_mapping' => 'help-text',
+            ));
+            $form->add('help-text', 'button', array(
+                'disabled' => true,
+                'label' => 'open_orchestra_backoffice.form.content_search.use'
             ));
         }
     }
@@ -64,6 +113,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
+            FormEvents::POST_SET_DATA => 'postSetData',
             FormEvents::PRE_SUBMIT => 'preSubmit',
         );
     }
@@ -72,6 +122,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
      * @param string $contentType
      * @param string $operator
      * @param string $keywords
+     *
+     * @return array
      */
     protected function getChoices($contentType, $choiceType, $condition)
     {
@@ -86,4 +138,17 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         return $choices;
     }
 
+    /**
+     * @param string $contentId
+     *
+     * @return array
+     */
+    protected function getChoice($contentId)
+    {
+        $choices = array();
+        $content = $this->contentRepository->find($contentId);
+        $choices[$content->getId()] = $content->getName();
+
+        return $choices;
+    }
 }

@@ -21,7 +21,7 @@ class BlockController extends AbstractAdminController
      * @param int     $blockNumber
      *
      * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="open_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
-     * @Config\Method({"GET", "POST"})
+     * @Config\Method({"GET", "POST", "PATCH"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE')")
      *
@@ -43,13 +43,21 @@ class BlockController extends AbstractAdminController
             $editionRole = $node->getNodeType() === NodeInterface::TYPE_ERROR? TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
             $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($editionRole, $node);
         }
+
+        $options['method'] = 'POST';
+        if ('PATCH' === $request->getMethod()) {
+            $options['validation_groups'] = false;
+            $options['method'] = 'PATCH';
+        }
+
         $form = parent::createForm('oo_block', $block, $options);
-
         $form->handleRequest($request);
-        $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
 
-        if ($this->handleForm($form, $message)) {
-            $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
+        if ('PATCH' !== $request->getMethod()) {
+            $message = $this->get('translator')->trans('open_orchestra_backoffice.form.block.success');
+            if ($this->handleForm($form, $message)) {
+                $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK, new NodeEvent($node));
+            }
         }
 
         $title = 'open_orchestra_backoffice.block.' . $block->getComponent() . '.title';

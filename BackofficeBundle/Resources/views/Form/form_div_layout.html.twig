@@ -135,7 +135,7 @@
             {% set errors = true %}
         {% endif %}
         {% for key, field in form %}
-            {% if field.vars.errors|length > 0 %}
+            {% if field.vars.errors is defined and field.vars.errors|length > 0 %}
                 {% set errors = true %}
             {% endif %}
         {% endfor %}

@@ -110,8 +110,10 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                 'contentTemplateEnabled' => true,
             )),
             array(ConfigurableContentStrategy::NAME, array(
-                'contentTypeId' => 'car',
-                'contentId' => 'car1',
+                'contentSearch' => array(
+                    'contentTypeId' => 'car',
+                    'contentId' => 'car1',
+                ),
                 'contentTemplateEnabled' => true,
             ))
         );

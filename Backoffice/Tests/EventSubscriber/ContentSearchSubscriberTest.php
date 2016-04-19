@@ -73,7 +73,8 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
             $this->contentRepository,
             $this->contextManager,
             $this->transformer,
-            $this->attributes
+            $this->attributes,
+            true
         );
     }
 
@@ -102,6 +103,7 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
     {
         return array(
             array(FormEvents::PRE_SUBMIT),
+            array(FormEvents::POST_SET_DATA),
         );
     }
 
@@ -110,11 +112,43 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
      */
     public function testPreSubmit()
     {
+        $config = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($config)->getMethod()->thenReturn('PATCH');
+        $parent = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($parent)->getConfig()->thenReturn($config);
+        Phake::when($this->form)->getParent()->thenReturn($parent);
+
         $this->subscriber->preSubmit($this->event);
 
         Phake::verify($this->form)->add('contentId', 'choice', array(
             'label' => false,
-            'required' => false,
+            'empty_value' => '        ',
+            'required' => true,
+            'choices' => array(
+                $this->contentId1 => $this->contentName1,
+                $this->contentId2 => $this->contentName2,
+           ),
+            'attr' => $this->attributes,
+        ));
+    }
+
+    /**
+     * Test postSubmit
+     */
+    public function testPostSetData()
+    {
+        $config = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($config)->getMethod()->thenReturn('POST');
+        $parent = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($parent)->getConfig()->thenReturn($config);
+        Phake::when($this->form)->getParent()->thenReturn($parent);
+
+        $this->subscriber->postSetData($this->event);
+
+        Phake::verify($this->form)->add('contentId', 'choice', array(
+            'label' => false,
+            'empty_value' => '        ',
+            'required' => true,
             'choices' => array(
                 $this->contentId1 => $this->contentName1,
                 $this->contentId2 => $this->contentName2,

@@ -56,40 +56,11 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choices = array();
-        $contentTypes = $this->contentTypeRepository->findAll();
-        if (!empty($contentTypes)) {
-            foreach ($contentTypes as $contentType) {
-                $choices[$contentType->getContentTypeId()] = $contentType->getName($this->context->getCurrentLocale());
-            }
-
-        }
-
-        $builder->add('contentTypeId', 'choice', array(
-            'required' => false,
-            'choices' => $choices,
-            'attr' => array(
-                'class' => 'contentTypeSelector',
-                'data-url' => $this->router->generate('open_orchestra_api_content_list')
-            ),
-            'label' => 'open_orchestra_backoffice.block.configurable_content.contentTypeId'
+        $builder->add('contentSearch', 'oo_content_search', array(
+            'label' => 'open_orchestra_backoffice.form.internal_link.content',
+            'refresh' => true,
+            'required' => true,
         ));
-
-
-        $contentCollection = $this->contentRepository->findBy(array('deleted' => false));
-
-        $contents = array();
-        foreach($contentCollection as $content) {
-            $contents[$content->getContentId()] = $content->getName();
-        }
-
-        $options = array(
-            'constraints' => new NotBlank(),
-            'choices' => $contents,
-            'label' => 'open_orchestra_backoffice.block.configurable_content.contentId'
-        );
-
-        $builder->add('contentId', 'choice', $options);
 
         $builder->add('contentTemplateEnabled', 'checkbox', array(
             'label' => 'open_orchestra_backoffice.block.configurable_content.content_template_enabled.title',
