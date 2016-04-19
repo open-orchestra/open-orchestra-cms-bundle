@@ -11,6 +11,7 @@ use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 
 /**
  * Class BlockTypeSubscriberTest
@@ -111,8 +112,10 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
             )),
             array(ConfigurableContentStrategy::NAME, array(
                 'contentSearch' => array(
-                    'contentTypeId' => 'car',
-                    'contentId' => 'car1',
+                    'contentType' => 'car',
+                    'keywords' => '',
+                    'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
+                    'contentId' => '5715f30b02b0cf96068b459a',
                 ),
                 'contentTemplateEnabled' => true,
             ))
