@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\Tests\EventListener;
+namespace OpenOrchestra\GroupBundle\Tests\EventSubscriber;
 
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
@@ -15,6 +15,8 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
     protected $container;
     protected $nodesRoles = array("access_node", "access_update_node");
     protected $nodeGroupRoleClass = 'OpenOrchestra\GroupBundle\Document\ModelGroupRole';
+    protected $uow;
+    protected $documentManager;
 
     /**
      * setUp
@@ -26,6 +28,10 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
         $roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector');
         Phake::when($this->container)->get('open_orchestra_backoffice.collector.backoffice_role')->thenReturn($roleCollector);
         Phake::when($roleCollector)->getRolesByType(Phake::anyParameters())->thenReturn($this->nodesRoles);
+        Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
+        $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
+        $this->uow = Phake::mock('Doctrine\ODM\MongoDB\UnitOfWork');
+        Phake::when($this->documentManager)->getUnitOfWork()->thenReturn($this->uow);
     }
 
     /**

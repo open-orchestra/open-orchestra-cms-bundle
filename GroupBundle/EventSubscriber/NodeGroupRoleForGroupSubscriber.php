@@ -1,17 +1,16 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\EventListener;
+namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
- * Class AddNodeGroupRoleForGroupListener
+ * Class NodeGroupRoleForGroupSubscriber
  */
-class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener implements EventSubscriber
+class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleListener
 {
     protected $treeManager;
 
@@ -30,8 +29,13 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener imp
      */
     public function prePersist(LifecycleEventArgs $event)
     {
-        dump($event);
-        $this->updateNodeGroupRole($event);
+        $document = $event->getDocument();
+        if ($document instanceof GroupInterface && ($site = $document->getSite()) instanceof SiteInterface) {
+            $siteId = $site->getSiteId();
+            $nodes = $this->container->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
+            $nodes = $this->treeManager->generateTree($nodes);
+            $this->createNodeGroupRoleForTree($nodes, $document);
+        }
     }
 
     /**
@@ -39,24 +43,15 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener imp
      */
     public function preUpdate(LifecycleEventArgs $event)
     {
-        dump($event);
-        dump($event->getDocument());
-        $this->updateNodeGroupRole($event);
-    }
-
-    protected function updateNodeGroupRole(LifecycleEventArgs $event)
-    {
         $document = $event->getDocument();
         if ($document instanceof GroupInterface && ($site = $document->getSite()) instanceof SiteInterface) {
             $siteId = $site->getSiteId();
             $nodes = $this->container->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
             $nodes = $this->treeManager->generateTree($nodes);
-            dump($siteId);
-            dump($nodes);
             $this->createNodeGroupRoleForTree($nodes, $document);
-            $event->getDocumentManager()->refresh($document);
-            dump(count($document->getModelGroupRoles()));
-            dump($document->getModelGroupRoles()->toArray());
+            $meta = $event->getDocumentManager()->getClassMetadata(get_class($document));
+            $uow = $event->getDocumentManager()->getUnitOfWork();
+            $uow->recomputeSingleDocumentChangeSet($meta, $document);
         }
     }
 
@@ -80,6 +75,9 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener imp
         }
     }
 
+    /**
+     * @return array
+     */
     public function getSubscribedEvents()
     {
         return array(

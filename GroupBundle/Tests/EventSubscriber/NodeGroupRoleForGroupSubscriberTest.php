@@ -1,21 +1,21 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\Tests\EventListener;
+namespace OpenOrchestra\GroupBundle\Tests\EventSubscriber;
 
-use OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForGroupListener;
+use OpenOrchestra\GroupBundle\EventSubscriber\NodeGroupRoleForGroupSubscriber;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Phake;
 
 /**
- * Class AddNodeGroupRoleForGroupListenerTest
+ * Class NodeGroupRoleForGroupSubscriberTest
  */
-class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListenerTest
+class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleListenerTest
 {
     /**
-     * @var AddNodeGroupRoleForGroupListener
+     * @var NodeGroupRoleForGroupSubscriber
      */
-    protected $listener;
+    protected $subscriber;
     protected $nodeRepository;
     protected $treeManager;
     protected $group;
@@ -29,18 +29,20 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
         $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
         Phake::when($this->container)->get('open_orchestra_model.repository.node')->thenReturn($this->nodeRepository);
-
         $this->group = $this->createMockGroup();
-        $this->listener = new AddNodeGroupRoleForGroupListener($this->nodeGroupRoleClass, $this->treeManager);
-        $this->listener->setContainer($this->container);
+        $this->subscriber = new NodeGroupRoleForGroupSubscriber($this->nodeGroupRoleClass, $this->treeManager);
+        $this->subscriber->setContainer($this->container);
     }
 
     /**
-     * test if the method is callable
+     * test get subscribed events
      */
-    public function testMethodPrePersistCallable()
+    public function testGetSubscribedEvents()
     {
-        $this->assertTrue(method_exists($this->listener, 'prePersist'));
+        $this->assertSame($this->subscriber->getSubscribedEvents(),  array(
+            'prePersist',
+            'preUpdate',
+        ));
     }
 
     /**
@@ -57,9 +59,30 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
         Phake::when($this->group)->getSite()->thenReturn($site);
         Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn($nodes);
 
-        $this->listener->prePersist($this->lifecycleEventArgs);
+        $this->subscriber->prePersist($this->lifecycleEventArgs);
 
         Phake::verify($this->group, Phake::times($countNodeGroupRole))->addModelGroupRole(Phake::anyParameters());
+    }
+
+    /**
+     * @param SiteInterface|null  $site
+     * @param array               $nodes
+     * @param int                 $countNodeGroupRole
+     *
+     * @dataProvider provideGroupAndNodes
+     */
+    public function testPreUpdate($site, array $nodes, $countNodeGroupRole)
+    {
+        $countNodeGroupRole = count($this->nodesRoles) * $countNodeGroupRole;
+        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($this->group);
+        Phake::when($this->group)->getSite()->thenReturn($site);
+        Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn($nodes);
+
+        $this->subscriber->preUpdate($this->lifecycleEventArgs);
+
+        Phake::verify($this->group, Phake::times($countNodeGroupRole))->addModelGroupRole(Phake::anyParameters());
+        $countRecompute = ($countNodeGroupRole > 0 ) ? 1 : 0;
+        Phake::verify($this->uow, Phake::times($countRecompute))->recomputeSingleDocumentChangeSet(Phake::anyParameters());
     }
 
     /**
@@ -88,7 +111,7 @@ class AddNodeGroupRoleForGroupListenerTest extends AbstractNodeGroupRoleListener
      *
      * @return array
      */
-    public function createTree($root, array $children = array())
+    protected function createTree($root, array $children = array())
     {
         phake::when($root)->getNodeId()->thenReturn(NodeInterface::ROOT_NODE_ID);
         $childTree = array();
