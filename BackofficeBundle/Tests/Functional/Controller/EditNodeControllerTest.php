@@ -18,8 +18,8 @@ class EditNodeControllerTest extends AbstractControllerTest
     protected $nodeRepository;
     protected $language = 'fr';
     protected $siteId = '2';
-    protected $username = 'demo';
-    protected $password = 'demo';
+    protected $username = 'admin';
+    protected $password = 'admin';
 
     /**
      * Set up the test
