@@ -33,7 +33,7 @@ class FormUserSuperAdminControllersTest extends AbstractControllerTest
 
         $response = $this->client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertRegExp('/This user is super admin, so it is impossible to select rights because it has all the access/', $response->getContent());
+        $this->assertRegExp('/This user is super admin, so it is impossible to select rights because he already has all the access/', $response->getContent());
     }
 
     /**
@@ -47,6 +47,6 @@ class FormUserSuperAdminControllersTest extends AbstractControllerTest
 
         $response = $this->client->getResponse();
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertNotRegExp('/This user is super admin, so it is impossible to select rights he already has all the access/', $response->getContent());
+        $this->assertNotRegExp('/This user is super admin, so it is impossible to select rights because he already has all the access/', $response->getContent());
     }
 }
