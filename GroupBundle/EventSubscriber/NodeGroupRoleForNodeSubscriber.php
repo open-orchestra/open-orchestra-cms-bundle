@@ -1,15 +1,15 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\EventListener;
+namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
- * Class AddNodeGroupRoleForNodeListener
+ * Class NodeGroupRoleForNodeSubscriber
  */
-class AddNodeGroupRoleForNodeListener extends AbstractNodeGroupRoleListener
+class NodeGroupRoleForNodeSubscriber extends AbstractNodeGroupRoleSubscriber
 {
     /**
      * @param LifecycleEventArgs $event
@@ -36,5 +36,15 @@ class AddNodeGroupRoleForNodeListener extends AbstractNodeGroupRoleListener
                 }
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubscribedEvents()
+    {
+        return array(
+            'postPersist',
+        );
     }
 }

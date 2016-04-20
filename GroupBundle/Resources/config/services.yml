@@ -2,8 +2,8 @@ parameters:
     open_orchestra_user.document.group.class: OpenOrchestra\GroupBundle\Document\Group
     open_orchestra_group.document.model_group_role.class: OpenOrchestra\GroupBundle\Document\ModelGroupRole
     open_orchestra_group.type.group_choice.class: OpenOrchestra\GroupBundle\Form\Type\GroupDocumentType
-    open_orchestra_group.listener.add_node_group_role_for_node.class: OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForNodeListener
-    open_orchestra_group.listener.add_node_group_role_for_group.class: OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForGroupListener
+    open_orchestra_group.listener.add_node_group_role_for_node.class: OpenOrchestra\GroupBundle\EventSubscriber\NodeGroupRoleForNodeSubscriber
+    open_orchestra_group.listener.add_node_group_role_for_group.class: OpenOrchestra\GroupBundle\EventSubscriber\NodeGroupRoleForGroupSubscriber
     open_orchestra_group.listener.update_node_group_role.class: OpenOrchestra\GroupBundle\EventListener\UpdateNodeGroupRoleListener
     open_orchestra_group.subscriber.update_node_group_role_move_node.class: OpenOrchestra\GroupBundle\EventSubscriber\UpdateNodeGroupRoleMoveNodeSubscriber
     open_orchestra_group.subscriber.node_group_role_transform.class: OpenOrchestra\GroupBundle\EventSubscriber\NodeGroupRoleTransformSubscriber
@@ -23,7 +23,7 @@ services:
         calls:
             - [ setContainer, [ @service_container ] ]
         tags:
-            - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+            - { name: doctrine_mongodb.odm.event_subscriber}
     open_orchestra_group.listener.add_node_group_role_for_group:
         class: %open_orchestra_group.listener.add_node_group_role_for_group.class%
         arguments:
@@ -32,7 +32,7 @@ services:
         calls:
             - [ setContainer, [ @service_container ] ]
         tags:
-            - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+            - { name: doctrine_mongodb.odm.event_subscriber }
     open_orchestra_group.listener.update_node_group_role:
         class: %open_orchestra_group.listener.update_node_group_role.class%
         arguments:

@@ -1,21 +1,20 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\Tests\EventListener;
+namespace OpenOrchestra\GroupBundle\Tests\EventSubscriber;
 
-use OpenOrchestra\GroupBundle\EventListener\AddNodeGroupRoleForNodeListener;
+use OpenOrchestra\GroupBundle\EventSubscriber\NodeGroupRoleForNodeSubscriber;
 use Phake;
 
 /**
- * Class AddNodeGroupRoleForNodeListenerTest
+ * Class NodeGroupRoleForNodeSubscriberTest
  */
-class AddNodeGroupRoleForNodeListenerTest extends AbstractNodeGroupRoleListenerTest
+class NodeGroupRoleForNodeSubscriberTest extends AbstractNodeGroupRoleSubscriberTest
 {
     /**
-     * @var AddNodeGroupRoleForNodeListener
+     * @var NodeGroupRoleForNodeSubscriber
      */
-    protected $listener;
+    protected $subscriber;
     protected $groupRepository;
-    protected $documentManager;
 
     /**
      * setUp
@@ -23,21 +22,21 @@ class AddNodeGroupRoleForNodeListenerTest extends AbstractNodeGroupRoleListenerT
     public function setUp()
     {
         parent::setUp();
-        $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->groupRepository = Phake::mock('OpenOrchestra\Backoffice\Repository\GroupRepositoryInterface');
         Phake::when($this->container)->get('open_orchestra_user.repository.group')->thenReturn($this->groupRepository);
-        Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
 
-        $this->listener = new AddNodeGroupRoleForNodeListener($this->nodeGroupRoleClass);
-        $this->listener->setContainer($this->container);
+        $this->subscriber = new NodeGroupRoleForNodeSubscriber($this->nodeGroupRoleClass);
+        $this->subscriber->setContainer($this->container);
     }
 
     /**
-     * test if the method is callable
+     * test get subscribed events
      */
-    public function testMethodPrePersistCallable()
+    public function testGetSubscribedEvents()
     {
-        $this->assertTrue(method_exists($this->listener, 'postPersist'));
+        $this->assertSame($this->subscriber->getSubscribedEvents(),  array(
+            'postPersist',
+        ));
     }
 
     /**
@@ -53,7 +52,7 @@ class AddNodeGroupRoleForNodeListenerTest extends AbstractNodeGroupRoleListenerT
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->groupRepository)->findAllWithSite()->thenReturn($groups);
 
-        $this->listener->postPersist($this->lifecycleEventArgs);
+        $this->subscriber->postPersist($this->lifecycleEventArgs);
 
         Phake::verify($this->documentManager, Phake::times($countNodeGroupRole))->persist(Phake::anyParameters());
     }

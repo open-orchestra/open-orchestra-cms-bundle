@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\GroupBundle\EventListener;
+namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
@@ -8,9 +8,9 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
- * Class AddNodeGroupRoleForGroupListener
+ * Class NodeGroupRoleForGroupSubscriber
  */
-class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
+class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleSubscriber
 {
     protected $treeManager;
 
@@ -39,6 +39,23 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
     }
 
     /**
+     * @param LifecycleEventArgs $event
+     */
+    public function preUpdate(LifecycleEventArgs $event)
+    {
+        $document = $event->getDocument();
+        if ($document instanceof GroupInterface && ($site = $document->getSite()) instanceof SiteInterface) {
+            $siteId = $site->getSiteId();
+            $nodes = $this->container->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
+            $nodes = $this->treeManager->generateTree($nodes);
+            $this->createNodeGroupRoleForTree($nodes, $document);
+            $meta = $event->getDocumentManager()->getClassMetadata(get_class($document));
+            $uow = $event->getDocumentManager()->getUnitOfWork();
+            $uow->recomputeSingleDocumentChangeSet($meta, $document);
+        }
+    }
+
+    /**
      * @param array          $nodes
      * @param GroupInterface $group
      */
@@ -56,5 +73,16 @@ class AddNodeGroupRoleForGroupListener extends AbstractNodeGroupRoleListener
                 $this->createNodeGroupRoleForTree($element['child'], $group);
             }
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubscribedEvents()
+    {
+        return array(
+            'prePersist',
+            'preUpdate',
+        );
     }
 }
