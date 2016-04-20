@@ -23,9 +23,9 @@ extendView['commonPage'] = {
   ###
    * Add layout button (edit and delete)
   ###
-  addLayoutButton: () ->
-    pageConfigurationButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addLayoutButton')
-    new pageConfigurationButtonViewClass(@addOption(
+  addPageLayoutButton: () ->
+    pageLayoutButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addPageLayoutButton')
+    new pageLayoutButtonViewClass(@addOption(
       viewContainer: @
       widget_index: 2
       deleteUrl: @options.configuration.get('links')._self_delete

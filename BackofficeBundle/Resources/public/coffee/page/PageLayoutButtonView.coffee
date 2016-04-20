@@ -1,10 +1,10 @@
-###*
+###
  * @namespace OpenOrchestra:Page
 ###
 window.OpenOrchestra or= {}
 window.OpenOrchestra.Page or= {}
 
-###*
+###
  * @class PageLayoutButtonView
 ###
 class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
@@ -25,7 +25,7 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
       'redirectUrl'
     ])
     @loadTemplates [
-      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageConfigurationButton"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageLayoutButton"
     ]
     return
 
@@ -33,7 +33,7 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
    * Render area
   ###
   render: ->
-    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageConfigurationButton',
+    @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageLayoutButton',
       deleteUrl: @options.deleteUrl
       confirmText: @options.confirmText
       confirmTitle: @options.confirmTitle
@@ -43,6 +43,9 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
     OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView(@, '.ribbon-form-button')
     return
 
+  ###
+   * Called when user click on edit span
+  ###
   configurationPage: () ->
     options =
       url: @options.configuration.get('links')._self_form

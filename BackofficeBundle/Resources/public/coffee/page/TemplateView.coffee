@@ -20,7 +20,7 @@ TemplateView = OrchestraView.extend(
     )
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
-    @addLayoutButton()
+    @addPageLayoutButton()
     @addAreasToView(@options.template.get('areas'))
     return
 )
