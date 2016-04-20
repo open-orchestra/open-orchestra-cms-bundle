@@ -248,7 +248,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
             ->deleteAreaFromBlock($source->getBlocks(), $blockDocument, $source->getAreaId(), $node);
         $source->setBlocks($blockDocument);
 
-        //$this->nodeManager->removeUnusedBlocks($node);
+        $this->nodeManager->removeUnusedBlocks($node);
 
         return $source;
     }
