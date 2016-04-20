@@ -13,6 +13,9 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
     'click span': 'configurationPage'
     'click .ajax-delete': 'deleteButton'
 
+  ###
+   * @param {Object} options
+  ###
   initialize: (options) ->
     @options = @reduceOption(options, [
       'configuration'
