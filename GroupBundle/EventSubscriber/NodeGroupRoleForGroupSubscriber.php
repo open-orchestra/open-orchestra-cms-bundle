@@ -10,7 +10,7 @@ use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 /**
  * Class NodeGroupRoleForGroupSubscriber
  */
-class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleListener
+class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleSubscriber
 {
     protected $treeManager;
 

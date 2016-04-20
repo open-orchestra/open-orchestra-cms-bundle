@@ -9,7 +9,7 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 /**
  * Class NodeGroupRoleForNodeSubscriber
  */
-class NodeGroupRoleForNodeSubscriber extends AbstractNodeGroupRoleListener
+class NodeGroupRoleForNodeSubscriber extends AbstractNodeGroupRoleSubscriber
 {
     /**
      * @param LifecycleEventArgs $event

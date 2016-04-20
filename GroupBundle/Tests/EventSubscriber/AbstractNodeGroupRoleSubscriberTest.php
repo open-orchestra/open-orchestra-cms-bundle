@@ -7,9 +7,9 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class AbstractNodeGroupRoleListenerTest
+ * Class AbstractNodeGroupRoleSubscriberTest
  */
-abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
+abstract class AbstractNodeGroupRoleSubscriberTest extends AbstractBaseTestCase
 {
     protected $lifecycleEventArgs;
     protected $container;

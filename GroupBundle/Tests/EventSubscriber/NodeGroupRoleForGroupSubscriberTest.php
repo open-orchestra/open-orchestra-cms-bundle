@@ -10,7 +10,7 @@ use Phake;
 /**
  * Class NodeGroupRoleForGroupSubscriberTest
  */
-class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleListenerTest
+class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleSubscriberTest
 {
     /**
      * @var NodeGroupRoleForGroupSubscriber

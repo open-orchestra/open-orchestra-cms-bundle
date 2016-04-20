@@ -11,9 +11,9 @@ use OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**
- * Class AbstractNodeGroupRoleListener
+ * Class AbstractNodeGroupRoleSubscriber
  */
-abstract class AbstractNodeGroupRoleListener implements ContainerAwareInterface, EventSubscriber
+abstract class AbstractNodeGroupRoleSubscriber implements ContainerAwareInterface, EventSubscriber
 {
     use ContainerAwareTrait;
 

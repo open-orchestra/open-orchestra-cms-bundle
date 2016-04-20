@@ -8,7 +8,7 @@ use Phake;
 /**
  * Class NodeGroupRoleForNodeSubscriberTest
  */
-class NodeGroupRoleForNodeSubscriberTest extends AbstractNodeGroupRoleListenerTest
+class NodeGroupRoleForNodeSubscriberTest extends AbstractNodeGroupRoleSubscriberTest
 {
     /**
      * @var NodeGroupRoleForNodeSubscriber
