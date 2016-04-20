@@ -10,9 +10,7 @@ AdminFormView = OrchestraView.extend(
     ])
     @method = if @options.method then @options.method else 'GET'
     @events = @events || {}
-    @loadTemplates [
-        'OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton'
-    ]
+    @doRender()
     return
 
   render: ->
