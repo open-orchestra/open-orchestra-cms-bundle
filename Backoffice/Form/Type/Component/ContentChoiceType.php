@@ -41,7 +41,7 @@ class ContentChoiceType extends AbstractType
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {var_dump('Done');
+    {
         $builder->addModelTransformer($this->referenceToEmbedTransformer);
         $builder->add($this->formTypeName, 'choice', array(
             'label' => false,
