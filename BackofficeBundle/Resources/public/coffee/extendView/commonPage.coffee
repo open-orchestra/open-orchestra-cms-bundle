@@ -27,7 +27,6 @@ extendView['commonPage'] = {
     pageLayoutButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addPageLayoutButton')
     new pageLayoutButtonViewClass(@addOption(
       viewContainer: @
-      widget_index: 2
       deleteUrl: @options.configuration.get('links')._self_delete
       confirmText: @$el.data('delete-confirm-txt')
       confirmTitle: @$el.data('delete-confirm-title')

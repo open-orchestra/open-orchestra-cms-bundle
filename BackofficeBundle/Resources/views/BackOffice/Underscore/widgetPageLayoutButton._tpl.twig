@@ -1,8 +1,10 @@
 <div class="widget-toolbar">
-    <span class="btn btn-warning btn-in-ribbon">
-        <i class="fa fa-cog"></i>
-        {{ 'open_orchestra_backoffice.node.configuration'|trans({}, 'messages', language) }}
-    </span>
+    <% if (typeof selfForm != 'undefined') { %>
+        <span class="btn btn-warning btn-in-ribbon">
+            <i class="fa fa-cog"></i>
+            {{ 'open_orchestra_backoffice.node.configuration'|trans({}, 'messages', language) }}
+        </span>
+    <% } %>
     <% if (typeof deleteUrl != 'undefined' &&
            typeof confirmText != 'undefined' &&
            typeof confirmTitle != 'undefined') {

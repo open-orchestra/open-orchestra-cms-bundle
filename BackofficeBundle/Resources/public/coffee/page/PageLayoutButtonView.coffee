@@ -18,7 +18,6 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
       'configuration'
       'viewContainer'
       'entityType'
-      'widget_index'
       'deleteUrl'
       'confirmText'
       'confirmTitle'
@@ -30,7 +29,7 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
     return
 
   ###
-   * Render area
+   * Render
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/widgetPageLayoutButton',
@@ -38,8 +37,8 @@ class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
       confirmText: @options.confirmText
       confirmTitle: @options.confirmTitle
       redirectUrl: @options.redirectUrl
+      selfForm: @options.configuration.get('links')._self_form
     )
-    @$el.attr('data-widget-index', @options.widget_index)
     OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView(@, '.ribbon-form-button')
     return
 
