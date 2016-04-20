@@ -43,7 +43,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/extendView/commonPage.js',
     'web/built/openorchestrabackoffice/js/extendView/generateId.js',
     'web/built/openorchestrabackoffice/js/extendView/showVideo.js',
-    'web/built/openorchestrabackoffice/js/extendView/deleteTree.js',
     'web/built/openorchestrabackoffice/js/extendView/submitAdmin.js',
     'web/built/openorchestrabackoffice/js/extendView/contentTypeSelector.js',
 
@@ -85,7 +84,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/page/showNode.js',
     'web/built/openorchestrabackoffice/js/page/showTemplate.js',
     'web/built/openorchestrabackoffice/js/page/orderNode.js',
-    'web/built/openorchestrabackoffice/js/page/PageConfigurationButtonView.js',
+    'web/built/openorchestrabackoffice/js/page/PageLayoutButtonView.js',
     'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
 
     //--[ AREA FLEX ]--//

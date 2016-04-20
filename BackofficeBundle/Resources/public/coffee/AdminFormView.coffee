@@ -1,9 +1,6 @@
 AdminFormView = OrchestraView.extend(
   initialize: (options) ->
     @options = @reduceOption(options, [
-      'deleteUrl'
-      'confirmText'
-      'confirmTitle'
       'redirectUrl'
       'title'
       'url'
@@ -11,7 +8,6 @@ AdminFormView = OrchestraView.extend(
       'method'
       'entityType'
     ])
-    @deleteButton = @options.deleteUrl && @options.confirmText && @options.confirmTitle
     @method = if @options.method then @options.method else 'GET'
     @events = @events || {}
     @loadTemplates [
@@ -35,8 +31,6 @@ AdminFormView = OrchestraView.extend(
         originalButton = $('.submit_form', response)
         button = originalButton.clone().attr('data-clone', originalButton.attr('id')).removeAttr('id')
         actionButtons = $('<div>')
-        if viewContext.deleteButton
-          actionButtons.append(viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/deleteButton', viewContext.options))
         actionButtons = actionButtons.prepend(button).html()
         extendView = viewContext.options.extendView || []
         if extendView.indexOf('submitAdmin') == -1

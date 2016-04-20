@@ -26,8 +26,8 @@ class DataTableView extends OrchestraView
   ###*
    * required options
    * {
-   *   columns: {object}
-   *   columnDefs: {object}
+   *   columns: {Object}
+   *   columnDefs: {Object}
    *   tableId : {string}
    * }
    * if serverSide is activate (by default it is enabled),
@@ -88,7 +88,7 @@ class DataTableView extends OrchestraView
     return @
 
   ###*
-   * @param {object} e jquery event
+   * @param {Object} e jquery event
    * @param {Object} settings DataTable settings
    * @param {boolean} processing
   ###
@@ -104,9 +104,9 @@ class DataTableView extends OrchestraView
       $('.dataTables_processing', @$el).hide()
 
   ###*
-   * @param {object} e jquery event
+   * @param {Object} e jquery event
    * @param {Object} settings DataTable settings
-   * @param {object} json DataTable data retrieved from server
+   * @param {Object} json DataTable data retrieved from server
   ###
   initComplete: (e, settings, json) ->
     api = $(e.target).DataTable()
@@ -206,9 +206,9 @@ class DataTableView extends OrchestraView
     return serverSideSettings
 
   ###*
-   * @param {object} data
+   * @param {Object} data
    *
-   * @return {object}
+   * @return {Object}
   ###
   transformerDataSearch: (data) ->
     search =
@@ -222,9 +222,9 @@ class DataTableView extends OrchestraView
     return search
 
   ###*
-   * @param {object} data
+   * @param {Object} data
    *
-   * @return {object}
+   * @return {Object}
   ###
   transformDataOrder: (data) ->
     for order in data.order
@@ -250,7 +250,7 @@ class DataTableView extends OrchestraView
       @api.settings()[0].clearCache = true
 
   ###*
-   * @param {object} opts
+   * @param {Object} opts
   ###
   dataTablePipeline : (opts) ->
     conf = $.extend(
