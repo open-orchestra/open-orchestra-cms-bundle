@@ -28,10 +28,12 @@ abstract class AbstractNodeGroupRoleListenerTest extends AbstractBaseTestCase
         $roleCollector = Phake::mock('OpenOrchestra\Backoffice\Collector\BackofficeRoleCollector');
         Phake::when($this->container)->get('open_orchestra_backoffice.collector.backoffice_role')->thenReturn($roleCollector);
         Phake::when($roleCollector)->getRolesByType(Phake::anyParameters())->thenReturn($this->nodesRoles);
-        Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->uow = Phake::mock('Doctrine\ODM\MongoDB\UnitOfWork');
         Phake::when($this->documentManager)->getUnitOfWork()->thenReturn($this->uow);
+        $metadata = Phake::mock('Doctrine\ODM\MongoDB\Mapping\ClassMetadata');
+        Phake::when($this->documentManager)->getClassMetadata(Phake::anyParameters())->thenReturn($metadata);
+        Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
     }
 
     /**
