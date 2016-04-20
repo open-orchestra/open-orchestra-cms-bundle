@@ -181,6 +181,9 @@ open_orchestra_backoffice:
             theme: The theme
             template_id: Template id
             alias: Alias
+            boLabel:
+                name: Back Office label
+                helper: This label is common to all versions and languages of the page
             route_pattern:
                 name : Url Pattern
                 helper: |

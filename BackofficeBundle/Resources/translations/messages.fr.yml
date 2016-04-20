@@ -181,6 +181,9 @@ open_orchestra_backoffice:
             theme: Le thème
             template_id: Id du gabarit
             alias: Alias
+            boLabel:
+                name: Label dans le Back Office
+                helper: Ce label est commun a toutes les versions et les langues de la page
             route_pattern:
                 name : Pattern de l'url
                 helper: |

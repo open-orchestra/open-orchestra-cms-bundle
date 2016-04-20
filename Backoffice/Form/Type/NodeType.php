@@ -73,6 +73,13 @@ class NodeType extends AbstractAreaContainerType
                     'class' => 'generate-id-source',
                 )
             ))
+            ->add('boLabel', 'text', array(
+                'label' => 'open_orchestra_backoffice.form.node.boLabel.name',
+                'attr' => array(
+                    'class' => 'generate-id-dest',
+                    'help_text' => 'open_orchestra_backoffice.form.node.boLabel.helper',
+                )
+            ))
             ->add('routePattern', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.route_pattern.name',
                 'attr' => array(
