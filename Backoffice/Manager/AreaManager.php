@@ -53,7 +53,7 @@ class AreaManager
     public function deleteAreaFromBlock($oldBlocks, $newBlocks, $areaId, NodeInterface $node)
     {
         foreach ($oldBlocks as $blockReference) {
-            if (!in_array($blockReference, $newBlocks)) {
+            if (!$this->blockIsInArray($blockReference, $newBlocks)) {
                 $block = $node->getBlock($blockReference['blockId']);
                 if ($blockReference['nodeId'] !== 0) {
                     $blockNode = $this->nodeRepository
@@ -92,6 +92,23 @@ class AreaManager
         }
 
         return true;
+    }
+
+    /**
+     * @param BlockInterface $block
+     * @param array          $arrayBlock
+     *
+     * @return bool
+     */
+    protected function blockIsInArray($block, array $arrayBlock)
+    {
+        foreach ($arrayBlock as $blockTest) {
+            if ($blockTest['blockId'] === $block['blockId'] && $blockTest['nodeId'] === $block['nodeId']) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
