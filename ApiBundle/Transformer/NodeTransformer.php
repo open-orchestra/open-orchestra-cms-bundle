@@ -102,11 +102,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $editionRole = $this->getEditionRole($node);
 
         $facade->editable = $this->authorizationChecker->isGranted($editionRole, $node);
-
-        $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
-                'id' => $node->getId(),
-            )));
-
+        
         $facade->addLink('_self_without_language', $this->generateRoute('open_orchestra_api_node_show_or_create', array(
             'nodeId' => $nodeId
         )));
@@ -134,6 +130,10 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 }
             }
 
+            $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
+                'id' => $node->getId(),
+            )));
+            
             $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
                 'nodeMongoId' => $node->getId()
             )));
