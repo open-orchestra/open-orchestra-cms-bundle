@@ -183,7 +183,7 @@ open_orchestra_backoffice:
             alias: Alias
             boLabel:
                 name: Label dans le Back Office
-                helper: Ce label est commun a toutes les versions et les langues de la page
+                helper: Ce label est commun à toutes les versions et les langues de la page
             route_pattern:
                 name : Pattern de l'url
                 helper: |
