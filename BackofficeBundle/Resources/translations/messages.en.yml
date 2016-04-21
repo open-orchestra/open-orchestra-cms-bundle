@@ -375,7 +375,7 @@ open_orchestra_backoffice:
             api_client:
                 list: Api Clients
             role:
-                list: Roles
+                list: Workflow transition
             group:
                 list: Groups
             redirection:
