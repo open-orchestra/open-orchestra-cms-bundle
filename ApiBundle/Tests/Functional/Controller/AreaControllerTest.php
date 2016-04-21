@@ -59,7 +59,7 @@ class AreaControllerTest extends AbstractControllerTest
         $siteId = $this->currentSiteManager->getCurrentSiteId();
         $nodeAfter = $this->nodeRepository->findInLastVersion($block['node_id'], $language, $siteId);
         $this->assertSame(
-            array(array('nodeId' => 0, 'areaId' => 'mainContentArea1')),
+            array(array('nodeId' => 0, 'areaId' => 'header')),
             $nodeAfter->getBlock(0)->getAreas()
         );
 
