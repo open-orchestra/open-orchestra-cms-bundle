@@ -369,13 +369,13 @@ open_orchestra_backoffice:
             content_type:
                 list: Type de contenu
             status:
-                list: Statut
+                list: Etapes de workflow
             user:
                 list: Utilisateurs
             api_client:
                 list: Clients d'API
             role:
-                list: Rôles
+                list: Transition de workflow
             group:
                 list: Groupes
             redirection:
