@@ -64,6 +64,8 @@ class NodeVersionVoterTest extends AbstractBaseTestCase
         return array(
             array(true, 'ROLE_USER'),
             array(true, 'ROLE_ACCESS'),
+            array(false, 'ROLE_ACCESS_TREE_NODE'),
+            array(false, 'ROLE_ACCESS_ERROR_NODE'),
             array(false, '24051'),
             array(false, 'foo'),
         );
