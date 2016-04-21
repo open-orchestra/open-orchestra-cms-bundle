@@ -59,7 +59,7 @@ class UserRepositoryTest extends AbstractKernelTestCase
             array($descriptionEntity, null, null, 0 ,5 , 5),
             array($descriptionEntity, $this->generateSearchProvider('admin'), null, 0 ,5 , 1),
             array($descriptionEntity, $this->generateSearchProvider('fakeUsername'), null, 0 ,5 , 0),
-            array($descriptionEntity, $this->generateSearchProvider('', 'user'), null, 0 ,5 , 4),
+            array($descriptionEntity, $this->generateSearchProvider('', 'user'), null, 0 ,5 , 5),
         );
     }
 
@@ -69,7 +69,7 @@ class UserRepositoryTest extends AbstractKernelTestCase
     public function testCount()
     {
         $users = $this->repository->count();
-        $this->assertEquals(6, $users);
+        $this->assertEquals(7, $users);
     }
 
     /**
@@ -94,9 +94,9 @@ class UserRepositoryTest extends AbstractKernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, null, 6),
+            array($descriptionEntity, null, 7),
             array($descriptionEntity, $this->generateSearchProvider('admin'), 1),
-            array($descriptionEntity, $this->generateSearchProvider('user'), 4),
+            array($descriptionEntity, $this->generateSearchProvider('user'), 5),
             array($descriptionEntity, $this->generateSearchProvider('', 'admin'), 1),
         );
     }
