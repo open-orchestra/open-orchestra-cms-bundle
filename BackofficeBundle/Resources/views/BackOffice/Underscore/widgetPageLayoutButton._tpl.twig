@@ -1,0 +1,22 @@
+<div class="widget-toolbar">
+    <% if (typeof selfForm != 'undefined') { %>
+        <span class="btn btn-warning btn-in-ribbon">
+            <i class="fa fa-cog"></i>
+            {{ 'open_orchestra_backoffice.node.configuration'|trans({}, 'messages', language) }}
+        </span>
+    <% } %>
+    <% if (typeof deleteUrl != 'undefined' &&
+           typeof confirmText != 'undefined' &&
+           typeof confirmTitle != 'undefined') {
+    %>
+        <button class="ajax-delete btn btn-danger btn-in-ribbon"
+                data-delete-url="<%= deleteUrl%>"
+                data-confirm-text="<%= confirmText%>"
+                data-confirm-title="<%= confirmTitle%>"
+            <% if (typeof redirectUrl != 'undefined') { %>
+                data-redirect-url="<%= redirectUrl%>"
+            <% } %>>
+            {{ 'open_orchestra_backoffice.form.delete'|trans }}
+        </button>
+    <% } %>>
+</div>

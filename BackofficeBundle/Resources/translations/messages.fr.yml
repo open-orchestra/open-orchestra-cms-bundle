@@ -522,6 +522,7 @@ open_orchestra_backoffice:
             at: Dernière mise à jour
             by: par
         delete:
+            button: Supprimer
             title: Souhaitez-vous supprimer ce noeud ?
             text: Cette opération est définitive.
         blocks: Blocs

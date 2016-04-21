@@ -522,6 +522,7 @@ open_orchestra_backoffice:
             at: Last update
             by: by
         delete:
+            button: Delete
             text: This operation is not reversible.
             title: Would you like delete this page?
         blocks: Blocks
