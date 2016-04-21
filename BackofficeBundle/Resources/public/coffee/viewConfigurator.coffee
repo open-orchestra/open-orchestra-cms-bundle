@@ -26,7 +26,6 @@ OrchestraViewConfigurator = ->
     'showVersion': VersionView
     'showVersionSelect': VersionSelectView
     'showOrchestraModal': OrchestraModalView
-    'addFieldOptionDefaultValue': FieldOptionDefaultValueView
     'showFlashBag': FlashBagView
     'apiError': DisplayApiErrorView
 

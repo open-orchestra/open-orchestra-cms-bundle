@@ -16,16 +16,7 @@ class OpenOrchestra.FormBehavior.RichText extends OpenOrchestra.FormBehavior.Abs
    * @param {Object} form
   ###
   activateBehaviorOnElements: (elements, view, form) ->
-    textareaId = []
-    elements.each ->
-      textareaId.push @id
-      return
-    $.each tinymce.editors, (index, editor) ->
-      if $('#' + editor.id).length == 0 or $.inArray(editor.id, textareaId) != -1
-        delete tinymce.editors[index]
-      return
-    tinymce.editors = tinymce.editors.filter (e) ->
-      e != undefined
+    tinymce.editors = []
     $.ajax
       url: $("#contextual-informations").data("translation-url-pattern").replace("*domain*", "tinymce")
       success: (response) ->

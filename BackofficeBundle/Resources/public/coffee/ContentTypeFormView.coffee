@@ -25,34 +25,21 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
   ###
   changeContentTypeChange: (event) ->
     event.preventDefault()
-    target = $(event.currentTarget)
-    form = target.parents('form')
-    url = form.attr('action')
-    optionId = target.attr('id').replace(/type$/g, 'options')
-    defaultValueId = target.attr('id').replace(/type$/g, 'default_value')
-    defaultValueField = $('#' + defaultValueId)
-    formGroupDefaultValue = defaultValueField.closest( ".form-group" )
-
+    viewContext = @
+    targetId = $(event.currentTarget).attr('id')
+    optionId = targetId.replace(/type$/g, 'options')
+    defaultValueId = targetId.replace(/type$/g, 'default_value')
     displayLoader('#' + optionId)
-    formGroupDefaultValue.hide()
-    defaultValueField.val('')
+    $('#' + defaultValueId, @$el).closest( ".form-group" ).hide()
 
-    form.ajaxSubmit
+    $('form', @$el).ajaxSubmit
       type: 'PATCH'
-      url: url
       success: (response) ->
-        defaultValueField = if $('#' + defaultValueId, response).length > 0  then $('#' + defaultValueId, response).closest( ".form-group" ).html() else ""
-        defaultValueViewClass = appConfigurationView.getConfiguration('fieldType', 'addFieldOptionDefaultValue')
-        defaultValueView = new defaultValueViewClass(html: defaultValueField)
-
-        $('#' + optionId).html $('#' + optionId, response).html()
-        formGroupDefaultValue.html defaultValueView.render().$el
-        formGroupDefaultValue.show()
-
-        widgetChannel.trigger 'ready', defaultValueView
-        if $('#' + defaultValueId).hasClass('tinymce')
-          tinymce.editors = []
-          activateForm(defaultValueView, formGroupDefaultValue)
+        $('#' + optionId, viewContext.$el).parent().html if $('#' + optionId, response).length > 0 then $('#' + optionId, response).parent().html() else ''
+        $('#' + defaultValueId, viewContext.$el).parent().html if $('#' + defaultValueId, response).length > 0 then $('#' + defaultValueId, response).parent().html() else ''
+        $('#' + defaultValueId, viewContext.$el).closest( ".form-group" ).show()
+        activateForm(viewContext, $('#' + defaultValueId, viewContext.$el).parent())
+        activateForm(viewContext, $('#' + optionId, viewContext.$el).parent())
 
 jQuery ->
   appConfigurationView.setConfiguration('content_types', 'editEntity', OpenOrchestra.ContentTypeFormView)
