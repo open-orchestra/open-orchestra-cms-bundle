@@ -42,7 +42,7 @@ NodeView = OrchestraView.extend(
       )
       @addAreasToView(@options.node.get('areas'))
       if @options.configuration.get('links')._self_form?
-        @addConfigurationButton()
+        @addPageLayoutButton()
       if !@options.editable
         $('.js-widget-blockpanel', @$el).hide()
       else
