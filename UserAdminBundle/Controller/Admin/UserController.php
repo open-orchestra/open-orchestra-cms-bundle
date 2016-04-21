@@ -35,6 +35,7 @@ class UserController extends AbstractAdminController
         $user = new $userClass();
         $form = $this->createForm('oo_registration_user', $user, array(
             'action' => $this->generateUrl('open_orchestra_user_admin_new'),
+            'validation_groups' => array('Registration')
         ));
         $form->handleRequest($request);
         if ($this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.new.success'), $user)) {
@@ -63,7 +64,8 @@ class UserController extends AbstractAdminController
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
         $form = $this->createForm('oo_user', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $userId))
+            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $userId)),
+            'validation_groups' => array('Profile')
         ));
         $form->handleRequest($request);
         $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
