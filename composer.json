@@ -1,6 +1,6 @@
 {
   "name": "open-orchestra/open-orchestra-cms-bundle",
-  "description": "This bundle provide the backoffice part of OpenOrchestra",
+  "description": "This bundle provide the Back Office part of Open Orchestra",
   "license": "Apache-2.0",
   "authors": [
     {
@@ -21,8 +21,6 @@
     "open-orchestra/open-orchestra-bbcode-bundle": "@dev",
     "open-orchestra/open-orchestra-libs": "@dev",
     "open-orchestra/open-orchestra-mongo-libs": "@dev",
-    "solution/mongo-odm-aggregation-bundle": "@dev",
-    "solution/pipeline-builder": "@dev",
     "innocead/captcha-bundle": "@dev",
     "friendsofsymfony/user-bundle": "@dev"
   },
