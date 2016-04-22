@@ -113,9 +113,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'language' => $node->getLanguage(),
         )));
 
-        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_show', array(
-            'siteId' => $node->getSiteId(),
-        )));
+        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_parameter_languages_show'));
 
         if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
             if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
