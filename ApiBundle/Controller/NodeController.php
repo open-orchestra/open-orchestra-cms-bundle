@@ -216,12 +216,14 @@ class NodeController extends BaseController
      * @Config\Route("/{nodeMongoId}/update", name="open_orchestra_api_node_update")
      * @Config\Method({"POST"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE')")
-     *
      * @return Response
      */
     public function changeStatusAction(Request $request, $nodeMongoId)
     {
+        /** @var NodeInterface $node */
+        $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
+        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+
         return $this->reverseTransform(
             $request, $nodeMongoId,
             'node',
