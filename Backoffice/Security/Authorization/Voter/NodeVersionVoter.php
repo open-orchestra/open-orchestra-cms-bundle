@@ -31,7 +31,9 @@ class NodeVersionVoter implements VoterInterface
      */
     public function supportsAttribute($attribute)
     {
-        return 0 === strpos($attribute, 'ROLE_');
+        return 0 === strpos($attribute, 'ROLE_') &&
+               false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_ERROR_NODE');
     }
 
     /**
@@ -60,6 +62,10 @@ class NodeVersionVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
+        if (($user = $token->getUser()) instanceof UserInterface && $user->isSuperAdmin()) {
+            return VoterInterface::ACCESS_GRANTED;
+        }
+
         foreach ($attributes as $attribute) {
             if (!$this->supportsAttribute($attribute)) {
                 return self::ACCESS_ABSTAIN;
