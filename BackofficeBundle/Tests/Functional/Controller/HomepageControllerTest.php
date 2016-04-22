@@ -21,9 +21,9 @@ class HomepageControllerTest extends AbstractControllerTest
         $this->assertEquals(1, $crawler->filter('html:contains("Orchestra ?")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Content")')->count());
         $this->assertEquals(1, $crawler->filter('a:contains("Orchestra ?")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Communauté")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Actualité")')->count());
-        $this->assertEquals(1, $crawler->filter('a:contains("Mentions Légales")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Community")')->count());
+        $this->assertEquals(2, $crawler->filter('a:contains("News")')->count());
+        $this->assertEquals(1, $crawler->filter('a:contains("Legal Notice")')->count());
         $this->assertEquals(1, $crawler->filter('a:contains("Home")')->count());
     }
 

@@ -103,6 +103,7 @@ class NodeControllerTest extends AbstractControllerTest
 
         $nodeName = 'fixturetest' . time();
         $formNode['oo_node[name]'] = $nodeName;
+        $formNode['oo_node[boLabel]'] = $nodeName;
         $formNode['oo_node[nodeTemplateSelection][nodeSource]'] = 'root';
         $formNode['oo_node[routePattern]'] = '/page-test' .time();
 

@@ -47,19 +47,10 @@ class TransverseNodePanelStrategy extends AbstractNavigationStrategy
     public function show()
     {
         $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $language = $this->currentSiteManager->getCurrentLocale();
 
         $node = null;
         $transverseNodes = $this->nodeRepository->findByNodeAndSite(NodeInterface::TRANSVERSE_NODE_ID, $siteId);
-        if (!empty($transverseNodes)) {
-            $node = current($transverseNodes);
-            foreach ($transverseNodes as $transverseNode) {
-                if ($language === $transverseNode->getLanguage()) {
-                    $node = $transverseNode;
-                    break;
-                }
-            }
-        }
+        $node = current($transverseNodes);
 
         return $this->render(
             'OpenOrchestraBackofficeBundle:BackOffice:Include/NavigationPanel/Menu/Editorial/transverseNode.html.twig',
