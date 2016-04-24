@@ -34,7 +34,6 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/node/root'),
             array('/api/node/root/show-or-create'),
             array('/api/node/root/delete', "DELETE"),
-            array('/api/node/root/update', "POST"),
             array('/api/node/root/children/update/order', 'POST'),
             array('/api/api-client'),
             array('/api/api-client/root/delete', "DELETE"),
