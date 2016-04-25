@@ -138,11 +138,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
                 'nodeMongoId' => $node->getId()
             )));
 
-            if ($facade->editable) {
-                $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
-                    'nodeMongoId' => $node->getId()
-                )));
-            }
+            $facade->addLink('_self_status_change', $this->generateRoute('open_orchestra_api_node_update', array(
+                'nodeMongoId' => $node->getId()
+            )));
 
             if ($this->authorizationChecker->isGranted($editionRole)) {
                 $facade->addLink('_self_duplicate', $this->generateRoute('open_orchestra_api_node_duplicate', array(

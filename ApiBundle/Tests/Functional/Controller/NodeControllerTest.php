@@ -191,4 +191,26 @@ class NodeControllerTest extends AbstractControllerTest
             array('draft', 1),
         );
     }
+
+    /**
+     * Test update not granted
+     */
+    public function testUpdateNotGranted()
+    {
+        $crawler = $this->client->request('GET', '/login');
+        $form = $crawler->selectButton('Log in')->form();
+        $form['_username'] = 'demo';
+        $form['_password'] = 'demo';
+        $this->client->submit($form);
+        $node = $this->nodeRepository->findInLastVersion('root', 'fr', '2');
+        $this->client->request(
+            'POST',
+            '/api/node/' . $node->getId() . '/update',
+            array(),
+            array(),
+            array(),
+            json_encode(array('status_id' => 'fakeStatus'))
+        );
+        $this->assertSame(403, $this->client->getResponse()->getStatusCode());
+    }
 }

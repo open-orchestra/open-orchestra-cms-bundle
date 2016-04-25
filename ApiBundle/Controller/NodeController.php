@@ -222,7 +222,7 @@ class NodeController extends BaseController
     {
         /** @var NodeInterface $node */
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeMongoId);
-        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+        $this->denyAccessUnlessGranted($this->getEditionRole($node));
 
         return $this->reverseTransform(
             $request, $nodeMongoId,
