@@ -135,6 +135,14 @@ class BlockTransformer extends AbstractTransformer
             ));
         }
 
+        if (null !== $nodeId &&
+            null !== $nodeMongoId &&
+            NodeInterface::TRANSVERSE_NODE_ID === $nodeId &&
+            $isInside
+        ) {
+            $facade->isDeletable = $this->blockIsDeletable($block, $nodeMongoId);
+        }
+
         return $facade;
     }
 
@@ -190,5 +198,25 @@ class BlockTransformer extends AbstractTransformer
     public function getName()
     {
         return 'block';
+    }
+
+    /**
+     * @param BlockInterface $block
+     * @param string         $nodeMongoId
+     *
+     * @return bool
+     */
+    protected function blockIsDeletable(BlockInterface $block, $nodeMongoId)
+    {
+        foreach ($block->getAreas() as $area) {
+            if (isset($area['nodeId']) &&
+                0 !== $area['nodeId'] &&
+                $nodeMongoId !== $area['nodeId']
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

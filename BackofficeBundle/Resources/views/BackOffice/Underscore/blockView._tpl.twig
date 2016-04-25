@@ -14,9 +14,11 @@
                         <i class="glyphicon glyphicon-pencil"></i>
                     </span>
                 <% } %>
-                <span class="tool move-trash">
-                    <i class="block-remove glyphicon glyphicon-trash"></i>
-                </span>
+                <% if (block.get('is_deletable')) { %>
+                    <span class="tool move-trash">
+                        <i class="block-remove glyphicon glyphicon-trash"></i>
+                    </span>
+                <% } %>
             <% } else { %>
                 <span class="tool block-title"><%= block.get('ui_model').label %></span>
                 <% if ('generate' == block.get('method')) { %>

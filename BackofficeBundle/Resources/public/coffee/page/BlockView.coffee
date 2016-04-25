@@ -33,7 +33,7 @@ BlockView = OrchestraView.extend(
     )
 
   confirmRemoveBlock: (event) ->
-    if @options.area.get("blocks").length > 0
+    if @options.area.get("blocks").length > 0 and @options.block.get('is_deletable')
       smartConfirm(
         'fa-trash-o',
         @$el.data('delete-confirm-question'),
