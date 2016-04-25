@@ -199,8 +199,8 @@ class NodeControllerTest extends AbstractControllerTest
     {
         $crawler = $this->client->request('GET', '/login');
         $form = $crawler->selectButton('Log in')->form();
-        $form['_username'] = 'demo';
-        $form['_password'] = 'demo';
+        $form['_username'] = 'userNoAccess';
+        $form['_password'] = 'userNoAccess';
         $this->client->submit($form);
         $node = $this->nodeRepository->findInLastVersion('root', 'fr', '2');
         $this->client->request(
