@@ -45,7 +45,7 @@ open_orchestra_backoffice:
             name: Name
             published: Published
             initial: Initial
-            labels: Labels in all languages
+            labels: Label
             from_role: Role needed to change the status from this one
             to_role: Role needed to get to this status
             color:
@@ -142,7 +142,7 @@ open_orchestra_backoffice:
         content_type:
             success: The content type has been modified
             creation: The content type has been created
-            content_type_id: Content type id
+            content_type_id: Id
             names: Names in all the languages
             version: Version
             status: Status
@@ -293,7 +293,7 @@ open_orchestra_backoffice:
             edit:
                 success: The role has been updated
             name: Name
-            descriptions: Descriptions
+            descriptions: Description
             from_status: Status from
             to_status: Status destination
         group:
@@ -370,7 +370,7 @@ open_orchestra_backoffice:
             themes:
                 list: Themes
             content_type:
-                list: Content type
+                list: Content types
             status:
                 list: Workflow status
             user:
@@ -378,7 +378,7 @@ open_orchestra_backoffice:
             api_client:
                 list: Api Clients
             role:
-                list: Workflow transition
+                list: Workflow transitions
             group:
                 list: Groups
             redirection:
@@ -582,7 +582,7 @@ open_orchestra_backoffice:
             updated_at: Modification date
             updated_by: Latest contributor
         content_types:
-            content_type_id: Content type id
+            content_type_id: Id
             name: Name
             version: Version
             status_label: Status label

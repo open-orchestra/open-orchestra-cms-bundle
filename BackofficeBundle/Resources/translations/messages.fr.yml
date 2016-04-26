@@ -45,7 +45,8 @@ open_orchestra_backoffice:
             name: Nom
             published: Publié
             initial: Initial
-            labels: Libellés dans toutes les langues
+            labels: Libellé
+            labels: Libellé
             from_role: Rôle requis pour partir de ce statut
             to_role: Rôle requis pour arriver sur ce statut
             color:
@@ -142,7 +143,7 @@ open_orchestra_backoffice:
         content_type:
             success: Le type de contenu a été modifié
             creation: Le type de contenu a été créé
-            content_type_id: Id du type de contenu
+            content_type_id: Id
             names: Nom dans toutes les langues
             version: Version
             status: Statut
@@ -293,7 +294,7 @@ open_orchestra_backoffice:
             edit:
                 success: Le rôle a été mis à jour
             name: Nom
-            descriptions: Descriptions
+            descriptions: Description
             from_status: Statut de provenance
             to_status: Statut de destination
         group:
@@ -370,15 +371,15 @@ open_orchestra_backoffice:
             themes:
                 list: Thèmes
             content_type:
-                list: Type de contenu
+                list: Types de contenu
             status:
-                list: Etape de workflow
+                list: Etapes de workflow
             user:
                 list: Utilisateurs
             api_client:
                 list: Clients d'API
             role:
-                list: Transition de workflow
+                list: Transitions de workflow
             group:
                 list: Groupes
             redirection:
@@ -582,7 +583,7 @@ open_orchestra_backoffice:
             updated_at: Date de modification
             updated_by: Dernier contributeur
         content_types:
-            content_type_id: Clef
+            content_type_id: Id
             name: Nom
             version: Version
             status_label: Statut
@@ -611,7 +612,7 @@ open_orchestra_backoffice:
             name: Nom
             trusted: Confiance
         websites:
-            site_id: Clef
+            site_id: Id
             name: Nom
         trashcan:
           name: Nom
