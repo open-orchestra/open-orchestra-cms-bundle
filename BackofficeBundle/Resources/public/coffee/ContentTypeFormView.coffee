@@ -31,6 +31,7 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     defaultValueId = targetId.replace(/type$/g, 'default_value')
     displayLoader('#' + optionId)
     $('#' + defaultValueId, @$el).closest( ".form-group" ).hide()
+    $('#' + defaultValueId, @$el).val('')
 
     $('form', @$el).ajaxSubmit
       type: 'PATCH'
