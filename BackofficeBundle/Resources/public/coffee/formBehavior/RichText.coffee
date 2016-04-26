@@ -39,5 +39,10 @@ class OpenOrchestra.FormBehavior.RichText extends OpenOrchestra.FormBehavior.Abs
     else
       initTinyMCE()
 
+    $.each(tinymce.editors, (key, editor) ->
+        editor.on 'change', (event) ->
+          @.save();
+    )
+
 jQuery ->
   OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.RichText("textarea.tinymce"))
