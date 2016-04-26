@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use OpenOrchestra\ApiBundle\Transformer\BlockTransformer;
 
@@ -143,6 +144,54 @@ class BlockTransformerTest extends AbstractBaseTestCase
             array('menu', array(), 'Menu'),
             array('menu', array('array' => array('test' => 'test')), 'Menu', array('array' => '{"test":"test"}')),
             array('menu', array(), null),
+        );
+    }
+
+    /**
+     * @param array $areas
+     * @param string $nodeId
+     * @param string $nodeMongoId
+     * @param bool   $isInside
+     * @param bool   $isDeletable
+     *
+     * @dataProvider provideBlockDeletable
+     */
+    public function testBlockTransformerIsDeletable(array $areas, $nodeId, $nodeMongoId, $isInside, $isDeletable)
+    {
+        $html = 'ok';
+        $component = 'fakeComponent';
+        $label = 'fakeLabel';
+        $block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
+        $response = Phake::mock('Symfony\Component\HttpFoundation\Response');
+        $transformer = Phake::mock('OpenOrchestra\BaseApi\Transformer\TransformerInterface');
+        $facade = Phake::mock('OpenOrchestra\ApiBundle\Facade\UiModelFacade');
+
+        Phake::when($block)->getComponent()->thenReturn($component);
+        Phake::when($block)->getLabel()->thenReturn($label);
+        Phake::when($block)->getAttributes()->thenReturn(array());
+        Phake::when($block)->getAreas()->thenReturn($areas);
+        Phake::when($this->displayBlockManager)->show($block)->thenReturn($response);
+        Phake::when($response)->getContent()->thenReturn($html);
+        Phake::when($this->displayIconManager)->show($component)->thenReturn('icon');
+
+        Phake::when($this->transformerManager)->get('ui_model')->thenReturn($transformer);
+        Phake::when($transformer)->transform(Phake::anyParameters())->thenReturn($facade);
+
+        $facadeResult = $this->blockTransformer->transform($block, $isInside, $nodeId, 0, 0, 0, $nodeMongoId);
+
+        $this->assertSame($facadeResult->isDeletable, $isDeletable);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideBlockDeletable()
+    {
+        return array(
+            array(array(), 'fakeNodeId', 'fakeMongoId', false, true),
+            array(array(), NodeInterface::TRANSVERSE_NODE_ID, 0, true, true),
+            array(array(array('nodeId' => 'fakeAreaId')), NodeInterface::TRANSVERSE_NODE_ID, 0, true, false),
+            array(array(array('nodeId' => 0)), NodeInterface::TRANSVERSE_NODE_ID, 0, true, true),
         );
     }
 

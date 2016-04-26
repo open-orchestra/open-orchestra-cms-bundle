@@ -54,6 +54,11 @@ class BlockFacade extends AbstractFacade
     public $blockId;
 
     /**
+     * @Serializer\Type("boolean")
+     */
+    public $isDeletable = true;
+
+    /**
      * @Serializer\Type("array<string,string>")
      */
     protected $attributes = array();
