@@ -46,7 +46,6 @@ open_orchestra_backoffice:
             published: Publié
             initial: Initial
             labels: Libellé
-            labels: Libellé
             from_role: Rôle requis pour partir de ce statut
             to_role: Rôle requis pour arriver sur ce statut
             color:
