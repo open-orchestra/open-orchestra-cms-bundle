@@ -148,15 +148,15 @@ class BlockTransformerTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param $areas
-     * @param $nodeId
-     * @param $nodeMongoId
-     * @param $isInside
-     * @param $isDeletable
+     * @param array $areas
+     * @param string $nodeId
+     * @param string $nodeMongoId
+     * @param bool   $isInside
+     * @param bool   $isDeletable
      *
      * @dataProvider provideBlockDeletable
      */
-    public function testBlockTransformerIsDeletable($areas, $nodeId, $nodeMongoId, $isInside, $isDeletable)
+    public function testBlockTransformerIsDeletable(array $areas, $nodeId, $nodeMongoId, $isInside, $isDeletable)
     {
         $html = 'ok';
         $component = 'fakeComponent';
