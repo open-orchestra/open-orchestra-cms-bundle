@@ -1,6 +1,6 @@
 open_orchestra_role:
     role_user: Role of a connected user
-    label_access_general_node: Transversal page
+    label_access_general_node: Global page
     role_access_tree_general_node: Access
     role_access_update_general_node: Update
     label_access_node: Page
@@ -9,7 +9,7 @@ open_orchestra_role:
     role_access_update_node: Update
     role_access_delete_node: Delete
     role_access_move_tree: Move
-    label_access_error_node: Error pages
+    label_access_error_node: Error page
     role_access_error_node: Access
     role_access_create_error_node: Create
     role_access_update_error_node: Update
@@ -18,7 +18,7 @@ open_orchestra_role:
     role_access_create_template: Create
     role_access_update_template: Update
     role_access_delete_template: Delete
-    label_access_template_flex: Page template flex
+    label_access_template_flex: Page template
     role_access_tree_template_flex: Access
     role_access_create_template_flex: Create
     role_access_update_template_flex: Update
@@ -33,7 +33,7 @@ open_orchestra_role:
     role_access_create_content_type: Create
     role_access_update_content_type: Update
     role_access_delete_content_type: Delete
-    label_access_redirection: HTTP redirection
+    label_access_redirection: Redirection
     role_access_redirection: Access
     role_access_create_redirection: Create
     role_access_update_redirection: Update
@@ -43,7 +43,7 @@ open_orchestra_role:
     role_access_create_api_client: Create
     role_access_update_api_client: Update
     role_access_delete_api_client: Delete
-    label_access_keyword: Keywords (tags)
+    label_access_keyword: Keyword (tag)
     role_access_keyword: Access
     role_access_create_keyword: Create
     role_access_update_keyword: Update
@@ -52,7 +52,7 @@ open_orchestra_role:
     role_access_deleted: Access
     role_access_restore: Restore
     role_access_removed_trashcan: Delete
-    label_access_status: Publication status
+    label_access_status: Workflow status
     role_access_status: Access
     role_access_create_status: Create
     role_access_update_status: Update
@@ -62,17 +62,17 @@ open_orchestra_role:
     role_access_create_theme: Create
     role_access_update_theme: Update
     role_access_delete_theme: Delete
-    label_access_site: Web sites
+    label_access_site: Websites
     role_access_site: Access
     role_access_create_site: Create
     role_access_update_site: Update
     role_access_delete_site: Delete
-    label_access_group: User group
+    label_access_group: Groups
     role_access_group: Access
     role_access_create_group: Create
     role_access_update_group: Update
     role_access_delete_group: Delete
-    label_access_role: Role
+    label_access_role: Workflow profile
     role_access_role: Access
     role_access_create_role: Create
     role_access_update_role: Update

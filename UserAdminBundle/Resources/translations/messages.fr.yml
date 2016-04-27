@@ -7,10 +7,10 @@ open_orchestra_user_admin:
         profile: Profil
         password: Mot de passe
     table:
-        username: Nom
+        username: Nom d'utilisateur
         groups: Groupes
     form:
-        title: Formulaire
+        title: Général
         super_admin_help_text: Cet utilisateur est super admin, il est donc impossible de sélectionner des droits car il possède déjà tous les accès.
     password:
-        title: Formulaire Mot de passe
+        title: Mot de passe
