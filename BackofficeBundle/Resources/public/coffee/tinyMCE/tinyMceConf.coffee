@@ -37,11 +37,8 @@ tinymce.create 'tinymce.plugins.BBCodeOrchestraPlugin',
 
   punbbConvert: (string, replacementList) ->
     string = tinymce.trim(string)
-    rep = (re, str) ->
-      string = string.replace(new RegExp(re,'gi'), str)
-      return
     for regex, str of replacementList
-      rep regex, str
+      string = string.replace(new RegExp(regex,'gi'), str)
     string
   getInfo : () ->
     longname : 'bbCode conversion plugin',
