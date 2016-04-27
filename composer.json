@@ -16,7 +16,9 @@
     "open-orchestra/open-orchestra-model-interface": "~1.1.0",
     "braincrafted/bootstrap-bundle": "2.1.2",
     "stfalcon/tinymce-bundle": "0.3.8",
-    "koala-framework/composer-extra-assets": "2.0.x"
+    "koala-framework/composer-extra-assets": "2.0.x",
+    "innocead/captcha-bundle": "@dev",
+    "friendsofsymfony/user-bundle": "@dev"
   },
   "require-dev": {
     "open-orchestra/open-orchestra-model-bundle": "~1.1.0",
