@@ -51,8 +51,8 @@ class NodeGroupRoleTransformSubscriber implements EventSubscriberInterface
                 UrlGeneratorInterface::ABSOLUTE_URL
             ));
             $facade->addLink('_role_list_node', $this->router->generate(
-                'open_orchestra_api_role_list_by_type',
-                array('type' => 'node'),
+                'open_orchestra_api_role_list_by_node_type',
+                array(),
                 UrlGeneratorInterface::ABSOLUTE_URL
             ));
         }
