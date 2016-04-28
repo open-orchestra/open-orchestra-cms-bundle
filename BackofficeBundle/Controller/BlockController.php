@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 
 /**
  * Class BlockController
@@ -41,6 +42,7 @@ class BlockController extends AbstractAdminController
 
         if ($node) {
             $editionRole = $node->getNodeType() === NodeInterface::TYPE_ERROR? TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+            $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:$editionRole;
             $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($editionRole, $node);
         }
 
