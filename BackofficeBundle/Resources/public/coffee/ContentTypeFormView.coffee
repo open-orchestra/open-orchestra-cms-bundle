@@ -27,20 +27,14 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     event.preventDefault()
     viewContext = @
     targetId = $(event.currentTarget).attr('id')
-    optionId = targetId.replace(/type$/g, 'options')
-    defaultValueId = targetId.replace(/type$/g, 'default_value')
-    displayLoader('#' + optionId)
-    $('#' + defaultValueId, @$el).closest( ".form-group" ).hide()
-    $('#' + defaultValueId, @$el).val('')
-
+    containerId = targetId.replace(/_type$/g, '')
+    displayLoader('#' + containerId + '_options')
+    $('[for="' + containerId + '_default_value"]', @$el).parent().remove()
     $('form', @$el).ajaxSubmit
       type: 'PATCH'
       success: (response) ->
-        $('#' + optionId, viewContext.$el).parent().html if $('#' + optionId, response).length > 0 then $('#' + optionId, response).parent().html() else ''
-        $('#' + defaultValueId, viewContext.$el).parent().html if $('#' + defaultValueId, response).length > 0 then $('#' + defaultValueId, response).parent().html() else ''
-        $('#' + defaultValueId, viewContext.$el).closest( ".form-group" ).show()
-        activateForm(viewContext, $('#' + defaultValueId, viewContext.$el).parent())
-        activateForm(viewContext, $('#' + optionId, viewContext.$el).parent())
+        $('#' + containerId, viewContext.$el).html $('#' + containerId, response).html()
+        activateForm(viewContext, $('#' + containerId, viewContext.$el))
 
 jQuery ->
   appConfigurationView.setConfiguration('content_types', 'editEntity', OpenOrchestra.ContentTypeFormView)
