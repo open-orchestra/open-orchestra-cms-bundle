@@ -88,8 +88,7 @@ parameters:
                     default_value: false
                 expanded:
                     default_value: false
-                choices:
-                    default_value: null
+                choices: ~
         money:
             label: open_orchestra_backoffice.form.field_type.custom_type.money
             type: money
@@ -142,8 +141,7 @@ parameters:
             options:
                 required:
                     default_value: false
-                content_search:
-                    default_value: null
+                content_search: ~
 
     open_orchestra_backoffice.options:
         orchestra_default_value_choice:
