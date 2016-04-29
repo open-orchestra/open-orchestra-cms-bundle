@@ -19,17 +19,24 @@ class BlockType extends AbstractType
     protected $generateFormManager;
     protected $fixedParameters;
     protected $formFactory;
+    protected $blockToArrayTransformer;
 
     /**
-     * @param GenerateFormManager  $generateFormManager
-     * @param array                $fixedParameters
-     * @param FormFactoryInterface $formFactory
+     * @param GenerateFormManager     $generateFormManager
+     * @param array                   $fixedParameters
+     * @param FormFactoryInterface    $formFactory
+     * @param BlockToArrayTransformer $blockToArrayTransformer
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParameters, FormFactoryInterface $formFactory)
-    {
+    public function __construct(
+        GenerateFormManager $generateFormManager,
+        $fixedParameters,
+        FormFactoryInterface $formFactory,
+        BlockToArrayTransformer $blockToArrayTransformer
+    ) {
         $this->generateFormManager = $generateFormManager;
         $this->fixedParameters = $fixedParameters;
         $this->formFactory = $formFactory;
+        $this->blockToArrayTransformer = $blockToArrayTransformer;
     }
 
     /**
@@ -57,7 +64,7 @@ class BlockType extends AbstractType
 
         $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
 
-        $builder->addViewTransformer(new BlockToArrayTransformer());
+        $builder->addViewTransformer($this->blockToArrayTransformer);
         $builder->addEventSubscriber(
             new BlockTypeSubscriber(
                 $this->generateFormManager, $this->fixedParameters, $this->formFactory, $options['blockPosition']
