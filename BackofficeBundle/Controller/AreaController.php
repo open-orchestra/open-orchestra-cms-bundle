@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AreaController
  */
-class AreaController extends AbstractAdminController
+class AreaController extends AbstractEditionRoleController
 {
     /**
      * @param Request $request
@@ -42,7 +42,7 @@ class AreaController extends AbstractAdminController
             'areaId' => $areaId
         ));
 
-        $editionRole = $node->getNodeType() === NodeInterface::TYPE_TRANSVERSE? TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
+        $editionRole = $this->getEditionRole($node);
         $form = $this->generateForm($request, $actionUrl, $area, $node, $editionRole);
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
