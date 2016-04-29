@@ -123,24 +123,24 @@
 .ui-model {
   .area-toolbar {
     &.toolbar-container {
-      opacity: 0;
-      &.shown {
-        opacity: 1;
+      &.shown .toolbar {
+        display: block;
+      }
+      .toolbar {
+        display: none;
+        .tool {
+          font-size: 10px;
+          color: #666666;
+          cursor: pointer;
+          padding: 0 3px;
+        }
+        .tool:first-child {
+          cursor: auto;
+        }
       }
     }
     display: block;
     text-align: center;
-    .toolbar {
-      .tool {
-        font-size: 10px;
-        color: #666666;
-        cursor: pointer;
-        padding: 0 3px;
-      }
-      .tool:first-child {
-        cursor: auto;
-      }
-    }
   }
   //block toolbar
   .ui-model-block {
