@@ -65,6 +65,8 @@ class ApiControllersSecurityTest extends AbstractControllerTest
             array('/api/status/root/delete', 'DELETE'),
             array('/api/role'),
             array('/api/role/show/root'),
+            array('/api/role/type-node'),
+            array('/api/role/type/folder'),
             array('/api/role/root/delete', 'DELETE'),
             array('/api/template_flex/template_home_flex'),
             array('/api/template_flex/template_home_flex/delete', 'DELETE'),
