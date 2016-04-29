@@ -2,9 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class BlockController
  */
-class BlockController extends AbstractAdminController
+class BlockController extends AbstractEditionRoleController
 {
     /**
      * @param Request $request
@@ -40,8 +38,7 @@ class BlockController extends AbstractAdminController
         );
 
         if ($node) {
-            $editionRole = $node->getNodeType() === NodeInterface::TYPE_ERROR? TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE:TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
-            $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($editionRole, $node);
+            $options['disabled'] = !$this->get('security.authorization_checker')->isGranted($this->getEditionRole($node), $node);
         }
 
         $options['method'] = 'POST';
@@ -70,5 +67,4 @@ class BlockController extends AbstractAdminController
             $form->getConfig()->getAttribute('template')
         );
     }
-
 }

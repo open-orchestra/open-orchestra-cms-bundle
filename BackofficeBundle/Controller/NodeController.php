@@ -2,11 +2,9 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\NodeEvents;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class NodeController
  */
-class NodeController extends AbstractAdminController
+class NodeController extends AbstractEditionRoleController
 {
     /**
      * @param Request $request
@@ -81,21 +79,5 @@ class NodeController extends AbstractAdminController
         }
 
         return $this->renderAdminForm($form);
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     */
-    protected function getEditionRole(NodeInterface $node)
-    {
-        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
-            return TransverseNodePanelStrategy::ROLE_ACCESS_UPDATE_GENERAL_NODE;
-        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE;
     }
 }
