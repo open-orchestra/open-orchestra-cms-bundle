@@ -130,7 +130,7 @@ class ContentTransformerTest extends AbstractBaseTestCase
      */
     public function testExceptionTransform()
     {
-        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException');
+        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->contentTransformer->transform(Phake::mock('stdClass'));
     }
 
