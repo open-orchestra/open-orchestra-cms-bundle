@@ -25,3 +25,13 @@ class OpenOrchestra.FormBehavior.AbstractFormBehavior
     elements = $(@selector, form)
     if elements and elements.length > 0
       @activateBehaviorOnElements(elements, view, form)
+
+  ###*
+   * deactivateBehavior
+   * @param {Object} view
+   * @param {Object} form
+  ###
+  deactivateBehavior: (view, form) ->
+    elements = $(@selector, form)
+    if elements and elements.length > 0 and @deactivateBehaviorOnElements
+      @deactivateBehaviorOnElements(elements, view, form)

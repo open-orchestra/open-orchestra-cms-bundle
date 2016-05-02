@@ -37,7 +37,7 @@ PO.formPrototype = (collectionHolder, settings) ->
     return
 
   @toogleAddButton()
-  @maxIndex = @getIndex()
+  @getNextIndex()
   if @getIndex() == 0 && @settings.required
     @addPrototype()
 
@@ -46,6 +46,15 @@ PO.formPrototype = (collectionHolder, settings) ->
 PO.formPrototype:: =
   getIndex: ->
     return @collectionHolder.children('div').length
+
+  getNextIndex: ->
+  	index = 0
+  	key = @collectionHolder.attr('id') + '_'
+  	$('[id^="' + key + '"]', @collectionHolder).each () ->
+      currentIndex = $(this).attr('id').replace(key, '')
+      if !isNaN(currentIndex)
+        index = Math.max(index, parseInt(currentIndex) + 1)
+    return index
 
   toogleAddButton: ->
     if @settings.limit is `undefined` or @getIndex() < @settings.limit
@@ -90,8 +99,7 @@ PO.formPrototype:: =
 
   addPrototype: ->
     newPrototype = @settings.prototype.clone()
-    newPrototype.html newPrototype.html().replace(/__name__/g, @maxIndex)
-    @maxIndex++
+    newPrototype.html newPrototype.html().replace(/__name__/g, @getNextIndex())
 
     # Display the input in the page before the add button
     @settings.addButtonContainer.before newPrototype
@@ -104,6 +112,7 @@ PO.formPrototype:: =
     return
 
   removePrototype: (removeButton) ->
+    deactivateForm(@settings.view, removeButton.parent())
     removeButton.parent().remove()
     @toogleAddButton()
     return
