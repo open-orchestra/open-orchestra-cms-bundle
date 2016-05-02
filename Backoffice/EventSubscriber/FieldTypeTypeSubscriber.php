@@ -89,6 +89,10 @@ class FieldTypeTypeSubscriber implements EventSubscriberInterface
      */
     protected function addDefaultValueField(FieldTypeInterface $data, $type, FormInterface $form)
     {
+        if ($form->has('default_value')) {
+            $form->remove('default_value');
+        }
+
         if (is_null($type) || !array_key_exists($type, $this->options)) {
             return;
         }
