@@ -208,7 +208,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
      */
     public function testExceptionTransform()
     {
-        $this->setExpectedException('OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException');
+        $this->setExpectedException('OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException');
         $this->nodeTransformer->transform(Phake::mock('stdClass'));
     }
 
