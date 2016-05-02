@@ -26,7 +26,7 @@ class RoleController extends BaseController
     /**
      * @param int $roleId
      *
-     * @Config\Route("/{roleId}", name="open_orchestra_api_role_show")
+     * @Config\Route("/show/{roleId}", name="open_orchestra_api_role_show")
      * @Config\Method({"GET"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
@@ -51,6 +51,29 @@ class RoleController extends BaseController
      * @return FacadeInterface
      */
     public function listByTypeAction($type)
+    {
+        return $this->getRoleByType($type);
+    }
+
+    /**
+     * @Config\Route("/type-node", name="open_orchestra_api_role_list_by_node_type")
+     * @Config\Method({"GET"})
+     *
+     * @Config\Security("is_granted('ROLE_ACCESS_ROLE')")
+     *
+     * @return FacadeInterface
+     */
+    public function listByNodeTypeAction()
+    {
+        return $this->getRoleByType('(?<!error_)node');
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return FacadeInterface
+     */
+    protected function getRoleByType($type)
     {
         $roles = $this->get('open_orchestra_backoffice.collector.backoffice_role')->getRolesByType($type);
 
