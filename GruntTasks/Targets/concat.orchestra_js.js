@@ -85,6 +85,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/page/showTemplate.js',
     'web/built/openorchestrabackoffice/js/page/orderNode.js',
     'web/built/openorchestrabackoffice/js/page/PageLayoutButtonView.js',
+    'web/built/openorchestrabackoffice/js/page/NodeLayoutButtonView.js',
     'web/built/openorchestrabackoffice/js/page/viewportChannel.js',
 
     //--[ AREA FLEX ]--//
