@@ -21,7 +21,7 @@ class BlockController extends AbstractEditionRoleController
      * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="open_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
      * @Config\Method({"GET", "POST", "PATCH"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE')")
+     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
      * @return Response
      */
