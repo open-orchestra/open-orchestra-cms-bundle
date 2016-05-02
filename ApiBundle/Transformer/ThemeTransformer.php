@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;

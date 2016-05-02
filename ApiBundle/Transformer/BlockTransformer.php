@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ApiBundle\Transformer;
 
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\DisplayIcon\DisplayManager;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
 use OpenOrchestra\BaseApi\Facade\FacadeInterface;
