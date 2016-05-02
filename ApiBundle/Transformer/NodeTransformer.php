@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;

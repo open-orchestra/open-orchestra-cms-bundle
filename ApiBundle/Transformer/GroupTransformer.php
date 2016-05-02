@@ -9,7 +9,7 @@ use OpenOrchestra\GroupBundle\GroupFacadeEvents;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use OpenOrchestra\BaseApi\Transformer\AbstractSecurityCheckerAwareTransformer;
-use OpenOrchestra\ApiBundle\Exceptions\TransformerParameterTypeException;
+use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
