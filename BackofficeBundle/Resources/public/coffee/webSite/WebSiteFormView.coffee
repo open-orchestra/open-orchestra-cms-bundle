@@ -17,3 +17,4 @@ class OpenOrchestra.WebSite.WebSiteFormView extends FullPageFormView
 
 jQuery ->
   appConfigurationView.setConfiguration('websites', 'addEntity', OpenOrchestra.WebSite.WebSiteFormView)
+  appConfigurationView.setConfiguration('websites', 'editEntity', OpenOrchestra.WebSite.WebSiteFormView)
