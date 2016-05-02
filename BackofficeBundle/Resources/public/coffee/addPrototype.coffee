@@ -37,7 +37,6 @@ PO.formPrototype = (collectionHolder, settings) ->
     return
 
   @toogleAddButton()
-  @getNextIndex()
   if @getIndex() == 0 && @settings.required
     @addPrototype()
 
@@ -48,9 +47,9 @@ PO.formPrototype:: =
     return @collectionHolder.children('div').length
 
   getNextIndex: ->
-  	index = 0
-  	key = @collectionHolder.attr('id') + '_'
-  	$('[id^="' + key + '"]', @collectionHolder).each () ->
+    index = 0
+    key = @collectionHolder.attr('id') + '_'
+    $('[id^="' + key + '"]', @collectionHolder).each () ->
       currentIndex = $(this).attr('id').replace(key, '')
       if !isNaN(currentIndex)
         index = Math.max(index, parseInt(currentIndex) + 1)
