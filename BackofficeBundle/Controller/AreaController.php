@@ -2,14 +2,11 @@
 
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeTemplatePanelStrategy;
 use OpenOrchestra\ModelInterface\Event\NodeEvent;
 use OpenOrchestra\ModelInterface\Event\TemplateEvent;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelInterface\TemplateEvents;
 use Symfony\Component\Form\FormInterface;
@@ -35,6 +32,7 @@ class AreaController extends AbstractEditionRoleController
     public function formAction(Request $request, $nodeId, $areaId)
     {
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
         $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $areaId);
 
         $actionUrl = $this->generateUrl('open_orchestra_backoffice_area_form', array(
@@ -42,8 +40,7 @@ class AreaController extends AbstractEditionRoleController
             'areaId' => $areaId
         ));
 
-        $editionRole = $this->getEditionRole($node);
-        $form = $this->generateForm($request, $actionUrl, $area, $node, $editionRole);
+        $form = $this->generateForm($request, $actionUrl, $area, $node, $this->getEditionRole($node));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.area.success');
         if ($this->handleForm($form, $message)) {
             $this->dispatchEvent(NodeEvents::NODE_UPDATE_AREA, new NodeEvent($node));
