@@ -27,12 +27,12 @@ class NodeController extends AbstractEditionRoleController
     {
         $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
         $node = $nodeRepository->findVersionByDocumentId($id);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
         $url = $this->generateUrl('open_orchestra_backoffice_node_form', array('id' => $id));
         $message = $this->get('translator')->trans('open_orchestra_backoffice.form.node.success');
 
-        $editionRole = $this->getEditionRole($node);
-        $form = $this->createForm('oo_node', $node, array('action' => $url), $editionRole);
+        $form = $this->createForm('oo_node', $node, array('action' => $url), $this->getEditionRole($node));
 
         $form->handleRequest($request);
 

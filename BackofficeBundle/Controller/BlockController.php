@@ -21,13 +21,12 @@ class BlockController extends AbstractEditionRoleController
      * @Config\Route("/block/form/{nodeId}/{blockNumber}", name="open_orchestra_backoffice_block_form", requirements={"blockNumber" = "\d+"}, defaults={"blockNumber" = 0})
      * @Config\Method({"GET", "POST", "PATCH"})
      *
-     * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_NODE') or is_granted('ROLE_ACCESS_UPDATE_ERROR_NODE') or is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE') or is_granted('ROLE_ACCESS_TREE_GENERAL_NODE') or is_granted('ROLE_ACCESS_TREE_NODE') or is_granted('ROLE_ACCESS_ERROR_NODE')")
-     *
      * @return Response
      */
     public function formAction(Request $request, $nodeId, $blockNumber = 0)
     {
         $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
         $block = $node->getBlocks()->get($blockNumber);
 
         $options = array(

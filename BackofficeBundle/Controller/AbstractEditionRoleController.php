@@ -16,6 +16,22 @@ abstract class AbstractEditionRoleController extends AbstractAdminController
      *
      * @return string
      */
+    protected function getAccessRole(NodeInterface $node)
+    {
+        if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
+            return TransverseNodePanelStrategy::ROLE_ACCESS_TREE_GENERAL_NODE;
+        } elseif (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
+        }
+
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
+    }
+
+    /**
+     * @param NodeInterface $node
+     *
+     * @return string
+     */
     protected function getEditionRole(NodeInterface $node)
     {
         if (NodeInterface::TYPE_TRANSVERSE === $node->getNodeType()) {
