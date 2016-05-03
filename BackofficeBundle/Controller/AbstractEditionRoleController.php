@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\Controller;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TreeNodesPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class AbstractEditionRoleController
