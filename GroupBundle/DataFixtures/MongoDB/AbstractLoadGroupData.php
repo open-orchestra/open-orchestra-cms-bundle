@@ -44,7 +44,7 @@ abstract class AbstractLoadGroupData extends AbstractFixture implements OrderedF
      *
      * @return Group
      */
-    protected function generateGroup($name, $enLabel, $frLabel, $siteNumber, $referenceName, $role = null)
+    protected function generateGroup($name, $enLabel, $frLabel, $siteNumber = null, $referenceName = null, $role = null)
     {
         $group = new Group();
         $group->setName($name);
@@ -112,8 +112,12 @@ abstract class AbstractLoadGroupData extends AbstractFixture implements OrderedF
             $group->addRole($role);
         }
 
-        $group->setSite($this->getReference($siteNumber));
-        $this->setReference($referenceName, $group);
+        if (!is_null($siteNumber)) {
+            $group->setSite($this->getReference($siteNumber));
+        }
+        if (!is_null($referenceName)) {
+            $this->setReference($referenceName, $group);
+        }
 
         return $group;
     }
