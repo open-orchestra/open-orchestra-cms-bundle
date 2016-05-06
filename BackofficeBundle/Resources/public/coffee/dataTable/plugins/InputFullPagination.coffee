@@ -26,9 +26,13 @@ $.extend $.fn.dataTableExt.oPagination, 'input_full':
       link = $('<li ' + cssClass + '><a href="#">' + number + '</a></li>').bind 'click', fnUpdatePage
       link.insertBefore($('li:last', domP[i])[0])
 
-    listLength = 5
     paging = settings.oInstance.api().table().page.info()
     domP = settings.aanFeatures.p
+
+    if !paging? || !domP
+      return
+
+    listLength = 5
     i = undefined
     j = undefined
     start = undefined
