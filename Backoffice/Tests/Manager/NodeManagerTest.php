@@ -515,6 +515,7 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertSame($siteId, $node->getSiteId());
         $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getNodeId());
         $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getName());
+        $this->assertSame(NodeInterface::TRANSVERSE_BO_LABEL, $node->getBoLabel());
         $this->assertSame(NodeInterface::TYPE_TRANSVERSE, $node->getNodeType());
         $this->assertSame(1, $node->getVersion());
         $this->assertSame($language, $node->getLanguage());
