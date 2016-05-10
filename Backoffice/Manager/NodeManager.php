@@ -242,9 +242,9 @@ class NodeManager
     {
         $newNode->setBoDirection($node->getBoDirection());
         $this->duplicateArea($node, $newNode);
-        foreach ($node->getBlocks() as $block) {
+        foreach ($node->getBlocks() as $key => $block) {
             $newBlock = clone $block;
-            $newNode->addBlock($newBlock);
+            $newNode->setBlock($key, $newBlock);
         }
 
         return $newNode;
