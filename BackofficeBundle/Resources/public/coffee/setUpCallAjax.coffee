@@ -11,7 +11,7 @@ $(document).ready ->
         displayLoader(context.button) if context != undefined && context.button != undefined
   $(document).ajaxError (event, jqXHR, settings) ->
     errors = {error : {message :$('#content').data('error-txt')}}
-    if jqXHR.statusText != 'abort'
+    if jqXHR.statusText != 'abort' && (jqXHR.status != 403 || settings.type != 'POST')
       if isAccessDenied(jqXHR)
         redirectToLogin()
       else if jqXHR.responseJSON
