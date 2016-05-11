@@ -299,6 +299,7 @@ class NodeManager
         $node->setTemplateId($template->getTemplateId());
         $node->setRoutePattern($routePattern);
         $node->setName($name);
+        $node->setBoLabel($name);
         $node->setVersion(1);
         $node->setInMenu(true);
         $node->setInFooter(true);
@@ -463,6 +464,7 @@ class NodeManager
         $node->setLanguage($language);
         $node->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
         $node->setName(NodeInterface::TRANSVERSE_NODE_ID);
+        $node->setBoLabel(NodeInterface::TRANSVERSE_BO_LABEL);
         $node->setNodeType(NodeInterface::TYPE_TRANSVERSE);
         $node->setSiteId($siteId);
         $node->addArea($area);
