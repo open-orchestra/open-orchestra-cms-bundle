@@ -1,12 +1,12 @@
 module.exports = {
   src: [
     //--[ MAIN ]--//
+    'web/built/openorchestrabackoffice/js/viewConfigurator.js',
     'web/built/openorchestrabackoffice/js/orchestraLib.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/tinyMceConf.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/bbcode2htmlConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/html2bbcodeConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/loadHtml2bbcodeInternalLink.js',
-    'web/built/openorchestrabackoffice/js/viewConfigurator.js',
     'web/built/openorchestrabackoffice/js/setUpCallAjax.js',
     'web/built/openorchestrabackoffice/js/OrchestraView.js',
     'web/built/openorchestrabackoffice/js/OrchestraModalView.js',

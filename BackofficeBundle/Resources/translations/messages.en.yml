@@ -38,6 +38,8 @@ open_orchestra_backoffice:
         swchoff:
             on: YES
             off: NO
+        javascript:
+          error: An error occurs during form submission!
         status:
             published: Published
             draft: Draft
