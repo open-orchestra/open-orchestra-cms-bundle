@@ -28,7 +28,8 @@
 
   "require-dev": {
     "phake/phake": "~2.1.0",
-    "phpunit/phpunit" : "~4.8.0",
+    "phpunit/phpunit": "~4.8.0",
+    "sensio/generator-bundle": "~2.5.0",
 
     "codeclimate/php-test-reporter": "dev-master",
     "open-orchestra/open-orchestra-model-bundle": "1.2.*@dev"
