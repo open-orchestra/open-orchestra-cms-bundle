@@ -284,6 +284,12 @@
     </div>
 {% endblock %}
 
+{% block _oo_content_type_fields_entry_additional_parameters_widget %}
+    {% spaceless %}
+        <hr />
+    {% endspaceless %}
+{% endblock %}
+
 {% block oo_node_widget %}
     {{ block('form_area_container') }}
 {% endblock %}
