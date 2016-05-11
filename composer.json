@@ -8,32 +8,36 @@
       "homepage": "https://github.com/open-orchestra/open-orchestra-cms-bundle/graphs/contributors"
     }
   ],
-  "require": {
-    "open-orchestra/open-orchestra-base-bundle": "1.2.*@dev",
-    "open-orchestra/open-orchestra-base-api-bundle": "1.2.*@dev",
-    "open-orchestra/open-orchestra-display-bundle": "1.2.*@dev",
-    "open-orchestra/open-orchestra-user-bundle": "1.2.*@dev",
-    "open-orchestra/open-orchestra-model-interface": "1.2.*@dev",
-    "braincrafted/bootstrap-bundle": "2.1.2",
-    "stfalcon/tinymce-bundle": "0.3.8",
-    "koala-framework/composer-extra-assets": "2.0.x",
-    "innocead/captcha-bundle": "@dev",
-    "friendsofsymfony/user-bundle": "@dev",
 
+  "require": {
+    "braincrafted/bootstrap-bundle": "~2.1.2",
+    "koala-framework/composer-extra-assets": "~2.0.4",
+    "stfalcon/tinymce-bundle": "~0.3.8",
+    "open-orchestra/open-orchestra-base-api-bundle": "1.2.*@dev",
+    "open-orchestra/open-orchestra-base-bundle": "1.2.*@dev",
+    "open-orchestra/open-orchestra-display-bundle": "1.2.*@dev",
+    "open-orchestra/open-orchestra-model-interface": "1.2.*@dev",
+    "open-orchestra/open-orchestra-user-bundle": "1.2.*@dev",
+
+    "friendsofsymfony/user-bundle": "@dev",
+    "innocead/captcha-bundle": "@dev",
     "open-orchestra/open-orchestra-bbcode-bundle": "@dev",
     "open-orchestra/open-orchestra-libs": "@dev",
     "open-orchestra/open-orchestra-mongo-libs": "@dev"
   },
+
   "require-dev": {
-    "open-orchestra/open-orchestra-model-bundle": "1.2.*@dev",
-    "phpunit/phpunit" : "4.8.12",
-    "psr/log": "1.0.0",
+    "phake/phake": "~2.1.0",
+    "phpunit/phpunit" : "~4.8.0",
+
     "codeclimate/php-test-reporter": "dev-master",
-    "phake/phake": "2.1.0"
+    "open-orchestra/open-orchestra-model-bundle": "1.2.*@dev"
   },
-  "config" : {
-    "bin-dir" : "bin"
+
+  "config": {
+    "bin-dir": "bin"
   },
+
   "autoload": {
     "psr-4": {
       "OpenOrchestra\\ModelLogBundle\\": "ModelLogBundle/",
@@ -45,6 +49,7 @@
       "OpenOrchestra\\UserAdminBundle\\": "UserAdminBundle/"
     }
   },
+
   "extra": {
     "branch-alias": {
       "dev-master": "1.2.x-dev"
