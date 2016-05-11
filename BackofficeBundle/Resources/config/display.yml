@@ -2,7 +2,6 @@ parameters:
     open_orchestra_backoffice.display.contact.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ContactStrategy
     open_orchestra_backoffice.display.footer.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\FooterStrategy
     open_orchestra_backoffice.display.menu.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\MenuStrategy
-    open_orchestra_backoffice.display.sample.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SampleStrategy
     open_orchestra_backoffice.display.tiny_mce_wysiwyg.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\TinyMCEWysiwygStrategy
     open_orchestra_backoffice.display.configurable_content.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\ConfigurableContentStrategy
     open_orchestra_backoffice.display.search.class: OpenOrchestra\Backoffice\DisplayBlock\Strategies\SearchStrategy
