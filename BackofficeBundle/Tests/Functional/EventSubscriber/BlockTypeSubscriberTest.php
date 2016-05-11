@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\Tests\Functional\EventSubscriber;
 use OpenOrchestra\BackofficeBundle\Tests\Functional\AbstractAuthentificatedTest;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ConfigurableContentStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\SampleStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\VideoStrategy;
 use OpenOrchestra\Media\DisplayBlock\Strategies\GalleryStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
@@ -94,12 +93,6 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function provideComponentAndData()
     {
         return array(
-            array(SampleStrategy::NAME, array(
-                'title' => 'title',
-                'news' => 'news',
-                'author' => 'author',
-                'multipleChoice' => array('foo', 'none'),
-            )),
             array(GalleryStrategy::NAME, array(
                 'pictures' => array(
                     'media1',

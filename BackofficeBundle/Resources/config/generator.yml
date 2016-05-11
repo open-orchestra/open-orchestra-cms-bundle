@@ -1,6 +1,5 @@
 parameters:
     open_orchestra_backoffice.generate_form_manager.class: OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager
-    open_orchestra_backoffice.sample.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\SampleStrategy
     open_orchestra_backoffice.contact.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\ContactStrategy
     open_orchestra_backoffice.footer.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\FooterStrategy
     open_orchestra_backoffice.menu.generate_form.class: OpenOrchestra\Backoffice\GenerateForm\Strategies\MenuStrategy
@@ -22,10 +21,6 @@ services:
     open_orchestra_backoffice.generate_form_manager:
         class: %open_orchestra_backoffice.generate_form_manager.class%
 
-    open_orchestra_backoffice.sample.generate_form:
-        class: %open_orchestra_backoffice.sample.generate_form.class%
-        tags:
-            - { name: open_orchestra_backoffice.generate_form.strategy }
     open_orchestra_backoffice.contact.generate_form:
         class: %open_orchestra_backoffice.contact.generate_form.class%
         tags:
