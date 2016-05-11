@@ -284,9 +284,21 @@
     </div>
 {% endblock %}
 
-{% block _oo_content_type_fields_entry_additional_parameters_widget %}
+{% block oo_field_type_widget %}
     {% spaceless %}
-        <hr />
+        {{ form_row(form.fieldId) }}
+        {{ form_row(form.labels) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.listable) }}
+        {{ form_row(form.translatable) }}
+        {{ form_row(form.searchable) }}
+        {{ form_row(form.orderable) }}
+        {{ form_row(form.orderDirection) }}
+        <div class="form-group">
+            <label class="alert alert-info control-label col-lg-3">{{ 'open_orchestra_backoffice.form.field_type.additionalParameters'|trans }}</label>
+            <div class="col-lg-9"><hr /></div>
+        </div>
+        {{ form_rest(form) }}
     {% endspaceless %}
 {% endblock %}
 

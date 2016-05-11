@@ -88,13 +88,6 @@ class FieldTypeType extends AbstractType
                 'choices' => $this->getChoicesOrder(),
                 'label' => 'open_orchestra_backoffice.form.field_type.orderDirection',
                 'required' => false,
-            ))
-            ->add('additionalParameters', "text", array(
-                'label' => 'open_orchestra_backoffice.form.field_type.additionalParameters',
-                'label_attr' => array('class' => 'alert alert-info'),
-                'block_name'=> 'additional_parameters',
-                'required' => false,
-                'mapped' => false
             ));
 
         $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeParameters));
