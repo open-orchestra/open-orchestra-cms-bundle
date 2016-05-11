@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
@@ -21,8 +22,12 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function adminAction($siteId = null)
+    public function adminAction(Request $request, $siteId = null)
     {
+        if ($request->getMethod() == 'POST') {
+            $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('open_orchestra_backoffice.form.javascript.error'));
+        }
+
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
         if ($siteId) {

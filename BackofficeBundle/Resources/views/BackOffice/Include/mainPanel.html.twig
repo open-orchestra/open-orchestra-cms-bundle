@@ -2,10 +2,13 @@
 <div id="main" role="main">
 
     {% include 'OpenOrchestraBackofficeBundle:BackOffice/Include/MainPanel:ribbon.html.twig' %}
-
+	{% set alert %}
+	    {% include 'BraincraftedBootstrapBundle::flash.html.twig' %}
+	{% endset %}
     <!-- MAIN CONTENT -->
     <div id="content"
          data-error-txt="{{ 'open_orchestra_backoffice.error_txt'|trans }}"
+         data-alert-txt="{{ alert|e('html') }}"
     ></div>
     <!-- END MAIN CONTENT -->
 
