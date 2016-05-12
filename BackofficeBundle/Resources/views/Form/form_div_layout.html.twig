@@ -294,11 +294,10 @@
         {{ form_row(form.searchable) }}
         {{ form_row(form.orderable) }}
         {{ form_row(form.orderDirection) }}
-        <div class="form-group">
-            <label class="alert alert-info control-label col-lg-3">{{ 'open_orchestra_backoffice.form.field_type.additionalParameters'|trans }}</label>
-            <div class="col-lg-9"><hr /></div>
-        </div>
-        {{ form_rest(form) }}
+        <fieldset>
+            <legend>{{ 'open_orchestra_backoffice.form.field_type.additionalParameters'|trans }}</legend>
+            {{ form_rest(form) }}
+        </fieldset>
     {% endspaceless %}
 {% endblock %}
 
