@@ -51,7 +51,7 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
 
-        $this->transformer = Phake::mock('OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface');
+        $this->transformer = Phake::mock('OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface');
         Phake::when($this->transformer)->reverseTransform($keywords)->thenReturn($condition);
 
         $this->attributes = array(

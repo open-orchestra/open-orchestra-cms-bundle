@@ -7,7 +7,7 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface;
+use OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface;
 
 /**
  * Class ContentSearchSubscriber

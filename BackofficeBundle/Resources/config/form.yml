@@ -321,8 +321,9 @@ services:
     open_orchestra_backoffice.type.keywords_choice:
         class: %open_orchestra_backoffice.type.keywords_choice.class%
         arguments:
-            - @open_orchestra_backoffice.transformer.embedkeywords_to_keywords
+            - @open_orchestra_backoffice.transformer.referencedkeywords_to_keywords
             - @open_orchestra_model.repository.keyword
+            - @open_orchestra_backoffice.manager.keyword_to_reference
             - @router
             - @security.authorization_checker
         tags:
@@ -388,7 +389,7 @@ services:
         arguments:
             - @open_orchestra_model.repository.content
             - @open_orchestra_backoffice.context_manager
-            - %open_orchestra.transformer.boolean_to_bdd.class%
+            - %open_orchestra_model.transformer.boolean_to_bdd.class%
         tags:
             - { name: form.type, alias: oo_content_search}
     open_orchestra_backoffice.type.internal_link:

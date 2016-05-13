@@ -36,7 +36,7 @@ class ContentSearchType extends AbstractType
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
         $this->transformerClass = $transformerClass;
-        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface')) {
+        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface')) {
             throw new NotAllowedClassNameException();
         }
     }
@@ -56,7 +56,6 @@ class ContentSearchType extends AbstractType
             'required' => !$options['refresh'] && $options['required']
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
-            'embedded' => false,
             'transformerClass' => $this->transformerClass,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
             'name' => 'keywords',

@@ -5,7 +5,7 @@ namespace OpenOrchestra\Backoffice\Tests\Form\Type\Component;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\Component\ContentSearchType;
-use OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface;
+use OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface;
 
 /**
  * Class ContentSearchTypeTest
