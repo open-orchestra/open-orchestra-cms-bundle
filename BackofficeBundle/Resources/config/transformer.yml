@@ -1,5 +1,4 @@
 parameters:
-    open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class: OpenOrchestra\Backoffice\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer
     open_orchestra_backoffice.transformer.video_url_to_id.class: OpenOrchestra\Backoffice\Form\DataTransformer\VideoUrlToIdTransformer
     open_orchestra_backoffice.transformer.choices_option_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\ChoicesOptionToArrayTransformer
     open_orchestra_backoffice.transformer.choice_array_to_string.class: OpenOrchestra\Backoffice\Form\DataTransformer\ChoiceArrayToStringTransformer
@@ -7,16 +6,9 @@ parameters:
     open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\Backoffice\Form\DataTransformer\BBcodeToHtmlTransformer
     open_orchestra_backoffice.transformer.reference_to_embed.class: OpenOrchestra\Backoffice\Form\DataTransformer\ReferenceToEmbedTransformer
     open_orchestra_backoffice.transformer.block_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer
-
+    open_orchestra_backoffice.transformer.referencedkeywords_to_keywords.class: OpenOrchestra\Backoffice\Form\DataTransformer\ReferencedKeywordsToKeywordsTransformer
+    
 services:
-    open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
-        class: %open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%
-        arguments:
-            - @open_orchestra_model.repository.keyword
-            - @open_orchestra_model.helper.suppress_special_character
-            - %open_orchestra_model.document.embed_keyword.class%
-            - %open_orchestra_model.document.keyword.class%
-            - @security.authorization_checker
     open_orchestra_backoffice.transformer.video_url_to_id:
         class: %open_orchestra_backoffice.transformer.video_url_to_id.class%
     open_orchestra_backoffice.transformer.choice_array_to_string:
@@ -41,3 +33,7 @@ services:
             - %open_orchestra_model.document.content.class%
     open_orchestra_backoffice.transformer.block_to_array:
         class: %open_orchestra_backoffice.transformer.block_to_array.class%
+    open_orchestra_backoffice.transformer.referencedkeywords_to_keywords:
+        class: %open_orchestra_backoffice.transformer.referencedkeywords_to_keywords.class%
+        arguments:
+            - @open_orchestra_backoffice.manager.keyword_to_reference

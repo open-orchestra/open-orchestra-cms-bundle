@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+@trigger_error('The '.__NAMESPACE__.'\EmbedKeywordsToKeywordsTransformer class is deprecated since version 1.2.0 and will be removed in 1.2.1', E_USER_DEPRECATED);
 
 /**
  * Class EmbedKeywordsToKeywordsTransformer

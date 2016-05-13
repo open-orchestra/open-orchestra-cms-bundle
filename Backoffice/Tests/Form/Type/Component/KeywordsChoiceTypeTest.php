@@ -25,6 +25,7 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     protected $keywords;
     protected $transformer;
     protected $keywordRepository;
+    protected $keywordToDocumentManager;
     protected $authorizationChecker;
 
     /**
@@ -41,14 +42,17 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
         Phake::when($this->keywordRepository)->findAll()->thenReturn($this->keywords);
 
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer');
+        $this->transformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ReferencedKeywordsToKeywordsTransformer');
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
+
+        $this->keywordToDocumentManager = Phake::mock('OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager');
+
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->form = new KeywordsChoiceType($this->transformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
+        $this->form = new KeywordsChoiceType($this->transformer, $this->keywordRepository, $this->keywordToDocumentManager, $this->router, $this->authorizationChecker);
     }
 
     /**
@@ -94,7 +98,6 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
                 );
                 return array_replace($default, $options['new_attr']);
             },
-            'embedded' => true,
             'name' => '',
             'new_attr' => array(),
             'transformerClass' => null,
@@ -117,7 +120,7 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
      */
     public function testBuildForm()
     {
-        $this->form->buildForm($this->builder, array('embedded' => true, 'transformerClass' => null));
+        $this->form->buildForm($this->builder, array('transformerClass' => null));
 
         Phake::verify($this->builder)->addModelTransformer($this->transformer);
     }
