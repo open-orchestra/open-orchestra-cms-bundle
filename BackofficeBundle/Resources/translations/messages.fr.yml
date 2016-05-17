@@ -41,7 +41,7 @@ open_orchestra_backoffice:
         status:
             published: Publié
             draft: Brouillon
-            Pending: En attente
+            pending: En attente
             name: Nom
             published: Publié
             initial: Initial
@@ -112,10 +112,10 @@ open_orchestra_backoffice:
             main: Alias principal
             blocks: Blocs disponibles
             theme: Thème par défaut
-            keywords: Meta keywords
-            description: Meta description
-            index: Meta index
-            follow: Meta follow
+            meta_keywords: Meta keywords
+            meta_description: Meta description
+            meta_index: Meta index
+            meta_follow: Meta follow
             robots_txt: Informations contenues dans le fichier robots.txt
             template_node_root:
                 label: Gabarit de la page d'accueil
@@ -146,7 +146,6 @@ open_orchestra_backoffice:
             names: Nom dans toutes les langues
             version: Version
             status: Statut
-            fields: Champs
             linked_to_site: Lié au site courant
             default_display: Visible par défaut dans les listes du Backoffice
             default_listable_label:
@@ -159,6 +158,7 @@ open_orchestra_backoffice:
                 created_by: Créé par
                 updated_at: Mis à jour le
                 updated_by: Mis à jour par
+            fields: Champs
             keywords: Mots-clé
             template:
                 label: Template personnalisé de formulaire d'édition
@@ -209,20 +209,6 @@ open_orchestra_backoffice:
             monthly: Mensuel
             yearly: Annuel
             never: Jamais
-        area_flex:
-            success: La zone a été modifiée
-            new_row_title: Nouvelle ligne
-            edit_row_title: Editer la ligne
-            new_row_title: Editer la colonne
-            html_class: Classe html pour la zone
-            label: Libellé de la zone
-            width: Taille de la zone
-            column_layout:
-                label: Réparition des colonnes
-                helper: Répartition des colonnes: 10%, auto, 100px
-            layout:
-                select_layout: Sélectionner une option
-                manually: Ou le spécifier manuellement
         area:
             success: La zone a été modifiée
             bo_direction: Direction des enfants
@@ -238,6 +224,20 @@ open_orchestra_backoffice:
             id_sub: Id de la zone
             remove_sub: Suppression
             block_exists: Ajout de zone impossible, cette zone contient au moins un bloc
+        area_flex:
+            success: La zone a été modifiée
+            html_class: Classe html pour la zone
+            label: Libellé de la zone
+            new_row_title: Nouvelle ligne
+            edit_row_title: Editer la ligne
+            edit_column_title: Editer la colonne
+            width: Taille de la zone
+            column_layout:
+                label: Réparition des colonnes
+                helper: Répartition des colonnes: 10%, auto, 100px
+            layout:
+                select_layout: Sélectionner une option
+                manually: Ou le spécifier manuellement
         block:
             success: Le bloc a été modifié
             label: Nom du bloc
@@ -303,7 +303,7 @@ open_orchestra_backoffice:
                 success: Le groupe a été mis à jour
             name: Nom
             label: Libellé
-            role: Rôles
+            roles: Rôles
             role_helper: Les rôles page par page ne sont pas pris en compte si le droit général correspondant n'est pas activé
             role_front_title: Front Office
             site: Site
@@ -433,7 +433,7 @@ open_orchestra_backoffice:
         language_list:
             title: Bloc séléction de langue
             description: Affiche la liste déroulante avec toutes les langues du site.
-        login: 
+        login:
             title: Bloc connexion
             description: Affiche un formulaire pour ce logger.
         delete_question: Voulez vous supprimer ce bloc ?
@@ -526,8 +526,8 @@ open_orchestra_backoffice:
             by: par
         delete:
             button: Supprimer
-            title: Souhaitez-vous supprimer ce noeud ?
             text: Cette opération est définitive.
+            title: Souhaitez-vous supprimer ce noeud ?
         blocks: Blocs
     status:
         none_available: Pas de statut disponible
