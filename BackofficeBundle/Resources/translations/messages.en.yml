@@ -553,12 +553,12 @@ open_orchestra_backoffice:
         new_row_label: Row
     templates:
         delete:
-          title: Would you like delete this template?
-          text: This operation is not reversible.
+            title: Would you like delete this template?
+            text: This operation is not reversible.
     templates_flex:
         delete:
-          title: Would you like delete this template?
-          text: This operation is not reversible.
+            title: Would you like delete this template?
+            text: This operation is not reversible.
     command:
         node:
             success: Nodes references are consistent.
