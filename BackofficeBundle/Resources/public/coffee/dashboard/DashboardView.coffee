@@ -12,13 +12,6 @@ DashboardView = OrchestraView.extend(
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/dashboard/dashboardView')
     @options.domContainer.html @$el
-    $('#content').each ->
-      if $(this).data('alertTxt') != ''
-        viewClass = appConfigurationView.getConfiguration('', 'showFlashBag')
-        new viewClass(
-          html: $(this).data('alertTxt')
-          domContainer: $('h1.page-title').parent()
-        )
     @loadWidgets()
 
   loadWidgets: ->

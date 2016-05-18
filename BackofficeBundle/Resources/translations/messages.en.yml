@@ -39,7 +39,7 @@ open_orchestra_backoffice:
             on: YES
             off: NO
         javascript:
-          error: An error occurs during form submission!
+          error: An error occurs on your browser during form submission!
         status:
             published: Published
             draft: Draft

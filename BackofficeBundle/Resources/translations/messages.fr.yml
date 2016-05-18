@@ -39,7 +39,7 @@ open_orchestra_backoffice:
             on: OUI
             off: NON
         javascript:
-          error: Une erreur est survenue lors de la soumission du formulaire!
+          error: Une erreur est survenue dans votre navigateur lors de la soumission du formulaire!
         status:
             published: Publié
             draft: Brouillon
