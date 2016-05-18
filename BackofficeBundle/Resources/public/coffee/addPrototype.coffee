@@ -106,12 +106,12 @@ PO.formPrototype:: =
 
     @createRemoveButton newPrototype
     # increase the index with one for the next item
-    activateForm(@settings.view, newPrototype)
+    window.OpenOrchestra.FormBehavior.channel.trigger 'activate', @settings.view, newPrototype
     @toogleAddButton()
     return
 
   removePrototype: (removeButton) ->
-    deactivateForm(@settings.view, removeButton.parent())
+    window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @settings.view, removeButton.parent()
     removeButton.parent().remove()
     @toogleAddButton()
     return

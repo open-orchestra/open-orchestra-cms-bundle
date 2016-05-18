@@ -22,7 +22,7 @@ class OpenOrchestra.FormBehavior.RefreshForm extends OpenOrchestra.FormBehavior.
 =======
       form = $('form', view.$el)
 
-      deactivateForm(view, form)
+      window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', view, $('form', view.$el)
       form.replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
       $('form', view.$el).replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
 
@@ -35,7 +35,7 @@ class OpenOrchestra.FormBehavior.RefreshForm extends OpenOrchestra.FormBehavior.
           newForm = $(response);
           $('input[name="_method"]', newForm).remove()
           $('.spin', @$el).replaceWith(newForm)
-          activateForm(@, $('form', @$el))
+          window.OpenOrchestra.FormBehavior.channel.trigger 'activate', @, $('form', @$el)
 
 jQuery ->
   OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.RefreshForm(".refresh-form"))
