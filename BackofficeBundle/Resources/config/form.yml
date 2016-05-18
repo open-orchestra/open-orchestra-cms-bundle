@@ -54,10 +54,10 @@ parameters:
                 theme: modern
                 content_css: /built/openorchestrabackoffice/css/tinyMCEPatches/floatPanel.css
                 plugins:
-                    - advlist autolink lists link image charmap print preview hr anchor pagebreak
+                    - advlist autolink lists image charmap print preview hr anchor pagebreak
                     - searchreplace wordcount visualblocks visualchars code fullscreen
                     - insertdatetime media nonbreaking save table contextmenu directionality
-                    - emoticons template paste textcolor orchestra_bbcode
+                    - emoticons template paste textcolor orchestra_bbcode orchestra_link
                 toolbar1: undo redo | styleselect bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link linkmanager
                 menubar: false
                 height: 200

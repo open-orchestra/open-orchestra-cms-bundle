@@ -3,6 +3,8 @@ module.exports = {
     //--[ MAIN ]--//
     'web/built/openorchestrabackoffice/js/orchestraLib.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/tinyMceConf.js',
+    'web/built/openorchestrabackoffice/js/tinyMCE/plugins/BBCodeOrchestraPlugin.js',
+    'web/built/openorchestrabackoffice/js/tinyMCE/plugins/LinkOrchestraPlugin.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/bbcode2htmlConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/html2bbcodeConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/loadHtml2bbcodeInternalLink.js',
