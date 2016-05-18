@@ -17,7 +17,16 @@ class OpenOrchestra.FormBehavior.RefreshForm extends OpenOrchestra.FormBehavior.
   ###
   activateBehaviorOnElements: (elements, view, form) ->
     elements.on 'click', ->
+<<<<<<< HEAD
       $('form', view.$el).replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
+=======
+      form = $('form', view.$el)
+
+      deactivateForm(view, form)
+      form.replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
+      $('form', view.$el).replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
+
+>>>>>>> 5514017... enable tinyMce reload on form changes
       form.ajaxSubmit
         method: 'PATCH'
         url : form.data('action')
