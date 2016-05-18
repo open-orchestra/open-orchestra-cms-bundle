@@ -35,7 +35,7 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
     )
     @$el.appendTo('body')
     @$el.modal "show"
-
+    deactivateForm(@, $('form', @$el))
     viewContext = @
     $.ajax
       url: @options.url
