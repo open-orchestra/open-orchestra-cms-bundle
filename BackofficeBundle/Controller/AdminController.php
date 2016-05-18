@@ -24,10 +24,6 @@ class AdminController extends Controller
      */
     public function adminAction(Request $request, $siteId = null)
     {
-        if ($request->getMethod() == 'POST') {
-            $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('open_orchestra_backoffice.form.javascript.error'));
-        }
-
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
         if ($siteId) {
