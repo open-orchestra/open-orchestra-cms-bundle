@@ -28,7 +28,7 @@ OrchestraModalView = OrchestraView.extend(
     @options.domContainer.html @$el
     @options.domContainer.modal "show"
     @options.domContainer.on 'hidden.bs.modal', ->
-      deactivateForm(viewContext, $('form', viewContext.$el))
+      window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', viewContext, $('form', viewContext.$el)
       return
 
   close: ->

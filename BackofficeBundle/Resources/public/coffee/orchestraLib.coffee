@@ -121,19 +121,6 @@ smartConfirm = (logo, titleColorized, text, functions) ->
 selectorExist = (selector) ->
   return selector.length
 
-#ACTIVATE FORM JS
-activateForm = (view, form) ->
-  if typeof OpenOrchestra != 'undefined' and typeof OpenOrchestra.FormBehavior != 'undefined' and typeof OpenOrchestra.FormBehavior.formBehaviorLibrary != 'undefined'
-    OpenOrchestra.FormBehavior.formBehaviorLibrary.activateBehaviors view, form
-  $("[data-prototype]", form).each ->
-    PO.formPrototypes.addPrototype $(@), view
-  loadExtendView(view, 'contentTypeSelector') if (elements = $(".contentTypeSelector", form)) && elements.length > 0
-
-#DEACTIVATE FORM JS
-deactivateForm = (view, form) ->
-  if typeof OpenOrchestra != 'undefined' and typeof OpenOrchestra.FormBehavior != 'undefined' and typeof OpenOrchestra.FormBehavior.formBehaviorLibrary != 'undefined'
-    OpenOrchestra.FormBehavior.formBehaviorLibrary.deactivateBehaviors view, form
-
 #LOAD EXTEND VIEW
 loadExtendView = (view, extendViewName) ->
   $.extend true, view, extendView[extendViewName]

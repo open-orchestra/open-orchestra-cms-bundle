@@ -35,7 +35,7 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
     )
     @$el.appendTo('body')
     @$el.modal "show"
-    deactivateForm(@, $('form', @$el))
+    window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, $('form', @$el)
     viewContext = @
     $.ajax
       url: @options.url
@@ -46,7 +46,7 @@ class OpenOrchestra.InternalLinkFormView extends OrchestraModalView
         originalButton = $('.submit_form', response)
         button = originalButton.clone().attr('data-clone', originalButton.attr('id')).removeAttr('id')
         $('.modal-header', @$el).prepend(button)
-        activateForm(@, $('form', @$el))
+        window.OpenOrchestra.FormBehavior.channel.trigger 'activate', @, $('form', @$el)
     return
 
   ###*
