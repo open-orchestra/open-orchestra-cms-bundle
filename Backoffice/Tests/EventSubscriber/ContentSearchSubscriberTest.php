@@ -38,10 +38,10 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
 
         $content1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content1)->getName()->thenReturn($this->contentName1);
-        Phake::when($content1)->getId()->thenReturn($this->contentId1);
+        Phake::when($content1)->getContentId()->thenReturn($this->contentId1);
         $content2 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
         Phake::when($content2)->getName()->thenReturn($this->contentName2);
-        Phake::when($content2)->getId()->thenReturn($this->contentId2);
+        Phake::when($content2)->getContentId()->thenReturn($this->contentId2);
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
         Phake::when($this->contentRepository)->findByContentTypeAndCondition($language, $contentType, $choiceType, $jCondition)->thenReturn(array(
