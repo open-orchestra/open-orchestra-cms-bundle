@@ -284,6 +284,23 @@
     </div>
 {% endblock %}
 
+{% block oo_field_type_widget %}
+    {% spaceless %}
+        {{ form_row(form.fieldId) }}
+        {{ form_row(form.labels) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.listable) }}
+        {{ form_row(form.translatable) }}
+        {{ form_row(form.searchable) }}
+        {{ form_row(form.orderable) }}
+        {{ form_row(form.orderDirection) }}
+        <fieldset>
+            <legend>{{ 'open_orchestra_backoffice.form.field_type.additionalParameters'|trans }}</legend>
+            {{ form_rest(form) }}
+        </fieldset>
+    {% endspaceless %}
+{% endblock %}
+
 {% block oo_node_widget %}
     {{ block('form_area_container') }}
 {% endblock %}
