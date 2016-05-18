@@ -31,7 +31,7 @@ OrchestraBORouter = Backbone.Router.extend(
   initDisplayRouteChanges: (selector) ->
     i = 0
     while i < tinymce.editors.length
-      tinyMCE.execCommand 'mceRemoveEditor', true, tinymce.editors[i].id
+      tinymce.EditorManager.remove tinymce.editors[i]
       i++
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
     $('#left-panel nav li.active').removeClass 'active'
