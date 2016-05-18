@@ -3,7 +3,6 @@
 namespace OpenOrchestra\BackofficeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 
@@ -22,7 +21,7 @@ class AdminController extends Controller
      *
      * @return Response
      */
-    public function adminAction(Request $request, $siteId = null)
+    public function adminAction($siteId = null)
     {
         $contextManager = $this->get('open_orchestra_backoffice.context_manager');
 
