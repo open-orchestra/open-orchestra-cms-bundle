@@ -23,7 +23,6 @@ extendView['submitAdmin'] = {
               button: viewContext.buttonContext
             statusCode:
               201: (response) ->
-                deactivateForm(viewContext, form)
                 widgetChannel.trigger 'element-created', viewContext
 
                 displayRoute = $("#nav-" + viewContext.options.entityType).attr('href')
@@ -47,7 +46,6 @@ extendView['submitAdmin'] = {
                   OpenOrchestra.RibbonButton.ribbonFormButtonView.setFocusedView @, '.ribbon-form-button'
                 $(document).scrollTop 0
               403: (response) ->
-                deactivateForm(viewContext, form)
                 displayRoute = OpenOrchestra.ForbiddenAccessRedirection[Backbone.history.fragment]
                 if typeof displayRoute != 'undefined'
                   Backbone.history.navigate(displayRoute, {trigger: true})
