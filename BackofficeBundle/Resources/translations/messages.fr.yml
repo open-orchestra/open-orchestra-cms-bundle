@@ -38,6 +38,8 @@ open_orchestra_backoffice:
         swchoff:
             on: OUI
             off: NON
+        javascript:
+          error: Une erreur est survenue dans votre navigateur lors de la soumission du formulaire!
         status:
             published: Publié
             draft: Brouillon
