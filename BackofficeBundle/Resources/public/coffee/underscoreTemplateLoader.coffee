@@ -42,7 +42,8 @@ do ->
           url: filename
           data: { 'language': language,'templateId': templateName }
           success: (tpl, textStatus, xhr) ->
-            if 200 == xhr.status
+            templateId = xhr.getResponseHeader('template-id')
+            if 200 == xhr.status && templateId? && templateId == templateName
               templateLoader.addTemplate templateName, language, tpl
               templateLoader.storeTemplates()
             view.onTemplateLoaded templateName, tpl
