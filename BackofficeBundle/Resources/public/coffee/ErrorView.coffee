@@ -15,7 +15,6 @@ class OpenOrchestra.ErrorView extends OrchestraView
   ###
   initialize: (options) ->
     @options = @reduceOption(options, [
-      'message'
       'domContainer'
     ])
     @loadTemplates [
@@ -36,14 +35,11 @@ jQuery ->
 
 ((router) ->
   router.route 'error', 'showError', ->
-    $('#content').each ->
-      if $(this).data('alertTxt') != ''
-        jQuery ->
-          viewClass = appConfigurationView.getConfiguration('all', 'showError')
-          new viewClass(
-            message: $(this).data('alertTxt')
-            domContainer: $('#content')
-          )
+    jQuery ->
+      viewClass = appConfigurationView.getConfiguration('all', 'showError')
+      new viewClass(
+        domContainer: $('#content')
+      )
     return
 
 ) window.appRouter
