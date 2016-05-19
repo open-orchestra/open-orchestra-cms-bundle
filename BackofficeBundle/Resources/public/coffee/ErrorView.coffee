@@ -38,11 +38,12 @@ jQuery ->
   router.route 'error', 'showError', ->
     $('#content').each ->
       if $(this).data('alertTxt') != ''
-        viewClass = appConfigurationView.getConfiguration('all', 'showError')
-        new viewClass(
-          message: $(this).data('alertTxt')
-          domContainer: $('#content')
-        )
+        jQuery ->
+          viewClass = appConfigurationView.getConfiguration('all', 'showError')
+          new viewClass(
+            message: $(this).data('alertTxt')
+            domContainer: $('#content')
+          )
     return
 
 ) window.appRouter
