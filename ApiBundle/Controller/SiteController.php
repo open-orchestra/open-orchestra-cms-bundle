@@ -93,4 +93,25 @@ class SiteController extends BaseController
 
         return array();
     }
+
+    /**
+     * @Config\Route("/{siteId}/languages", name="open_orchestra_api_site_languages_show")
+     * @Config\Method({"GET"})
+     *
+     * @return Response
+     */
+    public function getAllLanguagesAction($siteId)
+    {
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+
+        $availableLanguages = array();
+
+        foreach ($site->getAliases() as $alias) {
+            if (!\in_array($alias->getLanguage(), $availableLanguages)) {
+                $availableLanguages[] = $alias->getLanguage();
+            }
+        }
+
+        return array('languages' => $availableLanguages);
+    }
 }
