@@ -227,6 +227,53 @@
         {% endspaceless %}
     {% endif %}
 {% endblock form_end %}
+
+{% block form_start %}
+    {% spaceless %}
+        {{ bootstrap_backup_form_settings() }}
+        {% set method = method|upper %}
+        {% if method in ["GET", "POST"] %}
+            {% set form_method = method %}
+        {% else %}
+            {% set form_method = "POST" %}
+        {% endif %}
+
+        {% if style is defined %}
+            {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' form-' ~ style)|trim }) %}
+            {{ bootstrap_set_style(style) }}
+        {% endif %}
+
+        {% if form.vars.errors|length > 0 %}
+            {% set attr = attr|merge({ 'class': (attr.class|default('') ~ ' has-global-errors')|trim }) %}
+        {% endif %}
+
+        {% if col_size is defined %}
+            {{ bootstrap_set_col_size(col_size) }}
+        {% endif %}
+
+        {% if widget_col is defined %}
+            {{ bootstrap_set_widget_col(widget_col) }}
+        {% endif %}
+
+        {% if label_col is defined %}
+            {{ bootstrap_set_label_col(label_col) }}
+        {% endif %}
+
+        {% if simple_col is defined %}
+            {{ bootstrap_set_simple_col(simple_col) }}
+        {% endif %}
+
+        {% if attr.role is not defined or attr.role is empty %}
+            {% set attr = attr|merge({ 'role': 'form' }) %}
+        {% endif %}
+
+        <form  name="{{ form.vars.name }}" method="{{ form_method|lower }}" data-action="{{ action }}" action="{{ path('homepage') }}#error"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        {% if form_method != method %}
+            <input type="hidden" name="_method" value="{{ method }}" />
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_start %}
+
 {% block oo_date_picker_widget %}
     {% spaceless %}
         {% if form.vars.widget == 'single_text' %}
