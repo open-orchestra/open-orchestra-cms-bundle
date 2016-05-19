@@ -149,6 +149,9 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/formBehavior/TagCondition.js',
     'web/built/openorchestrabackoffice/js/formBehavior/TagCreator.js',
     'web/built/openorchestrabackoffice/js/formBehavior/ValidateHidden.js',
+
+    //--[ ERROR ]--//
+    'web/built/openorchestrabackoffice/js/ErrorView.js',
     
   ],
   dest: 'web/built/orchestra.js'

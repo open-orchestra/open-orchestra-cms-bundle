@@ -3,7 +3,6 @@ OrchestraBORouter = Backbone.Router.extend(
 
   routes: {
     '*path': 'showHome'
-    'error': 'showError'
   }
 
   initialize: ->
@@ -17,15 +16,6 @@ OrchestraBORouter = Backbone.Router.extend(
   showHome: ->
     @navigate 'dashboard', true
     return
-
-  showError: ->
-    $('#content').each ->
-      if $(this).data('alertTxt') != ''
-        viewClass = appConfigurationView.getConfiguration('', 'showFlashBag')
-        new viewClass(
-          html: $(this).data('alertTxt')
-          domContainer: $('#content')
-        )
 
   addRoutePattern: (routeName, routePattern) ->
     @routePatterns[routeName] = routePattern
