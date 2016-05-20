@@ -104,14 +104,6 @@ class SiteController extends BaseController
     {
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
 
-        $availableLanguages = array();
-
-        foreach ($site->getAliases() as $alias) {
-            if (!\in_array($alias->getLanguage(), $availableLanguages)) {
-                $availableLanguages[] = $alias->getLanguage();
-            }
-        }
-
-        return array('languages' => $availableLanguages);
+        return array('languages' => $site->getLanguages());
     }
 }
