@@ -11,6 +11,7 @@ use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use OpenOrchestra\Backoffice\Validator\Constraints\BooleanCondition;
 
 /**
  * Class ContentSearchType
@@ -58,6 +59,7 @@ class ContentSearchType extends AbstractType
         $builder->add('keywords', 'oo_keywords_choice', array(
             'transformerClass' => $this->transformerClass,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
+            'constraints' => array(new BooleanCondition()),
             'name' => 'keywords',
             'new_attr' => array(
                 'class' => 'select-boolean',

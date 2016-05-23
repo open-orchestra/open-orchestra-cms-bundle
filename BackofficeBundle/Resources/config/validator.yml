@@ -8,6 +8,7 @@ parameters:
     open_orchestra_model.validator.check_variable_route_pattern_in_menu.class: OpenOrchestra\Backoffice\Validator\Constraints\CheckVariableRoutePatternInMenuValidator
     open_orchestra_model.validator.role_statuses.class: OpenOrchestra\Backoffice\Validator\Constraints\RoleStatusesValidator
     open_orchestra_model.validator.trashitem_remove_node.class: OpenOrchestra\Backoffice\Validator\Constraints\TrashcanRemoveNodeValidator
+    open_orchestra_model.validator.boolean_condition.class: OpenOrchestra\Backoffice\Validator\Constraints\BooleanConditionValidator
 
 services:
     open_orchestra_model.validatorcontent_template:
@@ -56,3 +57,7 @@ services:
         class: %open_orchestra_model.validator.trashitem_remove_node.class%
         tags:
             - { name: validator.constraint_validator, alias: remove_node_date}
+    open_orchestra_model.validator.boolean_condition:
+        class: %open_orchestra_model.validator.boolean_condition.class%
+        tags:
+            - { name: validator.constraint_validator, alias: boolean_condition}

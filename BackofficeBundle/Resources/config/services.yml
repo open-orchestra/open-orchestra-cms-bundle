@@ -12,7 +12,7 @@ parameters:
     open_orchestra_backoffice.manager.route_document.class: OpenOrchestra\Backoffice\Manager\RouteDocumentManager
     open_orchestra_backoffice.manager.template_flex.class: OpenOrchestra\Backoffice\Manager\TemplateFlexManager
     open_orchestra_backoffice.manager.area_flex.class: OpenOrchestra\Backoffice\Manager\AreaFlexManager
-    open_orchestra_backoffice.manager.keyword_to_reference.class: OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager
+    open_orchestra_backoffice.manager.keyword_to_document.class: OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager
 
 services:
     open_orchestra_backoffice.context_manager:
@@ -96,8 +96,8 @@ services:
         class: %open_orchestra_backoffice.manager.area_flex.class%
         arguments:
             - %open_orchestra_model.document.area_flex.class%
-    open_orchestra_backoffice.manager.keyword_to_reference:
-        class: %open_orchestra_backoffice.manager.keyword_to_reference.class%
+    open_orchestra_backoffice.manager.keyword_to_document:
+        class: %open_orchestra_backoffice.manager.keyword_to_document.class%
         arguments:
             - @open_orchestra_model.repository.keyword
             - @open_orchestra_model.helper.suppress_special_character
