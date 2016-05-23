@@ -20,7 +20,7 @@ class OpenOrchestra.FormBehavior.RefreshForm extends OpenOrchestra.FormBehavior.
       form = $('form', view.$el)
       form.replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
       form.ajaxSubmit
-        url: form.form.data('action')
+        url: form.data('action')
         method: 'PATCH'
         context: view
         success: (response) ->

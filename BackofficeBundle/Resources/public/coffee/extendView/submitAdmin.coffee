@@ -18,7 +18,7 @@ extendView['submitAdmin'] = {
         form.submit ->
           event.preventDefault()
           form.ajaxSubmit
-            url: form.form.data('action')
+            url: form.data('action')
             context:
               button: viewContext.button
             statusCode:
