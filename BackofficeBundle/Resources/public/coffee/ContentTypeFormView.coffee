@@ -29,7 +29,8 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     targetId = $(event.currentTarget).attr('id')
     containerId = targetId.replace(/_type$/g, '')
     displayLoader('#' + containerId + '_options')
-    $('[for="' + containerId + '_default_value"]', @$el).parent().remove()
+    form = $('[for="' + containerId + '_default_value"]', @$el)
+    form.parent().remove()
     $('form', @$el).ajaxSubmit
       url: form.form.data('action')
       type: 'PATCH'
