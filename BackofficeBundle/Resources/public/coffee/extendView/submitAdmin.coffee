@@ -15,10 +15,10 @@ extendView['submitAdmin'] = {
         tinymce.triggerSave()
       if !form.hasClass('HTML5validation')
         form.addClass('HTML5validation')
-        form.attr 'action', form.data('action')
         form.submit ->
           event.preventDefault()
           form.ajaxSubmit
+            url: form.data('action')
             context:
               button: viewContext.button
             statusCode:
