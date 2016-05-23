@@ -23,7 +23,8 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     protected $keyword1;
     protected $keyword2;
     protected $keywords;
-    protected $transformer;
+    protected $csvToReferenceKeywordTransformer;
+    protected $conditionToReferenceKeywordTransformer;
     protected $keywordRepository;
     protected $keywordToDocumentManager;
     protected $authorizationChecker;
@@ -42,17 +43,16 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
         Phake::when($this->keywordRepository)->findAll()->thenReturn($this->keywords);
 
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ReferencedKeywordsToKeywordsTransformer');
+
+        $this->csvToReferenceKeywordTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer');
+        $this->conditionToReferenceKeywordTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer');
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
-
-        $this->keywordToDocumentManager = Phake::mock('OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager');
-
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->form = new KeywordsChoiceType($this->transformer, $this->keywordRepository, $this->keywordToDocumentManager, $this->router, $this->authorizationChecker);
+        $this->form = new KeywordsChoiceType($this->csvToReferenceKeywordTransformer, $this->conditionToReferenceKeywordTransformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
     }
 
     /**
@@ -122,7 +122,7 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     {
         $this->form->buildForm($this->builder, array('transformerClass' => null));
 
-        Phake::verify($this->builder)->addModelTransformer($this->transformer);
+        Phake::verify($this->builder)->addModelTransformer($this->csvToReferenceKeywordTransformer);
     }
 
     /**
