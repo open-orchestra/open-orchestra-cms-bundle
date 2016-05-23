@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
 
 /**
- * Class ReferencedKeywordsToKeywordsTransformer
+ * Class CsvToReferenceKeywordTransformer
  */
-class ReferencedKeywordsToKeywordsTransformer implements DataTransformerInterface
+class CsvToReferenceKeywordTransformer implements DataTransformerInterface
 {
     protected $keywordToDocumentManager;
 
@@ -20,7 +20,8 @@ class ReferencedKeywordsToKeywordsTransformer implements DataTransformerInterfac
         KeywordToDocumentManager $keywordToDocumentManager
     )
     {
-        $this->keywordToDocumentManager = $keywordToDocumentManager;    }
+        $this->keywordToDocumentManager = $keywordToDocumentManager;
+    }
 
     /**
      * @param ArrayCollection $referenceKeywords

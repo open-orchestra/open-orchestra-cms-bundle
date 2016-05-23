@@ -6,7 +6,8 @@ parameters:
     open_orchestra_backoffice.transformer.bbcode_to_html.class: OpenOrchestra\Backoffice\Form\DataTransformer\BBcodeToHtmlTransformer
     open_orchestra_backoffice.transformer.reference_to_embed.class: OpenOrchestra\Backoffice\Form\DataTransformer\ReferenceToEmbedTransformer
     open_orchestra_backoffice.transformer.block_to_array.class: OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer
-    open_orchestra_backoffice.transformer.referencedkeywords_to_keywords.class: OpenOrchestra\Backoffice\Form\DataTransformer\ReferencedKeywordsToKeywordsTransformer
+    open_orchestra_backoffice.transformer.csv_to_reference_keyword.class: OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer
+    open_orchestra_backoffice.transformer.condition_to_reference_keyword.class: OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer
     
 services:
     open_orchestra_backoffice.transformer.video_url_to_id:
@@ -33,7 +34,12 @@ services:
             - %open_orchestra_model.document.content.class%
     open_orchestra_backoffice.transformer.block_to_array:
         class: %open_orchestra_backoffice.transformer.block_to_array.class%
-    open_orchestra_backoffice.transformer.referencedkeywords_to_keywords:
-        class: %open_orchestra_backoffice.transformer.referencedkeywords_to_keywords.class%
+    open_orchestra_backoffice.transformer.csv_to_reference_keyword:
+        class: %open_orchestra_backoffice.transformer.csv_to_reference_keyword.class%
         arguments:
-            - @open_orchestra_backoffice.manager.keyword_to_reference
+            - @open_orchestra_backoffice.manager.keyword_to_document
+    open_orchestra_backoffice.transformer.condition_to_reference_keyword:
+        class: %open_orchestra_backoffice.transformer.condition_to_reference_keyword.class%
+        arguments:
+            - @open_orchestra_backoffice.manager.keyword_to_document
+            - @open_orchestra_model.repository.keyword
