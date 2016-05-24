@@ -37,14 +37,20 @@ class BooleanConditionValidator extends ConstraintValidator
             $condition,
             $encapsuledElements
         );
-        foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
-            $is_boolean = $is_boolean &&
-                (preg_match(ConditionFromBooleanToBddTransformerInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key])
-                || preg_match(ConditionFromBooleanToBddTransformerInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key]));
-            $condition = preg_replace('/'.preg_quote($encapsuledElement).'/', '##', $condition, 1);
-            if (count($encapsuledElements[0]) > 0) {
-                $is_boolean = $is_boolean  && $this->validateCondition($condition);
+        if(count($encapsuledElements[0]) > 0) {
+            foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
+                $is_boolean = (preg_match(ConditionFromBooleanToBddTransformerInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key]) ||
+                    preg_match(ConditionFromBooleanToBddTransformerInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key])) &&
+                    $is_boolean;
+                $condition = preg_replace('/'.preg_quote($encapsuledElement).'/', '##', $condition, 1);
+                if (count($encapsuledElements[0]) > 0) {
+                    $is_boolean = $is_boolean  && $this->validateCondition($condition);
+                }
             }
+        } else {
+            $is_boolean = (preg_match(ConditionFromBooleanToBddTransformerInterface::IS_AND_BOOLEAN, $condition) ||
+                preg_match(ConditionFromBooleanToBddTransformerInterface::IS_OR_BOOLEAN, $condition)) &&
+                $is_boolean;
         }
 
         return $is_boolean;
