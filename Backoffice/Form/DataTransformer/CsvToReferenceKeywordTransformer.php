@@ -34,12 +34,12 @@ class CsvToReferenceKeywordTransformer implements DataTransformerInterface
             return '';
         }
 
-        $keyworks = array();
+        $keywords = array();
         foreach ($referenceKeywords as $keyword) {
-            $keyworks[] = $keyword->getLabel();
+            $keywords[] = $keyword->getLabel();
         }
 
-        return implode(',', $keyworks);
+        return implode(',', $keywords);
     }
 
     /**
