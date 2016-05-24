@@ -120,8 +120,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $contentType
-     * @param string $operator
-     * @param string $keywords
+     * @param string $choiceType
+     * @param string $condition
      *
      * @return array
      */
@@ -132,7 +132,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition);
 
         foreach ($contents as $content) {
-            $choices[$content->getId()] = $content->getName();
+            $choices[$content->getContentId()] = $content->getName();
         }
 
         return $choices;
@@ -146,8 +146,8 @@ class ContentSearchSubscriber implements EventSubscriberInterface
     protected function getChoice($contentId)
     {
         $choices = array();
-        $content = $this->contentRepository->find($contentId);
-        $choices[$content->getId()] = $content->getName();
+        $content = $this->contentRepository->findOneByContentId($contentId);
+        $choices[$content->getContentId()] = $content->getName();
 
         return $choices;
     }
