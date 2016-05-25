@@ -45,7 +45,7 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
         tokenValue: 'value'
         zindex: 100002
       for i of prepopulatedTags
-        prepopulatedTags[i] = prepopulatedTags[i]
+        prepopulatedTags[i] = prepopulatedTags[i].trim()
         if prepopulatedTags[i] != ''
           type = if @operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
           element.tokenInput 'add',
