@@ -39,14 +39,18 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         if (null === $keywords) {
             return '';
         }
-        $matches = array();
-        preg_match_all('/' . ConditionFromBooleanToBddTransformerInterface::SEPARATOR . '(.*?)' . ConditionFromBooleanToBddTransformerInterface::SEPARATOR . '/', $keywords, $matches);
-        foreach ($matches[1] as $id) {
-            $keywordDocument = $this->keywordRepository->find($id);
-            if (!is_null($keywordDocument)) {
-                $keywords = str_replace(ConditionFromBooleanToBddTransformerInterface::SEPARATOR . $id . ConditionFromBooleanToBddTransformerInterface::SEPARATOR, $keywordDocument->getLabel(), $keywords);
-            } else {
-                return '';
+
+        $keywordWithoutOperator = preg_replace(ConditionFromBooleanToBddTransformerInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordArray = explode(' ', $keywordWithoutOperator);
+
+        foreach ($keywordArray as $keyword) {
+            if ($keyword != '') {
+                $keywordDocument = $this->keywordRepository->find($keyword);
+                if (!is_null($keywordDocument)) {
+                    $keywords = str_replace($keyword, $keywordDocument->getLabel(), $keywords);
+                } else {
+                    return '';
+                }
             }
         }
 
@@ -66,7 +70,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
                 $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
-                $keywords = str_replace($keyword, ConditionFromBooleanToBddTransformerInterface::SEPARATOR . $keywordDocument->getId() . ConditionFromBooleanToBddTransformerInterface::SEPARATOR, $keywords);
+                $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
             }
         }
 

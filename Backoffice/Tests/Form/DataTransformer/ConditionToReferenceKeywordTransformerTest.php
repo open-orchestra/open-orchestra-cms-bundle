@@ -92,11 +92,11 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
     public function providerReverseTransformData()
     {
         return array(
-            array('( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )', '( NOT ( ##fakeId[cat:X1]## OR ##fakeId[cat:X2]## ) AND ##fakeId[author:AAA]## ) OR ( ##fakeId[T1]## OR ##fakeId[T2]## OR NOT ##fakeId[T3]## )'),
-            array('( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )', '( ##fakeId[cat:X1]## OR ##fakeId[cat:X2]## ) AND ( ##fakeId[author:AAA]## ) AND ( ##fakeId[T1]## OR ##fakeId[T2]## OR NOT ##fakeId[T3]## )'),
-            array('cat:X1', '##fakeId[cat:X1]##'),
-            array('( cat:X1 )', '( ##fakeId[cat:X1]## )'),
-            array('not_created_keyword', '##fakeId[not_created_keyword]##'),
+            array('( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )', '( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
+            array('( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )', '( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
+            array('cat:X1', 'fakeId[cat:X1]'),
+            array('( cat:X1 )', '( fakeId[cat:X1] )'),
+            array('not_created_keyword', 'fakeId[not_created_keyword]'),
         );
     }
 
@@ -116,11 +116,11 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
     public function providerTransformData()
     {
         return array(
-            array('( NOT ( ##fakeId[cat:X1]## OR ##fakeId[cat:X2]## ) AND ##fakeId[author:AAA]## ) OR ( ##fakeId[T1]## OR ##fakeId[T2]## OR NOT ##fakeId[T3]## )', '( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )'),
-            array('( ##fakeId[cat:X1]## OR ##fakeId[cat:X2]## ) AND ( ##fakeId[author:AAA]## ) AND ( ##fakeId[T1]## OR ##fakeId[T2]## OR NOT ##fakeId[T3]## )', '( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )'),
-            array('##fakeId[cat:X1]##', 'cat:X1'),
-            array('( ##fakeId[cat:X1]## )', '( cat:X1 )'),
-            array('##fakeId[not_created_keyword]##', ''),
+            array('( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )'),
+            array('( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )'),
+            array('fakeId[cat:X1]', 'cat:X1'),
+            array('( fakeId[cat:X1] )', '( cat:X1 )'),
+            array('fakeId[not_created_keyword]', ''),
             array(null, ''),
         );
     }

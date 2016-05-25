@@ -23,6 +23,8 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      * @var FormFactoryInterface
      */
     protected $formFactory;
+    protected $keywords;
+    protected $keywordsLabelToId;
 
     /**
      * Set up the test
@@ -30,6 +32,12 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function setUp()
     {
         parent::setUp();
+        $keywordRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.keyword');
+        $keywords = $keywordRepository->findAll();
+        $this->keywordsLabelToId = array();
+        foreach($keywords as $keywords) {
+            $this->keywordsLabelToId['##' . $keywords->getLabel() . '##'] = '##' . $keywords->getId() . '##';
+        }
         $this->formFactory = static::$kernel->getContainer()->get('form.factory');
     }
 
@@ -124,7 +132,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     {
         $block = new Block();
         $block->setComponent($component);
-
+        $transformedValue = $this->replaceKeywordLabelById($transformedValue);
         $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
 
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
@@ -149,13 +157,13 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                         'contentNodeId' => 'news',
                         'contentTemplateEnabled' => true,
                         'contentSearch' => array(
-                                'keywords' => 'Lorem AND Ipsum',
+                                'keywords' => 'lorem AND ipsum',
                             )
                 ), array(
                         'contentNodeId' => 'news',
                         'contentTemplateEnabled' => true,
                         'contentSearch' => array(
-                                'keywords' => '{"$and":[{"keywords":{"$eq":"Lorem"}},{"keywords":{"$eq":"Ipsum"}}]}'
+                                'keywords' => '{"$and":[{"keywords":{"$eq":"##lorem##"}},{"keywords":{"$eq":"##ipsum##"}}]}'
                             )
                     )),
         );
@@ -169,5 +177,19 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\BlockInterface', $data);
         $this->assertSame('testId', $data->getId());
         $this->assertSame('testClass', $data->getClass());
+    }
+
+    /**
+     * @param array $data
+     */
+    protected function replaceKeywordLabelById($data)
+    {
+        $keywordsLabelToId = $this->keywordsLabelToId;
+        array_walk_recursive($data, function (&$item, $key) use ($keywordsLabelToId) {
+            if (is_string($item)) {
+                $item = str_replace(array_keys($keywordsLabelToId), $keywordsLabelToId, $item);
+            }
+        });
+        return $data;
     }
 }
