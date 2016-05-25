@@ -2,20 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Manager;
 
-
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
-
 /**
  * Class KeywordToDocumentManager
  */
 class KeywordToDocumentManager
 {
-
     /**
      * @param KeywordRepositoryInterface              $keywordRepository
      * @param SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper

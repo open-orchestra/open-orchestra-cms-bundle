@@ -67,6 +67,7 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
 
         $this->transformer = new ConditionToReferenceKeywordTransformer($this->keywordToDocumentManager, $this->keywordRepository);
     }
+
     /**
      * Test instance
      */
@@ -84,6 +85,7 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
     {
         $this->assertSame($expected, $this->transformer->reverseTransform($string));
     }
+
     /**
      * @return array
      */
@@ -107,6 +109,7 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
     {
         $this->assertSame($expected, $this->transformer->transform($string));
     }
+
     /**
      * @return array
      */

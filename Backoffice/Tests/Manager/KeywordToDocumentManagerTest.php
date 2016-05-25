@@ -18,7 +18,6 @@ class KeywordToDocumentManagerTest extends AbstractBaseTestCase
     protected $keywordClass;
     protected $authorizationChecker;
 
-
     /**
      * Set Up the test
      */

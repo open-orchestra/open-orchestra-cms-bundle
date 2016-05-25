@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Form\DataTransformer;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer;
-use Doctrine\Common\Collections\ArrayCollection ;
 
 /**
  * Class CsvToReferenceKeywordTransformerTest
@@ -33,6 +32,7 @@ class CsvToReferenceKeywordTransformerTest extends AbstractBaseTestCase
 
         $this->transformer = new CsvToReferenceKeywordTransformer($this->keywordToDocumentManager, $this->keywordRepository);
     }
+
     /**
      * Test instance
      */
@@ -52,6 +52,7 @@ class CsvToReferenceKeywordTransformerTest extends AbstractBaseTestCase
         $keywords = $this->createKeywordsToInterface($keywords);
         $this->assertSame($keywords, $this->transformer->reverseTransform($string)->toArray());
     }
+
     /**
      * @return array
      */
