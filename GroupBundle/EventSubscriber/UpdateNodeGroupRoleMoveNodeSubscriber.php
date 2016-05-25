@@ -73,7 +73,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
                         $role
                     );
 
-                    if ($nodeGroupRole === null) {
+                    if (null === $nodeGroupRole) {
                         throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                     }
 
@@ -84,7 +84,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
                             $role
                         );
 
-                        if ($nodeGroupRoleParent === null) {
+                        if (null === $nodeGroupRoleParent) {
                             throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                         }
 
