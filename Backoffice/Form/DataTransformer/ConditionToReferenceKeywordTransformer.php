@@ -16,7 +16,6 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
     protected $keywordToDocumentManager;
     protected $keywordRepository;
 
-
     /**
      * @param KeywordToDocumentManager   $keywordToDocumentManager
      * @param KeywordRepositoryInterface $keywordRepository

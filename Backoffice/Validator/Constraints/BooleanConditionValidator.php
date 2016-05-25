@@ -12,7 +12,7 @@ use OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddT
 class BooleanConditionValidator extends ConstraintValidator
 {
     /**
-     * @param string $value
+     * @param string     $value
      * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint)

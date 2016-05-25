@@ -61,6 +61,8 @@ class BooleanConditionValidatorTest extends AbstractBaseTestCase
     public function provideCountAndViolation()
     {
         return array(
+            array('cat:X1', 0),
+            array('cat:X1 OR cat:X2', 0),
             array('( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )', 0),
             array('( NOT NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )', 1),
             array('( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 AND NOT T3 )', 1),

@@ -61,7 +61,7 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
             $('#token-input-' + element.attr('id')).focus()
             return
         )(@operator[i], element)
-        $('<li>').html(@operator[i].trim()).on('click', click).appendTo ul
+        $('<li>').html(@operator[i]).on('click', click).appendTo ul
       element.parent().append ul
 
   ###*
