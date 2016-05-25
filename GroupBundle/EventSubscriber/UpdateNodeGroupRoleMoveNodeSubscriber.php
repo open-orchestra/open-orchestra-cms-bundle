@@ -65,14 +65,31 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
         /** @var GroupInterface $group */
         foreach ($groups as $group) {
             if ($node->getSiteId() === $group->getSite()->getSiteId()) {
+
                 foreach ($nodeRole as $role => $translation) {
-                    $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $role);
+                    $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(
+                        NodeInterface::GROUP_ROLE_TYPE,
+                        $node->getNodeId(),
+                        $role
+                    );
+
+                    if ($nodeGroupRole === null) {
+                        throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
+                    }
+
                     if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
-                        $nodeGroupRoleParent = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $role);
+                        $nodeGroupRoleParent = $group->getModelGroupRoleByTypeAndIdAndRole(
+                            NodeInterface::GROUP_ROLE_TYPE,
+                            $node->getParentId(),
+                            $role
+                        );
+
                         if ($nodeGroupRoleParent === null) {
                             throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                         }
+
                         $accessParent = $nodeGroupRoleParent->isGranted();
+
                         if ($accessParent !== $nodeGroupRole->isGranted()) {
                             $nodeGroupRole->setGranted($accessParent);
                             $this->objectManager->persist($group);
