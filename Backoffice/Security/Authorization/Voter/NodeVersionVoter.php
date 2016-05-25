@@ -4,6 +4,7 @@ namespace OpenOrchestra\Backoffice\Security\Authorization\Voter;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -32,8 +33,12 @@ class NodeVersionVoter implements VoterInterface
     public function supportsAttribute($attribute)
     {
         return 0 === strpos($attribute, 'ROLE_') &&
-               false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE') &&
-               false === strpos($attribute, 'ROLE_ACCESS_ERROR_NODE');
+               false === strpos($attribute, 'ROLE_ACCESS_MOVE_TREE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_CREATE_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_DELETE_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_ERROR_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_CREATE_ERROR_NODE') &&
+               false === strpos($attribute, 'ROLE_ACCESS_TREE_NODE');
     }
 
     /**
