@@ -1,5 +1,10 @@
-<li <% if (currentLanguage == language) { %>class="active"<% } %>>
-    <a href="#" class="change-language" data-language="<%= language %>">
+<% if (currentLanguage == language) { %>
+    <li class="active">
+        <a href="#" class="change-language">
+<% } else { %>
+    <li>
+        <a href="#" class="change-language" data-language="<%= language %>">
+<% }%>
         <img
             src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
             class="flag flag-<%= language %>"
