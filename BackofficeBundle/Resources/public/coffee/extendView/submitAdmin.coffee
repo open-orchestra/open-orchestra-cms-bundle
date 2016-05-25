@@ -6,7 +6,7 @@ extendView['submitAdmin'] = {
   addEventOnSave: (event) ->
     viewContext = @
     viewClass = appConfigurationView.getConfiguration(viewContext.options.entityType, viewContext.options.formView)
-    @button = $(event.target).parent() if event.originalEvent
+    @buttonContext = $(event.target).parent() if event.originalEvent
     form = $(event.target).closest('form')
     if form.length == 0 && (clone = $(event.target).data('clone'))
       $('#' + clone).click()
@@ -20,7 +20,7 @@ extendView['submitAdmin'] = {
           form.ajaxSubmit
             url: form.data('action')
             context:
-              button: viewContext.button
+              button: viewContext.buttonContext
             statusCode:
               201: (response) ->
                 widgetChannel.trigger 'element-created', viewContext
