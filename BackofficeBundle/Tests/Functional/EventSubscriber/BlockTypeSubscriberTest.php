@@ -35,8 +35,8 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $keywordRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.keyword');
         $keywords = $keywordRepository->findAll();
         $this->keywordsLabelToId = array();
-        foreach($keywords as $keywords) {
-            $this->keywordsLabelToId['##' . $keywords->getLabel() . '##'] = '##' . $keywords->getId() . '##';
+            foreach($keywords as $keywords) {
+            $this->keywordsLabelToId[$keywords->getLabel()] = $keywords->getId();
         }
         $this->formFactory = static::$kernel->getContainer()->get('form.factory');
     }
@@ -114,7 +114,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
             array(ConfigurableContentStrategy::NAME, array(
                 'contentSearch' => array(
                     'contentType' => 'car',
-                    'keywords' => '',
+                    'keywords' => null,
                     'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
                 ),
                 'contentTemplateEnabled' => true,
@@ -132,9 +132,8 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     {
         $block = new Block();
         $block->setComponent($component);
-        $transformedValue = $this->replaceKeywordLabelById($transformedValue);
+        $transformedValue['contentSearch']['keywords'] = serialize($this->replaceKeywordLabelById($transformedValue['contentSearch']['keywords']));
         $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
-
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
         $form->submit($submittedValue);
 
@@ -143,6 +142,8 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $data = $form->getConfig()->getData();
         $this->assertBlock($data);
         foreach ($transformedValue as $key => $receivedData) {
+            var_export($receivedData);
+            var_export($data->getAttribute($key));
             $this->assertSame($receivedData, $data->getAttribute($key));
         }
     }
@@ -163,7 +164,23 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                         'contentNodeId' => 'news',
                         'contentTemplateEnabled' => true,
                         'contentSearch' => array(
-                                'keywords' => '{"$and":[{"keywords":{"$eq":"##lorem##"}},{"keywords":{"$eq":"##ipsum##"}}]}'
+                                'keywords' => array (
+                                    '$and' =>
+                                        array (
+                                            array (
+                                                'keywords.$id' =>
+                                                    array (
+                                                        '$eq' => 'lorem'
+                                                    )
+                                            ),
+                                            array (
+                                                'keywords.$id' =>
+                                                    array (
+                                                        '$eq' => 'ipsum'
+                                                    )
+                                            ),
+                                        )
+                                 )
                             )
                     )),
         );
@@ -186,8 +203,8 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     {
         $keywordsLabelToId = $this->keywordsLabelToId;
         array_walk_recursive($data, function (&$item, $key) use ($keywordsLabelToId) {
-            if (is_string($item)) {
-                $item = str_replace(array_keys($keywordsLabelToId), $keywordsLabelToId, $item);
+            if (array_key_exists($item, $keywordsLabelToId)) {
+                $item = new \MongoId($keywordsLabelToId[$item]);
             }
         });
         return $data;
