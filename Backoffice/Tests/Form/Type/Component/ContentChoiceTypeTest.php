@@ -42,7 +42,7 @@ class ContentChoiceTypeTest extends AbstractBaseTestCase
         $contents->add($content1);
 
         $contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
-        Phake::when($contentRepository)->findByContentTypeAndKeywords($this->language, $this->contentType, $this->choiceType, $this->keyword)->thenReturn($contents);
+        Phake::when($contentRepository)->findByContentTypeAndCondition($this->language, $this->contentType, $this->choiceType, $this->keyword)->thenReturn($contents);
 
         $contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($this->language);
