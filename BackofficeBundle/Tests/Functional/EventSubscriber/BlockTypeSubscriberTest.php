@@ -142,8 +142,6 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $data = $form->getConfig()->getData();
         $this->assertBlock($data);
         foreach ($transformedValue as $key => $receivedData) {
-            var_export($receivedData);
-            var_export($data->getAttribute($key));
             $this->assertSame($receivedData, $data->getAttribute($key));
         }
     }
