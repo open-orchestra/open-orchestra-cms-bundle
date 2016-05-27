@@ -3,6 +3,7 @@
 namespace OpenOrchestra\GroupBundle\EventSubscriber;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
+use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
@@ -39,12 +40,15 @@ class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleSubscriber
     }
 
     /**
-     * @param LifecycleEventArgs $event
+     * @param PreUpdateEventArgs $event
      */
-    public function preUpdate(LifecycleEventArgs $event)
+    public function preUpdate(PreUpdateEventArgs $event)
     {
         $document = $event->getDocument();
-        if ($document instanceof GroupInterface && ($site = $document->getSite()) instanceof SiteInterface) {
+        if ($document instanceof GroupInterface &&
+           ($site = $document->getSite()) instanceof SiteInterface &&
+            $event->hasChangedField('site')
+        ) {
             $siteId = $site->getSiteId();
             $nodes = $this->container->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
             $nodes = $this->treeManager->generateTree($nodes);
