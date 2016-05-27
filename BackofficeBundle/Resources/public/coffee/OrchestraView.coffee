@@ -48,7 +48,7 @@ OrchestraView = Backbone.View.extend(
     if $('.page-title', @$el).length > 0
       renderPageTitle()
     if (form = $('form', @$el)) && form.length > 0
-      activateForm(@, form)
+      window.OpenOrchestra.FormBehavior.channel.trigger 'activate', @, form
     return
 
   onViewReady: ->
