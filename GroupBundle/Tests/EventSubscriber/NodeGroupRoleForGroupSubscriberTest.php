@@ -18,6 +18,7 @@ class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleSubscribe
     protected $subscriber;
     protected $nodeRepository;
     protected $treeManager;
+    protected $preUpdateEventArgs;
     protected $group;
 
     /**
@@ -30,6 +31,10 @@ class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleSubscribe
         $this->treeManager = Phake::mock('OpenOrchestra\DisplayBundle\Manager\TreeManager');
         Phake::when($this->container)->get('open_orchestra_model.repository.node')->thenReturn($this->nodeRepository);
         $this->group = $this->createMockGroup();
+
+        $this->preUpdateEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs');
+        Phake::when($this->preUpdateEventArgs)->getDocumentManager()->thenReturn($this->documentManager);
+
         $this->subscriber = new NodeGroupRoleForGroupSubscriber($this->nodeGroupRoleClass, $this->treeManager);
         $this->subscriber->setContainer($this->container);
     }
@@ -65,27 +70,6 @@ class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleSubscribe
     }
 
     /**
-     * @param SiteInterface|null  $site
-     * @param array               $nodes
-     * @param int                 $countNodeGroupRole
-     *
-     * @dataProvider provideGroupAndNodes
-     */
-    public function testPreUpdate($site, array $nodes, $countNodeGroupRole)
-    {
-        $countNodeGroupRole = count($this->nodesRoles) * $countNodeGroupRole;
-        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($this->group);
-        Phake::when($this->group)->getSite()->thenReturn($site);
-        Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn($nodes);
-
-        $this->subscriber->preUpdate($this->lifecycleEventArgs);
-
-        Phake::verify($this->group, Phake::times($countNodeGroupRole))->addModelGroupRole(Phake::anyParameters());
-        $countRecompute = ($countNodeGroupRole > 0 ) ? 1 : 0;
-        Phake::verify($this->uow, Phake::times($countRecompute))->recomputeSingleDocumentChangeSet(Phake::anyParameters());
-    }
-
-    /**
      * @return array
      */
     public function provideGroupAndNodes()
@@ -102,6 +86,50 @@ class NodeGroupRoleForGroupSubscriberTest extends AbstractNodeGroupRoleSubscribe
             array($site, $treeNoChild, 1),
             array(null, $treeNoChild, 0),
             array(null, array(), 0),
+        );
+    }
+
+    /**
+     * @param SiteInterface|null  $site
+     * @param array               $nodes
+     * @param bool                $hasChangeField
+     * @param int                 $countNodeGroupRole
+     *
+     * @dataProvider provideGroupAndNodesUpdateSite
+     */
+    public function testPreUpdate($site, array $nodes, $hasChangeField, $countNodeGroupRole)
+    {
+        $countNodeGroupRole = count($this->nodesRoles) * $countNodeGroupRole;
+        Phake::when($this->preUpdateEventArgs)->getDocument()->thenReturn($this->group);
+        Phake::when($this->preUpdateEventArgs)->hasChangedField('site')->thenReturn($hasChangeField);
+        Phake::when($this->group)->getSite()->thenReturn($site);
+        Phake::when($this->treeManager)->generateTree(Phake::anyParameters())->thenReturn($nodes);
+
+        $this->subscriber->preUpdate($this->preUpdateEventArgs);
+
+        Phake::verify($this->group, Phake::times($countNodeGroupRole))->addModelGroupRole(Phake::anyParameters());
+        $countRecompute = ($countNodeGroupRole > 0 ) ? 1 : 0;
+        Phake::verify($this->uow, Phake::times($countRecompute))->recomputeSingleDocumentChangeSet(Phake::anyParameters());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGroupAndNodesUpdateSite()
+    {
+        $nodeRoot = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeChild = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+
+        $treeNoChild = $this->createTree($nodeRoot);
+        $treeChild = $this->createTree($nodeRoot, array($nodeChild));
+
+        return array(
+            array($site, $treeChild, true, 2),
+            array($site, $treeChild, false, 0),
+            array($site, $treeNoChild, true, 1),
+            array(null, $treeNoChild, true, 0),
+            array(null, array(), true, 0),
         );
     }
 
