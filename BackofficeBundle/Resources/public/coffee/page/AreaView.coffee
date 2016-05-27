@@ -4,7 +4,7 @@ AreaView = OrchestraView.extend(
   events:
     'click span.area-param': 'paramArea'
     'click span.area-remove': 'confirmRemoveArea'
-    'sortupdate ul.ui-model-blocks': 'sendBlockData'
+    'sortupdate ul.ui-model-blocks': 'moveBlock'
 
   initialize: (options) ->
     @options = @reduceOption(options, [
@@ -68,29 +68,66 @@ AreaView = OrchestraView.extend(
     ))
     @subBlocks.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
-  sendBlockData: (event)->
-    event.stopImmediatePropagation() if event.stopImmediatePropagation
-    ul = $(event.target)
-    refreshUl ul
-    blocks = ul.children()
+# #############################################################################
+
+  moveBlock: (event, ui) ->
+    event.stopPropagation()
+    areaFrom = $(event.currentTarget)
+    areaTo = $(ui.item.context).parent()
+
+    if (areaTo.find('.newly-inserted').length)
+      @addBlockToArea areaTo
+      return
+
+    console.log ui.sender
+    if (ui.sender)
+      @moveBlockToNewArea ui.sender, areaTo
+    else if (areaFrom[0] == areaTo[0])
+      @moveBlockInSameArea areaFrom
+
+  addBlockToArea: (area) ->
+    currentView = @
+    @updateArea area, ->
+      currentView.refresh()
+
+  removeBlockFromArea: (area) ->
+    @updateArea area
+
+  moveBlockToNewArea: (areaFrom, areaTo) ->
+    # passer par une action dédiée puis supprimer les callbacks useless
+    alert('move into different area')
+    viewContext = @
+    @updateArea areaTo, ->
+      viewContext.updateArea areaFrom
+
+  moveBlockInSameArea: (area) ->
+    @updateArea area
+
+  updateArea: (area, callback) ->
+    refreshUl area
+    $.ajax
+      url: @options.area.get('links')._self_block
+      method: 'POST'
+      data: JSON.stringify
+        blocks: @formatBlocks area.children()
+      success: (response) ->
+        callback() if callback
+
+  formatBlocks: (blocks) ->
     blockData = []
     for block in blocks
       info = $('div[data-block-type]', block)
       if info.length > 0
-        if info.data('node-id') != '' && info.data('block-id') != '' 
-          blockData.push({'node_id' : info.data('node-id'), 'block_id' : info.data('block-id')})
+        if info.data('node-id') != '' && info.data('block-id') != ''
+          blockData.push
+            'node_id': info.data('node-id')
+            'block_id': info.data('block-id')
         else
-          blockData.push({'component' : info.data('block-type')})
-    mustRefresh = !! ul.find(".newly-inserted").length > 0
-    currentView = @
-    $.ajax
-      url: @options.area.get('links')._self_block
-      method: 'POST'
-      data: JSON.stringify(
-        blocks: blockData
-      )
-      success: (response) ->
-        currentView.refresh() if mustRefresh
+          blockData.push
+            'component': info.data('block-type')
+    blockData
+
+# ################################################################################
 
   refresh: ->
     currentView = @
