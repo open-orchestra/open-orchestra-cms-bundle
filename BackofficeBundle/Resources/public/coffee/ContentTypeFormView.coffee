@@ -28,6 +28,7 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     viewContext = @
     targetId = $(event.currentTarget).attr('id')
     containerId = targetId.replace(/_type$/g, '')
+    window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, $('#' + containerId, view.$el)
     displayLoader('#' + containerId + '_options')
     $('[for="' + containerId + '_default_value"]', @$el).parent().remove()
     $('form', @$el).ajaxSubmit
@@ -35,7 +36,7 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
       type: 'PATCH'
       success: (response) ->
         $('#' + containerId, viewContext.$el).html $('#' + containerId, response).html()
-        activateForm(viewContext, $('#' + containerId, viewContext.$el))
+        window.OpenOrchestra.FormBehavior.channel.trigger 'activate', viewContext, $('#' + containerId, viewContext.$el)
 
 jQuery ->
   appConfigurationView.setConfiguration('content_types', 'editEntity', OpenOrchestra.ContentTypeFormView)

@@ -21,11 +21,15 @@ OrchestraModalView = OrchestraView.extend(
 
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/orchestraModalView', @options)
+    viewContext = @
     if (title = $('form', @$el).data('title'))
       @options.title = title
       $('.modal-title', @$el).html @options.title
     @options.domContainer.html @$el
-    $("#OrchestraBOModal").modal "show"
+    @options.domContainer.modal "show"
+    @options.domContainer.on 'hidden.bs.modal', ->
+      window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', viewContext, $('form', viewContext.$el)
+      return
 
   close: ->
     $("#select2-drop-mask").click();

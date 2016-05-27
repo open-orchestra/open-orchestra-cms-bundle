@@ -140,6 +140,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/InternalLinkFormView.js',
 
     //--[ FORM BEHAVIOR ]--//
+    'web/built/openorchestrabackoffice/js/formBehavior/formChannel.js',
     'web/built/openorchestrabackoffice/js/formBehavior/AbstractFormBehavior.js',
     'web/built/openorchestrabackoffice/js/formBehavior/FormLibraryBehavior.js',
     'web/built/openorchestrabackoffice/js/formBehavior/ColorPicker.js',

@@ -34,6 +34,7 @@ extendView['submitAdmin'] = {
                 ))
                 $(document).scrollTop 0
               200: (response) ->
+                window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', viewContext, form
                 widgetChannel.trigger 'form-error', viewContext
 
                 new viewClass(viewContext.addOption(
