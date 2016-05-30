@@ -40,7 +40,6 @@ class OpenOrchestraBackofficeBundle extends Bundle
         $container->addCompilerPass(new DisplayBlockCompilerPass());
         $container->addCompilerPass(new ValueTransformerCompilerPass());
         $container->addCompilerPass(new AuthorizeStatusChangeCompilerPass());
-        $container->addCompilerPass(new AuthorizeEditionCompilerPass());
         $container->addCompilerPass(new RestoreEntityCompilerPass());
         $container->addCompilerPass(new RemoveTrashcanEntityCompilerPass());
         $container->addCompilerPass(new RoleCompilerPass());

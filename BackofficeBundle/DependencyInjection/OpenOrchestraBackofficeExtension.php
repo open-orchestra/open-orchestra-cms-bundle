@@ -66,7 +66,6 @@ class OpenOrchestraBackofficeExtension extends Extension
         $loader->load('validator.yml');
         $loader->load('initializer.yml');
         $loader->load('authorize_status_change.yml');
-        $loader->load('authorize_edition.yml');
         $loader->load('restore_entity.yml');
         $loader->load('remove_trashcan_entity.yml');
         $loader->load('collector.yml');

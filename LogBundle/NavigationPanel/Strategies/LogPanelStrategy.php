@@ -2,12 +2,12 @@
 
 namespace OpenOrchestra\LogBundle\NavigationPanel\Strategies;
 
-use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AbstractNavigationPanelStrategy;
+use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AbstractNavigationStrategy;
 
 /**
  * Class LogPanelStrategy
  */
-class LogPanelStrategy extends AbstractNavigationPanelStrategy
+class LogPanelStrategy extends AbstractNavigationStrategy
 {
     const ROLE_ACCESS_LOG = 'ROLE_ACCESS_LOG';
 
@@ -17,7 +17,7 @@ class LogPanelStrategy extends AbstractNavigationPanelStrategy
      */
     public function __construct($parent, $weight)
     {
-        parent::__construct('logs', self::ROLE_ACCESS_LOG, $weight, $parent);
+        parent::__construct('logs', $weight, $parent, self::ROLE_ACCESS_LOG);
     }
 
     /**
