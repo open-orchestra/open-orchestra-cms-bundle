@@ -49,7 +49,7 @@ class ContentManagerTest extends AbstractBaseTestCase
 
         $this->contentClass = 'OpenOrchestra\ModelBundle\Document\Content';
 
-        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Manager\VersionableSaver');
+        $this->versionableSaver = Phake::mock('OpenOrchestra\ModelBundle\Saver\VersionableSaver');
 
         $this->manager = new ContentManager($this->contextManager, $this->contentClass, $this->contentTypeRepository, $this->versionableSaver);
     }

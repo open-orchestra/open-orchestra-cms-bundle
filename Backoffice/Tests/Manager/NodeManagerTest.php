@@ -346,7 +346,7 @@ class NodeManagerTest extends AbstractBaseTestCase
     {
         Phake::when($this->nodeRepository)->findOneByParentWithGreatestOrder(Phake::anyParameters())->thenReturn($node);
 
-        $node = $this->manager->initializeNewNode('fakeParentId');
+        $node = $this->manager->initializeNode('fakeParentId', 'fakeLanguage', 'fakeId');
 
         $this->assertEquals($expectedOrder, $node->getOrder());
     }
