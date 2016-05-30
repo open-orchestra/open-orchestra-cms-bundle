@@ -17,7 +17,12 @@ For instance if it is an issue for a bug :
 - [ ] Other
 
 ## Description
-<!--- If is a bug issue--->
-### Expected behavior and actual behavior
+<!--- 
+If is a bug issue
+Explain the issue with screenshot if possible and what do you expected
+--->
+### Actual behavior
+
+### Expected behavior
 
 ### Steps to reproduce the problem
