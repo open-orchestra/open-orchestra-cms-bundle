@@ -1,0 +1,23 @@
+## Informations
+<!--- Orchestra version (1.0, 1.1, master, ...) --->
+**Orchestra Version** : 
+
+**Issue Type**: 
+<!--- 
+Add x in type of your issue 
+For instance if it is an issue for a bug : 
+- [ x] Bug
+- [ ] Feature
+- [ ] Question
+- [ ] Other
+--->
+- [ ] Bug
+- [ ] Feature
+- [ ] Question
+- [ ] Other
+
+## Description
+<!--- If is a bug issue--->
+### Expected behavior and actual behavior
+
+### Steps to reproduce the problem
