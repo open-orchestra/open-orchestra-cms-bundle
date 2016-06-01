@@ -7,7 +7,6 @@ use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface;
 
 /**
  * Class ContentSearchSubscriber
@@ -16,27 +15,23 @@ class ContentSearchSubscriber implements EventSubscriberInterface
 {
     protected $contentRepository;
     protected $contextManager;
-    protected $transformer;
     protected $attributes;
     protected $required;
 
     /**
      * @param ContentRepositoryInterface                    $contentRepository
      * @param CurrentSiteIdInterface                        $contextManager
-     * @param ConditionFromBooleanToBddTransformerInterface $transformer
      * @param array                                         $attributes
      * @param boolean                                       $required
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
         CurrentSiteIdInterface $contextManager,
-        ConditionFromBooleanToBddTransformerInterface $transformer,
         array $attributes,
         $required
     ) {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
-        $this->transformer = $transformer;
         $this->attributes = $attributes;
         $this->required = $required;
     }
@@ -77,11 +72,7 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         $choices = array();
         if (!is_null($data)) {
             if ($data['contentType'] != '' || $data['keywords'] != '') {
-                $condition = null;
-                if ($data['keywords'] != '') {
-                    $condition = json_decode($this->transformer->reverseTransform($data['keywords']), true);
-                }
-                $choices = array_merge($choices, $this->getChoices($data['contentType'], $data['choiceType'], $condition));
+                $choices = array_merge($choices, $this->getChoices($data['contentType'], $data['choiceType'], $data['keywords']));
             }
             if (array_key_exists('contentId', $data) && $data['contentId'] != '') {
                 $choices = array_merge($choices, $this->getChoice($data['contentId']));
@@ -130,7 +121,6 @@ class ContentSearchSubscriber implements EventSubscriberInterface
         $choices = array();
         $language = $this->contextManager->getCurrentSiteDefaultLanguage();
         $contents = $this->contentRepository->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition);
-
         foreach ($contents as $content) {
             $choices[$content->getContentId()] = $content->getName();
         }

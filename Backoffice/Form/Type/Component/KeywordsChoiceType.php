@@ -49,25 +49,14 @@ class KeywordsChoiceType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    /**
-     * @param FormBuilderInterface $builder
      * @param array                $options
      *
      * @throws NotAllowedClassNameException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (!is_null($options['transformerClass'])) {
-            if(!is_string($options['transformerClass']) || !is_subclass_of($options['transformerClass'], 'OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface')) {
-                throw new NotAllowedClassNameException();
-            }
+        if ($options['is_condition']) {
             $builder->addModelTransformer($this->conditionToReferenceKeywordTransformer);
-            $transformerClass = $options['transformerClass'];
-            $transformer = new $transformerClass();
-            $transformer->setField($options['name']);
-            $builder->addModelTransformer($transformer);
         }
         else {
             $builder->addModelTransformer($this->csvToReferenceKeywordTransformer);
@@ -93,7 +82,7 @@ class KeywordsChoiceType extends AbstractType
             },
             'name' => '',
             'new_attr' => array(),
-            'transformerClass' => null,
+            'is_condition' => false,
         ));
     }
 

@@ -20,26 +20,17 @@ class ContentSearchType extends AbstractType
 {
     protected $contentRepository;
     protected $contextManager;
-    protected $transformerClass;
 
     /**
      * @param ContentRepositoryInterface $contentRepository
      * @param CurrentSiteIdInterface     $contextManager
-     * @param string                     $transformerClass
-     *
-     * @throws NotAllowedClassNameException
      */
     public function __construct(
         ContentRepositoryInterface $contentRepository,
-        CurrentSiteIdInterface $contextManager,
-        $transformerClass
+        CurrentSiteIdInterface $contextManager
     ) {
         $this->contentRepository = $contentRepository;
         $this->contextManager = $contextManager;
-        $this->transformerClass = $transformerClass;
-        if (!is_string($this->transformerClass) || !is_subclass_of($this->transformerClass, 'OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface')) {
-            throw new NotAllowedClassNameException();
-        }
     }
 
     /**
@@ -57,7 +48,7 @@ class ContentSearchType extends AbstractType
             'required' => !$options['refresh'] && $options['required']
         ));
         $builder->add('keywords', 'oo_keywords_choice', array(
-            'transformerClass' => $this->transformerClass,
+            'is_condition' => true,
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
             'constraints' => array(new BooleanCondition()),
             'name' => 'keywords',
@@ -68,14 +59,10 @@ class ContentSearchType extends AbstractType
         ));
 
         if ($options['refresh']) {
-            $transformerClass = $this->transformerClass;
-            $transformer = new $transformerClass();
-            $transformer->setField('keywords');
             $builder->addEventSubscriber(
                 new ContentSearchSubscriber(
                     $this->contentRepository,
                     $this->contextManager,
-                    $transformer,
                     $options['attr'],
                     $options['required']
             ));
