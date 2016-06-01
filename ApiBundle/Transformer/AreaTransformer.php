@@ -116,14 +116,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
                 'nodeId' => $node->getId(),
                 'areaId' => $area->getAreaId()
             )));
-        }
 
-        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
-            'nodeId' => $node->getId(),
-            'areaId' => $area->getAreaId()
-        )));
-
-        if ($this->authorizationChecker->isGranted(TreeNodesPanelStrategy::ROLE_ACCESS_UPDATE_NODE, $node)) {
             if ($parentAreaId) {
                 $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_area_delete_in_node_area',
                     array(
@@ -141,7 +134,16 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
                     )
                 ));
             }
+
+            $facade->addLink('_move_block', $this->generateRoute('open_orchestra_api_area_move_block', array(
+                'nodeId' => $node->getId()
+            )));
         }
+
+        $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
+            'nodeId' => $node->getId(),
+            'areaId' => $area->getAreaId()
+        )));
 
         return $facade;
     }
