@@ -33,6 +33,8 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      * @param string $keywords
      *
      * @return string
+     *
+     * @throws NotFoundedKeywordException
      */
     public function transform($keywords)
     {
@@ -49,7 +51,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
                 if (!is_null($keywordDocument)) {
                     $keywords = str_replace($keyword, $keywordDocument->getLabel(), $keywords);
                 } else {
-                    return '';
+                    throw new NotFoundedKeywordException();
                 }
             }
         }
