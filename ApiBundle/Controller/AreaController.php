@@ -119,7 +119,7 @@ class AreaController extends BaseController
      *
      * @return Response
      */
-    public function moveBlockFormAreaToArea(Request $request, $nodeId)
+    public function moveBlockFromAreaToAreaAction(Request $request, $nodeId)
     {
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
