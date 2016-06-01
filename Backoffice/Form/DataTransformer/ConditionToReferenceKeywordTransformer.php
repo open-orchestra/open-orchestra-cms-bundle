@@ -6,7 +6,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use OpenOrchestra\ModelBundle\Repository\ContentRepository;
+use OpenOrchestra\Backoffice\Exception\NotFoundedKeywordException;
 
 /**
  * Class ConditionToReferenceKeywordTransformer
@@ -61,6 +61,8 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      * @param string $keywords
      *
      * @return string
+     *
+     * @throws NotFoundedKeywordException
      */
     public function reverseTransform($keywords)
     {
@@ -70,7 +72,11 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
                 $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
-                $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
+                if($keywordDocument instanceof KeywordInterface) {
+                    $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
+                } else {
+                    throw new NotFoundedKeywordException();
+                }
             }
         }
 
