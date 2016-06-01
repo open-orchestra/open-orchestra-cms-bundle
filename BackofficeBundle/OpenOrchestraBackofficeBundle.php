@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\BackofficeBundle;
 
-use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\AuthorizeEditionCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\BlockParameterCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\RemoveTrashcanEntityCompilerPass;
 use OpenOrchestra\BackofficeBundle\DependencyInjection\Compiler\DisplayBlockCompilerPass;
