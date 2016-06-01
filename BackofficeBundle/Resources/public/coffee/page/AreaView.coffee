@@ -68,18 +68,13 @@ AreaView = OrchestraView.extend(
     ))
     @subBlocks.addClass (if @options.area.get("bo_direction") is "h" then "bo-row" else "bo-column")
 
-# #############################################################################
-
   moveBlock: (event, ui) ->
     event.stopPropagation()
     areaFrom = $(event.currentTarget)
     areaTo = $(ui.item.context).parent()
-
     if (areaTo.find('.newly-inserted').length)
       @addBlockToArea areaTo
       return
-
-    console.log ui.sender
     if (ui.sender)
       @moveBlockToNewArea ui.sender, areaTo
     else if (areaFrom[0] == areaTo[0])
@@ -93,25 +88,29 @@ AreaView = OrchestraView.extend(
   removeBlockFromArea: (area) ->
     @updateArea area
 
-  moveBlockToNewArea: (areaFrom, areaTo) ->
-    # passer par une action dédiée puis supprimer les callbacks useless
-    alert('move into different area')
-    viewContext = @
-    @updateArea areaTo, ->
-      viewContext.updateArea areaFrom
-
   moveBlockInSameArea: (area) ->
     @updateArea area
+
+  moveBlockToNewArea: (areaFrom, areaTo) ->
+    $.ajax
+      url: @options.area.get('links')._move_block
+      method: 'POST'
+      data: JSON.stringify 
+        areas: [@transformArea(areaFrom), @transformArea(areaTo)]
 
   updateArea: (area, callback) ->
     refreshUl area
     $.ajax
       url: @options.area.get('links')._self_block
       method: 'POST'
-      data: JSON.stringify
-        blocks: @formatBlocks area.children()
+      data: JSON.stringify @transformArea(area)
       success: (response) ->
         callback() if callback
+
+  transformArea: (area) ->
+    area =
+      area_id: area.data('areaid')
+      blocks: @formatBlocks area.children()
 
   formatBlocks: (blocks) ->
     blockData = []
@@ -126,8 +125,6 @@ AreaView = OrchestraView.extend(
           blockData.push
             'component': info.data('block-type')
     blockData
-
-# ################################################################################
 
   refresh: ->
     currentView = @

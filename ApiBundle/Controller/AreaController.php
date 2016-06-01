@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 
 /**
  * Class AreaController
@@ -76,16 +77,28 @@ class AreaController extends BaseController
      */
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
-        $nodeRepository = $this->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->find($nodeId);
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
-        $area = $nodeRepository->findAreaByAreaId($node, $areaId);
-
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\AreaFacade',
             $request->get('_format', 'json')
         );
+
+        $this->updateArea($nodeId, $facade);
+
+        return array();
+    }
+
+    /**
+     * @param string     $nodeId
+     * @param AreaFacade $facade
+     */
+    protected function updateArea($nodeId, AreaFacade $facade)
+    {
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+        $node = $nodeRepository->find($nodeId);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+
+        $area = $nodeRepository->findAreaByAreaId($node, $facade->areaId);
 
         $this->get('open_orchestra_api.transformer_manager')
             ->get('area')->reverseTransform($facade, $area, $node);
@@ -93,6 +106,31 @@ class AreaController extends BaseController
         $this->get('object_manager')->flush();
 
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
+    }
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param int     $areaFromId
+     * @param int     $areaToId
+     *
+     * @Config\Route("/move-block/{nodeId}", name="open_orchestra_api_area_move_block")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function moveBlockFormAreaToArea(Request $request, $nodeId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
+            $request->get('_format', 'json')
+        );
+
+        $areas = $facade->getAreas();
+
+        $this->updateArea($nodeId,$areas[1]);
+        $this->updateArea($nodeId, $areas[0]);
 
         return array();
     }
