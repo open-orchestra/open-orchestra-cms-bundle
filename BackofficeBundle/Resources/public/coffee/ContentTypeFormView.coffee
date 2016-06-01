@@ -28,7 +28,7 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     viewContext = @
     targetId = $(event.currentTarget).attr('id')
     containerId = targetId.replace(/_type$/g, '')
-    window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, $('#' + containerId, view.$el)
+    window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, $('#' + containerId, @$el)
     displayLoader('#' + containerId + '_options')
     label = $('[for="' + containerId + '_default_value"]', @$el)
     label.parent().remove()
