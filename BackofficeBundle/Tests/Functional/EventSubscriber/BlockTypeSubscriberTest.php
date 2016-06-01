@@ -11,6 +11,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
  * Class BlockTypeSubscriberTest
@@ -24,7 +25,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      */
     protected $formFactory;
     protected $keywords;
-    protected $keywordsLabelToId;
+    protected $keywordRepository;
 
     /**
      * Set up the test
@@ -32,12 +33,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function setUp()
     {
         parent::setUp();
-        $keywordRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.keyword');
-        $keywords = $keywordRepository->findAll();
-        $this->keywordsLabelToId = array();
-            foreach($keywords as $keywords) {
-            $this->keywordsLabelToId[$keywords->getLabel()] = $keywords->getId();
-        }
+        $this->keywordRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.keyword');
         $this->formFactory = static::$kernel->getContainer()->get('form.factory');
     }
 
@@ -128,20 +124,20 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      *
      * @dataProvider provideComponentAndDataAndTransformedValue
      */
-    public function testMultipleBlockWithDataTransformation($component, $value, $transformedValue)
+    public function testMultipleBlockWithDataTransformation($component, $value)
     {
         $block = new Block();
         $block->setComponent($component);
-        $transformedValue['contentSearch']['keywords'] = serialize($this->replaceKeywordLabelById($transformedValue['contentSearch']['keywords']));
         $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
+        $value['contentSearch']['keywords'] = $this->replaceKeywordLabelById($value['contentSearch']['keywords']);
         $form->submit($submittedValue);
 
         $this->assertTrue($form->isSynchronized());
         /** @var BlockInterface $data */
         $data = $form->getConfig()->getData();
         $this->assertBlock($data);
-        foreach ($transformedValue as $key => $receivedData) {
+        foreach ($value as $key => $receivedData) {
             $this->assertSame($receivedData, $data->getAttribute($key));
         }
     }
@@ -158,29 +154,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                         'contentSearch' => array(
                                 'keywords' => 'lorem AND ipsum',
                             )
-                ), array(
-                        'contentNodeId' => 'news',
-                        'contentTemplateEnabled' => true,
-                        'contentSearch' => array(
-                                'keywords' => array (
-                                    '$and' =>
-                                        array (
-                                            array (
-                                                'keywords.$id' =>
-                                                    array (
-                                                        '$eq' => 'lorem'
-                                                    )
-                                            ),
-                                            array (
-                                                'keywords.$id' =>
-                                                    array (
-                                                        '$eq' => 'ipsum'
-                                                    )
-                                            ),
-                                        )
-                                 )
-                            )
-                    )),
+                )),
         );
     }
 
@@ -195,16 +169,26 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     }
 
     /**
-     * @param array $data
+     * @param string $condition
+     *
+     * @return array
      */
-    protected function replaceKeywordLabelById($data)
+    protected function replaceKeywordLabelById($condition)
     {
-        $keywordsLabelToId = $this->keywordsLabelToId;
-        array_walk_recursive($data, function (&$item, $key) use ($keywordsLabelToId) {
-            if (array_key_exists($item, $keywordsLabelToId)) {
-                $item = new \MongoId($keywordsLabelToId[$item]);
+        $conditionWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $condition);
+        $conditionArray = explode(' ', $conditionWithoutOperator);
+
+        foreach ($conditionArray as $keyword) {
+            if ($keyword != '') {
+                $keywordDocument = $this->keywordRepository->findOneByLabel($keyword);
+                if (!is_null($keywordDocument)) {
+                    $condition = str_replace($keyword, $keywordDocument->getId(), $condition);
+                } else {
+                    return '';
+                }
             }
-        });
-        return $data;
+        }
+
+        return $condition;
     }
 }

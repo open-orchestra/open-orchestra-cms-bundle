@@ -100,7 +100,7 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
             },
             'name' => '',
             'new_attr' => array(),
-            'transformerClass' => null,
+            'is_condition' => false,
         ));
     }
 
@@ -116,22 +116,20 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test model transformer
+     * Test build form
      */
-    public function testBuildForm()
+    public function testBuildFormWithCsv()
     {
-        $this->form->buildForm($this->builder, array('transformerClass' => null));
-
+        $this->form->buildForm($this->builder, array('is_condition' => false));
         Phake::verify($this->builder)->addModelTransformer($this->csvToReferenceKeywordTransformer);
     }
 
     /**
-     * Test Exception transformer
+     * Test build form
      */
-    public function testExceptionReverseTransform()
+    public function testBuildFormWithCondition()
     {
-        $this->setExpectedException('OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException');
-
-        $this->form->buildForm($this->builder, array('embedded' => true, 'transformerClass' => 'phakeTransformer'));
+        $this->form->buildForm($this->builder, array('is_condition' => true));
+        Phake::verify($this->builder)->addModelTransformer($this->conditionToReferenceKeywordTransformer);
     }
 }

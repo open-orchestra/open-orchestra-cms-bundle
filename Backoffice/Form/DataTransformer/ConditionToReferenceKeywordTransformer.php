@@ -3,10 +3,10 @@
 namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
-use OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ModelBundle\Repository\ContentRepository;
 
 /**
  * Class ConditionToReferenceKeywordTransformer
@@ -40,7 +40,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
             return '';
         }
 
-        $keywordWithoutOperator = preg_replace(ConditionFromBooleanToBddTransformerInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
         $keywordArray = explode(' ', $keywordWithoutOperator);
 
         foreach ($keywordArray as $keyword) {
@@ -64,7 +64,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      */
     public function reverseTransform($keywords)
     {
-        $keywordWithoutOperator = preg_replace(ConditionFromBooleanToBddTransformerInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
         $keywordArray = explode(' ', $keywordWithoutOperator);
 
         foreach ($keywordArray as $keyword) {
