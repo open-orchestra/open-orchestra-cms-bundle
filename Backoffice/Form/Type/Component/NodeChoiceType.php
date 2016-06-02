@@ -3,10 +3,11 @@
 namespace OpenOrchestra\Backoffice\Form\Type\Component;
 
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\DisplayBundle\Manager\TreeManager;
 
 /**
  * Class NodeChoiceType
@@ -37,11 +38,30 @@ class NodeChoiceType extends AbstractType
         $resolver->setDefaults(
             array(
                 'choices' => $this->getChoices(),
-                'attr' => array(
-                    'class' => 'orchestra-node-choice'
-                )
             )
         );
+
+        /*
+         * Normalize 'attr' option to force presence of 'orchestra-node-choice' html class.
+         * This class is mandatory to trigger execution of following coffee function on field :
+         * OpenOrchestra.FormBehavior.NodeChoice.activateBehaviorOnElements().
+         */
+        $resolver->setNormalizer('attr', function (Options $options, $value) {
+            if (!is_array($value)) {
+                $value = array();
+            }
+
+            $classList = array();
+            if (array_key_exists('class', $value) && !empty($value['class'])) {
+                $classList = explode(' ', $value['class']);
+            }
+            if (!in_array('orchestra-node-choice', $classList)) {
+                $classList[] = 'orchestra-node-choice';
+            }
+            $value['class'] = implode(' ', $classList);
+
+            return $value;
+        });
     }
 
     /**
