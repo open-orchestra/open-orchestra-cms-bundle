@@ -20,8 +20,7 @@ class CsvToReferenceKeywordTransformer implements DataTransformerInterface
      */
     public function __construct(
         KeywordToDocumentManager $keywordToDocumentManager
-    )
-    {
+    ){
         $this->keywordToDocumentManager = $keywordToDocumentManager;
     }
 

@@ -37,7 +37,7 @@ class BooleanConditionValidator extends ConstraintValidator
             $condition,
             $encapsuledElements
         );
-        if(count($encapsuledElements[0]) > 0) {
+        if (count($encapsuledElements[0]) > 0) {
             foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
                 $is_boolean = (preg_match(ContentRepositoryInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key]) ||
                     preg_match(ContentRepositoryInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key])) &&
