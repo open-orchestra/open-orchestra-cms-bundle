@@ -15,7 +15,6 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
 {
     protected $keywordToDocumentManager;
     protected $keywordRepository;
-
     /**
      * @param KeywordToDocumentManager   $keywordToDocumentManager
      * @param KeywordRepositoryInterface $keywordRepository
@@ -27,7 +26,6 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         $this->keywordToDocumentManager = $keywordToDocumentManager;
         $this->keywordRepository = $keywordRepository;
     }
-
     /**
      * @param string $keywords
      *
@@ -40,23 +38,8 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         if (null === $keywords) {
             return '';
         }
-
-        $keywordArray = $this->getKeywordAsArray($keywords);
-
-        foreach ($keywordArray as $keyword) {
-            if ($keyword != '') {
-                $keywordDocument = $this->keywordRepository->find($keyword);
-                if (!is_null($keywordDocument)) {
-                    $keywords = str_replace($keyword, $keywordDocument->getLabel(), $keywords);
-                } else {
-                    throw new NotFoundedKeywordException();
-                }
-            }
-        }
-
-        return $keywords;
+        return $this->replaceKeywords($keywords, 'getLabelFromRepository');
     }
-
     /**
      * @param string $keywords
      *
@@ -66,31 +49,51 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      */
     public function reverseTransform($keywords)
     {
-        $keywordArray = $this->getKeywordAsArray($keywords);
-
+        return $this->replaceKeywords($keywords, 'getIdFromManager');
+    }
+    /**
+     * @param string $keywords
+     *
+     * @return string
+     *
+     * @throws NotFoundedKeywordException
+     */
+    protected function replaceKeywords($keywords, $method) {
+        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordArray = explode(' ', $keywordWithoutOperator);
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
-                $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
-                if($keywordDocument instanceof KeywordInterface) {
-                    $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
+                if (null !== ($value = $this->$method)) {
+                    $keywords = str_replace($keyword, $value, $keywords);
                 } else {
                     throw new NotFoundedKeywordException();
                 }
             }
         }
-
         return $keywords;
     }
-
     /**
-     * @param string $keywords
+     * @param string $keyword
      *
-     * @return array
+     * @return string|null
      */
-    protected function getKeywordAsArray($keywords) {
-        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
-        $keywordArray = explode(' ', $keywordWithoutOperator);
-
-        return $keywordArray;
+    protected function getLabelFromRepository($keyword) {
+        $keywordDocument = $this->keywordRepository->find($keyword);
+        if($keywordDocument instanceof KeywordInterface) {
+            return $keywordDocument->getLabel();
+        }
+        return null;
+    }
+     /**
+     * @param string $keyword
+     *
+     * @return string|null
+     */
+    protected function getIdFromManager($keyword) {
+        $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
+        if($keywordDocument instanceof KeywordInterface) {
+            return $keywordDocument->getId();
+        }
+        return null;
     }
 }
