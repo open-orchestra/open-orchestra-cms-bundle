@@ -82,6 +82,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         if($keywordDocument instanceof KeywordInterface) {
             return $keywordDocument->getLabel();
         }
+
         return null;
     }
      /**
@@ -94,6 +95,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         if($keywordDocument instanceof KeywordInterface) {
             return $keywordDocument->getId();
         }
+
         return null;
     }
 }
