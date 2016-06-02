@@ -72,7 +72,7 @@ open_orchestra_role:
     role_access_create_site: Créer
     role_access_update_site: Editer
     role_access_delete_site: Supprimer
-    label_access_role: Profil de worflow
+    label_access_role: Transitions de workflow
     role_access_role: Accéder
     role_access_create_role: Créer
     role_access_update_role: Editer
