@@ -45,8 +45,7 @@ BlockView = OrchestraView.extend(
       )
 
   removeBlock: (event) ->
-    ul = $(event.target).parents("ul").first()
+    area = $(event.target).parents("ul").first()
     $(event.target).parents("li").first().remove()
-    refreshUl ul
-    @options.viewContainer.sendBlockData({target: ul})
+    @options.viewContainer.removeBlockFromArea area
 )

@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
+use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 
 /**
  * Class AreaController
@@ -25,6 +26,9 @@ use OpenOrchestra\BaseApiBundle\Controller\BaseController;
  */
 class AreaController extends BaseController
 {
+    const ROLE_ACCESS = 'access';
+    const ROLE_EDIT = 'edit';
+
     /**
      * @param string $areaId
      * @param string $nodeId
@@ -36,10 +40,8 @@ class AreaController extends BaseController
      */
     public function showInNodeAction($areaId, $nodeId)
     {
-        $nodeRepository = $this->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->find($nodeId);
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
-        $area = $nodeRepository->findAreaByAreaId($node, $areaId);
+        $node = $this->getNode($nodeId, self::ROLE_ACCESS);
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $areaId);
 
         return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
     }
@@ -61,7 +63,8 @@ class AreaController extends BaseController
         $template = $templateRepository->findOneByTemplateId($templateId);
         $area = $templateRepository->findAreaByTemplateIdAndAreaId($templateId, $areaId);
 
-        return $this->get('open_orchestra_api.transformer_manager')->get('area')->transformFromTemplate($area, $template);
+        return $this->get('open_orchestra_api.transformer_manager')
+            ->get('area')->transformFromTemplate($area, $template);
     }
 
     /**
@@ -76,23 +79,40 @@ class AreaController extends BaseController
      */
     public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
     {
-        $nodeRepository = $this->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->find($nodeId);
-        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
-        $area = $nodeRepository->findAreaByAreaId($node, $areaId);
-
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
             'OpenOrchestra\ApiBundle\Facade\AreaFacade',
             $request->get('_format', 'json')
         );
 
-        $this->get('open_orchestra_api.transformer_manager')
-            ->get('area')->reverseTransform($facade, $area, $node);
+        $this->updateArea($nodeId, $facade);
 
-        $this->get('object_manager')->flush();
+        return array();
+    }
 
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param int     $areaFromId
+     * @param int     $areaToId
+     *
+     * @Config\Route("/move-block/{nodeId}", name="open_orchestra_api_area_move_block")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function moveBlockFromAreaToAreaAction(Request $request, $nodeId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
+            $request->get('_format', 'json')
+        );
+
+        $areas = $facade->getAreas();
+
+        $this->updateArea($nodeId,$areas[1]);
+        $this->updateArea($nodeId, $areas[0]);
 
         return array();
     }
@@ -108,8 +128,7 @@ class AreaController extends BaseController
      */
     public function deleteAreaInNodeAction($areaId, $nodeId)
     {
-        $node = $this->get('open_orchestra_model.repository.node')->find($nodeId);
-        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+        $node = $this->getNode($nodeId, self::ROLE_EDIT);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $node);
 
@@ -129,10 +148,9 @@ class AreaController extends BaseController
      */
     public function deleteAreaInNodeAreaAction($areaId, $parentAreaId, $nodeId)
     {
-        $nodeRepository= $this->get('open_orchestra_model.repository.node');
-        $node = $nodeRepository->find($nodeId);
-        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
-        $areaContainer = $nodeRepository->findAreaByAreaId($node, $parentAreaId);
+        $node = $this->getNode($nodeId, self::ROLE_EDIT);
+        $areaContainer = $this->get('open_orchestra_model.repository.node')
+            ->findAreaByAreaId($node, $parentAreaId);
         $this->dispatchEvent(NodeEvents::NODE_DELETE_AREA, new NodeEvent($node));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
@@ -152,7 +170,8 @@ class AreaController extends BaseController
      */
     public function deleteAreaInTemplateAction($areaId, $templateId)
     {
-        $areaContainer = $this->get('open_orchestra_model.repository.template')->findOneByTemplateId($templateId);
+        $areaContainer = $this->get('open_orchestra_model.repository.template')
+            ->findOneByTemplateId($templateId);
         $this->dispatchEvent(TemplateEvents::TEMPLATE_AREA_DELETE, new TemplateEvent($areaContainer));
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
@@ -180,6 +199,44 @@ class AreaController extends BaseController
         $this->deleteAreaFromContainer($areaId, $areaContainer);
 
         return array();
+    }
+
+    /**
+     * @param string $nodeId
+     *
+     * @return NodeInterface
+     */
+    protected function getNode($nodeId, $roleToCheck)
+    {
+        $nodeRepository = $this->get('open_orchestra_model.repository.node');
+        $node = $nodeRepository->find($nodeId);
+        $role = '';
+        if (self::ROLE_ACCESS == $roleToCheck) {
+            $role = $this->getAccessRole($node);
+        } else if (self::ROLE_EDIT) {
+            $role = $this->getEditionRole($node);
+        }
+
+        $this->denyAccessUnlessGranted($role, $node);
+
+        return $node;
+    }
+
+    /**
+     * @param string     $nodeId
+     * @param AreaFacade $facade
+     */
+    protected function updateArea($nodeId, AreaFacade $facade)
+    {
+        $node = $this->getNode($nodeId, self::ROLE_ACCESS);
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $facade->areaId);
+
+        $this->get('open_orchestra_api.transformer_manager')
+            ->get('area')->reverseTransform($facade, $area, $node);
+
+        $this->get('object_manager')->flush();
+
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
     }
 
     /**

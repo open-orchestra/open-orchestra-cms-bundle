@@ -120,7 +120,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
         $this->assertArrayHasKey('_self_block', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self_delete', $areaFacade->getLinks());
-        Phake::verify($this->router, Phake::times(4))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(5))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform(
             $this->block,
             true,
