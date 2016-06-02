@@ -38,6 +38,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         if (null === $keywords) {
             return '';
         }
+
         return $this->replaceKeywords($keywords, 'getLabelFromRepository');
     }
     /**
@@ -70,6 +71,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
                 }
             }
         }
+
         return $keywords;
     }
     /**
