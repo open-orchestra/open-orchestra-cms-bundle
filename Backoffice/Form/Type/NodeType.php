@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
 use OpenOrchestra\Backoffice\Manager\NodeManager;
 use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
@@ -10,6 +11,7 @@ use OpenOrchestra\Backoffice\EventSubscriber\BoDirectionChildrenSubscriber;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +30,7 @@ class NodeType extends AbstractAreaContainerType
     protected $templateRepository;
     protected $siteRepository;
     protected $schemeChoices;
+    protected $translateValueInitializer;
 
     /**
      * @param string                      $nodeClass
@@ -43,7 +46,8 @@ class NodeType extends AbstractAreaContainerType
         SiteRepositoryInterface $siteRepository,
         NodeManager $nodeManager,
         $areaClass,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        TranslateValueInitializerListener $translateValueInitializer
     ) {
         $this->nodeClass = $nodeClass;
         $this->nodeManager = $nodeManager;
@@ -58,6 +62,7 @@ class NodeType extends AbstractAreaContainerType
             SchemeableInterface::SCHEME_FILE => SchemeableInterface::SCHEME_FILE,
             SchemeableInterface::SCHEME_FTP => SchemeableInterface::SCHEME_FTP
         );
+        $this->translateValueInitializer = $translateValueInitializer;
     }
 
     /**
@@ -66,6 +71,7 @@ class NodeType extends AbstractAreaContainerType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.node.name',
@@ -112,11 +118,11 @@ class NodeType extends AbstractAreaContainerType
                 'label' => 'open_orchestra_backoffice.form.node.in_footer',
                 'required' => false
             ))
-            ->add('metaKeywords', 'text', array(
+            ->add('metaKeywords', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
             ))
-            ->add('metaDescription', 'text', array(
+            ->add('metaDescriptions', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
             ))

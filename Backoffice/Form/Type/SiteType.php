@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
+use OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteNodeTemplateSubscriber;
 use OpenOrchestra\Backoffice\EventSubscriber\WebSiteSubscriber;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class SiteType
@@ -18,17 +20,22 @@ class SiteType extends AbstractType
     protected $siteClass;
     protected $translator;
     protected $templateRepository;
+    protected $translateValueInitializer;
 
     /**
      * @param string                      $siteClass
      * @param TranslatorInterface         $translator
      * @param TemplateRepositoryInterface $templateRepository
      */
-    public function __construct($siteClass, TranslatorInterface $translator, TemplateRepositoryInterface $templateRepository)
-    {
+    public function __construct(
+        $siteClass, TranslatorInterface $translator,
+        TemplateRepositoryInterface $templateRepository,
+        TranslateValueInitializerListener $translateValueInitializer
+    ) {
         $this->siteClass = $siteClass;
         $this->translator = $translator;
         $this->templateRepository = $templateRepository;
+        $this->translateValueInitializer = $translateValueInitializer;
     }
 
     /**
@@ -37,6 +44,8 @@ class SiteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
+
         $builder
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.website.name',
@@ -77,11 +86,11 @@ class SiteType extends AbstractType
                 'precision' => 2,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
             ))
-            ->add('metaKeywords', 'text', array(
+            ->add('metaKeywords', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
             ))
-            ->add('metaDescription', 'text', array(
+            ->add('metaDescriptions', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
             ))

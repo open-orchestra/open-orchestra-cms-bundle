@@ -347,7 +347,7 @@ class NodeManager
         $site = $this->siteRepository->findOneBySiteId($siteId);
         if ($site) {
             $node->setMetaKeywords($site->getMetaKeywords());
-            $node->setMetaDescription($site->getMetaDescription());
+            $node->setMetaDescriptions($site->getMetaDescriptions());
             $node->setMetaIndex($site->getMetaIndex());
             $node->setMetaFollow($site->getMetaFollow());
         }
@@ -387,7 +387,7 @@ class NodeManager
         $site = $this->siteRepository->findOneBySiteId($siteId);
         if ($site) {
             $node->setMetaKeywords($site->getMetaKeywords());
-            $node->setMetaDescription($site->getMetaDescription());
+            $node->setMetaDescriptions($site->getMetaDescriptions());
             $node->setMetaIndex($site->getMetaIndex());
             $node->setMetaFollow($site->getMetaFollow());
         }
