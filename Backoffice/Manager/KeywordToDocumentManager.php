@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\AdministrationPanelStrategy;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Class KeywordToDocumentManager
@@ -24,8 +25,7 @@ class KeywordToDocumentManager
         SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper,
         $keywordClass,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+    ){
         $this->keywordRepository = $keywordRepository;
         $this->suppressSpecialCharacterHelper = $suppressSpecialCharacterHelper;
         $this->keywordClass = $keywordClass;
@@ -42,7 +42,10 @@ class KeywordToDocumentManager
         $keyword = $this->suppressSpecialCharacterHelper->transform($keyword);
         $keywordClass = $this->keywordClass;
         $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
-        if (is_null($keywordEntity) && $this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD)) {
+        if (!$this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD)) {
+            throw new AccessDeniedHttpException();
+        }
+        if (is_null($keywordEntity)) {
             $keywordEntity = new $keywordClass();
             $keywordEntity->setLabel($keyword);
             $this->keywordRepository->getManager()->persist($keywordEntity);

@@ -23,8 +23,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
     public function __construct(
         KeywordToDocumentManager $keywordToDocumentManager,
         KeywordRepositoryInterface $keywordRepository
-    )
-    {
+    ){
         $this->keywordToDocumentManager = $keywordToDocumentManager;
         $this->keywordRepository = $keywordRepository;
     }
@@ -42,8 +41,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
             return '';
         }
 
-        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
-        $keywordArray = explode(' ', $keywordWithoutOperator);
+        $keywordArray = $this->getKeywordAsArray($keywords);
 
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
@@ -68,8 +66,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      */
     public function reverseTransform($keywords)
     {
-        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
-        $keywordArray = explode(' ', $keywordWithoutOperator);
+        $keywordArray = $this->getKeywordAsArray($keywords);
 
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
@@ -83,5 +80,17 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         }
 
         return $keywords;
+    }
+
+    /**
+     * @param string $keywords
+     *
+     * @return array
+     */
+    protected function getKeywordAsArray($keywords) {
+        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordArray = explode(' ', $keywordWithoutOperator);
+
+        return $keywordArray;
     }
 }

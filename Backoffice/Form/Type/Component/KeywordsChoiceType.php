@@ -38,8 +38,7 @@ class KeywordsChoiceType extends AbstractType
         KeywordRepositoryInterface $keywordRepository,
         RouterInterface $router,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
+    ){
         $this->csvToReferenceKeywordTransformer = $csvToReferenceKeywordTransformer;
         $this->conditionToReferenceKeywordTransformer = $conditionToReferenceKeywordTransformer;
         $this->keywordRepository = $keywordRepository;
