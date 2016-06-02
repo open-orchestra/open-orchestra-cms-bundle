@@ -20,4 +20,4 @@ class OpenOrchestra.FormBehavior.ValidateHidden extends OpenOrchestra.FormBehavi
 
 jQuery ->
   OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.ValidateHidden("input[type='hidden'][required='required']"))
-  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.ValidateHidden("input:hidden[type='text'][required='required']"))
+  OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.ValidateHidden("input.select-boolean[type='text'][required='required']"))
