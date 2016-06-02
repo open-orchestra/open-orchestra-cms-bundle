@@ -72,7 +72,7 @@ open_orchestra_role:
     role_access_create_group: Create
     role_access_update_group: Update
     role_access_delete_group: Delete
-    label_access_role: Workflow profile
+    label_access_role: Workflow transitions
     role_access_role: Access
     role_access_create_role: Create
     role_access_update_role: Update
