@@ -4,7 +4,7 @@ namespace OpenOrchestra\Backoffice\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use \OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**
  * Class BooleanConditionValidator
@@ -33,14 +33,14 @@ class BooleanConditionValidator extends ConstraintValidator
         $is_boolean = true;
         $encapsuledElements = array();
         preg_match_all(
-            ContentRepositoryInterface::GET_BALANCED_BRACKETS,
+            KeywordableTraitInterface::GET_BALANCED_BRACKETS,
             $condition,
             $encapsuledElements
         );
         if (count($encapsuledElements[0]) > 0) {
             foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
-                $is_boolean = (preg_match(ContentRepositoryInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key]) ||
-                    preg_match(ContentRepositoryInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key])) &&
+                $is_boolean = (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $encapsuledElements[1][$key]) ||
+                    preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $encapsuledElements[1][$key])) &&
                     $is_boolean;
                 $condition = preg_replace('/'.preg_quote($encapsuledElement).'/', '##', $condition, 1);
                 if (count($encapsuledElements[0]) > 0) {
@@ -48,8 +48,8 @@ class BooleanConditionValidator extends ConstraintValidator
                 }
             }
         } else {
-            $is_boolean = (preg_match(ContentRepositoryInterface::IS_AND_BOOLEAN, $condition) ||
-                preg_match(ContentRepositoryInterface::IS_OR_BOOLEAN, $condition)) &&
+            $is_boolean = (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition) ||
+                preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $condition)) &&
                 $is_boolean;
         }
 

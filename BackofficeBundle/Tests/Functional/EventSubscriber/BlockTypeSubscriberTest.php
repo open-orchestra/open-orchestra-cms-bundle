@@ -11,7 +11,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**
  * Class BlockTypeSubscriberTest
@@ -175,7 +175,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      */
     protected function replaceKeywordLabelById($condition)
     {
-        $conditionWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $condition);
+        $conditionWithoutOperator = preg_replace(KeywordableTraitInterface::OPERATOR_SPLIT, ' ', $condition);
         $conditionArray = explode(' ', $conditionWithoutOperator);
 
         foreach ($conditionArray as $keyword) {
