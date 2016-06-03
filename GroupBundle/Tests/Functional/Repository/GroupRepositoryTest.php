@@ -70,7 +70,7 @@ class GroupRepositoryTest extends AbstractKernelTestCase
     public function testCount()
     {
         $groups = $this->repository->count();
-        $this->assertEquals(6, $groups);
+        $this->assertEquals(7, $groups);
     }
 
     /**
@@ -105,8 +105,8 @@ class GroupRepositoryTest extends AbstractKernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array($descriptionEntity, null, 6),
-            array($descriptionEntity, $this->generateSearchProvider('group'), 5),
+            array($descriptionEntity, null, 7),
+            array($descriptionEntity, $this->generateSearchProvider('group'), 6),
             array($descriptionEntity, $this->generateSearchProvider('Demo'), 1),
             array($descriptionEntity, $this->generateSearchProvider('', 'fakeName'), 0),
         );

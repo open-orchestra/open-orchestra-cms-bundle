@@ -30,7 +30,12 @@ class OpenOrchestra.ContentTypeFormView extends FullPageFormView
     containerId = targetId.replace(/_type$/g, '')
     window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', @, $('#' + containerId, @$el)
     displayLoader('#' + containerId + '_options')
+<<<<<<< HEAD
     $('[for="' + containerId + '_default_value"]', @$el).parent().remove()
+=======
+    label = $('[for="' + containerId + '_default_value"]', @$el)
+    label.parent().remove()
+>>>>>>> 5fd53d6e9c1a4d8b163c6a3de1e356c83f760e73
     $('form', @$el).ajaxSubmit
       url: $('form', @$el).data('action')
       type: 'PATCH'

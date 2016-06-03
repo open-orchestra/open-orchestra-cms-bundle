@@ -21,7 +21,12 @@ class OpenOrchestra.FormBehavior.RefreshForm extends OpenOrchestra.FormBehavior.
 
       window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', view, $('form', view.$el)
       form.replaceWith('<h1 class="spin"><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5fd53d6e9c1a4d8b163c6a3de1e356c83f760e73
       form.ajaxSubmit
+        url: form.data('action')
         method: 'PATCH'
         url : form.data('action')
         context: view

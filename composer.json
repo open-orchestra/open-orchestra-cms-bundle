@@ -8,7 +8,9 @@
       "homepage": "https://github.com/open-orchestra/open-orchestra-cms-bundle/graphs/contributors"
     }
   ],
+
   "require": {
+<<<<<<< HEAD
     "open-orchestra/open-orchestra-base-bundle": "1.1.*@dev",
     "open-orchestra/open-orchestra-base-api-bundle": "1.1.*@dev",
     "open-orchestra/open-orchestra-display-bundle": "1.1.*@dev",
@@ -19,21 +21,37 @@
     "koala-framework/composer-extra-assets": "2.0.x",
     "innocead/captcha-bundle": "@dev",
     "friendsofsymfony/user-bundle": "@dev",
+=======
+    "braincrafted/bootstrap-bundle": "~2.1.2",
+    "koala-framework/composer-extra-assets": "~2.0.4",
+    "stfalcon/tinymce-bundle": "~0.3.8",
+    "open-orchestra/open-orchestra-base-api-bundle": "1.2.*@dev",
+    "open-orchestra/open-orchestra-base-bundle": "1.2.*@dev",
+    "open-orchestra/open-orchestra-display-bundle": "1.2.*@dev",
+    "open-orchestra/open-orchestra-model-interface": "1.2.*@dev",
+    "open-orchestra/open-orchestra-user-bundle": "1.2.*@dev",
+>>>>>>> 5fd53d6e9c1a4d8b163c6a3de1e356c83f760e73
 
+    "friendsofsymfony/user-bundle": "@dev",
+    "innocead/captcha-bundle": "@dev",
     "open-orchestra/open-orchestra-bbcode-bundle": "@dev",
     "open-orchestra/open-orchestra-libs": "@dev",
     "open-orchestra/open-orchestra-mongo-libs": "@dev"
   },
+
   "require-dev": {
-    "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
-    "phpunit/phpunit" : "4.8.12",
-    "psr/log": "1.0.0",
-    "codeclimate/php-test-reporter": "dev-master",
-    "phake/phake": "2.1.0"
+    "codeclimate/php-test-reporter": "~0.3.2",
+    "phake/phake": "~2.1.0",
+    "phpunit/phpunit": "~4.8.0",
+
+    "sensio/generator-bundle": "~2.5.0",
+    "open-orchestra/open-orchestra-model-bundle": "1.2.*@dev"
   },
-  "config" : {
-    "bin-dir" : "bin"
+
+  "config": {
+    "bin-dir": "bin"
   },
+
   "autoload": {
     "psr-4": {
       "OpenOrchestra\\ModelLogBundle\\": "ModelLogBundle/",
@@ -45,9 +63,15 @@
       "OpenOrchestra\\UserAdminBundle\\": "UserAdminBundle/"
     }
   },
+
   "extra": {
     "branch-alias": {
-      "dev-master": "1.1.x-dev"
+      "dev-master": "1.2.x-dev"
+    },
+    "mouf": {
+      "nodejs": {
+        "version": "~4.4.3"
+      }
     },
     "mouf": {
       "nodejs": {
@@ -55,22 +79,22 @@
       }
     },
     "require-npm": {
-      "bower": "~1.3",
+      "bower": "~1.7",
       "grunt": "~0.4",
-      "grunt-cli": "~0.1",
-      "grunt-contrib-symlink": "~0.2",
-      "grunt-contrib-less": "~1.0.0",
-      "grunt-contrib-cssmin": "~0.7",
-      "grunt-contrib-coffee": "~0.8",
-      "grunt-contrib-uglify": "~0.2",
-      "grunt-contrib-concat": "~0.3",
-      "grunt-contrib-watch": "~0.4",
-      "grunt-contrib-clean": "~0.5",
+      "grunt-cli": "~1.2",
+      "grunt-contrib-symlink": "~1.0",
+      "grunt-contrib-less": "~1.3.0",
+      "grunt-contrib-cssmin": "~1.0",
+      "grunt-contrib-coffee": "~1.0",
+      "grunt-contrib-uglify": "~1.0",
+      "grunt-contrib-concat": "~1.0",
+      "grunt-contrib-watch": "~1.0",
+      "grunt-contrib-clean": "~1.0",
       "grunt-js-test": "1.5.x",
       "grunt-commands": "~0.1",
-      "coffee-script": "~1.9.1",
-      "load-grunt-tasks": "~3.2.0",
-      "glob": "~5.0.10",
+      "coffee-script": "~1.10.0",
+      "load-grunt-tasks": "~3.5.0",
+      "glob": "~7.0.3",
       "merge": "~1.2.0"
     },
     "expose-npm-packages": true,

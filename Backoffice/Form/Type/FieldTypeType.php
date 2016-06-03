@@ -61,6 +61,21 @@ class FieldTypeType extends AbstractType
             ->add('labels', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.labels'
             ))
+            ->add('type', 'choice', array(
+                'choices' => $this->getChoicesType(),
+                'label' => 'open_orchestra_backoffice.form.field_type.type',
+                'attr' => array(
+                    'class' => 'content_type_change_type'
+                )
+            ))
+            ->add('listable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.listable',
+                'required' => false,
+            ))
+            ->add('translatable', 'checkbox', array(
+                'label' => 'open_orchestra_backoffice.form.field_type.translatable',
+                'required' => false,
+            ))
             ->add('searchable', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.searchable',
                 'required' => false,
@@ -73,22 +88,8 @@ class FieldTypeType extends AbstractType
                 'choices' => $this->getChoicesOrder(),
                 'label' => 'open_orchestra_backoffice.form.field_type.orderDirection',
                 'required' => false,
-            ))
-            ->add('translatable', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.field_type.translatable',
-                'required' => false,
-            ))
-            ->add('type', 'choice', array(
-                'choices' => $this->getChoicesType(),
-                'label' => 'open_orchestra_backoffice.form.field_type.type',
-                'attr' => array(
-                    'class' => 'content_type_change_type'
-                )
-            ))
-            ->add('listable', 'checkbox', array(
-                'label' => 'open_orchestra_backoffice.form.field_type.listable',
-                'required' => false,
             ));
+
         $builder->addEventSubscriber(new FieldTypeTypeSubscriber($this->fieldOptions, $this->fieldOptionClass, $this->fieldTypeParameters));
     }
 

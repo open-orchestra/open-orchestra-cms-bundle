@@ -3,7 +3,6 @@ parameters:
     open_orchestra_backoffice.display_icon.contact.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\ContactStrategy
     open_orchestra_backoffice.display_icon.footer.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\FooterStrategy
     open_orchestra_backoffice.display_icon.menu.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\MenuStrategy
-    open_orchestra_backoffice.display_icon.sample.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\SampleStrategy
     open_orchestra_backoffice.display_icon.tiny_mce_wysiwyg.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\TinyMCEWysiwygStrategy
     open_orchestra_backoffice.display_icon.configurable_content.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\ConfigurableContentStrategy
     open_orchestra_backoffice.display_icon.search.class: OpenOrchestra\Backoffice\DisplayIcon\Strategies\SearchStrategy
