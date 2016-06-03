@@ -49,8 +49,10 @@ class AreaControllerTest extends AbstractControllerTest
 
 
         // Remove ref of area in block
-        $formData = json_encode(array('blocks' => array(
-        )));
+        $formData = json_encode(array(
+            'area_id' => 'mainContentArea1',
+            'blocks' => array()
+        ));
 
         $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
@@ -94,7 +96,10 @@ class AreaControllerTest extends AbstractControllerTest
         }
         $blocksDataToSend[] = array('component' => 'audience_analysis');
 
-        $datas = json_encode(array('blocks' => $blocksDataToSend));
+        $datas = json_encode(array(
+            'area_id' => 'main',
+            'blocks' => $blocksDataToSend
+        ));
         $this->client->request('POST', $updateLink, array(), array(), array(), $datas);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
