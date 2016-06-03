@@ -66,9 +66,10 @@ class AreaControllerTest extends AbstractControllerTest
         );
 
         // Add ref of area in block
-        $formData = json_encode(array('blocks' => array(
-            array('node_id' => 'root', 'block_id' => 0),
-        )));
+        $formData = json_encode(array(
+            'area_id' => 'mainContentArea1',
+            'blocks' => array(array('node_id' => 'root', 'block_id' => 0))
+        ));
 
         $this->client->request('POST', $update, array(), array(), array(), $formData);
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
