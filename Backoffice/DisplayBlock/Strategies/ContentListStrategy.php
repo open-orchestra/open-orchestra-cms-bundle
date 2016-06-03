@@ -26,9 +26,9 @@ class ContentListStrategy extends AbstractStrategy
             'class' => $block->getClass(),
             'contentNodeId' => $block->getAttribute('contentNodeId'),
             'characterNumber' => $block->getAttribute('characterNumber'),
-            'keywords' => $block->getAttribute('keywords'),
-            'choiceType' => $block->getAttribute('choiceType'),
-            'contentType' => $block->getAttribute('contentType'),
+            'keywords' => $block->getAttribute('contentSearch')['keywords'],
+            'choiceType' => $block->getAttribute('contentSearch')['choiceType'],
+            'contentType' => $block->getAttribute('contentSearch')['contentType'],
             'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
             'contentTemplate' => $block->getAttribute('contentTemplate'),
         );
