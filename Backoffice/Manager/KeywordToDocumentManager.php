@@ -42,7 +42,8 @@ class KeywordToDocumentManager
         $keyword = $this->suppressSpecialCharacterHelper->transform($keyword);
         $keywordClass = $this->keywordClass;
         $keywordEntity = $this->keywordRepository->findOneByLabel($keyword);
-        if (!$this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD)) {
+
+        if (is_null($keywordEntity) && !$this->authorizationChecker->isGranted(AdministrationPanelStrategy::ROLE_ACCESS_CREATE_KEYWORD)) {
             throw new AccessDeniedHttpException();
         }
         if (is_null($keywordEntity)) {

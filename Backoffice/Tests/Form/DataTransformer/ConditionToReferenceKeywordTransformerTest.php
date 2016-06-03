@@ -120,8 +120,28 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
             array('( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )'),
             array('fakeId[cat:X1]', 'cat:X1'),
             array('( fakeId[cat:X1] )', '( cat:X1 )'),
-            array('fakeId[not_created_keyword]', ''),
             array(null, ''),
+        );
+    }
+
+    /**
+     * @param string $string
+     *
+     * @dataProvider providerTransformDataException
+     */
+    public function testTransformException($string, $expected)
+    {
+        $this->setExpectedException('OpenOrchestra\Backoffice\Exception\NotFoundedKeywordException');
+        $this->assertSame($expected, $this->transformer->transform($string));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerTransformDataException()
+    {
+        return array(
+            array('fakeId[not_created_keyword]', ''),
         );
     }
 }

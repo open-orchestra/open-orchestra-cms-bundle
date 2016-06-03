@@ -5,8 +5,9 @@ namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
-use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\Backoffice\Exception\NotFoundedKeywordException;
+use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class ConditionToReferenceKeywordTransformer
@@ -15,6 +16,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
 {
     protected $keywordToDocumentManager;
     protected $keywordRepository;
+
     /**
      * @param KeywordToDocumentManager   $keywordToDocumentManager
      * @param KeywordRepositoryInterface $keywordRepository
@@ -26,6 +28,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         $this->keywordToDocumentManager = $keywordToDocumentManager;
         $this->keywordRepository = $keywordRepository;
     }
+
     /**
      * @param string $keywords
      *
@@ -39,8 +42,22 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
             return '';
         }
 
-        return $this->replaceKeywords($keywords, 'getLabelFromRepository');
+        $keywordArray = $this->getKeywordAsArray($keywords);
+
+        foreach ($keywordArray as $keyword) {
+            if ($keyword != '') {
+                $keywordDocument = $this->keywordRepository->find($keyword);
+                if (!is_null($keywordDocument)) {
+                    $keywords = str_replace($keyword, $keywordDocument->getLabel(), $keywords);
+                } else {
+                    throw new NotFoundedKeywordException();
+                }
+            }
+        }
+
+        return $keywords;
     }
+
     /**
      * @param string $keywords
      *
@@ -50,22 +67,13 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      */
     public function reverseTransform($keywords)
     {
-        return $this->replaceKeywords($keywords, 'getIdFromManager');
-    }
-    /**
-     * @param string $keywords
-     *
-     * @return string
-     *
-     * @throws NotFoundedKeywordException
-     */
-    protected function replaceKeywords($keywords, $method) {
-        $keywordWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $keywords);
-        $keywordArray = explode(' ', $keywordWithoutOperator);
+        $keywordArray = $this->getKeywordAsArray($keywords);
+
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
-                if (null !== ($value = $this->$method)) {
-                    $keywords = str_replace($keyword, $value, $keywords);
+                $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
+                if($keywordDocument instanceof KeywordInterface) {
+                    $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
                 } else {
                     throw new NotFoundedKeywordException();
                 }
@@ -74,30 +82,16 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
 
         return $keywords;
     }
+
     /**
-     * @param string $keyword
+     * @param string $keywords
      *
-     * @return string|null
+     * @return array
      */
-    protected function getLabelFromRepository($keyword) {
-        $keywordDocument = $this->keywordRepository->find($keyword);
-        if($keywordDocument instanceof KeywordInterface) {
-            return $keywordDocument->getLabel();
-        }
+    protected function getKeywordAsArray($keywords) {
+        $keywordWithoutOperator = preg_replace(KeywordableTraitInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordArray = explode(' ', $keywordWithoutOperator);
 
-        return null;
-    }
-     /**
-     * @param string $keyword
-     *
-     * @return string|null
-     */
-    protected function getIdFromManager($keyword) {
-        $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
-        if($keywordDocument instanceof KeywordInterface) {
-            return $keywordDocument->getId();
-        }
-
-        return null;
+        return $keywordArray;
     }
 }
