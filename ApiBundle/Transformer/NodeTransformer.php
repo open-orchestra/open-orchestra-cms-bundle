@@ -113,7 +113,9 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             'language' => $node->getLanguage(),
         )));
 
-        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_parameter_languages_show'));
+        $facade->addLink('_language_list', $this->generateRoute('open_orchestra_api_site_languages_show', array(
+            'siteId' => $node->getSiteId()
+        )));
 
         if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
             if ($site = $this->siteRepository->findOneBySiteId($node->getSiteId())) {
@@ -131,7 +133,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
             $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_node_form', array(
                 'id' => $node->getId(),
             )));
-            
+
             $facade->addLink('_status_list', $this->generateRoute('open_orchestra_api_node_list_status', array(
                 'nodeMongoId' => $node->getId()
             )));
