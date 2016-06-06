@@ -49,8 +49,13 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($theme)->getName()->thenReturn('fakeNameTheme');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getTheme()->thenReturn($theme);
-        Phake::when($site)->getMetaKeywords()->thenReturn('fake keyword');
-        Phake::when($site)->getMetaDescription()->thenReturn('fake description');
+
+        $meta = new ArrayCollection();
+        $meta->set('fr', 'fake meta');
+        $meta->set('en', 'fake meta');
+        $meta->set('de', 'fake meta');
+        Phake::when($site)->getMetaKeywords()->thenReturn($meta);
+        Phake::when($site)->getMetaDescriptions()->thenReturn($meta);
         Phake::when($site)->getMetaIndex()->thenReturn(true);
         Phake::when($site)->getMetaFollow()->thenReturn(true);
 
@@ -299,8 +304,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals($language, $node->getLanguage());
         $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
         $this->assertTrue($node->hasDefaultSiteTheme());
-        $this->assertEquals('fake keyword', $node->getMetaKeywords());
-        $this->assertEquals('fake description', $node->getMetaDescription());
+        $this->assertArrayHasKey('fr', $node->getMetaKeywords());
+        $this->assertArrayHasKey('fr', $node->getMetaDescriptions());
         $this->assertEquals(0, $node->getOrder());
         $this->assertEquals($status, $node->getStatus());
         $this->assertEquals(true, $node->getMetaIndex());
