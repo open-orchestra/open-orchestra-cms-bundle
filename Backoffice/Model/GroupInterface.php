@@ -3,6 +3,7 @@
 namespace OpenOrchestra\Backoffice\Model;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\GroupInterface as BaseGroupInterface;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueContainerInterface;
@@ -54,6 +55,11 @@ interface GroupInterface extends BaseGroupInterface, TranslatedValueContainerInt
      * @param ModelGroupRoleInterface $modelGroupRole
      */
     public function addModelGroupRole(ModelGroupRoleInterface $modelGroupRole);
+
+    /**
+     * @param ArrayCollection <ModelGroupRoleInterface> $modelGroupRole
+     */
+    public function setModelGroupRoles(ArrayCollection $modelGroupRoles);
 
     /**
      * @param string $type
