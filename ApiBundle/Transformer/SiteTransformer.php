@@ -30,7 +30,7 @@ class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
         parent::__construct($facadeClass, $authorizationChecker);
         $this->translationChoiceManager = $translationChoiceManager;
     }
-    
+
     /**
      * @param SiteInterface $site
      *

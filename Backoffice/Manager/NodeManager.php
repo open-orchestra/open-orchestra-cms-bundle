@@ -155,6 +155,8 @@ class NodeManager
         $newNode->setStatus($this->getEditableStatus($node));
         $newNode->setLanguage($language);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
+        $newNode->setMetaKeywords($node->getMetaKeywords());
+        $newNode->setMetaDescriptions($node->getMetaDescriptions());
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_ADD_LANGUAGE, new NodeEvent($node));
 

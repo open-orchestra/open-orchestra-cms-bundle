@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_backoffice.manager.context.class: OpenOrchestra\Backoffice\Context\ContextManager
     open_orchestra_backoffice.listener.translate_value_initializer.class: OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener
+    open_orchestra_backoffice.listener.translate_front_value_initializer.class: OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener
     open_orchestra_backoffice.manager.translation_choice.class: OpenOrchestra\Backoffice\Manager\TranslationChoiceManager
     open_orchestra_backoffice.manager.area.class: OpenOrchestra\Backoffice\Manager\AreaManager
     open_orchestra_backoffice.manager.node.class: OpenOrchestra\Backoffice\Manager\NodeManager
@@ -26,6 +27,11 @@ services:
         class: %open_orchestra_backoffice.listener.translate_value_initializer.class%
         arguments:
             - @open_orchestra_backoffice.initializer.translated_value
+            - %open_orchestra_model.document.field_type.class%
+    open_orchestra_backoffice.listener.translate_front_value_initializer:
+        class: %open_orchestra_backoffice.listener.translate_front_value_initializer.class%
+        arguments:
+            - @open_orchestra_backoffice.initializer.translated_front_value
             - %open_orchestra_model.document.field_type.class%
     open_orchestra_backoffice.manager.translation_choice:
         class: %open_orchestra_backoffice.manager.translation_choice.class%
