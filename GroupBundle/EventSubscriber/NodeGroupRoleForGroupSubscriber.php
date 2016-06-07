@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
 use OpenOrchestra\Backoffice\Model\GroupInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\DisplayBundle\Manager\TreeManager;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class NodeGroupRoleForGroupSubscriber
@@ -44,18 +45,19 @@ class NodeGroupRoleForGroupSubscriber extends AbstractNodeGroupRoleSubscriber
      */
     public function preUpdate(PreUpdateEventArgs $event)
     {
-        $document = $event->getDocument();
-        if ($document instanceof GroupInterface &&
-           ($site = $document->getSite()) instanceof SiteInterface &&
+        $group = $event->getDocument();
+        if ($group instanceof GroupInterface &&
+           ($site = $group->getSite()) instanceof SiteInterface &&
             $event->hasChangedField('site')
         ) {
             $siteId = $site->getSiteId();
+            $group->setModelGroupRoles(new ArrayCollection());
             $nodes = $this->container->get('open_orchestra_model.repository.node')->findLastVersionByType($siteId);
             $nodes = $this->treeManager->generateTree($nodes);
-            $this->createNodeGroupRoleForTree($nodes, $document);
-            $meta = $event->getDocumentManager()->getClassMetadata(get_class($document));
+            $this->createNodeGroupRoleForTree($nodes, $group);
+            $meta = $event->getDocumentManager()->getClassMetadata(get_class($group));
             $uow = $event->getDocumentManager()->getUnitOfWork();
-            $uow->recomputeSingleDocumentChangeSet($meta, $document);
+            $uow->recomputeSingleDocumentChangeSet($meta, $group);
         }
     }
 
