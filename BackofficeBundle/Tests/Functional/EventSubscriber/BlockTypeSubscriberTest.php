@@ -11,6 +11,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**
  * Class BlockTypeSubscriberTest
@@ -23,6 +24,8 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      * @var FormFactoryInterface
      */
     protected $formFactory;
+    protected $keywords;
+    protected $keywordRepository;
 
     /**
      * Set up the test
@@ -30,6 +33,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function setUp()
     {
         parent::setUp();
+        $this->keywordRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.keyword');
         $this->formFactory = static::$kernel->getContainer()->get('form.factory');
     }
 
@@ -106,7 +110,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
             array(ConfigurableContentStrategy::NAME, array(
                 'contentSearch' => array(
                     'contentType' => 'car',
-                    'keywords' => '',
+                    'keywords' => null,
                     'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
                 ),
                 'contentTemplateEnabled' => true,
@@ -120,21 +124,20 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      *
      * @dataProvider provideComponentAndDataAndTransformedValue
      */
-    public function testMultipleBlockWithDataTransformation($component, $value, $transformedValue)
+    public function testMultipleBlockWithDataTransformation($component, $value)
     {
         $block = new Block();
         $block->setComponent($component);
-
         $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
-
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
+        $value['contentSearch']['keywords'] = $this->replaceKeywordLabelById($value['contentSearch']['keywords']);
         $form->submit($submittedValue);
 
         $this->assertTrue($form->isSynchronized());
         /** @var BlockInterface $data */
         $data = $form->getConfig()->getData();
         $this->assertBlock($data);
-        foreach ($transformedValue as $key => $receivedData) {
+        foreach ($value as $key => $receivedData) {
             $this->assertSame($receivedData, $data->getAttribute($key));
         }
     }
@@ -149,15 +152,9 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
                         'contentNodeId' => 'news',
                         'contentTemplateEnabled' => true,
                         'contentSearch' => array(
-                                'keywords' => 'Lorem AND Ipsum',
+                                'keywords' => 'lorem AND ipsum',
                             )
-                ), array(
-                        'contentNodeId' => 'news',
-                        'contentTemplateEnabled' => true,
-                        'contentSearch' => array(
-                                'keywords' => '{"$and":[{"keywords":{"$eq":"Lorem"}},{"keywords":{"$eq":"Ipsum"}}]}'
-                            )
-                    )),
+                )),
         );
     }
 
@@ -169,5 +166,29 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\BlockInterface', $data);
         $this->assertSame('testId', $data->getId());
         $this->assertSame('testClass', $data->getClass());
+    }
+
+    /**
+     * @param string $condition
+     *
+     * @return array
+     */
+    protected function replaceKeywordLabelById($condition)
+    {
+        $conditionWithoutOperator = preg_replace(explode('|', KeywordableTraitInterface::OPERATOR_SPLIT), ' ', $condition);
+        $conditionArray = explode(' ', $conditionWithoutOperator);
+
+        foreach ($conditionArray as $keyword) {
+            if ($keyword != '') {
+                $keywordDocument = $this->keywordRepository->findOneByLabel($keyword);
+                if (!is_null($keywordDocument)) {
+                    $condition = str_replace($keyword, $keywordDocument->getId(), $condition);
+                } else {
+                    return '';
+                }
+            }
+        }
+
+        return $condition;
     }
 }

@@ -15,7 +15,6 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
     protected $subscriber;
     protected $contentRepository;
     protected $contextManager;
-    protected $transformer;
     protected $attributes;
     protected $form;
     protected $contentName1 = 'fakeContentName1';
@@ -30,10 +29,9 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
     {
         $contentType = 'fakeContentType';
         $choiceType = 'fakeChoiceType';
-        $keywords = 'fakeKeywords';
         $language = 'fakeLanguage';
 
-        $condition = '{fakeCondition: "fakeCondition"}';
+        $condition = 'fakeCondition';
         $jCondition = json_decode($condition, true);
 
         $content1 = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
@@ -44,15 +42,12 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         Phake::when($content2)->getContentId()->thenReturn($this->contentId2);
         $this->contentRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface');
 
-        Phake::when($this->contentRepository)->findByContentTypeAndCondition($language, $contentType, $choiceType, $jCondition)->thenReturn(array(
+        Phake::when($this->contentRepository)->findByContentTypeAndCondition($language, $contentType, $choiceType, $condition)->thenReturn(array(
                 $content1,
                 $content2
         ));
         $this->contextManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->contextManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
-
-        $this->transformer = Phake::mock('OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface');
-        Phake::when($this->transformer)->reverseTransform($keywords)->thenReturn($condition);
 
         $this->attributes = array(
             'fakeAttributes' => 'fakeAttributes'
@@ -66,13 +61,12 @@ class ContentSearchSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->event)->getData()->thenReturn(array(
             'contentType' => $contentType,
             'choiceType' => $choiceType,
-            'keywords' => $keywords,
+            'keywords' => $condition,
         ));
 
         $this->subscriber = new ContentSearchSubscriber(
             $this->contentRepository,
             $this->contextManager,
-            $this->transformer,
             $this->attributes,
             true
         );

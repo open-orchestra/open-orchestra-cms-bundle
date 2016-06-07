@@ -23,8 +23,10 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     protected $keyword1;
     protected $keyword2;
     protected $keywords;
-    protected $transformer;
+    protected $csvToReferenceKeywordTransformer;
+    protected $conditionToReferenceKeywordTransformer;
     protected $keywordRepository;
+    protected $keywordToDocumentManager;
     protected $authorizationChecker;
 
     /**
@@ -41,14 +43,16 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
         Phake::when($this->keywordRepository)->findAll()->thenReturn($this->keywords);
 
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer');
+
+        $this->csvToReferenceKeywordTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer');
+        $this->conditionToReferenceKeywordTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer');
 
         $this->router = Phake::mock('Symfony\Component\Routing\RouterInterface');
 
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
-        $this->form = new KeywordsChoiceType($this->transformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
+        $this->form = new KeywordsChoiceType($this->csvToReferenceKeywordTransformer, $this->conditionToReferenceKeywordTransformer, $this->keywordRepository, $this->router, $this->authorizationChecker);
     }
 
     /**
@@ -94,10 +98,9 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
                 );
                 return array_replace($default, $options['new_attr']);
             },
-            'embedded' => true,
             'name' => '',
             'new_attr' => array(),
-            'transformerClass' => null,
+            'is_condition' => false,
         ));
     }
 
@@ -113,22 +116,20 @@ class KeywordsChoiceTypeTest extends AbstractBaseTestCase
     }
 
     /**
-     * Test model transformer
+     * Test build form
      */
-    public function testBuildForm()
+    public function testBuildFormWithCsv()
     {
-        $this->form->buildForm($this->builder, array('embedded' => true, 'transformerClass' => null));
-
-        Phake::verify($this->builder)->addModelTransformer($this->transformer);
+        $this->form->buildForm($this->builder, array('is_condition' => false));
+        Phake::verify($this->builder)->addModelTransformer($this->csvToReferenceKeywordTransformer);
     }
 
     /**
-     * Test Exception transformer
+     * Test build form
      */
-    public function testExceptionReverseTransform()
+    public function testBuildFormWithCondition()
     {
-        $this->setExpectedException('OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException');
-
-        $this->form->buildForm($this->builder, array('embedded' => true, 'transformerClass' => 'phakeTransformer'));
+        $this->form->buildForm($this->builder, array('is_condition' => true));
+        Phake::verify($this->builder)->addModelTransformer($this->conditionToReferenceKeywordTransformer);
     }
 }

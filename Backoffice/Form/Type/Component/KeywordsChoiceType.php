@@ -7,45 +7,45 @@ use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\Backoffice\Form\DataTransformer\EmbedKeywordsToKeywordsTransformer;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\OptionsResolver\Options;
 use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
+use OpenOrchestra\Backoffice\Form\DataTransformer\CsvToReferenceKeywordTransformer;
+use OpenOrchestra\Backoffice\Form\DataTransformer\ConditionToReferenceKeywordTransformer;
 
 /**
  * Class KeywordsChoiceType
  */
 class KeywordsChoiceType extends AbstractType
 {
-    protected $keywordsTransformer;
+    protected $csvToReferenceKeywordTransformer;
+    protected $conditionToReferenceKeywordTransformer;
     protected $keywordRepository;
     protected $router;
     protected $authorizationChecker;
 
     /**
-     * @param EmbedKeywordsToKeywordsTransformer $keywordsTransformer
-     * @param KeywordRepositoryInterface         $keywordRepository
-     * @param RouterInterface                    $router
-     * @param AuthorizationCheckerInterface      $authorizationChecker
+     * @param CsvToReferenceKeywordTransformer       $csvToReferenceKeywordTransformer
+     * @param ConditionToReferenceKeywordTransformer $conditionToReferenceKeywordTransformer
+     * @param KeywordRepositoryInterface             $keywordRepository
+     * @param RouterInterface                        $router
+     * @param AuthorizationCheckerInterface          $authorizationChecker
      */
     public function __construct(
-        EmbedKeywordsToKeywordsTransformer $keywordsTransformer,
+        CsvToReferenceKeywordTransformer $csvToReferenceKeywordTransformer,
+        ConditionToReferenceKeywordTransformer $conditionToReferenceKeywordTransformer,
         KeywordRepositoryInterface $keywordRepository,
         RouterInterface $router,
         AuthorizationCheckerInterface $authorizationChecker
-    )
-    {
-        $this->keywordsTransformer = $keywordsTransformer;
+    ){
+        $this->csvToReferenceKeywordTransformer = $csvToReferenceKeywordTransformer;
+        $this->conditionToReferenceKeywordTransformer = $conditionToReferenceKeywordTransformer;
         $this->keywordRepository = $keywordRepository;
         $this->router = $router;
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
@@ -54,19 +54,12 @@ class KeywordsChoiceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options['embedded']) {
-            $builder->addModelTransformer($this->keywordsTransformer);
+        if ($options['is_condition']) {
+            $builder->addModelTransformer($this->conditionToReferenceKeywordTransformer);
         }
-        if (!is_null($options['transformerClass'])) {
-            if(!is_string($options['transformerClass']) || !is_subclass_of($options['transformerClass'], 'OpenOrchestra\Transformer\ConditionFromBooleanToBddTransformerInterface')) {
-                throw new NotAllowedClassNameException();
-            }
-            $transformerClass = $options['transformerClass'];
-            $transformer = new $transformerClass();
-            $transformer->setField($options['name']);
-            $builder->addModelTransformer($transformer);
+        else {
+            $builder->addModelTransformer($this->csvToReferenceKeywordTransformer);
         }
-
     }
 
     /**
@@ -86,10 +79,9 @@ class KeywordsChoiceType extends AbstractType
                 );
                 return array_replace($default, $options['new_attr']);
             },
-            'embedded' => true,
             'name' => '',
             'new_attr' => array(),
-            'transformerClass' => null,
+            'is_condition' => false,
         ));
     }
 

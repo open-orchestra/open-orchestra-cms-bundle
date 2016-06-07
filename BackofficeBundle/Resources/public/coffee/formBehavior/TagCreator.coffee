@@ -20,11 +20,10 @@ class OpenOrchestra.FormBehavior.TagCreator extends OpenOrchestra.FormBehavior.A
       element = $(element)
       tags = elements.data('tags')
       url = elements.data('check')
-      grantedNew = elements.data('authorize-new')
       elements.select2(
         tags: tags
         createSearchChoice: (term, data) ->
-          return false if !grantedNew
+          return false if !elements.data('authorize-new')
           if $(data).filter(->
             @text.localeCompare(term) is 0
           ).length is 0

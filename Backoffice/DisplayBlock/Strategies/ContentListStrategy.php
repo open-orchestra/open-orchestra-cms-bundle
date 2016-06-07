@@ -21,14 +21,15 @@ class ContentListStrategy extends AbstractStrategy
      */
     public function show(ReadBlockInterface $block)
     {
+        $contentSearch = $block->getAttribute('contentSearch');
         $attributes = array(
             'id' => $block->getId(),
             'class' => $block->getClass(),
             'contentNodeId' => $block->getAttribute('contentNodeId'),
             'characterNumber' => $block->getAttribute('characterNumber'),
-            'keywords' => $block->getAttribute('keywords'),
-            'choiceType' => $block->getAttribute('choiceType'),
-            'contentType' => $block->getAttribute('contentType'),
+            'keywords' => (!is_null($contentSearch) && array_key_exists('keywords', $contentSearch)) ? $contentSearch['keywords'] : '',
+            'choiceType' => (!is_null($contentSearch) && array_key_exists('choiceType', $contentSearch)) ? $contentSearch['choiceType'] : '',
+            'contentType' => (!is_null($contentSearch) && array_key_exists('contentType', $contentSearch)) ? $contentSearch['contentType'] : '',
             'contentTemplateEnabled' => $block->getAttribute('contentTemplateEnabled'),
             'contentTemplate' => $block->getAttribute('contentTemplate'),
         );
