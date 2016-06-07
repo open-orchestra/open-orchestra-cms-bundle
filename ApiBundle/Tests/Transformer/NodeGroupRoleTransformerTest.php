@@ -73,8 +73,13 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
      *
      * @dataProvider provideTransformDataWithAccessType
      */
-    public function testReverseTransformGroupWitAccessType($nodeId, $role, $accessType, $expectedAccess, $parentAccess)
-    {
+    public function testReverseTransformGroupWitAccessType(
+        $nodeId,
+        $role,
+        $accessType,
+        $expectedAccess,
+        $parentAccess
+    ) {
         $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $source = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         $nodeGroupRoleParent = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
@@ -85,11 +90,23 @@ class NodeGroupRoleTransformerTest extends AbstractBaseTestCase
         $facade->name = $role;
         $facade->accessType = $accessType;
         $group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
-        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $facade->modelId, $facade->name)->thenReturn($source);
+        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(
+            NodeInterface::GROUP_ROLE_TYPE,
+            $facade->modelId,
+            $facade->name
+        )->thenReturn($source);
 
+        $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        Phake::when($site)->getSiteId->thenReturn($nodeId);
+
+        Phake::when($group)->getSite->thenReturn($site);
         Phake::when($node)->getParentId()->thenReturn('fakeId');
-        Phake::when($this->nodeRepository)->findInLastVersion(Phake::anyParameters())->thenReturn($node);
-        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getParentId(), $facade->name)->thenReturn($nodeGroupRoleParent);
+        Phake::when($this->nodeRepository)->findOneByNodeAndSite(Phake::anyParameters())->thenReturn($node);
+        Phake::when($group)->getModelGroupRoleByTypeAndIdAndRole(
+            NodeInterface::GROUP_ROLE_TYPE,
+            $node->getParentId(),
+            $facade->name
+        )->thenReturn($nodeGroupRoleParent);
         Phake::when($nodeGroupRoleParent)->isGranted()->thenReturn($parentAccess);
 
         $nodeGroupRole = $this->transformer->reverseTransformWithGroup($group, $facade, $source);
