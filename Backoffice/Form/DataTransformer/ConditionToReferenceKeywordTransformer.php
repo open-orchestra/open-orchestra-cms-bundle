@@ -72,7 +72,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
                 $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
-                if($keywordDocument instanceof KeywordInterface) {
+                if ($keywordDocument instanceof KeywordInterface) {
                     $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
                 } else {
                     throw new NotFoundedKeywordException();

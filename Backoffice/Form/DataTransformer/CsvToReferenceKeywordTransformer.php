@@ -55,9 +55,9 @@ class CsvToReferenceKeywordTransformer implements DataTransformerInterface
         $keywordArray = explode(',', $keywords);
         $referenceKeywords = new ArrayCollection();
 
-        foreach($keywordArray as $keyword) {
+        foreach ($keywordArray as $keyword) {
             $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
-            if($keywordDocument instanceof KeywordInterface) {
+            if ($keywordDocument instanceof KeywordInterface) {
                 $referenceKeywords->add($keywordDocument);
             } else {
                 throw new NotFoundedKeywordException();
