@@ -175,7 +175,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
      */
     protected function replaceKeywordLabelById($condition)
     {
-        $conditionWithoutOperator = preg_replace(KeywordableTraitInterface::OPERATOR_SPLIT, ' ', $condition);
+        $conditionWithoutOperator = preg_replace(KeywordableTraitInterface::$OPERATOR_SPLIT, ' ', $condition);
         $conditionArray = explode(' ', $conditionWithoutOperator);
 
         foreach ($conditionArray as $keyword) {

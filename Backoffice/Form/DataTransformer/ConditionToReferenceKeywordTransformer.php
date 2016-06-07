@@ -89,7 +89,7 @@ class ConditionToReferenceKeywordTransformer implements DataTransformerInterface
      * @return array
      */
     protected function getKeywordAsArray($keywords) {
-        $keywordWithoutOperator = preg_replace(KeywordableTraitInterface::OPERATOR_SPLIT, ' ', $keywords);
+        $keywordWithoutOperator = preg_replace(KeywordableTraitInterface::$OPERATOR_SPLIT, ' ', $keywords);
         $keywordArray = explode(' ', $keywordWithoutOperator);
 
         return $keywordArray;
