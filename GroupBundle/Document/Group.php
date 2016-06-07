@@ -148,6 +148,25 @@ class Group extends BaseGroup implements GroupInterface
     }
 
     /**
+     * @param ArrayCollection <ModelGroupRoleInterface> $modelGroupRole
+     */
+    public function setModelGroupRoles(ArrayCollection $modelGroupRoles)
+    {
+        $correctCollection = true;
+
+        foreach ($modelGroupRoles as $modelGroupRole) {
+            if (!($modelGroupRole instanceof ModelGroupRoleInterface)) {
+                $correctCollection = false;
+                break;
+            }
+        }
+
+        if ($correctCollection) {
+            $this->modelRoles = $modelGroupRoles;
+        }
+    }
+
+/**
      * @param string $type
      * @param string $id
      * @param string $role
