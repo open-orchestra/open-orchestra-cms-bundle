@@ -27,6 +27,7 @@ NodeView = OrchestraView.extend(
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blockView"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/elementTitle"
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/blocksPanel"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView"
     ]
     return
 

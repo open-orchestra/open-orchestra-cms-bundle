@@ -11,6 +11,7 @@ TemplateView = OrchestraView.extend(
     @options.editable = @options.template.get('editable')
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/templateView"
+      "OpenOrchestraBackofficeBundle:BackOffice:Underscore/areaView"
     ]
     return
 
