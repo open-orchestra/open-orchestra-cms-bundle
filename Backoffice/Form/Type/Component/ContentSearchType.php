@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Form\Type\Component;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormBuilderInterface;
-use OpenOrchestra\Backoffice\Exception\NotAllowedClassNameException;
 use OpenOrchestra\Backoffice\EventSubscriber\ContentSearchSubscriber;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
