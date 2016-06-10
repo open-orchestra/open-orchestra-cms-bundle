@@ -362,29 +362,61 @@
     {{ block('form_area_container') }}
 {% endblock %}
 
-
 {% block form_area_container %}
     {% spaceless %}
         {% for key, child in form %}
             {% if key != 'newAreas' %}
                 {{ form_row(child) }}
             {% else %}
-			<div class="form-group{% if child.vars.errors|length > 0 %} has-error{% endif %}">
-                {{ form_label(child) }}
-                <div class="col-lg-9">
-                {% if form.vars.areas|length > 0 %}
-                	<ul class="list-group">
-    			    {% for area in areas %}
-                		<li class="list-group-item">
-                		    {{ area }}
-                		</li>
-                	{% endfor %}
-                {% endif %}
-                {{ form_widget(child) }}
-                {{ form_errors(child) }}
+                <div class="form-group{% if child.vars.errors|length > 0 %} has-error{% endif %}">
+                    {{ form_label(child) }}
+                    <div class="col-lg-9">
+                        {% if form.vars.areas|length > 0 %}
+                            <ul class="list-group">
+                                {% for area in areas %}
+                                    <li class="list-group-item">
+                                        {{ area }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {{ form_widget(child) }}
+                        {{ form_errors(child) }}
+                    </div>
                 </div>
-    		</div>
             {% endif %}
         {% endfor %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block oo_multi_languages_text_widget %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            <ul class="nav nav-tabs" role="tablist" id="myTab">
+                {% for key, field in form %}
+                   <li {% if loop.first %}class="active" {% endif %}>
+                        <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
+                            <img
+                                src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
+                                class="flag flag-{{ key }}"
+                                alt="{{ ('open_orchestra_backoffice.language.' ~ key)|trans }}"
+                            >
+                            {{ form_label(field) }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for key, field in form %}
+                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
+                        <div class="form-group{% if field.vars.errors|length > 0 %} has-error{% endif %}">
+                            {{ form_widget(field) }}
+                            {{ form_rest(field) }}
+                            {{ form_errors(field) }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     {% endspaceless %}
 {% endblock %}
