@@ -153,6 +153,7 @@ services:
             - %open_orchestra_model.document.site.class%
             - @translator
             - @open_orchestra_model.repository.template
+            - %open_orchestra_backoffice.orchestra_choice.front_language%
         tags:
             - { name: form.type, alias: oo_site }
     open_orchestra_backoffice.type.site_alias:

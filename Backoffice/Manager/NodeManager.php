@@ -153,8 +153,15 @@ class NodeManager
         $newNode = clone $node;
         $newNode->setVersion(1);
         $newNode->setStatus($this->getEditableStatus($node));
-        $newNode->setLanguage($language);
         $newNode = $this->duplicateBlockAndArea($node, $newNode);
+
+        $siteId = $this->contextManager->getCurrentSiteId();
+        $site = $this->siteRepository->findOneBySiteId($siteId);
+        $newNode->setLanguage($language);
+        if ($site) {
+            $newNode->setMetaKeywords($site->getMetaKeywordsInLanguage($language));
+            $newNode->setMetaDescription($site->getMetaDescriptionInLanguage($language));
+        }
 
         $this->eventDispatcher->dispatch(NodeEvents::NODE_ADD_LANGUAGE, new NodeEvent($node));
 
@@ -341,8 +348,8 @@ class NodeManager
 
         $site = $this->siteRepository->findOneBySiteId($siteId);
         if ($site) {
-            $node->setMetaKeywords($site->getMetaKeywords());
-            $node->setMetaDescription($site->getMetaDescription());
+            $node->setMetaKeywords($site->getMetaKeywordsInLanguage($language));
+            $node->setMetaDescription($site->getMetaDescriptionInLanguage($language));
             $node->setMetaIndex($site->getMetaIndex());
             $node->setMetaFollow($site->getMetaFollow());
         }
