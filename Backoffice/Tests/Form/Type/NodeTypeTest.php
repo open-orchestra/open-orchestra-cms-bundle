@@ -18,6 +18,7 @@ class NodeTypeTest extends AbstractBaseTestCase
     protected $nodeClass = 'nodeClass';
     protected $areaClass = 'areaClass';
     protected $translator;
+    protected $translateValueInitializer;
 
     /**
      * Set up the test
@@ -28,13 +29,15 @@ class NodeTypeTest extends AbstractBaseTestCase
         $this->siteRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
         $this->nodeManager = Phake::mock('OpenOrchestra\Backoffice\Manager\NodeManager');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
+        $this->translateValueInitializer = Phake::mock('OpenOrchestra\Backoffice\EventListener\TranslateValueInitializerListener');
         $this->nodeType = new NodeType(
             $this->nodeClass,
             $this->templateRepository,
             $this->siteRepository,
             $this->nodeManager,
             $this->areaClass,
-            $this->translator
+            $this->translator,
+            $this->translateValueInitializer
         );
     }
 

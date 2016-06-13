@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ApiBundle\Transformer;
 
 use OpenOrchestra\ApiBundle\Exceptions\HttpException\StatusChangeNotGrantedHttpException;
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\BaseApi\Exceptions\TransformerParameterTypeException;
 use OpenOrchestra\Backoffice\Exception\StatusChangeNotGrantedException;
 use OpenOrchestra\Backoffice\NavigationPanel\Strategies\TransverseNodePanelStrategy;
@@ -31,6 +32,7 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
     protected $eventDispatcher;
     protected $statusRepository;
     protected $facadeClass;
+    protected $translationChoiceManager;
 
     /**
      * @param string                        $facadeClass
@@ -46,13 +48,16 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         SiteRepositoryInterface $siteRepository,
         StatusRepositoryInterface $statusRepository,
         EventDispatcherInterface $eventDispatcher,
-        AuthorizationCheckerInterface $authorizationChecker
+        AuthorizationCheckerInterface $authorizationChecker,
+        TranslationChoiceManager $translationChoiceManager
     ) {
         parent::__construct($facadeClass, $authorizationChecker);
         $this->encrypter = $encrypter;
         $this->siteRepository = $siteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->statusRepository = $statusRepository;
+        $this->translationChoiceManager = $translationChoiceManager;
+
     }
 
     /**
@@ -86,8 +91,8 @@ class NodeTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->path = $node->getPath();
         $facade->routePattern = $node->getRoutePattern();
         $facade->language = $node->getLanguage();
-        $facade->metaKeywords = $node->getMetaKeywords();
-        $facade->metaDescription = $node->getMetaDescription();
+        $facade->metaKeyword = $this->translationChoiceManager->choose($node->getMetaKeywords());
+        $facade->metaDescription = $this->translationChoiceManager->choose($node->getMetaDescriptions());
         $facade->metaIndex = $node->getMetaIndex();
         $facade->metaFollow = $node->getMetaFollow();
         $facade->status = $this->getTransformer('status')->transform($node->getStatus());

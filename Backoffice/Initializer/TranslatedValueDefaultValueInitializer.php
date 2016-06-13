@@ -19,6 +19,10 @@ class TranslatedValueDefaultValueInitializer implements DefaultValueInitializerI
      */
     public function __construct(array $defaultLanguages, $translatedValueClass)
     {
+        foreach ($defaultLanguages as $key => $language) {
+            $lang =  explode('.', $language);
+            $defaultLanguages[$key] = end($lang);
+        }
         $this->defaultLanguages = $defaultLanguages;
         $this->translatedValueClass = $translatedValueClass;
     }

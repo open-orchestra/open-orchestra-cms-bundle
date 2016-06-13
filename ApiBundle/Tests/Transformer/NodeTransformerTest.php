@@ -20,6 +20,7 @@ class NodeTransformerTest extends AbstractBaseTestCase
 
     protected $facadeClass = 'OpenOrchestra\ApiBundle\Facade\NodeFacade';
     protected $authorizationChecker;
+    protected $translationChoiceManager;
     protected $roleName = 'ROLE_NAME';
     protected $transformerManager;
     protected $encryptionManager;
@@ -45,6 +46,12 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->node)->getStatus()->thenReturn($status);
         Phake::when($status)->isPublished()->thenReturn(false);
+
+        $metaKeywords = Phake::mock('Doctrine\Common\Collections\Collection');
+        Phake::when($this->node)->getMetaKeywords()->thenReturn($metaKeywords);
+
+        $metaDescriptions = Phake::mock('Doctrine\Common\Collections\Collection');
+        Phake::when($this->node)->getMetaDescriptions()->thenReturn($metaDescriptions);
 
         $siteAlias = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
@@ -77,13 +84,17 @@ class NodeTransformerTest extends AbstractBaseTestCase
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
+        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        Phake::when($this->translationChoiceManager)->choose(Phake::anyParameters())->thenReturn("fake meta");
+
         $this->nodeTransformer = new NodeTransformer(
             $this->facadeClass,
             $this->encryptionManager,
             $this->siteRepository,
             $this->statusRepository,
             $this->eventDispatcher,
-            $this->authorizationChecker
+            $this->authorizationChecker,
+            $this->translationChoiceManager
         );
 
         $this->nodeTransformer->setContext($this->transformerManager);

@@ -22,6 +22,11 @@ class TranslatedValueType extends AbstractType
     public function __construct($translatedValueClass, $languages)
     {
         $this->translatedValueClass = $translatedValueClass;
+
+        foreach ($languages as $key => $language) {
+            $lang =  explode('.', $language);
+            $languages[$key] = end($lang);
+        }
         $this->languages = $languages;
     }
 

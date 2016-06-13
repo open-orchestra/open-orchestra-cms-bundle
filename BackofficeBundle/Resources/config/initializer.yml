@@ -1,9 +1,15 @@
 parameters:
     open_orchestra_backoffice.initializer.translated_value.class: OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer
+    open_orchestra_backoffice.initializer.translated_front_value.class: OpenOrchestra\Backoffice\Initializer\TranslatedValueDefaultValueInitializer
 
 services:
     open_orchestra_backoffice.initializer.translated_value:
         class: %open_orchestra_backoffice.initializer.translated_value.class%
         arguments:
             - %open_orchestra_base.administration_languages%
+            - %open_orchestra_model.document.translated_value.class%
+    open_orchestra_backoffice.initializer.translated_front_value:
+        class: %open_orchestra_backoffice.initializer.translated_front_value.class%
+        arguments:
+            - %open_orchestra_backoffice.orchestra_choice.front_language%
             - %open_orchestra_model.document.translated_value.class%
