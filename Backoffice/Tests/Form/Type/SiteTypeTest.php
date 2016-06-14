@@ -18,6 +18,7 @@ class SiteTypeTest extends AbstractBaseTestCase
 
     protected $siteClass = 'oo_site';
     protected $translator;
+    protected $languages = array('en', 'fr');
 
     /**
      * Set up the test
@@ -28,7 +29,7 @@ class SiteTypeTest extends AbstractBaseTestCase
         $repositoryTemplate = Phake::mock('OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn('foo');
 
-        $this->form = new SiteType($this->siteClass, $this->translator, $repositoryTemplate);
+        $this->form = new SiteType($this->siteClass, $this->translator, $repositoryTemplate, $this->languages);
     }
 
     /**

@@ -39,6 +39,8 @@ class NodeManagerTest extends AbstractBaseTestCase
     protected $siteRepository;
     protected $eventDispatcher;
     protected $statusRepository;
+    protected $metaKeywords = 'fake keyword';
+    protected $metaDescription = 'fake description';
 
     /**
      * Set up the test
@@ -49,8 +51,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::when($theme)->getName()->thenReturn('fakeNameTheme');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($site)->getTheme()->thenReturn($theme);
-        Phake::when($site)->getMetaKeywords()->thenReturn('fake keyword');
-        Phake::when($site)->getMetaDescription()->thenReturn('fake description');
+        Phake::when($site)->getMetaKeywordsInLanguage(Phake::anyParameters())->thenReturn($this->metaKeywords);
+        Phake::when($site)->getMetaDescriptionInLanguage(Phake::anyParameters())->thenReturn($this->metaDescription);
         Phake::when($site)->getMetaIndex()->thenReturn(true);
         Phake::when($site)->getMetaFollow()->thenReturn(true);
 
@@ -132,6 +134,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         Phake::verify($alteredNode)->setVersion(1);
         Phake::verify($alteredNode)->setStatus(null);
         Phake::verify($alteredNode)->setLanguage($language);
+        Phake::verify($alteredNode)->setMetaKeywords($this->metaKeywords);
+        Phake::verify($alteredNode)->setMetaDescription($this->metaDescription);
         Phake::verify($this->eventDispatcher)->dispatch(Phake::anyParameters());
     }
 
@@ -299,8 +303,8 @@ class NodeManagerTest extends AbstractBaseTestCase
         $this->assertEquals($language, $node->getLanguage());
         $this->assertEquals(NodeInterface::THEME_DEFAULT, $node->getTheme());
         $this->assertTrue($node->hasDefaultSiteTheme());
-        $this->assertEquals('fake keyword', $node->getMetaKeywords());
-        $this->assertEquals('fake description', $node->getMetaDescription());
+        $this->assertEquals($this->metaKeywords, $node->getMetaKeywords());
+        $this->assertEquals($this->metaDescription, $node->getMetaDescription());
         $this->assertEquals(0, $node->getOrder());
         $this->assertEquals($status, $node->getStatus());
         $this->assertEquals(true, $node->getMetaIndex());

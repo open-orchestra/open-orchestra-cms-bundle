@@ -21,14 +21,14 @@ class SiteFacade extends AbstractFacade
     public $name;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("array<string>")
      */
     public $metaKeywords;
 
     /**
-     * @Serializer\Type("string")
+     * @Serializer\Type("array<string>")
      */
-    public $metaDescription;
+    public $metaDescriptions;
 
     /**
      * @Serializer\Type("boolean")

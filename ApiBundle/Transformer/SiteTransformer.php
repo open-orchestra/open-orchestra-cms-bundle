@@ -32,7 +32,7 @@ class SiteTransformer extends AbstractSecurityCheckerAwareTransformer
         $facade->siteId = $site->getSiteId();
         $facade->name = $site->getName();
         $facade->metaKeywords = $site->getMetaKeywords();
-        $facade->metaDescription = $site->getMetaDescription();
+        $facade->metaDescriptions = $site->getMetaDescriptions();
         $facade->metaIndex = $site->getMetaIndex();
         $facade->metaFollow = $site->getMetaFollow();
         $facade->theme = $this->getTransformer('theme')->transform($site->getTheme());

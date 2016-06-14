@@ -18,17 +18,24 @@ class SiteType extends AbstractType
     protected $siteClass;
     protected $translator;
     protected $templateRepository;
+    protected $frontLanguages;
 
     /**
      * @param string                      $siteClass
      * @param TranslatorInterface         $translator
      * @param TemplateRepositoryInterface $templateRepository
+     * @param array                       $frontLanguages
      */
-    public function __construct($siteClass, TranslatorInterface $translator, TemplateRepositoryInterface $templateRepository)
-    {
+    public function __construct(
+        $siteClass,
+        TranslatorInterface $translator,
+        TemplateRepositoryInterface $templateRepository,
+        array $frontLanguages
+    ){
         $this->siteClass = $siteClass;
         $this->translator = $translator;
         $this->templateRepository = $templateRepository;
+        $this->frontLanguages = \array_keys($frontLanguages);
     }
 
     /**
@@ -77,13 +84,15 @@ class SiteType extends AbstractType
                 'precision' => 2,
                 'attr' => array('help_text' => 'open_orchestra_backoffice.form.node.priority.helper'),
             ))
-            ->add('metaKeywords', 'text', array(
+            ->add('metaKeywords', 'oo_multi_languages_text', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_keywords',
                 'required' => false,
+                'languages' => $this->frontLanguages
             ))
-            ->add('metaDescription', 'text', array(
+            ->add('metaDescriptions', 'oo_multi_languages_text', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_description',
                 'required' => false,
+                'languages' => $this->frontLanguages
             ))
             ->add('metaIndex', 'checkbox', array(
                 'label' => 'open_orchestra_backoffice.form.website.meta_index',
