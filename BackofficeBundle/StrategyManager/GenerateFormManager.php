@@ -23,23 +23,6 @@ class GenerateFormManager
     }
 
     /**
-     * @param FormBuilderInterface  $form
-     * @param array                 $options
-     * @param BlockInterface        $block
-     *
-     * @deprecated remove in tag 0.4.0
-     */
-    public function buildForm(FormBuilderInterface $form, array $options, BlockInterface $block)
-    {
-        /** @var GenerateFormInterface $strategy */
-        foreach ($this->strategies as $strategy) {
-            if ($strategy->support($block)) {
-                $strategy->buildForm($form, $options);
-            }
-        }
-    }
-
-    /**
      * Get the default configuration for the block
      *
      * @param BlockInterface $block

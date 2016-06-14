@@ -43,7 +43,6 @@ class UpdateSiteAliasRedirectionSiteSubscriberTest extends AbstractBaseTestCase
         $this->redirectionManager = Phake::mock('OpenOrchestra\Backoffice\Manager\RedirectionManager');
 
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        Phake::when($this->nodeRepository)->findLastVersionBySiteId(Phake::anyParameters())->thenReturn(array($node, $node));
         Phake::when($this->nodeRepository)->findLastVersionByType(Phake::anyParameters())->thenReturn(array($node, $node));
 
         $this->subscriber = new UpdateSiteAliasRedirectionSiteSubscriber($this->objectManager, $this->redirectionManager, $this->nodeRepository);

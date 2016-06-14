@@ -1,10 +1,8 @@
 parameters:
     open_orchestra_backoffice.subscriber.update_child_node_path.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateChildNodePathSubscriber
-    open_orchestra_backoffice.subscriber.update_node_redirection.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateNodeRedirectionSubscriber
     open_orchestra_backoffice.subscriber.update_redirection_node.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateRedirectionNodeSubscriber
     open_orchestra_backoffice.subscriber.flush_node_clache.class: OpenOrchestra\Backoffice\EventSubscriber\FlushNodeCacheSubscriber
     open_orchestra_backoffice.subscriber.block_menu_cache.class: OpenOrchestra\Backoffice\EventSubscriber\BlockMenuCacheSubscriber
-    open_orchestra_backoffice.subscriber.change_content_status.class: OpenOrchestra\Backoffice\EventSubscriber\ChangeContentStatusSubscriber
     open_orchestra_backoffice.subscriber.content_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type_update_cache.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeUpdateCacheSubscriber
     open_orchestra_backoffice.subscriber.content_type.class: OpenOrchestra\Backoffice\EventSubscriber\ContentTypeSubscriber
@@ -26,15 +24,6 @@ services:
             - @open_orchestra_backoffice.context_manager
         tags:
             - { name: kernel.event_subscriber }
-    open_orchestra_backoffice.subscriber.update_node_redirection:
-        class: %open_orchestra_backoffice.subscriber.update_node_redirection.class%
-        arguments:
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.manager.redirection
-            - @open_orchestra_backoffice.context_manager
-        tags:
-            - { name: kernel.event_subscriber }
-        deprecated: 'The "%service_id%" service is deprecated. Use "open_orchestra_backoffice.subscriber.update_redirection_node" instead'
     open_orchestra_backoffice.subscriber.update_redirection_node:
         class: %open_orchestra_backoffice.subscriber.update_redirection_node.class%
         arguments:

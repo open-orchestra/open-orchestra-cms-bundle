@@ -63,7 +63,7 @@ class UpdateSiteAliasRedirectionSiteSubscriber implements EventSubscriberInterfa
     {
         $site = $event->getSite();
         $siteId = $site->getSiteId();
-        $nodes = $this->nodeRepository->findLastVersionBySiteId($siteId);
+        $nodes = $this->nodeRepository->findLastVersionByType($siteId);
         foreach ($nodes as $node) {
             $this->redirectionManager->deleteRedirection(
                 $node->getNodeId(),
