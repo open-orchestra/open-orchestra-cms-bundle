@@ -10,6 +10,7 @@
   ],
 
   "require": {
+    "php": "~5.6.0",
     "braincrafted/bootstrap-bundle": "~2.1.2",
     "koala-framework/composer-extra-assets": "~2.0.4",
     "stfalcon/tinymce-bundle": "~0.3.8",
