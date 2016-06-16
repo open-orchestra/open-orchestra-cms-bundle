@@ -41,5 +41,4 @@ OrchestraViewConfigurator = ->
         return view
     return @baseConfigurations[action]
 
-jQuery ->
-  window.appConfigurationView = new OrchestraViewConfigurator()
+appConfigurationView = new OrchestraViewConfigurator()
