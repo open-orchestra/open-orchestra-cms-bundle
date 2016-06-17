@@ -41,10 +41,6 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
         if (null !== $block) {
             $blockAttributes = array();
             foreach ($event->getForm()->all() as $key => $children) {
-                if ( 'submit' === $key) {
-                    continue;
-                }
-
                 $value = $children->getData();
 
                 if (in_array($key, $this->fixedParameters)) {
