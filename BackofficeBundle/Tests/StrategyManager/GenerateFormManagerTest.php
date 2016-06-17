@@ -62,7 +62,7 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
     /**
      * Test getDefaultConfiguration with Exception
      *
-     * @expectedException OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
+     * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
      */
     public function testGetDefaultConfigurationWithException()
     {
@@ -83,7 +83,7 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
     /**
      * Test getRequiredUriParameter with Exception
      *
-     * @expectedException OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
+     * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
      */
     public function testGetRequiredUriParameterWithException()
     {
@@ -92,6 +92,7 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
 
     /**
      * Test Create form
+     * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use getFormType
      */
     public function testCreateForm()
     {
@@ -101,12 +102,30 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
 
     /**
      * Test Create form with Exception
-     *
-     * @expectedException OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
+     * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use getFormType
+     * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
      */
     public function testCreateFormWithException()
     {
         $this->exceptionManager->createForm($this->block);
+    }
+
+    /**
+     * Test get form
+     */
+    public function testGetFormType()
+    {
+        $strategy = $this->manager->getFormType($this->block);
+        $this->assertSame($this->strategy1, $strategy);
+    }
+
+    /**
+     * Test Create form with Exception
+     * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
+     */
+    public function testGetFormTypeWithException()
+    {
+        $this->exceptionManager->getFormType($this->block);
     }
 
     /**
@@ -123,7 +142,7 @@ class GenerateFormManagerTest extends AbstractBaseTestCase
     /**
      * Test get template with Exception
      *
-     * @expectedException OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
+     * @expectedException \OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException
      */
     public function testGetTemplateWithException()
     {

@@ -14,11 +14,11 @@ use OpenOrchestra\ModelInterface\Repository\ReadContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**
- * Class BlockTypeSubscriberTest
+ * Class BlockFormTypeSubscriberTest
  *
  * @group backofficeTest
  */
-class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
+class BlockFormTypeSubscriberTest extends AbstractAuthentificatedTest
 {
     /**
      * @var FormFactoryInterface
@@ -46,15 +46,15 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $block->setComponent(VideoStrategy::NAME);
         $block->addAttribute('videoType', 'youtube');
         $block->addAttribute('youtubeFs', true);
-
-        $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
+        $formType =  static::$kernel->getContainer()->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
+        $form = $this->formFactory->create($formType, $block, array('csrf_protection' => false));
 
         $form->submit(array(
             'id' => 'testId',
             'class' => 'testClass',
             'videoType' => 'youtube',
             'youtubeVideoId' => 'videoId',
-            'youtubeAutoplay' => '1',
+            'youtubeAutoplay' => true,
         ));
 
         $this->assertTrue($form->isSynchronized());
@@ -63,7 +63,7 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
         $this->assertBlock($data);
         $this->assertSame('videoId', $data->getAttribute('youtubeVideoId'));
         $this->assertTrue($data->getAttribute('youtubeAutoplay'));
-        $this->assertNull($data->getAttribute('youtubeFs'));
+        $this->assertFalse($data->getAttribute('youtubeFs'));
     }
 
     /**
@@ -76,8 +76,9 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     {
         $block = new Block();
         $block->setComponent($component);
+        $formType =  static::$kernel->getContainer()->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
 
-        $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
+        $form = $this->formFactory->create($formType, $block, array('csrf_protection' => false));
 
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
         $form->submit($submittedValue);
@@ -97,21 +98,22 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function provideComponentAndData()
     {
         return array(
-            array(GalleryStrategy::NAME, array(
-                'pictures' => array(
-                    'media1',
-                    'media2'
-                )
-            )),
             array(ContentListStrategy::NAME, array(
-                'contentNodeId' => 'news',
+                'contentNodeId' => 'root',
+                'contentSearch' => array(
+                  'contentType' => 'news',
+                  'choiceType' => 'choice_and',
+                  'keywords' => null,
+                ),
+                'characterNumber' => 150,
                 'contentTemplateEnabled' => true,
             )),
             array(ConfigurableContentStrategy::NAME, array(
                 'contentSearch' => array(
                     'contentType' => 'car',
-                    'keywords' => null,
                     'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
+                    'keywords' => null,
+                    'contentId' => null,
                 ),
                 'contentTemplateEnabled' => true,
             ))
@@ -128,7 +130,9 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     {
         $block = new Block();
         $block->setComponent($component);
-        $form = $this->formFactory->create('oo_block', $block, array('csrf_protection' => false));
+        $formType =  static::$kernel->getContainer()->get('open_orchestra_backoffice.generate_form_manager')->getFormType($block);
+
+        $form = $this->formFactory->create($formType, $block, array('csrf_protection' => false));
         $submittedValue = array_merge(array('id' => 'testId', 'class' => 'testClass'), $value);
         $value['contentSearch']['keywords'] = $this->replaceKeywordLabelById($value['contentSearch']['keywords']);
         $form->submit($submittedValue);
@@ -148,13 +152,16 @@ class BlockTypeSubscriberTest extends AbstractAuthentificatedTest
     public function provideComponentAndDataAndTransformedValue()
     {
         return array(
-                array(ContentListStrategy::NAME, array(
-                        'contentNodeId' => 'news',
-                        'contentTemplateEnabled' => true,
-                        'contentSearch' => array(
-                                'keywords' => 'lorem AND ipsum',
-                            )
-                )),
+            array(ContentListStrategy::NAME, array(
+                'contentNodeId' => 'root',
+                'contentTemplateEnabled' => true,
+                'characterNumber' => 150,
+                'contentSearch' => array(
+                    'contentType' => 'news',
+                    'choiceType' => ReadContentRepositoryInterface::CHOICE_AND,
+                    'keywords' => 'lorem AND ipsum',
+                    )
+            )),
         );
     }
 

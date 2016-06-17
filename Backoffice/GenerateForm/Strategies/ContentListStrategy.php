@@ -61,7 +61,7 @@ class ContentListStrategy extends AbstractBlockStrategy
     {
         return array(
             'contentNodeId' => NodeInterface::ROOT_NODE_ID,
-            'characterNumber' => '50',
+            'characterNumber' => 50,
             'contentTemplate' => '',
         );
     }
