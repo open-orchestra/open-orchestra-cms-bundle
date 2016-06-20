@@ -70,8 +70,30 @@ class GenerateFormManager
      * @throws MissingGenerateFormStrategyException
      *
      * @return GenerateFormInterface
+     *
+     * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0, use getFormType
      */
     public function createForm(BlockInterface $block)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 1.3.0. Use the '.__CLASS__.'::getFormType method instead.', E_USER_DEPRECATED);
+        /** @var GenerateFormInterface $strategy */
+        foreach ($this->strategies as $strategy) {
+            if ($strategy->support($block)) {
+                return $strategy;
+            }
+        }
+
+        throw new MissingGenerateFormStrategyException();
+    }
+
+    /**
+     * @param BlockInterface $block
+     *
+     * @throws MissingGenerateFormStrategyException
+     *
+     * @return GenerateFormInterface
+     */
+    public function getFormType(BlockInterface $block)
     {
         /** @var GenerateFormInterface $strategy */
         foreach ($this->strategies as $strategy) {

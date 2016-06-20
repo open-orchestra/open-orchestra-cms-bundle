@@ -2,12 +2,11 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\BlockTypeSubscriber;
 use OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -17,26 +16,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class BlockType extends AbstractType
 {
     protected $generateFormManager;
-    protected $fixedParameters;
-    protected $formFactory;
     protected $blockToArrayTransformer;
+    protected $blockFormTypeSubscriber;
 
     /**
-     * @param GenerateFormManager     $generateFormManager
-     * @param array                   $fixedParameters
-     * @param FormFactoryInterface    $formFactory
-     * @param BlockToArrayTransformer $blockToArrayTransformer
+     * @param GenerateFormManager      $generateFormManager
+     * @param BlockToArrayTransformer  $blockToArrayTransformer
+     * @param EventSubscriberInterface $blockFormTypeSubscriber
      */
     public function __construct(
         GenerateFormManager $generateFormManager,
-        $fixedParameters,
-        FormFactoryInterface $formFactory,
-        BlockToArrayTransformer $blockToArrayTransformer
+        BlockToArrayTransformer $blockToArrayTransformer,
+        EventSubscriberInterface $blockFormTypeSubscriber
     ) {
         $this->generateFormManager = $generateFormManager;
-        $this->fixedParameters = $fixedParameters;
-        $this->formFactory = $formFactory;
         $this->blockToArrayTransformer = $blockToArrayTransformer;
+        $this->blockFormTypeSubscriber = $blockFormTypeSubscriber;
     }
 
     /**
@@ -65,11 +60,8 @@ class BlockType extends AbstractType
         $builder->setAttribute('template', $this->generateFormManager->getTemplate($options['data']));
 
         $builder->addViewTransformer($this->blockToArrayTransformer);
-        $builder->addEventSubscriber(
-            new BlockTypeSubscriber(
-                $this->generateFormManager, $this->fixedParameters, $this->formFactory, $options['blockPosition']
-            )
-        );
+        $builder->addEventSubscriber($this->blockFormTypeSubscriber);
+
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }

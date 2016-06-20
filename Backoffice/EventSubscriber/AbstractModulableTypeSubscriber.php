@@ -7,8 +7,11 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
+@trigger_error('The '.__NAMESPACE__.'\AbstractModulableTypeSubscriber class is deprecated since version 1.2.0 and will be removed in 1.3.0', E_USER_DEPRECATED);
+
 /**
  * Class AbstractModulableTypeSubscriber
+ * @deprecated  deprecated since version 1.2.0 and will be removed in version 1.3.0
  */
 abstract class AbstractModulableTypeSubscriber implements EventSubscriberInterface
 {

@@ -18,8 +18,6 @@ class BlockTypeTest extends AbstractBaseTestCase
 
     protected $templateName = 'template';
     protected $generateFormManager;
-    protected $fixedParameters;
-    protected $formFactory;
 
     /**
      * Set up the test
@@ -28,12 +26,11 @@ class BlockTypeTest extends AbstractBaseTestCase
     {
         $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
         $blockToArrayTransformer = Phake::mock('OpenOrchestra\Backoffice\Form\DataTransformer\BlockToArrayTransformer');
+        $blockFormTypeSubscriber = Phake::mock('OpenOrchestra\Backoffice\EventSubscriber\BlockFormTypeSubscriber');
 
         Phake::when($this->generateFormManager)->getTemplate(Phake::anyParameters())->thenReturn($this->templateName);
-        $this->fixedParameters = array('component', 'submit', 'label', 'class', 'id', 'max_age');
-        $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactoryInterface');
 
-        $this->blockType = new BlockType($this->generateFormManager, $this->fixedParameters, $this->formFactory, $blockToArrayTransformer);
+        $this->blockType = new BlockType($this->generateFormManager, $blockToArrayTransformer, $blockFormTypeSubscriber);
     }
 
     /**
