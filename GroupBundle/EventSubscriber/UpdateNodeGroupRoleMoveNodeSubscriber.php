@@ -63,46 +63,48 @@ class UpdateNodeGroupRoleMoveNodeSubscriber implements EventSubscriberInterface
     protected function updateNodeGroupRoleTree(NodeInterface $node, array $nodeRole, array $groups)
     {
         /** @var GroupInterface $group */
-        foreach ($groups as $group) {
-            if ($node->getSiteId() === $group->getSite()->getSiteId()) {
+        if (!$node->isDeleted()) {
+            foreach ($groups as $group) {
+                if ($node->getSiteId() === $group->getSite()->getSiteId()) {
 
-                foreach ($nodeRole as $role => $translation) {
-                    $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(
-                        NodeInterface::GROUP_ROLE_TYPE,
-                        $node->getNodeId(),
-                        $role
-                    );
-
-                    if (null === $nodeGroupRole) {
-                        throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
-                    }
-
-                    if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
-                        $nodeGroupRoleParent = $group->getModelGroupRoleByTypeAndIdAndRole(
+                    foreach ($nodeRole as $role => $translation) {
+                        $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(
                             NodeInterface::GROUP_ROLE_TYPE,
-                            $node->getParentId(),
+                            $node->getNodeId(),
                             $role
                         );
 
-                        if (null === $nodeGroupRoleParent) {
+                        if (null === $nodeGroupRole) {
                             throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
                         }
 
-                        $accessParent = $nodeGroupRoleParent->isGranted();
+                        if (ModelGroupRoleInterface::ACCESS_INHERIT === $nodeGroupRole->getAccessType()) {
+                            $nodeGroupRoleParent = $group->getModelGroupRoleByTypeAndIdAndRole(
+                                NodeInterface::GROUP_ROLE_TYPE,
+                                $node->getParentId(),
+                                $role
+                            );
 
-                        if ($accessParent !== $nodeGroupRole->isGranted()) {
-                            $nodeGroupRole->setGranted($accessParent);
-                            $this->objectManager->persist($group);
-                            $this->objectManager->flush();
+                            if (null === $nodeGroupRoleParent) {
+                                throw new NodeGroupRoleNotFoundException($role, $node->getNodeId(), $group->getName());
+                            }
+
+                            $accessParent = $nodeGroupRoleParent->isGranted();
+
+                            if ($accessParent !== $nodeGroupRole->isGranted()) {
+                                $nodeGroupRole->setGranted($accessParent);
+                                $this->objectManager->persist($group);
+                                $this->objectManager->flush();
+                            }
                         }
                     }
                 }
             }
-        }
 
-        $children = $this->nodeRepository->findByParent($node->getNodeId(), $node->getSiteId());
-        foreach ($children as $child) {
-            $this->updateNodeGroupRoleTree($child, $nodeRole, $groups);
+            $children = $this->nodeRepository->findByParent($node->getNodeId(), $node->getSiteId());
+            foreach ($children as $child) {
+                $this->updateNodeGroupRoleTree($child, $nodeRole, $groups);
+            }
         }
     }
 

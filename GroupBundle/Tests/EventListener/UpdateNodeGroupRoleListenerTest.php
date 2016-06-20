@@ -35,6 +35,8 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
         $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         $childNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         $childNode2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $childNode3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+
         $this->group = Phake::mock('OpenOrchestra\Backoffice\Model\GroupInterface');
         $site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         $nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
@@ -47,9 +49,11 @@ class UpdateNodeGroupRoleListenerTest extends AbstractBaseTestCase
         Phake::when($this->documentManager)->getRepository(Phake::anyParameters())->thenReturn($nodeRepository);
         $metadata = Phake::mock('Doctrine\ODM\MongoDB\Mapping\ClassMetadata');
         Phake::when($this->documentManager)->getClassMetadata(Phake::anyParameters())->thenReturn($metadata);
-        Phake::when($nodeRepository)->findByParent(Phake::anyParameters())->thenReturn(array($childNode, $childNode2));
+        Phake::when($nodeRepository)->findByParent(Phake::anyParameters())->thenReturn(array($childNode, $childNode2, $childNode3));
         Phake::when($childNode)->getNodeType()->thenReturn('page');
         Phake::when($childNode2)->getNodeType()->thenReturn('error');
+        Phake::when($childNode3)->getNodeType()->thenReturn('page');
+        Phake::when($childNode3)->isDeleted()->thenReturn(true);
         Phake::when($this->lifecycleEventArgs)->hasChangedField(Phake::anyParameters())->thenReturn(true);
 
         $this->listener = new UpdateNodeGroupRoleListener($this->nodeClass);

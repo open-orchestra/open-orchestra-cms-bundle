@@ -146,6 +146,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         $accessParent,
         $accessChildType,
         $accessChild,
+        $isDeleted,
         $countUpdateNode,
         $countUpdateChild
     ) {
@@ -155,6 +156,7 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         Phake::when($child)->getNodeId()->thenReturn($fakeChildId);
         Phake::when($child)->getParentId()->thenReturn($this->fakeNodeId);
         Phake::when($child)->getSiteId()->thenReturn($this->fakeSiteId);
+        Phake::when($child)->isDeleted()->thenReturn($isDeleted);
 
         $nodeGroupRole = Phake::mock('OpenOrchestra\Backoffice\Model\ModelGroupRoleInterface');
         Phake::when($nodeGroupRole)->getAccessType()->thenReturn($accessType);
@@ -196,16 +198,20 @@ class UpdateNodeGroupRoleMoveNodeSubscriberTest extends AbstractBaseTestCase
         $denied = ModelGroupRoleInterface::ACCESS_DENIED;
 
         return array(
-            array($inherit, true, true, $inherit, true, 0, 0),
-            array($inherit, true, true, $inherit, false, 0, 1),
-            array($inherit, true, true, $granted, false, 0, 0),
-            array($inherit, true, true, $denied, false, 0, 0),
-            array($denied, true, true, $inherit, true, 0, 0),
-            array($denied, true, true, $inherit, false, 0, 1),
-            array($granted, true, true, $inherit, true, 0, 0),
-            array($granted, true, true, $inherit, false, 0, 1),
-            array($inherit, true, false, $inherit, false, 1, 1),
-            array($inherit, true, false, $inherit, true, 1, 0),
+            array($inherit, true, true, $inherit, true, false, 0, 0),
+            array($inherit, true, true, $inherit, false, false, 0, 1),
+            array($inherit, true, true, $granted, false, false, 0, 0),
+            array($inherit, true, true, $denied, false, false, 0, 0),
+            array($denied, true, true, $inherit, true, false, 0, 0),
+            array($denied, true, true, $inherit, false, false, 0, 1),
+            array($granted, true, true, $inherit, true, false, 0, 0),
+            array($granted, true, true, $inherit, false, false, 0, 1),
+            array($inherit, true, false, $inherit, false, false, 1, 1),
+            array($inherit, true, false, $inherit, true, false, 1, 0),
+            array($inherit, true, true, $inherit, false, true, 0, 0),
+            array($denied, true, true, $inherit, false, true, 0, 0),
+            array($granted, true, true, $inherit, false, true, 0, 0),
+            array($inherit, true, false, $inherit, false, true, 1, 0),
         );
     }
 
