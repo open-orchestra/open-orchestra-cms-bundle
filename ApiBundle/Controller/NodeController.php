@@ -68,47 +68,39 @@ class NodeController extends BaseController
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
         $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
-        $siteGetLanguage = false;
 
         if (!is_null($site)) {
-            $aliases = $site->getAliases();
-            foreach ($aliases as $alias) {
-                if ($siteGetLanguage = ($alias->getLanguage() == $language)) {
-                    break;
-                }
+            if (!in_array($language, $site->getLanguages())) {
+                throw new AccessLanguageForNodeNotGrantedHttpException();
             }
         }
 
-        if ($siteGetLanguage) {
-            $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
-            if ($node) {
-                $this->denyAccessUnlessGranted($this->getAccessRole($node));
-            }
-            if (!$node) {
-                $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
+        $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
+        if ($node) {
+            $this->denyAccessUnlessGranted($this->getAccessRole($node));
+        }
+        if (!$node) {
+            $oldNode = $this->findOneNode($nodeId, $currentSiteDefaultLanguage, $siteId);
 
-                if ($oldNode) {
-                    $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $oldNode);
-                    $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
-                } elseif ($errorNode) {
-                    $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_ERROR_NODE);
-                    $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
-                }
-
-                $dm = $this->get('object_manager');
-                $dm->persist($node);
-
-                if ($oldNode) {
-                    $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
-                }
-
-                $dm->flush();
+            if ($oldNode) {
+                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_NODE, $oldNode);
+                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewLanguageNode($oldNode, $language);
+            } elseif ($errorNode) {
+                $this->denyAccessUnlessGranted(TreeNodesPanelStrategy::ROLE_ACCESS_CREATE_ERROR_NODE);
+                $node = $this->get('open_orchestra_backoffice.manager.node')->createNewErrorNode($nodeId, $siteId, $language);
             }
 
-            return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
+            $dm = $this->get('object_manager');
+            $dm->persist($node);
+
+            if ($oldNode) {
+                $this->get('open_orchestra_backoffice.manager.node')->updateBlockReferences($oldNode, $node);
+            }
+
+            $dm->flush();
         }
 
-        throw new AccessLanguageForNodeNotGrantedHttpException();
+        return $this->get('open_orchestra_api.transformer_manager')->get('node')->transform($node);
     }
 
     /**
