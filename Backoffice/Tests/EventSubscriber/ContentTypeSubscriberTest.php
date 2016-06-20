@@ -20,6 +20,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
     protected $subscriber;
 
     protected $form;
+    protected $subForm;
     protected $event;
     protected $content;
     protected $collection;
@@ -66,7 +67,8 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->formConfig)->getModelTransformers()->thenReturn(array());
         Phake::when($this->formConfig)->getViewTransformers()->thenReturn(array());
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
+        $this->subForm = Phake::mock('Symfony\Component\Form\Form');
+        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->subForm);
         Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
 
         $this->contentTypeId = 'contentTypeId';
@@ -130,7 +132,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
     {
         $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
         $this->assertArrayHasKey(FormEvents::POST_SET_DATA, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(FormEvents::PRE_SUBMIT, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::POST_SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
     /**
@@ -242,8 +244,9 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
             'contentType' => $realContentTypeId,
             'title' => $realValueArray,
         );
-        Phake::when($this->event)->getData()->thenReturn($data);
 
+        Phake::when($this->event)->getData()->thenReturn($data);
+        Phake::when($this->subForm)->getData()->thenReturn($realValueArray);
         Phake::when($this->form)->getData()->thenReturn($this->content);
 
         $this->fieldCollection->add($this->fieldType1);
@@ -263,9 +266,10 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
 
         Phake::when($this->content)->getAttributeByName($fieldId)->thenReturn($this->contentAttribute);
 
-        $this->subscriber->preSubmit($this->event);
+        $this->subscriber->postSubmit($this->event);
 
         Phake::verify($this->form)->getData();
+        Phake::verify($this->subForm)->getData();
         Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->contentAttribute)->setValue($realValueArray);
@@ -294,6 +298,7 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
         Phake::when($this->event)->getData()->thenReturn($data);
 
         Phake::when($this->form)->getData()->thenReturn($this->content);
+        Phake::when($this->subForm)->getData()->thenReturn($title);
 
         $this->fieldCollection->add($this->fieldType1);
         $fieldId = 'title';
@@ -303,9 +308,10 @@ class ContentTypeSubscriberTest extends AbstractBaseTestCase
 
         Phake::when($this->content)->getAttributeByName($fieldId)->thenReturn(null);
 
-        $this->subscriber->preSubmit($this->event);
+        $this->subscriber->postSubmit($this->event);
 
         Phake::verify($this->form)->getData();
+        Phake::verify($this->subForm)->getData();
         Phake::verify($this->repository)->findOneByContentTypeIdInLastVersion($realContentTypeId);
         Phake::verify($this->content)->getAttributeByName($fieldId);
         Phake::verify($this->content)->addAttribute(Phake::anyParameters());

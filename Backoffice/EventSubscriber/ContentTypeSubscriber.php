@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * Class ContentTypeSubscriber
  */
-class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
+class ContentTypeSubscriber implements EventSubscriberInterface
 {
     protected $translationChoiceManager;
     protected $contentTypeRepository;
@@ -59,9 +60,10 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
      */
     public static function getSubscribedEvents()
     {
-        return array_merge(
-            parent::getSubscribedEvents(),
-            array(FormEvents::POST_SET_DATA => 'postSetData')
+        return array(
+            FormEvents::PRE_SET_DATA => 'preSetData',
+            FormEvents::POST_SET_DATA => 'postSetData',
+            FormEvents::POST_SUBMIT => 'postSubmit',
         );
     }
 
@@ -107,23 +109,17 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
     /**
      * @param FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
+    public function postSubmit(FormEvent $event)
     {
         $form = $event->getForm();
         $content = $form->getData();
         $contentType = $this->contentTypeRepository->findOneByContentTypeIdInLastVersion($content->getContentType());
 
         if ($contentType instanceof ContentTypeInterface) {
-            $data = $event->getData();
             $content->setContentTypeVersion($contentType->getVersion());
             foreach ($contentType->getFields() as $contentTypeField) {
                 $contentTypeFieldId = $contentTypeField->getFieldId();
-                $data[$contentTypeFieldId] = isset($data[$contentTypeFieldId]) ? $data[$contentTypeFieldId] : null;
-                try {
-                    $value = $this->transformData($data[$contentTypeFieldId], $form->get($contentTypeFieldId));
-                } catch (TransformationFailedException $e) {
-                }
-
+                $value = $form->get($contentTypeFieldId)->getData();
                 $attribute = $content->getAttributeByName($contentTypeFieldId);
                 if (is_null($attribute)) {
                     /** @var ContentAttributeInterface $attribute */
@@ -131,6 +127,7 @@ class ContentTypeSubscriber extends AbstractModulableTypeSubscriber
                     $attribute->setName($contentTypeFieldId);
                     $content->addAttribute($attribute);
                 }
+
                 $attribute->setValue($value);
                 $attribute->setType($contentTypeField->getType());
                 $attribute->setStringValue($this->valueTransformerManager->transform($attribute->getType(), $value));
