@@ -48,7 +48,7 @@ class UpdateNodeGroupRoleListener
                 $nodes = $nodeRepository->findByParent($document->getId(), $site->getSiteId());
                 /** @var $node NodeInterface */
                 foreach ($nodes as $node) {
-                    if (NodeInterface::TYPE_DEFAULT === $node->getNodeType()) {
+                    if (NodeInterface::TYPE_DEFAULT === $node->getNodeType() && !$node->isDeleted()) {
                         $role = $document->getRole();
                         $nodeGroupRole = $group->getModelGroupRoleByTypeAndIdAndRole(NodeInterface::GROUP_ROLE_TYPE, $node->getNodeId(), $role);
                         if ($nodeGroupRole === null) {
