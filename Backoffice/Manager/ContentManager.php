@@ -85,8 +85,7 @@ class ContentManager
         $newContent->setVersion($lastVersion + 1);
         $newContent->setStatus(null);
         foreach ($content->getKeywords() as $keyword) {
-            $newKeyword = clone $keyword;
-            $newContent->addKeyword($newKeyword);
+            $newContent->addKeyword($keyword);
         }
         foreach ($content->getAttributes() as $attribute) {
             $newAttribute = clone $attribute;
