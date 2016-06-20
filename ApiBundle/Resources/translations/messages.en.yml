@@ -3,3 +3,4 @@ open_orchestra_api:
         change_not_granted: You cannot apply this status due to some right limitation
     node:
         duplicate_not_granted: You cannot duplicate this page due to some right limitation
+        access_language_not_granted: This language is not allowed for this node on the current site

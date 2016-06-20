@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use OpenOrchestra\BaseApiBundle\Controller\BaseController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use OpenOrchestra\ApiBundle\Exceptions\HttpException\AccessLanguageForNodeNotGrantedHttpException;
 
 /**
  * Class NodeController
@@ -66,6 +67,14 @@ class NodeController extends BaseController
         $currentSiteDefaultLanguage = $currentSiteManager->getCurrentSiteDefaultLanguage();
         $language = $request->get('language', $currentSiteDefaultLanguage);
         $siteId = $currentSiteManager->getCurrentSiteId();
+        $site = $this->get('open_orchestra_model.repository.site')->findOneBySiteId($siteId);
+
+        if (!is_null($site)) {
+            if (!in_array($language, $site->getLanguages())) {
+                throw new AccessLanguageForNodeNotGrantedHttpException();
+            }
+        }
+
         $node = $this->findOneNode($nodeId, $language, $siteId, $request->get('version'));
         if ($node) {
             $this->denyAccessUnlessGranted($this->getAccessRole($node));
