@@ -34,7 +34,8 @@ class BlockTypeTest extends AbstractBaseTestCase
         $this->fixedParameters = array('component', 'submit', 'label', 'class', 'id', 'max_age');
         $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactoryInterface');
 
-        $this->blockType = new BlockType($this->generateFormManager, $blockToArrayTransformer, $blockTypeSubscriber);    }
+        $this->blockType = new BlockType($this->generateFormManager, $blockToArrayTransformer, $blockTypeSubscriber);
+    }
 
     /**
      * Test instance
