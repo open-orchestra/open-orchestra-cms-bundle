@@ -102,7 +102,6 @@ PO.formPrototype:: =
 
     # Display the input in the page before the add button
     @settings.addButtonContainer.before newPrototype
-    newPrototype.find("input").click()
 
     @createRemoveButton newPrototype
     # increase the index with one for the next item
