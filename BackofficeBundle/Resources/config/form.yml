@@ -127,9 +127,8 @@ services:
         class: %open_orchestra_backoffice.type.block.class%
         arguments:
             - @open_orchestra_backoffice.generate_form_manager
-            - %open_orchestra_backoffice.block.fixed_attributes%
-            - @form.factory
             - @open_orchestra_backoffice.transformer.block_to_array
+            - @open_orchestra_backoffice.subscriber.block_form_type
         tags:
             - { name: form.type, alias: oo_block }
     open_orchestra_backoffice.type.existing_block_choice:

@@ -16,15 +16,10 @@ class BlockTypeSubscriberTest extends AbstractBaseTestCase
      * @var BlockTypeSubscriber
      */
     protected $subscriber;
-
     protected $form;
     protected $event;
     protected $block;
-    protected $formConfig;
-    protected $formFactory;
     protected $fixedParameters;
-    protected $generateFormManager;
-    protected $generateFormInterface;
 
     /**
      * Set up the test
@@ -32,30 +27,12 @@ class BlockTypeSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->block = Phake::mock('OpenOrchestra\ModelInterface\Model\BlockInterface');
-
-        $this->formConfig = Phake::mock('Symfony\Component\Form\FormConfigInterface');
-        Phake::when($this->formConfig)->getModelTransformers()->thenReturn(array());
-        Phake::when($this->formConfig)->getViewTransformers()->thenReturn(array());
         $this->form = Phake::mock('Symfony\Component\Form\Form');
-        Phake::when($this->form)->add(Phake::anyParameters())->thenReturn($this->form);
-        Phake::when($this->form)->get(Phake::anyParameters())->thenReturn($this->form);
-        Phake::when($this->form)->getConfig()->thenReturn($this->formConfig);
-        Phake::when($this->form)->all()->thenReturn(array($this->form));
-
-
-        $this->formFactory = Phake::mock('Symfony\Component\Form\FormFactoryInterface');
-        Phake::when($this->formFactory)->create(Phake::anyParameters())->thenReturn($this->form);
-        $this->generateFormInterface = Phake::mock('OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface');
-
+        Phake::when($this->form)->getData()->thenReturn($this->block);
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
-
-        $this->generateFormManager = Phake::mock('OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager');
-        Phake::when($this->generateFormManager)->createForm(Phake::anyParameters())->thenReturn($this->generateFormInterface);
-
         $this->fixedParameters = array('component', 'label', 'class', 'id', 'max_age');
-
-        $this->subscriber = new BlockTypeSubscriber($this->generateFormManager, $this->fixedParameters, $this->formFactory);
+        $this->subscriber = new BlockTypeSubscriber($this->fixedParameters);
     }
 
     /**
@@ -71,32 +48,35 @@ class BlockTypeSubscriberTest extends AbstractBaseTestCase
      */
     public function testEventSubscribed()
     {
-        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
-        $this->assertArrayHasKey(FormEvents::PRE_SUBMIT, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::SUBMIT, $this->subscriber->getSubscribedEvents());
     }
 
     /**
-     * Test with no data
+     * Test submit
      */
-    public function testPreSetDataWithNoAttributes()
+    public function testSubmit()
     {
-        Phake::when($this->event)->getForm()->thenReturn($this->form);
-        Phake::when($this->event)->getData()->thenReturn($this->block);
+        $subForm1 = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($subForm1)->getData()->thenReturn('test');
+        $subForm2 = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($subForm2)->getData()->thenReturn('sub');
+        $subForm3 = Phake::mock('Symfony\Component\Form\FormInterface');
+        Phake::when($subForm3)->getData()->thenReturn(array('1','2'));
 
-        $this->subscriber->preSetData($this->event);
-
-        Phake::verify($this->generateFormManager)->createForm($this->block);
-        Phake::verify($this->form)->add(Phake::anyParameters());
-    }
-
-    /**
-     * @return array
-     */
-    public function provideKeyAndData()
-    {
-        return array(
-            array('test', array('tentative' => 'tentative', 'test')),
-            array('key', array('value' => 'tentative', 'test', 'other' => 4)),
+        $subForms = array(
+            'label' => $subForm1,
+            'fakeAttribute' => $subForm2,
+            'fakeArrayAttribute' => $subForm3,
         );
+        Phake::when($this->form)->all()->thenReturn($subForms);
+
+        $blockAttributes = array(
+            'fakeAttribute' => 'sub',
+            'fakeArrayAttribute' => array('1','2'),
+        );
+
+        $this->subscriber->submit($this->event);
+
+        Phake::verify($this->block)->setAttributes($blockAttributes);
     }
 }

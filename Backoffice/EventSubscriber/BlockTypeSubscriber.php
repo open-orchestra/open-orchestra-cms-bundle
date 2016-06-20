@@ -3,90 +3,56 @@
 namespace OpenOrchestra\Backoffice\EventSubscriber;
 
 use Doctrine\Common\Util\Inflector;
-use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
-use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class BlockTypeSubscriber
  */
-class BlockTypeSubscriber extends AbstractModulableTypeSubscriber
+class BlockTypeSubscriber implements EventSubscriberInterface
 {
-    protected $generateFormManager;
     protected $fixedParameters;
-    protected $blockPosition;
-    protected $formFactory;
 
     /**
-     * @param GenerateFormManager  $generateFormManager
-     * @param array                $fixedParameters
-     * @param FormFactoryInterface $formFactory
-     * @param int                  $blockPosition
+     * @param array $fixedParameters
      */
-    public function __construct(GenerateFormManager $generateFormManager, $fixedParameters, FormFactoryInterface $formFactory, $blockPosition = 0)
+    public function __construct(array $fixedParameters)
     {
-        $this->generateFormManager = $generateFormManager;
         $this->fixedParameters = $fixedParameters;
-        $this->blockPosition = $blockPosition;
-        $this->formFactory = $formFactory;
     }
 
     /**
-     * @param FormEvent $event
+     * @return array The event names to listen to
      */
-    public function preSetData(FormEvent $event)
+    public static function getSubscribedEvents()
     {
-        $form = $event->getForm();
-        $data = $event->getData();
-
-        $label = $data->getLabel();
-        if ('' == $label) {
-            $data->setLabel($data->getComponent() . ' #' . ($this->blockPosition + 1));
-        }
-        $newForm = $this->formFactory->create(
-            $this->generateFormManager->createForm($data),
-            null,
-            array('disabled' => $form->isDisabled(), 'inherit_data' => true)
+        return array(
+            FormEvents::SUBMIT => 'submit',
         );
-
-        foreach ($newForm->all() as $newFormChild) {
-            $form->add($newFormChild);
-        }
     }
 
     /**
      * @param FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
+    public function submit(FormEvent $event)
     {
-        $form = $event->getForm();
-        $block = $form->getData();
-        $blockAttributes = array();
-        $data = $event->getData();
-
-        foreach ($data as $key => $value) {
-            if ($key == 'submit') {
-                continue;
+        $block = $event->getForm()->getData();
+        if (null !== $block) {
+            $blockAttributes = array();
+            foreach ($event->getForm()->all() as $key => $children) {
+                $value = $children->getData();
+                if (in_array($key, $this->fixedParameters)) {
+                    $setter = 'set' . Inflector::classify($key);
+                    $block->$setter($value);
+                    continue;
+                }
+                if (is_string($value) && is_array(json_decode($value, true))) {
+                    $value = json_decode($value, true);
+                }
+                $blockAttributes[$key] = $value;
             }
-            if (in_array($key, $this->fixedParameters)) {
-                $setter = 'set' . Inflector::classify($key);
-                $block->$setter($value);
-                continue;
-            }
-
-            try {
-                $value = $this->transformData($value, $form->get($key));
-            } catch (TransformationFailedException $e) {
-            }
-
-            $blockAttributes[$key] = $value;
-
-            if (is_string($value) && is_array(json_decode($value, true))) {
-                $blockAttributes[$key] = json_decode($value, true);
-            }
+            $block->setAttributes($blockAttributes);
         }
-
-        $block->setAttributes($blockAttributes);
     }
 }
