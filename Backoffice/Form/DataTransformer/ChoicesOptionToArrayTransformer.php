@@ -42,7 +42,7 @@ class ChoicesOptionToArrayTransformer implements DataTransformerInterface
     public function reverseTransform($choices)
     {
         if (null === $choices || '' === trim($choices)) {
-            return array();
+            return null;
         }
 
         $choices = explode(',', $choices);

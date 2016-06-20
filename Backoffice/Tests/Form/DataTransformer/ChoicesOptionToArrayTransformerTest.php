@@ -70,7 +70,7 @@ class ChoicesOptionToArrayTransformerTest extends AbstractBaseTestCase
      */
     public function testReverseTransformWithNullAndEmptyData($data)
     {
-        $this->assertSame(array(), $this->transformer->reverseTransform($data));
+        $this->assertSame(null, $this->transformer->reverseTransform($data));
     }
 
     /**
