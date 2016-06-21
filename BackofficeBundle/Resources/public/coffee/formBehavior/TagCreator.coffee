@@ -32,12 +32,6 @@ class OpenOrchestra.FormBehavior.TagCreator extends OpenOrchestra.FormBehavior.A
             isNew: true
         formatResult: (term) ->
           if term.isNew
-            $.ajax
-              type: 'GET'
-              url: url
-              data: 'term=' + encodeURIComponent(term.text)
-              success: (response) ->
-                term.text = response.term
             "<span class=\"label label-danger\">New</span> " + term.text
           else
             term.text

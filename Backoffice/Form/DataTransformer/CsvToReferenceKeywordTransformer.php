@@ -13,35 +13,6 @@ use OpenOrchestra\Backoffice\Exception\NotFoundedKeywordException;
  */
 class CsvToReferenceKeywordTransformer implements DataTransformerInterface
 {
-    protected $keywordToDocumentManager;
-
-    /**
-     * @param KeywordToDocumentManager $keywordToDocumentManager
-     */
-    public function __construct(KeywordToDocumentManager $keywordToDocumentManager)
-    {
-        $this->keywordToDocumentManager = $keywordToDocumentManager;
-    }
-
-    /**
-     * @param ArrayCollection $referenceKeywords
-     *
-     * @return ArrayCollection
-     */
-    public function transform($referenceKeywords)
-    {
-        if (null === $referenceKeywords) {
-            return '';
-        }
-
-        $keywords = array();
-        foreach ($referenceKeywords as $keyword) {
-            $keywords[] = $keyword->getLabel();
-        }
-
-        return implode(',', $keywords);
-    }
-
     /**
      * @param string $keywords
      *
@@ -55,7 +26,7 @@ class CsvToReferenceKeywordTransformer implements DataTransformerInterface
         $referenceKeywords = new ArrayCollection();
 
         foreach ($keywordArray as $keyword) {
-            $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
+            $keywordDocument = $this->keywordRepository->find($keyword);
             if ($keywordDocument instanceof KeywordInterface) {
                 $referenceKeywords->add($keywordDocument);
             } else {
@@ -64,5 +35,15 @@ class CsvToReferenceKeywordTransformer implements DataTransformerInterface
         }
 
         return $referenceKeywords;
+    }
+
+    /**
+     * @param string $keywords
+     *
+     * @return array
+     */
+    protected function getKeywordAsArray($keywords) {
+        return explode(',', $keywords);
+    ;
     }
 }

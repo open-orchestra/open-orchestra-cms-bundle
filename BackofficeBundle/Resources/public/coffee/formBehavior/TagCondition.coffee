@@ -23,8 +23,7 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
   activateBehaviorOnElements: (elements, view, form) ->
     for element in elements
       element = $(element)
-      tags = @formatTags(element.data('tags'), 'tag')
-      tags = tags.concat(@formatTags(@operator, 'operator'))
+      tags = element.data('tags')
       prepopulatedTags = element.val().split(' ')
       context = @
       element.tokenInput tags,
@@ -35,28 +34,33 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
         onDelete: (item) ->
           context.applicateSqlCss $(this)
           return
-        propertyToSearch: 'value'
+        propertyToSearch: 'text'
         theme: 'facebook'
         tokenFormatter: (item) ->
-          item = _.findWhere(tags, value: item.value) or item
+          item = _.findWhere(tags, text: item.text) or item
           item.type = item.type or 'new'
-          '<li class="' + item.type + '">' + item.value + '</li>'
+          '<li class="' + item.type + '">' + item.text + '</li>'
         tokenDelimiter: ' '
-        tokenValue: 'value'
         zindex: 100002
       for i of prepopulatedTags
         prepopulatedTags[i] = prepopulatedTags[i].trim()
         if prepopulatedTags[i] != ''
-          type = if @operator.indexOf(prepopulatedTags[i]) != -1 then 'operator' else 'tag'
-          element.tokenInput 'add',
-            value: prepopulatedTags[i]
-            type: type
+          if @operator.indexOf(prepopulatedTags[i]) != -1
+            element.tokenInput 'add', 
+              id: prepopulatedTags[i]
+              text: prepopulatedTags[i]
+              type: 'operator'
+          else
+            element.tokenInput 'add', _.findWhere(tags,
+              id: prepopulatedTags[i]
+            )
       ul = $('<ul class="operator-list">')
       for i of @operator
         click = ((operator, element) ->
           ->
             element.tokenInput 'add',
-              value: operator
+              id: operator
+              text: operator
               type: 'operator'
             $('#token-input-' + element.attr('id')).focus()
             return
@@ -89,19 +93,6 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
     else
       isSqlExpression = isSqlExpression and (@isAndBooleanRegExp.test(testedString.text) or @isOrBooleanRegExp.test(testedString.text))
     return isSqlExpression
-
-  ###*
-   * formatTags
-   * @param {Array} tags
-   * @param {String} type
-  ###
-  formatTags: (tags, type) ->
-    result = $.extend([], tags)
-    for i of result
-      result[i] =
-        value: result[i]
-        type: type
-    result
 
 jQuery ->
   OpenOrchestra.FormBehavior.formBehaviorLibrary.add(new OpenOrchestra.FormBehavior.TagCondition(".select-boolean"))
