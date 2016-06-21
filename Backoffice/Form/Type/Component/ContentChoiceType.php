@@ -53,6 +53,8 @@ class ContentChoiceType extends AbstractType
      * @param string $contentType
      * @param string $operator
      * @param string $keywords
+     *
+     * @return array
      */
     protected function getChoices($contentType, $operator, $keywords)
     {

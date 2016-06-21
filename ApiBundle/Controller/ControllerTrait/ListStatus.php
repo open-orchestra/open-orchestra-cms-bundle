@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ApiBundle\Controller\ControllerTrait;
 
-use OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
@@ -13,7 +12,7 @@ trait ListStatus
     /**
      * @param StatusableInterface $document
      *
-     * @return StatusCollectionFacade
+     * @return \OpenOrchestra\ApiBundle\Facade\StatusCollectionFacade
      */
     protected function listStatuses(StatusableInterface $document)
     {

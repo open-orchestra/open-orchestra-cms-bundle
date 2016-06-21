@@ -5,7 +5,6 @@ namespace OpenOrchestra\BackofficeBundle\StrategyManager;
 use OpenOrchestra\Backoffice\Exception\MissingGenerateFormStrategyException;
 use OpenOrchestra\Backoffice\GenerateForm\GenerateFormInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class GenerateFormManager

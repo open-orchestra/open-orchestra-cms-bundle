@@ -13,6 +13,8 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
 {
     protected $entityDbMapper;
     protected $formTypeName;
+    protected $objectManager;
+    protected $documentClass;
 
     /**
      * @param EntityDbMapperInterface $entityDbMapper
@@ -55,13 +57,17 @@ class ReferenceToEmbedTransformer implements DataTransformerInterface
      *
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function reverseTransform($data)
     {
-        list($key, $id) = each($data);
-        $document = $this->objectManager->find($this->documentClass, $id);
+        if (is_array($data)) {
+            $id = current($data);
+            $document = $this->objectManager->find($this->documentClass, $id);
 
-        return $this->entityDbMapper->fromEntityToDb($document);
+            return $this->entityDbMapper->fromEntityToDb($document);
+        }
+
+        return null;
     }
 }
