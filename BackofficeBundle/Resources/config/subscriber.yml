@@ -16,6 +16,7 @@ parameters:
     open_orchestra_backoffice.subscriber.create_transverse_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateTransverseNodeSubscriber
     open_orchestra_backoffice.subscriber.create_root_node.class: OpenOrchestra\Backoffice\EventSubscriber\CreateRootNodeSubscriber
     open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class: OpenOrchestra\Backoffice\EventSubscriber\UpdateSiteAliasRedirectionSiteSubscriber
+    open_orchestra_backoffice.subscriber.block_form_type.class: OpenOrchestra\Backoffice\EventSubscriber\BlockTypeSubscriber
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
@@ -137,3 +138,9 @@ services:
             - @open_orchestra_model.repository.node
         tags:
             - { name: kernel.event_subscriber }
+    open_orchestra_backoffice.subscriber.block_form_type:
+         class: %open_orchestra_backoffice.subscriber.block_form_type.class%
+         arguments:
+             - %open_orchestra_backoffice.block.fixed_attributes%
+         tags:
+             - { name: kernel.event_subscriber }

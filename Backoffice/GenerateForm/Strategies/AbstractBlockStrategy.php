@@ -39,4 +39,12 @@ abstract class AbstractBlockStrategy extends AbstractType implements GenerateFor
     {
         return array();
     }
+
+    /**
+     * @return string
+     */
+    public function getParent()
+    {
+        return 'oo_block';
+    }
 }

@@ -46,7 +46,8 @@ class BlockController extends AbstractEditionRoleController
             $options['method'] = 'PATCH';
         }
 
-        $form = parent::createForm('oo_block', $block, $options);
+        $formType = $this->get('open_orchestra_backoffice.generate_form_manager')->createForm($block);
+        $form = $this->createForm($formType, $block, $options);
         $form->handleRequest($request);
 
         if ('PATCH' !== $request->getMethod()) {
