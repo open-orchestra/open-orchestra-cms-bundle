@@ -9,19 +9,23 @@
     }
   ],
   "require": {
-    "open-orchestra/open-orchestra-base-bundle": "1.1.2",
-    "open-orchestra/open-orchestra-base-api-bundle": "1.1.2",
-    "open-orchestra/open-orchestra-display-bundle": "1.1.2",
-    "open-orchestra/open-orchestra-user-bundle": "1.1.2",
-    "open-orchestra/open-orchestra-model-interface": "1.1.2",
+    "open-orchestra/open-orchestra-base-bundle": "1.1.*@dev",
+    "open-orchestra/open-orchestra-base-api-bundle": "1.1.*@dev",
+    "open-orchestra/open-orchestra-display-bundle": "1.1.*@dev",
+    "open-orchestra/open-orchestra-user-bundle": "1.1.*@dev",
+    "open-orchestra/open-orchestra-model-interface": "1.1.*@dev",
     "braincrafted/bootstrap-bundle": "2.1.2",
     "stfalcon/tinymce-bundle": "0.3.8",
     "koala-framework/composer-extra-assets": "2.0.x",
     "innocead/captcha-bundle": "@dev",
-    "friendsofsymfony/user-bundle": "@dev"
+    "friendsofsymfony/user-bundle": "@dev",
+
+    "open-orchestra/open-orchestra-bbcode-bundle": "@dev",
+    "open-orchestra/open-orchestra-libs": "@dev",
+    "open-orchestra/open-orchestra-mongo-libs": "@dev"
   },
   "require-dev": {
-    "open-orchestra/open-orchestra-model-bundle": "1.1.2",
+    "open-orchestra/open-orchestra-model-bundle": "1.1.*@dev",
     "phpunit/phpunit" : "4.8.12",
     "psr/log": "1.0.0",
     "codeclimate/php-test-reporter": "dev-master",
@@ -42,6 +46,9 @@
     }
   },
   "extra": {
+    "branch-alias": {
+      "dev-master": "1.1.x-dev"
+    },
     "mouf": {
       "nodejs": {
         "version": "~4.4.3"
