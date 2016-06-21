@@ -65,7 +65,7 @@
             <ul class="nav nav-tabs" role="tablist" id="myTab">
                 {% for key, field in form %}
                    {% if attribute(field.children, 'value') is defined %}
-                   <li {% if loop.first %}class="active" {% endif %}>
+                   <li {% if app.request.locale == key %}class="active" {% endif %}>
                         <a href="#tab-{{ form.vars.id }}-{{ key }}" role="tab" data-toggle="tab">
                             <img
                                 src="{{ asset('bundles/openorchestrabackoffice/smartadmin/img/blank.gif') }}"
@@ -81,7 +81,7 @@
             <div class="tab-content">
                 {% for key, field in form %}
                    {% if attribute(field.children, 'value') is defined %}
-                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
+                    <div class="tab-pane {% if app.request.locale == key %}active{% endif %}" id="tab-{{ form.vars.id }}-{{ key }}">
                         <div class="form-group{% if field.value.vars.errors|length > 0 %} has-error{% endif %}">
                             {{ form_widget(field.value) }}
                             {{ form_rest(field) }}
