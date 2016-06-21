@@ -2,48 +2,40 @@
 
 namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
-use OpenOrchestra\ModelInterface\Model\KeywordInterface;
-use OpenOrchestra\Backoffice\Exception\NotFoundedKeywordException;
 
 /**
  * Class CsvToReferenceKeywordTransformer
  */
-class CsvToReferenceKeywordTransformer implements DataTransformerInterface
+class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransformer
 {
     /**
      * @param string $keywords
      *
      * @return ArrayCollection
-     *
-     * @throws NotFoundedKeywordException
      */
     public function reverseTransform($keywords)
     {
-        $keywordArray = explode(',', $keywords);
-        $referenceKeywords = new ArrayCollection();
+        $keywords = explode(',', $this->partialReverseTransform($keywords));
 
-        foreach ($keywordArray as $keyword) {
-            $keywordDocument = $this->keywordRepository->find($keyword);
-            if ($keywordDocument instanceof KeywordInterface) {
-                $referenceKeywords->add($keywordDocument);
-            } else {
-                throw new NotFoundedKeywordException();
-            }
-        }
+        return new ArrayCollection($keywords);
+    }
 
-        return $referenceKeywords;
+    /**
+     * @param mixed $keywords
+     *
+     * @return array
+     */
+    protected function getKeywordAsArray($keywords) {
+        return ($keywords instanceof ArrayCollection) ? $keywords->toArray() : explode(',', $keywords);
     }
 
     /**
      * @param string $keywords
      *
-     * @return array
+     * @return string
      */
-    protected function getKeywordAsArray($keywords) {
-        return explode(',', $keywords);
-    ;
+    protected function getKeywordAsCondition($keywords) {
+        return implode(',', $keywords->toArray());
     }
 }

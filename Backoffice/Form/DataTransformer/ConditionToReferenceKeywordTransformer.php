@@ -14,12 +14,10 @@ class ConditionToReferenceKeywordTransformer extends AbstractReferenceKeywordTra
      * @param string $keywords
      *
      * @return string
-     *
-     * @throws NotFoundedKeywordException
      */
     public function reverseTransform($keywords)
     {
-        return $keywords;
+        return $this->partialReverseTransform($keywords);
     }
 
     /**
@@ -32,5 +30,14 @@ class ConditionToReferenceKeywordTransformer extends AbstractReferenceKeywordTra
         $keywordArray = explode(' ', $keywordWithoutOperator);
 
         return $keywordArray;
+    }
+
+    /**
+     * @param string $keywords
+     *
+     * @return string
+     */
+    protected function getKeywordAsCondition($keywords) {
+        return $keywords;
     }
 }
