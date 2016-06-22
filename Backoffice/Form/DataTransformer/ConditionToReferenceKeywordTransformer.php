@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\Backoffice\Form\DataTransformer;
 
-use OpenOrchestra\Backoffice\Exception\NotFoundedKeywordException;
 use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**

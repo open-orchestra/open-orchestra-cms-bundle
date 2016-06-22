@@ -61,13 +61,14 @@ abstract class AbstractReferenceKeywordTransformer implements DataTransformerInt
     /**
      * @param string $keywords
      *
-     * @return ArrayCollection
+     * @return mixed
      *
      * @throws NotFoundedKeywordException
      */
-    protected function partialReverseTransform($keywords)
+    protected function partialReverseTransform($keywords, $asString = true)
     {
         $keywordArray = $this->getKeywordAsArray($keywords);
+        $referenceKeywords = new ArrayCollection();
 
         foreach ($keywordArray as $keyword) {
             if ($keyword != '') {
@@ -75,15 +76,16 @@ abstract class AbstractReferenceKeywordTransformer implements DataTransformerInt
                 if (is_null($keywordDocument)) {
                     $keywordDocument = $this->keywordToDocumentManager->getDocument($keyword);
                 }
-                if ($keywordDocument instanceof KeywordInterface) {
-                    $keyword = str_replace($keyword, $keywordDocument->getId(), $keywords);
+                if (!is_null($keywordDocument)) {
+                    $keywords = str_replace($keyword, $keywordDocument->getId(), $keywords);
+                    $referenceKeywords->add($keywordDocument);
                 } else {
                     throw new NotFoundedKeywordException();
                 }
             }
         }
 
-        return $keywords;
+        return $asString ? $keywords : $referenceKeywords;
     }
 
     /**

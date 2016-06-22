@@ -57,12 +57,6 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
         Phake::when($this->keywordRepository)->find('fakeId[T3]')->thenReturn($t3Keyword);
 
         $this->keywordToDocumentManager = Phake::mock('OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager');
-        Phake::when($this->keywordToDocumentManager)->getDocument('cat:X1')->thenReturn($catX1Keyword);
-        Phake::when($this->keywordToDocumentManager)->getDocument('cat:X2')->thenReturn($catX2Keyword);
-        Phake::when($this->keywordToDocumentManager)->getDocument('author:AAA')->thenReturn($authorAAAKeyword);
-        Phake::when($this->keywordToDocumentManager)->getDocument('T1')->thenReturn($t1Keyword);
-        Phake::when($this->keywordToDocumentManager)->getDocument('T2')->thenReturn($t2Keyword);
-        Phake::when($this->keywordToDocumentManager)->getDocument('T3')->thenReturn($t3Keyword);
         Phake::when($this->keywordToDocumentManager)->getDocument('not_created_keyword')->thenReturn($notCreatedKeyword);
 
         $this->transformer = new ConditionToReferenceKeywordTransformer($this->keywordToDocumentManager, $this->keywordRepository);
@@ -92,11 +86,11 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
     public function providerReverseTransformData()
     {
         return array(
-            array('( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )', '( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
-            array('( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )', '( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
-            array('cat:X1', 'fakeId[cat:X1]'),
-            array('( cat:X1 )', '( fakeId[cat:X1] )'),
             array('not_created_keyword', 'fakeId[not_created_keyword]'),
+            array('( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
+            array('( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
+            array('fakeId[cat:X1]', 'fakeId[cat:X1]'),
+            array('( fakeId[cat:X1] )', '( fakeId[cat:X1] )'),
         );
     }
 
@@ -116,10 +110,10 @@ class ConditionToReferenceKeywordTransformerTest extends AbstractBaseTestCase
     public function providerTransformData()
     {
         return array(
-            array('( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )'),
-            array('( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )'),
-            array('fakeId[cat:X1]', 'cat:X1'),
-            array('( fakeId[cat:X1] )', '( cat:X1 )'),
+            array('( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( NOT ( fakeId[cat:X1] OR fakeId[cat:X2] ) AND fakeId[author:AAA] ) OR ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
+            array('( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )', '( fakeId[cat:X1] OR fakeId[cat:X2] ) AND ( fakeId[author:AAA] ) AND ( fakeId[T1] OR fakeId[T2] OR NOT fakeId[T3] )'),
+            array('fakeId[cat:X1]', 'fakeId[cat:X1]'),
+            array('( fakeId[cat:X1] )', '( fakeId[cat:X1] )'),
             array(null, ''),
         );
     }

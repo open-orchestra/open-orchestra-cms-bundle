@@ -16,9 +16,7 @@ class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransform
      */
     public function reverseTransform($keywords)
     {
-        $keywords = explode(',', $this->partialReverseTransform($keywords));
-
-        return new ArrayCollection($keywords);
+        return $this->partialReverseTransform($keywords, false);
     }
 
     /**
@@ -27,7 +25,16 @@ class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransform
      * @return array
      */
     protected function getKeywordAsArray($keywords) {
-        return ($keywords instanceof ArrayCollection) ? $keywords->toArray() : explode(',', $keywords);
+        if ($keywords instanceof ArrayCollection) {
+            $keywords = $keywords->toArray();
+            foreach ($keywords as &$keyword) {
+                $keyword = $keyword->getId();
+            }
+
+            return $keywords;
+        }
+
+        return explode(',', $keywords);
     }
 
     /**
@@ -36,6 +43,11 @@ class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransform
      * @return string
      */
     protected function getKeywordAsCondition($keywords) {
-        return implode(',', $keywords->toArray());
+        $keywords = $keywords->toArray();
+        foreach ($keywords as &$keyword) {
+            $keyword = $keyword->getLabel();
+        }
+
+        return implode(',', $keywords);
     }
 }
