@@ -25,7 +25,9 @@ class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransform
      * @return array
      */
     protected function getKeywordAsArray($keywords) {
-        if ($keywords instanceof ArrayCollection) {
+        if (is_string($keywords)) {
+            return explode(',', $keywords);
+        } else {
             $keywords = $keywords->toArray();
             foreach ($keywords as &$keyword) {
                 $keyword = $keyword->getId();
@@ -33,8 +35,6 @@ class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransform
 
             return $keywords;
         }
-
-        return explode(',', $keywords);
     }
 
     /**
