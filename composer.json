@@ -25,7 +25,7 @@
     "phpunit/phpunit" : "4.8.12",
     "psr/log": "1.0.0",
     "codeclimate/php-test-reporter": "dev-master",
-    "phake/phake": "2.1.0"
+    "phake/phake": "2.1.0",
 
     "open-orchestra/open-orchestra-bbcode-bundle": "self.version",
     "open-orchestra/open-orchestra-libs": "self.version",
