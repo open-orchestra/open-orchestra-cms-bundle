@@ -17,6 +17,7 @@ before_install:
   - cp composer.phar ~/composer/composer.phar
 
 install:
+  - if [[ $TRAVIS_BRANCH = master ]]; then export COMPOSER_ROOT_VERSION=dev-master; else export COMPOSER_ROOT_VERSION=$TRAVIS_BRANCH.x-dev; fi;
   - php -d memory_limit=-1 ./composer.phar install --no-progress --prefer-dist
 
 script:
