@@ -9,8 +9,8 @@ window.OpenOrchestra.FormBehavior or= {}
 ###
 class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior.AbstractFormBehavior
 
-  isAndBooleanRegExp: new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( AND (?=.)){0,1})+$/)
-  isOrBooleanRegExp: new RegExp(/^((NOT (?=.)){0,1}[^ \(\)]+( OR (?=.)){0,1})+$/)
+  isAndBooleanRegExp: new RegExp(/^(NOT ){0,1}([^ ]+?)( AND (NOT ){0,1}([^ ]+?))*$/)
+  isOrBooleanRegExp: new RegExp(/^(NOT ){0,1}([^ ]+?)( OR (NOT ){0,1}([^ ]+?))*$/)
   getBalancedBracketsRegExp: new RegExp(/\( ([^\(\)]*) \)/)
   operator: ['(', ')', 'AND', 'OR', 'NOT']
 
@@ -73,8 +73,7 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
    * @param {Object} obj
   ###
   applicateSqlCss: (obj) ->
-    isSqlExpression = @testSqlExpression 
-      text: obj.val()
+    isSqlExpression = @testSqlExpression(obj.val())
     addClass = if isSqlExpression then 'operator-ok' else 'operator'
     removeClass = if isSqlExpression then 'operator' else 'operator-ok'
     $('.token-input-list-facebook .operator, .token-input-list-facebook .operator-ok', obj.parent())
@@ -86,12 +85,13 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
   ###
   testSqlExpression: (testedString) ->
     isSqlExpression = true
-    if @getBalancedBracketsRegExp.test(testedString.text)
-      subTestedString = @getBalancedBracketsRegExp.exec(testedString.text)
-      testedString.text = testedString.text.replace(subTestedString[0], '#')
+    if @getBalancedBracketsRegExp.test(testedString)
+      subTestedString = @getBalancedBracketsRegExp.exec(testedString)
+      testedString = testedString.replace(subTestedString[0], '#')
       isSqlExpression = @testSqlExpression(testedString) and (@isAndBooleanRegExp.test(subTestedString[1]) or @isOrBooleanRegExp.test(subTestedString[1]))
     else
-      isSqlExpression = isSqlExpression and (@isAndBooleanRegExp.test(testedString.text) or @isOrBooleanRegExp.test(testedString.text))
+      isSqlExpression = isSqlExpression and (@isAndBooleanRegExp.test(testedString) or @isOrBooleanRegExp.test(testedString))
+      console.log('Done')
     return isSqlExpression
 
 jQuery ->

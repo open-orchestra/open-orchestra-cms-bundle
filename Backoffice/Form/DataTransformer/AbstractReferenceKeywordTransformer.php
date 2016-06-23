@@ -9,7 +9,7 @@ use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class ConditionToReferenceKeywordTransformer
+ * Class AbstractReferenceKeywordTransformer
  */
 abstract class AbstractReferenceKeywordTransformer implements DataTransformerInterface
 {
@@ -59,7 +59,8 @@ abstract class AbstractReferenceKeywordTransformer implements DataTransformerInt
     }
 
     /**
-     * @param string $keywords
+     * @param string  $keywords
+     * @param boolean $asString
      *
      * @return mixed
      *
