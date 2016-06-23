@@ -55,7 +55,8 @@ class ContentSearchTypeTest extends AbstractBaseTestCase
         $this->form->buildForm($builder, array(
             'refresh' => true,
             'required' => true,
-            'attr' => array()
+            'attr' => array(),
+            'authorize_new' => null,
         ));
 
         Phake::verify($builder, Phake::times(3))->add(Phake::anyParameters());

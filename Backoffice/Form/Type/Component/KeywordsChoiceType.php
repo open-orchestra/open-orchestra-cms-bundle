@@ -109,7 +109,7 @@ class KeywordsChoiceType extends AbstractType
         $keywords = $this->keywordRepository->findAll();
         $tags = array();
         foreach ($keywords as $tag) {
-            $tags[] = $tag->getLabel();
+            $tags[] = array('id' => $tag->getId(), 'text' => $tag->getLabel(), 'type' => 'tag');
         }
 
         return json_encode($tags);

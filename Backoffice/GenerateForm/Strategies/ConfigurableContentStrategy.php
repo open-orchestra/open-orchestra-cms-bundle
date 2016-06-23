@@ -59,6 +59,7 @@ class ConfigurableContentStrategy extends AbstractBlockStrategy
             'label' => 'open_orchestra_backoffice.form.internal_link.content',
             'refresh' => true,
             'required' => true,
+            'authorize_new' => false,
         ));
 
         $builder->add('contentTemplateEnabled', 'checkbox', array(

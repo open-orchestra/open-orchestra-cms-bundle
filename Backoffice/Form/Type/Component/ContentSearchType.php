@@ -38,6 +38,11 @@ class ContentSearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $newAttr = array('class' => 'select-boolean');
+        if (!is_null($options['authorize_new'])) {
+            $newAttr['data-authorize-new'] = $options['authorize_new'];
+        }
+
         $builder->add('contentType', 'oo_content_type_choice', array(
             'label' => 'open_orchestra_backoffice.form.content_search.content_type',
             'required' => !$options['refresh'] && $options['required']
@@ -51,9 +56,7 @@ class ContentSearchType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.content_search.content_keyword',
             'constraints' => array(new BooleanCondition()),
             'name' => 'keywords',
-            'new_attr' => array(
-                'class' => 'select-boolean',
-            ),
+            'new_attr' => $newAttr,
             'required' => !$options['refresh'] && $options['required'],
         ));
 
@@ -86,7 +89,7 @@ class ContentSearchType extends AbstractType
         $resolver->setDefaults(
             array(
                 'refresh' => false,
-                'attr' => array()
+                'authorize_new' => null,
             )
         );
     }
