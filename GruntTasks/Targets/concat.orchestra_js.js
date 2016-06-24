@@ -8,7 +8,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/tinyMCE/bbcode2htmlConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/html2bbcodeConfigurator.js',
     'web/built/openorchestrabackoffice/js/tinyMCE/loadHtml2bbcodeInternalLink.js',
-    'web/built/openorchestrabackoffice/js/viewConfigurator.js',
     'web/built/openorchestrabackoffice/js/setUpCallAjax.js',
     'web/built/openorchestrabackoffice/js/OrchestraView.js',
     'web/built/openorchestrabackoffice/js/OrchestraModalView.js',
@@ -155,7 +154,9 @@ module.exports = {
 
     //--[ ERROR ]--//
     'web/built/openorchestrabackoffice/js/ErrorView.js',
-    
+
+    //--[ VIEWS CONFIGURATION ]--//
+    'web/built/openorchestrabackoffice/js/viewConfigurator.js',
   ],
   dest: 'web/built/orchestra.js'
 };
