@@ -6,7 +6,6 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/tinyMCE/activateTinyMCE.js',
         'web/built/openorchestrabackoffice/js/tinyMCE/bbcode2htmlConfigurator.js',
         'web/built/openorchestrabackoffice/js/tinyMCE/html2bbcodeConfigurator.js',
-        'web/built/openorchestrabackoffice/js/viewConfigurator.js',
         'web/built/openorchestrabackoffice/js/setUpCallAjax.js',
         'web/built/openorchestrabackoffice/js/OrchestraView.js',
         'web/built/openorchestrabackoffice/js/OrchestraModalView.js',
@@ -90,6 +89,9 @@ module.exports = {
         'web/built/openorchestrabackoffice/js/table/TableviewRestoreAction.js',
         'web/built/openorchestrabackoffice/js/table/TableviewCollectionView.js',
         'web/built/openorchestrabackoffice/js/table/tableviewLoader.js',
+
+        //--[ VIEWS CONFIGURATION ]--//
+        'web/built/openorchestrabackoffice/js/viewConfigurator.js',
 
         //--[ USER ]--//
         'web/built/openorchestrauseradmin/js/user/*.js'
