@@ -3,10 +3,10 @@ parameters:
 
 services:
     open_orchestra_log.processor.log_user:
-        class: %open_orchestra_log.processor.log_user.class%
+        class: '%open_orchestra_log.processor.log_user.class%'
         arguments:
-            - @security.token_storage
-            - @request_stack
-            - @open_orchestra_backoffice.context_manager
+            - '@security.token_storage'
+            - '@request_stack'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: monolog.processor, method: processRecord, channel: openorchestra }

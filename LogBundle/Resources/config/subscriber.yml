@@ -15,82 +15,82 @@ parameters:
 
 services:
     open_orchestra_log.subscriber.node:
-        class: %open_orchestra_log.subscriber.node.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.node.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.content:
-        class: %open_orchestra_log.subscriber.content.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.content.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.content_type:
-        class: %open_orchestra_log.subscriber.content_type.class%
+        class: '%open_orchestra_log.subscriber.content_type.class%'
         arguments:
-            - @logger
-            - @open_orchestra_backoffice.context_manager
+            - '@logger'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.keyword:
-        class: %open_orchestra_log.subscriber.keyword.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.keyword.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.role:
-        class: %open_orchestra_log.subscriber.role.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.role.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.group:
-        class: %open_orchestra_log.subscriber.group.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.group.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.redirection:
-        class: %open_orchestra_log.subscriber.redirection.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.redirection.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.site:
-        class: %open_orchestra_log.subscriber.site.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.site.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.status:
-        class: %open_orchestra_log.subscriber.status.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.status.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.template:
-        class: %open_orchestra_log.subscriber.template.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.template.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.template_flex:
-        class: %open_orchestra_log.subscriber.template_flex.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.template_flex.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.theme:
-        class: %open_orchestra_log.subscriber.theme.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.theme.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }
     open_orchestra_log.subscriber.user:
-        class: %open_orchestra_log.subscriber.user.class%
-        arguments: [@logger]
+        class: '%open_orchestra_log.subscriber.user.class%'
+        arguments: ['@logger']
         tags:
             - { name: kernel.event_subscriber }
             - { name: monolog.logger, channel: openorchestra }

@@ -4,15 +4,15 @@ parameters:
 
 services:
     open_orchestra_user_admin.type.user:
-        class: %open_orchestra_user_admin.type.user.class%
+        class: '%open_orchestra_user_admin.type.user.class%'
         arguments:
-            - %open_orchestra_user.document.user.class%
-            - %open_orchestra_base.administration_languages%
+            - '%open_orchestra_user.document.user.class%'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_user}
     open_orchestra_user_admin.type.registration_user:
-        class: %open_orchestra_user_admin.type.registration_user.class%
+        class: '%open_orchestra_user_admin.type.registration_user.class%'
         arguments:
-            - %open_orchestra_user.document.user.class%
+            - '%open_orchestra_user.document.user.class%'
         tags:
             - { name: form.type, alias: oo_registration_user}

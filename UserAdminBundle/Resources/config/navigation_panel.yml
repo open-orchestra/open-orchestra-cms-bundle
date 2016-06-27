@@ -1,13 +1,13 @@
 services:
     open_orchestra_user_admin.navigation_panel.user:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        class: '%open_orchestra_backoffice.navigation_panel.administration.class%'
         arguments:
             - user
             - 395
-            - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - '%open_orchestra_backoffice.navigation_panel.menu.administration%'
             - ROLE_ACCESS_USER
-            - %open_orchestra_user_admin.navigation_panel.user.parameters%
-            - @translator
+            - '%open_orchestra_user_admin.navigation_panel.user.parameters%'
+            - '@translator'
         calls:
             - [ setTemplate, ['OpenOrchestraUserAdminBundle:AdministrationPanel:user.html.twig'] ]
         tags:

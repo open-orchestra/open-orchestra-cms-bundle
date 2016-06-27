@@ -19,70 +19,70 @@ parameters:
 
 services:
     open_orchestra_backoffice.display_icon_manager:
-        class: %open_orchestra_backoffice.display_icon_manager.class%
+        class: '%open_orchestra_backoffice.display_icon_manager.class%'
         calls:
-            - [ setContainer,[ @service_container ] ]
+            - [ setContainer,[ '@service_container' ] ]
     open_orchestra_backoffice.display_icon.contact:
-        class: %open_orchestra_backoffice.display_icon.contact.class%
+        class: '%open_orchestra_backoffice.display_icon.contact.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.footer:
-        class: %open_orchestra_backoffice.display_icon.footer.class%
+        class: '%open_orchestra_backoffice.display_icon.footer.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.menu:
-        class: %open_orchestra_backoffice.display_icon.menu.class%
+        class: '%open_orchestra_backoffice.display_icon.menu.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.search_result:
-        class: %open_orchestra_backoffice.display_icon.search_result.class%
+        class: '%open_orchestra_backoffice.display_icon.search_result.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.search:
-        class: %open_orchestra_backoffice.display_icon.search.class%
+        class: '%open_orchestra_backoffice.display_icon.search.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.login:
-        class: %open_orchestra_backoffice.display_icon.login.class%
+        class: '%open_orchestra_backoffice.display_icon.login.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.sub_menu:
-        class: %open_orchestra_backoffice.display_icon.sub_menu.class%
+        class: '%open_orchestra_backoffice.display_icon.sub_menu.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.content_list:
-        class: %open_orchestra_backoffice.display_icon.content_list.class%
+        class: '%open_orchestra_backoffice.display_icon.content_list.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.content:
-        class: %open_orchestra_backoffice.display_icon.content.class%
+        class: '%open_orchestra_backoffice.display_icon.content.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.language_list:
-        class: %open_orchestra_backoffice.display_icon.language_list.class%
+        class: '%open_orchestra_backoffice.display_icon.language_list.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.tiny_mce_wysiwyg:
-        class: %open_orchestra_backoffice.display_icon.tiny_mce_wysiwyg.class%
+        class: '%open_orchestra_backoffice.display_icon.tiny_mce_wysiwyg.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.display_icon.configurable_content:
-        class: %open_orchestra_backoffice.display_icon.configurable_content.class%
+        class: '%open_orchestra_backoffice.display_icon.configurable_content.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.icon.gmap:
-        class: %open_orchestra_backoffice.display_icon.gmap.class%
+        class: '%open_orchestra_backoffice.display_icon.gmap.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.icon.add_this:
-        class: %open_orchestra_backoffice.display_icon.add_this.class%
+        class: '%open_orchestra_backoffice.display_icon.add_this.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.icon.audience_analysis:
-        class: %open_orchestra_backoffice.display_icon.audience_analysis.class%
+        class: '%open_orchestra_backoffice.display_icon.audience_analysis.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }
     open_orchestra_backoffice.icon.video:
-        class: %open_orchestra_backoffice.display_icon.video.class%
+        class: '%open_orchestra_backoffice.display_icon.video.class%'
         tags:
             - { name: open_orchestra_backoffice.display_icon.strategy }

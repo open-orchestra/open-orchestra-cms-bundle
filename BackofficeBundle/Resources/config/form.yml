@@ -68,59 +68,59 @@ parameters:
 services:
     # Template form type
     open_orchestra_backoffice.type.template:
-        class: %open_orchestra_backoffice.type.template.class%
+        class: '%open_orchestra_backoffice.type.template.class%'
         arguments:
-            - %open_orchestra_model.document.template.class%
-            - %open_orchestra_model.document.area.class%
-            - @translator
+            - '%open_orchestra_model.document.template.class%'
+            - '%open_orchestra_model.document.area.class%'
+            - '@translator'
         tags:
             - { name: form.type, alias: oo_template }
     # Template Flex form type
     open_orchestra_backoffice.type.template_flex:
-        class: %open_orchestra_backoffice.type.template_flex.class%
+        class: '%open_orchestra_backoffice.type.template_flex.class%'
         arguments:
-            - %open_orchestra_model.document.template_flex.class%
-            - %open_orchestra_model.document.area.class%
+            - '%open_orchestra_model.document.template_flex.class%'
+            - '%open_orchestra_model.document.area.class%'
         tags:
             - { name: form.type, alias: oo_template_flex }
     # Node form type
     open_orchestra_backoffice.type.node:
-        class: %open_orchestra_backoffice.type.node.class%
+        class: '%open_orchestra_backoffice.type.node.class%'
         arguments:
-            - %open_orchestra_model.document.node.class%
-            - @open_orchestra_model.repository.template
-            - @open_orchestra_model.repository.site
-            - @open_orchestra_backoffice.manager.node
-            - %open_orchestra_model.document.area.class%
-            - @translator
+            - '%open_orchestra_model.document.node.class%'
+            - '@open_orchestra_model.repository.template'
+            - '@open_orchestra_model.repository.site'
+            - '@open_orchestra_backoffice.manager.node'
+            - '%open_orchestra_model.document.area.class%'
+            - '@translator'
         tags:
             - { name: form.type, alias: oo_node }
     # Area form type
     open_orchestra_backoffice.type.area:
-        class: %open_orchestra_backoffice.type.area.class%
+        class: '%open_orchestra_backoffice.type.area.class%'
         arguments:
-            - %open_orchestra_model.document.area.class%
-            - @translator
+            - '%open_orchestra_model.document.area.class%'
+            - '@translator'
         tags:
             - { name: form.type, alias: oo_area }
     # Area flex row form type
     open_orchestra_backoffice.type.area_flex_row:
-        class: %open_orchestra_backoffice.type.area_flex_row.class%
+        class: '%open_orchestra_backoffice.type.area_flex_row.class%'
         arguments:
-            - %open_orchestra_model.document.area_flex.class%
-            - @open_orchestra_backoffice.manager.area_flex
+            - '%open_orchestra_model.document.area_flex.class%'
+            - '@open_orchestra_backoffice.manager.area_flex'
         tags:
             - { name: form.type}
     # Area flex column form type
     open_orchestra_backoffice.type.area_flex_column:
-        class: %open_orchestra_backoffice.type.area_flex_column.class%
+        class: '%open_orchestra_backoffice.type.area_flex_column.class%'
         arguments:
-            - %open_orchestra_model.document.area_flex.class%
+            - '%open_orchestra_model.document.area_flex.class%'
         tags:
             - { name: form.type}
     # Column layout row type
     open_orchestra_backoffice.type.column_layout_row:
-        class: %open_orchestra_backoffice.type.column_layout_row.class%
+        class: '%open_orchestra_backoffice.type.column_layout_row.class%'
         tags:
             - { name: form.type}
     # Block form type
@@ -133,280 +133,280 @@ services:
         tags:
             - { name: form.type, alias: oo_block }
     open_orchestra_backoffice.type.existing_block_choice:
-        class: %open_orchestra_backoffice.type.existing_block_choice.class%
+        class: '%open_orchestra_backoffice.type.existing_block_choice.class%'
         arguments:
-            - @open_orchestra_model.repository.node
+            - '@open_orchestra_model.repository.node'
         tags:
             - { name: form.type, alias: oo_existing_block }
 
     open_orchestra_backoffice.type.orchestra_block:
-        class: %open_orchestra_backoffice.type.orchestra_block.class%
+        class: '%open_orchestra_backoffice.type.orchestra_block.class%'
         arguments:
-            - %open_orchestra.blocks%
+            - '%open_orchestra.blocks%'
         tags:
             - { name: form.type, alias: oo_block_choice }
     # Site Form Builder
     open_orchestra_backoffice.type.site:
-        class: %open_orchestra_backoffice.type.site.class%
+        class: '%open_orchestra_backoffice.type.site.class%'
         arguments:
-            - %open_orchestra_model.document.site.class%
-            - @translator
-            - @open_orchestra_model.repository.template
-            - %open_orchestra_backoffice.orchestra_choice.front_language%
+            - '%open_orchestra_model.document.site.class%'
+            - '@translator'
+            - '@open_orchestra_model.repository.template'
+            - '%open_orchestra_backoffice.orchestra_choice.front_language%'
         tags:
             - { name: form.type, alias: oo_site }
     open_orchestra_backoffice.type.site_alias:
-        class: %open_orchestra_backoffice.type.site_alias.class%
+        class: '%open_orchestra_backoffice.type.site_alias.class%'
         arguments:
-            - %open_orchestra_model.document.site_alias.class%
+            - '%open_orchestra_model.document.site_alias.class%'
         tags:
             - { name: form.type, alias: oo_site_alias }
     # Content Type Form Builder
     open_orchestra_backoffice.type.content_type:
-        class: %open_orchestra_backoffice.type.content_type.class%
+        class: '%open_orchestra_backoffice.type.content_type.class%'
         arguments:
-            - %open_orchestra_model.document.content_type.class%
-            - @translator
-            - @open_orchestra_backoffice.listener.translate_value_initializer
+            - '%open_orchestra_model.document.content_type.class%'
+            - '@translator'
+            - '@open_orchestra_backoffice.listener.translate_value_initializer'
         tags:
             - { name: form.type, alias: oo_content_type }
     open_orchestra_backoffice.type.field_type:
-        class: %open_orchestra_backoffice.type.field_type.class%
+        class: '%open_orchestra_backoffice.type.field_type.class%'
         arguments:
-            - @open_orchestra_backoffice.listener.translate_value_initializer
-            - %open_orchestra_backoffice.field_types%
-            - %open_orchestra_model.document.field_option.class%
-            - %open_orchestra_model.document.field_type.class%
-            - %open_orchestra_backoffice.field_types%
+            - '@open_orchestra_backoffice.listener.translate_value_initializer'
+            - '%open_orchestra_backoffice.field_types%'
+            - '%open_orchestra_model.document.field_option.class%'
+            - '%open_orchestra_model.document.field_type.class%'
+            - '%open_orchestra_backoffice.field_types%'
         tags:
             - { name: form.type, alias: oo_field_type }
     open_orchestra_backoffice.type.field_option:
-        class: %open_orchestra_backoffice.type.field_option.class%
+        class: '%open_orchestra_backoffice.type.field_option.class%'
         arguments:
-            - %open_orchestra_backoffice.options%
-            - %open_orchestra_model.document.field_option.class%
+            - '%open_orchestra_backoffice.options%'
+            - '%open_orchestra_model.document.field_option.class%'
         tags:
             - { name: form.type, alias: oo_field_option }
     open_orchestra_backoffice.type.choices_option:
-        class: %open_orchestra_backoffice.type.choices_option.class%
+        class: '%open_orchestra_backoffice.type.choices_option.class%'
         arguments:
-            - @open_orchestra_backoffice.transformer.choices_option_to_array
+            - '@open_orchestra_backoffice.transformer.choices_option_to_array'
         tags:
             - { name: form.type, alias: oo_choices_option}
     open_orchestra_backoffice.type.field_choice:
-        class: %open_orchestra_backoffice.type.field_choice.class%
+        class: '%open_orchestra_backoffice.type.field_choice.class%'
         tags:
             - { name: form.type, alias: oo_field_choice}
     open_orchestra_backoffice.type.date_widget_option:
-        class: %open_orchestra_backoffice.type.date_widget_option.class%
+        class: '%open_orchestra_backoffice.type.date_widget_option.class%'
         tags:
             - { name: form.type, alias: oo_date_widget_option}
     open_orchestra_backoffice.type.date_picker:
-        class: %open_orchestra_backoffice.type.date_picker.class%
+        class: '%open_orchestra_backoffice.type.date_picker.class%'
         tags:
             - { name: form.type, alias: oo_date_picker}
 
     # Status Type
     open_orchestra_backoffice.type.status:
-        class: %open_orchestra_backoffice.type.status.class%
+        class: '%open_orchestra_backoffice.type.status.class%'
         arguments:
-            - %open_orchestra_model.document.status.class%
-            - @open_orchestra_backoffice.listener.translate_value_initializer
+            - '%open_orchestra_model.document.status.class%'
+            - '@open_orchestra_backoffice.listener.translate_value_initializer'
         tags:
             - { name: form.type, alias: oo_status }
 
     # Content Form Builder
     open_orchestra_backoffice.type.orchestra_content:
-        class: %open_orchestra_backoffice.type.orchestra_content.class%
+        class: '%open_orchestra_backoffice.type.orchestra_content.class%'
         arguments:
-            - @open_orchestra_backoffice.subscriber.content_type
-            - %open_orchestra_model.document.content.class%
+            - '@open_orchestra_backoffice.subscriber.content_type'
+            - '%open_orchestra_model.document.content.class%'
         tags:
             - {name: form.type, alias: oo_content}
 
     # Language form field type
     open_orchestra_backoffice.type.language:
-        class: %open_orchestra_backoffice.type.orchestra_choice.class%
+        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
         arguments:
-            - %open_orchestra_backoffice.orchestra_choice.front_language%
-            - "orchestra_language"
+            - '%open_orchestra_backoffice.orchestra_choice.front_language%'
+            - 'orchestra_language'
         tags:
             - { name: form.type, alias: orchestra_language }
 
     # Direction form field type
     open_orchestra_backoffice.type.direction:
-        class: %open_orchestra_backoffice.type.orchestra_choice.class%
+        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
         arguments:
-            - %open_orchestra_backoffice.orchestra_choice.direction%
-            - "orchestra_direction"
+            - '%open_orchestra_backoffice.orchestra_choice.direction%'
+            - 'orchestra_direction'
         tags:
             - { name: form.type, alias: orchestra_direction }
 
     open_orchestra_backoffice.type.translated_value:
-        class: %open_orchestra_backoffice.type.translated_value.class%
+        class: '%open_orchestra_backoffice.type.translated_value.class%'
         arguments:
-            - %open_orchestra_model.document.translated_value.class%
-            - %open_orchestra_base.administration_languages%
+            - '%open_orchestra_model.document.translated_value.class%'
+            - '%open_orchestra_base.administration_languages%'
         tags:
             - { name: form.type, alias: oo_translated_value }
     open_orchestra_backoffice.type.translated_value_collection:
-        class: %open_orchestra_backoffice.type.translated_value_collection.class%
+        class: '%open_orchestra_backoffice.type.translated_value_collection.class%'
         tags:
             - { name: form.type, alias: oo_translated_value_collection }
     open_orchestra_backoffice.type.theme_choice:
-        class: %open_orchestra_backoffice.type.theme_choice.class%
+        class: '%open_orchestra_backoffice.type.theme_choice.class%'
         arguments:
-            - @open_orchestra_model.repository.theme
+            - '@open_orchestra_model.repository.theme'
         tags:
             - { name: form.type, alias: oo_theme_choice}
     open_orchestra_backoffice.type.theme:
-        class: %open_orchestra_backoffice.type.theme.class%
+        class: '%open_orchestra_backoffice.type.theme.class%'
         arguments:
-            - %open_orchestra_model.document.theme.class%
+            - '%open_orchestra_model.document.theme.class%'
         tags:
             - { name: form.type, alias: oo_theme}
     open_orchestra_backoffice.type.node_choice:
-        class: %open_orchestra_backoffice.type.node_choice.class%
+        class: '%open_orchestra_backoffice.type.node_choice.class%'
         arguments:
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_display.manager.tree
-            - @open_orchestra_backoffice.context_manager
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_display.manager.tree'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: form.type, alias: oo_node_choice}
     open_orchestra_backoffice.type.site_choice:
-        class: %open_orchestra_backoffice.type.site_choice.class%
+        class: '%open_orchestra_backoffice.type.site_choice.class%'
         arguments:
-            - @open_orchestra_model.repository.site
+            - '@open_orchestra_model.repository.site'
         tags:
             - { name: form.type, alias: oo_site_choice}
     open_orchestra_backoffice.type.content_type_choice:
-        class: %open_orchestra_backoffice.type.content_type_choice.class%
+        class: '%open_orchestra_backoffice.type.content_type_choice.class%'
         arguments:
-            - @open_orchestra_model.repository.content_type
-            - @open_orchestra_backoffice.context_manager
+            - '@open_orchestra_model.repository.content_type'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: form.type, alias: oo_content_type_choice}
     open_orchestra_backoffice.type.content_choice:
-        class: %open_orchestra_backoffice.type.content_choice.class%
+        class: '%open_orchestra_backoffice.type.content_choice.class%'
         arguments:
-            - @open_orchestra_model.repository.content
-            - @open_orchestra_backoffice.context_manager
-            - @open_orchestra_backoffice.transformer.reference_to_embed
-            - content
+            - '@open_orchestra_model.repository.content'
+            - '@open_orchestra_backoffice.context_manager'
+            - '@open_orchestra_backoffice.transformer.reference_to_embed'
+            - 'content'
         tags:
             - { name: form.type, alias: oo_content_choice}
     open_orchestra_backoffice.type.orchestra_color_choice:
-        class: %open_orchestra_backoffice.type.orchestra_choice.class%
+        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
         arguments:
-            - %open_orchestra_backoffice.choice.available_color%
-            - "orchestra_color_choice"
+            - '%open_orchestra_backoffice.choice.available_color%'
+            - 'orchestra_color_choice'
         tags:
             - { name: form.type, alias: orchestra_color_choice}
     open_orchestra_backoffice.type.orchestra_frequence_choice:
-        class: %open_orchestra_backoffice.type.orchestra_choice.class%
+        class: '%open_orchestra_backoffice.type.orchestra_choice.class%'
         arguments:
-            - %open_orchestra_backoffice.choice.frequence%
-            - "orchestra_frequence_choice"
+            - '%open_orchestra_backoffice.choice.frequence%'
+            - 'orchestra_frequence_choice'
         tags:
             - { name: form.type, alias: orchestra_frequence_choice}
     open_orchestra_backoffice.type.tinymce:
-        class: %open_orchestra_backoffice.type.tinymce.class%
+        class: '%open_orchestra_backoffice.type.tinymce.class%'
         arguments:
-            - @open_orchestra_backoffice.transformer.bbcode_to_html
+            - '@open_orchestra_backoffice.transformer.bbcode_to_html'
         tags:
             - { name: form.type, alias: oo_tinymce}
     open_orchestra_backoffice.type.keyword:
-        class: %open_orchestra_backoffice.type.keyword.class%
+        class: '%open_orchestra_backoffice.type.keyword.class%'
         tags:
             - { name: form.type, alias: oo_keyword}
     open_orchestra_backoffice.type.keywords_choice:
-        class: %open_orchestra_backoffice.type.keywords_choice.class%
+        class: '%open_orchestra_backoffice.type.keywords_choice.class%'
         arguments:
-            - @open_orchestra_backoffice.transformer.csv_to_reference_keyword
-            - @open_orchestra_backoffice.transformer.condition_to_reference_keyword
-            - @open_orchestra_model.repository.keyword
-            - @router
-            - @security.authorization_checker
+            - '@open_orchestra_backoffice.transformer.csv_to_reference_keyword'
+            - '@open_orchestra_backoffice.transformer.condition_to_reference_keyword'
+            - '@open_orchestra_model.repository.keyword'
+            - '@router'
+            - '@security.authorization_checker'
         tags:
             - { name: form.type, alias: oo_keywords_choice}
     open_orchestra_backoffice.type.role:
-        class: %open_orchestra_backoffice.type.role.class%
+        class: '%open_orchestra_backoffice.type.role.class%'
         arguments:
-            - @open_orchestra_backoffice.listener.translate_value_initializer
-            - %open_orchestra_model.document.role.class%
+            - '@open_orchestra_backoffice.listener.translate_value_initializer'
+            - '%open_orchestra_model.document.role.class%'
         tags:
             - { name: form.type, alias: oo_role }
     open_orchestra_backoffice.type.group:
-        class: %open_orchestra_backoffice.type.group.class%
+        class: '%open_orchestra_backoffice.type.group.class%'
         arguments:
-            - %open_orchestra_user.document.group.class%
-            - @open_orchestra_backoffice.listener.translate_value_initializer
+            - '%open_orchestra_user.document.group.class%'
+            - '@open_orchestra_backoffice.listener.translate_value_initializer'
         tags:
             - { name: form.type, alias: oo_group }
     open_orchestra_backoffice.type.redirection:
-        class: %open_orchestra_backoffice.type.redirection.class%
+        class: '%open_orchestra_backoffice.type.redirection.class%'
         arguments:
-            - %open_orchestra_model.document.redirection.class%
+            - '%open_orchestra_model.document.redirection.class%'
         tags:
             - { name: form.type, alias: oo_redirection }
     open_orchestra_backoffice.type.video:
-        class: %open_orchestra_backoffice.type.video.class%
+        class: '%open_orchestra_backoffice.type.video.class%'
         arguments:
-            - @open_orchestra_backoffice.transformer.video_url_to_id
+            - '@open_orchestra_backoffice.transformer.video_url_to_id'
         tags:
             - { name: form.type, alias: oo_video }
     open_orchestra_backoffice.type.color_picker:
-        class: %open_orchestra_backoffice.type.color_picker.class%
+        class: '%open_orchestra_backoffice.type.color_picker.class%'
         tags:
             - { name: form.type, alias: oo_color_picker }
     open_orchestra_backoffice.type.role_choice:
-        class: %open_orchestra_backoffice.type.role_choice.class%
+        class: '%open_orchestra_backoffice.type.role_choice.class%'
         arguments:
-            - [@open_orchestra_backoffice.collector.backoffice_role, @open_orchestra_backoffice.collector.front_role]
-            - oo_role_choice
-            - %open_orchestra_backoffice.role%
+            - ['@open_orchestra_backoffice.collector.backoffice_role', '@open_orchestra_backoffice.collector.front_role']
+            - 'oo_role_choice'
+            - '%open_orchestra_backoffice.role%'
         tags:
             - { name: form.type, alias: oo_role_choice }
     open_orchestra_backoffice.type.front_role_choice:
-        class: %open_orchestra_backoffice.type.role_choice.class%
+        class: '%open_orchestra_backoffice.type.role_choice.class%'
         arguments:
-            - [@open_orchestra_backoffice.collector.front_role]
-            - oo_front_role_choice
+            - ['@open_orchestra_backoffice.collector.front_role']
+            - 'oo_front_role_choice'
             - {}
         tags:
             - { name: form.type, alias: oo_front_role_choice }
     open_orchestra_backoffice.type.api_client:
-        class: %open_orchestra_backoffice.type.api_client.class%
+        class: '%open_orchestra_backoffice.type.api_client.class%'
         arguments:
-            - %open_orchestra_api.document.api_client.class%
+            - '%open_orchestra_api.document.api_client.class%'
         tags:
             - { name: form.type, alias: oo_api_client }
     open_orchestra_backoffice.type.operator_choice:
-        class: %open_orchestra_backoffice.type.operator_choice.class%
+        class: '%open_orchestra_backoffice.type.operator_choice.class%'
         tags:
             - { name: form.type, alias: oo_operator_choice}
     open_orchestra_backoffice.type.content_search:
-        class: %open_orchestra_backoffice.type.content_search.class%
+        class: '%open_orchestra_backoffice.type.content_search.class%'
         arguments:
-            - @open_orchestra_model.repository.content
-            - @open_orchestra_backoffice.context_manager
+            - '@open_orchestra_model.repository.content'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: form.type, alias: oo_content_search}
     open_orchestra_backoffice.type.internal_link:
-        class: %open_orchestra_backoffice.type.internal_link.class%
+        class: '%open_orchestra_backoffice.type.internal_link.class%'
         tags:
             - { name: form.type, alias: oo_internal_link}
     open_orchestra_backoffice.type.site_site_alias:
-        class: %open_orchestra_backoffice.type.site_site_alias.class%
+        class: '%open_orchestra_backoffice.type.site_site_alias.class%'
         arguments:
-            - @open_orchestra_model.repository.site
+            - '@open_orchestra_model.repository.site'
         tags:
             - { name: form.type, alias: oo_site_site_alias}
     open_orchestra_backoffice.type.default_listable_checkbox:
-        class: %open_orchestra_backoffice.type.default_listable_checkbox.class%
+        class: '%open_orchestra_backoffice.type.default_listable_checkbox.class%'
         tags:
             - { name: form.type, alias: oo_default_listable_checkbox}
     open_orchestra_backoffice.type.multi_languages_text:
-        class: %open_orchestra_backoffice.type.multi_languages_text.class%
+        class: '%open_orchestra_backoffice.type.multi_languages_text.class%'
         tags:
             - { name: form.type, alias: oo_multi_languages_text}
