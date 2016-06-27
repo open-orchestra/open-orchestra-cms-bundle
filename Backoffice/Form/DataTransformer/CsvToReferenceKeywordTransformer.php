@@ -25,6 +25,10 @@ class CsvToReferenceKeywordTransformer extends AbstractReferenceKeywordTransform
      * @return array
      */
     protected function getKeywordAsArray($keywords) {
+        if (null === $keywords) {
+            return array();
+        }
+
         if (is_string($keywords)) {
             return explode(',', $keywords);
         } else {
