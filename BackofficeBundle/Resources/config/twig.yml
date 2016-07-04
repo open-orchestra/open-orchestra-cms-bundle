@@ -5,20 +5,20 @@ parameters:
 
 services:
     open_orchestra_backoffice.twig_extension.translation_choice:
-        class: %open_orchestra_backoffice.twig_extension.translation_choice.class%
+        class: '%open_orchestra_backoffice.twig_extension.translation_choice.class%'
         arguments:
-            - @open_orchestra_backoffice.manager.translation_choice
+            - '@open_orchestra_backoffice.manager.translation_choice'
         tags:
-            - { name: twig.extension}
+            - {name: twig.extension}
     open_orchestra_backoffice.twig_extension.block_icon:
-        class: %open_orchestra_backoffice.twig_extension.block_icon.class%
+        class: '%open_orchestra_backoffice.twig_extension.block_icon.class%'
         arguments:
-            - @open_orchestra_backoffice.display_icon_manager
+            - '@open_orchestra_backoffice.display_icon_manager'
         tags:
-            - { name: twig.extension}
+            - {name: twig.extension}
     open_orchestra_backoffice.twig_extension.navigation_panel:
-        class: %open_orchestra_backoffice.twig_extension.navigation_panel.class%
+        class: '%open_orchestra_backoffice.twig_extension.navigation_panel.class%'
         calls:
-            - [ setContainer, [ @service_container ]  ]
+            - [setContainer, ['@service_container']]
         tags:
-            - { name: twig.extension }
+            - {name: twig.extension}

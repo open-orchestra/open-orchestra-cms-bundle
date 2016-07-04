@@ -9,31 +9,31 @@ parameters:
 
 services:
     open_orchestra_backoffice.value_transformer.manager:
-        class: %open_orchestra_backoffice.value_transformer.manager.class%
+        class: '%open_orchestra_backoffice.value_transformer.manager.class%'
 
     open_orchestra_backoffice.value_transformer.array:
-            class: %open_orchestra_backoffice.value_transformer.array.class%
+            class: '%open_orchestra_backoffice.value_transformer.array.class%'
             tags:
                 - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.integer:
-            class: %open_orchestra_backoffice.value_transformer.integer.class%
+            class: '%open_orchestra_backoffice.value_transformer.integer.class%'
             tags:
                 - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.double:
-            class: %open_orchestra_backoffice.value_transformer.double.class%
+            class: '%open_orchestra_backoffice.value_transformer.double.class%'
             tags:
                 - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.null:
-        class: %open_orchestra_backoffice.value_transformer.null.class%
+        class: '%open_orchestra_backoffice.value_transformer.null.class%'
         tags:
             - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.embedded_content:
-        class: %open_orchestra_backoffice.value_transformer.embedded_entity.class%
+        class: '%open_orchestra_backoffice.value_transformer.embedded_entity.class%'
         arguments:
             - name
         tags:
             - { name: open_orchestra_backoffice.value_transformer.strategy }
     open_orchestra_backoffice.value_transformer.object:
-        class: %open_orchestra_backoffice.value_transformer.object.class%
+        class: '%open_orchestra_backoffice.value_transformer.object.class%'
         tags:
             - { name: open_orchestra_backoffice.value_transformer.strategy }

@@ -10,48 +10,48 @@ parameters:
 
 services:
     open_orchestra_group.type.group_choice:
-        class: %open_orchestra_group.type.group_choice.class%
+        class: '%open_orchestra_group.type.group_choice.class%'
         arguments:
-            - %open_orchestra_user.document.group.class%
-            - @open_orchestra_backoffice.manager.translation_choice
+            - '%open_orchestra_user.document.group.class%'
+            - '@open_orchestra_backoffice.manager.translation_choice'
         tags:
             - { name: form.type, alias: oo_group_choice }
     open_orchestra_group.listener.add_node_group_role_for_node:
-        class: %open_orchestra_group.listener.add_node_group_role_for_node.class%
+        class: '%open_orchestra_group.listener.add_node_group_role_for_node.class%'
         arguments:
-            - %open_orchestra_group.document.model_group_role.class%
+            - '%open_orchestra_group.document.model_group_role.class%'
         calls:
-            - [ setContainer, [ @service_container ] ]
+            - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: doctrine_mongodb.odm.event_subscriber}
     open_orchestra_group.listener.add_node_group_role_for_group:
-        class: %open_orchestra_group.listener.add_node_group_role_for_group.class%
+        class: '%open_orchestra_group.listener.add_node_group_role_for_group.class%'
         arguments:
-            - %open_orchestra_group.document.model_group_role.class%
-            - @open_orchestra_display.manager.tree
+            - '%open_orchestra_group.document.model_group_role.class%'
+            - '@open_orchestra_display.manager.tree'
         calls:
-            - [ setContainer, [ @service_container ] ]
+            - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: doctrine_mongodb.odm.event_subscriber }
     open_orchestra_group.listener.update_node_group_role:
-        class: %open_orchestra_group.listener.update_node_group_role.class%
+        class: '%open_orchestra_group.listener.update_node_group_role.class%'
         arguments:
-            - %open_orchestra_model.document.node.class%
+            - '%open_orchestra_model.document.node.class%'
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
     open_orchestra_group.subscriber.update_node_group_role_move_node:
-        class: %open_orchestra_group.subscriber.update_node_group_role_move_node.class%
+        class: '%open_orchestra_group.subscriber.update_node_group_role_move_node.class%'
         arguments:
-            - @open_orchestra_user.repository.group
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.collector.backoffice_role
-            - @object_manager
+            - '@open_orchestra_user.repository.group'
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.collector.backoffice_role'
+            - '@object_manager'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_group.subscriber.node_group_role_transform:
-        class: %open_orchestra_group.subscriber.node_group_role_transform.class%
+        class: '%open_orchestra_group.subscriber.node_group_role_transform.class%'
         arguments:
-            - @router
-            - @open_orchestra_api.transformer.node_group_role
+            - '@router'
+            - '@open_orchestra_api.transformer.node_group_role'
         tags:
             - { name: kernel.event_subscriber }

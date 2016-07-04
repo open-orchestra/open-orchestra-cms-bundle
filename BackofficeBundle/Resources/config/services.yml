@@ -16,90 +16,90 @@ parameters:
 
 services:
     open_orchestra_backoffice.context_manager:
-        class: "%open_orchestra_backoffice.manager.context.class%"
+        class: '%open_orchestra_backoffice.manager.context.class%'
         arguments:
-            - @session
-            - @security.token_storage
+            - '@session'
+            - '@security.token_storage'
             - "%kernel.default_locale%"
-            - @open_orchestra_model.repository.site
+            - '@open_orchestra_model.repository.site'
     open_orchestra_backoffice.listener.translate_value_initializer:
-        class: %open_orchestra_backoffice.listener.translate_value_initializer.class%
+        class: '%open_orchestra_backoffice.listener.translate_value_initializer.class%'
         arguments:
-            - @open_orchestra_backoffice.initializer.translated_value
-            - %open_orchestra_model.document.field_type.class%
+            - '@open_orchestra_backoffice.initializer.translated_value'
+            - '%open_orchestra_model.document.field_type.class%'
     open_orchestra_backoffice.manager.translation_choice:
-        class: %open_orchestra_backoffice.manager.translation_choice.class%
+        class: '%open_orchestra_backoffice.manager.translation_choice.class%'
         arguments:
-            - @open_orchestra_backoffice.context_manager
+            - '@open_orchestra_backoffice.context_manager'
     open_orchestra_backoffice.manager.area:
-        class: %open_orchestra_backoffice.manager.area.class%
+        class: '%open_orchestra_backoffice.manager.area.class%'
         arguments:
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.block_parameter_manager
-            - %open_orchestra_model.document.area.class%
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.block_parameter_manager'
+            - '%open_orchestra_model.document.area.class%'
     open_orchestra_backoffice.manager.node:
-        class: %open_orchestra_backoffice.manager.node.class%
+        class: '%open_orchestra_backoffice.manager.node.class%'
         arguments:
-            - @open_orchestra_model.saver.versionnable_saver
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_model.repository.site
-            - @open_orchestra_model.repository.status
-            - @open_orchestra_backoffice.manager.area
-            - @open_orchestra_backoffice.manager.block
-            - @open_orchestra_backoffice.context_manager
-            - %open_orchestra_model.document.node.class%
-            - %open_orchestra_model.document.area.class%
-            - @event_dispatcher
+            - '@open_orchestra_model.saver.versionnable_saver'
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_model.repository.site'
+            - '@open_orchestra_model.repository.status'
+            - '@open_orchestra_backoffice.manager.area'
+            - '@open_orchestra_backoffice.manager.block'
+            - '@open_orchestra_backoffice.context_manager'
+            - '%open_orchestra_model.document.node.class%'
+            - '%open_orchestra_model.document.area.class%'
+            - '@event_dispatcher'
     open_orchestra_backoffice.manager.site:
-        class: %open_orchestra_backoffice.manager.site.class%
+        class: '%open_orchestra_backoffice.manager.site.class%'
         arguments:
-            - %open_orchestra_model.document.site.class%
-            - %open_orchestra_model.document.site_alias.class%
+            - '%open_orchestra_model.document.site.class%'
+            - '%open_orchestra_model.document.site_alias.class%'
     open_orchestra_backoffice.manager.content_type:
-        class: %open_orchestra_backoffice.manager.content_type.class%
+        class: '%open_orchestra_backoffice.manager.content_type.class%'
         arguments:
-            - %open_orchestra_model.document.content_type.class%
+            - '%open_orchestra_model.document.content_type.class%'
     open_orchestra_backoffice.manager.content:
-        class: %open_orchestra_backoffice.manager.content.class%
+        class: '%open_orchestra_backoffice.manager.content.class%'
         arguments:
-            - @open_orchestra_backoffice.context_manager
-            - %open_orchestra_model.document.content.class%
-            - @open_orchestra_model.repository.content_type
-            - @open_orchestra_model.saver.versionnable_saver
+            - '@open_orchestra_backoffice.context_manager'
+            - '%open_orchestra_model.document.content.class%'
+            - '@open_orchestra_model.repository.content_type'
+            - '@open_orchestra_model.saver.versionnable_saver'
     open_orchestra_backoffice.manager.block:
-        class: %open_orchestra_backoffice.manager.block.class%
-        arguments: [@open_orchestra_model.repository.node]
+        class: '%open_orchestra_backoffice.manager.block.class%'
+        arguments: ['@open_orchestra_model.repository.node']
     open_orchestra_backoffice.manager.redirection:
-        class: %open_orchestra_backoffice.manager.redirection.class%
+        class: '%open_orchestra_backoffice.manager.redirection.class%'
         arguments:
-            - %open_orchestra_model.document.redirection.class%
-            - @open_orchestra_backoffice.context_manager
-            - @object_manager
-            - @event_dispatcher
-            - @open_orchestra_model.repository.site
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_model.repository.redirection
+            - '%open_orchestra_model.document.redirection.class%'
+            - '@open_orchestra_backoffice.context_manager'
+            - '@object_manager'
+            - '@event_dispatcher'
+            - '@open_orchestra_model.repository.site'
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_model.repository.redirection'
     open_orchestra_backoffice.manager.route_document:
-        class: %open_orchestra_backoffice.manager.route_document.class%
+        class: '%open_orchestra_backoffice.manager.route_document.class%'
         arguments:
-            - %open_orchestra_model.document.route_document.class%
-            - @open_orchestra_model.repository.site
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_model.repository.route_document
+            - '%open_orchestra_model.document.route_document.class%'
+            - '@open_orchestra_model.repository.site'
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_model.repository.route_document'
     open_orchestra_backoffice.manager.template_flex:
-        class: %open_orchestra_backoffice.manager.template_flex.class%
+        class: '%open_orchestra_backoffice.manager.template_flex.class%'
         arguments:
-            - @open_orchestra_backoffice.context_manager
-            - %open_orchestra_model.document.template_flex.class%
-            - @open_orchestra_backoffice.manager.area_flex
+            - '@open_orchestra_backoffice.context_manager'
+            - '%open_orchestra_model.document.template_flex.class%'
+            - '@open_orchestra_backoffice.manager.area_flex'
     open_orchestra_backoffice.manager.area_flex:
-        class: %open_orchestra_backoffice.manager.area_flex.class%
+        class: '%open_orchestra_backoffice.manager.area_flex.class%'
         arguments:
-            - %open_orchestra_model.document.area_flex.class%
+            - '%open_orchestra_model.document.area_flex.class%'
     open_orchestra_backoffice.manager.keyword_to_document:
-        class: %open_orchestra_backoffice.manager.keyword_to_document.class%
+        class: '%open_orchestra_backoffice.manager.keyword_to_document.class%'
         arguments:
-            - @open_orchestra_model.repository.keyword
-            - @open_orchestra_model.helper.suppress_special_character
-            - %open_orchestra_model.document.keyword.class%
-            - @security.authorization_checker
+            - '@open_orchestra_model.repository.keyword'
+            - '@open_orchestra_model.helper.suppress_special_character'
+            - '%open_orchestra_model.document.keyword.class%'
+            - '@security.authorization_checker'

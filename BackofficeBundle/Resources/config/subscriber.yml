@@ -18,113 +18,113 @@ parameters:
 
 services:
     open_orchestra_backoffice.subscriber.update_child_node_path:
-        class: %open_orchestra_backoffice.subscriber.update_child_node_path.class%
+        class: '%open_orchestra_backoffice.subscriber.update_child_node_path.class%'
         arguments:
-            - @open_orchestra_model.repository.node
-            - @event_dispatcher
-            - @open_orchestra_backoffice.context_manager
+            - '@open_orchestra_model.repository.node'
+            - '@event_dispatcher'
+            - '@open_orchestra_backoffice.context_manager'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.update_redirection_node:
-        class: %open_orchestra_backoffice.subscriber.update_redirection_node.class%
+        class: '%open_orchestra_backoffice.subscriber.update_redirection_node.class%'
         arguments:
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.manager.redirection
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.manager.redirection'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.flush_node_clache:
-        class: %open_orchestra_backoffice.subscriber.flush_node_clache.class%
+        class: '%open_orchestra_backoffice.subscriber.flush_node_clache.class%'
         arguments:
-            - @open_orchestra_display.manager.cacheable
-            - @open_orchestra_base.manager.tag
+            - '@open_orchestra_display.manager.cacheable'
+            - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.block_menu_cache:
-        class: %open_orchestra_backoffice.subscriber.block_menu_cache.class%
+        class: '%open_orchestra_backoffice.subscriber.block_menu_cache.class%'
         arguments:
-            - @open_orchestra_display.manager.cacheable
-            - @open_orchestra_base.manager.tag
+            - '@open_orchestra_display.manager.cacheable'
+            - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.content_update_cache:
-        class: %open_orchestra_backoffice.subscriber.content_update_cache.class%
+        class: '%open_orchestra_backoffice.subscriber.content_update_cache.class%'
         arguments:
-            - @open_orchestra_display.manager.cacheable
-            - @open_orchestra_base.manager.tag
+            - '@open_orchestra_display.manager.cacheable'
+            - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.content_type_update_cache:
-        class: %open_orchestra_backoffice.subscriber.content_type_update_cache.class%
+        class: '%open_orchestra_backoffice.subscriber.content_type_update_cache.class%'
         arguments:
-            - @open_orchestra_display.manager.cacheable
-            - @open_orchestra_base.manager.tag
+            - '@open_orchestra_display.manager.cacheable'
+            - '@open_orchestra_base.manager.tag'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.content_type:
-        class: %open_orchestra_backoffice.subscriber.content_type.class%
+        class: '%open_orchestra_backoffice.subscriber.content_type.class%'
         arguments:
-            - @open_orchestra_model.repository.content_type
-            - %open_orchestra_model.document.content_attribute.class%
-            - @open_orchestra_backoffice.manager.translation_choice
-            - %open_orchestra_backoffice.field_types%
-            - @open_orchestra_backoffice.value_transformer.manager
-            - @translator
+            - '@open_orchestra_model.repository.content_type'
+            - '%open_orchestra_model.document.content_attribute.class%'
+            - '@open_orchestra_backoffice.manager.translation_choice'
+            - '%open_orchestra_backoffice.field_types%'
+            - '@open_orchestra_backoffice.value_transformer.manager'
+            - '@translator'
     open_orchestra_backoffice.subscriber.update_status:
-        class: %open_orchestra_backoffice.subscriber.update_status.class%
+        class: '%open_orchestra_backoffice.subscriber.update_status.class%'
         arguments:
-            - @open_orchestra_backoffice.authorize_status_change_manager
+            - '@open_orchestra_backoffice.authorize_status_change_manager'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.delete_node:
-        class: %open_orchestra_backoffice.subscriber.delete_node.class%
+        class: '%open_orchestra_backoffice.subscriber.delete_node.class%'
         arguments:
-            - @object_manager
-            - %open_orchestra_model.document.trash_item.class%
+            - '@object_manager'
+            - '%open_orchestra_model.document.trash_item.class%'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.delete_content:
-        class: %open_orchestra_backoffice.subscriber.delete_content.class%
+        class: '%open_orchestra_backoffice.subscriber.delete_content.class%'
         arguments:
-            - @object_manager
-            - %open_orchestra_model.document.trash_item.class%
+            - '@object_manager'
+            - '%open_orchestra_model.document.trash_item.class%'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.update_route_document:
-        class: %open_orchestra_backoffice.subscriber.update_route_document.class%
+        class: '%open_orchestra_backoffice.subscriber.update_route_document.class%'
         arguments:
-            - @object_manager
-            - @open_orchestra_backoffice.manager.route_document
+            - '@object_manager'
+            - '@open_orchestra_backoffice.manager.route_document'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.add_transverse_block:
-        class: %open_orchestra_backoffice.subscriber.add_transverse_block.class%
+        class: '%open_orchestra_backoffice.subscriber.add_transverse_block.class%'
         arguments:
-            - @open_orchestra_model.repository.node
+            - '@open_orchestra_model.repository.node'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.create_transverse_node:
-        class: %open_orchestra_backoffice.subscriber.create_transverse_node.class%
+        class: '%open_orchestra_backoffice.subscriber.create_transverse_node.class%'
         arguments:
-            - @open_orchestra_model.repository.node
-            - @open_orchestra_backoffice.manager.node
-            - @object_manager
+            - '@open_orchestra_model.repository.node'
+            - '@open_orchestra_backoffice.manager.node'
+            - '@object_manager'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.create_root_node:
-        class: %open_orchestra_backoffice.subscriber.create_root_node.class%
+        class: '%open_orchestra_backoffice.subscriber.create_root_node.class%'
         arguments:
-            - @open_orchestra_backoffice.manager.node
-            - @open_orchestra_model.repository.template
-            - @object_manager
-            - @translator
+            - '@open_orchestra_backoffice.manager.node'
+            - '@open_orchestra_model.repository.template'
+            - '@object_manager'
+            - '@translator'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.update_site_alias_redirection_site:
-        class: %open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class%
+        class: '%open_orchestra_backoffice.subscriber.update_site_alias_redirection_site.class%'
         arguments:
-            - @object_manager
-            - @open_orchestra_backoffice.manager.redirection
-            - @open_orchestra_model.repository.node
+            - '@object_manager'
+            - '@open_orchestra_backoffice.manager.redirection'
+            - '@open_orchestra_model.repository.node'
         tags:
             - { name: kernel.event_subscriber }
     open_orchestra_backoffice.subscriber.block_form_type:

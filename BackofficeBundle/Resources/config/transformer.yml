@@ -10,39 +10,39 @@ parameters:
     
 services:
     open_orchestra_backoffice.transformer.embedkeywords_to_keywords:
-        class: %open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%
+        class: '%open_orchestra_backoffice.transformer.embedkeywords_to_keywords.class%'
         arguments:
-            - @open_orchestra_model.repository.keyword
-            - @open_orchestra_model.helper.suppress_special_character
-            - %open_orchestra_model.document.embed_keyword.class%
-            - %open_orchestra_model.document.keyword.class%
-            - @security.authorization_checker
+            - '@open_orchestra_model.repository.keyword'
+            - '@open_orchestra_model.helper.suppress_special_character'
+            - '%open_orchestra_model.document.embed_keyword.class%'
+            - '%open_orchestra_model.document.keyword.class%'
+            - '@security.authorization_checker'
         deprecated: ~
     open_orchestra_backoffice.transformer.video_url_to_id:
-        class: %open_orchestra_backoffice.transformer.video_url_to_id.class%
+        class: '%open_orchestra_backoffice.transformer.video_url_to_id.class%'
     open_orchestra_backoffice.transformer.choices_option_to_array:
-        class: %open_orchestra_backoffice.transformer.choices_option_to_array.class%
+        class: '%open_orchestra_backoffice.transformer.choices_option_to_array.class%'
         arguments:
-            - @open_orchestra_model.helper.suppress_special_character
+            - '@open_orchestra_model.helper.suppress_special_character'
     open_orchestra_backoffice.transformer.bbcode_to_html:
-        class: %open_orchestra_backoffice.transformer.bbcode_to_html.class%
+        class: '%open_orchestra_backoffice.transformer.bbcode_to_html.class%'
         arguments:
-            - @open_orchestra_bbcode.parser
+            - '@open_orchestra_bbcode.parser'
     open_orchestra_backoffice.transformer.reference_to_embed:
-        class: %open_orchestra_backoffice.transformer.reference_to_embed.class%
+        class: '%open_orchestra_backoffice.transformer.reference_to_embed.class%'
         arguments:
-            - @open_orchestra_model.manager.content_for_embed
-            - @object_manager
-            - %open_orchestra_model.document.content.class%
+            - '@open_orchestra_model.manager.content_for_embed'
+            - '@object_manager'
+            - '%open_orchestra_model.document.content.class%'
     open_orchestra_backoffice.transformer.block_to_array:
-        class: %open_orchestra_backoffice.transformer.block_to_array.class%
+        class: '%open_orchestra_backoffice.transformer.block_to_array.class%'
     open_orchestra_backoffice.transformer.csv_to_reference_keyword:
-        class: %open_orchestra_backoffice.transformer.csv_to_reference_keyword.class%
+        class: '%open_orchestra_backoffice.transformer.csv_to_reference_keyword.class%'
         arguments:
-            - @open_orchestra_backoffice.manager.keyword_to_document
-            - @open_orchestra_model.repository.keyword
+            - '@open_orchestra_backoffice.manager.keyword_to_document'
+            - '@open_orchestra_model.repository.keyword'
     open_orchestra_backoffice.transformer.condition_to_reference_keyword:
-        class: %open_orchestra_backoffice.transformer.condition_to_reference_keyword.class%
+        class: '%open_orchestra_backoffice.transformer.condition_to_reference_keyword.class%'
         arguments:
-            - @open_orchestra_backoffice.manager.keyword_to_document
-            - @open_orchestra_model.repository.keyword
+            - '@open_orchestra_backoffice.manager.keyword_to_document'
+            - '@open_orchestra_model.repository.keyword'

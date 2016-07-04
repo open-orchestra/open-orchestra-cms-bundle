@@ -1,13 +1,13 @@
 services:
     open_orchestra_log.navigation_panel.log:
-        class: %open_orchestra_backoffice.navigation_panel.administration.class%
+        class: '%open_orchestra_backoffice.navigation_panel.administration.class%'
         arguments:
             - logs
             - 365
-            - %open_orchestra_backoffice.navigation_panel.menu.administration%
+            - '%open_orchestra_backoffice.navigation_panel.menu.administration%'
             - ROLE_ACCESS_LOG
-            - %open_orchestra_log.navigation_panel.log.parameters%
-            - @translator
+            - '%open_orchestra_log.navigation_panel.log.parameters%'
+            - '@translator'
         tags:
             - { name: open_orchestra_backoffice.navigation_panel.strategy }
         calls:

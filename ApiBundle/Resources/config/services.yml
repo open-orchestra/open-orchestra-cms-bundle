@@ -3,6 +3,6 @@ parameters:
 
 services:
     open_orchestra_api.mapping.content_attribute:
-        class: %open_orchestra_api.mapping.content_attribute.class%
+        class: '%open_orchestra_api.mapping.content_attribute.class%'
         arguments:
-            - @open_orchestra_model.repository.content_type
+            - '@open_orchestra_model.repository.content_type'
