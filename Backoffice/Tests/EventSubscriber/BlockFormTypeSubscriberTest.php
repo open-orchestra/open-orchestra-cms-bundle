@@ -55,7 +55,9 @@ class BlockFormTypeSubscriberTest extends AbstractBaseTestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(FormEvents::SUBMIT, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
     }
+
 
     /**
      * Test submit
