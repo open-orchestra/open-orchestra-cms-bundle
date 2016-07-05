@@ -14,7 +14,7 @@
     "braincrafted/bootstrap-bundle": "~2.1.2",
     "doctrine/data-fixtures": "~1.2.0",
     "koala-framework/composer-extra-assets": "~2.0.4",
-    "sensio/generator-bundle": "~2.5.0",
+    "sensio/generator-bundle": "~3.0.0",
     "stfalcon/tinymce-bundle": "~0.3.8",
     "symfony/assetic-bundle": "~2.8.0",
     "symfony/monolog-bundle": "~2.11.0",
