@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
+namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
 use Phake;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;

@@ -6,7 +6,6 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Manager\AreaManager;
-use OpenOrchestra\ModelBundle\Document\Area;
 use Phake;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
@@ -43,69 +42,17 @@ class AreaManagerTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param AreaContainerInterface $areaContainer
-     * @param string                 $areaId
-     * @param AreaContainerInterface $expectedArea
-     *
-     * @dataProvider provideAreaAndAreaId
+     * Test delete area from areas
      */
-    public function testDeleteAreaFromAreas(AreaContainerInterface $areaContainer, $areaId, AreaContainerInterface $expectedArea)
+    public function testDeleteAreaFromAreas()
     {
-        $this->manager->deleteAreaFromContainer($areaContainer, $areaId);
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        $areaId = 'miscId';
+        $this->manager->deleteAreaFromContainer($area, $areaId);
 
-        $this->assertTrue(
-            $this->arrayContains($expectedArea->getAreas(), $areaContainer->getAreas())
-            && $this->arrayContains($areaContainer->getAreas(), $expectedArea->getAreas())
-        );
+        Phake::verify($area)->removeAreaByAreaId($areaId);
     }
 
-    /**
-     * @param ArrayCollection $refArray
-     * @param ArrayCollection $includedArray
-     *
-     * @return bool
-     */
-    protected function arrayContains(ArrayCollection $refArray, ArrayCollection $includedArray)
-    {
-        if (count($includedArray) > 0) {
-            foreach($includedArray as $element) {
-                if (!$refArray->contains($element)) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @return array
-     */
-    public function provideAreaAndAreaId()
-    {
-        $area1 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area1)->getAreaId()->thenReturn('area1');
-
-        $area2 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area2)->getAreaId()->thenReturn('area2');
-
-        $area3 = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area3)->getAreaId()->thenReturn('area3');
-
-        $emptyArea = new Area();
-
-        $area = new Area();
-        $area->addArea($area1); $area->addArea($area2); $area->addArea($area3);
-
-        $filteredArea = new Area();
-        $filteredArea->addArea($area1); $filteredArea->addArea($area3);
-
-        return array(
-            array($emptyArea, 'miscId', $emptyArea),
-            array($area, 'miscId', $area),
-            array($area, 'area2', $filteredArea)
-        );
-    }
 
     /**
      * @param array  $oldBlocks

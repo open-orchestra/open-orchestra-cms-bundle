@@ -5,7 +5,6 @@ namespace OpenOrchestra\Backoffice\Tests\Manager;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 
 /**
@@ -32,13 +31,14 @@ class TranslationChoiceManagerTest extends AbstractBaseTestCase
     {
         $this->baseValue = array('en' => 'English', 'fr' => 'Francais');
 
-        $this->frName = new TranslatedValue();
-        $this->frName->setLanguage('fr');
-        $this->frName->setValue($this->baseValue['fr']);
+        $this->frName = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
+        Phake::when($this->frName)->getLanguage()->thenReturn('fr');
+        Phake::when($this->frName)->getValue()->thenReturn($this->baseValue['fr']);
 
-        $this->enName = new TranslatedValue();
-        $this->enName->setLanguage('en');
-        $this->enName->setValue($this->baseValue['en']);
+        $this->enName = Phake::mock('OpenOrchestra\ModelInterface\Model\TranslatedValueInterface');
+        Phake::when($this->enName)->getLanguage()->thenReturn('en');
+        Phake::when($this->enName)->getValue()->thenReturn($this->baseValue['en']);
+
 
         $this->names = new ArrayCollection();
         $this->names->add($this->enName);
