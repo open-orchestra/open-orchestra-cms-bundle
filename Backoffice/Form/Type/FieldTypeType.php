@@ -8,7 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use OpenOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class FieldTypeType
@@ -111,7 +110,7 @@ class FieldTypeType extends AbstractType
             'label' => 'open_orchestra_backoffice.form.field_type.label',
             'prototype_data' => function(){
                 $default = each($this->fieldOptions);
-                $fieldType = new FieldType();
+                $fieldType = new $this->fieldTypeClass();
                 $fieldType->setType($default['key']);
 
                 return $fieldType;
