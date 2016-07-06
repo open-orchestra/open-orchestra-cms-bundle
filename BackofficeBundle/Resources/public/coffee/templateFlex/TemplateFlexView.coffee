@@ -42,7 +42,7 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addArea($('.template-flex-container', @$el), @options.template.get('area'))
-    @addConfigurationButton()
+    #@addConfigurationButton()
     return
 
   ###*
@@ -63,10 +63,9 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
    * Add button configuration page
   ###
   addConfigurationButton: () ->
-    pageConfigurationButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addConfigurationButton')
-    new pageConfigurationButtonViewClass(@addOption(
+    pageLayoutButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addPageLayoutButton')
+    new pageLayoutButtonViewClass(@addOption(
       viewContainer: @
-      widget_index: 2
     ))
 
   ###*
