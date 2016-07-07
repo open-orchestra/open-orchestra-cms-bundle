@@ -33,7 +33,8 @@
 
     "open-orchestra/open-orchestra-bbcode-bundle": "self.version",
     "open-orchestra/open-orchestra-model-bundle": "self.version",
-    "open-orchestra/open-orchestra-libs": "self.version"
+    "open-orchestra/open-orchestra-libs": "self.version",
+    "open-orchestra/open-orchestra-mongo-libs": "self.version"
   },
 
   "config": {
