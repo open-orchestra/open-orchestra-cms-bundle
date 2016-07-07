@@ -55,6 +55,46 @@ class BlockFormTypeSubscriberTest extends AbstractBaseTestCase
     public function testEventSubscribed()
     {
         $this->assertArrayHasKey(FormEvents::SUBMIT, $this->subscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(FormEvents::PRE_SET_DATA, $this->subscriber->getSubscribedEvents());
+    }
+
+    /**
+     * Test pre set data
+     */
+    /**
+     * @param string $label
+     * @param int    $blockPosition
+     * @param string $expectedLabel
+     * @param int    $count
+     *
+     * @dataProvider provideLabel
+     */
+    public function testPreSetData($label, $blockPosition, $expectedLabel, $count)
+    {
+        $component = 'fakeComponent';
+        $config = Phake::mock('Symfony\Component\Form\FormConfigInterface');
+        Phake::when($this->event)->getData()->thenReturn($this->block);
+        Phake::when($this->block)->getLabel()->thenReturn($label);
+        Phake::when($this->block)->getComponent()->thenReturn($component);
+        Phake::when($this->form)->getConfig()->thenReturn($config);
+        Phake::when($config)->getOption('blockPosition')->thenReturn($blockPosition);
+
+        $this->subscriber->preSetData($this->event);
+
+        Phake::verify($this->block, Phake::times($count))->setLabel($expectedLabel);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLabel()
+    {
+        return array(
+            array('', 1, 'fakeComponent #2', 1),
+            array('', 2, 'fakeComponent #3', 1),
+            array('', null, null, 0),
+            array('label', null, null, 0),
+        );
     }
 
     /**

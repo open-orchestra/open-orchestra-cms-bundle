@@ -21,6 +21,7 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::SUBMIT => 'submit',
+            FormEvents::PRE_SET_DATA => 'preSetData',
         );
     }
 
@@ -30,6 +31,21 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
     public function __construct(array $fixedParameters)
     {
         $this->fixedParameters = $fixedParameters;
+    }
+
+    /**
+     * @param FormEvent $event
+     */
+    public function preSetData(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+        $label = $data->getLabel();
+        $blockPosition = $form->getConfig()->getOption('blockPosition');
+        if ('' == $label && null !== $blockPosition) {
+            $label = $this->generateLabel($data->getComponent(), $blockPosition);
+            $data->setLabel($label);
+        }
     }
 
     /**
@@ -55,5 +71,16 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
             }
             $block->setAttributes($blockAttributes);
         }
+    }
+
+    /**
+     * @param string $component
+     * @param int    $blockPosition
+     *
+     * @return string
+     */
+    protected function generateLabel($component, $blockPosition)
+    {
+        return $component . ' #'. ($blockPosition +1);
     }
 }
