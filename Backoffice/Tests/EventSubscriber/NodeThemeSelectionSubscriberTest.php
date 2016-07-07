@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Phake;
-use OpenOrchestra\ModelBundle\Document\Site;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\Backoffice\EventSubscriber\NodeThemeSelectionSubscriber;
@@ -46,9 +46,9 @@ class NodeThemeSelectionSubscriberTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param string $nodeTheme
-     * @param Site   $site
-     * @param int    $callTimes
+     * @param string        $nodeTheme
+     * @param SiteInterface $site
+     * @param int           $callTimes
      *
      * @dataProvider provideSiteAndTheme
      */
