@@ -43,7 +43,8 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
         $label = $data->getLabel();
         $blockPosition = $form->getConfig()->getOption('blockPosition');
         if ('' == $label && null !== $blockPosition) {
-            $data->setLabel($data->getComponent() . ' #'. ($blockPosition +1));
+            $label = $this->generateLabel($data->getComponent(), $blockPosition);
+            $data->setLabel($label);
         }
     }
 
@@ -70,5 +71,16 @@ class BlockFormTypeSubscriber implements EventSubscriberInterface
             }
             $block->setAttributes($blockAttributes);
         }
+    }
+
+    /**
+     * @param string $component
+     * @param int    $blockPosition
+     *
+     * @return string
+     */
+    protected function generateLabel($component, $blockPosition)
+    {
+        return $component . ' #'. ($blockPosition +1);
     }
 }
