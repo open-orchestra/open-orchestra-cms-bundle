@@ -6,7 +6,6 @@ use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\Backoffice\Form\Type\FieldTypeType;
 use Symfony\Component\Form\FormEvents;
-use OpenOrchestra\ModelBundle\Document\FieldType;
 
 /**
  * Class FieldTypeTypeTest
@@ -79,7 +78,7 @@ class FieldTypeTypeTest extends AbstractBaseTestCase
             'label' => 'open_orchestra_backoffice.form.field_type.label',
             'prototype_data' => function(){
                 $default = each($this->fieldOptions);
-                $fieldType = new FieldType();
+                $fieldType = new $this->fieldTypeClass();
                 $fieldType->setType($default['key']);
 
                 return $fieldType;
