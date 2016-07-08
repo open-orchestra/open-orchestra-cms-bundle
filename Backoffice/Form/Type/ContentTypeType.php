@@ -41,14 +41,12 @@ class ContentTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $contentTypeIdName = "contentTypeId";
-
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this->translateValueInitializer, 'preSetData'));
         $builder
-            ->add($contentTypeIdName, 'text', array(
+            ->add('contentTypeId', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
                 'attr' => array(
-                    'class' => 'generate-id-dest',
+                    'class' => 'generate-id-dest'
                 )
             ))
             ->add('names', 'oo_translated_value_collection', array(

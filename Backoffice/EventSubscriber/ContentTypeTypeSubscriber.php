@@ -20,7 +20,10 @@ class ContentTypeTypeSubscriber implements EventSubscriberInterface
         $data = $event->getData();
         $options = array(
             'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
-            'attr' => array('class' => 'generate-id-dest')
+            'attr' => array(
+                'class' => 'generate-id-dest',
+                'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+            )
         );
         if (null !== $data->getContentTypeId()) {
             $options['disabled'] = true;
