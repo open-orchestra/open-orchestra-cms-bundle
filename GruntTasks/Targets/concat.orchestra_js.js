@@ -46,7 +46,6 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/extendView/generateId.js',
     'web/built/openorchestrabackoffice/js/extendView/showVideo.js',
     'web/built/openorchestrabackoffice/js/extendView/submitAdmin.js',
-    'web/built/openorchestrabackoffice/js/extendView/contentTypeSelector.js',
 
     //--[ WIDGETS ]--//
     'web/built/openorchestrabackoffice/js/widget/widgetChannel.js',
