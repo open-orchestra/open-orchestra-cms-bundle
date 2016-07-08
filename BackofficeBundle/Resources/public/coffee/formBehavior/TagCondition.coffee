@@ -91,7 +91,6 @@ class OpenOrchestra.FormBehavior.TagCondition extends OpenOrchestra.FormBehavior
       isSqlExpression = @testSqlExpression(testedString) and (@isAndBooleanRegExp.test(subTestedString[1]) or @isOrBooleanRegExp.test(subTestedString[1]))
     else
       isSqlExpression = isSqlExpression and (@isAndBooleanRegExp.test(testedString) or @isOrBooleanRegExp.test(testedString))
-      console.log('Done')
     return isSqlExpression
 
 jQuery ->
