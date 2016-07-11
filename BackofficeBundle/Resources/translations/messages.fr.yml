@@ -40,6 +40,8 @@ open_orchestra_backoffice:
             off: NON
         javascript:
           error: Une erreur est survenue dans votre navigateur lors de la soumission du formulaire!
+        allowed_characters:
+          helper: Caractères autorisés : a-z, 0-9, _, -
         status:
             published: Publié
             draft: Brouillon

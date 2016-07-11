@@ -55,7 +55,10 @@ class FieldTypeType extends AbstractType
         }
         $builder
             ->add('fieldId', 'text', array(
-                'label' => 'open_orchestra_backoffice.form.field_type.field_id'
+                'label' => 'open_orchestra_backoffice.form.field_type.field_id',
+                'attr' => array(
+                    'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+                )
             ))
             ->add('labels', 'oo_translated_value_collection', array(
                 'label' => 'open_orchestra_backoffice.form.field_type.labels'

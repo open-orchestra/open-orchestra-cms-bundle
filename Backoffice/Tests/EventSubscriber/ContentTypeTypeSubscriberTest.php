@@ -74,11 +74,17 @@ class ContentTypeTypeSubscriberTest extends AbstractBaseTestCase
         return array(
             array(null, array(
                 'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
-                'attr' => array('class' => 'generate-id-dest')
+                'attr' => array(
+                    'class' => 'generate-id-dest',
+                    'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+                )
             )),
             array('fakeContentId', array(
                 'label' => 'open_orchestra_backoffice.form.content_type.content_type_id',
-                'attr' => array('class' => 'generate-id-dest'),
+                'attr' => array(
+                    'class' => 'generate-id-dest',
+                    'help_text' => 'open_orchestra_backoffice.form.allowed_characters.helper',
+                ),
                 'disabled' => true
             ))
         );
