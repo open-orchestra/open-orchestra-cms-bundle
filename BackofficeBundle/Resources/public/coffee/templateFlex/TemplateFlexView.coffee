@@ -42,7 +42,7 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     @options.domContainer.html @$el
     $('.js-widget-title', @$el).html $('#generated-title', @$el).html()
     @addArea($('.template-flex-container', @$el), @options.template.get('area'))
-    #@addConfigurationButton()
+    @addConfigurationButton()
     return
 
   ###*
@@ -66,6 +66,9 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
     pageLayoutButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addPageLayoutButton')
     new pageLayoutButtonViewClass(@addOption(
       viewContainer: @
+      deleteUrl: @options.template.get('links')._self_delete
+      confirmText: @$el.data('delete-confirm-txt')
+      confirmTitle: @$el.data('delete-confirm-title')
     ))
 
   ###*
