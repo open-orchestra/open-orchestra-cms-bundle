@@ -7,8 +7,12 @@ use Phake;
 use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
 use Symfony\Component\Form\FormEvents;
 
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
 /**
  * Class AreaCollectionSubscriberTest
+ * @deprecated will be removed in 2.0
+ *
  */
 class AreaCollectionSubscriberTest extends AbstractBaseTestCase
 {

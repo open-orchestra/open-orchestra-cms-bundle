@@ -1,9 +1,0 @@
-OpenOrchestra\ModelInterface\Model\NodeInterface:
-    constraints:
-        - OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaId: ~
-OpenOrchestra\ModelInterface\Model\TemplateInterface:
-    constraints:
-        - OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaId: ~
-OpenOrchestra\ModelInterface\Model\AreaInterface:
-    constraints:
-        - OpenOrchestra\Backoffice\Validator\Constraints\UniqueAreaId: ~

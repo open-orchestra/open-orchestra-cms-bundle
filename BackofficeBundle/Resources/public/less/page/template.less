@@ -1,0 +1,56 @@
+#page_model {
+
+  #jarviswidget-fullscreen-mode {
+    .toolbar-container {
+      min-height: 80px;
+    }
+    .area-toolbar.fixed {
+      top: 35px;
+    }
+  }
+
+  .page-container {
+    padding: 3px;
+    position: relative;
+
+    &>.area:not(.active):hover {
+      cursor: pointer;
+    }
+  }
+
+  .overlay-sortable {
+    background: black;
+    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .area-toolbar {
+    margin-bottom: 10px;
+    position: static;
+    background: white;
+    &.fixed {
+      position: fixed;
+      top: 89px;
+      z-index: 10;
+    }
+    .label-btn-groups {
+      float: left;
+      padding: 6px 12px 6px 0;
+    }
+
+    .area-breadcrumb {
+      background-color: #FFFFFF;
+      padding-left: 0;
+
+      li:last-child {
+        color: #999999;
+      }
+      li:not(:last-of-type):hover{
+        cursor: pointer;
+        font-weight: bold;
+      }
+    }
+  }
+}

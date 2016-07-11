@@ -18,7 +18,7 @@ class TemplateController extends AbstractAdminController
      * @param Request $request
      * @param int     $templateId
      *
-     * @Config\Route("/template/form/{templateId}", name="open_orchestra_backoffice_template_form", defaults={"templateId" = 0})
+     * @Config\Route("/template/form/{templateId}", name="open_orchestra_backoffice_template_form")
      * @Config\Method({"GET", "POST"})
      *
      * @Config\Security("is_granted('ROLE_ACCESS_TREE_TEMPLATE')")
@@ -55,14 +55,10 @@ class TemplateController extends AbstractAdminController
      *
      * @return Response
      */
-    public function newAction(Request $request)
+    public function newTemplateAction(Request $request)
     {
-        $templateClass = $this->container->getParameter('open_orchestra_model.document.template.class');
-        $context = $this->get('open_orchestra_backoffice.context_manager');
-
-        $template = new $templateClass();
-        $template->setSiteId($context->getCurrentSiteId());
-        $template->setLanguage($context->getCurrentLocale());
+        $templateManager = $this->container->get('open_orchestra_backoffice.manager.template');
+        $template = $templateManager->initializeNewTemplate();
 
         $form = $this->createForm('oo_template', $template, array(
             'action' => $this->generateUrl('open_orchestra_backoffice_template_new')

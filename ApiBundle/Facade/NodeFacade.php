@@ -109,6 +109,11 @@ class NodeFacade extends DeletedFacade
     protected $areas = array();
 
     /**
+     * @Serializer\Type("OpenOrchestra\ApiBundle\Facade\AreaFacade")
+     */
+    public $area;
+
+    /**
      * @Serializer\Type("array<OpenOrchestra\ApiBundle\Facade\BlockFacade>")
      */
     protected $blocks = array();

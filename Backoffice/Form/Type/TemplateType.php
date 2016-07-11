@@ -2,35 +2,29 @@
 
 namespace OpenOrchestra\Backoffice\Form\Type;
 
-use OpenOrchestra\Backoffice\EventSubscriber\AreaCollectionSubscriber;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 
 /**
  * Class TemplateType
  */
-class TemplateType extends AbstractAreaContainerType
+class TemplateType extends AbstractType
 {
     protected $templateClass;
     protected $areaClass;
-    protected $translator;
 
     /**
-     * @param string              $templateClass
-     * @param string              $areaClass
-     * @param TranslatorInterface $translator
+     * @param string $templateClass
+     * @param string $areaClass
      */
     public function __construct(
         $templateClass,
-        $areaClass,
-        TranslatorInterface $translator
+        $areaClass
     ) {
         $this->templateClass = $templateClass;
         $this->areaClass = $areaClass;
-        $this->translator = $translator;
     }
 
     /**
@@ -43,30 +37,13 @@ class TemplateType extends AbstractAreaContainerType
             ->add('name', 'text', array(
                 'label' => 'open_orchestra_backoffice.form.template.name',
             ))
-            ->add('language', 'orchestra_language', array(
-                'label' => 'open_orchestra_backoffice.form.template.language',
-            ))
-            ->add('boDirection', 'orchestra_direction', array(
-                'label' => 'open_orchestra_backoffice.form.template.boDirection',
-            ))
             ->add('templateId', 'hidden', array(
                 'disabled' => true
             ));
 
-        $builder->addEventSubscriber(new AreaCollectionSubscriber($this->areaClass, $this->translator));
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
         }
-    }
-
-    /**
-     * @param FormView      $view
-     * @param FormInterface $form
-     * @param array         $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $this->buildAreaListView($view, $form, $options);
     }
 
     /**

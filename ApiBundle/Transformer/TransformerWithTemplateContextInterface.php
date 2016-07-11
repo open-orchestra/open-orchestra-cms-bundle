@@ -20,5 +20,5 @@ interface TransformerWithTemplateContextInterface extends TransformerInterface
      *
      * @return FacadeInterface
      */
-    public function transformFromTemplate(AreaInterface $area, TemplateInterface $template = null, $parentAreaId = null);
+    public function transformFromTemplate(AreaInterface $area, TemplateInterface $template, $parentAreaId = null);
 }

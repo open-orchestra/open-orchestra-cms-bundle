@@ -95,6 +95,84 @@ class AreaManager
     }
 
     /**
+     * @param  AreaInterface $areaParent
+     *
+     * @return AreaInterface
+     */
+    public function initializeNewAreaRow(AreaInterface $areaParent)
+    {
+        $area = $this->initializeNewArea(AreaInterface::TYPE_ROW);
+
+        $lastAreaId = $this->getChildLastId($areaParent) + 1;
+        $areaId = $areaParent->getAreaId().'_'.AreaInterface::TYPE_ROW.'_'.$lastAreaId;
+        $area->setAreaId($areaId);
+
+        return $area;
+    }
+
+    /**
+     * @param  AreaInterface $areaParent
+     *
+     * @return AreaInterface
+     */
+    public function initializeNewAreaColumn(AreaInterface $areaParent)
+    {
+        $area = $this->initializeNewArea(AreaInterface::TYPE_COLUMN);
+
+        $lastAreaId = $this->getChildLastId($areaParent) + 1;
+        $areaId = $areaParent->getAreaId().'_'.AreaInterface::TYPE_COLUMN.'_'.$lastAreaId;
+        $area->setAreaId($areaId);
+
+        return $area;
+    }
+
+    /**
+     * @return AreaInterface
+     */
+    public function initializeNewAreaRoot()
+    {
+        /** @var AreaInterface $area */
+        $area = $this->initializeNewArea(AreaInterface::TYPE_ROOT);
+        $area->setAreaId(AreaInterface::ROOT_AREA_ID);
+        $area->setLabel(AreaInterface::ROOT_AREA_LABEL);
+
+        return $area;
+    }
+
+    /**
+     * @param AreaInterface $area
+     *
+     * @return int
+     */
+    protected function getChildLastId(AreaInterface $area)
+    {
+        $id = 0;
+        foreach ($area->getAreas() as $subArea) {
+            $areaIdExplode = explode('_', $subArea->getAreaId());
+            $idSubArea = (int) end($areaIdExplode);
+            if ($idSubArea > $id) {
+                $id = $idSubArea;
+            }
+        }
+
+        return $id;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return AreaInterface
+     */
+    protected function initializeNewArea($type)
+    {
+        /** @var AreaInterface $area */
+        $area = new $this->areaClass();
+        $area->setAreaType($type);
+
+        return $area;
+    }
+
+    /**
      * @param BlockInterface $block
      * @param array          $arrayBlock
      *
