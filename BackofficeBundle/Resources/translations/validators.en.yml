@@ -10,9 +10,7 @@ open_orchestra_backoffice_validators:
     authorize:
         edition: You cannot edit this document anymore
     area:
-        unique_area_id: areas's id have to be unique
         presence_required: You need to choose one of them
-    area_flex:
         row_layout: The column layout is incorrect
     role:
         duplicate_statuses: A role already exists with these from and to statuses

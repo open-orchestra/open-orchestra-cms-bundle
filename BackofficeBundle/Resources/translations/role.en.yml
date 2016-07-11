@@ -18,11 +18,6 @@ open_orchestra_role:
     role_access_create_template: Create
     role_access_update_template: Update
     role_access_delete_template: Delete
-    label_access_template_flex: Page template
-    role_access_tree_template_flex: Access
-    role_access_create_template_flex: Create
-    role_access_update_template_flex: Update
-    role_access_delete_template_flex: Delete
     label_access_for_content: Content
     role_access_content_type_for_content: Access
     role_access_create_content_type_for_content: Create

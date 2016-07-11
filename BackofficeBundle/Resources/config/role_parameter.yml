@@ -195,23 +195,6 @@ parameters:
         role_access_delete_template :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_template
-            order: 4000
-        role_access_tree_template_flex :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template_flex
-            order: 4100
-        role_access_create_template_flex :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template_flex
-            order: 4200
-        role_access_update_template_flex :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template_flex
-            order: 4300
-        role_access_delete_template_flex :
-            category: open_orchestra_backoffice.left_menu.administration.title
-            label: open_orchestra_role.label_access_template_flex
-            order: 4400
         role_access_group :
             category: open_orchestra_backoffice.left_menu.administration.title
             label: open_orchestra_role.label_access_group

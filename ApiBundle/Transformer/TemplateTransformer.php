@@ -27,17 +27,12 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
         }
 
         $facade = $this->newFacade();
-        foreach ($template->getAreas() as $area) {
-            $facade->addArea($this->getTransformer('area')->transformFromTemplate($area, $template));
-        }
-
+        $facade->area = $this->getTransformer('area')->transformFromTemplate($template->getArea(), $template);
         $facade->id = $template->getId();
         $facade->name = $template->getName();
         $facade->siteId = $template->getSiteId();
         $facade->templateId = $template->getTemplateId();
-        $facade->language = $template->getLanguage();
         $facade->deleted = $template->isDeleted();
-        $facade->boDirection = $template->getBoDirection();
         $facade->editable = false;
 
         $facade->addLink('_self_form', $this->generateRoute('open_orchestra_backoffice_template_form',
@@ -47,14 +42,6 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
         if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_DELETE_TEMPLATE, $template)) {
             $facade->addLink('_self_delete', $this->generateRoute('open_orchestra_api_template_delete',
                 array('templateId' => $template->getTemplateId())
-            ));
-        }
-
-        if ($this->authorizationChecker->isGranted(TreeTemplatePanelStrategy::ROLE_ACCESS_UPDATE_TEMPLATE, $template)) {
-            $facade->editable = true;
-            $facade->addLink('_self_update_areas', $this->generateRoute('open_orchestra_api_areas_update_in_template',
-                array(
-                    'templateId' => $template->getTemplateId())
             ));
         }
 
@@ -68,5 +55,4 @@ class TemplateTransformer extends AbstractSecurityCheckerAwareTransformer
     {
         return 'template';
     }
-
 }

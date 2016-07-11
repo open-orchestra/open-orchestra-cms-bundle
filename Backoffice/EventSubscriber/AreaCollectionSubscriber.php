@@ -9,8 +9,11 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Translation\TranslatorInterface;
 
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
 /**
  * Class AreaCollectionSubscriber
+ * @deprecated will be removed in 2.0
  */
 class AreaCollectionSubscriber implements EventSubscriberInterface
 {

@@ -39,7 +39,7 @@
     {% spaceless %}
         <div class="col-lg-11 col-lg-offset-1">
             <div class="form-group">
-                <label class="control-label">{{ 'open_orchestra_backoffice.form.area_flex.layout.select_layout'|trans }}</label>
+                <label class="control-label">{{ 'open_orchestra_backoffice.form.area.layout.select_layout'|trans }}</label>
                 <ul class="list-inline layout-options">
                     <li class="text-hide" data-layout="1">1</li>
                     <li class="text-hide" data-layout="1,1">1,1</li>
@@ -347,45 +347,6 @@
                 {{ form_rest(form) }}
             </fieldset>
         </div>
-    {% endspaceless %}
-{% endblock %}
-
-{% block oo_node_widget %}
-    {{ block('form_area_container') }}
-{% endblock %}
-
-{% block oo_template_widget %}
-    {{ block('form_area_container') }}
-{% endblock %}
-
-{% block oo_area_widget %}
-    {{ block('form_area_container') }}
-{% endblock %}
-
-{% block form_area_container %}
-    {% spaceless %}
-        {% for key, child in form %}
-            {% if key != 'newAreas' %}
-                {{ form_row(child) }}
-            {% else %}
-                <div class="form-group{% if child.vars.errors|length > 0 %} has-error{% endif %}">
-                    {{ form_label(child) }}
-                    <div class="col-lg-9">
-                        {% if form.vars.areas|length > 0 %}
-                            <ul class="list-group">
-                                {% for area in areas %}
-                                    <li class="list-group-item">
-                                        {{ area }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                        {{ form_widget(child) }}
-                        {{ form_errors(child) }}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
     {% endspaceless %}
 {% endblock %}
 

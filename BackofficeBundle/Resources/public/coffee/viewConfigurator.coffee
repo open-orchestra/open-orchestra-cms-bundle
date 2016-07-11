@@ -5,9 +5,8 @@ OrchestraViewConfigurator = ->
     'addEntity': FullPageFormView
     'editEntityTab': TabElementFormView
     'showTab': TabView
-    'addArea': AreaView
-    'addAreaFlex': OpenOrchestra.AreaFlex.AreaFlexView
-    'showAreaFlexToolbar': OpenOrchestra.AreaFlex.AreaFlexToolbarView
+    'addArea': OpenOrchestra.Page.Area.AreaView
+    'showAreaToolbar': OpenOrchestra.Page.Area.AreaToolbarView
     'addBlock': BlockView
     'addButtonAction': TableviewAction
     'addPageLayoutButton': OpenOrchestra.Page.PageLayoutButtonView
@@ -16,9 +15,8 @@ OrchestraViewConfigurator = ->
     'addDataTable': DataTableView
     'showAdminForm': AdminFormView
     'showBlocksPanel': BlocksPanelView
-    'showNode': NodeView
-    'showTemplate': TemplateView
-    'showTemplateFlex': OpenOrchestra.TemplateFlex.TemplateFlexView
+    'showTemplate': OpenOrchestra.Page.Template.TemplateView
+    'showNode': OpenOrchestra.Page.Node.NodeView
     'showLanguage': LanguageView
     'showDuplicate': DuplicateView
     'showPreviewLinks': PreviewLinkView

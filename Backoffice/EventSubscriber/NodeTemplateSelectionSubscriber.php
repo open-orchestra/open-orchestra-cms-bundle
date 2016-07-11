@@ -47,8 +47,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
             ) {
                 $template = $this->templateRepository->findOneByTemplateId($data['nodeTemplateSelection']['templateId']);
                 if (null !== $template) {
-                    $formData->setBoDirection($template->getBoDirection());
-                    $this->nodeManager->hydrateAreaFromTemplate($formData, $template->getAreas());
+                    $this->nodeManager->hydrateAreaFromTemplate($formData, $template->getArea());
                 }
             } elseif (
                 array_key_exists('nodeSource', $data['nodeTemplateSelection']) &&

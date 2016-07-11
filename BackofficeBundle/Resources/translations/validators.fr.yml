@@ -10,9 +10,7 @@ open_orchestra_backoffice_validators:
     authorize:
         edition: Ce document n'est plus modifiable
     area:
-        unique_area_id: Les identifiants des aires doivent être unique
         presence_required: Vous devez choisir l'un d'eux
-    area_flex:
         row_layout: La disposition des colonnes est incorrecte
     role:
         duplicate_statuses: Un rôle existe déjà avec ce statut de provenance et ce statut de destination
