@@ -41,7 +41,7 @@ open_orchestra_backoffice:
         javascript:
           error: An error occurs on your browser during form submission!
         allowed_characters:
-          helper: Allowed characters a-z, 0-9, _, -
+          helper: Allowed characters: a-z, 0-9, _, -
         status:
             published: Published
             draft: Draft
