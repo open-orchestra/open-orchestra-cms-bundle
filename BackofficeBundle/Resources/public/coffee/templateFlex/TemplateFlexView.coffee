@@ -63,10 +63,12 @@ class OpenOrchestra.TemplateFlex.TemplateFlexView extends OrchestraView
    * Add button configuration page
   ###
   addConfigurationButton: () ->
-    pageConfigurationButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addConfigurationButton')
-    new pageConfigurationButtonViewClass(@addOption(
+    pageLayoutButtonViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addPageLayoutButton')
+    new pageLayoutButtonViewClass(@addOption(
       viewContainer: @
-      widget_index: 2
+      deleteUrl: @options.template.get('links')._self_delete
+      confirmText: @$el.data('delete-confirm-txt')
+      confirmTitle: @$el.data('delete-confirm-title')
     ))
 
   ###*

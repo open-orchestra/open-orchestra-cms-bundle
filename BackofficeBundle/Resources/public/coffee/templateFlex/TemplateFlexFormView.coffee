@@ -18,6 +18,7 @@ class OpenOrchestra.TemplateFlex.TemplateFlexFormView extends OrchestraModalView
       displayRoute = appRouter.generateUrl "showTemplateFlex",
         templateId: $('#oo_template_flex_templateId', @$el).val()
       refreshMenu(displayRoute)
+      Backbone.history.loadUrl(Backbone.history.fragment);
 
 jQuery ->
   appConfigurationView.setConfiguration('template-flex', 'showOrchestraModal', OpenOrchestra.TemplateFlex.TemplateFlexFormView)
