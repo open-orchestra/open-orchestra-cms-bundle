@@ -3,8 +3,6 @@
 namespace OpenOrchestra\Backoffice\Tests\Manager;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Manager\AreaManager;
 use Phake;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
