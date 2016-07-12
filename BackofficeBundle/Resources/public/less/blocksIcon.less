@@ -25,7 +25,10 @@
 }
 
 .block-icon-font p.block-text {
-  width: 66%;
+  width: 66%; // Default width if the browser don't support calc
+}
+
+.block-icon-font p.block-text {
   width: ~"calc(100% - 46px)";
   float:left;
 }
