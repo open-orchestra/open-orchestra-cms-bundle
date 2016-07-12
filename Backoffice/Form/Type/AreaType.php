@@ -10,8 +10,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
+@trigger_error('The '.__NAMESPACE__.'\ChoiceArrayToStringTransformer class is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
 /**
  * Class TemplateAreaType
+ * @deprecated will be removed in 2.0
  */
 class AreaType extends AbstractAreaContainerType
 {

@@ -60,6 +60,7 @@ class NodeController extends BaseController
      * @Config\Method({"GET"})
      *
      * @return FacadeInterface
+     * @throws AccessLanguageForNodeNotGrantedHttpException
      */
     public function showOrCreateAction(Request $request, $nodeId, $errorNode)
     {
