@@ -45,10 +45,17 @@
                 </button>
             </div>
         <% } %>
-        <% if ("undefined" !== typeof(area.get('links')._self_form_new_row)) { %>
+        <% if ("undefined" !== typeof(area.get('links')._self_form_new_row) && _.isEmpty(area.get('blocks').models)) { %>
             <div class="btn-group">
                 <button type="button" class="btn btn-default add-row-action">
                     <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
+                </button>
+            </div>
+        <% } %>
+        <% if ("undefined" !== typeof(area.get('links')._block_list)) { %>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default add-block-action">
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.add_block_label'|trans() }}
                 </button>
             </div>
         <% } %>

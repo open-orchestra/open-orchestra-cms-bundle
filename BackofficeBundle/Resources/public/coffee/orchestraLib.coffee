@@ -25,7 +25,7 @@ addCustomJarvisWidget = (newWidget, container) ->
 displayLoader = (element, context) ->
   element = "#content"  if typeof element is "undefined"
   selector = if context? then $(element, context) else $(element)
-  selector.html "<h1><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
+  selector.html "<h1 class='loader'><i class=\"fa fa-cog fa-spin\"></i> Loading...</h1>"
   true
 
 # REFRESH NAV MENU

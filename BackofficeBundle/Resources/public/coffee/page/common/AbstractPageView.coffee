@@ -22,11 +22,9 @@ class OpenOrchestra.Page.Common.AbstractPageView extends OrchestraView
    * @param {Object} areas List of areas to add in container
   ###
   addArea: (container, area) ->
-    areaModel = new Area
-    areaModel.set area
     areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addArea')
     new areaViewClass(
-      area: areaModel
+      area: area
       domContainer: container
       toolbarContainer: $('.toolbar-container', @$el)
     )

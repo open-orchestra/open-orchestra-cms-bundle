@@ -13,10 +13,11 @@ class OpenOrchestra.Page.Area.AreaToolbarView extends OrchestraView
   AREA_TYPE_ROW: 'row'
   AREA_TYPE_ROOT: 'root'
 
-  extendView: ['OpenOrchestra.Page.Area.AddRow']
+  extendView: ['OpenOrchestra.Page.Area.AddRow', 'OpenOrchestra.Page.Area.AddBlock']
 
   events:
     'click .add-row-action': 'showFormAddRow'
+    'click .add-block-action': 'showFormAddBlock'
     'click .edit-column': 'showFormColumn'
     'click .delete-column': 'deleteColumn'
     'click .delete-row': 'deleteRow'

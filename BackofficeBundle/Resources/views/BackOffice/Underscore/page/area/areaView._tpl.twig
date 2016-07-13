@@ -1,5 +1,6 @@
 <div class="area"
      data-title-new-row = "{{ 'open_orchestra_backoffice.form.area.new_row_title'|trans() }}"
+     data-title-add-block = "{{ 'open_orchestra_backoffice.form.area.add_block_title'|trans() }}"
      data-area-id = "<%= area.get('area_id') %>"
 >
     <% if ('column' === area.get('area_type')) { %>
@@ -7,15 +8,18 @@
     <% }  %>
     <div class="area-container area-<%= area.get('area_type') %>">
     </div>
-    <% if (
-        'row' !== area.get('area_type') &&
-        "undefined" !== typeof(area.get('links')._self_form_new_row)
-       ) {
-    %>
+    <% if ('row' !== area.get('area_type')) { %>
         <div class="area-action">
+        <% if ("undefined" !== typeof(area.get('links')._self_form_new_row) && _.isEmpty(area.get('blocks').models)) { %>
             <button type="button" class="add-row btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.new_row_label'|trans() }}
             </button>
+        <% } %>
+        <% if ("undefined" !== typeof(area.get('links')._block_list)) { %>
+            <button type="button" class="add-block btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> {{ 'open_orchestra_backoffice.areas.add_block_label'|trans() }}
+            </button>
+        <% } %>
         </div>
     <% } %>
 </div>

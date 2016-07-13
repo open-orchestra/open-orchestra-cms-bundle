@@ -7,7 +7,7 @@ OrchestraViewConfigurator = ->
     'showTab': TabView
     'addArea': OpenOrchestra.Page.Area.AreaView
     'showAreaToolbar': OpenOrchestra.Page.Area.AreaToolbarView
-    'addBlock': BlockView
+    'addBlock': OpenOrchestra.Page.Block.BlockView
     'addButtonAction': TableviewAction
     'addPageLayoutButton': OpenOrchestra.Page.PageLayoutButtonView
     'showTableCollection': TableviewCollectionView
@@ -15,6 +15,7 @@ OrchestraViewConfigurator = ->
     'addDataTable': DataTableView
     'showAdminForm': AdminFormView
     'showBlocksPanel': BlocksPanelView
+    'showAddBlocksModal': OpenOrchestra.Page.Block.BlockFormAddView
     'showTemplate': OpenOrchestra.Page.Template.TemplateView
     'showNode': OpenOrchestra.Page.Node.NodeView
     'showLanguage': LanguageView

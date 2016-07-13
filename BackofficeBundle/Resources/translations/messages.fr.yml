@@ -218,6 +218,7 @@ open_orchestra_backoffice:
             label: Libellé de la zone
             area_id: Id de la zone
             width: Taille de la zone
+            add_block_title: Ajouter un block
             new_row_title: Nouvelle ligne
             edit_row_title: Editer la ligne
             edit_column_title: Editer la colonne
@@ -537,6 +538,7 @@ open_orchestra_backoffice:
         edit_column_label: Editer la colonne
         edit_row_label: Editer la ligne
         new_row_label: Ligne
+        add_block_label: Bloc
     templates:
         delete:
             title: Souhaitez-vous supprimer ce gabarit ?

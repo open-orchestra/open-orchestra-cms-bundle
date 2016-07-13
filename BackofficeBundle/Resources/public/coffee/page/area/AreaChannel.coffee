@@ -2,6 +2,7 @@
  * @channel Area
  * Event available
  *  - activateEditArea(areaId) enable edition of an area
+ *  - updateArea(areaId) update area
  *  - activateSortableArea(containerAreaId, areaViewSortable) enable sortable area in a container
  *  - disableSortableArea() disable sortable in area
 ###

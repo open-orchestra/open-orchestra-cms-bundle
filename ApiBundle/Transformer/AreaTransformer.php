@@ -25,6 +25,30 @@ use OpenOrchestra\Backoffice\Manager\NodeManager;
  */
 class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements TransformerWithTemplateContextInterface
 {
+    protected $nodeRepository;
+    protected $areaManager;
+    protected $nodeManager;
+
+    /**
+     * @param string                        $facadeClass
+     * @param NodeRepositoryInterface       $nodeRepository
+     * @param AreaManager                   $areaManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param NodeManager                   $nodeManager
+     */
+    public function __construct(
+        $facadeClass,
+        NodeRepositoryInterface $nodeRepository,
+        AreaManager $areaManager,
+        AuthorizationCheckerInterface $authorizationChecker,
+        NodeManager $nodeManager
+    ){
+        parent::__construct($facadeClass, $authorizationChecker);
+        $this->nodeRepository = $nodeRepository;
+        $this->areaManager = $areaManager;
+        $this->nodeManager = $nodeManager;
+    }
+
     /**
      * @param AreaInterface      $area
      * @param NodeInterface|null $node
@@ -64,6 +88,24 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
 
         foreach ($area->getAreas() as $subArea) {
             $facade->addArea($this->transform($subArea, $node, $area->getAreaId()));
+        }
+
+        foreach ($area->getBlocks() as $blockPosition => $block) {
+            $otherNode = $node;
+            $isInside = true;
+            if (0 !== $block['nodeId'] && $node->getNodeId() != $block['nodeId']) {
+                $otherNode = $this->nodeRepository->findInLastVersion($block['nodeId'], $node->getLanguage(), $node->getSiteId());
+                $isInside = false;
+            }
+            $facade->addBlock($this->getTransformer('block')->transform(
+                $otherNode->getBlock($block['blockId']),
+                $isInside,
+                $otherNode->getNodeId(),
+                $block['blockId'],
+                $area->getAreaId(),
+                $blockPosition,
+                $otherNode->getId()
+            ));
         }
 
         if ($facade->editable) {
@@ -115,6 +157,28 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
                     'siteId' => $node->getSiteId(),
                     'areaId' => $parentAreaId,
                 )));
+
+                $routeName = 'open_orchestra_api_block_list_without_transverse';
+                if (NodeInterface::TYPE_TRANSVERSE !== $node->getNodeType()) {
+                    $routeName = 'open_orchestra_api_block_list_with_transverse';
+                }
+                $facade->addLink('_block_list', $this->generateRoute($routeName, array('language' => $node->getLanguage())));
+
+                $facade->addLink('_self_update_block', $this->generateRoute('open_orchestra_api_area_update_block', array(
+                    'nodeId' => $node->getNodeId(),
+                    'language' => $node->getLanguage(),
+                    'version' => $node->getVersion(),
+                    'siteId' => $node->getSiteId(),
+                )));
+
+                $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
+                    'areaId' => $area->getAreaId(),
+                    'nodeId' => $node->getNodeId(),
+                    'language' => $node->getLanguage(),
+                    'version' => $node->getVersion(),
+                    'siteId' => $node->getSiteId(),
+                    'areaParentId' => $parentAreaId
+                )));
             }
         }
 
@@ -150,6 +214,7 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
         foreach ($area->getAreas() as $subArea) {
             $facade->addArea($this->transformFromTemplate($subArea, $template, $area->getAreaId()));
         }
+
         if ($facade->editable) {
             $facade->addLink('_self_form_new_row', $this->generateRoute('open_orchestra_backoffice_template_new_row_area', array(
                 'templateId' => $template->getTemplateId(),
@@ -190,12 +255,13 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
     /**
      * @param FacadeInterface    $facade
      * @param AreaInterface|null $source
+     * @param NodeInterface|null $node
      *
      * @return AreaInterface
      *
      * @throws UnexpectedValueException
      */
-    public function reverseTransform(FacadeInterface $facade, $source = null)
+    public function reverseTransform(FacadeInterface $facade, $source = null, NodeInterface $node = null)
     {
         if (!$source instanceof AreaInterface) {
             throw new UnexpectedValueException("source must be an instance of AreaInterface");
@@ -209,6 +275,29 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
         }
         ksort($newOrderSubAreas);
         $source->setAreas(new ArrayCollection($newOrderSubAreas));
+
+        if ($node instanceof NodeInterface) {
+            $blocks = $facade->getBlocks();
+            $blockDocument = array();
+            foreach ($blocks as $position => $blockFacade) {
+                $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
+                dump($blockArray);
+                $blockDocument[$position] = $blockArray;
+                $block = $node->getBlock($blockArray['blockId']);
+                if ($blockArray['nodeId'] !== 0) {
+                    $nodeTransverse = $this->nodeRepository
+                        ->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $node->getSiteId());
+                    dump($nodeTransverse);
+                    $block = $nodeTransverse->getBlock($blockArray['blockId']);
+                }
+                $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));
+            }
+
+            $this->areaManager
+                ->deleteAreaFromBlock($source->getBlocks(), $blockDocument, $source->getAreaId(), $node);
+            $source->setBlocks($blockDocument);
+            $this->nodeManager->removeUnusedBlocks($node);
+        }
 
         return $source;
     }

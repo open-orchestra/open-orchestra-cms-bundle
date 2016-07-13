@@ -18,6 +18,7 @@ module.exports = {
     'web/built/openorchestrabackoffice/css/ajaxLoader/ajaxLoader.css',
     'web/built/openorchestrabackoffice/css/page/template.css',
     'web/built/openorchestrabackoffice/css/page/area.css',
+    'web/built/openorchestrabackoffice/css/page/block.css',
     'web/built/openorchestrabackoffice/css/role.css'
   ],
   dest: 'web/built/orchestra.css'

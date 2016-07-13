@@ -35,7 +35,7 @@
       type: "GET"
       url: url
       success: (response) ->
-        node = new NodeModel
+        node = new OpenOrchestra.Page.Node.Node
         node.set response
         nodeViewClass = appConfigurationView.getConfiguration('node', 'showNode')
         new nodeViewClass(

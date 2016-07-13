@@ -219,6 +219,7 @@ open_orchestra_backoffice:
             area_id: The area id
             width: Area width
             new_row_title: New row
+            add_block_title: Add a block
             edit_row_title: Edit row
             edit_column_title: Edit column
             column_layout:
@@ -537,6 +538,7 @@ open_orchestra_backoffice:
         edit_column_label: Edit column
         edit_row_label: Edit Row
         new_row_label: Row
+        add_block_label: Block
     templates:
         delete:
             title: Would you like delete this template?

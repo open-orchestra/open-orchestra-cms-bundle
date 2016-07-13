@@ -32,16 +32,44 @@ class AreaController extends BaseController
     const ROLE_EDIT = 'edit';
 
     /**
+     * @param string $areaId
+     * @param string  $nodeId
+     * @param string  $language
+     * @param string  $version
+     * @param string  $siteId
+     * @param string  $areaParentId
+     *
+     * @Config\Route("/{areaId}/show-in-node/{siteId}/{nodeId}/{version}/{language}/{areaParentId}", name="open_orchestra_api_area_show_in_node")
+     * @Config\Method({"GET"})
+     *
+     * @return FacadeInterface
+     */
+    public function showInNodeAction($areaId, $nodeId, $language, $version, $siteId, $areaParentId)
+    {
+
+        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+        $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
+
+        $rootArea = $node->getArea();
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($rootArea, $areaId);
+
+        return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node, $areaParentId);
+    }
+
+
+    /**
      * @param Request $request
      * @param string  $nodeId
-     * @param int     $areaId
+     * @param string  $language
+     * @param string  $version
+     * @param string  $siteId
      *
-     * @Config\Route("/{nodeId}/{areaId}/update-block", name="open_orchestra_api_area_update_block")
+     * @Config\Route("/{siteId}/{nodeId}/{version}/{language}/update-block", name="open_orchestra_api_area_update_block")
      * @Config\Method({"POST"})
      *
      * @return Response
      */
-    public function updateBlockInAreaAction(Request $request, $nodeId, $areaId)
+    public function updateBlockInAreaAction(Request $request, $nodeId, $language, $version, $siteId)
     {
         $facade = $this->get('jms_serializer')->deserialize(
             $request->getContent(),
@@ -49,9 +77,37 @@ class AreaController extends BaseController
             $request->get('_format', 'json')
         );
 
-        $this->updateArea($nodeId, $facade);
+        $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
+        $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
+        $rootArea = $node->getArea();
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($rootArea, $facade->areaId);
+
+        $this->get('open_orchestra_api.transformer_manager')
+            ->get('area')->reverseTransform($facade, $area, $node);
+
+        $this->get('object_manager')->flush();
+
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
 
         return array();
+    }
+
+    /**
+     * @param string     $nodeId
+     * @param AreaFacade $facade
+     */
+    protected function updateArea($node, AreaFacade $facade)
+    {
+        //$node = $this->getNode($nodeId, self::ROLE_ACCESS);
+
+        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $facade->areaId);
+
+        $this->get('open_orchestra_api.transformer_manager')
+            ->get('area')->reverseTransform($facade, $area, $node);
+
+        $this->get('object_manager')->flush();
+
+        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
     }
 
     /**
@@ -202,7 +258,6 @@ class AreaController extends BaseController
         return array();
     }
 
-
     /**
      * @param NodeInterface $node
      *
@@ -218,25 +273,20 @@ class AreaController extends BaseController
     }
 
     /**
-     * @param string $areaId
-     * @param string $nodeId
+     * @param NodeInterface $node
      *
-     * @Config\Route("/{areaId}/show-in-node/{nodeId}", name="open_orchestra_api_area_show_in_node")
-     * @Config\Method({"GET"})
+     * @return string
      *
-     * @return FacadeInterface
-     *
-     * @deprecated will be removed in 2.0
      */
-    public function showInNodeAction($areaId, $nodeId)
+    protected function getAccessRole(NodeInterface $node)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
+            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
+        }
 
-        $node = $this->getNode($nodeId, self::ROLE_ACCESS);
-        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $areaId);
-
-        return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node);
+        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
     }
+
 
     /**
      * @param string $areaId
@@ -361,23 +411,6 @@ class AreaController extends BaseController
     }
 
     /**
-     * @param string     $nodeId
-     * @param AreaFacade $facade
-     */
-    protected function updateArea($nodeId, AreaFacade $facade)
-    {
-        $node = $this->getNode($nodeId, self::ROLE_ACCESS);
-        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $facade->areaId);
-
-        $this->get('open_orchestra_api.transformer_manager')
-            ->get('area')->reverseTransform($facade, $area, $node);
-
-        $this->get('object_manager')->flush();
-
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
-    }
-
-    /**
      * Remove an area from an areaContainer
      *
      * @param string                 $areaId
@@ -416,24 +449,5 @@ class AreaController extends BaseController
         $this->denyAccessUnlessGranted($role, $node);
 
         return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     *
-     * @return string
-     *
-     * @deprecated will be removed in 2.0
-     *
-     */
-    protected function getAccessRole(NodeInterface $node)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
-
-        if (NodeInterface::TYPE_ERROR === $node->getNodeType()) {
-            return TreeNodesPanelStrategy::ROLE_ACCESS_ERROR_NODE;
-        }
-
-        return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
     }
 }

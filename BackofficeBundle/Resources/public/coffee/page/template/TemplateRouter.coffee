@@ -12,7 +12,7 @@
       type: "GET"
       url: $('#nav-template-' + templateId).data('url')
       success: (response) ->
-        template = new TemplateModel
+        template = new penOrchestra.Page.Template.Template
         template.set response
         templateViewClass = appConfigurationView.getConfiguration('template', 'showTemplate')
         new templateViewClass(

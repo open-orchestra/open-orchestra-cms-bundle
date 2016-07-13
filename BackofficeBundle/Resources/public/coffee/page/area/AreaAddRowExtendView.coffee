@@ -21,7 +21,7 @@ extendView['OpenOrchestra.Page.Area.AddRow'] = {
      * @param {string} title
     ###
     showFormWithSelectLayout: (url, title) ->
-      adminFormViewClass = appConfigurationView.setConfiguration(@options.entityType, 'showOrchestraModal', OpenOrchestra.Page.Area.AreaFormRowView)
+      appConfigurationView.setConfiguration(@options.entityType, 'showOrchestraModal', OpenOrchestra.Page.Area.AreaFormRowView)
       adminFormViewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAdminForm')
       new adminFormViewClass(
         url: url

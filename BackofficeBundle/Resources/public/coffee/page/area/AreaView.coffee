@@ -10,11 +10,12 @@ window.OpenOrchestra.Page.Area or= {}
 ###
 class OpenOrchestra.Page.Area.AreaView extends OrchestraView
 
-  extendView: ['OpenOrchestra.Page.Area.AddRow']
+  extendView: ['OpenOrchestra.Page.Area.AddRow', 'OpenOrchestra.Page.Area.AddBlock']
 
   events:
     'click': 'triggerEditArea'
     'click .add-row': 'showFormAddRow'
+    'click .add-block': 'showFormAddBlock'
     'sortstop .area-container': 'stopSortArea'
 
   ###*
@@ -33,6 +34,7 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     @options.entityType = 'area'
     OpenOrchestra.Page.Area.Channel.bind 'activateEditArea', @activateEditArea, @
     OpenOrchestra.Page.Area.Channel.bind 'activateSortableArea', @activateSortableArea, @
+    OpenOrchestra.Page.Area.Channel.bind 'updateArea', @reloadArea, @
     return
 
   ###*
@@ -40,9 +42,41 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/area/areaView', @options)
+    @renderAreaBlocks($('.area-container', @$el))
     @options.domContainer.append @$el
     @setFlexWidth(@$el, @options.area.get('width')) if @options.area.get('width')
     @addSubAreas($('.area-container', @$el), @options.area.get('areas'))
+
+
+  ###*
+   * @param {string} areaId
+  ###
+  reloadArea: (areaId) ->
+    if areaId == @options.area.get('area_id')
+      url = @options.area.get('links')._self
+      if url?
+        viewContext = @
+        displayLoader('.area-container', @$el)
+        $.ajax
+          type: "GET"
+          url: url
+          success: (response) ->
+            area = new OpenOrchestra.Page.Area.Area
+            area.set response
+            viewContext.options.area = area
+            $('.area-container', viewContext.$el). html('')
+            viewContext.renderAreaBlocks($('.area-container', viewContext.$el))
+
+  ###*
+   * Render blocks area
+  ###
+  renderAreaBlocks: (container) ->
+    for block in @options.area.get('blocks').models
+      blockViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addBlock')
+      new blockViewClass(
+        domContainer: container
+        block: block
+      )
 
   ###*
    * Set width in flex property if width is a number else if flex-basis property
@@ -115,12 +149,16 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     data = {}
     data.area_id = @options.area.get('area_id')
     data.areas = []
-    for area in @options.area.get('areas')
+    console.log @options.area.get('areas')
+    for area in @options.area.get('areas').models
+      console.log area
       subArea = {}
-      subArea.area_id = area.area_id
-      subArea.order = $('.area[data-area-id="'+area.area_id+'"]', @$el).index()
+      subArea.area_id = area.get('area_id')
+      subArea.order = $('.area[data-area-id="'+area.get('area_id')+'"]', @$el).index()
       data.areas.push(subArea)
     url = @options.area.get('links')._self_move_area
+    url = null
+    console.log data
     if url?
       $.ajax
          url: url
@@ -134,12 +172,10 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
    * @param {object} areas
   ###
   addSubAreas: (container, areas) ->
-    for area in areas
-      areaModel = new Area
-      areaModel.set area
+    for area in areas.models
       areaViewClass = appConfigurationView.getConfiguration(@options.entityType, 'addArea')
       new areaViewClass(
-        area: areaModel
+        area: area
         parentAreaView: @
         domContainer: container
         toolbarContainer: @options.toolbarContainer
