@@ -17,6 +17,9 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     'click .add-row': 'showFormAddRow'
     'click .add-block': 'showFormAddBlock'
     'sortstop .area-container': 'stopSortArea'
+    'sortupdate .block-container': 'stopBlock'
+    'sortreceive .block-container': 'receiveBlock'
+    'sortremove .block-container': 'removeBlock'
 
   ###*
    * @param {Object} options
@@ -42,11 +45,10 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
   ###
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/area/areaView', @options)
-    @renderAreaBlocks($('.area-container', @$el))
+    @renderAreaBlocks($('.block-container', @$el)) if @options.area.get('blocks').length > 0 or @options.area.get('areas').length == 0
+    @addSubAreas($('.area-container', @$el), @options.area.get('areas')) if @options.area.get('areas').length > 0
     @options.domContainer.append @$el
     @setFlexWidth(@$el, @options.area.get('width')) if @options.area.get('width')
-    @addSubAreas($('.area-container', @$el), @options.area.get('areas'))
-
 
   ###*
    * @param {string} areaId
@@ -56,7 +58,7 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
       url = @options.area.get('links')._self
       if url?
         viewContext = @
-        displayLoader('.area-container', @$el)
+        displayLoader('.block-container', @$el)
         $.ajax
           type: "GET"
           url: url
@@ -64,8 +66,8 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
             area = new OpenOrchestra.Page.Area.Area
             area.set response
             viewContext.options.area = area
-            $('.area-container', viewContext.$el). html('')
-            viewContext.renderAreaBlocks($('.area-container', viewContext.$el))
+            $('.block-container', viewContext.$el). html('')
+            viewContext.renderAreaBlocks($('.block-container', viewContext.$el))
 
   ###*
    * Render blocks area
@@ -78,6 +80,59 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
         block: block
         area: @options.area
       )
+    @activateBlocksSortable()
+
+  ###*
+   * activate sortable for blocks
+  ###
+  activateBlocksSortable: () ->
+    $('.block-container', @$el).sortable(
+      connectWith: '.block-container',
+      handle: '.move-tool',
+      tolerance: 'pointer',
+      areaSenderView: @
+    )
+
+  ###*
+   * event when block is moved inside area
+  ###
+  stopBlock: (event, ui) ->
+    event.stopPropagation()
+    areaTo = $(ui.item.context).parent()
+    areaFrom = $(event.currentTarget)
+    if (not ui.sender && areaFrom[0] == areaTo[0])
+      @updateOrderBlocks()
+      @options.area.updateBlock(false)
+
+  ###*
+   * Update order of block in area
+  ###
+  updateOrderBlocks: () ->
+    orderBlocks = $('.item-block', @$el).map(() ->
+      return $(this).attr('data-block-id')
+    ).get();
+    @options.area.updateOrderBlocks(orderBlocks)
+
+  ###*
+   * Event when block is moved in other area
+  ###
+  receiveBlock: (event, ui) ->
+    event.stopPropagation()
+    blockId = ui.item.attr('data-block-id')
+    areaSenderView = $(ui.sender).sortable("option", "areaSenderView");
+    areaSender = areaSenderView.options.area
+    block = areaSender.get('blocks').get(blockId)
+
+    @options.area.get('blocks').add(block)
+    @updateOrderBlocks()
+    OpenOrchestra.Page.Block.Channel.trigger 'moveBlock', blockId, @options.area
+    areaSender.get('blocks').remove(block)
+
+    data = {areas: [@options.area.toJSON(), areaSender.toJSON()]}
+    $.ajax
+      url: @options.area.get('links')._self_move_block
+      method: 'POST'
+      data: JSON.stringify data
 
   ###*
    * Set width in flex property if width is a number else if flex-basis property
@@ -111,27 +166,13 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
       })
 
   ###*
-   * activate sortable in area
-   *
-   * @param {string} rowContainerAreaId
-   * @param {object} rowAreaView
-  ###
-  activateSortableAreaColumn: (rowContainerAreaId, columnAreaView) ->
-    if rowContainerAreaId == @options.area.get('area_id')
-      sortableContainer = @$el.children('.area-container')
-      sortableContainer.children().addClass('blocked')
-      columnAreaView.$el.removeClass('blocked')
-      sortableContainer.sortable({
-        cancel: '.blocked'
-      })
-
-  ###*
    * Stop sortable area
   ###
   stopSortArea: (event)->
     event.stopPropagation()
-    @destroySortable()
-    @updateOrderChildrenAreas()
+    if($(event.target).hasClass('area-container'))
+      @destroySortable()
+      @updateOrderChildrenAreas()
 
   ###*
    * Destroy sortable area
@@ -142,6 +183,7 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     OpenOrchestra.Page.Area.Channel.trigger 'disableSortableArea'
     @$el.children('.area-container').children().removeClass('blocked')
     @$el.children('.area-container').children().css('z-index', '')
+    @activateBlocksSortable()
 
   ###*
    * Update order children areas
@@ -150,16 +192,12 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
     data = {}
     data.area_id = @options.area.get('area_id')
     data.areas = []
-    console.log @options.area.get('areas')
     for area in @options.area.get('areas').models
-      console.log area
       subArea = {}
       subArea.area_id = area.get('area_id')
       subArea.order = $('.area[data-area-id="'+area.get('area_id')+'"]', @$el).index()
       data.areas.push(subArea)
     url = @options.area.get('links')._self_move_area
-    url = null
-    console.log data
     if url?
       $.ajax
          url: url

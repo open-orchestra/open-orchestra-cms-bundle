@@ -1,8 +1,5 @@
 SiteModel = Backbone.Model.extend({})
 
-BlockModel = Backbone.Model.extend({})
-BlockCollection = Backbone.Collection.extend(model: BlockModel)
-
 TableviewModel = Backbone.Model.extend({})
 
 VersionModel = Backbone.Model.extend({})

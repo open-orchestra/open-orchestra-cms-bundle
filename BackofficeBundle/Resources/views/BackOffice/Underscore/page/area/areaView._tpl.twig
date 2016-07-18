@@ -7,6 +7,9 @@
         <header class="text-center"><%= area.get('label') %></header>
     <% }  %>
     <div class="area-container area-<%= area.get('area_type') %>">
+        <% if (_.isEmpty(area.get('areas').models)) { %>
+            <div class="block-container"></div>
+        <% } %>
     </div>
     <% if ('row' !== area.get('area_type')) { %>
         <div class="area-action">

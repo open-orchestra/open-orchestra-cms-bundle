@@ -14,7 +14,6 @@ extendView['OpenOrchestra.Page.Area.AddBlock'] = {
       url_block_list = @options.area.get("links")._block_list
       title = @$el.attr('data-title-add-block')
       viewClass = appConfigurationView.getConfiguration(@options.entityType, 'showAddBlocksModal')
-      console.log @options.area
       new viewClass(
         urlBlockList: url_block_list
         title: title

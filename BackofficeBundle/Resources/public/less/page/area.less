@@ -9,7 +9,13 @@
   }
   .area-container {
     display: flex;
-    flex: 1
+    flex: 1;
+
+    .block-container {
+      display:flex;
+      flex-direction: column;
+      flex: 1;
+    }
   }
   .area-container.area-root {
     flex-direction: column;
@@ -43,7 +49,7 @@
     z-index: 2;
   }
   &.ui-sortable-handle.blocked, .ui-sortable-handle.blocked .area {
-    opacity: 0.9;
+    opacity: 0.7;
   }
   .ui-sortable-handle:not(.blocked) {
     border: 2px solid orange;

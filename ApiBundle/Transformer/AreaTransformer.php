@@ -171,6 +171,13 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
                     'siteId' => $node->getSiteId(),
                 )));
 
+                $facade->addLink('_self_move_block', $this->generateRoute('open_orchestra_api_area_move_block', array(
+                    'nodeId' => $node->getNodeId(),
+                    'language' => $node->getLanguage(),
+                    'version' => $node->getVersion(),
+                    'siteId' => $node->getSiteId(),
+                )));
+
                 $facade->addLink('_self', $this->generateRoute('open_orchestra_api_area_show_in_node', array(
                     'areaId' => $area->getAreaId(),
                     'nodeId' => $node->getNodeId(),
@@ -281,13 +288,11 @@ class AreaTransformer extends AbstractSecurityCheckerAwareTransformer implements
             $blockDocument = array();
             foreach ($blocks as $position => $blockFacade) {
                 $blockArray = $this->getTransformer('block')->reverseTransformToArray($blockFacade, $node);
-                dump($blockArray);
                 $blockDocument[$position] = $blockArray;
                 $block = $node->getBlock($blockArray['blockId']);
                 if ($blockArray['nodeId'] !== 0) {
                     $nodeTransverse = $this->nodeRepository
                         ->findInLastVersion($blockArray['nodeId'], $node->getLanguage(), $node->getSiteId());
-                    dump($nodeTransverse);
                     $block = $nodeTransverse->getBlock($blockArray['blockId']);
                 }
                 $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $source->getAreaId()));

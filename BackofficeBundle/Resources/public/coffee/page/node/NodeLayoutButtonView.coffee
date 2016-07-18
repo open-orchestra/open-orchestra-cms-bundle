@@ -1,13 +1,14 @@
 ###
- * @namespace OpenOrchestra:Page
+ * @namespace OpenOrchestra:Page:Node
 ###
 window.OpenOrchestra or= {}
 window.OpenOrchestra.Page or= {}
+window.OpenOrchestra.Page.Node or= {}
 
 ###
  * @class NodeLayoutButtonView
 ###
-class OpenOrchestra.Page.NodeLayoutButtonView extends OpenOrchestra.Page.PageLayoutButtonView
+class OpenOrchestra.Page.Node.NodeLayoutButtonView extends OpenOrchestra.Page.Common.PageLayoutButtonView
 
   ###
    * Called when user click on edit span
@@ -24,4 +25,4 @@ class OpenOrchestra.Page.NodeLayoutButtonView extends OpenOrchestra.Page.PageLay
     new adminFormViewClass(options)
 
 jQuery ->
-  appConfigurationView.setConfiguration('node', 'addPageLayoutButton', OpenOrchestra.Page.NodeLayoutButtonView)
+  appConfigurationView.setConfiguration('node', 'addPageLayoutButton', OpenOrchestra.Page.Node.NodeLayoutButtonView)

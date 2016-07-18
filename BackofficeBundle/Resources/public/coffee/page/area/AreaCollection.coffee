@@ -6,7 +6,7 @@ window.OpenOrchestra.Page or= {}
 window.OpenOrchestra.Page.Area or= {}
 
 ###*
- * @class Area
+ * @class AreaCollection
 ###
 class OpenOrchestra.Page.Area.AreaCollection extends Backbone.Collection
 

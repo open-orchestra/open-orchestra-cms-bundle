@@ -16,4 +16,4 @@ class OpenOrchestra.Page.Node.Node extends Backbone.Model
   set: (models) ->
     super(models)
     @attributes.area = new OpenOrchestra.Page.Area.Area(models.area) if models.area?
-    @attributes.blocks = new BlockCollection(models.blocks) if models.blocks?
+    @attributes.blocks = new OpenOrchestra.Page.Block.BlockCollection(models.blocks) if models.blocks?

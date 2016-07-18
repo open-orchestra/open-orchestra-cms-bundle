@@ -46,7 +46,6 @@ class AreaController extends BaseController
      */
     public function showInNodeAction($areaId, $nodeId, $language, $version, $siteId, $areaParentId)
     {
-
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getAccessRole($node), $node);
 
@@ -55,7 +54,6 @@ class AreaController extends BaseController
 
         return $this->get('open_orchestra_api.transformer_manager')->get('area')->transform($area, $node, $areaParentId);
     }
-
 
     /**
      * @param Request $request
@@ -77,6 +75,51 @@ class AreaController extends BaseController
             $request->get('_format', 'json')
         );
 
+        $this->updateArea($facade, $nodeId, $language, $version, $siteId);
+
+        return array();
+    }
+
+
+    /**
+     * @param Request $request
+     * @param string  $nodeId
+     * @param string  $language
+     * @param string  $version
+     * @param string  $siteId
+     *
+     * @Config\Route("/{siteId}/{nodeId}/{version}/{language}/move-block", name="open_orchestra_api_area_move_block")
+     * @Config\Method({"POST"})
+     *
+     * @return Response
+     */
+    public function moveBlockFromAreaToAreaAction(Request $request, $nodeId, $language, $version, $siteId)
+    {
+        $facade = $this->get('jms_serializer')->deserialize(
+            $request->getContent(),
+            'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
+            $request->get('_format', 'json')
+        );
+        $areas = $facade->getAreas();
+        dump($areas);
+
+        $this->updateArea($areas[0], $nodeId, $language, $version, $siteId);
+        $this->updateArea($areas[1], $nodeId, $language, $version, $siteId);
+
+        $this->get('object_manager')->flush();
+
+        return array();
+    }
+
+    /**
+     * @param AreaFacade $facade
+     * @param string     $nodeId
+     * @param string     $language
+     * @param string     $version
+     * @param string     $siteId
+     */
+    protected function updateArea(AreaFacade $facade, $nodeId, $language, $version, $siteId)
+    {
         $node = $this->get('open_orchestra_model.repository.node')->findVersion($nodeId, $language, $siteId, $version);
         $this->denyAccessUnlessGranted($this->getEditionRole($node), $node);
         $rootArea = $node->getArea();
@@ -85,54 +128,7 @@ class AreaController extends BaseController
         $this->get('open_orchestra_api.transformer_manager')
             ->get('area')->reverseTransform($facade, $area, $node);
 
-        $this->get('object_manager')->flush();
-
         $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
-
-        return array();
-    }
-
-    /**
-     * @param string     $nodeId
-     * @param AreaFacade $facade
-     */
-    protected function updateArea($node, AreaFacade $facade)
-    {
-        //$node = $this->getNode($nodeId, self::ROLE_ACCESS);
-
-        $area = $this->get('open_orchestra_model.repository.node')->findAreaByAreaId($node, $facade->areaId);
-
-        $this->get('open_orchestra_api.transformer_manager')
-            ->get('area')->reverseTransform($facade, $area, $node);
-
-        $this->get('object_manager')->flush();
-
-        $this->dispatchEvent(NodeEvents::NODE_UPDATE_BLOCK_POSITION, new NodeEvent($node));
-    }
-
-    /**
-     * @param Request $request
-     * @param string  $nodeId
-     *
-     * @Config\Route("/move-block/{nodeId}", name="open_orchestra_api_area_move_block")
-     * @Config\Method({"POST"})
-     *
-     * @return Response
-     */
-    public function moveBlockFromAreaToAreaAction(Request $request, $nodeId)
-    {
-        $facade = $this->get('jms_serializer')->deserialize(
-            $request->getContent(),
-            'OpenOrchestra\ApiBundle\Facade\AreaCollectionFacade',
-            $request->get('_format', 'json')
-        );
-
-        $areas = $facade->getAreas();
-
-        $this->updateArea($nodeId,$areas[1]);
-        $this->updateArea($nodeId, $areas[0]);
-
-        return array();
     }
 
     /**
@@ -287,7 +283,6 @@ class AreaController extends BaseController
         return TreeNodesPanelStrategy::ROLE_ACCESS_TREE_NODE;
     }
 
-
     /**
      * @param string $areaId
      * @param string $templateId
@@ -312,7 +307,6 @@ class AreaController extends BaseController
         return $this->get('open_orchestra_api.transformer_manager')
             ->get('area')->transformFromTemplate($area, $template);
     }
-
 
     /**
      * @param string      $areaId

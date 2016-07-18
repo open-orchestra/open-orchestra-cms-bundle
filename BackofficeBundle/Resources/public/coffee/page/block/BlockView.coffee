@@ -29,6 +29,7 @@ class OpenOrchestra.Page.Block.BlockView extends OrchestraView
     @loadTemplates [
       "OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/block/blockView"
     ]
+    OpenOrchestra.Page.Block.Channel.bind 'moveBlock', @moveBlock, @
     return
 
   ###*
@@ -37,6 +38,16 @@ class OpenOrchestra.Page.Block.BlockView extends OrchestraView
   render: ->
     @setElement @renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/block/blockView', @options)
     @options.domContainer.append @$el
+
+  ###*
+   * move block
+   *
+   * @param {string} blockId
+   * @param {OpenOrchestra.Page.Area.Area} area
+  ###
+  moveBlock: (blockId, area) ->
+    if blockId == @options.block.cid and area != @options.area
+      @options.area = area
 
   ###*
    * Remove a block
@@ -49,10 +60,12 @@ class OpenOrchestra.Page.Block.BlockView extends OrchestraView
         @$el.data('delete-confirm-question'),
         @$el.data('delete-confirm-explanation'),
         callBackParams:
+          view: @
           block: @options.block
           area: @options.area
         yesCallback: (params) ->
           params.area.removeBlock(params.block)
+          params.view.remove()
       )
 
   ###*

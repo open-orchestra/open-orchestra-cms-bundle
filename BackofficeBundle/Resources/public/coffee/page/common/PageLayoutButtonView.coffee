@@ -1,13 +1,14 @@
 ###
- * @namespace OpenOrchestra:Page
+ * @namespace OpenOrchestra:Page:Common
 ###
 window.OpenOrchestra or= {}
 window.OpenOrchestra.Page or= {}
+window.OpenOrchestra.Page.Common or= {}
 
 ###
  * @class PageLayoutButtonView
 ###
-class OpenOrchestra.Page.PageLayoutButtonView extends OrchestraView
+class OpenOrchestra.Page.Common.PageLayoutButtonView extends OrchestraView
 
   events:
     'click span': 'configurationPage'

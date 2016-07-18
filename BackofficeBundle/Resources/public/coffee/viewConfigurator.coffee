@@ -9,7 +9,7 @@ OrchestraViewConfigurator = ->
     'showAreaToolbar': OpenOrchestra.Page.Area.AreaToolbarView
     'addBlock': OpenOrchestra.Page.Block.BlockView
     'addButtonAction': TableviewAction
-    'addPageLayoutButton': OpenOrchestra.Page.PageLayoutButtonView
+    'addPageLayoutButton': OpenOrchestra.Page.Common.PageLayoutButtonView
     'showTableCollection': TableviewCollectionView
     'showTableHeader': DataTableViewSearchHeader
     'addDataTable': DataTableView

@@ -71,18 +71,22 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/dashboard/widget/DraftContentsView.js',
 
     //--[ OLD PAGE ]--//
-    'web/built/openorchestrabackoffice/js/page-old/makeSortable.js',
-    'web/built/openorchestrabackoffice/js/page-old/BlockView.js',
-    'web/built/openorchestrabackoffice/js/page-old/SubElementFormView.js',
     'web/built/openorchestrabackoffice/js/page-old/orderNode.js',
-    'web/built/openorchestrabackoffice/js/page-old/PageLayoutButtonView.js',
-    'web/built/openorchestrabackoffice/js/page-old/NodeLayoutButtonView.js',
-    'web/built/openorchestrabackoffice/js/page-old/viewportChannel.js',
+
 
     //--[ PAGE ]--//
     'web/built/openorchestrabackoffice/js/page/common/AbstractPageView.js',
+    'web/built/openorchestrabackoffice/js/page/common/PageLayoutButtonView.js',
 
-    //----- AREA  -----//
+    //----- Block -----//
+    'web/built/openorchestrabackoffice/js/page/block/Block.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockCollection.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockChannel.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockFormAddView.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockFormEditView.js',
+    'web/built/openorchestrabackoffice/js/page/block/BlockView.js',
+
+      //----- AREA  -----//
     'web/built/openorchestrabackoffice/js/page/area/Area.js',
     'web/built/openorchestrabackoffice/js/page/area/AreaCollection.js',
     'web/built/openorchestrabackoffice/js/page/area/AreaChannel.js',
@@ -104,10 +108,8 @@ module.exports = {
     'web/built/openorchestrabackoffice/js/page/node/NodeRouter.js',
     'web/built/openorchestrabackoffice/js/page/node/NodeView.js',
     'web/built/openorchestrabackoffice/js/page/node/NodeFormView.js',
-
-    //----- Block -----//
-    'web/built/openorchestrabackoffice/js/page/block/BlockFormAddView.js',
-    'web/built/openorchestrabackoffice/js/page/block/BlockView.js',
+    'web/built/openorchestrabackoffice/js/page/node/NodeLayoutButtonView.js',
+    'web/built/openorchestrabackoffice/js/page-old/orderNode.js',
 
     //--[ TAB ]--//
     'web/built/openorchestrabackoffice/js/tab/TabView.js',

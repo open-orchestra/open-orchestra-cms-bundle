@@ -16,7 +16,7 @@ class OpenOrchestra.Page.Area.Area extends Backbone.Model
   set: (models) ->
     super(models)
     @attributes.areas = new OpenOrchestra.Page.Area.AreaCollection(models.areas) if models.areas?
-    @attributes.blocks = new BlockCollection(models.blocks) if models.blocks?
+    @attributes.blocks = new OpenOrchestra.Page.Block.BlockCollection(models.blocks) if models.blocks?
 
   ###*
    * Add Block in area
@@ -31,20 +31,32 @@ class OpenOrchestra.Page.Area.Area extends Backbone.Model
   ###
   removeBlock: (block) ->
     @attributes.blocks.remove(block)
-    @updateBlock()
+    @updateBlock(false)
     return
 
   ###*
-   * Flush blocks
+   * update order of blockCollection
   ###
-  updateBlock: () ->
+  updateOrderBlocks: (orderBlocksId) ->
+    blocks = new OpenOrchestra.Page.Block.BlockCollection
+    for blockId in orderBlocksId
+      blocks.add(@attributes.blocks.get(blockId))
+    @attributes.blocks = blocks
+
+  ###*
+   * Flush blocks
+   *
+   * @param {boolean} trigger Trigger the update
+  ###
+  updateBlock: (trigger = true) ->
     viewContext = @
     $.ajax
       url: @attributes.links._self_update_block
       method: 'POST'
       data: JSON.stringify @toJSON()
       success: ->
-        OpenOrchestra.Page.Area.Channel.trigger 'updateArea', viewContext.get('area_id')
+        if trigger
+          OpenOrchestra.Page.Area.Channel.trigger 'updateArea', viewContext.get('area_id')
     return
 
   ###*

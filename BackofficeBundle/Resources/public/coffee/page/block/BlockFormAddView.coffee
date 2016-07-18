@@ -42,7 +42,7 @@ class OpenOrchestra.Page.Block.BlockFormAddView extends OrchestraModalView
       type: "GET"
       url: @options.urlBlockList
       success: (response) ->
-          viewContext.options.blocks = new BlockCollection
+          viewContext.options.blocks = new OpenOrchestra.Page.Block.BlockCollection
           viewContext.options.blocks.set(response.blocks)
           $('.modal-body', viewContext.$el).html viewContext.renderTemplate('OpenOrchestraBackofficeBundle:BackOffice:Underscore/page/block/blockListView',
             blocks : viewContext.options.blocks
@@ -59,4 +59,3 @@ class OpenOrchestra.Page.Block.BlockFormAddView extends OrchestraModalView
     @options.domContainer.modal "hide"
     @unbind()
     @remove()
-
