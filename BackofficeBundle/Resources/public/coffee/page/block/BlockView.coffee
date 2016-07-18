@@ -12,6 +12,7 @@ class OpenOrchestra.Page.Block.BlockView extends OrchestraView
 
   events:
     'click .toolbar .block-remove': 'removeBlock'
+    'click .toolbar .block-param': 'editBlock'
 
   ###*
    * @param {Object} options
@@ -53,3 +54,15 @@ class OpenOrchestra.Page.Block.BlockView extends OrchestraView
         yesCallback: (params) ->
           params.area.removeBlock(params.block)
       )
+
+  ###*
+   * edit block
+  ###
+  editBlock: (event) ->
+    event.stopPropagation()
+    adminFormViewClass = appConfigurationView.getConfiguration('area', 'showAdminForm')
+    new adminFormViewClass(
+      url: @options.block.get('links')._self_form
+      extendView: [ 'showVideo' ]
+      entityType: 'block'
+    )
