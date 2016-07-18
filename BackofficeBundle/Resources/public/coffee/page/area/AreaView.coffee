@@ -76,6 +76,7 @@ class OpenOrchestra.Page.Area.AreaView extends OrchestraView
       new blockViewClass(
         domContainer: container
         block: block
+        area: @options.area
       )
 
   ###*

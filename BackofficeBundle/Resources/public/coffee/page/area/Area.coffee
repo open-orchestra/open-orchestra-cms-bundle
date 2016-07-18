@@ -10,7 +10,6 @@ window.OpenOrchestra.Page.Area or= {}
 ###
 class OpenOrchestra.Page.Area.Area extends Backbone.Model
 
-
   ###*
    * set nested attributes area and blocks
   ###
@@ -24,6 +23,14 @@ class OpenOrchestra.Page.Area.Area extends Backbone.Model
   ###
   addBlock: (block) ->
     @attributes.blocks.push(block)
+    @updateBlock()
+    return
+
+  ###*
+   * Remove Block in area
+  ###
+  removeBlock: (block) ->
+    @attributes.blocks.remove(block)
     @updateBlock()
     return
 
