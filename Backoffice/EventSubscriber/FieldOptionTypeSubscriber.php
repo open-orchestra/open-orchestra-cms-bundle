@@ -31,14 +31,14 @@ class FieldOptionTypeSubscriber implements EventSubscriberInterface
         $option = $this->options[$element->getKey()];
         $form = $event->getForm();
 
-        $optionsField = array(
-            'label' => $option['label'],
-            'required' => $option['required']
-        );
         if ($option['required'] === true) {
-            $optionsField['constraints'] = new NotBlank();
+            $option['constraints'] = new NotBlank();
         }
-        $form->add('value', $option['type'], $optionsField);
+
+        $formType = $option['type'];
+        unset($option['type']);
+
+        $form->add('value', $formType, $option);
     }
 
     /**
