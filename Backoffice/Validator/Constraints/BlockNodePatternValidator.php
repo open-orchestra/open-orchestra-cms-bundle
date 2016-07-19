@@ -7,7 +7,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\BackofficeBundle\StrategyManager\GenerateFormManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class BlockNodePatternValidator
@@ -55,11 +54,11 @@ class BlockNodePatternValidator extends ConstraintValidator
     }
 
     /**
-     * @param AreaContainerInterface $container
+     * @param NodeInterface $container
      *
      * @return array
      */
-    protected function getRefBlock(AreaContainerInterface $container)
+    protected function getRefBlock(NodeInterface $container)
     {
         $blockRef = array();
         $areas = $container->getAreas();
