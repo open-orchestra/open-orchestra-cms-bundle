@@ -41,7 +41,7 @@ class NodeTemplateSelectionSubscriber implements EventSubscriberInterface
         ) {
             if (
                 array_key_exists('templateId', $data['nodeTemplateSelection']) &&
-                0 === $formData->getAreas()->count() &&
+                null === $formData->getArea() &&
                 0 === $formData->getBlocks()->count()&&
                 '' != $data['nodeTemplateSelection']['templateId']
             ) {

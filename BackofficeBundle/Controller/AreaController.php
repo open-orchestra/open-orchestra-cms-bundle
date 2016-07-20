@@ -26,7 +26,7 @@ class AreaController extends AbstractEditionRoleController
      * @param string  $templateId
      * @param string  $areaParentId
      *
-     * @Config\Route("/area/row/new/{templateId}/{areaParentId}", name="open_orchestra_backoffice_template_new_row_area")
+     * @Config\Route("/area/template/row/new/{templateId}/{areaParentId}", name="open_orchestra_backoffice_template_new_row_area")
      * @Config\Method({"GET", "POST"})
      * @Config\Security("is_granted('ROLE_ACCESS_UPDATE_GENERAL_NODE')")
      *
