@@ -48,7 +48,7 @@ class UserType extends AbstractType
             'disabled' => true
         ));
 
-        if ($options['edit_groups']) {
+        if (isset($options['edit_groups']) && $options['edit_groups']) {
             $builder->addEventSubscriber(new UserGroupsSubscriber());
         }
 
