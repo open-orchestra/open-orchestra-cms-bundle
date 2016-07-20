@@ -21,4 +21,3 @@ open_orchestra_backoffice_validators:
         remove_node_date: Sie müssen 7 Tage warten, um dauerhaft eine Seite löschen
     boolean_condition:
         pattern: Boolesche Bedingung ist nicht korrekt formatiert
-        

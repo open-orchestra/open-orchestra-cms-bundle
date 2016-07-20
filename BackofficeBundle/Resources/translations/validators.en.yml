@@ -22,4 +22,3 @@ open_orchestra_backoffice_validators:
         remove_node_date: You must wait 7 days to permanently delete a page
     boolean_condition:
         pattern: Boolean condition is not correctly formated
-        
