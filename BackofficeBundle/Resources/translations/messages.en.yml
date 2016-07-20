@@ -25,6 +25,8 @@ open_orchestra_backoffice:
               name: Name
               language: Language
               date: Date
+    internal_link:
+        title: Internal link
     form:
         submit: Save
         edit: Edit

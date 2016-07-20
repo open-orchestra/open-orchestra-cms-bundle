@@ -289,18 +289,17 @@ tinymce.PluginManager.add 'orchestra_link', (editor) ->
         return
     )
     return
-
   editor.addButton 'link',
     icon: 'link'
     tooltip: 'Insert/edit link'
     shortcut: 'Meta+K'
     onclick: createLinkList(showDialog)
-    stateSelector: 'a[href]'
+    stateSelector: 'a[href]:not([data-options])'
   editor.addButton 'unlink',
     icon: 'unlink'
     tooltip: 'Remove link'
     cmd: 'unlink'
-    stateSelector: 'a[href]'
+    stateSelector: 'a[href]:not([data-options])'
   editor.addShortcut 'Meta+K', '', createLinkList(showDialog)
   editor.addCommand 'mceLink', createLinkList(showDialog)
   @showDialog = showDialog
@@ -309,7 +308,7 @@ tinymce.PluginManager.add 'orchestra_link', (editor) ->
     text: 'Insert/edit link'
     shortcut: 'Meta+K'
     onclick: createLinkList(showDialog)
-    stateSelector: 'a[href]'
+    stateSelector: 'a[href]:not([data-options])'
     context: 'insert'
     prependToContext: true
   return
