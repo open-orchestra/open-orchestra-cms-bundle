@@ -28,6 +28,7 @@ open_orchestra_backoffice:
     internal_link:
         title: Internal link
     form:
+        personnal_account: My account
         submit: Save
         edit: Edit
         delete: Delete
@@ -43,7 +44,7 @@ open_orchestra_backoffice:
         javascript:
           error: An error occurs on your browser during form submission!
         allowed_characters:
-          helper: Allowed characters: a-z, 0-9, _, -
+          helper: "Allowed characters: a-z, 0-9, _, -"
         status:
             published: Published
             draft: Draft
@@ -224,7 +225,7 @@ open_orchestra_backoffice:
             edit_column_title: Edit column
             column_layout:
                 label: Column Layout
-                helper: Column layout: 10%, auto, 100px
+                helper: "Column layout: 10%, auto, 100px"
             layout:
                 select_layout: Select an option
                 manually: Or specify manually
@@ -496,7 +497,7 @@ open_orchestra_backoffice:
             tag_type: Tag type
             google_analytics: Google Analytics
             xiti_free: Xiti Free 7.5
-            site_id: Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)
+            site_id: "Site Id (Google Analytics: Tracking id / Xiti: 's' parameter)"
     element:
         version:
             create: New version
@@ -524,7 +525,7 @@ open_orchestra_backoffice:
     status:
         none_available: No status available
     top_menu:
-        site: Site:
+        site: "Site:"
         collapse_menu: Collapse menu
         sign_out: Sign out
         improve_security: You can improve your security further after logging out by closing this opened browser

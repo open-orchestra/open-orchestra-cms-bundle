@@ -1,14 +1,19 @@
 ((router) ->
   router.route 'user/edit', 'editUserSelf', ->
     @initDisplayRouteChanges()
-    editPersonnalAccount $('#user-account').data('user-url'), $('#user-account').data('password-url')
+    pageTitle = $('#user-account').data('title')
+    userUrl = $('#user-account').data('user-url')
+    passwordUrl = $('#user-account').data('password-url')
+    editPersonnalAccount pageTitle, userUrl, passwordUrl
 ) window.appRouter
 
-editPersonnalAccount = (userUrl, passwordUrl)->
+editPersonnalAccount = (pageTitle, userUrl, passwordUrl)->
+  drawBreadCrumb [pageTitle]
   tabViewClass = appConfigurationView.getConfiguration('user', 'showTab')
   @tabView = new tabViewClass(
     'domContainer': $('#content')
   )
+  setPageLogo('fa fa-fw fa-user')
 
   renderPanel = (tabViewType, panelUrl, tabId, tabIndex, isTabActive) ->
     $.ajax
