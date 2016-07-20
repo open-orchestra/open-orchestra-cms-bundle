@@ -18,6 +18,7 @@ editPersonnalAccount = (userUrl, passwordUrl)->
         elementTabViewClass = appConfigurationView.getConfiguration(tabViewType, 'editEntityTab')
         panelView = new elementTabViewClass
           'response': response
+          'listUrl': false
         window.tabView.addPanel $('[data-title]', panelView.$el).data('title'), tabId, panelView, isTabActive, tabIndex
         return
 
