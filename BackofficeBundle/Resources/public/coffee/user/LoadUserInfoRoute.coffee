@@ -4,10 +4,10 @@
     pageTitle = $('#user-account').data('title')
     userUrl = $('#user-account').data('user-url')
     passwordUrl = $('#user-account').data('password-url')
-    editPersonnalAccount pageTitle, userUrl, passwordUrl
+    editMyAccount pageTitle, userUrl, passwordUrl
 ) window.appRouter
 
-editPersonnalAccount = (pageTitle, userUrl, passwordUrl)->
+editMyAccount = (pageTitle, userUrl, passwordUrl)->
   drawBreadCrumb [pageTitle]
   tabViewClass = appConfigurationView.getConfiguration('user', 'showTab')
   @tabView = new tabViewClass(
