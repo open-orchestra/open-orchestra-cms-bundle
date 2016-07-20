@@ -14,7 +14,6 @@ OrchestraViewConfigurator = ->
     'showTableHeader': DataTableViewSearchHeader
     'addDataTable': DataTableView
     'showAdminForm': AdminFormView
-    'showBlocksPanel': BlocksPanelView
     'showAddBlocksModal': OpenOrchestra.Page.Block.BlockFormAddView
     'showTemplate': OpenOrchestra.Page.Template.TemplateView
     'showNode': OpenOrchestra.Page.Node.NodeView
