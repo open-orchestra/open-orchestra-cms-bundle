@@ -17,7 +17,6 @@ class CheckAreaPresenceValidatorTest extends AbstractBaseTestCase
     protected $validator;
 
     protected $node;
-    protected $areas;
     protected $context;
     protected $constraint;
     protected $constraintViolationBuilder;
@@ -34,10 +33,7 @@ class CheckAreaPresenceValidatorTest extends AbstractBaseTestCase
         Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
         Phake::when($this->constraintViolationBuilder)->atPath(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
 
-        $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
-
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->node)->getAreas()->thenReturn($this->areas);
 
         $this->validator = new CheckAreaPresenceValidator();
         $this->validator->initialize($this->context);
@@ -52,29 +48,29 @@ class CheckAreaPresenceValidatorTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int $count
-     * @param int $violationTimes
-     *
-     * @dataProvider provideCountAndViolation
+     * Test not add violation
      */
-    public function testAddViolationOrNot($count, $violationTimes)
+    public function testAddNotViolation()
     {
-        Phake::when($this->areas)->count()->thenReturn($count);
+        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
+        Phake::when($this->node)->getArea()->thenReturn($area);
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes))->atPath('nodeSource');
-        Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes))->atPath('templateId');
+        Phake::verify($this->constraintViolationBuilder, Phake::never())->atPath('templateId');
+        Phake::verify($this->constraintViolationBuilder, Phake::never())->atPath('nodeSource');
     }
 
     /**
-     * @return array
+     * Test add violation
      */
-    public function provideCountAndViolation()
+    public function testAddViolation()
     {
-        return array(
-            array(1, 0),
-            array(0, 1),
-        );
+        $this->validator->validate($this->node, $this->constraint);
+
+        Phake::when($this->node)->getArea()->thenReturn(null);
+
+        Phake::verify($this->constraintViolationBuilder)->atPath('nodeSource');
+        Phake::verify($this->constraintViolationBuilder)->atPath('templateId');
     }
 }

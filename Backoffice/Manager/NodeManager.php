@@ -279,7 +279,7 @@ class NodeManager
     {
         if (is_array($nodes)) {
             foreach ($nodes as $node) {
-                if (!$this->areaManager->areaConsistency($node) || !$this->blockManager->blockConsistency($node)) {
+                if (!$this->areaManager->areaConsistency($node->getArea(), $node) || !$this->blockManager->blockConsistency($node)) {
                     return false;
                 }
             }
@@ -366,7 +366,7 @@ class NodeManager
         $nodeTransverse = $this->nodeRepository
             ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $node->getLanguage(), $node->getSiteId());
 
-        foreach($node->getAreas() as $area) {
+        foreach($node->getArea()->getAreas() as $area) {
             foreach ($area->getBlocks() as $areaBlock) {
                 if (NodeInterface::TRANSVERSE_NODE_ID === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);

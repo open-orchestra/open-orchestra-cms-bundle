@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
-use OpenOrchestra\Backoffice\Validator\Constraints\AreaFlexRowLayout;
+use OpenOrchestra\Backoffice\Validator\Constraints\AreaRowLayout;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class AreaFlexRowLayoutTest
+ * Class AreaRowLayoutTest
  */
-class AreaFlexRowLayoutTest extends AbstractBaseTestCase
+class AreaRowLayoutTest extends AbstractBaseTestCase
 {
     /**
-     * @var AreaFlexRowLayout
+     * @var AreaRowLayout
      */
     protected $constraint;
 
@@ -21,7 +21,7 @@ class AreaFlexRowLayoutTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $this->constraint = new AreaFlexRowLayout();
+        $this->constraint = new AreaRowLayout();
     }
 
     /**
@@ -45,7 +45,7 @@ class AreaFlexRowLayoutTest extends AbstractBaseTestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_backoffice_validators.area_flex.row_layout', $this->constraint->message);
+        $this->assertSame('open_orchestra_backoffice_validators.area.row_layout', $this->constraint->message);
     }
 
     /**
@@ -53,6 +53,6 @@ class AreaFlexRowLayoutTest extends AbstractBaseTestCase
      */
     public function testValidateBy()
     {
-        $this->assertSame('area_flex_row_layout', $this->constraint->validatedBy());
+        $this->assertSame('area_row_layout', $this->constraint->validatedBy());
     }
 }

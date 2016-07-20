@@ -4,6 +4,7 @@ namespace OpenOrchestra\ApiBundle\Tests\Transformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use Phake;
 use OpenOrchestra\ApiBundle\Facade\AreaFacade;
 use OpenOrchestra\ApiBundle\Facade\BlockFacade;
@@ -33,9 +34,9 @@ class AreaTransformerTest extends AbstractBaseTestCase
     protected $block;
     protected $node;
     protected $area;
-    protected $currentSiteManager;
     protected $authorizationChecker;
     protected $nodeManager;
+    protected $siteId = 'fakeSiteId';
 
     /**
      * Set up the test
@@ -54,6 +55,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
         Phake::when($this->node)->getId()->thenReturn($this->nodeMongoId);
         Phake::when($this->node)->getBlock(Phake::anyParameters())->thenReturn($this->block);
         Phake::when($this->node)->getLanguage(Phake::anyParameters())->thenReturn($this->language);
+        Phake::when($this->node)->getSiteId(Phake::anyParameters())->thenReturn($this->siteId);
 
         $this->otherNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->otherNode)->getBlock(Phake::anyParameters())->thenReturn($this->block);
@@ -70,9 +72,6 @@ class AreaTransformerTest extends AbstractBaseTestCase
 
         $this->areaManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaManager');
 
-        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('fakeId');
-
         $this->authorizationChecker = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         Phake::when($this->authorizationChecker)->isGranted(Phake::anyParameters())->thenReturn(true);
 
@@ -82,7 +81,6 @@ class AreaTransformerTest extends AbstractBaseTestCase
             $this->facadeClass,
             $this->nodeRepository,
             $this->areaManager,
-            $this->currentSiteManager,
             $this->authorizationChecker,
             $this->nodeManager
         );
@@ -107,6 +105,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getHtmlClass()->thenReturn('html_class');
         Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($area)->getAreaType()->thenReturn(AreaInterface::TYPE_COLUMN);
         Phake::when($area)->getBlocks()->thenReturn(array(
             array('nodeId' => 0, 'blockId' => 0),
             array('nodeId' => 'root', 'blockId' => 0),
@@ -116,11 +115,17 @@ class AreaTransformerTest extends AbstractBaseTestCase
         $areaFacade = $this->areaTransformer->transform($area, $this->node, $parentAreaId);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
-        $this->assertArrayHasKey('_self_form', $areaFacade->getLinks());
-        $this->assertArrayHasKey('_self_block', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_form_new_row', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_move_area', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_form_column', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_form_row', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_delete_column', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_delete_row', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_block_list', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_update_block', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_move_block', $areaFacade->getLinks());
         $this->assertArrayHasKey('_self', $areaFacade->getLinks());
-        $this->assertArrayHasKey('_self_delete', $areaFacade->getLinks());
-        Phake::verify($this->router, Phake::times(5))->generate(Phake::anyParameters());
+        Phake::verify($this->router, Phake::times(10))->generate(Phake::anyParameters());
         Phake::verify($this->transformer)->transform(
             $this->block,
             true,
@@ -176,14 +181,18 @@ class AreaTransformerTest extends AbstractBaseTestCase
         Phake::when($area)->getAreaId()->thenReturn('areaId');
         Phake::when($area)->getHtmlClass()->thenReturn('html_class');
         Phake::when($area)->getAreas()->thenReturn(new ArrayCollection());
+        Phake::when($area)->getAreaType()->thenReturn(AreaInterface::TYPE_COLUMN);
 
         $areaFacade = $this->areaTransformer->transformFromTemplate($area, $template, $parentAreaId);
 
         $this->assertInstanceOf('OpenOrchestra\ApiBundle\Facade\AreaFacade', $areaFacade);
-        $this->assertArrayHasKey('_self_form', $areaFacade->getLinks());
-        $this->assertArrayHasKey('_self', $areaFacade->getLinks());
-        $this->assertArrayHasKey('_self_delete', $areaFacade->getLinks());
-        Phake::verify($this->router, Phake::times(3))->generate(Phake::anyParameters());
+        $this->assertArrayHasKey('_self_form_new_row', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_move_area', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_form_column', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_form_row', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_delete_column', $areaFacade->getLinks());
+        $this->assertArrayHasKey('_self_delete_row', $areaFacade->getLinks());
+        Phake::verify($this->router, Phake::times(6))->generate(Phake::anyParameters());
     }
 
     /**
@@ -201,6 +210,9 @@ class AreaTransformerTest extends AbstractBaseTestCase
         $facade = new AreaFacade();
         $facade->addBlock($blockFacade);
 
+        Phake::when($this->area)->getAreas(Phake::anyParameters())
+            ->thenReturn(array());
+
         Phake::when($this->transformer)->reverseTransformToArray(Phake::anyParameters())
             ->thenReturn(array('nodeId' => $nodeId, 'blockId' => $blockId));
 
@@ -211,8 +223,7 @@ class AreaTransformerTest extends AbstractBaseTestCase
             0 => array('nodeId' => $nodeId, 'blockId' => $blockId)
         ));
 
-        $siteId = $this->currentSiteManager->getCurrentSiteId();
-        Phake::verify($this->nodeRepository)->findInLastVersion($nodeId, $this->language, $siteId);
+        Phake::verify($this->nodeRepository)->findInLastVersion($nodeId, $this->language, $this->siteId);
         Phake::verify($this->block)->addArea(array('nodeId' => $this->nodeMongoId, 'areaId' => $this->areaId));
         Phake::verify($this->areaManager, Phake::times(1))->deleteAreaFromBlock(Phake::anyParameters());
     }
@@ -244,6 +255,9 @@ class AreaTransformerTest extends AbstractBaseTestCase
 
         $facade = new AreaFacade();
         $facade->addBlock($blockFacade);
+
+        Phake::when($this->area)->getAreas(Phake::anyParameters())
+            ->thenReturn(array());
 
         Phake::when($this->transformer)->reverseTransformToArray(Phake::anyParameters())
             ->thenReturn(array('nodeId' => 0, 'blockId' => $blockId));

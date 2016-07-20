@@ -51,7 +51,7 @@ class NodeTypeTest extends AbstractBaseTestCase
         Phake::verify($formBuilderMock, Phake::times(16))->add(Phake::anyParameters());
 
         Phake::verify($formBuilderMock, Phake::never())->addModelTransformer(Phake::anyParameters());
-        Phake::verify($formBuilderMock, Phake::times(4))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(2))->addEventSubscriber(Phake::anyParameters());
     }
 
     /**
@@ -99,36 +99,5 @@ class NodeTypeTest extends AbstractBaseTestCase
     public function testGetName()
     {
         $this->assertEquals('oo_node', $this->nodeType->getName());
-    }
-
-    /**
-     * test buildView
-     */
-    public function testBuildView()
-    {
-        $areaId = 'fakeAreaId';
-        $errorFormInterface = Phake::mock('Symfony\Component\Form\FormInterface');
-        Phake::when($errorFormInterface)->getData()->thenReturn(array($areaId));
-
-        $error = Phake::mock('Symfony\Component\Form\FormError');
-        Phake::when($error)->getOrigin()->thenReturn($errorFormInterface);
-
-        $newAreasInterface = Phake::mock('Symfony\Component\Form\FormInterface');
-        Phake::when($newAreasInterface)->getErrors()->thenReturn(array($error));
-
-        $formInterface = Phake::mock('Symfony\Component\Form\FormInterface');
-        Phake::when($formInterface)->has('newAreas')->thenReturn(true);
-        Phake::when($formInterface)->get('newAreas')->thenReturn($newAreasInterface);
-
-        $formView = Phake::mock('Symfony\Component\Form\FormView');
-        $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
-        Phake::when($area)->getAreaId()->thenReturn($areaId);
-        $areaContainer = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaContainerInterface');
-        Phake::when($areaContainer)->getAreas()->thenReturn(array($area, $area));
-        $formView->vars['value'] = $areaContainer;
-
-        $this->nodeType->buildView($formView, $formInterface, array());
-        $this->assertEquals(array_values($formView->vars['areas']), array($areaId));
-        $this->assertEquals($formView->vars['form_legend_helper'], "open_orchestra_backoffice.form.node.template_selection.helper");
     }
 }

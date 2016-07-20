@@ -53,7 +53,7 @@ class BlockManager
                 $otherNode = $this->nodeRepository->find($refArea['nodeId']);
                 $node = $otherNode;
             }
-            $result = $this->findAreaIfExist($refArea['areaId'], $node->getAreas());
+            $result = $this->findAreaIfExist($refArea['areaId'], $node->getArea()->getAreas());
 
             if (null === $result || !$this->checkBlock($result->getBlocks(), $block, $node)) {
                 return false;

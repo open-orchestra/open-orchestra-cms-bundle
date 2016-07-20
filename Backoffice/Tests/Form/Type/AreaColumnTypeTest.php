@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Form\Type;
 
-use OpenOrchestra\Backoffice\Form\Type\AreaFlexRowType;
+use OpenOrchestra\Backoffice\Form\Type\AreaColumnType;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class AreaFlexRowTypeTest
+ * Class AreaColumnTypeTest
  */
-class AreaFlexRowTypeTest extends AbstractBaseTestCase
+class AreaColumnTypeTest extends AbstractBaseTestCase
 {
     protected $areaClass = 'OpenOrchestra\ModelBundle\Document\AreaFlex';
-    /** @var  AreaFlexRowType */
+    /** @var  AreaColumnType */
     protected $areaType;
 
     /**
@@ -20,8 +20,7 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
      */
     public function setUp()
     {
-        $areaFlexManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaFlexManager');
-        $this->areaType = new AreaFlexRowType($this->areaClass, $areaFlexManager);
+        $this->areaType = new AreaColumnType($this->areaClass);
     }
 
     /**
@@ -34,7 +33,7 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
 
         $this->areaType->buildForm($formBuilderMock, array());
 
-        Phake::verify($formBuilderMock, Phake::times(1))->addEventSubscriber(Phake::anyParameters());
+        Phake::verify($formBuilderMock, Phake::times(3))->add(Phake::anyParameters());
     }
 
     /**
@@ -43,8 +42,8 @@ class AreaFlexRowTypeTest extends AbstractBaseTestCase
     public function testConfigureOptions()
     {
         $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
-        $this->areaType->configureOptions($resolverMock);
 
+        $this->areaType->configureOptions($resolverMock);
         Phake::verify($resolverMock)->setDefault('data_class', $this->areaClass);
     }
 }

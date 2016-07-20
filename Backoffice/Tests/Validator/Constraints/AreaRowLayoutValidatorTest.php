@@ -2,17 +2,17 @@
 
 namespace OpenOrchestra\Backoffice\Tests\Validator\Constraints;
 
-use OpenOrchestra\Backoffice\Validator\Constraints\AreaFlexRowLayoutValidator;
+use OpenOrchestra\Backoffice\Validator\Constraints\AreaRowLayoutValidator;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 
 /**
- * Class AreaFlexRowLayoutValidatorTest
+ * Class AreaRowLayoutValidatorTest
  */
-class AreaFlexRowLayoutValidatorTest extends AbstractBaseTestCase
+class AreaRowLayoutValidatorTest extends AbstractBaseTestCase
 {
     /**
-     * @var AreaFlexRowLayoutValidator
+     * @var AreaRowLayoutValidator
      */
     protected $validator;
     protected $context;
@@ -31,7 +31,7 @@ class AreaFlexRowLayoutValidatorTest extends AbstractBaseTestCase
 
         Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
 
-        $this->validator = new AreaFlexRowLayoutValidator();
+        $this->validator = new AreaRowLayoutValidator();
         $this->validator->initialize($this->context);
     }
 

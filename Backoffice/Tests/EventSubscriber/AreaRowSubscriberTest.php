@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\Backoffice\Tests\EventSubscriber;
 
-use OpenOrchestra\Backoffice\EventSubscriber\AreaFlexRowSubscriber;
+use OpenOrchestra\Backoffice\EventSubscriber\AreaRowSubscriber;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Backoffice\Form\Type\Component\ColumnLayoutRowType;
 use OpenOrchestra\Pagination\Tests\AbstractBaseTestCase;
@@ -10,14 +10,14 @@ use Symfony\Component\Form\FormEvents;
 use Phake;
 
 /**
- * Class AreaFlexRowSubscriberTest
+ * Class AreaRowSubscriberTest
  */
-class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
+class AreaRowSubscriberTest extends AbstractBaseTestCase
 {
     protected $areaManager;
     protected $form;
     protected $event;
-    /** @var AreaFlexRowSubscriber */
+    /** @var AreaRowSubscriber */
     protected $subscriber;
     protected $rowArea;
 
@@ -27,11 +27,11 @@ class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
     public function setUp()
     {
 
-        $this->areaManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaFlexManager');
-        Phake::when($this->areaManager)->initializeNewAreaColumn(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface'));
+        $this->areaManager = Phake::mock('OpenOrchestra\Backoffice\Manager\AreaManager');
+        Phake::when($this->areaManager)->initializeNewAreaColumn(Phake::anyParameters())->thenReturn(Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface'));
 
         $this->form = Phake::mock('Symfony\Component\Form\FormInterface');
-        $this->rowArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface');
+        $this->rowArea = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
         $emptyCollection = Phake::mock('Doctrine\Common\Collections\Collection');
         Phake::when($this->rowArea)->getAreas()->thenReturn($emptyCollection);
         Phake::when($this->form)->getData()->thenReturn($this->rowArea);
@@ -39,7 +39,7 @@ class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
         $this->event = Phake::mock('Symfony\Component\Form\FormEvent');
         Phake::when($this->event)->getForm()->thenReturn($this->form);
 
-        $this->subscriber = new AreaFlexRowSubscriber($this->areaManager);
+        $this->subscriber = new AreaRowSubscriber($this->areaManager);
     }
 
     /**
@@ -52,7 +52,7 @@ class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
     {
         $columnArea = array();
         foreach ($layoutColumn as $width) {
-            $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface');
+            $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
             Phake::when($area)->getWidth()->thenReturn($width);
             $columnArea[] = $area;
         }
@@ -62,10 +62,10 @@ class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
 
         $this->subscriber->preSetData($this->event);
         Phake::verify($this->form, Phake::times(1))->add('columnLayout', ColumnLayoutRowType::class, array(
-            'label' => 'open_orchestra_backoffice.form.area_flex.column_layout.label',
+            'label' => 'open_orchestra_backoffice.form.area.column_layout.label',
             'mapped' => false,
             'attr' => array(
-                'help_text' => 'open_orchestra_backoffice.form.area_flex.column_layout.helper',
+                'help_text' => 'open_orchestra_backoffice.form.area.column_layout.helper',
             ),
             'data' => array('layout' => $expectedValue)
         ));
@@ -138,7 +138,7 @@ class AreaFlexRowSubscriberTest extends AbstractBaseTestCase
     {
         $columnArea = new ArrayCollection();
         for($i=0; $i < $areaColumnCount; $i++) {
-            $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaFlexInterface');
+            $area = Phake::mock('OpenOrchestra\ModelInterface\Model\AreaInterface');
             $columnArea[] = $area;
         }
         Phake::when($this->rowArea)->getAreas()->thenReturn($columnArea);

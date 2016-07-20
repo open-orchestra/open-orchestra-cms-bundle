@@ -71,12 +71,8 @@ class AreaManager
      *
      * @return bool
      */
-    public function areaConsistency(AreaContainerInterface $container,NodeInterface $node = null)
+    public function areaConsistency(AreaContainerInterface $container, NodeInterface $node)
     {
-        if (is_null($node)) {
-            $node = $container;
-        }
-
         foreach ($container->getAreas() as $area) {
             if (is_array($area->getBlocks()) && count($area->getBlocks()) > 0) {
                 if (!$this->checkBlockRef($area->getBlocks(), $node, $area)) {
