@@ -9,8 +9,8 @@ OrchestraBORouter = Backbone.Router.extend(
     @generateRoutePatterns()
     jQuery ->
       ribbonFormButtonViewClass = appConfigurationView.getConfiguration('ribbon-form-button', 'createRibbonFormButton')
-      OpenOrchestra.RibbonButton.ribbonFormButtonView = new ribbonFormButtonViewClass()
-      OpenOrchestra.RibbonButton.ribbonFormButtonModalView = new ribbonFormButtonViewClass()
+      OpenOrchestra.RibbonButton.ribbonFormButtonView = new ribbonFormButtonViewClass
+      OpenOrchestra.RibbonButton.ribbonFormButtonModalView = new ribbonFormButtonViewClass
     return
 
   showHome: ->
@@ -31,8 +31,8 @@ OrchestraBORouter = Backbone.Router.extend(
   initDisplayRouteChanges: (selector) ->
     window.OpenOrchestra.FormBehavior.channel.trigger 'deactivate', null, $('form').not('#OrchestraBOModal form')
     selector = if selector == undefined then '[href="#' + Backbone.history.fragment + '"]' else selector
-    $('#left-panel nav li.active').removeClass 'active'
-    link = $('#left-panel nav li a' + selector)
+    $('#left-panel .active').removeClass 'active'
+    link = $('#left-panel a' + selector)
     if link.length == 0
       Backbone.history.navigate('', {trigger: true})
       return false
@@ -42,9 +42,9 @@ OrchestraBORouter = Backbone.Router.extend(
     return true
 
   afterRouteChanges: (selector) ->
-    $('#left-panel nav li:has(a' + selector + ')').addClass 'active'
-    $('#left-panel nav li.current').removeClass 'current'
-    $('#left-panel nav li:has(>a' + selector + ')').addClass 'current'
+    $('#left-panel *:has(a' + selector + ')').addClass 'active'
+    $('#left-panel *.current').removeClass 'current'
+    $('#left-panel *:has(>a' + selector + ')').addClass 'current'
     openMenu $("#left-panel nav").data('opts').speed, $("#left-panel nav").data('opts').openedSign
     document.title = $('#left-panel nav a' + selector).attr('title') or document.title
     drawBreadCrumb()

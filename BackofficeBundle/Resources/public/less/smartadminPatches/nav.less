@@ -42,3 +42,23 @@ nav {
     }
   }
 }
+
+span.active {
+  > a {
+    color:#fff !important;
+    position: relative;
+  }
+  > a:before {
+    color: #474544;
+    content: "";
+    display: block;
+    font-family: FontAwesome;
+    font-size: 20px;
+    height: 27px;
+    line-height: normal;
+    position: absolute;
+    right: -151px;
+    width: 27px;
+    top: 3px;
+  }
+}

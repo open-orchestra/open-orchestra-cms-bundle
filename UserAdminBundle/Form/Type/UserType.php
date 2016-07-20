@@ -47,7 +47,10 @@ class UserType extends AbstractType
         $builder->add('id', 'hidden', array(
             'disabled' => true
         ));
-        $builder->addEventSubscriber(new UserGroupsSubscriber());
+
+        if ($options['edit_groups']) {
+            $builder->addEventSubscriber(new UserGroupsSubscriber());
+        }
 
         if (array_key_exists('disabled', $options)) {
             $builder->setAttribute('disabled', $options['disabled']);
@@ -60,7 +63,8 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class
+            'data_class' => $this->class,
+            'edit_groups' => true
         ));
     }
 

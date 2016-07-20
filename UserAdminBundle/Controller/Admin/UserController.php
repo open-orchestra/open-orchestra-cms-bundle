@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration as Config;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use OpenOrchestra\UserBundle\Document\User;
 
 /**
  * Class UserController
@@ -63,9 +62,36 @@ class UserController extends AbstractAdminController
     public function formAction(Request $request, $userId)
     {
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+
+        return $this->renderForm($request, $user, true);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/form", name="open_orchestra_user_admin_user_self_form")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function formSelfAction(Request $request)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        return $this->renderForm($request, $user, false);
+    }
+
+    /**
+     * @param Request       $request
+     * @param UserInterface $user
+     * @param boolean       $editGroups
+     */
+    protected function renderForm(Request $request, UserInterface $user, $editGroups)
+    {
         $form = $this->createForm('oo_user', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $userId)),
-            'validation_groups' => array('Profile')
+            'action' => $this->generateUrl('open_orchestra_user_admin_user_form', array('userId' => $user->getId())),
+            'validation_groups' => array('Profile'),
+            'edit_groups' => $editGroups
         ));
         $form->handleRequest($request);
         $this->handleForm($form, $this->get('translator')->trans('open_orchestra_user.update.success'));
@@ -90,10 +116,35 @@ class UserController extends AbstractAdminController
      */
     public function changePasswordAction(Request $request, $userId)
     {
-        /* @var User $user */
+        /* @var UserInterface $user */
         $user = $this->get('open_orchestra_user.repository.user')->find($userId);
+
+        return $this->renderChangePassword($request, $user);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Config\Route("/password/change", name="open_orchestra_user_admin_user_self_change_password")
+     * @Config\Method({"GET", "POST"})
+     *
+     * @return Response
+     */
+    public function selfChangePasswordAction(Request $request)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        return $this->renderChangePassword($request, $user);
+    }
+
+    /**
+     * @param Request       $request
+     * @param UserInterface $user
+     */
+    public function renderChangePassword(Request $request, UserInterface $user)
+    {
         $form = $this->createForm('oo_user_change_password', $user, array(
-            'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $userId))
+            'action' => $this->generateUrl('open_orchestra_user_admin_user_change_password', array('userId' => $user->getId()))
         ));
         $form->handleRequest($request);
 
